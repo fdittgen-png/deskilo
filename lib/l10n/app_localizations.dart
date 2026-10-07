@@ -18000,17 +18000,71 @@ abstract class AppLocalizations {
   /// **'Find a space'**
   String get meFindSpace;
 
+  /// No description provided for @meGroupAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get meGroupAdd;
+
+  /// No description provided for @meGroupDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete group'**
+  String get meGroupDelete;
+
+  /// No description provided for @meGroupEmptyFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a space a heart and it waits for you here.'**
+  String get meGroupEmptyFavorites;
+
+  /// No description provided for @meGroupEmptyOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'Move spaces here from their menu.'**
+  String get meGroupEmptyOwn;
+
+  /// No description provided for @meGroupFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get meGroupFavorites;
+
   /// #1846 Me groups: meGroupInstallations
   ///
   /// In en, this message translates to:
   /// **'Connected installations'**
   String get meGroupInstallations;
 
+  /// No description provided for @meGroupMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to group…'**
+  String get meGroupMove;
+
+  /// No description provided for @meGroupName.
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get meGroupName;
+
+  /// No description provided for @meGroupOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get meGroupOther;
+
   /// #1846 Me groups: meGroupProfile
   ///
   /// In en, this message translates to:
   /// **'My profile'**
   String get meGroupProfile;
+
+  /// No description provided for @meGroupRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get meGroupRename;
 
   /// #1846 Me groups: meGroupWorkspaces
   ///
@@ -18132,6 +18186,36 @@ abstract class AppLocalizations {
   /// **'My history and data'**
   String get meSectionMine;
 
+  /// No description provided for @meSortAlphabet.
+  ///
+  /// In en, this message translates to:
+  /// **'A–Z'**
+  String get meSortAlphabet;
+
+  /// No description provided for @meSortHand.
+  ///
+  /// In en, this message translates to:
+  /// **'My order'**
+  String get meSortHand;
+
+  /// No description provided for @meSortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Best rated'**
+  String get meSortRating;
+
+  /// No description provided for @meSortRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently used'**
+  String get meSortRecent;
+
+  /// No description provided for @meSortTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get meSortTooltip;
+
   /// Title of the row listing this space's own overrides of the person's preferences.
   ///
   /// In en, this message translates to:
@@ -18155,6 +18239,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waiting for approval'**
   String get meSpacePending;
+
+  /// No description provided for @meSpacesNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No space matches.'**
+  String get meSpacesNoMatch;
+
+  /// No description provided for @meSpacesSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search my spaces'**
+  String get meSpacesSearch;
 
   /// Me layer bottom tab: find published spaces.
   ///

@@ -1,0 +1,18 @@
+{
+  "meGroupFavorites": "Favoritos",
+  "meGroupOther": "Otros",
+  "meGroupName": "Nombre del grupo",
+  "meGroupAdd": "Nuevo grupo",
+  "meGroupRename": "Renombrar",
+  "meGroupDelete": "Eliminar grupo",
+  "meGroupMove": "Mover a un grupo…",
+  "meGroupEmptyFavorites": "Dale un corazón a un espacio y te espera aquí.",
+  "meGroupEmptyOwn": "Mueve espacios aquí desde su menú.",
+  "meSortHand": "Mi orden",
+  "meSortRecent": "Usados recientemente",
+  "meSortRating": "Mejor valorados",
+  "meSortAlphabet": "A–Z",
+  "meSortTooltip": "Ordenar",
+  "meSpacesSearch": "Buscar mis espacios",
+  "meSpacesNoMatch": "Ningún espacio coincide."
+}

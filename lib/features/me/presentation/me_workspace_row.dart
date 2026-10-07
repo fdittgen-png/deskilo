@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_typography.dart';
+import 'hold_to_move.dart';
 
 /// One of my spaces on Me › Home: a soft card with the identity on top —
 /// avatar, name, role, what I marked it with, one options menu — and the
@@ -17,14 +18,61 @@ class MeWorkspaceRow extends StatelessWidget {
     required this.actions,
     this.lastUsed = false,
     this.controls,
+    this.dragIndex,
   });
   final bool lastUsed;
+
+  /// The place of this card in its (reorderable) list; null when the list
+  /// cannot be reordered now (filtered, or sorted another way).
+  final int? dragIndex;
   final Widget avatar;
   final String name, detail;
   final List<Widget> actions;
 
   /// The heart, the stars and the options menu of this row.
   final Widget? controls;
+
+  /// A hold on the avatar or the name lifts the card to move it.
+  Widget _held(Widget identity) => dragIndex == null
+      ? identity
+      : HoldToMove(
+          key: ValueKey('me-hold-move-$dragIndex'),
+          index: dragIndex!,
+          // The whole strip answers to the hold, not only its text.
+          child: ColoredBox(color: Colors.transparent, child: identity),
+        );
+
+  Widget identity(ThemeData theme, ColorScheme scheme) => Row(
+    children: [
+      // No tooltip here: its long press would win the gesture the one-second
+      // hold needs to lift the card.
+      avatar,
+      const SizedBox(width: AppSpacing.md),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleMedium?.strong,
+            ),
+            if (detail.isNotEmpty)
+              Text(
+                detail,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+          ],
+        ),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -56,31 +104,7 @@ class MeWorkspaceRow extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Tooltip(message: name, child: avatar),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleMedium?.strong,
-                        ),
-                        if (detail.isNotEmpty)
-                          Text(
-                            detail,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: scheme.onSurfaceVariant,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
+                  Expanded(child: _held(identity(theme, scheme))),
                   ?controls,
                 ],
               ),

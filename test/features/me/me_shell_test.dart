@@ -220,7 +220,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Home offers finding, joining and creating a space', (
+  testWidgets('Home offers joining and creating a space', (
     tester,
   ) async {
     final router = await pumpMeApp(
@@ -228,12 +228,8 @@ void main() {
       workspace: FakeWorkspaceRepository(workspaces: []),
     );
     await goTo(tester, router, '/me');
-    await tester.tap(find.byKey(const ValueKey('me-home-discover')));
-    await tester.pumpAndSettle();
-    expect(find.byType(DirectoryScreen), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('me-tab-home')));
-    await tester.pumpAndSettle();
+    // Finding a space is the Discover entry of the Me menu, not a button here.
+    expect(find.byKey(const ValueKey('me-home-discover')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('me-home-join')));
     await tester.pumpAndSettle();
     expect(router.state.uri.toString(), '/onboarding?join=1');

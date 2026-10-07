@@ -33,6 +33,7 @@ class SpaceRowControls extends StatelessWidget {
     this.onUp,
     this.onDown,
     this.leave = const [],
+    this.onMoveToGroup,
   });
 
   final String rowKey, name;
@@ -46,6 +47,9 @@ class SpaceRowControls extends StatelessWidget {
 
   /// The ways to leave, one per side; owners cannot (they hand over first).
   final List<SpaceLeaveItem> leave;
+
+  /// Opens the choice of group; null hides the entry.
+  final VoidCallback? onMoveToGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +88,8 @@ class SpaceRowControls extends StatelessWidget {
             switch (v) {
               case 'favorite':
                 onFavorite();
+              case 'group':
+                onMoveToGroup?.call();
               case 'up':
                 onUp?.call();
               case 'down':
@@ -108,6 +114,12 @@ class SpaceRowControls extends StatelessWidget {
                     : (l10n?.spaceFavoriteAdd ?? 'Add to favorites'),
               ),
             ),
+            if (onMoveToGroup != null)
+              PopupMenuItem(
+                key: ValueKey('$key-group'),
+                value: 'group',
+                child: Text(l10n?.meGroupMove ?? 'Move to group…'),
+              ),
             PopupMenuItem(
               key: ValueKey('$key-up'),
               value: 'up',
@@ -125,7 +137,7 @@ class SpaceRowControls extends StatelessWidget {
               PopupMenuItem(
                 key: ValueKey('$key-rate-$n'),
                 value: '$n',
-                child: Text('${'★' * n}${'☆' * (5 - n)}'),
+                child: _Stars(n),
               ),
             PopupMenuItem(
               key: ValueKey('$key-clear'),
@@ -133,7 +145,10 @@ class SpaceRowControls extends StatelessWidget {
               child: Text(l10n?.spaceRatingClear ?? 'No rating'),
             ),
             if (leave.isNotEmpty) const PopupMenuDivider(),
-            for (final l in leave)
+            // An owner cannot leave either side: say it once, not per side.
+            for (final l in leave.every((l) => !l.enabled)
+                ? leave.take(1)
+                : leave)
               PopupMenuItem(
                 key: ValueKey('$key-leave-${l.id}'),
                 value: 'leave:${l.id}',
@@ -143,6 +158,36 @@ class SpaceRowControls extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// n of 5 stars, the earned ones gold and filled, the rest plain outlines,
+/// with the number beside them — so 3 and 4 cannot be mistaken in a menu.
+class _Stars extends StatelessWidget {
+  const _Stars(this.n);
+  final int n;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Semantics(
+      label: '$n / 5',
+      excludeSemantics: true,
+      child: Row(
+        children: [
+          for (var i = 1; i <= 5; i++)
+            Icon(
+              i <= n ? Icons.star_rounded : Icons.star_outline_rounded,
+              size: 22,
+              color: i <= n
+                  ? Colors.amber.shade600
+                  : scheme.onSurfaceVariant.withValues(alpha: .45),
+            ),
+          const SizedBox(width: 10),
+          Text('$n', style: Theme.of(context).textTheme.labelLarge),
+        ],
+      ),
     );
   }
 }

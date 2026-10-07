@@ -10579,10 +10579,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meFindSpace => 'Space finden';
 
   @override
+  String get meGroupAdd => 'Neue Gruppe';
+
+  @override
+  String get meGroupDelete => 'Gruppe löschen';
+
+  @override
+  String get meGroupEmptyFavorites =>
+      'Geben Sie einem Space ein Herz, dann wartet er hier.';
+
+  @override
+  String get meGroupEmptyOwn => 'Verschieben Sie Spaces über ihr Menü hierher.';
+
+  @override
+  String get meGroupFavorites => 'Favoriten';
+
+  @override
   String get meGroupInstallations => 'Verbundene Installationen';
 
   @override
+  String get meGroupMove => 'In Gruppe verschieben…';
+
+  @override
+  String get meGroupName => 'Gruppenname';
+
+  @override
+  String get meGroupOther => 'Andere';
+
+  @override
   String get meGroupProfile => 'Mein Profil';
+
+  @override
+  String get meGroupRename => 'Umbenennen';
 
   @override
   String get meGroupWorkspaces => 'Meine Arbeitsbereiche';
@@ -10663,6 +10691,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meSectionMine => 'Mein Verlauf und meine Daten';
 
   @override
+  String get meSortAlphabet => 'A–Z';
+
+  @override
+  String get meSortHand => 'Meine Reihenfolge';
+
+  @override
+  String get meSortRating => 'Am besten bewertet';
+
+  @override
+  String get meSortRecent => 'Zuletzt genutzt';
+
+  @override
+  String get meSortTooltip => 'Sortieren';
+
+  @override
   String get meSpaceException => 'In diesem Space';
 
   @override
@@ -10673,6 +10716,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meSpacePending => 'Wartet auf Freigabe';
+
+  @override
+  String get meSpacesNoMatch => 'Kein Space passt.';
+
+  @override
+  String get meSpacesSearch => 'Meine Spaces durchsuchen';
 
   @override
   String get meTabDiscover => 'Entdecken';
