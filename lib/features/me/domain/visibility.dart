@@ -56,6 +56,15 @@ enum VisibilityAudience {
 
   final String wire;
 
+  /// How wide the audience is, narrow to wide: only me < chosen spaces < my
+  /// spaces < anyone signed in.
+  int get breadth => switch (this) {
+    nobody => 0,
+    chosenSpaces => 1,
+    mySpaces => 2,
+    signedIn => 3,
+  };
+
   static VisibilityAudience? fromWire(Object? wire) =>
       values.where((a) => a.wire == wire).firstOrNull;
 }
@@ -80,6 +89,16 @@ class FieldAudience {
 
   /// The chosen spaces, meaningful only for [VisibilityAudience.chosenSpaces].
   final List<String> workspaces;
+
+  /// Whether this choice shows the field to more people than [before]: a
+  /// wider audience, or the same chosen spaces plus more of them.
+  bool widens(FieldAudience before) {
+    if (audience.breadth != before.audience.breadth) {
+      return audience.breadth > before.audience.breadth;
+    }
+    return audience == VisibilityAudience.chosenSpaces &&
+        workspaces.any((id) => !before.workspaces.contains(id));
+  }
 
   /// A choice the server would refuse: chosen spaces, and none chosen.
   bool get incomplete =>

@@ -20925,6 +20925,18 @@
   "@visibilityTitle": {
     "description": "Title of the card choosing who sees what of the account."
   },
+  "visibilityWidenAction": "Widen",
+  "visibilityWidenConfirm": "Show your {field} to: {audience}? They will be able to see it.",
+  "@visibilityWidenConfirm": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
   "visitCancel": "Cancel this visit",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"

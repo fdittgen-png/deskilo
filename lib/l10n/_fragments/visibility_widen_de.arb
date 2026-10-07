@@ -1,0 +1,14 @@
+{
+  "visibilityWidenConfirm": "{field} zeigen für: {audience}? Diese Personen können es sehen.",
+  "@visibilityWidenConfirm": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityWidenAction": "Erweitern"
+}

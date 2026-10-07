@@ -24,6 +24,12 @@ Future<void> _choose(WidgetTester tester, VisibilityField field,
   }
   await tester.tap(find.byKey(const ValueKey('visibility-save')));
   await tester.pumpAndSettle();
+  // Widening asks first (#2211); the helper answers yes.
+  final confirm = find.byKey(const ValueKey('visibility-widen-confirm'));
+  if (confirm.evaluate().isNotEmpty) {
+    await tester.tap(confirm);
+    await tester.pumpAndSettle();
+  }
 }
 
 Future<void> _previewAs(WidgetTester tester, PreviewAudience as) async {
@@ -64,6 +70,25 @@ void main() {
     await _previewAs(tester, PreviewAudience.nobody);
     expect(find.byKey(const ValueKey('visibility-preview-name')), findsOneWidget);
     expect(find.byKey(const ValueKey('visibility-preview-email')), findsOneWidget);
+  });
+
+  testWidgets('widening asks first and names the audience; cancelling keeps '
+      'the field as it was', (tester) async {
+    final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
+    await goTo(tester, router, '/me?tab=me');
+    await tapIn(tester, 'me-account-list',
+        find.byKey(const ValueKey('visibility-field-about')));
+    await tester.tap(find.byKey(const ValueKey('visibility-audience-signed_in')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('visibility-save')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Anyone signed in'), findsWidgets);
+    expect(find.byKey(const ValueKey('visibility-widen-confirm')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('visibility-widen-cancel')));
+    await tester.pumpAndSettle();
+    expect(find.descendant(
+        of: find.byKey(const ValueKey('visibility-field-about')),
+        matching: find.text('Nobody')), findsOneWidget);
   });
 
   testWidgets('profession and bio are written on the card and read only by '
