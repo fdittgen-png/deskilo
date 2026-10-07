@@ -79,6 +79,14 @@ Future<void> showExpenseSheet(
       l10n?.expenseInvalidUnitPrice ??
           'Enter a valid unit price, or leave it empty.',
   };
+  // The field each refusal is about, so its words sit under that field.
+  String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
+    ExpenseOutcome.submitted => null,
+    ExpenseOutcome.invalidAmount => 'amount',
+    ExpenseOutcome.missingSupplyName => 'supplyName',
+    ExpenseOutcome.invalidSupplyQuantity => 'supplyQuantity',
+    ExpenseOutcome.invalidUnitPrice => 'supplyUnit',
+  };
   final failed =
       l10n?.workspaceGenericError ??
       'Something went wrong. Please try again.';
@@ -91,9 +99,12 @@ Future<void> showExpenseSheet(
       submitKey: const ValueKey('expense-submit'),
       errorKey: const ValueKey('expense-problem'),
       onDispose: fields.dispose,
+      validate: () {
+        final outcome = expenseOutcome(draft());
+        final field = fieldOf(outcome);
+        return field == null ? const {} : {field: reason(outcome)!};
+      },
       onSubmit: () async {
-        final why = reason(expenseOutcome(draft()));
-        if (why != null) return why;
         try {
           final outcome = await ref
               .read(expensesProvider)
@@ -112,6 +123,7 @@ Future<void> showExpenseSheet(
       builder: (context, refresh) => [
         AppTextField(
           controller: fields['amount'],
+          fieldKey: 'amount',
           label: l10n?.moneyAmountLabel ?? 'Amount',
           suffixText: currency.currencyName,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -185,6 +197,7 @@ Future<void> showExpenseSheet(
               AppTextField(
                 key: const ValueKey('expense-supply-name'),
                 controller: fields['supplyName'],
+                fieldKey: 'supplyName',
                 label: l10n?.expenseSupplyNewItem ?? 'New item',
               ),
             ],
@@ -195,6 +208,7 @@ Future<void> showExpenseSheet(
                   child: AppTextField(
                     key: const ValueKey('expense-supply-quantity'),
                     controller: fields['supplyQuantity'],
+                    fieldKey: 'supplyQuantity',
                     keyboardType: TextInputType.number,
                     label: l10n?.expenseSupplyQuantity ?? 'Quantity',
                     onChanged: (_) {
@@ -208,6 +222,7 @@ Future<void> showExpenseSheet(
                   child: AppTextField(
                     key: const ValueKey('expense-supply-unit'),
                     controller: fields['supplyUnit'],
+                    fieldKey: 'supplyUnit',
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),

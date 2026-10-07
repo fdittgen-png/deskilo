@@ -65,7 +65,16 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '0');
     await tester.tap(find.byKey(const ValueKey('expense-submit')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('expense-problem')), findsOneWidget);
+    // #1449 — the reason sits under the field it is about, not in a
+    // banner, and nothing is filed.
+    expect(
+      find.descendant(
+        of: find.widgetWithText(TextField, 'Amount'),
+        matching: find.text('Enter an amount above zero.'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('expense-problem')), findsNothing);
     expect(money.submittedExpenses, isEmpty);
 
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '12');

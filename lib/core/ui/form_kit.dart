@@ -18,16 +18,42 @@
 //     the buttons; the sheet closes only when the submit succeeds.
 //
 // Validation stays domain-first: the rules live in a pure function that
-// returns, per field, the key of what is wrong ([FieldErrors]); the form
-// maps a key to its localized words and passes them to the field.
+// says what is wrong (an outcome enum, a set of problems); the form maps
+// that to [FieldErrors] — field key → localized words — in
+// [AppFormSheet.validate], and each [AppTextField] with that [fieldKey]
+// shows its own error under itself.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 
 import '../theme/app_spacing.dart';
 import 'inline_banner.dart';
 
-/// Per-field problems, keyed by the field's own key: what a domain
-/// validator returns and what each [AppTextField] shows under itself.
+/// Per-field problems: the field's key → the localized sentence shown
+/// under it. What [AppFormSheet.validate] returns; empty = valid.
 typedef FieldErrors = Map<String, String>;
+
+/// The [FieldErrors] of the enclosing form, for the [AppTextField]s
+/// inside it; [onEdit] clears a field's error as soon as it is edited.
+class FormErrorsScope extends InheritedWidget {
+  const FormErrorsScope({
+    super.key,
+    required this.errors,
+    required this.onEdit,
+    required super.child,
+  });
+
+  final FieldErrors errors;
+  final ValueChanged<String> onEdit;
+
+  static FormErrorsScope? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<FormErrorsScope>();
+
+  @override
+  bool updateShouldNotify(FormErrorsScope oldWidget) =>
+      !identical(errors, oldWidget.errors);
+}
 
 /// The space between two fields of a form.
 class FormGap extends StatelessWidget {
@@ -69,14 +95,16 @@ class FormSection extends StatelessWidget {
 
 /// One text field of a form, styled by the theme.
 ///
-/// [error] is shown under the field and announced by the platform's
-/// semantics; [help] (usually a `HelpDot`) sits at the end of the field.
-/// E-mail, name, phone and address fields pass [autofillHints].
+/// [error] is shown under the field; without one, a field with a
+/// [fieldKey] shows the enclosing form's error for that key
+/// ([FormErrorsScope]). [help] (usually a `HelpDot`) sits at the end of
+/// the field. E-mail, name, phone and address fields pass [autofillHints].
 class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
     required this.controller,
     required this.label,
+    this.fieldKey,
     this.helper,
     this.error,
     this.suffixText,
@@ -95,6 +123,9 @@ class AppTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final String label;
+
+  /// The key this field's problems are reported under in [FieldErrors].
+  final String? fieldKey;
   final String? helper, error, suffixText;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -107,28 +138,37 @@ class AppTextField extends StatelessWidget {
   final Widget? help;
 
   @override
-  Widget build(BuildContext context) => TextField(
-    controller: controller,
-    enabled: enabled,
-    autofocus: autofocus,
-    obscureText: obscureText,
-    keyboardType: keyboardType,
-    textInputAction: textInputAction,
-    autofillHints: autofillHints,
-    maxLines: obscureText ? 1 : maxLines,
-    maxLength: maxLength,
-    onChanged: onChanged,
-    onSubmitted: onSubmitted,
-    decoration: InputDecoration(
-      labelText: label,
-      helperText: helper,
-      helperMaxLines: 3,
-      errorText: error,
-      errorMaxLines: 3,
-      suffixText: suffixText,
-      suffixIcon: help,
-    ),
-  );
+  Widget build(BuildContext context) {
+    final scope = fieldKey == null ? null : FormErrorsScope.maybeOf(context);
+    final shown = error ?? scope?.errors[fieldKey];
+    return TextField(
+      controller: controller,
+      enabled: enabled,
+      autofocus: autofocus,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      textInputAction: textInputAction,
+      autofillHints: autofillHints,
+      maxLines: obscureText ? 1 : maxLines,
+      maxLength: maxLength,
+      onChanged: (value) {
+        if (scope != null && shown != null && error == null) {
+          scope.onEdit(fieldKey!);
+        }
+        onChanged?.call(value);
+      },
+      onSubmitted: onSubmitted,
+      decoration: InputDecoration(
+        labelText: label,
+        helperText: helper,
+        helperMaxLines: 3,
+        errorText: shown,
+        errorMaxLines: 3,
+        suffixText: suffixText,
+        suffixIcon: help,
+      ),
+    );
+  }
 }
 
 /// The text controllers of one form: asked for by name, created on first
@@ -178,11 +218,13 @@ class FormControllers {
 /// is up), and a footer that stays in view with the cancel and the
 /// primary action.
 ///
-/// [onSubmit] does the whole job — check, save — and returns null when
-/// it is done (the sheet then closes with `true`), or the reason it could
-/// not, which the sheet shows above the buttons and keeps the sheet open
-/// so the person can correct it. The primary button shows progress while
-/// [onSubmit] runs and cannot be pressed twice.
+/// [validate], when given, runs first: the [FieldErrors] it returns are
+/// shown under their fields (the first one announced), and nothing is
+/// submitted until it returns none. [onSubmit] then does the job and
+/// returns null when it is done (the sheet closes with `true`), or the
+/// reason it could not — a refusal no single field explains — which the
+/// sheet shows above the buttons, staying open. The primary button shows
+/// progress while [onSubmit] runs and cannot be pressed twice.
 ///
 /// Open it with [showAppFormSheet].
 class AppFormSheet extends StatefulWidget {
@@ -192,6 +234,7 @@ class AppFormSheet extends StatefulWidget {
     required this.builder,
     required this.submitLabel,
     required this.onSubmit,
+    this.validate,
     this.submitKey,
     this.errorKey = const ValueKey('form-sheet-error'),
     this.onDispose,
@@ -205,6 +248,9 @@ class AppFormSheet extends StatefulWidget {
   builder;
   final String submitLabel;
   final Future<String?> Function() onSubmit;
+
+  /// The per-field check, run before [onSubmit]; empty = valid.
+  final FieldErrors Function()? validate;
   final Key? submitKey;
   final Key errorKey;
 
@@ -219,6 +265,7 @@ class AppFormSheet extends StatefulWidget {
 class _AppFormSheetState extends State<AppFormSheet> {
   bool _saving = false;
   String? _problem;
+  FieldErrors _fieldErrors = const {};
 
   @override
   void dispose() {
@@ -228,7 +275,23 @@ class _AppFormSheetState extends State<AppFormSheet> {
 
   Future<void> _submit() async {
     if (_saving) return;
+    final errors = widget.validate?.call() ?? const <String, String>{};
+    if (errors.isNotEmpty) {
+      setState(() {
+        _problem = null;
+        _fieldErrors = errors;
+      });
+      unawaited(
+        SemanticsService.sendAnnouncement(
+          View.of(context),
+          errors.values.first,
+          Directionality.of(context),
+        ),
+      );
+      return;
+    }
     setState(() {
+      _fieldErrors = const {};
       _saving = true;
       _problem = null;
     });
@@ -274,7 +337,17 @@ class _AppFormSheetState extends State<AppFormSheet> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const FormGap(),
-                  ...widget.builder(context, () => setState(() {})),
+                  FormErrorsScope(
+                    errors: _fieldErrors,
+                    onEdit: (key) => setState(
+                      () => _fieldErrors = {..._fieldErrors}..remove(key),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: widget.builder(context, () => setState(() {})),
+                    ),
+                  ),
                 ],
               ),
             ),
