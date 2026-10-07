@@ -1,0 +1,21 @@
+{
+  "financesAllSpaces": "Todos los espacios",
+  "financesLinkTitle": "Tus documentos están en Yo",
+  "financesLinkBody": "Tus facturas, recordatorios y pagos de todos tus espacios están juntos en Yo › Finanzas.",
+  "financesLinkAction": "Abrir para {space}",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "meFinanceGlanceOwed": "A pagar: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}

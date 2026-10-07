@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -55,6 +56,7 @@ Future<GoRouter> pumpMeApp(
   FakeMeRepository? me,
   FakePersonalPreferencesRepository? preferences,
   FakeDirectoryRepository? directory,
+  FakeAccountActivityRepository? accountActivity,
   List<ConnectedInstallation> connectedSources = const [],
   IdentityConnector? identityConnector,
   Size size = const Size(800, 1600),
@@ -70,6 +72,7 @@ Future<GoRouter> pumpMeApp(
         me: me,
         personalPreferences: preferences,
         directory: directory,
+        accountActivity: accountActivity,
         connectedSources: connectedSources,
         identityConnector: identityConnector,
       ),

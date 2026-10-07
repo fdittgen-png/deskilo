@@ -1,0 +1,21 @@
+{
+  "financesAllSpaces": "Alle Spaces",
+  "financesLinkTitle": "Ihre Dokumente liegen in Ich",
+  "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.",
+  "financesLinkAction": "Für {space} öffnen",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "meFinanceGlanceOwed": "Zu zahlen: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}

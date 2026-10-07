@@ -109,6 +109,28 @@ class FinanceOverview {
   final List<FinanceInvoice> invoices;
   final List<FinanceReminder> reminders;
 
+  /// The workspaces my documents come from, as (id, name), by name.
+  List<(String, String)> get workspaces {
+    final seen = <String, String>{};
+    for (final i in invoices) {
+      seen.putIfAbsent(i.workspaceId, () => i.workspaceName);
+    }
+    return [for (final e in seen.entries) (e.key, e.value)]
+      ..sort((a, b) => a.$2.toLowerCase().compareTo(b.$2.toLowerCase()));
+  }
+
+  /// Only [workspaceId]'s documents; every workspace when it is null. A
+  /// reminder follows its invoice.
+  FinanceOverview inWorkspace(String? workspaceId) {
+    if (workspaceId == null) return this;
+    final mine = [for (final i in invoices) if (i.workspaceId == workspaceId) i];
+    final ids = {for (final i in mine) i.id};
+    return FinanceOverview(
+      invoices: mine,
+      reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
+    );
+  }
+
   List<FinanceInvoice> get outstanding => [
         for (final i in invoices)
           if (i.state.owed) i,

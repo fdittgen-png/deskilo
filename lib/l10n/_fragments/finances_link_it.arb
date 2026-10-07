@@ -1,0 +1,21 @@
+{
+  "financesAllSpaces": "Tutti gli spazi",
+  "financesLinkTitle": "I tuoi documenti sono in Io",
+  "financesLinkBody": "Fatture, solleciti e pagamenti di tutti i tuoi spazi sono insieme in Io › Finanze.",
+  "financesLinkAction": "Apri per {space}",
+  "@financesLinkAction": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "meFinanceGlanceOwed": "Da pagare: {amount}",
+  "@meFinanceGlanceOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}
