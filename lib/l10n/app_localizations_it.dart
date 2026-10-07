@@ -2161,6 +2161,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione è interamente nel passato.';
 
   @override
+  String bookingRecordedPastSpaceWhen(String space, String when) {
+    return '$space registrato: $when. Quel periodo è già finito, quindi resta come visita passata.';
+  }
+
+  @override
+  String bookingRecordedPastWhen(String when) {
+    return 'Registrato: $when. Quel periodo è già finito, quindi resta come visita passata.';
+  }
+
+  @override
   String get bookingRecoveryBanner =>
       'Una tua richiesta di prenotazione è ancora senza risposta.';
 
@@ -15276,6 +15286,19 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get reservationLimitError =>
       'Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.';
+
+  @override
+  String reservationNoteCheckedOutAt(String time) {
+    return 'Completata: uscita registrata alle $time.';
+  }
+
+  @override
+  String get reservationNoteOverNotCheckedIn =>
+      'Questo periodo è finito senza check-in.';
+
+  @override
+  String get reservationNoteRecordedAfterEnd =>
+      'Registrata dopo la fine di questo periodo, quindi resta come visita passata.';
 
   @override
   String get reservationRecurring => 'Prenotazione ricorrente';

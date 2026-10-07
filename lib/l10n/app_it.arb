@@ -1249,6 +1249,25 @@
   "bookingOutsideWalkUpError": "Fuori dagli orari di apertura è possibile solo un check-in spontaneo, non una prenotazione in anticipo.",
   "bookingOverlapsAnother": "Il posto è già prenotato per parte di questo orario.",
   "bookingPastError": "Questa prenotazione è interamente nel passato.",
+  "bookingRecordedPastSpaceWhen": "{space} registrato: {when}. Quel periodo è già finito, quindi resta come visita passata.",
+  "@bookingRecordedPastSpaceWhen": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Registrato: {when}. Quel periodo è già finito, quindi resta come visita passata.",
+  "@bookingRecordedPastWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "bookingRecoveryBanner": "Una tua richiesta di prenotazione è ancora senza risposta.",
   "@bookingRecoveryBanner": {
     "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
@@ -9773,6 +9792,16 @@
     "description": "Extend flow: picked time not after the current end (#574)"
   },
   "reservationLimitError": "Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.",
+  "reservationNoteCheckedOutAt": "Completata: uscita registrata alle {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "Questo periodo è finito senza check-in.",
+  "reservationNoteRecordedAfterEnd": "Registrata dopo la fine di questo periodo, quindi resta come visita passata.",
   "reservationRecurring": "Prenotazione ricorrente",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
   "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.",

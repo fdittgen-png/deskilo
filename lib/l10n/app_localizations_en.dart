@@ -2149,6 +2149,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPastError => 'This booking lies entirely in the past.';
 
   @override
+  String bookingRecordedPastSpaceWhen(String space, String when) {
+    return 'Recorded $space: $when. That period is already over, so it is kept as a past visit.';
+  }
+
+  @override
+  String bookingRecordedPastWhen(String when) {
+    return 'Recorded: $when. That period is already over, so it is kept as a past visit.';
+  }
+
+  @override
   String get bookingRecoveryBanner =>
       'A booking request of yours is still unanswered.';
 
@@ -15144,6 +15154,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reservationLimitError =>
       'Reservation limit reached — you already hold the maximum number of open reservations.';
+
+  @override
+  String reservationNoteCheckedOutAt(String time) {
+    return 'Completed: checked out at $time.';
+  }
+
+  @override
+  String get reservationNoteOverNotCheckedIn =>
+      'This period is over without a check-in.';
+
+  @override
+  String get reservationNoteRecordedAfterEnd =>
+      'Recorded after this period had ended, so it is kept as a past visit.';
 
   @override
   String get reservationRecurring => 'Recurring booking';

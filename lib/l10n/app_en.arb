@@ -2512,6 +2512,27 @@
     "description": "#2016 Reserve time choice: bookingOverlapsAnother"
   },
   "bookingPastError": "This booking lies entirely in the past.",
+  "bookingRecordedPastSpaceWhen": "Recorded {space}: {when}. That period is already over, so it is kept as a past visit.",
+  "@bookingRecordedPastSpaceWhen": {
+    "description": "Booking confirmation when the booked period had already ended today: the booking is recorded as a past visit",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Recorded: {when}. That period is already over, so it is kept as a past visit.",
+  "@bookingRecordedPastWhen": {
+    "description": "Same, without a space name",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "bookingRecoveryBanner": "A booking request of yours is still unanswered.",
   "@bookingRecoveryBanner": {
     "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
@@ -17268,6 +17289,23 @@
   "reservationLimitError": "Reservation limit reached — you already hold the maximum number of open reservations.",
   "@reservationLimitError": {
     "description": "Booking error when the enforce_reservation_limit trigger (0044) rejects a reservation beyond the member's cap"
+  },
+  "reservationNoteCheckedOutAt": "Completed: checked out at {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "description": "Reservation details: a completed stay and its check-out time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "This period is over without a check-in.",
+  "@reservationNoteOverNotCheckedIn": {
+    "description": "Reservation details: the period ended and nobody checked in"
+  },
+  "reservationNoteRecordedAfterEnd": "Recorded after this period had ended, so it is kept as a past visit.",
+  "@reservationNoteRecordedAfterEnd": {
+    "description": "Reservation details: the booking was made after its period ended"
   },
   "reservationRecurring": "Recurring booking",
   "@reservationRecurring": {

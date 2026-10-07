@@ -1249,6 +1249,25 @@
   "bookingOutsideWalkUpError": "En dehors des heures d'ouverture, seul un check-in spontané est possible — pas une réservation à l'avance.",
   "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau.",
   "bookingPastError": "Cette réservation est entièrement dans le passé.",
+  "bookingRecordedPastSpaceWhen": "{space} enregistré : {when}. Cette période est déjà passée : la réservation est conservée comme une visite passée.",
+  "@bookingRecordedPastSpaceWhen": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Enregistré : {when}. Cette période est déjà passée : la réservation est conservée comme une visite passée.",
+  "@bookingRecordedPastWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
   "bookingRecoveryBanner": "Une de vos demandes de réservation est restée sans réponse.",
   "@bookingRecoveryBanner": {
     "description": "#1855 — interrupted booking: durable intent, own-result lookup, recovery sheet"
@@ -9773,6 +9792,16 @@
     "description": "Extend flow: picked time not after the current end (#574)"
   },
   "reservationLimitError": "Limite de réservations atteinte — vous détenez déjà le maximum de réservations ouvertes.",
+  "reservationNoteCheckedOutAt": "Terminée : départ enregistré à {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "Cette période est terminée sans arrivée enregistrée.",
+  "reservationNoteRecordedAfterEnd": "Enregistrée après la fin de cette période : conservée comme une visite passée.",
   "reservationRecurring": "Réservation récurrente",
   "reservationUpdatedSnack": "Réservation mise à jour.",
   "reserveAvailabilityUnavailable": "La disponibilité n'a pas pu être chargée en entier : aucune place n'est affichée comme libre. Réessayez.",

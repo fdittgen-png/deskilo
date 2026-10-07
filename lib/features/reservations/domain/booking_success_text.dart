@@ -2,6 +2,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 
 /// THE booking-success → user-message mapper (#663), the counterpart of
 /// `bookingErrorText`.
@@ -26,6 +27,7 @@ String bookingSuccessText(
   required DateTime start,
   required DateTime end,
   String? spaceName,
+  DateTime? now,
 }) {
   // Times, not durations: "until 12:00" is what a member checks against
   // the clock on the wall. Locale-aware — never a raw toString (a HARD
@@ -57,6 +59,16 @@ String bookingSuccessText(
       ? '${_md(locale, start)} $from–$until'
       : '${_md(locale, start)} $from → ${_md(locale, end)} $until';
 
+  // A period already over when it was booked (same-day attendance,
+  // 0116/0122) is recorded, not reserved: say so, or the member looks
+  // for an upcoming booking the plan rightly does not show as one.
+  if (now != null && !end.isAfter(now)) {
+    // English from the catalogue itself, not a second copy inline.
+    final words = l10n ?? AppLocalizationsEn();
+    return space.isEmpty
+        ? words.bookingRecordedPastWhen(when)
+        : words.bookingRecordedPastSpaceWhen(space, when);
+  }
   if (space.isEmpty) {
     return l10n?.bookingReservedWhen(when) ?? 'Reserved: $when.';
   }

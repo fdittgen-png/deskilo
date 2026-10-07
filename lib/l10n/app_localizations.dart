@@ -3799,6 +3799,18 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// Booking confirmation when the booked period had already ended today: the booking is recorded as a past visit
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded {space}: {when}. That period is already over, so it is kept as a past visit.'**
+  String bookingRecordedPastSpaceWhen(String space, String when);
+
+  /// Same, without a space name
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded: {when}. That period is already over, so it is kept as a past visit.'**
+  String bookingRecordedPastWhen(String when);
+
   /// #1855 — interrupted booking: durable intent, own-result lookup, recovery sheet
   ///
   /// In en, this message translates to:
@@ -26227,6 +26239,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reservation limit reached — you already hold the maximum number of open reservations.'**
   String get reservationLimitError;
+
+  /// Reservation details: a completed stay and its check-out time
+  ///
+  /// In en, this message translates to:
+  /// **'Completed: checked out at {time}.'**
+  String reservationNoteCheckedOutAt(String time);
+
+  /// Reservation details: the period ended and nobody checked in
+  ///
+  /// In en, this message translates to:
+  /// **'This period is over without a check-in.'**
+  String get reservationNoteOverNotCheckedIn;
+
+  /// Reservation details: the booking was made after its period ended
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded after this period had ended, so it is kept as a past visit.'**
+  String get reservationNoteRecordedAfterEnd;
 
   /// Generic repetition label for series bookings whose pattern predates 0034
   ///

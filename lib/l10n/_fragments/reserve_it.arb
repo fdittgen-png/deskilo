@@ -130,5 +130,34 @@
   },
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).",
   "bookingGateBlocked": "Non prenotabile così",
-  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova."
+  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.",
+  "bookingRecordedPastSpaceWhen": "{space} registrato: {when}. Quel periodo è già finito, quindi resta come visita passata.",
+  "@bookingRecordedPastSpaceWhen": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Registrato: {when}. Quel periodo è già finito, quindi resta come visita passata.",
+  "@bookingRecordedPastWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteRecordedAfterEnd": "Registrata dopo la fine di questo periodo, quindi resta come visita passata.",
+  "reservationNoteCheckedOutAt": "Completata: uscita registrata alle {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "Questo periodo è finito senza check-in."
 }
