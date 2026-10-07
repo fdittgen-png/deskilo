@@ -177,6 +177,8 @@ public.profiles.profiles_select
 public.profiles.profiles_update
 public.public_directory_sources.mcp_delegated_deny
 public.public_directory_sources.public_directory_read
+public.public_person_cards.mcp_delegated_deny
+public.public_person_cards.published_people
 public.public_workspace_cards.mcp_delegated_deny
 public.public_workspace_cards.published_cards
 public.push_config.mcp_delegated_deny

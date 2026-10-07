@@ -32,7 +32,7 @@ abstract interface class MeRepository {
   /// `set_public_profile(publish)`: the explicit publish / withdraw step.
   Future<void> setPublicProfile(bool publish);
 
-  /// `public_person(user)`: what anyone, signed in or not, may read of
+  /// The public card (0390, `public_person_cards`): what anyone, signed in or not, may read of
   /// [userId] — null when the profile is not published (or unknown).
   Future<PublicPerson?> publicPerson(String userId);
 

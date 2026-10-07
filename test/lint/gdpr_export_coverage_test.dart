@@ -118,6 +118,7 @@ const Set<String> _exported = {
   'rights_requests', // #1915: the person's own rights requests and their outcome.
   'account_blocks', // 0387: the blocks the person set (anchored patch).
   'account_public_profiles', // 0389: whether I published my public profile (anchored patch).
+  'public_person_cards', // 0390: what my published profile shows (anchored patch).
   'account_group_members', 'account_group_messages', // 0384: my groups, my memberships and what I wrote (anchored patch).
   'message_reactions', 'message_stars', // 0382: the person's own reactions and bookmarks (anchored patch).
   'workspace_favorites', 'workspace_ratings', // #2185: own marks on workspaces (0376).

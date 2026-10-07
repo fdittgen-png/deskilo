@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
 import '../../../core/data/system_columns.dart';
-import '../../../core/trace/trace_logger.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
 import '../domain/public_person.dart';
@@ -67,21 +66,13 @@ class SupabaseMeRepository implements MeRepository {
 
   @override
   Future<PublicPerson?> publicPerson(String userId) async {
-    try {
-      return PublicPerson.fromJson(_object(await _client
-          .rpc<dynamic>('public_person', params: {'p_user': userId})));
-    } on PostgrestException catch (e, st) {
-      TraceLogger.instance.log(
-        TraceLevel.info,
-        'me',
-        'public profile read refused',
-        error: e,
-        stackTrace: st,
-      );
-      // Unknown, unpublished and withdrawn all answer the same refusal.
-      if (e.message.contains('profile unavailable')) return null;
-      Error.throwWithStackTrace(e, st);
-    }
+    // 0390 — the public card, readable signed in or not; no row = not public.
+    final row = await _client
+        .from('public_person_cards')
+        .select('name, profession, bio')
+        .eq('user_id', userId)
+        .maybeSingle();
+    return row == null ? null : PublicPerson.fromJson(row);
   }
 
   @override
