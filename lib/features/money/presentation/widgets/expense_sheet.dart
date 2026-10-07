@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -33,8 +33,8 @@ Future<void> showExpenseSheet(
     _ => l10n?.expenseCategoryOther ?? 'Other',
   };
 
-  final amount = TextEditingController();
-  final description = TextEditingController();
+  // The form's text, created on demand and disposed with the sheet.
+  final fields = FormControllers({'supplyQuantity': '1'});
   var category = categories.first;
   // #731 — a supply for the space: name (or an existing item), how
   // many, what a consumption will cost.
@@ -46,31 +46,27 @@ Future<void> showExpenseSheet(
       : const <ServiceItem>[];
   var isSupply = false;
   ServiceItem? supplyItem;
-  final supplyName = TextEditingController();
-  final supplyQty = TextEditingController(text: '1');
-  final supplyUnit = TextEditingController();
   void prefillUnit() {
-    final cents = parseCentsInput(amount.text) ?? 0;
-    final qty = int.tryParse(supplyQty.text) ?? 0;
+    final cents = parseCentsInput(fields['amount'].text) ?? 0;
+    final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
     if (cents > 0 && qty > 0) {
-      supplyUnit.text = centsToMajor((cents + qty - 1) ~/ qty); // #1140
+      fields['supplyUnit'].text = centsToMajor((cents + qty - 1) ~/ qty); // #1140
     }
   }
 
   ExpenseDraft draft() => ExpenseDraft(
-    amount: amount.text,
+    amount: fields['amount'].text,
     category: category,
-    description: description.text,
+    description: fields['description'].text,
     isSupply: isSupply,
     supplyItemId: supplyItem?.id,
     supplyItemName: supplyItem?.name,
-    supplyName: supplyName.text,
-    supplyQuantity: supplyQty.text,
-    supplyUnitPrice: supplyUnit.text,
+    supplyName: fields['supplyName'].text,
+    supplyQuantity: fields['supplyQuantity'].text,
+    supplyUnitPrice: fields['supplyUnit'].text,
   );
   // #1449 — the reason the typed expense cannot be filed, shown in the
   // sheet; the sheet only closes on a draft the rules accept.
-  String? problem;
   String? reason(ExpenseOutcome outcome) => switch (outcome) {
     ExpenseOutcome.submitted => null,
     ExpenseOutcome.invalidAmount =>
@@ -83,173 +79,156 @@ Future<void> showExpenseSheet(
       l10n?.expenseInvalidUnitPrice ??
           'Enter a valid unit price, or leave it empty.',
   };
-  final submitted = await showModalBottomSheet<bool>(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) => StatefulBuilder(
-      builder: (context, setSheetState) => SheetShell(
-        title: l10n?.moneySubmitExpense ?? 'Submit an expense',
-        children: [
-          const SizedBox(height: 12),
-          TextField(
-            controller: amount,
-            decoration: InputDecoration(
-              labelText: l10n?.moneyAmountLabel ?? 'Amount',
-              suffixText: currency.currencyName,
-            ),
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            autofocus: true,
+  final failed =
+      l10n?.workspaceGenericError ??
+      'Something went wrong. Please try again.';
+
+  final submitted = await showAppFormSheet(
+    context,
+    AppFormSheet(
+      title: l10n?.moneySubmitExpense ?? 'Submit an expense',
+      submitLabel: l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+      submitKey: const ValueKey('expense-submit'),
+      errorKey: const ValueKey('expense-problem'),
+      onDispose: fields.dispose,
+      onSubmit: () async {
+        final why = reason(expenseOutcome(draft()));
+        if (why != null) return why;
+        try {
+          final outcome = await ref
+              .read(expensesProvider)
+              .submit(workspace.id, draft());
+          return reason(outcome);
+        } catch (e, st) {
+          TraceLogger.instance.warn(
+            'money',
+            'submit expense failed',
+            error: e,
+            stackTrace: st,
+          );
+          return failed;
+        }
+      },
+      builder: (context, refresh) => [
+        AppTextField(
+          controller: fields['amount'],
+          label: l10n?.moneyAmountLabel ?? 'Amount',
+          suffixText: currency.currencyName,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          autofocus: true,
+        ),
+        const FormGap(),
+        DropdownButtonFormField<String>(
+          initialValue: category,
+          decoration: InputDecoration(
+            labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',
           ),
-          const SizedBox(height: 12),
-          DropdownButtonFormField<String>(
-            initialValue: category,
-            decoration: InputDecoration(
-              labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',
+          items: [
+            for (final key in categories)
+              DropdownMenuItem(value: key, child: Text(categoryLabel(key))),
+          ],
+          onChanged: (v) {
+            category = v ?? category;
+            refresh();
+          },
+        ),
+        const FormGap(),
+        AppTextField(
+          controller: fields['description'],
+          label: l10n?.moneyDescriptionLabel ?? 'Description',
+        ),
+        if (suppliesOn) ...[
+          SwitchListTile(
+            key: const ValueKey('expense-supply-toggle'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              l10n?.expenseSupplyToggle ?? 'This is a supply for the space',
             ),
-            items: [
-              for (final key in categories)
-                DropdownMenuItem(value: key, child: Text(categoryLabel(key))),
-            ],
-            onChanged: (v) => setSheetState(() => category = v ?? category),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: description,
-            decoration: InputDecoration(
-              labelText: l10n?.moneyDescriptionLabel ?? 'Description',
+            subtitle: Text(
+              l10n?.expenseSupplyHint ??
+                  'Coffee capsules, vacuum bags… Once validated, the '
+                      'item goes on the shelf as a consumable service: '
+                      'members who use it pay for it.',
             ),
+            value: isSupply,
+            onChanged: (v) {
+              isSupply = v;
+              if (v) prefillUnit();
+              refresh();
+            },
           ),
-          if (suppliesOn) ...[
-            SwitchListTile(
-              key: const ValueKey('expense-supply-toggle'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(
-                l10n?.expenseSupplyToggle ?? 'This is a supply for the space',
+          if (isSupply) ...[
+            DropdownButtonFormField<ServiceItem?>(
+              key: const ValueKey('expense-supply-item'),
+              initialValue: supplyItem,
+              decoration: InputDecoration(
+                labelText: l10n?.expenseSupplyItem ?? 'Item',
               ),
-              subtitle: Text(
-                l10n?.expenseSupplyHint ??
-                    'Coffee capsules, vacuum bags… Once validated, the '
-                        'item goes on the shelf as a consumable service: '
-                        'members who use it pay for it.',
-              ),
-              value: isSupply,
-              onChanged: (v) => setSheetState(() {
-                isSupply = v;
-                if (v) prefillUnit();
-              }),
-            ),
-            if (isSupply) ...[
-              DropdownButtonFormField<ServiceItem?>(
-                key: const ValueKey('expense-supply-item'),
-                initialValue: supplyItem,
-                decoration: InputDecoration(
-                  labelText: l10n?.expenseSupplyItem ?? 'Item',
+              items: [
+                DropdownMenuItem<ServiceItem?>(
+                  value: null,
+                  child: Text(l10n?.expenseSupplyNewItem ?? 'New item'),
                 ),
-                items: [
+                for (final item in existing)
                   DropdownMenuItem<ServiceItem?>(
-                    value: null,
-                    child: Text(l10n?.expenseSupplyNewItem ?? 'New item'),
+                    value: item,
+                    child: Text(item.name),
                   ),
-                  for (final item in existing)
-                    DropdownMenuItem<ServiceItem?>(
-                      value: item,
-                      child: Text(item.name),
-                    ),
-                ],
-                onChanged: (v) => setSheetState(() => supplyItem = v),
+              ],
+              onChanged: (v) {
+                supplyItem = v;
+                refresh();
+              },
+            ),
+            if (supplyItem == null) ...[
+              const FormGap(),
+              AppTextField(
+                key: const ValueKey('expense-supply-name'),
+                controller: fields['supplyName'],
+                label: l10n?.expenseSupplyNewItem ?? 'New item',
               ),
-              if (supplyItem == null) ...[
-                const SizedBox(height: 12),
-                TextField(
-                  key: const ValueKey('expense-supply-name'),
-                  controller: supplyName,
-                  decoration: InputDecoration(
-                    labelText: l10n?.expenseSupplyNewItem ?? 'New item',
+            ],
+            const FormGap(),
+            Row(
+              children: [
+                Expanded(
+                  child: AppTextField(
+                    key: const ValueKey('expense-supply-quantity'),
+                    controller: fields['supplyQuantity'],
+                    keyboardType: TextInputType.number,
+                    label: l10n?.expenseSupplyQuantity ?? 'Quantity',
+                    onChanged: (_) {
+                      prefillUnit();
+                      refresh();
+                    },
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: AppTextField(
+                    key: const ValueKey('expense-supply-unit'),
+                    controller: fields['supplyUnit'],
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    label:
+                        l10n?.expenseSupplyUnitPrice ??
+                        'Unit price (what a consumption costs)',
+                    suffixText: currency.currencyName,
+                    helper:
+                        l10n?.expenseSupplyUnitPriceHint ??
+                        'Prefilled from amount ÷ quantity; round up '
+                            'if you like.',
                   ),
                 ),
               ],
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      key: const ValueKey('expense-supply-quantity'),
-                      controller: supplyQty,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: l10n?.expenseSupplyQuantity ?? 'Quantity',
-                      ),
-                      onChanged: (_) => setSheetState(prefillUnit),
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: TextField(
-                      key: const ValueKey('expense-supply-unit'),
-                      controller: supplyUnit,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      decoration: InputDecoration(
-                        labelText:
-                            l10n?.expenseSupplyUnitPrice ??
-                            'Unit price (what a consumption costs)',
-                        suffixText: currency.currencyName,
-                        helperText:
-                            l10n?.expenseSupplyUnitPriceHint ??
-                            'Prefilled from amount ÷ quantity; round up '
-                                'if you like.',
-                        helperMaxLines: 2,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ],
-          const SizedBox(height: 16),
-          if (problem != null) ...[
-            Text(
-              problem!,
-              key: const ValueKey('expense-problem'),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
-            const SizedBox(height: 8),
           ],
-          FilledButton(
-            key: const ValueKey('expense-submit'),
-            onPressed: () {
-              final why = reason(expenseOutcome(draft()));
-              if (why != null) {
-                setSheetState(() => problem = why);
-                return;
-              }
-              Navigator.of(context).pop(true);
-            },
-            child: Text(l10n?.moneySubmitPayment ?? 'Submit for confirmation'),
-          ),
         ],
-      ),
+      ],
     ),
   );
-  if (submitted != true || !context.mounted) return;
-
-  var outcome = ExpenseOutcome.submitted;
-  if (!await runGuarded(
-    context,
-    domain: 'money',
-    message: 'submit expense failed',
-    errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
-    action: () async => outcome = await ref
-        .read(expensesProvider)
-        .submit(workspace.id, draft()),
-  )) {
-    return;
-  }
-  if (outcome != ExpenseOutcome.submitted) return;
-  if (!context.mounted) return;
+  if (!submitted || !context.mounted) return;
   AppSnack.success(
     context,
     l10n?.moneyExpensePending ?? 'Expense submitted — waiting for approval.',

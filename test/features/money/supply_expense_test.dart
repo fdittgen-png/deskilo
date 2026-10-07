@@ -37,7 +37,10 @@ void main() {
     // Unit price prefilled from amount ÷ quantity.
     expect(
       tester
-          .widget<TextField>(find.byKey(const ValueKey('expense-supply-unit')))
+          .widget<TextField>(find.descendant(
+            of: find.byKey(const ValueKey('expense-supply-unit')),
+            matching: find.byType(TextField),
+          ))
           .controller!
           .text,
       '1.20',

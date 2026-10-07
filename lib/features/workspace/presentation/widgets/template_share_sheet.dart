@@ -70,6 +70,7 @@ Future<void> showTemplateShareSheet(
                       key: const ValueKey('share-email'),
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
+                      autofillHints: const [AutofillHints.email],
                       decoration: InputDecoration(
                           labelText: l10n?.libraryShareEmail ?? 'E-mail address'),
                     ),

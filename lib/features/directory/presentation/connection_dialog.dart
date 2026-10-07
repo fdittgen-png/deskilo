@@ -145,6 +145,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
                 controller: _email,
                 enabled: !_busy,
                 keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
                 decoration: InputDecoration(
                   labelText: l?.authEmailLabel ?? 'Email',
                 ),
