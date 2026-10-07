@@ -31646,6 +31646,18 @@ abstract class AppLocalizations {
   /// **'Who sees me'**
   String get visibilityTitle;
 
+  /// No description provided for @visibilityWidenAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Widen'**
+  String get visibilityWidenAction;
+
+  /// No description provided for @visibilityWidenConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Show your {field} to: {audience}? They will be able to see it.'**
+  String visibilityWidenConfirm(String field, String audience);
+
   /// #1835 a visit row: the guest withdraws or cancels
   ///
   /// In en, this message translates to:

@@ -11428,6 +11428,18 @@
   "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuche es erneut.",
   "visibilitySignedIn": "Alle Angemeldeten",
   "visibilityTitle": "Wer mich sieht",
+  "visibilityWidenAction": "Erweitern",
+  "visibilityWidenConfirm": "{field} zeigen für: {audience}? Diese Personen können es sehen.",
+  "@visibilityWidenConfirm": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
   "visitCancel": "Diesen Besuch absagen",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"

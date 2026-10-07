@@ -1469,6 +1469,7 @@ Map<String, _Getter> _part6() => {
   'visibilityNobody': (l) => l.visibilityNobody,
   'visibilityPreviewCanWrite': (l) => l.visibilityPreviewCanWrite,
   'visibilitySignedIn': (l) => l.visibilitySignedIn,
+  'visibilityWidenAction': (l) => l.visibilityWidenAction,
   'whatsappHint': (l) => l.whatsappHint,
   'wizardReviewToIssue': (l) => l.wizardReviewToIssue,
   'wizardSubmitting': (l) => l.wizardSubmitting,

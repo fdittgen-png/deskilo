@@ -10,6 +10,21 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/mock_providers.dart';
 
 void main() {
+  test('widens: a wider audience, or more chosen spaces — never a narrower one', () {
+    const nobody = FieldAudience(VisibilityAudience.nobody);
+    const mine = FieldAudience(VisibilityAudience.mySpaces);
+    const anyone = FieldAudience(VisibilityAudience.signedIn);
+    expect(anyone.widens(nobody), isTrue);
+    expect(mine.widens(nobody), isTrue);
+    expect(nobody.widens(mine), isFalse);
+    expect(mine.widens(mine), isFalse);
+    const one = FieldAudience(VisibilityAudience.chosenSpaces, ['a']);
+    const two = FieldAudience(VisibilityAudience.chosenSpaces, ['a', 'b']);
+    expect(two.widens(one), isTrue);
+    expect(one.widens(two), isFalse);
+    expect(one.widens(nobody), isTrue);
+  });
+
   test('my_visibility: fields, reachability and my own about text', () {
     final v = MyVisibility.fromJson({
       'fields': {

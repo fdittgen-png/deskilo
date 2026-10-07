@@ -18426,6 +18426,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityTitle => 'Wer mich sieht';
 
   @override
+  String get visibilityWidenAction => 'Erweitern';
+
+  @override
+  String visibilityWidenConfirm(String field, String audience) {
+    return '$field zeigen für: $audience? Diese Personen können es sehen.';
+  }
+
+  @override
   String get visitCancel => 'Diesen Besuch absagen';
 
   @override

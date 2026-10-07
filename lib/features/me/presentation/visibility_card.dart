@@ -38,6 +38,12 @@ class VisibilityCard extends ConsumerWidget {
           _AudienceSheet(field: field, current: current, spaces: spaces),
     );
     if (choice == null || choice == current || !context.mounted) return;
+    // Widening asks first, naming who will see it (#2211).
+    if (choice.widens(current) &&
+        !await _confirmWiden(context, field, choice)) {
+      return;
+    }
+    if (!context.mounted) return;
     final ok = await runGuarded(
       context,
       domain: 'me',
@@ -47,6 +53,38 @@ class VisibilityCard extends ConsumerWidget {
       action: () => ref.read(meActionsProvider).choose(field, choice),
     );
     if (ok) ref.invalidate(myVisibilityProvider);
+  }
+
+  Future<bool> _confirmWiden(
+    BuildContext context,
+    VisibilityField field,
+    FieldAudience choice,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final fieldName = visibilityFieldLabel(l10n, field);
+    final who = audienceSummary(l10n, choice);
+    return await showDialog<bool>(
+          context: context,
+          builder: (dialog) => AlertDialog(
+            content: Text(
+              l10n?.visibilityWidenConfirm(fieldName, who) ??
+                  'Show $fieldName to: $who?',
+            ),
+            actions: [
+              TextButton(
+                key: const ValueKey('visibility-widen-cancel'),
+                onPressed: () => Navigator.of(dialog).pop(false),
+                child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
+              ),
+              FilledButton(
+                key: const ValueKey('visibility-widen-confirm'),
+                onPressed: () => Navigator.of(dialog).pop(true),
+                child: Text(l10n?.visibilityWidenAction ?? 'Widen'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
   }
 
   Future<void> _editAbout(
