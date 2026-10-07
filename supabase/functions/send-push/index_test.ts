@@ -15,6 +15,7 @@ import {
   classify,
   CONCURRENCY,
   deliverAll,
+  dropMuted,
   isUnregistered,
   readAll,
   resetTokenCacheForTests,
@@ -176,4 +177,11 @@ Deno.test("deliverAll: one retry after Retry-After, no resend of unknown, bounde
   assertEquals(waits, [2000]);
   assertEquals(out.length, 25);
   assertEquals(peak <= CONCURRENCY, true);
+});
+
+Deno.test("a muted conversation does not ring for the member who muted it (#2216)", () => {
+  const all = [{ id: "a" }, { id: "b" }, { id: "c" }];
+  assertEquals(dropMuted(all, ["b"]), [{ id: "a" }, { id: "c" }]);
+  assertEquals(dropMuted(all, []), all);
+  assertEquals(dropMuted(all, ["a", "b", "c"]), []);
 });
