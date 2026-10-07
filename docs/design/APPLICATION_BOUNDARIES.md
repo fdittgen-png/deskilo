@@ -15,7 +15,7 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Booking | `calendar` | 1 |
 | Booking | `editor` | 3 |
 | Finance | `money` | 21 |
-| Workspace configuration | `workspace` | 28 |
+| Workspace configuration | `workspace` | 27 |
 | Workspace configuration | `members` | 3 |
 | Workspace configuration | `profile` | 7 |
 | — | `auth` | 4 |
