@@ -131,4 +131,26 @@ sealed class Reservation with _$Reservation implements SystemStamped {
   /// NOT overlap — mirroring [coversInstant]'s end-exclusive semantics.
   bool coversRange(DateTime from, DateTime to) =>
       isActive && from.isBefore(endsAt) && startsAt.isBefore(to);
+
+  /// Whether this booking HOLDS (or held) its space at all: an active
+  /// one, or a completed one — that a stay happened is part of the day.
+  bool get held => isActive || status == ReservationStatus.completed;
+
+  /// Until when it holds the space: the check-out for a completed stay
+  /// (an early check-out freed the rest of the window), the end otherwise.
+  DateTime get heldUntil => status == ReservationStatus.completed
+      ? (checkedOutAt ?? endsAt)
+      : endsAt;
+
+  /// What the plan, the timeline and the grids DRAW: like [coversRange],
+  /// and a completed stay keeps its place for the time it was held. A
+  /// window booked after it ended today is completed by the server's
+  /// day-end sweep on the very next read (0075), and used to vanish
+  /// right after its success message. Decisions about a new booking
+  /// stay on [coversRange] and the server.
+  bool holdsRange(DateTime from, DateTime to) =>
+      held &&
+      startsAt.isBefore(heldUntil) &&
+      from.isBefore(heldUntil) &&
+      startsAt.isBefore(to);
 }

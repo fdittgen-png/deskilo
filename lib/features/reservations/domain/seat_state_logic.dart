@@ -144,13 +144,16 @@ SeatState _seatStateInRange({
   );
   if (covering == null) return SeatState.free;
   if (covering.memberId == myMemberId) return SeatState.mine;
-  return covering.status == ReservationStatus.checkedIn
-      ? SeatState.occupied
-      : SeatState.reserved;
+  // A completed stay was a presence: drawn as one.
+  return covering.status == ReservationStatus.reserved
+      ? SeatState.reserved
+      : SeatState.occupied;
 }
 
-/// The first reservation overlapping [seat] within `[from, to)` (#184),
+/// The first reservation holding [seat] within `[from, to)` (#184),
 /// if any (incl. whole-space) — the range twin of [reservationOnSeatAt].
+/// A completed stay counts for the time it was held
+/// ([Reservation.holdsRange]).
 Reservation? reservationOnSeatInRange({
   required FloorPlan plan,
   required Seat seat,
@@ -160,7 +163,7 @@ Reservation? reservationOnSeatInRange({
 }) {
   final officeId = _officeIdOf(plan, seat);
   for (final r in reservations) {
-    if (!r.coversRange(from, to)) continue;
+    if (!r.holdsRange(from, to)) continue;
     if (_covers(plan, seat, officeId, r)) return r;
   }
   return null;

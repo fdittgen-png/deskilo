@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // A seat's state over a window: overlap is start-inclusive and end-
-// exclusive, and inactive reservations never block.
+// exclusive; cancelled and released reservations never show, and a
+// completed stay shows for the time it was held — up to its check-out.
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -218,6 +219,47 @@ void main() {
         ),
         isNull,
       );
+    });
+  });
+
+  group('a completed stay keeps its place (booked after it ended)', () {
+    final done = reservation(
+      start: nine,
+      end: noon,
+      status: ReservationStatus.completed,
+    ).copyWith(checkedInAt: nine, checkedOutAt: noon);
+
+    test('the plan draws it: mine for me, a presence for others', () {
+      // The day-end sweep (0075) completes a window booked after its
+      // end on the very next read; it must not vanish from the plan.
+      expect(stateIn([done], nine, noon, me: 'member-2'), SeatState.mine);
+      expect(stateIn([done], nine, noon), SeatState.occupied);
+      expect(done.holdsRange(nine, noon), isTrue);
+      expect(done.coversRange(nine, noon), isFalse,
+          reason: 'booking decisions still ignore a finished stay');
+    });
+
+    test('an early check-out frees the rest of the window', () {
+      final early = done.copyWith(checkedOutAt: ten);
+      expect(early.holdsRange(nine, ten), isTrue);
+      expect(early.holdsRange(ten, noon), isFalse);
+      expect(stateIn([early], eleven, noon), SeatState.free);
+    });
+
+    test('a check-out before the start holds nothing', () {
+      final never = done.copyWith(checkedOutAt: nine);
+      expect(never.holdsRange(nine, noon), isFalse);
+    });
+
+    test('cancelled and released bookings still never show', () {
+      for (final status in [
+        ReservationStatus.cancelled,
+        ReservationStatus.released,
+      ]) {
+        expect(stateIn([done.copyWith(status: status)], nine, noon),
+            SeatState.free,
+            reason: '$status');
+      }
     });
   });
 }
