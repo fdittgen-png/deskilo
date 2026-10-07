@@ -20,7 +20,10 @@ scoped to the last-used space. The design is docs/design/ME_SPACE.md.
    types generically. Me never imports a workspace kind's domain.
 3. `workspaces.kind` is a profile (template, feature profile, lexicon,
    contributors), not a fork.
-4. Wallet pays what it shows: online payment intents may target invoices, and
+4. Me is production: development spaces never count anywhere in Me; their
+   documents are shown apart, marked DEV in the development colour, and open
+   in their own environment.
+5. Wallet pays what it shows: online payment intents may target invoices, and
    settlement matches them. Saved methods are provider-held references scoped
    to (person, space, provider); no card data is stored.
 

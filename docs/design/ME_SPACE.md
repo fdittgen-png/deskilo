@@ -57,6 +57,11 @@ The survey behind this table (2026-10-07) is summarised in §9.
    person their own data.
 7. **Federated by the same contract.** A connected installation answers the
    same reads; Me merges them (as the inbox does), naming the server.
+8. **Me is production.** A development space holds test data: it never enters
+   a total, a badge or a "to do", and when shown (to those who have access)
+   it sits apart, in the development colour, with DEV beside the space's
+   name. Opening it opens the document in that development space, never in
+   its production twin (#2256).
 
 ## 3. Information architecture
 
