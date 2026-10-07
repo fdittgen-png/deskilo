@@ -80,6 +80,15 @@ export async function readAll<T>(
   }
 }
 
+/** Who still rings once the people who muted the conversation are left out. */
+export function dropMuted<T extends { id: string }>(
+  recipients: T[],
+  mutedIds: Iterable<string>,
+): T[] {
+  const muted = new Set(mutedIds);
+  return recipients.filter((r) => !muted.has(r.id));
+}
+
 export function chunked<T>(items: T[], size = 100): T[][] {
   const out: T[][] = [];
   for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
@@ -299,6 +308,20 @@ async function deliver(req: Request): Promise<Response> {
             .range(from, to),
       );
       recipients = admins.filter((m) => m.is_admin || m.is_owner);
+    }
+    // A conversation someone muted (0146, #2216) does not ring for them: the
+    // message is still delivered and counted, only the push is silent.
+    if (note.conversation_id && recipients.length > 0) {
+      const { data: muted } = await supabase
+        .from("conversation_participants")
+        .select("member_id")
+        .eq("conversation_id", note.conversation_id)
+        .eq("muted", true)
+        .is("left_at", null);
+      recipients = dropMuted(
+        recipients,
+        (muted ?? []).map((m: { member_id: string }) => m.member_id),
+      );
     }
   } else {
     // Load the event ourselves — never trust the caller's content.
