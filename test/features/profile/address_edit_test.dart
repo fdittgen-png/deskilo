@@ -40,13 +40,16 @@ Future<void> openForm(WidgetTester tester) async {
     120,
   );
   // The tile's centre is its help dot (which opens the guide); the
-  // leading icon is the tile itself.
-  await tester.tap(
-    find.descendant(
-      of: find.byKey(const ValueKey('settings-personal-info')),
-      matching: find.byIcon(Icons.contact_mail_outlined),
-    ),
+  // leading icon is the tile itself — brought fully into view, since a tile
+  // that only just entered the screen can leave its icon under the edge.
+  final icon = find.descendant(
+    of: find.byKey(const ValueKey('settings-personal-info')),
+    matching: find.byIcon(Icons.contact_mail_outlined),
   );
+  await tester.pumpAndSettle();
+  await tester.ensureVisible(icon);
+  await tester.pumpAndSettle();
+  await tester.tap(icon);
   await tester.pumpAndSettle();
 }
 

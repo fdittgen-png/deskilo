@@ -57,6 +57,10 @@ class MeActions {
     return _repository.setAbout(p, b);
   }
 
+  /// Publish ([publish] true) or withdraw my public profile (0389).
+  Future<void> publishProfile(bool publish) =>
+      _repository.setPublicProfile(publish);
+
   /// Give [field] the audience [choice].
   Future<void> choose(VisibilityField field, FieldAudience choice) {
     if (choice.incomplete) throw const MeRefused(MeRefusal.noSpaceChosen);

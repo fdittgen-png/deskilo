@@ -24,6 +24,7 @@ public.account_group_members.mcp_delegated_deny
 public.account_group_messages.mcp_delegated_deny
 public.account_groups.mcp_delegated_deny
 public.account_messages.mcp_delegated_deny
+public.account_public_profiles.mcp_delegated_deny
 public.analytics_history.mcp_delegated_deny
 public.badge_auth_attempts.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny

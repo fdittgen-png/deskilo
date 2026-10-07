@@ -11,6 +11,7 @@ import '../features/directory/presentation/public_page_editor.dart';
 import '../features/directory/presentation/connections_screen.dart';
 import '../features/directory/presentation/account_messenger_screen.dart';
 import 'package:flutter/foundation.dart';
+import '../features/me/presentation/public_person_screen.dart';
 import '../features/money/presentation/screens/my_finances_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -902,6 +903,8 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/account-activity',
           builder: (context, state) => const MyFinancesScreen()),
       GoRoute(path: '/discover',builder:(context,state)=>const discovery.DirectoryScreen()),
+      GoRoute(path: '/p/:id', builder: (context, state) => PublicPersonScreen( // #2211, 0389
+          userId: state.pathParameters['id'] ?? '')),
       GoRoute(path: '/connections',builder:(context,state)=>const ConnectionsScreen()),
       GoRoute(path: '/account-messages',builder:(context,state)=>AccountMessengerScreen(
         source:state.uri.queryParameters['source']??'',recipient:state.uri.queryParameters['recipient'],name:state.uri.queryParameters['name']??'')),

@@ -3,8 +3,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
+import '../domain/public_person.dart';
 import '../domain/visibility.dart';
 
 /// #1823 — [MeRepository] over this server's client, and over the linked
@@ -51,6 +53,36 @@ class SupabaseMeRepository implements MeRepository {
   Future<AccountView> previewMyAccount(PreviewAudience audience) async =>
       AccountView.fromJson(_object(await _client
           .rpc<dynamic>('preview_my_account', params: {'p_as': audience.wire})));
+
+  @override
+  Future<bool> myPublicProfile() async =>
+      _object(await _client.rpc<dynamic>('my_public_profile'))['published'] ==
+      true;
+
+  @override
+  Future<void> setPublicProfile(bool publish) => _client.rpc<void>(
+        'set_public_profile',
+        params: {'p_publish': publish},
+      );
+
+  @override
+  Future<PublicPerson?> publicPerson(String userId) async {
+    try {
+      return PublicPerson.fromJson(_object(await _client
+          .rpc<dynamic>('public_person', params: {'p_user': userId})));
+    } on PostgrestException catch (e, st) {
+      TraceLogger.instance.log(
+        TraceLevel.info,
+        'me',
+        'public profile read refused',
+        error: e,
+        stackTrace: st,
+      );
+      // Unknown, unpublished and withdrawn all answer the same refusal.
+      if (e.message.contains('profile unavailable')) return null;
+      Error.throwWithStackTrace(e, st);
+    }
+  }
 
   @override
   Future<AccountView> visibleAccount(String userId) async =>

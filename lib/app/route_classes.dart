@@ -67,6 +67,8 @@ const String kMeHome = '/me';
 const List<RouteRule> routeRules = [
   RouteRule(kMeHome, RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),
+  // #2211 — a published public profile, readable signed in or not.
+  RouteRule('/p/:id', RouteClass.publicEntry),
   RouteRule('/connections', RouteClass.nativeAccount),
   RouteRule('/account-messages', RouteClass.nativeAccount),
   RouteRule('/settings/public-page', RouteClass.workspace),

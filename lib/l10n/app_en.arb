@@ -15499,6 +15499,15 @@
   "@publicHolidaysYear": {
     "description": "#1274 the year field label"
   },
+  "publicPersonUnavailable": "This profile is not public.",
+  "publicProfileCopied": "Link copied.",
+  "publicProfileCopy": "Copy the link",
+  "publicProfileOff": "Off: people who are not signed in see nothing of you.",
+  "publicProfileOn": "Anyone with the link reads your name, profession and bio.",
+  "publicProfilePublishAction": "Publish",
+  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
+  "publicProfilePublishTitle": "Publish a public profile?",
+  "publicProfileTitle": "Public profile",
   "pushCancelledBody": "A reservation was removed by an admin.",
   "@pushCancelledBody": {
     "description": "Push body for the removed-reservation ping — generic, no personal data (#424)"

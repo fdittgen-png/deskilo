@@ -1,0 +1,11 @@
+{
+  "publicProfileTitle": "Public profile",
+  "publicProfileOn": "Anyone with the link reads your name, profession and bio.",
+  "publicProfileOff": "Off: people who are not signed in see nothing of you.",
+  "publicProfilePublishTitle": "Publish a public profile?",
+  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
+  "publicProfilePublishAction": "Publish",
+  "publicProfileCopy": "Copy the link",
+  "publicProfileCopied": "Link copied.",
+  "publicPersonUnavailable": "This profile is not public."
+}
