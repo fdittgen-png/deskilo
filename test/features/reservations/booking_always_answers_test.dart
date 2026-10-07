@@ -25,6 +25,40 @@ void main() {
     }
   });
 
+  group('a period already over when booked is said to be recorded', () {
+    // Field report: "Reserved 13: Wed, Oct 7 07:00–19:00." at 21:16,
+    // and no trace of it anywhere — the period was over, so the booking
+    // was kept as a past visit, and nothing said so.
+    final start = DateTime(2026, 10, 7, 7);
+    final end = DateTime(2026, 10, 7, 19);
+
+    test('after the end: recorded, and why', () {
+      for (final space in ['13', null]) {
+        final text = bookingSuccessText(null, 'en',
+            checkedIn: false,
+            start: start,
+            end: end,
+            spaceName: space,
+            now: DateTime(2026, 10, 7, 21, 16));
+        expect(text, startsWith('Recorded'));
+        expect(text, contains('already over'));
+        expect(text, contains('19:00'));
+      }
+    });
+
+    test('before the end, or with no clock, it is a reservation', () {
+      for (final now in [DateTime(2026, 10, 7, 18, 59), null]) {
+        final text = bookingSuccessText(null, 'en',
+            checkedIn: false,
+            start: start,
+            end: end,
+            spaceName: '13',
+            now: now);
+        expect(text, startsWith('Reserved 13'));
+      }
+    });
+  });
+
   group('a check-in says when it runs until', () {
     test('names the space when there is one', () {
       final text = bookingSuccessText(

@@ -66,11 +66,29 @@
     }
   },
   "bookingHorizonError": "Zu weit voraus — Buchungen sind {days} Tage im Voraus möglich.",
-  "@bookingHorizonError": {"placeholders": {"days": {"type": "int"}}},
+  "@bookingHorizonError": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooShortError": "Zu kurz — eine Buchung dauert mindestens {minutes} Minuten.",
-  "@bookingTooShortError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooShortError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "bookingTooLongError": "Zu lang — eine Buchung dauert höchstens {minutes} Minuten.",
-  "@bookingTooLongError": {"placeholders": {"minutes": {"type": "int"}}},
+  "@bookingTooLongError": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "legendFree": "Frei",
   "legendReserved": "Reserviert",
   "legendOccupied": "Eingecheckt",
@@ -103,8 +121,43 @@
   "legendClosed": "Geschlossen",
   "reserveClosedShort": "Zu",
   "planCheckOutFor": "{name} auschecken",
-  "@planCheckOutFor": {"placeholders": {"name": {"type": "String"}}},
+  "@planCheckOutFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "bookingGateBlocked": "So nicht buchbar",
-  "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen."
+  "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen.",
+  "bookingRecordedPastSpaceWhen": "{space} erfasst: {when}. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.",
+  "@bookingRecordedPastSpaceWhen": {
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Erfasst: {when}. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.",
+  "@bookingRecordedPastWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteRecordedAfterEnd": "Nach dem Ende dieses Zeitraums erfasst, daher als vergangener Besuch erhalten.",
+  "reservationNoteCheckedOutAt": "Abgeschlossen: ausgecheckt um {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei."
 }

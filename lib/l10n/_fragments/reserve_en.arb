@@ -213,5 +213,43 @@
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "bookingGateBlocked": "Not bookable as chosen",
-  "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it."
+  "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it.",
+  "bookingRecordedPastSpaceWhen": "Recorded {space}: {when}. That period is already over, so it is kept as a past visit.",
+  "@bookingRecordedPastSpaceWhen": {
+    "description": "Booking confirmation when the booked period had already ended today: the booking is recorded as a past visit",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingRecordedPastWhen": "Recorded: {when}. That period is already over, so it is kept as a past visit.",
+  "@bookingRecordedPastWhen": {
+    "description": "Same, without a space name",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteRecordedAfterEnd": "Recorded after this period had ended, so it is kept as a past visit.",
+  "@reservationNoteRecordedAfterEnd": {
+    "description": "Reservation details: the booking was made after its period ended"
+  },
+  "reservationNoteCheckedOutAt": "Completed: checked out at {time}.",
+  "@reservationNoteCheckedOutAt": {
+    "description": "Reservation details: a completed stay and its check-out time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationNoteOverNotCheckedIn": "This period is over without a check-in.",
+  "@reservationNoteOverNotCheckedIn": {
+    "description": "Reservation details: the period ended and nobody checked in"
+  }
 }

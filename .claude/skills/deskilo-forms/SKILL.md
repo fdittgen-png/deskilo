@@ -103,5 +103,8 @@ problem never goes to that banner.
 `form_patterns_test` prints which count moved:
 * **grew** — the change added a raw field / literal gap / inline fallback /
   e-mail field without autofill: use the kit instead.
+  A new string never gets an inline English copy: take the English from the
+  catalogue, `final words = l10n ?? AppLocalizationsEn();` then
+  `words.myKey` (see `booking_success_text.dart`).
 * **fell** — you migrated something: lower the ceiling in the same commit to the
   number printed, so the ground stays taken.

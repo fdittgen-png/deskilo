@@ -2169,6 +2169,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Buchung liegt vollständig in der Vergangenheit.';
 
   @override
+  String bookingRecordedPastSpaceWhen(String space, String when) {
+    return '$space erfasst: $when. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.';
+  }
+
+  @override
+  String bookingRecordedPastWhen(String when) {
+    return 'Erfasst: $when. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.';
+  }
+
+  @override
   String get bookingRecoveryBanner =>
       'Eine Ihrer Buchungsanfragen ist noch unbeantwortet.';
 
@@ -15294,6 +15304,19 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reservationLimitError =>
       'Reservierungslimit erreicht — du hältst bereits die maximale Zahl offener Reservierungen.';
+
+  @override
+  String reservationNoteCheckedOutAt(String time) {
+    return 'Abgeschlossen: ausgecheckt um $time.';
+  }
+
+  @override
+  String get reservationNoteOverNotCheckedIn =>
+      'Dieser Zeitraum ist ohne Check-in vorbei.';
+
+  @override
+  String get reservationNoteRecordedAfterEnd =>
+      'Nach dem Ende dieses Zeitraums erfasst, daher als vergangener Besuch erhalten.';
 
   @override
   String get reservationRecurring => 'Wiederkehrende Reservierung';

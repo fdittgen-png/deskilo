@@ -700,7 +700,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           // `false` while it checked them in is the confirmation lying.
           announceBooking(context, l10n,
               checkedIn: checkedIn, start: start, end: end, spaceName: seat.name,
-              onOpen: () => openReservationById(context, ref, reservationId));
+              now: ref.read(clockProvider).now(), onOpen: () => openReservationById(context, ref, reservationId));
         case SeriesBooked(:final result):
           await showSeriesResultDialog(context, result);
       }

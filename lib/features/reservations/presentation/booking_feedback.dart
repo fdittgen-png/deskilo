@@ -20,6 +20,7 @@ void announceBooking(
   required DateTime start,
   required DateTime end,
   String? spaceName,
+  DateTime? now,
   VoidCallback? onOpen,
 }) {
   AppSnack.success(
@@ -31,6 +32,7 @@ void announceBooking(
       start: start,
       end: end,
       spaceName: spaceName,
+      now: now,
     ),
     replace: true,
     // #1301 S3 — the answer is the reservation itself, one tap away,

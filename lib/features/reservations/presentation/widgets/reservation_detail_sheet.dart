@@ -29,6 +29,7 @@ import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'reservation_status_note.dart';
 import 'calendar_file_button.dart';
 import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
@@ -202,6 +203,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                       ],
                     ),
             ),
+            ReservationStatusNote(reservation: r, now: now),
             if (seatId != null) SeatAccessoryRow(seatId: seatId),
             const SizedBox(height: 16),
             FilledButton.icon(
