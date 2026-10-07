@@ -10152,6 +10152,12 @@ abstract class AppLocalizations {
   /// **'Payment being validated'**
   String get financesAwaitingValidation;
 
+  /// No description provided for @financesDevSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Development spaces — test data, not counted above'**
+  String get financesDevSection;
+
   /// Me › Finances
   ///
   /// In en, this message translates to:

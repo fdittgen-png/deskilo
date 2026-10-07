@@ -41,6 +41,7 @@ Future<void> show(
   WidgetTester tester,
   FinanceOverview overview, {
   String? workspaceId,
+  FakeWorkspaceRepository? workspace,
 }) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1;
@@ -51,6 +52,7 @@ Future<void> show(
       overrides: standardTestOverrides(
         auth: FakeAuthRepository.signedIn(),
         accountActivity: repo,
+        workspace: workspace,
       ),
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

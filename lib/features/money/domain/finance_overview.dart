@@ -121,15 +121,28 @@ class FinanceOverview {
 
   /// Only [workspaceId]'s documents; every workspace when it is null. A
   /// reminder follows its invoice.
-  FinanceOverview inWorkspace(String? workspaceId) {
-    if (workspaceId == null) return this;
-    final mine = [for (final i in invoices) if (i.workspaceId == workspaceId) i];
+  FinanceOverview inWorkspace(String? workspaceId) => workspaceId == null
+      ? this
+      : where((i) => i.workspaceId == workspaceId);
+
+  /// The invoices [keep] accepts, and the reminders of those invoices.
+  FinanceOverview where(bool Function(FinanceInvoice) keep) {
+    final mine = [for (final i in invoices) if (keep(i)) i];
     final ids = {for (final i in mine) i.id};
     return FinanceOverview(
       invoices: mine,
       reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
     );
   }
+
+  /// Production only: what Me counts. A development space holds test data
+  /// and never enters a total.
+  FinanceOverview production(Set<String> devWorkspaceIds) =>
+      where((i) => !devWorkspaceIds.contains(i.workspaceId));
+
+  /// The development spaces' documents, shown apart and marked DEV.
+  FinanceOverview development(Set<String> devWorkspaceIds) =>
+      where((i) => devWorkspaceIds.contains(i.workspaceId));
 
   List<FinanceInvoice> get outstanding => [
         for (final i in invoices)

@@ -654,3 +654,7 @@ Future<List<Site>> sitesOf(Ref ref, String workspaceId) =>
 @riverpod
 Future<List<WorkspaceTemplate>> workspaceTemplates(Ref ref) =>
     ref.watch(workspaceRepositoryProvider).fetchWorkspaceTemplates();
+
+/// My development spaces: test data that Me shows apart and never counts.
+@riverpod
+Set<String> myDevelopmentWorkspaceIds(Ref ref) => {for (final w in ref.watch(myWorkspacesProvider).value ?? const <Workspace>[]) if (w.isDevelopment) w.id};

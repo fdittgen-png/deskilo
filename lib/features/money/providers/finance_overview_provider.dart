@@ -12,3 +12,21 @@ final financeOverviewProvider = FutureProvider.autoDispose<FinanceOverview>((ref
   }
   return ref.watch(accountActivityRepositoryProvider).overview();
 });
+
+/// A one-shot request to open one invoice in its own space's Money screen
+/// (Me › Finances → the workspace, in the right environment). The screen
+/// consumes it only when the request's space is the current one.
+class InvoiceFocus extends Notifier<({String workspaceId, String invoiceId})?> {
+  @override
+  ({String workspaceId, String invoiceId})? build() => null;
+
+  void request(String workspaceId, String invoiceId) =>
+      state = (workspaceId: workspaceId, invoiceId: invoiceId);
+
+  void clear() => state = null;
+}
+
+final invoiceFocusProvider =
+    NotifierProvider<InvoiceFocus, ({String workspaceId, String invoiceId})?>(
+      InvoiceFocus.new,
+    );

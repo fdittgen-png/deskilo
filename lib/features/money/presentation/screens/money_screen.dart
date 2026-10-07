@@ -44,6 +44,8 @@ import '../report_actions.dart';
 import '../invoice_status.dart';
 import '../../domain/bill_sections.dart';
 import '../../domain/money_face.dart';
+import '../../providers/finance_overview_provider.dart';
+import '../widgets/focused_invoice.dart';
 import '../../domain/expense_schedule.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/package.dart';
@@ -100,6 +102,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _applyFocus(ref.read(moneyFocusControllerProvider));
+      _applyInvoiceFocus(ref.read(invoiceFocusProvider));
     });
     // #726 — an admin opening Finances is one of the two clocks that
     // apply the dunning rules (the other is the morning cron).
@@ -130,6 +133,20 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       setState(() => _month = DateTime(int.parse(parts[0]), int.parse(parts[1])));
     }
     ref.read(moneyFocusControllerProvider.notifier).clear();
+  }
+
+  /// Me › Finances asked for one invoice of this space: open it here.
+  Future<void> _applyInvoiceFocus(
+    ({String workspaceId, String invoiceId})? focus,
+  ) {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    return openFocusedInvoice(
+      context,
+      ref,
+      focus,
+      workspaceId: workspace?.id,
+      countryCode: workspace?.countryCode ?? '',
+    );
   }
 
   void _shiftMonth(int delta) {
@@ -848,6 +865,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   Widget build(BuildContext context) {
     // #718 — the calendar hub asks for a month; consume it once.
     ref.listen(moneyFocusControllerProvider, (_, period) => _applyFocus(period));
+    ref.listen(invoiceFocusProvider, (_, focus) => _applyInvoiceFocus(focus));
+    // The space may arrive after the request: try again once it does.
+    ref.listen(currentWorkspaceProvider, (_, _) =>
+        _applyInvoiceFocus(ref.read(invoiceFocusProvider)));
     final l10n = AppLocalizations.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final member = ref.watch(myMemberProvider).value;

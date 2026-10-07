@@ -13,7 +13,6 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -22,7 +21,14 @@ import '../../domain/account_activity.dart';
 import '../../domain/finance_overview.dart';
 import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
+import '../widgets/dev_label.dart';
+import '../widgets/my_finances_parts.dart';
+import '../../domain/money_face.dart';
+import '../../providers/money_face_controller.dart';
+import '../../providers/money_focus_controller.dart';
 import '../widgets/personal_payment_provider.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/status_colors.dart';
 import 'account_activity_screen.dart';
 
 class MyFinancesScreen extends ConsumerStatefulWidget {
@@ -43,8 +49,13 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     final l10n = AppLocalizations.of(context);
     final overview = ref.watch(financeOverviewProvider);
     final all = overview.value ?? const FinanceOverview();
+    // Me is production. A development space's documents are test data:
+    // shown apart, in the development colour, and never counted.
+    final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
     final data = all.inWorkspace(_workspace);
-    final owed = data.outstanding.length;
+    final prod = data.production(devIds);
+    final dev = data.development(devIds);
+    final owed = prod.outstanding.length;
     final options = all.workspaces;
     return DefaultTabController(
       length: 4,
@@ -72,7 +83,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                 key: const ValueKey('finances-tab-reminders'),
                 child: _FinancesLabel.label(
                   l10n?.financesReminders ?? 'Reminders',
-                  data.invoices.where((i) => i.state.owed && i.reminderCount > 0).length,
+                  prod.invoices.where((i) => i.state.owed && i.reminderCount > 0).length,
                 ),
               ),
             ],
@@ -90,18 +101,19 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
           AsyncData() => Column(
               children: [
                 if (options.length > 1 || _workspace != null)
-                  _WorkspaceFilter(
+                  FinancesWorkspaceFilter(
                     options: options,
+                    devIds: devIds,
                     selected: _workspace,
                     onSelected: (id) => setState(() => _workspace = id),
                   ),
                 Expanded(
                   child: TabBarView(
                     children: [
-                      _Outstanding(data: data),
-                      _Paid(data: data),
-                      _Payments(workspaceId: _workspace),
-                      _Reminders(data: data),
+                      _Outstanding(data: prod, dev: dev),
+                      _Paid(data: prod, dev: dev),
+                      _Payments(workspaceId: _workspace, devIds: devIds),
+                      _Reminders(data: prod, dev: dev),
                     ],
                   ),
                 ),
@@ -109,50 +121,6 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
             ),
           _ => const LoadingView(),
         },
-      ),
-    );
-  }
-}
-
-/// "All spaces" or one of them: the documents of several workspaces arrive
-/// here together, and this narrows them to the space being looked at.
-class _WorkspaceFilter extends StatelessWidget {
-  const _WorkspaceFilter({
-    required this.options,
-    required this.selected,
-    required this.onSelected,
-  });
-  final List<(String, String)> options;
-  final String? selected;
-  final ValueChanged<String?> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      child: EdgeFadeScroll(
-        key: const ValueKey('finances-filter'),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-        child: Row(
-          children: [
-            ChoiceChip(
-              key: const ValueKey('finances-filter-all'),
-              label: Text(l10n?.financesAllSpaces ?? 'All spaces'),
-              selected: selected == null,
-              onSelected: (_) => onSelected(null),
-            ),
-            for (final (id, name) in options) ...[
-              const SizedBox(width: AppSpacing.sm),
-              ChoiceChip(
-                key: ValueKey('finances-filter-$id'),
-                label: Text(name),
-                selected: selected == id,
-                onSelected: (_) => onSelected(id),
-              ),
-            ],
-          ],
-        ),
       ),
     );
   }
@@ -197,19 +165,43 @@ class _Column extends StatelessWidget {
   }
 }
 
-Future<void> _openInWorkspace(
+/// Opens [invoiceId] itself, in the Money screen of the space it belongs to
+/// — a development space's invoice opens in that development space.
+Future<void> openMyInvoice(
   BuildContext context,
   WidgetRef ref,
   String workspaceId,
+  String invoiceId,
 ) async {
   final router = GoRouter.of(context);
   await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+  ref.read(invoiceFocusProvider.notifier).request(workspaceId, invoiceId);
+  router.go('/money');
+}
+
+/// Opens the Payments face of [workspaceId] on the month of [at].
+Future<void> openMyPayment(
+  BuildContext context,
+  WidgetRef ref,
+  String workspaceId,
+  DateTime at,
+) async {
+  final router = GoRouter.of(context);
+  await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+  ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
+  final local = at.toLocal();
+  ref
+      .read(moneyFocusControllerProvider.notifier)
+      .setPeriod('${local.year}-${local.month.toString().padLeft(2, '0')}');
   router.go('/money');
 }
 
 class _Outstanding extends ConsumerWidget {
-  const _Outstanding({required this.data});
+  const _Outstanding({required this.data, required this.dev});
   final FinanceOverview data;
+
+  /// The development spaces' outstanding invoices, listed apart.
+  final FinanceOverview dev;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -265,14 +257,20 @@ class _Outstanding extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm),
           for (final invoice in list) _InvoiceCard(invoice: invoice, now: now),
         ],
+        if (dev.outstanding.isNotEmpty) ...[
+          const FinancesDevSection(),
+          for (final invoice in dev.outstanding)
+            _InvoiceCard(invoice: invoice, now: now, isDev: true),
+        ],
       ],
     );
   }
 }
 
 class _Paid extends ConsumerWidget {
-  const _Paid({required this.data});
+  const _Paid({required this.data, required this.dev});
   final FinanceOverview data;
+  final FinanceOverview dev;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -293,15 +291,27 @@ class _Paid extends ConsumerWidget {
           )
         else
           for (final invoice in list) _InvoiceCard(invoice: invoice, now: now),
+        if (dev.paid.isNotEmpty) ...[
+          const FinancesDevSection(),
+          for (final invoice in dev.paid)
+            _InvoiceCard(invoice: invoice, now: now, isDev: true),
+        ],
       ],
     );
   }
 }
 
 class _InvoiceCard extends ConsumerWidget {
-  const _InvoiceCard({required this.invoice, required this.now});
+  const _InvoiceCard({
+    required this.invoice,
+    required this.now,
+    this.isDev = false,
+  });
   final FinanceInvoice invoice;
   final DateTime now;
+
+  /// A development space's invoice: tinted and labelled DEV.
+  final bool isDev;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -321,13 +331,22 @@ class _InvoiceCard extends ConsumerWidget {
       FinanceState.closed => l10n?.financesStateClosed ?? 'Closed',
     };
     final amount = invoice.state.owed ? invoice.remainingCents : invoice.totalCents;
+    final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
     return Card(
       key: ValueKey('finances-invoice-${invoice.id}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       clipBehavior: Clip.antiAlias,
+      color: isDev ? devTone.withValues(alpha: .10) : null,
+      shape: isDev
+          ? RoundedRectangleBorder(
+              borderRadius: AppRadius.lgAll,
+              side: BorderSide(color: devTone.withValues(alpha: .55)),
+            )
+          : null,
       child: InkWell(
         key: ValueKey('finances-open-${invoice.id}'),
-        onTap: () => _openInWorkspace(context, ref, invoice.workspaceId),
+        onTap: () =>
+            openMyInvoice(context, ref, invoice.workspaceId, invoice.id),
         child: Padding(
           padding: AppSpacing.mdAll,
           child: Row(
@@ -348,11 +367,14 @@ class _InvoiceCard extends ConsumerWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.titleSmall),
-                    Text(invoice.workspaceName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: scheme.onSurfaceVariant)),
+                    if (isDev)
+                      DevLabel(name: invoice.workspaceName, small: true)
+                    else
+                      Text(invoice.workspaceName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall
+                              ?.copyWith(color: scheme.onSurfaceVariant)),
                     const SizedBox(height: 2),
                     if (invoice.state.owed && due != null)
                       Text(
@@ -409,57 +431,87 @@ class _InvoiceCard extends ConsumerWidget {
 }
 
 class _Reminders extends ConsumerWidget {
-  const _Reminders({required this.data});
+  const _Reminders({required this.data, required this.dev});
   final FinanceOverview data;
+  final FinanceOverview dev;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
-    final list = data.reminders;
+    final workspaceOf = {
+      for (final i in [...data.invoices, ...dev.invoices]) i.id: i.workspaceId,
+    };
+    Widget row(FinanceReminder r, {bool isDev = false}) {
+      final tone = AppEnvironmentColors.developmentOf(theme.brightness);
+      final workspaceId = workspaceOf[r.invoiceId];
+      return Card(
+        key: ValueKey('finances-reminder-${r.id}'),
+        margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+        color: isDev ? tone.withValues(alpha: .10) : null,
+        child: ListTile(
+          key: ValueKey('finances-reminder-open-${r.id}'),
+          leading: Icon(
+            Icons.notifications_active_outlined,
+            color: isDev ? tone : null,
+          ),
+          title: Text(
+            '${l10n?.financesReminderLevel(r.level) ?? 'Reminder ${r.level}'} · ${r.invoiceNumber}',
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (isDev) DevLabel(name: r.workspaceName, small: true),
+              Text(
+                [
+                  if (!isDev) r.workspaceName,
+                  format.format(r.sentAt.toLocal()),
+                  if (r.automatic) l10n?.financesAutomatic ?? 'automatic',
+                ].join(' · '),
+                style: theme.textTheme.bodySmall,
+              ),
+            ],
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          // A reminder opens the invoice it is about, in its own space.
+          onTap: workspaceId == null
+              ? null
+              : () => openMyInvoice(context, ref, workspaceId, r.invoiceId),
+        ),
+      );
+    }
+
     return _Column(
       onRefresh: () async {
         ref.invalidate(financeOverviewProvider);
         await ref.read(financeOverviewProvider.future);
       },
       children: [
-        if (list.isEmpty)
+        if (data.reminders.isEmpty && dev.reminders.isEmpty)
           EmptyState(
             key: const ValueKey('finances-reminders-empty'),
             icon: Icons.notifications_none_outlined,
             title: l10n?.financesNoReminders ?? 'No reminder received.',
-          )
-        else
-          for (final r in list)
-            Card(
-              key: ValueKey('finances-reminder-${r.id}'),
-              margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: ListTile(
-                leading: const Icon(Icons.notifications_active_outlined),
-                title: Text(
-                  '${l10n?.financesReminderLevel(r.level) ?? 'Reminder ${r.level}'} · ${r.invoiceNumber}',
-                ),
-                subtitle: Text(
-                  [
-                    r.workspaceName,
-                    format.format(r.sentAt.toLocal()),
-                    if (r.automatic) l10n?.financesAutomatic ?? 'automatic',
-                  ].join(' · '),
-                  style: theme.textTheme.bodySmall,
-                ),
-              ),
-            ),
+          ),
+        for (final r in data.reminders) row(r),
+        if (dev.reminders.isNotEmpty) ...[
+          const FinancesDevSection(),
+          for (final r in dev.reminders) row(r, isDev: true),
+        ],
       ],
     );
   }
 }
 
 class _Payments extends ConsumerWidget {
-  const _Payments({this.workspaceId});
+  const _Payments({this.workspaceId, this.devIds = const {}});
 
   /// Only this workspace's payments; all of them when null.
   final String? workspaceId;
+
+  /// My development spaces: their payments are tinted and labelled DEV.
+  final Set<String> devIds;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -488,9 +540,23 @@ class _Payments extends ConsumerWidget {
                   Card(
                     key: ValueKey('finances-payment-${e.id}'),
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                    color: devIds.contains(e.workspaceId)
+                        ? AppEnvironmentColors.developmentOf(
+                            Theme.of(context).brightness,
+                          ).withValues(alpha: .10)
+                        : null,
                     child: ListTile(
+                      key: ValueKey('finances-payment-open-${e.id}'),
                       leading: const Icon(Icons.payments_outlined),
-                      title: Text(e.workspaceName),
+                      title: devIds.contains(e.workspaceId)
+                          ? DevLabel(name: e.workspaceName)
+                          : Text(e.workspaceName),
+                      onTap: () => openMyPayment(
+                        context,
+                        ref,
+                        e.workspaceId,
+                        e.occurredAt,
+                      ),
                       subtitle: Text([
                         if (e.description.isNotEmpty) e.description,
                         format.format(e.occurredAt.toLocal()),

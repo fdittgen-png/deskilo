@@ -155,7 +155,11 @@ class _FinanceGlance extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final data = ref.watch(financeOverviewProvider).value;
+    // Me is production: a development space's test invoices never count.
+    final data = ref
+        .watch(financeOverviewProvider)
+        .value
+        ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider));
     if (data == null || data.outstanding.isEmpty) return const SizedBox.shrink();
     final now = ref.watch(clockProvider).now();
     final overdue = data.outstanding.where((i) => i.overdueAt(now)).length;
