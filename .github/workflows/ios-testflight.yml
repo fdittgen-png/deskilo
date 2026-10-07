@@ -212,6 +212,9 @@ jobs:
           BETA_DEMO_PASSWORD: ${{ secrets.BETA_DEMO_PASSWORD || '' }}
           FASTLANE_DISABLE_COLORS: "1"
           FASTLANE_HIDE_CHANGELOG: "1"
+          # A loaded macOS runner answers `xcodebuild -showBuildSettings` slowly:
+          # the 3 s default with 4 retries failed a whole alpha train (#2247).
+          FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
         run: |
           if [ "${{ inputs.upload_metadata }}" = "true" ]; then
             bundle exec fastlane upload_metadata
