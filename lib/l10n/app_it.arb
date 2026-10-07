@@ -6544,6 +6544,14 @@
   "meLeaveDone": "Hai lasciato {name}.",
   "meLeaveFailed": "Impossibile lasciare lo spazio. Riprova.",
   "meLeaveOwner": "I proprietari cedono lo spazio prima di lasciarlo",
+  "meLeaveSide": "Esci da {side}",
+  "@meLeaveSide": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
   "meLeaveTitle": "Lasciare {name}?",
   "meLinkedOpen": "Apri su {host}",
   "meLinkedOpenBody": "Questo spazio si trova su {host}. L'app lavora con un server alla volta: aprirlo passa a quel server e ti chiede di accedere lì.",

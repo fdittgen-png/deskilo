@@ -12083,6 +12083,14 @@
   "@meLeaveOwner": {
     "description": "Disabled menu item for an owner, who must hand the space over first."
   },
+  "meLeaveSide": "Leave {side}",
+  "@meLeaveSide": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
   "meLeaveTitle": "Leave {name}?",
   "@meLeaveTitle": {
     "description": "Title of the confirmation before leaving a space.",

@@ -5,7 +5,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_typography.dart';
 
-/// One identity, with its environment actions kept together at every width.
+/// One of my spaces on Me › Home: a soft card with the identity on top —
+/// avatar, name, role, what I marked it with, one options menu — and the
+/// environments to enter below it, side by side at every width.
 class MeWorkspaceRow extends StatelessWidget {
   const MeWorkspaceRow({
     super.key,
@@ -21,85 +23,78 @@ class MeWorkspaceRow extends StatelessWidget {
   final String name, detail;
   final List<Widget> actions;
 
-  /// Favourite, stars and move arrows of this row.
+  /// The heart, the stars and the options menu of this row.
   final Widget? controls;
 
   @override
-  Widget build(BuildContext context) => Card.outlined(
-    color: Theme.of(context).colorScheme.surface,
-    shape: RoundedRectangleBorder(
-      borderRadius: AppRadius.xlAll,
-      side: BorderSide(
-        color: lastUsed
-            ? Theme.of(context).colorScheme.primary.withValues(alpha: .4)
-            : Theme.of(context).colorScheme.outlineVariant,
-      ),
-    ),
-    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.sm,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final identity = Row(
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: scheme.surfaceContainerLow,
+          borderRadius: AppRadius.xxlAll,
+          // The space I used last wears a quiet ring, not a different card.
+          border: Border.all(
+            color: lastUsed
+                ? scheme.primary.withValues(alpha: .45)
+                : Colors.transparent,
+            width: 1.5,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.md,
+            AppSpacing.sm,
+            AppSpacing.lg,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Tooltip(message: name, child: avatar),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      maxLines: 1,
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .primaryValue
-                          ?.emphasised,
-                    ),
-                    if (detail.isNotEmpty)
-                      Text(
-                        detail,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+              Row(
+                children: [
+                  Tooltip(message: name, child: avatar),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleMedium?.strong,
                         ),
-                      ),
-                  ],
-                ),
+                        if (detail.isNotEmpty)
+                          Text(
+                            detail,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  ?controls,
+                ],
               ),
-              ?controls,
+              const SizedBox(height: AppSpacing.md),
+              // The right edge keeps the card's own padding: the menu above
+              // reaches further out so its tap target stays 48dp.
+              Padding(
+                padding: const EdgeInsets.only(right: AppSpacing.sm),
+                child: Row(children: actions),
+              ),
             ],
-          );
-          // Production and development share the row, production twice as
-          // wide; the row fills the width so development sits at the right.
-          final environments = Row(children: actions);
-          // Large text gets the same stacked identity as a small viewport;
-          // environments remain next to each other, with horizontal scrolling
-          // only when accessibility text cannot fit both controls.
-          if (constraints.maxWidth /
-                  MediaQuery.textScalerOf(context).scale(1) >=
-              600) {
-            return Row(
-              children: [
-                Expanded(child: identity),
-                SizedBox(width: 340, child: environments),
-              ],
-            );
-          }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              identity,
-              const SizedBox(height: AppSpacing.xs),
-              environments,
-            ],
-          );
-        },
+          ),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

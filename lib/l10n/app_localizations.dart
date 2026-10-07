@@ -18066,6 +18066,12 @@ abstract class AppLocalizations {
   /// **'Owners hand the space over before leaving'**
   String get meLeaveOwner;
 
+  /// No description provided for @meLeaveSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {side}'**
+  String meLeaveSide(String side);
+
   /// Title of the confirmation before leaving a space.
   ///
   /// In en, this message translates to:

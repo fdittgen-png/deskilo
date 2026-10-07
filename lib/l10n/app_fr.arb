@@ -6544,6 +6544,14 @@
   "meLeaveDone": "Vous avez quitté {name}.",
   "meLeaveFailed": "Impossible de quitter l'espace. Veuillez réessayer.",
   "meLeaveOwner": "Les propriétaires transmettent l'espace avant de le quitter",
+  "meLeaveSide": "Quitter {side}",
+  "@meLeaveSide": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
   "meLeaveTitle": "Quitter {name} ?",
   "meLinkedOpen": "Ouvrir sur {host}",
   "meLinkedOpenBody": "Cet espace se trouve sur {host}. L'application travaille avec un serveur à la fois : l'ouvrir bascule vers ce serveur et vous demande de vous y connecter.",

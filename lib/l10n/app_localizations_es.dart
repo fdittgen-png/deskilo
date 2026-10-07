@@ -10597,6 +10597,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los propietarios traspasan el espacio antes de salir';
 
   @override
+  String meLeaveSide(String side) {
+    return 'Salir de $side';
+  }
+
+  @override
   String meLeaveTitle(String name) {
     return '¿Salir de $name?';
   }

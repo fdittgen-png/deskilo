@@ -8,6 +8,19 @@ import 'package:flutter/material.dart';
 
 import '../../../l10n/app_localizations.dart';
 
+/// One way out of a space: the menu lists one per side of the row.
+class SpaceLeaveItem {
+  const SpaceLeaveItem({
+    required this.id,
+    required this.label,
+    required this.onLeave,
+    this.enabled = true,
+  });
+  final String id, label;
+  final VoidCallback onLeave;
+  final bool enabled;
+}
+
 class SpaceRowControls extends StatelessWidget {
   const SpaceRowControls({
     super.key,
@@ -19,6 +32,7 @@ class SpaceRowControls extends StatelessWidget {
     required this.onRate,
     this.onUp,
     this.onDown,
+    this.leave = const [],
   });
 
   final String rowKey, name;
@@ -29,6 +43,9 @@ class SpaceRowControls extends StatelessWidget {
 
   /// Null when the row cannot move that way.
   final VoidCallback? onUp, onDown;
+
+  /// The ways to leave, one per side; owners cannot (they hand over first).
+  final List<SpaceLeaveItem> leave;
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +59,25 @@ class SpaceRowControls extends StatelessWidget {
           Icon(
             Icons.favorite,
             key: ValueKey('space-favorite-$rowKey'),
-            size: 18,
+            size: 16,
             color: scheme.error,
           ),
         if (rating != null) ...[
-          Icon(Icons.star, size: 18, color: Colors.amber.shade700),
-          Text('$rating', key: ValueKey('space-rating-$rowKey')),
+          const SizedBox(width: 6),
+          Icon(Icons.star_rounded, size: 18, color: Colors.amber.shade700),
+          const SizedBox(width: 2),
+          Text(
+            '$rating',
+            key: ValueKey('space-rating-$rowKey'),
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
         ],
         PopupMenuButton<String>(
+          style: IconButton.styleFrom(
+            foregroundColor: scheme.onSurfaceVariant,
+            backgroundColor: Colors.transparent,
+            side: BorderSide.none,
+          ),
           key: ValueKey(key),
           tooltip: l10n?.spaceOptions(name) ?? 'Options for $name',
           onSelected: (v) {
@@ -63,7 +91,11 @@ class SpaceRowControls extends StatelessWidget {
               case 'clear':
                 onRate(null);
               default:
-                onRate(int.parse(v));
+                if (v.startsWith('leave:')) {
+                  leave.firstWhere((l) => 'leave:${l.id}' == v).onLeave();
+                } else {
+                  onRate(int.parse(v));
+                }
             }
           },
           itemBuilder: (_) => [
@@ -100,6 +132,14 @@ class SpaceRowControls extends StatelessWidget {
               value: 'clear',
               child: Text(l10n?.spaceRatingClear ?? 'No rating'),
             ),
+            if (leave.isNotEmpty) const PopupMenuDivider(),
+            for (final l in leave)
+              PopupMenuItem(
+                key: ValueKey('$key-leave-${l.id}'),
+                value: 'leave:${l.id}',
+                enabled: l.enabled,
+                child: Text(l.label),
+              ),
           ],
         ),
       ],

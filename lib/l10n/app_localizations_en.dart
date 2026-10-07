@@ -10522,6 +10522,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meLeaveOwner => 'Owners hand the space over before leaving';
 
   @override
+  String meLeaveSide(String side) {
+    return 'Leave $side';
+  }
+
+  @override
   String meLeaveTitle(String name) {
     return 'Leave $name?';
   }
