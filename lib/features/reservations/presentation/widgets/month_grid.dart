@@ -199,7 +199,7 @@ class MonthGrid extends ConsumerWidget {
     final last = cells.last;
     final byDay = <DateTime, Set<String>>{};
     for (final r in reservations) {
-      if (!r.isActive) continue;
+      if (!r.held) continue;
       // Whole-space rows expand to every covered seat (#452); an
       // unknown target (plan still loading) contributes nothing.
       final seatIds = seatIdsOf(r);
@@ -211,7 +211,7 @@ class MonthGrid extends ConsumerWidget {
       while (!day.isAfter(last) &&
           day.isBefore(r.endsAt.add(const Duration(days: 1)))) {
         final window = HalfDayWindows.fullDay(day);
-        if (r.coversRange(window.start, window.end)) {
+        if (r.holdsRange(window.start, window.end)) {
           (byDay[day] ??= <String>{}).addAll(seatIds);
         }
         day = DateTime(day.year, day.month, day.day + 1);

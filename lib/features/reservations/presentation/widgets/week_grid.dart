@@ -607,7 +607,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     final dayEnd = HalfDayWindows.displayAfternoon(day).end;
     final items = [
       for (final r in rowReservations)
-        if (r.coversRange(dayStart, dayEnd)) r,
+        if (r.holdsRange(dayStart, dayEnd)) r,
     ];
     final selected = DateUtils.isSameDay(day, widget.selectedDay);
     return SizedBox(
@@ -669,7 +669,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     var occupied = false;
     var mine = false;
     for (final r in items) {
-      if (!r.coversRange(half.start, half.end)) continue;
+      if (!r.holdsRange(half.start, half.end)) continue;
       occupied = true;
       if (r.memberId == widget.myMemberId) {
         mine = true;
@@ -689,7 +689,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
         // covering occupant's initial, mirroring the plan's seat avatars.
         final names = ref.watch(memberNamesProvider).value ?? const {};
         final covering = items.firstWhere(
-          (r) => r.coversRange(half.start, half.end),
+          (r) => r.holdsRange(half.start, half.end),
         );
         final name = names[covering.memberId] ?? '';
         if (name.trim().isNotEmpty) {

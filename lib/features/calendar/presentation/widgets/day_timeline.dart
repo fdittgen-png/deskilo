@@ -378,7 +378,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     final allLevels = plans.any((e) => e.$1 != null);
 
     final dayReservations = widget.reservations
-        .where((r) => r.coversRange(_dayStartInstant, _dayEndInstant))
+        .where((r) => r.holdsRange(_dayStartInstant, _dayEndInstant))
         .toList()
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 

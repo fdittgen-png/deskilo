@@ -1091,7 +1091,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
           onRetry: () => ref.invalidate(reservationsForDayProvider(dayKey)));
     }
     final reservations = dayRead.value ?? const <Reservation>[];
-    final active = [for (final r in reservations) if (r.isActive) r];
+    final active = [for (final r in reservations) if (r.held) r];
     return DayTimeline(
       day: _selectedDay,
       reservations: active,
@@ -1164,7 +1164,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       selectedDay: _selectedDay,
       reservations: [
         for (final r in byId.values)
-          if (r.isActive) r,
+          if (r.held) r,
       ],
       everyone: true,
       myMemberId: myMemberId,
@@ -1201,7 +1201,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     return MonthGrid(
       key: const ValueKey('reserve-month-grid'),
       selectedDay: _selectedDay,
-      reservations: [for (final r in month) if (r.isActive) r],
+      reservations: [for (final r in month) if (r.held) r],
       isDayOpen: _isDayOpen,
       onDaySelected: (day) {
         _selectDay(day);
