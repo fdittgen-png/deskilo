@@ -10608,6 +10608,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les propriétaires transmettent l\'espace avant de le quitter';
 
   @override
+  String meLeaveSide(String side) {
+    return 'Quitter $side';
+  }
+
+  @override
   String meLeaveTitle(String name) {
     return 'Quitter $name ?';
   }

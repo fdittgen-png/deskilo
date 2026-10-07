@@ -50,6 +50,15 @@ Future<(FakeWorkspaceRepository, InMemoryActiveWorkspaceStore)> pumpProfiles(
   await tester.pumpAndSettle();
   await tester.tap(find.text('Back to Me'));
   await tester.pumpAndSettle();
+  // The list is lazy and the cards are taller: bring the link into view.
+  await tester.scrollUntilVisible(
+    find.byKey(const ValueKey('me-home-manage')),
+    200,
+    scrollable: find.descendant(
+      of: find.byKey(const ValueKey('me-home-list')),
+      matching: find.byType(Scrollable),
+    ),
+  );
   await tester.tap(find.byKey(const ValueKey('me-home-manage')));
   await tester.pumpAndSettle();
   return (workspace, store);

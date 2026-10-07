@@ -10597,6 +10597,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eigentümer übergeben den Space, bevor sie ihn verlassen';
 
   @override
+  String meLeaveSide(String side) {
+    return '$side verlassen';
+  }
+
+  @override
   String meLeaveTitle(String name) {
     return '$name verlassen?';
   }

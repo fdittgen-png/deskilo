@@ -10,9 +10,12 @@ import '../../helpers/mock_providers.dart';
 import 'me_app.dart';
 
 Future<void> _openMenu(WidgetTester tester, String id) async {
-  await tester.tap(find.byKey(ValueKey('me-space-menu-$id')));
+  await tester.tap(find.byKey(ValueKey('space-menu-space:$id')));
   await tester.pumpAndSettle();
 }
+
+/// The way out of [id], in the options menu of its row.
+Finder _leave(String id) => find.byKey(ValueKey('space-menu-space:$id-leave-$id'));
 
 void main() {
   testWidgets('leave a space from its card: confirmed, then left',
@@ -22,14 +25,14 @@ void main() {
     await goTo(tester, router, '/me');
 
     await _openMenu(tester, 'ws-2');
-    await tester.tap(find.byKey(const ValueKey('me-space-leave')));
+    await tester.tap(_leave('ws-2'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('me-leave-cancel')));
     await tester.pumpAndSettle();
     expect(me.left, isEmpty, reason: 'cancelling leaves nothing');
 
     await _openMenu(tester, 'ws-2');
-    await tester.tap(find.byKey(const ValueKey('me-space-leave')));
+    await tester.tap(_leave('ws-2'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('me-leave-confirm')));
     await tester.pumpAndSettle();
@@ -42,11 +45,10 @@ void main() {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');
     await _openMenu(tester, 'ws-1');
-    final item = tester.widget<PopupMenuItem<String>>(
-        find.byKey(const ValueKey('me-space-leave')));
+    final item = tester.widget<PopupMenuItem<String>>(_leave('ws-1'));
     expect(item.enabled, isFalse);
     expect(find.text('Owners hand the space over before leaving'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('me-space-leave')), warnIfMissed: false);
+    await tester.tap(_leave('ws-1'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('me-leave-confirm')), findsNothing);
     expect(me.left, isEmpty);
@@ -57,7 +59,7 @@ void main() {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');
     await _openMenu(tester, 'ws-2');
-    await tester.tap(find.byKey(const ValueKey('me-space-leave')));
+    await tester.tap(_leave('ws-2'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('me-leave-confirm')));
     await tester.pumpAndSettle();
