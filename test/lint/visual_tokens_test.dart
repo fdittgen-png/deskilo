@@ -36,8 +36,9 @@ import 'lint_sources.dart';
 /// Presentation files still writing a raw font size → how many.
 const Map<String, int> _fontSizeBaseline = {
   'lib/features/calendar/presentation/widgets/day_timeline.dart': 1,
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1,
   'lib/features/money/presentation/widgets/report_field_picker.dart': 1,
+  // 2026-10-07 moved from invoice_template_sheet.dart with the markup bands.
+  'lib/features/money/presentation/widgets/report_template_toolbar.dart': 1,
   'lib/features/money/presentation/widgets/report_layout_preview.dart': 2,
   'lib/features/money/presentation/widgets/report_page_designer.dart': 1,
   'lib/features/money/presentation/widgets/report_page_style.dart': 5,

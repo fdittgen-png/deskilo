@@ -42,7 +42,9 @@ import 'report_history_controls.dart';
 import 'report_markup_guide.dart';
 import 'report_page_designer.dart';
 import 'report_preview.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
+import 'report_editor_dialogs.dart';
+import 'report_template_toolbar.dart';
+import '../../domain/report_template_assembly.dart';
 
 /// The invoice REPORT editor (#454, rebuilt as a banded reporting tool
 /// in #470): three Liquid bands — header, body with the lines, footer —
@@ -125,14 +127,6 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// language's overlay (empty bands = inherit the default).
   String _lang = '';
 
-  static const List<String> _templateLanguages = [
-    'en',
-    'fr',
-    'de',
-    'es',
-    'it',
-  ];
-
   /// Unsaved edits per language|document, so switching loses nothing.
   final Map<String, ReportBands> _drafts = {};
 
@@ -192,9 +186,6 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     _designerKey = GlobalKey<ReportPageDesignerState>();
   }
 
-  String _draftKey(String lang, String doc) =>
-      lang.isEmpty ? doc : '$lang|$doc';
-
   @override
   void initState() {
     super.initState();
@@ -221,7 +212,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       );
 
   ReportEditHistory get _history => _histories.putIfAbsent(
-        _draftKey(_lang, _doc),
+        reportDraftKey(_lang, _doc),
         () => ReportEditHistory(_storedBands(_doc)),
       );
 
@@ -289,84 +280,35 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// current document (unsaved edits included).
   bool _overridden(String lang) => lang == _lang
       ? _currentBands.hasBands
-      : (_drafts[_draftKey(lang, _doc)] ?? _storedBands(_doc, lang: lang))
+      : (_drafts[reportDraftKey(lang, _doc)] ?? _storedBands(_doc, lang: lang))
           .hasBands;
 
   void _switchDoc(String doc) {
     if (doc == _doc) return;
-    _drafts[_draftKey(_lang, _doc)] = _currentBands;
+    _drafts[reportDraftKey(_lang, _doc)] = _currentBands;
     _doc = doc;
-    _apply(_drafts[_draftKey(_lang, doc)] ?? _storedBands(doc), step: false);
+    _apply(_drafts[reportDraftKey(_lang, doc)] ?? _storedBands(doc), step: false);
   }
 
   /// #496 — switch the edited template LANGUAGE, keeping the document.
   void _switchLang(String lang) {
     if (lang == _lang) return;
-    _drafts[_draftKey(_lang, _doc)] = _currentBands;
+    _drafts[reportDraftKey(_lang, _doc)] = _currentBands;
     _lang = lang;
-    _apply(_drafts[_draftKey(lang, _doc)] ?? _storedBands(_doc),
+    _apply(_drafts[reportDraftKey(lang, _doc)] ?? _storedBands(_doc),
         step: false);
   }
 
-  /// The full template with every unsaved edit folded in — the default
-  /// bands plus one overlay per edited language (#496).
+  /// The full template with every unsaved edit folded in (#496).
   InvoicePdfTemplate _assemble(int maxLevels) {
-    _drafts[_draftKey(_lang, _doc)] = _currentBands;
-    final invoice = _drafts['invoice'] ?? widget.initial.invoiceBands;
-    var template = InvoicePdfTemplate(
-      header: invoice.header,
-      body: invoice.body,
-      footer: invoice.footer,
-      reminders: widget.initial.reminders,
-      proforma: _drafts['proforma'] ?? widget.initial.proforma,
-      statement: _drafts['statement'] ?? widget.initial.statement,
-      extraDocs: widget.initial.extraDocs,
-      // #869 — set on the legal identity screen; carried through so
-      // saving a design never resets it.
-      addressWindow: widget.initial.addressWindow,
-      texts: _textsFor(''),
+    _drafts[reportDraftKey(_lang, _doc)] = _currentBands;
+    return assembleReportTemplate(
+      stored: widget.initial,
+      drafts: _drafts,
+      layoutDrafts: _layoutDrafts,
+      textDrafts: _textDrafts,
+      reminderLevels: maxLevels,
     );
-    for (var level = 1; level <= maxLevels; level++) {
-      final bands = _drafts['r$level'];
-      if (bands != null) template = template.withReminder(level, bands);
-    }
-    for (final kind in reportKinds(reminderLevels: maxLevels)) {
-      if (kind.slot is! ReportDocSlot) continue;
-      final bands = _drafts[kind.id];
-      if (bands != null) template = withBands(template, kind, bands);
-    }
-    // #875 — a layout per kind, edited beside the bands.
-    for (final entry in _layoutDrafts.entries) {
-      final kind = reportKindById(entry.key, reminderLevels: maxLevels);
-      if (kind != null) template = withLayout(template, kind, entry.value);
-    }
-    // #496 — fold every edited language overlay in.
-    for (final lang in _templateLanguages) {
-      var overlay =
-          widget.initial.translations[lang] ?? InvoicePdfTemplate.empty;
-      var touched = widget.initial.translations.containsKey(lang);
-      void apply(String doc, ReportBands bands) {
-        final kind = reportKindById(doc, reminderLevels: maxLevels);
-        if (kind == null) return;
-        touched = true;
-        overlay = withBands(overlay, kind, bands);
-      }
-
-      for (final entry in _drafts.entries) {
-        if (entry.key.startsWith('$lang|')) {
-          apply(entry.key.substring(lang.length + 1), entry.value);
-        }
-      }
-      final texts = _textDrafts[lang];
-      if (texts != null) {
-        touched = true;
-        overlay = overlay.copyWith(texts: texts);
-      }
-      if (touched) {
-        template = template.withTranslation(lang, overlay);
-      }
-    }
-    return template;
   }
 
   /// #864 — write the open design out. The file names the report it
@@ -486,58 +428,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   }
 
   /// #822 — presets and reset REPLACE a layout: ask when there is one.
-  Future<bool> _confirmReplace() async {
-    if (!_currentBands.hasBands) return true;
-    final l10n = AppLocalizations.of(context);
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n?.reportDesignerReplaceTitle ??
-            'Replace the current layout?'),
-        content: Text(l10n?.reportDesignerReplaceBody ??
-            'The bands of this document are replaced. Undo brings them back.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            key: const ValueKey('report-designer-replace-confirm'),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.reportDesignerReplace ?? 'Replace'),
-          ),
-        ],
-      ),
-    );
-    return ok ?? false;
-  }
-
-  /// #822 — leaving with unsaved work asks first.
-  Future<bool> _confirmDiscard() async {
-    final l10n = AppLocalizations.of(context);
-    final leave = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n?.reportDesignerDiscardTitle ??
-            'Leave without saving?'),
-        content: Text(l10n?.reportDesignerDiscardBody ??
-            'Your changes to the templates are not saved.'),
-        actions: [
-          TextButton(
-            key: const ValueKey('report-designer-keep-editing'),
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.reportDesignerKeepEditing ?? 'Keep editing'),
-          ),
-          FilledButton(
-            key: const ValueKey('report-designer-discard'),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.reportDesignerDiscard ?? 'Discard'),
-          ),
-        ],
-      ),
-    );
-    return leave ?? false;
-  }
+  Future<bool> _confirmReplace() async =>
+      !_currentBands.hasBands || await confirmReportReplace(context);
 
   /// INSTANT preview (#474): the report engine's output rendered as
   /// widgets — real newest-invoice data when one exists, simulated
@@ -699,192 +591,12 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     controller.value = insertMarkupAt(controller.value, markup);
   }
 
-  Widget _bandField(
-    TextEditingController controller,
-    String label, {
-    required String key,
-    int minLines = 3,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.only(top: AppSpacing.sm),
-        child: TextField(
-          key: ValueKey(key),
-          controller: controller,
-          onTap: () => _focusedBand = controller,
-          minLines: minLines,
-          maxLines: 14,
-          style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-          decoration: InputDecoration(
-            labelText: label,
-            alignLabelWithHint: true,
-            border: const OutlineInputBorder(),
-          ),
-        ),
-      );
-
   /// #864 — the chips come from the registry, so a report kind added
   /// there appears here without this list being remembered.
   List<(String, String)> _docs(AppLocalizations? l10n) => [
         for (final kind in reportKinds(reminderLevels: _reminderLevels))
           (kind.id, reportKindLabel(l10n, kind)),
       ];
-
-  Widget _langChips(AppLocalizations? l10n) => EdgeFadeScroll(
-        child: Row(children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 6),
-            child: ChoiceChip(
-              key: const ValueKey('invoice-template-lang-default'),
-              label: Text(l10n?.reportTemplateLangDefault ??
-                  'Default (all languages)'),
-              selected: _lang.isEmpty,
-              onSelected: (_) => _switchLang(''),
-            ),
-          ),
-          for (final lang in _templateLanguages)
-            Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: ChoiceChip(
-                key: ValueKey('invoice-template-lang-$lang'),
-                // #822 — a dot says "this language has its own".
-                // #1191 — the chip's own tick would land on this.
-                showCheckmark: false,
-                avatar: _overridden(lang)
-                    ? Icon(Icons.circle,
-                        key: ValueKey('invoice-template-lang-own-$lang'),
-                        size: 10,
-                        color: Theme.of(context).colorScheme.primary)
-                    : null,
-                tooltip: _overridden(lang)
-                    ? (l10n?.reportTemplateLangOverridden ?? 'Own template')
-                    : (l10n?.reportTemplateLangInherits ??
-                        'Inherits the default'),
-                label: Text(lang.toUpperCase()),
-                selected: _lang == lang,
-                onSelected: (_) => _switchLang(lang),
-              ),
-            ),
-          if (_lang.isNotEmpty && _currentBands.hasBands)
-            TextButton.icon(
-              key: const ValueKey('invoice-template-clear-overlay'),
-              icon: const Icon(Icons.layers_clear_outlined, size: 18),
-              label: Text(l10n?.reportTemplateClearOverlay ??
-                  'Use the default for this language'),
-              onPressed: () => _apply(ReportBands.empty),
-            ),
-        ]),
-      );
-
-  Widget _docChips(AppLocalizations? l10n) => EdgeFadeScroll(
-        key: const ValueKey('invoice-template-docs'),
-        child: Row(children: [
-          for (final (doc, label) in _docs(l10n))
-            Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: ChoiceChip(
-                key: ValueKey('invoice-template-doc-$doc'),
-                label: Text(label),
-                selected: _doc == doc,
-                onSelected: (_) => _switchDoc(doc),
-              ),
-            ),
-        ]),
-      );
-
-  Widget _actions(AppLocalizations? l10n) => Wrap(
-        spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.xs,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          PopupMenuButton<ReportPreset>(
-            key: const ValueKey('invoice-template-presets'),
-            enabled: !_busy,
-            onSelected: (preset) async {
-              if (!await _confirmReplace() || !mounted) return;
-              _apply(preset.bands);
-            },
-            itemBuilder: (context) => [
-              for (final preset in presetsForDoc(_doc, l10n))
-                PopupMenuItem(
-                  key: ValueKey('invoice-template-preset-${preset.id}'),
-                  value: preset,
-                  child: Text(preset.name),
-                ),
-            ],
-            child: TextButton.icon(
-              icon: const Icon(Icons.auto_awesome_outlined),
-              label: Text(l10n?.invoiceTemplatePresets ?? 'Templates'),
-              // The menu opens from the surrounding button.
-              onPressed: null,
-            ),
-          ),
-          OutlinedButton.icon(
-            key: const ValueKey('invoice-template-image'),
-            icon: const Icon(Icons.image_outlined),
-            label: Text(l10n?.reportInsertImage ?? 'Insert image'),
-            onPressed: _busy ? null : _insertImage,
-          ),
-          OutlinedButton.icon(
-            key: const ValueKey('invoice-template-quick-preview'),
-            icon: const Icon(Icons.bolt_outlined),
-            label: Text(
-                l10n?.invoiceTemplateQuickPreview ?? 'Quick preview'),
-            onPressed: _busy ? null : _quickPreview,
-          ),
-          PopupMenuButton<bool>(
-            key: const ValueKey('invoice-template-pdf'),
-            enabled: !_busy,
-            onSelected: (download) => _pdf(download: download),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                key: const ValueKey('invoice-template-download'),
-                value: true,
-                child:
-                    Text(l10n?.invoiceTemplateDownload ?? 'Download PDF'),
-              ),
-              PopupMenuItem(
-                key: const ValueKey('invoice-template-share'),
-                value: false,
-                child: Text(l10n?.invoiceTemplateShare ?? 'Share PDF'),
-              ),
-            ],
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.picture_as_pdf_outlined),
-              label: Text(l10n?.invoiceTemplatePreview ?? 'Preview'),
-              onPressed: null,
-            ),
-          ),
-          // #864 — the design leaves as a self-describing file and
-          // comes back the same way, so it can be edited by a person or
-          // a tool outside the app and reviewed like source.
-          if (ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.reportDesignExchange))
-            ReportDesignExchangeButtons(
-              onExport: _busy ? null : _exportDesign,
-              onImport: _busy ? null : _importDesign,
-            ),
-          TextButton.icon(
-            key: const ValueKey('invoice-template-reset'),
-            icon: const Icon(Icons.restart_alt),
-            label: Text(l10n?.invoiceTemplateReset ?? 'Reset to default'),
-            onPressed: _busy
-                ? null
-                : () async {
-                    if (!await _confirmReplace() || !mounted) return;
-                    _apply(defaultBandsForDoc(
-                        _doc,
-                        _lang.isEmpty ? l10n : l10nForLanguage(_lang)));
-                  },
-          ),
-          if (!widget.asPage)
-            FilledButton(
-              key: const ValueKey('invoice-template-save'),
-              onPressed: _busy ? null : _save,
-              child: Text(l10n?.commonSave ?? 'Save'),
-            ),
-        ],
-      );
 
   Widget _editorArea(AppLocalizations? l10n, {required bool sideBySide}) {
     if (_visual) {
@@ -908,27 +620,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         sideBySide: sideBySide,
       );
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _bandField(
-          _header,
-          l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
-          key: 'invoice-template-header',
-        ),
-        _bandField(
-          _body,
-          l10n?.invoiceTemplateBodyLabel ?? 'Body band (the invoice lines)',
-          key: 'invoice-template-body',
-          minLines: 5,
-        ),
-        _bandField(
-          _footer,
-          l10n?.invoiceTemplateFooterLabel ??
-              'Footer band (payment terms, legal mentions)',
-          key: 'invoice-template-footer',
-        ),
-      ],
+    return ReportMarkupBands(
+      header: _header,
+      body: _body,
+      footer: _footer,
+      onFocus: (band) => _focusedBand = band,
     );
   }
 
@@ -937,6 +633,9 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final wide = widget.asPage && MediaQuery.sizeOf(context).width >= 1000;
+    final designExchange = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.reportDesignExchange);
     final content = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -966,11 +665,21 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         const SizedBox(height: AppSpacing.sm),
         // #496 — one template per LANGUAGE: the default, plus an
         // overlay per language for readers in that language.
-        _langChips(l10n),
+        ReportTemplateLanguageChips(
+          selected: _lang,
+          overridden: _overridden,
+          canClear: _currentBands.hasBands,
+          onSelect: _switchLang,
+          onClear: () => _apply(ReportBands.empty),
+        ),
         const SizedBox(height: AppSpacing.xs),
         // #472: one report per DOCUMENT — the invoice, and every
         // reminder level of the dunning rules.
-        _docChips(l10n),
+        ReportTemplateDocChips(
+          docs: _docs(l10n),
+          selected: _doc,
+          onSelect: _switchDoc,
+        ),
         const SizedBox(height: AppSpacing.sm),
         // #488 — markup or WYSIWYG, same underlying bands.
         SegmentedButton<bool>(
@@ -997,7 +706,27 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         const SizedBox(height: AppSpacing.md),
         // #474: pick a ready-made report, see it INSTANTLY, then
         // download or share the PDF — or save the bands.
-        _actions(l10n),
+        ReportTemplateActions(
+          doc: _doc,
+          busy: _busy,
+          showSave: !widget.asPage,
+          onPreset: (preset) async {
+            if (!await _confirmReplace() || !mounted) return;
+            _apply(preset.bands);
+          },
+          onInsertImage: _insertImage,
+          onQuickPreview: _quickPreview,
+          onPdf: (download) => _pdf(download: download),
+          onReset: () async {
+            if (!await _confirmReplace() || !mounted) return;
+            _apply(defaultBandsForDoc(
+                _doc, _lang.isEmpty ? l10n : l10nForLanguage(_lang)));
+          },
+          onSave: _save,
+          // #864 — the design exchange, when the workspace has it.
+          onExportDesign: designExchange ? _exportDesign : null,
+          onImportDesign: designExchange ? _importDesign : null,
+        ),
         // #875 — last in the column on purpose: the panel adds height
         // below every existing control, and moves none of them.
         if (ref
@@ -1063,7 +792,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       canPop: !_dirty,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
-        final leave = await _confirmDiscard();
+        final leave = await confirmReportDiscard(context);
         if (leave && mounted) Navigator.of(this.context).pop();
       },
       child: Scaffold(

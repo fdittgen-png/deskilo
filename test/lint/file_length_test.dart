@@ -248,7 +248,7 @@ const Map<String, int> _baseline = {
   // 700→800 (2026-08-05): #496 the template-language chips + per-language
   // overlay assembly.
   // 800→810 (2026-08-31): #763 the report editor's header help dot.
-  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 1115, // 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
+  'lib/features/money/presentation/widgets/invoice_template_sheet.dart': 845, // 2026-10-07 1115→845: the save assembly moved to domain/report_template_assembly.dart (and stopped dropping untouched layouts, the continuation strip and other-language overlays), the dialogs to report_editor_dialogs.dart, the chips, markup bands and actions to report_template_toolbar.dart; 2026-09-11 #1061 1160→1101: the live-data switch moved to template_live_data.dart // 1180→1160 (2026-09-10): #1056 the app bar's undo/redo pair left for report_history_controls.dart
 
   'lib/features/money/presentation/widgets/report_field_picker.dart': 365, // #2003 configuration row scaffold. // #2003 VAT declaration fields reuse the existing picker registry. // 2026-09-06 #966 meanings + topic groups // 2026-09-02 #822 the page, undo/redo, guards // 2026-09-04 #875 layout drafts per kind, the panel mount and its three handlers — the panel and the actions themselves live in their own files // 2026-09-05 #880 the owner-texts drafts per language, merged into every preview/export, and the Texts panel mount
 
