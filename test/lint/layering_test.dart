@@ -246,7 +246,7 @@ const Map<String, int> _pairBudget = {
   // are read in both files now.
   'events -> plan': 2,
   'events -> reservations': 4,
-  'events -> workspace': 20, // #1306 S2 — CalendarDecisions reads the effective features
+  'events -> workspace': 22, // #2294: scoped update counts read workspace identity and the existing Events feature gate; no repository access.
   'kiosk -> events': 1,
   'kiosk -> members': 1,
   'kiosk -> plan': 7,
