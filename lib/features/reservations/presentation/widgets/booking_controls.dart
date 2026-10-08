@@ -75,7 +75,10 @@ class WindowControls extends StatelessWidget {
         child: ChoiceChip(
           key: ValueKey('$keyPrefix-$keySuffix'),
           label: MediaQuery.sizeOf(context).width >= 600
-              ? Text(name)
+              ? Row(mainAxisSize: MainAxisSize.min, children: [
+                  DayHalvesGlyph(am: halves.am, pm: halves.pm, semanticLabel: label),
+                  const SizedBox(width: AppSpacing.xs), Text(name),
+                ])
               : DayHalvesGlyph(
                   am: halves.am, pm: halves.pm, semanticLabel: label),
           selected: isSelected(window),
