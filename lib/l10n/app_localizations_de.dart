@@ -18085,7 +18085,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get uxMoneyPaymentsScope =>
-      'Zahlungen für diesen Monat. Anfragen stehen getrennt darunter.';
+      'Monatssaldo · Überfällige Rechnungen aus allen Zeiträumen.';
 
   @override
   String get uxMoneyStatementScope =>

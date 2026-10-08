@@ -11172,7 +11172,7 @@
   "uxMoneyAllPeriods": "Alle Zeiträume · Guthaben, offene Rechnungen und Erstattungen.",
   "uxMoneyDocumentsScope": "Monatsberichte und Ihre aktuelle Vereinbarung.",
   "uxMoneyInvoicesScope": "Ihre Rechnungen in diesem Workspace · Alle Zeiträume.",
-  "uxMoneyPaymentsScope": "Zahlungen für diesen Monat. Anfragen stehen getrennt darunter.",
+  "uxMoneyPaymentsScope": "Monatssaldo · Überfällige Rechnungen aus allen Zeiträumen.",
   "uxMoneyStatementScope": "Monatsübersicht für den gewählten Zeitraum.",
   "uxMoneyUsageScope": "Buchungen und Verbrauch im gewählten Monat.",
   "uxMoneyWorkspaceTools": "Finanzverwaltung des Workspaces",

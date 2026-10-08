@@ -1,6 +1,6 @@
 {
   "uxMoneyStatementScope": "Monthly detail for the selected period.",
-  "uxMoneyPaymentsScope": "Payments for this month. Requests are separate below.",
+  "uxMoneyPaymentsScope": "Monthly balance · Overdue invoices from all periods.",
   "uxMoneyInvoicesScope": "Your invoices in this workspace · All periods.",
   "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
   "uxMoneyDocumentsScope": "Monthly reports and your current agreement.",

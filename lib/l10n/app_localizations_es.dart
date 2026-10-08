@@ -18032,7 +18032,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get uxMoneyPaymentsScope =>
-      'Pagos de este mes. Las solicitudes aparecen por separado más abajo.';
+      'Saldo mensual · Facturas vencidas de todos los períodos.';
 
   @override
   String get uxMoneyStatementScope =>

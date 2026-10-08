@@ -17896,7 +17896,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uxMoneyPaymentsScope =>
-      'Payments for this month. Requests are separate below.';
+      'Monthly balance · Overdue invoices from all periods.';
 
   @override
   String get uxMoneyStatementScope => 'Monthly detail for the selected period.';

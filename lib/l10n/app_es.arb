@@ -11172,7 +11172,7 @@
   "uxMoneyAllPeriods": "Todos los períodos · Crédito, facturas abiertas y reembolsos.",
   "uxMoneyDocumentsScope": "Informes mensuales y tu acuerdo vigente.",
   "uxMoneyInvoicesScope": "Tus facturas en este espacio · Todos los períodos.",
-  "uxMoneyPaymentsScope": "Pagos de este mes. Las solicitudes aparecen por separado más abajo.",
+  "uxMoneyPaymentsScope": "Saldo mensual · Facturas vencidas de todos los períodos.",
   "uxMoneyStatementScope": "Detalle mensual del período seleccionado.",
   "uxMoneyUsageScope": "Reservas y consumos del mes seleccionado.",
   "uxMoneyWorkspaceTools": "Herramientas financieras del espacio",

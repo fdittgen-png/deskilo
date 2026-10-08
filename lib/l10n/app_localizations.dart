@@ -31025,7 +31025,7 @@ abstract class AppLocalizations {
   /// No description provided for @uxMoneyPaymentsScope.
   ///
   /// In en, this message translates to:
-  /// **'Payments for this month. Requests are separate below.'**
+  /// **'Monthly balance · Overdue invoices from all periods.'**
   String get uxMoneyPaymentsScope;
 
   /// No description provided for @uxMoneyStatementScope.

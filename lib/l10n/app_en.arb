@@ -20398,7 +20398,7 @@
   "uxMoneyAllPeriods": "All periods · Credit, open invoices and refunds.",
   "uxMoneyDocumentsScope": "Monthly reports and your current agreement.",
   "uxMoneyInvoicesScope": "Your invoices in this workspace · All periods.",
-  "uxMoneyPaymentsScope": "Payments for this month. Requests are separate below.",
+  "uxMoneyPaymentsScope": "Monthly balance · Overdue invoices from all periods.",
   "uxMoneyStatementScope": "Monthly detail for the selected period.",
   "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
   "uxMoneyWorkspaceTools": "Workspace finance tools",

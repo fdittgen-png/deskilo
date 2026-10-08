@@ -18094,7 +18094,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get uxMoneyPaymentsScope =>
-      'Paiements de ce mois. Les demandes sont regroupées séparément ci-dessous.';
+      'Solde du mois · Factures en retard de toutes les périodes.';
 
   @override
   String get uxMoneyStatementScope =>

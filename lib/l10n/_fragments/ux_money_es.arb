@@ -1,6 +1,6 @@
 {
   "uxMoneyStatementScope": "Detalle mensual del período seleccionado.",
-  "uxMoneyPaymentsScope": "Pagos de este mes. Las solicitudes aparecen por separado más abajo.",
+  "uxMoneyPaymentsScope": "Saldo mensual · Facturas vencidas de todos los períodos.",
   "uxMoneyInvoicesScope": "Tus facturas en este espacio · Todos los períodos.",
   "uxMoneyUsageScope": "Reservas y consumos del mes seleccionado.",
   "uxMoneyDocumentsScope": "Informes mensuales y tu acuerdo vigente.",
