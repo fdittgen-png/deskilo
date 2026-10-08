@@ -4,8 +4,9 @@
 // no action here: the database change reaches the open Reserve hub and
 // the seat turns from free to taken. And a booking committed while this
 // device's channel was down still lands, through the resync the channel
-// emits when it comes back (#577). The FakeRealtimeSync stands in for the
-// Supabase channel, as in test/core/realtime_sync_test.dart.
+// emits when it comes back (#577). A ROLE given or taken on another device
+// redraws this one's permissions the same way. The FakeRealtimeSync stands
+// in for the Supabase channel, as in test/core/realtime_sync_test.dart.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/realtime/invalidation_map.dart';
@@ -29,22 +30,34 @@ SeatState? _seat(WidgetTester tester) =>
             as FloorPlanPainter)
         .seatStates?['seat-4'];
 
-Future<({FakeReservationRepository repo, FakeRealtimeSync realtime})> _open(
-  WidgetTester tester,
-) async {
+Future<
+  ({
+    FakeReservationRepository repo,
+    FakeRealtimeSync realtime,
+    FakeWorkspaceRepository workspace,
+  })
+>
+_open(WidgetTester tester, {bool admin = true}) async {
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   final repo = FakeReservationRepository();
   final realtime = FakeRealtimeSync();
+  final workspace = FakeWorkspaceRepository.withWorkspace()
+    ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
+    ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7];
+  if (!admin) {
+    workspace.myMember = workspace.myMember.copyWith(
+      isAdmin: false,
+      isOwner: false,
+    );
+  }
   await tester.pumpWidget(
     ProviderScope(
       overrides: standardTestOverrides(
         floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
         reservations: repo,
-        workspace: FakeWorkspaceRepository.withWorkspace()
-          ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
-          ..openWeekdays['ws-1'] = const [1, 2, 3, 4, 5, 6, 7],
+        workspace: workspace,
         realtime: realtime,
       ),
       child: const DeskiloApp(),
@@ -53,7 +66,7 @@ Future<({FakeReservationRepository repo, FakeRealtimeSync realtime})> _open(
   await tester.pumpAndSettle();
   await tester.tap(find.byType(ShellCenterButton));
   await tester.pumpAndSettle();
-  return (repo: repo, realtime: realtime);
+  return (repo: repo, realtime: realtime, workspace: workspace);
 }
 
 /// Ana's booking of the seat for the whole of today, made elsewhere.
@@ -99,5 +112,24 @@ void main() {
     await _settle(tester);
 
     expect(_seat(tester), SeatState.reserved);
+  });
+
+  testWidgets('a role given and taken elsewhere redraws what this device '
+      'may do', (tester) async {
+    final r = await _open(tester, admin: false);
+    const editor = ValueKey('shell-editor-button');
+    expect(find.byKey(editor), findsNothing);
+
+    // The owner makes this member an admin from their own device.
+    r.workspace.myMember = r.workspace.myMember.copyWith(isAdmin: true);
+    r.realtime.emit('members');
+    await _settle(tester);
+    expect(find.byKey(editor), findsOneWidget);
+
+    // And takes it back.
+    r.workspace.myMember = r.workspace.myMember.copyWith(isAdmin: false);
+    r.realtime.emit('members');
+    await _settle(tester);
+    expect(find.byKey(editor), findsNothing);
   });
 }
