@@ -113,9 +113,10 @@ STRANGER=$(user "stranger-$RUN@deskilo.test") || fail "could not create the stra
 PAYER_JWT=$(token "payer-$RUN@deskilo.test") || fail "the payer could not sign in"
 STRANGER_JWT=$(token "stranger-$RUN@deskilo.test") || fail "the stranger could not sign in"
 
-# A production workspace the payer owns, with Stripe configured.
+# A production workspace the payer owns, with online payments switched on
+# (0393 refuses a new payment while they are off) and Stripe configured.
 WS=$(sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAYER', 'role', 'authenticated')::text, false);
-          select public.create_workspace('Pay check', 'FR', 'EUR', 'Europe/Paris', 'prod', false, null);" | tail -1) \
+          select public.create_workspace('Pay check', 'FR', 'EUR', 'Europe/Paris', 'prod', false, '{\"onlinePayments\": true}'::jsonb);" | tail -1) \
   || fail "could not create the workspace"
 [ -n "$WS" ] || fail "could not create the workspace"
 MEMBER=$(sql "select id from public.members where workspace_id = '$WS' and user_id = '$PAYER'")

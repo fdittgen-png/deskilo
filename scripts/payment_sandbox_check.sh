@@ -206,7 +206,7 @@ JWT=$(curl -s -X POST "$SANDBOX_URL/auth/v1/token?grant_type=password" \
   -d "{\"email\":\"$EMAIL\",\"password\":\"Sandbox-$RUN!\"}" | json "['access_token']") \
   || fail "the payer could not sign in"
 WS=$(sql "select set_config('request.jwt.claims', json_build_object('sub', '$PAYER', 'role', 'authenticated')::text, false);
-          select public.create_workspace('Sandbox $RUN', 'FR', 'EUR', 'Europe/Paris', 'prod', false, null);" | tail -1)
+          select public.create_workspace('Sandbox $RUN', 'FR', 'EUR', 'Europe/Paris', 'prod', false, '{\"onlinePayments\": true}'::jsonb);" | tail -1)
 [ -n "$WS" ] || fail "could not create the fixture workspace"
 MEMBER=$(sql "select id from public.members where workspace_id = '$WS' and user_id = '$PAYER'")
 case "$PROVIDER" in
