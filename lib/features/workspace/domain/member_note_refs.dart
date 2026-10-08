@@ -14,6 +14,9 @@ import '../../reservations/domain/space_code.dart';
 ///   `[quote:<id>|<preview>]`        — the message being replied to
 ///   `[ref:<kind>:<id>|<label>]`     — #842, kind ∈ alert|validation|
 ///                                     invoice|payment|refund
+///   `[at:<id>|<name>]`              — #2216, a mention: a member of the
+///                                     conversation, or an account in a
+///                                     cross-workspace group
 ///
 /// Labels may not contain `]` (the composer strips it); everything
 /// else — emojis included — passes through untouched.
@@ -79,6 +82,18 @@ class NoteRecordRef extends NoteSegment {
   final String label;
 }
 
+/// #2216 — a mention of someone in the conversation. The server keeps
+/// only mentions of people who are in it (0391); anyone else's turns
+/// back into the plain `@name` it reads as.
+class NoteMention extends NoteSegment {
+  const NoteMention({required this.id, required this.name});
+
+  /// A member id in a workspace conversation, an account id in a
+  /// cross-workspace group.
+  final String id;
+  final String name;
+}
+
 /// A space reference — the subject of a future booking.
 class NoteSpaceRef extends NoteSegment {
   const NoteSpaceRef({
@@ -96,7 +111,8 @@ final _refPattern = RegExp(
     r'|quote:(?<qid>[A-Za-z0-9-]{4,})'
     r'|space:(?<kind>seat|desk|office|level):(?<sid>[A-Za-z0-9-]{4,})'
     r'|ref:(?<rkind>alert|validation|invoice|payment|refund)'
-    r':(?<recid>[A-Za-z0-9-]{4,}))'
+    r':(?<recid>[A-Za-z0-9-]{4,})'
+    r'|at:(?<aid>[A-Za-z0-9-]{4,}))'
     r'\|(?<label>[^\]]+)\]');
 
 /// Splits [body] into text and reference segments. A token that does
@@ -113,7 +129,10 @@ List<NoteSegment> parseNoteBody(String body) {
     final rid = match.namedGroup('rid');
     final qid = match.namedGroup('qid');
     final rkind = match.namedGroup('rkind');
-    if (rid != null) {
+    final aid = match.namedGroup('aid');
+    if (aid != null) {
+      segments.add(NoteMention(id: aid, name: label));
+    } else if (rid != null) {
       segments.add(NoteReservationRef(id: rid, label: label));
     } else if (qid != null) {
       segments.add(NoteQuoteRef(id: qid, preview: label));
@@ -147,6 +166,7 @@ String notePlainText(String body) => [
           NoteSpaceRef(:final label) => label,
           NoteRecordRef(:final label) => label,
           NoteQuoteRef(:final preview) => preview,
+          NoteMention(:final name) => '@$name',
         },
     ].join();
 
@@ -170,6 +190,7 @@ String notePreview(String body, {int max = 64}) {
         NoteSpaceRef(:final label) => label,
         NoteRecordRef(:final label) => label,
         NoteQuoteRef(:final preview) => preview,
+        NoteMention(:final name) => '@$name',
       },
   ].join().replaceAll('\n', ' ').trim();
   if (plain.length <= max) return plain;
@@ -210,6 +231,16 @@ String quoteToken(String id, String preview) {
   final oneLine = _safeLabel(preview.replaceAll('\n', ' '));
   return '[quote:$id|${oneLine.length <= 80 ? oneLine : '${oneLine.substring(0, 79)}…'}]';
 }
+
+/// Builds a mention token (#2216) for the person with [id].
+String mentionToken(String id, String name) => '[at:$id|${_safeLabel(name)}]';
+
+/// The ids [body] mentions — whom a message is addressed to beyond the
+/// whole group.
+Set<String> mentionedIds(String body) => {
+      for (final segment in parseNoteBody(body))
+        if (segment is NoteMention) segment.id,
+    };
 
 /// Builds a space token for the composer.
 String spaceToken(SpaceKind kind, String id, String label) =>

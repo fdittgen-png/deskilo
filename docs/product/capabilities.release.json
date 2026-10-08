@@ -1024,6 +1024,12 @@
       "capabilities": []
     },
     {
+      "key": "messageMentions",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "messagesHub",
       "maturity": "unreviewed",
       "lifecycle": "active",

@@ -43,6 +43,7 @@ const _fixture = <String, dynamic>{
   'spaceInquiries': false,
   'messageForwarding': false,
   'captureProtection': false,
+  'messageMentions': false,
 };
 
 Finder _card(String key) => find.byKey(ValueKey('process-$key'));
@@ -88,7 +89,7 @@ void main() {
       _inCard(
         'coordination',
         '0 of 3 subprocesses active · '
-            '0 of 16 features on',
+            '0 of 17 features on',
       ),
       findsOneWidget,
     );

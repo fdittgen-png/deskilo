@@ -658,3 +658,10 @@ Future<List<WorkspaceTemplate>> workspaceTemplates(Ref ref) =>
 /// My development spaces: test data that Me shows apart and never counts.
 @riverpod
 Set<String> myDevelopmentWorkspaceIds(Ref ref) => {for (final w in ref.watch(myWorkspacesProvider).value ?? const <Workspace>[]) if (w.isDevelopment) w.id};
+
+/// #2216 — whether a mention picked in a message names the person for the
+/// server (`[at:id|name]`, notified) or stays the plain `@name`.
+@riverpod
+bool messageMentionsOn(Ref ref) => ref
+    .watch(enabledFeaturesSyncProvider)
+    .contains(WorkspaceFeature.messageMentions);

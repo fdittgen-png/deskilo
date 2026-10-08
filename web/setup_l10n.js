@@ -1089,6 +1089,10 @@ window.SETUP_L10N={
    "guestParticipation": [
     "Guest visits",
     "Lets a person who is not a member ask to visit this space, and someone who manages reservations admit or decline them. A visit creates no membership, subscription or role. Off: nobody asks or is admitted here."
+   ],
+   "messageMentions": [
+    "Mentions in groups",
+    "In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody."
    ]
   },
   "process": {
@@ -2387,6 +2391,10 @@ window.SETUP_L10N={
    "guestParticipation": [
     "Visites d'invités",
     "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici."
+   ],
+   "messageMentions": [
+    "Mentions dans les groupes",
+    "Dans un groupe, on peut mentionner une personne par son nom. Seules les personnes de la conversation peuvent être mentionnées, et la personne mentionnée est notifiée même si elle a mis la conversation en sourdine. Désactivé, un nom écrit après @ reste du texte et ne notifie personne."
    ]
   },
   "process": {
@@ -3685,6 +3693,10 @@ window.SETUP_L10N={
    "guestParticipation": [
     "Gastbesuche",
     "Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen."
+   ],
+   "messageMentions": [
+    "Erwähnungen in Gruppen",
+    "In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden."
    ]
   },
   "process": {
@@ -4983,6 +4995,10 @@ window.SETUP_L10N={
    "guestParticipation": [
     "Visitas de invitados",
     "Permite a una persona que no es miembro pedir visitar este espacio, y a quien gestiona las reservas admitirla o rechazarla. Una visita no crea membresía, suscripción ni rol. Desactivado: nadie pide ni es admitido aquí."
+   ],
+   "messageMentions": [
+    "Menciones en grupos",
+    "En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie."
    ]
   },
   "process": {
@@ -6281,6 +6297,10 @@ window.SETUP_L10N={
    "guestParticipation": [
     "Visite degli ospiti",
     "Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui."
+   ],
+   "messageMentions": [
+    "Menzioni nei gruppi",
+    "In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno."
    ]
   },
   "process": {

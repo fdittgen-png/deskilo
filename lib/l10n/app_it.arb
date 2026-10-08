@@ -3489,6 +3489,14 @@
   },
   "featureMessageGesturesDesc": "Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.",
   "featureMessageGesturesTitle": "Scorri per citare o ritirare",
+  "featureMessageMentionsDesc": "In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
+  },
+  "featureMessageMentionsTitle": "Menzioni nei gruppi",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
   "featureMessagesHubDesc": "Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.",
   "featureMessagesHubTitle": "Messaggi, rinnovati",
   "featureMoneyTab": "Scheda Finanze",

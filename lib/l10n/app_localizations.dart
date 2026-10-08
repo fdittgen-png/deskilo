@@ -8994,6 +8994,18 @@ abstract class AppLocalizations {
   /// **'Swipe to quote or take back'**
   String get featureMessageGesturesTitle;
 
+  /// #2216 messenger flags: featureMessageMentionsDesc
+  ///
+  /// In en, this message translates to:
+  /// **'In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody.'**
+  String get featureMessageMentionsDesc;
+
+  /// #2216 messenger flags: featureMessageMentionsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Mentions in groups'**
+  String get featureMessageMentionsTitle;
+
   /// No description provided for @featureMessagesHubDesc.
   ///
   /// In en, this message translates to:

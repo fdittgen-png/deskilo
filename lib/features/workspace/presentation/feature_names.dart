@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../domain/workspace_feature.dart';
 
 /// Localized display name for a [WorkspaceFeature] (#146) — shared by the
@@ -224,6 +225,9 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureSpaceInquiriesTitle ?? 'Write to the hosts',
       WorkspaceFeature.messageForwarding =>
         l10n?.featureMessageForwardingTitle ?? 'Message forwarding',
+      WorkspaceFeature.messageMentions =>
+        l10n?.featureMessageMentionsTitle ??
+            AppLocalizationsEn().featureMessageMentionsTitle,
       WorkspaceFeature.captureProtection =>
         l10n?.featureCaptureProtectionTitle ?? 'Screen capture protection',
       WorkspaceFeature.holidayImport =>

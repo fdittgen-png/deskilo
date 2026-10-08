@@ -118,6 +118,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.spaceInquiries,
       WorkspaceFeature.messageForwarding,
       WorkspaceFeature.captureProtection,
+      WorkspaceFeature.messageMentions,
     ]),
   ]),
   WorkspaceProcess('membershipCommerce', [

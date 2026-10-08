@@ -5183,6 +5183,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMessageGesturesTitle => 'Scorri per citare o ritirare';
 
   @override
+  String get featureMessageMentionsDesc =>
+      'In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno.';
+
+  @override
+  String get featureMessageMentionsTitle => 'Menzioni nei gruppi';
+
+  @override
   String get featureMessagesHubDesc =>
       'Una sola barra della posta (Tutti / Non letti / Archiviati e ricerca), fissare, silenziare, archiviare e segnare come non letto un thread, la conversazione a pagina intera con separatori di data, un menu allega e una bozza conservata nel compositore, una persona aperta con un tocco. Disattivato: la posta a due barre e il thread in foglio.';
 

@@ -39,6 +39,11 @@ const TEXTS: Record<string, { title: string; body: string }> = {
     title: "DesKilo",
     body: "You have a new message.",
   },
+  // #2216 — someone named you in a group conversation.
+  member_mention: {
+    title: "DesKilo",
+    body: "You were mentioned in a conversation.",
+  },
   // #726 — automatic dunning: the subject member, nobody else.
   invoice_reminder: {
     title: "DesKilo",
@@ -87,6 +92,16 @@ export function dropMuted<T extends { id: string }>(
 ): T[] {
   const muted = new Set(mutedIds);
   return recipients.filter((r) => !muted.has(r.id));
+}
+
+/** #2216 — the muted who still ring: a mention reaches its person even
+ * in a conversation they muted, which is what a mention is for. */
+export function mutedExceptMentioned(
+  mutedIds: Iterable<string>,
+  mentionedIds: Iterable<string>,
+): string[] {
+  const mentioned = new Set(mentionedIds);
+  return [...mutedIds].filter((id) => !mentioned.has(id));
 }
 
 export function chunked<T>(items: T[], size = 100): T[][] {
@@ -268,6 +283,9 @@ async function deliver(req: Request): Promise<Response> {
 
   let kind: string;
   let recipients: { id: string }[];
+  // #2216 — the members a group message mentions (0391; empty while the
+  // workspace has messageMentions off).
+  let mentioned = new Set<string>();
   if (note_id) {
     // Member note (#456): load it ourselves — recipient is the target;
     // a GROUP message (#1822) goes to the conversation's current
@@ -309,8 +327,13 @@ async function deliver(req: Request): Promise<Response> {
       );
       recipients = admins.filter((m) => m.is_admin || m.is_owner);
     }
+    if (note.conversation_id) {
+      const { data: ids } = await supabase.rpc("note_push_mentions", { p_note: note.id });
+      mentioned = new Set((ids ?? []) as string[]);
+    }
     // A conversation someone muted (0146, #2216) does not ring for them: the
-    // message is still delivered and counted, only the push is silent.
+    // message is still delivered and counted, only the push is silent —
+    // unless the message mentions them.
     if (note.conversation_id && recipients.length > 0) {
       const { data: muted } = await supabase
         .from("conversation_participants")
@@ -320,7 +343,10 @@ async function deliver(req: Request): Promise<Response> {
         .is("left_at", null);
       recipients = dropMuted(
         recipients,
-        (muted ?? []).map((m: { member_id: string }) => m.member_id),
+        mutedExceptMentioned(
+          (muted ?? []).map((m: { member_id: string }) => m.member_id),
+          mentioned,
+        ),
       );
     }
   } else {
@@ -384,16 +410,18 @@ async function deliver(req: Request): Promise<Response> {
   if (endpoints.length === 0) return Response.json({ sent: 0 });
 
   const token = await cachedAccessToken(sa);
-  const text = TEXTS[kind];
+
   // iOS/macOS badge: each recipient's live pending count, once per member.
   const badges = await badgeCounts(supabase, endpoints.map((ep) => ep.member_id));
   const results = await deliverAll(endpoints, async (ep) => {
     const badge = badges.get(ep.member_id);
+    const epKind = mentioned.has(ep.member_id) ? "member_mention" : kind;
+    const text = TEXTS[epKind];
     const message = {
       message: {
         token: ep.endpoint.slice(4),
         notification: { title: text.title, body: text.body },
-        data: { kind },
+        data: { kind: epKind },
         ...(badge === undefined ? {} : { apns: { payload: { aps: { badge } } } }),
       },
     };

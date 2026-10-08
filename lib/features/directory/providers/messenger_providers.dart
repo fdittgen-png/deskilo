@@ -111,3 +111,7 @@ Future<List<HostRosterEntry>> hostRoster(
 @riverpod
 Future<List<InquirySummary>> workspaceInquiries(Ref ref, String workspace) =>
     ref.watch(messengerRepositoryProvider()).workspaceInquiries(workspace);
+
+/// #2216 — the signed-in account, which a group mention names.
+@riverpod
+String? myAccountId(Ref ref) => ref.watch(authStateProvider).value;

@@ -353,7 +353,14 @@ enum WorkspaceFeature {
   /// created by it. Gates asking and admitting on this workspace; a
   /// person's own visits are theirs to read whatever the flag says. Core,
   /// default OFF: a space admits guests deliberately.
-  guestParticipation;
+  guestParticipation,
+
+  /// #2216 — mentions in group conversations: picking someone puts a
+  /// mention of that person in the message, the server accepts only
+  /// people who are in the conversation, and the person mentioned is
+  /// notified even when they muted it. Core, default ON, under
+  /// memberNotifications; OFF writes a plain `@Name` that notifies nobody.
+  messageMentions;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1469,6 +1476,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.members,
     tier: FeatureTier.core,
     defaultOn: false,
+  ),
+  // #2216 — a mention is part of a message: nothing without the messenger.
+  WorkspaceFeature.messageMentions: FeatureManifestEntry(
+    feature: WorkspaceFeature.messageMentions,
+    surface: FeatureSurface.messages,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.memberNotifications,
   ),
 };
 

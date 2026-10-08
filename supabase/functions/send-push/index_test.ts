@@ -16,6 +16,7 @@ import {
   CONCURRENCY,
   deliverAll,
   dropMuted,
+  mutedExceptMentioned,
   isUnregistered,
   readAll,
   resetTokenCacheForTests,
@@ -185,3 +186,14 @@ Deno.test("a muted conversation does not ring for the member who muted it (#2216
   assertEquals(dropMuted(all, []), all);
   assertEquals(dropMuted(all, ["a", "b", "c"]), []);
 });
+
+Deno.test("#2216 — a mention rings through a mute; the rest stays silent", () => {
+  const all = [{ id: "a" }, { id: "b" }, { id: "c" }];
+  // b and c muted the conversation; the message mentions c.
+  const muted = mutedExceptMentioned(["b", "c"], ["c"]);
+  assertEquals(muted, ["b"]);
+  assertEquals(dropMuted(all, muted), [{ id: "a" }, { id: "c" }]);
+  // No mention: every mute holds.
+  assertEquals(mutedExceptMentioned(["b", "c"], []), ["b", "c"]);
+});
+

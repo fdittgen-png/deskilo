@@ -5190,6 +5190,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wischen zum Zitieren oder Zurücknehmen';
 
   @override
+  String get featureMessageMentionsDesc =>
+      'In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden.';
+
+  @override
+  String get featureMessageMentionsTitle => 'Erwähnungen in Gruppen';
+
+  @override
   String get featureMessagesHubDesc =>
       'Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.';
 

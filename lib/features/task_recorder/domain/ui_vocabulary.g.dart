@@ -4115,6 +4115,8 @@ const Set<String> uiLabelKeys = {
   'featureMessageForwardingTitle',
   'featureMessageGesturesDesc',
   'featureMessageGesturesTitle',
+  'featureMessageMentionsDesc',
+  'featureMessageMentionsTitle',
   'featureMessagesHubDesc',
   'featureMessagesHubTitle',
   'featureMoneyTab',

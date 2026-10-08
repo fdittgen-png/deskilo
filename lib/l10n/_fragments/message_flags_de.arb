@@ -23,5 +23,13 @@
   "featureCaptureProtectionDesc": "Nachrichtenbildschirme verweigern Bildschirmfotos und Bildschirmaufnahmen, wo das Gerät es erlaubt, verbergen ihren Inhalt während einer Aufnahme und melden ein Bildschirmfoto im Gespräch, wo es nur erkannt werden kann. Ein Browser kann Bildschirmfotos nicht verhindern; dort wird das Gespräch unscharf, sobald der Tab den Fokus verliert.",
   "@featureCaptureProtectionDesc": {
     "description": "#1824 messenger flags: featureCaptureProtectionDesc"
+  },
+  "featureMessageMentionsTitle": "Erwähnungen in Gruppen",
+  "@featureMessageMentionsTitle": {
+    "description": "#2216 messenger flags: featureMessageMentionsTitle"
+  },
+  "featureMessageMentionsDesc": "In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden.",
+  "@featureMessageMentionsDesc": {
+    "description": "#2216 messenger flags: featureMessageMentionsDesc"
   }
 }
