@@ -1,0 +1,9 @@
+{
+  "uxMoneyStatementScope": "Monatsübersicht für den gewählten Zeitraum.",
+  "uxMoneyPaymentsScope": "Zahlungen für diesen Monat. Anfragen stehen getrennt darunter.",
+  "uxMoneyInvoicesScope": "Ihre Rechnungen in diesem Workspace · Alle Zeiträume.",
+  "uxMoneyUsageScope": "Buchungen und Verbrauch im gewählten Monat.",
+  "uxMoneyDocumentsScope": "Monatsberichte und Ihre aktuelle Vereinbarung.",
+  "uxMoneyAllPeriods": "Alle Zeiträume · Guthaben, offene Rechnungen und Erstattungen.",
+  "uxMoneyWorkspaceTools": "Finanzverwaltung des Workspaces"
+}

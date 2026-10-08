@@ -1,6 +1,6 @@
 {
   "financesAllSpaces": "All spaces",
-  "financesLinkTitle": "Your documents live in Me",
+  "financesLinkTitle": "Your finances across spaces",
   "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {

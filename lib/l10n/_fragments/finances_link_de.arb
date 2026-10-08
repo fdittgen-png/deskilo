@@ -1,6 +1,6 @@
 {
   "financesAllSpaces": "Alle Spaces",
-  "financesLinkTitle": "Ihre Dokumente liegen in Ich",
+  "financesLinkTitle": "Ihre Finanzen in allen Workspaces",
   "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.",
   "financesLinkAction": "Für {space} öffnen",
   "@financesLinkAction": {

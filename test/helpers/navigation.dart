@@ -121,3 +121,15 @@ Future<void> openWorkspaceChats(WidgetTester tester) async {
   );
   await tester.pumpAndSettle();
 }
+
+/// Open the finance tools disclosure before following an existing invoice route.
+Future<void> openMoneyWorkspaceTools(WidgetTester tester) async {
+  final tools = find.byKey(const ValueKey('money-workspace-tools'));
+  if (tools.evaluate().isNotEmpty &&
+      find.byKey(const ValueKey('invoices-button')).evaluate().isEmpty) {
+    await tester.ensureVisible(tools);
+    await tester.pumpAndSettle();
+    await tester.tap(tools);
+    await tester.pumpAndSettle();
+  }
+}

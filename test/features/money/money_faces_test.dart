@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #720 — the Finances tab as four faces: Statement, Payments, Invoices,
-// Documents. Each face shows ITS cards and ITS actions and nothing of
-// the others; the period chooser is shared; a deep link picks the face
+// Documents. Monthly faces share the period chooser; invoices cover all
+// periods. Each face retains its existing cards and actions; a deep link picks the face
 // through the controller; the flag off restores the single column.
 // #726 — an invoice past the workspace's term reads overdue on the
 // Payments and Invoices faces, with the way to settle it.
@@ -56,6 +56,10 @@ void main() {
     expect(find.byKey(const ValueKey('money-invoice-summary')), findsOneWidget);
     expect(find.text('Nothing open — you are up to date.'), findsOneWidget);
     expect(find.byKey(const ValueKey('my-invoices-empty')), findsOneWidget);
+    final tools = find.byKey(const ValueKey('money-workspace-tools'));
+    expect(tools, findsOneWidget);
+    await tester.tap(tools);
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoices-button')), findsOneWidget);
     expect(find.byKey(const ValueKey('money-overdue-banner')), findsNothing);
   });
@@ -79,14 +83,14 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('past the term the invoice is overdue on both faces (#726)',
+  testWidgets('overdue detail is retained without a duplicate invoice banner',
       (tester) async {
     final money = FakeMoneyRepository()
       ..dunningRules = const DunningRules(firstAfterDays: 14);
     await openInvoice(money, ageDays: 20);
     await pumpFaces(tester, money: money);
     await face(tester, MoneyFace.invoices);
-    expect(find.byKey(const ValueKey('money-overdue-banner')), findsOneWidget);
+    expect(find.byKey(const ValueKey('money-overdue-banner')), findsNothing);
     expect(find.textContaining('Overdue by 6 days'), findsOneWidget);
     await face(tester, MoneyFace.payments);
     expect(find.byKey(const ValueKey('money-overdue-banner')), findsOneWidget);
@@ -158,6 +162,64 @@ void main() {
     expect(find.text(label), findsOneWidget);
     await face(tester, MoneyFace.payments);
     expect(find.text(label), findsOneWidget);
+  });
+
+  testWidgets('invoices are all-period and workspace tools open the existing hub', (tester) async {
+    await pumpFaces(tester);
+    await face(tester, MoneyFace.invoices);
+    expect(find.byIcon(Icons.chevron_left), findsNothing);
+    expect(find.byIcon(Icons.picture_as_pdf_outlined), findsNothing);
+    expect(find.text('Your invoices in this workspace · All periods.'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('money-workspace-tools')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoices-button')));
+    await tester.pumpAndSettle();
+    expect(find.text('To invoice'), findsOneWidget);
+  });
+
+  testWidgets('narrow tabs retain full labels and the document destination is reachable', (tester) async {
+    await pumpFaces(tester, size: const Size(320, 800));
+    expect(tester.takeException(), isNull);
+    final tabs = find.byKey(const ValueKey('money-faces'));
+    expect(find.descendant(of: tabs, matching: find.byType(FittedBox)), findsNothing);
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('money-face-documents')), 180,
+      scrollable: find.descendant(of: tabs, matching: find.byType(Scrollable)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('money-face-documents')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('money-face-body-documents')), findsOneWidget);
+  });
+
+  testWidgets('the account summary discloses unchanged credit and past-invoice details', (tester) async {
+    final money = FakeMoneyRepository();
+    await openInvoice(money);
+    money.invoices[0] = money.invoices[0].copyWith(period: '2026-04');
+    money.seedCreditNote('member-1', 30000);
+    final account = await money.fetchMemberAccount('member-1');
+    await pumpFaces(tester, money: money);
+    final details = find.byKey(const ValueKey('money-account-details'));
+    await tester.scrollUntilVisible(details, 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.text('All periods · Credit, open invoices and refunds.'), findsOneWidget);
+    expect(find.text('Net position'), findsNothing);
+    await tester.tap(details);
+    await tester.pumpAndSettle();
+    expect(find.text('Credit on account'), findsOneWidget);
+    expect(find.text(money.invoices.single.number), findsOneWidget);
+    expect(find.text('2026-04'), findsOneWidget);
+    expect(find.text('Net position'), findsOneWidget);
+    expect(account.openInvoices.single.remainingCents, money.invoices.single.totalCents);
+  });
+
+  testWidgets('every Money destination remains readable at 320 dp and doubled text', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await pumpFaces(tester, size: const Size(320, 800));
+    expect(tester.takeException(), isNull);
+    for (final destination in MoneyFace.values) {
+      await face(tester, destination);
+      expect(tester.takeException(), isNull, reason: destination.name);
+    }
   });
 
   testWidgets('the flag off keeps the single column', (tester) async {

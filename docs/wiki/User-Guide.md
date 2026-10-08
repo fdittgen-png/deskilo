@@ -1326,7 +1326,7 @@ A member can also have **no subscription** — a visitor who comes now and then 
 - **Requests** — **Submit an expense** (bought coffee for the space? another admin approves it — no self-approval — and it credits your statement), **Request extra half-days**, **Add a consumption** (owner-defined services — lockers, printing… — you confirm what you consumed).
 - **Documents** — **Invoices** (yours are always readable here: positions, balance, status — and for issuers the invoicing hub, §11), **My conditions** (which renders the document titled *Financial agreement*) and the **monthly payments report**, self-service (§11).
 
-Finances has **four faces** along the top — **Statement · Payments · Invoices · Documents** (§9c–9f) — sharing the **‹ month ›** chooser and the **PDF** button; the shield, the bell and the gear sit in the app bar as everywhere else.
+Finances has **five destinations**: **Statement · Payments · Invoices · Usage · Documents**. The month chooser and statement PDF belong to the monthly views; **Invoices covers all periods** and has no month selector. Full tab labels scroll when needed on a small screen.
 
 <!-- anchor: user.badges.nfc -->
 #### NFC badge check-in
@@ -1339,7 +1339,7 @@ does the same job.
 ### 9a. Once the month is invoiced, the invoice decides
 
 - Your bill shows an **invoice card** — number, state, total, what's paid, what remains — and the month reads **settled** as soon as the invoice is paid, its remainder cancelled, or its credit note refunded, even when the settling payment was recorded in a later month. A **partially paid** invoice keeps the month outstanding at exactly the **remaining** amount (that's also what *Pay online* charges). A **credit note** month shows what the workspace owes you back — nothing to pay on your side.
-- **Your account** — when you hold spare credit (an avoir, or payments left over from a past month), the Finances tab shows your real cross-month position above the bill: **credit on account**, every **open invoice** with its remaining amount, refunds the workspace owes, and the resulting **net position**. Your credit can settle open invoices — the workspace applies it when matching payments (imputation). Months before your membership began owe nothing and never read outstanding.
+- **Your account** — when you hold spare credit (an avoir, or payments left over from a past month), the Finances tab shows your real cross-month position in an expandable account summary below the monthly detail: **credit on account**, every **open invoice** with its remaining amount, refunds the workspace owes, and the resulting **net position**. Your credit can settle open invoices — the workspace applies it when matching payments (imputation). Months before your membership began owe nothing and never read outstanding.
 
 ### 9b. Quick view, save, share — every report
 
@@ -1351,11 +1351,11 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 ### 9c. The Statement face
 
-**The month as it stands.** Your account (the real cross-month position), the **This month** card (days included, used, left), the **subscription** card, **consumed services**, **accessory and space supplements**, **day packages**, **open positions** still awaiting validation, **payments & credits**, the month's **invoice card** once invoiced (§9a) and the **balance**. Read-only: nothing to press here except the **‹ month ›** chooser, shared by all faces.
+**The selected month first.** Days included, used and left, subscription, consumed services and supplements, packages, pending positions, credits, the issued invoice and its balance describe the selected period. Below this detail, expand **Your account** to read credit, open invoices and refunds across **all periods**. Its net position is separate from the monthly balance. Negotiated prices are in **Documents**, beside your current agreement.
 
 <p><img src="images/statement-account.jpg" width="240"></p>
 
-*The top of the Statement: your account (the real cross-month position) and your negotiated conditions — the tariff beside your prices, with Who can see.*
+*Examples of account details and negotiated prices. Expand Your account under the monthly detail; find negotiated prices in Documents.*
 
 <p><img src="images/statement-balance.jpg" width="240"></p>
 
@@ -1363,7 +1363,7 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 ### 9d. The Payments face
 
-**Settle and ask.** An **overdue strip** when an invoice is past the workspace's payment term (§11e), the **balance**, the **payment instructions** and **Pay online** while something is owed, then the actions: **Record a payment**, **Buy a package** (package plans), **Submit an expense**, **Request extra half-days**, **Add a consumption**.
+**Pay, then requests.** The overdue notice, monthly balance, payment instructions, online payment and recorded-payment actions form the payment group. **Requests** separately groups expenses, scheduled expenses, extra half-days and consumption. The link to all your spaces comes after these actions.
 
 **Supplies (#731).** Bought coffee capsules or vacuum bags for the space? In **Submit an expense**, switch on *This is a supply for the space*, name the item (or pick an existing one), the quantity and what one consumption will cost (prefilled from amount ÷ quantity). Once the expense is validated you are reimbursed as usual **and** the item goes on the shelf as a consumable service with that stock; members who use it add a consumption and pay for it, the stock counts down, and at zero the item cannot be consumed until the next supply. Feature *Supplies from expenses* (needs Services).
 
@@ -1373,7 +1373,7 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 ### 9e. The Invoices face
 
-**What was I invoiced?** A headline card — *nothing open, you are up to date*, or *N open · amount due*, with overdue count — then **every invoice issued to you**, newest first, each with its status chip, **due in N days** or **overdue by N days**, how often it was reminded, and a **pay** button that jumps to the Payments face; tap a row for the detail sheet with quick view, PDF and share. Issuers find the **Invoices** button to the register (§11).
+**Your invoices · All periods.** The summary shows open amounts and overdue counts once, followed by every invoice issued to you, newest first. The selected monthly statement does not filter this archive. Expand **Workspace finance tools** above the summary for the existing invoice register, workspace status and cost-sharing entries available to your role and enabled features. Invoice rows still open their detail sheet, documents and payment destination.
 
 **The journey (#812).** Every row also carries the invoice's **journey bar** — *Issued · Payment · Confirmation · Closed*, the current step ringed — and **your move** in one sentence: *pay X by date*, *you declared X — the workspace is confirming it*, *your payment is registered — the workspace matches it*, *paid on … — closed*. **How it works** on the headline card opens the four steps with what the workspace does and what you do. Feature *The journey of an invoice* (under Invoices).
 
@@ -1391,7 +1391,7 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 ### 9g. Price negotiations
 
-**The tariff is the default; your deal is yours.** An owner or a finance admin can propose a **price negotiation** for a member — a monthly fee, an overage rate per half-day, a discount on the supplements (accessories, whole-space reservations) — each optional, the tariff where absent. The proposal lands in Événements for the rule's validators (*Price negotiation* domain, or the default rule); once confirmed it applies from the chosen month and supersedes the previous deal. On your **Relevé** face the card *My negotiated prices* shows the tariff struck through beside your prices, since when, and **Who can see this**: you, the owners and the finance admins — every read by someone else is logged and listed there (§14). Feature *Price negotiations*.
+**The tariff is the default; your deal is yours.** An owner or a finance admin can propose a **price negotiation** for a member — a monthly fee, an overage rate per half-day, a discount on the supplements (accessories, whole-space reservations) — each optional, the tariff where absent. The proposal lands in Événements for the rule's validators (*Price negotiation* domain, or the default rule); once confirmed it applies from the chosen month and supersedes the previous deal. In **Documents** the card *My negotiated prices* shows the tariff struck through beside your prices, since when, and **Who can see this**: you, the owners and the finance admins — every read by someone else is logged and listed there (§14). Feature *Price negotiations*.
 
 **Services, packages and the occupation (#744).** The deal can also fix the **occupation** — the percentage of open days included each month, negotiated together with its price (applied to the member once validated, the previous value shown beside it) — and a **unit price per service and per package**: a consumption or a package purchase is charged at the member's price, the catalogue price shown struck through in the sheets and on the card.
 

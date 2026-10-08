@@ -8,6 +8,7 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 
@@ -32,20 +33,10 @@ Widget moneySectionLabel(BuildContext context, String text) => Padding(
       ),
     );
 
-/// A label that never wraps: it shrinks to the width it is given and,
-/// beyond that, ends in an ellipsis (#902).
-Widget fittedLabel(String text) => FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Text(
-        text,
-        maxLines: 1,
-        softWrap: false,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
+/// Action labels wrap at the user's chosen text size.
+Widget fittedLabel(String text) => Text(text, textAlign: TextAlign.center);
 
-/// Two buttons per row on a phone, wrapping; each cell half the width.
+/// Actions use one column when width or enlarged text needs it.
 class MoneyActionGrid extends StatelessWidget {
   const MoneyActionGrid(this.buttons, {super.key});
 
@@ -54,7 +45,10 @@ class MoneyActionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (context, constraints) {
-          final buttonWidth = (constraints.maxWidth - AppSpacing.sm) / 2;
+          final singleColumn = constraints.maxWidth < 480 ||
+              MediaQuery.textScalerOf(context).scale(100) > 130;
+          final buttonWidth = singleColumn ? constraints.maxWidth
+              : (constraints.maxWidth - AppSpacing.sm) / 2;
           return Wrap(
             spacing: AppSpacing.sm,
             runSpacing: AppSpacing.sm,
@@ -117,11 +111,9 @@ HelpHintId moneyFaceHint(MoneyFace face) => switch (face) {
       MoneyFace.documents => HelpHintId.moneyDocuments,
     };
 
-/// #720 — the Finances tab as three faces under one shared period
-/// chooser. The screen builds the pieces (it owns the sheets and the
-/// providers); this widget owns the TAB and the layout: a column in
-/// portrait, the #486 split in landscape (header, balance and the
-/// face's actions left; the face's cards right).
+/// Finances destinations: monthly views share a period chooser; invoices
+/// cover all periods. The screen owns providers and actions; this widget
+/// owns the tabs and responsive layout (actions left, cards right when wide).
 ///
 /// WHY THE TAB LIVES IN A PROVIDER. A calendar row that lands on a
 /// payment wants the Payments face; an invoice link the Invoices face.
@@ -131,13 +123,11 @@ class MoneyFacesView extends ConsumerStatefulWidget {
   const MoneyFacesView({
     super.key,
     required this.periodHeader,
-    required this.balanceCard,
     required this.cards,
     required this.actions,
   });
 
   final Widget periodHeader;
-  final Widget balanceCard;
   final Map<MoneyFace, List<Widget>> cards;
   final Map<MoneyFace, List<Widget>> actions;
 
@@ -182,21 +172,42 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     final actions = widget.actions[face] ?? const <Widget>[];
     final hint = HelpHint(moneyFaceHint(face), key: ValueKey('money-hint-${face.name}'));
 
-    final tabs = TabBar(
+    final labels = l10n ?? AppLocalizationsEn();
+    final scope = switch (face) {
+      MoneyFace.statement =>
+        labels.uxMoneyStatementScope,
+      MoneyFace.payments =>
+        labels.uxMoneyPaymentsScope,
+      MoneyFace.invoices =>
+        labels.uxMoneyInvoicesScope,
+      MoneyFace.usage =>
+        labels.uxMoneyUsageScope,
+      MoneyFace.documents =>
+        labels.uxMoneyDocumentsScope,
+    };
+    final scopeHeader = Padding(
+      key: ValueKey('money-scope-${face.name}'),
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Text(scope, style: Theme.of(context).textTheme.bodyMedium),
+    );
+    final monthly = face != MoneyFace.invoices;
+
+    final tabs = LayoutBuilder(builder: (context, constraints) => TabBar(
       key: const ValueKey('money-faces'),
       controller: _controller,
-      // #902 — a label NEVER wraps: "Documents" broke into "Document"
-      // + "s". It shrinks to fit its tab and, at the very worst, loses
-      // its last letters to an ellipsis.
-      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+      // Scroll when full labels need more space; preserve their text size.
+      isScrollable: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130,
+      tabAlignment: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130
+          ? TabAlignment.start : TabAlignment.fill,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 16),
       tabs: [
         for (final f in MoneyFace.values)
           Tab(
             key: ValueKey('money-face-${f.name}'),
-            child: fittedLabel(moneyFaceLabel(l10n, f)),
+            child: Text(moneyFaceLabel(l10n, f)),
           ),
       ],
-    );
+    ));
 
     return Column(
       children: [
@@ -214,9 +225,9 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            scopeHeader,
+                            if (monthly) widget.periodHeader,
                             hint,
-                            widget.periodHeader,
-                            if (face == MoneyFace.payments) widget.balanceCard,
                             ...actions,
                           ],
                         ),
@@ -236,7 +247,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
               return ListView(
                 key: ValueKey('money-face-body-${face.name}'),
                 padding: AppSpacing.mdAll,
-                children: [hint, widget.periodHeader, ...cards, ...actions],
+                children: [scopeHeader, if (monthly) widget.periodHeader, hint, ...cards, ...actions],
               );
             },
           ),
