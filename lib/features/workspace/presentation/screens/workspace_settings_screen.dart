@@ -22,7 +22,6 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/share/file_sharer.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -1005,9 +1004,7 @@ class _WorkspaceSettingsScreenState
           ? const LoadingView()
           : Form(
               key: _formKey,
-              child: SingleChildScrollView(
-                padding: AppSpacing.gutterAll,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              child: WorkspaceFormSections(children: [
                   const AdminVisibilityTile(),
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
@@ -1017,8 +1014,7 @@ class _WorkspaceSettingsScreenState
                   WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber,
                     children: _dangerZoneTiles(context, l10n: l10n, workspace: workspace)),
                   const HelpHint(HelpHintId.workspaceSettings),
-                ]),
-              ),
+              ]),
             ),
       bottomNavigationBar: workspace == null ? null : WorkspaceSettingsSaveBar(busy: _busy, onSave: () => _save(workspace.id)),
     );

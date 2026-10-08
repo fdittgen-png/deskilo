@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
@@ -33,6 +34,15 @@ class WorkspaceFormGroup extends StatefulWidget {
 
 class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
   final _controller = ExpansibleController();
+  final _headingFocus = FocusNode(skipTraversal: true);
+  Future<void> open() async {
+    _controller.expand();
+    _headingFocus.requestFocus();
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted) return;
+    await Scrollable.ensureVisible(context,
+      duration: motionDuration(context, MotionTokens.standard));
+  }
   Future<void> reveal(FormFieldState<Object?> field, bool wasClosed) async {
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted || !field.mounted) return;
@@ -45,7 +55,7 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
       alignment: 0.1);
   }
   @override
-  void dispose() { _controller.dispose(); super.dispose(); }
+  void dispose() { _controller.dispose(); _headingFocus.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -53,12 +63,46 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
       controller: _controller, maintainState: true,
       onExpansionChanged: (open) { if (!open) FocusScope.of(context).unfocus(); setState(() {}); },
       initiallyExpanded: widget.initiallyExpanded,
-      leading: Icon(widget.icon), title: Text(widget.title),
+      leading: Icon(widget.icon), title: Focus(focusNode: _headingFocus, child: Text(widget.title)),
       childrenPadding: AppSpacing.gutterAll,
       children: [TickerMode(enabled: _controller.isExpanded,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
           children: widget.children))]),
   );
+}
+
+/// Shortcuts stay visible; content remains one draft-preserving form.
+class WorkspaceFormSections extends StatefulWidget {
+  const WorkspaceFormSections({required this.children, super.key});
+  final List<Widget> children;
+  @override
+  State<WorkspaceFormSections> createState() => _WorkspaceFormSectionsState();
+}
+
+class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
+  final _groups = <String, GlobalKey<_WorkspaceFormGroupState>>{};
+  @override
+  Widget build(BuildContext context) {
+    final groups = widget.children.whereType<WorkspaceFormGroup>().toList();
+    for (final group in groups) {
+      _groups.putIfAbsent(group.id, GlobalKey<_WorkspaceFormGroupState>.new);
+    }
+    return Column(children: [
+      Padding(padding: AppSpacing.smAll, child: Wrap(spacing: AppSpacing.xs,
+        children: [for (final group in groups) TextButton(
+          key: ValueKey('workspace-section-${group.id}'),
+          onPressed: () => _groups[group.id]?.currentState?.open(),
+          child: Text(group.title))])),
+      Expanded(child: SingleChildScrollView(padding: AppSpacing.gutterAll,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          for (final child in widget.children)
+            if (child is WorkspaceFormGroup) WorkspaceFormGroup(key: _groups[child.id],
+              id: child.id, title: child.title, icon: child.icon,
+              initiallyExpanded: child.initiallyExpanded, children: child.children)
+            else child,
+        ]))),
+    ]);
+  }
 }
 
 class WorkspaceSettingsSaveBar extends StatelessWidget {

@@ -92,7 +92,8 @@ void main() {
     expect(find.byKey(const Key('workspaceSettingsWhatsappGroup')), findsNothing);
     expect(find.byKey(const Key('workspaceSettingsSave')), findsOneWidget);
     expect(tester.getRect(find.byKey(const Key('workspaceSettingsSave'))).bottom, lessThanOrEqualTo(1100));
-    await toggleWorkspaceSettingsGroup(tester, 'community');
+    await tester.tap(find.byKey(const ValueKey('workspace-section-community')));
+    await tester.pumpAndSettle();
     final whatsapp = find.byKey(const Key('workspaceSettingsWhatsappGroup'));
     await tester.ensureVisible(whatsapp);
     await tester.pumpAndSettle();
