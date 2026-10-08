@@ -39,4 +39,15 @@ abstract interface class MeRepository {
   /// My spaces on the linked server [source], read with that server's
   /// own session.
   Future<List<LinkedSpace>> spacesOn(String source);
+
+  /// #2211 — `my_visibility()` on the linked server [source], for the
+  /// account I have there: what people on that server see of me.
+  Future<MyVisibility> myVisibilityOn(String source);
+
+  /// #2211 — `set_visibility` on the linked server [source].
+  Future<void> setVisibilityOn(
+    String source,
+    VisibilityField field,
+    FieldAudience audience,
+  );
 }

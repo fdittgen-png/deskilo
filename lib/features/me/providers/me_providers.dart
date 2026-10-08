@@ -42,6 +42,11 @@ Future<AccountView> visibilityPreview(Ref ref, PreviewAudience audience) {
   return ref.watch(meRepositoryProvider).previewMyAccount(audience);
 }
 
+/// #2211 — who sees what of me on the linked server [source].
+@riverpod
+Future<MyVisibility> linkedVisibility(Ref ref, String source) =>
+    ref.watch(meRepositoryProvider).myVisibilityOn(source);
+
 /// My spaces on every linked server. A server that does not answer is
 /// reported as such — the list is then incomplete, never silently short.
 @riverpod

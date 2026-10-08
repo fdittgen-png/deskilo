@@ -31784,6 +31784,18 @@ abstract class AppLocalizations {
   /// **'WhatsApp and e-mail'**
   String get visibilityContact;
 
+  /// #2211 who sees me on a connected server: visibilityElsewhereIntro
+  ///
+  /// In en, this message translates to:
+  /// **'On a connected server you have that server\'s own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.'**
+  String get visibilityElsewhereIntro;
+
+  /// #2211 who sees me on a connected server: visibilityElsewhereTitle
+  ///
+  /// In en, this message translates to:
+  /// **'On my other servers'**
+  String get visibilityElsewhereTitle;
+
   /// Visibility field: name and photo.
   ///
   /// In en, this message translates to:
@@ -31807,6 +31819,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nobody'**
   String get visibilityNobody;
+
+  /// #2211 who sees me on a connected server: visibilityOnServer
+  ///
+  /// In en, this message translates to:
+  /// **'Who sees me on {host}'**
+  String visibilityOnServer(String host);
+
+  /// #2211 who sees me on a connected server: visibilityOnServerUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'{host} did not answer. Try again later.'**
+  String visibilityOnServerUnavailable(String host);
 
   /// Visibility field: presence in a space today.
   ///

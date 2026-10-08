@@ -1,0 +1,20 @@
+{
+  "visibilityElsewhereTitle": "En mis otros servidores",
+  "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
+  "visibilityOnServer": "Quién me ve en {host}",
+  "@visibilityOnServer": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityOnServerUnavailable": "{host} no respondió. Inténtelo más tarde.",
+  "@visibilityOnServerUnavailable": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  }
+}

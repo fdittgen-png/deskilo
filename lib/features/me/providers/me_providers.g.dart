@@ -223,6 +223,90 @@ final class VisibilityPreviewFamily extends $Family
   String toString() => r'visibilityPreviewProvider';
 }
 
+/// #2211 — who sees what of me on the linked server [source].
+
+@ProviderFor(linkedVisibility)
+final linkedVisibilityProvider = LinkedVisibilityFamily._();
+
+/// #2211 — who sees what of me on the linked server [source].
+
+final class LinkedVisibilityProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<MyVisibility>,
+          MyVisibility,
+          FutureOr<MyVisibility>
+        >
+    with $FutureModifier<MyVisibility>, $FutureProvider<MyVisibility> {
+  /// #2211 — who sees what of me on the linked server [source].
+  LinkedVisibilityProvider._({
+    required LinkedVisibilityFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'linkedVisibilityProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$linkedVisibilityHash();
+
+  @override
+  String toString() {
+    return r'linkedVisibilityProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<MyVisibility> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<MyVisibility> create(Ref ref) {
+    final argument = this.argument as String;
+    return linkedVisibility(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is LinkedVisibilityProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$linkedVisibilityHash() => r'630733fcf5962e0702559f0018bf46f398faeee4';
+
+/// #2211 — who sees what of me on the linked server [source].
+
+final class LinkedVisibilityFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<MyVisibility>, String> {
+  LinkedVisibilityFamily._()
+    : super(
+        retry: null,
+        name: r'linkedVisibilityProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #2211 — who sees what of me on the linked server [source].
+
+  LinkedVisibilityProvider call(String source) =>
+      LinkedVisibilityProvider._(argument: source, from: this);
+
+  @override
+  String toString() => r'linkedVisibilityProvider';
+}
+
 /// My spaces on every linked server. A server that does not answer is
 /// reported as such — the list is then incomplete, never silently short.
 

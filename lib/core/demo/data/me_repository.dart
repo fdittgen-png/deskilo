@@ -176,4 +176,30 @@ class FakeMeRepository implements MeRepository {
     if (unavailable.contains(source)) throw StateError('server unavailable');
     return linkedSpaces[source] ?? const [];
   }
+
+  /// #2211 — my visibility on each linked server, by source.
+  final Map<String, MyVisibility> linkedVisibility = {};
+
+  @override
+  Future<MyVisibility> myVisibilityOn(String source) async {
+    if (unavailable.contains(source)) throw StateError('server unavailable');
+    return linkedVisibility[source] ?? MyVisibility.defaults;
+  }
+
+  @override
+  Future<void> setVisibilityOn(
+    String source,
+    VisibilityField field,
+    FieldAudience audience,
+  ) async {
+    if (unavailable.contains(source)) throw StateError('server unavailable');
+    // 0392 — the same cap as at home; chosen spaces are not offered there.
+    if (!field.allowedAudiences.contains(audience.audience) ||
+        audience.audience == VisibilityAudience.chosenSpaces) {
+      throw ArgumentError('not an audience for ${field.wire} there');
+    }
+    linkedVisibility[source] =
+        (linkedVisibility[source] ?? MyVisibility.defaults)
+            .withField(field, audience);
+  }
 }
