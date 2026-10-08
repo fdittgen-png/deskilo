@@ -4168,7 +4168,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get entitlementBlockedFull =>
-      'Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra abajo.';
+      'Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra.';
 
   @override
   String entitlementDaysLeft(String left) {
@@ -5917,7 +5917,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tus facturas, recordatorios y pagos de todos tus espacios están juntos en Yo › Finanzas.';
 
   @override
-  String get financesLinkTitle => 'Tus documentos están en Yo';
+  String get financesLinkTitle => 'Tus finanzas en todos tus espacios';
 
   @override
   String get financesNoReminders => 'Ningún recordatorio recibido.';
@@ -18017,6 +18017,32 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get uxManageResource => 'Gestionar recurso';
+
+  @override
+  String get uxMoneyAllPeriods =>
+      'Todos los períodos · Crédito, facturas abiertas y reembolsos.';
+
+  @override
+  String get uxMoneyDocumentsScope =>
+      'Informes mensuales y tu acuerdo vigente.';
+
+  @override
+  String get uxMoneyInvoicesScope =>
+      'Tus facturas en este espacio · Todos los períodos.';
+
+  @override
+  String get uxMoneyPaymentsScope =>
+      'Saldo mensual · Facturas vencidas de todos los períodos.';
+
+  @override
+  String get uxMoneyStatementScope =>
+      'Detalle mensual del período seleccionado.';
+
+  @override
+  String get uxMoneyUsageScope => 'Reservas y consumos del mes seleccionado.';
+
+  @override
+  String get uxMoneyWorkspaceTools => 'Herramientas financieras del espacio';
 
   @override
   String get uxMyBookings => 'Mis reservas';

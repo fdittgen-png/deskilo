@@ -4142,7 +4142,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get entitlementBlockedFull =>
-      'You\'ve used all your days this month. Ask an admin for more or request extra half-days below.';
+      'You\'ve used all your days this month. Ask an admin for more or request extra half-days.';
 
   @override
   String entitlementDaysLeft(String left) {
@@ -5876,7 +5876,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your invoices, reminders and payments from every space are together in Me › Finances.';
 
   @override
-  String get financesLinkTitle => 'Your documents live in Me';
+  String get financesLinkTitle => 'Your finances across spaces';
 
   @override
   String get financesNoReminders => 'No reminder received.';
@@ -17881,6 +17881,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uxManageResource => 'Manage resource';
+
+  @override
+  String get uxMoneyAllPeriods =>
+      'All periods · Credit, open invoices and refunds.';
+
+  @override
+  String get uxMoneyDocumentsScope =>
+      'Monthly reports and your current agreement.';
+
+  @override
+  String get uxMoneyInvoicesScope =>
+      'Your invoices in this workspace · All periods.';
+
+  @override
+  String get uxMoneyPaymentsScope =>
+      'Monthly balance · Overdue invoices from all periods.';
+
+  @override
+  String get uxMoneyStatementScope => 'Monthly detail for the selected period.';
+
+  @override
+  String get uxMoneyUsageScope =>
+      'Bookings and consumption for the selected month.';
+
+  @override
+  String get uxMoneyWorkspaceTools => 'Workspace finance tools';
 
   @override
   String get uxMyBookings => 'My bookings';

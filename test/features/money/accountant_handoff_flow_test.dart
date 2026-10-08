@@ -64,6 +64,7 @@ _openPreflight(
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
   await tester.pumpAndSettle();
+  await openMoneyWorkspaceTools(tester);
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();

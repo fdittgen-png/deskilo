@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/money_format.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/member_account.dart';
 
 /// #512 — the member's REAL position, above the per-month bill: months
@@ -15,10 +16,12 @@ class AccountCard extends StatelessWidget {
     super.key,
     required this.account,
     required this.currencyCode,
+    this.collapsible = false,
   });
 
   final MemberAccount account;
   final String currencyCode;
+  final bool collapsible;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +65,8 @@ class AccountCard extends StatelessWidget {
       );
     }
 
-    return Card(
-      key: const ValueKey('account-card'),
-      child: Padding(
+    final labels = l10n ?? AppLocalizationsEn();
+    final detail = Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,7 +120,18 @@ class AccountCard extends StatelessWidget {
               ),
           ],
         ),
-      ),
+      );
+    return Card(
+      key: const ValueKey('account-card'),
+      child: collapsible ? ExpansionTile(
+        key: const ValueKey('money-account-details'),
+        title: Text(labels.accountCardTitle),
+        subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(labels.uxMoneyAllPeriods),
+          Text(money(net), style: theme.textTheme.titleMedium?.copyWith(color: netColor)),
+        ]),
+        children: [detail],
+      ) : detail,
     );
   }
 }

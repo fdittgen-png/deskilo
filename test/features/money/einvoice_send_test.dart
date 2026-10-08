@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import '../../helpers/real_async.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
@@ -58,6 +59,7 @@ Future<FakeMoneyRepository> _pumpArchive(
   // #720 — the register lives on the Invoices face.
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
   await tester.pumpAndSettle();
+  await openMoneyWorkspaceTools(tester);
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();

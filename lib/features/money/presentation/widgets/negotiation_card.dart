@@ -18,7 +18,7 @@ import '../../providers/money_providers.dart';
 import '../../../../core/format/cents.dart';
 
 /// #739 — the member's own prices against the workspace tariff, on the
-/// Statement face: what everyone pays, what I pay, since when — and who
+/// Documents face: what everyone pays, what I pay, since when — and who
 /// can see this (the GDPR sheet, with the log of who did).
 class NegotiationCard extends ConsumerWidget {
   const NegotiationCard({

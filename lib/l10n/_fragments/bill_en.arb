@@ -94,7 +94,7 @@
       }
     }
   },
-  "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days below.",
+  "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days.",
   "@entitlementBlockedFull": {
     "description": "Footer of the usage card for a blocked member who has used their whole cap"
   },
