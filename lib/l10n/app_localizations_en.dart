@@ -17871,6 +17871,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxDeviceTime => 'Your time';
 
   @override
+  String get uxLinkedReference => 'Linked resource';
+
+  @override
   String get uxManageResource => 'Manage resource';
 
   @override

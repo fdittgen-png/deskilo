@@ -20391,6 +20391,7 @@
   "uxBookingFor": "Booking for",
   "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
   "uxDeviceTime": "Your time",
+  "uxLinkedReference": "Linked resource",
   "uxManageResource": "Manage resource",
   "uxWorkspaceTime": "Workspace time",
   "validationAdminsMay": "Admins may validate",

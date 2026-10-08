@@ -30980,6 +30980,12 @@ abstract class AppLocalizations {
   /// **'Your time'**
   String get uxDeviceTime;
 
+  /// No description provided for @uxLinkedReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked resource'**
+  String get uxLinkedReference;
+
   /// No description provided for @uxManageResource.
   ///
   /// In en, this message translates to:

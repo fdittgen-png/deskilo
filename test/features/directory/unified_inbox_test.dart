@@ -116,6 +116,23 @@ void main() {
       );
   });
 
+  testWidgets('shortened reference previews stay readable in the real Me inbox', (tester) async {
+    const body = 'Meet [space:level:01234567-0123-0123-0123-012345678901|Rez-de-chaussée]';
+    home.inboxRows
+      ..clear()
+      ..add({...inboxRow(MessageContextKind.space, 'c-cut', 'Floor discussion'),
+        'last_body': body.substring(0, 64)})
+      ..add({...inboxRow(MessageContextKind.account, 'c-missing', 'Booking discussion'),
+        'last_body': 'Before [res:01234567-0123-0123-0123-012345678901] after'});
+    remote.inboxRows.clear();
+    await pumpInbox(tester, home: home, remote: remote);
+    expect(find.textContaining('Meet Rez-de-'), findsOneWidget);
+    expect(find.textContaining('Linked resource'), findsOneWidget);
+    expect(find.textContaining('[space:'), findsNothing);
+    expect(find.textContaining('01234567'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('conversations of every context and server in one list, '
       'newest first, each labelled', (tester) async {
     await pumpInbox(tester, home: home, remote: remote);

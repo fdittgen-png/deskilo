@@ -18060,6 +18060,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxDeviceTime => 'Ihre Ortszeit';
 
   @override
+  String get uxLinkedReference => 'Verknüpfte Ressource';
+
+  @override
   String get uxManageResource => 'Ressource verwalten';
 
   @override

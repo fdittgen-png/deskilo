@@ -11,6 +11,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
@@ -196,6 +197,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     AppLocalizations? l10n,
   ) {
     final format = ref.watch(appFormatProvider);
+    final words = l10n ?? AppLocalizationsEn();
     final marks = ref.watch(inboxMarksProvider);
     // A workspace conversation's pin / archive are the server's (0386); every
     // other kind keeps this device's marks.
@@ -279,7 +281,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     : null,
               ),
               subtitle: Text(
-                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120)}',
+                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120, referenceFallback: words.uxLinkedReference)}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

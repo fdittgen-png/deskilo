@@ -11165,6 +11165,7 @@
   "uxBookingFor": "Réservation pour",
   "uxBookingModesHelp": "Réserver conserve le créneau choisi. S’installer maintenant utilise le créneau actuel et indique votre présence.",
   "uxDeviceTime": "Votre heure",
+  "uxLinkedReference": "Ressource liée",
   "uxManageResource": "Gérer la ressource",
   "uxWorkspaceTime": "Heure de l’espace",
   "validationAdminsMay": "Les admins peuvent valider",

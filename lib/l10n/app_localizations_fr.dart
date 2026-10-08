@@ -18069,6 +18069,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uxDeviceTime => 'Votre heure';
 
   @override
+  String get uxLinkedReference => 'Ressource liée';
+
+  @override
   String get uxManageResource => 'Gérer la ressource';
 
   @override

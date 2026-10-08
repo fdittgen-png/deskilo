@@ -18007,6 +18007,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxDeviceTime => 'Tu hora';
 
   @override
+  String get uxLinkedReference => 'Recurso enlazado';
+
+  @override
   String get uxManageResource => 'Gestionar recurso';
 
   @override

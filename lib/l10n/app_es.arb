@@ -11165,6 +11165,7 @@
   "uxBookingFor": "Reserva para",
   "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca tu presencia.",
   "uxDeviceTime": "Tu hora",
+  "uxLinkedReference": "Recurso enlazado",
   "uxManageResource": "Gestionar recurso",
   "uxWorkspaceTime": "Hora del espacio",
   "validationAdminsMay": "Los admins pueden validar",

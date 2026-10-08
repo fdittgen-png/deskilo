@@ -11165,6 +11165,7 @@
   "uxBookingFor": "Buchung für",
   "uxBookingModesHelp": "Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.",
   "uxDeviceTime": "Ihre Ortszeit",
+  "uxLinkedReference": "Verknüpfte Ressource",
   "uxManageResource": "Ressource verwalten",
   "uxWorkspaceTime": "Ortszeit des Arbeitsbereichs",
   "validationAdminsMay": "Admins dürfen validieren",
