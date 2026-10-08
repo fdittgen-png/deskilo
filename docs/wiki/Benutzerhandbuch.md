@@ -73,6 +73,8 @@ Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalend
 
 **Meine Buchungen finden (#2276).** Meine Buchungen steht über den Kategorien und zeigt die eigenen Reservierungen. Die Zusammenfassung nennt Person und Kategorien; Filter zurücksetzen zeigt wieder die eigene Aktivität aller verfügbaren Kategorien bei unveränderter Datumsauswahl. Buchungszeilen nennen zugängliche Stockwerke, Ressourcen und Zustände. Fehlende Quellen behalten ihre Beschriftung oder zeigen Ressource nicht verfügbar. Jede Zeile öffnet weiterhin ihre Quelle.
 
+**Navigation im Workspace.** Alltägliche Ziele bleiben sichtbar. Die Verwaltung ist in **Mitglieder und Zugang**, **Abrechnung und Zahlungen** und **Workspace einrichten** gegliedert. Öffnen Sie eine Gruppe für die Werkzeuge Ihrer Rolle; bei der Rückkehr bleibt sie geöffnet. Zurück zu Ich und persönliche Kontoziele bleiben getrennt.
+
 ## 2. Rollen & Einladungen
 
 DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, plus ein Gerätekonto:

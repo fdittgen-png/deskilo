@@ -73,6 +73,8 @@ The app has up to five destinations along the bottom: **Messages** (§16), **Cal
 
 **Find my bookings (#2276).** My bookings is visible above the category strip and returns the calendar to your own reservation scope. The summary names the current member and categories; Reset filters returns to your own activity with all available categories and keeps the date selection. Booking rows show authorized floor/resource names and status where available. Missing sources retain their supplied label or say Resource unavailable. Each row still opens its original source.
 
+**Workspace navigation.** Daily destinations stay visible. Administration is organized into **People & access**, **Billing & payments**, and **Workspace setup**. Open a group to see the tools available to your role; returning from a tool preserves the open group. Back to Me and personal account destinations remain separate.
+
 ## 2. Roles & invitations
 
 DesKilo has three additive roles and a co-ownership flavour on top of them, plus a device account:

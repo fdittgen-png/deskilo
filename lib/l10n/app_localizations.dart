@@ -31010,6 +31010,24 @@ abstract class AppLocalizations {
   /// **'My bookings'**
   String get uxMyBookings;
 
+  /// No description provided for @uxNavFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing & payments'**
+  String get uxNavFinance;
+
+  /// No description provided for @uxNavPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People & access'**
+  String get uxNavPeople;
+
+  /// No description provided for @uxNavWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace setup'**
+  String get uxNavWorkspace;
+
   /// No description provided for @uxOpenWorkspace.
   ///
   /// In en, this message translates to:
