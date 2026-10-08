@@ -295,6 +295,8 @@ Kalender, und nichts wird synchronisiert.
 
 **Buchungszeitraum (#2270).** Die Zusammenfassung unter den Bedienelementen zeigt Wochentag, vollständiges Datum, gegebenenfalls Heute oder Morgen, den gewählten Zeitraum und genaue Arbeitsbereichszeiten mit Zeitzone. Bei abweichender persönlicher Zeitzone erscheint auch Ihre Ortszeit. Änderungen des Zeitraums oder individueller Zeiten aktualisieren sie vor der Platzauswahl. Breite Bildschirme benennen die Optionen; auf schmalen bleibt der gewählte Zeitraum in der Zusammenfassung lesbar.
 
+**Den Plan lesen (#2271).** Der gewählte Stockwerksname bleibt auf dem Plan sichtbar, auch bei nur einem Stockwerk; das Menü zeigt vollständige Namen. Plätze tragen ein deckendes Namensschild und ein Symbol aus der Legende: offener Kreis für frei, Schloss für reserviert, Haken für anwesend, Stern für den eigenen Platz und Sperrsymbol für blockiert. Bei dichten Plänen vergrößern Sie die Ansicht, um Namen zu lesen. Screenreader behalten vollständige Namen und Zustände bei jeder Zoomstufe. In der Listenansicht steht die Stockwerksauswahl über den Zeilen und verdeckt keine Buchungsaktion.
+
 ## 5. Kalender (Kalender-Tab)
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:

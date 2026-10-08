@@ -297,6 +297,8 @@ L'application n'écrit rien dans aucun agenda et rien ne se synchronise.
 
 **Créneau de réservation (#2270).** Le récapitulatif sous les commandes affiche le jour, la date complète, Aujourd’hui ou Demain si applicable, la période choisie, les heures exactes et le fuseau de l’espace. Si votre fuseau personnel diffère, votre heure apparaît aussi. Changer de période ou une heure personnalisée actualise le récapitulatif avant le choix d’une place. Les grands écrans nomment les périodes ; sur les écrans étroits, la période choisie reste lisible dans le récapitulatif.
 
+**Lire le plan (#2271).** L’étage sélectionné est nommé sur le plan, même lorsque l’espace n’a qu’un étage ; le menu affiche les noms complets. Chaque place porte une étiquette opaque et un symbole repris dans la légende : cercle vide pour libre, cadenas pour réservée, coche pour présent, étoile pour la vôtre et symbole d’interdiction pour bloquée. Zoomez sur un plan dense pour lire les noms ; le lecteur d’écran conserve le nom et l’état à tout niveau de zoom. En vue liste, le sélecteur d’étage reste au-dessus des lignes sans couvrir leurs actions.
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :

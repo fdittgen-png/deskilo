@@ -42,6 +42,8 @@ void main() {
     await pumpHub(tester, twoLevels: true);
 
     // Plan opens on the first floor, as it always did.
+    await tester.tap(find.byKey(const ValueKey('reserve-level-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(_planLevel('level-9'));
     await tester.pumpAndSettle();
 

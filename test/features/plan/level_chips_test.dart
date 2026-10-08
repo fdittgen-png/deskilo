@@ -58,16 +58,20 @@ void main() {
       (tester) async {
     final env = await pumpTwoLevelPlan(tester);
 
-    // The floor switcher floats on the canvas (indoor-maps idiom): one
-    // short button per level, full name in the tooltip.
-    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
+    // The floor name stays visible on the canvas.
+    expect(find.byKey(const ValueKey('reserve-level-menu')), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
 
-    // Tap the other floor's button.
+    expect(find.text('Ground floor'), findsAtLeast(1));
+    await tester.tap(find.byKey(const ValueKey('reserve-level-menu')));
+    await tester.pumpAndSettle();
+    // Choose the other floor by its full name.
     await tester.tap(find.byKey(const ValueKey('reserve-level-level-upper')));
     await tester.pumpAndSettle();
 
     expect(canvasLevelId(tester), 'level-upper');
+    expect(find.descendant(of: find.byKey(const ValueKey('reserve-level-menu')),
+        matching: find.text('First floor')), findsOneWidget);
     expect(env.store.values['ws-1'], 'level-upper');
   });
 
@@ -85,7 +89,7 @@ void main() {
     expect(canvasLevelId(tester), 'level-1');
   });
 
-  testWidgets('a single level renders no level picker', (tester) async {
+  testWidgets('a single level still names the current floor', (tester) async {
     final plans = FakeFloorPlanRepository()..seedSmallPlan();
     await tester.pumpWidget(
       ProviderScope(
@@ -96,7 +100,7 @@ void main() {
     await tester.pumpAndSettle();
     await switchToPlanTab(tester);
 
-    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsNothing);
+    expect(find.byKey(const ValueKey('reserve-level-menu')), findsOneWidget);
     expect(canvasLevelId(tester), 'level-1');
   });
 
@@ -118,7 +122,7 @@ void main() {
     expect(find.byKey(const ValueKey('split-divider')), findsOneWidget);
     expect(find.byKey(const ValueKey('reserve-plan-canvas')), findsOneWidget);
     // The floor switcher rides the canvas, not the side panel.
-    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-level-menu')), findsOneWidget);
   });
 
   testWidgets('portrait keeps the single-column layout (no split)',

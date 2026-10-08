@@ -41,3 +41,14 @@ abstract final class SeatStateColors {
     };
   }
 }
+
+/// Shared shape cues for the canvas and its named legend.
+abstract final class SeatStateIcons {
+  static IconData of(SeatState state) => switch (state) {
+    SeatState.free => Icons.radio_button_unchecked,
+    SeatState.reserved => Icons.lock_outline,
+    SeatState.occupied => Icons.check_circle_outline,
+    SeatState.mine => Icons.star_outline,
+    SeatState.blocked => Icons.block,
+  };
+}

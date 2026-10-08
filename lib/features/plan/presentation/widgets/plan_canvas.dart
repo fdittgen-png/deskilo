@@ -242,7 +242,7 @@ class _PlanCanvasState extends State<PlanCanvas>
             // #611 — the AnimatedBuilder only re-renders while the
             // brief state-colour lerp runs; at rest it costs nothing.
             child: AnimatedBuilder(
-              animation: _stateFade,
+              animation: Listenable.merge([_stateFade, _viewTransform]),
               builder: (context, _) => CustomPaint(
               key: widget.paintKey,
               size: PlanCanvasMetrics.size,
@@ -254,6 +254,9 @@ class _PlanCanvasState extends State<PlanCanvas>
                 colorScheme: Theme.of(context).colorScheme,
                 brightness: Theme.of(context).brightness,
                 seatStates: widget.seatStates,
+                labelScale: _viewTransform.value.getMaxScaleOnAxis(),
+                identifierStyle: Theme.of(context).textTheme.labelSmall?.apply(
+                    fontSizeFactor: MediaQuery.textScalerOf(context).scale(1)),
                 seatDaySegments: widget.seatDaySegments,
                 previousSeatStates: _previousSeatStates,
                 seatStateLerp:

@@ -296,6 +296,8 @@ alcun calendario e nulla si sincronizza.
 
 **Intervallo di prenotazione (#2270).** Il riepilogo sotto i controlli mostra giorno, data completa, Oggi o Domani quando pertinente, periodo scelto e ore esatte con il fuso dello spazio. Se il fuso personale differisce, compare anche la tua ora. Cambiare periodo o un’ora personalizzata aggiorna il riepilogo prima della scelta del posto. Gli schermi ampi mostrano i nomi dei periodi; su quelli stretti il periodo scelto resta leggibile nel riepilogo.
 
+**Leggere la planimetria (#2271).** Il nome del piano selezionato resta visibile anche quando ce n’è uno solo; il menu mostra i nomi completi. Ogni posto ha un’etichetta opaca e un simbolo della legenda: cerchio vuoto per libero, lucchetto per prenotato, spunta per presente, stella per il proprio posto e blocco per non disponibile. Ingrandisci una planimetria densa per leggere i nomi. I lettori di schermo mantengono nome completo e stato a ogni zoom. Nella lista, il selettore del piano resta sopra le righe senza coprire le azioni di prenotazione.
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show listEquals, mapEquals, setEquals;
 import 'package:flutter/material.dart';
 
 import 'plan_paint_helpers.dart';
+import 'seat_identifier_paint.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../../core/theme/office_colors.dart';
@@ -32,6 +33,8 @@ class FloorPlanPainter extends CustomPainter {
     this.background,
     this.images = const {},
     this.seatStates,
+    this.labelScale = 1,
+    this.identifierStyle,
     this.seatDaySegments = const {},
     this.previousSeatStates,
     this.seatStateLerp = 1,
@@ -67,6 +70,8 @@ class FloorPlanPainter extends CustomPainter {
 
   final FloorPlan plan;
   final double cellSize;
+  final double labelScale;
+  final TextStyle? identifierStyle;
   final ColorScheme colorScheme;
   final Brightness brightness;
 
@@ -441,13 +446,8 @@ class FloorPlanPainter extends CustomPainter {
         );
       }
 
-      // State never conveyed by colour alone (spec §11).
-      if (state == SeatState.blocked) {
-        drawLabel(canvas, '✕', rect, accent, center: true);
-        continue;
-      }
       final label = seatLabels?[seat.id] ?? '';
-      if (state != null && label.isNotEmpty) {
+      if (state != null && state != SeatState.blocked && label.isNotEmpty) {
         // Live occupancy: the occupant becomes an avatar right on the
         // seat — one glance answers "who's here". This is the plan's
         // signature move. A check badge marks someone physically checked
@@ -471,6 +471,7 @@ class FloorPlanPainter extends CustomPainter {
           drawLabel(canvas, label, rect, colorScheme.onSurface, center: true);
         }
       }
+      if (state != null) drawSeatIdentifier(canvas, rect, seat.name, state, scale: labelScale, style: identifierStyle);
     }
 
     // #576 — the space highlight rings, on top of everything painted.
@@ -742,6 +743,7 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.deskOpacity != deskOpacity ||
       !listEquals(oldDelegate.officePalette, officePalette) ||
       !setEquals(oldDelegate.onlineSeatIds, onlineSeatIds) ||
+      oldDelegate.labelScale != labelScale || oldDelegate.identifierStyle != identifierStyle ||
       oldDelegate.cellSize != cellSize;
 
   /// One semantics node per seat (#402). Without this, the app's core

@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 264;
 const int _fallbackCeiling =
-    6481; // per fallback since 2026-10-07 (was 4607 per line)
+    6480; // per fallback since 2026-10-07 (was 4607 per line)
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

@@ -291,6 +291,8 @@ Nothing is written to any calendar by the app itself, and nothing syncs.
 
 **Booking window (#2270).** The summary below the controls shows the weekday, full date, Today or Tomorrow where applicable, selected period, exact workspace hours and timezone. If your personal timezone differs, your time appears alongside it. Period changes and custom time changes update this summary before you choose a seat. Wide screens also name the period choices; on narrow screens the selected period stays readable in the summary.
 
+**Reading the plan (#2271).** The selected floor is named on the plan, including a workspace with one floor; its menu lists full floor names. Seats carry an opaque identifier with a shape matching the legend: open circle for free, lock for reserved, check for present, star for yours and blocked symbol for unavailable. Zoom in on a dense plan to read the seat names; screen readers keep the full name and state at every zoom. In list view the floor selector sits above the rows so it cannot cover their booking actions.
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:

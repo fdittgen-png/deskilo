@@ -136,22 +136,22 @@ class SeatLegend extends StatelessWidget {
       SeatGroup.free => (
           word('legendFree', l10n?.legendFree ?? 'Free'),
           colorOf(SeatState.free),
-          null,
+          SeatStateIcons.of(SeatState.free),
         ),
       SeatGroup.reserved => (
           word('legendReserved', l10n?.legendReserved ?? 'Reserved'),
           colorOf(SeatState.reserved),
-          null,
+          SeatStateIcons.of(SeatState.reserved),
         ),
       SeatGroup.occupied => (
           word('legendOccupied', l10n?.legendOccupied ?? 'Checked in'),
           colorOf(SeatState.occupied),
-          Icons.check,
+          SeatStateIcons.of(SeatState.occupied),
         ),
       SeatGroup.mine => (
           word('legendMine', l10n?.legendMine ?? 'Mine'),
           colorOf(SeatState.mine),
-          Icons.person,
+          SeatStateIcons.of(SeatState.mine),
         ),
       SeatGroup.blocked => (
           word('legendBlocked', l10n?.legendBlocked ?? 'Blocked'),
