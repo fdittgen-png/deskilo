@@ -36,8 +36,10 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
   final _controller = ExpansibleController();
   final _headingFocus = FocusNode(skipTraversal: true);
   Future<void> open() async {
+    final duration = motionDuration(context, kThemeAnimationDuration);
     _controller.expand();
     _headingFocus.requestFocus();
+    if (duration != Duration.zero) { await Future<void>.delayed(duration); }
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted) return;
     await Scrollable.ensureVisible(context,
@@ -61,6 +63,7 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
     child: ExpansionTile(key: ValueKey('workspace-group-${widget.id}'),
       controller: _controller, maintainState: true,
+      expansionAnimationStyle: AnimationStyle(duration: motionDuration(context, kThemeAnimationDuration)),
       onExpansionChanged: (open) { if (!open) FocusScope.of(context).unfocus(); setState(() {}); },
       initiallyExpanded: widget.initiallyExpanded,
       leading: Icon(widget.icon), title: Focus(focusNode: _headingFocus, child: Text(widget.title)),
