@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/core/time/work_hours.dart';
@@ -230,6 +231,9 @@ void main() {
       ]);
     await pumpAvailability(tester, workspace: workspace);
 
+    await tester.scrollUntilVisible(find.text('December 24, 2026'), 200,
+        scrollable: find.descendant(of: find.byType(AvailabilityScreen), matching: find.byType(Scrollable)).first);
+    await tester.pumpAndSettle();
     expect(find.text('December 24, 2026'), findsOneWidget);
     expect(find.text('Christmas Eve'), findsOneWidget);
     expect(find.text('August 15, 2026'), findsOneWidget);

@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/holiday_import.dart';
+import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
 import 'package:deskilo/features/workspace/providers/holiday_import_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -110,7 +111,8 @@ void main() {
   ) async {
     final workspace = _workspace();
     await _open(tester, workspace, _FakeSource());
-    await tester.ensureVisible(find.byKey(_tile));
+    await tester.scrollUntilVisible(find.byKey(_tile), 200,
+        scrollable: find.descendant(of: find.byType(AvailabilityScreen), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(_tile));
     await tester.pumpAndSettle();
@@ -153,7 +155,8 @@ void main() {
     workspace.invoicedMonths.add('${kTestNow.year}-07');
     await _open(tester, workspace, _FakeSource());
 
-    await tester.ensureVisible(find.byKey(_tile));
+    await tester.scrollUntilVisible(find.byKey(_tile), 200,
+        scrollable: find.descendant(of: find.byType(AvailabilityScreen), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(_tile));
     await tester.pumpAndSettle();
@@ -177,7 +180,8 @@ void main() {
     final source = _FakeSource(down: true);
     await _open(tester, workspace, source);
 
-    await tester.ensureVisible(find.byKey(_tile));
+    await tester.scrollUntilVisible(find.byKey(_tile), 200,
+        scrollable: find.descendant(of: find.byType(AvailabilityScreen), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(_tile));
     await tester.pumpAndSettle();
@@ -202,7 +206,8 @@ void main() {
   ) async {
     final workspace = _workspace();
     await _open(tester, workspace, _FakeSource());
-    await tester.ensureVisible(find.byKey(_tile));
+    await tester.scrollUntilVisible(find.byKey(_tile), 200,
+        scrollable: find.descendant(of: find.byType(AvailabilityScreen), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(_tile));
     await tester.pumpAndSettle();
