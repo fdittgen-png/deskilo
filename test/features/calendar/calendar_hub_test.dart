@@ -117,6 +117,8 @@ void main() {
     await pumpHub(tester);
     await tester.scrollUntilVisible(find.byKey(const ValueKey('calendar-item-p1')), 100,
         scrollable: find.descendant(of: find.byKey(const ValueKey('calendar-feed')), matching: find.byType(Scrollable)).first);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('calendar-item-p1')).hitTestable(), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('calendar-item-p1')));
     await tester.pumpAndSettle();
 

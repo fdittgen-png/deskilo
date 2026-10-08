@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
@@ -321,12 +322,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
     if (!viewsOn) {
       return Scaffold(
-        body: Column(children: [
+        body: ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
           const CalendarDecisions(), // #1306 — when the bell is off
           _plainSelector(l10n),
           chips,
-          Expanded(child: feed),
         ]),
       );
     }
@@ -395,12 +395,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             Expanded(child: feed),
           ]);
         }
-        return Column(children: [
+        return ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
           const CalendarDecisions(), // #1306 — when the bell is off
           selector,
           chips,
-          Expanded(child: feed),
         ]);
       }),
     );
