@@ -17916,7 +17916,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxTestSpaceHint => 'Test space: practice bookings and invoices';
 
   @override
+  String get uxWorkspaceAppearance => 'Appearance & wording';
+
+  @override
+  String get uxWorkspaceCommunity => 'Community & invitations';
+
+  @override
+  String get uxWorkspaceGeneral => 'General details';
+
+  @override
   String get uxWorkspaceTime => 'Workspace time';
+
+  @override
+  String get uxWorkspaceTools => 'Templates & data';
 
   @override
   String get validationAdminsMay => 'Admins may validate';

@@ -907,6 +907,8 @@ want for something discontinued rather than mistaken.
 
 ### Workspace settings (Coworking space)
 
+**Configure by task.** General details, payments, community and invitations, appearance, new-member defaults, templates and data, and the danger zone have separate sections. General details opens first; open another section when you need it. Setup readiness stays above the tasks. Save remains at the bottom of the screen as you scroll. Closed sections retain their drafts, and Save opens and scrolls to invalid fields. Pages opened from a section keep their own save controls.
+
 The workspace's own screen, top to bottom:
 
 - **Identity** — name, country, currency (proposed from the country, editable), time zone, **workspace language** (invitations default to it; *sender's app language* is an option) and the postal **address** printed on invoices.

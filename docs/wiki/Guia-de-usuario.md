@@ -930,6 +930,8 @@ quiere para algo descatalogado, no para algo equivocado.
 
 ### Ajustes del espacio (Espacio de coworking)
 
+**Configurar por tarea.** Datos generales, pagos, comunidad e invitaciones, apariencia, valores para nuevos miembros, plantillas y datos y zona de riesgo tienen secciones separadas. Datos generales se abre primero; abre otras secciones cuando las necesites. La preparación permanece encima. Guardar sigue visible abajo al desplazarte. Las secciones cerradas conservan sus borradores; Guardar abre los campos no válidos y los muestra. Las páginas abiertas desde una sección mantienen sus propios controles para guardar.
+
 La pantalla propia del espacio, de arriba abajo:
 
 - **Identidad** — nombre, país, moneda (propuesta según el país, editable), zona horaria, **idioma del espacio** (las invitaciones lo usan por defecto; *idioma de la app del remitente* es una opción) y la **dirección** postal impresa en las facturas.

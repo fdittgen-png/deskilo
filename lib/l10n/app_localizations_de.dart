@@ -18106,7 +18106,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Testbereich: Buchungen und Rechnungen zum Ausprobieren';
 
   @override
+  String get uxWorkspaceAppearance => 'Darstellung und Bezeichnungen';
+
+  @override
+  String get uxWorkspaceCommunity => 'Gemeinschaft und Einladungen';
+
+  @override
+  String get uxWorkspaceGeneral => 'Allgemeine Angaben';
+
+  @override
   String get uxWorkspaceTime => 'Ortszeit des Arbeitsbereichs';
+
+  @override
+  String get uxWorkspaceTools => 'Vorlagen und Daten';
 
   @override
   String get validationAdminsMay => 'Admins dürfen validieren';

@@ -962,6 +962,8 @@ qu'on veut pour quelque chose d'arrêté, pas d'erroné.
 
 ### Réglages de l'espace (Espace de coworking)
 
+**Configurer par tâche.** Informations générales, paiements, communauté et invitations, apparence, valeurs par défaut des nouveaux membres, modèles et données et zone sensible ont des sections séparées. Les informations générales sont ouvertes au départ ; ouvrez une autre section selon votre besoin. La préparation reste au-dessus des tâches. Enregistrer reste en bas de l’écran pendant le défilement. Les sections fermées conservent leurs brouillons ; Enregistrer ouvre les champs invalides et les fait défiler à l’écran. Les pages ouvertes depuis une section gardent leur propre bouton d’enregistrement.
+
 L'écran de l'espace, de haut en bas :
 
 - **Identité** — nom, pays, devise (proposée d'après le pays, modifiable), fuseau horaire, **langue de l'espace** (les invitations y sont rédigées par défaut ; *langue de l'app de l'expéditeur* est une option) et l'**adresse** postale imprimée sur les factures.

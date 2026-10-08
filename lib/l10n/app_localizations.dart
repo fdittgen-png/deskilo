@@ -31070,11 +31070,35 @@ abstract class AppLocalizations {
   /// **'Test space: practice bookings and invoices'**
   String get uxTestSpaceHint;
 
+  /// No description provided for @uxWorkspaceAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance & wording'**
+  String get uxWorkspaceAppearance;
+
+  /// No description provided for @uxWorkspaceCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Community & invitations'**
+  String get uxWorkspaceCommunity;
+
+  /// No description provided for @uxWorkspaceGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General details'**
+  String get uxWorkspaceGeneral;
+
   /// No description provided for @uxWorkspaceTime.
   ///
   /// In en, this message translates to:
   /// **'Workspace time'**
   String get uxWorkspaceTime;
+
+  /// No description provided for @uxWorkspaceTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates & data'**
+  String get uxWorkspaceTools;
 
   /// Switch label: whether admins may validate at all (off = owner only)
   ///

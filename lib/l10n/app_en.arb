@@ -20406,7 +20406,11 @@
   "uxResetFilters": "Reset filters",
   "uxTestSpace": "Test space",
   "uxTestSpaceHint": "Test space: practice bookings and invoices",
+  "uxWorkspaceAppearance": "Appearance & wording",
+  "uxWorkspaceCommunity": "Community & invitations",
+  "uxWorkspaceGeneral": "General details",
   "uxWorkspaceTime": "Workspace time",
+  "uxWorkspaceTools": "Templates & data",
   "validationAdminsMay": "Admins may validate",
   "@validationAdminsMay": {
     "description": "Switch label: whether admins may validate at all (off = owner only)"
