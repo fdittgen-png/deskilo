@@ -4343,7 +4343,7 @@
   "helpHintMoneyStatementTip2": "Ein gebuchter Vormittag zählt als halber Tag; Tage außerhalb der Öffnungszeiten folgen der Außerhalb-Regel des Workspace.",
   "helpHintMoneyStatementTip2Topic": "Wie sich Buchungen verhalten",
   "helpHintMoneyStatementTip3": "Keine Tage mehr? Halbe Tage anfragen, ein Paket kaufen oder nach Verbrauch weiterbuchen — je nach Tarif.",
-  "helpHintMoneyStatementTipNegotiation": "Konditionen verhandelt? Die Karte zeigt Ihre Preise neben dem Tarif, seit wann, und wer sie sehen kann — die Inhaber und Finanz-Admins, jeder Zugriff protokolliert.",
+  "helpHintMoneyStatementTipNegotiation": "Ihre ausgehandelten Preise finden Sie unter Dokumente neben Ihrer Vereinbarung. Die Karte vergleicht sie mit dem Tarif und zeigt, wer sie einsehen darf; Zugriffe anderer werden protokolliert.",
   "helpHintMoneyStatementTipNegotiationTopic": "Preisverhandlungen",
   "helpHintMoneyStatementTopic": "Die Ansicht Abrechnung",
   "helpHintMoneyTip2": "Jedes Dokument bietet dieselben drei Aktionen: Schnellansicht auf dem Bildschirm, Download als PDF und Teilen an jede App.",

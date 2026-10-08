@@ -6649,7 +6649,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      '¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.';
+      'Tus precios negociados están en Documentos, junto a tu acuerdo. La tarjeta los compara con la tarifa y muestra quién puede consultarlos; las consultas de otras personas quedan registradas.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic =>

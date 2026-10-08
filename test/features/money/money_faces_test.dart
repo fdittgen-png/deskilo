@@ -34,11 +34,15 @@ void main() {
     await tester.scrollUntilVisible(find.byKey(const Key('entitlement-card')), 200, scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('entitlement-card')), findsOneWidget);
     expect(find.text('Balance'), findsOneWidget);
+    expect(tester.getTopLeft(find.text('Balance')).dy,
+        lessThan(tester.getTopLeft(find.byKey(const Key('entitlement-card'))).dy));
     // Read-only: no action of the other faces leaks in.
     expect(find.text('Record a payment'), findsNothing);
     expect(find.text('Add consumption'), findsNothing);
     expect(find.byKey(const ValueKey('invoices-button')), findsNothing);
-    expect(find.byKey(const ValueKey('money-hint-statement')), findsOneWidget);
+    final hint = find.byKey(const ValueKey('money-hint-statement'));
+    await tester.scrollUntilVisible(hint, 200, scrollable: find.byType(Scrollable).last);
+    expect(hint, findsOneWidget);
     expect(find.descendant(of: find.byKey(const ValueKey('money-faces')),
         matching: find.byType(FittedBox)), findsNothing);
     for (final destination in MoneyFace.values) {
@@ -196,6 +200,21 @@ void main() {
     expect(find.byKey(const ValueKey('money-faces')), findsNothing);
     expect(find.text('Record a payment'), findsOneWidget);
     expect(find.text('Add consumption'), findsOneWidget);
+  });
+
+  testWidgets('short landscape keeps month, content and actions in one reading flow', (tester) async {
+    await pumpFaces(tester, size: const Size(800, 420));
+    final body = find.byKey(const ValueKey('money-face-body-statement'));
+    expect(find.descendant(of: body, matching: find.byIcon(Icons.chevron_left)), findsOneWidget);
+    for (final destination in MoneyFace.values) {
+      await face(tester, destination);
+      expect(tester.takeException(), isNull, reason: destination.name);
+    }
+    await face(tester, MoneyFace.payments);
+    final record = find.text('Record a payment');
+    await tester.scrollUntilVisible(record, 200, scrollable: find.byType(Scrollable).last);
+    expect(tester.getSize(find.ancestor(of: record, matching: find.byType(FilledButton))).height,
+        greaterThanOrEqualTo(48));
   });
 
   // #1217 — "None of the buttons actually works." The sheet popped an

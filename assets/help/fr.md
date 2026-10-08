@@ -1329,6 +1329,8 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 ### 9c. Le volet Relevé
 
+Le solde mensuel ouvre cette vue ; l’usage et les frais suivent. Les astuces viennent après le contenu et les actions.
+
 **Le mois sélectionné en premier.** Jours inclus, utilisés et restants, abonnement, services et suppléments, forfaits, postes en attente, avoirs, facture émise et solde décrivent la période choisie. Sous ce détail, développez **Votre compte** pour lire le crédit, les factures ouvertes et les remboursements de **toutes les périodes**. Sa position nette est distincte du solde mensuel. Les conditions négociées sont dans **Documents**, avec votre accord en vigueur.
 
 ![](assets/help/images/statement-account.jpg)

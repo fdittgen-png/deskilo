@@ -6664,7 +6664,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      'Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.';
+      'Vos conditions négociées sont dans Documents, à côté de votre accord. La carte les compare au tarif et indique qui peut les consulter ; les consultations des autres sont enregistrées.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic =>

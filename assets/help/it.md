@@ -1304,6 +1304,8 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 ### 9c. La vista Estratto
 
+Il saldo mensile apre questa vista; seguono l’utilizzo e gli addebiti. I suggerimenti vengono dopo i contenuti e le azioni.
+
 **Prima il mese selezionato.** Giorni inclusi, usati e rimasti, abbonamento, servizi e supplementi, pacchetti, posizioni in attesa, crediti, fattura e saldo descrivono il periodo scelto. Sotto, espandi **Il tuo conto** per credito, fatture aperte e rimborsi di **tutti i periodi**. La posizione netta è distinta dal saldo mensile. I prezzi negoziati sono in **Documenti**, accanto all’accordo attuale.
 
 ![](assets/help/images/statement-account.jpg)
