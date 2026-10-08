@@ -85,6 +85,24 @@ void main() {
     expect(checkFinder, findsOneWidget);
   });
 
+  testWidgets('standalone environments and default controls fit enlarged phone text', (tester) async {
+    tester.view.physicalSize = const Size(320, 1100);
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await pumpProfiles(tester);
+    expect(find.text('Production — the invoices are owed'), findsWidgets);
+    expect(find.text('BEACHHUB1'), findsNothing);
+    final button = find.byKey(const ValueKey('profile-default-ws-2'));
+    await tester.ensureVisible(button);
+    await tester.pumpAndSettle();
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: button, matching: find.byIcon(Icons.star)), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('a persisted choice survives a restart', (tester) async {
     final store = InMemoryActiveWorkspaceStore()..value = 'ws-2';
     // #1823 — no server default: the device's memory of this person decides.

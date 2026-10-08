@@ -51,6 +51,8 @@ Creare uno spazio significa decine di decisioni sparse in una decina di schermat
 
 ### Profili — un account, più spazi
 
+I nomi degli spazi sono in primo piano nell’elenco dei profili. Apri uno spazio abbinato per scegliere Sviluppo per le prove o Produzione con fatture dovute; l’ambiente attivo è indicato. I ruoli sono testo secondario e gli altri spazi della piattaforma sono in una sezione espandibile separata (#2289).
+
 Un account può appartenere a più spazi. **Impostazioni → Profili** li elenca tutti: ogni riga mostra il nome dello spazio, **il tuo ruolo lì** (Membro, Admin, Proprietario) e il suo ID. Il **segno di spunta** indica il profilo in cui ti trovi adesso; la **stella** indica quello **predefinito** — il profilo con cui l'app si apre, su ogni dispositivo e anche dopo una reinstallazione (la scelta è salvata con il tuo account). Tocca una riga per cambiare, **+ Aggiungi un profilo** per unirti a un altro spazio ancora. Tutto nell'app è riferito allo spazio attivo. Dal #996 **il cambio viene ricordato**: toccare un altro profilo, o l'altro lato di una coppia, lo rende predefinito all'avvio — la stella lo segue, e dopo un riavvio non torni mai in uno spazio o in un ambiente che avevi lasciato.
 
 ![](assets/help/images/profiles.jpg)
@@ -72,6 +74,8 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 **Ingresso e orientamento (#2273, #2275, #2277).** Apri spazio entra nello spazio abituale; Spazio di prova apre l’ambiente di esercitazione spiegato sulla scheda. Il contesto reale/di prova resta visibile. Profilo e account compare nella navigazione. I collegamenti fissi Profilo, Privacy, Preferenze e Avanzate portano alle sezioni corrispondenti. Preferenze inizia con lingua, tema e formati disponibili. Pubblico, profilo pubblico e anteprima restano insieme in Privacy. Le finestre web ampie mostrano le destinazioni in una barra laterale, con Torna a Me e Amministrazione. Le finestre strette e il testo ingrandito usano il menu compatto. I controlli del calendario e le indicazioni della pianta scorrono se il testo ingrandito richiede più altezza, mantenendo accessibili attività e azioni.
 
 **Trovare le mie prenotazioni (#2276).** Le mie prenotazioni è visibile sopra le categorie e torna alle prenotazioni personali. Il riepilogo indica persona e categorie; Reimposta filtri torna all’attività personale di tutte le categorie disponibili e conserva le date. Le righe mostrano piano, risorsa e stato autorizzati quando disponibili. Le fonti mancanti mantengono l’etichetta o mostrano Risorsa non disponibile. Ogni riga apre ancora la propria fonte.
+
+**Navigazione dello spazio.** Le destinazioni quotidiane restano visibili. L’amministrazione è organizzata in **Membri e accesso**, **Fatturazione e pagamenti** e **Configurazione dello spazio**. Apri un gruppo per vedere gli strumenti del tuo ruolo; al ritorno da uno strumento, il gruppo resta aperto. Torna a Me e le destinazioni personali rimangono separate.
 
 ## 2. Ruoli e inviti
 

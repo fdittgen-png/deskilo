@@ -17912,6 +17912,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxMyBookings => 'My bookings';
 
   @override
+  String get uxNavFinance => 'Billing & payments';
+
+  @override
+  String get uxNavPeople => 'People & access';
+
+  @override
+  String get uxNavWorkspace => 'Workspace setup';
+
+  @override
   String get uxOpenWorkspace => 'Open workspace';
 
   @override
@@ -17922,6 +17931,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uxProfileAccount => 'Profile & account';
+
+  @override
+  String get uxProfileChooseEnvironment => 'Choose an environment';
 
   @override
   String get uxProfileSection => 'Profile';

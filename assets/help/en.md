@@ -51,6 +51,8 @@ It is a single web page. Nothing to install, no account, nothing sent anywhere: 
 
 ### Profiles — one account, several spaces
 
+Workspace names lead the profile list. Open a paired workspace to choose **Development — for trying things out** or **Production — the invoices are owed**; the active environment is marked. Roles appear as supporting text, and platform-wide spaces are in a separate expandable section (#2289).
+
 One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace. Since #996, **switching is remembered**: tapping another profile, or the other side of a pair, makes it the default at start-up — the star follows, and you never come back after a restart to a workspace or an environment you had left.
 
 ![](assets/help/images/profiles.jpg)
@@ -72,6 +74,8 @@ The app has up to five destinations along the bottom: **Messages** (§16), **Cal
 **Space entry and account navigation (#2273, #2275, #2277).** Open workspace enters the normal workspace; Test space opens its practice environment, with an explanation on the card. The workspace keeps its real/test context visible after entry. Profile & account is a labeled navigation destination. Its persistent Profile, Privacy, Preferences and Advanced shortcuts jump to the corresponding section; Preferences puts language, theme and available region/format controls first. Visibility audiences, public-profile controls and their preview remain together under Privacy. On wide web layouts, Me and workspace destinations stay visible in a sidebar, including Back to Me and the existing Administration group. Narrow layouts and enlarged text use the compact navigation menu. Calendar controls and floor guidance scroll when enlarged text needs more height, keeping the activity feed and actions reachable.
 
 **Find my bookings (#2276).** My bookings is visible above the category strip and returns the calendar to your own reservation scope. The summary names the current member and categories; Reset filters returns to your own activity with all available categories and keeps the date selection. Booking rows show authorized floor/resource names and status where available. Missing sources retain their supplied label or say Resource unavailable. Each row still opens its original source.
+
+**Workspace navigation.** Daily destinations stay visible. Administration is organized into **People & access**, **Billing & payments**, and **Workspace setup**. Open a group to see the tools available to your role; returning from a tool preserves the open group. Back to Me and personal account destinations remain separate.
 
 ## 2. Roles & invitations
 

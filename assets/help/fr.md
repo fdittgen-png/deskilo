@@ -51,6 +51,8 @@ C'est une simple page web. Rien à installer, aucun compte, rien n'est envoyé n
 
 ### Profils — un compte, plusieurs espaces
 
+Les noms des espaces structurent la liste des profils. Ouvrez un espace jumelé pour choisir **Développement — pour essayer** ou **Production — les factures sont dues** ; l’environnement actif est indiqué. Les rôles sont du texte secondaire et les espaces de la plateforme ont leur propre section dépliable (#2289).
+
 Un compte peut appartenir à plusieurs espaces. **Réglages → Profils** les liste tous : chaque ligne montre le nom de l'espace, **votre rôle** (Membre, Admin, Propriétaire) et son ID. La **coche** marque le profil actif ; l'**étoile** marque votre profil **par défaut** — celui avec lequel l'app s'ouvre, sur chaque appareil et même après réinstallation (le choix est stocké avec votre compte). Touchez une ligne pour changer, **+ Ajouter un profil** pour rejoindre un espace de plus. Tout dans l'app est limité à l'espace actif. Depuis #996, **le changement est retenu** : toucher un autre profil, ou l'autre côté d'une paire, en fait le profil par défaut au démarrage — l'étoile suit, et vous ne revenez jamais, après un redémarrage, sur un espace ou un environnement que vous aviez quitté.
 
 ![](assets/help/images/profiles.jpg)
@@ -72,6 +74,8 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 **Entrer et se repérer (#2273, #2275, #2277).** Ouvrir l’espace mène à l’espace habituel ; Espace de test ouvre son environnement d’essai, expliqué sur la carte. Le contexte réel/test reste visible dans l’espace. Profil et compte apparaît dans la navigation. Les raccourcis fixes Profil, Confidentialité, Préférences et Avancé mènent à leurs sections ; Préférences commence par la langue, le thème et les formats disponibles. Les audiences, le profil public et l’aperçu restent ensemble sous Confidentialité. Sur le web large, les destinations restent visibles dans une barre latérale, avec Retour à Moi et le groupe Administration. Les petites fenêtres et le texte agrandi utilisent le menu compact. Les commandes du calendrier et les conseils du plan défilent si le texte agrandi demande plus de hauteur, pour garder le fil et les actions accessibles.
 
 **Retrouver mes réservations (#2276).** Mes réservations est visible au-dessus des catégories et revient à vos propres réservations. Le résumé indique la personne et les catégories choisies ; Réinitialiser les filtres revient à votre activité et à toutes les catégories disponibles, sans changer les dates. Les lignes montrent l’étage, la ressource et l’état autorisés lorsqu’ils sont disponibles. Une source manquante garde son libellé ou indique Ressource indisponible. Chaque ligne ouvre toujours sa source.
+
+**Navigation de l’espace.** Les destinations quotidiennes restent visibles. L’administration est organisée en **Membres et accès**, **Facturation et paiements** et **Configuration de l’espace**. Ouvrez un groupe pour voir les outils accessibles à votre rôle ; au retour d’un outil, le groupe reste ouvert. Retour à Moi et les destinations personnelles restent séparés.
 
 ## 2. Rôles et invitations
 

@@ -51,6 +51,8 @@ Es ist eine einzige Webseite. Nichts zu installieren, kein Konto, nichts wird ir
 
 ### Profile — ein Konto, mehrere Spaces
 
+Die Raumnamen stehen in der Profilliste im Vordergrund. Öffnen Sie einen gekoppelten Raum und wählen Sie Entwicklung zum Ausprobieren oder Produktion mit fälligen Rechnungen; die aktive Umgebung ist markiert. Rollen sind ergänzender Text, weitere Plattformräume stehen in einem eigenen aufklappbaren Abschnitt (#2289).
+
 Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** listet alle: jede Zeile zeigt den Namen des Space, **deine Rolle dort** (Mitglied, Admin, Inhaber) und die Workspace-ID. Das **Häkchen** markiert das aktive Profil; der **Stern** dein **Standardprofil** — das, mit dem die App öffnet, auf jedem Gerät und selbst nach Neuinstallation (die Wahl ist beim Konto gespeichert). Zeile antippen zum Wechseln, **+ Profil hinzufügen** für einen weiteren Space. Alles in der App ist auf den aktiven Workspace beschränkt. Seit #996 **merkt sich die App den Wechsel**: ein Tipp auf ein anderes Profil oder die andere Seite eines Paars macht es zum Standard beim Start — der Stern folgt, und Sie landen nach einem Neustart nie wieder in einem Raum oder einer Umgebung, die Sie verlassen hatten.
 
 ![](assets/help/images/profiles.jpg)
@@ -72,6 +74,8 @@ Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalend
 **Einstieg und Orientierung (#2273, #2275, #2277).** Arbeitsbereich öffnen führt zum regulären Bereich; Testbereich öffnet die auf der Karte erklärte Übungsumgebung. Der Echt-/Testkontext bleibt im Bereich sichtbar. Profil und Konto steht in der Navigation. Die festen Verknüpfungen Profil, Datenschutz, Einstellungen und Erweitert springen zum jeweiligen Abschnitt. Einstellungen beginnt mit Sprache, Design und verfügbaren regionalen Formaten. Sichtbarkeit, öffentliches Profil und Vorschau bleiben unter Datenschutz zusammen. Breite Webansichten zeigen Ziele in einer Seitenleiste mit Zurück zu Mir und der Gruppe Verwaltung. Kleine Fenster und vergrößerte Schrift nutzen das kompakte Menü. Kalendersteuerung und Hinweise zum Grundriss lassen sich bei vergrößerter Schrift scrollen, sodass Aktivitäten und Aktionen erreichbar bleiben.
 
 **Meine Buchungen finden (#2276).** Meine Buchungen steht über den Kategorien und zeigt die eigenen Reservierungen. Die Zusammenfassung nennt Person und Kategorien; Filter zurücksetzen zeigt wieder die eigene Aktivität aller verfügbaren Kategorien bei unveränderter Datumsauswahl. Buchungszeilen nennen zugängliche Stockwerke, Ressourcen und Zustände. Fehlende Quellen behalten ihre Beschriftung oder zeigen Ressource nicht verfügbar. Jede Zeile öffnet weiterhin ihre Quelle.
+
+**Navigation im Workspace.** Alltägliche Ziele bleiben sichtbar. Die Verwaltung ist in **Mitglieder und Zugang**, **Abrechnung und Zahlungen** und **Workspace einrichten** gegliedert. Öffnen Sie eine Gruppe für die Werkzeuge Ihrer Rolle; bei der Rückkehr bleibt sie geöffnet. Zurück zu Ich und persönliche Kontoziele bleiben getrennt.
 
 ## 2. Rollen & Einladungen
 

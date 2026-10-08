@@ -68,6 +68,8 @@ Future<void> _pump(
 
 /// The drawer's list builds lazily: bring [key] into view.
 Future<void> _reveal(WidgetTester tester, String key) async {
+  await tester.tap(find.text('Workspace setup'));
+  await tester.pumpAndSettle();
   await tester.scrollUntilVisible(
     find.byKey(ValueKey(key)),
     80,

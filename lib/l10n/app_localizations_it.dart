@@ -18080,6 +18080,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get uxMyBookings => 'Le mie prenotazioni';
 
   @override
+  String get uxNavFinance => 'Fatturazione e pagamenti';
+
+  @override
+  String get uxNavPeople => 'Membri e accesso';
+
+  @override
+  String get uxNavWorkspace => 'Configurazione dello spazio';
+
+  @override
   String get uxOpenWorkspace => 'Apri spazio';
 
   @override
@@ -18090,6 +18099,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get uxProfileAccount => 'Profilo e account';
+
+  @override
+  String get uxProfileChooseEnvironment => 'Scegli un ambiente';
 
   @override
   String get uxProfileSection => 'Profilo';
