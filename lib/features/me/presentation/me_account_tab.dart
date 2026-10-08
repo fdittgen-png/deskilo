@@ -7,6 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/motion/motion.dart';
 import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
@@ -18,12 +21,42 @@ import 'blocked_people_card.dart';
 import 'linked_visibility_card.dart';
 import 'visibility_card.dart';
 
-class MeAccountTab extends ConsumerWidget {
+class MeAccountTab extends ConsumerStatefulWidget {
   const MeAccountTab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MeAccountTab> createState() => _MeAccountTabState();
+}
+
+class _MeAccountTabState extends ConsumerState<MeAccountTab> {
+  final _sections = List.generate(4, (_) => GlobalKey());
+  final _sectionFocus = List.generate(4, (_) => FocusNode(skipTraversal: true));
+
+  @override
+  void dispose() {
+    for (final node in _sectionFocus) { node.dispose(); }
+    super.dispose();
+  }
+
+  Widget _header(String title, int index) => Focus(
+    key: _sections[index], focusNode: _sectionFocus[index],
+    child: SettingsSectionHeader(title));
+
+  void _jump(int index) {
+    final target = _sections[index].currentContext;
+    if (target != null) {
+      _sectionFocus[index].requestFocus();
+      Scrollable.ensureVisible(target,
+          duration: motionDuration(context, MotionTokens.standard));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final words = l10n ?? AppLocalizationsEn();
+    final labels = [words.uxProfileSection, words.uxPrivacySection,
+      words.uxPreferencesSection, words.uxAdvancedSection];
     final scheme = Theme.of(context).colorScheme;
     Widget door(String key, IconData icon, String title, String path) =>
         ListTile(
@@ -38,23 +71,37 @@ class MeAccountTab extends ConsumerWidget {
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 760),
-          child: ListView(
+          child: Column(children: [
+            Padding(
+              padding: AppSpacing.smAll,
+              child: Wrap(spacing: AppSpacing.xs, children: [
+                for (final (index, label) in labels.indexed)
+                  TextButton(
+                    key: ValueKey('me-section-$index'),
+                    onPressed: () => _jump(index),
+                    child: Text(label),
+                  ),
+              ]),
+            ),
+            Expanded(child: SingleChildScrollView(
         key: const ValueKey('me-account-list'),
-        children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           // #1846 — four groups: who others see, what is private to the
           // account, the spaces it belongs to, the installations it uses.
-          SettingsSectionHeader(l10n?.meGroupProfile ?? 'My profile'),
+          _header(words.uxProfileSection, 0),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.profile),
+          _header(words.uxPrivacySection, 1),
           const VisibilityCard(),
           const LinkedVisibilityCard(),
           const BlockedPeopleCard(),
-          SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
+          door('me-privacy', Icons.shield_outlined,
+              l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
+          _header(words.uxPreferencesSection, 2),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
           door('me-activity', Icons.account_balance_wallet_outlined,
               l10n?.financesTitle ?? 'Finances',
               '/account-activity'),
-          door('me-privacy', Icons.shield_outlined,
-              l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
+          _header(words.uxAdvancedSection, 3),
           // The task wizard: recording, guides and tools in one place.
           if (ref
               .watch(enabledFeaturesSyncProvider)
@@ -82,8 +129,9 @@ class MeAccountTab extends ConsumerWidget {
             ),
             onTap: () => signOutAndForget(ref),
           ),
-        ],
-      ),
+        ]),
+      )),
+          ]),
         ),
       ),
     );

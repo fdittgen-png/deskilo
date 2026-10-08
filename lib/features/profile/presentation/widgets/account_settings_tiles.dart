@@ -210,6 +210,12 @@ List<Widget> accountSettingsTiles(
         ),
         onTap: () => _photoSheet(context, ref, myProfile),
       ),
+    // In-app language (#147) and theme (#160) overrides: the defaults.
+    if (account) _languageTile(context, ref, defaultsOnly: true),
+    if (account) _themeTile(context, ref, defaultsOnly: true),
+    // #711 — Region & formats, behind the regionalFormats feature.
+    if (account && inSpace && features.contains(WorkspaceFeature.regionalFormats))
+      const RegionalFormatsSection(),
     // #886 — the structured identity: name, postal block, contacts. The
     // legacy free-text address dialog stays while the flag is off.
     if (account && inSpace && features.contains(WorkspaceFeature.personalInfo))
@@ -271,12 +277,6 @@ List<Widget> accountSettingsTiles(
           builder: (_) => const WhatsappDialog(),
         ),
       ),
-    // In-app language (#147) and theme (#160) overrides: the defaults.
-    if (account) _languageTile(context, ref, defaultsOnly: true),
-    if (account) _themeTile(context, ref, defaultsOnly: true),
-    // #711 — Region & formats, behind the regionalFormats feature.
-    if (account && inSpace && features.contains(WorkspaceFeature.regionalFormats))
-      const RegionalFormatsSection(),
     // Linked accounts (0051): Google/Microsoft/Apple/Facebook sign-in.
     if (account) ListTile(
       key: const ValueKey('settings-linked-accounts'),

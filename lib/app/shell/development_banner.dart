@@ -12,17 +12,18 @@
 // off marks nothing.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/demo/presentation/demo_workspace.dart';
 
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/status_colors.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_en.dart';
 import '../../core/theme/app_typography.dart';
 
-/// Wraps [child] with the development strip when the active workspace is
-/// a development one. Before a workspace is loaded there is nothing to
-/// say, so nothing is shown.
+/// Keeps the active workspace's environment visible. Demo has its own
+/// persistent strip; Me and the unloaded state have no workspace context.
 class DevelopmentBanner extends ConsumerWidget {
   const DevelopmentBanner({super.key, this.hidden = false, required this.child});
 
@@ -33,12 +34,12 @@ class DevelopmentBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final show = !hidden && workspace != null && workspace.isDevelopment;
+    final show = !hidden && workspace != null && DemoEnvironment.maybeOf(context) == null;
     // Always the same Column, the body last: the strip coming and going
     // (a space entered, Me reached) never rebuilds the navigator below.
     return Column(
       children: [
-        if (show) const _DevelopmentStrip(),
+        if (show) _DevelopmentStrip(development: workspace.isDevelopment),
         Expanded(key: const ValueKey('layer-body'), child: child),
       ],
     );
@@ -46,17 +47,19 @@ class DevelopmentBanner extends ConsumerWidget {
 }
 
 class _DevelopmentStrip extends StatelessWidget {
-  const _DevelopmentStrip();
+  const _DevelopmentStrip({required this.development});
+  final bool development;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     // #917 — orange, the same orange the workspace switcher paints on a
     // development space, so the two agree at a glance.
-    final ink = AppEnvironmentColors.developmentOf(
+    final ink = development ? AppEnvironmentColors.developmentOf(
+        Theme.of(context).brightness) : AppEnvironmentColors.productionOf(
         Theme.of(context).brightness);
     return Material(
-      key: const ValueKey('development-banner'),
+      key: ValueKey(development ? 'development-banner' : 'production-banner'),
       color: ink,
       child: SafeArea(
         bottom: false,
@@ -68,14 +71,14 @@ class _DevelopmentStrip extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.construction_outlined,
+              Icon(development ? Icons.construction_outlined : Icons.workspaces_outline,
                   size: 14, color: Colors.white),
               const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
-                  l10n?.developmentBanner ??
-                      'Development workspace — nothing here is real',
-                  maxLines: 1,
+                  development ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint
+                      : '${(l10n ?? AppLocalizationsEn()).uxRealWorkspace} · ${(l10n ?? AppLocalizationsEn()).uxRealSpaceHint}',
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: Theme.of(context)

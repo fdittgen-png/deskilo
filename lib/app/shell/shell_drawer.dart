@@ -54,6 +54,7 @@ class ShellDrawer extends ConsumerWidget {
     required this.currentIndex,
     required this.onBranch,
     required this.pendingEvents,
+    this.permanent = false,
   });
 
   final List<String> tabTitles;
@@ -61,6 +62,7 @@ class ShellDrawer extends ConsumerWidget {
   final int currentIndex;
   final ValueChanged<int> onBranch;
   final int pendingEvents;
+  final bool permanent;
 
   // #1306 — the bar's own icon table; one list, one set of icons.
   static IconData _branchIcon(int branch) => shellBranchIcon(branch);
@@ -83,7 +85,7 @@ class ShellDrawer extends ConsumerWidget {
     );
 
     void go(String route, {bool push = true}) {
-      Navigator.of(context).pop();
+      if (!permanent) Navigator.of(context).pop();
       if (push) {
         context.push(route);
       } else {
@@ -95,12 +97,12 @@ class ShellDrawer extends ConsumerWidget {
       if (may(WorkspacePermission.makeReservations))
       _Entry('drawer-reserve', _branchIcon(ShellBranch.reserve),
           lexiconText(context, key: 'shellReserveButton', fallback: l10n?.shellReserveButton ?? 'Reserve'), () {
-        Navigator.of(context).pop();
+        if (!permanent) Navigator.of(context).pop();
         onBranch(ShellBranch.reserve);
       }, selected: currentIndex == ShellBranch.reserve),
       for (final branch in visibleBranches)
         _Entry('drawer-tab-$branch', _branchIcon(branch), tabTitles[branch], () {
-          Navigator.of(context).pop();
+          if (!permanent) Navigator.of(context).pop();
           onBranch(branch);
         }, selected: currentIndex == branch),
       // Events live in the calendar when it holds the alerts: no entry then.
@@ -201,6 +203,8 @@ class ShellDrawer extends ConsumerWidget {
           leading: Icon(e.icon),
           title: Text(e.label),
           selected: e.selected,
+          selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
+          selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
           // Every badge opens the content it counts (#1306 S3): the events
           // entry while the bell is on, the Calendar entry when the
           // calendar carries the decisions instead.
@@ -213,9 +217,7 @@ class ShellDrawer extends ConsumerWidget {
           onTap: e.onTap,
         );
 
-    return Drawer(
-      key: const ValueKey('shell-drawer'),
-      child: SafeArea(
+    final content = SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -261,7 +263,10 @@ class ShellDrawer extends ConsumerWidget {
             for (final e in account) tile(e),
           ],
         ),
-      ),
-    );
+      );
+    return permanent
+        ? Material(key: const ValueKey('shell-sidebar'),
+            color: theme.colorScheme.surfaceContainerLow, child: content)
+        : Drawer(key: const ValueKey('shell-drawer'), child: content);
   }
 }

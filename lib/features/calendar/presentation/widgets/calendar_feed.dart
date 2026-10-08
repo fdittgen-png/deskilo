@@ -81,6 +81,7 @@ class CalendarFeed extends ConsumerWidget {
       onRefresh: onRefresh,
       child: ListView(
         key: const ValueKey('calendar-feed'),
+        padding: const EdgeInsets.only(bottom: kMinInteractiveDimension),
         children: [
           if (page.locked.isNotEmpty)
             Padding(

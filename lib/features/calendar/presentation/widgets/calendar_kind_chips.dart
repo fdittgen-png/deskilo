@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import 'calendar_item_row.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 
@@ -21,6 +22,9 @@ class CalendarKindChips extends StatelessWidget {
     required this.onKinds,
     required this.memberLabel,
     required this.onPickMember,
+    required this.myBookings,
+    required this.onMyBookings,
+    required this.onReset,
   });
 
   /// The selected kinds, or null for "all of them".
@@ -33,11 +37,38 @@ class CalendarKindChips extends StatelessWidget {
   /// Null when the member chip is not on offer for this viewer.
   final String? memberLabel;
   final VoidCallback onPickMember;
+  final bool myBookings;
+  final VoidCallback onMyBookings, onReset;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return EdgeFadeScroll(
+    final words = l10n ?? AppLocalizationsEn();
+    final scopeLabel = '${memberLabel ?? words.calendarMemberMe} · ${kinds == null ? words.eventsFilterAll : kinds!.map((k) => calendarKindLabel(words, k)).join(', ')}';
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      Padding(padding: AppSpacing.smH, child: Wrap(
+        spacing: AppSpacing.xs,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          FilterChip(key: const ValueKey('calendar-my-bookings'),
+              showCheckmark: false, avatar: const Icon(Icons.event_seat_outlined, size: 18),
+              label: Text(words.uxMyBookings), selected: myBookings,
+              onSelected: (_) => onMyBookings()),
+          if (memberLabel != null) ActionChip(
+            key: const ValueKey('calendar-member-chip'),
+            avatar: const Icon(Icons.person_search_outlined, size: 18),
+            label: Text(memberLabel!), onPressed: onPickMember),
+          IconButton(key: const ValueKey('calendar-reset-filters'),
+              tooltip: words.uxResetFilters, onPressed: onReset,
+              icon: const Icon(Icons.filter_alt_off_outlined)),
+        ],
+      )),
+      Padding(padding: AppSpacing.smH, child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(scopeLabel, key: const ValueKey('calendar-filter-summary'),
+            style: Theme.of(context).textTheme.bodySmall),
+      )),
+      EdgeFadeScroll(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: Row(children: [
         FilterChip(
@@ -62,18 +93,8 @@ class CalendarKindChips extends StatelessWidget {
             },
           ),
         ],
-        if (memberLabel != null) ...[
-          const SizedBox(width: AppSpacing.sm),
-          // Another member's dated facts — as far as the server lets
-          // THIS viewer see them.
-          ActionChip(
-            key: const ValueKey('calendar-member-chip'),
-            avatar: const Icon(Icons.person_search_outlined, size: 18),
-            label: Text(memberLabel!),
-            onPressed: onPickMember,
-          ),
-        ],
       ]),
-    );
+    ),
+    ]);
   }
 }

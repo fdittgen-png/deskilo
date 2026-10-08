@@ -20,6 +20,7 @@ import '../../../app/shell/shell_drawer.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
@@ -114,11 +115,13 @@ class _MeShellState extends ConsumerState<MeShell> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final menu = ref.watch(webShellProvider);
+    final wideNavigation = menu && MediaQuery.sizeOf(context).width >= 900 &&
+        MediaQuery.textScalerOf(context).scale(100) <= 150;
     final labels = [
       l10n?.meTabHome ?? 'Home',
       l10n?.meTabDiscover ?? 'Discover',
       l10n?.meTabMessages ?? 'Messages',
-      l10n?.meTabMe ?? 'Me',
+      (l10n ?? AppLocalizationsEn()).uxProfileAccount,
     ];
     final icons = [
       Icons.home_outlined,
@@ -126,35 +129,7 @@ class _MeShellState extends ConsumerState<MeShell> {
       Icons.forum_outlined,
       Icons.person_outline,
     ];
-    return Scaffold(
-      key: const ValueKey('me-shell'),
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              labels[_tab.index],
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            key: const ValueKey('me-profile-settings'),
-            tooltip: l10n?.meGroupProfile ?? 'My profile',
-            onPressed: () => _show(MeTab.me),
-            icon: const PersonalAvatar(),
-          ),
-        ],
-      ),
-      drawer: menu
-          ? Drawer(
-              key: const ValueKey('me-drawer'),
-              child: SafeArea(
+    Widget navigation({bool permanent = false}) => SafeArea(
                 child: ListView(
                   children: [
                     ListTile(
@@ -175,35 +150,70 @@ class _MeShellState extends ConsumerState<MeShell> {
                           leading: const Icon(Icons.assistant_navigation),
                           title: Text(l10n?.taskWizardTitle ?? 'Task wizard'),
                           onTap: () {
-                            Navigator.of(context).pop();
+                            if (!permanent) Navigator.of(context).pop();
                             context.push(taskWizardRoute);
                           },
                         ),
                       // Me is the profile button at the top right already.
-                      if (tab != MeTab.me)
-                        ListTile(
+                      ListTile(
                           key: ValueKey('me-tab-${tab.wire}'),
                           leading: Icon(icons[tab.index]),
                           title: Text(labels[tab.index]),
                           selected: _tab == tab,
+                          selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
+                          selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
                           onTap: () {
-                            Navigator.of(context).pop();
+                            if (!permanent) Navigator.of(context).pop();
                             _show(tab);
                           },
                         ),
                     ],
                   ],
                 ),
-              ),
-            )
-          : null,
-      body: IndexedStack(
+              );
+    return Scaffold(
+      key: const ValueKey('me-shell'),
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${l10n?.appTitle ?? 'DesKilo'} · ${l10n?.meTabMe ?? 'Me'}',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            Text(
+              labels[_tab.index],
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            key: const ValueKey('me-profile-settings'),
+            tooltip: (l10n ?? AppLocalizationsEn()).uxProfileAccount,
+            onPressed: () => _show(MeTab.me),
+            icon: const PersonalAvatar(),
+          ),
+        ],
+      ),
+      drawer: menu && !wideNavigation
+          ? Drawer(key: const ValueKey('me-drawer'), child: navigation()) : null,
+      body: Row(children: [
+        if (wideNavigation) ...[
+          SizedBox(width: 220, child: Material(
+            key: const ValueKey('me-sidebar'),
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            child: navigation(permanent: true))),
+          const VerticalDivider(width: 1),
+        ],
+        Expanded(child: IndexedStack(
         index: _tab.index,
         children: [
           for (final tab in MeTab.values)
             _visited.contains(tab) ? _page(tab) : const SizedBox.shrink(),
         ],
-      ),
+      )),
+      ]),
       bottomNavigationBar: menu
           ? null
           : NavigationBar(
@@ -232,7 +242,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                   key: const ValueKey('me-tab-me'),
                   icon: const Icon(Icons.person_outline),
                   selectedIcon: const PersonalAvatar(),
-                  label: l10n?.meTabMe ?? 'Me',
+                  label: (l10n ?? AppLocalizationsEn()).uxProfileAccount,
                 ),
               ],
             ),

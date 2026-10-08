@@ -55,10 +55,10 @@ void main() {
     );
     await goTo(tester, router, '/me');
     expect(find.text('COWORKONTI'), findsOneWidget);
-    expect(find.text('DEV'), findsOneWidget);
+    expect(find.text('Test space'), findsOneWidget);
     expect(find.descendant(
       of: find.byKey(const ValueKey('linked-space-coworkonti.example-prod')),
-      matching: find.text('PROD')), findsOneWidget);
+      matching: find.text('Open workspace')), findsOneWidget);
     expect(tester.getCenter(find.byKey(const ValueKey('linked-space-coworkonti.example-prod'))).dy,
       tester.getCenter(find.byKey(const ValueKey('linked-space-coworkonti.example-dev'))).dy);
     await tester.tap(

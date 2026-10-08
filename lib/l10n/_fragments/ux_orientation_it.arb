@@ -1,0 +1,15 @@
+{
+  "uxOpenWorkspace": "Apri spazio",
+  "uxTestSpace": "Spazio di prova",
+  "uxRealWorkspace": "Spazio reale",
+  "uxRealSpaceHint": "Prenotazioni e fatture reali",
+  "uxTestSpaceHint": "Spazio di prova: prenotazioni e fatture di prova",
+  "uxProfileAccount": "Profilo e account",
+  "uxProfileSection": "Profilo",
+  "uxPrivacySection": "Privacy",
+  "uxPreferencesSection": "Preferenze",
+  "uxAdvancedSection": "Avanzate",
+  "uxMyBookings": "Le mie prenotazioni",
+  "uxBookingResourceUnavailable": "Risorsa non disponibile",
+  "uxResetFilters": "Reimposta filtri"
+}

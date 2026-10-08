@@ -97,15 +97,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     _selection = CalendarSelection(view: CalendarView.agenda, anchor: today);
   }
 
-  bool get _viewsOn => ref
-      .watch(enabledFeaturesSyncProvider)
-      .contains(WorkspaceFeature.calendarViews);
+  bool get _viewsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarViews);
 
   /// #843 — decisions on the timeline. Off, the chip is gone and the
   /// query never asks for the kind, so the server sends none.
-  bool get _validationsOn => ref
-      .watch(enabledFeaturesSyncProvider)
-      .contains(WorkspaceFeature.calendarValidations);
+  bool get _validationsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarValidations);
 
   /// The kinds to ask for: null means "everything the workspace offers",
   /// which is not the same as everything the server knows.
@@ -278,6 +274,12 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
     final chips = CalendarKindChips(
       kinds: _kinds,
+      myBookings: _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation),
+      onMyBookings: () => setState(() {
+        _kinds = _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation) ? null : {CalendarKind.reservation};
+        _memberId = null;
+      }),
+      onReset: () => setState(() { _memberId = null; _kinds = null; }),
       // #843 — a workspace that does not want decisions on its timeline
       // is not offered the chip either.
       offered: [
@@ -328,7 +330,6 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         ]),
       );
     }
-
     final viewBar = CalendarViewBar(
         view: _selection.view,
         alertsAvailable: alertsOffered,

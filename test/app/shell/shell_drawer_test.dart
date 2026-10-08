@@ -22,7 +22,7 @@ Future<void> _pump(
   FakeWorkspaceRepository? workspace,
   FakeWorkspaceRoles? roles,
 }) async {
-  tester.view.physicalSize = const Size(1200, 900);
+  tester.view.physicalSize = const Size(800, 900);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(

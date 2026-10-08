@@ -12,10 +12,62 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/fake_floor_plan_repository.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import '../../helpers/open_my_account.dart';
 import '../../helpers/screens/calendar_hub.dart';
 
 void main() {
+  testWidgets('booking rows distinguish resources and keep deleted-source fallbacks', (tester) async {
+    final env = await pumpHub(tester, size: const Size(800, 1100));
+    final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+    final plans = container.read(floorPlanRepositoryProvider) as FakeFloorPlanRepository;
+    plans.seats.add(plans.seats.single.copyWith(id: 'seat-5', name: 'A2'));
+    final reservations = container.read(reservationRepositoryProvider) as FakeReservationRepository;
+    for (final (id, seat) in [('res-1', 'seat-4'), ('res-2', 'seat-5')]) {
+      reservations.reservations.add(Reservation(id: id, workspaceId: 'ws-1',
+          seatId: seat, memberId: 'member-1', startsAt: kTestNow,
+          endsAt: kTestNow.add(const Duration(hours: 2)), status: ReservationStatus.reserved));
+    }
+    env.calendar.items.addAll([
+      CalendarItem(kind: CalendarKind.reservation, id: 'r2', at: kTestNow,
+          memberId: 'member-1', title: '', status: 'reserved', link: const ReservationLink('res-2')),
+      CalendarItem(kind: CalendarKind.reservation, id: 'gone', at: kTestNow,
+          memberId: 'member-1', title: '', link: const ReservationLink('missing')),
+    ]);
+    container.invalidate(reservationsForMonthProvider);
+    container.invalidate(calendarItemsProvider);
+    await tester.pumpAndSettle();
+    for (final (id, name) in [('r1', 'A1'), ('r2', 'A2')]) {
+      final row = find.byKey(ValueKey('calendar-item-$id'));
+      expect(find.descendant(of: row, matching: find.textContaining('Ground floor')), findsOneWidget);
+      expect(find.descendant(of: row, matching: find.textContaining(name)), findsOneWidget);
+    }
+    expect(find.textContaining('Resource unavailable'), findsOneWidget);
+    expect(find.textContaining('reserved'), findsOneWidget);
+  });
+
+  testWidgets('My bookings is visible and resets member and kind filters', (tester) async {
+    final r = await pumpHub(tester);
+    final shortcut = find.byKey(const ValueKey('calendar-my-bookings'));
+    expect(shortcut.hitTestable(), findsOneWidget);
+    await tester.tap(shortcut);
+    await tester.pumpAndSettle();
+    expect(r.calendar.queries.last.kinds, {CalendarKind.reservation});
+    expect(r.calendar.queries.last.memberId, isNull);
+    expect(find.byKey(const ValueKey('calendar-item-r1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('calendar-item-m1')), findsNothing);
+    expect(find.text('Me · Bookings'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('calendar-reset-filters')));
+    await tester.pumpAndSettle();
+    expect(r.calendar.queries.last.kinds, isNull);
+    expect(r.calendar.queries.last.memberId, isNull);
+  });
+
   testWidgets('today is selected and the feed shows every kind of the day',
       (tester) async {
     final r = await pumpHub(tester);
@@ -23,6 +75,8 @@ void main() {
     expect(find.byKey(const ValueKey('calendar-feed')), findsOneWidget);
     expect(find.byKey(const ValueKey('calendar-item-r1')), findsOneWidget);
     expect(find.byKey(const ValueKey('calendar-item-m1')), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('calendar-item-p1')), 100,
+        scrollable: find.descendant(of: find.byKey(const ValueKey('calendar-feed')), matching: find.byType(Scrollable)).first);
     expect(find.byKey(const ValueKey('calendar-item-p1')), findsOneWidget);
     // Yesterday's invoice is outside a one-day selection.
     expect(find.byKey(const ValueKey('calendar-item-i-old')), findsNothing);
@@ -61,7 +115,8 @@ void main() {
   testWidgets('rows lead somewhere: a payment opens the Money month',
       (tester) async {
     await pumpHub(tester);
-    await tester.ensureVisible(find.byKey(const ValueKey('calendar-item-p1')));
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('calendar-item-p1')), 100,
+        scrollable: find.descendant(of: find.byKey(const ValueKey('calendar-feed')), matching: find.byType(Scrollable)).first);
     await tester.tap(find.byKey(const ValueKey('calendar-item-p1')));
     await tester.pumpAndSettle();
 
@@ -78,7 +133,10 @@ void main() {
 
   testWidgets('a message row opens the conversation thread', (tester) async {
     await pumpHub(tester);
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('calendar-item-m1')), 100,
+        scrollable: find.descendant(of: find.byKey(const ValueKey('calendar-feed')), matching: find.byType(Scrollable)).first);
     await tester.ensureVisible(find.byKey(const ValueKey('calendar-item-m1')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('calendar-item-m1')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('conversation-thread')), findsOneWidget);

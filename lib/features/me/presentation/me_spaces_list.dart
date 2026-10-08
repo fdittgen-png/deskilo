@@ -4,6 +4,7 @@
 // (Favorites and Other are always there, the rest are mine), searchable and
 // sortable, and — in my own order — movable by holding a space for a second.
 import 'package:flutter/material.dart';
+import '../../workspace/domain/workspace.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/storage/space_prefs_store.dart';
@@ -11,8 +12,8 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
-import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../providers/space_prefs_provider.dart';
@@ -294,6 +295,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             ? null
             : () => notifier.move(groupKeys, key, 1),
       ),
+      environmentHint: group.any((s) => s.isDevelopment)
+          ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint
+          : null,
       avatar: WorkspaceAvatar(workspace: group.first),
       name: group.first.name,
       lastUsed: group.any((s) => s.id == widget.lastUsedId),

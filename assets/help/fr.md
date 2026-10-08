@@ -69,6 +69,10 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 
 **Destinations personnelles et messages lisibles (#2274, #2269).** Accueil, Découvrir, Messages et le profil/réglages ont chacun une URL Moi stable. Recharger ou ouvrir un lien copié rétablit cette destination après le démarrage ; Précédent/Suivant suit les changements et les onglets visités gardent leur état de session. Les aperçus affichent les libellés des ressources liées. Si un aperçu coupe une référence, il montre le libellé restant avec des points de suspension, ou Ressource liée si le libellé manque. Le message original reste intact et aucun détail de ressource n’est recherché pour l’aperçu.
 
+**Entrer et se repérer (#2273, #2275, #2277).** Ouvrir l’espace mène à l’espace habituel ; Espace de test ouvre son environnement d’essai, expliqué sur la carte. Le contexte réel/test reste visible dans l’espace. Profil et compte apparaît dans la navigation. Les raccourcis fixes Profil, Confidentialité, Préférences et Avancé mènent à leurs sections ; Préférences commence par la langue, le thème et les formats disponibles. Les audiences, le profil public et l’aperçu restent ensemble sous Confidentialité. Sur le web large, les destinations restent visibles dans une barre latérale, avec Retour à Moi et le groupe Administration. Les petites fenêtres et le texte agrandi utilisent le menu compact.
+
+**Retrouver mes réservations (#2276).** Mes réservations est visible au-dessus des catégories et revient à vos propres réservations. Le résumé indique la personne et les catégories choisies ; Réinitialiser les filtres revient à votre activité et à toutes les catégories disponibles, sans changer les dates. Les lignes montrent l’étage, la ressource et l’état autorisés lorsqu’ils sont disponibles. Une source manquante garde son libellé ou indique Ressource indisponible. Chaque ligne ouvre toujours sa source.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, plus un compte d'appareil :

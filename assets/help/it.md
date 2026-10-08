@@ -69,6 +69,10 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 
 **Destinazioni personali e messaggi leggibili (#2274, #2269).** Home, Scopri, Messaggi e profilo/impostazioni hanno un URL personale stabile. Ricaricare o aprire un link copiato ripristina la destinazione dopo l’avvio; Indietro/Avanti segue i cambiamenti e le schede visitate mantengono lo stato della sessione. Le anteprime mostrano i nomi delle risorse collegate. Se un riferimento è troncato, compare il nome disponibile con puntini di sospensione, oppure Risorsa collegata se manca. Il messaggio originale resta intatto e l’anteprima non cerca dettagli della risorsa.
 
+**Ingresso e orientamento (#2273, #2275, #2277).** Apri spazio entra nello spazio abituale; Spazio di prova apre l’ambiente di esercitazione spiegato sulla scheda. Il contesto reale/di prova resta visibile. Profilo e account compare nella navigazione. I collegamenti fissi Profilo, Privacy, Preferenze e Avanzate portano alle sezioni corrispondenti. Preferenze inizia con lingua, tema e formati disponibili. Pubblico, profilo pubblico e anteprima restano insieme in Privacy. Le finestre web ampie mostrano le destinazioni in una barra laterale, con Torna a Me e Amministrazione. Le finestre strette e il testo ingrandito usano il menu compatto.
+
+**Trovare le mie prenotazioni (#2276).** Le mie prenotazioni è visibile sopra le categorie e torna alle prenotazioni personali. Il riepilogo indica persona e categorie; Reimposta filtri torna all’attività personale di tutte le categorie disponibili e conserva le date. Le righe mostrano piano, risorsa e stato autorizzati quando disponibili. Le fonti mancanti mantengono l’etichetta o mostrano Risorsa non disponibile. Ogni riga apre ancora la propria fonte.
+
 ## 2. Ruoli e inviti
 
 DesKilo ha tre ruoli cumulativi e, sopra di essi, una variante di comproprietà, più un account dispositivo:

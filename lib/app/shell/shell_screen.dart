@@ -341,20 +341,18 @@ class ShellScreen extends ConsumerWidget {
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
     final webShell = ref.watch(webShellProvider);
+    final wideNavigation = webShell && MediaQuery.sizeOf(context).width >= 900 &&
+        MediaQuery.textScalerOf(context).scale(100) <= 150;
+    Widget navigation({bool permanent = false}) => ShellDrawer(
+      permanent: permanent,
+      tabTitles: tabTitles, visibleBranches: visibleBranches,
+      currentIndex: navigationShell.currentIndex, pendingEvents: pendingEvents,
+      onBranch: (branch) => navigationShell.goBranch(branch,
+          initialLocation: branch == navigationShell.currentIndex),
+    );
     final barHidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return Scaffold(
-      drawer: webShell
-          ? ShellDrawer(
-              tabTitles: tabTitles,
-              visibleBranches: visibleBranches,
-              currentIndex: navigationShell.currentIndex,
-              pendingEvents: pendingEvents,
-              onBranch: (branch) => navigationShell.goBranch(
-                branch,
-                initialLocation: branch == navigationShell.currentIndex,
-              ),
-            )
-          : null,
+      drawer: webShell && !wideNavigation ? navigation() : null,
       // #1322 — the title bar leaves with the bottom bar: one gesture,
       // one progress, a real full-screen view. The web shell has no bar
       // to follow, and neither does a shell without one.
@@ -445,11 +443,18 @@ class ShellScreen extends ConsumerWidget {
       // FadeIndexedStack pattern: the shell's IndexedStack (and with it
       // the #111 per-tab keep-alive state) stays untouched; only an
       // opacity layer above it animates, keyed by the active branch.
-      body: FadeInOnChange(
+      body: Row(children: [
+        if (wideNavigation) ...[
+          SizedBox(width: 220, child: FocusTraversalGroup(child: navigation(permanent: true))),
+          const VerticalDivider(width: 1),
+        ],
+        // A branch route's semantics must not hide the sibling navigation.
+        Expanded(child: Semantics(container: true, child: FadeInOnChange(
         changeKey: navigationShell.currentIndex,
         // #1818 — one navigation shell at a time: see ShellSlot.
         child: ShellSlot(child: navigationShell),
-      ),
+      ))),
+      ]),
       // ONE destination is enough (#702).
       //
       // The old guard hid the whole bar below two, on the reasoning that

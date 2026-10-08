@@ -18042,6 +18042,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get uxAdvancedSection => 'Erweitert';
+
+  @override
   String get uxBookingChargePending =>
       'Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.';
 
@@ -18057,6 +18060,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.';
 
   @override
+  String get uxBookingResourceUnavailable => 'Ressource nicht verfügbar';
+
+  @override
   String get uxDeviceTime => 'Ihre Ortszeit';
 
   @override
@@ -18064,6 +18070,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get uxManageResource => 'Ressource verwalten';
+
+  @override
+  String get uxMyBookings => 'Meine Buchungen';
+
+  @override
+  String get uxOpenWorkspace => 'Arbeitsbereich öffnen';
+
+  @override
+  String get uxPreferencesSection => 'Einstellungen';
+
+  @override
+  String get uxPrivacySection => 'Datenschutz';
+
+  @override
+  String get uxProfileAccount => 'Profil und Konto';
+
+  @override
+  String get uxProfileSection => 'Profil';
+
+  @override
+  String get uxRealSpaceHint => 'Echte Buchungen und Rechnungen';
+
+  @override
+  String get uxRealWorkspace => 'Arbeitsbereich';
+
+  @override
+  String get uxResetFilters => 'Filter zurücksetzen';
+
+  @override
+  String get uxTestSpace => 'Testbereich';
+
+  @override
+  String get uxTestSpaceHint =>
+      'Testbereich: Buchungen und Rechnungen zum Ausprobieren';
 
   @override
   String get uxWorkspaceTime => 'Ortszeit des Arbeitsbereichs';

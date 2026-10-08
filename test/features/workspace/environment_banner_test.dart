@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,9 +43,22 @@ void main() {
     expect(find.byKey(const ValueKey('development-banner')), findsOneWidget);
   });
 
-  testWidgets('a production workspace carries nothing — the absence is '
-      'what makes the strip mean something', (tester) async {
+  testWidgets('a production workspace states that actions are real', (tester) async {
     await _pump(tester, environment: 'prod');
+    expect(find.byKey(const ValueKey('development-banner')), findsNothing);
+    expect(find.byKey(const ValueKey('production-banner')), findsOneWidget);
+    expect(find.textContaining('Real bookings and invoices'), findsOneWidget);
+    final context = tester.element(find.byType(Scaffold).first);
+    unawaited(GoRouter.of(context).push('/settings'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('production-banner')), findsOneWidget);
+  });
+
+  testWidgets('Demo never claims synthetic actions are real', (tester) async {
+    await tester.pumpWidget(const ProviderScope(
+      child: DemoWorkspace(child: DeskiloApp())));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('production-banner')), findsNothing);
     expect(find.byKey(const ValueKey('development-banner')), findsNothing);
   });
 

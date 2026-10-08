@@ -53,7 +53,7 @@ FakeWorkspaceRepository _repo({
 
 Future<void> _pump(WidgetTester tester, FakeWorkspaceRepository repo,
     {bool web = false}) async {
-  tester.view.physicalSize = const Size(1200, 1600);
+  tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(

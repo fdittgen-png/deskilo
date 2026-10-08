@@ -18,6 +18,7 @@ class MeWorkspaceRow extends StatelessWidget {
     required this.actions,
     this.lastUsed = false,
     this.controls,
+    this.environmentHint,
     this.dragIndex,
   });
   final bool lastUsed;
@@ -27,6 +28,7 @@ class MeWorkspaceRow extends StatelessWidget {
   final int? dragIndex;
   final Widget avatar;
   final String name, detail;
+  final String? environmentHint;
   final List<Widget> actions;
 
   /// The heart, the stars and the options menu of this row.
@@ -114,6 +116,10 @@ class MeWorkspaceRow extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: AppSpacing.sm),
                 child: Row(children: actions),
+              ),
+              if (environmentHint case final hint?) Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.xs, right: AppSpacing.sm),
+                child: Text(hint, style: theme.textTheme.bodySmall),
               ),
             ],
           ),

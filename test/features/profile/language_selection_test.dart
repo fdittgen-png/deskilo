@@ -90,7 +90,7 @@ void main() {
       'persists to the store', (tester) async {
     final store = InMemoryLocaleStore();
     await pumpSettings(tester, store: store);
-    expect(find.widgetWithText(AppBar, 'Me'), findsOneWidget); // #1823: in Me
+    expect(find.widgetWithText(AppBar, 'Profile & account'), findsOneWidget); // #1823: in Me
 
     await revealTile(tester, 'Language');
     await tester.tap(find.text('Language'));
@@ -116,10 +116,10 @@ void main() {
     await tester.pumpAndSettle();
 
     // No restart: My account (in Me) now renders in German.
-    expect(find.widgetWithText(AppBar, 'Ich'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Profil und Konto'), findsOneWidget);
     expect(find.text('Sprache'), findsOneWidget);
     expect(find.text('Deutsch'), findsOneWidget);
-    expect(find.widgetWithText(AppBar, 'Me'), findsNothing);
+    expect(find.widgetWithText(AppBar, 'Profile & account'), findsNothing);
     expect(store.code, 'de');
   });
 
@@ -128,7 +128,7 @@ void main() {
       (tester) async {
     final store = InMemoryLocaleStore(code: 'de');
     await pumpSettings(tester, store: store);
-    expect(find.widgetWithText(AppBar, 'Ich'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Profil und Konto'), findsOneWidget);
 
     await revealTile(tester, 'Sprache');
     await tester.tap(find.text('Sprache'));
@@ -140,8 +140,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // The test platform locale is en_US, so English is back.
-    expect(find.widgetWithText(AppBar, 'Me'), findsOneWidget); // #1823: in Me
-    expect(find.widgetWithText(AppBar, 'Ich'), findsNothing);
+    expect(find.widgetWithText(AppBar, 'Profile & account'), findsOneWidget); // #1823: in Me
+    expect(find.widgetWithText(AppBar, 'Profil und Konto'), findsNothing);
     expect(store.code, isNull);
   });
 }

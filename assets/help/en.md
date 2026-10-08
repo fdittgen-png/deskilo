@@ -69,6 +69,10 @@ The app has up to five destinations along the bottom: **Messages** (§16), **Cal
 
 **Personal destinations and readable messages (#2274, #2269).** Home, Discover, Messages and the profile/settings destination each have a stable Me URL. Reload or open a copied link to restore that destination after startup; browser Back/Forward follows destination changes, and visited tabs retain their in-session state. Inbox previews read linked resources as labels. If a preview ends inside a reference, it shows the surviving label with an ellipsis, or Linked resource when no label is available. The original message remains unchanged and previews do not fetch resource details.
 
+**Space entry and account navigation (#2273, #2275, #2277).** Open workspace enters the normal workspace; Test space opens its practice environment, with an explanation on the card. The workspace keeps its real/test context visible after entry. Profile & account is a labeled navigation destination. Its persistent Profile, Privacy, Preferences and Advanced shortcuts jump to the corresponding section; Preferences puts language, theme and available region/format controls first. Visibility audiences, public-profile controls and their preview remain together under Privacy. On wide web layouts, Me and workspace destinations stay visible in a sidebar, including Back to Me and the existing Administration group. Narrow layouts and enlarged text use the compact navigation menu.
+
+**Find my bookings (#2276).** My bookings is visible above the category strip and returns the calendar to your own reservation scope. The summary names the current member and categories; Reset filters returns to your own activity with all available categories and keeps the date selection. Booking rows show authorized floor/resource names and status where available. Missing sources retain their supplied label or say Resource unavailable. Each row still opens its original source.
+
 ## 2. Roles & invitations
 
 DesKilo has three additive roles and a co-ownership flavour on top of them, plus a device account:

@@ -18020,6 +18020,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get uxAdvancedSection => 'Avanzate';
+
+  @override
   String get uxBookingChargePending =>
       'L’importo e il consumo del piano saranno calcolati secondo il piano del membro. L’importo finale non è disponibile qui.';
 
@@ -18035,6 +18038,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la tua presenza.';
 
   @override
+  String get uxBookingResourceUnavailable => 'Risorsa non disponibile';
+
+  @override
   String get uxDeviceTime => 'La tua ora';
 
   @override
@@ -18042,6 +18048,40 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get uxManageResource => 'Gestisci risorsa';
+
+  @override
+  String get uxMyBookings => 'Le mie prenotazioni';
+
+  @override
+  String get uxOpenWorkspace => 'Apri spazio';
+
+  @override
+  String get uxPreferencesSection => 'Preferenze';
+
+  @override
+  String get uxPrivacySection => 'Privacy';
+
+  @override
+  String get uxProfileAccount => 'Profilo e account';
+
+  @override
+  String get uxProfileSection => 'Profilo';
+
+  @override
+  String get uxRealSpaceHint => 'Prenotazioni e fatture reali';
+
+  @override
+  String get uxRealWorkspace => 'Spazio reale';
+
+  @override
+  String get uxResetFilters => 'Reimposta filtri';
+
+  @override
+  String get uxTestSpace => 'Spazio di prova';
+
+  @override
+  String get uxTestSpaceHint =>
+      'Spazio di prova: prenotazioni e fatture di prova';
 
   @override
   String get uxWorkspaceTime => 'Ora dello spazio';

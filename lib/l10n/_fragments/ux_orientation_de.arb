@@ -1,0 +1,15 @@
+{
+  "uxOpenWorkspace": "Arbeitsbereich öffnen",
+  "uxTestSpace": "Testbereich",
+  "uxRealWorkspace": "Arbeitsbereich",
+  "uxRealSpaceHint": "Echte Buchungen und Rechnungen",
+  "uxTestSpaceHint": "Testbereich: Buchungen und Rechnungen zum Ausprobieren",
+  "uxProfileAccount": "Profil und Konto",
+  "uxProfileSection": "Profil",
+  "uxPrivacySection": "Datenschutz",
+  "uxPreferencesSection": "Einstellungen",
+  "uxAdvancedSection": "Erweitert",
+  "uxMyBookings": "Meine Buchungen",
+  "uxBookingResourceUnavailable": "Ressource nicht verfügbar",
+  "uxResetFilters": "Filter zurücksetzen"
+}

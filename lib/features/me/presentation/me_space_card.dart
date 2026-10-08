@@ -5,6 +5,7 @@
 // erasing my data stays the stronger action under Privacy.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/demo/presentation/demo_workspace.dart';
 
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_radius.dart';
@@ -13,6 +14,7 @@ import '../../../core/theme/status_colors.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
@@ -48,10 +50,12 @@ class MeSpaceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final words = l10n ?? AppLocalizationsEn();
     final role = member == null ? null : memberRoleLabel(l10n, member!);
-    final environment = space.environment == 'prod'
-        ? (l10n?.profilesPairProd ?? 'PROD')
-        : (l10n?.profilesPairDev ?? 'DEV');
+    final demo = DemoEnvironment.maybeOf(context) != null;
+    final environment = demo ? words.demoSessionBadge : space.environment == 'prod'
+        ? words.uxRealWorkspace
+        : words.uxTestSpace;
     final status = _pending
         ? (l10n?.meSpacePending ?? 'Waiting for approval')
         : role;
@@ -72,6 +76,7 @@ class MeSpaceCard extends ConsumerWidget {
             message: [
               space.name,
               environment,
+              demo ? words.demoSessionBadgeHint : space.isDevelopment ? words.uxTestSpaceHint : words.uxRealSpaceHint,
               ?status,
               if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used',
             ].join(' · '),
@@ -125,12 +130,11 @@ class MeSpaceCard extends ConsumerWidget {
                     const SizedBox(width: AppSpacing.sm),
                   ],
                   Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        environment,
-                        style: Theme.of(context).textTheme.labelLarge?.strong,
-                      ),
+                    child: Text(
+                      isProd ? words.uxOpenWorkspace : words.uxTestSpace,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelLarge?.strong,
                     ),
                   ),
                 ],
@@ -195,4 +199,3 @@ Future<void> confirmLeaveSpace(
     l10n?.meLeaveDone(space.name) ?? 'You left ${space.name}.',
   );
 }
-

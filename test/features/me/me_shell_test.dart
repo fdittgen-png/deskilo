@@ -7,6 +7,7 @@ import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
@@ -19,6 +20,83 @@ import '../../helpers/mock_providers.dart';
 import 'me_app.dart';
 
 void main() {
+  testWidgets('wide Me keeps destinations visible and shrinks to a drawer', (tester) async {
+    final semantics = tester.ensureSemantics();
+    final router = await pumpMeApp(tester, size: const Size(1200, 900));
+    await goTo(tester, router, '/me');
+    final container = ProviderScope.containerOf(tester.element(find.byType(MeShell)));
+    await container.read(navigationStyleControllerProvider.notifier).set(NavigationStyle.menu);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('me-sidebar')), findsOneWidget);
+    expect(find.byTooltip('Open navigation menu'), findsNothing);
+    for (final tab in ['discover', 'messages', 'me', 'home']) {
+      await tester.tap(find.byKey(ValueKey('me-tab-$tab')));
+      await tester.pumpAndSettle();
+      expect(router.state.uri.queryParameters['tab'] ?? 'home', tab);
+      expect(tester.widget<ListTile>(find.byKey(ValueKey('me-tab-$tab'))).selected, isTrue);
+      expect(find.byKey(const ValueKey('me-sidebar')), findsOneWidget);
+    }
+    await goTo(tester, router, '/reserve');
+    expect(find.byKey(const ValueKey('shell-sidebar')), findsOneWidget);
+    expect(tester.getSemantics(find.byKey(const ValueKey('drawer-tab-1')))
+        .getSemanticsData().label, contains('Calendar'));
+    var reachedCalendar = false;
+    for (var step = 0; step < 60 && !reachedCalendar; step++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      FocusManager.instance.primaryFocus?.context?.visitAncestorElements((element) {
+        if (element.widget.key == const ValueKey('drawer-tab-1')) {
+          reachedCalendar = true;
+          return false;
+        }
+        return true;
+      });
+    }
+    expect(reachedCalendar, isTrue, reason: 'the persistent sidebar is reachable by keyboard');
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/calendar');
+    expect(find.byKey(const ValueKey('shell-sidebar')), findsOneWidget);
+    for (final (branch, path) in [(2, '/directory'), (3, '/money')]) {
+      final destination = find.byKey(ValueKey('drawer-tab-$branch'));
+      if (destination.evaluate().isEmpty) continue;
+      await tester.tap(destination);
+      await tester.pumpAndSettle();
+      expect(router.state.uri.path, path);
+      expect(tester.widget<ListTile>(destination).selected, isTrue);
+      expect(find.byKey(const ValueKey('shell-sidebar')), findsOneWidget);
+    }
+    await tester.tap(find.byKey(const ValueKey('drawer-back-to-me')));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/me');
+    tester.view.physicalSize = const Size(390, 844);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('me-sidebar')), findsNothing);
+    expect(find.byTooltip('Open navigation menu'), findsOneWidget);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('me-tab-me')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    semantics.dispose();
+  });
+
+  testWidgets('preferences are reachable from the first account viewport', (tester) async {
+    final router = await pumpMeApp(tester, workspace: twoSpaces(),
+        size: const Size(390, 844));
+    await goTo(tester, router, '/me?tab=me');
+    final shortcut = find.byKey(const ValueKey('me-section-2'));
+    expect(tester.getRect(shortcut).bottom, lessThan(300));
+    await tester.tap(shortcut);
+    await tester.pumpAndSettle();
+    expect(find.text('Language').hitTestable(), findsOneWidget);
+    expect(find.text('Theme').hitTestable(), findsOneWidget);
+    expect(find.byKey(const ValueKey('regional-formats')).hitTestable(), findsOneWidget);
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    expect(find.byType(SimpleDialog), findsOneWidget);
+  });
+
   testWidgets('the global menu preference follows Me and the workspace', (
     tester,
   ) async {
@@ -115,18 +193,18 @@ void main() {
       final group = find.byKey(const ValueKey('me-space-pair-pair-1'));
       expect(group, findsOneWidget);
       expect(
-        find.descendant(of: group, matching: find.text('DEV')),
+        find.descendant(of: group, matching: find.text('Test space')),
         findsOneWidget,
       );
       expect(
-        find.descendant(of: group, matching: find.text('PROD')),
+        find.descendant(of: group, matching: find.text('Open workspace')),
         findsOneWidget,
       );
-      expect(tester.getCenter(find.text('DEV')).dy,
-          tester.getCenter(find.text('PROD')).dy);
+      expect(tester.getCenter(find.text('Test space')).dy,
+          tester.getCenter(find.text('Open workspace')).dy);
       // A card: the identity and its options on one line, both environments
       // below it — no taller than that at phone width.
-      expect(tester.getSize(group).height, lessThan(168));
+      expect(tester.getSize(group).height, lessThan(230));
       // Production is the wide green button on the left, development the
       // narrow orange one at the right.
       final prod = find.byKey(const ValueKey('me-space-ws-2'));
@@ -142,8 +220,8 @@ void main() {
       for (final width in [320.0, 1200.0]) {
         tester.view.physicalSize = Size(width, 844);
         await tester.pumpAndSettle();
-        expect(tester.getCenter(find.text('DEV')).dy,
-            tester.getCenter(find.text('PROD')).dy);
+        expect(tester.getCenter(find.text('Test space')).dy,
+            tester.getCenter(find.text('Open workspace')).dy);
         expect(tester.takeException(), isNull);
       }
       expect(tester.takeException(), isNull);
@@ -298,12 +376,14 @@ void main() {
     await goTo(tester, router, '/me?tab=me');
     final tops = <double>[];
     for (final title in [
-      'My profile',
-      'My account',
+      'Profile',
+      'Privacy',
+      'Preferences',
+      'Advanced',
       'My workspaces',
       'Connected installations',
     ]) {
-      final header = find.text(title).first;
+      final header = find.descendant(of: find.byKey(const ValueKey('me-account-list')), matching: find.text(title)).first;
       await tester.scrollUntilVisible(
         header,
         200,
@@ -316,6 +396,6 @@ void main() {
       tops.add(tester.getTopLeft(header).dy);
     }
     // Each header was reached scrolling DOWN: the order is the list's.
-    expect(tops, hasLength(4));
+    expect(tops, hasLength(6));
   });
 }
