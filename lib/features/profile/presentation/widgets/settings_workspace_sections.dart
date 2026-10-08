@@ -7,7 +7,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/widgets/environment_tile.dart';
-import 'settings_section_header.dart';
+import 'settings_task_section.dart';
 
 /// #1307 S3 — what used to be one Administration block, split by the
 /// decision a reader came to make (`docs/ux/SETTINGS_OWNERSHIP.md`):
@@ -185,14 +185,14 @@ List<Widget> workspaceSettingsTiles(
     if (isOwner) const WorkspaceEnvironmentTile(),
   ];
 
-  List<Widget> section(String title, List<Widget> tiles) => tiles.isEmpty
+  List<Widget> section(String id, String title, List<Widget> tiles) => tiles.isEmpty
       ? const []
-      : [const Divider(), SettingsSectionHeader(title), ...tiles];
+      : [SettingsTaskSection(id: id, title: title, initiallyExpanded: id == 'workspace', children: tiles)];
 
   return [
-    ...section(l10n?.settingsSectionWorkspace ?? 'This workspace', workspace),
+    ...section('workspace', l10n?.settingsSectionWorkspace ?? 'This workspace', workspace),
     ...section(
-        l10n?.settingsSectionAdministration ?? 'Administration', administration),
-    ...section(l10n?.settingsSectionGovernance ?? 'Governance', governance),
+        'administration', l10n?.settingsSectionAdministration ?? 'Administration', administration),
+    ...section('governance', l10n?.settingsSectionGovernance ?? 'Governance', governance),
   ];
 }

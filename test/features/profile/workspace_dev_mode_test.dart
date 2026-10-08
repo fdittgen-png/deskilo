@@ -4,6 +4,7 @@
 // owner/admins, applies to EVERY member. The switch is an admin
 // affordance; plain members inherit the state without seeing it.
 
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,6 +34,7 @@ Future<FakeWorkspaceRepository> _pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await openSettingsSection(tester, 'advanced');
   await tester.scrollUntilVisible(find.text('Advanced'), 100);
   await tester.pumpAndSettle();
   return workspace;

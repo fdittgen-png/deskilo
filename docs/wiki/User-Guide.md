@@ -1876,6 +1876,9 @@ An import is **refused with the reason** when the file is not readable JSON, is 
 
 ## 12. Settings & profile
 
+**Choose the scope.** My settings holds your account shortcut, membership controls, device diagnostics, help and sign out. Manage workspace contains only the configuration and administration tools permitted by your role, labeled with the workspace name. Its task groups open when needed; Advanced starts closed. The two scopes keep their scroll position as you switch. Members without administration tools see their personal settings directly.
+
+
 Your personal screen, top to bottom:
 
 <p><img src="images/settings-personal.jpg" width="240"></p>

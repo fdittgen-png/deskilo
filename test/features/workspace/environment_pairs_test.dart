@@ -5,6 +5,7 @@
 // environment tile, the onboarding form creates both, and the three
 // deploy permissions sit in the matrix with their implication.
 import 'dart:async';
+import '../../helpers/settings_sections.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -153,6 +154,7 @@ void main() {
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     await _pump(tester, workspace: workspace, route: '/settings');
+    await showWorkspaceSettings(tester);
     final twin = find.byKey(const ValueKey('workspace-create-twin'));
     await tester.scrollUntilVisible(twin, 300,
         scrollable: find.byType(Scrollable).first);

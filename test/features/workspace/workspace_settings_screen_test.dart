@@ -2,6 +2,7 @@
 //
 // Workspace settings seed from the workspace and save identity, languages,
 // invitation templates and currency (#486, #711).
+import '../../helpers/settings_sections.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
@@ -64,6 +65,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   if (settle) {
     await tester.pumpAndSettle();
@@ -383,6 +385,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
 
     expect(find.text('Workspace'), findsNothing);
   });

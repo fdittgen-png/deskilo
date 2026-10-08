@@ -13,12 +13,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<void> pumpSettingsAs(
   WidgetTester tester, {
   required bool isAdmin,
   required bool isOwner,
   Map<String, dynamic> featureFlags = const {},
+  bool manage = false,
+  Size size = const Size(800, 3600),
 }) async {
   // The sectioned list no longer fits the default 800×600 lazy-list
   // viewport; a taller view keeps every tile and header built.
@@ -30,7 +33,7 @@ Future<void> pumpSettingsAs(
   // #711 added the Region & formats tile; 2700 no longer reached Sign out.
   // 3300→3600 (#1307): section headers for My account, My membership,
   // This workspace and Governance.
-  tester.view.physicalSize = const Size(800, 3600);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(
@@ -54,48 +57,51 @@ Future<void> pumpSettingsAs(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  if (manage) await showWorkspaceSettings(tester);
 }
 
 double dy(WidgetTester tester, String text) =>
     tester.getTopLeft(find.text(text)).dy;
 
 void main() {
-  testWidgets(
-      'owner sees Back to Me first, then every section in order, with Sign out '
-      'at the bottom', (tester) async {
-    await pumpSettingsAs(tester, isAdmin: true, isOwner: true);
+  testWidgets('personal settings and workspace configuration have distinct scopes', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await pumpSettingsAs(tester, isAdmin: true, isOwner: true, size: const Size(320, 1100));
+    expect(find.byKey(const ValueKey('settings-personal-tab')), findsOneWidget);
+    expect(find.byKey(const ValueKey('settings-workspace-tab')), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Status'), 160, scrollable: find.descendant(of: find.byKey(const PageStorageKey('settings-personal')), matching: find.byType(Scrollable)).first);
+    await tester.pumpAndSettle();
+    expect(find.text('Status'), findsOneWidget);
+    expect(find.text('Workspace'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('settings-workspace-tab')));
+    await tester.pumpAndSettle();
+    expect(find.text('Workspace'), findsOneWidget);
+    expect(find.text('Status'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('settings-personal-tab')));
+    await tester.pumpAndSettle();
+    expect(find.text('Status'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
-    const order = [
-      'Back to Me',
-      'My account',
-      'My membership',
-      'This workspace',
-      'Administration',
-      'Governance',
-      'Advanced',
-      'Help & about',
-      'Sign out',
-    ];
-    for (final header in order) {
-      expect(find.text(header), findsOneWidget, reason: 'missing "$header"');
+  testWidgets('personal sections stay separate from workspace task groups', (tester) async {
+    await pumpSettingsAs(tester, isAdmin: true, isOwner: true);
+    for (final header in ['Back to Me', 'My account', 'My membership', 'Advanced', 'Help & about', 'Sign out']) {
+      expect(find.text(header), findsOneWidget);
     }
-    for (var i = 1; i < order.length; i++) {
-      expect(dy(tester, order[i - 1]), lessThan(dy(tester, order[i])),
-          reason: '"${order[i - 1]}" must come before "${order[i]}"');
-    }
-    // Each section wraps what it is about.
-    // #1823 — the account's own rows live in Me; this row leads there.
+    expect(find.text('Workspace'), findsNothing);
     expect(dy(tester, 'My account'), lessThan(dy(tester, 'My account is in Me')));
-    expect(dy(tester, 'My account is in Me'), lessThan(dy(tester, 'My membership')));
     expect(dy(tester, 'My membership'), lessThan(dy(tester, 'Status')));
+    await openSettingsSection(tester, 'advanced');
+    expect(find.text('Developer mode'), findsOneWidget);
+    await showWorkspaceSettings(tester);
+    expect(find.text('Status'), findsNothing);
+    expect(find.text('Sign out'), findsNothing);
     expect(dy(tester, 'This workspace'), lessThan(dy(tester, 'Workspace')));
     expect(dy(tester, 'Features'), lessThan(dy(tester, 'Administration')));
     expect(dy(tester, 'Administration'), lessThan(dy(tester, 'Members & plans')));
     expect(dy(tester, 'Governance'), lessThan(dy(tester, 'Roles')));
-    expect(dy(tester, 'Advanced'), lessThan(dy(tester, 'Developer mode')));
-    expect(dy(tester, 'Help & about'), lessThan(dy(tester, 'Help')));
-    // Sections are visually separated.
-    expect(find.byType(Divider), findsWidgets);
+    expect(find.byType(Card), findsWidgets);
   });
 
   testWidgets(
@@ -162,6 +168,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
 
+    await showWorkspaceSettings(tester);
     expect(find.text('This workspace'), findsOneWidget);
     expect(find.text('Billing'), findsOneWidget);
     expect(find.text('Roles'), findsNothing,
@@ -182,6 +189,7 @@ void main() {
       tester,
       isAdmin: true,
       isOwner: true,
+      manage: true,
       featureFlags: const {
         'onlinePayments': false,
         'nfcBadges': false,
@@ -209,6 +217,7 @@ void main() {
       tester,
       isAdmin: true,
       isOwner: true,
+      manage: true,
       featureFlags: const {
         'onlinePayments': true,
         'nfcBadges': true,

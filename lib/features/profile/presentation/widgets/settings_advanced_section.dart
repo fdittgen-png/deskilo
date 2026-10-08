@@ -11,7 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/application/set_workspace_dev_mode.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import 'backend_settings_tile.dart';
-import 'settings_section_header.dart';
+import 'settings_task_section.dart';
 
 /// #1307 — the Advanced section: THIS DEVICE and diagnostics — which
 /// backend it talks to, the push pipeline, the scan camera, developer mode
@@ -29,8 +29,7 @@ List<Widget> advancedSettingsTiles(
     required bool devMode,
   }) =>
       [
-          const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionAdvanced ?? 'Advanced'),
+          SettingsTaskSection(id: 'advanced', title: l10n?.settingsSectionAdvanced ?? 'Advanced', initiallyExpanded: false, children: [
           // #780 — which Supabase instance this device talks to: the
           // app's own by default, a community's own project if they
           // run one. Device-level, so it sits above the push state.
@@ -77,4 +76,5 @@ List<Widget> advancedSettingsTiles(
               title: Text(l10n?.developerTitle ?? 'Developer'),
               onTap: () => context.push('/developer'),
             ),
+          ]),
       ];

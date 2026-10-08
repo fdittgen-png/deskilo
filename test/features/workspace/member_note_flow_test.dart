@@ -6,6 +6,7 @@
 // reservation, a space link opens the space's booking sheet. Deleting
 // (swipe OR button) always asks for confirmation first. The composer
 // attaches references from pickers.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -441,6 +442,7 @@ void main() {
     final workspace = await _pump(tester);
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Ana'));

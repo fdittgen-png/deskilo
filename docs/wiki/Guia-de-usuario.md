@@ -1895,6 +1895,9 @@ El comando imprime la posición de cada zona en milímetros y concluye **CONFORM
 
 ## 12. Ajustes y perfil
 
+**Elegir el ámbito.** Mis ajustes reúne el enlace a tu cuenta, tu membresía, los diagnósticos del dispositivo, la ayuda y cerrar sesión. Gestionar espacio contiene solo las herramientas de configuración y administración permitidas para tu rol, con el nombre del espacio. Abre los grupos cuando los necesites; Avanzado empieza cerrado. Ambas vistas conservan su posición al cambiar. Los miembros sin herramientas de administración acceden directamente a sus ajustes personales.
+
+
 Tu pantalla personal, de arriba abajo:
 
 <p><img src="images/settings-personal.jpg" width="240"></p>

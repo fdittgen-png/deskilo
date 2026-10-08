@@ -1888,6 +1888,9 @@ Der Befehl druckt jede Zone in Millimetern und schließt mit **CONFORMS** oder l
 
 ## 12. Einstellungen & Profil
 
+**Den Bereich wählen.** Meine Einstellungen enthält den Kontolink, Ihre Mitgliedschaft, Gerätediagnose, Hilfe und Abmelden. Workspace verwalten zeigt nur die für Ihre Rolle erlaubten Einrichtungs- und Verwaltungswerkzeuge mit dem Namen des Workspace. Öffnen Sie Aufgabengruppen bei Bedarf; Erweitert ist zunächst geschlossen. Beide Ansichten behalten ihre Scrollposition. Mitglieder ohne Verwaltungswerkzeuge sehen direkt ihre persönlichen Einstellungen.
+
+
 Dein persönlicher Bildschirm, von oben nach unten:
 
 <p><img src="images/settings-personal.jpg" width="240"></p>

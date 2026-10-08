@@ -31058,6 +31058,18 @@ abstract class AppLocalizations {
   /// **'Reset filters'**
   String get uxResetFilters;
 
+  /// No description provided for @uxSettingsPersonal.
+  ///
+  /// In en, this message translates to:
+  /// **'My settings'**
+  String get uxSettingsPersonal;
+
+  /// No description provided for @uxSettingsSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage workspace'**
+  String get uxSettingsSpace;
+
   /// No description provided for @uxTestSpace.
   ///
   /// In en, this message translates to:

@@ -1825,6 +1825,8 @@ Il comando stampa la posizione di ogni zona in millimetri e conclude con **CONFO
 
 ## 12. Impostazioni e profilo
 
+**Scegli l’ambito.** Le mie impostazioni raccoglie il collegamento all’account, la tua adesione, la diagnostica del dispositivo, l’aiuto e l’uscita. Gestisci spazio contiene solo gli strumenti di configurazione e amministrazione consentiti al tuo ruolo, con il nome dello spazio. Apri i gruppi quando servono; Avanzate parte chiuso. Entrambe le viste mantengono la posizione di scorrimento. I membri senza strumenti di amministrazione vedono direttamente le proprie impostazioni.
+
 La tua schermata personale, dall'alto in basso:
 
 ![](assets/help/images/settings-personal.jpg)

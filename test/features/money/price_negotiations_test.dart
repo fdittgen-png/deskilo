@@ -5,6 +5,7 @@
 // Statement face and sees who can look; an owner (or finance admin)
 // proposes it from the member's sheet; it goes through validation;
 // the feed narrates it. The server side (0137) has its own harness.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
@@ -330,6 +331,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
     await openSheet(tester, 'Ana');
