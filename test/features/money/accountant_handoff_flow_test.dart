@@ -22,7 +22,11 @@ import '../../helpers/navigation.dart';
 Future<
   ({FakeMoneyRepository money, List<({String name, Uint8List bytes})> saved})
 >
-_openPreflight(WidgetTester tester, {bool failSave = false}) async {
+_openPreflight(
+  WidgetTester tester, {
+  bool failSave = false,
+  Future<void> Function(FakeMoneyRepository money)? prepare,
+}) async {
   final money = FakeMoneyRepository();
   await money.createInvoice(
     workspaceId: 'ws-1',
@@ -34,6 +38,7 @@ _openPreflight(WidgetTester tester, {bool failSave = false}) async {
     memberId: 'member-1',
     period: '2026-07',
   );
+  await prepare?.call(money);
   final saved = <({String name, Uint8List bytes})>[];
   tester.view.physicalSize = const Size(800, 1400);
   tester.view.devicePixelRatio = 1.0;
@@ -137,4 +142,83 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('#1885 — the saved file, read back on its own, accounts for '
+      'every document once and each currency apart', (tester) async {
+    final r = await _openPreflight(tester, prepare: (money) async {
+      await money.createInvoice(
+        workspaceId: 'ws-1',
+        memberId: 'member-1',
+        period: '2026-08',
+      );
+      // A second currency: never added to the first.
+      money.invoices[2] = money.invoices[2].copyWith(currency: 'CHF');
+    });
+    await tester.tap(find.byKey(const ValueKey('handoff-save')));
+    await tester.pumpAndSettle();
+
+    final zip = ZipDecoder().decodeBytes(r.saved.single.bytes);
+    final csv = utf8.decode(
+      zip.files.singleWhere((f) => f.name.endsWith('.csv')).content as List<int>,
+    );
+    final report = jsonDecode(utf8.decode(
+      zip.files.singleWhere((f) => f.name == 'report.json').content as List<int>,
+    )) as Map<String, Object?>;
+
+    // Read independently of the app's own reader: comment lines and the
+    // header skipped, then the columns by the header's names.
+    final lines = [
+      for (final l in const LineSplitter().convert(csv))
+        if (l.isNotEmpty && !l.startsWith('#')) l,
+    ];
+    final header = lines.first.split(',');
+    final rows = [for (final l in lines.skip(1)) _cells(l)];
+    String col(List<String> row, String name) => row[header.indexOf(name)];
+
+    expect({for (final row in rows) col(row, 'invoice_number')},
+        {for (final i in r.money.invoices) i.number},
+        reason: 'every issued document, by its number');
+    expect(rows.length, r.money.invoices.length, reason: 'and each once');
+
+    int minor(String major) => int.parse(major.replaceAll('.', ''));
+    final gross = <String, int>{};
+    for (final row in rows) {
+      gross.update(col(row, 'currency'), (v) => v + minor(col(row, 'gross')),
+          ifAbsent: () => minor(col(row, 'gross')));
+    }
+    final totals = report['totals'] as Map<String, Object?>;
+    expect(gross.keys.toSet(), {'EUR', 'CHF'});
+    for (final currency in gross.keys) {
+      final issued = (totals[currency] as Map)['issued'] as Map;
+      expect(issued['gross_minor'], gross[currency],
+          reason: '$currency: the report counts what the file holds');
+      expect(issued['gross_minor'], r.money.invoices
+          .where((i) => i.currency == currency)
+          .fold<int>(0, (sum, i) => sum + i.totalCents),
+          reason: '$currency: and what was issued');
+    }
+  });
+}
+
+/// One CSV line's cells, quotes honoured — a reader written here, apart
+/// from the app's own, so the file is checked by something it did not make.
+List<String> _cells(String line) {
+  final cells = <String>[];
+  final cell = StringBuffer();
+  var quoted = false;
+  for (var i = 0; i < line.length; i++) {
+    final ch = line[i];
+    if (quoted && ch == '"' && i + 1 < line.length && line[i + 1] == '"') {
+      cell.write('"');
+      i++;
+    } else if (ch == '"') {
+      quoted = !quoted;
+    } else if (ch == ',' && !quoted) {
+      cells.add(cell.toString());
+      cell.clear();
+    } else {
+      cell.write(ch);
+    }
+  }
+  return cells..add(cell.toString());
 }

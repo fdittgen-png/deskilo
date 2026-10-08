@@ -386,7 +386,10 @@ Future<void> exportAccountingFile(
               buyer: buyerOf(invoice, workspace),
               iban: workspaceIban(workspace),
             );
-            if (pdf.bytes.isNotEmpty) files['invoices/${pdf.fileName}'] = pdf.bytes;
+            // #1885 — a document that did not render ends the bundle: an
+            // archive missing an invoice must never be saved as complete.
+            if (pdf.bytes.isEmpty) return;
+            files['invoices/${pdf.fileName}'] = pdf.bytes;
           }
           files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
           files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
