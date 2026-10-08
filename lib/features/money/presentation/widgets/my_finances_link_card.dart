@@ -44,7 +44,7 @@ class MyFinancesLinkCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
-                    l10n?.financesLinkTitle ?? 'Your documents live in Me',
+                    l10n?.financesLinkTitle ?? 'Your finances across spaces',
                     style: theme.textTheme.titleSmall,
                   ),
                 ),

@@ -88,6 +88,13 @@ Future<bool> _drawerHas(WidgetTester tester, String key) async {
     of: find.byType(ShellDrawer),
     matching: find.byType(Scrollable),
   );
+  final group = find.byKey(const PageStorageKey('drawer-group-finance-false'));
+  if (group.evaluate().isNotEmpty) {
+    await tester.ensureVisible(group);
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: group, matching: find.byType(ListTile)).first);
+    await tester.pumpAndSettle();
+  }
   try {
     await tester.scrollUntilVisible(
       find.byKey(ValueKey(key)),

@@ -411,7 +411,7 @@ class _EntitlementCard extends StatelessWidget {
         if (statement.isCapReached) {
           footer = l10n?.entitlementBlockedFull ??
               "You've used all your days this month. Ask an admin for "
-                  'more or request extra half-days below.';
+                  'more or request extra half-days.';
         }
       case OveragePolicy.package:
         if (statement.isCapReached) {
@@ -447,10 +447,10 @@ class _EntitlementCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
+                Expanded(child: Text(
                   leftLabel,
                   style: theme.bodyMedium?.copyWith(color: barColor),
-                ),
+                )),
               ],
             ),
             const SizedBox(height: 10),
@@ -825,11 +825,12 @@ class _BalanceFooter extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Row(
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Expanded(
-              child: Text(l10n?.billBalance ?? 'Balance', style: style),
-            ),
+            Text(l10n?.billBalance ?? 'Balance', style: style),
             Chip(
               label: Text(
                 isSettled
@@ -843,7 +844,6 @@ class _BalanceFooter extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               side: BorderSide(color: color),
             ),
-            const SizedBox(width: 12),
             Text(money(balanceCents), style: style),
           ],
         ),

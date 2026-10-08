@@ -28,9 +28,9 @@ import 'lint_sources.dart';
 /// Ceilings measured 2026-10-07, then lowered by the expense sheet's move to
 /// the kit and the e-mail autofill fixes. Lower them as forms move.
 const int _rawFieldCeiling = 207;
-const int _literalGapCeiling = 261; // #2272 removes literal booking-sheet gaps.
+const int _literalGapCeiling = 255; // #2284 removes duplicate Money spacing.
 const int _fallbackCeiling =
-    6466; // #2288 replaces duplicate section heading fallbacks.
+    6465; // #2287 and #2288 replace duplicated navigation and section headings.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

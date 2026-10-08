@@ -2,13 +2,14 @@
 //
 // #739 — price negotiations. The tariff is the default; a member may
 // have their own deal. The member reads it beside the tariff on the
-// Statement face and sees who can look; an owner (or finance admin)
+// Documents face and sees who can look; an owner (or finance admin)
 // proposes it from the member's sheet; it goes through validation;
 // the feed narrates it. The server side (0137) has its own harness.
 import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
+import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../members/members_screen_test.dart' show openSheet, pumpMembers;
-import '../../helpers/screens/money_faces.dart' show pumpFaces;
+import '../../helpers/screens/money_faces.dart' show pumpFaces, face;
 
 final _deal = PriceNegotiation(
   defaultFeeCents: 25000,
@@ -72,10 +73,11 @@ void main() {
     }).negotiated, isNull);
   });
 
-  testWidgets('the Statement face shows my deal beside the tariff, and who '
+  testWidgets('the Documents face shows my deal beside the tariff, and who '
       'can see it', (tester) async {
     final money = FakeMoneyRepository()..negotiations['member-1'] = _deal;
     await pumpFaces(tester, money: money);
+    await face(tester, MoneyFace.documents);
     final card = find.byKey(const ValueKey('negotiation-card'));
     await tester.scrollUntilVisible(card, 200,
         scrollable: find.byType(Scrollable).first);
@@ -102,11 +104,13 @@ void main() {
   testWidgets('on the tariff the card says so; the feature off hides it',
       (tester) async {
     await pumpFaces(tester);
+    await face(tester, MoneyFace.documents);
     expect(find.text('You are on the workspace tariff.'), findsOneWidget);
   });
 
   testWidgets('the feature off hides the card', (tester) async {
     await pumpFaces(tester, flags: const {'priceNegotiations': false});
+    await face(tester, MoneyFace.documents);
     expect(find.byKey(const ValueKey('negotiation-card')), findsNothing);
   });
 
@@ -205,6 +209,7 @@ void main() {
       ),
     );
     await pumpFaces(tester, money: money);
+    await face(tester, MoneyFace.documents);
     final card = find.byKey(const ValueKey('negotiation-card'));
     await tester.scrollUntilVisible(card, 200,
         scrollable: find.byType(Scrollable).first);

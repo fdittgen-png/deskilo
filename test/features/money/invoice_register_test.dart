@@ -58,6 +58,7 @@ Future<FakeMoneyRepository> _pumpRegister(
   // #720 — the register lives on the Invoices face.
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
   await tester.pumpAndSettle();
+  await openMoneyWorkspaceTools(tester);
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
@@ -131,6 +132,7 @@ void main() {
     // #720 — the register lives on the Invoices face.
     await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
     await tester.pumpAndSettle();
+    await openMoneyWorkspaceTools(tester);
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();
@@ -210,6 +212,7 @@ void main() {
     // #720 — the register lives on the Invoices face.
     await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
     await tester.pumpAndSettle();
+    await openMoneyWorkspaceTools(tester);
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();

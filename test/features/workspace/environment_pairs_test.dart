@@ -19,8 +19,9 @@ import 'package:go_router/go_router.dart';
 import '../../helpers/mock_providers.dart';
 
 Future<FakeWorkspaceRepository> _pump(WidgetTester tester,
-    {required FakeWorkspaceRepository workspace, String route = '/profiles'}) async {
-  await tester.binding.setSurfaceSize(const Size(900, 1600));
+    {required FakeWorkspaceRepository workspace, String route = '/profiles',
+    Size size = const Size(900, 1600)}) async {
+  await tester.binding.setSurfaceSize(size);
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(ProviderScope(
     overrides: standardTestOverrides(workspace: workspace),
@@ -68,6 +69,27 @@ void main() {
     // #996 — the switch is the new default: the next start lands here.
     expect(workspace.serverDefaultWorkspaceId, 'ws-prod');
     expect(container.read(defaultWorkspaceIdProvider).value, 'ws-prod');
+  });
+
+  testWidgets('environment selection stays explicit at 320px and doubled text',
+      (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    final dev = workspace.workspaces.first.copyWith(pairId: 'pair-1', environment: 'dev');
+    final prod = dev.copyWith(id: 'ws-prod', environment: 'prod');
+    workspace.workspaces..clear()..addAll([dev, prod]);
+    await _pump(tester, workspace: workspace, size: const Size(320, 1100));
+    expect(find.text('Development — for trying things out'), findsWidgets);
+    expect(find.text('Production — the invoices are owed'), findsOneWidget);
+    expect(find.text(dev.inviteCode), findsNothing);
+    final production = find.byKey(const ValueKey('profile-pair-prod-pair-1'));
+    await tester.ensureVisible(production);
+    await tester.tap(production);
+    await tester.pumpAndSettle();
+    final container = ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)));
+    expect(container.read(activeWorkspaceIdProvider).value, 'ws-prod');
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('existing pairs stay together when pair creation is disabled',
