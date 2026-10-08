@@ -7,6 +7,7 @@ import 'place_feedback_bar.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -260,6 +261,7 @@ class SeatListView extends ConsumerWidget {
     String place,
   ) {
     final l10n = AppLocalizations.of(context);
+    final words = l10n ?? AppLocalizationsEn();
     final timeFormat = ref.watch(appFormatProvider); // #1150
     final myMemberId = ref.watch(myMemberProvider).value?.id;
         // Browsing (#184): the row mirrors the canvas — occupancy over the
@@ -348,7 +350,8 @@ class SeatListView extends ConsumerWidget {
             ),
           SeatDayPhase.none => null,
         };
-        return ListTile(
+        return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        ListTile(
           leading: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -380,16 +383,27 @@ class SeatListView extends ConsumerWidget {
           contentPadding:
               EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
           title: Text(seat.name.isEmpty ? place : seat.name),
-          subtitle: Text(
-            [place, stateText]
+          subtitle: Text([place, stateText]
                 .where((s) => seat.name.isNotEmpty || s != place)
                 .where((s) => s.isNotEmpty)
                 .join('\n'),
           ),
           isThreeLine: seat.name.isNotEmpty && place.isNotEmpty,
-          trailing: PlaceFeedbackChip(
-              kind: PlaceKind.seat, id: seat.id, title: seat.name.isEmpty ? place : seat.name),
+          trailing: TextButton(
+            key: ValueKey('list-seat-action-${seat.id}'),
+            onPressed: () => onSeatTap(seat),
+            child: Text(state == SeatState.free && dayOpen
+                ? words.planReserveButton : words.bookingOpenDetails),
+          ),
           onTap: () => onSeatTap(seat),
-        );
+        ),
+        if (placeFeedbackShown(ref, PlaceKind.seat))
+          Padding(
+            padding: EdgeInsetsDirectional.only(start: 72 + indent, end: 16),
+            child: Align(alignment: AlignmentDirectional.centerStart,
+              child: PlaceFeedbackChip(kind: PlaceKind.seat, id: seat.id,
+                title: seat.name.isEmpty ? place : seat.name)),
+          ),
+        ]);
   }
 }
