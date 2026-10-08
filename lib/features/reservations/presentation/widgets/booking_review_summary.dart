@@ -56,6 +56,7 @@ class BookingReviewSummary extends StatelessWidget {
     this.timezone,
     this.recurrence,
     this.walkUp = false,
+    this.resourcePriceLabel,
   });
   final List<String> resource;
   final String person;
@@ -64,6 +65,7 @@ class BookingReviewSummary extends StatelessWidget {
   final String? timezone;
   final String? recurrence;
   final bool walkUp;
+  final String? resourcePriceLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +82,15 @@ class BookingReviewSummary extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             Text('${words.uxBookingFor}: $person'),
-          if (walkUp) Text(words.planStartNow),
+            if (walkUp) Text(words.planStartNow),
             BookingWindowSummary(
               window: window,
               today: today,
               timezone: timezone,
             ),
             if (recurrence != null) Text('${words.planRepeatLabel}: $recurrence'),
+            if (resourcePriceLabel case final price?)
+              Text(price, key: const ValueKey('booking-known-price')),
             Text(
               words.uxBookingChargePending,
               key: const ValueKey('booking-charge-context'),

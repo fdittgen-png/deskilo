@@ -82,6 +82,7 @@ class BookingSheet extends StatefulWidget {
     required this.seatName,
     this.resourceContext = const [],
     this.timezone,
+    this.resourcePriceLabel,
     required this.start,
     required this.initialEnd,
     required this.cap,
@@ -112,6 +113,7 @@ class BookingSheet extends StatefulWidget {
   final String seatName;
   final List<String> resourceContext;
   final String? timezone;
+  final String? resourcePriceLabel;
   final DateTime start;
   final DateTime initialEnd;
   final DateTime? cap;
@@ -355,6 +357,7 @@ class _BookingSheetState extends State<BookingSheet> {
 
             BookingReviewSummary(
               resource: [...widget.resourceContext, widget.seatName],
+              resourcePriceLabel: widget.resourcePriceLabel,
               person: widget.members.where((m) => m.id == _forMemberId)
                   .firstOrNull?.name ?? words.levelAssignMyself,
               window: (start: _start, end: _end), timezone: widget.timezone, walkUp: _walkUp,
@@ -364,6 +367,8 @@ class _BookingSheetState extends State<BookingSheet> {
                   : '${_patternLabel(l10n, _pattern)} · '
                       '${appFormatOf(context).date(_until)}',
             ),
+            if (widget.seatId != null)
+              SeatAccessoryRow(seatId: widget.seatId!),
             // ── period (fits the workspace granularity) ──
             if (showHalfDayPicker) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -564,7 +569,6 @@ class _BookingSheetState extends State<BookingSheet> {
                 },
               ),
             if (widget.seatId != null) ...[
-              SeatAccessoryRow(seatId: widget.seatId!),
               PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
             ],
             if (widget.allowBlocking)

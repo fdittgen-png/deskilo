@@ -433,6 +433,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
     String? levelId,
     required String name,
     required bool granted,
+    String? knownPrice,
   }) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
@@ -454,6 +455,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
         seatName: name,
         now: ref.read(clockProvider).now(),
         timezone: workspace.timezone,
+        resourcePriceLabel: knownPrice,
         resourceContext: [workspace.name, ?widget.level?.name],
         start: initial.start,
         initialEnd: initial.end,
@@ -770,6 +772,7 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
                         levelId:
                             widget.kind == SpaceKind.level ? level?.id : null,
                         name: title,
+                        knownPrice: priceLine,
                         granted: granted,
                       ),
               icon: const Icon(Icons.event_available_outlined),
