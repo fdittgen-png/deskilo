@@ -792,7 +792,8 @@ void main() {
     final canvasTop = tester
         .getTopLeft(find.byKey(const ValueKey('kiosk-plan-canvas')))
         .dy;
-    expect(canvasTop, lessThan(100));
+    final viewportTop = tester.getTopLeft(find.byType(KioskScreen)).dy;
+    expect(canvasTop - viewportTop, lessThan(100));
   });
 
   testWidgets('#618 — an occupant with a profile photo appears as their '

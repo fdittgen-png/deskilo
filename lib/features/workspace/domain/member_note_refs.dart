@@ -176,7 +176,7 @@ String notePlainText(String body) => [
 /// A LEADING quote is dropped (#798): the inbox row must show what this
 /// message says, not a rerun of the one it answers — which is also what
 /// every chat app shows in its list.
-String notePreview(String body, {int max = 64}) {
+String notePreview(String body, {int max = 64, String referenceFallback = '…'}) {
   final segments = parseNoteBody(body);
   final withoutQuote =
       segments.isNotEmpty && segments.first is NoteQuoteRef
@@ -185,7 +185,7 @@ String notePreview(String body, {int max = 64}) {
   final plain = [
     for (final segment in withoutQuote)
       switch (segment) {
-        NoteText(:final text) => text,
+        NoteText(:final text) => _previewFragment(text, referenceFallback),
         NoteReservationRef(:final label) => label,
         NoteSpaceRef(:final label) => label,
         NoteRecordRef(:final label) => label,
@@ -200,6 +200,21 @@ String notePreview(String body, {int max = 64}) {
   if (codeUnit >= 0xD800 && codeUnit <= 0xDBFF) cut -= 1;
   return '${plain.substring(0, cut)}…';
 }
+
+// Inbox payloads may end inside a reference. Only previews replace such
+// fragments; full message parsing keeps the original text unchanged.
+final _previewToken = RegExp(r'\[(?:res|space|ref|quote|at):[^\]\n]*(?:\]|$)');
+String _previewFragment(String text, String fallback) =>
+    text.replaceAllMapped(_previewToken, (match) {
+      final token = match.group(0)!;
+      final pipe = token.indexOf('|');
+      if (pipe < 0) return fallback;
+      final closed = token.endsWith(']');
+      final label = token.substring(pipe + 1, closed ? token.length - 1 : token.length).trim();
+      if (label.isEmpty) return fallback;
+      final mention = token.startsWith('[at:') ? '@' : '';
+      return '$mention$label${closed ? '' : '…'}';
+    });
 
 /// Builds a reservation token for the composer.
 String reservationToken(String id, String label) =>

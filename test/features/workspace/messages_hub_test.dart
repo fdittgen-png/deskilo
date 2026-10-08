@@ -13,6 +13,7 @@ import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -224,7 +225,7 @@ void main() {
     expect(find.byKey(const ValueKey('member-note-ref-reservation')),
         findsOneWidget);
     // Close the menu without picking.
-    await tester.tapAt(const Offset(10, 10));
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
 
     await tester.enterText(

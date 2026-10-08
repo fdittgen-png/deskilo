@@ -79,10 +79,13 @@ Future<void> _go(WidgetTester tester, String path) async {
 }
 
 Future<bool> _drawerHas(WidgetTester tester, String key) async {
-  await tester.tap(find.byTooltip('Open navigation menu'));
-  await tester.pumpAndSettle();
+  final menu = find.byTooltip('Open navigation menu');
+  if (menu.evaluate().isNotEmpty) {
+    await tester.tap(menu);
+    await tester.pumpAndSettle();
+  }
   final scrollable = find.descendant(
-    of: find.byKey(const ValueKey('shell-drawer')),
+    of: find.byType(ShellDrawer),
     matching: find.byType(Scrollable),
   );
   try {
@@ -91,6 +94,7 @@ Future<bool> _drawerHas(WidgetTester tester, String key) async {
       80,
       scrollable: scrollable,
     );
+    await tester.pumpAndSettle();
     return true;
   } on StateError {
     return false;
@@ -114,7 +118,7 @@ void main() {
     );
   });
 
-  testWidgets('web: the drawer opens BI, which shows the capacity module', (
+  testWidgets('web: visible navigation opens BI, which shows the capacity module', (
     tester,
   ) async {
     final kpis = await _pump(tester, web: true);

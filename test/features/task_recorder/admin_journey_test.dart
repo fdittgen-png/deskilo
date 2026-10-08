@@ -22,6 +22,7 @@ import 'package:deskilo/features/task_recorder/presentation/recorder_seam.dart';
 import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -215,7 +216,7 @@ void main() {
     );
     await tester.tap(find.text('Default policy'));
     await tester.pumpAndSettle();
-    await tester.tapAt(const Offset(600, 10));
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
     final r = await _stop(tester, c);
     expect(

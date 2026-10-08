@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -592,9 +593,6 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     // possibly scrolled off, and the bell is gone.
     //
     // #606 — the feed's contextual how-to; gated inside the widget.
-    return Column(children: [
-      const HelpHint(HelpHintId.events),
-      Expanded(child: body),
-    ]);
+    return ControlsFeedBody(controls: const [HelpHint(HelpHintId.events)], feed: body);
   }
 }

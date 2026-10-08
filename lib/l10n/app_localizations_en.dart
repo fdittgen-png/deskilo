@@ -17853,6 +17853,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get uxAdvancedSection => 'Advanced';
+
+  @override
   String get uxBookingChargePending =>
       'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.';
 
@@ -17868,10 +17871,49 @@ class AppLocalizationsEn extends AppLocalizations {
       'Reserve keeps the selected window. Check in now switches to the current window and marks you present.';
 
   @override
+  String get uxBookingResourceUnavailable => 'Resource unavailable';
+
+  @override
   String get uxDeviceTime => 'Your time';
 
   @override
+  String get uxLinkedReference => 'Linked resource';
+
+  @override
   String get uxManageResource => 'Manage resource';
+
+  @override
+  String get uxMyBookings => 'My bookings';
+
+  @override
+  String get uxOpenWorkspace => 'Open workspace';
+
+  @override
+  String get uxPreferencesSection => 'Preferences';
+
+  @override
+  String get uxPrivacySection => 'Privacy';
+
+  @override
+  String get uxProfileAccount => 'Profile & account';
+
+  @override
+  String get uxProfileSection => 'Profile';
+
+  @override
+  String get uxRealSpaceHint => 'Real bookings and invoices';
+
+  @override
+  String get uxRealWorkspace => 'Workspace';
+
+  @override
+  String get uxResetFilters => 'Reset filters';
+
+  @override
+  String get uxTestSpace => 'Test space';
+
+  @override
+  String get uxTestSpaceHint => 'Test space: practice bookings and invoices';
 
   @override
   String get uxWorkspaceTime => 'Workspace time';

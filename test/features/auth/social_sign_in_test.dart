@@ -189,6 +189,9 @@ void main() {
     await tester.pumpAndSettle();
     await openMyAccount(tester); // #1823: My account is in Me
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('settings-linked-accounts')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('settings-linked-accounts')).hitTestable(), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('settings-linked-accounts')));
     await tester.pumpAndSettle();
 

@@ -18051,6 +18051,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get uxAdvancedSection => 'Avancé';
+
+  @override
   String get uxBookingChargePending =>
       'Le montant et l’utilisation du forfait seront calculés selon le plan du membre. Le montant final n’est pas disponible ici.';
 
@@ -18066,10 +18069,50 @@ class AppLocalizationsFr extends AppLocalizations {
       'Réserver conserve le créneau choisi. S’installer maintenant utilise le créneau actuel et indique votre présence.';
 
   @override
+  String get uxBookingResourceUnavailable => 'Ressource indisponible';
+
+  @override
   String get uxDeviceTime => 'Votre heure';
 
   @override
+  String get uxLinkedReference => 'Ressource liée';
+
+  @override
   String get uxManageResource => 'Gérer la ressource';
+
+  @override
+  String get uxMyBookings => 'Mes réservations';
+
+  @override
+  String get uxOpenWorkspace => 'Ouvrir l’espace';
+
+  @override
+  String get uxPreferencesSection => 'Préférences';
+
+  @override
+  String get uxPrivacySection => 'Confidentialité';
+
+  @override
+  String get uxProfileAccount => 'Profil et compte';
+
+  @override
+  String get uxProfileSection => 'Profil';
+
+  @override
+  String get uxRealSpaceHint => 'Réservations et factures réelles';
+
+  @override
+  String get uxRealWorkspace => 'Espace réel';
+
+  @override
+  String get uxResetFilters => 'Réinitialiser les filtres';
+
+  @override
+  String get uxTestSpace => 'Espace de test';
+
+  @override
+  String get uxTestSpaceHint =>
+      'Espace de test : réservations et factures d’essai';
 
   @override
   String get uxWorkspaceTime => 'Heure de l’espace';

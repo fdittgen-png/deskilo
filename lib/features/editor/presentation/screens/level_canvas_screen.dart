@@ -830,11 +830,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   /// The first thing to do on a floor nobody has drawn yet.
   Widget _emptyFloor() {
     final l10n = AppLocalizations.of(context);
-    return IgnorePointer(
-      ignoring: false,
-      child: Center(
-        child: Padding(
-          padding: AppSpacing.xlAll,
+    return Center(
+      child: Padding(
+        padding: AppSpacing.xlAll,
+        child: SingleChildScrollView(
+          primary: false,
           child: Card(
             key: const ValueKey('editor-empty-floor'),
             child: Padding(

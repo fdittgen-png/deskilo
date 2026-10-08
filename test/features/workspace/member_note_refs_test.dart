@@ -59,6 +59,20 @@ void main() {
       expect(preview, '${'x' * 63}…');
     });
 
+    test('shortened inbox tokens show the surviving label rather than identifiers', () {
+      const body = 'Meet [space:level:01234567-0123-0123-0123-012345678901|Rez-de-chaussée]';
+      final shortened = body.substring(0, 64);
+      final preview = notePreview(shortened, max: 120);
+      expect(preview, startsWith('Meet Rez-de-'));
+      expect(preview, endsWith('…'));
+      expect(preview, isNot(contains('01234567')));
+      expect(notePreview('Before [res:bad-id] after'), 'Before … after');
+      expect(notePreview('[space:unknown:resource-id|Room A]'), 'Room A');
+      expect(notePreview('[res:resource-id|${'Réunion 😀 ' * 20}]').length, lessThanOrEqualTo(65));
+      expect(notePlainText(shortened), shortened,
+        reason: 'the original body is preserved for thread rendering and editing');
+    });
+
     test('token builders strip ] from labels', () {
       expect(reservationToken('res-link-1', 'A1 [win]'),
           '[res:res-link-1|A1 [win)]');

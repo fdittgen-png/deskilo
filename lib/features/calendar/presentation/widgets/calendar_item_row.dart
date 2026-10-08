@@ -9,6 +9,8 @@ import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
+import 'calendar_booking_title.dart';
+import '../../../../l10n/app_localizations_en.dart';
 
 IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
       CalendarKind.reservation => Icons.event_seat_outlined,
@@ -124,7 +126,10 @@ class CalendarItemRow extends ConsumerWidget {
               child: Icon(calendarKindIcon(item.kind), size: 20),
             )
           : Icon(calendarKindIcon(item.kind)),
-      title: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
+      title: item.link is ReservationLink &&
+              (item.kind == CalendarKind.reservation || item.kind == CalendarKind.checkIn || item.kind == CalendarKind.checkOut)
+          ? CalendarBookingTitle(item: item)
+          : Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: Text(
         [
           time,
@@ -187,7 +192,17 @@ class CalendarItemRow extends ConsumerWidget {
   /// A status worth a word: what still waits or was refused. "applied"
   /// and "confirmed" are the normal course and say nothing.
   String? _statusLabel(AppLocalizations? l10n, CalendarItem item) {
-    if (item.kind == CalendarKind.reservation) return null;
+    if (item.kind == CalendarKind.reservation) {
+      final words = l10n ?? AppLocalizationsEn();
+      return switch (item.status) {
+        'reserved' => words.a11ySeatReserved,
+        'checked_in' => words.a11ySeatOccupied,
+        'completed' => words.gettingStartedStateCompleted,
+        'cancelled' => words.gettingStartedStateCancelled,
+        'released' => words.gettingStartedStateReleased,
+        _ => null,
+      };
+    }
     return switch (item.status) {
       'pending' => l10n?.calendarEventStatusPending ?? 'awaiting confirmation',
       'rejected' => l10n?.calendarEventStatusRejected ?? 'rejected',

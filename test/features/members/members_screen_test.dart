@@ -11,6 +11,7 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -68,6 +69,9 @@ Future<FakeWorkspaceRepository> pumpMembers(
 
 /// Opens [name]'s management sheet (the row tap).
 Future<void> openSheet(WidgetTester tester, String name) async {
+  await tester.ensureVisible(find.text(name));
+  await tester.pumpAndSettle();
+  expect(find.text(name).hitTestable(), findsOneWidget);
   await tester.tap(find.text(name));
   await tester.pumpAndSettle();
 }
@@ -650,7 +654,7 @@ void main() {
     await openSheet(tester, 'Flo');
     expect(find.text('Give the Administrator role'), findsNothing);
     expect(find.text('Take back the Administrator role'), findsNothing);
-    await tester.tapAt(const Offset(10, 10)); // dismiss
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape); // dismiss
     await tester.pumpAndSettle();
 
     // …the admin's sheet offers demotion.
@@ -685,7 +689,7 @@ void main() {
     await pumpMembers(tester, featureFlags: const {'levelBooking': true});
     await openSheet(tester, 'Flo');
     expect(find.textContaining('whole level'), findsNothing);
-    await tester.tapAt(const Offset(10, 10)); // close the sheet
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape); // close the sheet
     await tester.pumpAndSettle();
 
     await openSheet(tester, 'Ana');

@@ -30950,6 +30950,12 @@ abstract class AppLocalizations {
   /// **'was {before}'**
   String usageWas(String before);
 
+  /// No description provided for @uxAdvancedSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get uxAdvancedSection;
+
   /// No description provided for @uxBookingChargePending.
   ///
   /// In en, this message translates to:
@@ -30974,17 +30980,95 @@ abstract class AppLocalizations {
   /// **'Reserve keeps the selected window. Check in now switches to the current window and marks you present.'**
   String get uxBookingModesHelp;
 
+  /// No description provided for @uxBookingResourceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource unavailable'**
+  String get uxBookingResourceUnavailable;
+
   /// No description provided for @uxDeviceTime.
   ///
   /// In en, this message translates to:
   /// **'Your time'**
   String get uxDeviceTime;
 
+  /// No description provided for @uxLinkedReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked resource'**
+  String get uxLinkedReference;
+
   /// No description provided for @uxManageResource.
   ///
   /// In en, this message translates to:
   /// **'Manage resource'**
   String get uxManageResource;
+
+  /// No description provided for @uxMyBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'My bookings'**
+  String get uxMyBookings;
+
+  /// No description provided for @uxOpenWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Open workspace'**
+  String get uxOpenWorkspace;
+
+  /// No description provided for @uxPreferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get uxPreferencesSection;
+
+  /// No description provided for @uxPrivacySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get uxPrivacySection;
+
+  /// No description provided for @uxProfileAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile & account'**
+  String get uxProfileAccount;
+
+  /// No description provided for @uxProfileSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get uxProfileSection;
+
+  /// No description provided for @uxRealSpaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Real bookings and invoices'**
+  String get uxRealSpaceHint;
+
+  /// No description provided for @uxRealWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get uxRealWorkspace;
+
+  /// No description provided for @uxResetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset filters'**
+  String get uxResetFilters;
+
+  /// No description provided for @uxTestSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Test space'**
+  String get uxTestSpace;
+
+  /// No description provided for @uxTestSpaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Test space: practice bookings and invoices'**
+  String get uxTestSpaceHint;
 
   /// No description provided for @uxWorkspaceTime.
   ///

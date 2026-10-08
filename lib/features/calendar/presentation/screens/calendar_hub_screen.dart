@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/invoice_ubl.dart';
 import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
@@ -97,15 +98,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     _selection = CalendarSelection(view: CalendarView.agenda, anchor: today);
   }
 
-  bool get _viewsOn => ref
-      .watch(enabledFeaturesSyncProvider)
-      .contains(WorkspaceFeature.calendarViews);
+  bool get _viewsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarViews);
 
   /// #843 — decisions on the timeline. Off, the chip is gone and the
   /// query never asks for the kind, so the server sends none.
-  bool get _validationsOn => ref
-      .watch(enabledFeaturesSyncProvider)
-      .contains(WorkspaceFeature.calendarValidations);
+  bool get _validationsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarValidations);
 
   /// The kinds to ask for: null means "everything the workspace offers",
   /// which is not the same as everything the server knows.
@@ -278,6 +275,12 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
     final chips = CalendarKindChips(
       kinds: _kinds,
+      myBookings: _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation),
+      onMyBookings: () => setState(() {
+        _kinds = _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation) ? null : {CalendarKind.reservation};
+        _memberId = null;
+      }),
+      onReset: () => setState(() { _memberId = null; _kinds = null; }),
       // #843 — a workspace that does not want decisions on its timeline
       // is not offered the chip either.
       offered: [
@@ -319,16 +322,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
     if (!viewsOn) {
       return Scaffold(
-        body: Column(children: [
+        body: ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
           const CalendarDecisions(), // #1306 — when the bell is off
           _plainSelector(l10n),
           chips,
-          Expanded(child: feed),
         ]),
       );
     }
-
     final viewBar = CalendarViewBar(
         view: _selection.view,
         alertsAvailable: alertsOffered,
@@ -394,12 +395,11 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
             Expanded(child: feed),
           ]);
         }
-        return Column(children: [
+        return ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
           const CalendarDecisions(), // #1306 — when the bell is off
           selector,
           chips,
-          Expanded(child: feed),
         ]);
       }),
     );

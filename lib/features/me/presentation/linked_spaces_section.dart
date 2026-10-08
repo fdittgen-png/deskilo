@@ -17,6 +17,7 @@ import '../../../core/backend/backend_uri.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../domain/my_spaces.dart';
 import '../providers/me_providers.dart';
 import 'me_workspace_row.dart';
@@ -95,6 +96,8 @@ class LinkedSpacesSection extends ConsumerWidget {
             ),
           for (final group in _groups(server.spaces))
             MeWorkspaceRow(
+              environmentHint: group.any((s) => s.environment == 'dev')
+                  ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint : null,
               avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
               name: group.first.name,
               detail: group.any((s) => s.standing == MySpaceStanding.pending)
@@ -116,8 +119,8 @@ class LinkedSpacesSection extends ConsumerWidget {
                         child: Text(space.environment.isEmpty
                             ? (l10n?.meSpaceOpen ?? 'Open')
                             : space.environment == 'prod'
-                            ? (l10n?.profilesPairProd ?? 'PROD')
-                            : (l10n?.profilesPairDev ?? 'DEV')),
+                            ? (l10n ?? AppLocalizationsEn()).uxOpenWorkspace
+                            : (l10n ?? AppLocalizationsEn()).uxTestSpace),
                       ),
                     ),
                   ),

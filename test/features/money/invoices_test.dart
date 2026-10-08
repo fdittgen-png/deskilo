@@ -12,6 +12,7 @@ import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
@@ -419,7 +420,7 @@ void main() {
         findsOneWidget);
     // Close the sheet; the MATCHED replacement is definitive (0068): its
     // sheet also keeps only the file exports.
-    await tester.tapAt(const Offset(10, 10));
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
     await openInvoice(tester, 'inv-2');
     expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
