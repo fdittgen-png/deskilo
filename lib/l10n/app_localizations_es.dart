@@ -17989,7 +17989,25 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get uxBookingChargePending =>
+      'El cargo y el uso del cupo se calcularán según el plan del miembro. El importe final no está disponible aquí.';
+
+  @override
+  String get uxBookingCheckInHelp =>
+      'Marcar también mi presencia al confirmar esta reserva.';
+
+  @override
+  String get uxBookingFor => 'Reserva para';
+
+  @override
+  String get uxBookingModesHelp =>
+      'Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca tu presencia.';
+
+  @override
   String get uxDeviceTime => 'Tu hora';
+
+  @override
+  String get uxManageResource => 'Gestionar recurso';
 
   @override
   String get uxWorkspaceTime => 'Hora del espacio';

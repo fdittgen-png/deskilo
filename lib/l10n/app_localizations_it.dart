@@ -18020,7 +18020,25 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get uxBookingChargePending =>
+      'L’importo e il consumo del piano saranno calcolati secondo il piano del membro. L’importo finale non è disponibile qui.';
+
+  @override
+  String get uxBookingCheckInHelp =>
+      'Indicare anche la mia presenza alla conferma di questa prenotazione.';
+
+  @override
+  String get uxBookingFor => 'Prenotazione per';
+
+  @override
+  String get uxBookingModesHelp =>
+      'Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la tua presenza.';
+
+  @override
   String get uxDeviceTime => 'La tua ora';
+
+  @override
+  String get uxManageResource => 'Gestisci risorsa';
 
   @override
   String get uxWorkspaceTime => 'Ora dello spazio';

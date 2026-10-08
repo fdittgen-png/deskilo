@@ -1,4 +1,9 @@
 {
   "uxWorkspaceTime": "Heure de l’espace",
-  "uxDeviceTime": "Votre heure"
+  "uxDeviceTime": "Votre heure",
+  "uxBookingFor": "Réservation pour",
+  "uxBookingChargePending": "Le montant et l’utilisation du forfait seront calculés selon le plan du membre. Le montant final n’est pas disponible ici.",
+  "uxBookingModesHelp": "Réserver conserve le créneau choisi. S’installer maintenant utilise le créneau actuel et indique votre présence.",
+  "uxBookingCheckInHelp": "Indiquer aussi ma présence lors de la confirmation de cette réservation.",
+  "uxManageResource": "Gérer la ressource"
 }

@@ -18042,7 +18042,25 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get uxBookingChargePending =>
+      'Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.';
+
+  @override
+  String get uxBookingCheckInHelp =>
+      'Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.';
+
+  @override
+  String get uxBookingFor => 'Buchung für';
+
+  @override
+  String get uxBookingModesHelp =>
+      'Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.';
+
+  @override
   String get uxDeviceTime => 'Ihre Ortszeit';
+
+  @override
+  String get uxManageResource => 'Ressource verwalten';
 
   @override
   String get uxWorkspaceTime => 'Ortszeit des Arbeitsbereichs';

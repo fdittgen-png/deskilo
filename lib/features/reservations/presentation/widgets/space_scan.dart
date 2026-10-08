@@ -174,9 +174,6 @@ Future<void> showSpaceSheet(
 /// The scanner: camera (injectable seam) plus a typed field — wedge
 /// scanners and tests type the payload. Foreign QR contents show an
 /// inline error and keep the sheet open.
-// The scan sheet itself lives next door: reading a CODE and acting on a
-// SPACE are different jobs, and this file only ever held both because
-// one opens the other.
 class SpaceSheet extends ConsumerStatefulWidget {
   const SpaceSheet({
     super.key,
@@ -455,6 +452,9 @@ class _SpaceSheetState extends ConsumerState<SpaceSheet> {
       isScrollControlled: true,
       builder: (context) => BookingSheet(
         seatName: name,
+        now: ref.read(clockProvider).now(),
+        timezone: workspace.timezone,
+        resourceContext: [workspace.name, ?widget.level?.name],
         start: initial.start,
         initialEnd: initial.end,
         cap: null,

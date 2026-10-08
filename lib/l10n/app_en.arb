@@ -20386,7 +20386,12 @@
       }
     }
   },
+  "uxBookingChargePending": "The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.",
+  "uxBookingCheckInHelp": "Also mark me present when confirming this reservation.",
+  "uxBookingFor": "Booking for",
+  "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
   "uxDeviceTime": "Your time",
+  "uxManageResource": "Manage resource",
   "uxWorkspaceTime": "Workspace time",
   "validationAdminsMay": "Admins may validate",
   "@validationAdminsMay": {
