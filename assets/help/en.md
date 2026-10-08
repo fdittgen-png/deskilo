@@ -1296,8 +1296,6 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 
 ### 9c. The Statement face
 
-The monthly balance leads this view; usage and charges follow. Help tips sit after the content and actions.
-
 **The selected month first.** Days included, used and left, subscription, consumed services and supplements, packages, pending positions, credits, the issued invoice and its balance describe the selected period. Below this detail, expand **Your account** to read credit, open invoices and refunds across **all periods**. Its net position is separate from the monthly balance. Negotiated prices are in **Documents**, beside your current agreement.
 
 ![](assets/help/images/statement-account.jpg)

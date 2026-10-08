@@ -1158,7 +1158,12 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       ],
       MoneyFace.invoices: [
         if (invoicesButton != null || statusButton != null || wizardButton != null)
-          MoneyWorkspaceTools(actions: [?invoicesButton, ?statusButton, ?wizardButton]),
+          ExpansionTile(
+            key: const ValueKey('money-workspace-tools'),
+            title: Text((l10n ?? AppLocalizationsEn()).uxMoneyWorkspaceTools),
+            leading: const Icon(Icons.business_outlined),
+            children: [?invoicesButton, ?statusButton, ?wizardButton],
+          ),
         if (exposure != null) ...[
           InvoiceSummaryCard(exposure: exposure),
           const SizedBox(height: 8),

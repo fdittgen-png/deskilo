@@ -6648,7 +6648,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      'I tuoi prezzi negoziati sono in Documenti, accanto al tuo accordo. La scheda li confronta con il tariffario e mostra chi può consultarli; le consultazioni altrui sono registrate.';
+      'Condizioni negoziate? La scheda mostra i tuoi prezzi accanto alla tariffa, da quando, e chi può vederli — i proprietari e gli admin finanze, ogni lettura registrata.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic =>

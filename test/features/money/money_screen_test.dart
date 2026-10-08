@@ -822,7 +822,8 @@ void main() {
   });
 
   testWidgets(
-      'landscape: monthly finances use one continuous reading flow', (tester) async {
+      'landscape: the money screen splits — actions in the side panel, '
+      'the bill fills the rest (#282 idiom)', (tester) async {
     tester.view.physicalSize = const Size(760, 360);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -836,8 +837,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.account_balance_wallet_outlined));
     await tester.pumpAndSettle();
 
-    expect(find.byType(VerticalDivider), findsNothing);
-    expect(find.byKey(const ValueKey('money-face-body-statement')), findsOneWidget);
+    expect(find.byType(VerticalDivider), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 }

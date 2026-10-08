@@ -135,7 +135,7 @@
   "helpHintValidationTipScopesTopic": "Gestion des rôles",
   "helpHintMoneyPaymentsTipSupply": "Vous avez acheté des capsules ou des sacs d'aspirateur pour l'espace ? Soumettez la dépense comme fourniture : validée, elle va sur l'étagère comme consommable que les autres paient, et vous êtes remboursé.",
   "helpHintMoneyPaymentsTipSupplyTopic": "Services et Accessoires",
-  "helpHintMoneyStatementTipNegotiation": "Vos conditions négociées sont dans Documents, à côté de votre accord. La carte les compare au tarif et indique qui peut les consulter ; les consultations des autres sont enregistrées.",
+  "helpHintMoneyStatementTipNegotiation": "Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.",
   "helpHintMoneyStatementTipNegotiationTopic": "Négociations tarifaires",
   "helpHintMembersTipNegotiation": "Les prix propres d'un membre : ouvrez sa fiche → Négociation tarifaire, saisissez l'abonnement, le dépassement ou la remise convenus, et les validateurs de la règle confirment.",
   "helpHintMembersTipNegotiationTopic": "Négociations tarifaires",

@@ -4343,7 +4343,7 @@
   "helpHintMoneyStatementTip2": "Une matinée réservée compte pour une demi-journée ; les jours hors horaires suivent la politique hors-horaires de l'espace.",
   "helpHintMoneyStatementTip2Topic": "Comment la réservation se comporte",
   "helpHintMoneyStatementTip3": "Plus de jours ? Demandez des demi-journées, achetez un forfait ou continuez à la consommation — selon votre formule.",
-  "helpHintMoneyStatementTipNegotiation": "Vos conditions négociées sont dans Documents, à côté de votre accord. La carte les compare au tarif et indique qui peut les consulter ; les consultations des autres sont enregistrées.",
+  "helpHintMoneyStatementTipNegotiation": "Des conditions négociées ? La carte montre vos prix à côté du tarif, depuis quand, et qui peut les voir — les propriétaires et les admins finances, chaque consultation journalisée.",
   "helpHintMoneyStatementTipNegotiationTopic": "Négociations tarifaires",
   "helpHintMoneyStatementTopic": "Le volet Relevé",
   "helpHintMoneyTip2": "Chaque document offre les trois mêmes actions : aperçu rapide à l'écran, téléchargement en PDF et partage vers n'importe quelle app.",

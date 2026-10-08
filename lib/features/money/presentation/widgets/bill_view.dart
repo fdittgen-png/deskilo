@@ -12,8 +12,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../workspace/domain/overage_policy.dart';
@@ -105,10 +103,7 @@ class BillView extends StatelessWidget {
     // whole bill (face null) is both, for the classic column and the PDF.
     final showStatement = face == null || face == MoneyFace.statement;
     final showPayments = face == null || face == MoneyFace.payments;
-    final balance = _BalanceFooter(statement: statement, settlement: settlement,
-        money: money, prominent: face != null);
     final cards = <Widget>[
-      if (face != null && (showStatement || showPayments)) balance,
       if (showStatement) ...[
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
@@ -128,7 +123,12 @@ class BillView extends StatelessWidget {
         if (settlement != null)
           _InvoiceCard(settlement: settlement!, money: money),
       ],
-      if (face == null) balance,
+      if (showStatement || showPayments)
+        _BalanceFooter(
+          statement: statement,
+          settlement: settlement,
+          money: money,
+        ),
       if (showPayments &&
           // #155 — how to pay, only while something is owed (spec §7:
           // "shown on unpaid statements") and only when the owner configured
@@ -148,7 +148,7 @@ class BillView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (var i = 0; i < cards.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.md),
+          if (i > 0) const SizedBox(height: 8),
           cards[i],
         ],
       ],
@@ -795,14 +795,17 @@ class _BalanceFooter extends StatelessWidget {
   const _BalanceFooter({
     required this.statement,
     required this.settlement,
-    required this.money, this.prominent = false,
+    required this.money,
   });
+
   final Statement statement;
+
   /// When set, the invoice decides settled/outstanding and the amount
   /// shown is its remainder — not the month's ledger arithmetic (#510).
   final PeriodSettlement? settlement;
+
   final String Function(int cents) money;
-  final bool prominent;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -819,34 +822,31 @@ class _BalanceFooter extends StatelessWidget {
         .textTheme
         .titleMedium
         ?.copyWith(fontWeight: FontWeight.bold, color: color);
-    final content = <Widget>[
-            Text(l10n?.billBalance ?? 'Balance', style: prominent
-                ? Theme.of(context).textTheme.titleMedium : style),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(l10n?.billBalance ?? 'Balance', style: style),
             Chip(
               label: Text(
-                isSettled ? (l10n?.billSettled ?? 'Settled')
+                isSettled
+                    ? (l10n?.billSettled ?? 'Settled')
                     : (l10n?.billOutstanding ?? 'Outstanding'),
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: color),
               ),
               visualDensity: VisualDensity.compact,
               side: BorderSide(color: color),
             ),
-            Text(money(balanceCents), style: prominent
-                ? Theme.of(context).textTheme.headlineSmall?.strong.copyWith(color: color)
-                : style),
-    ];
-    return Card(
-      key: prominent ? const ValueKey('money-month-balance') : null,
-      color: prominent ? scheme.surfaceContainer : null,
-      child: Padding(
-        padding: prominent ? AppSpacing.xlAll : const EdgeInsets.all(16),
-        child: prominent ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Wrap(spacing: AppSpacing.md, runSpacing: AppSpacing.sm,
-              crossAxisAlignment: WrapCrossAlignment.center, children: content.take(2).toList()),
-          const SizedBox(height: AppSpacing.md),
-          content.last,
-        ]) : Wrap(spacing: AppSpacing.md, runSpacing: AppSpacing.sm,
-            crossAxisAlignment: WrapCrossAlignment.center, children: content),
+            Text(money(balanceCents), style: style),
+          ],
+        ),
       ),
     );
   }

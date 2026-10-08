@@ -4343,7 +4343,7 @@
   "helpHintMoneyStatementTip2": "Una mañana reservada cuenta medio día; los días fuera del horario siguen la política de fuera de horario del espacio.",
   "helpHintMoneyStatementTip2Topic": "Cómo se comporta la reserva",
   "helpHintMoneyStatementTip3": "¿Sin días? Pide medios días extra, compra un paquete o sigue reservando por consumo — según tu plan.",
-  "helpHintMoneyStatementTipNegotiation": "Tus precios negociados están en Documentos, junto a tu acuerdo. La tarjeta los compara con la tarifa y muestra quién puede consultarlos; las consultas de otras personas quedan registradas.",
+  "helpHintMoneyStatementTipNegotiation": "¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.",
   "helpHintMoneyStatementTipNegotiationTopic": "Negociaciones de precios",
   "helpHintMoneyStatementTopic": "La vista Extracto",
   "helpHintMoneyTip2": "Cada documento ofrece las mismas tres acciones: vista rápida en pantalla, descarga en PDF y compartir con cualquier app.",

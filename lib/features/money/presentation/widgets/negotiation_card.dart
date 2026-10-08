@@ -45,42 +45,38 @@ class NegotiationCard extends ConsumerWidget {
       Localizations.maybeLocaleOf(context)?.toString(),
     );
 
-    final defaultLabel = l10n?.negotiationDefaultColumn ?? 'Tariff';
-    final mineLabel = l10n?.negotiationMineColumn ?? 'Mine';
-    bool compact(BoxConstraints c) => c.maxWidth < 480 ||
-        MediaQuery.textScalerOf(context).scale(100) > 130;
-    Widget row(String label, String defaults, String? mine, {Key? key}) {
-      final tariff = Text(defaults, textAlign: TextAlign.end,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: mine != null ? theme.colorScheme.onSurfaceVariant : null,
-          decoration: mine != null ? TextDecoration.lineThrough : null,
-        ));
-      final personal = Text(mine ?? '—', textAlign: TextAlign.end,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: mine != null ? FontWeight.bold : null,
-          color: mine != null ? theme.colorScheme.primary : null,
-        ));
-      return
+    Widget row(String label, String defaults, String? mine, {Key? key}) =>
         Padding(
           key: key,
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-          child: LayoutBuilder(builder: (context, constraints) {
-            if (compact(constraints)) {
-              return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(label, style: theme.textTheme.titleSmall),
-                const SizedBox(height: AppSpacing.xs),
-                Row(children: [Expanded(child: Text(defaultLabel, style: theme.textTheme.labelSmall)), tariff]),
-                Row(children: [Expanded(child: Text(mineLabel, style: theme.textTheme.labelSmall)), personal]),
-              ]);
-            }
-            return Row(children: [
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Row(children: [
             Expanded(flex: 3, child: Text(label)),
-            Expanded(flex: 2, child: tariff),
-            Expanded(flex: 2, child: personal),
-          ]);
-          }),
+            Expanded(
+              flex: 2,
+              child: Text(
+                defaults,
+                textAlign: TextAlign.end,
+                style: mine != null
+                    ? TextStyle(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        decoration: TextDecoration.lineThrough,
+                      )
+                    : null,
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                mine ?? '—',
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontWeight: mine != null ? FontWeight.bold : null,
+                  color: mine != null ? theme.colorScheme.primary : null,
+                ),
+              ),
+            ),
+          ]),
         );
-    }
 
     return Card(
       key: const ValueKey('negotiation-card'),
@@ -98,15 +94,14 @@ class NegotiationCard extends ConsumerWidget {
                   style: theme.textTheme.titleMedium,
                 ),
               ),
-            ]),
               if (pending != null)
-                Align(alignment: Alignment.centerLeft, child:
                 Chip(
                   key: const ValueKey('negotiation-pending'),
                   label: Text(
                       l10n?.negotiationPendingBadge ?? 'awaiting validation'),
                   visualDensity: VisualDensity.compact,
-                )),
+                ),
+            ]),
             const SizedBox(height: 4),
             Text(
               deal == null
@@ -123,22 +118,21 @@ class NegotiationCard extends ConsumerWidget {
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: AppSpacing.sm),
-            LayoutBuilder(builder: (context, constraints) => compact(constraints)
-                ? const SizedBox.shrink() : Row(children: [
+            Row(children: [
               const Expanded(flex: 3, child: SizedBox()),
               Expanded(
                 flex: 2,
-                child: Text(defaultLabel,
+                child: Text(l10n?.negotiationDefaultColumn ?? 'Tariff',
                     textAlign: TextAlign.end,
                     style: theme.textTheme.labelSmall),
               ),
               Expanded(
                 flex: 2,
-                child: Text(mineLabel,
+                child: Text(l10n?.negotiationMineColumn ?? 'Mine',
                     textAlign: TextAlign.end,
                     style: theme.textTheme.labelSmall),
               ),
-            ])),
+            ]),
             if (deal?.subscriptionPct != null)
               row(
                 l10n?.negotiationOccupation ?? 'Occupation',
