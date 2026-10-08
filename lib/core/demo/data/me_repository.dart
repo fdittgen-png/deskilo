@@ -86,6 +86,10 @@ class FakeMeRepository implements MeRepository {
   ) async {
     if (failure != null) throw failure!;
     if (audience.incomplete) throw ArgumentError('choose at least one space');
+    // 0392 — the server's cap, mirrored.
+    if (!field.allowedAudiences.contains(audience.audience)) {
+      throw ArgumentError('this field never goes beyond your spaces');
+    }
     _me.visibility = _me.visibility.withField(field, audience);
   }
 

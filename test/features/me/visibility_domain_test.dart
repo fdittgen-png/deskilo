@@ -75,4 +75,16 @@ void main() {
     await actions.saveAbout('  Architect ', ' Plans. ');
     expect(repo.accounts['user-1']!.profession, 'Architect');
   });
+
+  test('#2211 — contact channels and presence stop at my spaces', () {
+    for (final field in VisibilityField.values) {
+      final wide = field.allowedAudiences.contains(VisibilityAudience.signedIn);
+      expect(wide,
+          field != VisibilityField.contactChannels && field != VisibilityField.presence,
+          reason: field.wire);
+      // Every field keeps the narrow choices and its own default.
+      expect(field.allowedAudiences, contains(VisibilityAudience.nobody));
+      expect(field.allowedAudiences, contains(field.defaultAudience));
+    }
+  });
 }

@@ -162,6 +162,24 @@ void main() {
     expect(find.text('Cannot start a conversation with you'), findsOneWidget);
   });
 
+  testWidgets('contact channels and presence never offer every signed-in '
+      'person; name and photo still may (#2211)', (tester) async {
+    final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
+    await goTo(tester, router, '/me?tab=me');
+    for (final field in [VisibilityField.contactChannels, VisibilityField.presence]) {
+      await tapIn(tester, 'me-account-list',
+          find.byKey(ValueKey('visibility-field-${field.wire}')));
+      expect(find.byKey(const ValueKey('visibility-audience-signed_in')), findsNothing,
+          reason: '${field.wire} stays within my spaces');
+      expect(find.byKey(const ValueKey('visibility-audience-my_spaces')), findsOneWidget);
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+    }
+    await tapIn(tester, 'me-account-list',
+        find.byKey(const ValueKey('visibility-field-identity')));
+    expect(find.byKey(const ValueKey('visibility-audience-signed_in')), findsOneWidget);
+  });
+
   testWidgets('"chosen spaces" with none chosen cannot be saved',
       (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
