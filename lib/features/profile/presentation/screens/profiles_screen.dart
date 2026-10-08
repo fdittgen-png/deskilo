@@ -10,8 +10,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -33,6 +35,7 @@ class ProfilesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final labels = l10n ?? AppLocalizationsEn();
     final workspacesAsync = ref.watch(myWorkspacesProvider);
     final workspaces = workspacesAsync.value ?? const <Workspace>[];
     // #1650 — a list that could not be fetched is not an empty list: the
@@ -67,7 +70,7 @@ class ProfilesScreen extends ConsumerWidget {
       body: ListView(
         // #1181 — "Add a profile" floats over the list; the last row has
         // to be reachable clear of it.
-        padding: AppSpacing.mdAll.add(
+        padding: AppSpacing.lgAll.add(
           const EdgeInsets.only(bottom: kFabSafeBottom),
         ),
         children: [
@@ -85,6 +88,8 @@ class ProfilesScreen extends ConsumerWidget {
               // `_skippedNotification == null`); refresh rebuilds on the spot.
               onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
             ),
+          if (workspacesAsync.isLoading && !workspacesAsync.hasValue)
+            const LinearProgressIndicator(),
           // #987 — a paired workspace renders once, as the couple, at
           // the dev's place; the prod row steps aside.
           for (final workspace in workspaces)
@@ -113,7 +118,10 @@ class ProfilesScreen extends ConsumerWidget {
                     .firstOrNull;
                 final isActive = workspace.id == active?.id;
                 return Card(
+                  margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                  color: isActive ? Theme.of(context).colorScheme.surfaceContainer : null,
                   child: ListTile(
+                    contentPadding: AppSpacing.lgAll,
                     // #917 — the environment, at a glance and before
                     // the tap: green is a real workspace, orange one to
                     // try things out in. Colour alone never carries a
@@ -137,21 +145,15 @@ class ProfilesScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    title: Text(workspace.name),
-                    subtitle: Wrap(
-                      spacing: 8,
+                    title: Text(workspace.name, style: Theme.of(context).textTheme.primaryValue?.strong),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (member != null)
-                          Chip(
-                            label: Text(memberRoleLabel(l10n, member)),
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                          ),
-                        Text(
-                          workspace.inviteCode,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                          Text(memberRoleLabel(l10n, member),
+                              style: Theme.of(context).textTheme.metadata),
+                        Text(workspace.isDevelopment
+                            ? labels.environmentDev : labels.environmentProd),
                         // #974 — the home site, and a tap to change it,
                         // once the workspace has more than one.
                         if (member != null &&
@@ -211,17 +213,12 @@ class ProfilesScreen extends ConsumerWidget {
           // database, greyed out: not theirs to enter, but theirs to
           // know about. Tapping one names its owners.
           if (ref.watch(isPlatformOwnerProvider).value ?? false) ...[
-            Padding(
-              padding: const EdgeInsets.only(
-                top: AppSpacing.lg,
-                bottom: AppSpacing.sm,
-              ),
-              child: Text(
-                l10n?.profilesAllWorkspaces ?? 'Every workspace (platform owner)',
-                key: const ValueKey('profiles-platform-section'),
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
+            Card(child: ExpansionTile(
+              key: const ValueKey('profiles-platform-section'),
+              shape: const Border(), collapsedShape: const Border(),
+              leading: const Icon(Icons.admin_panel_settings_outlined),
+              title: Text(l10n?.profilesAllWorkspaces ?? 'Every workspace (platform owner)'),
+              children: [
             // #987 — a twin pair is ONE space with two sides, and the
             // list above has rendered it as one row since that issue.
             // This list used to emit a card per workspace row, so the
@@ -234,10 +231,7 @@ class ProfilesScreen extends ConsumerWidget {
                   .where((w) => !w.isMember)
                   .toList(),
             ))
-              Opacity(
-                opacity: 0.55,
-                child: Card(
-                  child: ListTile(
+                  ListTile(
                     key: ValueKey('platform-workspace-${group.first.id}'),
                     leading: const Icon(Icons.lock_outline),
                     title: Text(group.first.name),
@@ -251,8 +245,8 @@ class ProfilesScreen extends ConsumerWidget {
                     onTap: () =>
                         showWorkspaceOwnersSheet(context, ref, group.first),
                   ),
-                ),
-              ),
+              ],
+            )),
           ],
         ],
       ),

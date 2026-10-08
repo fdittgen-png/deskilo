@@ -31034,6 +31034,12 @@ abstract class AppLocalizations {
   /// **'Profile & account'**
   String get uxProfileAccount;
 
+  /// No description provided for @uxProfileChooseEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an environment'**
+  String get uxProfileChooseEnvironment;
+
   /// No description provided for @uxProfileSection.
   ///
   /// In en, this message translates to:
