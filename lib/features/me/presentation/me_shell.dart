@@ -92,13 +92,16 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   void didUpdateWidget(MeShell oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.tab != widget.tab) _show(widget.tab);
+    if (oldWidget.tab != widget.tab) {
+      _tab = widget.tab;
+      _visited.add(widget.tab);
+    }
   }
 
-  void _show(MeTab tab) => setState(() {
-    _tab = tab;
-    _visited.add(tab);
-  });
+  void _show(MeTab tab) {
+    if (_tab == tab) return;
+    context.go(tab == MeTab.home ? '/me' : '/me?tab=${tab.wire}');
+  }
 
   Widget _page(MeTab tab) => switch (tab) {
     MeTab.home => const MeHomeTab(),

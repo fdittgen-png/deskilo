@@ -20386,6 +20386,7 @@
       }
     }
   },
+  "uxLinkedReference": "Linked resource",
   "validationAdminsMay": "Admins may validate",
   "@validationAdminsMay": {
     "description": "Switch label: whether admins may validate at all (off = owner only)"

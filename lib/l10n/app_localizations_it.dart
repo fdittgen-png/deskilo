@@ -18020,6 +18020,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get uxLinkedReference => 'Risorsa collegata';
+
+  @override
   String get validationAdminsMay => 'Gli admin possono validare';
 
   @override

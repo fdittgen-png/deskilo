@@ -18042,6 +18042,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get uxLinkedReference => 'Verknüpfte Ressource';
+
+  @override
   String get validationAdminsMay => 'Admins dürfen validieren';
 
   @override

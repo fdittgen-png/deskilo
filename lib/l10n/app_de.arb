@@ -11160,6 +11160,7 @@
   },
   "usageTitle": "Nutzung",
   "usageWas": "war {before}",
+  "uxLinkedReference": "Verknüpfte Ressource",
   "validationAdminsMay": "Admins dürfen validieren",
   "validationAllAdmins": "Alle Admins",
   "validationAutoValidateAdmin": "Admins löschen ohne Validierung",

@@ -11160,6 +11160,7 @@
   },
   "usageTitle": "Usage",
   "usageWas": "était {before}",
+  "uxLinkedReference": "Ressource liée",
   "validationAdminsMay": "Les admins peuvent valider",
   "validationAllAdmins": "Tous les admins",
   "validationAutoValidateAdmin": "Les admins suppriment sans validation",

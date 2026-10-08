@@ -30950,6 +30950,12 @@ abstract class AppLocalizations {
   /// **'was {before}'**
   String usageWas(String before);
 
+  /// No description provided for @uxLinkedReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked resource'**
+  String get uxLinkedReference;
+
   /// Switch label: whether admins may validate at all (off = owner only)
   ///
   /// In en, this message translates to:
