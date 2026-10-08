@@ -141,12 +141,19 @@ class AccountantHandoff {
     'columns': accountantCsvColumns,
     'generated_at': generatedAt.toUtc().toIso8601String(),
     'included': included,
-    'excluded': excluded,
+    // #1885 — keys in a fixed order, so the same books read in another
+    // order give the same bytes (the CSV is ordered; its report must be).
+    'excluded': {for (final k in excluded.keys.toList()..sort()) k: excluded[k]},
     'totals': {
-      for (final c in totals.entries)
-        c.key: {for (final l in c.value.entries) l.key: l.value.toJson()},
+      for (final c in totals.keys.toList()..sort())
+        c: {
+          for (final l in totals[c]!.keys.toList()..sort())
+            l: totals[c]![l]!.toJson(),
+        },
     },
-    'payments': {for (final p in payments.entries) p.key: p.value.toJson()},
+    'payments': {
+      for (final c in payments.keys.toList()..sort()) c: payments[c]!.toJson(),
+    },
     'findings': [for (final f in findings) f.toJson()],
     'clean': clean,
     'file': {'sha256': csvSha256, 'bytes': csvBytes, 'rows': csvRows},

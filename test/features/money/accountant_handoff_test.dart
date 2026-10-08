@@ -217,6 +217,25 @@ void main() {
       expect(_cells(one.csv).map((c) => c[0]), ['INV-A', 'INV-B']);
     });
 
+    test('#1885 — the same frozen input gives the same archive bytes; a '
+        'changed document gives a different identity', () {
+      List<int> archiveOf(List<Invoice> invoices) {
+        final out = _export(invoices);
+        return accountantHandoffArchive(
+          csv: out.csv,
+          csvName: 'books.csv',
+          report: out.report,
+        );
+      }
+
+      final docs = [_inv(id: '1'), _inv(id: '2', currency: 'CHF')];
+      final first = archiveOf(docs);
+      expect(archiveOf([docs[1], docs[0]]), first,
+          reason: 'order of reading and time of saving change nothing');
+      final changed = archiveOf([docs[0], _inv(id: '2', currency: 'CHF', charges: 12100, net: 10100)]);
+      expect(sha256.convert(changed), isNot(sha256.convert(first)));
+    });
+
     test('a missing currency, a duplicate, a foreign match block the file', () {
       final r = _export(
         [_inv(id: '1', currency: ''), _inv(id: '2'), _inv(id: '2')],
