@@ -70,17 +70,17 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000018
 select lives_ok($$select public.set_visibility('about','chosen_spaces',array['00000000-0000-4000-8000-0000001823b2']::uuid[])$$,'about for one chosen space');
 select throws_ok($$select public.set_visibility('about','chosen_spaces',array['00000000-0000-4000-8000-0000001823b3']::uuid[])$$,'P0001','choose spaces you belong to','a space one is not in cannot be chosen');
 select throws_ok($$select public.set_visibility('salary','signed_in')$$,'P0001','unknown field','an unknown field is refused');
-select lives_ok($$select public.set_visibility('contact_channels','signed_in')$$,'contact channels for anyone signed in');
+select throws_ok($$select public.set_visibility('contact_channels','signed_in')$$,'P0001','this field never goes beyond your spaces','contact channels never reach anyone signed in (0392, #2211)');
 select lives_ok($$select public.set_visibility('reachability','signed_in')$$,'reachable by anyone signed in');
 select ok(public.my_contact_availability(),'the legacy reader follows reachability');
-select ok(public.preview_my_account('signed_in') ? 'contact_channels' and not (public.preview_my_account('signed_in') ? 'about'),'the signed-in preview shows the channels and not the chosen-space about');
+select ok(not (public.preview_my_account('signed_in') ? 'contact_channels') and not (public.preview_my_account('signed_in') ? 'about'),'the signed-in preview shows neither the channels nor the chosen-space about');
 select ok(public.preview_my_account('my_spaces') ? 'about','the my-spaces preview shows the chosen-space about');
 select ok(public.preview_my_account('nobody') ? 'presence' and not (public.preview_my_account('nobody')->>'can_message')::boolean,'the nobody preview is what only I see');
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001823a4","role":"authenticated"}',true);
 select is(public.visible_account('00000000-0000-4000-8000-0000001823a1')->'about'->>'profession','Architect','a member of the chosen space sees the about');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001823a3","role":"authenticated"}',true);
-select is(public.visible_account('00000000-0000-4000-8000-0000001823a1')->'contact_channels'->>'email','a1@contact.test','a stranger now sees the channels shared with anyone signed in');
+select ok(not (public.visible_account('00000000-0000-4000-8000-0000001823a1') ? 'contact_channels'),'a stranger never sees the contact channels (0392)');
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001823a1","role":"authenticated"}',true);
 select lives_ok($$select public.set_contact_availability(false)$$,'the legacy switch turns reachability back');
