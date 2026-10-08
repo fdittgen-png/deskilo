@@ -297,6 +297,8 @@ alcun calendario e nulla si sincronizza.
 
 **Leggere la planimetria (#2271).** Il nome del piano selezionato resta visibile anche quando ce n’è uno solo; il menu mostra i nomi completi. Ogni posto ha un’etichetta opaca e un simbolo della legenda: cerchio vuoto per libero, lucchetto per prenotato, spunta per presente, stella per il proprio posto e blocco per non disponibile. Ingrandisci una planimetria densa per leggere i nomi. I lettori di schermo mantengono nome completo e stato a ogni zoom. Nella lista, il selettore del piano resta sopra le righe senza coprire le azioni di prenotazione.
 
+**Verificare prima di confermare (#2272).** Il modulo indica spazio, piano/risorsa, persona, data completa, ore esatte, fuso e ripetizione prima della decisione. Specifica quando importo finale e calcolo del piano non sono disponibili. Prenotare mantiene l’intervallo; Registrarsi ora usa quello attuale e indica la presenza. L’interruttore separato aggiunge la presenza a una prenotazione attuale. La conferma resta visibile durante lo scorrimento. Preferiti e valutazioni seguono le opzioni; la manutenzione è in Gestisci risorsa per operatori autorizzati. Nell’elenco, Prenota apre il modulo e le valutazioni hanno un’azione propria (#2268).
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:

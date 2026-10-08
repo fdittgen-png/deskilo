@@ -30950,11 +30950,41 @@ abstract class AppLocalizations {
   /// **'was {before}'**
   String usageWas(String before);
 
+  /// No description provided for @uxBookingChargePending.
+  ///
+  /// In en, this message translates to:
+  /// **'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.'**
+  String get uxBookingChargePending;
+
+  /// No description provided for @uxBookingCheckInHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Also mark me present when confirming this reservation.'**
+  String get uxBookingCheckInHelp;
+
+  /// No description provided for @uxBookingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking for'**
+  String get uxBookingFor;
+
+  /// No description provided for @uxBookingModesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve keeps the selected window. Check in now switches to the current window and marks you present.'**
+  String get uxBookingModesHelp;
+
   /// No description provided for @uxDeviceTime.
   ///
   /// In en, this message translates to:
   /// **'Your time'**
   String get uxDeviceTime;
+
+  /// No description provided for @uxManageResource.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage resource'**
+  String get uxManageResource;
 
   /// No description provided for @uxWorkspaceTime.
   ///

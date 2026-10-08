@@ -294,6 +294,8 @@ Nothing is written to any calendar by the app itself, and nothing syncs.
 
 **Reading the plan (#2271).** The selected floor is named on the plan, including a workspace with one floor; its menu lists full floor names. Seats carry an opaque identifier with a shape matching the legend: open circle for free, lock for reserved, check for present, star for yours and blocked symbol for unavailable. Zoom in on a dense plan to read the seat names; screen readers keep the full name and state at every zoom. In list view the floor selector sits above the rows so it cannot cover their booking actions.
 
+**Review before confirming (#2272).** The form names the workspace, floor/resource, person, full date, exact hours, timezone and recurrence before the booking decision. It states when the final charge and allowance calculation are unavailable. Reserve keeps the selected window; Check in now uses the current window and marks you present. The separate immediate check-in switch adds presence to a current reservation. Confirmation stays visible while the details scroll. Favorites and ratings follow the booking controls; maintenance waits in Manage resource, for authorized operators. In the seat list, Reserve opens the booking form and feedback has its own action (#2268).
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:

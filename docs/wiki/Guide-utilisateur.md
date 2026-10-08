@@ -299,6 +299,8 @@ L'application n'écrit rien dans aucun agenda et rien ne se synchronise.
 
 **Lire le plan (#2271).** L’étage sélectionné est nommé sur le plan, même lorsque l’espace n’a qu’un étage ; le menu affiche les noms complets. Chaque place porte une étiquette opaque et un symbole repris dans la légende : cercle vide pour libre, cadenas pour réservée, coche pour présent, étoile pour la vôtre et symbole d’interdiction pour bloquée. Zoomez sur un plan dense pour lire les noms ; le lecteur d’écran conserve le nom et l’état à tout niveau de zoom. En vue liste, le sélecteur d’étage reste au-dessus des lignes sans couvrir leurs actions.
 
+**Vérifier avant de confirmer (#2272).** Le formulaire indique l’espace, l’étage/la ressource, la personne, la date complète, les heures exactes, le fuseau et la répétition avant la décision. Il précise quand le montant final et le calcul du forfait sont indisponibles. Réserver conserve le créneau choisi ; S’installer maintenant utilise le créneau actuel et indique votre présence. Le commutateur de pointage immédiat ajoute la présence à une réservation actuelle. La confirmation reste visible pendant le défilement. Favoris et notes suivent les commandes ; la maintenance attend dans Gérer la ressource, pour les opérateurs autorisés. Dans la liste, Réserver ouvre le formulaire et les avis ont leur propre action (#2268).
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :

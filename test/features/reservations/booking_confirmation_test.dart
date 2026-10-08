@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'reserve_hub_test.dart' show pumpHub, seatCenter;
 
 void main() {
-  testWidgets('operator actions wait behind More options; confirm stays in view',
+  testWidgets('operator actions wait behind Manage resource; confirm stays in view',
       (tester) async {
     await pumpHub(tester);
     await tester.tapAt(seatCenter(tester));
@@ -22,7 +22,7 @@ void main() {
     expect(find.text('Make not reservable'), findsNothing,
         reason: 'taking a seat out of service is not part of booking it');
 
-    final more = find.byKey(const ValueKey('booking-more-options'));
+    final more = find.byKey(const ValueKey('booking-manage-options'));
     expect(more, findsOneWidget);
     await tester.ensureVisible(more);
     await tester.tap(more);

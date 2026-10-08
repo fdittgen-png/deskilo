@@ -69,7 +69,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // The admin-only picker defaults to self.
-    await tester.tap(find.text('Flo').last);
+    await tester.ensureVisible(find.byKey(const ValueKey('booking-for-member')));
+    await tester.tap(find.byKey(const ValueKey('booking-for-member')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Ana Lima').last);
     await tester.pumpAndSettle();
