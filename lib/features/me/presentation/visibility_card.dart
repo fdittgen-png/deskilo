@@ -60,33 +60,7 @@ class VisibilityCard extends ConsumerWidget {
     BuildContext context,
     VisibilityField field,
     FieldAudience choice,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final fieldName = visibilityFieldLabel(l10n, field);
-    final who = audienceSummary(l10n, choice);
-    return await showDialog<bool>(
-          context: context,
-          builder: (dialog) => AlertDialog(
-            content: Text(
-              l10n?.visibilityWidenConfirm(fieldName, who) ??
-                  'Show $fieldName to: $who?',
-            ),
-            actions: [
-              TextButton(
-                key: const ValueKey('visibility-widen-cancel'),
-                onPressed: () => Navigator.of(dialog).pop(false),
-                child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
-              ),
-              FilledButton(
-                key: const ValueKey('visibility-widen-confirm'),
-                onPressed: () => Navigator.of(dialog).pop(true),
-                child: Text(l10n?.visibilityWidenAction ?? 'Widen'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+  ) => confirmVisibilityWiden(context, field, choice);
 
   Future<void> _editAbout(
       BuildContext context, WidgetRef ref, MyVisibility current) async {
@@ -252,4 +226,38 @@ class _AudienceSheetState extends State<_AudienceSheet> {
       ),
     );
   }
+}
+
+/// #2211 — widening a field asks first, naming who will see it; shared by
+/// this card and the linked servers'.
+Future<bool> confirmVisibilityWiden(
+  BuildContext context,
+  VisibilityField field,
+  FieldAudience choice,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final fieldName = visibilityFieldLabel(l10n, field);
+  final who = audienceSummary(l10n, choice);
+  return await showDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          content: Text(
+            l10n?.visibilityWidenConfirm(fieldName, who) ??
+                'Show $fieldName to: $who?',
+          ),
+          actions: [
+            TextButton(
+              key: const ValueKey('visibility-widen-cancel'),
+              onPressed: () => Navigator.of(dialog).pop(false),
+              child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
+            ),
+            FilledButton(
+              key: const ValueKey('visibility-widen-confirm'),
+              onPressed: () => Navigator.of(dialog).pop(true),
+              child: Text(l10n?.visibilityWidenAction ?? 'Widen'),
+            ),
+          ],
+        ),
+      ) ??
+      false;
 }

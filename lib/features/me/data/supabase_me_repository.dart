@@ -81,6 +81,32 @@ class SupabaseMeRepository implements MeRepository {
           .rpc<dynamic>('visible_account', params: {'p_user_id': userId})));
 
   @override
+  Future<MyVisibility> myVisibilityOn(String source) {
+    final connections = _connections;
+    if (connections == null) return Future.value(MyVisibility.defaults);
+    return connections.use(source, (client) async => MyVisibility.fromJson(
+        _object(await client.rpc<dynamic>('my_visibility'))));
+  }
+
+  @override
+  Future<void> setVisibilityOn(
+    String source,
+    VisibilityField field,
+    FieldAudience audience,
+  ) {
+    final connections = _connections;
+    if (connections == null) throw StateError('no linked server');
+    return connections.use(source, (client) => client.rpc<void>(
+          'set_visibility',
+          params: {
+            'p_field': field.wire,
+            'p_audience': audience.audience.wire,
+            'p_workspaces': null,
+          },
+        ));
+  }
+
+  @override
   Future<List<LinkedSpace>> spacesOn(String source) {
     final connections = _connections;
     if (connections == null) return Future.value(const []);

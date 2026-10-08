@@ -11500,10 +11500,28 @@
   "visibilityChosenCount": "{count, plural, =1{Membres d'1 espace choisi} other{Membres de {count} espaces choisis}}",
   "visibilityChosenSpaces": "Membres d'espaces choisis",
   "visibilityContact": "WhatsApp et e-mail",
+  "visibilityElsewhereIntro": "Sur un serveur connecté, vous avez le compte de ce serveur. Les personnes qui n'y partagent aucun espace avec vous voient ce que vous autorisez à toute personne connectée ; vos coordonnées et votre présence ne sortent jamais de vos espaces.",
+  "visibilityElsewhereTitle": "Sur mes autres serveurs",
   "visibilityIdentity": "Nom et photo",
   "visibilityIntro": "Chaque partie de votre compte choisit son public. Rien n'est public sans votre choix.",
   "visibilityMySpaces": "Membres de mes espaces",
   "visibilityNobody": "Personne",
+  "visibilityOnServer": "Qui me voit sur {host}",
+  "@visibilityOnServer": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityOnServerUnavailable": "{host} n'a pas répondu. Réessayez plus tard.",
+  "@visibilityOnServerUnavailable": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "visibilityPresence": "Présent dans l'espace aujourd'hui",
   "visibilityPreviewCanWrite": "Peut démarrer une conversation avec vous",
   "visibilityPreviewCannotWrite": "Ne peut pas démarrer de conversation avec vous",

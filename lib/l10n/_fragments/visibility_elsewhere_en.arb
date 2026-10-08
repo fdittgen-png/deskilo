@@ -1,0 +1,28 @@
+{
+  "visibilityElsewhereTitle": "On my other servers",
+  "@visibilityElsewhereTitle": {
+    "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
+  },
+  "visibilityElsewhereIntro": "On a connected server you have that server's own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.",
+  "@visibilityElsewhereIntro": {
+    "description": "#2211 who sees me on a connected server: visibilityElsewhereIntro"
+  },
+  "visibilityOnServer": "Who sees me on {host}",
+  "@visibilityOnServer": {
+    "description": "#2211 who sees me on a connected server: visibilityOnServer",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityOnServerUnavailable": "{host} did not answer. Try again later.",
+  "@visibilityOnServerUnavailable": {
+    "description": "#2211 who sees me on a connected server: visibilityOnServerUnavailable",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  }
+}

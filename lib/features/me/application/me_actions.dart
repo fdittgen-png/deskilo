@@ -16,6 +16,11 @@ enum MeRefusal {
   /// everybody while claiming to show it to some.
   noSpaceChosen,
 
+  /// #2211 — an audience this field may not have (contact details and
+  /// presence stop at my spaces), or chosen spaces on another server,
+  /// whose spaces are not listed here.
+  audienceNotAllowed,
+
   /// A profession over 120 characters or a bio over 1000 — the limits
   /// the server's table holds.
   aboutTooLong,
@@ -70,5 +75,19 @@ class MeActions {
           ? choice
           : FieldAudience(choice.audience),
     );
+  }
+
+  /// #2211 — give [field] the audience [choice] on the linked server
+  /// [source], for the account I have there.
+  Future<void> chooseOn(
+    String source,
+    VisibilityField field,
+    FieldAudience choice,
+  ) {
+    if (!field.allowedAudiences.contains(choice.audience) ||
+        choice.audience == VisibilityAudience.chosenSpaces) {
+      throw const MeRefused(MeRefusal.audienceNotAllowed);
+    }
+    return _repository.setVisibilityOn(source, field, choice);
   }
 }

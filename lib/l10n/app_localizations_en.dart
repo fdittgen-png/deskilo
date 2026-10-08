@@ -18314,6 +18314,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityContact => 'WhatsApp and e-mail';
 
   @override
+  String get visibilityElsewhereIntro =>
+      'On a connected server you have that server\'s own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.';
+
+  @override
+  String get visibilityElsewhereTitle => 'On my other servers';
+
+  @override
   String get visibilityIdentity => 'Name and photo';
 
   @override
@@ -18325,6 +18332,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visibilityNobody => 'Nobody';
+
+  @override
+  String visibilityOnServer(String host) {
+    return 'Who sees me on $host';
+  }
+
+  @override
+  String visibilityOnServerUnavailable(String host) {
+    return '$host did not answer. Try again later.';
+  }
 
   @override
   String get visibilityPresence => 'In the space today';
