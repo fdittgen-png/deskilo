@@ -162,8 +162,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           Tab(key: const ValueKey('settings-personal-tab'), height: tabHeight, child: Text(labels.uxSettingsPersonal, textAlign: TextAlign.center)),
           Tab(key: const ValueKey('settings-workspace-tab'), height: tabHeight, child: Text(labels.uxSettingsSpace, textAlign: TextAlign.center)),
         ]),
-        Expanded(child: IndexedStack(index: scope, children: [ListView(
-        key: const PageStorageKey('settings-personal'), padding: AppSpacing.gutterAll,
+        Expanded(child: IndexedStack(index: scope, children: [SettingsTaskPane(pane: 'personal',
         children: [
           ListTile(
             leading: const Icon(Icons.switch_account_outlined),
@@ -176,14 +175,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ...advancedSettingsTiles(context, ref, l10n: l10n, devMode: devMode),
           ...aboutSettingsTiles(context, ref, l10n: l10n, colorScheme: colorScheme),
         ],
-      ), if (workspaceTiles.isNotEmpty) SingleChildScrollView(
-        key: const PageStorageKey('settings-workspace'), padding: AppSpacing.gutterAll,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      ), if (workspaceTiles.isNotEmpty) SettingsTaskPane(pane: 'workspace', children: [
           if (ref.watch(currentWorkspaceProvider).value case final workspace?)
             Padding(padding: AppSpacing.mdAll, child: Text(workspace.name,
               style: Theme.of(context).textTheme.titleLarge)),
           ...workspaceTiles,
-        ]),
+        ],
       )])),
       ]),
     ));

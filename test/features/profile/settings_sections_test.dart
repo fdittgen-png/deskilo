@@ -61,7 +61,7 @@ Future<void> pumpSettingsAs(
 }
 
 double dy(WidgetTester tester, String text) =>
-    tester.getTopLeft(find.text(text)).dy;
+    tester.getTopLeft(find.text(text).last).dy;
 
 void main() {
   testWidgets('personal settings and workspace configuration have distinct scopes', (tester) async {
@@ -70,7 +70,7 @@ void main() {
     await pumpSettingsAs(tester, isAdmin: true, isOwner: true, size: const Size(320, 1100));
     expect(find.byKey(const ValueKey('settings-personal-tab')), findsOneWidget);
     expect(find.byKey(const ValueKey('settings-workspace-tab')), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Status'), 160, scrollable: find.descendant(of: find.byKey(const PageStorageKey('settings-personal')), matching: find.byType(Scrollable)).first);
+    await tester.tap(find.byKey(const ValueKey('settings-link-membership')));
     await tester.pumpAndSettle();
     expect(find.text('Status'), findsOneWidget);
     expect(find.text('Workspace'), findsNothing);
@@ -87,12 +87,13 @@ void main() {
   testWidgets('personal sections stay separate from workspace task groups', (tester) async {
     await pumpSettingsAs(tester, isAdmin: true, isOwner: true);
     for (final header in ['Back to Me', 'My account', 'My membership', 'Advanced', 'Help & about', 'Sign out']) {
-      expect(find.text(header), findsOneWidget);
+      expect(find.text(header), ['My account', 'My membership', 'Advanced'].contains(header) ? findsNWidgets(2) : findsOneWidget);
     }
     expect(find.text('Workspace'), findsNothing);
     expect(dy(tester, 'My account'), lessThan(dy(tester, 'My account is in Me')));
     expect(dy(tester, 'My membership'), lessThan(dy(tester, 'Status')));
-    await openSettingsSection(tester, 'advanced');
+    await tester.tap(find.byKey(const ValueKey('settings-link-advanced')));
+    await tester.pumpAndSettle();
     expect(find.text('Developer mode'), findsOneWidget);
     await showWorkspaceSettings(tester);
     expect(find.text('Status'), findsNothing);
@@ -131,7 +132,7 @@ void main() {
     expect(find.text('Members'), findsNothing);
     // The member's own sections stay.
     for (final header in ['Back to Me', 'My account', 'My membership', 'Help & about']) {
-      expect(find.text(header), findsOneWidget, reason: 'missing "$header"');
+      expect(find.text(header), ['My account', 'My membership'].contains(header) ? findsNWidgets(2) : findsOneWidget, reason: 'missing "$header"');
     }
     // The four essentials, pinned by what they are.
     expect(find.text('Sign out'), findsOneWidget);
@@ -169,7 +170,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await showWorkspaceSettings(tester);
-    expect(find.text('This workspace'), findsOneWidget);
+    expect(find.text('This workspace'), findsNWidgets(2));
     expect(find.text('Billing'), findsOneWidget);
     expect(find.text('Roles'), findsNothing,
         reason: 'the matrix is for whoever holds manageRoles');

@@ -1909,6 +1909,8 @@ Il comando stampa la posizione di ogni zona in millimetri e conclude con **CONFO
 
 ## 12. Impostazioni e profilo
 
+Il menu orizzontale delle sezioni resta visibile: scegli una sezione per aprirla e raggiungerla direttamente. Scorri il modulo quando serve; le bozze vengono conservate.
+
 **Scegli l’ambito.** Le mie impostazioni raccoglie il collegamento all’account, la tua adesione, la diagnostica del dispositivo, l’aiuto e l’uscita. Gestisci spazio contiene solo gli strumenti di configurazione e amministrazione consentiti al tuo ruolo, con il nome dello spazio. Apri i gruppi quando servono; Avanzate parte chiuso. Entrambe le viste mantengono la posizione di scorrimento. I membri senza strumenti di amministrazione vedono direttamente le proprie impostazioni.
 
 

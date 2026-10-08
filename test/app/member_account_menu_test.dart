@@ -204,7 +204,7 @@ void main() {
       expect(await _push(tester, '/settings'), '/settings');
       expect(_appBarText('Settings'), findsOneWidget);
       await showWorkspaceSettings(tester);
-      expect(find.text('This workspace'), findsOneWidget);
+      expect(find.text('This workspace'), findsNWidgets(2));
     });
   });
 

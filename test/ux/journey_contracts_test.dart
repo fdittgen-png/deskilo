@@ -167,9 +167,9 @@ void main() {
     // As the owner of ws-1, the workspace sections are there.
     await tester.tap(find.byKey(const ValueKey('settings-workspace-tab')));
     await tester.pumpAndSettle();
-    expect(find.text('Administration'), findsOneWidget);
-    expect(find.text('Governance'), findsOneWidget);
-    expect(find.text('This workspace'), findsOneWidget);
+    expect(find.text('Administration'), findsNWidgets(2));
+    expect(find.text('Governance'), findsNWidgets(2));
+    expect(find.text('This workspace'), findsNWidgets(2));
 
     // Workspace changes start on Me, then reopen the new space's settings.
     await tester.tap(find.byKey(const ValueKey('settings-personal-tab')));

@@ -35,7 +35,7 @@ Future<FakeWorkspaceRepository> _pumpSettings(
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
   await openSettingsSection(tester, 'advanced');
-  await tester.scrollUntilVisible(find.text('Advanced'), 100);
+  await tester.tap(find.byKey(const ValueKey('settings-link-advanced')));
   await tester.pumpAndSettle();
   return workspace;
 }
