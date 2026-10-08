@@ -121,12 +121,11 @@ Future<void> openWorkspaceChats(WidgetTester tester) async {
   );
   await tester.pumpAndSettle();
 }
-
-/// Open the finance tools disclosure before following an existing invoice route.
 Future<void> openMoneyWorkspaceTools(WidgetTester tester) async {
   final tools = find.byKey(const ValueKey('money-workspace-tools'));
-  if (tools.evaluate().isNotEmpty &&
-      find.byKey(const ValueKey('invoices-button')).evaluate().isEmpty) {
+  final body = find.byKey(const ValueKey('money-face-body-invoices'));
+  if (body.evaluate().isNotEmpty && find.byKey(const ValueKey('invoices-button')).evaluate().isEmpty) {
+    await tester.scrollUntilVisible(tools, 160, scrollable: find.descendant(of: body, matching: find.byType(Scrollable)).first);
     await tester.ensureVisible(tools);
     await tester.pumpAndSettle();
     await tester.tap(tools);
