@@ -75,6 +75,8 @@ La app tiene hasta cinco destinos en la barra inferior: **Mensajes** (§16), **C
 
 **Encontrar mis reservas (#2276).** Mis reservas está visible encima de las categorías y vuelve a las reservas propias. El resumen indica la persona y las categorías; Restablecer filtros vuelve a la actividad propia de todas las categorías disponibles y conserva las fechas. Las filas muestran planta, recurso y estado autorizados cuando están disponibles. Las fuentes ausentes conservan su etiqueta o indican Recurso no disponible. Cada fila sigue abriendo su fuente.
 
+**Navegación del espacio.** Los destinos cotidianos permanecen visibles. La administración se organiza en **Miembros y acceso**, **Facturación y pagos** y **Configuración del espacio**. Abre un grupo para ver las herramientas de tu rol; al volver de una herramienta, el grupo sigue abierto. Volver a Yo y los destinos personales siguen separados.
+
 ## 2. Roles e invitaciones
 
 DesKilo tiene tres roles acumulativos y, encima de ellos, una variante de copropiedad, más una cuenta de dispositivo:

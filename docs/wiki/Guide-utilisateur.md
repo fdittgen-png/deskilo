@@ -75,6 +75,8 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 
 **Retrouver mes réservations (#2276).** Mes réservations est visible au-dessus des catégories et revient à vos propres réservations. Le résumé indique la personne et les catégories choisies ; Réinitialiser les filtres revient à votre activité et à toutes les catégories disponibles, sans changer les dates. Les lignes montrent l’étage, la ressource et l’état autorisés lorsqu’ils sont disponibles. Une source manquante garde son libellé ou indique Ressource indisponible. Chaque ligne ouvre toujours sa source.
 
+**Navigation de l’espace.** Les destinations quotidiennes restent visibles. L’administration est organisée en **Membres et accès**, **Facturation et paiements** et **Configuration de l’espace**. Ouvrez un groupe pour voir les outils accessibles à votre rôle ; au retour d’un outil, le groupe reste ouvert. Retour à Moi et les destinations personnelles restent séparés.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, plus un compte d'appareil :

@@ -75,6 +75,8 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 
 **Trovare le mie prenotazioni (#2276).** Le mie prenotazioni è visibile sopra le categorie e torna alle prenotazioni personali. Il riepilogo indica persona e categorie; Reimposta filtri torna all’attività personale di tutte le categorie disponibili e conserva le date. Le righe mostrano piano, risorsa e stato autorizzati quando disponibili. Le fonti mancanti mantengono l’etichetta o mostrano Risorsa non disponibile. Ogni riga apre ancora la propria fonte.
 
+**Navigazione dello spazio.** Le destinazioni quotidiane restano visibili. L’amministrazione è organizzata in **Membri e accesso**, **Fatturazione e pagamenti** e **Configurazione dello spazio**. Apri un gruppo per vedere gli strumenti del tuo ruolo; al ritorno da uno strumento, il gruppo resta aperto. Torna a Me e le destinazioni personali rimangono separate.
+
 ## 2. Ruoli e inviti
 
 DesKilo ha tre ruoli cumulativi e, sopra di essi, una variante di comproprietà, più un account dispositivo:

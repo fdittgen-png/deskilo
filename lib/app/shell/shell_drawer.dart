@@ -5,7 +5,7 @@
 // phone lacks and none of the thumb-reach the bar was built for; the
 // drawer keeps the whole height for content and puts EVERY destination
 // — the tabs, the Reserve hub, the administration screens, the account
-// — one tap away. Native platforms keep the bar untouched.
+// — grouped by task. Native platforms keep the bar untouched.
 import 'package:flutter/material.dart';
 import '../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +14,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/theme/app_radius.dart';
+import '../../l10n/app_localizations_en.dart';
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -38,12 +40,13 @@ bool webShell(Ref ref) => shellUsesMenu(
 
 /// One destination of the drawer.
 class _Entry {
-  const _Entry(this.key, this.icon, this.label, this.onTap, {this.selected = false});
+  const _Entry(this.key, this.icon, this.label, this.onTap, {this.selected = false, this.route});
   final String key;
   final IconData icon;
   final String label;
   final VoidCallback onTap;
   final bool selected;
+  final String? route;
 }
 
 class ShellDrawer extends ConsumerWidget {
@@ -70,7 +73,9 @@ class ShellDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final labels = l10n ?? AppLocalizationsEn();
     final theme = Theme.of(context);
+    final path = GoRouterState.of(context).uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     // #2137 — each entry asks the permission its route asks, so a member
@@ -121,61 +126,61 @@ class ShellDrawer extends ConsumerWidget {
       if (may(WorkspacePermission.workspaceSettings))
         _Entry('drawer-workspace-settings', Icons.business_outlined,
             l10n?.workspaceSettingsTitle ?? 'Workspace',
-            () => go('/workspace-settings')),
+            () => go('/workspace-settings'), route: '/workspace-settings'),
       if (may(WorkspacePermission.manageMembers))
         _Entry('drawer-members', Icons.group_outlined,
-            l10n?.membersTitle ?? 'Members & plans', () => go('/members')),
+            l10n?.membersTitle ?? 'Members & plans', () => go('/members'), route: '/members'),
       if (may(WorkspacePermission.workspaceSettings))
         _Entry('drawer-availability', Icons.event_busy_outlined,
             l10n?.availabilityTitle ?? 'Availability',
-            () => go('/availability')),
+            () => go('/availability'), route: '/availability'),
       // #1923 — the BI area, on every platform.
       if (biAvailable(
           features: features,
           permissions: ref.watch(myPermissionsProvider)))
         _Entry('drawer-bi', Icons.insights_outlined,
-            l10n?.biTitle ?? 'Business analytics', () => go('/bi')),
+            l10n?.biTitle ?? 'Business analytics', () => go('/bi'), route: '/bi'),
       if (may(WorkspacePermission.manageRoles) &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,
-            l10n?.rolesTitle ?? 'Roles', () => go('/roles')),
+            l10n?.rolesTitle ?? 'Roles', () => go('/roles'), route: '/roles'),
       if ((may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.issueInvoices)) &&
           features.contains(WorkspaceFeature.invoicing))
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
             l10n?.settingsBillingReports ?? 'Billing & reports',
-            () => go('/invoices')),
+            () => go('/invoices'), route: '/invoices'),
       if (may(WorkspacePermission.manageIntegrations))
         _Entry('drawer-payment-methods', Icons.account_balance_wallet_outlined,
             l10n?.paymentInstructionsTitle ?? 'Payment instructions',
-            () => go('/payment-methods')),
+            () => go('/payment-methods'), route: '/payment-methods'),
       if (may(WorkspacePermission.manageIntegrations) &&
           features.contains(WorkspaceFeature.onlinePayments))
         _Entry('drawer-payment-config', Icons.credit_card_outlined,
             l10n?.payConfigTitle ?? 'Online payments',
-            () => go('/payment-config')),
+            () => go('/payment-config'), route: '/payment-config'),
       if (may(WorkspacePermission.operateKiosk) &&
           features.contains(WorkspaceFeature.nfcBadges))
         _Entry('drawer-nfc-config', Icons.nfc_outlined,
-            l10n?.nfcConfigTitle ?? 'RFID / NFC badges', () => go('/nfc-config')),
+            l10n?.nfcConfigTitle ?? 'RFID / NFC badges', () => go('/nfc-config'), route: '/nfc-config'),
       if (may(WorkspacePermission.manageServices) &&
           features.contains(WorkspaceFeature.services))
         _Entry('drawer-services', Icons.room_service_outlined,
-            l10n?.servicesTitle ?? 'Services', () => go('/services')),
+            l10n?.servicesTitle ?? 'Services', () => go('/services'), route: '/services'),
       if (may(WorkspacePermission.manageServices) &&
           features.contains(WorkspaceFeature.accessorySupplements))
         _Entry('drawer-accessories', Icons.chair_outlined,
-            l10n?.accessoriesTitle ?? 'Accessories', () => go('/accessories')),
+            l10n?.accessoriesTitle ?? 'Accessories', () => go('/accessories'), route: '/accessories'),
       if (may(WorkspacePermission.manageBilling))
         _Entry('drawer-billing', Icons.tune, l10n?.billingTitle ?? 'Billing',
-            () => go('/billing')),
+            () => go('/billing'), route: '/billing'),
       if (may(WorkspacePermission.manageConfiguration))
         _Entry('drawer-features', Icons.toggle_on_outlined,
-            l10n?.featuresTitle ?? 'Features', () => go('/features')),
+            l10n?.featuresTitle ?? 'Features', () => go('/features'), route: '/features'),
       // #2137 — editing the plan is delegable through manageSites.
       if (may(WorkspacePermission.manageSites))
         _Entry('drawer-editor', Icons.design_services_outlined,
-            l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor')),
+            l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor'), route: '/editor'),
     ];
     final account = <_Entry>[
       if (features.contains(WorkspaceFeature.documents) &&
@@ -202,7 +207,9 @@ class ShellDrawer extends ConsumerWidget {
           key: ValueKey(e.key),
           leading: Icon(e.icon),
           title: Text(e.label),
-          selected: e.selected,
+          selected: e.selected || (e.route != null &&
+              (path == e.route || path.startsWith('${e.route}/'))),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
           selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
           selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
           // Every badge opens the content it counts (#1306 S3): the events
@@ -217,9 +224,22 @@ class ShellDrawer extends ConsumerWidget {
           onTap: e.onTap,
         );
 
+    Widget group(String id, String title, IconData icon, Set<String> keys) {
+      final entries = administration.where((e) => keys.contains(e.key)).toList();
+      final active = entries.any((e) => path == e.route || path.startsWith('${e.route}/'));
+      if (entries.isEmpty) return const SizedBox.shrink();
+      return ExpansionTile(
+        key: PageStorageKey('drawer-group-$id-$active'),
+        initiallyExpanded: active,
+        leading: Icon(icon), title: Text(title),
+        shape: const Border(), collapsedShape: const Border(),
+        children: [for (final e in entries) tile(e)],
+      );
+    }
+
     final content = SafeArea(
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.smH,
           children: [
             Padding(
               padding: AppSpacing.lgAll,
@@ -249,15 +269,17 @@ class ShellDrawer extends ConsumerWidget {
             for (final e in navigation) tile(e),
             if (administration.isNotEmpty) ...[
               const Divider(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xs),
-                child: Text(
-                  l10n?.settingsSectionAdministration ?? 'Administration',
-                  style: theme.textTheme.labelLarge,
-                ),
-              ),
-              for (final e in administration) tile(e),
+              group('people', labels.uxNavPeople, Icons.group_outlined, {
+                'drawer-members', 'drawer-roles', 'drawer-nfc-config',
+              }),
+              group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
+                'drawer-invoices', 'drawer-billing', 'drawer-payment-methods',
+                'drawer-payment-config', 'drawer-bi',
+              }),
+              group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
+                'drawer-workspace-settings', 'drawer-availability', 'drawer-services',
+                'drawer-accessories', 'drawer-features', 'drawer-editor',
+              }),
             ],
             const Divider(),
             for (final e in account) tile(e),

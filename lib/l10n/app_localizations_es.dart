@@ -18048,6 +18048,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxMyBookings => 'Mis reservas';
 
   @override
+  String get uxNavFinance => 'Facturación y pagos';
+
+  @override
+  String get uxNavPeople => 'Miembros y acceso';
+
+  @override
+  String get uxNavWorkspace => 'Configuración del espacio';
+
+  @override
   String get uxOpenWorkspace => 'Abrir espacio';
 
   @override
