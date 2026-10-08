@@ -4174,7 +4174,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get entitlementBlockedFull =>
-      'Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires ci-dessous.';
+      'Vous avez utilisé tous vos jours ce mois-ci. Demandez-en plus à un administrateur ou demandez des demi-journées supplémentaires.';
 
   @override
   String entitlementDaysLeft(String left) {
@@ -5929,7 +5929,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Finances.';
 
   @override
-  String get financesLinkTitle => 'Vos documents sont dans Moi';
+  String get financesLinkTitle => 'Vos finances dans tous vos espaces';
 
   @override
   String get financesNoReminders => 'Aucun rappel reçu.';
@@ -18081,7 +18081,43 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uxManageResource => 'Gérer la ressource';
 
   @override
+  String get uxMoneyAllPeriods =>
+      'Toutes les périodes · Crédit, factures ouvertes et remboursements.';
+
+  @override
+  String get uxMoneyDocumentsScope =>
+      'Rapports mensuels et votre accord en vigueur.';
+
+  @override
+  String get uxMoneyInvoicesScope =>
+      'Vos factures dans cet espace · Toutes les périodes.';
+
+  @override
+  String get uxMoneyPaymentsScope =>
+      'Solde du mois · Factures en retard de toutes les périodes.';
+
+  @override
+  String get uxMoneyStatementScope =>
+      'Détail mensuel pour la période sélectionnée.';
+
+  @override
+  String get uxMoneyUsageScope =>
+      'Réservations et consommations du mois sélectionné.';
+
+  @override
+  String get uxMoneyWorkspaceTools => 'Outils financiers de l’espace';
+
+  @override
   String get uxMyBookings => 'Mes réservations';
+
+  @override
+  String get uxNavFinance => 'Facturation et paiements';
+
+  @override
+  String get uxNavPeople => 'Membres et accès';
+
+  @override
+  String get uxNavWorkspace => 'Configuration de l’espace';
 
   @override
   String get uxOpenWorkspace => 'Ouvrir l’espace';
@@ -18094,6 +18130,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get uxProfileAccount => 'Profil et compte';
+
+  @override
+  String get uxProfileChooseEnvironment => 'Choisir un environnement';
 
   @override
   String get uxProfileSection => 'Profil';

@@ -73,6 +73,7 @@ void main() {
     await tester.pumpAndSettle();
     // The hub first, then the register — the same two steps the journey
     // test takes; the register is not the face's landing surface.
+    await openMoneyWorkspaceTools(tester);
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();

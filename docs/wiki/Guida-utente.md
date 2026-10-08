@@ -51,6 +51,8 @@ Creare uno spazio significa decine di decisioni sparse in una decina di schermat
 
 ### Profili — un account, più spazi
 
+I nomi degli spazi sono in primo piano nell’elenco dei profili. Apri uno spazio abbinato per scegliere Sviluppo per le prove o Produzione con fatture dovute; l’ambiente attivo è indicato. I ruoli sono testo secondario e gli altri spazi della piattaforma sono in una sezione espandibile separata (#2289).
+
 Un account può appartenere a più spazi. **Impostazioni → Profili** li elenca tutti: ogni riga mostra il nome dello spazio, **il tuo ruolo lì** (Membro, Admin, Proprietario) e il suo ID. Il **segno di spunta** indica il profilo in cui ti trovi adesso; la **stella** indica quello **predefinito** — il profilo con cui l'app si apre, su ogni dispositivo e anche dopo una reinstallazione (la scelta è salvata con il tuo account). Tocca una riga per cambiare, **+ Aggiungi un profilo** per unirti a un altro spazio ancora. Tutto nell'app è riferito allo spazio attivo. Dal #996 **il cambio viene ricordato**: toccare un altro profilo, o l'altro lato di una coppia, lo rende predefinito all'avvio — la stella lo segue, e dopo un riavvio non torni mai in uno spazio o in un ambiente che avevi lasciato.
 
 <p><img src="images/profiles.jpg" width="240"></p>
@@ -72,6 +74,8 @@ L'app ha fino a cinque destinazioni lungo il bordo inferiore: **Messaggi** (§16
 **Ingresso e orientamento (#2273, #2275, #2277).** Apri spazio entra nello spazio abituale; Spazio di prova apre l’ambiente di esercitazione spiegato sulla scheda. Il contesto reale/di prova resta visibile. Profilo e account compare nella navigazione. I collegamenti fissi Profilo, Privacy, Preferenze e Avanzate portano alle sezioni corrispondenti. Preferenze inizia con lingua, tema e formati disponibili. Pubblico, profilo pubblico e anteprima restano insieme in Privacy. Le finestre web ampie mostrano le destinazioni in una barra laterale, con Torna a Me e Amministrazione. Le finestre strette e il testo ingrandito usano il menu compatto. I controlli del calendario e le indicazioni della pianta scorrono se il testo ingrandito richiede più altezza, mantenendo accessibili attività e azioni.
 
 **Trovare le mie prenotazioni (#2276).** Le mie prenotazioni è visibile sopra le categorie e torna alle prenotazioni personali. Il riepilogo indica persona e categorie; Reimposta filtri torna all’attività personale di tutte le categorie disponibili e conserva le date. Le righe mostrano piano, risorsa e stato autorizzati quando disponibili. Le fonti mancanti mantengono l’etichetta o mostrano Risorsa non disponibile. Ogni riga apre ancora la propria fonte.
+
+**Navigazione dello spazio.** Le destinazioni quotidiane restano visibili. L’amministrazione è organizzata in **Membri e accesso**, **Fatturazione e pagamenti** e **Configurazione dello spazio**. Apri un gruppo per vedere gli strumenti del tuo ruolo; al ritorno da uno strumento, il gruppo resta aperto. Torna a Me e le destinazioni personali rimangono separate.
 
 ## 2. Ruoli e inviti
 
@@ -1336,7 +1340,7 @@ I **carnet** (Funzioni → *Carnet*, sotto la fatturazione; disattivati per impo
 - **Richieste** — **Invia una spesa** (hai comprato il caffè per lo spazio? un altro admin la approva — niente auto-approvazione — e viene accreditata sul tuo estratto), **Richiedi mezze giornate extra**, **Aggiungi un consumo** (servizi definiti dal proprietario — armadietti, stampe… — confermi ciò che hai consumato).
 - **Documenti** — **Fatture** (le tue restano sempre leggibili qui: posizioni, saldo, stato — e per chi emette, l'hub di fatturazione, §11), **Le mie condizioni** (che stampa il documento intitolato *Accordo finanziario*) e il **report mensile dei pagamenti**, self-service (§11).
 
-Finanze ha **quattro viste** in alto — **Estratto · Pagamenti · Fatture · Documenti** (§9c–9f) — che condividono il selettore **‹ mese ›** e il pulsante **PDF**; lo scudo, la campana e l'ingranaggio stanno nella barra dell'app come ovunque.
+Finanze ha **cinque destinazioni**: **Estratto · Pagamenti · Fatture · Uso · Documenti**. Il selettore del mese e il PDF dell’estratto appartengono alle viste mensili; **Fatture comprende tutti i periodi**, senza selettore del mese. Sugli schermi piccoli le etichette complete scorrono quando necessario.
 
 <!-- anchor: user.badges.nfc -->
 #### Registrazione con badge NFC
@@ -1349,7 +1353,7 @@ badge QR fa lo stesso lavoro.
 ### 9a. Una volta fatturato il mese, decide la fattura
 
 - Il tuo estratto mostra una **scheda fattura** — numero, stato, totale, già pagato, residuo — e il mese risulta **saldato** non appena la fattura è pagata, il suo saldo annullato o la sua nota di credito rimborsata, anche se il pagamento che la salda è stato registrato un mese dopo. Una fattura **parzialmente pagata** lascia il mese aperto esattamente per l'**importo residuo** (è anche quanto addebita *Paga online*). Un mese con **nota di credito** mostra ciò che lo spazio ti deve — nulla da pagare da parte tua.
-- **Il tuo conto** — quando possiedi credito disponibile (un avoir, o pagamenti in eccesso di un mese passato), la scheda Finanze mostra la tua posizione reale tra i mesi, sopra l'estratto: **credito disponibile**, ogni **fattura aperta** con il residuo, i rimborsi che lo spazio ti deve e la **posizione netta** risultante. Il tuo credito può saldare le fatture aperte — lo spazio lo applica durante la riconciliazione dei pagamenti (imputazione). I mesi precedenti alla tua adesione non devono nulla e non risultano mai aperti.
+- **Il tuo conto** — quando possiedi credito disponibile (un avoir, o pagamenti in eccesso di un mese passato), la scheda Finanze mostra la tua posizione reale tra i mesi, nel conto espandibile sotto il dettaglio mensile: **credito disponibile**, ogni **fattura aperta** con il residuo, i rimborsi che lo spazio ti deve e la **posizione netta** risultante. Il tuo credito può saldare le fatture aperte — lo spazio lo applica durante la riconciliazione dei pagamenti (imputazione). I mesi precedenti alla tua adesione non devono nulla e non risultano mai aperti.
 
 ### 9b. Anteprima rapida, scarica, condividi — ogni report
 
@@ -1361,11 +1365,11 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 ### 9c. La vista Estratto
 
-**Il mese così com'è.** Il tuo conto (la posizione reale su più mesi), la scheda **Questo mese** (giorni inclusi, usati, rimasti), la scheda **abbonamento**, **servizi consumati**, **supplementi di accessori e spazi**, **pacchetti di giorni**, **posizioni aperte** in attesa di convalida, **pagamenti e crediti**, la **scheda fattura** del mese appena è fatturato (§9a) e il **saldo**. Sola lettura: nulla da premere tranne il selettore **‹ mese ›**, comune a tutte le viste.
+**Prima il mese selezionato.** Giorni inclusi, usati e rimasti, abbonamento, servizi e supplementi, pacchetti, posizioni in attesa, crediti, fattura e saldo descrivono il periodo scelto. Sotto, espandi **Il tuo conto** per credito, fatture aperte e rimborsi di **tutti i periodi**. La posizione netta è distinta dal saldo mensile. I prezzi negoziati sono in **Documenti**, accanto all’accordo attuale.
 
 <p><img src="images/statement-account.jpg" width="240"></p>
 
-*La parte alta dell'Estratto: il tuo conto (la posizione reale su più mesi) e le tue condizioni negoziate — la tariffa accanto ai tuoi prezzi, con Chi può vedere.*
+*Esempi di conto e prezzi negoziati. Espandi Il tuo conto sotto il dettaglio mensile; i prezzi negoziati sono in Documenti.*
 
 <p><img src="images/statement-balance.jpg" width="240"></p>
 
@@ -1373,7 +1377,7 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 ### 9d. La vista Pagamenti
 
-**Regolare e chiedere.** Una **striscia di scaduto** quando una fattura supera il termine di pagamento dello spazio (§11e), il **saldo**, le **istruzioni di pagamento** e **Paga online** finché qualcosa è dovuto, poi le azioni: **Registra un pagamento**, **Compra un pacchetto** (piani a pacchetti), **Invia una spesa**, **Chiedi mezze giornate extra**, **Aggiungi un consumo**.
+**Pagare, poi richiedere.** Avvisi di ritardo, saldo mensile, istruzioni e azioni di pagamento formano il gruppo pagamenti. **Richieste** raggruppa separatamente spese, spese programmate, mezze giornate aggiuntive e consumi. Il collegamento a tutti gli spazi segue queste azioni.
 
 **Scorte (#731).** Hai comprato capsule di caffè o sacchetti per aspirapolvere per lo spazio? In **Invia una spesa**, attiva *È una scorta per lo spazio*, indica l'articolo (o scegline uno esistente), la quantità e quanto costerà un consumo (precompilato con importo ÷ quantità). Convalidata la spesa, vieni rimborsato come sempre **e** l'articolo va sullo scaffale come servizio consumabile con quella scorta; chi lo usa aggiunge un consumo e lo paga, la scorta scende, e a zero l'articolo non si può consumare fino alla prossima scorta. Funzionalità *Scorte dalle spese* (richiede Servizi).
 
@@ -1383,7 +1387,7 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 ### 9e. La vista Fatture
 
-**Cosa mi è stato fatturato?** Una scheda di testa — *niente di aperto, sei in regola*, o *N aperte · importo dovuto*, con il numero delle scadute — poi **ogni fattura emessa a tuo nome**, dalla più recente, ciascuna con il suo chip di stato, **scade tra N giorni** o **scaduta da N giorni**, quante volte è stata sollecitata, e un pulsante **paga** che salta alla vista Pagamenti; tocca una riga per la scheda di dettaglio con anteprima, PDF e condivisione. Chi emette trova il pulsante **Fatture** verso il registro (§11).
+**Le tue fatture · Tutti i periodi.** Il riepilogo mostra una sola volta importi aperti e ritardi, poi tutte le tue fatture, dalle più recenti. Il mese dell’estratto non filtra questo archivio. Espandi **Strumenti finanziari dello spazio** sopra il riepilogo per registro, situazione dello spazio e ripartizione dei costi disponibili secondo il ruolo e le funzionalità attive. Le righe aprono ancora dettagli, documenti e pagamento.
 
 **Il percorso (#812).** Ogni riga porta anche la **barra del percorso** della fattura — *Emessa · Pagamento · Conferma · Chiusa*, il passo corrente cerchiato — e **tocca a te** in una frase: *paga X entro il data*, *hai dichiarato X — lo spazio lo sta confermando*, *il tuo pagamento è registrato — lo spazio lo abbina*, *pagata il … — chiusa*. **Come funziona** sulla scheda di testa apre i quattro passi con ciò che fa lo spazio e ciò che fai tu. Funzione *Il percorso di una fattura* (sotto Fatture).
 
@@ -1401,7 +1405,7 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 
 ### 9g. Negoziazioni di prezzo
 
-**La tariffa è il valore predefinito; le tue condizioni sono tue.** Un proprietario o un admin finanze può proporre una **negoziazione di prezzo** per un membro — quota mensile, eccedenza per mezza giornata, sconto sui supplementi (accessori, prenotazioni di spazi interi) — ciascuno opzionale, la tariffa se assente. La proposta arriva in Eventi ai convalidatori della regola (dominio *Negoziazione di prezzo*, o la regola predefinita); confermata, si applica dal mese scelto e sostituisce le condizioni precedenti. Nella tua vista **Estratto**, la scheda *I miei prezzi negoziati* mostra la tariffa barrata accanto ai tuoi prezzi, da quando, e **Chi può vederlo**: tu, i proprietari e gli admin finanze — ogni lettura da parte di altri è registrata ed elencata lì (§14). Funzionalità *Negoziazioni di prezzo*.
+**La tariffa è il valore predefinito; le tue condizioni sono tue.** Un proprietario o un admin finanze può proporre una **negoziazione di prezzo** per un membro — quota mensile, eccedenza per mezza giornata, sconto sui supplementi (accessori, prenotazioni di spazi interi) — ciascuno opzionale, la tariffa se assente. La proposta arriva in Eventi ai convalidatori della regola (dominio *Negoziazione di prezzo*, o la regola predefinita); confermata, si applica dal mese scelto e sostituisce le condizioni precedenti. In **Documenti**, la scheda *I miei prezzi negoziati* mostra la tariffa barrata accanto ai tuoi prezzi, da quando, e **Chi può vederlo**: tu, i proprietari e gli admin finanze — ogni lettura da parte di altri è registrata ed elencata lì (§14). Funzionalità *Negoziazioni di prezzo*.
 
 **Servizi, pacchetti e occupazione (#744).** Le condizioni possono fissare anche l'**occupazione** — la quota di giorni di apertura inclusa ogni mese, negoziata con il suo prezzo (applicata al membro una volta convalidata, il valore precedente accanto) — e un **prezzo unitario per servizio e per pacchetto**: un consumo o l'acquisto di un pacchetto è addebitato al prezzo del membro, il prezzo di catalogo barrato nelle schede e sulla carta.
 

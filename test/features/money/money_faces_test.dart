@@ -2,7 +2,7 @@
 //
 // #720 — the Finances tab as four faces: Statement, Payments, Invoices,
 // Documents. Each face shows ITS cards and ITS actions and nothing of
-// the others; the period chooser is shared; a deep link picks the face
+// the others; monthly views share the period chooser; a deep link picks the face
 // through the controller; the flag off restores the single column.
 // #726 — an invoice past the workspace's term reads overdue on the
 // Payments and Invoices faces, with the way to settle it.
@@ -19,15 +19,19 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/money_faces.dart';
 
 void main() {
-  testWidgets('Statement is the first face: the month as it stands',
+  for (final scale in [1.0, 2.0]) {
+  testWidgets('Statement is first and Money tabs stay readable at 320 dp, text scale $scale',
       (tester) async {
-    await pumpFaces(tester);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    tester.platformDispatcher.textScaleFactorTestValue = scale;
+    await pumpFaces(tester, size: const Size(320, 800));
     expect(find.byKey(const ValueKey('money-faces')), findsOneWidget);
     for (final f in MoneyFace.values) {
       expect(find.byKey(ValueKey('money-face-${f.name}')), findsOneWidget);
     }
     expect(find.byKey(const ValueKey('money-face-body-statement')),
         findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('entitlement-card')), 200, scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('entitlement-card')), findsOneWidget);
     expect(find.text('Balance'), findsOneWidget);
     // Read-only: no action of the other faces leaks in.
@@ -35,7 +39,14 @@ void main() {
     expect(find.text('Add consumption'), findsNothing);
     expect(find.byKey(const ValueKey('invoices-button')), findsNothing);
     expect(find.byKey(const ValueKey('money-hint-statement')), findsOneWidget);
+    expect(find.descendant(of: find.byKey(const ValueKey('money-faces')),
+        matching: find.byType(FittedBox)), findsNothing);
+    for (final destination in MoneyFace.values) {
+      await face(tester, destination);
+      expect(tester.takeException(), isNull, reason: destination.name);
+    }
   });
+  }
 
   testWidgets('the Payments face fuses settling and asking', (tester) async {
     await pumpFaces(tester);
@@ -55,8 +66,10 @@ void main() {
     await face(tester, MoneyFace.invoices);
     expect(find.byKey(const ValueKey('money-invoice-summary')), findsOneWidget);
     expect(find.text('Nothing open — you are up to date.'), findsOneWidget);
+    expect(find.byIcon(Icons.chevron_left), findsNothing);
+    expect(find.text('Your invoices in this workspace · All periods.'), findsOneWidget);
     expect(find.byKey(const ValueKey('my-invoices-empty')), findsOneWidget);
-    expect(find.byKey(const ValueKey('invoices-button')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoices-button')), findsNothing);
     expect(find.byKey(const ValueKey('money-overdue-banner')), findsNothing);
   });
 
@@ -79,14 +92,14 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('past the term the invoice is overdue on both faces (#726)',
+  testWidgets('overdue detail is retained without a duplicate invoice banner',
       (tester) async {
     final money = FakeMoneyRepository()
       ..dunningRules = const DunningRules(firstAfterDays: 14);
     await openInvoice(money, ageDays: 20);
     await pumpFaces(tester, money: money);
     await face(tester, MoneyFace.invoices);
-    expect(find.byKey(const ValueKey('money-overdue-banner')), findsOneWidget);
+    expect(find.byKey(const ValueKey('money-overdue-banner')), findsNothing);
     expect(find.textContaining('Overdue by 6 days'), findsOneWidget);
     await face(tester, MoneyFace.payments);
     expect(find.byKey(const ValueKey('money-overdue-banner')), findsOneWidget);
@@ -158,6 +171,24 @@ void main() {
     expect(find.text(label), findsOneWidget);
     await face(tester, MoneyFace.payments);
     expect(find.text(label), findsOneWidget);
+  });
+
+  testWidgets('the account summary discloses unchanged credit and past-invoice details', (tester) async {
+    final money = FakeMoneyRepository();
+    await openInvoice(money);
+    money.invoices[0] = money.invoices[0].copyWith(period: '2026-04');
+    money.seedCreditNote('member-1', 30000);
+    await pumpFaces(tester, money: money);
+    final details = find.byKey(const ValueKey('money-account-details'));
+    await tester.scrollUntilVisible(details, 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.text('All periods · Credit, open invoices and refunds.'), findsOneWidget);
+    expect(find.text('Net position'), findsNothing);
+    await tester.tap(details);
+    await tester.pumpAndSettle();
+    expect(find.text('Credit on account'), findsOneWidget);
+    expect(find.text(money.invoices.single.number), findsOneWidget);
+    expect(find.text('2026-04'), findsOneWidget);
   });
 
   testWidgets('the flag off keeps the single column', (tester) async {

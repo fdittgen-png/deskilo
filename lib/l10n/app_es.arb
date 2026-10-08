@@ -2787,7 +2787,7 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
-  "entitlementBlockedFull": "Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra abajo.",
+  "entitlementBlockedFull": "Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra.",
   "entitlementDaysLeft": "{left} días restantes",
   "entitlementDaysUsed": "{used} de {total} días usados",
   "entitlementPackageFull": "Has usado todos tus días este mes. Compra un paquete para seguir reservando.",
@@ -3970,7 +3970,7 @@
     }
   },
   "financesLinkBody": "Tus facturas, recordatorios y pagos de todos tus espacios están juntos en Yo › Finanzas.",
-  "financesLinkTitle": "Tus documentos están en Yo",
+  "financesLinkTitle": "Tus finanzas en todos tus espacios",
   "financesNoReminders": "Ningún recordatorio recibido.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -11169,11 +11169,22 @@
   "uxDeviceTime": "Tu hora",
   "uxLinkedReference": "Recurso enlazado",
   "uxManageResource": "Gestionar recurso",
+  "uxMoneyAllPeriods": "Todos los períodos · Crédito, facturas abiertas y reembolsos.",
+  "uxMoneyDocumentsScope": "Informes mensuales y tu acuerdo vigente.",
+  "uxMoneyInvoicesScope": "Tus facturas en este espacio · Todos los períodos.",
+  "uxMoneyPaymentsScope": "Saldo mensual · Facturas vencidas de todos los períodos.",
+  "uxMoneyStatementScope": "Detalle mensual del período seleccionado.",
+  "uxMoneyUsageScope": "Reservas y consumos del mes seleccionado.",
+  "uxMoneyWorkspaceTools": "Herramientas financieras del espacio",
   "uxMyBookings": "Mis reservas",
+  "uxNavFinance": "Facturación y pagos",
+  "uxNavPeople": "Miembros y acceso",
+  "uxNavWorkspace": "Configuración del espacio",
   "uxOpenWorkspace": "Abrir espacio",
   "uxPreferencesSection": "Preferencias",
   "uxPrivacySection": "Privacidad",
   "uxProfileAccount": "Perfil y cuenta",
+  "uxProfileChooseEnvironment": "Elegir un entorno",
   "uxProfileSection": "Perfil",
   "uxRealSpaceHint": "Reservas y facturas reales",
   "uxRealWorkspace": "Espacio real",

@@ -7318,7 +7318,7 @@ abstract class AppLocalizations {
   /// Footer of the usage card for a blocked member who has used their whole cap
   ///
   /// In en, this message translates to:
-  /// **'You\'ve used all your days this month. Ask an admin for more or request extra half-days below.'**
+  /// **'You\'ve used all your days this month. Ask an admin for more or request extra half-days.'**
   String get entitlementBlockedFull;
 
   /// Remaining days within the monthly cap; value already formatted (may be fractional)
@@ -10209,7 +10209,7 @@ abstract class AppLocalizations {
   /// No description provided for @financesLinkTitle.
   ///
   /// In en, this message translates to:
-  /// **'Your documents live in Me'**
+  /// **'Your finances across spaces'**
   String get financesLinkTitle;
 
   /// Me › Finances
@@ -31004,11 +31004,71 @@ abstract class AppLocalizations {
   /// **'Manage resource'**
   String get uxManageResource;
 
+  /// No description provided for @uxMoneyAllPeriods.
+  ///
+  /// In en, this message translates to:
+  /// **'All periods · Credit, open invoices and refunds.'**
+  String get uxMoneyAllPeriods;
+
+  /// No description provided for @uxMoneyDocumentsScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly reports and your current agreement.'**
+  String get uxMoneyDocumentsScope;
+
+  /// No description provided for @uxMoneyInvoicesScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices in this workspace · All periods.'**
+  String get uxMoneyInvoicesScope;
+
+  /// No description provided for @uxMoneyPaymentsScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly balance · Overdue invoices from all periods.'**
+  String get uxMoneyPaymentsScope;
+
+  /// No description provided for @uxMoneyStatementScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly detail for the selected period.'**
+  String get uxMoneyStatementScope;
+
+  /// No description provided for @uxMoneyUsageScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings and consumption for the selected month.'**
+  String get uxMoneyUsageScope;
+
+  /// No description provided for @uxMoneyWorkspaceTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace finance tools'**
+  String get uxMoneyWorkspaceTools;
+
   /// No description provided for @uxMyBookings.
   ///
   /// In en, this message translates to:
   /// **'My bookings'**
   String get uxMyBookings;
+
+  /// No description provided for @uxNavFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing & payments'**
+  String get uxNavFinance;
+
+  /// No description provided for @uxNavPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People & access'**
+  String get uxNavPeople;
+
+  /// No description provided for @uxNavWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace setup'**
+  String get uxNavWorkspace;
 
   /// No description provided for @uxOpenWorkspace.
   ///
@@ -31033,6 +31093,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile & account'**
   String get uxProfileAccount;
+
+  /// No description provided for @uxProfileChooseEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an environment'**
+  String get uxProfileChooseEnvironment;
 
   /// No description provided for @uxProfileSection.
   ///

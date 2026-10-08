@@ -1,0 +1,9 @@
+{
+  "uxMoneyStatementScope": "Détail mensuel pour la période sélectionnée.",
+  "uxMoneyPaymentsScope": "Solde du mois · Factures en retard de toutes les périodes.",
+  "uxMoneyInvoicesScope": "Vos factures dans cet espace · Toutes les périodes.",
+  "uxMoneyUsageScope": "Réservations et consommations du mois sélectionné.",
+  "uxMoneyDocumentsScope": "Rapports mensuels et votre accord en vigueur.",
+  "uxMoneyAllPeriods": "Toutes les périodes · Crédit, factures ouvertes et remboursements.",
+  "uxMoneyWorkspaceTools": "Outils financiers de l’espace"
+}

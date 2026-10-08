@@ -28,6 +28,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/overage_policy.dart';
@@ -1141,35 +1142,28 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         : OverdueBanner(exposure: exposure);
     final faceCards = <MoneyFace, List<Widget>>{
       MoneyFace.statement: [
-        if (account != null && account.isNotable) ...[
-          AccountCard(account: account, currencyCode: currencyCode),
-          const SizedBox(height: 8),
-        ],
-        // #739 — my prices against the tariff, and who can see them.
-        if (features.contains(WorkspaceFeature.priceNegotiations) &&
-            member != null) ...[
-          NegotiationCard(memberId: member.id, currency: currency),
-          const SizedBox(height: 8),
-        ],
         ...attemptsCard,
         if (visibleStatement != null) bill(MoneyFace.statement),
+        if (account != null && account.isNotable) ...[
+          const SizedBox(height: 8),
+          AccountCard(account: account, currencyCode: currencyCode, collapsible: true),
+        ],
       ],
       MoneyFace.payments: [
-        MyFinancesLinkCard(
-          workspaceId: workspaceForSweep?.id,
-          workspaceName: workspaceForSweep?.name,
-        ),
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
         ...attemptsCard,
         ...occurrenceCards,
+        sectionLabel((l10n ?? AppLocalizationsEn()).moneySectionPay),
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],
       MoneyFace.invoices: [
-        MyFinancesLinkCard(
-          workspaceId: workspaceForSweep?.id,
-          workspaceName: workspaceForSweep?.name,
-        ),
-        if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
+        if (invoicesButton != null || statusButton != null || wizardButton != null)
+          ExpansionTile(
+            key: const ValueKey('money-workspace-tools'),
+            title: Text((l10n ?? AppLocalizationsEn()).uxMoneyWorkspaceTools),
+            leading: const Icon(Icons.business_outlined),
+            children: [?invoicesButton, ?statusButton, ?wizardButton],
+          ),
         if (exposure != null) ...[
           InvoiceSummaryCard(exposure: exposure),
           const SizedBox(height: 8),
@@ -1194,7 +1188,10 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         if (features.contains(WorkspaceFeature.usageRecords))
           UsageFace(period: _period),
       ],
-      MoneyFace.documents: const [],
+      MoneyFace.documents: [
+        if (features.contains(WorkspaceFeature.priceNegotiations) && member != null)
+          NegotiationCard(memberId: member.id, currency: currency),
+      ],
     };
     final documentsOn = features.contains(WorkspaceFeature.documents);
     final faceActions = <MoneyFace, List<Widget>>{
@@ -1203,13 +1200,18 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         const SizedBox(height: 8),
         recordPayment,
         if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
-        const SizedBox(height: 8),
+        sectionLabel((l10n ?? AppLocalizationsEn()).moneySectionRequests),
         grid(requestButtons),
+        MyFinancesLinkCard(
+          workspaceId: workspaceForSweep?.id,
+          workspaceName: workspaceForSweep?.name,
+        ),
       ],
       MoneyFace.invoices: [
-        if (invoicesButton != null) ...[const SizedBox(height: 8), invoicesButton],
-        if (statusButton != null) ...[const SizedBox(height: 8), statusButton],
-        if (wizardButton != null) ...[const SizedBox(height: 8), wizardButton],
+        MyFinancesLinkCard(
+          workspaceId: workspaceForSweep?.id,
+          workspaceName: workspaceForSweep?.name,
+        ),
       ],
       MoneyFace.usage: const [],
       MoneyFace.documents: [
@@ -1236,7 +1238,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     return switch (statementAsync) {
       AsyncData() when facesOn => MoneyFacesView(
           periodHeader: periodHeader,
-          balanceCard: balanceCard,
           cards: faceCards,
           actions: faceActions,
         ),

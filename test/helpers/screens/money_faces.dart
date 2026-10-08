@@ -46,6 +46,8 @@ Future<FakeMoneyRepository> pumpFaces(
 }
 
 Future<void> face(WidgetTester tester, MoneyFace face) async {
+  await tester.ensureVisible(find.byKey(ValueKey('money-face-${face.name}')));
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(ValueKey('money-face-${face.name}')));
   await tester.pumpAndSettle();
 }

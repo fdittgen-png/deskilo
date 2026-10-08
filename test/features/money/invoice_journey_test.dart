@@ -386,6 +386,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
       await tester.pumpAndSettle();
       if (hub) {
+        await openMoneyWorkspaceTools(tester);
         await tester
             .ensureVisible(find.byKey(const ValueKey('invoices-button')));
         await tester.tap(find.byKey(const ValueKey('invoices-button')));
@@ -582,6 +583,7 @@ void main() {
       expect(find.byKey(const ValueKey('money-invoice-process')), findsNothing);
       expect(find.textContaining('Due in'), findsOneWidget);
 
+      await openMoneyWorkspaceTools(tester);
       await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
       await tester.tap(find.byKey(const ValueKey('invoices-button')));
       await tester.pumpAndSettle();

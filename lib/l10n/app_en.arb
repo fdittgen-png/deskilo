@@ -4833,7 +4833,7 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
-  "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days below.",
+  "entitlementBlockedFull": "You've used all your days this month. Ask an admin for more or request extra half-days.",
   "@entitlementBlockedFull": {
     "description": "Footer of the usage card for a blocked member who has used their whole cap"
   },
@@ -6834,7 +6834,7 @@
     }
   },
   "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › Finances.",
-  "financesLinkTitle": "Your documents live in Me",
+  "financesLinkTitle": "Your finances across spaces",
   "financesNoReminders": "No reminder received.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -20395,11 +20395,22 @@
   "uxDeviceTime": "Your time",
   "uxLinkedReference": "Linked resource",
   "uxManageResource": "Manage resource",
+  "uxMoneyAllPeriods": "All periods · Credit, open invoices and refunds.",
+  "uxMoneyDocumentsScope": "Monthly reports and your current agreement.",
+  "uxMoneyInvoicesScope": "Your invoices in this workspace · All periods.",
+  "uxMoneyPaymentsScope": "Monthly balance · Overdue invoices from all periods.",
+  "uxMoneyStatementScope": "Monthly detail for the selected period.",
+  "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
+  "uxMoneyWorkspaceTools": "Workspace finance tools",
   "uxMyBookings": "My bookings",
+  "uxNavFinance": "Billing & payments",
+  "uxNavPeople": "People & access",
+  "uxNavWorkspace": "Workspace setup",
   "uxOpenWorkspace": "Open workspace",
   "uxPreferencesSection": "Preferences",
   "uxPrivacySection": "Privacy",
   "uxProfileAccount": "Profile & account",
+  "uxProfileChooseEnvironment": "Choose an environment",
   "uxProfileSection": "Profile",
   "uxRealSpaceHint": "Real bookings and invoices",
   "uxRealWorkspace": "Workspace",
