@@ -8298,8 +8298,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Complétez ces informations avant d\'émettre';
 
   @override
+  String get invoiceMissingVatNotRegistered =>
+      'Aucune TVA sur les lignes : l\'espace ne facture pas la TVA, mais un taux est réglé sur l\'abonnement ou un accessoire';
+
+  @override
   String get invoiceMissingVatRate =>
       'Un taux de TVA en vigueur pour le taux par défaut de l\'espace (sinon 0 % serait facturé)';
+
+  @override
+  String get invoiceMissingVatZeroLine =>
+      'Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l\'explique';
 
   @override
   String get invoiceNoOpen => 'Aucune facture en cours.';

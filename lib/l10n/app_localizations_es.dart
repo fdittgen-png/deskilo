@@ -8277,8 +8277,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMissingTitle => 'Complete estos datos antes de emitir';
 
   @override
+  String get invoiceMissingVatNotRegistered =>
+      'Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio';
+
+  @override
   String get invoiceMissingVatRate =>
       'Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)';
+
+  @override
+  String get invoiceMissingVatZeroLine =>
+      'Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique';
 
   @override
   String get invoiceNoOpen => 'No hay facturas abiertas.';

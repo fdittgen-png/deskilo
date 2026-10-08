@@ -5,7 +5,7 @@
 -- taken, so a refused invoice leaves no row and no gap. A consumer is not
 -- asked for a postal address; a stated business capacity is.
 begin;
-select plan(15);
+select plan(21);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001917'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -60,6 +60,32 @@ select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B"}}'),
 select is(pg_temp.missing('{"seller":{"city":"c","country":"DE"},"buyer":{"name":"B"}}'),
   array[]::text[], 'the seller country stated on the party (DE) is reviewed');
 update public.workspaces set country_code = 'FR' where id = '00000000-0000-4000-8000-0000001917b1';
+
+-- #1917 (0393): an expired default no longer resolves with its own percent;
+-- a 0 % charge with nothing explaining it, and VAT billed by a seller that
+-- does not charge VAT, both refuse issuing. A 0 % credit does not.
+update public.vat_rates set active = true, valid_from = '2000-01-01', valid_to = '2001-01-01'
+ where workspace_id = '00000000-0000-4000-8000-0000001917b1';
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}'),
+  array['vat_rate_unresolved'], 'an expired default rate is not in force');
+update public.vat_rates set valid_to = null where workspace_id = '00000000-0000-4000-8000-0000001917b1';
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}',
+  '[{"percent":0,"category":"O","gross_cents":1000}]'),
+  array['vat_line_zero_unexplained'], 'a charge at 0 % with nothing explaining it refuses issuing');
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered","vat_id":"FR1"},"buyer":{"name":"B"}}',
+  '[{"percent":0,"category":"O","gross_cents":-500}]'),
+  array[]::text[], 'a credit at 0 % is money returned, not a supply');
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"not_subject"},"buyer":{"name":"B"}}',
+  '[{"percent":20,"category":"S","gross_cents":1200}]'),
+  array['vat_charged_not_registered'], 'a seller that does not charge VAT never issues VAT');
+select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"not_subject"},"buyer":{"name":"B"}}',
+  '[{"percent":0,"category":"O","gross_cents":1000}]'),
+  array[]::text[], 'and its 0 % lines are what they should be');
+update public.workspaces set subscription_vat_rate_id =
+  (select id from public.vat_rates where workspace_id = '00000000-0000-4000-8000-0000001917b1' limit 1)
+ where id = '00000000-0000-4000-8000-0000001917b1';
+select is(public.workspace_tariff_vat_percent('00000000-0000-4000-8000-0000001917b1', current_date),
+  0::numeric, 'a subscription rate does not apply where the workspace does not charge VAT');
 
 -- The gate itself: the workspace has no postal address. The owner issues.
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001917a1","role":"authenticated"}',true);

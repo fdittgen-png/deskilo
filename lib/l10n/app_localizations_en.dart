@@ -8222,8 +8222,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override
+  String get invoiceMissingVatNotRegistered =>
+      'No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory';
+
+  @override
   String get invoiceMissingVatRate =>
       'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)';
+
+  @override
+  String get invoiceMissingVatZeroLine =>
+      'A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';

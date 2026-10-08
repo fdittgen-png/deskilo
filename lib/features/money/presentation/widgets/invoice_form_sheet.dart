@@ -9,6 +9,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -514,5 +515,9 @@ String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
       'vat_rate_unresolved' => l10n?.invoiceMissingVatRate ??
           "A VAT rate in force for the workspace's default rate (it would "
               'bill 0 %)',
+      'vat_line_zero_unexplained' => l10n?.invoiceMissingVatZeroLine ??
+          AppLocalizationsEn().invoiceMissingVatZeroLine,
+      'vat_charged_not_registered' => l10n?.invoiceMissingVatNotRegistered ??
+          AppLocalizationsEn().invoiceMissingVatNotRegistered,
       _ => key,
     };

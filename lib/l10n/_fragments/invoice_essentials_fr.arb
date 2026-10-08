@@ -33,5 +33,7 @@
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
   "invoiceMissingSellerCountry": "Le pays de l'espace doit être la France ou l'Allemagne pour émettre ici — les autres pays sont émis hors de l'application",
-  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)"
+  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
+  "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
+  "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'espace ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire"
 }

@@ -9334,7 +9334,15 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatNotRegistered": "No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory",
+  "@invoiceMissingVatNotRegistered": {
+    "description": "#1917 essentials key vat_charged_not_registered (0393)"
+  },
   "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
+  "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
+  "@invoiceMissingVatZeroLine": {
+    "description": "#1917 essentials key vat_line_zero_unexplained (0393)"
+  },
   "invoiceNoOpen": "No open invoices.",
   "@invoiceNoOpen": {
     "description": "Open tab empty state"

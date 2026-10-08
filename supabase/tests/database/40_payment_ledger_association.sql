@@ -21,8 +21,8 @@ begin
           'authenticated', 'assoc@deskilo.test', '', now(), now(), now()),
          (v, '00000000-0000-0000-0000-000000000000', 'authenticated',
           'authenticated', 'assoc-other@deskilo.test', '', now(), now(), now());
-  insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
-  values ('Assoc', 'FR', 'EUR', 'Europe/Paris', u) returning id into ws;
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
+  values ('Assoc', 'FR', 'EUR', 'Europe/Paris', u, '{"onlinePayments": true}') returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u, true, true) returning id into m;
   insert into public.members (workspace_id, user_id) values (ws, v) returning id into other;
