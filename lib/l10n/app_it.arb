@@ -11160,6 +11160,8 @@
   },
   "usageTitle": "Utilizzo",
   "usageWas": "era {before}",
+  "uxDeviceTime": "La tua ora",
+  "uxWorkspaceTime": "Ora dello spazio",
   "validationAdminsMay": "Gli admin possono validare",
   "validationAllAdmins": "Tutti gli admin",
   "validationAutoValidateAdmin": "Gli admin eliminano senza validazione",

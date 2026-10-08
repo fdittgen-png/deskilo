@@ -11160,6 +11160,8 @@
   },
   "usageTitle": "Nutzung",
   "usageWas": "war {before}",
+  "uxDeviceTime": "Ihre Ortszeit",
+  "uxWorkspaceTime": "Ortszeit des Arbeitsbereichs",
   "validationAdminsMay": "Admins dürfen validieren",
   "validationAllAdmins": "Alle Admins",
   "validationAutoValidateAdmin": "Admins löschen ohne Validierung",

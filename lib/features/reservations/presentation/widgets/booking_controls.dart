@@ -59,24 +59,8 @@ class WindowControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final timeFormat = appFormatOf(context); // #1150
-    // Icons, not words (UX pass): the localized name lives in the
-    // tooltip (and the semantics label for assistive tech).
-    //
-    // #1269 — "the morning and afternoon selection could be more
-    // meaningful". It was a sunrise, a sunset and a calendar page: three
-    // unrelated glyphs at 18dp, none of which said WHICH hours it books
-    // or that the three are one family. Two changes, both free in
-    // width — and width is why these are icons at all (#699):
-    //
-    //   * the glyph is now the week grid's own day cell, two half-slots
-    //     side by side with the booked half filled. A member who has
-    //     seen the week view has already learnt to read it, and the
-    //     three chips finally look like three parts of one choice.
-    //   * the tooltip and the semantics label carry the real hours —
-    //     "Morning · 08:00–13:00" — off the workspace's configured
-    //     working day, so "morning" stops being a guess. Hours in the
-    //     chip itself would cost ~62dp and take the hub's header to a
-    //     third row at 360dp, which is the trade #699 already refused.
+    // Names on wide screens; compact glyph choices on phones. The reserve
+    // header's summary keeps the selected name and exact hours visible.
     Widget chip(
       String keySuffix,
       ({bool am, bool pm}) halves,
@@ -90,11 +74,10 @@ class WindowControls extends StatelessWidget {
         message: label,
         child: ChoiceChip(
           key: ValueKey('$keyPrefix-$keySuffix'),
-          label: DayHalvesGlyph(
-            am: halves.am,
-            pm: halves.pm,
-            semanticLabel: label,
-          ),
+          label: MediaQuery.sizeOf(context).width >= 600
+              ? Text(name)
+              : DayHalvesGlyph(
+                  am: halves.am, pm: halves.pm, semanticLabel: label),
           selected: isSelected(window),
           materialTapTargetSize: MaterialTapTargetSize.padded,
           // #699 — SQUARE, 48dp, not the default chip's ~58dp text box.

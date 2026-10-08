@@ -292,6 +292,8 @@ una **funcionalidad** que un propietario puede desactivar en *Ajustes →
 Funcionalidades*; está activada por defecto. La aplicación no escribe en
 ningún calendario y nada se sincroniza.
 
+**Intervalo de reserva (#2270).** El resumen bajo los controles muestra el día, la fecha completa, Hoy o Mañana cuando corresponda, el período elegido, las horas exactas y la zona horaria del espacio. Si tu zona personal difiere, aparece también tu hora. Cambiar el período o una hora personalizada actualiza el resumen antes de elegir asiento. Las pantallas amplias nombran los períodos; en las estrechas el elegido sigue legible en el resumen.
+
 ## 5. Calendario (pestaña Calendario)
 
 El mes de un vistazo, con dos alcances y dos formas:

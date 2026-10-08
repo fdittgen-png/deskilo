@@ -18051,6 +18051,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get uxDeviceTime => 'Votre heure';
+
+  @override
+  String get uxWorkspaceTime => 'Heure de l’espace';
+
+  @override
   String get validationAdminsMay => 'Les admins peuvent valider';
 
   @override

@@ -294,6 +294,8 @@ Downloads; im Browser: wo Ihr Browser Downloads ablegt). Sie ist eine
 ausschalten kann; sie ist standardmäßig an. Die App schreibt in keinen
 Kalender, und nichts wird synchronisiert.
 
+**Buchungszeitraum (#2270).** Die Zusammenfassung unter den Bedienelementen zeigt Wochentag, vollständiges Datum, gegebenenfalls Heute oder Morgen, den gewählten Zeitraum und genaue Arbeitsbereichszeiten mit Zeitzone. Bei abweichender persönlicher Zeitzone erscheint auch Ihre Ortszeit. Änderungen des Zeitraums oder individueller Zeiten aktualisieren sie vor der Platzauswahl. Breite Bildschirme benennen die Optionen; auf schmalen bleibt der gewählte Zeitraum in der Zusammenfassung lesbar.
+
 ## 5. Kalender (Kalender-Tab)
 
 Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
