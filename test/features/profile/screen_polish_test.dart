@@ -45,7 +45,7 @@ void main() {
   });
 
   group('#1188 — a paired workspace row', () {
-    testWidgets('puts the role in a chip, as an unpaired one does',
+    testWidgets('roles use supporting text rather than a selection control',
         (tester) async {
       await tester.pumpWidget(
         ProviderScope(
@@ -65,11 +65,10 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(
-        find.widgetWithText(Chip, 'Owner'),
-        findsOneWidget,
-        reason: 'two adjacent rows styled the same fact two ways — one '
-            'in a chip, one in plain text',
+        find.text('Owner'), findsOneWidget,
+        reason: 'the role is information, not a choice',
       );
+      expect(find.widgetWithText(Chip, 'Owner'), findsNothing);
     });
   });
 }

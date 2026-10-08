@@ -15,6 +15,7 @@ import '../me/me_app.dart' show tapIn;
 Future<FakeWorkspaceRepository> pumpProfiles(
   WidgetTester tester, {
   required bool platformOwner,
+  bool expand = true,
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace()
     ..platformOwner = platformOwner
@@ -47,6 +48,10 @@ Future<FakeWorkspaceRepository> pumpProfiles(
   await tester.pumpAndSettle();
   // The list is longer and lazy: scroll to the link, then tap it.
   await tapIn(tester, 'me-home-list', find.byKey(const ValueKey('me-home-manage')));
+  if (platformOwner && expand) {
+    await tester.tap(find.byKey(const ValueKey('profiles-platform-section')));
+    await tester.pumpAndSettle();
+  }
   return workspace;
 }
 
@@ -61,6 +66,18 @@ void main() {
     await pumpProfiles(tester, platformOwner: false);
     expect(_section, findsNothing);
     expect(_foreign, findsNothing);
+  });
+
+  testWidgets('platform spaces stay separate until their section is opened',
+      (tester) async {
+    await pumpProfiles(tester, platformOwner: true, expand: false);
+    expect(_foreign, findsNothing);
+    await tester.tap(_section);
+    await tester.pumpAndSettle();
+    expect(_foreign, findsOneWidget);
+    await tester.tap(_foreign);
+    await tester.pumpAndSettle();
+    expect(find.text('Owners of Foreign Hub'), findsOneWidget);
   });
 
   testWidgets('every other workspace is listed greyed out; one\'s own is not '

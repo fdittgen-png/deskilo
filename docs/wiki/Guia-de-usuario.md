@@ -51,6 +51,8 @@ Es una única página web. Nada que instalar, sin cuenta, nada que se envíe a n
 
 ### Perfiles — una cuenta, varios espacios
 
+Los nombres de los espacios destacan en la lista de perfiles. Abra un espacio emparejado para elegir Desarrollo para probar o Producción con facturas exigibles; se marca el entorno activo. Los roles son texto secundario y los demás espacios de la plataforma están en una sección desplegable separada (#2289).
+
 Una cuenta puede pertenecer a varios espacios. **Ajustes → Perfiles** los lista todos: cada fila muestra el nombre del espacio, **tu rol allí** (Miembro, Admin, Propietario) y su ID de espacio. La **marca de verificación** señala el perfil en el que estás ahora; la **estrella** marca tu perfil **predeterminado** — aquel con el que se abre la app, en cualquier dispositivo e incluso tras reinstalar (la elección se guarda con tu cuenta). Toca una fila para cambiar, **+ Añadir un perfil** para unirte a otro espacio más. Todo en la app se refiere al espacio activo. Desde #996, **el cambio se recuerda**: tocar otro perfil, o el otro lado de una pareja, lo convierte en el predeterminado al arrancar — la estrella lo sigue, y nunca vuelve, tras un reinicio, a un espacio o un entorno que había dejado.
 
 <p><img src="images/profiles.jpg" width="240"></p>
