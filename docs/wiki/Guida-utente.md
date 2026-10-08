@@ -51,6 +51,8 @@ Creare uno spazio significa decine di decisioni sparse in una decina di schermat
 
 ### Profili — un account, più spazi
 
+I nomi degli spazi sono in primo piano nell’elenco dei profili. Apri uno spazio abbinato per scegliere Sviluppo per le prove o Produzione con fatture dovute; l’ambiente attivo è indicato. I ruoli sono testo secondario e gli altri spazi della piattaforma sono in una sezione espandibile separata (#2289).
+
 Un account può appartenere a più spazi. **Impostazioni → Profili** li elenca tutti: ogni riga mostra il nome dello spazio, **il tuo ruolo lì** (Membro, Admin, Proprietario) e il suo ID. Il **segno di spunta** indica il profilo in cui ti trovi adesso; la **stella** indica quello **predefinito** — il profilo con cui l'app si apre, su ogni dispositivo e anche dopo una reinstallazione (la scelta è salvata con il tuo account). Tocca una riga per cambiare, **+ Aggiungi un profilo** per unirti a un altro spazio ancora. Tutto nell'app è riferito allo spazio attivo. Dal #996 **il cambio viene ricordato**: toccare un altro profilo, o l'altro lato di una coppia, lo rende predefinito all'avvio — la stella lo segue, e dopo un riavvio non torni mai in uno spazio o in un ambiente che avevi lasciato.
 
 <p><img src="images/profiles.jpg" width="240"></p>

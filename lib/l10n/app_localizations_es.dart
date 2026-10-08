@@ -18043,6 +18043,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxProfileAccount => 'Perfil y cuenta';
 
   @override
+  String get uxProfileChooseEnvironment => 'Elegir un entorno';
+
+  @override
   String get uxProfileSection => 'Perfil';
 
   @override
