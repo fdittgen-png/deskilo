@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 261; // #2272 removes literal booking-sheet gaps.
 const int _fallbackCeiling =
-    6479; // #2272 uses the localized review kit; per fallback since 2026-10-07 (was 4607 per line)
+    6478; // #2271 and #2272 keep the fallback ratchet moving down.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

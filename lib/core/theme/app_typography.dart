@@ -38,3 +38,6 @@ extension AppTextEmphasis on TextStyle {
   /// The strongest weight a role may take: today's column, a heading.
   TextStyle get strong => copyWith(fontWeight: FontWeight.w700);
 }
+
+/// Base label for a canvas painted without an ambient widget theme.
+const canvasLabelStyle = TextStyle(fontSize: 12, height: 1);

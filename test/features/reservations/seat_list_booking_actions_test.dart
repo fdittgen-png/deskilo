@@ -58,7 +58,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     final action = find.byKey(const ValueKey('list-seat-action-seat-4'));
-    await tester.ensureVisible(action);
+    await tester.scrollUntilVisible(action, 100, scrollable: find.descendant(
+        of: find.byKey(const ValueKey('reserve-list-view')),
+        matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(action);
     await tester.pumpAndSettle();

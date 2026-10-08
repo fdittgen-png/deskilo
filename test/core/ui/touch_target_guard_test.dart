@@ -94,7 +94,7 @@ void main() {
     // reachable and honestly sized.
     expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);
-    expect(find.byKey(const ValueKey('reserve-level-level-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('reserve-level-menu')), findsOneWidget);
 
     expectTouchTargets(tester, surface: 'reserve hub');
   });
@@ -133,7 +133,7 @@ void main() {
     // buttons (the date pills are gone — one calendar chip now).
     expect(find.byType(ChoiceChip), findsAtLeastNWidgets(3));
     expect(
-      find.byKey(const ValueKey('reserve-level-level-1')),
+      find.byKey(const ValueKey('reserve-level-menu')),
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('reserve-view-switch')), findsOneWidget);

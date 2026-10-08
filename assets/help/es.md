@@ -294,6 +294,8 @@ ningún calendario y nada se sincroniza.
 
 **Intervalo de reserva (#2270).** El resumen bajo los controles muestra el día, la fecha completa, Hoy o Mañana cuando corresponda, el período elegido, las horas exactas y la zona horaria del espacio. Si tu zona personal difiere, aparece también tu hora. Cambiar el período o una hora personalizada actualiza el resumen antes de elegir asiento. Las pantallas amplias nombran los períodos; en las estrechas el elegido sigue legible en el resumen.
 
+**Leer el plano (#2271).** El nombre de la planta seleccionada se muestra incluso si solo hay una; el menú conserva los nombres completos. Cada asiento tiene una etiqueta opaca y un símbolo de la leyenda: círculo vacío para libre, candado para reservado, marca para presente, estrella para el suyo y bloqueo para no disponible. Amplíe los planos densos para leer los nombres. Los lectores de pantalla conservan el nombre completo y el estado con cualquier zoom. En la lista, el selector de planta queda encima de las filas sin tapar sus acciones.
+
 **Revisar antes de confirmar (#2272).** El formulario nombra espacio, planta/recurso, persona, fecha completa, horas exactas, zona horaria y repetición antes de decidir. Indica cuando no están disponibles el importe final y el cálculo del cupo. Reservar mantiene el intervalo; Registrarse ahora usa el actual y marca tu presencia. El interruptor separado añade presencia a una reserva actual. La confirmación sigue visible al desplazarse. Favoritos y valoraciones siguen a las opciones; el mantenimiento queda en Gestionar recurso para operadores autorizados. En la lista, Reservar abre el formulario y las valoraciones tienen su propia acción (#2268).
 
 ## 5. Calendario (pestaña Calendario)

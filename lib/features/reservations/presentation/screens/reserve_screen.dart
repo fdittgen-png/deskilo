@@ -928,10 +928,62 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // Floor switcher floats over the canvas (indoor-maps idiom, UX
     // pass) — hub-local browsing state (#187), never the plan tab's
     // persisted default (#159).
+    final selector = LevelSelector(
+              keyPrefix: 'reserve',
+              levels: levels,
+              current: level,
+              onSelected: (id) {
+                // Changing floor answers the question the highlight was
+                // asking, so the ring goes with it.
+                _clearFocus();
+                ref.read(browsedLevelProvider.notifier).select(id);
+                recordTaskStep(ref, RecorderActions.selectLevel); // #1881
+                // #687/#159 — and it STICKS. Choosing a floor used to be
+                // browsing-only here because the Plan tab owned the
+                // stored default; with that tab gone, a member who works
+                // on the second floor would have re-picked it on every
+                // launch forever.
+                unawaited(
+                  ref.read(selectedLevelIdProvider.notifier).select(id),
+                );
+              },
+              // #466: the whole-level booking button, Plan-tab parity —
+              // the hub only had the hidden double-tap path.
+              trailing: _levelReserveVisible(level)
+                  ? IconButton(
+                      key: const ValueKey('reserve-reserve-level'),
+                      tooltip: lexiconText(context,
+                          key: 'levelReserveButton',
+                          fallback: AppLocalizations.of(context)
+                                  ?.levelReserveButton ??
+                              'Reserve level'),
+                      icon: const Icon(Icons.layers_outlined),
+                      onPressed: () {
+                        final plan =
+                            ref.read(floorPlanProvider(level.id)).value;
+                        final window = _effectiveWindow(_granularity);
+                        showSpaceSheet(
+                          context,
+                          kind: SpaceKind.level,
+                          level: level,
+                          plan: plan,
+                          initialWindow:
+                              (start: window.start, end: window.end),
+                          // #687 — the level button is the OWNER's
+                          // assignment path (#638). With no roster it
+                          // silently degraded to "book this floor for
+                          // myself".
+                          members: spaceAssignmentCandidates(ref),
+                        );
+                      },
+                    )
+                  : null,
+            );
     return Stack(
       children: [
         Positioned.fill(child: Column(
       children: [
+        if (_seatList) Align(alignment: Alignment.topRight, child: selector),
         Expanded(
           // #209/#611 — map and list CROSS-FADE rather than swapping
           // hard. Outside any InteractiveViewer, so pan/zoom is
@@ -1007,61 +1059,10 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
         ),
       ],
     )),
-        if (levels.length > 1 || _levelReserveVisible(level))
-          Positioned(
+        if (!_seatList) Positioned(
             top: AppSpacing.sm,
             right: AppSpacing.sm,
-            child: LevelSelector(
-              keyPrefix: 'reserve',
-              levels: levels,
-              current: level,
-              onSelected: (id) {
-                // Changing floor answers the question the highlight was
-                // asking, so the ring goes with it.
-                _clearFocus();
-                ref.read(browsedLevelProvider.notifier).select(id);
-                recordTaskStep(ref, RecorderActions.selectLevel); // #1881
-                // #687/#159 — and it STICKS. Choosing a floor used to be
-                // browsing-only here because the Plan tab owned the
-                // stored default; with that tab gone, a member who works
-                // on the second floor would have re-picked it on every
-                // launch forever.
-                unawaited(
-                  ref.read(selectedLevelIdProvider.notifier).select(id),
-                );
-              },
-              // #466: the whole-level booking button, Plan-tab parity —
-              // the hub only had the hidden double-tap path.
-              trailing: _levelReserveVisible(level)
-                  ? IconButton(
-                      key: const ValueKey('reserve-reserve-level'),
-                      tooltip: lexiconText(context,
-                          key: 'levelReserveButton',
-                          fallback: AppLocalizations.of(context)
-                                  ?.levelReserveButton ??
-                              'Reserve level'),
-                      icon: const Icon(Icons.layers_outlined),
-                      onPressed: () {
-                        final plan =
-                            ref.read(floorPlanProvider(level.id)).value;
-                        final window = _effectiveWindow(_granularity);
-                        showSpaceSheet(
-                          context,
-                          kind: SpaceKind.level,
-                          level: level,
-                          plan: plan,
-                          initialWindow:
-                              (start: window.start, end: window.end),
-                          // #687 — the level button is the OWNER's
-                          // assignment path (#638). With no roster it
-                          // silently degraded to "book this floor for
-                          // myself".
-                          members: spaceAssignmentCandidates(ref),
-                        );
-                      },
-                    )
-                  : null,
-            ),
+            child: selector,
           ),
       ],
     );

@@ -207,12 +207,7 @@ class HeaderControlRow extends StatelessWidget {
       );
 }
 
-/// Floor switcher ON the plan (UX pass): a small vertical stack of
-/// buttons floating over the canvas — where floors intuitively live
-/// (the indoor-maps idiom) — instead of eating header space. One short
-/// button per level (full name in the tooltip); beyond five levels it
-/// collapses into a single menu button. [trailing] hosts contextual
-/// per-level actions (the reserve-level icon).
+/// Names the current floor on the plan; all alternatives keep their full names.
 class LevelSelector extends StatelessWidget {
   const LevelSelector({
     super.key,
@@ -229,94 +224,58 @@ class LevelSelector extends StatelessWidget {
   final ValueChanged<String> onSelected;
   final Widget? trailing;
 
-  /// A level's on-button short form: leading digits when the name has
-  /// them ('2eme' → '2'), else its first two characters.
-  static String shortLabel(String name) {
-    final digits = RegExp(r'^\d+').firstMatch(name.trim())?.group(0);
-    if (digits != null) return digits;
-    final t = name.trim();
-    return t.length <= 2 ? t : t.substring(0, 2);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     return Card(
       elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (levels.length <= 5)
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          PopupMenuButton<String>(
+            key: ValueKey('$keyPrefix-level-menu'),
+            enabled: levels.length > 1,
+            tooltip: current.name,
+            onSelected: onSelected,
+            itemBuilder: (context) => [
               for (final level in levels)
-                Tooltip(
-                  message: level.name,
-                  child: InkWell(
-                    key: ValueKey('$keyPrefix-level-${level.id}'),
-                    borderRadius: AppRadius.smAll,
-                    onTap: () => onSelected(level.id),
-                    child: Container(
-                      width: kMinInteractiveDimension,
-                      height: kMinInteractiveDimension,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: level.id == current.id
-                            ? scheme.secondaryContainer
-                            : null,
-                        borderRadius: AppRadius.smAll,
-                      ),
-                      child: Text(
-                        shortLabel(level.name),
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge
-                            ?.copyWith(
-                              fontWeight: level.id == current.id
-                                  ? FontWeight.w700
-                                  : null,
-                              // secondaryContainer stays LIGHT in the
-                              // dark theme — the pill must carry its
-                              // on-color (contrast, field report).
-                              color: level.id == current.id
-                                  ? scheme.onSecondaryContainer
-                                  : null,
-                            ),
-                      ),
-                    ),
+                PopupMenuItem(
+                  key: ValueKey('$keyPrefix-level-${level.id}'),
+                  value: level.id,
+                  child: Row(
+                    children: [
+                      Icon(level.id == current.id ? Icons.check : null,
+                          size: 18, color: scheme.primary),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(child: Text(level.name)),
+                    ],
                   ),
-                )
-            else
-              PopupMenuButton<String>(
-                key: ValueKey('$keyPrefix-level-menu'),
-                tooltip: l10n?.planLevelTooltip ?? 'Level',
-                onSelected: onSelected,
-                icon: const Icon(Icons.layers_outlined),
-                itemBuilder: (context) => [
-                  for (final Level l in levels)
-                    PopupMenuItem(
-                      value: l.id,
-                      child: Row(
-                        children: [
-                          Icon(
-                            l.id == current.id ? Icons.check : null,
-                            size: 18,
-                            color: scheme.primary,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(l.name),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            if (trailing != null) ...[
-              const Divider(height: 1),
-              trailing!,
+                ),
             ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: kMinInteractiveDimension, maxWidth: 200),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.layers_outlined, size: 18),
+                    const SizedBox(width: AppSpacing.xs),
+                    Flexible(child: Text(current.name,
+                        maxLines: 2, overflow: TextOverflow.ellipsis)),
+                    if (levels.length > 1)
+                      const Icon(Icons.arrow_drop_down, size: 18),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          if (trailing != null) ...[
+            const Divider(height: 1),
+            trailing!,
           ],
-        ),
+        ],
       ),
     );
   }
