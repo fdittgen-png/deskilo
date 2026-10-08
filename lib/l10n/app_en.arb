@@ -20386,6 +20386,8 @@
       }
     }
   },
+  "uxDeviceTime": "Your time",
+  "uxWorkspaceTime": "Workspace time",
   "validationAdminsMay": "Admins may validate",
   "@validationAdminsMay": {
     "description": "Switch label: whether admins may validate at all (off = owner only)"

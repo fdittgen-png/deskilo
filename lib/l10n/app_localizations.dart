@@ -30950,6 +30950,18 @@ abstract class AppLocalizations {
   /// **'was {before}'**
   String usageWas(String before);
 
+  /// No description provided for @uxDeviceTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Your time'**
+  String get uxDeviceTime;
+
+  /// No description provided for @uxWorkspaceTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace time'**
+  String get uxWorkspaceTime;
+
   /// Switch label: whether admins may validate at all (off = owner only)
   ///
   /// In en, this message translates to:
