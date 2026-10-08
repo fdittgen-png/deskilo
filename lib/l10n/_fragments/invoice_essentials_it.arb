@@ -33,5 +33,7 @@
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
   "invoiceMissingSellerCountry": "Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall'app",
-  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)"
+  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
+  "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
+  "invoiceMissingVatNotRegistered": "Nessuna IVA sulle righe: lo spazio non applica l'IVA, ma un'aliquota è impostata sull'abbonamento o su un accessorio"
 }

@@ -14154,11 +14154,23 @@ abstract class AppLocalizations {
   /// **'Complete these details before issuing'**
   String get invoiceMissingTitle;
 
+  /// #1917 essentials key vat_charged_not_registered (0393)
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory'**
+  String get invoiceMissingVatNotRegistered;
+
   /// No description provided for @invoiceMissingVatRate.
   ///
   /// In en, this message translates to:
   /// **'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)'**
   String get invoiceMissingVatRate;
+
+  /// #1917 essentials key vat_line_zero_unexplained (0393)
+  ///
+  /// In en, this message translates to:
+  /// **'A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it'**
+  String get invoiceMissingVatZeroLine;
 
   /// Open tab empty state
   ///

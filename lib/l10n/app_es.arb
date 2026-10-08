@@ -5319,7 +5319,9 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatNotRegistered": "Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio",
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
+  "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
   "invoiceNoOpen": "No hay facturas abiertas.",
   "invoiceNothingToInvoice": "Nada registrado este mes — nada que facturar.",
   "invoiceOpenAge": "{days} días",

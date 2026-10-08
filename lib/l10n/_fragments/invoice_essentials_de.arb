@@ -33,5 +33,7 @@
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
   "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
-  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)"
+  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)",
+  "invoiceMissingVatZeroLine": "Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund",
+  "invoiceMissingVatNotRegistered": "Keine MwSt. auf den Positionen: der Raum berechnet keine MwSt., aber für das Abonnement oder ein Zubehör ist ein Satz eingestellt"
 }

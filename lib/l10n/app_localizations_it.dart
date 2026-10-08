@@ -8281,8 +8281,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Completa questi dati prima dell\'emissione';
 
   @override
+  String get invoiceMissingVatNotRegistered =>
+      'Nessuna IVA sulle righe: lo spazio non applica l\'IVA, ma un\'aliquota è impostata sull\'abbonamento o su un accessorio';
+
+  @override
   String get invoiceMissingVatRate =>
       'Un\'aliquota IVA in vigore per l\'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)';
+
+  @override
+  String get invoiceMissingVatZeroLine =>
+      'Un\'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi';
 
   @override
   String get invoiceNoOpen => 'Nessuna fattura aperta.';

@@ -5319,7 +5319,9 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatNotRegistered": "Nessuna IVA sulle righe: lo spazio non applica l'IVA, ma un'aliquota è impostata sull'abbonamento o su un accessorio",
   "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
+  "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
   "invoiceNoOpen": "Nessuna fattura aperta.",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
   "invoiceOpenAge": "{days} giorni",

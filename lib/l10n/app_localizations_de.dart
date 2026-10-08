@@ -8291,8 +8291,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
 
   @override
+  String get invoiceMissingVatNotRegistered =>
+      'Keine MwSt. auf den Positionen: der Raum berechnet keine MwSt., aber für das Abonnement oder ein Zubehör ist ein Satz eingestellt';
+
+  @override
   String get invoiceMissingVatRate =>
       'Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)';
+
+  @override
+  String get invoiceMissingVatZeroLine =>
+      'Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund';
 
   @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';

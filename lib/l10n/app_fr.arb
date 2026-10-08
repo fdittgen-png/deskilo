@@ -5319,7 +5319,9 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
+  "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'espace ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire",
   "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
+  "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
   "invoiceOpenAge": "{days} jours",
