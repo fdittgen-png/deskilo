@@ -44,14 +44,18 @@ void main() {
   });
 
   testWidgets('a production workspace states that actions are real', (tester) async {
+    final semantics = tester.ensureSemantics();
     await _pump(tester, environment: 'prod');
     expect(find.byKey(const ValueKey('development-banner')), findsNothing);
     expect(find.byKey(const ValueKey('production-banner')), findsOneWidget);
     expect(find.textContaining('Real bookings and invoices'), findsOneWidget);
+    expect(tester.getSemantics(find.textContaining('Real bookings and invoices'))
+        .getSemanticsData().label, contains('Real bookings and invoices'));
     final context = tester.element(find.byType(Scaffold).first);
     unawaited(GoRouter.of(context).push('/settings'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('production-banner')), findsOneWidget);
+    semantics.dispose();
   });
 
   testWidgets('Demo never claims synthetic actions are real', (tester) async {

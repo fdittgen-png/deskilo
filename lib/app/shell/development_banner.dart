@@ -40,7 +40,8 @@ class DevelopmentBanner extends ConsumerWidget {
     return Column(
       children: [
         if (show) _DevelopmentStrip(development: workspace.isDevelopment),
-        Expanded(key: const ValueKey('layer-body'), child: child),
+        Expanded(key: const ValueKey('layer-body'),
+            child: Semantics(container: true, child: child)),
       ],
     );
   }
