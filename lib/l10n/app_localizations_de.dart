@@ -4176,7 +4176,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get entitlementBlockedFull =>
-      'Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.';
+      'Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage zusätzliche Halbtage.';
 
   @override
   String entitlementDaysLeft(String left) {
@@ -5922,7 +5922,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.';
 
   @override
-  String get financesLinkTitle => 'Ihre Dokumente liegen in Ich';
+  String get financesLinkTitle => 'Ihre Finanzen in allen Workspaces';
 
   @override
   String get financesNoReminders => 'Keine Erinnerung erhalten.';
@@ -18077,7 +18077,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxManageResource => 'Ressource verwalten';
 
   @override
+  String get uxMoneyAllPeriods =>
+      'Alle Zeiträume · Guthaben, offene Rechnungen und Erstattungen.';
+
+  @override
+  String get uxMoneyDocumentsScope =>
+      'Monatsberichte und Ihre aktuelle Vereinbarung.';
+
+  @override
+  String get uxMoneyInvoicesScope =>
+      'Ihre Rechnungen in diesem Workspace · Alle Zeiträume.';
+
+  @override
+  String get uxMoneyPaymentsScope =>
+      'Monatssaldo · Überfällige Rechnungen aus allen Zeiträumen.';
+
+  @override
+  String get uxMoneyStatementScope =>
+      'Monatsübersicht für den gewählten Zeitraum.';
+
+  @override
+  String get uxMoneyUsageScope => 'Buchungen und Verbrauch im gewählten Monat.';
+
+  @override
+  String get uxMoneyWorkspaceTools => 'Finanzverwaltung des Workspaces';
+
+  @override
   String get uxMyBookings => 'Meine Buchungen';
+
+  @override
+  String get uxNavFinance => 'Abrechnung und Zahlungen';
+
+  @override
+  String get uxNavPeople => 'Mitglieder und Zugang';
+
+  @override
+  String get uxNavWorkspace => 'Workspace einrichten';
 
   @override
   String get uxOpenWorkspace => 'Arbeitsbereich öffnen';

@@ -79,8 +79,11 @@ Future<FakeMoneyRepository> pumpInvoices(
   await tapNavIcon(tester, Icons.account_balance_wallet_outlined);
   await tester.pumpAndSettle();
   // #720 — the register lives on the Invoices face.
+  await tester.ensureVisible(find.byKey(const ValueKey('money-face-invoices')));
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
   await tester.pumpAndSettle();
+  await openMoneyWorkspaceTools(tester);
   // #1339 — on a short viewport the button is below the fold and not
   // built, so `ensureVisible` alone threw "Bad state: No element".
   //
@@ -91,7 +94,8 @@ Future<FakeMoneyRepository> pumpInvoices(
   // rather than overflow at large text.
   await tester.scrollUntilVisible(
       find.byKey(const ValueKey('invoices-button')), 200,
-      scrollable: find.byType(Scrollable).first);
+      scrollable: find.descendant(of: find.byKey(const ValueKey('money-face-body-invoices')),
+          matching: find.byType(Scrollable)).first);
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();

@@ -21,8 +21,9 @@ Future<void> _pump(
   required bool web,
   FakeWorkspaceRepository? workspace,
   FakeWorkspaceRoles? roles,
+  Size size = const Size(800, 900),
 }) async {
-  tester.view.physicalSize = const Size(800, 900);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
@@ -43,6 +44,19 @@ Future<void> _reveal(WidgetTester tester, String key) async {
   final scrollable = find.descendant(
       of: find.byKey(const ValueKey('shell-drawer')),
       matching: find.byType(Scrollable));
+  final group = switch (key) {
+    'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
+    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' || 'drawer-bi' => 'Billing & payments',
+    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-services' || 'drawer-accessories' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
+    _ => null,
+  };
+  if (group != null && find.byKey(ValueKey(key)).evaluate().isEmpty) {
+    await tester.scrollUntilVisible(find.text(group), -80, scrollable: scrollable);
+    await tester.ensureVisible(find.text(group));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(group));
+    await tester.pumpAndSettle();
+  }
   try {
     await tester.scrollUntilVisible(find.byKey(ValueKey(key)), 80,
         scrollable: scrollable);
@@ -86,10 +100,49 @@ void main() {
     expect(find.text('Members & plans'), findsWidgets);
   });
 
+  testWidgets('administration groups disclose destinations deliberately', (tester) async {
+    await _pump(tester, web: true);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    expect(find.text('People & access'), findsOneWidget);
+    expect(find.text('Billing & payments'), findsOneWidget);
+    expect(find.text('Workspace setup'), findsOneWidget);
+    expect(find.byKey(const ValueKey('drawer-members')), findsNothing);
+    await tester.tap(find.text('People & access'));
+    await tester.pumpAndSettle();
+    await _reveal(tester, 'drawer-members');
+    await tester.tap(find.byKey(const ValueKey('drawer-members')));
+    await tester.pumpAndSettle();
+    expect(find.text('Members & plans'), findsWidgets);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('drawer-members')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('native keeps the bar and has no drawer', (tester) async {
     await _pump(tester, web: false);
     expect(find.byType(ShellBottomBar), findsOneWidget);
     expect(find.byTooltip('Open navigation menu'), findsNothing);
+  });
+
+  testWidgets('task groups and their destinations fit enlarged phone text', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await _pump(tester, web: true, size: const Size(320, 1100));
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    for (final key in ['drawer-members', 'drawer-invoices', 'drawer-features']) {
+      await _reveal(tester, key);
+      expect(find.byKey(ValueKey(key)), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+    await tester.tap(find.byKey(const ValueKey('drawer-features')));
+    await tester.pumpAndSettle();
+    expect(find.text('Features'), findsWidgets);
+    expect(tester.takeException(), isNull);
   });
 
   // #2137 — every administration entry asks the permission its route

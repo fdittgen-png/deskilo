@@ -75,6 +75,8 @@ L'app a jusqu'à cinq destinations en bas : **Messages** (§16), **Calendrier** 
 
 **Retrouver mes réservations (#2276).** Mes réservations est visible au-dessus des catégories et revient à vos propres réservations. Le résumé indique la personne et les catégories choisies ; Réinitialiser les filtres revient à votre activité et à toutes les catégories disponibles, sans changer les dates. Les lignes montrent l’étage, la ressource et l’état autorisés lorsqu’ils sont disponibles. Une source manquante garde son libellé ou indique Ressource indisponible. Chaque ligne ouvre toujours sa source.
 
+**Navigation de l’espace.** Les destinations quotidiennes restent visibles. L’administration est organisée en **Membres et accès**, **Facturation et paiements** et **Configuration de l’espace**. Ouvrez un groupe pour voir les outils accessibles à votre rôle ; au retour d’un outil, le groupe reste ouvert. Retour à Moi et les destinations personnelles restent séparés.
+
 ## 2. Rôles et invitations
 
 DesKilo a trois rôles additifs, une déclinaison de copropriété par-dessus, plus un compte d'appareil :
@@ -1363,7 +1365,7 @@ Les **carnets** (Fonctionnalités → *Carnets*, sous la facturation ; désactiv
 - **Demandes** — **Soumettre une dépense** (du café pour l'espace ? un autre admin approuve — pas d'auto-approbation — et cela crédite votre relevé), **Demander des demi-journées**, **Ajouter une consommation** (les services du propriétaire — casiers, impression… — vous confirmez ce que vous consommez).
 - **Documents** — **Factures** (les vôtres sont toujours lisibles ici : positions, solde, état — et pour les émetteurs le hub de facturation, §11), **Mes conditions** (qui rend le document intitulé *Accord financier*) et le **rapport mensuel des paiements**, en libre-service (§11).
 
-Finances a **quatre volets** en haut — **Relevé · Paiements · Factures · Documents** (§9c–9f) — qui partagent le sélecteur **‹ mois ›** et le bouton **PDF** ; le bouclier, la cloche et la roue dentée sont dans la barre d'app comme partout.
+Finances propose **cinq destinations** : **Relevé · Paiements · Factures · Usage · Documents**. Le sélecteur de mois et le PDF du relevé concernent les vues mensuelles ; **Factures couvre toutes les périodes**, sans sélecteur de mois. Les libellés complets défilent si nécessaire sur un petit écran.
 
 <!-- anchor: user.badges.nfc -->
 #### Pointage par badge NFC
@@ -1376,7 +1378,7 @@ seulement ; ailleurs le badge QR fait le même travail.
 ### 9a. Dès que le mois est facturé, c'est la facture qui décide
 
 - Votre relevé affiche une **carte facture** — numéro, état, total, déjà réglé, restant dû — et le mois passe **réglé** dès que la facture est payée, son solde annulé, ou son avoir remboursé, même si le paiement qui la solde a été enregistré un mois plus tard. Une facture **partiellement payée** laisse le mois à régler pour exactement le **restant dû** (c'est aussi ce montant que *Payer en ligne* prélève). Un mois en **avoir** montre ce que l'espace vous doit — rien à payer de votre côté.
-- **Votre compte** — dès que vous détenez un crédit disponible (un avoir, ou des paiements excédentaires d'un mois passé), l'onglet Finances affiche votre position réelle toutes périodes confondues, au-dessus du relevé : **avoir disponible**, chaque **facture ouverte** avec son restant dû, les remboursements que l'espace vous doit, et la **position nette**. Votre avoir peut solder les factures ouvertes — l'espace l'impute lors du rapprochement des paiements (imputation d'avoir, valable pour les associations comme pour les sociétés). Les mois antérieurs à votre adhésion ne doivent rien et n'affichent jamais « à régler ».
+- **Votre compte** — dès que vous détenez un crédit disponible (un avoir, ou des paiements excédentaires d'un mois passé), l'onglet Finances affiche votre position réelle toutes périodes confondues, dans le compte dépliable sous le détail mensuel : **avoir disponible**, chaque **facture ouverte** avec son restant dû, les remboursements que l'espace vous doit, et la **position nette**. Votre avoir peut solder les factures ouvertes — l'espace l'impute lors du rapprochement des paiements (imputation d'avoir, valable pour les associations comme pour les sociétés). Les mois antérieurs à votre adhésion ne doivent rien et n'affichent jamais « à régler ».
 
 ### 9b. Aperçu rapide, enregistrer, partager — chaque rapport
 
@@ -1388,11 +1390,11 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 ### 9c. Le volet Relevé
 
-**Le mois tel qu'il est.** Votre compte (la position réelle sur plusieurs mois), la carte **Ce mois-ci** (jours inclus, utilisés, restants), la carte **abonnement**, les **services consommés**, les **suppléments d'accessoires et d'espaces**, les **forfaits de jours**, les **positions ouvertes** en attente de validation, **paiements et avoirs**, la **carte de facture** du mois dès qu'il est facturé (§9a) et le **solde**. En lecture seule : rien à presser ici sauf le sélecteur **‹ mois ›**, commun à tous les volets.
+**Le mois sélectionné en premier.** Jours inclus, utilisés et restants, abonnement, services et suppléments, forfaits, postes en attente, avoirs, facture émise et solde décrivent la période choisie. Sous ce détail, développez **Votre compte** pour lire le crédit, les factures ouvertes et les remboursements de **toutes les périodes**. Sa position nette est distincte du solde mensuel. Les conditions négociées sont dans **Documents**, avec votre accord en vigueur.
 
 <p><img src="images/statement-account.jpg" width="240"></p>
 
-*Le haut du Relevé : votre compte (la position réelle sur plusieurs mois) et vos conditions négociées — le tarif à côté de vos prix, avec Qui peut voir.*
+*Exemples de compte et de conditions négociées. Développez Votre compte sous le détail mensuel ; retrouvez les conditions dans Documents.*
 
 <p><img src="images/statement-balance.jpg" width="240"></p>
 
@@ -1400,7 +1402,7 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 ### 9d. Le volet Paiements
 
-**Régler et demander.** Un **bandeau de retard** quand une facture dépasse le délai de paiement de l'espace (§11e), le **solde**, les **instructions de paiement** et **Payer en ligne** tant qu'un montant est dû, puis les actions : **Enregistrer un paiement**, **Acheter un forfait** (formules à forfaits), **Soumettre une dépense**, **Demander des demi-journées**, **Ajouter une consommation**.
+**Payer, puis demander.** La relance, le solde mensuel, les instructions et les actions de paiement forment le groupe paiement. **Demandes** regroupe séparément dépenses, dépenses programmées, demi-journées supplémentaires et consommations. Le lien vers tous vos espaces vient après ces actions.
 
 **Fournitures (#731).** Vous avez acheté des capsules de café ou des sacs d'aspirateur pour l'espace ? Dans **Soumettre une dépense**, activez *C'est une fourniture pour l'espace*, nommez l'article (ou choisissez-en un existant), la quantité et ce que coûtera une consommation (prérempli avec montant ÷ quantité). Une fois la dépense validée, vous êtes remboursé comme d'habitude **et** l'article va sur l'étagère comme service consommable avec ce stock ; ceux qui l'utilisent ajoutent une consommation et le paient, le stock décroît, et à zéro l'article ne peut plus être consommé jusqu'à la prochaine fourniture. Fonctionnalité *Fournitures via les dépenses* (nécessite Services).
 
@@ -1410,7 +1412,7 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 ### 9e. Le volet Factures
 
-**Qu'est-ce qui m'a été facturé ?** Une carte de tête — *rien d'ouvert, vous êtes à jour*, ou *N ouvertes · montant dû*, avec le nombre en retard — puis **toutes les factures qui vous ont été émises**, de la plus récente à la plus ancienne, chacune avec sa puce d'état, **échéance dans N jours** ou **en retard de N jours**, le nombre de relances, et un bouton **payer** qui saute au volet Paiements ; touchez une ligne pour la fiche détaillée avec aperçu, PDF et partage. Les émetteurs trouvent le bouton **Factures** vers le registre (§11).
+**Vos factures · Toutes les périodes.** La synthèse affiche une seule fois les montants ouverts et les retards, puis toutes vos factures de la plus récente à la plus ancienne. Le mois du relevé ne filtre pas cet historique. Développez **Outils financiers de l’espace** au-dessus de la synthèse pour le registre, la situation de l’espace et la répartition des coûts disponibles selon votre rôle et les fonctionnalités activées. Chaque facture conserve sa fiche, ses documents et son accès au paiement.
 
 **Le parcours (#812).** Chaque ligne porte aussi la **barre de parcours** de la facture — *Émise · Paiement · Confirmation · Close*, l'étape en cours cerclée — et **à vous** en une phrase : *payez X avant le date*, *vous avez déclaré X — l'espace le confirme*, *votre paiement est enregistré — l'espace le rapproche*, *payée le … — close*. **Comment ça marche** sur la carte de tête ouvre les quatre étapes avec ce que fait l'espace et ce que vous faites. Fonctionnalité *Le parcours d'une facture* (sous Factures).
 
@@ -1428,7 +1430,7 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 
 ### 9g. Négociations tarifaires
 
-**Le tarif est la valeur par défaut ; vos conditions sont les vôtres.** Un propriétaire ou un admin finances peut proposer une **négociation tarifaire** pour un membre — abonnement mensuel, dépassement par demi-journée, remise sur les suppléments (accessoires, réservations d'espaces entiers) — chacun optionnel, le tarif à défaut. La proposition arrive dans Événements pour les validateurs de la règle (domaine *Négociation tarifaire*, ou la règle par défaut) ; confirmée, elle s'applique dès le mois choisi et remplace les conditions précédentes. Sur votre volet **Relevé**, la carte *Mes conditions négociées* montre le tarif barré à côté de vos prix, depuis quand, et **Qui peut voir** : vous, les propriétaires et les admins finances — chaque consultation par quelqu'un d'autre est journalisée et listée là (§14). Fonctionnalité *Négociations tarifaires*.
+**Le tarif est la valeur par défaut ; vos conditions sont les vôtres.** Un propriétaire ou un admin finances peut proposer une **négociation tarifaire** pour un membre — abonnement mensuel, dépassement par demi-journée, remise sur les suppléments (accessoires, réservations d'espaces entiers) — chacun optionnel, le tarif à défaut. La proposition arrive dans Événements pour les validateurs de la règle (domaine *Négociation tarifaire*, ou la règle par défaut) ; confirmée, elle s'applique dès le mois choisi et remplace les conditions précédentes. Dans **Documents**, la carte *Mes conditions négociées* montre le tarif barré à côté de vos prix, depuis quand, et **Qui peut voir** : vous, les propriétaires et les admins finances — chaque consultation par quelqu'un d'autre est journalisée et listée là (§14). Fonctionnalité *Négociations tarifaires*.
 
 **Services, forfaits et occupation (#744).** Les conditions peuvent aussi fixer l'**occupation** — la part des jours d'ouverture incluse chaque mois, négociée avec son prix (appliquée au membre une fois validée, la valeur précédente affichée à côté) — et un **prix unitaire par service et par forfait** : une consommation ou l'achat d'un forfait est facturé au prix du membre, le prix catalogue barré dans les feuilles et sur la carte.
 

@@ -75,6 +75,8 @@ Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalend
 
 **Meine Buchungen finden (#2276).** Meine Buchungen steht über den Kategorien und zeigt die eigenen Reservierungen. Die Zusammenfassung nennt Person und Kategorien; Filter zurücksetzen zeigt wieder die eigene Aktivität aller verfügbaren Kategorien bei unveränderter Datumsauswahl. Buchungszeilen nennen zugängliche Stockwerke, Ressourcen und Zustände. Fehlende Quellen behalten ihre Beschriftung oder zeigen Ressource nicht verfügbar. Jede Zeile öffnet weiterhin ihre Quelle.
 
+**Navigation im Workspace.** Alltägliche Ziele bleiben sichtbar. Die Verwaltung ist in **Mitglieder und Zugang**, **Abrechnung und Zahlungen** und **Workspace einrichten** gegliedert. Öffnen Sie eine Gruppe für die Werkzeuge Ihrer Rolle; bei der Rückkehr bleibt sie geöffnet. Zurück zu Ich und persönliche Kontoziele bleiben getrennt.
+
 ## 2. Rollen & Einladungen
 
 DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, plus ein Gerätekonto:
@@ -1263,7 +1265,7 @@ Ein Mitglied kann auch **kein Abo** haben — ein gelegentlicher Besucher (#1279
 - **Anträge** — **Ausgabe einreichen** (Kaffee für den Space? ein anderer Admin genehmigt — keine Selbst-Genehmigung), **Extra-Halbtage beantragen**, **Konsumation hinzufügen**.
 - **Dokumente** — **Rechnungen** (deine sind hier immer lesbar; für Aussteller der Rechnungs-Hub, §11), **Meine Konditionen** (rendert das Dokument mit dem Titel *Finanzvereinbarung*) und der **monatliche Zahlungsbericht**, Selbstbedienung (§11).
 
-Finanzen hat oben **vier Ansichten** — **Abrechnung · Zahlungen · Rechnungen · Dokumente** (§9c–9f) —, die sich den **‹ Monat ›**-Wähler und die **PDF**-Taste teilen; Schild, Glocke und Zahnrad sitzen wie überall in der App-Leiste.
+Finanzen hat **fünf Ziele**: **Abrechnung · Zahlungen · Rechnungen · Nutzung · Dokumente**. Monatsauswahl und Abrechnungs-PDF gehören zu den Monatsansichten; **Rechnungen umfasst alle Zeiträume** und hat keine Monatsauswahl. Auf kleinen Bildschirmen lassen sich die vollständigen Tabnamen bei Bedarf scrollen.
 
 #### Einchecken per NFC-Ausweis
 
@@ -1275,7 +1277,7 @@ Android; anderswo leistet der QR-Ausweis dasselbe.
 ### 9a. Sobald der Monat fakturiert ist, entscheidet die Rechnung
 
 - Deine Abrechnung zeigt eine **Rechnungskarte** — Nummer, Status, Betrag, bereits bezahlt, Restbetrag — und der Monat gilt als **beglichen**, sobald die Rechnung bezahlt, ihr Rest erlassen oder ihre Gutschrift erstattet ist — auch wenn die Zahlung erst in einem späteren Monat erfasst wurde. Eine **teilweise bezahlte** Rechnung hält den Monat offen, genau um den **Restbetrag** (den zieht auch *Online zahlen* ein). Ein **Gutschrift**-Monat zeigt, was der Space dir schuldet — du musst nichts zahlen.
-- **Dein Konto** — sobald du freies Guthaben hältst (eine Gutschrift oder überzählige Zahlungen eines vergangenen Monats), zeigt der Finanzen-Tab deine echte monatsübergreifende Position über der Abrechnung: **Guthaben auf dem Konto**, jede **offene Rechnung** mit Restbetrag, ausstehende Erstattungen und die **Nettoposition**. Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen an. Monate vor Beginn deiner Mitgliedschaft schulden nichts.
+- **Dein Konto** — sobald du freies Guthaben hältst (eine Gutschrift oder überzählige Zahlungen eines vergangenen Monats), zeigt der Finanzen-Tab deine echte monatsübergreifende Position im aufklappbaren Konto unter der Monatsübersicht: **Guthaben auf dem Konto**, jede **offene Rechnung** mit Restbetrag, ausstehende Erstattungen und die **Nettoposition**. Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen an. Monate vor Beginn deiner Mitgliedschaft schulden nichts.
 
 ### 9b. Schnellansicht, Speichern, Teilen — jeder Bericht
 
@@ -1287,11 +1289,11 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 ### 9c. Die Ansicht Abrechnung
 
-**Der Monat, wie er steht.** Ihr Konto (die echte monatsübergreifende Position), die Karte **Dieser Monat** (enthaltene, genutzte, verbleibende Tage), die **Abonnement**-Karte, **genutzte Leistungen**, **Zubehör- und Raumzuschläge**, **Tagespakete**, **offene Posten** in Prüfung, **Zahlungen & Gutschriften**, die **Rechnungskarte** des Monats, sobald er fakturiert ist (§9a), und der **Saldo**. Nur lesen: nichts zu drücken außer der **‹ Monat ›**-Auswahl, die alle Ansichten teilen.
+**Der gewählte Monat zuerst.** Enthaltene, genutzte und verbleibende Tage, Abonnement, Leistungen und Zuschläge, Pakete, offene Posten, Gutschriften, Rechnung und Saldo beschreiben den gewählten Zeitraum. Darunter öffnet **Ihr Konto** Guthaben, offene Rechnungen und Erstattungen aus **allen Zeiträumen**. Die Nettoposition ist vom Monatssaldo getrennt. Verhandelte Preise stehen unter **Dokumente** bei Ihrer aktuellen Vereinbarung.
 
 ![](assets/help/images/statement-account.jpg)
 
-*Der obere Teil der Abrechnung: Ihr Konto (die echte monatsübergreifende Position) und Ihre verhandelten Konditionen — der Tarif neben Ihren Preisen, mit Wer darf sehen.*
+*Beispiele für Kontodetails und verhandelte Preise. Öffnen Sie Ihr Konto unter der Monatsübersicht; verhandelte Preise stehen unter Dokumente.*
 
 ![](assets/help/images/statement-balance.jpg)
 
@@ -1299,7 +1301,7 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 ### 9d. Die Ansicht Zahlungen
 
-**Begleichen und anfragen.** Ein **Überfällig-Streifen**, wenn eine Rechnung die Zahlungsfrist des Workspace überschritten hat (§11e), der **Saldo**, die **Zahlungshinweise** und **Online zahlen**, solange etwas offen ist, dann die Aktionen: **Zahlung erfassen**, **Paket kaufen** (Pakettarife), **Ausgabe einreichen**, **Halbe Tage anfragen**, **Verbrauch hinzufügen**.
+**Zahlen, dann anfragen.** Überfällige Rechnungen, Monatssaldo, Zahlungsanweisungen und Zahlungsaktionen bilden die Zahlungsgruppe. **Anfragen** gruppiert Ausgaben, geplante Ausgaben, zusätzliche halbe Tage und Verbrauch getrennt. Der Link zu allen Workspaces folgt diesen Aktionen.
 
 **Vorräte (#731).** Kaffeekapseln oder Staubsaugerbeutel für den Raum gekauft? In **Ausgabe einreichen** schalten Sie *Das ist ein Vorrat für den Raum* ein, benennen den Artikel (oder wählen einen bestehenden), die Menge und was ein Verbrauch kosten soll (vorbelegt mit Betrag ÷ Menge). Nach der Genehmigung werden Sie wie gewohnt erstattet **und** der Artikel steht mit diesem Bestand als verbrauchbare Leistung im Regal; wer ihn nutzt, trägt einen Verbrauch ein und zahlt, der Bestand sinkt, und bei null kann der Artikel bis zum nächsten Vorrat nicht verbraucht werden. Funktion *Vorräte aus Ausgaben* (braucht Leistungen).
 
@@ -1309,7 +1311,7 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 ### 9e. Die Ansicht Rechnungen
 
-**Was wurde mir in Rechnung gestellt?** Eine Kopfkarte — *nichts offen, Sie sind auf dem Laufenden*, oder *N offen · fälliger Betrag*, mit der Zahl der überfälligen — dann **jede an Sie gestellte Rechnung**, neueste zuerst, je mit Status-Chip, **fällig in N Tagen** oder **überfällig seit N Tagen**, Zahl der Mahnungen und einem **Zahlen**-Knopf, der zur Ansicht Zahlungen springt; Zeile antippen für das Detailblatt mit Schnellansicht, PDF und Teilen. Rechnungssteller finden den Button **Rechnungen** zum Register (§11).
+**Ihre Rechnungen · Alle Zeiträume.** Die Zusammenfassung zeigt offene Beträge und überfällige Rechnungen einmal, dann alle Ihre Rechnungen, neueste zuerst. Der Abrechnungsmonat filtert dieses Archiv nicht. Öffnen Sie **Finanzverwaltung des Workspaces** über der Zusammenfassung für Rechnungsregister, Workspace-Status und Kostenteilung gemäß Ihrer Rolle und den aktivierten Funktionen. Rechnungszeilen öffnen weiterhin Details, Dokumente und Zahlungen.
 
 **Der Weg (#812).** Jede Zeile trägt außerdem die **Verlaufsleiste** der Rechnung — *Ausgestellt · Zahlung · Bestätigung · Abgeschlossen*, der aktuelle Schritt umringt — und **Sie sind dran** in einem Satz: *X bis Datum zahlen*, *Sie haben X gemeldet — der Space bestätigt es*, *Ihre Zahlung ist verbucht — der Space ordnet sie zu*, *bezahlt am … — abgeschlossen*. **So funktioniert es** auf der Kopfkarte öffnet die vier Schritte mit dem, was der Space tut und was Sie tun. Funktion *Der Weg einer Rechnung* (unter Rechnungen).
 
@@ -1331,7 +1333,7 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 ### 9g. Preisverhandlungen
 
-**Der Tarif ist der Standard; Ihre Konditionen sind Ihre.** Ein Inhaber oder Finanz-Admin kann für ein Mitglied eine **Preisverhandlung** vorschlagen — Monatsbeitrag, Überschreitungssatz je halben Tag, Rabatt auf Zuschläge (Zubehör, Ganzraum-Reservierungen) — je optional, sonst der Tarif. Der Vorschlag landet unter Ereignisse bei den Prüfern der Regel (Domäne *Preisverhandlung* oder Standardregel); bestätigt, gilt er ab dem gewählten Monat und ersetzt die vorigen Konditionen. Auf Ihrer Ansicht **Abrechnung** zeigt die Karte *Meine verhandelten Preise* den durchgestrichenen Tarif neben Ihren Preisen, seit wann, und **Wer das sehen kann**: Sie, die Inhaber und die Finanz-Admins — jeder Zugriff durch andere wird protokolliert und dort aufgeführt (§14). Funktion *Preisverhandlungen*.
+**Der Tarif ist der Standard; Ihre Konditionen sind Ihre.** Ein Inhaber oder Finanz-Admin kann für ein Mitglied eine **Preisverhandlung** vorschlagen — Monatsbeitrag, Überschreitungssatz je halben Tag, Rabatt auf Zuschläge (Zubehör, Ganzraum-Reservierungen) — je optional, sonst der Tarif. Der Vorschlag landet unter Ereignisse bei den Prüfern der Regel (Domäne *Preisverhandlung* oder Standardregel); bestätigt, gilt er ab dem gewählten Monat und ersetzt die vorigen Konditionen. Unter **Dokumente** zeigt die Karte *Meine verhandelten Preise* den durchgestrichenen Tarif neben Ihren Preisen, seit wann, und **Wer das sehen kann**: Sie, die Inhaber und die Finanz-Admins — jeder Zugriff durch andere wird protokolliert und dort aufgeführt (§14). Funktion *Preisverhandlungen*.
 
 **Leistungen, Pakete und Auslastung (#744).** Die Konditionen können auch die **Auslastung** festlegen — den Anteil der Öffnungstage, der monatlich enthalten ist, verhandelt mit seinem Preis (nach Prüfung auf das Mitglied angewendet, der vorige Wert daneben) — und einen **Stückpreis je Leistung und je Paket**: ein Verbrauch oder ein Paketkauf wird zum Preis des Mitglieds berechnet, der Katalogpreis durchgestrichen in den Blättern und auf der Karte.
 

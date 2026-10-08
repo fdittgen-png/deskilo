@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 
 void main() {
   testWidgets('the Invoices face offers "Manage invoices" and opens the hub',
@@ -30,6 +31,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
     await tester.pumpAndSettle();
 
+    await openMoneyWorkspaceTools(tester);
     final row = find.byKey(const ValueKey('invoices-button'));
     await tester.ensureVisible(row);
     expect(tester.widget(row), isA<ListTile>(),

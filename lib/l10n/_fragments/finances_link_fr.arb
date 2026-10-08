@@ -1,6 +1,6 @@
 {
   "financesAllSpaces": "Tous les espaces",
-  "financesLinkTitle": "Vos documents sont dans Moi",
+  "financesLinkTitle": "Vos finances dans tous vos espaces",
   "financesLinkBody": "Vos factures, rappels et paiements de tous vos espaces sont réunis dans Moi › Finances.",
   "financesLinkAction": "Ouvrir pour {space}",
   "@financesLinkAction": {

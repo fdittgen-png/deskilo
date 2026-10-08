@@ -75,6 +75,8 @@ La app tiene hasta cinco destinos en la barra inferior: **Mensajes** (§16), **C
 
 **Encontrar mis reservas (#2276).** Mis reservas está visible encima de las categorías y vuelve a las reservas propias. El resumen indica la persona y las categorías; Restablecer filtros vuelve a la actividad propia de todas las categorías disponibles y conserva las fechas. Las filas muestran planta, recurso y estado autorizados cuando están disponibles. Las fuentes ausentes conservan su etiqueta o indican Recurso no disponible. Cada fila sigue abriendo su fuente.
 
+**Navegación del espacio.** Los destinos cotidianos permanecen visibles. La administración se organiza en **Miembros y acceso**, **Facturación y pagos** y **Configuración del espacio**. Abre un grupo para ver las herramientas de tu rol; al volver de una herramienta, el grupo sigue abierto. Volver a Yo y los destinos personales siguen separados.
+
 ## 2. Roles e invitaciones
 
 DesKilo tiene tres roles acumulativos y, encima de ellos, una variante de copropiedad, más una cuenta de dispositivo:
@@ -1328,7 +1330,7 @@ Los **bonos** (Funciones → *Bonos*, bajo la facturación; desactivados por def
 - **Solicitudes** — **Enviar un gasto** (¿compraste café para el espacio? otro admin lo aprueba — sin autoaprobación — y se abona en tu extracto), **Solicitar medias jornadas extra**, **Añadir un consumo** (servicios definidos por el propietario — taquillas, impresión… — tú confirmas lo que consumiste).
 - **Documentos** — **Facturas** (las tuyas siempre están legibles aquí: posiciones, saldo, estado — y para quien emite, el hub de facturación, §11), **Mis condiciones** (que produce el documento titulado *Acuerdo financiero*) y el **informe mensual de pagos**, en autoservicio (§11).
 
-Finanzas tiene **cuatro vistas** arriba — **Extracto · Pagos · Facturas · Documentos** (§9c–9f) — que comparten el selector **‹ mes ›** y el botón **PDF**; el escudo, la campana y la rueda están en la barra de la app como en todas partes.
+Finanzas tiene **cinco destinos**: **Extracto · Pagos · Facturas · Uso · Documentos**. El selector de mes y el PDF del extracto pertenecen a las vistas mensuales; **Facturas abarca todos los períodos**, sin selector de mes. En pantallas pequeñas las etiquetas completas se pueden desplazar.
 
 <!-- anchor: user.badges.nfc -->
 #### Registro con credencial NFC
@@ -1341,7 +1343,7 @@ otros sistemas la credencial QR hace lo mismo.
 ### 9a. Una vez facturado el mes, decide la factura
 
 - Tu factura mensual muestra una **tarjeta de factura** — número, estado, total, lo pagado, lo pendiente — y el mes pasa a **saldado** en cuanto la factura se paga, se anula su saldo o se reembolsa su nota de crédito, aunque el pago que la salda se registrara en un mes posterior. Una factura **parcialmente pagada** deja el mes pendiente exactamente por el importe **restante** (eso es también lo que cobra *Pagar en línea*). Un mes con **nota de crédito** muestra lo que el espacio te debe devolver — nada que pagar por tu parte.
-- **Tu cuenta** — cuando tienes crédito disponible (un avoir, o pagos sobrantes de un mes pasado), la pestaña Finanzas muestra tu posición real entre meses encima de la factura: **crédito a favor**, cada **factura abierta** con su importe restante, los reembolsos que el espacio te debe y la **posición neta** resultante. Tu crédito puede saldar facturas abiertas — el espacio lo aplica al conciliar los pagos (imputación). Los meses anteriores a tu adhesión no deben nada y nunca aparecen pendientes.
+- **Tu cuenta** — cuando tienes crédito disponible (un avoir, o pagos sobrantes de un mes pasado), la pestaña Finanzas muestra tu posición real entre meses en la cuenta desplegable debajo del detalle mensual: **crédito a favor**, cada **factura abierta** con su importe restante, los reembolsos que el espacio te debe y la **posición neta** resultante. Tu crédito puede saldar facturas abiertas — el espacio lo aplica al conciliar los pagos (imputación). Los meses anteriores a tu adhesión no deben nada y nunca aparecen pendientes.
 
 ### 9b. Vista rápida, guardar, compartir — todos los informes
 
@@ -1353,11 +1355,11 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 ### 9c. La vista Extracto
 
-**El mes tal como está.** Tu cuenta (la posición real entre meses), la tarjeta **Este mes** (días incluidos, usados, restantes), la tarjeta de **suscripción**, **servicios consumidos**, **suplementos de accesorios y espacios**, **paquetes de días**, **posiciones abiertas** pendientes de validación, **pagos y abonos**, la **tarjeta de factura** del mes en cuanto se factura (§9a) y el **saldo**. Solo lectura: nada que pulsar salvo el selector **‹ mes ›**, común a todas las vistas.
+**Primero el mes seleccionado.** Días incluidos, usados y restantes, suscripción, servicios y suplementos, paquetes, posiciones pendientes, abonos, factura y saldo describen el período elegido. Debajo, despliega **Tu cuenta** para ver crédito, facturas abiertas y reembolsos de **todos los períodos**. Su posición neta es distinta del saldo mensual. Los precios negociados están en **Documentos**, junto a tu acuerdo vigente.
 
 <p><img src="images/statement-account.jpg" width="240"></p>
 
-*La parte alta del Extracto: tu cuenta (la posición real entre meses) y tus condiciones negociadas — la tarifa junto a tus precios, con Quién puede ver.*
+*Ejemplos de cuenta y precios negociados. Despliega Tu cuenta debajo del detalle mensual; los precios negociados están en Documentos.*
 
 <p><img src="images/statement-balance.jpg" width="240"></p>
 
@@ -1365,7 +1367,7 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 ### 9d. La vista Pagos
 
-**Liquidar y pedir.** Una **franja de vencido** cuando una factura supera el plazo de pago del espacio (§11e), el **saldo**, las **instrucciones de pago** y **Pagar en línea** mientras se deba algo, y las acciones: **Registrar un pago**, **Comprar un paquete** (planes por paquetes), **Enviar un gasto**, **Pedir medios días extra**, **Añadir un consumo**.
+**Pagar, luego solicitar.** Avisos de retraso, saldo mensual, instrucciones y acciones de pago forman el grupo de pagos. **Solicitudes** agrupa por separado gastos, gastos programados, medios días adicionales y consumos. El enlace a todos tus espacios aparece después de estas acciones.
 
 **Suministros (#731).** ¿Compraste cápsulas de café o bolsas de aspiradora para el espacio? En **Enviar un gasto**, activa *Es un suministro para el espacio*, nombra el artículo (o elige uno existente), la cantidad y lo que costará un consumo (prellenado con importe ÷ cantidad). Validado el gasto, te reembolsan como siempre **y** el artículo pasa al estante como servicio consumible con ese stock; quien lo usa añade un consumo y lo paga, el stock baja, y a cero el artículo no puede consumirse hasta el próximo suministro. Función *Suministros desde gastos* (necesita Servicios).
 
@@ -1375,7 +1377,7 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 ### 9e. La vista Facturas
 
-**¿Qué me facturaron?** Una tarjeta de cabecera — *nada abierto, estás al día*, o *N abiertas · importe pendiente*, con el número de vencidas — y luego **todas las facturas que te emitieron**, la más reciente primero, cada una con su chip de estado, **vence en N días** o **vencida hace N días**, cuántas veces se recordó, y un botón **pagar** que salta a la vista Pagos; toca una fila para la ficha de detalle con vista rápida, PDF y compartir. Quienes emiten encuentran el botón **Facturas** hacia el registro (§11).
+**Tus facturas · Todos los períodos.** El resumen muestra una sola vez los importes abiertos y los retrasos, seguido de todas tus facturas, más recientes primero. El mes del extracto no filtra este archivo. Despliega **Herramientas financieras del espacio** encima del resumen para el registro, la situación del espacio y el reparto de costes disponibles según tu rol y las funciones activadas. Las filas conservan sus detalles, documentos y acceso al pago.
 
 **El recorrido (#812).** Cada fila lleva además la **barra de recorrido** de la factura — *Emitida · Pago · Confirmación · Cerrada*, el paso actual rodeado — y **le toca** en una frase: *pague X antes del fecha*, *declaró X — el espacio lo está confirmando*, *su pago está registrado — el espacio lo concilia*, *pagada el … — cerrada*. **Cómo funciona** en la tarjeta de cabecera abre los cuatro pasos con lo que hace el espacio y lo que hace usted. Función *El recorrido de una factura* (bajo Facturas).
 
@@ -1393,7 +1395,7 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 ### 9g. Negociaciones de precios
 
-**La tarifa es el valor por defecto; tus condiciones son tuyas.** Un propietario o un admin de finanzas puede proponer una **negociación de precios** para un miembro — cuota mensual, exceso por medio día, descuento en suplementos (accesorios, reservas de espacios enteros) — cada uno opcional, la tarifa si falta. La propuesta llega a Eventos para los validadores de la regla (dominio *Negociación de precios*, o la regla por defecto); confirmada, se aplica desde el mes elegido y sustituye las condiciones anteriores. En tu vista **Extracto**, la tarjeta *Mis precios negociados* muestra la tarifa tachada junto a tus precios, desde cuándo, y **Quién puede verlo**: tú, los propietarios y los admins de finanzas — cada lectura por otra persona queda registrada y listada ahí (§14). Función *Negociaciones de precios*.
+**La tarifa es el valor por defecto; tus condiciones son tuyas.** Un propietario o un admin de finanzas puede proponer una **negociación de precios** para un miembro — cuota mensual, exceso por medio día, descuento en suplementos (accesorios, reservas de espacios enteros) — cada uno opcional, la tarifa si falta. La propuesta llega a Eventos para los validadores de la regla (dominio *Negociación de precios*, o la regla por defecto); confirmada, se aplica desde el mes elegido y sustituye las condiciones anteriores. En **Documentos**, la tarjeta *Mis precios negociados* muestra la tarifa tachada junto a tus precios, desde cuándo, y **Quién puede verlo**: tú, los propietarios y los admins de finanzas — cada lectura por otra persona queda registrada y listada ahí (§14). Función *Negociaciones de precios*.
 
 **Servicios, paquetes y ocupación (#744).** Las condiciones también pueden fijar la **ocupación** — la parte de días abiertos incluida cada mes, negociada con su precio (aplicada al miembro una vez validada, el valor anterior mostrado al lado) — y un **precio unitario por servicio y por paquete**: un consumo o la compra de un paquete se cobra al precio del miembro, el precio de catálogo tachado en las hojas y en la tarjeta.
 

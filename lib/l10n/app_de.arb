@@ -2787,7 +2787,7 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
-  "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage unten zusätzliche Halbtage.",
+  "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage zusätzliche Halbtage.",
   "entitlementDaysLeft": "Noch {left} Tage",
   "entitlementDaysUsed": "{used} von {total} Tagen genutzt",
   "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.",
@@ -3970,7 +3970,7 @@
     }
   },
   "financesLinkBody": "Ihre Rechnungen, Mahnungen und Zahlungen aus allen Spaces sind gesammelt unter Ich › Finanzen.",
-  "financesLinkTitle": "Ihre Dokumente liegen in Ich",
+  "financesLinkTitle": "Ihre Finanzen in allen Workspaces",
   "financesNoReminders": "Keine Erinnerung erhalten.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -11180,7 +11180,17 @@
   "uxDeviceTime": "Ihre Ortszeit",
   "uxLinkedReference": "Verknüpfte Ressource",
   "uxManageResource": "Ressource verwalten",
+  "uxMoneyAllPeriods": "Alle Zeiträume · Guthaben, offene Rechnungen und Erstattungen.",
+  "uxMoneyDocumentsScope": "Monatsberichte und Ihre aktuelle Vereinbarung.",
+  "uxMoneyInvoicesScope": "Ihre Rechnungen in diesem Workspace · Alle Zeiträume.",
+  "uxMoneyPaymentsScope": "Monatssaldo · Überfällige Rechnungen aus allen Zeiträumen.",
+  "uxMoneyStatementScope": "Monatsübersicht für den gewählten Zeitraum.",
+  "uxMoneyUsageScope": "Buchungen und Verbrauch im gewählten Monat.",
+  "uxMoneyWorkspaceTools": "Finanzverwaltung des Workspaces",
   "uxMyBookings": "Meine Buchungen",
+  "uxNavFinance": "Abrechnung und Zahlungen",
+  "uxNavPeople": "Mitglieder und Zugang",
+  "uxNavWorkspace": "Workspace einrichten",
   "uxOpenWorkspace": "Arbeitsbereich öffnen",
   "uxPreferencesSection": "Einstellungen",
   "uxPrivacySection": "Datenschutz",
