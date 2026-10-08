@@ -216,7 +216,7 @@ class _AudienceSheetState extends State<_AudienceSheet> {
                   onChanged: (a) => setState(() => _audience = a ?? _audience),
                   child: Column(
                     children: [
-                      for (final audience in VisibilityAudience.values)
+                      for (final audience in widget.field.allowedAudiences)
                         RadioListTile<VisibilityAudience>(
                           key: ValueKey('visibility-audience-${audience.wire}'),
                           value: audience,

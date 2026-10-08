@@ -43,6 +43,19 @@ enum VisibilityField {
 
   static VisibilityField? fromWire(String? wire) =>
       values.where((f) => f.wire == wire).firstOrNull;
+
+  /// #2211 — the audiences this field may have. Contact channels and
+  /// presence never go wider than the spaces I am in: a signed-in
+  /// stranger — and so anyone known only through another workspace or a
+  /// connected installation — never sees them (0392 refuses it too).
+  List<VisibilityAudience> get allowedAudiences => switch (this) {
+    contactChannels || presence => const [
+      VisibilityAudience.nobody,
+      VisibilityAudience.mySpaces,
+      VisibilityAudience.chosenSpaces,
+    ],
+    _ => VisibilityAudience.values,
+  };
 }
 
 /// Who may see a field.

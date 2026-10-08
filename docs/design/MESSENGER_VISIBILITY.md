@@ -12,10 +12,27 @@ one matrix, edited in Me › Me and previewed "as seen by".
 | V0 | Me | the account itself |
 | V1 | Co-member | shares at least one workspace with me (either environment of a pair) |
 | V2 | Chosen space | member of a space I picked for that field |
-| V3 | External workspace | a person only known through another workspace or a connected installation, no space in common |
+| V3 | External workspace | a person only known through another workspace or a connected installation, no space in common — judged by the server that holds my account as a signed-in person (V4), see §1.1 |
 | V4 | Signed-in stranger | any signed-in account on this installation |
 | V5 | Public visitor | not signed in: the public workspace page, the public directory |
 | V6 | Space operator | admin/owner of a space I belong to — governed by the space's own rules, below |
+
+### 1.1 The external tier is V4, judged by my own server (#2211, 0392)
+
+There is no server-to-server federation. A connected installation is the
+app signed in to another DesKilo server with that server's own account
+(`connected_installations.dart`); no server ever asks another one what to
+show. So a person reached through another installation is, on the server
+that holds my account, simply a signed-in account with no space in common
+with me, and the matrix's "V3 via V4" is literally how it is decided.
+What I show there is what I set on that server.
+
+Two rules make that tier safe, and the server enforces both (0392):
+contact channels and presence can never be set wider than my spaces
+(`set_visibility` refuses it, and older wider rows were narrowed); and an
+ignored or still-pending message request gives the sender no right to keep
+writing (`visible_account.can_message` counts only an accepted
+conversation).
 
 ## 2. What can be seen (the field)
 
@@ -74,10 +91,12 @@ Delivered: the four audiences, the five fields, the preview, the server
 functions, the unified inbox in Me, and — with this change — the workspace
 Messages destination reduced to alerts plus one door to the messenger.
 
-Follow-ups (each its own issue): message requests and blocks; a public-profile
-tier for V5 with an explicit publish step; the external-workspace tier for
-connected installations; porting pin / mute / archive / search from the legacy
-workspace conversation list into the Me inbox, then deleting that list.
+Delivered since (#2211): message requests (0388) and blocks (0387); the
+public-profile tier for V5 with an explicit publish step (0389/0390); the
+widen confirmation naming the audience; the external tier (§1.1, 0392).
+
+Follow-up: porting pin / mute / archive / search from the legacy workspace
+conversation list into the Me inbox, then deleting that list.
 
 ## 6. Conversations: levels and what may be shared
 
