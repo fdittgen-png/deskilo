@@ -292,6 +292,8 @@ a browser: wherever your browser puts downloads). It is a **feature** an
 owner can switch off under *Settings → Features*; it is on by default.
 Nothing is written to any calendar by the app itself, and nothing syncs.
 
+**Booking window (#2270).** The summary below the controls shows the weekday, full date, Today or Tomorrow where applicable, selected period, exact workspace hours and timezone. If your personal timezone differs, your time appears alongside it. Period changes and custom time changes update this summary before you choose a seat. Wide screens also name the period choices; on narrow screens the selected period stays readable in the summary.
+
 ## 5. Calendar (Calendar tab)
 
 The month at a glance, with two scopes and two shapes:

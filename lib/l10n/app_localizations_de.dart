@@ -18042,7 +18042,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get uxDeviceTime => 'Ihre Ortszeit';
+
+  @override
   String get uxLinkedReference => 'Verknüpfte Ressource';
+
+  @override
+  String get uxWorkspaceTime => 'Ortszeit des Arbeitsbereichs';
 
   @override
   String get validationAdminsMay => 'Admins dürfen validieren';

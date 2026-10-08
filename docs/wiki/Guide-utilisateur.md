@@ -297,6 +297,8 @@ téléchargements). C'est une **fonctionnalité** qu'un propriétaire peut
 désactiver sous *Réglages → Fonctionnalités* ; elle est active par défaut.
 L'application n'écrit rien dans aucun agenda et rien ne se synchronise.
 
+**Créneau de réservation (#2270).** Le récapitulatif sous les commandes affiche le jour, la date complète, Aujourd’hui ou Demain si applicable, la période choisie, les heures exactes et le fuseau de l’espace. Si votre fuseau personnel diffère, votre heure apparaît aussi. Changer de période ou une heure personnalisée actualise le récapitulatif avant le choix d’une place. Les grands écrans nomment les périodes ; sur les écrans étroits, la période choisie reste lisible dans le récapitulatif.
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :

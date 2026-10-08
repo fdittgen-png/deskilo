@@ -18020,7 +18020,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get uxDeviceTime => 'La tua ora';
+
+  @override
   String get uxLinkedReference => 'Risorsa collegata';
+
+  @override
+  String get uxWorkspaceTime => 'Ora dello spazio';
 
   @override
   String get validationAdminsMay => 'Gli admin possono validare';

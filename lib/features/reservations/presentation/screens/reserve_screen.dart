@@ -48,6 +48,7 @@ import '../../providers/default_period_controller.dart';
 import '../../providers/reservation_providers.dart';
 import '../../domain/space_code.dart';
 import '../widgets/booking_controls.dart';
+import '../widgets/booking_window_summary.dart';
 import '../widgets/booking_sheet.dart';
 import '../widgets/space_scan.dart';
 import '../widgets/reservation_detail_sheet.dart';
@@ -738,9 +739,6 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       ];
       // ROW 2 — WHEN you are looking at it, plus how the plan draws.
       final whenControls = <Widget>[
-            // One date affordance (UX pass): the 7-day pill strip was
-            // redundant with the calendar picker — a chip naming the
-            // selected day opens it.
             TextButton(
               key: const ValueKey('reserve-date-button'),
               // #699 — the default TextButton carries 16dp of padding a
@@ -811,10 +809,11 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                         minHeight: 2),
           ),
           const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
-          // Two rows, and the split means something — HeaderControlRow
-          // carries the why and the metrics (#699).
           HeaderControlRow(children: viewControls),
           HeaderControlRow(children: whenControls),
+          if (_view != ReserveView.week && _view != ReserveView.month)
+            BookingWindowSummary(window: window, today: _today,
+              timezone: workspace?.timezone),
           if (gateOn)
             SeatLegend(
               showClosed: _view == ReserveView.week ||

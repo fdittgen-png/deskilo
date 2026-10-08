@@ -296,6 +296,8 @@ Download; in un browser: dove il browser mette i download). È una
 Funzionalità*; è attiva per impostazione predefinita. L'app non scrive in
 alcun calendario e nulla si sincronizza.
 
+**Intervallo di prenotazione (#2270).** Il riepilogo sotto i controlli mostra giorno, data completa, Oggi o Domani quando pertinente, periodo scelto e ore esatte con il fuso dello spazio. Se il fuso personale differisce, compare anche la tua ora. Cambiare periodo o un’ora personalizzata aggiorna il riepilogo prima della scelta del posto. Gli schermi ampi mostrano i nomi dei periodi; su quelli stretti il periodo scelto resta leggibile nel riepilogo.
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:

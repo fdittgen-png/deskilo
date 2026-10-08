@@ -17853,7 +17853,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get uxDeviceTime => 'Your time';
+
+  @override
   String get uxLinkedReference => 'Linked resource';
+
+  @override
+  String get uxWorkspaceTime => 'Workspace time';
 
   @override
   String get validationAdminsMay => 'Admins may validate';
