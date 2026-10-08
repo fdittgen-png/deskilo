@@ -297,6 +297,8 @@ L'application n'écrit rien dans aucun agenda et rien ne se synchronise.
 
 **Créneau de réservation (#2270).** Le récapitulatif sous les commandes affiche le jour, la date complète, Aujourd’hui ou Demain si applicable, la période choisie, les heures exactes et le fuseau de l’espace. Si votre fuseau personnel diffère, votre heure apparaît aussi. Changer de période ou une heure personnalisée actualise le récapitulatif avant le choix d’une place. Les grands écrans nomment les périodes ; sur les écrans étroits, la période choisie reste lisible dans le récapitulatif.
 
+**Vérifier avant de confirmer (#2272).** Le formulaire indique l’espace, l’étage/la ressource, la personne, la date complète, les heures exactes, le fuseau et la répétition avant la décision. Il précise quand le montant final et le calcul du forfait sont indisponibles. Réserver conserve le créneau choisi ; S’installer maintenant utilise le créneau actuel et indique votre présence. Le commutateur de pointage immédiat ajoute la présence à une réservation actuelle. La confirmation reste visible pendant le défilement. Favoris et notes suivent les commandes ; la maintenance attend dans Gérer la ressource, pour les opérateurs autorisés. Dans la liste, Réserver ouvre le formulaire et les avis ont leur propre action (#2268).
+
 ## 5. Calendrier (onglet Calendrier)
 
 Le mois d'un coup d'œil, avec deux portées et deux formes :

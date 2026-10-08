@@ -17853,7 +17853,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get uxBookingChargePending =>
+      'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.';
+
+  @override
+  String get uxBookingCheckInHelp =>
+      'Also mark me present when confirming this reservation.';
+
+  @override
+  String get uxBookingFor => 'Booking for';
+
+  @override
+  String get uxBookingModesHelp =>
+      'Reserve keeps the selected window. Check in now switches to the current window and marks you present.';
+
+  @override
   String get uxDeviceTime => 'Your time';
+
+  @override
+  String get uxManageResource => 'Manage resource';
 
   @override
   String get uxWorkspaceTime => 'Workspace time';

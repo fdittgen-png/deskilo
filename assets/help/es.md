@@ -294,6 +294,8 @@ ningún calendario y nada se sincroniza.
 
 **Intervalo de reserva (#2270).** El resumen bajo los controles muestra el día, la fecha completa, Hoy o Mañana cuando corresponda, el período elegido, las horas exactas y la zona horaria del espacio. Si tu zona personal difiere, aparece también tu hora. Cambiar el período o una hora personalizada actualiza el resumen antes de elegir asiento. Las pantallas amplias nombran los períodos; en las estrechas el elegido sigue legible en el resumen.
 
+**Revisar antes de confirmar (#2272).** El formulario nombra espacio, planta/recurso, persona, fecha completa, horas exactas, zona horaria y repetición antes de decidir. Indica cuando no están disponibles el importe final y el cálculo del cupo. Reservar mantiene el intervalo; Registrarse ahora usa el actual y marca tu presencia. El interruptor separado añade presencia a una reserva actual. La confirmación sigue visible al desplazarse. Favoritos y valoraciones siguen a las opciones; el mantenimiento queda en Gestionar recurso para operadores autorizados. En la lista, Reservar abre el formulario y las valoraciones tienen su propia acción (#2268).
+
 ## 5. Calendario (pestaña Calendario)
 
 El mes de un vistazo, con dos alcances y dos formas:

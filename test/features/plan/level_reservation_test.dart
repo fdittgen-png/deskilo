@@ -92,8 +92,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('space-price-line')), findsOneWidget);
+    final knownPrice = tester.widget<Text>(find.byKey(const ValueKey('space-price-line'))).data;
     await tester.tap(find.byKey(const ValueKey('space-reserve')));
     await tester.pumpAndSettle();
+
+    expect(tester.widget<Text>(find.byKey(const ValueKey('booking-known-price'))).data, knownPrice);
 
     // #638 — the capability the level sheet never had: the window is
     // EDITABLE here, not a static line of text.

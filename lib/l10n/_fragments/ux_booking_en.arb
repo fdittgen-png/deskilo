@@ -1,4 +1,9 @@
 {
   "uxWorkspaceTime": "Workspace time",
-  "uxDeviceTime": "Your time"
+  "uxDeviceTime": "Your time",
+  "uxBookingFor": "Booking for",
+  "uxBookingChargePending": "The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.",
+  "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
+  "uxBookingCheckInHelp": "Also mark me present when confirming this reservation.",
+  "uxManageResource": "Manage resource"
 }

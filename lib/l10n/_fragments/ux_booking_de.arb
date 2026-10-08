@@ -1,4 +1,9 @@
 {
   "uxWorkspaceTime": "Ortszeit des Arbeitsbereichs",
-  "uxDeviceTime": "Ihre Ortszeit"
+  "uxDeviceTime": "Ihre Ortszeit",
+  "uxBookingFor": "Buchung für",
+  "uxBookingChargePending": "Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.",
+  "uxBookingModesHelp": "Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.",
+  "uxBookingCheckInHelp": "Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.",
+  "uxManageResource": "Ressource verwalten"
 }

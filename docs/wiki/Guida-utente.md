@@ -296,6 +296,8 @@ alcun calendario e nulla si sincronizza.
 
 **Intervallo di prenotazione (#2270).** Il riepilogo sotto i controlli mostra giorno, data completa, Oggi o Domani quando pertinente, periodo scelto e ore esatte con il fuso dello spazio. Se il fuso personale differisce, compare anche la tua ora. Cambiare periodo o un’ora personalizzata aggiorna il riepilogo prima della scelta del posto. Gli schermi ampi mostrano i nomi dei periodi; su quelli stretti il periodo scelto resta leggibile nel riepilogo.
 
+**Verificare prima di confermare (#2272).** Il modulo indica spazio, piano/risorsa, persona, data completa, ore esatte, fuso e ripetizione prima della decisione. Specifica quando importo finale e calcolo del piano non sono disponibili. Prenotare mantiene l’intervallo; Registrarsi ora usa quello attuale e indica la presenza. L’interruttore separato aggiunge la presenza a una prenotazione attuale. La conferma resta visibile durante lo scorrimento. Preferiti e valutazioni seguono le opzioni; la manutenzione è in Gestisci risorsa per operatori autorizzati. Nell’elenco, Prenota apre il modulo e le valutazioni hanno un’azione propria (#2268).
+
 ## 5. Calendario (scheda Calendario)
 
 Il mese a colpo d'occhio, con due ambiti e due forme:

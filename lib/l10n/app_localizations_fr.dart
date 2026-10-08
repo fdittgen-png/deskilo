@@ -18051,7 +18051,25 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get uxBookingChargePending =>
+      'Le montant et l’utilisation du forfait seront calculés selon le plan du membre. Le montant final n’est pas disponible ici.';
+
+  @override
+  String get uxBookingCheckInHelp =>
+      'Indiquer aussi ma présence lors de la confirmation de cette réservation.';
+
+  @override
+  String get uxBookingFor => 'Réservation pour';
+
+  @override
+  String get uxBookingModesHelp =>
+      'Réserver conserve le créneau choisi. S’installer maintenant utilise le créneau actuel et indique votre présence.';
+
+  @override
   String get uxDeviceTime => 'Votre heure';
+
+  @override
+  String get uxManageResource => 'Gérer la ressource';
 
   @override
   String get uxWorkspaceTime => 'Heure de l’espace';

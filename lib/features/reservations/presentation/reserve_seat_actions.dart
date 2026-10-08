@@ -542,14 +542,15 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       builder: (context) => BookingSheet(
         seatId: seat.id,
         seatName: seat.name,
+        timezone: workspace.timezone,
+        resourceContext: [workspace.name,
+          ?ref.read(levelsProvider).value?.where((l) => l.id == seatPlan?.levelId).firstOrNull?.name,
+          ?seatPlan?.desks.where((d) => d.id == seat.deskId).firstOrNull?.name],
         start: window.start,
         initialEnd: end,
         cap: next?.startsAt,
         capped: capped,
         granularity: granularity,
-        // #687 — the hub is the only map surface now, so it owns the
-        // walk-up: on a live view a free-seat tap is "I am sitting here",
-        // not a reservation for later.
         walkUp: walkUp,
         walkUpOption: walkUpOption,
         liveWindow: liveWindow,
@@ -571,8 +572,6 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         fixedEnd: dayBased,
         members: _bookingCandidates,
         myMemberId: myMemberId,
-        // Series is available from the hub too now (was Plan-only): the
-        // repeat picker shows when the workspace enables it.
         allowSeries: ref
             .read(enabledFeaturesSyncProvider)
             .contains(WorkspaceFeature.seriesBooking),

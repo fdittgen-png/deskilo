@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
+import 'booking_review_summary.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
@@ -79,6 +80,9 @@ class BookingSheet extends StatefulWidget {
     super.key,
     this.seatId,
     required this.seatName,
+    this.resourceContext = const [],
+    this.timezone,
+    this.resourcePriceLabel,
     required this.start,
     required this.initialEnd,
     required this.cap,
@@ -107,6 +111,9 @@ class BookingSheet extends StatefulWidget {
   /// accessory row; [seatName] carries the space's name either way.
   final String? seatId;
   final String seatName;
+  final List<String> resourceContext;
+  final String? timezone;
+  final String? resourcePriceLabel;
   final DateTime start;
   final DateTime initialEnd;
   final DateTime? cap;
@@ -258,6 +265,7 @@ class _BookingSheetState extends State<BookingSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final words = l10n ?? AppLocalizationsEn();
     final timeFormat = appFormatOf(context); // #1150
     // Half-day granularity offers the three canonical windows (hours
     // offers them as shortcuts too, #446); full-day is a single locked
@@ -294,18 +302,32 @@ class _BookingSheetState extends State<BookingSheet> {
     final showRepeat = !_walkUp && !_forOther && widget.allowSeries;
     final offerModes = widget.walkUpOption != null && !_forOther;
 
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+    return BookingSheetFrame(
+      action: FilledButton(
+              key: const ValueKey('booking-confirm'),
+              onPressed: refusal != null || overlap
+                  ? null
+                  : () => Navigator.of(context).pop(
+                BookingChoice(
+                  checkInNow: _liveWindow && _checkInNow,
+                  walkUp: _walkUp,
+                  _start,
+                  _end,
+                  _forOther ? null : _pattern,
+                  _forOther || _pattern == null ? null : _until,
+                  _forMemberId,
+                ),
+              ),
+              child: Text(
+                _forOther
+                    ? (l10n?.planSendForConfirmation ??
+                        'Send for confirmation')
+                    : _walkUp
+                        ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in'))
+                        : (lexiconText(context, key: 'planReserveButton', fallback: l10n?.planReserveButton ?? 'Reserve')),
+              ),
+            ),
+      children: [
             Row(children: [
               Expanded(
                 child: Text(
@@ -329,22 +351,24 @@ class _BookingSheetState extends State<BookingSheet> {
               const SizedBox(height: AppSpacing.sm),
               BookingModeSelector(walkUp: _walkUp, onChanged: _setMode),
             ],
-            const SizedBox(height: 8),
-            Text(
-              _walkUp
-                  ? '${l10n?.planStartNow ?? 'Starts now'} · '
-                      '${timeFormat.time(_start)}'
-                  : '${DateFormat.MMMEd().format(WorkspaceTime.display(_start))}'
-                      ' · ${bookingRangeText(context, appFormatOf(context), l10n, _start, _end)}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+            if (offerModes)
+              Text(words.uxBookingModesHelp,
+                style: Theme.of(context).textTheme.bodySmall),
+
+            BookingReviewSummary(
+              resource: [...widget.resourceContext, widget.seatName],
+              resourcePriceLabel: widget.resourcePriceLabel,
+              person: widget.members.where((m) => m.id == _forMemberId)
+                  .firstOrNull?.name ?? words.levelAssignMyself,
+              window: (start: _start, end: _end), timezone: widget.timezone, walkUp: _walkUp,
+              today: WorkspaceTime.dateOf(widget.now ?? widget.start),
+              recurrence: _pattern == null || _forOther
+                  ? _patternLabel(l10n, null)
+                  : '${_patternLabel(l10n, _pattern)} · '
+                      '${appFormatOf(context).date(_until)}',
             ),
             if (widget.seatId != null)
               SeatAccessoryRow(seatId: widget.seatId!),
-            if (widget.seatId != null)
-              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
-
             // ── period (fits the workspace granularity) ──
             if (showHalfDayPicker) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -490,10 +514,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   ],
                 ),
               ),
-            // #1301 S3 — place · date · time · confirm stay in view; what a
-            // member rarely needs (a repeat) and what only an operator
-            // does (taking the seat out of service) wait behind one line.
-            if (showRepeat || widget.allowBlocking)
+            if (showRepeat)
               ExpansionTile(
                 key: const ValueKey('booking-more-options'),
                 tilePadding: EdgeInsets.zero,
@@ -532,60 +553,28 @@ class _BookingSheetState extends State<BookingSheet> {
                         },
                       ),
                   ],
-                  if (widget.allowBlocking) ...[
-                    const SizedBox(height: 8),
-                    TextButton.icon(
-                      icon: const Icon(Icons.block),
-                      label: Text(
-                        l10n?.planMakeNotReservable ?? 'Make not reservable',
-                      ),
-                      onPressed: () => Navigator.of(context).pop(
-                        BookingChoice(_start, _end, null, null, null, block: true),
-                      ),
-                    ),
-                  ],
                 ],
               ),
-            const SizedBox(height: 16),
-            FilledButton(
-              key: const ValueKey('booking-confirm'),
-              onPressed: refusal != null || overlap
-                  ? null
-                  : () => Navigator.of(context).pop(
-                BookingChoice(
-                  checkInNow: _liveWindow && _checkInNow,
-                  walkUp: _walkUp,
-                  _start,
-                  _end,
-                  _forOther ? null : _pattern,
-                  _forOther || _pattern == null ? null : _until,
-                  _forMemberId,
-                ),
-              ),
-              child: Text(
-                _forOther
-                    ? (l10n?.planSendForConfirmation ??
-                        'Send for confirmation')
-                    : _walkUp
-                        ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in'))
-                        : (lexiconText(context, key: 'planReserveButton', fallback: l10n?.planReserveButton ?? 'Reserve')),
-              ),
-            ),
             if (_liveWindow)
               SwitchListTile(
                 key: const ValueKey('booking-check-in-now'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                     l10n?.kioskCheckInRightAway ?? 'Check in right away'),
+                subtitle: Text(words.uxBookingCheckInHelp),
                 value: _checkInNow,
                 onChanged: (v) {
                   setState(() => _checkInNow = v);
                   widget.onFieldCommitted?.call('check_in');
                 },
               ),
-          ],
-        ),
-      ),
+            if (widget.seatId != null) ...[
+              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
+            ],
+            if (widget.allowBlocking)
+              BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
+                BookingChoice(_start, _end, null, null, null, block: true))),
+      ],
     );
   }
 
