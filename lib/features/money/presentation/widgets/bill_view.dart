@@ -447,10 +447,10 @@ class _EntitlementCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
+                Expanded(child: Text(
                   leftLabel,
                   style: theme.bodyMedium?.copyWith(color: barColor),
-                ),
+                )),
               ],
             ),
             const SizedBox(height: 10),

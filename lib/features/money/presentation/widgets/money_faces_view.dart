@@ -34,7 +34,10 @@ Widget moneySectionLabel(BuildContext context, String text) => Padding(
     );
 
 /// Action labels wrap at the user's chosen text size.
-Widget fittedLabel(String text) => Text(text, textAlign: TextAlign.center);
+Widget fittedLabel(String text) => Text(
+        text,
+        textAlign: TextAlign.center,
+    );
 
 /// Actions use one column when width or enlarged text needs it.
 class MoneyActionGrid extends StatelessWidget {
@@ -174,16 +177,11 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
 
     final labels = l10n ?? AppLocalizationsEn();
     final scope = switch (face) {
-      MoneyFace.statement =>
-        labels.uxMoneyStatementScope,
-      MoneyFace.payments =>
-        labels.uxMoneyPaymentsScope,
-      MoneyFace.invoices =>
-        labels.uxMoneyInvoicesScope,
-      MoneyFace.usage =>
-        labels.uxMoneyUsageScope,
-      MoneyFace.documents =>
-        labels.uxMoneyDocumentsScope,
+      MoneyFace.statement => labels.uxMoneyStatementScope,
+      MoneyFace.payments => labels.uxMoneyPaymentsScope,
+      MoneyFace.invoices => labels.uxMoneyInvoicesScope,
+      MoneyFace.usage => labels.uxMoneyUsageScope,
+      MoneyFace.documents => labels.uxMoneyDocumentsScope,
     };
     final scopeHeader = Padding(
       key: ValueKey('money-scope-${face.name}'),
