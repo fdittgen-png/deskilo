@@ -38,8 +38,8 @@ conversation).
 
 | Field | V0 | V1 co-member | V2 chosen space | V3 external | V4 signed-in | V5 public | Default |
 |---|---|---|---|---|---|---|---|
-| Name and photo (identity) | always | choice | choice | choice (via V4) | choice | **never** unless I publish a public profile (future tier) | V1 |
-| Profession and bio (about) | always | choice | choice | choice (via V4) | choice | never | nobody |
+| Name and photo (identity) | always | choice | choice | choice (via V4) | choice | name only after explicit public-profile publication; no photo | V1 |
+| Profession and bio (about) | always | choice | choice | choice (via V4) | choice | only after explicit public-profile publication | nobody |
 | WhatsApp and e-mail (contact channels) | always | choice | choice | never | never | never | nobody |
 | Presence ("in the space today") | always | choice (only inside the space it concerns) | choice | never | never | never | nobody |
 | Which spaces I belong to | always | only the spaces we share | choice | never | never | never | shared spaces only |
@@ -94,6 +94,13 @@ Messages destination reduced to alerts plus one door to the messenger.
 Delivered since (#2211): message requests (0388) and blocks (0387); the
 public-profile tier for V5 with an explicit publish step (0389/0390); the
 widen confirmation naming the audience; the external tier (§1.1, 0392).
+
+Personal-message blocks are enforced on every message insert (0394), including
+forwards and context notices. Both directions use the same opaque refusal;
+unblocking restores delivery. Historical messages remain readable to their
+participants. Workspace and group conversations retain their own rules.
+`162_account_message_blocks.sql` proves these paths through authenticated RPCs,
+including the one-message limit for pending and ignored requests.
 
 Follow-up: porting pin / mute / archive / search from the legacy workspace
 conversation list into the Me inbox, then deleting that list.

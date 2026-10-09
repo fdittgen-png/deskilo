@@ -2146,6 +2146,8 @@ Qué puede leer de usted cada rol en cada uno de sus espacios. Es el
 enunciado de lo que el servidor aplica, no un juego de interruptores — la
 respuesta es la misma esté o no abierta esta pantalla.
 
+**Bloquear a una persona (#2211).** El bloqueo detiene los mensajes personales en ambos sentidos, incluidos los reenvíos y los avisos de captura de pantalla. Los mensajes anteriores permanecen en la conversación. Desbloquea a la persona para permitir nuevos envíos. Las conversaciones del espacio y de grupo siguen sus propias reglas.
+
 ### Exportar mis datos
 
 Todo lo que DesKilo guarda sobre usted, como archivo que se queda. Se

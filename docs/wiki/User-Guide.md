@@ -2198,6 +2198,8 @@ What each role in each of your spaces can read about you. It is a
 statement of what the server enforces, not a set of switches — the
 answer is the same whether or not this screen is open.
 
+**Blocking a person (#2211).** A block stops personal messages in both directions, including forwards and screenshot notices. Earlier messages stay in the conversation. Unblock the person to allow delivery again. Workspace and group conversations follow their own rules.
+
 <!-- anchor: user.privacy.export -->
 ### Export my data
 

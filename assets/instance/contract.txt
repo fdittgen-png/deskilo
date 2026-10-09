@@ -1193,7 +1193,7 @@ routine public.account_group_members_of(p_group uuid) -> jsonb | function | defi
 routine public.account_group_message_reach(p_message uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9ae8f4a432d2
 routine public.account_group_messages_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9877eded3649
 routine public.account_group_messages_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:49460b231470
-routine public.account_message_request_guard() -> trigger | function | definer | volatile | exec:service_role | body:5c081a1b1fb0
+routine public.account_message_request_guard() -> trigger | function | definer | volatile | exec:service_role | body:dc478bb36646
 routine public.account_messages_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9aeca399cd10
 routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:78eb18577763
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
