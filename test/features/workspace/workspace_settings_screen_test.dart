@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/workspace_settings_groups.dart';
+import '../../helpers/section_jump.dart';
 
 /// #1563 — the new-member defaults are read separately from the workspace
 /// row, so the form can render — and save — before they arrive. This fake
@@ -83,7 +84,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     await tester.pump(const Duration(milliseconds: 400));
   }
   if (reports) {
-    await tester.tap(find.byKey(const ValueKey('workspace-section-payments')));
+    await tapSection(tester, 'workspace-section-payments');
     await tester.pumpAndSettle();
     final reportsLink = find.descendant(of: find.byKey(const Key('workspaceSettingsReports')), matching: find.text('Reports'));
     await tester.ensureVisible(reportsLink);
@@ -105,7 +106,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
 void main() {
   testWidgets('Reports opens the document designer and Back keeps its Templates tab', (tester) async {
     await pumpWorkspaceSettings(tester, reports: true);
-    await tester.tap(find.byKey(const ValueKey('workspace-section-templates')));
+    await tapSection(tester, 'workspace-section-templates');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('reports-templates')));
     await tester.pumpAndSettle();
@@ -122,13 +123,13 @@ void main() {
     final error = Theme.of(tester.element(danger)).colorScheme.error;
     expect(tile.textColor, error);
     expect(tile.collapsedTextColor, error);
-    final shortcut = tester.widget<ActionChip>(find.byKey(const ValueKey('workspace-section-danger')));
-    expect(shortcut.labelStyle?.color, error);
-    await tester.tap(find.byKey(const ValueKey('workspace-section-tools')));
+    final shortcut = tester.widget<TextButton>(find.byKey(const ValueKey('workspace-section-danger')));
+    expect(shortcut.style?.foregroundColor?.resolve({}), error);
+    await tapSection(tester, 'workspace-section-tools');
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsNothing);
     expect(find.byKey(const Key('workspaceSettingsExportXml')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('workspace-section-payments')));
+    await tapSection(tester, 'workspace-section-payments');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('workspaceSettingsReports')));
     await tester.pumpAndSettle();
@@ -153,7 +154,7 @@ void main() {
     expect(find.byKey(const Key('workspaceSettingsWhatsappGroup')), findsNothing);
     expect(find.byKey(const Key('workspaceSettingsSave')), findsOneWidget);
     expect(tester.getRect(find.byKey(const Key('workspaceSettingsSave'))).bottom, lessThanOrEqualTo(1100));
-    await tester.tap(find.byKey(const ValueKey('workspace-section-community')));
+    await tapSection(tester, 'workspace-section-community');
     await tester.pumpAndSettle();
     final whatsapp = find.byKey(const Key('workspaceSettingsWhatsappGroup'));
     await tester.ensureVisible(whatsapp);

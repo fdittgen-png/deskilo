@@ -30,6 +30,7 @@ import '../widgets/personal_payment_provider.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/status_colors.dart';
 import 'account_activity_screen.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 class MyFinancesScreen extends ConsumerStatefulWidget {
   /// [workspaceId] narrows every list to one workspace — what a workspace's
@@ -62,30 +63,19 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n?.financesTitle ?? 'Finances'),
-          bottom: TabBar(
-            key: const ValueKey('finances-tabs'),
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
+          bottom: AppTabBar.bottom(
+            context,
+            barKey: const ValueKey('finances-tabs'),
             tabs: [
-              Tab(
-                key: const ValueKey('finances-tab-outstanding'),
-                child: _FinancesLabel.label(l10n?.financesOutstanding ?? 'Outstanding', owed),
-              ),
-              Tab(
-                key: const ValueKey('finances-tab-paid'),
-                text: l10n?.financesPaid ?? 'Paid',
-              ),
-              Tab(
-                key: const ValueKey('finances-tab-payments'),
-                text: l10n?.financesPayments ?? 'Payments',
-              ),
-              Tab(
-                key: const ValueKey('finances-tab-reminders'),
-                child: _FinancesLabel.label(
-                  l10n?.financesReminders ?? 'Reminders',
-                  prod.invoices.where((i) => i.state.owed && i.reminderCount > 0).length,
-                ),
-              ),
+              AppTab(l10n?.financesOutstanding ?? 'Outstanding',
+                  key: const ValueKey('finances-tab-outstanding'), badge: owed),
+              AppTab(l10n?.financesPaid ?? 'Paid',
+                  key: const ValueKey('finances-tab-paid')),
+              AppTab(l10n?.financesPayments ?? 'Payments',
+                  key: const ValueKey('finances-tab-payments')),
+              AppTab(l10n?.financesReminders ?? 'Reminders',
+                  key: const ValueKey('finances-tab-reminders'),
+                  badge: prod.invoices.where((i) => i.state.owed && i.reminderCount > 0).length),
             ],
           ),
         ),
@@ -124,19 +114,6 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       ),
     );
   }
-}
-
-class _FinancesLabel {
-  static Widget label(String text, int count) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(text, maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis),
-          if (count > 0) ...[
-            const SizedBox(width: 6),
-            Badge.count(count: count),
-          ],
-        ],
-      );
 }
 
 /// A bounded, centred column: a list of money rows is read, not scanned

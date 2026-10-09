@@ -10,6 +10,7 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 /// Existing destinations keep their own feature and permission checks.
 bool workspaceReportsAvailable(Set<WorkspaceFeature> features,
@@ -100,8 +101,8 @@ class WorkspaceReports extends ConsumerWidget {
     return DefaultTabController(length: sections.length, initialIndex: initial < 0 ? 0 : initial,
       child: Column(children: [
       ListTile(title: Text(workspaceName), subtitle: Text(l.uxReportsHint)),
-      TabBar(isScrollable: true, tabAlignment: TabAlignment.start, tabs: [
-        for (final section in sections) Tab(key: ValueKey('workspace-section-${section.$1}'), text: section.$2),
+      AppTabBar(tabs: [
+        for (final section in sections) AppTab(section.$2, key: ValueKey('workspace-section-${section.$1}')),
       ]),
       Expanded(child: TabBarView(children: [
         for (final section in sections) ListView(padding: AppSpacing.gutterAll,

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/section_jump.dart';
 
 /// Open Settings → My badge with [count] badges already issued, on a
 /// phone-sized screen — the dialog only overflowed where there was not
@@ -38,7 +39,7 @@ Future<FakeWorkspaceRepository> openWithBadges(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('settings-link-membership')));
+  await tapSection(tester, 'settings-link-membership');
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('settings-my-badge')));
   await tester.pumpAndSettle();
