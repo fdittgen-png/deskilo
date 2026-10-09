@@ -1,0 +1,4 @@
+{
+  "invoiceIssuingUnavailable": "Rechnungserstellung nicht verfügbar",
+  "invoiceFeatureDisabled": "Diese Rechnungsart ist in diesem Workspace deaktiviert. Bestehende Rechnungen und Kontoauszüge bleiben verfügbar."
+}

@@ -86,13 +86,14 @@ Future<
   WizardRun run = WizardRun.startOfMonth,
   FakeMoneyRepository? money,
   List<WorkspaceEvent> events = const [],
+  Map<String, bool> featureFlags = const {},
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final m = money ?? await seededMoney(matched: false);
   final e = FakeEventRepository()..events.addAll(events);
-  final workspace = FakeWorkspaceRepository.withWorkspace()
+  final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: featureFlags)
     ..memberNames = {'member-1': 'Flo', 'member-2': 'Ana'}
     ..otherMembers.add(const Member(
       id: 'member-2',
@@ -305,6 +306,25 @@ void main() {
     expect(find.byKey(const ValueKey('invoice-wizard-card')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-wizard-button')), findsNothing);
   });
+
+  for (final flag in ['invoicing', 'subscriptionInvoices', 'usageInvoices']) {
+    testWidgets('disabled $flag prevents new wizard invoices but keeps history',
+        (tester) async {
+      final money = await seededMoney(matched: false);
+      final original = money.invoices.map((i) => i.id).toList();
+      await _pumpWizard(tester, money: money,
+          run: flag == 'usageInvoices' ? WizardRun.endOfMonth : WizardRun.startOfMonth,
+          featureFlags: {flag: false});
+      await _goTo(tester, WizardStep.issue);
+      expect(find.textContaining('disabled in this workspace'), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('wizard-issue-all')));
+      await tester.tap(find.byKey(const ValueKey('wizard-issue-all')));
+      await tester.pumpAndSettle();
+      expect(money.invoices.map((i) => i.id), original);
+      await _goTo(tester, WizardStep.payments);
+      expect(find.byKey(const ValueKey('wizard-register-payment')), findsOneWidget);
+    });
+  }
 
   testWidgets('START run: the review counts the members to issue, one tap '
       'issues them all as SUBSCRIPTION invoices, the rows turn done, the '

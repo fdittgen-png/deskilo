@@ -1,0 +1,4 @@
+{
+  "invoiceIssuingUnavailable": "Invoice creation unavailable",
+  "invoiceFeatureDisabled": "This invoice type is disabled in this workspace. Existing invoices and statements remain available."
+}

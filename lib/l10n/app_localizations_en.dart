@@ -7913,6 +7913,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceFacturXShare => 'Share Factur-X (PDF)';
 
   @override
+  String get invoiceFeatureDisabled =>
+      'This invoice type is disabled in this workspace. Existing invoices and statements remain available.';
+
+  @override
   String get invoiceFilterAllMembers => 'All members';
 
   @override
@@ -8059,6 +8063,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String invoiceIssuedPartial(int issued, int failed) {
     return '$issued issued, $failed failed.';
   }
+
+  @override
+  String get invoiceIssuingUnavailable => 'Invoice creation unavailable';
 
   @override
   String get invoiceKindFull => 'Whole month';

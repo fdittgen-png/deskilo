@@ -5022,6 +5022,7 @@
   "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
   "invoiceFacturXExplain": "Un seul fichier : la facture qu'un humain lit, avec le XML lisible par machine à l'intérieur. C'est ce qu'attendent la plupart des plateformes.",
   "invoiceFacturXShare": "Partager le Factur-X (PDF)",
+  "invoiceFeatureDisabled": "Ce type de facture est désactivé dans cet espace. Les factures existantes et les relevés restent disponibles.",
   "invoiceFilterAllMembers": "Tous les membres",
   "invoiceFilterAllMonths": "Tous les mois",
   "invoiceFilterClear": "Réinitialiser les filtres",
@@ -5159,6 +5160,7 @@
       }
     }
   },
+  "invoiceIssuingUnavailable": "Création de factures indisponible",
   "invoiceKindFull": "Mois entier",
   "invoiceKindSettlement": "Factures regroupées",
   "invoiceKindSubscription": "Abonnement, à l’avance",

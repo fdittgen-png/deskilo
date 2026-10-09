@@ -13614,6 +13614,12 @@ abstract class AppLocalizations {
   /// **'Share Factur-X (PDF)'**
   String get invoiceFacturXShare;
 
+  /// No description provided for @invoiceFeatureDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice type is disabled in this workspace. Existing invoices and statements remain available.'**
+  String get invoiceFeatureDisabled;
+
   /// Archive member filter: no filter
   ///
   /// In en, this message translates to:
@@ -13865,6 +13871,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{issued} issued, {failed} failed.'**
   String invoiceIssuedPartial(int issued, int failed);
+
+  /// No description provided for @invoiceIssuingUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice creation unavailable'**
+  String get invoiceIssuingUnavailable;
 
   /// No description provided for @invoiceKindFull.
   ///

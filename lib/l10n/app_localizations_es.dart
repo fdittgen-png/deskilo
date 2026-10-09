@@ -7961,6 +7961,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceFacturXShare => 'Compartir Factur-X (PDF)';
 
   @override
+  String get invoiceFeatureDisabled =>
+      'Este tipo de factura está desactivado en este espacio. Las facturas existentes y los extractos siguen disponibles.';
+
+  @override
   String get invoiceFilterAllMembers => 'Todos los miembros';
 
   @override
@@ -8112,6 +8116,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String invoiceIssuedPartial(int issued, int failed) {
     return '$issued emitidas, $failed con error.';
   }
+
+  @override
+  String get invoiceIssuingUnavailable => 'Creación de facturas no disponible';
 
   @override
   String get invoiceKindFull => 'Mes completo';

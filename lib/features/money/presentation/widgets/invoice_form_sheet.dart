@@ -108,6 +108,8 @@ Future<void> showInvoiceIssueSheet(
       e.toString().contains('already invoiced')
           ? (l10n?.invoiceAlreadyInvoiced ??
               'This month is already invoiced for this member.')
+          : e.toString().contains('invoice_feature_disabled')
+              ? (l10n?.invoiceFeatureDisabled ?? AppLocalizationsEn().invoiceFeatureDisabled)
           : e.toString().contains('invoice_essentials_missing')
               ? (l10n?.invoiceEssentialsRefused ??
                   'The invoice was not issued: required details are missing.')
@@ -470,7 +472,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           InlineBanner(
             key: const ValueKey('invoice-missing-essentials'),
             icon: Icons.rule_folder_outlined,
-            text: '${_missing.contains('vat_treatment_unreviewed')
+            text: '${_missing.contains('invoice_feature_disabled')
+                ? l10n?.invoiceIssuingUnavailable ?? AppLocalizationsEn().invoiceIssuingUnavailable
+                : _missing.contains('vat_treatment_unreviewed')
                 ? l10n?.invoiceExternalIssuingTitle ?? AppLocalizationsEn().invoiceExternalIssuingTitle
                 : l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
@@ -499,6 +503,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
 
 /// #1916 — the words for one missing essential (stable server keys, 0365).
 String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
+      'invoice_feature_disabled' => l10n?.invoiceFeatureDisabled ??
+          AppLocalizationsEn().invoiceFeatureDisabled,
       'seller_address' => l10n?.invoiceMissingSellerAddress ??
           "The workspace's postal address (street or city)",
       'seller_vat_id' => l10n?.invoiceMissingSellerVatId ??

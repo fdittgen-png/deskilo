@@ -7976,6 +7976,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceFacturXShare => 'Factur-X (PDF) teilen';
 
   @override
+  String get invoiceFeatureDisabled =>
+      'Diese Rechnungsart ist in diesem Workspace deaktiviert. Bestehende Rechnungen und Kontoauszüge bleiben verfügbar.';
+
+  @override
   String get invoiceFilterAllMembers => 'Alle Mitglieder';
 
   @override
@@ -8125,6 +8129,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String invoiceIssuedPartial(int issued, int failed) {
     return '$issued ausgestellt, $failed fehlgeschlagen.';
   }
+
+  @override
+  String get invoiceIssuingUnavailable => 'Rechnungserstellung nicht verfügbar';
 
   @override
   String get invoiceKindFull => 'Ganzer Monat';

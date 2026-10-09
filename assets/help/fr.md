@@ -1369,6 +1369,8 @@ Le solde mensuel ouvre cette vue ; l’usage et les frais suivent. Les astuces v
 
 **Limites d’émission (#1917).** Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.
 
+Désactiver les factures d’abonnement ou de consommation bloque aussi leur création dans l’assistant et à l’émission. Les factures du mois entier restent disponibles si la facturation est activée ; les documents existants et les relevés restent consultables.
+
 **Vos factures · Toutes les périodes.** La synthèse affiche une seule fois les montants ouverts et les retards, puis toutes vos factures de la plus récente à la plus ancienne. Le mois du relevé ne filtre pas cet historique. Développez **Outils financiers de l’espace** au-dessus de la synthèse pour le registre, la situation de l’espace et la répartition des coûts disponibles selon votre rôle et les fonctionnalités activées. Chaque facture conserve sa fiche, ses documents et son accès au paiement.
 
 **Le parcours (#812).** Chaque ligne porte aussi la **barre de parcours** de la facture — *Émise · Paiement · Confirmation · Close*, l'étape en cours cerclée — et **à vous** en une phrase : *payez X avant le date*, *vous avez déclaré X — l'espace le confirme*, *votre paiement est enregistré — l'espace le rapproche*, *payée le … — close*. **Comment ça marche** sur la carte de tête ouvre les quatre étapes avec ce que fait l'espace et ce que vous faites. Fonctionnalité *Le parcours d'une facture* (sous Factures).

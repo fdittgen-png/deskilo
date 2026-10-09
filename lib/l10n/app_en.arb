@@ -8935,6 +8935,7 @@
   "@invoiceFacturXShare": {
     "description": "E-invoice sheet: share the hybrid document"
   },
+  "invoiceFeatureDisabled": "This invoice type is disabled in this workspace. Existing invoices and statements remain available.",
   "invoiceFilterAllMembers": "All members",
   "@invoiceFilterAllMembers": {
     "description": "Archive member filter: no filter"
@@ -9132,6 +9133,7 @@
       }
     }
   },
+  "invoiceIssuingUnavailable": "Invoice creation unavailable",
   "invoiceKindFull": "Whole month",
   "invoiceKindSettlement": "Regrouped invoices",
   "invoiceKindSubscription": "Subscription, in advance",

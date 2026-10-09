@@ -1,0 +1,4 @@
+{
+  "invoiceIssuingUnavailable": "Creazione delle fatture non disponibile",
+  "invoiceFeatureDisabled": "Questo tipo di fattura è disattivato in questo spazio. Le fatture esistenti e gli estratti conto restano disponibili."
+}
