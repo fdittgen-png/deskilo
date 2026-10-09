@@ -35,5 +35,7 @@
   "invoiceMissingSellerCountry": "El país del espacio debe ser Francia o Alemania para emitir aquí — los demás países se emiten fuera de la aplicación",
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
   "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
-  "invoiceMissingVatNotRegistered": "Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio"
+  "invoiceMissingVatNotRegistered": "Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio",
+  "invoiceMissingVatTreatment": "Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.",
+  "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación"
 }
