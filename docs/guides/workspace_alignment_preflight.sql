@@ -17,14 +17,15 @@
 --   set local alignment.groups            = 'wording,hours_booking,pricing_credits,roles_access';
 --   set local alignment.plan_ids          = 'none'; -- obsolete, unreferenced plans, by id
 --   set local alignment.package_ids       = 'none';
---   set local alignment.level_ids         = 'none'; -- levels that lose whole-level booking
+--   set local alignment.desk_level_id     = 'none'; -- reviewed floor id, or none when no desks change
+--   set local alignment.desk_ids          = 'none'; -- exact tables that lose whole-table booking
 --   set local alignment.holiday_plan      = 'skip'; -- skip | enable_control | apply_group
 --   \i docs/guides/workspace_alignment_preflight.sql
 --   rollback;
 do $preflight$
 declare
   p_workspace_id uuid; p_twin_id uuid; p_groups text[];
-  p_plan_ids uuid[]; p_package_ids uuid[]; p_level_ids uuid[];
+  p_plan_ids uuid[]; p_package_ids uuid[]; p_desk_ids uuid[]; p_desk_level_id uuid;
   v_p jsonb := '{}'::jsonb; v_missing text[] := '{}'; v_stop text[] := '{}';
   v_report jsonb := '{}'::jsonb; v_data jsonb := '{}'::jsonb;
   v_ws public.workspaces; v_tpl public.workspace_templates;
@@ -32,7 +33,7 @@ declare
 begin
   -- 0 ─ the parameters, all of them, or nothing happens
   foreach v_k in array array['backend_system_id', 'environment', 'workspace_id', 'twin_id',
-                             'template_key', 'groups', 'plan_ids', 'package_ids', 'level_ids',
+                             'template_key', 'groups', 'plan_ids', 'package_ids', 'desk_level_id', 'desk_ids',
                              'holiday_plan'] loop
     if coalesce(current_setting('alignment.' || v_k, true), '') = '' then
       v_missing := v_missing || v_k;
@@ -48,7 +49,11 @@ begin
   p_groups       := string_to_array(v_p->>'groups', ',');
   p_plan_ids     := coalesce(string_to_array(nullif(v_p->>'plan_ids', 'none'), ',')::uuid[], '{}');
   p_package_ids  := coalesce(string_to_array(nullif(v_p->>'package_ids', 'none'), ',')::uuid[], '{}');
-  p_level_ids    := coalesce(string_to_array(nullif(v_p->>'level_ids', 'none'), ',')::uuid[], '{}');
+  p_desk_ids     := coalesce(string_to_array(nullif(v_p->>'desk_ids', 'none'), ',')::uuid[], '{}');
+  p_desk_level_id := nullif(v_p->>'desk_level_id', 'none')::uuid;
+  if coalesce(current_setting('alignment.level_ids', true), '') not in ('', 'none') then
+    v_stop := v_stop || 'level_ids is retired: review exact desk_ids and desk_level_id; no level policy changes'::text;
+  end if;
 
   -- 1 ─ the backend, before anything is read from it
   if (select system_identifier::text from pg_control_system()) <> (v_p->>'backend_system_id') then
@@ -148,17 +153,31 @@ begin
     v_stop := v_stop || 'packages: a listed id is foreign to this workspace'::text;
   end if;
 
-  -- 6 ─ whole-level booking: the listed levels change, every other is preserved
+  -- 6 ─ whole-table booking: explicit desks on the reviewed floor only.
+  -- Level and room policies remain read-only, including on the target floor.
   v_report := v_report || jsonb_build_object('levels', (
     select coalesce(jsonb_agg(jsonb_build_object('id', l.id, 'name', l.name,
              'bookable_as_whole', l.bookable_as_whole,
-             'action', case when l.id = any (p_level_ids) then 'set false' else 'preserved' end)
+             'action', 'preserved')
            order by l.sort_order), '[]'::jsonb)
       from public.levels l where l.workspace_id = p_workspace_id));
-  if exists (select 1 from unnest(p_level_ids) i
-              where not exists (select 1 from public.levels l where l.id = i
-                                 and l.workspace_id = p_workspace_id and l.bookable_as_whole)) then
-    v_stop := v_stop || 'levels: a listed id is foreign to this workspace, or is already not bookable as a whole'::text;
+  v_report := v_report || jsonb_build_object('desks', (
+    select coalesce(jsonb_agg(jsonb_build_object('id', d.id, 'name', d.name,
+             'office_id', o.id, 'office_name', o.name, 'level_id', l.id, 'level_name', l.name,
+             'bookable_as_whole', d.bookable_as_whole,
+             'action', case when d.id = any (p_desk_ids) then
+               case when d.bookable_as_whole then 'set false' else 'already false' end
+               else 'preserved' end) order by l.sort_order, o.name, d.name, d.id), '[]'::jsonb)
+      from public.desks d join public.offices o on o.id = d.office_id
+      join public.levels l on l.id = o.level_id where d.workspace_id = p_workspace_id));
+  if (cardinality(p_desk_ids) > 0 and p_desk_level_id is null)
+     or (p_desk_level_id is not null and not exists (select 1 from public.levels l
+           where l.id = p_desk_level_id and l.workspace_id = p_workspace_id))
+     or exists (select 1 from unnest(p_desk_ids) i
+           where not exists (select 1 from public.desks d join public.offices o on o.id = d.office_id
+             where d.id = i and d.workspace_id = p_workspace_id and o.workspace_id = p_workspace_id
+               and o.level_id = p_desk_level_id)) then
+    v_stop := v_stop || 'desks: an id is missing, foreign to this workspace or outside the reviewed floor'::text;
   end if;
 
   -- 7 ─ the holidays: which control, which months, and never in silence

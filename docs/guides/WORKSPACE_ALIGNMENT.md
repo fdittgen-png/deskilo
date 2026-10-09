@@ -21,15 +21,15 @@ inferred from whichever connection happens to be open.
 ## Before anything: the preflight
 
 `docs/guides/workspace_alignment_preflight.sql` reads, reports and
-aborts. It takes ten parameters — backend, environment, workspace id,
-twin id, template key, groups, the plan / package / level ids that may
-change, and the holiday decision — and **stops when one is missing or
+aborts. It takes explicit parameters — backend, environment, workspace id,
+twin id, template key, groups, the plan / package / desk ids that may
+change, the reviewed desk floor id, and the holiday decision — and **stops when one is missing or
 disagrees with the database**:
 
 ```
 begin;
 set local alignment.backend_system_id = '...';  -- from pg_control_system()
-set local alignment.environment = 'prod';       -- … and the eight others,
+set local alignment.environment = 'prod';       -- … and the others,
 set local alignment.workspace_id = '...';       -- all listed at the head
 \i docs/guides/workspace_alignment_preflight.sql   -- of the file itself
 rollback;
@@ -43,7 +43,7 @@ not reviewable, so an unreadable preview is itself a stop.
 Its report is the review packet: the target and its twin, the number of
 workspaces sharing that name, the change preview per group, the levels
 the template would *add*, every plan with the number of members pointing
-at it, every package, every level, and the holiday months split into
+at it, every package, every level and table with its room and floor, and the holiday months split into
 eligible and locked. Keep it **outside the repository**.
 
 ### Stop and recovery
@@ -134,29 +134,41 @@ bought, so it is deactivated and never deleted.
 
 **Read back:** the listed ids read `active = false`; no invoice changed.
 
-## Step 4 — whole-level booking on the second floor
+## Step 4 — whole-table booking on the second floor
 
 The report's *« supprimer la possibilité de réserver toute une table »*
-is the **whole-level** booking on floor 2.
+concerns **whole-table/desk booking**, as corrected in #1285 on
+30 September 2026. It does not authorize changing whole-level or room booking.
 
-*Preconditions*, all three, checked by the preflight and restated in the
-statement: the id belongs to this workspace, it currently reads
-`bookable_as_whole = true`, and floor 1's id is **not** in the list.
+Review the current floor ID (`desk_level_id`) and exact table IDs (`desk_ids`)
+from the preflight. Names identify the rows for the operator; IDs scope the
+operation. Every table must belong to this workspace and this floor.
+An already-disabled table is an explicit no-op, so the same packet also
+supports readback. Retired `level_ids` packets must be reviewed again.
 
 ```sql
-update public.levels set bookable_as_whole = false
- where workspace_id = :'workspace_id'
-   and id = any (:'level_ids'::uuid[])
-   and bookable_as_whole;
+update public.desks d set bookable_as_whole = false
+ where d.workspace_id = :'workspace_id'
+   and d.id = any (:'desk_ids'::uuid[])
+   and exists (select 1 from public.offices o where o.id = d.office_id
+     and o.workspace_id = d.workspace_id and o.level_id = :'desk_level_id'::uuid)
+   and d.bookable_as_whole;
 
-select id, name, bookable_as_whole from public.levels
- where workspace_id = :'workspace_id' order by sort_order;
+select d.id, d.name, o.name as room, l.name as floor, d.bookable_as_whole
+ from public.desks d join public.offices o on o.id = d.office_id
+ join public.levels l on l.id = o.level_id
+ where d.workspace_id = :'workspace_id' order by l.sort_order, o.name, d.name, d.id;
 ```
 
-Floor 1 keeps whole-level booking unless the responsable says otherwise,
-in writing, as a separate instruction. Existing reservations on either
-level are unaffected: `reservations.level_id` is `on delete restrict`
-and nothing here deletes a level.
+**Read back:** the selected tables are disabled; unrelated tables, all room
+and level policies, individual seats and protected rows retain their before
+values. No floor-plan rows are deleted. A separate instruction is required
+to change a room or level policy.
+
+The regression rehearsal executes this preflight on synthetic rows and rolls
+back everything: `python3 -B scripts/workspace_alignment_check.py DATABASE_URL`.
+Use the disposable test database. CI runs the same rehearsal with the database
+disciplines; it covers wrong-floor/unknown IDs, target mismatch and readback.
 
 ## Step 5 — the holidays: three paths, and no silent one
 

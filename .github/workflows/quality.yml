@@ -336,6 +336,8 @@ jobs:
         id: pgtap
         if: steps.migrations.outcome == 'success'
         continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
         run: |
           # #1335 — without pipefail this step reported `tee`'s exit code,
           # so a failing pgTAP run could never turn it red.
@@ -343,6 +345,7 @@ jobs:
           # #1632 — the report names the commit it was produced at, so the
           # MCP coverage gate below can refuse evidence from another one.
           { echo "# source $GITHUB_SHA"; supabase test db 2>&1; } | tee report-pgtap.log
+          python3 -B scripts/workspace_alignment_check.py "$DB_URL" | tee report-alignment.log
 
       # #1313 — the policies the migrations actually build, read from the
       # replay and never parsed out of the SQL: 0030 creates a policy 0051
