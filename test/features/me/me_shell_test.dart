@@ -20,6 +20,29 @@ import '../../helpers/mock_providers.dart';
 import 'me_app.dart';
 
 void main() {
+  testWidgets('Messages badges refresh before opening the tab, hide zero and cap at 99+', (tester) async {
+    final messenger = FakeMessengerRepository()..inboxRows.addAll([
+      {'context_kind': 'account', 'context_id': 'new', 'title': 'New', 'unread': 124},
+      {'context_kind': 'space', 'context_id': 'quiet', 'unread': 9, 'pinned': false, 'muted': true},
+      {'context_kind': 'space', 'context_id': 'archived', 'unread': 9, 'pinned': false, 'archived': true},
+    ]);
+    final router = await pumpMeApp(tester, messenger: messenger, size: const Size(390, 844));
+    await goTo(tester, router, '/me');
+    final destination = find.byKey(const ValueKey('me-tab-messages'));
+    expect(find.descendant(of: destination, matching: find.text('99+')), findsOneWidget);
+    expect(find.byType(MeMessagesTab), findsNothing);
+    final container = ProviderScope.containerOf(tester.element(find.byType(MeShell)));
+    await container.read(navigationStyleControllerProvider.notifier).set(NavigationStyle.menu);
+    tester.view.physicalSize = const Size(1200, 900);
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: destination, matching: find.text('99+')), findsOneWidget);
+    messenger.inboxRows.clear();
+    await tester.pump(const Duration(seconds: 30));
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: destination, matching: find.byType(Badge)), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('wide Me keeps destinations visible and shrinks to a drawer', (tester) async {
     final semantics = tester.ensureSemantics();
     final router = await pumpMeApp(tester, size: const Size(1200, 900));

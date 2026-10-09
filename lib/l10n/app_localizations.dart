@@ -30956,6 +30956,12 @@ abstract class AppLocalizations {
   /// **'Advanced'**
   String get uxAdvancedSection;
 
+  /// No description provided for @uxAttentionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{updates} new updates · {pending} awaiting your decision'**
+  String uxAttentionSummary(int updates, int pending);
+
   /// No description provided for @uxBookingChargePending.
   ///
   /// In en, this message translates to:

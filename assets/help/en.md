@@ -347,6 +347,8 @@ See who's part of your community:
 
 ## 7. Events & confirmations (Messages → Events)
 
+**Blue counters.** Alerts counts new workspace updates (including invoices, reminders and changes), unread broadcasts and decisions awaiting you, with each item counted once. Opening Alerts acknowledges new updates; pending decisions remain until resolved. This device remembers updates separately for each person, server and workspace. In Me, Messages counts unread messages across connected servers; muted or archived conversations stay quiet. Zero hides the counter; larger counts display **99+**.
+
 **Where it lives.** The feed is the second face of the **Messages** tab, and the **bell** in every app bar is a shortcut straight onto it, carrying the count of what awaits you. One place holds the alerts, so reading one there is reading it everywhere. With the reworked messaging the tab is labelled **Alerts**, and it marks itself read only while it is the face on screen — switching to it is reading it, having it behind the chats is not.
 
 The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.

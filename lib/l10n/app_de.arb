@@ -11161,6 +11161,17 @@
   "usageTitle": "Nutzung",
   "usageWas": "war {before}",
   "uxAdvancedSection": "Erweitert",
+  "uxAttentionSummary": "{updates} neue Meldungen · {pending} ausstehende Entscheidungen",
+  "@uxAttentionSummary": {
+    "placeholders": {
+      "updates": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
   "uxBookingChargePending": "Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.",
   "uxBookingCheckInHelp": "Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.",
   "uxBookingFor": "Buchung für",

@@ -7,6 +7,7 @@
 // workspace's colour or its development strip — that is decided above
 // the navigator, by route (app/shell/layer_chrome.dart), so every page
 // pushed from here wears it too.
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +23,7 @@ import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
 import '../../directory/presentation/directory_screen.dart';
+import '../../directory/providers/messenger_providers.dart';
 import '../../task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
 import '../../workspace/domain/workspace_feature.dart';
@@ -56,11 +58,21 @@ class MeShell extends ConsumerStatefulWidget {
 
 class _MeShellState extends ConsumerState<MeShell> {
   late MeTab _tab = widget.tab;
+  Timer? _badgeRefresh;
 
   @override
   void initState() {
     super.initState();
     _offerKeptInvitation();
+    _badgeRefresh = Timer.periodic(const Duration(seconds: 30), (_) {
+      if (mounted && !_visited.contains(MeTab.messages)) ref.invalidate(unifiedInboxProvider);
+    });
+  }
+
+  @override
+  void dispose() {
+    _badgeRefresh?.cancel();
+    super.dispose();
   }
 
   Future<void> _offerKeptInvitation() async {
@@ -87,7 +99,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   }
 
   /// Tabs are built on first visit and kept: Discover searches and
-  /// Messages polls, and neither should start before it is opened.
+  /// Messages keeps its own polling once opened; before then only its badge refreshes.
   late final Set<MeTab> _visited = {widget.tab};
 
   @override
@@ -114,6 +126,10 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final inbox = ref.watch(unifiedInboxProvider);
+    final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
+    Widget messageIcon(IconData icon) => unread > 0
+        ? Badge.count(count: unread, maxCount: 99, child: Icon(icon)) : Icon(icon);
     final menu = ref.watch(webShellProvider);
     final wideNavigation = menu && MediaQuery.sizeOf(context).width >= 900 &&
         MediaQuery.textScalerOf(context).scale(100) <= 150;
@@ -157,7 +173,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                       // Me is the profile button at the top right already.
                       ListTile(
                           key: ValueKey('me-tab-${tab.wire}'),
-                          leading: Icon(icons[tab.index]),
+                          leading: tab == MeTab.messages ? messageIcon(icons[tab.index]) : Icon(icons[tab.index]),
                           title: Text(labels[tab.index]),
                           selected: _tab == tab,
                           selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -234,8 +250,8 @@ class _MeShellState extends ConsumerState<MeShell> {
                 ),
                 NavigationDestination(
                   key: const ValueKey('me-tab-messages'),
-                  icon: const Icon(Icons.forum_outlined),
-                  selectedIcon: const Icon(Icons.forum),
+                  icon: messageIcon(Icons.forum_outlined),
+                  selectedIcon: messageIcon(Icons.forum),
                   label: l10n?.meTabMessages ?? 'Messages',
                 ),
                 NavigationDestination(

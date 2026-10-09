@@ -11161,6 +11161,17 @@
   "usageTitle": "Usage",
   "usageWas": "était {before}",
   "uxAdvancedSection": "Avancé",
+  "uxAttentionSummary": "{updates} nouveautés · {pending} décisions en attente",
+  "@uxAttentionSummary": {
+    "placeholders": {
+      "updates": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
   "uxBookingChargePending": "Le montant et l’utilisation du forfait seront calculés selon le plan du membre. Le montant final n’est pas disponible ici.",
   "uxBookingCheckInHelp": "Indiquer aussi ma présence lors de la confirmation de cette réservation.",
   "uxBookingFor": "Réservation pour",

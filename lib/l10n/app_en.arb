@@ -20387,6 +20387,17 @@
     }
   },
   "uxAdvancedSection": "Advanced",
+  "uxAttentionSummary": "{updates} new updates · {pending} awaiting your decision",
+  "@uxAttentionSummary": {
+    "placeholders": {
+      "updates": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
   "uxBookingChargePending": "The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.",
   "uxBookingCheckInHelp": "Also mark me present when confirming this reservation.",
   "uxBookingFor": "Booking for",

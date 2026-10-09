@@ -18045,6 +18045,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxAdvancedSection => 'Erweitert';
 
   @override
+  String uxAttentionSummary(int updates, int pending) {
+    return '$updates neue Meldungen · $pending ausstehende Entscheidungen';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.';
 
