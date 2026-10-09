@@ -73,6 +73,22 @@ void main() {
     expect((await repo.fetch('ws-1', PlaceKind.seat, 's1')).mine, 0);
   });
 
+  testWidgets('#2313 — on a phone with large text the heart and the five '
+      'stars stay on one line', (tester) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    tester.platformDispatcher.textScaleFactorTestValue = 1.5;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await _pump(tester);
+    final line = tester.getCenter(find.byKey(PlaceFeedbackBar.heartKey('s1'))).dy;
+    for (var n = 1; n <= 5; n++) {
+      expect(tester.getCenter(find.byKey(PlaceFeedbackBar.starKey('s1', n))).dy,
+          moreOrLessEquals(line, epsilon: 1), reason: 'star $n');
+    }
+    expect(tester.takeException(), isNull, reason: 'nothing overflows');
+  });
+
   testWidgets('with the feature off there is no heart and no star', (tester) async {
     await _pump(tester, flags: const {'placeFeedback': false});
     expect(find.byKey(PlaceFeedbackBar.heartKey('s1')), findsNothing);

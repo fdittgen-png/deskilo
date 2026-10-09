@@ -42,51 +42,77 @@ class PlaceFeedbackBar extends ConsumerWidget {
         );
 
     final mine = feedback.mine;
+    // Round, borderless: the icon-button theme's outlined box (the title
+    // bar's look) made six boxes in a row here.
+    final round = IconButton.styleFrom(shape: const CircleBorder());
+    final summary = Text(
+      feedback.count == 0
+          ? (l10n?.placeFeedbackNoRating ?? 'No rating yet')
+          : (l10n?.placeFeedbackAverage(
+                  feedback.average!.toStringAsFixed(1), feedback.count) ??
+              '${feedback.average!.toStringAsFixed(1)} · ${feedback.count}'),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: theme.textTheme.bodySmall
+          ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+    );
+    // #2313 — two lines that never break: the heart and the five stars on
+    // one (shrunk a little rather than wrapped on a narrow screen with
+    // large text), the average and the 0-star choice on the next. A Wrap
+    // used to push the fifth star and the average onto a line of their
+    // own on a phone.
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: AppSpacing.xs,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-            key: heartKey(id),
-            tooltip: feedback.favorite
-                ? (l10n?.placeFeedbackUnfavorite ?? 'Remove from favourites')
-                : (l10n?.placeFeedbackFavorite ?? 'Add to favourites'),
-            isSelected: feedback.favorite,
-            icon: const Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite, color: theme.colorScheme.error),
-            onPressed: () => run(() => setPlaceFavorite(ref,
-                kind: kind, id: id, on: !feedback.favorite)),
-          ),
-          TextButton(
-            key: zeroKey(id),
-            onPressed: () => run(() => setPlaceRating(ref,
-                kind: kind, id: id, stars: mine == 0 ? null : 0)),
-            child: Text(l10n?.placeFeedbackZero ?? '0 stars'),
-          ),
-          for (var n = 1; n <= 5; n++)
-            IconButton(
-              key: starKey(id, n),
-              visualDensity: VisualDensity.compact,
-              tooltip: l10n?.placeFeedbackStars(n) ?? '$n stars',
-              icon: Icon(
-                (mine ?? 0) >= n ? Icons.star : Icons.star_border,
-                color: (mine ?? 0) >= n ? theme.colorScheme.tertiary : null,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              IconButton(
+                key: heartKey(id),
+                style: round,
+                tooltip: feedback.favorite
+                    ? (l10n?.placeFeedbackUnfavorite ?? 'Remove from favourites')
+                    : (l10n?.placeFeedbackFavorite ?? 'Add to favourites'),
+                isSelected: feedback.favorite,
+                icon: const Icon(Icons.favorite_border),
+                selectedIcon:
+                    Icon(Icons.favorite, color: theme.colorScheme.error),
+                onPressed: () => run(() => setPlaceFavorite(ref,
+                    kind: kind, id: id, on: !feedback.favorite)),
               ),
-              // The same star again takes the rating back.
-              onPressed: () => run(() => setPlaceRating(ref,
-                  kind: kind, id: id, stars: mine == n ? null : n)),
-            ),
-          Text(
-            feedback.count == 0
-                ? (l10n?.placeFeedbackNoRating ?? 'No rating yet')
-                : (l10n?.placeFeedbackAverage(
-                        feedback.average!.toStringAsFixed(1), feedback.count) ??
-                    '${feedback.average!.toStringAsFixed(1)} · ${feedback.count}'),
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              const SizedBox(width: AppSpacing.sm),
+              for (var n = 1; n <= 5; n++)
+                IconButton(
+                  key: starKey(id, n),
+                  style: round,
+                  tooltip: l10n?.placeFeedbackStars(n) ?? '$n stars',
+                  icon: Icon(
+                    (mine ?? 0) >= n ? Icons.star : Icons.star_border,
+                    color: (mine ?? 0) >= n ? theme.colorScheme.tertiary : null,
+                  ),
+                  // The same star again takes the rating back.
+                  onPressed: () => run(() => setPlaceRating(ref,
+                      kind: kind, id: id, stars: mine == n ? null : n)),
+                ),
+            ]),
           ),
+          Row(children: [
+            const SizedBox(width: AppSpacing.md),
+            Expanded(child: summary),
+            Flexible(
+              child: TextButton(
+                key: zeroKey(id),
+                onPressed: () => run(() => setPlaceRating(ref,
+                    kind: kind, id: id, stars: mine == 0 ? null : 0)),
+                child: Text(l10n?.placeFeedbackZero ?? '0 stars',
+                    maxLines: 1, overflow: TextOverflow.ellipsis),
+              ),
+            ),
+          ]),
         ],
       ),
     );
