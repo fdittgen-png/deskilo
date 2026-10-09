@@ -18,7 +18,7 @@ create or replace function pg_temp.seed() returns void language plpgsql as $seed
 declare
   u_mine uuid := '00000000-0000-4000-8000-0000000000c1';
   u_other uuid := '00000000-0000-4000-8000-0000000000c2';
-  ws uuid; m uuid; lvl uuid; office uuid; desk uuid; seat uuid;
+  ws uuid; m uuid; lvl uuid; office uuid; desk uuid; seat uuid; tz text;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
@@ -26,8 +26,15 @@ begin
           'authenticated', 'queue-mine@deskilo.test', '', now(), now(), now()),
          (u_other, '00000000-0000-0000-0000-000000000000', 'authenticated',
           'authenticated', 'queue-other@deskilo.test', '', now(), now(), now());
+  -- A zone where "now" still has an hour of its day left: after 22:00 in
+  -- Paris the explicit check-in below would be shorter than the minimum
+  -- booking (30 minutes) and refused, so late runs book in Los Angeles,
+  -- where it is mid-afternoon.
+  tz := case when extract(hour from now() at time zone 'Europe/Paris') >= 22
+             then 'America/Los_Angeles' else 'Europe/Paris' end;
+  perform set_config('deskilo.queue.tz', tz, false);
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
-  values ('Queue', 'FR', 'EUR', 'Europe/Paris', u_mine) returning id into ws;
+  values ('Queue', 'FR', 'EUR', tz, u_mine) returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_mine, true, true) returning id into m;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
@@ -113,8 +120,9 @@ select lives_ok(
        now(),
        -- inside the workspace's day, so the file is green at any hour
        least(now() + interval '1 hour',
-             (date_trunc('day', now() at time zone 'Europe/Paris')
-               + interval '1 day' - interval '1 minute') at time zone 'Europe/Paris'),
+             (date_trunc('day', now() at time zone current_setting('deskilo.queue.tz'))
+               + interval '1 day' - interval '1 minute')
+               at time zone current_setting('deskilo.queue.tz')),
        true) $$,
   'an explicit check-in now is accepted');
 
