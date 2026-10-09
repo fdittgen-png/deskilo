@@ -6623,6 +6623,7 @@
   "meSortTooltip": "Sortieren",
   "meSpaceException": "In diesem Space",
   "meSpaceLastUsed": "Zuletzt genutzt",
+  "meSpaceNotifications": "{count, plural, =1{1 Benachrichtigung wartet hier} other{{count} Benachrichtigungen warten hier}}",
   "meSpaceOpen": "Öffnen",
   "meSpacePending": "Wartet auf Freigabe",
   "meSpacesNoMatch": "Kein Space passt.",

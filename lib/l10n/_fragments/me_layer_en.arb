@@ -55,6 +55,15 @@
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
   },
+  "meSpaceNotifications": "{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}",
+  "@meSpaceNotifications": {
+    "description": "Tooltip of the count on a space side (production or development) on Me › Home: the notifications that belong to it.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "meSpaceLastUsed": "Last used",
   "@meSpaceLastUsed": {
     "description": "Chip on the space the person used last."

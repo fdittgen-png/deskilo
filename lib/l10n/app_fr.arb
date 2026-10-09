@@ -6623,6 +6623,7 @@
   "meSortTooltip": "Trier",
   "meSpaceException": "Dans cet espace",
   "meSpaceLastUsed": "Dernier utilisé",
+  "meSpaceNotifications": "{count, plural, =1{1 notification vous attend ici} other{{count} notifications vous attendent ici}}",
   "meSpaceOpen": "Ouvrir",
   "meSpacePending": "En attente de validation",
   "meSpacesNoMatch": "Aucun espace ne correspond.",
