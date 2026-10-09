@@ -68,7 +68,7 @@ void main() {
     SharedPreferences.setMockInitialValues({'workspace_updates_seen_scope': before.toIso8601String()});
     final pending = event('decision', type: EventType.payment);
     final c = ProviderContainer(overrides: [
-      ...standardTestOverrides(clock: FixedClock(now)),
+      ...standardTestOverrides(clock: FixedClock(now), updateSeenStore: PrefsUpdateSeenStore.new),
       attentionScopeProvider.overrideWithValue('scope'),
       eventsProvider.overrideWith((ref) async => [event('invoice'), event('reminder', type: EventType.invoiceReminder), pending, event('foreign', workspace: 'ws-2')]),
       myPendingEventsProvider.overrideWith((ref) async => [pending]),

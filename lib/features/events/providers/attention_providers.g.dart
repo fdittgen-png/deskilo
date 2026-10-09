@@ -8,6 +8,85 @@ part of 'attention_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+
+@ProviderFor(updateSeenStore)
+final updateSeenStoreProvider = UpdateSeenStoreFamily._();
+
+final class UpdateSeenStoreProvider
+    extends
+        $FunctionalProvider<UpdateSeenStore, UpdateSeenStore, UpdateSeenStore>
+    with $Provider<UpdateSeenStore> {
+  UpdateSeenStoreProvider._({
+    required UpdateSeenStoreFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'updateSeenStoreProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$updateSeenStoreHash();
+
+  @override
+  String toString() {
+    return r'updateSeenStoreProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<UpdateSeenStore> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  UpdateSeenStore create(Ref ref) {
+    final argument = this.argument as String;
+    return updateSeenStore(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(UpdateSeenStore value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<UpdateSeenStore>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdateSeenStoreProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$updateSeenStoreHash() => r'a051ece75fba0d33140fb8e91c510a13052e11e9';
+
+final class UpdateSeenStoreFamily extends $Family
+    with $FunctionalFamilyOverride<UpdateSeenStore, String> {
+  UpdateSeenStoreFamily._()
+    : super(
+        retry: null,
+        name: r'updateSeenStoreProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  UpdateSeenStoreProvider call(String key) =>
+      UpdateSeenStoreProvider._(argument: key, from: this);
+
+  @override
+  String toString() => r'updateSeenStoreProvider';
+}
+
 /// A device acknowledgement belongs to one person, server and workspace.
 
 @ProviderFor(attentionScope)
@@ -99,7 +178,7 @@ final class UpdatesSeenProvider
   }
 }
 
-String _$updatesSeenHash() => r'c38955e077ccff3ac38e949da7fa668b7e5c29c1';
+String _$updatesSeenHash() => r'75a359c9bbf8c060b482ad16a3ac0b7b65cd16d1';
 
 /// Badges clear immediately; the currently visible feed retains its new rows.
 

@@ -12,6 +12,26 @@ import 'event_providers.dart';
 
 part 'attention_providers.g.dart';
 
+abstract class UpdateSeenStore {
+  Future<String?> read();
+  Future<void> write(String? value);
+}
+
+class PrefsUpdateSeenStore extends PrefsStringStore implements UpdateSeenStore {
+  const PrefsUpdateSeenStore(super.key);
+}
+
+class InMemoryUpdateSeenStore implements UpdateSeenStore {
+  String? value;
+  @override
+  Future<String?> read() async => value;
+  @override
+  Future<void> write(String? next) async => value = next;
+}
+
+@Riverpod(keepAlive: true)
+UpdateSeenStore updateSeenStore(Ref ref, String key) => PrefsUpdateSeenStore(key);
+
 /// A device acknowledgement belongs to one person, server and workspace.
 @riverpod
 String? attentionScope(Ref ref) {
@@ -34,7 +54,7 @@ class UpdatesSeen extends _$UpdatesSeen {
   @override
   Future<UpdateReadState> build(String scope) async {
     final now = ref.watch(clockProvider).now();
-    final store = PrefsStringStore('workspace_updates_seen_$scope');
+    final store = ref.read(updateSeenStoreProvider('workspace_updates_seen_$scope'));
     final stored = DateTime.tryParse(await store.read() ?? '');
     final cutoff = stored ?? now;
     if (stored == null) await store.write(cutoff.toUtc().toIso8601String());
@@ -47,7 +67,7 @@ class UpdatesSeen extends _$UpdatesSeen {
       if (!ref.mounted) return;
       final now = ref.read(clockProvider).now();
       state = AsyncData(UpdateReadState(now, previous.seenUntil));
-      await PrefsStringStore('workspace_updates_seen_$scope')
+      await ref.read(updateSeenStoreProvider('workspace_updates_seen_$scope'))
           .write(now.toUtc().toIso8601String());
     } catch (e, st) {
       TraceLogger.instance.warn('events', 'update acknowledgement unavailable',
