@@ -6658,7 +6658,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      'Konditionen verhandelt? Die Karte zeigt Ihre Preise neben dem Tarif, seit wann, und wer sie sehen kann — die Inhaber und Finanz-Admins, jeder Zugriff protokolliert.';
+      'Ihre ausgehandelten Preise finden Sie unter Dokumente neben Ihrer Vereinbarung. Die Karte vergleicht sie mit dem Tarif und zeigt, wer sie einsehen darf; Zugriffe anderer werden protokolliert.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic => 'Preisverhandlungen';

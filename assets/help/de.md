@@ -1289,6 +1289,8 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 
 ### 9c. Die Ansicht Abrechnung
 
+Der Monatssaldo steht zuerst; Nutzung und Kosten folgen. Hilfetipps stehen nach den Inhalten und Aktionen.
+
 **Der gewählte Monat zuerst.** Enthaltene, genutzte und verbleibende Tage, Abonnement, Leistungen und Zuschläge, Pakete, offene Posten, Gutschriften, Rechnung und Saldo beschreiben den gewählten Zeitraum. Darunter öffnet **Ihr Konto** Guthaben, offene Rechnungen und Erstattungen aus **allen Zeiträumen**. Die Nettoposition ist vom Monatssaldo getrennt. Verhandelte Preise stehen unter **Dokumente** bei Ihrer aktuellen Vereinbarung.
 
 ![](assets/help/images/statement-account.jpg)
