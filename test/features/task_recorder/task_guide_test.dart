@@ -163,7 +163,7 @@ void main() {
         RecorderActions.selectResource,
         RecorderActions.changeBookingField,
       ]) {
-        run.onAction(a);
+        run.onAction(a, target: run.current?.target);
       }
     }
 
@@ -206,18 +206,26 @@ void main() {
       token = run.onAction(RecorderActions.confirmBooking);
       run
         ..pause()
-        ..onOutcome(RecorderOutcomes.bookingConfirmed, token: token) // arrives while paused
+        ..onOutcome(
+          RecorderOutcomes.bookingConfirmed,
+          token: token,
+        ) // arrives while paused
         ..resume();
       expect(run.statusOf(confirm.id), GuideStepStatus.pending);
       expect(run.uncertain, isTrue);
     });
 
     test('skipped is never done; foreign and late events change nothing', () {
-      token = run.onAction(RecorderActions.confirmBooking); // not the current step
+      token = run.onAction(
+        RecorderActions.confirmBooking,
+      ); // not the current step
       expect(run.current!.action, RecorderActions.openReserve);
       run.skip();
       expect(run.statusOf('g1'), GuideStepStatus.skipped);
-      run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token); // nothing waits
+      run.onOutcome(
+        RecorderOutcomes.bookingConfirmed,
+        token: token,
+      ); // nothing waits
       expect(run.statusOf('g6'), GuideStepStatus.pending);
       run.stop();
       run.onAction(RecorderActions.selectDate);

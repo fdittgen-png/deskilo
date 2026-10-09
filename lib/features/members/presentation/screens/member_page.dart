@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../../core/vat/vat_treatment.dart';
+import '../../../../core/motion/motion.dart';
+import '../../../../l10n/app_localizations_en.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,6 +51,8 @@ import '../../../workspace/domain/site.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../money/presentation/widgets/member_carnet_tile.dart';
+
+part '../widgets/member_page_cards.dart';
 
 /// #825 — ONE page per person (`/member/:id`): who they are and whether
 /// they are here, what they have booked, how to reach them, their money
@@ -497,97 +502,111 @@ class _MemberPageBody extends ConsumerWidget {
             ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xl),
-        children: [
-          _HeaderCard(
-            member: member,
-            name: name,
-            isSelf: isSelf,
-            hasAvatar: profile?.hasAvatar ?? false,
-            statusText: profile?.statusText ?? '',
-            presence: presence,
-            now: now,
+      body: _MemberSections(
+        sections: [
+          _MemberSection(
+            'profile',
+            (l10n ?? AppLocalizationsEn()).uxProfileSection,
+            [
+              _HeaderCard(
+                member: member,
+                name: name,
+                isSelf: isSelf,
+                hasAvatar: profile?.hasAvatar ?? false,
+                statusText: profile?.statusText ?? '',
+                presence: presence,
+                now: now,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              _NowCard(
+                info: info,
+                upcoming: upcoming,
+                targets: targets,
+                onOpen: (r) => showReservationDetail(context, ref, r),
+              ),
+              if (quickActions.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.md),
+                // #1187 — the actions were a Wrap of buttons each sized to
+                // its own label: three rows, three widths, ragged right. Two
+                // equal columns instead, and a lone last button spans them,
+                // so the group reads as a group.
+                LayoutBuilder(
+                  key: const ValueKey('member-page-actions'),
+                  builder: (context, constraints) {
+                    const gap = AppSpacing.sm;
+                    final cell = (constraints.maxWidth - gap) / 2;
+                    return Wrap(
+                      spacing: gap,
+                      runSpacing: gap,
+                      children: [
+                        for (final (i, action) in quickActions.indexed)
+                          SizedBox(
+                            key: ValueKey('member-page-cell-$i'),
+                            // A lone last button spans both columns rather
+                            // than sitting half-width beside nothing.
+                            width: i == quickActions.length - 1 && i.isEven
+                                ? constraints.maxWidth
+                                : cell,
+                            child: action,
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+              // Role-gated INSIDE each card, as on the old sheet.
+              MemberContactCard(member: member, isSelf: isSelf),
+              MemberMoneyCard(memberId: member.id, isSelf: isSelf),
+            ],
           ),
-          const SizedBox(height: AppSpacing.md),
-          _NowCard(
-            info: info,
-            upcoming: upcoming,
-            targets: targets,
-            onOpen: (r) => showReservationDetail(context, ref, r),
-          ),
-          if (quickActions.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.md),
-            // #1187 — the actions were a Wrap of buttons each sized to
-            // its own label: three rows, three widths, ragged right. Two
-            // equal columns instead, and a lone last button spans them,
-            // so the group reads as a group.
-            LayoutBuilder(
-              key: const ValueKey('member-page-actions'),
-              builder: (context, constraints) {
-                const gap = AppSpacing.sm;
-                final cell = (constraints.maxWidth - gap) / 2;
-                return Wrap(
-                  spacing: gap,
-                  runSpacing: gap,
-                  children: [
-                    for (final (i, action) in quickActions.indexed)
-                      SizedBox(
-                        key: ValueKey('member-page-cell-$i'),
-                        // A lone last button spans both columns rather
-                        // than sitting half-width beside nothing.
-                        width: i == quickActions.length - 1 && i.isEven
-                            ? constraints.maxWidth
-                            : cell,
-                        child: action,
-                      ),
-                  ],
-                );
-              },
-            ),
-          ],
-          // Role-gated INSIDE each card, as on the old sheet.
-          MemberContactCard(member: member, isSelf: isSelf),
-          MemberMoneyCard(memberId: member.id, isSelf: isSelf),
-          // #881 — the conditions the member's documents print.
-          if (features.contains(WorkspaceFeature.memberPaymentTerms) &&
-              (isSelf || canAdmin))
-            PaymentTermsCard(member: member, isSelf: isSelf),
           // #2085 — the one place a member is given a role.
           if (rolesOn &&
               !member.isKiosk &&
               (isSelf ||
                   canAdmin ||
                   perms.contains(WorkspacePermission.manageRoles)))
-            MemberRolesCard(member: member, name: name),
-          if (groups.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.lg),
-            Text(
+            _MemberSection('roles', l10n?.memberRolesTitle ?? 'Roles', [
+              MemberRolesCard(member: member, name: name),
+            ], showHeading: false),
+          if (groups.isNotEmpty)
+            _MemberSection(
+              'manage',
               l10n?.memberPageManageHeading ?? 'Manage',
-              key: const ValueKey('member-page-manage'),
-              style: theme.textTheme.titleMedium,
-            ),
-            for (final (title, tiles) in groups)
-              Card(
-                margin: const EdgeInsets.only(top: AppSpacing.sm),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
-                      child: Text(
-                        title,
-                        style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant),
-                      ),
+              [
+                for (final (title, tiles) in groups)
+                  Card(
+                    margin: const EdgeInsets.only(top: AppSpacing.sm),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.lg,
+                            AppSpacing.md,
+                            AppSpacing.lg,
+                            0,
+                          ),
+                          child: Text(
+                            title,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        ...tiles,
+                      ],
                     ),
-                    ...tiles,
-                  ],
-                ),
-              ),
-          ],
+                  ),
+              ],
+            ),
+          if (features.contains(WorkspaceFeature.memberPaymentTerms) &&
+              (isSelf || canAdmin))
+            _MemberSection(
+              'payment-terms',
+              l10n?.paymentTermsTitle ?? 'Payment conditions',
+              [PaymentTermsCard(member: member, isSelf: isSelf)],
+              showHeading: false,
+            ),
         ],
       ),
     );
@@ -595,338 +614,112 @@ class _MemberPageBody extends ConsumerWidget {
 
 }
 
-/// Who they are, at a glance: photo with the presence dot, name, role
-/// chips, their own status line, when they were last seen, since when
-/// they are a member.
-class _HeaderCard extends StatelessWidget {
-  const _HeaderCard({
-    required this.member,
-    required this.name,
-    required this.isSelf,
-    required this.hasAvatar,
-    required this.statusText,
-    required this.presence,
-    required this.now,
-  });
+class _MemberSection {
+  const _MemberSection(this.id, this.title, this.children, {this.showHeading = true});
 
-  final Member member;
-  final String name;
-  final bool isSelf;
-  final bool hasAvatar;
-  final String statusText;
-  final DirectoryPresence presence;
-  final DateTime now;
+  final String id;
+  final String title;
+  final List<Widget> children;
+  final bool showHeading;
+}
+
+/// The same section shortcuts and reading width as Profile and account.
+/// All sections stay mounted so keyboard focus and guide highlights can reach
+/// a control below the fold without switching away from the member's form.
+class _MemberSections extends StatefulWidget {
+  const _MemberSections({required this.sections});
+
+  final List<_MemberSection> sections;
 
   @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final brightness = theme.brightness;
-    final online = presence.kind == DirectoryPresenceKind.online;
-    final chips = <Widget>[
-      if (member.isOwner)
-        _Chip(l10n?.memberRoleOwner ?? 'Owner',
-            foreground: theme.colorScheme.onPrimary,
-            background: theme.colorScheme.primary),
-      if (member.isAdmin && !member.isOwner)
-        _Chip(l10n?.memberRoleAdmin ?? 'Administrator',
-            foreground: theme.colorScheme.primary, outlined: true),
-      if (member.coOwner == CoOwnerStatus.active)
-        _Chip(l10n?.memberCoOwnerChip ?? 'Co-owner',
-            foreground: theme.colorScheme.primary, outlined: true),
-      if (member.coOwner == CoOwnerStatus.passive)
-        _Chip(l10n?.memberCoOwnerPassiveChip ?? 'Successor',
-            foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
-      if (member.isKiosk)
-        _Chip(l10n?.memberKioskLabel ?? 'Kiosk',
-            foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
-      if (member.isManaged)
-        _Chip(l10n?.managedProfileChip ?? 'Managed',
-            foreground: theme.colorScheme.tertiary, outlined: true),
-      if (member.status == MemberStatus.pending)
-        _Chip(l10n?.memberStatusPending ?? 'Pending',
-            foreground: theme.colorScheme.onError,
-            background: theme.colorScheme.error),
-      if (member.status == MemberStatus.paused)
-        _Chip(l10n?.memberStatusPaused ?? 'Paused',
-            foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
-      if (member.status == MemberStatus.exited)
-        _Chip(l10n?.memberStatusExited ?? 'Exited',
-            foreground: theme.colorScheme.onSurfaceVariant, outlined: true),
-    ];
-    final presenceText = online
-        ? (l10n?.directoryOnline ?? 'Online')
-        : presence.lastSeenAt == null
-            ? (l10n?.memberPageNeverSeen ?? 'Not seen yet')
-            : relativeLastSeen(l10n, now, presence.lastSeenAt!);
-    final joined = member.joinedAt;
-    return Card(
-      key: const ValueKey('member-page-header'),
-      child: Padding(
-        padding: AppSpacing.lgAll,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(clipBehavior: Clip.none, children: [
-              MemberAvatar(
-                userId: member.userId,
-                name: name,
-                hasAvatar: hasAvatar,
-                radius: 32,
-              ),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  key: const ValueKey('member-page-presence-dot'),
-                  width: 16,
-                  height: 16,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: online
-                        ? AppStatusColors.successOf(brightness)
-                        : theme.colorScheme.outlineVariant,
-                    border: Border.all(
-                        color: theme.colorScheme.surface, width: 2),
+  State<_MemberSections> createState() => _MemberSectionsState();
+}
+
+class _MemberSectionsState extends State<_MemberSections> {
+  final _anchors = <String, GlobalKey>{};
+  final _focus = <String, FocusNode>{};
+
+  @override
+  void dispose() {
+    for (final node in _focus.values) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  void _jump(String id) {
+    final target = _anchors[id]?.currentContext;
+    if (target == null) return;
+    _focus[id]?.requestFocus();
+    Scrollable.ensureVisible(
+      target,
+      duration: motionDuration(context, MotionTokens.standard),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => Align(
+    alignment: Alignment.topCenter,
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 760),
+      child: Column(
+        children: [
+          Padding(
+            padding: AppSpacing.smAll,
+            child: Wrap(
+              key: const ValueKey('member-section-navigation'),
+              spacing: AppSpacing.xs,
+              children: [
+                for (final section in widget.sections)
+                  TextButton(
+                    key: ValueKey('member-section-${section.id}'),
+                    onPressed: () => _jump(section.id),
+                    child: Text(section.title),
                   ),
-                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              key: const ValueKey('member-page-sections'),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                0,
+                AppSpacing.lg,
+                AppSpacing.xl,
               ),
-            ]),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    isSelf
-                        ? (l10n?.memberPageYou(name) ?? '$name (you)')
-                        : name,
-                    style: theme.textTheme.titleLarge,
-                  ),
-                  // #928 — the member number, as the invoice prints it.
-                  if (member.memberNumber.isNotEmpty)
-                    Text(
-                      member.memberNumber,
-                      key: const ValueKey('member-page-number'),
-                      style: theme.textTheme.bodySmall,
-                    ),
-                  if (chips.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: AppSpacing.xs),
-                      child: Wrap(
-                        spacing: AppSpacing.xs,
-                        runSpacing: AppSpacing.xs,
-                        children: chips,
+                for (final section in widget.sections)
+                    Focus(
+                      key: _anchors.putIfAbsent(section.id, GlobalKey.new),
+                      focusNode: _focus.putIfAbsent(
+                        section.id,
+                        () => FocusNode(skipTraversal: true),
                       ),
-                    ),
-                  if (statusText.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: AppSpacing.sm),
-                      child: Text(statusText,
-                          key: const ValueKey('member-page-status-text'),
-                          style: theme.textTheme.bodyMedium),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.sm),
-                    child: Row(children: [
-                      Icon(Icons.circle,
-                          size: 10,
-                          color: online
-                              ? AppStatusColors.successOf(brightness)
-                              : theme.colorScheme.outline),
-                      const SizedBox(width: AppSpacing.xs),
-                      Text(
-                        presenceText,
-                        key: const ValueKey('member-page-presence'),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: online
-                              ? AppStatusColors.successOf(brightness)
-                              : theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ]),
-                  ),
-                  if (joined != null)
-                    Text(
-                      l10n?.memberPageSince(
-                              DateFormat.yMMMd().format(joined.toLocal())) ??
-                          'Member since ${DateFormat.yMMMd().format(joined.toLocal())}',
-                      key: const ValueKey('member-page-since'),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant),
+                    child: section.showHeading
+                        ? FormSection(
+                            key: ValueKey('member-page-${section.id}'),
+                            title: section.title,
+                            children: section.children,
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(top: AppSpacing.md),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: section.children,
+                            ),
+                          ),
                     ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
-}
-
-/// Where they are right now and what comes next — the live check-in,
-/// the current reservation, or the next booking as a full sentence, then
-/// the upcoming list, each row opening the reservation.
-class _NowCard extends StatelessWidget {
-  const _NowCard({
-    required this.info,
-    required this.upcoming,
-    required this.targets,
-    required this.onOpen,
-  });
-
-  final ReservationInfo? info;
-  final List<Reservation> upcoming;
-  final Map<String, String> targets;
-  final void Function(Reservation reservation) onOpen;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final success = AppStatusColors.successOf(theme.brightness);
-    final (IconData icon, Color color, String line) = switch (info) {
-      CheckedInNow(:final reservation) => (
-          Icons.event_available,
-          success,
-          l10n?.memberPageCheckedIn(
-                  reservation.spaceNameFrom(targets),
-                  appFormatOf(context).time(reservation.startsAt)) ??
-              'Checked in · ${reservation.spaceNameFrom(targets)} · since ${appFormatOf(context).time(reservation.startsAt)}',
-        ),
-      ReservedNow(:final reservation) => (
-          Icons.event_seat_outlined,
-          theme.colorScheme.primary,
-          l10n?.memberPageReservedNow(
-                  reservation.spaceNameFrom(targets),
-                  appFormatOf(context).time(reservation.endsAt)) ??
-              'Reserved now · ${reservation.spaceNameFrom(targets)} · until ${appFormatOf(context).time(reservation.endsAt)}',
-        ),
-      UpcomingReservation(:final reservation) => (
-          Icons.event_outlined,
-          theme.colorScheme.onSurfaceVariant,
-          l10n?.memberPageNext(_MemberPageBody.bookingLabel(appFormatOf(context), 
-                  reservation, reservation.spaceNameFrom(targets))) ??
-              'Next: ${_MemberPageBody.bookingLabel(appFormatOf(context), reservation, reservation.spaceNameFrom(targets))}',
-        ),
-      null => (
-          Icons.event_busy_outlined,
-          theme.colorScheme.onSurfaceVariant,
-          l10n?.directoryNoUpcoming ?? 'No upcoming reservations',
-        ),
-    };
-    final rest = info == null
-        ? upcoming
-        : upcoming.where((r) => r.id != info!.reservation.id).toList();
-    return Card(
-      key: const ValueKey('member-page-now'),
-      child: Padding(
-        padding: AppSpacing.lgAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n?.memberPageNowHeading ?? 'Right now',
-                style: theme.textTheme.titleSmall),
-            const SizedBox(height: AppSpacing.xs),
-            InkWell(
-              key: const ValueKey('member-page-now-line'),
-              borderRadius: AppRadius.mdAll,
-              onTap: info == null ? null : () => onOpen(info!.reservation),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-                child: Row(children: [
-                  Icon(icon, size: 20, color: color),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: Text(line,
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(color: color)),
-                  ),
-                ]),
-              ),
-            ),
-            for (final r in rest)
-              InkWell(
-                key: ValueKey('member-page-reservation-${r.id}'),
-                borderRadius: AppRadius.mdAll,
-                onTap: () => onOpen(r),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-                  child: Row(children: [
-                    Icon(Icons.event_outlined,
-                        size: 20, color: theme.colorScheme.onSurfaceVariant),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Text(
-                        _MemberPageBody.bookingLabel(appFormatOf(context), 
-                            r, r.spaceNameFrom(targets)),
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                    Icon(Icons.chevron_right,
-                        size: 18, color: theme.colorScheme.onSurfaceVariant),
-                  ]),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ManageTile extends StatelessWidget {
-  const _ManageTile({
-    required this.tileKey,
-    required this.icon,
-    required this.title,
-    required this.onTap,
-    this.subtitle,
-  });
-
-  final Key tileKey;
-  final IconData icon;
-  final String title;
-  final String? subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-        key: tileKey,
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: subtitle == null ? null : Text(subtitle!),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      );
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip(this.label,
-      {required this.foreground, this.background, this.outlined = false});
-
-  final String label;
-  final Color foreground;
-  final Color? background;
-  final bool outlined;
-
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: AppSpacing.xs / 2),
-        decoration: BoxDecoration(
-          color: background,
-          border: outlined ? Border.all(color: foreground) : null,
-          borderRadius: AppRadius.xlAll,
-        ),
-        child: Text(label,
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: foreground)),
-      );
+    ),
+  );
 }
 
 /// "Seen 20 h ago" — the directory's relative last-seen label, shared

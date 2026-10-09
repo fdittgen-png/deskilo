@@ -6,14 +6,14 @@
   "guideHostSkip": "Passer",
   "guideHostBack": "Retour",
   "guideHostStop": "Arrêter le guide",
-  "guideHostShowMe": "Montrer",
+  "guideHostShowMe": "Ouvrir et mettre en évidence",
   "guideHostSteps": "Toutes les étapes",
   "guideHostResume": "Reprendre",
   "guideHostClose": "Fermer",
   "guideHostWaiting": "En attente du résultat…",
   "guideHostUncertain": "La réponse n'est pas arrivée. Vérifiez si l'action a eu lieu avant de réessayer.",
   "guideHostRecovery": "C'est refusé. Suivez ces étapes, puis réessayez.",
-  "guideHostNotOnScreen": "Ce contrôle n'est pas sur cet écran. Allez à l'écran de l'étape précédente ou vérifiez le guide.",
+  "guideHostNotOnScreen": "Ouvrez la page de l’étape, puis suivez les étapes précédentes pour afficher ce contrôle.",
   "guideHostPausedScope": "En pause : le compte ou l'espace a changé. Le guide ne continue que là où il a commencé.",
   "guideHostPausedFeature": "En pause : l'enregistreur de tâches est désactivé dans cet espace.",
   "guideHostBlocked": "Réglez d'abord le message à l'écran ; le guide attend.",
@@ -63,5 +63,17 @@
       }
     }
   },
-  "guideHostGoToPage": "Aller à la page"
+  "guideHostGoToPage": "Aller à la page",
+  "guideHostDestination": "Destination de l’étape",
+  "guideHostDestinationMissing": "Choisissez la page de cette étape dans l’éditeur du guide.",
+  "taskRecorderEndReferenceMissing": "Arrêt : le formulaire actuel n’a pas pu être identifié. Ouvrez une page prise en charge et recommencez.",
+  "guideHostManualAt": "Effectuez cette étape sur « {form} », puis marquez-la comme faite.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  }
 }

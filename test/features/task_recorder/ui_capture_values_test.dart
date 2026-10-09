@@ -84,7 +84,8 @@ Future<(ProviderContainer, RecorderController)> _pump(
     ],
   );
   final router = GoRouter(
-    routes: [GoRoute(path: '/', builder: (_, _) => const _Form())],
+    initialLocation: '/me',
+    routes: [GoRoute(path: '/me', builder: (_, _) => const _Form())],
   );
   addTearDown(router.dispose);
   await tester.pumpWidget(
@@ -149,7 +150,10 @@ void main() {
     StepValues of(String k) => values[k]!;
     expect(of('me-workspaces').entries['value'], TextValue(_typed));
     expect(of('me-help').entries['value'], const NumberValue(3.5));
-    expect(of('me-privacy').entries['value'], const RedactedValue(_secret.length));
+    expect(
+      of('me-privacy').entries['value'],
+      const RedactedValue(_secret.length),
+    );
     expect(of('me-activity').entries['value'], const RedactedValue(15));
     expect(of('me-servers').entries['checked'], const FlagValue(true));
 

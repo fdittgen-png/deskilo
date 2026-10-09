@@ -6182,6 +6182,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guideHostCompleted => 'Anleitung abgeschlossen.';
 
   @override
+  String get guideHostDestination => 'Ziel des Schritts';
+
+  @override
+  String get guideHostDestinationMissing =>
+      'Wählen Sie die Seite dieses Schritts im Guide-Editor.';
+
+  @override
   String guideHostDoAction(String action) {
     return 'Als Nächstes: $action.';
   }
@@ -6210,6 +6217,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.';
 
   @override
+  String guideHostManualAt(String form) {
+    return 'Führen Sie diesen Schritt auf „$form“ aus und markieren Sie ihn dann als erledigt.';
+  }
+
+  @override
   String guideHostManualProtected(String category) {
     return 'Dieser Teil findet auf einem geschützten Bildschirm statt ($category). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.';
   }
@@ -6219,7 +6231,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get guideHostNotOnScreen =>
-      'Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.';
+      'Öffnen Sie die Seite des Schritts und folgen Sie den vorherigen Schritten, um dieses Bedienelement anzuzeigen.';
 
   @override
   String guideHostOpenLabel(String label) {
@@ -6250,7 +6262,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guideHostResume => 'Fortsetzen';
 
   @override
-  String get guideHostShowMe => 'Zeigen';
+  String get guideHostShowMe => 'Öffnen und hervorheben';
 
   @override
   String get guideHostSkip => 'Überspringen';
@@ -17230,6 +17242,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taskRecorderEndLimitReached =>
       'Beendet: ein Grenzwert wurde erreicht';
+
+  @override
+  String get taskRecorderEndReferenceMissing =>
+      'Gestoppt: Das aktuelle Formular konnte nicht erkannt werden. Öffnen Sie eine unterstützte Seite und starten Sie erneut.';
 
   @override
   String get taskRecorderEndScopeChanged =>

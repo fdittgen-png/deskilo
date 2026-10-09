@@ -72,14 +72,11 @@ const Map<String, SafeField> safeFields = {
   // #2142 — a control's or a screen's label: one of the app's own
   // messages (by key), never text somebody typed.
   'label': SafeField('label', uiLabelKeys, soft: true),
+  'me_tab': SafeField('me_tab', {'home', 'discover', 'messages', 'me'}),
   // #1881 B — the calendar: which way the dates moved, whose calendar,
   // which kind of entry was opened; and a decision's answer.
   'direction': SafeField('direction', {'previous', 'next', 'today'}),
-  'calendar_of': SafeField('calendar_of', {
-    'mine',
-    'someone_else',
-    'everyone',
-  }),
+  'calendar_of': SafeField('calendar_of', {'mine', 'someone_else', 'everyone'}),
   'item_kind': SafeField('item_kind', {
     'conversation',
     'alert',
@@ -90,12 +87,7 @@ const Map<String, SafeField> safeFields = {
   'decision': SafeField('decision', {'accept', 'decline'}),
   // #1884 B — the built-in role a permission was switched for, and what
   // happened to a role the space defines.
-  'role_kind': SafeField('role_kind', {
-    'owner',
-    'co_owner',
-    'admin',
-    'member',
-  }),
+  'role_kind': SafeField('role_kind', {'owner', 'co_owner', 'admin', 'member'}),
   'role_change': SafeField('role_change', {'created', 'edited', 'renamed'}),
   'refusal': SafeField('refusal', {
     'conflict',

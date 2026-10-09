@@ -67,7 +67,9 @@ class GuideRun {
   /// on that control: the same kind of tap elsewhere is not this step.
   Object? onAction(String actionId, {String? target}) {
     final step = current;
-    if (!_live || step == null || step.kind != GuideStepKind.perform) return null;
+    if (!_live || step == null || step.kind != GuideStepKind.perform) {
+      return null;
+    }
     if (step.action != actionId) return null;
     if (step.target != null && step.target != target) return null;
     if (_status[step.id] == GuideStepStatus.waiting) return null;
@@ -85,7 +87,12 @@ class GuideRun {
   /// The command the current step waits for answered [outcomeId].
   void onOutcome(String outcomeId, {required Object? token}) {
     final step = current;
-    if (!_live || step == null || token == null || !identical(token, _attempt)) return;
+    if (!_live ||
+        step == null ||
+        token == null ||
+        !identical(token, _attempt)) {
+      return;
+    }
     if (_status[step.id] != GuideStepStatus.waiting) return;
     _attempt = null;
     if (step.expectedOutcomes.contains(outcomeId)) {
@@ -128,6 +135,19 @@ class GuideRun {
       return;
     }
     if (_index > 0) _index--;
+  }
+
+  /// Inspect or revisit any step without marking intervening steps complete
+  /// and without abandoning an in-flight command.
+  void visit(String id) {
+    if (!_live ||
+        current != null && statusOf(current!.id) == GuideStepStatus.waiting) {
+      return;
+    }
+    final index = guide.steps.indexWhere((s) => s.id == id);
+    if (index < 0) return;
+    _index = index;
+    _recoveryIndex = null;
   }
 
   /// The account, workspace or feature changed under the guide.
@@ -182,6 +202,15 @@ class GuideRun {
         _status[guide.steps[_index].id] != GuideStepStatus.pending) {
       _index++;
     }
-    if (_index >= guide.steps.length) _state = GuideRunState.completed;
+    if (_index >= guide.steps.length) {
+      final remaining = guide.steps.indexWhere(
+        (s) => _status[s.id] == GuideStepStatus.pending,
+      );
+      if (remaining >= 0) {
+        _index = remaining;
+      } else {
+        _state = GuideRunState.completed;
+      }
+    }
   }
 }

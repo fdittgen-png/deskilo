@@ -24,14 +24,16 @@ import 'step_values.dart';
 /// The format marker every encoded recording starts with.
 const String taskRecordingFormat = 'deskilo.task-recording';
 
-/// The newest schema version this build reads. 2 adds the typed `values` of
-/// a step (step_values.dart), written only by a recording the person started
-/// with "capture values"; every other recording is still written as 1, so an
-/// older build reads everything that carries no value.
-const int taskRecordingSchemaVersion = 2;
+/// Schema 3 requires a safe page reference on every recorded step. Schema 2
+/// introduced opt-in typed values. Legacy recordings remain readable.
+const int taskRecordingSchemaVersion = 3;
 
-/// The schema [r] is written with: 2 only when it captures values.
-int schemaVersionOf(TaskRecording r) => r.capturesValues ? 2 : 1;
+/// New recordings carry page references; legacy copies keep their old format.
+int schemaVersionOf(TaskRecording r) => r.steps.any((s) => s.page != null)
+    ? 3
+    : r.capturesValues
+    ? 2
+    : 1;
 
 /// Why a recording ended.
 enum RecordingEndReason {
@@ -49,7 +51,10 @@ enum RecordingEndReason {
   storageFailed('storage_failed'),
 
   /// The app stopped while it was recording; found on the next start.
-  interrupted('interrupted');
+  interrupted('interrupted'),
+
+  /// The current form could not be identified; no unlinked step is saved.
+  referenceMissing('reference_missing');
 
   const RecordingEndReason(this.wire);
   final String wire;
@@ -207,6 +212,7 @@ class RecordedStep {
     this.action,
     this.actionVersion,
     this.target,
+    this.page,
     this.payload = SafePayload.empty,
     this.values = StepValues.none,
     this.op,
@@ -229,6 +235,10 @@ class RecordedStep {
   final String? action;
   final int? actionVersion;
   final String? target;
+
+  /// The form on which this step occurred. Required on every schema-3 step.
+  /// A registered page/tab, never an arbitrary URL or a private record ID.
+  final String? page;
   final SafePayload payload;
 
   /// What was entered or chosen, when the recording captures values.
@@ -255,25 +265,27 @@ class RecordedStep {
   bool get isAttempt =>
       kind == StepKind.action && state == ObservationState.attempted;
 
-  RecordedStep renumbered(int newSeq, {int? keepSourceSeq}) => RecordedStep(
-    seq: newSeq,
-    segment: segment,
-    elapsedMs: elapsedMs,
-    kind: kind,
-    surface: surface,
-    action: action,
-    actionVersion: actionVersion,
-    target: target,
-    payload: payload,
-    values: values,
-    op: op,
-    state: state,
-    outcome: outcome,
-    note: note,
-    protectedCategory: protectedCategory,
-    origin: origin,
-    sourceSeq: keepSourceSeq ?? sourceSeq,
-  );
+  RecordedStep renumbered(int newSeq, {int? keepSourceSeq, String? page}) =>
+      RecordedStep(
+        seq: newSeq,
+        segment: segment,
+        elapsedMs: elapsedMs,
+        kind: kind,
+        surface: surface,
+        action: action,
+        actionVersion: actionVersion,
+        target: target,
+        page: page ?? this.page,
+        payload: payload,
+        values: values,
+        op: op,
+        state: state,
+        outcome: outcome,
+        note: note,
+        protectedCategory: protectedCategory,
+        origin: origin,
+        sourceSeq: keepSourceSeq ?? sourceSeq,
+      );
 
   @override
   bool operator ==(Object other) =>
@@ -286,6 +298,7 @@ class RecordedStep {
       other.action == action &&
       other.actionVersion == actionVersion &&
       other.target == target &&
+      other.page == page &&
       other.payload == payload &&
       other.values == values &&
       other.op == op &&
@@ -305,6 +318,7 @@ class RecordedStep {
     surface,
     action,
     target,
+    page,
     payload,
     values,
     op,

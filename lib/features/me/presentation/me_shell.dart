@@ -226,7 +226,12 @@ class _MeShellState extends ConsumerState<MeShell> {
         index: _tab.index,
         children: [
           for (final tab in MeTab.values)
-            _visited.contains(tab) ? _page(tab) : const SizedBox.shrink(),
+            TickerMode(
+              enabled: _tab == tab,
+              child: _visited.contains(tab)
+                  ? _page(tab)
+                  : const SizedBox.shrink(),
+            ),
         ],
       )),
       ]),

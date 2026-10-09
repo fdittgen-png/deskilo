@@ -23,6 +23,7 @@ import '../application/recorder_controller.dart' show RecorderScope;
 import '../providers/recorder_providers.dart';
 import 'guide_runner.dart';
 import 'task_guide.dart';
+import 'guide_destination.dart';
 
 part 'guide_session.g.dart';
 
@@ -84,13 +85,15 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
   /// (unknown actions, a newer contract) is refused by the caller's
   /// decoder before it gets here; a signed-out person cannot start one.
   bool start(TaskGuide guide) {
+    final linked = linkedGuide(guide);
+    if (linked == null) return false;
     final scope = ref.read(recorderScopeProvider);
     if (scope == null || !ref.read(taskRecorderAvailableProvider)) {
       return false;
     }
     _startScope = scope;
     GuideEvents.sink = this;
-    _set(GuideRun(guide), pauseReason: null);
+    _set(GuideRun(linked), pauseReason: null);
     return true;
   }
 
@@ -114,6 +117,8 @@ class GuideSession extends _$GuideSession implements GuideEventSink {
   void skip() => _change((run) => run.skip());
 
   void back() => _change((run) => run.back());
+
+  void visit(String id) => _change((run) => run.visit(id));
 
   /// Resumes only where it paused: the same scope, the feature on.
   bool resume() {

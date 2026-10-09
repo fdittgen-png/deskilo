@@ -321,7 +321,11 @@ StoredRecording recoverRecordingLog(
   }
   final json = {
     'format': taskRecordingFormat,
-    'schema_version': head['values'] == true ? 2 : 1,
+    'schema_version': steps.any((s) => s is Map && s.containsKey('page'))
+        ? 3
+        : head['values'] == true
+        ? 2
+        : 1,
     'action_contract_version': head['contract'],
     'platform': head['platform'],
     'kind': RecordingKind.source.wire,

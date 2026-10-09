@@ -5,12 +5,18 @@
 // workbench, so a step reads the same wherever it is shown.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/action_registry.dart';
 import '../../domain/task_recording.dart';
+import '../../guide/guide_compiler.dart';
+import '../../guide/guide_session.dart';
+import '../../guide/task_guide.dart';
 import '../recorder_labels.dart';
+import '../guide_host/guide_step_text.dart' show guideDestinationLabel;
 
 class RecordingStepsView extends StatelessWidget {
   const RecordingStepsView({
@@ -76,7 +82,7 @@ class _Gap extends StatelessWidget {
   );
 }
 
-class _StepTile extends StatelessWidget {
+class _StepTile extends ConsumerWidget {
   const _StepTile({
     required this.step,
     required this.answered,
@@ -103,7 +109,7 @@ class _StepTile extends StatelessWidget {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final text = stepText(l10n, step);
     final unanswered = answered
@@ -121,7 +127,46 @@ class _StepTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: Icon(_icon),
       title: Text(text.title, style: style),
-      subtitle: detail.isEmpty ? null : Text(detail, style: style),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (detail.isNotEmpty) Text(detail, style: style),
+          if (step.page != null)
+            TextButton.icon(
+              key: ValueKey('task-step-reference-${step.seq}'),
+              onPressed: GoRouter.maybeOf(context) == null
+                  ? null
+                  : () {
+                      final compiled = compileGuide(
+                        TaskRecording(
+                          actionContractVersion: actionContractVersion,
+                          platform: RecordingPlatform.unknown,
+                          steps: [step],
+                          segments: const [],
+                        ),
+                      );
+                      // A result or window event still has a form reference.
+                      final guide = compiled.steps.isNotEmpty
+                          ? compiled
+                          : TaskGuide(
+                              actionContractVersion: actionContractVersion,
+                              steps: [
+                                GuideStep(
+                                  id: 'g1',
+                                  kind: GuideStepKind.instruction,
+                                  text: text.title,
+                                  destination: step.page,
+                                ),
+                              ],
+                            );
+                      ref.read(guideSessionProvider.notifier).start(guide);
+                      GoRouter.of(context).go(step.page!);
+                    },
+              icon: const Icon(Icons.open_in_new, size: 16),
+              label: Text(guideDestinationLabel(l10n, step.page!)),
+            ),
+        ],
+      ),
       trailing: IconButton(
         key: ValueKey('task-step-toggle-${step.seq}'),
         tooltip: leftOut

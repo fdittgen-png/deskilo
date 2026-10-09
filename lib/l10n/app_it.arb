@@ -4167,6 +4167,8 @@
   "guideHostClose": "Chiudi",
   "guideHostCommand": "Conferma, poi attendi il risultato.",
   "guideHostCompleted": "Guida completata.",
+  "guideHostDestination": "Destinazione del passaggio",
+  "guideHostDestinationMissing": "Scegli la pagina di questo passaggio nell’editor della guida.",
   "guideHostDoAction": "Poi: {action}.",
   "guideHostDone": "Fatto",
   "guideHostFillField": "Compila il campo evidenziato, poi esci.",
@@ -4174,12 +4176,21 @@
   "guideHostGoToPage": "Vai alla pagina",
   "guideHostInstruction": "Leggi questo, poi segnalo come fatto.",
   "guideHostManual": "Esegui tu questo passo, poi segnalo come fatto.",
+  "guideHostManualAt": "Completa questo passaggio su «{form}», poi contrassegnalo come fatto.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
   "guideHostManualProtected": "Questa parte avviene in una schermata protetta ({category}). Eseguila tu, poi segnala come fatta.",
   "guideHostMinimize": "Riduci la guida",
   "@guideHostMinimize": {
     "description": "Task wizard: guideHostMinimize"
   },
-  "guideHostNotOnScreen": "Questo controllo non è in questa schermata. Vai alla schermata del passo precedente o controlla la guida.",
+  "guideHostNotOnScreen": "Apri la pagina del passaggio e segui i passaggi precedenti per mostrare questo controllo.",
   "guideHostOpenLabel": "Apri «{label}».",
   "guideHostOpenScreen": "Apri la schermata successiva.",
   "guideHostPausedFeature": "In pausa: il registratore di attività è disattivato in questo spazio.",
@@ -4198,7 +4209,7 @@
     }
   },
   "guideHostResume": "Riprendi",
-  "guideHostShowMe": "Mostrami",
+  "guideHostShowMe": "Apri ed evidenzia",
   "guideHostSkip": "Salta",
   "guideHostStatusAcknowledged": "Preso atto",
   "guideHostStatusDone": "Fatto",
@@ -10819,6 +10830,7 @@
   "taskRecorderEditedNote": "Copia modificata: {count} passaggi esclusi. La registrazione su questo dispositivo resta invariata.",
   "taskRecorderEndInterrupted": "Interrotta: l'app si è fermata durante la registrazione",
   "taskRecorderEndLimitReached": "Terminata: è stato raggiunto un limite",
+  "taskRecorderEndReferenceMissing": "Interrotto: impossibile identificare il modulo attuale. Apri una pagina supportata e ricomincia.",
   "taskRecorderEndScopeChanged": "Terminata: è cambiato l'account o lo spazio",
   "taskRecorderEndStopped": "Fermata da lei",
   "taskRecorderEndStorageFailed": "Terminata: non è stato possibile salvarla su questo dispositivo",

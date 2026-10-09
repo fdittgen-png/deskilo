@@ -60,16 +60,16 @@ const List<String> canaryFragments = ['canary', 'CANARY', 'Zelda'];
 /// A raw payload as a careless call site might pass it: the right keys
 /// with private values, and private keys nobody declared.
 Map<String, Object?> canaryPayload([Map<String, Object?> legit = const {}]) => {
-      for (final c in privateCanaries) 'x_$c': c,
-      'member_name': kCanaryMemberName,
-      'reservation_id': kCanaryReservationId,
-      'workspace_id': kCanaryWorkspaceId,
-      'password': kCanaryPassword,
-      'note': kCanaryMessage,
-      // Every declared field, with a private value in it.
-      for (final key in safeFields.keys) key: kCanaryMemberName,
-      ...legit,
-    };
+  for (final c in privateCanaries) 'x_$c': c,
+  'member_name': kCanaryMemberName,
+  'reservation_id': kCanaryReservationId,
+  'workspace_id': kCanaryWorkspaceId,
+  'password': kCanaryPassword,
+  'note': kCanaryMessage,
+  // Every declared field, with a private value in it.
+  for (final key in safeFields.keys) key: kCanaryMemberName,
+  ...legit,
+};
 
 /// The scope the canary journeys are recorded in.
 final RecorderScope canaryScope = RecorderScope.of(
@@ -79,7 +79,9 @@ final RecorderScope canaryScope = RecorderScope.of(
 );
 
 final String canaryNamespace = RecorderScope.accountNamespace(
-    backendUrl: kCanaryUrl, userId: kCanaryUserId);
+  backendUrl: kCanaryUrl,
+  userId: kCanaryUserId,
+);
 
 /// A clock the journeys advance by hand: 400 ms per step.
 class StepClock {
@@ -89,15 +91,18 @@ class StepClock {
 }
 
 /// A controller over [store] with a deterministic clock and ids.
-RecorderController fixtureController(RecordingSink store, StepClock clock,
-        {RecordingLimits limits = const RecordingLimits()}) =>
-    RecorderController(
-      sink: store,
-      platform: RecordingPlatform.android,
-      clock: clock.call,
-      limits: limits,
-      newId: () => '0123456789abcdef0123456789abcdef',
-    );
+RecorderController fixtureController(
+  RecordingSink store,
+  StepClock clock, {
+  RecordingLimits limits = const RecordingLimits(),
+}) => RecorderController(
+  initialPage: '/reserve',
+  sink: store,
+  platform: RecordingPlatform.android,
+  clock: clock.call,
+  limits: limits,
+  newId: () => '0123456789abcdef0123456789abcdef',
+);
 
 /// The four booking journeys of #1865's acceptance.
 enum BookingJourney {
@@ -119,7 +124,10 @@ enum BookingJourney {
 
 /// Drives [c] through [journey] with canaries at every boundary.
 Future<TaskRecording> recordJourney(
-    RecorderController c, StepClock clock, BookingJourney journey) async {
+  RecorderController c,
+  StepClock clock,
+  BookingJourney journey,
+) async {
   final started = await c.start(
     scope: canaryScope,
     title: 'Book a desk',
@@ -130,8 +138,11 @@ Future<TaskRecording> recordJourney(
   );
   if (!started) throw StateError('fixture recording did not start');
   final list = journey == BookingJourney.listRefused;
-  void step(String action,
-      {String? target, Map<String, Object?> legit = const {}}) {
+  void step(
+    String action, {
+    String? target,
+    Map<String, Object?> legit = const {},
+  }) {
     clock.tick();
     c.record(action, target: target, payload: canaryPayload(legit));
   }
@@ -140,8 +151,10 @@ Future<TaskRecording> recordJourney(
   step(RecorderActions.selectDate, legit: {'date_relation': 'tomorrow'});
   step(RecorderActions.selectPeriod, legit: {'period': 'morning'});
   if (list) step(RecorderActions.switchView, legit: {'view_mode': 'list'});
-  step(RecorderActions.selectResource,
-      legit: {'view_mode': list ? 'list' : 'plan', 'resource_kind': 'desk'});
+  step(
+    RecorderActions.selectResource,
+    legit: {'view_mode': list ? 'list' : 'plan', 'resource_kind': 'desk'},
+  );
   step(RecorderActions.changeBookingField, target: 'check_in');
   step(RecorderActions.changeBookingField, target: 'check_in'); // coalesces
   if (journey == BookingJourney.cancelledReview) {
@@ -150,22 +163,36 @@ Future<TaskRecording> recordJourney(
     c.annotate('I only wanted to look.');
   } else {
     clock.tick();
-    final token = c.attempt(RecorderActions.confirmBooking,
-        payload: canaryPayload(
-            {'for_whom': 'self', 'repeat': 'once', 'check_in': 'yes'}));
+    final token = c.attempt(
+      RecorderActions.confirmBooking,
+      payload: canaryPayload({
+        'for_whom': 'self',
+        'repeat': 'once',
+        'check_in': 'yes',
+      }),
+    );
     clock.tick(900);
     switch (journey) {
       case BookingJourney.planConfirmed:
-        c.outcome(token, RecorderOutcomes.bookingConfirmed,
-            payload: canaryPayload({'check_in': 'yes'}));
+        c.outcome(
+          token,
+          RecorderOutcomes.bookingConfirmed,
+          payload: canaryPayload({'check_in': 'yes'}),
+        );
         step(RecorderActions.viewDetails);
         step(RecorderActions.back);
       case BookingJourney.listRefused:
-        c.outcome(token, RecorderOutcomes.bookingRefused,
-            payload: canaryPayload({'refusal': 'conflict'}));
+        c.outcome(
+          token,
+          RecorderOutcomes.bookingRefused,
+          payload: canaryPayload({'refusal': 'conflict'}),
+        );
       case BookingJourney.unknownOutcome:
-        c.outcome(token, RecorderOutcomes.bookingUnknown,
-            payload: canaryPayload());
+        c.outcome(
+          token,
+          RecorderOutcomes.bookingUnknown,
+          payload: canaryPayload(),
+        );
       case BookingJourney.cancelledReview:
         break;
     }
@@ -176,7 +203,7 @@ Future<TaskRecording> recordJourney(
 
 /// Records [journey] into a fresh in-memory store.
 Future<({TaskRecording recording, MemoryRecorderLogBackend backend})>
-    recordFixture(BookingJourney journey) async {
+recordFixture(BookingJourney journey) async {
   final backend = MemoryRecorderLogBackend();
   final store = RecorderStore(backend: backend, namespace: canaryNamespace);
   final clock = StepClock();
@@ -187,8 +214,7 @@ Future<({TaskRecording recording, MemoryRecorderLogBackend backend})>
 }
 
 /// The directory the JSON fixtures live in.
-final Directory fixturesDir =
-    Directory('test/features/task_recorder/fixtures');
+final Directory fixturesDir = Directory('test/features/task_recorder/fixtures');
 
 /// One committed JSON fixture's text.
 String fixtureText(String name) =>

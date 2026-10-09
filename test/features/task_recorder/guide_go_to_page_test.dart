@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Invariant: a guide step that happens on a page offers "Go to page" — the
-// page is worked out from what the recorder knows (the screen seam's page, or
-// the page the guide last opened), a page that needs an id offers none, the
-// button opens the page without entering anything, and it is gone once the
-// person is there.
+// page is worked out from an explicit reference or legacy context. The link
+// remains usable, and an already-open form is preserved when highlighting.
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
 import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
@@ -42,7 +40,7 @@ void main() {
       expect(guideStepRoute([open, tap], open), '/me');
     });
 
-    test('a page that needs an id offers none, and neither does a step '
+    test('a page that needs an id opens its chooser; no invented destination '
         'before any page', () {
       final open = _step(
         'g1',
@@ -50,7 +48,7 @@ void main() {
         target: '/member/:memberId',
       );
       final tap = _step('g2', RecorderActions.uiTap, target: 'demo-save');
-      expect(guideStepRoute([open, tap], tap), isNull);
+      expect(guideStepRoute([open, tap], tap), '/members');
       expect(guideStepRoute([tap], tap), isNull);
     });
 
@@ -66,7 +64,7 @@ void main() {
     });
   });
 
-  testWidgets('Go to page opens the page, and leaves once you are there', (
+  testWidgets('Go to page opens the page and remains available', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(800, 1400);
@@ -81,6 +79,20 @@ void main() {
         GoRoute(
           path: '/calendar',
           builder: (_, _) => const Scaffold(body: Text('calendar page')),
+        ),
+        GoRoute(
+          path: '/members',
+          builder: (_, _) => const Scaffold(body: Text('choose a member')),
+        ),
+        GoRoute(
+          path: '/member/:memberId',
+          builder: (_, _) =>
+              const Scaffold(body: TextField(key: ValueKey('me-workspaces'))),
+        ),
+        GoRoute(
+          path: '/roles',
+          builder: (_, _) =>
+              const Scaffold(body: TextField(key: ValueKey('me-workspaces'))),
         ),
       ],
     );
@@ -129,9 +141,66 @@ void main() {
     await tester.tap(go);
     await tester.pumpAndSettle();
     expect(find.text('calendar page'), findsOneWidget);
-    // Nothing was entered for the person, and the button left with the trip.
-    expect(go, findsNothing);
+    // The destination stays available without completing the action.
+    expect(go, findsOneWidget);
     expect(c.read(guideSessionProvider).run!.statusOf('g1').name, 'pending');
+    // A navigation instruction can be satisfied even when its page is
+    // already open; the following form action must remain pending.
+    c
+        .read(guideSessionProvider.notifier)
+        .start(
+          TaskGuide(
+            actionContractVersion: actionContractVersion,
+            steps: [
+              _step('g1', RecorderActions.uiOpenScreen, target: '/calendar'),
+              _step('g2', RecorderActions.calendarSwitchView),
+            ],
+          ),
+        );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('guide-host-show-me')));
+    await tester.pumpAndSettle();
+    expect(c.read(guideSessionProvider).run!.statusOf('g1').name, 'done');
+    expect(c.read(guideSessionProvider).run!.current!.id, 'g2');
+    expect(c.read(guideSessionProvider).run!.statusOf('g2').name, 'pending');
+
+    // A private detail route is already open. Its recorded public reference
+    // is the chooser, but the mounted control can be highlighted in place.
+    router.go('/member/example');
+    await tester.pumpAndSettle();
+    c
+        .read(guideSessionProvider.notifier)
+        .start(
+          TaskGuide(
+            actionContractVersion: actionContractVersion,
+            steps: const [
+              GuideStep(
+                id: 'g1',
+                kind: GuideStepKind.perform,
+                action: RecorderActions.uiCommitField,
+                target: 'me-workspaces',
+                destination: '/members',
+              ),
+            ],
+          ),
+        );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('guide-host-show-me')));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/member/example');
+    expect(find.byKey(const ValueKey('guide-host-ring')), findsOneWidget);
+    expect(c.read(guideSessionProvider).run!.statusOf('g1').name, 'pending');
+    router.go('/roles');
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(
+      find.byKey(const ValueKey('guide-host-ring')),
+      findsNothing,
+      reason: 'A reused control key on another form is not the reference.',
+    );
+    await tester.tap(find.byKey(const ValueKey('guide-host-show-me')));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/members');
     c.read(guideSessionProvider.notifier).close();
     await tester.pumpWidget(const SizedBox());
   });

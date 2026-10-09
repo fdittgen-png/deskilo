@@ -74,6 +74,7 @@ class _Harness {
     tester.view.physicalSize = const Size(800, 1600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
+    controller.setPage('/reserve');
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
@@ -299,8 +300,9 @@ void main() {
   ) async {
     final h = _Harness();
     final router = GoRouter(
+      initialLocation: '/me',
       routes: [
-        GoRoute(path: '/', builder: (_, _) => const Text('home')),
+        GoRoute(path: '/me', builder: (_, _) => const Text('home')),
         GoRoute(path: '/auth', builder: (_, _) => const Text('sign in')),
         GoRoute(path: '/nowhere', builder: (_, _) => const Text('nowhere')),
       ],
@@ -334,19 +336,20 @@ void main() {
 
     router.go('/auth');
     await tester.pumpAndSettle();
-    router.go('/nowhere');
+    router.go('/me');
     await tester.pumpAndSettle();
     // #1884 B — a PUSHED protected screen is marked too: the top route
     // decides, not the one the push was made from.
     unawaited(router.push('/auth'));
     await tester.pumpAndSettle();
     expect(h.controller.snapshot!.steps.map((s) => s.kind), [
+      StepKind.action,
       StepKind.excluded,
-      StepKind.unrecorded,
+      StepKind.action,
       StepKind.excluded,
     ]);
     expect(
-      h.controller.snapshot!.steps.first.protectedCategory,
+      h.controller.snapshot!.steps[1].protectedCategory,
       ProtectedSurface.authentication,
     );
 
@@ -357,6 +360,29 @@ void main() {
     await tester.pumpAndSettle();
     expect(h.controller.state, RecorderState.ended);
     expect(find.byKey(const ValueKey('recording-indicator')), findsNothing);
+    // An unsupported page ends the recording before saving an unlinked gap.
+    router.go('/me');
+    await tester.pumpAndSettle();
+    await h.controller.start(scope: canaryScope);
+    router.go('/nowhere');
+    await tester.pumpAndSettle();
+    expect(h.controller.status.endReason, RecordingEndReason.referenceMissing);
+    expect(
+      find.byKey(const ValueKey('recording-reference-error')),
+      findsOneWidget,
+    );
+    await tester.tap(
+      find.byKey(const ValueKey('recording-reference-error-close')),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('recording-reference-error')),
+      findsNothing,
+    );
+    expect(
+      h.controller.snapshot!.steps.every((step) => step.page != null),
+      isTrue,
+    );
     await h.done(tester);
   });
 

@@ -25,6 +25,7 @@ import 'action_registry.dart';
 import 'safe_payload.dart';
 import 'step_values.dart';
 import 'task_recording.dart';
+import 'recording_reference.dart';
 
 part 'task_recording_decoder.dart';
 
@@ -113,6 +114,7 @@ Map<String, Object?> encodeStep(RecordedStep s) => {
   if (s.action != null) 'action': s.action,
   if (s.actionVersion != null) 'action_version': s.actionVersion,
   if (s.target != null) 'target': s.target,
+  if (s.page != null) 'page': s.page,
   if (!s.payload.isEmpty) 'payload': s.payload.toJson(),
   if (!s.values.isEmpty) 'values': s.values.toJson(),
   if (s.op != null) 'op': s.op,
@@ -169,3 +171,40 @@ RecordingDecodeResult decodeRecording(
   ActionRegistry registry = recorderRegistry,
   RecordingLimits limits = const RecordingLimits(),
 }) => _Decoder(registry, limits).root(json);
+
+const _rootKeys = {
+  'format',
+  'schema_version',
+  'action_contract_version',
+  'platform',
+  'kind',
+  'source_digest',
+  'title',
+  'values_mode',
+  'prerequisites',
+  'segments',
+  'steps',
+  'end_reason',
+  'completeness',
+};
+
+const _stepKeys = {
+  'seq',
+  'segment',
+  'elapsed_ms',
+  'kind',
+  'surface',
+  'action',
+  'action_version',
+  'target',
+  'page',
+  'payload',
+  'values',
+  'op',
+  'state',
+  'outcome',
+  'note',
+  'protected',
+  'origin',
+  'source_seq',
+};

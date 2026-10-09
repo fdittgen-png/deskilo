@@ -28,9 +28,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
+import '../../domain/task_recording.dart' show RecordingEndReason;
 import '../../guide/guide_session.dart';
 import '../../providers/recorder_providers.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
+import '../../domain/recording_reference.dart';
 import '../guide_host/guide_host.dart';
 import '../route_classification.dart';
 import '../ui_capture.dart';
@@ -47,7 +49,9 @@ class RecordingIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final guiding = ref.watch(guideSessionProvider.select((s) => s.run != null));
+    final guiding = ref.watch(
+      guideSessionProvider.select((s) => s.run != null),
+    );
     if (!ref.watch(recorderOpenedProvider) && !guiding) return child;
     return _LiveIndicator(router: router, child: child);
   }
@@ -65,6 +69,7 @@ class _LiveIndicator extends ConsumerStatefulWidget {
 
 class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
   String? _lastPath;
+  bool _referenceErrorDismissed = false;
 
   /// #2142 — the screen on top is protected or the recorder's own: the
   /// generic layer notes nothing there.
@@ -80,6 +85,9 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
     super.initState();
     widget.router.routerDelegate.addListener(_onRoute);
     _capture.attach();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _onRoute();
+    });
   }
 
   @override
@@ -106,11 +114,32 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
       if (widget.router.routerDelegate.currentConfiguration.isEmpty) return;
       final state = widget.router.state;
       final path = state.uri.path;
-      if (path == _lastPath) return;
-      _lastPath = path;
+      final meTab = path == '/me' ? state.uri.queryParameters['tab'] : null;
+      final location = path == '/me' ? '$path?tab=${meTab ?? 'home'}' : path;
+      final controller = ref.read(recorderControllerProvider);
       final treatment = treatRoute(path);
       _quiet = treatment is Protected || treatment is RecorderScreen;
-      final controller = ref.read(recorderControllerProvider);
+      // Opening the recorder to annotate a task must preserve the task's form.
+      if (treatment is! RecorderScreen) {
+        controller.setPage(
+          path == '/me' && guideMeDestinations.contains(location)
+              ? location
+              : state.fullPath,
+        );
+      } else if (controller.currentPage == null) {
+        final base = widget.router.routerDelegate.currentConfiguration;
+        if (treatRoute(base.uri.path) is! RecorderScreen) {
+          final tab = base.uri.queryParameters['tab'] ?? 'home';
+          controller.setPage(
+            base.uri.path == '/me' &&
+                    guideMeDestinations.contains('/me?tab=$tab')
+                ? '/me?tab=$tab'
+                : base.fullPath,
+          );
+        }
+      }
+      if (location == _lastPath) return;
+      _lastPath = location;
       if (controller.state != RecorderState.recording) {
         // #1867 — a guide still hears which screen opened.
         final pattern = state.fullPath;
@@ -118,7 +147,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
             !_quiet &&
             pattern != null &&
             uiRoutes.contains(pattern)) {
-          scheduleMicrotask(() => _capture.screenOpened(pattern));
+          scheduleMicrotask(() => _capture.screenOpened(pattern, meTab: meTab));
         }
         return;
       }
@@ -130,7 +159,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
         switch (treatment) {
           case Instrumented(:final selfOpening) when !selfOpening:
           case Unrecorded() when pattern != null && uiRoutes.contains(pattern):
-            _capture.screenOpened(pattern!);
+            _capture.screenOpened(pattern!, meTab: meTab);
           case Instrumented() || RecorderScreen():
             break;
           case Protected(:final category):
@@ -155,6 +184,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
         status != null &&
         (status.state == RecorderState.recording ||
             status.state == RecorderState.paused);
+    if (live) _referenceErrorDismissed = false;
     _capture.localizations = AppLocalizations.of(context);
     // One shape whether live or not, so starting or stopping a recording
     // never rebuilds the app beneath it from scratch.
@@ -167,6 +197,42 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
         children: [
           widget.child,
           Positioned.fill(child: GuideHostLayer(router: widget.router)),
+          if (!live &&
+              status?.endReason == RecordingEndReason.referenceMissing &&
+              !_referenceErrorDismissed)
+            Positioned(
+              left: AppSpacing.sm,
+              right: AppSpacing.sm,
+              top: MediaQuery.paddingOf(context).top + AppSpacing.sm,
+              child: Material(
+                key: const ValueKey('recording-reference-error'),
+                elevation: 6,
+                color: Theme.of(context).colorScheme.errorContainer,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)
+                                  ?.taskRecorderEndReferenceMissing ??
+                              'Stopped: the current form could not be identified. Open a supported page and start again.',
+                        ),
+                      ),
+                      _PillButton(
+                        key: const ValueKey('recording-reference-error-close'),
+                        label:
+                            AppLocalizations.of(context)?.guideHostClose ??
+                            'Close',
+                        onTap: () =>
+                            setState(() => _referenceErrorDismissed = true),
+                        icon: Icons.close,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           if (live)
             PositionedDirectional(
               top: MediaQuery.paddingOf(context).top + AppSpacing.xs,

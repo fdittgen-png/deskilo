@@ -55,8 +55,8 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final words = l10n ?? AppLocalizationsEn();
-    final labels = [words.uxProfileSection, words.uxPrivacySection,
-      words.uxPreferencesSection, words.uxAdvancedSection];
+    final labels = [(0, words.uxProfileSection), (2, words.uxPreferencesSection),
+      (3, words.uxAdvancedSection), (1, words.uxPrivacySection)];
     final scheme = Theme.of(context).colorScheme;
     Widget door(String key, IconData icon, String title, String path) =>
         ListTile(
@@ -75,7 +75,7 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
             Padding(
               padding: AppSpacing.smAll,
               child: Wrap(spacing: AppSpacing.xs, children: [
-                for (final (index, label) in labels.indexed)
+                for (final (index, label) in labels)
                   TextButton(
                     key: ValueKey('me-section-$index'),
                     onPressed: () => _jump(index),
@@ -90,12 +90,6 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
           // account, the spaces it belongs to, the installations it uses.
           _header(words.uxProfileSection, 0),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.profile),
-          _header(words.uxPrivacySection, 1),
-          const VisibilityCard(),
-          const LinkedVisibilityCard(),
-          const BlockedPeopleCard(),
-          door('me-privacy', Icons.shield_outlined,
-              l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
           _header(words.uxPreferencesSection, 2),
           ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
           door('me-activity', Icons.account_balance_wallet_outlined,
@@ -119,6 +113,12 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
               only: AccountTileGroup.installations),
           const Divider(),
           door('me-help', Icons.help_outline, l10n?.helpTitle ?? 'Help', '/help'),
+          _header(words.uxPrivacySection, 1),
+          const VisibilityCard(),
+          const LinkedVisibilityCard(),
+          const BlockedPeopleCard(),
+          door('me-privacy', Icons.shield_outlined,
+              l10n?.privacyTitle ?? 'Privacy & data', '/privacy'),
           const Divider(),
           ListTile(
             key: const ValueKey('me-sign-out'),

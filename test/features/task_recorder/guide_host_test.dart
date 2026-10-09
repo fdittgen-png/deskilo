@@ -39,7 +39,7 @@ final _scope = NotifierProvider<_Scope, RecorderScope?>(_Scope.new);
 TaskGuide _guide(List<GuideStep> steps) => TaskGuide(
   actionContractVersion: actionContractVersion,
   title: 'Save the form',
-  steps: steps,
+  steps: [for (final step in steps) step.copyWith(destination: '/reserve')],
 );
 
 const _tapSave = GuideStep(
@@ -166,6 +166,14 @@ void main() {
     var token = _session(c).action(RecorderActions.uiCommand);
     await _settle(tester);
     expect(_key('guide-host-waiting'), findsOneWidget);
+    // Finding the current form remains available while its command runs.
+    expect(
+      tester.widget<FilledButton>(_key('guide-host-show-me')).onPressed,
+      isNotNull,
+    );
+    await tester.tap(_key('guide-host-show-me'));
+    await _settle(tester);
+    expect(c.read(guideSessionProvider).run!.statusOf('g2').name, 'waiting');
     // While it waits, it cannot be skipped into "done".
     expect(_key('guide-host-skip'), findsNothing);
     _session(c).outcome(RecorderOutcomes.commandUnknown, token: token);
@@ -238,7 +246,7 @@ void main() {
     await _settle(tester);
     expect(_key('guide-host-not-on-screen'), findsOneWidget);
     expect(_key('guide-host-ring'), findsNothing);
-    expect(_key('guide-host-show-me'), findsNothing);
+    expect(_key('guide-host-show-me'), findsOneWidget);
     await _end(tester, c);
   });
 
@@ -320,19 +328,28 @@ void main() {
       'alternates colour, an arrow — then it rests', (tester) async {
     final c = await showControl(tester);
     expect(_key('guide-host-pointer'), findsOneWidget);
-    expect(_key('guide-host-flash'), findsOneWidget,
-        reason: 'a new control is announced by a flash');
+    expect(
+      _key('guide-host-flash'),
+      findsOneWidget,
+      reason: 'a new control is announced by a flash',
+    );
     final seen = <Color>{};
     for (var i = 0; i < 16; i++) {
       seen.add(ringColor(tester));
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(seen.length, greaterThan(2),
-        reason: 'the ring moves between the two accent colours');
+    expect(
+      seen.length,
+      greaterThan(2),
+      reason: 'the ring moves between the two accent colours',
+    );
     await tester.pumpAndSettle();
     expect(_key('guide-host-flash'), findsNothing);
-    expect(_key('guide-host-ring'), findsOneWidget,
-        reason: 'after the pulse the ring stays, steady');
+    expect(
+      _key('guide-host-ring'),
+      findsOneWidget,
+      reason: 'after the pulse the ring stays, steady',
+    );
     final resting = ringColor(tester);
     await tester.pump(const Duration(seconds: 1));
     expect(ringColor(tester), resting);
@@ -369,10 +386,15 @@ void main() {
     expect(_key('guide-host'), findsNothing);
     expect(_key('guide-host-bubble'), findsOneWidget);
     expect(find.text('1/1'), findsOneWidget);
-    expect(tester.getSize(_key('guide-host-bubble')).shortestSide,
-        greaterThanOrEqualTo(48));
-    expect(_key('guide-host-ring'), findsOneWidget,
-        reason: 'only the explanation is put aside; the pointer stays');
+    expect(
+      tester.getSize(_key('guide-host-bubble')).shortestSide,
+      greaterThanOrEqualTo(48),
+    );
+    expect(
+      _key('guide-host-ring'),
+      findsOneWidget,
+      reason: 'only the explanation is put aside; the pointer stays',
+    );
     expect(_key('guide-host-pointer'), findsOneWidget);
 
     final before = tester.getTopLeft(_key('guide-host-bubble'));
@@ -391,8 +413,9 @@ void main() {
     await _end(tester, c);
   });
 
-  testWidgets('a finished guide shows its pane even when it was minimised',
-      (tester) async {
+  testWidgets('a finished guide shows its pane even when it was minimised', (
+    tester,
+  ) async {
     final c = await showControl(tester);
     await tester.pumpAndSettle();
     await tester.tap(_key('guide-host-minimize'));
@@ -400,8 +423,11 @@ void main() {
     _session(c).stop();
     await tester.pumpAndSettle();
     expect(_key('guide-host-bubble'), findsNothing);
-    expect(_key('guide-host-close'), findsOneWidget,
-        reason: 'the result and Close are never left hidden');
+    expect(
+      _key('guide-host-close'),
+      findsOneWidget,
+      reason: 'the result and Close are never left hidden',
+    );
     await _end(tester, c);
   });
 }

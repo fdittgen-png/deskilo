@@ -6174,6 +6174,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get guideHostCompleted => 'Guida completata.';
 
   @override
+  String get guideHostDestination => 'Destinazione del passaggio';
+
+  @override
+  String get guideHostDestinationMissing =>
+      'Scegli la pagina di questo passaggio nell’editor della guida.';
+
+  @override
   String guideHostDoAction(String action) {
     return 'Poi: $action.';
   }
@@ -6200,6 +6207,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Esegui tu questo passo, poi segnalo come fatto.';
 
   @override
+  String guideHostManualAt(String form) {
+    return 'Completa questo passaggio su «$form», poi contrassegnalo come fatto.';
+  }
+
+  @override
   String guideHostManualProtected(String category) {
     return 'Questa parte avviene in una schermata protetta ($category). Eseguila tu, poi segnala come fatta.';
   }
@@ -6209,7 +6221,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideHostNotOnScreen =>
-      'Questo controllo non è in questa schermata. Vai alla schermata del passo precedente o controlla la guida.';
+      'Apri la pagina del passaggio e segui i passaggi precedenti per mostrare questo controllo.';
 
   @override
   String guideHostOpenLabel(String label) {
@@ -6240,7 +6252,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get guideHostResume => 'Riprendi';
 
   @override
-  String get guideHostShowMe => 'Mostrami';
+  String get guideHostShowMe => 'Apri ed evidenzia';
 
   @override
   String get guideHostSkip => 'Salta';
@@ -17210,6 +17222,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taskRecorderEndLimitReached =>
       'Terminata: è stato raggiunto un limite';
+
+  @override
+  String get taskRecorderEndReferenceMissing =>
+      'Interrotto: impossibile identificare il modulo attuale. Apri una pagina supportata e ricomincia.';
 
   @override
   String get taskRecorderEndScopeChanged =>

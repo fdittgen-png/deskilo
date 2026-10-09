@@ -32,6 +32,7 @@ TaskGuide _bookAPlace(AppLocalizations? l10n) {
     steps: [
       GuideStep(
         id: 'g1',
+        destination: '/reserve',
         kind: GuideStepKind.instruction,
         text:
             l10n?.guideBuiltinBookingIntro ??

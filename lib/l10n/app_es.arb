@@ -4167,6 +4167,8 @@
   "guideHostClose": "Cerrar",
   "guideHostCommand": "Confirme y espere el resultado.",
   "guideHostCompleted": "Guía completada.",
+  "guideHostDestination": "Destino del paso",
+  "guideHostDestinationMissing": "Elija la página de este paso en el editor de la guía.",
   "guideHostDoAction": "A continuación: {action}.",
   "guideHostDone": "Hecho",
   "guideHostFillField": "Rellene el campo resaltado y salga de él.",
@@ -4174,12 +4176,21 @@
   "guideHostGoToPage": "Ir a la página",
   "guideHostInstruction": "Lea esto y márquelo como hecho.",
   "guideHostManual": "Haga este paso usted mismo y márquelo como hecho.",
+  "guideHostManualAt": "Complete este paso en «{form}» y márquelo como hecho.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
   "guideHostManualProtected": "Esta parte ocurre en una pantalla protegida ({category}). Hágala usted mismo y márquela como hecha.",
   "guideHostMinimize": "Minimizar la guía",
   "@guideHostMinimize": {
     "description": "Task wizard: guideHostMinimize"
   },
-  "guideHostNotOnScreen": "Este control no está en esta pantalla. Vaya a la pantalla del paso anterior o revise la guía.",
+  "guideHostNotOnScreen": "Abra la página del paso y siga los pasos anteriores para mostrar este control.",
   "guideHostOpenLabel": "Abra «{label}».",
   "guideHostOpenScreen": "Abra la siguiente pantalla.",
   "guideHostPausedFeature": "En pausa: la grabadora de tareas está desactivada en este espacio.",
@@ -4198,7 +4209,7 @@
     }
   },
   "guideHostResume": "Reanudar",
-  "guideHostShowMe": "Muéstramelo",
+  "guideHostShowMe": "Abrir y resaltar",
   "guideHostSkip": "Omitir",
   "guideHostStatusAcknowledged": "Confirmado",
   "guideHostStatusDone": "Hecho",
@@ -10819,6 +10830,7 @@
   "taskRecorderEditedNote": "Copia editada: {count} pasos excluidos. La grabación en este dispositivo no cambia.",
   "taskRecorderEndInterrupted": "Interrumpida: la aplicación se detuvo mientras grababa",
   "taskRecorderEndLimitReached": "Terminada: se alcanzó un límite",
+  "taskRecorderEndReferenceMissing": "Detenido: no se pudo identificar el formulario actual. Abra una página compatible y vuelva a empezar.",
   "taskRecorderEndScopeChanged": "Terminada: cambió la cuenta o el espacio",
   "taskRecorderEndStopped": "Detenida por usted",
   "taskRecorderEndStorageFailed": "Terminada: no se pudo guardar en este dispositivo",

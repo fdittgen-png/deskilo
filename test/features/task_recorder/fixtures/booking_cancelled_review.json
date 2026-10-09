@@ -1,6 +1,6 @@
 {
   "format": "deskilo.task-recording",
-  "schema_version": 1,
+  "schema_version": 3,
   "action_contract_version": 1,
   "platform": "android",
   "kind": "source",
@@ -29,7 +29,8 @@
       "kind": "action",
       "surface": "reservations.reserve",
       "action": "reservations.open_reserve",
-      "action_version": 1
+      "action_version": 1,
+      "page": "/reserve"
     },
     {
       "seq": 2,
@@ -39,6 +40,7 @@
       "surface": "reservations.reserve",
       "action": "reservations.select_date",
       "action_version": 1,
+      "page": "/reserve",
       "payload": {
         "date_relation": "tomorrow"
       }
@@ -51,6 +53,7 @@
       "surface": "reservations.reserve",
       "action": "reservations.select_period",
       "action_version": 1,
+      "page": "/reserve",
       "payload": {
         "period": "morning"
       }
@@ -63,6 +66,7 @@
       "surface": "reservations.reserve",
       "action": "reservations.select_resource",
       "action_version": 1,
+      "page": "/reserve",
       "payload": {
         "resource_kind": "desk",
         "view_mode": "plan"
@@ -76,7 +80,8 @@
       "surface": "reservations.booking_sheet",
       "action": "reservations.change_booking_field",
       "action_version": 1,
-      "target": "check_in"
+      "target": "check_in",
+      "page": "/reserve"
     },
     {
       "seq": 6,
@@ -85,13 +90,15 @@
       "kind": "action",
       "surface": "reservations.booking_sheet",
       "action": "reservations.cancel_review",
-      "action_version": 1
+      "action_version": 1,
+      "page": "/reserve"
     },
     {
       "seq": 7,
       "segment": 0,
       "elapsed_ms": 3200,
       "kind": "annotation",
+      "page": "/reserve",
       "note": "I only wanted to look."
     }
   ],

@@ -16,11 +16,16 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../guide/guide_codec.dart';
+import '../../guide/guide_destination.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
+import '../guide_host/guide_step_text.dart'
+    show guideStepText, guideDestinationLabel;
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
@@ -87,13 +92,14 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
         manualCategory: step.manualCategory,
         target: step.target,
         label: step.label,
+        destination: step.destination,
       ),
     );
   }
 
   /// Follows this draft on the live app. Only a runnable guide starts:
   /// one this build fully understands, in a scope that allows it.
-  void _start() {
+  void _start({GuideStep? at}) {
     final l10n = AppLocalizations.of(context);
     final decoded = decodeGuideText(encodeGuideText(_guide));
     final messenger = ScaffoldMessenger.of(context);
@@ -104,6 +110,17 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
             l10n?.guideStartNotRunnable ??
                 'This guide names steps this version of the app does not '
                     'know; it can be read, not followed.',
+          ),
+        ),
+      );
+      return;
+    }
+    if (_steps.any((step) => guideStepRoute(_steps, step) == null)) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n?.guideHostDestinationMissing ??
+                'Choose a page for every step.',
           ),
         ),
       );
@@ -121,7 +138,13 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
       );
       return;
     }
+    final router = GoRouter.maybeOf(context);
+    if (at != null) ref.read(guideSessionProvider.notifier).visit(at.id);
+    final route = _steps.isEmpty
+        ? null
+        : guideStepRoute(_steps, at ?? _steps.first);
     Navigator.of(context).popUntil((route) => route.isFirst);
+    if (router != null && route != null) router.go(route);
   }
 
   /// Puts the draft in the library: a new guide, or the changes of the
@@ -194,9 +217,15 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
           for (final step in _steps)
             _StepCard(
               step: step,
-              onEdit: step.kind == GuideStepKind.perform
+              onEdit: () => _editText(step),
+              onOpen:
+                  guideStepRoute(_steps, step) == null ||
+                      GoRouter.maybeOf(context) == null
                   ? null
-                  : () => _editText(step),
+                  : () => _start(at: step),
+              destination: guideStepRoute(_steps, step),
+              onDestination: (value) =>
+                  _replace(step.copyWith(destination: value)),
               onOptional: (v) => _replace(step.copyWith(optional: v)),
             ),
           const SizedBox(height: AppSpacing.md),
@@ -237,16 +266,22 @@ class _StepCard extends StatelessWidget {
     required this.step,
     required this.onEdit,
     required this.onOptional,
+    required this.destination,
+    required this.onDestination,
+    required this.onOpen,
   });
 
   final GuideStep step;
   final VoidCallback? onEdit;
   final ValueChanged<bool> onOptional;
+  final String? destination;
+  final ValueChanged<String> onDestination;
+  final VoidCallback? onOpen;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final title = guideStepTitle(l10n, step);
+    final title = guideStepText(l10n, step);
     final waits = step.isCommand
         ? l10n?.taskGuideWaitsFor(
                 step.expectedOutcomes
@@ -284,8 +319,40 @@ class _StepCard extends StatelessWidget {
                   ),
               ],
             ),
-            if (step.kind == GuideStepKind.perform && step.text != null)
-              Text(step.text!),
+            const SizedBox(height: AppSpacing.sm),
+            DropdownButtonFormField<String>(
+              key: ValueKey('guide-destination-${step.id}-$destination'),
+              initialValue: destination,
+              isExpanded: true,
+              decoration: InputDecoration(
+                labelText: l10n?.guideHostDestination ?? 'Step destination',
+                helperText: destination == null
+                    ? (l10n?.guideHostDestinationMissing ??
+                          'Choose a page in the guide editor')
+                    : null,
+                prefixIcon: const Icon(Icons.link),
+              ),
+              items: [
+                for (final page in ({
+                  ...uiRoutes.where(isGuideDestination),
+                  ...guideMeDestinations,
+                }.toList()..sort()))
+                  DropdownMenuItem(
+                    value: page,
+                    child: Text(guideDestinationLabel(l10n, page)),
+                  ),
+              ],
+              onChanged: (value) {
+                if (value != null) onDestination(value);
+              },
+            ),
+            if (onOpen != null)
+              TextButton.icon(
+                key: ValueKey('guide-preview-${step.id}'),
+                onPressed: onOpen,
+                icon: const Icon(Icons.open_in_new),
+                label: Text(l10n?.guideHostShowMe ?? 'Open & highlight'),
+              ),
             ?(waits == null ? null : Text(waits)),
             ?(recovery == null ? null : Text(recovery)),
             SwitchListTile(
