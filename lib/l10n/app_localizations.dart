@@ -10359,8 +10359,8 @@ abstract class AppLocalizations {
   /// #1654 getting started card: gettingStartedBooked
   ///
   /// In en, this message translates to:
-  /// **'Your booking {id} is {state}. Your membership shows what else is included.'**
-  String gettingStartedBooked(String id, String state);
+  /// **'Your booking is {state}. Your membership shows what else is included.'**
+  String gettingStartedBooked(String state);
 
   /// #1654 getting started card: gettingStartedClosedToday
   ///

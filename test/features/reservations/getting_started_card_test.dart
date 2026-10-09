@@ -214,7 +214,7 @@ void main() {
   });
 
   testWidgets('one normal booking through the existing sheet: the card '
-      'shows the real id and state the repository returned', (tester) async {
+      'shows its place and state without internal identifiers', (tester) async {
     final hub = await pumpCard(tester);
     expect(find.byKey(_booking), findsNothing);
     await tester.tapAt(seatCenter(tester));
@@ -230,7 +230,8 @@ void main() {
       ReservationStatus.checkedIn => 'checked in',
       _ => fail('unexpected state ${made.status}'),
     };
-    expect(_text(tester, _booking), '${made.id} · $state');
+    expect(_text(tester, _booking), 'A1 · $state');
+    expect(find.textContaining(made.id), findsNothing);
     expect(_primaryLabel(tester), 'View my membership');
     // The card said nothing about the booking until the repository did.
     expect(hub.reservations.createCalls, 1);

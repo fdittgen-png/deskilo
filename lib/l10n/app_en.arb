@@ -6956,13 +6956,10 @@
   "@gettingStartedAvailabilityUnknown": {
     "description": "#1654 getting started card: gettingStartedAvailabilityUnknown"
   },
-  "gettingStartedBooked": "Your booking {id} is {state}. Your membership shows what else is included.",
+  "gettingStartedBooked": "Your booking is {state}. Your membership shows what else is included.",
   "@gettingStartedBooked": {
     "description": "#1654 getting started card: gettingStartedBooked",
     "placeholders": {
-      "id": {
-        "type": "String"
-      },
       "state": {
         "type": "String"
       }

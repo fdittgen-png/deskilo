@@ -640,6 +640,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
             p.offices.where((o) => o.bookableAsWhole).length +
             p.desks.where((d) => d.bookableAsWhole).length +
             (level.bookableAsWhole ? 1 : 0) + levels.value!.length - 1);
+    final targetNames = ref.watch(targetNamesProvider).value ?? const <String, String>{};
     final facts = GettingStartedFacts(
       workspaceName: workspace?.name ?? '',
       production: workspace != null && !workspace.isDevelopment,
@@ -662,7 +663,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               final mine = list.where((r) => r.memberId == me.id &&
                   r.status != ReservationStatus.cancelled && r.status != ReservationStatus.released).toList()
                 ..sort((a, b) => b.startsAt.compareTo(a.startsAt));
-              return mine.isEmpty ? null : BookingEvidence(id: mine.first.id, state: mine.first.status.name);
+              return mine.isEmpty ? null : BookingEvidence(id: mine.first.id,
+                  state: mine.first.status.name, spaceName: mine.first.spaceNameFrom(targetNames));
             }),
     );
 
