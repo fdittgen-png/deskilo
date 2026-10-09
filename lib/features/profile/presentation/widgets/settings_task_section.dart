@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/motion/motion.dart';
 
-/// Task groups preserve their mounted controls when their header is closed.
 class SettingsTaskSection extends StatelessWidget {
   const SettingsTaskSection({required this.id, required this.title,
     required this.children, this.initiallyExpanded = true, this.controller, super.key});
@@ -25,7 +24,6 @@ class SettingsTaskSection extends StatelessWidget {
   );
 }
 
-/// Persistent shortcuts use the same section navigation as Profile & account.
 class SettingsTaskPane extends StatefulWidget {
   const SettingsTaskPane({required this.pane, required this.children, super.key});
   final String pane;
