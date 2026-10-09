@@ -7488,67 +7488,24 @@
     "description": "#1867 live guide host"
   },
   "helpHintAvailability": "Set the open weekdays and working hours, and add closure days nobody can book.",
-  "helpHintAvailabilityTip2": "The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.",
-  "helpHintAvailabilityTip3": "Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.",
-  "helpHintAvailabilityTip4": "Three booking policies tighten or relax the rules: past bookings, minute bookings kept within working hours, and admin check-out.",
   "helpHintAvailabilityTopic": "Availability",
   "helpHintBadges": "Issue a printable QR badge or register an NFC card; revoke lost badges any time.",
-  "helpHintBadgesTip2": "Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.",
-  "helpHintBadgesTip3": "Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.",
-  "helpHintBadgesTip4": "Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.",
   "helpHintBadgesTopic": "NFC badges",
   "helpHintCalendar": "Pick a day or a range: everything dated that you may see, in one list, each row opening its source.",
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintCalendarTip2": "Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.",
-  "@helpHintCalendarTip2": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintCalendarTip3": "Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.",
-  "@helpHintCalendarTip3": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintCalendarTip4": "Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.",
-  "@helpHintCalendarTip4": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintCalendarTip4Topic": "How booking behaves",
-  "helpHintCalendarTip5": "The shield shows who can see each kind, and who actually looked at your finances.",
-  "@helpHintCalendarTip5": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintCalendarTip5Topic": "Privacy",
-  "@helpHintCalendarTip5Topic": {
-    "description": "#718/#719 - help hints"
-  },
   "helpHintCalendarTopic": "Calendar",
   "helpHintDismiss": "Dismiss hint",
   "helpHintEditor": "Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.",
-  "helpHintEditorTip2": "Pick Office or Table in the toolbar and drag on the grid to draw it; Select moves and resizes what is already there.",
-  "helpHintEditorTip3": "The Seat tool stamps seats onto desks; a seat's sheet sets its direction, chair type, accessories and a maintenance block.",
-  "helpHintEditorTip4": "Give a seat its NFC/RFID tag from the seat sheet — tap the chip on the phone and the field fills itself.",
-  "helpHintEditorTip5": "Print a QR card for every seat, desk, office and level — pick the card size and what each card shows before exporting.",
-  "helpHintEditorTip5Topic": "Space QR codes",
   "helpHintEditorTopic": "space editor",
   "helpHintEvents": "Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.",
-  "helpHintEventsTip2": "The filter chips remember your choice across visits — and the Unread chip narrows the list to unread messages.",
-  "helpHintEventsTip3": "Group the feed by type, day or member from the Group by menu; tap the group symbol to return to the flat list.",
-  "helpHintEventsTip4": "Pending decisions sit pinned on top with Accept and reject — and nobody ever validates their own event.",
   "helpHintEventsTopic": "confirmations",
   "helpHintFeatures": "Switch workspace functionality on or off — every member's app follows immediately.",
-  "helpHintFeaturesTip2": "The list is hierarchical — a feature that needs another sits indented under it and greys out while its parent is off.",
-  "helpHintFeaturesTip3": "Switching a parent off takes its whole subtree out of the app; the children's stored choices return untouched with the parent.",
-  "helpHintFeaturesTip4": "A feature's settings entry only appears while the feature is on — the Features screen itself always stays reachable.",
   "helpHintFeaturesTopic": "Features",
   "helpHintLearnMore": "Learn more",
   "helpHintMembers": "Invite members, set their plan percentage and role, and manage their badges.",
-  "helpHintMembersTip2": "Tap a member for their management sheet — subscription, reservation limit, badges, services and more in one place.",
-  "helpHintMembersTip3": "Badges live per member: mint a printable QR badge, or register their NFC card by holding it to the device.",
-  "helpHintMembersTip3Topic": "NFC badges",
-  "helpHintMembersTip4": "Name admin grants admin rights after validation; the role matrix under Role management decides what every role may do.",
   "helpHintMembersTip4Topic": "Role management",
-  "helpHintMembersTipNegotiation": "A member's own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule's validators confirm it.",
   "helpHintMembersTipNegotiationTopic": "Price negotiations",
   "helpHintMembersTopic": "Members & plans",
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
@@ -7577,51 +7534,23 @@
   },
   "helpHintMoney": "Your monthly bill: browse months with the arrows; pay, export or share from here.",
   "helpHintMoneyDocuments": "Your paperwork: your conditions, the payments report, the month's statement as PDF, the document library.",
-  "helpHintMoneyDocumentsTip3": "My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.",
   "helpHintMoneyDocumentsTopic": "The Documents face",
   "helpHintMoneyInvoices": "Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.",
-  "helpHintMoneyInvoicesTip2": "Past the workspace's payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.",
   "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
   "helpHintMoneyInvoicesTopic": "The Invoices face",
   "helpHintMoneyPayments": "Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.",
-  "helpHintMoneyPaymentsTip2": "Record a payment with the date the money moved and the month it settles — the other side confirms it.",
-  "helpHintMoneyPaymentsTip3": "Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.",
   "helpHintMoneyPaymentsTip3Topic": "online payments",
-  "helpHintMoneyPaymentsTipSupply": "Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.",
   "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories",
   "helpHintMoneyPaymentsTopic": "The Payments face",
   "helpHintMoneyStatement": "The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.",
-  "helpHintMoneyStatementTip2": "A booked morning counts as half a day; days outside the opening hours follow the workspace's outside-hours policy.",
-  "helpHintMoneyStatementTip2Topic": "How booking behaves",
-  "helpHintMoneyStatementTip3": "Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.",
-  "helpHintMoneyStatementTipNegotiation": "Your negotiated prices are in Documents, beside your agreement. The card compares them with the tariff and explains who can see them; other people’s views are recorded.",
-  "helpHintMoneyStatementTipNegotiationTopic": "Price negotiations",
   "helpHintMoneyStatementTopic": "The Statement face",
-  "helpHintMoneyTip2": "Every document offers the same three actions: quick view on screen, download as PDF, and share to any app.",
-  "helpHintMoneyTip2Topic": "Quick view, save, share",
-  "helpHintMoneyTip3": "Record a payment with the date the money moved and the month it settles — the other side confirms it.",
-  "helpHintMoneyTip4": "Once the month is invoiced, the invoice decides: the month reads settled as soon as its invoice is paid.",
-  "helpHintMoneyTip4Topic": "the invoice decides",
   "helpHintMoneyTopic": "Money",
   "helpHintNextTip": "Next tip",
   "helpHintPlan": "The live floor plan: tap a free seat to book it, tap your own booking to check in.",
-  "helpHintPlanTip2": "Standing at a free seat? Tap it — the sheet suggests now until closing, and confirming checks you in on the spot.",
-  "helpHintPlanTip3": "Browse another moment with the date chip and the time scroller — the plan shows who sits where at any future time.",
-  "helpHintPlanTip4": "Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.",
-  "helpHintPlanTip5": "Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.",
-  "helpHintPlanTip5Topic": "How booking behaves",
   "helpHintPlanTopic": "floor plan",
   "helpHintPrevTip": "Previous tip",
   "helpHintPrivacy": "See who can read your data and who did, export everything as one file, or leave with your personal data erased.",
   "@helpHintPrivacy": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintPrivacyTip2": "Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.",
-  "@helpHintPrivacyTip2": {
-    "description": "#718/#719 - help hints"
-  },
-  "helpHintPrivacyTip3": "Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.",
-  "@helpHintPrivacyTip3": {
     "description": "#718/#719 - help hints"
   },
   "helpHintPrivacyTopic": "Privacy",
@@ -7629,27 +7558,13 @@
     "description": "#718/#719 - help hints"
   },
   "helpHintReserve": "Pick a day and time window, then tap a free seat to book it.",
-  "helpHintReserveTip2": "The Week and Month views find a free half-day at a glance — tap a free cell or day to book right there.",
-  "helpHintReserveTip3": "Tap the scan button and point the camera at a space's QR card — the sheet shows exactly what you may do there.",
-  "helpHintReserveTip3Topic": "Scan a space code",
-  "helpHintReserveTip4": "The morning, afternoon and full-day chips pick your window before you choose a seat — a booked morning counts as half a day.",
   "helpHintReserveTip4Topic": "How booking behaves",
-  "helpHintReserveTip5": "Set your default booking period in Settings — the hub preselects it on every visit.",
-  "helpHintReserveTip5Topic": "Settings & profile",
   "helpHintReserveTopic": "Reserve hub",
   "helpHintRestoreTitle": "Show help hints again",
   "helpHintRestored": "Help hints will be shown again.",
   "helpHintValidation": "Decide which actions need confirmation, who confirms, and how many approvals it takes.",
-  "helpHintValidationTip2": "One card per event type, each inheriting from the default rule until you edit it — payments, expenses, role changes and more.",
-  "helpHintValidationTip3": "Nobody ever validates their own event, and unanswered requests expire after 7 days — nothing is granted silently.",
-  "helpHintValidationTipScopes": "Who validates is the rule's scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.",
-  "helpHintValidationTipScopesTopic": "Role management",
   "helpHintValidationTopic": "confirmations",
   "helpHintWorkspace": "Country, currency, language and billing details — documents and taxes follow these settings.",
-  "helpHintWorkspaceTip2": "Print the space QR cards from Exports — choose the card size and the info each card carries, ten per A4 page.",
-  "helpHintWorkspaceTip2Topic": "Space QR codes",
-  "helpHintWorkspaceTip3": "Export the space as XML to back it up or template a new one; the setup questionnaire prefills a fresh workspace end to end.",
-  "helpHintWorkspaceTip4": "Reset the workspace wipes reservations, accounting and the floor plan — settings and members survive, and a typed confirmation guards it.",
   "helpHintWorkspaceTopic": "Workspace settings",
   "helpTitle": "Help",
   "helpTopicAccounting": "Accounting exports",
@@ -20281,6 +20196,390 @@
   "threadRefsIn": "References in",
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
+  },
+  "tipAvailabilityClosure": "To close a day nobody can book: tap “Add closure day” and give a reason if you like.",
+  "@tipAvailabilityClosure": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipAvailabilityDays": "To set the days you open: toggle the weekday chips under “Open weekdays”.",
+  "@tipAvailabilityDays": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipAvailabilityGrid": "To choose how bookings are cut: pick a “Booking granularity” — free periods, slots, half days or full days.",
+  "@tipAvailabilityGrid": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipAvailabilityHolidays": "To close on public holidays: tap “Add public holidays”.",
+  "@tipAvailabilityHolidays": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipAvailabilityHours": "To set the working day: adjust “Day starts”, “Half-day boundary” and “Day ends”.",
+  "@tipAvailabilityHours": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipAvailabilityPolicies": "To tighten or relax the rules — past bookings, outside the opening hours, booking limits: use “Booking policies”.",
+  "@tipAvailabilityPolicies": {
+    "description": "Tip (#2313) on the availability surface: a scenario \"To …: …\"."
+  },
+  "tipBadgesLost": "To stop a lost badge: tap “Revoke”; swipe a revoked badge to the right to delete it.",
+  "@tipBadgesLost": {
+    "description": "Tip (#2313) on the badges surface: a scenario \"To …: …\"."
+  },
+  "tipBadgesNfc": "To use an NFC card: tap “Register card” and hold the card against the device.",
+  "@tipBadgesNfc": {
+    "description": "Tip (#2313) on the badges surface: a scenario \"To …: …\"."
+  },
+  "tipBadgesQr": "To give someone a QR badge: tap “New badge”, then “Save as PDF” to print it.",
+  "@tipBadgesQr": {
+    "description": "Tip (#2313) on the badges surface: a scenario \"To …: …\"."
+  },
+  "tipBadgesSignIn": "To sign in with your badge: switch on “Signs me in” on your own badge.",
+  "@tipBadgesSignIn": {
+    "description": "Tip (#2313) on the badges surface: a scenario \"To …: …\"."
+  },
+  "tipCalendarAlerts": "To handle alerts and decisions waiting for you: open “Alerts”.",
+  "@tipCalendarAlerts": {
+    "description": "Tip (#2313) on the calendar surface: a scenario \"To …: …\"."
+  },
+  "tipCalendarKinds": "To see one kind of item only: tap its chip — bookings, invoices, payments…; “Reset filters” shows everything again.",
+  "@tipCalendarKinds": {
+    "description": "Tip (#2313) on the calendar surface: a scenario \"To …: …\"."
+  },
+  "tipCalendarMine": "To see only your own bookings: tap “My bookings”.",
+  "@tipCalendarMine": {
+    "description": "Tip (#2313) on the calendar surface: a scenario \"To …: …\"."
+  },
+  "tipCalendarMoney": "To see the money behind a payment: tap its row — your finances open on that payment.",
+  "@tipCalendarMoney": {
+    "description": "Tip (#2313) on the calendar surface: a scenario \"To …: …\". Links to /money."
+  },
+  "tipCalendarViews": "To see a week or a month at once: tap “Week” or “Month”; “Today” brings you back.",
+  "@tipCalendarViews": {
+    "description": "Tip (#2313) on the calendar surface: a scenario \"To …: …\"."
+  },
+  "tipEditorAccessories": "To offer accessories on seats: set them up first, then pick them in each seat’s “Properties”.",
+  "@tipEditorAccessories": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\". Links to /accessories."
+  },
+  "tipEditorBackground": "To draw over a real floor plan: set it under “Background image”.",
+  "@tipEditorBackground": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEditorDraw": "To draw a room or a desk: pick “Office” or “Desk” in the toolbar and drag on the plan.",
+  "@tipEditorDraw": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEditorLevel": "To add a floor: tap “Add level”; “Level actions” renames or deletes it.",
+  "@tipEditorLevel": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEditorNfc": "To let people check in with a tag: in a seat’s “Properties”, use “NFC/RFID tag” › “Read a tag now”.",
+  "@tipEditorNfc": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEditorQr": "To print QR cards for the spaces: open the workspace documents and choose “Space QR codes (PDF)”.",
+  "@tipEditorQr": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\". Links to /reports?section=documents."
+  },
+  "tipEditorSeat": "To name a seat or block it for maintenance: select it and tap “Properties”.",
+  "@tipEditorSeat": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEditorSeats": "To add seats: pick the “Seat” tool and tap a desk.",
+  "@tipEditorSeats": {
+    "description": "Tip (#2313) on the editor surface: a scenario \"To …: …\"."
+  },
+  "tipEventsDecide": "To answer a request waiting for you: tap “Accept” or “Decline” on it — it sits on top of the feed.",
+  "@tipEventsDecide": {
+    "description": "Tip (#2313) on the events surface: a scenario \"To …: …\"."
+  },
+  "tipEventsGroup": "To group the feed: open “Group by” and choose type, date or member; “Ungroup” flattens it again.",
+  "@tipEventsGroup": {
+    "description": "Tip (#2313) on the events surface: a scenario \"To …: …\"."
+  },
+  "tipEventsMessages": "To answer your conversations: open your messenger.",
+  "@tipEventsMessages": {
+    "description": "Tip (#2313) on the events surface: a scenario \"To …: …\". Links to /me?tab=messages."
+  },
+  "tipEventsTopic": "To see one topic only: tap its chip — messages, reservations, check-ins, money or members.",
+  "@tipEventsTopic": {
+    "description": "Tip (#2313) on the events surface: a scenario \"To …: …\"."
+  },
+  "tipEventsUnread": "To see what you have not read yet: tap “Unread”.",
+  "@tipEventsUnread": {
+    "description": "Tip (#2313) on the events surface: a scenario \"To …: …\"."
+  },
+  "tipFeaturesChanged": "To see what you changed from the defaults: tap the “Changed” filter.",
+  "@tipFeaturesChanged": {
+    "description": "Tip (#2313) on the features surface: a scenario \"To …: …\"."
+  },
+  "tipFeaturesProcess": "To start from what you want to do: choose “Processes” and search for it.",
+  "@tipFeaturesProcess": {
+    "description": "Tip (#2313) on the features surface: a scenario \"To …: …\"."
+  },
+  "tipFeaturesRequires": "To switch on a greyed feature: first switch on the one its “Requires” line names.",
+  "@tipFeaturesRequires": {
+    "description": "Tip (#2313) on the features surface: a scenario \"To …: …\"."
+  },
+  "tipFeaturesSwitch": "To switch one feature on or off: choose “Switches”, search it and flip its switch — every member’s app follows at once.",
+  "@tipFeaturesSwitch": {
+    "description": "Tip (#2313) on the features surface: a scenario \"To …: …\"."
+  },
+  "tipMembersApprove": "To admit someone who asked to join: open them and tap “Approve membership”.",
+  "@tipMembersApprove": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\"."
+  },
+  "tipMembersBadge": "To issue a badge: open the member and choose “Badges & access” › “Badges”.",
+  "@tipMembersBadge": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\"."
+  },
+  "tipMembersInvite": "To invite someone: share the workspace ID or its QR code — “Invite a member” opens them.",
+  "@tipMembersInvite": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\". Links to /workspace-code."
+  },
+  "tipMembersManaged": "To add a person who has no account: “Add a managed profile”.",
+  "@tipMembersManaged": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\". Links to /members/managed."
+  },
+  "tipMembersNotify": "To write to every admin at once: tap “Notify all admins”.",
+  "@tipMembersNotify": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\"."
+  },
+  "tipMembersPlan": "To change a member’s plan: open the member and set the “Subscription” under “Billing”.",
+  "@tipMembersPlan": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\"."
+  },
+  "tipMembersPrices": "To set the workspace’s prices and plans: open the billing settings.",
+  "@tipMembersPrices": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\". Links to /billing."
+  },
+  "tipMembersRole": "To decide what each role may do: edit the roles; a member gets one with “Add a role” on their page.",
+  "@tipMembersRole": {
+    "description": "Tip (#2313) on the members surface: a scenario \"To …: …\". Links to /roles."
+  },
+  "tipMessagesAlerts": "To handle alerts and decisions waiting for you: open “Alerts” in the calendar.",
+  "@tipMessagesAlerts": {
+    "description": "Tip (#2313) on the messages surface: a scenario \"To …: …\"."
+  },
+  "tipMessagesUnread": "To see what you have not read yet: tap “Unread” in your messenger.",
+  "@tipMessagesUnread": {
+    "description": "Tip (#2313) on the messages surface: a scenario \"To …: …\". Links to /me?tab=messages."
+  },
+  "tipMessagesWrite": "To write to someone or start a group: open your messenger and tap the pencil.",
+  "@tipMessagesWrite": {
+    "description": "Tip (#2313) on the messages surface: a scenario \"To …: …\". Links to /me?tab=messages."
+  },
+  "tipMoneyDays": "To get more days this month: tap “Request extra half-days”.",
+  "@tipMoneyDays": {
+    "description": "Tip (#2313) on the money surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyDocumentsConditions": "To read the conditions you agreed to: open “My conditions”.",
+  "@tipMoneyDocumentsConditions": {
+    "description": "Tip (#2313) on the moneyDocuments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyDocumentsLibrary": "To find the space’s shared documents: open the “Document library”.",
+  "@tipMoneyDocumentsLibrary": {
+    "description": "Tip (#2313) on the moneyDocuments surface: a scenario \"To …: …\". Links to /documents."
+  },
+  "tipMoneyDocumentsPayments": "To list what you paid: open the “Payments report”.",
+  "@tipMoneyDocumentsPayments": {
+    "description": "Tip (#2313) on the moneyDocuments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyDocumentsStatement": "To keep the month on paper: open “This month's statement (PDF)”.",
+  "@tipMoneyDocumentsStatement": {
+    "description": "Tip (#2313) on the moneyDocuments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyDocumentsUsage": "To see what you used: open the “Consumption report”.",
+  "@tipMoneyDocumentsUsage": {
+    "description": "Tip (#2313) on the moneyDocuments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyExpense": "To get an expense paid back: tap “Submit an expense”.",
+  "@tipMoneyExpense": {
+    "description": "Tip (#2313) on the money surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyInvoicesAcross": "To see your invoices of every space together: open “Your finances across spaces”.",
+  "@tipMoneyInvoicesAcross": {
+    "description": "Tip (#2313) on the moneyInvoices surface: a scenario \"To …: …\". Links to /account-activity."
+  },
+  "tipMoneyInvoicesPay": "To pay an open invoice: tap “Pay now” on it.",
+  "@tipMoneyInvoicesPay": {
+    "description": "Tip (#2313) on the moneyInvoices surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyInvoicesRead": "To read an invoice: tap it — its detail opens, with what is still due.",
+  "@tipMoneyInvoicesRead": {
+    "description": "Tip (#2313) on the moneyInvoices surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyMonth": "To see another month: use the arrows beside the month.",
+  "@tipMoneyMonth": {
+    "description": "Tip (#2313) on the money surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsAcross": "To see your money across all your spaces: open “Your finances across spaces”.",
+  "@tipMoneyPaymentsAcross": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\". Links to /account-activity."
+  },
+  "tipMoneyPaymentsConsumption": "To note something you used — a coffee, a print: tap “Add consumption”.",
+  "@tipMoneyPaymentsConsumption": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsDays": "To get more days this month: tap “Request extra half-days”.",
+  "@tipMoneyPaymentsDays": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsExpense": "To get an expense paid back: tap “Submit an expense”.",
+  "@tipMoneyPaymentsExpense": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsOnline": "To pay at once: tap “Pay online”.",
+  "@tipMoneyPaymentsOnline": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsRecord": "To tell the space you paid: tap “Record a payment”.",
+  "@tipMoneyPaymentsRecord": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsScheduled": "To plan an expense that comes back: open “Scheduled expenses”.",
+  "@tipMoneyPaymentsScheduled": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPaymentsTransfer": "To pay by transfer: open “Payment instructions” and copy the IBAN.",
+  "@tipMoneyPaymentsTransfer": {
+    "description": "Tip (#2313) on the moneyPayments surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyPdf": "To keep your bill: tap “Export bill as PDF”.",
+  "@tipMoneyPdf": {
+    "description": "Tip (#2313) on the money surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyRecord": "To tell the space you paid: tap “Record a payment”.",
+  "@tipMoneyRecord": {
+    "description": "Tip (#2313) on the money surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyStatementAcross": "To see your money across all your spaces: open “Your finances across spaces”.",
+  "@tipMoneyStatementAcross": {
+    "description": "Tip (#2313) on the moneyStatement surface: a scenario \"To …: …\". Links to /account-activity."
+  },
+  "tipMoneyStatementMonth": "To see another month: use the arrows; “Balance” says what is left to settle.",
+  "@tipMoneyStatementMonth": {
+    "description": "Tip (#2313) on the moneyStatement surface: a scenario \"To …: …\"."
+  },
+  "tipMoneyStatementOut": "To keep booking when your days run out: on the payments face, tap “Request extra half-days” or “Buy a package”.",
+  "@tipMoneyStatementOut": {
+    "description": "Tip (#2313) on the moneyStatement surface: a scenario \"To …: …\"."
+  },
+  "tipPrivacyConsent": "To reread what you agreed to: open your rights and consent.",
+  "@tipPrivacyConsent": {
+    "description": "Tip (#2313) on the privacy surface: a scenario \"To …: …\". Links to /consent?review=1."
+  },
+  "tipPrivacyErase": "To leave with your personal data erased: tap “Leave this workspace and erase my data”.",
+  "@tipPrivacyErase": {
+    "description": "Tip (#2313) on the privacy surface: a scenario \"To …: …\"."
+  },
+  "tipPrivacyExport": "To download everything the space holds about you: tap “Export my data”.",
+  "@tipPrivacyExport": {
+    "description": "Tip (#2313) on the privacy surface: a scenario \"To …: …\"."
+  },
+  "tipPrivacyWho": "To see who can read your data: tap “Who can see my data”.",
+  "@tipPrivacyWho": {
+    "description": "Tip (#2313) on the privacy surface: a scenario \"To …: …\"."
+  },
+  "tipReserveAhead": "To find a free day ahead: open “View” and choose “Week” or “Month”, then tap a free cell or day.",
+  "@tipReserveAhead": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveBook": "To book a seat: pick the day, choose “Morning”, “Afternoon” or “Full day”, tap a free seat, then “Reserve”.",
+  "@tipReserveBook": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveChange": "To change or cancel a booking: tap it and choose “Edit times”, “Stay longer”, “End earlier” or “Cancel reservation”.",
+  "@tipReserveChange": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveCheckIn": "To check in or out: tap your own seat and choose “Check in” or “Check out” — or switch on “Check in right away” while booking.",
+  "@tipReserveCheckIn": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveDefault": "To have your usual period preselected: set “Default booking period” in your settings.",
+  "@tipReserveDefault": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\". Links to /settings."
+  },
+  "tipReserveFavourite": "To find your favourite seats again: tap “Add to favourites” and rate the seat with the stars in the booking sheet.",
+  "@tipReserveFavourite": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveLevel": "To book a whole level: tap “Reserve level” on the level’s row.",
+  "@tipReserveLevel": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveList": "To book from a list instead of the plan: tap “List view”; “Plan view” brings the plan back.",
+  "@tipReserveList": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveRepeat": "To book the same seat regularly: in the booking sheet open “More options”, then set “Repeat” and “Repeat until”.",
+  "@tipReserveRepeat": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipReserveScan": "To act on a space from its QR card: tap “Scan a space code”, point the camera at the card and choose what to do.",
+  "@tipReserveScan": {
+    "description": "Tip (#2313) on the reserve surface: a scenario \"To …: …\"."
+  },
+  "tipValidationChain": "To have approvals given in turn: switch on “One after another”.",
+  "@tipValidationChain": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\"."
+  },
+  "tipValidationCount": "To ask for more approvals: raise “Required validations”, or require them only above an amount with “Only above this amount”.",
+  "@tipValidationCount": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\"."
+  },
+  "tipValidationDefault": "To change the rule every action inherits: tap “Default policy”.",
+  "@tipValidationDefault": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\"."
+  },
+  "tipValidationOverride": "To treat one action differently: tap its card and change it — it then reads “Customized”.",
+  "@tipValidationOverride": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\"."
+  },
+  "tipValidationRoles": "To decide who holds which role: edit the roles.",
+  "@tipValidationRoles": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\". Links to /roles."
+  },
+  "tipValidationWho": "To choose who approves — admins, listed persons or all members: set “Who validates”.",
+  "@tipValidationWho": {
+    "description": "Tip (#2313) on the validation surface: a scenario \"To …: …\"."
+  },
+  "tipWorkspaceSettingsBackup": "To back up or copy the space: use “Export workspace (XML)”.",
+  "@tipWorkspaceSettingsBackup": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\"."
+  },
+  "tipWorkspaceSettingsColours": "To give the app your colours: choose them.",
+  "@tipWorkspaceSettingsColours": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /settings/colours."
+  },
+  "tipWorkspaceSettingsDocuments": "To print the space’s documents — QR cards, price lists, rules: open the workspace documents.",
+  "@tipWorkspaceSettingsDocuments": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /reports?section=documents."
+  },
+  "tipWorkspaceSettingsGeneral": "To set the country, currency, time zone and language: open “General details” — documents and taxes follow them.",
+  "@tipWorkspaceSettingsGeneral": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\"."
+  },
+  "tipWorkspaceSettingsLegal": "To issue compliant invoices and e-invoices: complete your legal identity.",
+  "@tipWorkspaceSettingsLegal": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /legal-identity."
+  },
+  "tipWorkspaceSettingsNewMembers": "To set what new members start with: choose their subscription and what happens when days run out under “New members”.",
+  "@tipWorkspaceSettingsNewMembers": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\"."
+  },
+  "tipWorkspaceSettingsPay": "To tell members how to pay you: fill in the payment instructions.",
+  "@tipWorkspaceSettingsPay": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /payment-methods."
+  },
+  "tipWorkspaceSettingsSave": "To keep your changes: tap “Save” at the bottom before leaving.",
+  "@tipWorkspaceSettingsSave": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\"."
+  },
+  "tipWorkspaceSettingsWording": "To call things your own way — seats, levels, bookings: change the wording.",
+  "@tipWorkspaceSettingsWording": {
+    "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /settings/wording."
   },
   "unblockAction": "Unblock",
   "unblockDone": "Unblocked.",

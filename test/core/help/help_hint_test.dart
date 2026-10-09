@@ -29,6 +29,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/open_my_account.dart';
+import '../../helpers/router_paths.dart';
 
 Override _helpOverride() => helpContentProvider.overrideWith(
   (ref, languageCode) async => '# User Guide\n\n## 1. Intro\n\nHi.\n',
@@ -62,9 +63,13 @@ Future<void> _pumpApp(
   await tester.pumpAndSettle();
 }
 
-/// The carousel's compact "2/5" position indicator for [id].
+/// The carousel's compact "2/9" position indicator for [id].
 String _position(WidgetTester tester, String id) =>
     tester.widget<Text>(find.byKey(ValueKey('help-hint-pos-$id'))).data!;
+
+/// How many tips [id] offers here (its features decide): the "N" of "1/N".
+int _count(WidgetTester tester, String id) =>
+    int.parse(_position(tester, id).split('/').last);
 
 void main() {
   setUpAll(() {
@@ -78,9 +83,10 @@ void main() {
   ) async {
     await _pumpApp(tester);
     expect(find.byKey(const ValueKey('help-hint-reserve')), findsOneWidget);
-    expect(find.textContaining('tap a free seat'), findsOneWidget);
+    expect(find.textContaining('To book a seat'), findsOneWidget);
     // The carousel indicator says where we are — first visit, tip 1.
-    expect(_position(tester, 'reserve'), '1/5');
+    expect(_position(tester, 'reserve'), '1/${_count(tester, 'reserve')}');
+    expect(_count(tester, 'reserve'), greaterThanOrEqualTo(5));
   });
 
   testWidgets('the next visit opens on the NEXT tip, rotating past the end', (
@@ -88,7 +94,8 @@ void main() {
   ) async {
     final store = InMemoryHelpHintStore();
     await _pumpApp(tester, store: store);
-    expect(_position(tester, 'reserve'), '1/5');
+    final n = _count(tester, 'reserve');
+    expect(_position(tester, 'reserve'), '1/$n');
     // Showing tip 1 recorded it as the last shown.
     expect(store.positions['reserve'], 0);
 
@@ -96,16 +103,16 @@ void main() {
     // (Tear the tree down first — a visit begins with a fresh screen.)
     await tester.pumpWidget(const SizedBox.shrink());
     await _pumpApp(tester, store: store);
-    expect(_position(tester, 'reserve'), '2/5');
-    expect(find.textContaining('Week and Month views'), findsOneWidget);
+    expect(_position(tester, 'reserve'), '2/$n');
+    expect(find.textContaining('To find a free day ahead'), findsOneWidget);
     expect(store.positions['reserve'], 1);
 
     // A stored index past the end (an older, longer tip list) rotates
     // back to the start instead of crashing.
-    store.positions['reserve'] = 99;
+    store.positions['reserve'] = n * 10 - 1;
     await tester.pumpWidget(const SizedBox.shrink());
     await _pumpApp(tester, store: store);
-    expect(_position(tester, 'reserve'), '1/5');
+    expect(_position(tester, 'reserve'), '1/$n');
   });
 
   testWidgets('chevrons page forward and backward, wrapping, and persist', (
@@ -113,26 +120,27 @@ void main() {
   ) async {
     final store = InMemoryHelpHintStore();
     await _pumpApp(tester, store: store);
-    expect(_position(tester, 'reserve'), '1/5');
+    final n = _count(tester, 'reserve');
+    expect(_position(tester, 'reserve'), '1/$n');
 
     await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
     await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '2/5');
-    expect(find.textContaining('Week and Month views'), findsOneWidget);
+    expect(_position(tester, 'reserve'), '2/$n');
+    expect(find.textContaining('To find a free day ahead'), findsOneWidget);
     // Manual paging updates the rotation memory.
     expect(store.positions['reserve'], 1);
 
     await tester.tap(find.byKey(const ValueKey('help-hint-prev-reserve')));
     await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '1/5');
+    expect(_position(tester, 'reserve'), '1/$n');
     expect(store.positions['reserve'], 0);
 
     // Backward from tip 1 wraps to the last tip — the indicator keeps
     // the position obvious.
     await tester.tap(find.byKey(const ValueKey('help-hint-prev-reserve')));
     await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '5/5');
-    expect(store.positions['reserve'], 4);
+    expect(_position(tester, 'reserve'), '$n/$n');
+    expect(store.positions['reserve'], n - 1);
   });
 
   testWidgets('swiping the card pages too, in sync with the indicator', (
@@ -140,13 +148,14 @@ void main() {
   ) async {
     final store = InMemoryHelpHintStore();
     await _pumpApp(tester, store: store);
+    final n = _count(tester, 'reserve');
 
     await tester.drag(
       find.byKey(const ValueKey('help-hint-pager-reserve')),
       const Offset(-400, 0),
     );
     await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '2/5');
+    expect(_position(tester, 'reserve'), '2/$n');
     expect(store.positions['reserve'], 1);
 
     await tester.drag(
@@ -154,7 +163,7 @@ void main() {
       const Offset(400, 0),
     );
     await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '1/5');
+    expect(_position(tester, 'reserve'), '1/$n');
     expect(store.positions['reserve'], 0);
   });
 
@@ -207,26 +216,35 @@ void main() {
     );
   });
 
-  testWidgets('a tip with its own topic deep-links to that guide section', (
-    tester,
-  ) async {
+  testWidgets('a tip that names a form links to it (#2313)', (tester) async {
     await _pumpApp(tester);
-    // Page to tip 3 — the QR-scan tip, which carries its own topic.
-    await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
-    await tester.pumpAndSettle();
-    expect(_position(tester, 'reserve'), '3/5');
-
-    await tester.tap(
-      find.byKey(const ValueKey('help-hint-learn-more-reserve')),
-    );
-    await tester.pumpAndSettle();
-    expect(find.byType(HelpScreen), findsOneWidget);
+    // Tip 1 happens on this screen: no link.
+    expect(find.byKey(const ValueKey('help-hint-go-reserve')), findsNothing);
+    // Page to the tip that sends the person to Settings.
+    for (var i = 0; i < _count(tester, 'reserve'); i++) {
+      if (find.textContaining('usual period').evaluate().isNotEmpty) break;
+      await tester.tap(find.byKey(const ValueKey('help-hint-next-reserve')));
+      await tester.pumpAndSettle();
+    }
+    final go = find.byKey(const ValueKey('help-hint-go-reserve'));
+    expect(go, findsOneWidget);
     expect(
-      tester.widget<HelpScreen>(find.byType(HelpScreen)).topic,
-      'Scan a space code',
+      find.descendant(of: go, matching: find.text('Settings')),
+      findsOneWidget,
+      reason: 'the link names the form by its title',
     );
+    await tester.tap(go);
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    expect(GoRouter.of(context).state.uri.path, '/settings');
+  });
+
+  testWidgets('a tip of a switched-off feature is not offered', (tester) async {
+    await _pumpApp(tester, featureFlags: {'seriesBooking': false});
+    final without = _count(tester, 'reserve');
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _pumpApp(tester, featureFlags: {'seriesBooking': true});
+    expect(_count(tester, 'reserve'), without + 1);
   });
 
   testWidgets('Settings → "Show help hints again" restores dismissed hints', (
@@ -290,24 +308,43 @@ void main() {
     }
   });
 
-  test('every surface carries 3–5 tips, tip 1 being the #606 how-to', () {
+  test('every surface carries at least three scenarios, each "To …" '
+      '(#2313)', () {
     for (final id in HelpHintId.values) {
       final tips = HelpHint.tips(null, id);
       expect(
         tips.length,
-        inInclusiveRange(3, 5),
+        greaterThanOrEqualTo(3),
         reason: '${id.name} has ${tips.length} tips',
-      );
-      expect(
-        tips.first.text,
-        HelpHint.text(null, id),
-        reason: '${id.name}: tip 1 must stay the original hint',
       );
       for (final tip in tips) {
         expect(
-          tip.text.trim(),
-          isNotEmpty,
-          reason: '${id.name} has an empty tip',
+          tip.text,
+          startsWith('To '),
+          reason: '${id.name}: "${tip.text}" is not a scenario',
+        );
+      }
+    }
+  });
+
+  testWidgets('every tip link opens a registered route and names it by '
+      'its title (#2313)', (tester) async {
+    final app = await bootRouter(tester);
+    final paths = registeredRoutePaths(app.router.configuration.routes).toSet();
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    for (final id in HelpHintId.values) {
+      for (final tip in HelpHint.tips(l10n, id)) {
+        final route = tip.route;
+        if (route == null) continue;
+        expect(
+          paths,
+          contains(Uri.parse(route).path),
+          reason: '${id.name}: $route is not a route',
+        );
+        expect(
+          helpTipDestination(l10n, route),
+          isNot(l10n.helpHintLearnMore),
+          reason: '${id.name}: $route has no title',
         );
       }
     }
@@ -330,8 +367,8 @@ void main() {
       'guide (#763, #1393)', () {
     Map<String, String> topicsOf(String locale) {
       final map = json.decode(
-          File('lib/l10n/app_$locale.arb').readAsStringSync())
-          as Map<String, dynamic>;
+        File('lib/l10n/app_$locale.arb').readAsStringSync(),
+      ) as Map<String, dynamic>;
       return {
         for (final e in map.entries)
           if (e.key.startsWith('helpTopic')) e.key: e.value as String,
@@ -339,16 +376,24 @@ void main() {
     }
 
     final en = topicsOf('en');
-    expect(en, isNotEmpty,
-        reason: 'no helpTopic* key was found in lib/l10n/app_en.arb — the '
-            'derivation is reading the wrong file and this test now '
-            'asserts nothing');
+    expect(
+      en,
+      isNotEmpty,
+      reason:
+          'no helpTopic* key was found in lib/l10n/app_en.arb — the '
+          'derivation is reading the wrong file and this test now '
+          'asserts nothing',
+    );
 
     for (final locale in ['en', 'fr', 'de', 'es', 'it']) {
       final topics = topicsOf(locale);
-      expect(topics.keys, unorderedEquals(en.keys),
-          reason: '$locale carries a different set of helpTopic keys than '
-              'en — arb_key_parity_test should have caught this first');
+      expect(
+        topics.keys,
+        unorderedEquals(en.keys),
+        reason:
+            '$locale carries a different set of helpTopic keys than '
+            'en — arb_key_parity_test should have caught this first',
+      );
 
       final headings = File('assets/help/$locale.md')
           .readAsLinesSync()
@@ -358,7 +403,8 @@ void main() {
         expect(
           headings.any((h) => h.toLowerCase().contains(topic.toLowerCase())),
           isTrue,
-          reason: '$key "$topic" ($locale) matches no guide heading — the '
+          reason:
+              '$key "$topic" ($locale) matches no guide heading — the '
               '/help jump would land at the top of the guide instead of '
               'the paragraph',
         );
@@ -369,8 +415,7 @@ void main() {
   // And the getters still agree with the ARB the derivation reads. The
   // test above catches an omission; this one catches a divergence
   // between the generated getter and the file it was generated from.
-  test('every HelpDot topic getter returns what the ARB says (#763)',
-      () async {
+  test('every HelpDot topic getter returns what the ARB says (#763)', () async {
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = await AppLocalizations.delegate.load(locale);
       final headings = File('assets/help/${locale.languageCode}.md')
@@ -412,23 +457,27 @@ void main() {
       // exactly as the old `dotTopics` array did — 16 keys shipped and
       // 14 were listed. Comparing it with the ARB makes the omission
       // fail instead of passing silently.
-      final declared = (json.decode(
-              File('lib/l10n/app_${locale.languageCode}.arb')
-                  .readAsStringSync()) as Map<String, dynamic>)
-          .keys
-          .where((k) => k.startsWith('helpTopic'))
-          .toSet();
-      expect(topics.keys.toSet(), declared,
-          reason: 'this map and lib/l10n/app_${locale.languageCode}.arb '
-              'disagree about which helpTopic keys exist — add the new '
-              'getter here, or remove the retired one');
+      final declared =
+          (json.decode(
+                File('lib/l10n/app_${locale.languageCode}.arb')
+                    .readAsStringSync(),
+              ) as Map<String, dynamic>).keys
+              .where((k) => k.startsWith('helpTopic'))
+              .toSet();
+      expect(
+        topics.keys.toSet(),
+        declared,
+        reason:
+            'this map and lib/l10n/app_${locale.languageCode}.arb '
+            'disagree about which helpTopic keys exist — add the new '
+            'getter here, or remove the retired one',
+      );
       topics.forEach((key, topic) {
         expect(
-          headings.any(
-            (h) => h.toLowerCase().contains(topic.toLowerCase()),
-          ),
+          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase())),
           isTrue,
-          reason: '$key "$topic" (${locale.languageCode}) matches no '
+          reason:
+              '$key "$topic" (${locale.languageCode}) matches no '
               'guide heading — the /help jump would land nowhere',
         );
       });

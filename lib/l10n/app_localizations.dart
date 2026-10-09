@@ -11010,24 +11010,6 @@ abstract class AppLocalizations {
   /// **'Set the open weekdays and working hours, and add closure days nobody can book.'**
   String get helpHintAvailability;
 
-  /// No description provided for @helpHintAvailabilityTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.'**
-  String get helpHintAvailabilityTip2;
-
-  /// No description provided for @helpHintAvailabilityTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.'**
-  String get helpHintAvailabilityTip3;
-
-  /// No description provided for @helpHintAvailabilityTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Three booking policies tighten or relax the rules: past bookings, minute bookings kept within working hours, and admin check-out.'**
-  String get helpHintAvailabilityTip4;
-
   /// No description provided for @helpHintAvailabilityTopic.
   ///
   /// In en, this message translates to:
@@ -11040,24 +11022,6 @@ abstract class AppLocalizations {
   /// **'Issue a printable QR badge or register an NFC card; revoke lost badges any time.'**
   String get helpHintBadges;
 
-  /// No description provided for @helpHintBadgesTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.'**
-  String get helpHintBadgesTip2;
-
-  /// No description provided for @helpHintBadgesTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.'**
-  String get helpHintBadgesTip3;
-
-  /// No description provided for @helpHintBadgesTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.'**
-  String get helpHintBadgesTip4;
-
   /// No description provided for @helpHintBadgesTopic.
   ///
   /// In en, this message translates to:
@@ -11069,42 +11033,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick a day or a range: everything dated that you may see, in one list, each row opening its source.'**
   String get helpHintCalendar;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.'**
-  String get helpHintCalendarTip2;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.'**
-  String get helpHintCalendarTip3;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.'**
-  String get helpHintCalendarTip4;
-
-  /// No description provided for @helpHintCalendarTip4Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'How booking behaves'**
-  String get helpHintCalendarTip4Topic;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'The shield shows who can see each kind, and who actually looked at your finances.'**
-  String get helpHintCalendarTip5;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy'**
-  String get helpHintCalendarTip5Topic;
 
   /// No description provided for @helpHintCalendarTopic.
   ///
@@ -11124,36 +11052,6 @@ abstract class AppLocalizations {
   /// **'Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.'**
   String get helpHintEditor;
 
-  /// No description provided for @helpHintEditorTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick Office or Table in the toolbar and drag on the grid to draw it; Select moves and resizes what is already there.'**
-  String get helpHintEditorTip2;
-
-  /// No description provided for @helpHintEditorTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'The Seat tool stamps seats onto desks; a seat\'s sheet sets its direction, chair type, accessories and a maintenance block.'**
-  String get helpHintEditorTip3;
-
-  /// No description provided for @helpHintEditorTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Give a seat its NFC/RFID tag from the seat sheet — tap the chip on the phone and the field fills itself.'**
-  String get helpHintEditorTip4;
-
-  /// No description provided for @helpHintEditorTip5.
-  ///
-  /// In en, this message translates to:
-  /// **'Print a QR card for every seat, desk, office and level — pick the card size and what each card shows before exporting.'**
-  String get helpHintEditorTip5;
-
-  /// No description provided for @helpHintEditorTip5Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'Space QR codes'**
-  String get helpHintEditorTip5Topic;
-
   /// No description provided for @helpHintEditorTopic.
   ///
   /// In en, this message translates to:
@@ -11166,24 +11064,6 @@ abstract class AppLocalizations {
   /// **'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.'**
   String get helpHintEvents;
 
-  /// No description provided for @helpHintEventsTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'The filter chips remember your choice across visits — and the Unread chip narrows the list to unread messages.'**
-  String get helpHintEventsTip2;
-
-  /// No description provided for @helpHintEventsTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Group the feed by type, day or member from the Group by menu; tap the group symbol to return to the flat list.'**
-  String get helpHintEventsTip3;
-
-  /// No description provided for @helpHintEventsTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Pending decisions sit pinned on top with Accept and reject — and nobody ever validates their own event.'**
-  String get helpHintEventsTip4;
-
   /// No description provided for @helpHintEventsTopic.
   ///
   /// In en, this message translates to:
@@ -11195,24 +11075,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch workspace functionality on or off — every member\'s app follows immediately.'**
   String get helpHintFeatures;
-
-  /// No description provided for @helpHintFeaturesTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'The list is hierarchical — a feature that needs another sits indented under it and greys out while its parent is off.'**
-  String get helpHintFeaturesTip2;
-
-  /// No description provided for @helpHintFeaturesTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Switching a parent off takes its whole subtree out of the app; the children\'s stored choices return untouched with the parent.'**
-  String get helpHintFeaturesTip3;
-
-  /// No description provided for @helpHintFeaturesTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'A feature\'s settings entry only appears while the feature is on — the Features screen itself always stays reachable.'**
-  String get helpHintFeaturesTip4;
 
   /// No description provided for @helpHintFeaturesTopic.
   ///
@@ -11232,41 +11094,11 @@ abstract class AppLocalizations {
   /// **'Invite members, set their plan percentage and role, and manage their badges.'**
   String get helpHintMembers;
 
-  /// No description provided for @helpHintMembersTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a member for their management sheet — subscription, reservation limit, badges, services and more in one place.'**
-  String get helpHintMembersTip2;
-
-  /// No description provided for @helpHintMembersTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Badges live per member: mint a printable QR badge, or register their NFC card by holding it to the device.'**
-  String get helpHintMembersTip3;
-
-  /// No description provided for @helpHintMembersTip3Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC badges'**
-  String get helpHintMembersTip3Topic;
-
-  /// No description provided for @helpHintMembersTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Name admin grants admin rights after validation; the role matrix under Role management decides what every role may do.'**
-  String get helpHintMembersTip4;
-
   /// No description provided for @helpHintMembersTip4Topic.
   ///
   /// In en, this message translates to:
   /// **'Role management'**
   String get helpHintMembersTip4Topic;
-
-  /// No description provided for @helpHintMembersTipNegotiation.
-  ///
-  /// In en, this message translates to:
-  /// **'A member\'s own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule\'s validators confirm it.'**
-  String get helpHintMembersTipNegotiation;
 
   /// No description provided for @helpHintMembersTipNegotiationTopic.
   ///
@@ -11328,12 +11160,6 @@ abstract class AppLocalizations {
   /// **'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.'**
   String get helpHintMoneyDocuments;
 
-  /// No description provided for @helpHintMoneyDocumentsTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.'**
-  String get helpHintMoneyDocumentsTip3;
-
   /// No description provided for @helpHintMoneyDocumentsTopic.
   ///
   /// In en, this message translates to:
@@ -11345,12 +11171,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.'**
   String get helpHintMoneyInvoices;
-
-  /// No description provided for @helpHintMoneyInvoicesTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Past the workspace\'s payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.'**
-  String get helpHintMoneyInvoicesTip2;
 
   /// No description provided for @helpHintMoneyInvoicesTip2Topic.
   ///
@@ -11370,29 +11190,11 @@ abstract class AppLocalizations {
   /// **'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.'**
   String get helpHintMoneyPayments;
 
-  /// No description provided for @helpHintMoneyPaymentsTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Record a payment with the date the money moved and the month it settles — the other side confirms it.'**
-  String get helpHintMoneyPaymentsTip2;
-
-  /// No description provided for @helpHintMoneyPaymentsTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.'**
-  String get helpHintMoneyPaymentsTip3;
-
   /// No description provided for @helpHintMoneyPaymentsTip3Topic.
   ///
   /// In en, this message translates to:
   /// **'online payments'**
   String get helpHintMoneyPaymentsTip3Topic;
-
-  /// No description provided for @helpHintMoneyPaymentsTipSupply.
-  ///
-  /// In en, this message translates to:
-  /// **'Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.'**
-  String get helpHintMoneyPaymentsTipSupply;
 
   /// No description provided for @helpHintMoneyPaymentsTipSupplyTopic.
   ///
@@ -11412,71 +11214,11 @@ abstract class AppLocalizations {
   /// **'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.'**
   String get helpHintMoneyStatement;
 
-  /// No description provided for @helpHintMoneyStatementTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.'**
-  String get helpHintMoneyStatementTip2;
-
-  /// No description provided for @helpHintMoneyStatementTip2Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'How booking behaves'**
-  String get helpHintMoneyStatementTip2Topic;
-
-  /// No description provided for @helpHintMoneyStatementTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.'**
-  String get helpHintMoneyStatementTip3;
-
-  /// No description provided for @helpHintMoneyStatementTipNegotiation.
-  ///
-  /// In en, this message translates to:
-  /// **'Your negotiated prices are in Documents, beside your agreement. The card compares them with the tariff and explains who can see them; other people’s views are recorded.'**
-  String get helpHintMoneyStatementTipNegotiation;
-
-  /// No description provided for @helpHintMoneyStatementTipNegotiationTopic.
-  ///
-  /// In en, this message translates to:
-  /// **'Price negotiations'**
-  String get helpHintMoneyStatementTipNegotiationTopic;
-
   /// No description provided for @helpHintMoneyStatementTopic.
   ///
   /// In en, this message translates to:
   /// **'The Statement face'**
   String get helpHintMoneyStatementTopic;
-
-  /// No description provided for @helpHintMoneyTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Every document offers the same three actions: quick view on screen, download as PDF, and share to any app.'**
-  String get helpHintMoneyTip2;
-
-  /// No description provided for @helpHintMoneyTip2Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'Quick view, save, share'**
-  String get helpHintMoneyTip2Topic;
-
-  /// No description provided for @helpHintMoneyTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Record a payment with the date the money moved and the month it settles — the other side confirms it.'**
-  String get helpHintMoneyTip3;
-
-  /// No description provided for @helpHintMoneyTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Once the month is invoiced, the invoice decides: the month reads settled as soon as its invoice is paid.'**
-  String get helpHintMoneyTip4;
-
-  /// No description provided for @helpHintMoneyTip4Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'the invoice decides'**
-  String get helpHintMoneyTip4Topic;
 
   /// No description provided for @helpHintMoneyTopic.
   ///
@@ -11495,36 +11237,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The live floor plan: tap a free seat to book it, tap your own booking to check in.'**
   String get helpHintPlan;
-
-  /// No description provided for @helpHintPlanTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Standing at a free seat? Tap it — the sheet suggests now until closing, and confirming checks you in on the spot.'**
-  String get helpHintPlanTip2;
-
-  /// No description provided for @helpHintPlanTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Browse another moment with the date chip and the time scroller — the plan shows who sits where at any future time.'**
-  String get helpHintPlanTip3;
-
-  /// No description provided for @helpHintPlanTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.'**
-  String get helpHintPlanTip4;
-
-  /// No description provided for @helpHintPlanTip5.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.'**
-  String get helpHintPlanTip5;
-
-  /// No description provided for @helpHintPlanTip5Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'How booking behaves'**
-  String get helpHintPlanTip5Topic;
 
   /// No description provided for @helpHintPlanTopic.
   ///
@@ -11547,18 +11259,6 @@ abstract class AppLocalizations {
   /// #718/#719 - help hints
   ///
   /// In en, this message translates to:
-  /// **'Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.'**
-  String get helpHintPrivacyTip2;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
-  /// **'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.'**
-  String get helpHintPrivacyTip3;
-
-  /// #718/#719 - help hints
-  ///
-  /// In en, this message translates to:
   /// **'Privacy'**
   String get helpHintPrivacyTopic;
 
@@ -11568,47 +11268,11 @@ abstract class AppLocalizations {
   /// **'Pick a day and time window, then tap a free seat to book it.'**
   String get helpHintReserve;
 
-  /// No description provided for @helpHintReserveTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'The Week and Month views find a free half-day at a glance — tap a free cell or day to book right there.'**
-  String get helpHintReserveTip2;
-
-  /// No description provided for @helpHintReserveTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the scan button and point the camera at a space\'s QR card — the sheet shows exactly what you may do there.'**
-  String get helpHintReserveTip3;
-
-  /// No description provided for @helpHintReserveTip3Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'Scan a space code'**
-  String get helpHintReserveTip3Topic;
-
-  /// No description provided for @helpHintReserveTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'The morning, afternoon and full-day chips pick your window before you choose a seat — a booked morning counts as half a day.'**
-  String get helpHintReserveTip4;
-
   /// No description provided for @helpHintReserveTip4Topic.
   ///
   /// In en, this message translates to:
   /// **'How booking behaves'**
   String get helpHintReserveTip4Topic;
-
-  /// No description provided for @helpHintReserveTip5.
-  ///
-  /// In en, this message translates to:
-  /// **'Set your default booking period in Settings — the hub preselects it on every visit.'**
-  String get helpHintReserveTip5;
-
-  /// No description provided for @helpHintReserveTip5Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings & profile'**
-  String get helpHintReserveTip5Topic;
 
   /// No description provided for @helpHintReserveTopic.
   ///
@@ -11634,30 +11298,6 @@ abstract class AppLocalizations {
   /// **'Decide which actions need confirmation, who confirms, and how many approvals it takes.'**
   String get helpHintValidation;
 
-  /// No description provided for @helpHintValidationTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'One card per event type, each inheriting from the default rule until you edit it — payments, expenses, role changes and more.'**
-  String get helpHintValidationTip2;
-
-  /// No description provided for @helpHintValidationTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Nobody ever validates their own event, and unanswered requests expire after 7 days — nothing is granted silently.'**
-  String get helpHintValidationTip3;
-
-  /// No description provided for @helpHintValidationTipScopes.
-  ///
-  /// In en, this message translates to:
-  /// **'Who validates is the rule\'s scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.'**
-  String get helpHintValidationTipScopes;
-
-  /// No description provided for @helpHintValidationTipScopesTopic.
-  ///
-  /// In en, this message translates to:
-  /// **'Role management'**
-  String get helpHintValidationTipScopesTopic;
-
   /// No description provided for @helpHintValidationTopic.
   ///
   /// In en, this message translates to:
@@ -11669,30 +11309,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Country, currency, language and billing details — documents and taxes follow these settings.'**
   String get helpHintWorkspace;
-
-  /// No description provided for @helpHintWorkspaceTip2.
-  ///
-  /// In en, this message translates to:
-  /// **'Print the space QR cards from Exports — choose the card size and the info each card carries, ten per A4 page.'**
-  String get helpHintWorkspaceTip2;
-
-  /// No description provided for @helpHintWorkspaceTip2Topic.
-  ///
-  /// In en, this message translates to:
-  /// **'Space QR codes'**
-  String get helpHintWorkspaceTip2Topic;
-
-  /// No description provided for @helpHintWorkspaceTip3.
-  ///
-  /// In en, this message translates to:
-  /// **'Export the space as XML to back it up or template a new one; the setup questionnaire prefills a fresh workspace end to end.'**
-  String get helpHintWorkspaceTip3;
-
-  /// No description provided for @helpHintWorkspaceTip4.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset the workspace wipes reservations, accounting and the floor plan — settings and members survive, and a typed confirmation guards it.'**
-  String get helpHintWorkspaceTip4;
 
   /// No description provided for @helpHintWorkspaceTopic.
   ///
@@ -30829,6 +30445,582 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'References in'**
   String get threadRefsIn;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To close a day nobody can book: tap “Add closure day” and give a reason if you like.'**
+  String get tipAvailabilityClosure;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To set the days you open: toggle the weekday chips under “Open weekdays”.'**
+  String get tipAvailabilityDays;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To choose how bookings are cut: pick a “Booking granularity” — free periods, slots, half days or full days.'**
+  String get tipAvailabilityGrid;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To close on public holidays: tap “Add public holidays”.'**
+  String get tipAvailabilityHolidays;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To set the working day: adjust “Day starts”, “Half-day boundary” and “Day ends”.'**
+  String get tipAvailabilityHours;
+
+  /// Tip (#2313) on the availability surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To tighten or relax the rules — past bookings, outside the opening hours, booking limits: use “Booking policies”.'**
+  String get tipAvailabilityPolicies;
+
+  /// Tip (#2313) on the badges surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To stop a lost badge: tap “Revoke”; swipe a revoked badge to the right to delete it.'**
+  String get tipBadgesLost;
+
+  /// Tip (#2313) on the badges surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To use an NFC card: tap “Register card” and hold the card against the device.'**
+  String get tipBadgesNfc;
+
+  /// Tip (#2313) on the badges surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To give someone a QR badge: tap “New badge”, then “Save as PDF” to print it.'**
+  String get tipBadgesQr;
+
+  /// Tip (#2313) on the badges surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To sign in with your badge: switch on “Signs me in” on your own badge.'**
+  String get tipBadgesSignIn;
+
+  /// Tip (#2313) on the calendar surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To handle alerts and decisions waiting for you: open “Alerts”.'**
+  String get tipCalendarAlerts;
+
+  /// Tip (#2313) on the calendar surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see one kind of item only: tap its chip — bookings, invoices, payments…; “Reset filters” shows everything again.'**
+  String get tipCalendarKinds;
+
+  /// Tip (#2313) on the calendar surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see only your own bookings: tap “My bookings”.'**
+  String get tipCalendarMine;
+
+  /// Tip (#2313) on the calendar surface: a scenario "To …: …". Links to /money.
+  ///
+  /// In en, this message translates to:
+  /// **'To see the money behind a payment: tap its row — your finances open on that payment.'**
+  String get tipCalendarMoney;
+
+  /// Tip (#2313) on the calendar surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see a week or a month at once: tap “Week” or “Month”; “Today” brings you back.'**
+  String get tipCalendarViews;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …". Links to /accessories.
+  ///
+  /// In en, this message translates to:
+  /// **'To offer accessories on seats: set them up first, then pick them in each seat’s “Properties”.'**
+  String get tipEditorAccessories;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To draw over a real floor plan: set it under “Background image”.'**
+  String get tipEditorBackground;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To draw a room or a desk: pick “Office” or “Desk” in the toolbar and drag on the plan.'**
+  String get tipEditorDraw;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To add a floor: tap “Add level”; “Level actions” renames or deletes it.'**
+  String get tipEditorLevel;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To let people check in with a tag: in a seat’s “Properties”, use “NFC/RFID tag” › “Read a tag now”.'**
+  String get tipEditorNfc;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …". Links to /reports?section=documents.
+  ///
+  /// In en, this message translates to:
+  /// **'To print QR cards for the spaces: open the workspace documents and choose “Space QR codes (PDF)”.'**
+  String get tipEditorQr;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To name a seat or block it for maintenance: select it and tap “Properties”.'**
+  String get tipEditorSeat;
+
+  /// Tip (#2313) on the editor surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To add seats: pick the “Seat” tool and tap a desk.'**
+  String get tipEditorSeats;
+
+  /// Tip (#2313) on the events surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To answer a request waiting for you: tap “Accept” or “Decline” on it — it sits on top of the feed.'**
+  String get tipEventsDecide;
+
+  /// Tip (#2313) on the events surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To group the feed: open “Group by” and choose type, date or member; “Ungroup” flattens it again.'**
+  String get tipEventsGroup;
+
+  /// Tip (#2313) on the events surface: a scenario "To …: …". Links to /me?tab=messages.
+  ///
+  /// In en, this message translates to:
+  /// **'To answer your conversations: open your messenger.'**
+  String get tipEventsMessages;
+
+  /// Tip (#2313) on the events surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see one topic only: tap its chip — messages, reservations, check-ins, money or members.'**
+  String get tipEventsTopic;
+
+  /// Tip (#2313) on the events surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see what you have not read yet: tap “Unread”.'**
+  String get tipEventsUnread;
+
+  /// Tip (#2313) on the features surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see what you changed from the defaults: tap the “Changed” filter.'**
+  String get tipFeaturesChanged;
+
+  /// Tip (#2313) on the features surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To start from what you want to do: choose “Processes” and search for it.'**
+  String get tipFeaturesProcess;
+
+  /// Tip (#2313) on the features surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To switch on a greyed feature: first switch on the one its “Requires” line names.'**
+  String get tipFeaturesRequires;
+
+  /// Tip (#2313) on the features surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To switch one feature on or off: choose “Switches”, search it and flip its switch — every member’s app follows at once.'**
+  String get tipFeaturesSwitch;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To admit someone who asked to join: open them and tap “Approve membership”.'**
+  String get tipMembersApprove;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To issue a badge: open the member and choose “Badges & access” › “Badges”.'**
+  String get tipMembersBadge;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …". Links to /workspace-code.
+  ///
+  /// In en, this message translates to:
+  /// **'To invite someone: share the workspace ID or its QR code — “Invite a member” opens them.'**
+  String get tipMembersInvite;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …". Links to /members/managed.
+  ///
+  /// In en, this message translates to:
+  /// **'To add a person who has no account: “Add a managed profile”.'**
+  String get tipMembersManaged;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To write to every admin at once: tap “Notify all admins”.'**
+  String get tipMembersNotify;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To change a member’s plan: open the member and set the “Subscription” under “Billing”.'**
+  String get tipMembersPlan;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …". Links to /billing.
+  ///
+  /// In en, this message translates to:
+  /// **'To set the workspace’s prices and plans: open the billing settings.'**
+  String get tipMembersPrices;
+
+  /// Tip (#2313) on the members surface: a scenario "To …: …". Links to /roles.
+  ///
+  /// In en, this message translates to:
+  /// **'To decide what each role may do: edit the roles; a member gets one with “Add a role” on their page.'**
+  String get tipMembersRole;
+
+  /// Tip (#2313) on the messages surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To handle alerts and decisions waiting for you: open “Alerts” in the calendar.'**
+  String get tipMessagesAlerts;
+
+  /// Tip (#2313) on the messages surface: a scenario "To …: …". Links to /me?tab=messages.
+  ///
+  /// In en, this message translates to:
+  /// **'To see what you have not read yet: tap “Unread” in your messenger.'**
+  String get tipMessagesUnread;
+
+  /// Tip (#2313) on the messages surface: a scenario "To …: …". Links to /me?tab=messages.
+  ///
+  /// In en, this message translates to:
+  /// **'To write to someone or start a group: open your messenger and tap the pencil.'**
+  String get tipMessagesWrite;
+
+  /// Tip (#2313) on the money surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To get more days this month: tap “Request extra half-days”.'**
+  String get tipMoneyDays;
+
+  /// Tip (#2313) on the moneyDocuments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To read the conditions you agreed to: open “My conditions”.'**
+  String get tipMoneyDocumentsConditions;
+
+  /// Tip (#2313) on the moneyDocuments surface: a scenario "To …: …". Links to /documents.
+  ///
+  /// In en, this message translates to:
+  /// **'To find the space’s shared documents: open the “Document library”.'**
+  String get tipMoneyDocumentsLibrary;
+
+  /// Tip (#2313) on the moneyDocuments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To list what you paid: open the “Payments report”.'**
+  String get tipMoneyDocumentsPayments;
+
+  /// Tip (#2313) on the moneyDocuments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To keep the month on paper: open “This month\'s statement (PDF)”.'**
+  String get tipMoneyDocumentsStatement;
+
+  /// Tip (#2313) on the moneyDocuments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see what you used: open the “Consumption report”.'**
+  String get tipMoneyDocumentsUsage;
+
+  /// Tip (#2313) on the money surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To get an expense paid back: tap “Submit an expense”.'**
+  String get tipMoneyExpense;
+
+  /// Tip (#2313) on the moneyInvoices surface: a scenario "To …: …". Links to /account-activity.
+  ///
+  /// In en, this message translates to:
+  /// **'To see your invoices of every space together: open “Your finances across spaces”.'**
+  String get tipMoneyInvoicesAcross;
+
+  /// Tip (#2313) on the moneyInvoices surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To pay an open invoice: tap “Pay now” on it.'**
+  String get tipMoneyInvoicesPay;
+
+  /// Tip (#2313) on the moneyInvoices surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To read an invoice: tap it — its detail opens, with what is still due.'**
+  String get tipMoneyInvoicesRead;
+
+  /// Tip (#2313) on the money surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see another month: use the arrows beside the month.'**
+  String get tipMoneyMonth;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …". Links to /account-activity.
+  ///
+  /// In en, this message translates to:
+  /// **'To see your money across all your spaces: open “Your finances across spaces”.'**
+  String get tipMoneyPaymentsAcross;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To note something you used — a coffee, a print: tap “Add consumption”.'**
+  String get tipMoneyPaymentsConsumption;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To get more days this month: tap “Request extra half-days”.'**
+  String get tipMoneyPaymentsDays;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To get an expense paid back: tap “Submit an expense”.'**
+  String get tipMoneyPaymentsExpense;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To pay at once: tap “Pay online”.'**
+  String get tipMoneyPaymentsOnline;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To tell the space you paid: tap “Record a payment”.'**
+  String get tipMoneyPaymentsRecord;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To plan an expense that comes back: open “Scheduled expenses”.'**
+  String get tipMoneyPaymentsScheduled;
+
+  /// Tip (#2313) on the moneyPayments surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To pay by transfer: open “Payment instructions” and copy the IBAN.'**
+  String get tipMoneyPaymentsTransfer;
+
+  /// Tip (#2313) on the money surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To keep your bill: tap “Export bill as PDF”.'**
+  String get tipMoneyPdf;
+
+  /// Tip (#2313) on the money surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To tell the space you paid: tap “Record a payment”.'**
+  String get tipMoneyRecord;
+
+  /// Tip (#2313) on the moneyStatement surface: a scenario "To …: …". Links to /account-activity.
+  ///
+  /// In en, this message translates to:
+  /// **'To see your money across all your spaces: open “Your finances across spaces”.'**
+  String get tipMoneyStatementAcross;
+
+  /// Tip (#2313) on the moneyStatement surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see another month: use the arrows; “Balance” says what is left to settle.'**
+  String get tipMoneyStatementMonth;
+
+  /// Tip (#2313) on the moneyStatement surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To keep booking when your days run out: on the payments face, tap “Request extra half-days” or “Buy a package”.'**
+  String get tipMoneyStatementOut;
+
+  /// Tip (#2313) on the privacy surface: a scenario "To …: …". Links to /consent?review=1.
+  ///
+  /// In en, this message translates to:
+  /// **'To reread what you agreed to: open your rights and consent.'**
+  String get tipPrivacyConsent;
+
+  /// Tip (#2313) on the privacy surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To leave with your personal data erased: tap “Leave this workspace and erase my data”.'**
+  String get tipPrivacyErase;
+
+  /// Tip (#2313) on the privacy surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To download everything the space holds about you: tap “Export my data”.'**
+  String get tipPrivacyExport;
+
+  /// Tip (#2313) on the privacy surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To see who can read your data: tap “Who can see my data”.'**
+  String get tipPrivacyWho;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To find a free day ahead: open “View” and choose “Week” or “Month”, then tap a free cell or day.'**
+  String get tipReserveAhead;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To book a seat: pick the day, choose “Morning”, “Afternoon” or “Full day”, tap a free seat, then “Reserve”.'**
+  String get tipReserveBook;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To change or cancel a booking: tap it and choose “Edit times”, “Stay longer”, “End earlier” or “Cancel reservation”.'**
+  String get tipReserveChange;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To check in or out: tap your own seat and choose “Check in” or “Check out” — or switch on “Check in right away” while booking.'**
+  String get tipReserveCheckIn;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …". Links to /settings.
+  ///
+  /// In en, this message translates to:
+  /// **'To have your usual period preselected: set “Default booking period” in your settings.'**
+  String get tipReserveDefault;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To find your favourite seats again: tap “Add to favourites” and rate the seat with the stars in the booking sheet.'**
+  String get tipReserveFavourite;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To book a whole level: tap “Reserve level” on the level’s row.'**
+  String get tipReserveLevel;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To book from a list instead of the plan: tap “List view”; “Plan view” brings the plan back.'**
+  String get tipReserveList;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To book the same seat regularly: in the booking sheet open “More options”, then set “Repeat” and “Repeat until”.'**
+  String get tipReserveRepeat;
+
+  /// Tip (#2313) on the reserve surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To act on a space from its QR card: tap “Scan a space code”, point the camera at the card and choose what to do.'**
+  String get tipReserveScan;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To have approvals given in turn: switch on “One after another”.'**
+  String get tipValidationChain;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To ask for more approvals: raise “Required validations”, or require them only above an amount with “Only above this amount”.'**
+  String get tipValidationCount;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To change the rule every action inherits: tap “Default policy”.'**
+  String get tipValidationDefault;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To treat one action differently: tap its card and change it — it then reads “Customized”.'**
+  String get tipValidationOverride;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …". Links to /roles.
+  ///
+  /// In en, this message translates to:
+  /// **'To decide who holds which role: edit the roles.'**
+  String get tipValidationRoles;
+
+  /// Tip (#2313) on the validation surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To choose who approves — admins, listed persons or all members: set “Who validates”.'**
+  String get tipValidationWho;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To back up or copy the space: use “Export workspace (XML)”.'**
+  String get tipWorkspaceSettingsBackup;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …". Links to /settings/colours.
+  ///
+  /// In en, this message translates to:
+  /// **'To give the app your colours: choose them.'**
+  String get tipWorkspaceSettingsColours;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …". Links to /reports?section=documents.
+  ///
+  /// In en, this message translates to:
+  /// **'To print the space’s documents — QR cards, price lists, rules: open the workspace documents.'**
+  String get tipWorkspaceSettingsDocuments;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To set the country, currency, time zone and language: open “General details” — documents and taxes follow them.'**
+  String get tipWorkspaceSettingsGeneral;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …". Links to /legal-identity.
+  ///
+  /// In en, this message translates to:
+  /// **'To issue compliant invoices and e-invoices: complete your legal identity.'**
+  String get tipWorkspaceSettingsLegal;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To set what new members start with: choose their subscription and what happens when days run out under “New members”.'**
+  String get tipWorkspaceSettingsNewMembers;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …". Links to /payment-methods.
+  ///
+  /// In en, this message translates to:
+  /// **'To tell members how to pay you: fill in the payment instructions.'**
+  String get tipWorkspaceSettingsPay;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …".
+  ///
+  /// In en, this message translates to:
+  /// **'To keep your changes: tap “Save” at the bottom before leaving.'**
+  String get tipWorkspaceSettingsSave;
+
+  /// Tip (#2313) on the workspaceSettings surface: a scenario "To …: …". Links to /settings/wording.
+  ///
+  /// In en, this message translates to:
+  /// **'To call things your own way — seats, levels, bookings: change the wording.'**
+  String get tipWorkspaceSettingsWording;
 
   /// No description provided for @unblockAction.
   ///

@@ -1016,6 +1016,8 @@ class _WorkspaceSettingsScreenState
           : Form(
               key: _formKey,
               child: WorkspaceFormSections(children: [
+                  // #2313 — tips sit at the top of every screen.
+                  const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
@@ -1024,7 +1026,6 @@ class _WorkspaceSettingsScreenState
                     children: _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic)),
                   WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber, destructive: true,
                     children: _dangerZoneTiles(context, l10n: l10n, workspace: workspace)),
-                  const HelpHint(HelpHintId.workspaceSettings),
               ]),
             ),
       bottomNavigationBar: workspace == null ? null : WorkspaceSettingsSaveBar(busy: _busy, onSave: () => _save(workspace.id)),

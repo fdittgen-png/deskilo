@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_en.dart';
 
 /// Every surface that carries a contextual help hint (#606). The enum
 /// name is the persisted dismissal id — renaming a value revives its
@@ -25,14 +27,23 @@ enum HelpHintId {
   privacy,
 }
 
-/// One tip of a surface's carousel (#610): its sentence and, when a more
-/// specific guide section exists, its own "Learn more" topic. A null
+/// One tip of a surface's carousel (#610, #2313): a scenario the person
+/// may want from that screen ("To …: …"), the form it continues on when
+/// it names one ([route], opened by the tip's link), the feature it needs
+/// (a tip about a switched-off feature is not shown) and, when a more
+/// specific guide section exists, its own "Learn more" [topic]. A null
 /// [topic] falls back to the surface's topic.
 class HelpTip {
-  const HelpTip(this.text, {this.topic});
+  const HelpTip(this.text, {this.topic, this.route, this.feature});
 
   final String text;
   final String? topic;
+
+  /// The form the tip names, as a route the router resolves.
+  final String? route;
+
+  /// The workspace feature the scenario needs; null: always available.
+  final WorkspaceFeature? feature;
 }
 
 /// Tip 1 — the surface's basic how-to sentence (#606).
@@ -142,430 +153,230 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
   HelpHintId.privacy => l10n?.helpHintPrivacyTopic ?? 'Privacy',
 };
 
-/// The surface's carousel (#610): tip 1 is the #606 how-to, the rest
-/// climb from there into the screen's deeper tricks. Every text and
-/// topic is mined from the bundled help guides — a lint-style test
-/// checks that every topic matches a real heading in all five.
-List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) =>
-    switch (id) {
-      HelpHintId.reserve => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintReserveTip2 ??
-              'The Week and Month views find a free half-day at a '
-                  'glance — tap a free cell or day to book right there.',
-        ),
-        HelpTip(
-          l10n?.helpHintReserveTip3 ??
-              'Tap the scan button and point the camera at a '
-                  'space\'s QR card — the sheet shows exactly what '
-                  'you may do there.',
-          topic: l10n?.helpHintReserveTip3Topic ?? 'Scan a space code',
-        ),
-        HelpTip(
-          l10n?.helpHintReserveTip4 ??
-              'The morning, afternoon and full-day chips pick your '
-                  'window before you choose a seat — a booked '
-                  'morning counts as half a day.',
-          topic: l10n?.helpHintReserveTip4Topic ?? 'How booking behaves',
-        ),
-        HelpTip(
-          l10n?.helpHintReserveTip5 ??
-              'Set your default booking period in Settings — the '
-                  'hub preselects it on every visit.',
-          topic: l10n?.helpHintReserveTip5Topic ?? 'Settings & profile',
-        ),
-      ],
-      HelpHintId.plan => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintPlanTip2 ??
-              'Standing at a free seat? Tap it — the sheet suggests '
-                  'now until closing, and confirming checks you in on '
-                  'the spot.',
-        ),
-        HelpTip(
-          l10n?.helpHintPlanTip3 ??
-              'Browse another moment with the date chip and the time '
-                  'scroller — the plan shows who sits where at any '
-                  'future time.',
-        ),
-        HelpTip(
-          l10n?.helpHintPlanTip4 ??
-              'Double-tap a desk, a room or the floor itself — or tap '
-                  'the layers icon on the level rail — to reserve the '
-                  'whole space at once.',
-        ),
-        HelpTip(
-          l10n?.helpHintPlanTip5 ??
-              'Tap your own seat for its sheet: check in from 15 '
-                  'minutes before your start, check out when you '
-                  'leave.',
-          topic: l10n?.helpHintPlanTip5Topic ?? 'How booking behaves',
-        ),
-      ],
-      HelpHintId.calendar => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintCalendarTip2 ??
-              'Switch Day to Range to see a whole week or month at once — '
-                  'the arrows step by the size of your selection.',
-        ),
-        HelpTip(
-          l10n?.helpHintCalendarTip3 ??
-              'Tap a kind chip to see only that: bookings, alerts, '
-                  'messages, invoices, payments, consumption, reminders.',
-        ),
-        HelpTip(
-          l10n?.helpHintCalendarTip4 ??
-              'Every row opens its source — the booking, the conversation, '
-                  'the alert, the invoice, or that month on Finances.',
-        ),
-        HelpTip(
-          l10n?.helpHintCalendarTip5 ??
-              'The shield shows who can see each kind, and who actually '
-                  'looked at your finances.',
-          topic: l10n?.helpHintCalendarTip5Topic ?? 'Privacy',
-        ),
-      ],
-      HelpHintId.events => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintEventsTip2 ??
-              'The filter chips remember your choice across visits — '
-                  'and the Unread chip narrows the list to unread '
-                  'messages.',
-        ),
-        HelpTip(
-          l10n?.helpHintEventsTip3 ??
-              'Group the feed by type, day or member from the Group '
-                  'by menu; tap the group symbol to return to the '
-                  'flat list.',
-        ),
-        HelpTip(
-          l10n?.helpHintEventsTip4 ??
-              'Pending decisions sit pinned on top with Accept and '
-                  'reject — and nobody ever validates their own '
-                  'event.',
-        ),
-      ],
-      HelpHintId.editor => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintEditorTip2 ??
-              'Pick Office or Table in the toolbar and drag on the '
-                  'grid to draw it; Select moves and resizes what is '
-                  'already there.',
-        ),
-        HelpTip(
-          l10n?.helpHintEditorTip3 ??
-              'The Seat tool stamps seats onto desks; a seat\'s sheet '
-                  'sets its direction, chair type, accessories and a '
-                  'maintenance block.',
-        ),
-        HelpTip(
-          l10n?.helpHintEditorTip4 ??
-              'Give a seat its NFC/RFID tag from the seat sheet — tap '
-                  'the chip on the phone and the field fills itself.',
-        ),
-        HelpTip(
-          l10n?.helpHintEditorTip5 ??
-              'Print a QR card for every seat, desk, office and '
-                  'level — pick the card size and what each card '
-                  'shows before exporting.',
-          topic: l10n?.helpHintEditorTip5Topic ?? 'Space QR codes',
-        ),
-      ],
-      HelpHintId.availability => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintAvailabilityTip2 ??
-              'The booking granularity decides what a window may look '
-                  'like: half-days, full days, minute grids or free '
-                  'times.',
-        ),
-        HelpTip(
-          l10n?.helpHintAvailabilityTip3 ??
-              'Day start, half-day boundary and day end drive every '
-                  'half-day and full-day slot — booking, check-in and '
-                  'billing follow them.',
-        ),
-        HelpTip(
-          l10n?.helpHintAvailabilityTip4 ??
-              'Three booking policies tighten or relax the rules: '
-                  'past bookings, minute bookings kept within working '
-                  'hours, and admin check-out.',
-        ),
-      ],
-      HelpHintId.features => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintFeaturesTip2 ??
-              'The list is hierarchical — a feature that needs '
-                  'another sits indented under it and greys out while '
-                  'its parent is off.',
-        ),
-        HelpTip(
-          l10n?.helpHintFeaturesTip3 ??
-              'Switching a parent off takes its whole subtree out of '
-                  'the app; the children\'s stored choices return '
-                  'untouched with the parent.',
-        ),
-        HelpTip(
-          l10n?.helpHintFeaturesTip4 ??
-              'A feature\'s settings entry only appears while the '
-                  'feature is on — the Features screen itself always '
-                  'stays reachable.',
-        ),
-      ],
-      HelpHintId.members => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMembersTipNegotiation ??
-              'A member\'s own prices: open their sheet → Price '
-                  'negotiation, set the fee, overage or discount you '
-                  'agreed, and the rule\'s validators confirm it.',
-          topic: l10n?.helpHintMembersTipNegotiationTopic ??
-              'Price negotiations',
-        ),
-        HelpTip(
-          l10n?.helpHintMembersTip2 ??
-              'Tap a member for their management sheet — '
-                  'subscription, reservation limit, badges, services '
-                  'and more in one place.',
-        ),
-        HelpTip(
-          l10n?.helpHintMembersTip3 ??
-              'Badges live per member: mint a printable QR badge, '
-                  'or register their NFC card by holding it to the '
-                  'device.',
-          topic: l10n?.helpHintMembersTip3Topic ?? 'NFC badges',
-        ),
-        HelpTip(
-          l10n?.helpHintMembersTip4 ??
-              'Name admin grants admin rights after validation; the '
-                  'role matrix under Role management decides what '
-                  'every role may do.',
-          topic: l10n?.helpHintMembersTip4Topic ?? 'Role management',
-        ),
-      ],
-      HelpHintId.money => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMoneyTip2 ??
-              'Every document offers the same three actions: quick '
-                  'view on screen, download as PDF, and share to '
-                  'any app.',
-          topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyTip3 ??
-              'Record a payment with the date the money moved and the '
-                  'month it settles — the other side confirms it.',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyTip4 ??
-              'Once the month is invoiced, the invoice decides: the '
-                  'month reads settled as soon as its invoice is '
-                  'paid.',
-          topic: l10n?.helpHintMoneyTip4Topic ?? 'the invoice decides',
-        ),
-      ],
-      HelpHintId.moneyPayments => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMoneyPaymentsTipSupply ??
-              'Bought capsules or vacuum bags for the space? Submit the '
-                  'expense as a supply: validated, it goes on the shelf '
-                  'as a consumable that others pay for, and you are '
-                  'reimbursed.',
-          topic: l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
-              'Services and Accessories',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyPaymentsTip2 ??
-              'Record a payment with the date the money moved and the '
-                  'month it settles — the other side confirms it.',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyPaymentsTip3 ??
-              'Pay online settles what is owed right away; the '
-                  'instructions card shows the manual way with the '
-                  'reference to quote.',
-          topic: l10n?.helpHintMoneyPaymentsTip3Topic ?? 'online payments',
-        ),
-      ],
-      HelpHintId.moneyStatement => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMoneyStatementTipNegotiation ??
-              'Negotiated a deal? The card shows your prices beside the '
-                  'tariff, since when, and who can see them — the owners '
-                  'and finance admins, every read on the record.',
-          topic: l10n?.helpHintMoneyStatementTipNegotiationTopic ??
-              'Price negotiations',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyStatementTip2 ??
-              'A booked morning counts as half a day; days outside the '
-                  'opening hours follow the workspace\'s outside-hours '
-                  'policy.',
-          topic: l10n?.helpHintMoneyStatementTip2Topic ??
-              'How booking behaves',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyStatementTip3 ??
-              'Out of days? Request extra half-days, buy a package, or '
-                  'keep booking pay-as-you-go — whichever your plan '
-                  'allows.',
-        ),
-      ],
-      HelpHintId.moneyInvoices => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMoneyInvoicesTip2 ??
-              'Past the workspace\'s payment term an open invoice reads '
-                  'overdue here, and the reminder levels the owner '
-                  'configured arrive by themselves — in your feed and as '
-                  'a push.',
-          topic: l10n?.helpHintMoneyInvoicesTip2Topic ??
-              'Automatic payment reminders',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyTip4 ??
-              'Once the month is invoiced, the invoice decides: the '
-                  'month reads settled as soon as its invoice is '
-                  'paid.',
-          topic: l10n?.helpHintMoneyTip4Topic ?? 'the invoice decides',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyTip2 ??
-              'Every document offers the same three actions: quick '
-                  'view on screen, download as PDF, and share to '
-                  'any app.',
-          topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
-        ),
-      ],
-      HelpHintId.moneyDocuments => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMoneyTip2 ??
-              'Every document offers the same three actions: quick '
-                  'view on screen, download as PDF, and share to '
-                  'any app.',
-          topic: l10n?.helpHintMoneyTip2Topic ?? 'Quick view, save, share',
-        ),
-        HelpTip(
-          l10n?.helpHintMoneyDocumentsTip3 ??
-              'My conditions is your standing financial agreement — plan, '
-                  'rate, extras — rendered as a document you can keep.',
-        ),
-      ],
-      HelpHintId.validation => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintValidationTipScopes ??
-              'Who validates is the rule\'s scope: the admins, listed '
-                  'persons of any role, or every member — and how many. '
-                  'The owner always may; nobody validates their own event.',
-          topic: l10n?.helpHintValidationTipScopesTopic ?? 'Role management',
-        ),
-        HelpTip(
-          l10n?.helpHintValidationTip2 ??
-              'One card per event type, each inheriting from the '
-                  'default rule until you edit it — payments, '
-                  'expenses, role changes and more.',
-        ),
-        HelpTip(
-          l10n?.helpHintValidationTip3 ??
-              'Nobody ever validates their own event, and unanswered '
-                  'requests expire after 7 days — nothing is granted '
-                  'silently.',
-        ),
-      ],
-      HelpHintId.workspaceSettings => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintWorkspaceTip2 ??
-              'Print the space QR cards from Exports — choose the '
-                  'card size and the info each card carries, ten '
-                  'per A4 page.',
-          topic: l10n?.helpHintWorkspaceTip2Topic ?? 'Space QR codes',
-        ),
-        HelpTip(
-          l10n?.helpHintWorkspaceTip3 ??
-              'Export the space as XML to back it up or template a '
-                  'new one; the setup questionnaire prefills a fresh '
-                  'workspace end to end.',
-        ),
-        HelpTip(
-          l10n?.helpHintWorkspaceTip4 ??
-              'Reset the workspace wipes reservations, accounting and '
-                  'the floor plan — settings and members survive, and '
-                  'a typed confirmation guards it.',
-        ),
-      ],
-      HelpHintId.messages => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintMessagesTip2 ??
-              'Pick one person for a private chat, or several to make a '
-                  'group — the name field appears once there are two, '
-                  'and a group name is unique here, so nobody has to '
-                  'guess which "Team" they mean.',
-        ),
-        HelpTip(
-          l10n?.helpHintMessagesTip3 ??
-              'Tap a name at the top of a chat to see their profile: '
-                  'today\'s booking, whether they are checked in, and '
-                  'how to reach them.',
-        ),
-        HelpTip(
-          l10n?.helpHintMessagesTip4 ??
-              'Search finds people, groups and the words inside '
-                  'messages — a result takes you straight there.',
-        ),
-        HelpTip(
-          l10n?.helpHintMessagesTip5 ??
-              'Link a reservation or a space in a message instead of '
-                  'describing it; the reader taps it and lands on the '
-                  'right one.',
-        ),
-      ],
-      HelpHintId.privacy => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintPrivacyTip2 ??
-              'Messages are readable only by the people in the conversation, '
-                  'whatever their role; money only by you and the finance '
-                  'permission.',
-        ),
-        HelpTip(
-          l10n?.helpHintPrivacyTip3 ??
-              'Every read of your finances by someone else is logged by '
-                  'the server — the log cannot be skipped or edited.',
-        ),
-      ],
-      HelpHintId.badges => [
-        HelpTip(helpHintText(l10n, id)),
-        HelpTip(
-          l10n?.helpHintBadgesTip2 ??
-              'Register a card by holding it to the device — any '
-                  'readable chip works, and the dialog names the '
-                  'workspace it joins.',
-        ),
-        HelpTip(
-          l10n?.helpHintBadgesTip3 ??
-              'Save a QR badge as PDF to print ten credit-card copies '
-                  'on one A4 page — spares included.',
-        ),
-        HelpTip(
-          l10n?.helpHintBadgesTip4 ??
-              'Revoke a lost badge any time; swipe a revoked badge to '
-                  'the right to delete it for good.',
-        ),
-      ],
-    };
+/// The surface's carousel (#2313): every scenario a person may want from
+/// that screen, each naming the controls by their own labels (built from
+/// the label keys, so all five languages quote the real buttons) and
+/// linking to the form it continues on. Regenerated from the current
+/// screens; tips of a switched-off feature are filtered by [HelpHint].
+List<HelpTip> helpHintTips(AppLocalizations? l10n, HelpHintId id) {
+  final t = l10n ?? AppLocalizationsEn();
+  return switch (id) {
+    // The live plan lives in Reserve now: the same scenarios.
+    HelpHintId.plan => helpHintTips(l10n, HelpHintId.reserve),
+    HelpHintId.reserve => [
+      HelpTip(t.tipReserveBook),
+      HelpTip(t.tipReserveAhead),
+      HelpTip(t.tipReserveList),
+      HelpTip(t.tipReserveRepeat, feature: WorkspaceFeature.seriesBooking),
+      HelpTip(t.tipReserveCheckIn),
+      HelpTip(t.tipReserveScan, feature: WorkspaceFeature.spaceQrCodes),
+      HelpTip(t.tipReserveChange),
+      HelpTip(t.tipReserveFavourite, feature: WorkspaceFeature.placeFeedback),
+      HelpTip(t.tipReserveLevel, feature: WorkspaceFeature.levelBooking),
+      HelpTip(t.tipReserveDefault, route: '/settings'),
+    ],
+    HelpHintId.calendar => [
+      HelpTip(t.tipCalendarViews, feature: WorkspaceFeature.calendarViews),
+      HelpTip(t.tipCalendarKinds),
+      HelpTip(t.tipCalendarMine),
+      HelpTip(t.tipCalendarAlerts, feature: WorkspaceFeature.eventsTab),
+      HelpTip(t.tipCalendarMoney, route: '/money'),
+    ],
+    HelpHintId.events => [
+      HelpTip(t.tipEventsDecide),
+      HelpTip(t.tipEventsTopic),
+      HelpTip(t.tipEventsUnread),
+      HelpTip(t.tipEventsGroup, feature: WorkspaceFeature.notificationGrouping),
+      HelpTip(t.tipEventsMessages, route: '/me?tab=messages'),
+    ],
+    HelpHintId.editor => [
+      HelpTip(t.tipEditorLevel),
+      HelpTip(t.tipEditorDraw),
+      HelpTip(t.tipEditorSeats),
+      HelpTip(t.tipEditorSeat),
+      HelpTip(t.tipEditorNfc, feature: WorkspaceFeature.nfcSeatTags),
+      HelpTip(t.tipEditorBackground),
+      HelpTip(
+        t.tipEditorAccessories,
+        route: '/accessories',
+        feature: WorkspaceFeature.accessorySupplements,
+      ),
+      HelpTip(
+        t.tipEditorQr,
+        route: '/reports?section=documents',
+        feature: WorkspaceFeature.spaceQrCodes,
+      ),
+    ],
+    HelpHintId.availability => [
+      HelpTip(t.tipAvailabilityDays),
+      HelpTip(t.tipAvailabilityGrid),
+      HelpTip(t.tipAvailabilityHours, feature: WorkspaceFeature.workingHours),
+      HelpTip(t.tipAvailabilityClosure),
+      HelpTip(
+        t.tipAvailabilityHolidays,
+        feature: WorkspaceFeature.publicHolidays,
+      ),
+      HelpTip(
+        t.tipAvailabilityPolicies,
+        feature: WorkspaceFeature.bookingPolicies,
+      ),
+    ],
+    HelpHintId.features => [
+      HelpTip(t.tipFeaturesProcess),
+      HelpTip(t.tipFeaturesSwitch),
+      HelpTip(t.tipFeaturesChanged),
+      HelpTip(t.tipFeaturesRequires),
+    ],
+    HelpHintId.members => [
+      HelpTip(t.tipMembersInvite, route: '/workspace-code'),
+      HelpTip(
+        t.tipMembersManaged,
+        route: '/members/managed',
+        feature: WorkspaceFeature.managedProfiles,
+      ),
+      HelpTip(t.tipMembersPlan),
+      HelpTip(t.tipMembersApprove),
+      HelpTip(t.tipMembersBadge),
+      HelpTip(
+        t.tipMembersRole,
+        route: '/roles',
+        feature: WorkspaceFeature.roleManagement,
+      ),
+      HelpTip(t.tipMembersPrices, route: '/billing'),
+      HelpTip(
+        t.tipMembersNotify,
+        feature: WorkspaceFeature.memberNotifications,
+      ),
+    ],
+    HelpHintId.money => [
+      HelpTip(t.tipMoneyMonth),
+      HelpTip(t.tipMoneyPdf, feature: WorkspaceFeature.pdfExport),
+      HelpTip(t.tipMoneyRecord),
+      HelpTip(t.tipMoneyExpense),
+      HelpTip(t.tipMoneyDays),
+    ],
+    HelpHintId.moneyStatement => [
+      HelpTip(t.tipMoneyStatementMonth),
+      HelpTip(t.tipMoneyStatementOut),
+      HelpTip(t.tipMoneyStatementAcross, route: '/account-activity'),
+    ],
+    HelpHintId.moneyPayments => [
+      HelpTip(
+        t.tipMoneyPaymentsOnline,
+        feature: WorkspaceFeature.onlinePayments,
+      ),
+      HelpTip(t.tipMoneyPaymentsTransfer),
+      HelpTip(t.tipMoneyPaymentsRecord),
+      HelpTip(t.tipMoneyPaymentsExpense),
+      HelpTip(
+        t.tipMoneyPaymentsScheduled,
+        feature: WorkspaceFeature.scheduledExpenses,
+      ),
+      HelpTip(t.tipMoneyPaymentsDays),
+      HelpTip(
+        t.tipMoneyPaymentsConsumption,
+        feature: WorkspaceFeature.services,
+      ),
+      HelpTip(t.tipMoneyPaymentsAcross, route: '/account-activity'),
+    ],
+    HelpHintId.moneyInvoices => [
+      HelpTip(t.tipMoneyInvoicesPay),
+      HelpTip(t.tipMoneyInvoicesRead),
+      HelpTip(t.tipMoneyInvoicesAcross, route: '/account-activity'),
+    ],
+    HelpHintId.moneyDocuments => [
+      HelpTip(
+        t.tipMoneyDocumentsConditions,
+        feature: WorkspaceFeature.memberReports,
+      ),
+      HelpTip(
+        t.tipMoneyDocumentsPayments,
+        feature: WorkspaceFeature.memberReports,
+      ),
+      HelpTip(t.tipMoneyDocumentsUsage, feature: WorkspaceFeature.usageReport),
+      HelpTip(
+        t.tipMoneyDocumentsStatement,
+        feature: WorkspaceFeature.pdfExport,
+      ),
+      HelpTip(
+        t.tipMoneyDocumentsLibrary,
+        route: '/documents',
+        feature: WorkspaceFeature.documents,
+      ),
+    ],
+    HelpHintId.validation => [
+      HelpTip(t.tipValidationDefault),
+      HelpTip(t.tipValidationOverride),
+      HelpTip(t.tipValidationCount),
+      HelpTip(t.tipValidationChain, feature: WorkspaceFeature.validationChain),
+      HelpTip(t.tipValidationWho, feature: WorkspaceFeature.validationScopes),
+      HelpTip(
+        t.tipValidationRoles,
+        route: '/roles',
+        feature: WorkspaceFeature.roleManagement,
+      ),
+    ],
+    HelpHintId.workspaceSettings => [
+      HelpTip(t.tipWorkspaceSettingsGeneral),
+      HelpTip(t.tipWorkspaceSettingsPay, route: '/payment-methods'),
+      HelpTip(t.tipWorkspaceSettingsLegal, route: '/legal-identity'),
+      HelpTip(t.tipWorkspaceSettingsNewMembers),
+      HelpTip(t.tipWorkspaceSettingsWording, route: '/settings/wording'),
+      HelpTip(
+        t.tipWorkspaceSettingsColours,
+        route: '/settings/colours',
+        feature: WorkspaceFeature.workspaceBranding,
+      ),
+      HelpTip(
+        t.tipWorkspaceSettingsDocuments,
+        route: '/reports?section=documents',
+      ),
+      HelpTip(t.tipWorkspaceSettingsBackup),
+      HelpTip(t.tipWorkspaceSettingsSave),
+    ],
+    HelpHintId.badges => [
+      HelpTip(t.tipBadgesQr, feature: WorkspaceFeature.qrBadges),
+      HelpTip(t.tipBadgesNfc, feature: WorkspaceFeature.nfcBadges),
+      HelpTip(t.tipBadgesLost),
+      HelpTip(t.tipBadgesSignIn),
+    ],
+    HelpHintId.privacy => [
+      HelpTip(t.tipPrivacyWho),
+      HelpTip(t.tipPrivacyExport, feature: WorkspaceFeature.memberDataExport),
+      HelpTip(t.tipPrivacyErase, feature: WorkspaceFeature.memberDataExport),
+      HelpTip(t.tipPrivacyConsent, route: '/consent?review=1'),
+    ],
+    HelpHintId.messages => [
+      HelpTip(t.tipMessagesWrite, route: '/me?tab=messages'),
+      HelpTip(t.tipMessagesUnread, route: '/me?tab=messages'),
+      HelpTip(t.tipMessagesAlerts, feature: WorkspaceFeature.eventsTab),
+    ],
+  };
+}
+
+/// The name of the form a tip links to: the title its screen carries.
+String helpTipDestination(AppLocalizations? l10n, String route) {
+  final t = l10n ?? AppLocalizationsEn();
+  return switch (Uri.parse(route).path) {
+    '/accessories' => t.accessoriesTitle,
+    '/account-activity' => t.financesTitle,
+    '/billing' => t.billingTitle,
+    '/consent' => t.consentTitle,
+    '/documents' => t.documentsTitle,
+    '/legal-identity' => t.legalIdentityTitle,
+    '/me' => t.meTabMessages,
+    '/members/managed' => t.managedProfileTitle,
+    '/money' => t.tabMoney,
+    '/payment-methods' => t.paymentInstructionsTitle,
+    '/reports' => t.uxReportsWorkspace,
+    '/roles' => t.rolesTitle,
+    '/settings' => t.settingsTitle,
+    '/settings/colours' => t.coloursTitle,
+    '/settings/wording' => t.wordingRow,
+    '/workspace-code' => t.workspaceCodeTitle,
+    _ => t.helpHintLearnMore,
+  };
+}
 
 /// Where a fresh visit opens: the tip AFTER the last shown one,
 /// rotating past the end back to 0. [lastShown] may be null (never
