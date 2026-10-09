@@ -10,6 +10,7 @@ from unittest.mock import patch
 import zipfile
 
 from application import main
+from authority import no_authority, restore_table_list, retained_target_identity
 from runtime import Refused, Stack, command, validate_paths
 from reporting import public_json
 from verify import objects_from_zip
@@ -21,6 +22,49 @@ class RecoveryGuards(unittest.TestCase):
         self.addCleanup(self.directory.cleanup)
         self.root = Path(self.directory.name).resolve()
         self.source, self.target = self.root / 'source', self.root / 'target'
+
+    def test_seeded_settings_are_not_account_authority(self):
+        class SeededStack:
+            def sql(self, query):
+                if query.startswith('select tablename'):
+                    return 'mcp_limits\nmcp_disclosure_maximum\nmcp_installation_settings\nmcp_connections'
+                if 'where enabled' in query or '"mcp_connections"' in query:
+                    return '0'
+                return '1'
+        no_authority(SeededStack())
+
+    def test_real_authority_and_enabled_runtime_still_refuse(self):
+        for table in ['mcp_connections', 'mcp_eligibility_grants',
+                      'identity_bindings', 'database_administrators', 'platform_admins']:
+            class GrantedStack:
+                def sql(self, query):
+                    return table if query.startswith('select tablename') else '1'
+            with self.subTest(table=table), self.assertRaisesRegex(Refused, 'unexpected_authority'):
+                no_authority(GrantedStack())
+        class EnabledStack:
+            def sql(self, query):
+                return '' if query.startswith('select tablename') else '1'
+        with self.assertRaisesRegex(Refused, 'mcp_runtime_enabled'):
+            no_authority(EnabledStack())
+
+    def test_restore_keeps_target_settings_and_excludes_all_source_authority(self):
+        class Catalogue:
+            def sql(self, query):
+                return ('workspaces\nmembers\ninvoices\ninstallation_identity\nidentity_bindings\n'
+                        'mcp_runtime\nmcp_limits\nmcp_disclosure_maximum\nmcp_installation_settings\n'
+                        'mcp_connections\nworkspace_mcp_policies\ndatabase_administrators')
+        self.assertEqual(restore_table_list(Catalogue()),
+                         'public."workspaces",public."members",public."invoices",auth.users,auth.identities')
+
+    def test_changed_target_configuration_fails_readback(self):
+        class Target:
+            def sql(self, query):
+                return '0'
+        with patch('authority.identity', return_value='target'), patch('authority.no_authority'), \
+                patch('authority.configuration', return_value={'settings': 'own'}):
+            retained_target_identity(Target(), 'source', 'target', {'settings': 'own'})
+            with self.assertRaisesRegex(Refused, 'target_configuration_changed'):
+                retained_target_identity(Target(), 'source', 'target', {'settings': 'lost'})
 
     def test_dry_run_creates_nothing_and_does_not_start_tools(self):
         with patch('runtime.subprocess.run') as run, patch('builtins.print'):

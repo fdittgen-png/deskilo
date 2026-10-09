@@ -12,6 +12,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
+import 'package:deskilo/features/workspace/presentation/screens/workspace_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -70,6 +71,8 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
+  await tester.ensureVisible(find.text('Workspace'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Workspace'));
   if (settle) {
     await tester.pumpAndSettle();
@@ -82,11 +85,20 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   if (reports) {
     await tester.tap(find.byKey(const ValueKey('workspace-section-payments')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('workspaceSettingsReports')));
+    final reportsLink = find.descendant(of: find.byKey(const Key('workspaceSettingsReports')), matching: find.text('Reports'));
+    await tester.ensureVisible(reportsLink);
+    await tester.pumpAndSettle();
+    await tester.tap(reportsLink);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('workspace-section-documents')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('workspace-section-documents')));
     await tester.pumpAndSettle();
-  } else if (expand) { await openWorkspaceSettingsGroups(tester); }
+    expect(find.byKey(const ValueKey('workspace-section-documents')).hitTestable(), findsOneWidget);
+  } else {
+    expect(find.byType(WorkspaceSettingsScreen), findsOneWidget);
+    if (expand) await openWorkspaceSettingsGroups(tester);
+  }
   return workspace;
 }
 

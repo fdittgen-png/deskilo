@@ -1,0 +1,68 @@
+{
+  "format": "deskilo.recovery",
+  "version": 1,
+  "status": "ready",
+  "scope": "disposable_local_only",
+  "cli": "2.118.0",
+  "limitations": [
+    "raw_unicode_storage_keys_unsupported",
+    "email_delivery_not_exercised"
+  ],
+  "mcp": "not_exercised",
+  "hosted": "not_exercised",
+  "checks": {
+    "source_start": "pass",
+    "database_regressions": "pass",
+    "registered_users": "pass",
+    "source_native_export": "pass",
+    "existing_database_drill": "pass",
+    "database_restore": "pass",
+    "storage_restore": "pass",
+    "target_native_auth_and_reads": "pass",
+    "storage_damage_detection": "pass"
+  },
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.14.5",
+    "images": {
+      "db": "public.ecr.aws/supabase/postgres:17.6.1.171",
+      "auth": "public.ecr.aws/supabase/gotrue:v2.197.0",
+      "storage": "public.ecr.aws/supabase/storage-api:v1.77.0"
+    },
+    "schema": 394
+  },
+  "database_regressions": {
+    "files": [
+      "12_storage_tenancy.sql",
+      "20_money_invariants.sql",
+      "22_reconciliation.sql",
+      "23_domain_invariants.sql",
+      "28_schema_version.sql"
+    ],
+    "assertions": 38
+  },
+  "elapsed_seconds": 103.705,
+  "timings_seconds": {
+    "source_start": 30.531,
+    "database_regressions": 1.911,
+    "source_auth_files_and_native_export": 17.113,
+    "existing_database_drill": 3.184,
+    "database_backup": 1.33,
+    "replace_source_with_target": 38.525,
+    "database_restore": 3.728,
+    "storage_restore": 0.19,
+    "target_native_auth_and_reads": 4.86,
+    "storage_damage_detection": 0.349,
+    "cleanup": 1.985
+  },
+  "evidence": {
+    "date": "2026-10-09",
+    "repository_base": "6a155278b65278b5b3c67600f4a9a549fffa66fe",
+    "script_sha256": {
+      "scripts/restore_check.sh": "03262a29de15afe89cd8bce27af650f10ba38ae0adeb04607c088273f77f0634",
+      "scripts/recovery/application.py": "01e90d48a61583c36676f44937e821857770612b77cd23e0a989b8137a8a50d7",
+      "scripts/recovery/authority.py": "bd11024b6da232cefbc7f5c9a729b77d81676756e7cb526d1be41ec87fe75b6f"
+    }
+  }
+}

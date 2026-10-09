@@ -14,7 +14,8 @@ import time
 
 from runtime import CLI, Refused, Stack, command, private_file, validate_paths
 from verify import financial_snapshot, objects_from_zip, upload, verify_objects, negative_objects, expect_failure
-from authority import dump_exclusions, identity, no_authority, retained_target_identity
+from authority import (configuration, dump_exclusions, identity, no_authority,
+                       restore_table_list, retained_target_identity)
 from reporting import Timings, environment, public_json
 
 REPO = Path(__file__).resolve().parents[2]
@@ -121,6 +122,10 @@ def run(args):
             # #1648: a real protected client row must not travel to the clone.
             source.sql("select public.operator_register_identity_federation_client("
                 "gen_random_uuid(), gen_random_uuid(), 'https://recovery.invalid/auth/v1');")
+            # Deliberately different source configuration must not replace the
+            # fresh target's settings; MCP remains disabled throughout.
+            source.sql("update public.mcp_installation_settings set "
+                       "endpoint_url='https://source-recovery.invalid/mcp';")
             # Recover synthetic accounts and identities, never active sessions,
             # refresh tokens, MFA/OAuth configuration or external credentials.
             dump = command(source.db + ['pg_dump', '-U', 'postgres', '-d', 'postgres',
@@ -138,14 +143,16 @@ def run(args):
             sensitive.extend(target.credentials.get(key, '') for key in SECRET_KEYS)
             timings.finish('replace_source_with_target')
             target_id = identity(target)
+            no_authority(target)
+            target_configuration = configuration(target)
             phase = 'database_restore'
-            tables = target.sql("select string_agg(format('%I.%I',schemaname,tablename), ',') from pg_tables where (schemaname='public' and tablename not in ('installation_identity','mcp_runtime')) or (schemaname='auth' and tablename in ('users','identities'));")
+            tables = restore_table_list(target)
             target.sql('truncate ' + tables + ' cascade;')
             command(target.db + ['psql', '-U', 'supabase_admin', '-d', 'postgres', '-q',
                 '--single-transaction', '-v', 'ON_ERROR_STOP=1'], data=dump)
             if financial_snapshot(target) != before:
                 raise Refused('financial_snapshot_mismatch')
-            retained_target_identity(target, source_id, target_id)
+            retained_target_identity(target, source_id, target_id, target_configuration)
             report['checks'][phase] = 'pass'
             timings.finish(phase)
             phase = 'storage_restore'

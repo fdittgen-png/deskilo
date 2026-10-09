@@ -52,6 +52,8 @@ Set<String> _spoken(WidgetTester tester) {
 }
 
 void main() {
+  setUp(() { WidgetController.hitTestWarningShouldBeFatal = true; });
+  tearDown(() { WidgetController.hitTestWarningShouldBeFatal = false; });
   for (final row in matrixRowsFor(MatrixAxis.narrow)) {
     testWidgets('${row.screen} holds at 360 dp', (tester) async {
       await row.pump!(tester, _phone);
