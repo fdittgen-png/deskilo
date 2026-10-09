@@ -4066,7 +4066,7 @@
   "gettingStartedActionMembership": "Meine Mitgliedschaft ansehen",
   "gettingStartedAllowance": "{count, plural, =1{Du kannst eine Buchung gleichzeitig halten.} other{Du kannst {count} Buchungen gleichzeitig halten.}}",
   "gettingStartedAvailabilityUnknown": "Die Verfügbarkeit konnte nicht geladen werden. Die Hilfe erklärt, wie Buchen hier funktioniert.",
-  "gettingStartedBooked": "Deine Buchung {id} ist {state}. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.",
+  "gettingStartedBooked": "Deine Buchung ist {state}. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.",
   "gettingStartedClosedToday": "Der Workspace ist am gewählten Tag geschlossen. Wähle einen anderen Tag, um zu sehen, was frei ist.",
   "gettingStartedEnvDev": "Entwicklungs-Workspace",
   "gettingStartedEnvProd": "Produktions-Workspace",

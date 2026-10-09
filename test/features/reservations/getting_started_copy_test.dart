@@ -21,10 +21,14 @@ void main() {
       for (final reason in [GettingStartedReason.loading, GettingStartedReason.pendingAdmission]) {
         expect(GettingStartedCopy.reason(l10n, GettingStartedHint(reason: reason)), isEmpty);
       }
-      const evidence = BookingEvidence(id: 'reservation-42', state: 'checkedIn');
+      const evidence = BookingEvidence(id: 'reservation-42', state: 'checkedIn', spaceName: 'A1');
       final result = GettingStartedCopy.reason(l10n,
         const GettingStartedHint(reason: GettingStartedReason.booked, booking: evidence));
-      expect(result, contains('reservation-42'));
+      expect(result, isNot(contains('reservation-42')));
+      expect(GettingStartedCopy.booking(l10n, evidence), 'A1 · ${l10n.gettingStartedStateCheckedIn}');
+      expect(GettingStartedCopy.booking(l10n,
+        const BookingEvidence(id: 'private-id', state: 'checkedIn')),
+        l10n.gettingStartedStateCheckedIn);
       expect(result, contains(l10n.gettingStartedStateCheckedIn));
       expect(GettingStartedCopy.bookingState(l10n, 'unknown-state'), 'unknown-state');
       for (final reason in GettingStartedReason.values.where((r) =>

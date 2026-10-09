@@ -17,7 +17,7 @@ import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 
-Future<void> _pumpPlan(
+Future<FakeReservationRepository> _pumpPlan(
   WidgetTester tester, {
   List<Reservation> seed = const [],
 }) async {
@@ -38,9 +38,38 @@ Future<void> _pumpPlan(
   );
   await tester.pumpAndSettle();
   await switchToPlanTab(tester);
+  return reservations;
 }
 
 void main() {
+  testWidgets('a semantic seat tap uses the updated booking after check-in',
+      (tester) async {
+    final handle = tester.ensureSemantics();
+    final repository = await _pumpPlan(tester, seed: [
+      Reservation(
+        id: 'own-booking', workspaceId: 'ws-1', seatId: 'seat-4',
+        memberId: 'member-1',
+        startsAt: kTestNow.subtract(const Duration(minutes: 10)),
+        endsAt: kTestNow.add(const Duration(hours: 2)),
+        status: ReservationStatus.reserved,
+      ),
+    ]);
+    final seat = find.semantics.byLabel('A1 · your seat · Flo');
+    tester.semantics.tap(seat);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Check in'));
+    await tester.pumpAndSettle();
+    tester.semantics.tap(seat);
+    await tester.pumpAndSettle();
+    expect(find.text('Check out'), findsOneWidget);
+    expect(find.text('Check in'), findsNothing);
+    await tester.tap(find.text('Check out'));
+    await tester.pumpAndSettle();
+    expect(repository.reservations.single.status, ReservationStatus.completed);
+    expect(tester.takeException(), isNull);
+    handle.dispose();
+  });
+
   testWidgets('a free seat exposes a labeled, tappable semantics node, '
       'and the semantic tap opens the same booking sheet a touch does',
       (tester) async {

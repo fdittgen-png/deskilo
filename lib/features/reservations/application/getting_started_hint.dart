@@ -79,13 +79,16 @@ enum MembershipStanding { member, administrator, owner, pending, inactive }
 /// A booking of mine the hub has already loaded: the authoritative
 /// outcome of the flow the card pointed at, never a tap or a checkbox.
 class BookingEvidence {
-  const BookingEvidence({required this.id, required this.state});
+  const BookingEvidence({required this.id, required this.state, this.spaceName = ''});
 
   /// The reservation's real id, as the server returned it.
   final String id;
 
   /// The reservation's real state name (`reserved`, `checkedIn`, …).
   final String state;
+
+  /// Human-readable target, when the plan or its saved label is available.
+  final String spaceName;
 }
 
 /// Everything the choice is allowed to know.

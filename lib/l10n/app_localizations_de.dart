@@ -6014,8 +6014,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Verfügbarkeit konnte nicht geladen werden. Die Hilfe erklärt, wie Buchen hier funktioniert.';
 
   @override
-  String gettingStartedBooked(String id, String state) {
-    return 'Deine Buchung $id ist $state. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.';
+  String gettingStartedBooked(String state) {
+    return 'Deine Buchung ist $state. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.';
   }
 
   @override

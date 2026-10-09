@@ -4066,7 +4066,7 @@
   "gettingStartedActionMembership": "Ver mi membresía",
   "gettingStartedAllowance": "{count, plural, =1{Puedes tener una reserva a la vez.} other{Puedes tener {count} reservas a la vez.}}",
   "gettingStartedAvailabilityUnknown": "No se pudo cargar la disponibilidad. La ayuda explica cómo funcionan las reservas aquí.",
-  "gettingStartedBooked": "Tu reserva {id} está {state}. Tu membresía muestra qué más está incluido.",
+  "gettingStartedBooked": "Tu reserva está {state}. Tu membresía muestra qué más está incluido.",
   "gettingStartedClosedToday": "El espacio está cerrado el día seleccionado. Elige otro día para ver qué está libre.",
   "gettingStartedEnvDev": "Espacio de desarrollo",
   "gettingStartedEnvProd": "Espacio de producción",
