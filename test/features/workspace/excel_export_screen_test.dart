@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/workspace_settings_groups.dart';
 
 /// #1310 S0 — an ADMIN whose role row does not carry exportData. An owner
 /// holds every permission by construction, so the permission can only be
@@ -79,6 +80,7 @@ Future<List<({String name, Uint8List bytes})>> _pump(
   await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
+  await openWorkspaceSettingsGroups(tester);
   return saved;
 }
 

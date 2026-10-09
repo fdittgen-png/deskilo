@@ -910,6 +910,8 @@ vuole per qualcosa di dismesso, non per qualcosa di sbagliato.
 
 ### Impostazioni dello spazio (Spazio di coworking)
 
+**Configura per attività.** Informazioni generali, pagamenti, comunità e inviti, aspetto, valori per nuovi membri, modelli e dati e zona di rischio hanno sezioni separate. Informazioni generali si apre per prima; apri le altre quando servono. Lo stato di preparazione rimane sopra. Salva resta visibile in basso durante lo scorrimento. Le sezioni chiuse conservano le bozze; Salva apre i campi non validi e li mostra. Le pagine aperte da una sezione mantengono i propri comandi di salvataggio. Il menu orizzontale delle sezioni resta visibile: scegli una sezione per aprirla e raggiungerla direttamente. Scorri il modulo quando serve; le bozze vengono conservate.
+
 La schermata propria dello spazio, dall'alto in basso:
 
 - **Identità** — nome, paese, valuta (proposta dal paese, modificabile), fuso orario, **lingua dello spazio** (gli inviti la usano per impostazione predefinita; *lingua dell'app del mittente* è un'opzione) e l'**indirizzo** postale stampato sulle fatture.

@@ -18102,7 +18102,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Espacio de prueba: reservas y facturas de ensayo';
 
   @override
+  String get uxWorkspaceAppearance => 'Apariencia y textos';
+
+  @override
+  String get uxWorkspaceCommunity => 'Comunidad e invitaciones';
+
+  @override
+  String get uxWorkspaceGeneral => 'Datos generales';
+
+  @override
   String get uxWorkspaceTime => 'Hora del espacio';
+
+  @override
+  String get uxWorkspaceTools => 'Plantillas y datos';
 
   @override
   String get validationAdminsMay => 'Los admins pueden validar';

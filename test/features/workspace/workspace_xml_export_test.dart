@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_accessory_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/workspace_settings_groups.dart';
 
 Future<void> pumpWorkspaceSettings(
   WidgetTester tester, {
@@ -66,6 +67,7 @@ Future<void> pumpWorkspaceSettings(
   await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
+  await openWorkspaceSettingsGroups(tester);
 }
 
 void main() {

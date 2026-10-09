@@ -22,7 +22,6 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/share/file_sharer.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -76,6 +75,8 @@ import '../../../money/presentation/batch_cover.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../money/domain/report_data_letters.dart';
 import '../widgets/reset_confirm_dialog.dart';
+import '../widgets/workspace_form_group.dart';
+import '../../../../l10n/app_localizations_en.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -162,7 +163,7 @@ class _WorkspaceSettingsScreenState
   }
 
   Future<void> _save(String workspaceId) async {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
+    if (!WorkspaceFormGroup.validate(_formKey.currentState)) return;
     final code = _countryCode;
     if (code == null) return;
     final l10n = AppLocalizations.of(context);
@@ -959,6 +960,7 @@ class _WorkspaceSettingsScreenState
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final labels = l10n ?? AppLocalizationsEn();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final helpTopic = l10n?.helpHintWorkspaceTopic ?? 'Workspace settings';
     if (workspace != null && !_seeded) {
@@ -1002,18 +1004,19 @@ class _WorkspaceSettingsScreenState
           ? const LoadingView()
           : Form(
               key: _formKey,
-              child: ListView(
-                padding: AppSpacing.gutterAll,
-                children: [
+              child: WorkspaceFormSections(children: [
                   const AdminVisibilityTile(),
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
-                  ..._toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
-                  ..._dangerZoneTiles(context, l10n: l10n, workspace: workspace),
-                ],
-              ),
+                  WorkspaceFormGroup(id: 'tools', title: labels.uxWorkspaceTools, icon: Icons.import_export,
+                    children: _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic)),
+                  WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber,
+                    children: _dangerZoneTiles(context, l10n: l10n, workspace: workspace)),
+                  const HelpHint(HelpHintId.workspaceSettings),
+              ]),
             ),
+      bottomNavigationBar: workspace == null ? null : WorkspaceSettingsSaveBar(busy: _busy, onSave: () => _save(workspace.id)),
     );
   }
 
@@ -1026,16 +1029,17 @@ class _WorkspaceSettingsScreenState
     required String helpTopic,
   }) =>
       [
-                  // #606 — contextual how-to; gated inside the widget.
-                  const HelpHint(HelpHintId.workspaceSettings),
                   Text(
                     workspace.name,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),
+                  WorkspaceFormGroup(id: 'general', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceGeneral, icon: Icons.location_on_outlined, initiallyExpanded: true, children: [
                   _withDot(
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsCountry'),
+                      isExpanded: true,
+                      itemHeight: null,
                       initialValue: _countryCode,
                       decoration: InputDecoration(
                         labelText: l10n?.workspaceCountryLabel ?? 'Country',
@@ -1073,6 +1077,8 @@ class _WorkspaceSettingsScreenState
                   _withDot(
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsLanguage'),
+                      isExpanded: true,
+                      itemHeight: null,
                       initialValue: _defaultLocale,
                       decoration: InputDecoration(
                         labelText: l10n?.workspaceLanguageLabel ??
@@ -1119,26 +1125,8 @@ class _WorkspaceSettingsScreenState
                     ),
                   ),
                   const SizedBox(height: 24),
-                  // #486 — payments & billing are SCREENS, not form
-                  // fields: the two tiles say where money settings live.
-                  Text(
-                    l10n?.workspacePaymentsBillingTitle ??
-                        'Payments & billing',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  if (ref
-                      .watch(enabledFeaturesSyncProvider)
-                      .contains(WorkspaceFeature.workspaceLibrary))
-                    ListTile(
-                      key: const Key('workspaceSettingsLibrary'),
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.grid_view_outlined),
-                      title: Text(l10n?.libraryTitle ?? 'Workspace library'),
-                      subtitle: Text(l10n?.librarySave ??
-                          'Save this space as a template'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context.push('/library'),
-                    ),
+                  ]),
+                  WorkspaceFormGroup(id: 'payments', title: (l10n ?? AppLocalizationsEn()).workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
                   ListTile(
                     key: const Key('workspaceSettingsPaymentMethods'),
                     contentPadding: EdgeInsets.zero,
@@ -1166,7 +1154,10 @@ class _WorkspaceSettingsScreenState
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/legal-identity'),
                   ),
+                  ..._billingTools(context, l10n: l10n, helpTopic: helpTopic),
                   const SizedBox(height: 24),
+                  ]),
+                  WorkspaceFormGroup(id: 'community', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceCommunity, icon: Icons.forum_outlined, children: [
                   // #231 — the community's WhatsApp group; the link is
                   // shown to members in the directory (#232).
                   Text(
@@ -1210,10 +1201,10 @@ class _WorkspaceSettingsScreenState
                   // listed as selectable chips; empty uses the localized
                   // built-in message (invite sheet on the ID & QR screen).
                   Row(children: [
-                    Text(
+                    Expanded(child: Text(
                       l10n?.invitationTemplateTitle ?? 'Invitation message',
                       style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                    )),
                     HelpDot(helpTopic,
                       anchor: HelpAnchor.workspaceInvitationMessage,
                     ),
@@ -1302,17 +1293,19 @@ class _WorkspaceSettingsScreenState
                     ),
                   ),
                   const SizedBox(height: 24),
+                  ]),
+                  WorkspaceFormGroup(id: 'appearance', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceAppearance, icon: Icons.palette_outlined, children: [
                   // #1277 / #1289 — the rows that open a screen of their
                   // own: neither rides the Save button below.
                   WorkspaceOwnScreens(helpTopic: helpTopic),
                   const SizedBox(height: 24),
                   // 0040 — desk transparency. Rides the same Save button.
                   Row(children: [
-                    Text(
+                    Expanded(child: Text(
                       l10n?.workspaceDeskTransparencyTitle ??
                           'Desk transparency',
                       style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                    )),
                     HelpDot(helpTopic,
                       anchor: HelpAnchor.workspaceDeskTransparency,
                     ),
@@ -1342,6 +1335,8 @@ class _WorkspaceSettingsScreenState
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 24),
+                  ]),
+                  WorkspaceFormGroup(id: 'membership', title: (l10n ?? AppLocalizationsEn()).newMemberDefaultsTitle, icon: Icons.person_add_outlined, children: [
                   NewMemberDefaultsTiles(
                     defaults: _newMemberDefaults,
                     enabled: !_busy,
@@ -1353,25 +1348,13 @@ class _WorkspaceSettingsScreenState
                         _newMemberDefaults = _newMemberDefaults?.copyWith(overagePolicy: policy)),
                   ),
                   const SizedBox(height: 24),
-                  FilledButton(
-                    key: const Key('workspaceSettingsSave'),
-                    onPressed: _busy ? null : () => _save(workspace.id),
-                    child: Text(l10n?.commonSave ?? 'Save'),
-                  ),
-                  const SizedBox(height: 24),
+                  ]),
 
       ];
 
-  /// #1154 — the tools — the report editor, exports, imports, the configuration transfer. One of the three slices of a build() that was 577
-  /// lines long; the tiles are unchanged, only the list is cut.
-  List<Widget> _toolsTiles(
-    BuildContext context, {
-    required AppLocalizations? l10n,
-    required Workspace workspace,
-    required String helpTopic,
-  }) =>
-      [
-                  const Divider(),
+  List<Widget> _billingTools(BuildContext context, {
+    required AppLocalizations? l10n, required String helpTopic,
+  }) => [
                   // #474 — the banded report editor (invoice + every
                   // reminder level) and the dunning policy live in the
                   // app parameters too, not only behind the Invoices
@@ -1435,6 +1418,25 @@ class _WorkspaceSettingsScreenState
                             'When subscription and end-of-month invoices go out',
                       ),
                       onTap: () => showBillingRulesDialog(context, ref),
+                    ),
+      ];
+
+  List<Widget> _toolsTiles(BuildContext context, {
+    required AppLocalizations? l10n, required Workspace workspace,
+    required String helpTopic,
+  }) => [
+                  if (ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.workspaceLibrary))
+                    ListTile(
+                      key: const Key('workspaceSettingsLibrary'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.grid_view_outlined),
+                      title: Text(l10n?.libraryTitle ?? 'Workspace library'),
+                      subtitle: Text(l10n?.librarySave ??
+                          'Save this space as a template'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => context.push('/library'),
                     ),
                   // #164 — versioned XML snapshot of settings + floor
                   // plan; the whole screen is owner-only already.
@@ -1573,23 +1575,9 @@ class _WorkspaceSettingsScreenState
 
       ];
 
-  /// #1154 — the danger zone — the irreversible reset, in its own error-tinted section. One of the three slices of a build() that was 577
-  /// lines long; the tiles are unchanged, only the list is cut.
-  List<Widget> _dangerZoneTiles(
-    BuildContext context, {
-    required AppLocalizations? l10n,
-    required Workspace workspace,
-  }) =>
-      [
-                  const Divider(),
-                  // Irreversible reset (0039). Its own error-tinted section so
-                  // it reads as clearly separate from the backup tools above.
-                  Text(
-                    l10n?.workspaceDangerZone ?? 'Danger zone',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                  ),
+  List<Widget> _dangerZoneTiles(BuildContext context, {
+    required AppLocalizations? l10n, required Workspace workspace,
+  }) => [
                   ListTile(
                     key: const Key('workspaceSettingsReset'),
                     contentPadding: EdgeInsets.zero,

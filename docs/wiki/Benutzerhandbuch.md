@@ -940,6 +940,8 @@ was man für etwas Eingestelltes will, nicht für etwas Falsches.
 
 ### Workspace-Einstellungen (Coworking-Space)
 
+**Nach Aufgabe einrichten.** Allgemeine Angaben, Zahlungen, Gemeinschaft und Einladungen, Darstellung, Vorgaben für neue Mitglieder, Vorlagen und Daten sowie der Gefahrenbereich haben eigene Abschnitte. Allgemeine Angaben ist zunächst geöffnet; öffnen Sie weitere Abschnitte nach Bedarf. Der Einrichtungsstand bleibt darüber. Speichern bleibt beim Scrollen unten sichtbar. Geschlossene Abschnitte behalten ihre Entwürfe; Speichern öffnet ungültige Felder und scrollt zu ihnen. Von hier geöffnete Seiten behalten ihre eigenen Speicheraktionen. Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
+
 Der Bildschirm des Space, von oben nach unten:
 
 - **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Sprache des Arbeitsbereichs** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.

@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/workspace_settings_groups.dart';
 
 /// #1563 — the new-member defaults are read separately from the workspace
 /// row, so the form can render — and save — before they arrive. This fake
@@ -42,13 +43,15 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   FakeWorkspaceRepository? repository,
   FakeMoneyRepository? money,
   bool settle = true,
+  bool expand = true,
+  Size size = const Size(800, 4600),
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
   // three more payment fields in #192, the WhatsApp-group section in
   // #231); a taller view keeps every field + Save built without
   // scrolling.
   // 0049 added the invitation-template section — grow again.
-  tester.view.physicalSize = const Size(800, 4600);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -75,10 +78,46 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
   }
+  if (expand) await openWorkspaceSettingsGroups(tester);
   return workspace;
 }
 
 void main() {
+  testWidgets('workspace tasks disclose fields while Save remains visible', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final workspace = await pumpWorkspaceSettings(tester, expand: false, size: const Size(320, 1100));
+    expect(find.byKey(const ValueKey('workspace-group-general')), findsOneWidget);
+    expect(find.byKey(const ValueKey('workspace-group-community')), findsOneWidget);
+    expect(find.byKey(const Key('workspaceSettingsWhatsappGroup')), findsNothing);
+    expect(find.byKey(const Key('workspaceSettingsSave')), findsOneWidget);
+    expect(tester.getRect(find.byKey(const Key('workspaceSettingsSave'))).bottom, lessThanOrEqualTo(1100));
+    await tester.tap(find.byKey(const ValueKey('workspace-section-community')));
+    await tester.pumpAndSettle();
+    final whatsapp = find.byKey(const Key('workspaceSettingsWhatsappGroup'));
+    await tester.ensureVisible(whatsapp);
+    await tester.pumpAndSettle();
+    await tester.enterText(whatsapp, 'https://example.invalid/');
+    final invitation = find.byKey(const Key('workspaceSettingsInvitationTemplate'));
+    await tester.ensureVisible(invitation);
+    await tester.pumpAndSettle();
+    await tester.enterText(invitation, 'Hello {firstname}');
+    await toggleWorkspaceSettingsGroup(tester, 'community');
+    expect(find.byKey(const Key('workspaceSettingsWhatsappGroup')), findsNothing);
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+    expect(find.text('Must be a chat.whatsapp.com invite link'), findsOneWidget);
+    expect(tester.getRect(whatsapp).top, greaterThanOrEqualTo(0));
+    expect(tester.getRect(whatsapp).bottom, lessThan(1100));
+    expect(workspace.settingsSaves, isEmpty);
+    expect(tester.widget<TextFormField>(invitation).controller!.text, 'Hello {firstname}');
+    await tester.enterText(whatsapp, '');
+    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
+    await tester.pumpAndSettle();
+    expect(workspace.settingsSaves, hasLength(1));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('configuration export uses its saved template and workspace image',
       (tester) async {
     final money = FakeMoneyRepository()
