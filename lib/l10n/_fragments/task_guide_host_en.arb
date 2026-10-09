@@ -32,7 +32,7 @@
   "@guideHostStop": {
     "description": "#1867 live guide host"
   },
-  "guideHostShowMe": "Show me",
+  "guideHostShowMe": "Open & highlight",
   "@guideHostShowMe": {
     "description": "#1867 live guide host"
   },
@@ -60,7 +60,7 @@
   "@guideHostRecovery": {
     "description": "#1867 live guide host"
   },
-  "guideHostNotOnScreen": "This control is not on this screen. Go to the screen of the previous step, or check the guide.",
+  "guideHostNotOnScreen": "Open the step’s page, then use the preceding steps to reveal this control.",
   "@guideHostNotOnScreen": {
     "description": "#1867 live guide host"
   },
@@ -237,5 +237,17 @@
       }
     }
   },
-  "guideHostGoToPage": "Go to page"
+  "guideHostGoToPage": "Go to page",
+  "guideHostDestination": "Step destination",
+  "guideHostDestinationMissing": "Choose the page this step refers to in the guide editor.",
+  "taskRecorderEndReferenceMissing": "Stopped: the current form could not be identified. Open a supported page and start again.",
+  "guideHostManualAt": "Complete this step on “{form}”, then mark it done.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  }
 }

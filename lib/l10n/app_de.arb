@@ -4167,6 +4167,8 @@
   "guideHostClose": "Schließen",
   "guideHostCommand": "Bestätigen Sie und warten Sie auf das Ergebnis.",
   "guideHostCompleted": "Anleitung abgeschlossen.",
+  "guideHostDestination": "Ziel des Schritts",
+  "guideHostDestinationMissing": "Wählen Sie die Seite dieses Schritts im Guide-Editor.",
   "guideHostDoAction": "Als Nächstes: {action}.",
   "guideHostDone": "Erledigt",
   "guideHostFillField": "Füllen Sie das hervorgehobene Feld aus und verlassen Sie es.",
@@ -4174,12 +4176,21 @@
   "guideHostGoToPage": "Zur Seite",
   "guideHostInstruction": "Lesen Sie dies und markieren Sie es als erledigt.",
   "guideHostManual": "Erledigen Sie diesen Schritt selbst und markieren Sie ihn als erledigt.",
+  "guideHostManualAt": "Führen Sie diesen Schritt auf „{form}“ aus und markieren Sie ihn dann als erledigt.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
   "guideHostManualProtected": "Dieser Teil findet auf einem geschützten Bildschirm statt ({category}). Erledigen Sie ihn selbst und markieren Sie ihn als erledigt.",
   "guideHostMinimize": "Anleitung verkleinern",
   "@guideHostMinimize": {
     "description": "Task wizard: guideHostMinimize"
   },
-  "guideHostNotOnScreen": "Dieses Bedienelement ist nicht auf diesem Bildschirm. Gehen Sie zum Bildschirm des vorherigen Schritts oder prüfen Sie die Anleitung.",
+  "guideHostNotOnScreen": "Öffnen Sie die Seite des Schritts und folgen Sie den vorherigen Schritten, um dieses Bedienelement anzuzeigen.",
   "guideHostOpenLabel": "Öffnen Sie „{label}“.",
   "guideHostOpenScreen": "Öffnen Sie den nächsten Bildschirm.",
   "guideHostPausedFeature": "Pausiert: Der Aufgabenrekorder ist in diesem Workspace ausgeschaltet.",
@@ -4198,7 +4209,7 @@
     }
   },
   "guideHostResume": "Fortsetzen",
-  "guideHostShowMe": "Zeigen",
+  "guideHostShowMe": "Öffnen und hervorheben",
   "guideHostSkip": "Überspringen",
   "guideHostStatusAcknowledged": "Bestätigt",
   "guideHostStatusDone": "Erledigt",
@@ -10819,6 +10830,7 @@
   "taskRecorderEditedNote": "Bearbeitete Kopie: {count} Schritte ausgenommen. Die Aufzeichnung auf diesem Gerät bleibt unverändert.",
   "taskRecorderEndInterrupted": "Unterbrochen: die App wurde während der Aufzeichnung beendet",
   "taskRecorderEndLimitReached": "Beendet: ein Grenzwert wurde erreicht",
+  "taskRecorderEndReferenceMissing": "Gestoppt: Das aktuelle Formular konnte nicht erkannt werden. Öffnen Sie eine unterstützte Seite und starten Sie erneut.",
   "taskRecorderEndScopeChanged": "Beendet: Konto oder Arbeitsbereich hat gewechselt",
   "taskRecorderEndStopped": "Von Ihnen beendet",
   "taskRecorderEndStorageFailed": "Beendet: konnte auf diesem Gerät nicht gespeichert werden",

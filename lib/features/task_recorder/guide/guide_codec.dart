@@ -23,6 +23,7 @@ import 'dart:convert';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
 import 'task_guide.dart';
+import 'guide_destination.dart';
 
 enum GuideIssueCode {
   tooLarge,
@@ -77,6 +78,7 @@ Map<String, Object?> encodeGuideStep(GuideStep s) => {
   if (s.manualCategory != null) 'manual_category': s.manualCategory!.wire,
   if (s.target != null) 'target': s.target,
   if (s.label != null) 'label': s.label,
+  if (s.destination != null) 'destination': s.destination,
   if (s.recovery.isNotEmpty)
     'recovery': [for (final r in s.recovery) encodeGuideStep(r)],
 };
@@ -204,6 +206,7 @@ class _GuideDecoder {
       'recovery',
       'target',
       'label',
+      'destination',
     };
     if (!raw.keys.every(keys.contains)) {
       throw _Refusal(GuideIssueCode.unknownKey, path);
@@ -215,6 +218,11 @@ class _GuideDecoder {
     if (!ids.add(id)) throw _Refusal(GuideIssueCode.duplicateId, '$path.id');
     final kind = GuideStepKind.fromWire(raw['kind']);
     if (kind == null) throw _Refusal(GuideIssueCode.badValue, '$path.kind');
+    final destination = raw['destination'];
+    if (destination != null &&
+        (destination is! String || !isGuideDestination(destination))) {
+      throw _Refusal(GuideIssueCode.badValue, '$path.destination');
+    }
     final text = _text(raw['text'], limits.maxTextLength, '$path.text');
     final optional = raw['optional'] ?? false;
     if (optional is! bool) {
@@ -254,6 +262,7 @@ class _GuideDecoder {
         text: text,
         optional: optional,
         manualCategory: category,
+        destination: destination as String?,
       );
     }
     if (actionRaw is! String) {
@@ -265,7 +274,12 @@ class _GuideDecoder {
       issues.add(
         GuideIssue(GuideIssueCode.unknownAction, '$path.action', fatal: false),
       );
-      return GuideStep(id: id, kind: GuideStepKind.manual, text: text);
+      return GuideStep(
+        id: id,
+        kind: GuideStepKind.manual,
+        destination: destination as String?,
+        text: text,
+      );
     }
     final expected = <String>{};
     for (final o in expectedRaw) {
@@ -292,7 +306,13 @@ class _GuideDecoder {
     }
     if (spec.softTargets &&
         (target == null || target == uiUnkeyed || target.contains('{}'))) {
-      return GuideStep(id: id, kind: GuideStepKind.manual, text: text, optional: optional);
+      return GuideStep(
+        id: id,
+        kind: GuideStepKind.manual,
+        destination: destination as String?,
+        text: text,
+        optional: optional,
+      );
     }
     final label = labelRaw is String && uiLabelKeys.contains(labelRaw)
         ? labelRaw
@@ -306,6 +326,7 @@ class _GuideDecoder {
       optional: optional,
       target: target,
       label: label,
+      destination: destination as String?,
       recovery: [
         for (var i = 0; i < recoveryRaw.length; i++)
           _step(recoveryRaw[i], '$path.recovery[$i]', inRecovery: true),

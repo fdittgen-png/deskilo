@@ -30,7 +30,7 @@ const List<ActionSpec> _uiActions = [
     surface: RecorderSurfaces.anyScreen,
     kind: ActionKind.navigate,
     targets: uiRoutes,
-    payloadFields: {'label'},
+    payloadFields: {'label', 'me_tab'},
     softTargets: true,
   ),
   ActionSpec(

@@ -10656,6 +10656,18 @@ abstract class AppLocalizations {
   /// **'Guide completed.'**
   String get guideHostCompleted;
 
+  /// No description provided for @guideHostDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Step destination'**
+  String get guideHostDestination;
+
+  /// No description provided for @guideHostDestinationMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the page this step refers to in the guide editor.'**
+  String get guideHostDestinationMissing;
+
   /// #1867 live guide host
   ///
   /// In en, this message translates to:
@@ -10698,6 +10710,12 @@ abstract class AppLocalizations {
   /// **'Do this step yourself, then mark it done.'**
   String get guideHostManual;
 
+  /// Instruction naming the required form when the precise control is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete this step on “{form}”, then mark it done.'**
+  String guideHostManualAt(String form);
+
   /// #1867 live guide host
   ///
   /// In en, this message translates to:
@@ -10713,7 +10731,7 @@ abstract class AppLocalizations {
   /// #1867 live guide host
   ///
   /// In en, this message translates to:
-  /// **'This control is not on this screen. Go to the screen of the previous step, or check the guide.'**
+  /// **'Open the step’s page, then use the preceding steps to reveal this control.'**
   String get guideHostNotOnScreen;
 
   /// #1867 live guide host
@@ -10761,7 +10779,7 @@ abstract class AppLocalizations {
   /// #1867 live guide host
   ///
   /// In en, this message translates to:
-  /// **'Show me'**
+  /// **'Open & highlight'**
   String get guideHostShowMe;
 
   /// #1867 live guide host
@@ -29515,6 +29533,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ended: a limit was reached'**
   String get taskRecorderEndLimitReached;
+
+  /// No description provided for @taskRecorderEndReferenceMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped: the current form could not be identified. Open a supported page and start again.'**
+  String get taskRecorderEndReferenceMissing;
 
   /// #1865 task recorder: taskRecorderEndScopeChanged
   ///

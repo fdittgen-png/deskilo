@@ -148,6 +148,35 @@ String _subtitle(WidgetTester tester, String key) =>
         .data!;
 
 void main() {
+  testWidgets('profile sections reach the bottom payment terms and return to the profile', (tester) async {
+    await _pumpPage(tester, 'member-3', flags: const {'roleAssignment': true, 'memberPaymentTerms': true});
+    tester.view.physicalSize = const Size(390, 844);
+    await tester.pumpAndSettle();
+    final navigation = find.byKey(const ValueKey('member-section-navigation'));
+    final shortcuts = tester.widgetList<TextButton>(find.descendant(of: navigation, matching: find.byType(TextButton)));
+    expect(shortcuts.map((w) => (w.key! as ValueKey<String>).value),
+        ['member-section-profile', 'member-section-roles', 'member-section-manage', 'member-section-payment-terms']);
+    expect(tester.getTopLeft(find.byKey(const ValueKey('payment-terms-card'))).dy,
+        greaterThan(tester.getBottomLeft(find.byKey(const ValueKey('member-page-badges'))).dy));
+    await tester.tap(find.byKey(const ValueKey('member-section-payment-terms')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('payment-terms-edit')).hitTestable(), findsOneWidget);
+    expect(navigation.hitTestable(), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('member-section-profile')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('member-page-header')).hitTestable(), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('section shortcuts respect the member feature and permission gates', (tester) async {
+    await _pumpPage(tester, 'member-3', viewerOwner: false,
+        flags: const {'roleAssignment': false, 'memberPaymentTerms': false});
+    expect(find.byKey(const ValueKey('member-section-roles')), findsNothing);
+    expect(find.byKey(const ValueKey('member-section-manage')), findsNothing);
+    expect(find.byKey(const ValueKey('member-section-payment-terms')), findsNothing);
+    expect(find.byKey(const ValueKey('member-section-profile')), findsOneWidget);
+  });
+
   testWidgets('the header says who they are and when they were last seen '
       '— in words, not a bare number', (tester) async {
     await _pumpPage(tester, 'member-5');

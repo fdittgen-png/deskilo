@@ -100,8 +100,9 @@ Future<(ProviderContainer, RecorderController, GoRouter)> _pumpHarness(
   addTearDown(tester.view.reset);
   final c = _container();
   final router = GoRouter(
+    initialLocation: '/me',
     routes: [
-      GoRoute(path: '/', builder: (_, _) => const _Home()),
+      GoRoute(path: '/me', builder: (_, _) => const _Home()),
       GoRoute(
         path: '/auth',
         builder: (_, _) => Scaffold(
@@ -141,6 +142,7 @@ Future<TaskRecording> _stop(
   RecorderController controller,
 ) async {
   final r = (await controller.stop())!;
+  expect(r.steps.every((step) => step.page != null), isTrue);
   await tester.pumpWidget(const SizedBox());
   c.dispose();
   return r;
@@ -186,6 +188,7 @@ void main() {
     await tester.pumpAndSettle();
     final r = await _stop(tester, c, controller);
     expect(_generic(r), [
+      'ui.open_screen /me',
       'ui.tap drawer-members "Members & plans"',
       'ui.tap unkeyed',
       'ui.tap perm-{}-{}',
@@ -219,7 +222,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('me-privacy')));
     await tester.pumpAndSettle();
     final r = await _stop(tester, c, controller);
-    expect(_generic(r), isEmpty);
+    expect(_generic(r), ['ui.open_screen /me']);
   });
 
   testWidgets('a protected screen is one marker, and nothing on it', (
@@ -232,7 +235,15 @@ void main() {
     await tester.pumpAndSettle();
     final r = await _stop(tester, c, controller);
     expect(r.steps.where((s) => s.kind == StepKind.excluded), hasLength(1));
-    expect(_generic(r), ['ui.tap me-activity']);
+    expect(_generic(r), ['ui.open_screen /me', 'ui.tap me-activity']);
+    expect(
+      r.steps.singleWhere((s) => s.action == RecorderActions.uiTap).page,
+      '/me?tab=home',
+    );
+    expect(
+      r.steps.singleWhere((s) => s.kind == StepKind.excluded).page,
+      '/auth',
+    );
   });
 
   testWidgets('the recorder\'s own controls are never noted', (tester) async {
@@ -240,7 +251,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('recording-indicator-pause')));
     await tester.pumpAndSettle();
     final r = await _stop(tester, c, controller);
-    expect(_generic(r), isEmpty);
+    expect(_generic(r), ['ui.open_screen /me']);
   });
 
   testWidgets('a recorder never opened costs nothing', (tester) async {
@@ -260,7 +271,9 @@ void main() {
   });
 
   testWidgets('across the app: a screen by its pattern and title, and a '
-      'command on the role matrix through its own seam (#1884)', (tester) async {
+      'command on the role matrix through its own seam (#1884)', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(800, 2800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);

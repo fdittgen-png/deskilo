@@ -28,13 +28,18 @@ import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../guide/guide_runner.dart';
+import '../../domain/action_registry.dart';
+import '../../domain/recording_reference.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../ui_capture.dart';
 import 'guide_attention.dart';
 import 'guide_bubble.dart';
 import 'guide_step_text.dart';
+
+part 'guide_pane.dart';
 
 class GuideHostLayer extends ConsumerStatefulWidget {
   const GuideHostLayer({super.key, this.router});
@@ -56,10 +61,14 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
   // The wizard folded into a small circle the person can move.
   bool _minimized = false;
   Offset? _bubble;
+  int _attentionRevision = 0;
+  String? _revealStep;
+  Timer? _revealTimer;
 
   @override
   void dispose() {
     _poll?.cancel();
+    _revealTimer?.cancel();
     super.dispose();
   }
 
@@ -78,12 +87,38 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
 
   Element? _element() {
     final anchor = _anchor;
+    final router = widget.router;
+    final page = ref.read(guideSessionProvider).run?.current?.destination;
+    if (router != null && page != null) {
+      final destination = Uri.parse(page);
+      final here = router.state;
+      final sameForm = destination.path == '/me'
+          ? here.uri.path == '/me' &&
+                (here.uri.queryParameters['tab'] ?? 'home') ==
+                    (destination.queryParameters['tab'] ?? 'home')
+          : guidePageForTarget(here.fullPath) == page;
+      if (!sameForm) return null;
+    }
     return anchor == null ? null : UiCapture.findControl(anchor);
   }
 
   void _locate() {
     if (!mounted) return;
-    final rect = _rectOf(_element());
+    final element = _element();
+    final rect = _rectOf(element);
+    // Navigation and lazy form construction can finish on different frames.
+    // Retry revealing the requested control briefly, then leave the link usable.
+    if (_revealStep == ref.read(guideSessionProvider).run?.current?.id &&
+        (_revealTimer?.isActive ?? false)) {
+      if (element != null) {
+        _revealTimer?.cancel();
+        _revealTimer = null;
+        _showMe();
+      }
+    } else {
+      _revealTimer?.cancel();
+      _revealTimer = null;
+    }
     if (rect != _target || !_targetSearched) {
       setState(() {
         _target = rect;
@@ -97,13 +132,15 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     final layer = context.findRenderObject();
     if (box is! RenderBox || !box.hasSize || !box.attached) return null;
     if (layer is! RenderBox || !layer.attached) return null;
-    final origin = box.localToGlobal(Offset.zero, ancestor: layer);
+    final origin =
+        box.localToGlobal(Offset.zero) - layer.localToGlobal(Offset.zero);
     return origin & box.size;
   }
 
   void _showMe() {
     final e = _element();
     if (e == null) return;
+    setState(() => _attentionRevision++);
     Scrollable.ensureVisible(
       e,
       alignment: 0.3,
@@ -112,27 +149,63 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _locate());
   }
 
-  /// Builds the pane with the step's page and a way to open it — null when
-  /// the step has no page that can be opened, or the person is already on
-  /// it. Rebuilt whenever the route changes, so the button leaves once the
-  /// page is open.
-  Widget _withPage(
-    GuideStep? step,
-    Widget Function(String? route, VoidCallback? go) build,
-  ) {
-    final router = widget.router;
+  /// Open only a page. Form actions remain the person's actions. An already
+  /// mounted dialog is preserved, and highlighting can be requested repeatedly.
+  void _openStep(GuideStep step) {
+    final session = ref.read(guideSessionProvider.notifier);
     final run = ref.read(guideSessionProvider).run;
-    final route = router == null || step == null || run == null
-        ? null
-        : guideStepRoute(run.guide.steps, step);
-    if (router == null || route == null) return build(null, null);
-    return ListenableBuilder(
-      listenable: router.routerDelegate,
-      builder: (context, _) {
-        final here = router.routerDelegate.currentConfiguration.uri.path;
-        return build(route, here == route ? null : () => router.go(route));
-      },
-    );
+    if (run == null ||
+        run.state != GuideRunState.running ||
+        step.id != run.current?.id &&
+            run.current != null &&
+            run.statusOf(run.current!.id) == GuideStepStatus.waiting) {
+      return;
+    }
+    if (step.id != run.current?.id) session.visit(step.id);
+    _follow(guideStepAnchor(step));
+    setState(() {
+      _showSteps = false;
+      _attentionRevision++;
+      _revealStep = step.id;
+      _revealTimer?.cancel();
+      _revealTimer = Timer(const Duration(seconds: 5), () {
+        _revealStep = null;
+        _revealTimer = null;
+      });
+    });
+    final router = widget.router;
+    final route = guideStepRoute(run.guide.steps, step);
+    final controlOnOpenForm =
+        router != null &&
+        _element() != null &&
+        router.state.uri.path != '/me' &&
+        guidePageForTarget(router.state.fullPath) == route;
+    // Going to the same page preserves any dialog already open on it.
+    if (router != null &&
+        route != null &&
+        !controlOnOpenForm &&
+        router.state.uri.toString() != route) {
+      router.go(route);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // A destination already open is still an observed navigation step.
+      // Merely following a link never completes a field or a command.
+      if (router != null &&
+          route != null &&
+          router.state.uri.toString() == route &&
+          ref.read(guideSessionProvider).run?.current?.id == step.id) {
+        if (step.action == RecorderActions.uiOpenScreen &&
+            router.state.fullPath == step.target) {
+          session.action(RecorderActions.uiOpenScreen, target: step.target);
+        } else if (step.action == RecorderActions.openReserve &&
+            router.state.uri.path == '/reserve') {
+          session.action(RecorderActions.openReserve);
+        }
+      }
+      _revealStep = ref.read(guideSessionProvider).run?.current?.id;
+      _locate();
+    });
   }
 
   @override
@@ -143,6 +216,9 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
       _follow(null);
       _minimized = false;
       _bubble = null;
+      _showSteps = false;
+      _revealTimer?.cancel();
+      _revealTimer = null;
       return const SizedBox.shrink();
     }
     final step = run.current;
@@ -166,7 +242,7 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
         // Above the app's bottom navigation (its centre button included),
         // and at the top whenever the control it points at would be under
         // the pane: the guide never hides the app it guides.
-        const bottomClearance = 96.0;
+        final bottomClearance = 96.0 + MediaQuery.viewInsetsOf(context).bottom;
         const paneEstimate = 280.0;
         final dockTop =
             target != null &&
@@ -177,15 +253,21 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
           child: Align(
             alignment: dockTop ? Alignment.topCenter : Alignment.bottomCenter,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 520),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                // The layer sits above the navigator: its own Overlay lets
-                // the pane's tooltips show.
-                child: Overlay.wrap(
-                  child: _withPage(
-                    step,
-                    (route, go) => _Pane(
+              constraints: BoxConstraints(
+                maxWidth: 520,
+                maxHeight:
+                    (box.maxHeight -
+                            bottomClearance -
+                            MediaQuery.paddingOf(context).vertical)
+                        .clamp(80, double.infinity),
+              ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  // The layer sits above the navigator: its own Overlay lets
+                  // the pane's tooltips show.
+                  child: Overlay.wrap(
+                    child: _Pane(
                       session: session,
                       run: run,
                       blocked: blocked,
@@ -194,8 +276,9 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
                       showSteps: _showSteps,
                       onToggleSteps: () =>
                           setState(() => _showSteps = !_showSteps),
-                      onShowMe: target == null ? null : _showMe,
-                      onGoToPage: go,
+                      onShowMe: step == null ? null : () => _openStep(step),
+                      onOpenStep: _openStep,
+                      canOpenPage: widget.router != null,
                       onMinimize: () => setState(() => _minimized = true),
                     ),
                   ),
@@ -211,7 +294,7 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
                 child: IgnorePointer(
                   // A new control restarts the pulse and the flash.
                   child: GuideAttention(
-                    key: ValueKey(_anchor),
+                    key: ValueKey('$_anchor-$_attentionRevision'),
                     target: target,
                     bounds: box.biggest,
                   ),
@@ -242,303 +325,6 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
           ],
         );
       },
-    );
-  }
-}
-
-class _Pane extends ConsumerWidget {
-  const _Pane({
-    required this.session,
-    required this.run,
-    required this.blocked,
-    required this.targetMissing,
-    required this.showSteps,
-    required this.onToggleSteps,
-    required this.onShowMe,
-    required this.onGoToPage,
-    required this.onMinimize,
-  });
-
-  final GuideSessionState session;
-  final GuideRun run;
-  final bool blocked;
-  final bool targetMissing;
-  final bool showSteps;
-  final VoidCallback onToggleSteps;
-  final VoidCallback? onShowMe;
-  final VoidCallback? onGoToPage;
-  final VoidCallback onMinimize;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final text = Theme.of(context).textTheme;
-    final notifier = ref.read(guideSessionProvider.notifier);
-    final guide = run.guide;
-    final steps = guide.steps;
-    final step = run.current;
-    final mainIndex = step == null
-        ? steps.length
-        : steps.indexWhere(
-            (s) => s.id == step.id || s.recovery.any((r) => r.id == step.id),
-          );
-    final ended =
-        run.state == GuideRunState.completed ||
-        run.state == GuideRunState.stopped;
-    final waiting =
-        step != null && run.statusOf(step.id) == GuideStepStatus.waiting;
-    final inRecovery = step != null && step.id.contains('r');
-
-    final notices = <Widget>[
-      if (ended)
-        _Notice(
-          'guide-host-${run.state.name}',
-          run.state == GuideRunState.completed
-              ? (l10n?.guideHostCompleted ?? 'Guide completed.')
-              : (l10n?.guideHostStopped ??
-                    'Guide stopped. Nothing was undone.'),
-        )
-      else if (run.state == GuideRunState.paused)
-        _Notice(
-          'guide-host-paused-${session.pauseReason?.name ?? 'other'}',
-          session.pauseReason == GuidePauseReason.featureOff
-              ? (l10n?.guideHostPausedFeature ??
-                    'Paused: the task recorder is turned off in this workspace.')
-              : (l10n?.guideHostPausedScope ??
-                    'Paused: the account or workspace changed. The guide '
-                        'continues only where it started.'),
-        )
-      else if (blocked)
-        _Notice(
-          'guide-host-blocked',
-          l10n?.guideHostBlocked ??
-              'Resolve the message on screen first; the guide waits.',
-        ),
-      if (!ended && run.state == GuideRunState.running && !blocked) ...[
-        if (inRecovery)
-          _Notice(
-            'guide-host-recovery',
-            l10n?.guideHostRecovery ??
-                'That was refused. Follow these steps, then try again.',
-          ),
-        if (run.uncertain)
-          _Notice(
-            'guide-host-uncertain',
-            l10n?.guideHostUncertain ??
-                'The answer did not arrive. Check whether it happened '
-                    'before trying again.',
-          ),
-        if (waiting)
-          _Notice(
-            'guide-host-waiting',
-            l10n?.guideHostWaiting ?? 'Waiting for the result…',
-          ),
-        if (targetMissing && !waiting)
-          _Notice(
-            'guide-host-not-on-screen',
-            l10n?.guideHostNotOnScreen ??
-                'This control is not on this screen. Go to the screen of '
-                    'the previous step, or check the guide.',
-          ),
-      ],
-    ];
-
-    return Material(
-      key: const ValueKey('guide-host'),
-      elevation: 6,
-      borderRadius: AppRadius.xlAll,
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.assistant_navigation),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Semantics(
-                    header: true,
-                    child: Text(
-                      guide.title ?? (l10n?.guideHostTitle ?? 'Guided task'),
-                      style: text.titleSmall,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                if (!ended)
-                  Text(
-                    l10n?.guideHostStepOf(
-                          (mainIndex + 1).clamp(1, steps.length),
-                          steps.length,
-                        ) ??
-                        'Step ${mainIndex + 1} of ${steps.length}',
-                    key: const ValueKey('guide-host-progress'),
-                    style: text.labelMedium,
-                  ),
-                if (!ended)
-                  IconButton(
-                    key: const ValueKey('guide-host-minimize'),
-                    tooltip: l10n?.guideHostMinimize ?? 'Minimise the guide',
-                    icon: const Icon(Icons.minimize_rounded),
-                    onPressed: onMinimize,
-                  ),
-                IconButton(
-                  key: const ValueKey('guide-host-steps'),
-                  tooltip: l10n?.guideHostSteps ?? 'All steps',
-                  icon: Icon(showSteps ? Icons.expand_more : Icons.list),
-                  onPressed: onToggleSteps,
-                ),
-                if (ended)
-                  IconButton(
-                    key: const ValueKey('guide-host-close'),
-                    tooltip: l10n?.guideHostClose ?? 'Close',
-                    icon: const Icon(Icons.close),
-                    onPressed: notifier.close,
-                  )
-                else
-                  IconButton(
-                    key: const ValueKey('guide-host-stop'),
-                    tooltip: l10n?.guideHostStop ?? 'Stop the guide',
-                    icon: const Icon(Icons.stop_circle_outlined),
-                    onPressed: notifier.stop,
-                  ),
-              ],
-            ),
-            if (step != null && !ended) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Semantics(
-                liveRegion: true,
-                child: Text(
-                  guideStepText(l10n, step),
-                  key: ValueKey('guide-host-step-${step.id}'),
-                  style: text.bodyLarge,
-                ),
-              ),
-            ],
-            for (final n in notices) ...[
-              const SizedBox(height: AppSpacing.xs),
-              n,
-            ],
-            if (showSteps) _StepList(run: run),
-            if (!ended) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.xs,
-                alignment: WrapAlignment.end,
-                children: [
-                  if (run.state == GuideRunState.paused)
-                    FilledButton(
-                      key: const ValueKey('guide-host-resume'),
-                      onPressed: notifier.resume,
-                      child: Text(l10n?.guideHostResume ?? 'Resume'),
-                    )
-                  else ...[
-                    TextButton(
-                      key: const ValueKey('guide-host-back'),
-                      onPressed: notifier.back,
-                      child: Text(l10n?.guideHostBack ?? 'Back'),
-                    ),
-                    if (step != null && !waiting)
-                      TextButton(
-                        key: const ValueKey('guide-host-skip'),
-                        onPressed: notifier.skip,
-                        child: Text(l10n?.guideHostSkip ?? 'Skip'),
-                      ),
-                    if (onGoToPage != null && !blocked)
-                      OutlinedButton(
-                        key: const ValueKey('guide-host-go-to-page'),
-                        onPressed: onGoToPage,
-                        child: Text(l10n?.guideHostGoToPage ?? 'Go to page'),
-                      ),
-                    if (onShowMe != null && !blocked)
-                      OutlinedButton(
-                        key: const ValueKey('guide-host-show-me'),
-                        onPressed: onShowMe,
-                        child: Text(l10n?.guideHostShowMe ?? 'Show me'),
-                      ),
-                    if (step != null && step.kind != GuideStepKind.perform)
-                      FilledButton(
-                        key: const ValueKey('guide-host-done'),
-                        onPressed: notifier.acknowledge,
-                        child: Text(l10n?.guideHostDone ?? 'Done'),
-                      ),
-                  ],
-                ],
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Notice extends StatelessWidget {
-  const _Notice(this.id, this.text);
-
-  final String id;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return DecoratedBox(
-      key: ValueKey(id),
-      decoration: BoxDecoration(
-        color: scheme.secondaryContainer,
-        borderRadius: AppRadius.mdAll,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.sm),
-        child: Text(text, style: TextStyle(color: scheme.onSecondaryContainer)),
-      ),
-    );
-  }
-}
-
-/// Every step and its status, readable by a screen reader.
-class _StepList extends StatelessWidget {
-  const _StepList({required this.run});
-
-  final GuideRun run;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    String status(GuideStepStatus s) => switch (s) {
-      GuideStepStatus.pending => l10n?.guideHostStatusPending ?? 'To do',
-      GuideStepStatus.waiting => l10n?.guideHostStatusWaiting ?? 'Waiting',
-      GuideStepStatus.done => l10n?.guideHostStatusDone ?? 'Done',
-      GuideStepStatus.acknowledged =>
-        l10n?.guideHostStatusAcknowledged ?? 'Acknowledged',
-      GuideStepStatus.skipped => l10n?.guideHostStatusSkipped ?? 'Skipped',
-    };
-    final current = run.current?.id;
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 240),
-      child: ListView(
-        key: const ValueKey('guide-host-step-list'),
-        shrinkWrap: true,
-        children: [
-          for (final s in run.guide.steps)
-            ListTile(
-              key: ValueKey('guide-host-list-${s.id}'),
-              dense: true,
-              selected: s.id == current,
-              title: Text(
-                guideStepText(l10n, s),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: Text(status(run.statusOf(s.id))),
-            ),
-        ],
-      ),
     );
   }
 }

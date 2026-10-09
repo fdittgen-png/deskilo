@@ -6,14 +6,14 @@
   "guideHostSkip": "Omitir",
   "guideHostBack": "Atrás",
   "guideHostStop": "Detener la guía",
-  "guideHostShowMe": "Muéstramelo",
+  "guideHostShowMe": "Abrir y resaltar",
   "guideHostSteps": "Todos los pasos",
   "guideHostResume": "Reanudar",
   "guideHostClose": "Cerrar",
   "guideHostWaiting": "Esperando el resultado…",
   "guideHostUncertain": "No llegó la respuesta. Compruebe si ocurrió antes de volver a intentarlo.",
   "guideHostRecovery": "Se rechazó. Siga estos pasos y vuelva a intentarlo.",
-  "guideHostNotOnScreen": "Este control no está en esta pantalla. Vaya a la pantalla del paso anterior o revise la guía.",
+  "guideHostNotOnScreen": "Abra la página del paso y siga los pasos anteriores para mostrar este control.",
   "guideHostPausedScope": "En pausa: cambió la cuenta o el espacio. La guía solo continúa donde empezó.",
   "guideHostPausedFeature": "En pausa: la grabadora de tareas está desactivada en este espacio.",
   "guideHostBlocked": "Resuelva primero el mensaje en pantalla; la guía espera.",
@@ -63,5 +63,17 @@
       }
     }
   },
-  "guideHostGoToPage": "Ir a la página"
+  "guideHostGoToPage": "Ir a la página",
+  "guideHostDestination": "Destino del paso",
+  "guideHostDestinationMissing": "Elija la página de este paso en el editor de la guía.",
+  "taskRecorderEndReferenceMissing": "Detenido: no se pudo identificar el formulario actual. Abra una página compatible y vuelva a empezar.",
+  "guideHostManualAt": "Complete este paso en «{form}» y márquelo como hecho.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  }
 }

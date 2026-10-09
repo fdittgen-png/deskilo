@@ -40,6 +40,8 @@ import '../guide/guide_session.dart';
 import 'toggle_capture.dart';
 import 'ui_labels.g.dart';
 
+part 'ui_capture_observer.dart';
+
 /// The live capture, while the recorder's indicator is mounted.
 class UiCapture implements GuardedCommandWatcher {
   UiCapture({required this.controller, required this.protectedNow});
@@ -55,8 +57,9 @@ class UiCapture implements GuardedCommandWatcher {
 
   AppLocalizations? _l10n;
   Map<String, String>? _labelIndex;
-  final Map<int, (Offset, Duration)> _downs = {};
+  final Map<int, (Offset, Duration, String?)> _downs = {};
   FocusNode? _focused;
+  String? _focusedPage;
   static final List<(String, List<String>)> _patterns = [
     for (final p in uiKeyPatterns) (p, p.split('{}')),
   ];
@@ -155,7 +158,8 @@ class UiCapture implements GuardedCommandWatcher {
         }
         return ++seen < 40000;
       },
-      skip: (w) => w is TickerMode && !w.enabled,
+      skip: (w) =>
+          (w is TickerMode && !w.enabled) || (w is Offstage && w.offstage),
     );
     return matches == 1 ? found : null;
   }
@@ -165,12 +169,16 @@ class UiCapture implements GuardedCommandWatcher {
       (key.startsWith('recording-indicator') ||
           key.startsWith('task-recorder') ||
           key.startsWith('task-recording') ||
-          key.startsWith('task-workbench'));
+          key.startsWith('task-workbench') ||
+          key.startsWith('guide-'));
 
   // ── taps ────────────────────────────────────────────────────────────
 
-  void onPointerDown(PointerDownEvent e) =>
-      _downs[e.pointer] = (e.position, e.timeStamp);
+  void onPointerDown(PointerDownEvent e) => _downs[e.pointer] = (
+    e.position,
+    e.timeStamp,
+    _recording ? controller().currentPage : null,
+  );
 
   void onPointerCancel(PointerCancelEvent e) => _downs.remove(e.pointer);
 
@@ -204,6 +212,7 @@ class UiCapture implements GuardedCommandWatcher {
           c.record(
             RecorderActions.uiTap,
             target: tap.target,
+            page: down.$3,
             payload: {'label': ?tap.label},
           );
           return;
@@ -217,13 +226,18 @@ class UiCapture implements GuardedCommandWatcher {
             c.record(
               RecorderActions.uiTap,
               target: tap.target,
+              page: down.$3,
               payload: {'label': ?tap.label},
               values: on == null
                   ? StepValues.none
                   : StepValues.of({'checked': on}),
             );
           } catch (err, st) {
-            TraceLogger.instance.warn('recorder', 'tap not noted', stackTrace: st);
+            TraceLogger.instance.warn(
+              'recorder',
+              'tap not noted',
+              stackTrace: st,
+            );
           }
         });
       });
@@ -241,7 +255,8 @@ class UiCapture implements GuardedCommandWatcher {
     // A switch, a checkbox or a chip has no tap detector of its own that
     // this finds; while a recording captures values their tap is noted too,
     // because their new state is exactly such a value.
-    final element = _tappedElement(result) ??
+    final element =
+        _tappedElement(result) ??
         (_recording && controller().capturesValues
             ? toggleElementAt(result)
             : null);
@@ -388,6 +403,8 @@ class UiCapture implements GuardedCommandWatcher {
   void _onFocus() {
     try {
       final left = _focused;
+      final page = _focusedPage;
+      _focusedPage = _recording ? controller().currentPage : null;
       _focused = FocusManager.instance.primaryFocus;
       final context = left?.context;
       if (identical(left, _focused) || context == null || !context.mounted) {
@@ -430,6 +447,7 @@ class UiCapture implements GuardedCommandWatcher {
       c.record(
         RecorderActions.uiCommitField,
         target: nameOfKey(keyed?.key),
+        page: page,
         payload: {'label': ?label},
         values: values,
       );
@@ -442,7 +460,7 @@ class UiCapture implements GuardedCommandWatcher {
 
   /// A screen was opened: its route pattern and, after the frame that
   /// shows it, the app message its bar carries.
-  void screenOpened(String pattern) {
+  void screenOpened(String pattern, {String? meTab}) {
     if (!_listening) return;
     _guide?.action(RecorderActions.uiOpenScreen, target: pattern);
     if (!_recording) return;
@@ -451,7 +469,8 @@ class UiCapture implements GuardedCommandWatcher {
         controller().record(
           RecorderActions.uiOpenScreen,
           target: pattern,
-          payload: {'label': ?_visibleTitle()},
+          page: pattern == '/me' && meTab != null ? '/me?tab=$meTab' : null,
+          payload: {'label': ?_visibleTitle(), 'me_tab': ?meTab},
         );
       } catch (err, st) {
         TraceLogger.instance.warn(
@@ -502,7 +521,10 @@ class UiCapture implements GuardedCommandWatcher {
       final target = uiCommandMessages.contains(message) ? message : null;
       // #1867 — a guide hears the attempt and, later, its real result.
       final guide = protectedNow() ? null : _guide;
-      final guideToken = guide?.action(RecorderActions.uiCommand, target: target);
+      final guideToken = guide?.action(
+        RecorderActions.uiCommand,
+        target: target,
+      );
       final c = controller();
       final OperationToken? token =
           c.state != RecorderState.recording ||
@@ -529,7 +551,11 @@ class UiCapture implements GuardedCommandWatcher {
       GuideEventSink? guide;
       Object? guideToken;
       switch (token) {
-        case _GuidedCommand(guide: final g, token: final t, guideToken: final gt):
+        case _GuidedCommand(
+          guide: final g,
+          token: final t,
+          guideToken: final gt,
+        ):
           guideToken = gt;
           guide = g;
           recorded = t;
@@ -560,28 +586,5 @@ class UiCapture implements GuardedCommandWatcher {
     } catch (err, st) {
       TraceLogger.instance.warn('recorder', 'result not noted', stackTrace: st);
     }
-  }
-}
-
-/// A guarded command a guide saw: the guide to tell its result, and the
-/// recording's own token when one was live.
-class _GuidedCommand {
-  const _GuidedCommand(this.guide, this.token, this.guideToken);
-  final GuideEventSink guide;
-  final OperationToken? token;
-  final Object? guideToken;
-}
-
-/// #2142 — reports windows pushed and popped on the navigator it watches
-/// to the live capture; does nothing while none is live.
-class RecorderWindowObserver extends NavigatorObserver {
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (route is PopupRoute) UiCapture.current?.windowChanged(opened: true);
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (route is PopupRoute) UiCapture.current?.windowChanged(opened: false);
   }
 }

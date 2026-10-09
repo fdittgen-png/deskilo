@@ -4167,6 +4167,8 @@
   "guideHostClose": "Fermer",
   "guideHostCommand": "Confirmez, puis attendez le résultat.",
   "guideHostCompleted": "Guide terminé.",
+  "guideHostDestination": "Destination de l’étape",
+  "guideHostDestinationMissing": "Choisissez la page de cette étape dans l’éditeur du guide.",
   "guideHostDoAction": "Ensuite : {action}.",
   "guideHostDone": "Fait",
   "guideHostFillField": "Remplissez le champ mis en évidence, puis quittez-le.",
@@ -4174,12 +4176,21 @@
   "guideHostGoToPage": "Aller à la page",
   "guideHostInstruction": "Lisez ceci, puis marquez-le comme fait.",
   "guideHostManual": "Faites cette étape vous-même, puis marquez-la comme faite.",
+  "guideHostManualAt": "Effectuez cette étape sur « {form} », puis marquez-la comme faite.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
   "guideHostManualProtected": "Cette partie se passe sur un écran protégé ({category}). Faites-la vous-même, puis marquez-la comme faite.",
   "guideHostMinimize": "Réduire le guide",
   "@guideHostMinimize": {
     "description": "Task wizard: guideHostMinimize"
   },
-  "guideHostNotOnScreen": "Ce contrôle n'est pas sur cet écran. Allez à l'écran de l'étape précédente ou vérifiez le guide.",
+  "guideHostNotOnScreen": "Ouvrez la page de l’étape, puis suivez les étapes précédentes pour afficher ce contrôle.",
   "guideHostOpenLabel": "Ouvrez « {label} ».",
   "guideHostOpenScreen": "Ouvrez l'écran suivant.",
   "guideHostPausedFeature": "En pause : l'enregistreur de tâches est désactivé dans cet espace.",
@@ -4198,7 +4209,7 @@
     }
   },
   "guideHostResume": "Reprendre",
-  "guideHostShowMe": "Montrer",
+  "guideHostShowMe": "Ouvrir et mettre en évidence",
   "guideHostSkip": "Passer",
   "guideHostStatusAcknowledged": "Pris en compte",
   "guideHostStatusDone": "Fait",
@@ -10819,6 +10830,7 @@
   "taskRecorderEditedNote": "Copie modifiée : {count} étapes exclues. L'enregistrement sur cet appareil reste inchangé.",
   "taskRecorderEndInterrupted": "Interrompu : l'application s'est arrêtée pendant l'enregistrement",
   "taskRecorderEndLimitReached": "Terminé : une limite a été atteinte",
+  "taskRecorderEndReferenceMissing": "Arrêt : le formulaire actuel n’a pas pu être identifié. Ouvrez une page prise en charge et recommencez.",
   "taskRecorderEndScopeChanged": "Terminé : le compte ou l'espace a changé",
   "taskRecorderEndStopped": "Arrêté par vous",
   "taskRecorderEndStorageFailed": "Terminé : impossible de l'enregistrer sur cet appareil",

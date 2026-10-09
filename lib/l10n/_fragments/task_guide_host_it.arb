@@ -6,14 +6,14 @@
   "guideHostSkip": "Salta",
   "guideHostBack": "Indietro",
   "guideHostStop": "Interrompi la guida",
-  "guideHostShowMe": "Mostrami",
+  "guideHostShowMe": "Apri ed evidenzia",
   "guideHostSteps": "Tutti i passi",
   "guideHostResume": "Riprendi",
   "guideHostClose": "Chiudi",
   "guideHostWaiting": "In attesa del risultato…",
   "guideHostUncertain": "La risposta non è arrivata. Verifica se è avvenuto prima di riprovare.",
   "guideHostRecovery": "È stato rifiutato. Segui questi passi, poi riprova.",
-  "guideHostNotOnScreen": "Questo controllo non è in questa schermata. Vai alla schermata del passo precedente o controlla la guida.",
+  "guideHostNotOnScreen": "Apri la pagina del passaggio e segui i passaggi precedenti per mostrare questo controllo.",
   "guideHostPausedScope": "In pausa: l'account o lo spazio è cambiato. La guida continua solo dove è iniziata.",
   "guideHostPausedFeature": "In pausa: il registratore di attività è disattivato in questo spazio.",
   "guideHostBlocked": "Risolvi prima il messaggio sullo schermo; la guida attende.",
@@ -63,5 +63,17 @@
       }
     }
   },
-  "guideHostGoToPage": "Vai alla pagina"
+  "guideHostGoToPage": "Vai alla pagina",
+  "guideHostDestination": "Destinazione del passaggio",
+  "guideHostDestinationMissing": "Scegli la pagina di questo passaggio nell’editor della guida.",
+  "taskRecorderEndReferenceMissing": "Interrotto: impossibile identificare il modulo attuale. Apri una pagina supportata e ricomincia.",
+  "guideHostManualAt": "Completa questo passaggio su «{form}», poi contrassegnalo come fatto.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  }
 }

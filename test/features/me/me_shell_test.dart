@@ -20,6 +20,22 @@ import '../../helpers/mock_providers.dart';
 import 'me_app.dart';
 
 void main() {
+  testWidgets('Confidentiality is last and remains reachable by its shortcut', (tester) async {
+    final router = await pumpMeApp(tester, workspace: twoSpaces(), size: const Size(390, 844));
+    await goTo(tester, router, '/me?tab=me');
+    final shortcuts = tester.widgetList<TextButton>(find.byWidgetPredicate((w) =>
+      w is TextButton && w.key is ValueKey<String> &&
+      (w.key! as ValueKey<String>).value.startsWith('me-section-')));
+    expect(shortcuts.map((w) => (w.key! as ValueKey<String>).value),
+        ['me-section-0', 'me-section-2', 'me-section-3', 'me-section-1']);
+    expect(tester.getTopLeft(find.byKey(const ValueKey('me-visibility-card'))).dy,
+        greaterThan(tester.getBottomLeft(find.byKey(const ValueKey('me-help'))).dy));
+    await tester.tap(find.byKey(const ValueKey('me-section-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('visibility-about-edit')).hitTestable(), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Messages badges refresh before opening the tab, hide zero and cap at 99+', (tester) async {
     final messenger = FakeMessengerRepository()..inboxRows.addAll([
       {'context_kind': 'account', 'context_id': 'new', 'title': 'New', 'unread': 124},

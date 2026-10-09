@@ -35,7 +35,7 @@ void main() {
 
   StepValues date(String iso) => StepValues.of({'date': TextValue(iso)});
 
-  test('off by default: values are dropped, the file is schema 1 and carries '
+  test('off by default: values are dropped, the file has form references and carries '
       'none', () async {
     await c.start(scope: canaryScope);
     expect(c.capturesValues, isFalse);
@@ -50,33 +50,36 @@ void main() {
     final text = encodeRecordingText(r);
     expect(text.contains('values'), isFalse);
     expect(text.contains('2026-10-06'), isFalse);
-    expect(jsonDecode(text)['schema_version'], 1);
+    expect(jsonDecode(text)['schema_version'], 3);
     // The stored log never held it either.
     expect(backend.logs.values.join().contains('2026-10-06'), isFalse);
   });
 
-  test('on: the values are kept, the file is schema 2 and says so', () async {
-    await c.start(scope: canaryScope, captureValues: true);
-    expect(c.capturesValues, isTrue);
-    c.record(
-      RecorderActions.selectDate,
-      payload: {'date_relation': 'today'},
-      values: date('2026-10-06'),
-    );
-    final r = (await c.stop())!;
-    expect(r.capturesValues, isTrue);
-    final json = jsonDecode(encodeRecordingText(r)) as Map;
-    expect(json['schema_version'], 2);
-    expect(json['values_mode'], 'captured');
-    expect(((json['steps'] as List).single as Map)['values'], {
-      'date': '2026-10-06',
-    });
-    // And it reads back identically.
-    final back = decodeRecordingText(encodeRecordingText(r));
-    expect(back.accepted, isTrue);
-    expect(back.recording!.steps.single.values, date('2026-10-06'));
-    expect(back.recording!.capturesValues, isTrue);
-  });
+  test(
+    'on: the values are kept, the file has references and values and says so',
+    () async {
+      await c.start(scope: canaryScope, captureValues: true);
+      expect(c.capturesValues, isTrue);
+      c.record(
+        RecorderActions.selectDate,
+        payload: {'date_relation': 'today'},
+        values: date('2026-10-06'),
+      );
+      final r = (await c.stop())!;
+      expect(r.capturesValues, isTrue);
+      final json = jsonDecode(encodeRecordingText(r)) as Map;
+      expect(json['schema_version'], 3);
+      expect(json['values_mode'], 'captured');
+      expect(((json['steps'] as List).single as Map)['values'], {
+        'date': '2026-10-06',
+      });
+      // And it reads back identically.
+      final back = decodeRecordingText(encodeRecordingText(r));
+      expect(back.accepted, isTrue);
+      expect(back.recording!.steps.single.values, date('2026-10-06'));
+      expect(back.recording!.capturesValues, isTrue);
+    },
+  );
 
   test('a field committed again with the SAME value is one step; with another '
       'value it is a new one', () async {

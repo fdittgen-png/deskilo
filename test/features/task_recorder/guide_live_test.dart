@@ -44,7 +44,7 @@ void main() {
         ),
       ]);
       final text = encodeGuideText(g);
-      expect(text, contains('"schema_version": 2'));
+      expect(text, contains('"schema_version": 3'));
       final back = decodeGuideText(text);
       expect(back.runnable, isTrue);
       expect(back.guide!.steps.single.target, _key);
@@ -60,7 +60,7 @@ void main() {
             action: RecorderActions.selectDate,
           ),
         ]),
-      ).replaceFirst('"schema_version": 2', '"schema_version": 1');
+      ).replaceFirst('"schema_version": 3', '"schema_version": 1');
       final back = decodeGuideText(text);
       expect(back.runnable, isTrue);
       expect(back.guide!.steps.single.target, isNull);

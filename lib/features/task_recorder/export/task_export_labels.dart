@@ -154,6 +154,7 @@ class TaskExportLabels {
     RecordingEndReason.scopeChanged => l.taskExportEndScopeChanged,
     RecordingEndReason.limitReached => l.taskExportEndLimitReached,
     RecordingEndReason.storageFailed => l.taskExportEndStorageFailed,
+    RecordingEndReason.referenceMissing => l.taskRecorderEndReferenceMissing,
     RecordingEndReason.interrupted => l.taskExportEndInterrupted,
     null => null,
   };

@@ -7171,6 +7171,8 @@
   "@guideHostCompleted": {
     "description": "#1867 live guide host"
   },
+  "guideHostDestination": "Step destination",
+  "guideHostDestinationMissing": "Choose the page this step refers to in the guide editor.",
   "guideHostDoAction": "Next: {action}.",
   "@guideHostDoAction": {
     "description": "#1867 live guide host",
@@ -7206,6 +7208,15 @@
   "@guideHostManual": {
     "description": "#1867 live guide host"
   },
+  "guideHostManualAt": "Complete this step on “{form}”, then mark it done.",
+  "@guideHostManualAt": {
+    "description": "Instruction naming the required form when the precise control is unknown.",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
   "guideHostManualProtected": "This part happens on a protected screen ({category}). Do it yourself, then mark it done.",
   "@guideHostManualProtected": {
     "description": "#1867 live guide host",
@@ -7219,7 +7230,7 @@
   "@guideHostMinimize": {
     "description": "Task wizard: guideHostMinimize"
   },
-  "guideHostNotOnScreen": "This control is not on this screen. Go to the screen of the previous step, or check the guide.",
+  "guideHostNotOnScreen": "Open the step’s page, then use the preceding steps to reveal this control.",
   "@guideHostNotOnScreen": {
     "description": "#1867 live guide host"
   },
@@ -7264,7 +7275,7 @@
   "@guideHostResume": {
     "description": "#1867 live guide host"
   },
-  "guideHostShowMe": "Show me",
+  "guideHostShowMe": "Open & highlight",
   "@guideHostShowMe": {
     "description": "#1867 live guide host"
   },
@@ -19316,6 +19327,7 @@
   "@taskRecorderEndLimitReached": {
     "description": "#1865 task recorder: taskRecorderEndLimitReached"
   },
+  "taskRecorderEndReferenceMissing": "Stopped: the current form could not be identified. Open a supported page and start again.",
   "taskRecorderEndScopeChanged": "Ended: the account or workspace changed",
   "@taskRecorderEndScopeChanged": {
     "description": "#1865 task recorder: taskRecorderEndScopeChanged"

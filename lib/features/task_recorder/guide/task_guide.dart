@@ -26,7 +26,8 @@ const String taskGuideFormat = 'deskilo.task-guide';
 /// 2 (#1867 live guide): a perform step may name its control ([GuideStep.
 /// target]) and the app message it shows ([GuideStep.label]). Schema 1
 /// guides read unchanged — they simply carry no target.
-const int taskGuideSchemaVersion = 2;
+/// 3 adds an explicit, registered destination to every kind of step.
+const int taskGuideSchemaVersion = 3;
 
 /// What a guide step asks of the person.
 enum GuideStepKind {
@@ -71,6 +72,7 @@ class GuideStep {
     this.manualCategory,
     this.target,
     this.label,
+    this.destination,
   });
 
   /// Unique within the guide: 'g1', 'g2', 'g1r1'.
@@ -107,19 +109,28 @@ class GuideStep {
   /// The app message (by key) the control showed, to say what to tap.
   final String? label;
 
+  /// A registered page, optionally a known Me tab. Never a record ID.
+  final String? destination;
+
   bool get isCommand => expectedOutcomes.isNotEmpty;
 
-  GuideStep copyWith({String? text, bool? optional}) => GuideStep(
+  GuideStep copyWith({
+    String? text,
+    bool? optional,
+    String? destination,
+    List<GuideStep>? recovery,
+  }) => GuideStep(
     id: id,
     kind: kind,
     action: action,
     expectedOutcomes: expectedOutcomes,
     text: text ?? this.text,
     optional: optional ?? this.optional,
-    recovery: recovery,
+    recovery: recovery ?? this.recovery,
     manualCategory: manualCategory,
     target: target,
     label: label,
+    destination: destination ?? this.destination,
   );
 }
 

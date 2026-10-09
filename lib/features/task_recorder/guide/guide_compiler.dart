@@ -22,6 +22,7 @@ import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
 import 'task_guide.dart';
+import 'guide_destination.dart';
 
 /// The outcomes of [action] that complete a guided command step.
 Set<String> successOutcomes(
@@ -41,27 +42,52 @@ TaskGuide compileGuide(
 }) {
   final steps = <GuideStep>[];
   String nextId() => 'g${steps.length + 1}';
+  String? destination;
   for (final step in recording.steps) {
+    if (step.page != null) {
+      destination = step.page;
+    } else if (step.action == RecorderActions.uiOpenScreen) {
+      final tab = step.payload.values['me_tab'];
+      destination =
+          step.target == '/me' &&
+              tab != null &&
+              guideMeDestinations.contains('/me?tab=$tab')
+          ? '/me?tab=$tab'
+          : guidePageForTarget(step.target);
+    } else {
+      destination = guideSurfaceRoutes[step.surface] ?? destination;
+    }
     switch (step.kind) {
       case StepKind.action:
+        if (step.action == RecorderActions.uiOpenWindow ||
+            step.action == RecorderActions.uiCloseWindow) {
+          continue;
+        }
         final spec = registry.action(step.action);
-        if (spec == null || (spec.softTargets &&
-            (step.target == null || step.target == uiUnkeyed ||
-             step.target!.contains('{}')))) {
-          steps.add(GuideStep(id: nextId(), kind: GuideStepKind.manual));
+        if (spec == null ||
+            (spec.softTargets &&
+                (step.target == null ||
+                    step.target == uiUnkeyed ||
+                    step.target!.contains('{}')))) {
+          steps.add(
+            GuideStep(
+              id: nextId(),
+              kind: GuideStepKind.manual,
+              destination: destination,
+            ),
+          );
           continue;
         }
         final id = nextId();
-        // A generic step's target IS its control; a screen seam's target
-        // is a detail of its own action (a booking field), not an anchor.
-        final target = !spec.softTargets || step.target == uiUnkeyed
-            ? null
-            : step.target;
+        // Retain both generic control keys and registered field identifiers.
+        // The player maps registered fields to their real control keys.
+        final target = step.target == uiUnkeyed ? null : step.target;
         final label = step.payload.values['label'];
         steps.add(
           GuideStep(
             id: id,
             kind: GuideStepKind.perform,
+            destination: destination,
             action: spec.id,
             target: target,
             label: label != null && uiLabelKeys.contains(label) ? label : null,
@@ -69,7 +95,13 @@ TaskGuide compileGuide(
                 ? successOutcomes(spec, registry: registry)
                 : const {},
             recovery: spec.isCommand
-                ? [GuideStep(id: '${id}r1', kind: GuideStepKind.instruction)]
+                ? [
+                    GuideStep(
+                      id: '${id}r1',
+                      kind: GuideStepKind.instruction,
+                      destination: destination,
+                    ),
+                  ]
                 : const [],
           ),
         );
@@ -82,6 +114,7 @@ TaskGuide compileGuide(
             id: nextId(),
             kind: GuideStepKind.instruction,
             text: step.note,
+            destination: destination,
           ),
         );
       case StepKind.excluded:
@@ -90,10 +123,17 @@ TaskGuide compileGuide(
             id: nextId(),
             kind: GuideStepKind.manual,
             manualCategory: step.protectedCategory,
+            destination: destination,
           ),
         );
       case StepKind.unrecorded:
-        steps.add(GuideStep(id: nextId(), kind: GuideStepKind.manual));
+        steps.add(
+          GuideStep(
+            id: nextId(),
+            kind: GuideStepKind.manual,
+            destination: destination,
+          ),
+        );
     }
   }
   return TaskGuide(

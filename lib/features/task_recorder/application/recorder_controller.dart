@@ -47,9 +47,11 @@ import '../domain/recording_sink.dart';
 import '../domain/safe_payload.dart';
 import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
+import '../domain/recording_reference.dart';
 import '../domain/task_recording_codec.dart' show encodeStep;
 
 part 'recorder_types.dart';
+part 'recorder_persistence.dart';
 
 class RecorderController {
   RecorderController({
@@ -60,8 +62,12 @@ class RecorderController {
     this.limits = const RecordingLimits(),
     this.dedupeWindowMs = 300,
     String Function()? newId,
+    String? initialPage,
   }) : _clock = clock ?? stopwatchClock(),
-       _newId = newId ?? _randomId;
+       _newId = newId ?? _randomId,
+       _page = initialPage != null && isGuideDestination(initialPage)
+           ? initialPage
+           : null;
 
   final RecordingSink _sink;
   final RecordingPlatform _platform;
@@ -85,6 +91,27 @@ class RecorderController {
   int _queued = 0;
   bool _writeFailed = false;
   RecordingWriter? _failedWriter;
+
+  String? _page;
+  String? get currentPage => _page;
+
+  /// Route context is updated even while paused, before deferred UI capture.
+  void setPage(String? page) {
+    _page = page == null ? null : guidePageForTarget(page);
+  }
+
+  String? _referencePage({
+    String? action,
+    String? surface,
+    String? target,
+    String? page,
+  }) {
+    if (page != null) return isGuideDestination(page) ? page : null;
+    if (action == RecorderActions.uiOpenScreen) {
+      return guidePageForTarget(target);
+    }
+    return _page ?? guideSurfaceRoutes[surface];
+  }
 
   int _startMs = 0;
   int _bytes = 0;
@@ -257,6 +284,7 @@ class RecorderController {
   void record(
     String actionId, {
     String? target,
+    String? page,
     Map<String, Object?> payload = const {},
     StepValues values = StepValues.none,
   }) => _guard(() {
@@ -279,6 +307,13 @@ class RecorderController {
         last.kind == StepKind.action &&
         last.action == spec.id &&
         last.target == safeTarget &&
+        last.page ==
+            _referencePage(
+              action: spec.id,
+              surface: spec.surface,
+              target: safeTarget,
+              page: page,
+            ) &&
         last.segment == _segments.last.index) {
       // A field committed again is one field change — unless it now holds
       // another value, which is a change worth its own step; an identical
@@ -301,6 +336,7 @@ class RecorderController {
         action: spec.id,
         actionVersion: spec.version,
         target: safeTarget,
+        page: page,
         payload: safe,
         values: kept,
       ),
@@ -312,6 +348,7 @@ class RecorderController {
   OperationToken? attempt(
     String actionId, {
     String? target,
+    String? page,
     Map<String, Object?> payload = const {},
     StepValues values = StepValues.none,
   }) {
@@ -333,6 +370,7 @@ class RecorderController {
           target: target != null && spec.targets.contains(target)
               ? target
               : null,
+          page: page,
           payload: SafePayload.minimize(spec.payloadFields, payload),
           values: _captureValues ? values : StepValues.none,
           op: op,
@@ -383,6 +421,7 @@ class RecorderController {
     final last = _steps.lastOrNull;
     if (last != null &&
         last.kind == StepKind.excluded &&
+        last.page == _referencePage() &&
         last.protectedCategory == category) {
       return;
     }
@@ -405,6 +444,7 @@ class RecorderController {
     final last = _steps.lastOrNull;
     if (last != null &&
         last.kind == StepKind.unrecorded &&
+        last.page == _referencePage(surface: known?.id) &&
         last.surface == known?.id) {
       return;
     }
@@ -447,6 +487,23 @@ class RecorderController {
   int _elapsed() => max(0, _clock() - _startMs);
 
   bool _append(RecordedStep step) {
+    final attemptPage = step.kind == StepKind.observation
+        ? _steps.where((s) => s.isAttempt && s.op == step.op).firstOrNull?.page
+        : null;
+    final page =
+        attemptPage ??
+        _referencePage(
+          action: step.action,
+          surface: step.surface,
+          target: step.target,
+          page: step.page,
+        );
+    if (page == null) {
+      _end(RecordingEndReason.referenceMissing);
+      return false;
+    }
+    _page ??= page;
+    step = step.renumbered(step.seq, page: page);
     if (_steps.length >= limits.maxSteps ||
         step.elapsedMs > limits.maxDuration.inMilliseconds) {
       _end(RecordingEndReason.limitReached);
@@ -462,101 +519,6 @@ class RecorderController {
     _enqueue((w) => w.step(step));
     _emit();
     return true;
-  }
-
-  void _enqueue(Future<void> Function(RecordingWriter) write) {
-    final writer = _writer;
-    if (writer == null || _writeFailed) return;
-    if (_queued >= limits.maxQueuedWrites) {
-      _writeFailed = true;
-      TraceLogger.instance.warn(
-        'recorder',
-        'write queue full; recording stopped',
-      );
-      _end(RecordingEndReason.storageFailed);
-      return;
-    }
-    _queued++;
-    _chain = _chain.then((_) async {
-      // After one failed write, nothing more goes to that recording: a
-      // later line after a missing one would read as a sound file.
-      if (identical(writer, _failedWriter)) {
-        if (identical(writer, _writer)) _queued--;
-        return;
-      }
-      try {
-        await write(writer);
-      } catch (e, st) {
-        TraceLogger.instance.warn(
-          'recorder',
-          'write failed (${e.runtimeType}); recording stopped',
-          stackTrace: st,
-        );
-        _failedWriter = writer;
-        if (identical(writer, _writer)) {
-          _writeFailed = true;
-          if (_live) {
-            _end(RecordingEndReason.storageFailed);
-          } else if (_state == RecorderState.ended) {
-            // Stopped, but the end never reached the disk: partial.
-            _endReason = RecordingEndReason.storageFailed;
-            _emit();
-          }
-        }
-      }
-      if (identical(writer, _writer)) _queued--;
-    });
-  }
-
-  void _end(RecordingEndReason reason) {
-    if (!_live) return;
-    final last = _segments.removeLast();
-    _segments.add(last.endMs == null ? last.closedAt(_elapsed()) : last);
-    final closed = _segments.last;
-    _endReason = reason;
-    _state = RecorderState.ended;
-    if (!_writeFailed) {
-      _enqueue((w) => w.segment(closed));
-      final completeness = completenessOf(reason, _steps);
-      _enqueue((w) => w.end(reason, completeness));
-    }
-    _emit();
-  }
-
-  Future<void> _drain() async {
-    try {
-      await _chain;
-    } catch (e, st) {
-      TraceLogger.instance.warn(
-        'recorder',
-        'drain failed (${e.runtimeType})',
-        stackTrace: st,
-      );
-    }
-  }
-
-  void _guard(void Function() body) {
-    try {
-      body();
-    } catch (e, st) {
-      // The recorder failing is never the task failing.
-      TraceLogger.instance.warn(
-        'recorder',
-        'observation failed (${e.runtimeType}); recording stopped',
-        stackTrace: st,
-      );
-      _writeFailed = true;
-      try {
-        _end(RecordingEndReason.storageFailed);
-      } catch (e, st) {
-        TraceLogger.instance.warn(
-          'recorder',
-          'could not end the recording (${e.runtimeType})',
-          stackTrace: st,
-        );
-        _state = RecorderState.ended;
-      }
-    }
   }
 
   void _emit() {

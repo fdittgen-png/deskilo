@@ -33,6 +33,7 @@ import '../../domain/stored_guide.dart';
 import '../../domain/stored_recording.dart';
 import '../../guide/builtin_guides.dart';
 import '../../guide/guide_codec.dart';
+import '../../guide/guide_destination.dart';
 import '../../guide/guide_compiler.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
@@ -211,7 +212,9 @@ Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
           ListTile(
             key: const ValueKey('task-wizard-add-from-recording'),
             leading: const Icon(Icons.list_alt),
-            title: Text(l10n?.taskWizardFromRecording ?? 'From one of my recordings'),
+            title: Text(
+              l10n?.taskWizardFromRecording ?? 'From one of my recordings',
+            ),
             subtitle: Text(
               l10n?.taskWizardFromRecordingHint ??
                   'Pick a recording; it becomes a guide at once.',
@@ -221,7 +224,9 @@ Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
           ListTile(
             key: const ValueKey('task-wizard-add-from-file'),
             leading: const Icon(Icons.inventory_2_outlined),
-            title: Text(l10n?.taskWizardFromFile ?? 'From a task file or package'),
+            title: Text(
+              l10n?.taskWizardFromFile ?? 'From a task file or package',
+            ),
             subtitle: Text(
               l10n?.taskWizardFromFileHint ??
                   'A recording, a task package or a guide file from '
@@ -277,7 +282,8 @@ Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
               key: ValueKey('task-wizard-pick-${r.id}'),
               leading: const Icon(Icons.list_alt),
               title: Text(
-                r.recording!.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task'),
+                r.recording!.title ??
+                    (l10n?.taskRecorderUntitled ?? 'Untitled task'),
               ),
               subtitle: Text(
                 l10n?.taskRecorderStepCount(r.recording!.steps.length) ??
@@ -325,7 +331,11 @@ Future<void> _makeGuide(
       ),
     );
   } on Object catch (e, st) {
-    TraceLogger.instance.warn('recorder', 'guide not made (${e.runtimeType})', stackTrace: st);
+    TraceLogger.instance.warn(
+      'recorder',
+      'guide not made (${e.runtimeType})',
+      stackTrace: st,
+    );
     if (!context.mounted) return;
     AppSnack.error(
       context,
@@ -371,7 +381,11 @@ Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
       }
     }
   } on Object catch (e, st) {
-    TraceLogger.instance.warn('recorder', 'task file not read (${e.runtimeType})', stackTrace: st);
+    TraceLogger.instance.warn(
+      'recorder',
+      'task file not read (${e.runtimeType})',
+      stackTrace: st,
+    );
     refusal = WorkbenchRefusal.unsupported;
   }
   if (!context.mounted) return;
@@ -410,14 +424,11 @@ class _MyGuides extends ConsumerWidget {
       return EmptyState(
         key: const ValueKey('task-wizard-no-guides'),
         icon: Icons.route_outlined,
-        title: l10n?.taskWizardNoGuides ??
-            'No guide of your own yet. Add one from a recording or a task file.',
+        title: l10n?.taskWizardNoGuides ?? 'No guide of your own yet. Add one from a recording or a task file.',
       );
     }
     return Column(
-      children: [
-        for (final stored in guides) _GuideTile(stored: stored),
-      ],
+      children: [for (final stored in guides) _GuideTile(stored: stored)],
     );
   }
 }
@@ -447,7 +458,12 @@ class _GuideTile extends ConsumerWidget {
         children: [
           FilledButton(
             key: ValueKey('task-wizard-start-${stored.id}'),
-            onPressed: () => _start(context, ref, guide),
+            onPressed: () =>
+                guide.steps.any(
+                  (step) => guideStepRoute(guide.steps, step) == null,
+                )
+                ? _edit(context, ref)
+                : _start(context, ref, guide),
             child: Text(l10n?.guideStart ?? 'Start the guide'),
           ),
           PopupMenuButton<String>(
@@ -476,7 +492,8 @@ class _GuideTile extends ConsumerWidget {
   Future<void> _edit(BuildContext context, WidgetRef ref) async {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => GuideDraftScreen(guide: stored.guide, libraryId: stored.id),
+        builder: (_) =>
+            GuideDraftScreen(guide: stored.guide, libraryId: stored.id),
       ),
     );
     ref.invalidate(myGuidesProvider);
@@ -526,7 +543,8 @@ class _Recordings extends ConsumerWidget {
       return EmptyState(
         key: const ValueKey('task-wizard-no-recordings'),
         icon: Icons.history,
-        title: l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
+        title:
+            l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
       );
     }
     return Column(
@@ -535,9 +553,12 @@ class _Recordings extends ConsumerWidget {
           ListTile(
             key: ValueKey('task-wizard-recording-${stored.id}'),
             contentPadding: EdgeInsets.zero,
-            leading: Icon(stored.recording == null ? Icons.error_outline : Icons.list_alt),
+            leading: Icon(
+              stored.recording == null ? Icons.error_outline : Icons.list_alt,
+            ),
             title: Text(
-              stored.recording?.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task'),
+              stored.recording?.title ??
+                  (l10n?.taskRecorderUntitled ?? 'Untitled task'),
             ),
             subtitle: Text(
               stored.recording == null

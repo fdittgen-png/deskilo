@@ -57,5 +57,6 @@ TaskRecording editedCopy(
     steps: kept,
     endReason: source.endReason,
     completeness: source.completeness,
+    capturesValues: source.capturesValues,
   );
 }

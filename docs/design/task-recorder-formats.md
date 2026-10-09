@@ -7,9 +7,9 @@ a token, a request id or a value somebody typed.
 
 | File | Format id | Version | Reader |
 |---|---|---|---|
-| `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 1, or 2 when it captures values | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
+| `*.json` (a recording) | `deskilo.task-recording` | `schema_version` 3 (reads 1 and 2) | `lib/features/task_recorder/domain/task_recording_codec.dart` (`decodeRecording`) |
 | `*.deskilo-task.zip` (a task package) | `deskilo.task-package` | `package_version` 1, or 2 with a storyboard | `lib/features/task_recorder/package/task_package.dart` (`readTaskPackage`) |
-| `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 2 (reads 1) | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
+| `deskilo-guide.json` (a guide draft) | `deskilo.task-guide` | `schema_version` 3 (reads 1 and 2) | `lib/features/task_recorder/guide/guide_codec.dart` (`decodeGuideText`) |
 
 ## The recording
 
@@ -32,12 +32,28 @@ Unknown keys are refused anywhere. A step naming an action this build
 does not know is kept as an `unrecorded` step without payload, and the
 recording reads as a transcript only (not runnable).
 
-### Values (schema 2, opt-in)
+### Form references (schema 3)
+
+Every newly captured step has a `page`: a registered static route or one of the
+four `/me?tab=…` destinations. A control's `target` is additional to its page.
+Notes, gaps, protected-screen markers and results also carry a page. A delayed
+result keeps the page of its command; a navigating click keeps its source page.
+References survive storage, export and editing even if navigation steps are
+removed. If the recorder cannot identify the form, it ends with
+`reference_missing` and a visible explanation before saving an unlinked step.
+Schema-3 imports with missing or invalid page references are refused.
+
+Legacy schema-1 and schema-2 recordings remain readable. Their compiled guides
+must resolve every destination from known context or be repaired in the editor
+before playback. Private record IDs are never exported: record-specific route
+patterns resolve to the corresponding selection page.
+
+### Values (since schema 2, opt-in)
 
 A recording keeps no value by default: a field change says which field,
 never what was typed. A person may start a recording with **Capture values
 (for issue reports)** — a switch on the start screen, off every time, never
-remembered. Such a recording is written as `schema_version` 2 with
+remembered. Such a recording is written with
 `"values_mode": "captured"`, and its action steps may carry `values`: a map
 of short names to **typed** values (`domain/step_values.dart`):
 
@@ -58,7 +74,7 @@ name) — it is recorded as `redacted` with only its length. A file cannot
 carry more than the recorder would have kept: `values` without
 `values_mode`, `values_mode` in a schema-1 file, a value of another shape, or
 more than 16 entries per step is refused (`unsafePayload` / `inconsistent`).
-An older build refuses a schema-2 file by design. Saving or sharing a
+An older build refuses a newer schema by design. Saving or sharing a
 recording that holds values asks for a confirmation first; the readable
 transcript and the Word document list the values. See ADR 0037.
 
@@ -111,6 +127,28 @@ Steps are `instruction`, `perform` (a registered action; for a command,
 command step may carry one level of `recovery` steps. There are no
 jumps, loops, expressions or scripts. Limits (`GuideLimits`): 100 steps,
 5 recovery steps, 500 characters of text, 256 KiB.
+
+Schema 3 adds an optional `destination` to every kind of guide step, including
+instructions, manual steps and recovery. It is a registered parameter-free
+page or one of the four `/me?tab=…` destinations. The validator rejects external
+URLs, arbitrary query parameters and record IDs. Compilation carries each
+recorded step's explicit page, including its Me tab. Existing guides derive their page from their
+preceding navigation or registered screen action. Record-specific routes open
+the appropriate selection page, because exports do not store private IDs.
+
+The draft editor lets authors change each destination and preview that step on
+the live form. Starting a draft with missing destinations keeps it in the editor;
+a library guide that needs destinations opens there for repair. The session
+also refuses unresolved main or recovery steps at its start boundary. Window
+open/close observations stay in the recording but are not standalone guide
+instructions; the initiating control is the useful step. On the live
+guide, **Open & highlight** remains available on the destination page and after
+leaving it. It navigates between Me and Workspace, scrolls a mounted control into
+view and repeats its highlight. **All steps** links to individual steps without
+marking intervening work done. In-flight commands keep their current step until
+the answer arrives. Dialogs and controls requiring a prior choice are opened by
+following those preceding steps; a link never submits a form or invents a record.
+Switching the active account or workspace still pauses the guide.
 
 ## Versioning
 

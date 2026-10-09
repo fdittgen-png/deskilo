@@ -263,6 +263,8 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
       RecordingEndReason.storageFailed =>
         l10n?.taskRecorderEndStorageFailed ??
             'Ended: it could not be saved on this device',
+      RecordingEndReason.referenceMissing =>
+        l10n?.taskRecorderEndReferenceMissing ?? 'Stopped: the current form could not be identified. Open a supported page and start again.',
       RecordingEndReason.interrupted || null =>
         l10n?.taskRecorderEndInterrupted ??
             'Interrupted: the app stopped while recording',

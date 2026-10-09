@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../../core/l10n/lexicon.dart';
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -770,6 +769,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.xs),
                 child: WindowControls(
+                  key: const ValueKey('reserve-window-controls'),
                   keyPrefix: 'reserve',
                   granularity: granularity,
                   day: _selectedDay,

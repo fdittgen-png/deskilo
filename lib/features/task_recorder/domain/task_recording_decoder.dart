@@ -4,42 +4,6 @@
 // untrusted recording must satisfy before it becomes a TaskRecording.
 part of 'task_recording_codec.dart';
 
-const _rootKeys = {
-  'format',
-  'schema_version',
-  'action_contract_version',
-  'platform',
-  'kind',
-  'source_digest',
-  'title',
-  'values_mode',
-  'prerequisites',
-  'segments',
-  'steps',
-  'end_reason',
-  'completeness',
-};
-
-const _stepKeys = {
-  'seq',
-  'segment',
-  'elapsed_ms',
-  'kind',
-  'surface',
-  'action',
-  'action_version',
-  'target',
-  'payload',
-  'values',
-  'op',
-  'state',
-  'outcome',
-  'note',
-  'protected',
-  'origin',
-  'source_seq',
-};
-
 typedef _Build = RecordedStep Function({
   StepKind? as,
   String? surface,
@@ -70,6 +34,7 @@ class _Decoder {
 
   // Whether the file says it captures values (its header decides, before any step).
   bool _captures = false;
+  int _schema = 1;
 
   bool get _failed => issues.any((i) => i.fatal);
 
@@ -129,6 +94,7 @@ class _Decoder {
       return _refused();
     }
     final schema = json['schema_version'];
+    if (schema is int) _schema = schema;
     if (schema is! int || schema < 1 || schema > taskRecordingSchemaVersion) {
       _fatal(RecordingIssueCode.unsupportedSchema, 'schema_version');
       return _refused();
@@ -333,6 +299,12 @@ class _Decoder {
       '$path.elapsed_ms',
       max: limits.maxDuration.inMilliseconds,
     );
+    final page = raw['page'];
+    if ((_schema >= 3 && page == null) ||
+        (page != null &&
+            (_schema < 3 || page is! String || !isGuideDestination(page)))) {
+      _fatal(RecordingIssueCode.badValue, '$path.page');
+    }
     final kind = StepKind.fromWire(raw['kind']);
     if (kind == null) _fatal(RecordingIssueCode.badValue, '$path.kind');
     final origin = raw['origin'] == null
@@ -370,6 +342,7 @@ class _Decoder {
       action: action,
       actionVersion: actionVersion,
       target: target,
+      page: page as String?,
       payload: payload,
       values: values,
       op: op,
@@ -425,6 +398,7 @@ class _Decoder {
   }
 
   static const _alwaysAllowed = {
+    'page',
     'seq',
     'segment',
     'elapsed_ms',
@@ -450,6 +424,7 @@ class _Decoder {
       'action',
       'action_version',
       'target',
+      'page',
       'payload',
       'values',
       'op',
