@@ -7,6 +7,9 @@
 // switcher, always; nowhere else. Not the app bar of every screen —
 // that is where this kind of feature goes to die — and not the boot
 // splash, whose own comment says boot must not wait on a logo.
+// #2313 adds one place: the curtain that plays while a person opens the
+// space from Me (space_entry.dart), and only with the logo already
+// loaded — the entry never waits for it.
 //
 // Absent, still loading, too slow, undecodable: the app renders exactly
 // as it did before emblems existed. That is the first test, not an

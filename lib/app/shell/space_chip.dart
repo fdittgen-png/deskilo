@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
+import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -24,7 +25,24 @@ class SpaceChip extends ConsumerWidget {
       key: const ValueKey('space-chip'),
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (space != null) WorkspaceAvatar(workspace: space, radius: 16),
+        if (space != null)
+          switch (spaceBrand(space)) {
+            // #2313 — a ring in the space's colour and pattern.
+            final brand? => SizedBox.square(
+              key: const ValueKey('space-chip-brand'),
+              dimension: 38,
+              child: ClipOval(
+                child: BrandSwatch(
+                  color: brand.color,
+                  pattern: brand.pattern,
+                  child: Center(
+                    child: WorkspaceAvatar(workspace: space, radius: 16),
+                  ),
+                ),
+              ),
+            ),
+            null => WorkspaceAvatar(workspace: space, radius: 16),
+          },
         const SizedBox(width: AppSpacing.sm),
         Flexible(
           child: Column(

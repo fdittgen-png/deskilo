@@ -2759,6 +2759,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get coloursLight => 'Chiaro';
 
   @override
+  String get coloursLogoHint =>
+      'Il tuo logo appare anche mentre qualcuno apre questo spazio.';
+
+  @override
   String coloursMalformed(String text) {
     return '$text non è un colore: scrivetelo come #RRGGBB.';
   }
@@ -2766,6 +2770,31 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get coloursNeverTheirs =>
       'Il marchio DesKilo, i colori degli stati dei posti e il banner di produzione sono del prodotto, in ogni spazio.';
+
+  @override
+  String get coloursPatternDots => 'Pois';
+
+  @override
+  String get coloursPatternGrid => 'Griglia';
+
+  @override
+  String get coloursPatternHint =>
+      'Come il tuo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.';
+
+  @override
+  String get coloursPatternSaved => 'Motivo salvato.';
+
+  @override
+  String get coloursPatternSolid => 'Tinta unita';
+
+  @override
+  String get coloursPatternStripes => 'Righe';
+
+  @override
+  String get coloursPatternTitle => 'Motivo';
+
+  @override
+  String get coloursPatternWaves => 'Onde';
 
   @override
   String get coloursPreview => 'Come appare';

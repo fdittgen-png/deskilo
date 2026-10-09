@@ -192,5 +192,41 @@
   "symbolTaken": "Another workspace already uses these letters in this colour. Choose another colour or letters — or use a photo instead.",
   "@symbolTaken": {
     "description": "workspace symbol"
+  },
+  "coloursPatternTitle": "Pattern",
+  "@coloursPatternTitle": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternHint": "How your colour is drawn on this space’s card in Me, on its chip and while it opens, so people tell it apart from their other spaces.",
+  "@coloursPatternHint": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternSolid": "Plain",
+  "@coloursPatternSolid": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternStripes": "Stripes",
+  "@coloursPatternStripes": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternDots": "Dots",
+  "@coloursPatternDots": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternGrid": "Grid",
+  "@coloursPatternGrid": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternWaves": "Waves",
+  "@coloursPatternWaves": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursPatternSaved": "Pattern saved.",
+  "@coloursPatternSaved": {
+    "description": "#2313 colours screen: the brand pattern / logo"
+  },
+  "coloursLogoHint": "Your logo is also shown while someone opens this space.",
+  "@coloursLogoHint": {
+    "description": "#2313 colours screen: the brand pattern / logo"
   }
 }

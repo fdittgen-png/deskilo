@@ -18,8 +18,10 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
+import '../widgets/pattern_picker.dart';
 import '../widgets/office_palette_editor.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/emblem_editor.dart';
@@ -150,6 +152,31 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     }
   }
 
+  /// #2313 — the pattern the colour is drawn in where the space is told
+  /// apart from the others.
+  Future<void> _savePattern(BrandPattern pattern) async {
+    final l10n = AppLocalizations.of(context);
+    final colours = ref.read(workspaceColoursProvider);
+    final workspace = await ref.read(currentWorkspaceProvider.future);
+    if (workspace == null || !mounted) return;
+    setState(() => _busy = true);
+    final ok = await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace pattern save failed',
+      errorText: (l10n ?? AppLocalizationsEn()).coloursSaveFailed,
+      action: () => colours.choosePattern(
+        workspaceId: workspace.id,
+        pattern: pattern == BrandPattern.solid ? null : pattern,
+      ),
+    );
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (!ok) return;
+    ref.invalidate(myWorkspacesProvider);
+    AppSnack.success(context, (l10n ?? AppLocalizationsEn()).coloursPatternSaved);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -247,6 +274,16 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
+          PatternPicker(
+            key: const ValueKey('colours-pattern'),
+            color: Color(
+              stored.seedArgb ?? Theme.of(context).colorScheme.primary.toARGB32(),
+            ),
+            selected: stored.pattern,
+            busy: _busy,
+            onPick: _savePattern,
+          ),
+          const SizedBox(height: AppSpacing.lg),
           OfficePaletteEditor(
             fills: fills,
             busy: _busy,
@@ -259,6 +296,11 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             SymbolEditor(workspaceId: workspace.id),
             const SizedBox(height: AppSpacing.lg),
             EmblemEditor(workspaceId: workspace.id),
+            Text(
+              (l10n ?? AppLocalizationsEn()).coloursLogoHint,
+              key: const ValueKey('colours-logo-hint'),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ],
           const SizedBox(height: AppSpacing.md),
           Text(
