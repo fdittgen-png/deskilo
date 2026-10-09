@@ -1,0 +1,4 @@
+{
+  "uxAttentionSummary": "{updates} nouveautés · {pending} décisions en attente",
+  "@uxAttentionSummary": {"placeholders": {"updates": {"type": "int"}, "pending": {"type": "int"}}}
+}

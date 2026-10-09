@@ -20,6 +20,7 @@ import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../../features/events/providers/attention_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import 'shell_destinations.dart';
@@ -77,6 +78,7 @@ class ShellDrawer extends ConsumerWidget {
     final theme = Theme.of(context);
     final path = GoRouterState.of(context).uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);
+    final attention = ref.watch(workspaceAttentionProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     // #2137 — each entry asks the permission its route asks, so a member
     // given it through a role finds the way there.
@@ -215,12 +217,10 @@ class ShellDrawer extends ConsumerWidget {
           // Every badge opens the content it counts (#1306 S3): the events
           // entry while the bell is on, the Calendar entry when the
           // calendar carries the decisions instead.
-          trailing: pendingEvents > 0 &&
-                  (e.key == 'drawer-events' ||
-                      (e.key == 'drawer-tab-${ShellBranch.calendar}' &&
-                          decisionSignalOnCalendar(features)))
-              ? Badge.count(count: pendingEvents)
-              : null,
+          trailing: e.key == 'drawer-events' && attention.total > 0
+              ? Badge.count(count: attention.total, maxCount: 99)
+              : pendingEvents > 0 && e.key == 'drawer-tab-${ShellBranch.calendar}' &&
+                  decisionSignalOnCalendar(features) ? Badge.count(count: pendingEvents, maxCount: 99) : null,
           onTap: e.onTap,
         );
 

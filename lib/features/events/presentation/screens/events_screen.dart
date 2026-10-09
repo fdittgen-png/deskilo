@@ -23,6 +23,7 @@ import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../../workspace/presentation/screens/inbox_screen.dart';
 import '../../providers/event_providers.dart';
+import '../../providers/attention_providers.dart';
 import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
@@ -65,10 +66,16 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   bool _seenThisShowing = false;
 
   /// Called from build: the face marks seen the first frame it SHOWS.
-  void _followTab() => ref.listen(inboxTabControllerProvider, (_, _) {
+  void _followTab() {
+    ref.listen(inboxTabControllerProvider, (_, _) {
         WidgetsBinding.instance
             .addPostFrameCallback((_) => _markSeenIfShowing());
       });
+    ref.listen(attentionScopeProvider, (_, _) {
+      _seenThisShowing = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
+    });
+  }
 
   void _markSeenIfShowing() {
     if (!mounted) return;
@@ -76,10 +83,12 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       _seenThisShowing = false;
       return;
     }
-    if (_seenThisShowing) return;
+    final scope = ref.read(attentionScopeProvider);
+    if (scope == null || _seenThisShowing) return;
     _seenThisShowing = true;
     ref.read(unreadNoteCountProvider.notifier).markAllSeen();
     ref.read(eventsSeenCutoffProvider.notifier).markOpened();
+    ref.read(updatesSeenProvider(scope).notifier).markOpened();
   }
 
 
@@ -262,7 +271,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     // "new" events are measured against.
     final filter = ref.watch(notificationFilterProvider).value ??
         const NotificationFilterState();
-    final seenBefore = ref.watch(eventsSeenCutoffProvider).value;
+    final scope = ref.watch(attentionScopeProvider);
+    final seenBefore = scope == null ? ref.watch(eventsSeenCutoffProvider).value
+        : ref.watch(updatesSeenProvider(scope)).value?.visitCutoff;
     final unreadOnly = filter.read == ReadFilter.unread;
     // #598 — the regrouping axis; the flag OFF forces the flat list
     // even when an older persisted choice still says otherwise.

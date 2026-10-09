@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/presentation/screens/events_screen.dart';
 import '../../domain/workspace_feature.dart';
-import '../../../events/providers/event_providers.dart';
-import '../../providers/conversation_providers.dart';
+import '../../../events/providers/attention_providers.dart';
+import '../../../directory/providers/messenger_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../../../directory/presentation/messenger/space_inquiries_screen.dart';
 import '../widgets/application_requests_entry.dart';
@@ -95,7 +96,8 @@ class _AlertsHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final features = ref.watch(enabledFeaturesSyncProvider);
-    final pending = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final attention = ref.watch(workspaceAttentionProvider);
+    final pending = attention.total;
     final label = features.contains(WorkspaceFeature.messagesHub)
         ? (l10n?.inboxAlertsTab ?? 'Alerts')
         : (l10n?.tabEvents ?? 'Events');
@@ -115,7 +117,8 @@ class _AlertsHeader extends ConsumerWidget {
           ),
           if (pending > 0) ...[
             const SizedBox(width: 8),
-            Badge.count(count: pending),
+            Tooltip(message: (l10n ?? AppLocalizationsEn()).uxAttentionSummary(attention.updates, attention.pending),
+                child: Badge.count(count: pending, maxCount: 99)),
           ],
         ],
       ),
@@ -133,7 +136,8 @@ class _TopRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final unread = ref.watch(unreadMessagesProvider);
+    final inbox = ref.watch(unifiedInboxProvider);
+    final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Wrap(
@@ -147,6 +151,7 @@ class _TopRow extends ConsumerWidget {
             icon: unread > 0
                 ? Badge.count(
                     count: unread,
+                    maxCount: 99,
                     child: const Icon(Icons.forum_outlined),
                   )
                 : const Icon(Icons.forum_outlined),

@@ -17856,6 +17856,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxAdvancedSection => 'Advanced';
 
   @override
+  String uxAttentionSummary(int updates, int pending) {
+    return '$updates new updates · $pending awaiting your decision';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.';
 

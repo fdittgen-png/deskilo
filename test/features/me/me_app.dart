@@ -59,6 +59,7 @@ Future<GoRouter> pumpMeApp(
   FakeAccountActivityRepository? accountActivity,
   List<ConnectedInstallation> connectedSources = const [],
   IdentityConnector? identityConnector,
+  FakeMessengerRepository? messenger,
   Size size = const Size(800, 1600),
 }) async {
   tester.view.physicalSize = size;
@@ -75,6 +76,7 @@ Future<GoRouter> pumpMeApp(
         accountActivity: accountActivity,
         connectedSources: connectedSources,
         identityConnector: identityConnector,
+        messenger: messenger,
       ),
       child: const DeskiloApp(),
     ),

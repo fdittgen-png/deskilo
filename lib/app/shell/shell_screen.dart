@@ -22,6 +22,7 @@ import '../../core/time/work_hours.dart';
 import '../../core/i18n/workspace_currency.dart';
 import '../../core/time/workspace_time.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/events/providers/attention_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/presentation/widgets/space_scan.dart';
@@ -32,6 +33,7 @@ import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_en.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer.dart';
@@ -291,6 +293,7 @@ class ShellScreen extends ConsumerWidget {
     // different kinds of "something needs you" told nobody which.
     final unreadMessages = ref.watch(unreadMessagesProvider);
     final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
+    final attention = ref.watch(workspaceAttentionProvider);
     final calendarBadge =
         decisionSignalOnCalendar(features) ? pendingEvents : 0;
     // #1306 — the one destination list the drawer renders too.
@@ -408,13 +411,14 @@ class ShellScreen extends ConsumerWidget {
           if (features.contains(WorkspaceFeature.eventsTab))
             IconButton(
               key: const ValueKey('shell-events-bell'),
-              icon: pendingEvents == 0
+              icon: attention.total == 0
                   ? const Icon(Icons.inbox_outlined)
                   : Badge.count(
-                      count: pendingEvents,
+                      count: attention.total,
+                      maxCount: 99,
                       child: const Icon(Icons.inbox_outlined),
                     ),
-              tooltip: lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events'),
+              tooltip: '${lexiconText(context, key: 'tabEvents', fallback: l10n?.tabEvents ?? 'Events')} — ${(l10n ?? AppLocalizationsEn()).uxAttentionSummary(attention.updates, attention.pending)}',
               // The /events path lands on the alerts (the calendar's Alerts
               // view when the hub holds them).
               onPressed: () => context.go('/events'),
