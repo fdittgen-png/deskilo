@@ -6359,18 +6359,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Set the open weekdays and working hours, and add closure days nobody can book.';
 
   @override
-  String get helpHintAvailabilityTip2 =>
-      'The booking granularity decides what a window may look like: half-days, full days, minute grids or free times.';
-
-  @override
-  String get helpHintAvailabilityTip3 =>
-      'Day start, half-day boundary and day end drive every half-day and full-day slot — booking, check-in and billing follow them.';
-
-  @override
-  String get helpHintAvailabilityTip4 =>
-      'Three booking policies tighten or relax the rules: past bookings, minute bookings kept within working hours, and admin check-out.';
-
-  @override
   String get helpHintAvailabilityTopic => 'Availability';
 
   @override
@@ -6378,45 +6366,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Issue a printable QR badge or register an NFC card; revoke lost badges any time.';
 
   @override
-  String get helpHintBadgesTip2 =>
-      'Register a card by holding it to the device — any readable chip works, and the dialog names the workspace it joins.';
-
-  @override
-  String get helpHintBadgesTip3 =>
-      'Save a QR badge as PDF to print ten credit-card copies on one A4 page — spares included.';
-
-  @override
-  String get helpHintBadgesTip4 =>
-      'Revoke a lost badge any time; swipe a revoked badge to the right to delete it for good.';
-
-  @override
   String get helpHintBadgesTopic => 'NFC badges';
 
   @override
   String get helpHintCalendar =>
       'Pick a day or a range: everything dated that you may see, in one list, each row opening its source.';
-
-  @override
-  String get helpHintCalendarTip2 =>
-      'Switch Day to Range to see a whole week or month at once — the arrows step by the size of your selection.';
-
-  @override
-  String get helpHintCalendarTip3 =>
-      'Tap a kind chip to see only that: bookings, alerts, messages, invoices, payments, consumption, reminders.';
-
-  @override
-  String get helpHintCalendarTip4 =>
-      'Every row opens its source — the booking, the conversation, the alert, the invoice, or that month on Finances.';
-
-  @override
-  String get helpHintCalendarTip4Topic => 'How booking behaves';
-
-  @override
-  String get helpHintCalendarTip5 =>
-      'The shield shows who can see each kind, and who actually looked at your finances.';
-
-  @override
-  String get helpHintCalendarTip5Topic => 'Privacy';
 
   @override
   String get helpHintCalendarTopic => 'Calendar';
@@ -6429,25 +6383,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.';
 
   @override
-  String get helpHintEditorTip2 =>
-      'Pick Office or Table in the toolbar and drag on the grid to draw it; Select moves and resizes what is already there.';
-
-  @override
-  String get helpHintEditorTip3 =>
-      'The Seat tool stamps seats onto desks; a seat\'s sheet sets its direction, chair type, accessories and a maintenance block.';
-
-  @override
-  String get helpHintEditorTip4 =>
-      'Give a seat its NFC/RFID tag from the seat sheet — tap the chip on the phone and the field fills itself.';
-
-  @override
-  String get helpHintEditorTip5 =>
-      'Print a QR card for every seat, desk, office and level — pick the card size and what each card shows before exporting.';
-
-  @override
-  String get helpHintEditorTip5Topic => 'Space QR codes';
-
-  @override
   String get helpHintEditorTopic => 'space editor';
 
   @override
@@ -6455,35 +6390,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.';
 
   @override
-  String get helpHintEventsTip2 =>
-      'The filter chips remember your choice across visits — and the Unread chip narrows the list to unread messages.';
-
-  @override
-  String get helpHintEventsTip3 =>
-      'Group the feed by type, day or member from the Group by menu; tap the group symbol to return to the flat list.';
-
-  @override
-  String get helpHintEventsTip4 =>
-      'Pending decisions sit pinned on top with Accept and reject — and nobody ever validates their own event.';
-
-  @override
   String get helpHintEventsTopic => 'confirmations';
 
   @override
   String get helpHintFeatures =>
       'Switch workspace functionality on or off — every member\'s app follows immediately.';
-
-  @override
-  String get helpHintFeaturesTip2 =>
-      'The list is hierarchical — a feature that needs another sits indented under it and greys out while its parent is off.';
-
-  @override
-  String get helpHintFeaturesTip3 =>
-      'Switching a parent off takes its whole subtree out of the app; the children\'s stored choices return untouched with the parent.';
-
-  @override
-  String get helpHintFeaturesTip4 =>
-      'A feature\'s settings entry only appears while the feature is on — the Features screen itself always stays reachable.';
 
   @override
   String get helpHintFeaturesTopic => 'Features';
@@ -6496,26 +6407,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Invite members, set their plan percentage and role, and manage their badges.';
 
   @override
-  String get helpHintMembersTip2 =>
-      'Tap a member for their management sheet — subscription, reservation limit, badges, services and more in one place.';
-
-  @override
-  String get helpHintMembersTip3 =>
-      'Badges live per member: mint a printable QR badge, or register their NFC card by holding it to the device.';
-
-  @override
-  String get helpHintMembersTip3Topic => 'NFC badges';
-
-  @override
-  String get helpHintMembersTip4 =>
-      'Name admin grants admin rights after validation; the role matrix under Role management decides what every role may do.';
-
-  @override
   String get helpHintMembersTip4Topic => 'Role management';
-
-  @override
-  String get helpHintMembersTipNegotiation =>
-      'A member\'s own prices: open their sheet → Price negotiation, set the fee, overage or discount you agreed, and the rule\'s validators confirm it.';
 
   @override
   String get helpHintMembersTipNegotiationTopic => 'Price negotiations';
@@ -6555,19 +6447,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.';
 
   @override
-  String get helpHintMoneyDocumentsTip3 =>
-      'My conditions is your standing financial agreement — plan, rate, extras — rendered as a document you can keep.';
-
-  @override
   String get helpHintMoneyDocumentsTopic => 'The Documents face';
 
   @override
   String get helpHintMoneyInvoices =>
       'Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.';
-
-  @override
-  String get helpHintMoneyInvoicesTip2 =>
-      'Past the workspace\'s payment term an open invoice reads overdue here, and the reminder levels the owner configured arrive by themselves — in your feed and as a push.';
 
   @override
   String get helpHintMoneyInvoicesTip2Topic => 'Automatic payment reminders';
@@ -6580,19 +6464,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.';
 
   @override
-  String get helpHintMoneyPaymentsTip2 =>
-      'Record a payment with the date the money moved and the month it settles — the other side confirms it.';
-
-  @override
-  String get helpHintMoneyPaymentsTip3 =>
-      'Pay online settles what is owed right away; the instructions card shows the manual way with the reference to quote.';
-
-  @override
   String get helpHintMoneyPaymentsTip3Topic => 'online payments';
-
-  @override
-  String get helpHintMoneyPaymentsTipSupply =>
-      'Bought capsules or vacuum bags for the space? Submit the expense as a supply: validated, it goes on the shelf as a consumable that others pay for, and you are reimbursed.';
 
   @override
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services and Accessories';
@@ -6605,43 +6477,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.';
 
   @override
-  String get helpHintMoneyStatementTip2 =>
-      'A booked morning counts as half a day; days outside the opening hours follow the workspace\'s outside-hours policy.';
-
-  @override
-  String get helpHintMoneyStatementTip2Topic => 'How booking behaves';
-
-  @override
-  String get helpHintMoneyStatementTip3 =>
-      'Out of days? Request extra half-days, buy a package, or keep booking pay-as-you-go — whichever your plan allows.';
-
-  @override
-  String get helpHintMoneyStatementTipNegotiation =>
-      'Your negotiated prices are in Documents, beside your agreement. The card compares them with the tariff and explains who can see them; other people’s views are recorded.';
-
-  @override
-  String get helpHintMoneyStatementTipNegotiationTopic => 'Price negotiations';
-
-  @override
   String get helpHintMoneyStatementTopic => 'The Statement face';
-
-  @override
-  String get helpHintMoneyTip2 =>
-      'Every document offers the same three actions: quick view on screen, download as PDF, and share to any app.';
-
-  @override
-  String get helpHintMoneyTip2Topic => 'Quick view, save, share';
-
-  @override
-  String get helpHintMoneyTip3 =>
-      'Record a payment with the date the money moved and the month it settles — the other side confirms it.';
-
-  @override
-  String get helpHintMoneyTip4 =>
-      'Once the month is invoiced, the invoice decides: the month reads settled as soon as its invoice is paid.';
-
-  @override
-  String get helpHintMoneyTip4Topic => 'the invoice decides';
 
   @override
   String get helpHintMoneyTopic => 'Money';
@@ -6654,25 +6490,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The live floor plan: tap a free seat to book it, tap your own booking to check in.';
 
   @override
-  String get helpHintPlanTip2 =>
-      'Standing at a free seat? Tap it — the sheet suggests now until closing, and confirming checks you in on the spot.';
-
-  @override
-  String get helpHintPlanTip3 =>
-      'Browse another moment with the date chip and the time scroller — the plan shows who sits where at any future time.';
-
-  @override
-  String get helpHintPlanTip4 =>
-      'Double-tap a desk, a room or the floor itself — or tap the layers icon on the level rail — to reserve the whole space at once.';
-
-  @override
-  String get helpHintPlanTip5 =>
-      'Tap your own seat for its sheet: check in from 15 minutes before your start, check out when you leave.';
-
-  @override
-  String get helpHintPlanTip5Topic => 'How booking behaves';
-
-  @override
   String get helpHintPlanTopic => 'floor plan';
 
   @override
@@ -6683,14 +6500,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'See who can read your data and who did, export everything as one file, or leave with your personal data erased.';
 
   @override
-  String get helpHintPrivacyTip2 =>
-      'Messages are readable only by the people in the conversation, whatever their role; money only by you and the finance permission.';
-
-  @override
-  String get helpHintPrivacyTip3 =>
-      'Every read of your finances by someone else is logged by the server — the log cannot be skipped or edited.';
-
-  @override
   String get helpHintPrivacyTopic => 'Privacy';
 
   @override
@@ -6698,29 +6507,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Pick a day and time window, then tap a free seat to book it.';
 
   @override
-  String get helpHintReserveTip2 =>
-      'The Week and Month views find a free half-day at a glance — tap a free cell or day to book right there.';
-
-  @override
-  String get helpHintReserveTip3 =>
-      'Tap the scan button and point the camera at a space\'s QR card — the sheet shows exactly what you may do there.';
-
-  @override
-  String get helpHintReserveTip3Topic => 'Scan a space code';
-
-  @override
-  String get helpHintReserveTip4 =>
-      'The morning, afternoon and full-day chips pick your window before you choose a seat — a booked morning counts as half a day.';
-
-  @override
   String get helpHintReserveTip4Topic => 'How booking behaves';
-
-  @override
-  String get helpHintReserveTip5 =>
-      'Set your default booking period in Settings — the hub preselects it on every visit.';
-
-  @override
-  String get helpHintReserveTip5Topic => 'Settings & profile';
 
   @override
   String get helpHintReserveTopic => 'Reserve hub';
@@ -6736,41 +6523,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Decide which actions need confirmation, who confirms, and how many approvals it takes.';
 
   @override
-  String get helpHintValidationTip2 =>
-      'One card per event type, each inheriting from the default rule until you edit it — payments, expenses, role changes and more.';
-
-  @override
-  String get helpHintValidationTip3 =>
-      'Nobody ever validates their own event, and unanswered requests expire after 7 days — nothing is granted silently.';
-
-  @override
-  String get helpHintValidationTipScopes =>
-      'Who validates is the rule\'s scope: the admins, listed persons of any role, or every member — and how many. The owner always may; nobody validates their own event.';
-
-  @override
-  String get helpHintValidationTipScopesTopic => 'Role management';
-
-  @override
   String get helpHintValidationTopic => 'confirmations';
 
   @override
   String get helpHintWorkspace =>
       'Country, currency, language and billing details — documents and taxes follow these settings.';
-
-  @override
-  String get helpHintWorkspaceTip2 =>
-      'Print the space QR cards from Exports — choose the card size and the info each card carries, ten per A4 page.';
-
-  @override
-  String get helpHintWorkspaceTip2Topic => 'Space QR codes';
-
-  @override
-  String get helpHintWorkspaceTip3 =>
-      'Export the space as XML to back it up or template a new one; the setup questionnaire prefills a fresh workspace end to end.';
-
-  @override
-  String get helpHintWorkspaceTip4 =>
-      'Reset the workspace wipes reservations, accounting and the floor plan — settings and members survive, and a typed confirmation guards it.';
 
   @override
   String get helpHintWorkspaceTopic => 'Workspace settings';
@@ -17790,6 +17547,388 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadRefsIn => 'References in';
+
+  @override
+  String get tipAvailabilityClosure =>
+      'To close a day nobody can book: tap “Add closure day” and give a reason if you like.';
+
+  @override
+  String get tipAvailabilityDays =>
+      'To set the days you open: toggle the weekday chips under “Open weekdays”.';
+
+  @override
+  String get tipAvailabilityGrid =>
+      'To choose how bookings are cut: pick a “Booking granularity” — free periods, slots, half days or full days.';
+
+  @override
+  String get tipAvailabilityHolidays =>
+      'To close on public holidays: tap “Add public holidays”.';
+
+  @override
+  String get tipAvailabilityHours =>
+      'To set the working day: adjust “Day starts”, “Half-day boundary” and “Day ends”.';
+
+  @override
+  String get tipAvailabilityPolicies =>
+      'To tighten or relax the rules — past bookings, outside the opening hours, booking limits: use “Booking policies”.';
+
+  @override
+  String get tipBadgesLost =>
+      'To stop a lost badge: tap “Revoke”; swipe a revoked badge to the right to delete it.';
+
+  @override
+  String get tipBadgesNfc =>
+      'To use an NFC card: tap “Register card” and hold the card against the device.';
+
+  @override
+  String get tipBadgesQr =>
+      'To give someone a QR badge: tap “New badge”, then “Save as PDF” to print it.';
+
+  @override
+  String get tipBadgesSignIn =>
+      'To sign in with your badge: switch on “Signs me in” on your own badge.';
+
+  @override
+  String get tipCalendarAlerts =>
+      'To handle alerts and decisions waiting for you: open “Alerts”.';
+
+  @override
+  String get tipCalendarKinds =>
+      'To see one kind of item only: tap its chip — bookings, invoices, payments…; “Reset filters” shows everything again.';
+
+  @override
+  String get tipCalendarMine =>
+      'To see only your own bookings: tap “My bookings”.';
+
+  @override
+  String get tipCalendarMoney =>
+      'To see the money behind a payment: tap its row — your finances open on that payment.';
+
+  @override
+  String get tipCalendarViews =>
+      'To see a week or a month at once: tap “Week” or “Month”; “Today” brings you back.';
+
+  @override
+  String get tipEditorAccessories =>
+      'To offer accessories on seats: set them up first, then pick them in each seat’s “Properties”.';
+
+  @override
+  String get tipEditorBackground =>
+      'To draw over a real floor plan: set it under “Background image”.';
+
+  @override
+  String get tipEditorDraw =>
+      'To draw a room or a desk: pick “Office” or “Desk” in the toolbar and drag on the plan.';
+
+  @override
+  String get tipEditorLevel =>
+      'To add a floor: tap “Add level”; “Level actions” renames or deletes it.';
+
+  @override
+  String get tipEditorNfc =>
+      'To let people check in with a tag: in a seat’s “Properties”, use “NFC/RFID tag” › “Read a tag now”.';
+
+  @override
+  String get tipEditorQr =>
+      'To print QR cards for the spaces: open the workspace documents and choose “Space QR codes (PDF)”.';
+
+  @override
+  String get tipEditorSeat =>
+      'To name a seat or block it for maintenance: select it and tap “Properties”.';
+
+  @override
+  String get tipEditorSeats =>
+      'To add seats: pick the “Seat” tool and tap a desk.';
+
+  @override
+  String get tipEventsDecide =>
+      'To answer a request waiting for you: tap “Accept” or “Decline” on it — it sits on top of the feed.';
+
+  @override
+  String get tipEventsGroup =>
+      'To group the feed: open “Group by” and choose type, date or member; “Ungroup” flattens it again.';
+
+  @override
+  String get tipEventsMessages =>
+      'To answer your conversations: open your messenger.';
+
+  @override
+  String get tipEventsTopic =>
+      'To see one topic only: tap its chip — messages, reservations, check-ins, money or members.';
+
+  @override
+  String get tipEventsUnread =>
+      'To see what you have not read yet: tap “Unread”.';
+
+  @override
+  String get tipFeaturesChanged =>
+      'To see what you changed from the defaults: tap the “Changed” filter.';
+
+  @override
+  String get tipFeaturesProcess =>
+      'To start from what you want to do: choose “Processes” and search for it.';
+
+  @override
+  String get tipFeaturesRequires =>
+      'To switch on a greyed feature: first switch on the one its “Requires” line names.';
+
+  @override
+  String get tipFeaturesSwitch =>
+      'To switch one feature on or off: choose “Switches”, search it and flip its switch — every member’s app follows at once.';
+
+  @override
+  String get tipMembersApprove =>
+      'To admit someone who asked to join: open them and tap “Approve membership”.';
+
+  @override
+  String get tipMembersBadge =>
+      'To issue a badge: open the member and choose “Badges & access” › “Badges”.';
+
+  @override
+  String get tipMembersInvite =>
+      'To invite someone: share the workspace ID or its QR code — “Invite a member” opens them.';
+
+  @override
+  String get tipMembersManaged =>
+      'To add a person who has no account: “Add a managed profile”.';
+
+  @override
+  String get tipMembersNotify =>
+      'To write to every admin at once: tap “Notify all admins”.';
+
+  @override
+  String get tipMembersPlan =>
+      'To change a member’s plan: open the member and set the “Subscription” under “Billing”.';
+
+  @override
+  String get tipMembersPrices =>
+      'To set the workspace’s prices and plans: open the billing settings.';
+
+  @override
+  String get tipMembersRole =>
+      'To decide what each role may do: edit the roles; a member gets one with “Add a role” on their page.';
+
+  @override
+  String get tipMessagesAlerts =>
+      'To handle alerts and decisions waiting for you: open “Alerts” in the calendar.';
+
+  @override
+  String get tipMessagesUnread =>
+      'To see what you have not read yet: tap “Unread” in your messenger.';
+
+  @override
+  String get tipMessagesWrite =>
+      'To write to someone or start a group: open your messenger and tap the pencil.';
+
+  @override
+  String get tipMoneyDays =>
+      'To get more days this month: tap “Request extra half-days”.';
+
+  @override
+  String get tipMoneyDocumentsConditions =>
+      'To read the conditions you agreed to: open “My conditions”.';
+
+  @override
+  String get tipMoneyDocumentsLibrary =>
+      'To find the space’s shared documents: open the “Document library”.';
+
+  @override
+  String get tipMoneyDocumentsPayments =>
+      'To list what you paid: open the “Payments report”.';
+
+  @override
+  String get tipMoneyDocumentsStatement =>
+      'To keep the month on paper: open “This month\'s statement (PDF)”.';
+
+  @override
+  String get tipMoneyDocumentsUsage =>
+      'To see what you used: open the “Consumption report”.';
+
+  @override
+  String get tipMoneyExpense =>
+      'To get an expense paid back: tap “Submit an expense”.';
+
+  @override
+  String get tipMoneyInvoicesAcross =>
+      'To see your invoices of every space together: open “Your finances across spaces”.';
+
+  @override
+  String get tipMoneyInvoicesPay =>
+      'To pay an open invoice: tap “Pay now” on it.';
+
+  @override
+  String get tipMoneyInvoicesRead =>
+      'To read an invoice: tap it — its detail opens, with what is still due.';
+
+  @override
+  String get tipMoneyMonth =>
+      'To see another month: use the arrows beside the month.';
+
+  @override
+  String get tipMoneyPaymentsAcross =>
+      'To see your money across all your spaces: open “Your finances across spaces”.';
+
+  @override
+  String get tipMoneyPaymentsConsumption =>
+      'To note something you used — a coffee, a print: tap “Add consumption”.';
+
+  @override
+  String get tipMoneyPaymentsDays =>
+      'To get more days this month: tap “Request extra half-days”.';
+
+  @override
+  String get tipMoneyPaymentsExpense =>
+      'To get an expense paid back: tap “Submit an expense”.';
+
+  @override
+  String get tipMoneyPaymentsOnline => 'To pay at once: tap “Pay online”.';
+
+  @override
+  String get tipMoneyPaymentsRecord =>
+      'To tell the space you paid: tap “Record a payment”.';
+
+  @override
+  String get tipMoneyPaymentsScheduled =>
+      'To plan an expense that comes back: open “Scheduled expenses”.';
+
+  @override
+  String get tipMoneyPaymentsTransfer =>
+      'To pay by transfer: open “Payment instructions” and copy the IBAN.';
+
+  @override
+  String get tipMoneyPdf => 'To keep your bill: tap “Export bill as PDF”.';
+
+  @override
+  String get tipMoneyRecord =>
+      'To tell the space you paid: tap “Record a payment”.';
+
+  @override
+  String get tipMoneyStatementAcross =>
+      'To see your money across all your spaces: open “Your finances across spaces”.';
+
+  @override
+  String get tipMoneyStatementMonth =>
+      'To see another month: use the arrows; “Balance” says what is left to settle.';
+
+  @override
+  String get tipMoneyStatementOut =>
+      'To keep booking when your days run out: on the payments face, tap “Request extra half-days” or “Buy a package”.';
+
+  @override
+  String get tipPrivacyConsent =>
+      'To reread what you agreed to: open your rights and consent.';
+
+  @override
+  String get tipPrivacyErase =>
+      'To leave with your personal data erased: tap “Leave this workspace and erase my data”.';
+
+  @override
+  String get tipPrivacyExport =>
+      'To download everything the space holds about you: tap “Export my data”.';
+
+  @override
+  String get tipPrivacyWho =>
+      'To see who can read your data: tap “Who can see my data”.';
+
+  @override
+  String get tipReserveAhead =>
+      'To find a free day ahead: open “View” and choose “Week” or “Month”, then tap a free cell or day.';
+
+  @override
+  String get tipReserveBook =>
+      'To book a seat: pick the day, choose “Morning”, “Afternoon” or “Full day”, tap a free seat, then “Reserve”.';
+
+  @override
+  String get tipReserveChange =>
+      'To change or cancel a booking: tap it and choose “Edit times”, “Stay longer”, “End earlier” or “Cancel reservation”.';
+
+  @override
+  String get tipReserveCheckIn =>
+      'To check in or out: tap your own seat and choose “Check in” or “Check out” — or switch on “Check in right away” while booking.';
+
+  @override
+  String get tipReserveDefault =>
+      'To have your usual period preselected: set “Default booking period” in your settings.';
+
+  @override
+  String get tipReserveFavourite =>
+      'To find your favourite seats again: tap “Add to favourites” and rate the seat with the stars in the booking sheet.';
+
+  @override
+  String get tipReserveLevel =>
+      'To book a whole level: tap “Reserve level” on the level’s row.';
+
+  @override
+  String get tipReserveList =>
+      'To book from a list instead of the plan: tap “List view”; “Plan view” brings the plan back.';
+
+  @override
+  String get tipReserveRepeat =>
+      'To book the same seat regularly: in the booking sheet open “More options”, then set “Repeat” and “Repeat until”.';
+
+  @override
+  String get tipReserveScan =>
+      'To act on a space from its QR card: tap “Scan a space code”, point the camera at the card and choose what to do.';
+
+  @override
+  String get tipValidationChain =>
+      'To have approvals given in turn: switch on “One after another”.';
+
+  @override
+  String get tipValidationCount =>
+      'To ask for more approvals: raise “Required validations”, or require them only above an amount with “Only above this amount”.';
+
+  @override
+  String get tipValidationDefault =>
+      'To change the rule every action inherits: tap “Default policy”.';
+
+  @override
+  String get tipValidationOverride =>
+      'To treat one action differently: tap its card and change it — it then reads “Customized”.';
+
+  @override
+  String get tipValidationRoles =>
+      'To decide who holds which role: edit the roles.';
+
+  @override
+  String get tipValidationWho =>
+      'To choose who approves — admins, listed persons or all members: set “Who validates”.';
+
+  @override
+  String get tipWorkspaceSettingsBackup =>
+      'To back up or copy the space: use “Export workspace (XML)”.';
+
+  @override
+  String get tipWorkspaceSettingsColours =>
+      'To give the app your colours: choose them.';
+
+  @override
+  String get tipWorkspaceSettingsDocuments =>
+      'To print the space’s documents — QR cards, price lists, rules: open the workspace documents.';
+
+  @override
+  String get tipWorkspaceSettingsGeneral =>
+      'To set the country, currency, time zone and language: open “General details” — documents and taxes follow them.';
+
+  @override
+  String get tipWorkspaceSettingsLegal =>
+      'To issue compliant invoices and e-invoices: complete your legal identity.';
+
+  @override
+  String get tipWorkspaceSettingsNewMembers =>
+      'To set what new members start with: choose their subscription and what happens when days run out under “New members”.';
+
+  @override
+  String get tipWorkspaceSettingsPay =>
+      'To tell members how to pay you: fill in the payment instructions.';
+
+  @override
+  String get tipWorkspaceSettingsSave =>
+      'To keep your changes: tap “Save” at the bottom before leaving.';
+
+  @override
+  String get tipWorkspaceSettingsWording =>
+      'To call things your own way — seats, levels, bookings: change the wording.';
 
   @override
   String get unblockAction => 'Unblock';

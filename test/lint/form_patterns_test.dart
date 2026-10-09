@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 252; // #2286 and #2291 use spacing tokens.
 const int _fallbackCeiling =
-    6449; // Task guide panes also use the generated localization fallback.
+    6370; // 2026-10-09 #2313: the scenario tips read the catalogue, not inline English.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

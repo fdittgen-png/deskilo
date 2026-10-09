@@ -14,10 +14,10 @@ import 'help_tips.dart';
 export 'help_tips.dart';
 
 /// One compact, dismissible tip carousel at the top of a form/screen
-/// (#606, #610): 3–5 tips for THAT surface, ordered from the basic
-/// how-to to the deeper tricks, browsable with chevrons and by swiping,
-/// each tip with a "Learn more" link into the in-app guide at its
-/// matching section, and a 48dp dismiss target. The carousel remembers
+/// (#606, #610, #2313): every scenario a person may want from THAT
+/// surface ("To …, …"), browsable with chevrons and by swiping, each tip
+/// with a link to the form it names, a "Learn more" link into the in-app
+/// guide at its matching section, and a 48dp dismiss target. The carousel remembers
 /// the last tip shown per surface and opens the NEXT visit on the tip
 /// after it, rotating — so every visit teaches something new. Dismissal
 /// persists per hint id; Settings can restore all. Rides the
@@ -51,6 +51,10 @@ class HelpHint extends ConsumerStatefulWidget {
 /// Horizontal drag (logical px) that counts as a page swipe.
 const double _swipeThreshold = 40;
 
+/// #2313 — the card's arrows and close are round and borderless, as the
+/// help marks are: the app-wide outlined icon button read as three boxes.
+final ButtonStyle _round = IconButton.styleFrom(shape: const CircleBorder());
+
 class _HelpHintState extends ConsumerState<HelpHint> {
   /// Computed once per visit (rotated past the stored tip) — a rebuild
   /// (or the position write landing) must never re-advance.
@@ -83,9 +87,8 @@ class _HelpHintState extends ConsumerState<HelpHint> {
   @override
   Widget build(BuildContext context) {
     final id = widget.id;
-    if (!ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.formHelpHints)) {
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    if (!features.contains(WorkspaceFeature.formHelpHints)) {
       return const SizedBox.shrink();
     }
     // #1867 — one help at a time: a guide step or a blocker outranks tips.
@@ -101,7 +104,13 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     }
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final tips = HelpHint.tips(l10n, id);
+    // #2313 — a scenario of a switched-off feature is not offered.
+    final tips = [
+      for (final tip in HelpHint.tips(l10n, id))
+        if (tip.feature == null || features.contains(tip.feature)) tip,
+    ];
+    if (tips.isEmpty) return const SizedBox.shrink();
+    if (_page >= tips.length) _page = 0;
     if (!_visited) {
       // First build of this visit: open on the tip after the stored one
       // and remember it — this visit's tip becomes the new "last shown".
@@ -202,6 +211,17 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                     alignment: WrapAlignment.spaceBetween,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
+                      // #2313 — a tip that names a form links to it.
+                      if (tips[_page].route case final route?)
+                        TextButton.icon(
+                          key: ValueKey('help-hint-go-${id.name}'),
+                          onPressed: () => context.push(route),
+                          icon: const Icon(Icons.arrow_forward, size: 16),
+                          label: Text(
+                            helpTipDestination(l10n, route),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       TextButton(
                         key: ValueKey('help-hint-learn-more-${id.name}'),
                         onPressed: () => context.push(
@@ -233,6 +253,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                           children: [
                             IconButton(
                               key: ValueKey('help-hint-prev-${id.name}'),
+                              style: _round,
                               tooltip: l10n?.helpHintPrevTip ?? 'Previous tip',
                               icon: const Icon(Icons.navigate_before, size: 20),
                               color: scheme.onSurfaceVariant,
@@ -245,6 +266,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                             ),
                             IconButton(
                               key: ValueKey('help-hint-next-${id.name}'),
+                              style: _round,
                               tooltip: l10n?.helpHintNextTip ?? 'Next tip',
                               icon: const Icon(Icons.navigate_next, size: 20),
                               color: scheme.onSurfaceVariant,
@@ -259,6 +281,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
             ),
             IconButton(
               key: ValueKey('help-hint-dismiss-${id.name}'),
+              style: _round,
               tooltip: l10n?.helpHintDismiss ?? 'Dismiss hint',
               icon: const Icon(Icons.close, size: 18),
               color: scheme.onSurfaceVariant,
