@@ -27,6 +27,19 @@ flutter test test/ux test/a11y test/app test/core/cache test/core/realtime \
 | Privacy / rights / contact / security responsibility review | BLOCKED | — | Needs the operator and the accountant; not fabricated |
 | Critical journey at narrow width, large text, keyboard, screen reader | PARTIAL | `test/a11y/responsive_matrix_test.dart` (360 dp, 2× text, keyboard, motion off), `screen_guidelines_test.dart`, `matrix_coverage_test.dart`; the new unavailable states (#1848) are covered by `unavailable_availability_test.dart` | Confirmation that every critical-journey screen is a matrix row, and a semantic-order walk of the journey |
 
+## Database follow-up — 9 October 2026 (#1917)
+
+The reconciliation fixture now uses authenticated `record_payment` and a
+separate operator's `respond_to_event`, instead of inserting a ledger credit.
+Its 19 assertions pass: pending payment leaves the balance unchanged, approval
+posts once, retrying approval is refused, and statement/invoice totals agree.
+`163_unreviewed_invoice_treatment.sql` passes 11 assertions: unreviewed
+cross-border, reverse-charge, export and exempt issuance is refused through
+both readiness and the issuing command; ordinary domestic invoices and
+statements remain available, and existing invoice snapshots remain identical.
+These are rolled-back synthetic database proofs, not accountant approval of a
+real workspace. The operator review and application journey remain outstanding.
+
 ## What this changes
 
 * The pilot exclusion set is now a named, tested list; widening it is a reviewed change.

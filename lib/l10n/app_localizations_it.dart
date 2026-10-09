@@ -7938,6 +7938,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (giornale di audit)';
 
   @override
+  String get invoiceExternalIssuingTitle =>
+      'Emetti questa fattura fuori dall’app';
+
+  @override
   String get invoiceFacturXDownload => 'Scarica Factur-X (PDF)';
 
   @override
@@ -8287,6 +8291,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoiceMissingVatRate =>
       'Un\'aliquota IVA in vigore per l\'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)';
+
+  @override
+  String get invoiceMissingVatTreatment =>
+      'Le fatture transfrontaliere, con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.';
 
   @override
   String get invoiceMissingVatZeroLine =>

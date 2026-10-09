@@ -7957,6 +7957,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (journal d’audit)';
 
   @override
+  String get invoiceExternalIssuingTitle =>
+      'Émettez cette facture hors de l’application';
+
+  @override
   String get invoiceFacturXDownload => 'Télécharger le Factur-X (PDF)';
 
   @override
@@ -8304,6 +8308,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingVatRate =>
       'Un taux de TVA en vigueur pour le taux par défaut de l\'espace (sinon 0 % serait facturé)';
+
+  @override
+  String get invoiceMissingVatTreatment =>
+      'Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.';
 
   @override
   String get invoiceMissingVatZeroLine =>

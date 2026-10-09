@@ -8914,6 +8914,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
   "invoiceFacturXDownload": "Download Factur-X (PDF)",
   "@invoiceFacturXDownload": {
     "description": "E-invoice sheet: the hybrid PDF+XML document (0073)"
@@ -9339,6 +9340,7 @@
     "description": "#1917 essentials key vat_charged_not_registered (0393)"
   },
   "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
+  "invoiceMissingVatTreatment": "Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "@invoiceMissingVatZeroLine": {
     "description": "#1917 essentials key vat_line_zero_unexplained (0393)"
