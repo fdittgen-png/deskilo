@@ -1332,6 +1332,8 @@ The monthly balance leads this view; usage and charges follow. Help tips sit aft
 
 ### 9e. The Invoices face
 
+**Issuance limits (#1917).** Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.
+
 **Your invoices · All periods.** The summary shows open amounts and overdue counts once, followed by every invoice issued to you, newest first. The selected monthly statement does not filter this archive. Expand **Workspace finance tools** above the summary for the existing invoice register, workspace status and cost-sharing entries available to your role and enabled features. Invoice rows still open their detail sheet, documents and payment destination.
 
 **The journey (#812).** Every row also carries the invoice's **journey bar** — *Issued · Payment · Confirmation · Closed*, the current step ringed — and **your move** in one sentence: *pay X by date*, *you declared X — the workspace is confirming it*, *your payment is registered — the workspace matches it*, *paid on … — closed*. **How it works** on the headline card opens the four steps with what the workspace does and what you do. Feature *The journey of an invoice* (under Invoices).

@@ -7887,6 +7887,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (audit trail)';
 
   @override
+  String get invoiceExternalIssuingTitle =>
+      'Issue this invoice outside the app';
+
+  @override
   String get invoiceFacturXDownload => 'Download Factur-X (PDF)';
 
   @override
@@ -8228,6 +8232,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceMissingVatRate =>
       'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)';
+
+  @override
+  String get invoiceMissingVatTreatment =>
+      'Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.';
 
   @override
   String get invoiceMissingVatZeroLine =>
