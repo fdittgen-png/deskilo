@@ -6,6 +6,7 @@ import '../payment_provider_labels.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 import 'package:flutter/material.dart';
+import '../widgets/money_attention_body.dart';
 
 import '../../../../core/ui/app_frame.dart';
 import '../../../profile/domain/personal_preferences.dart';
@@ -1230,7 +1231,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       currency: currency,
     );
 
-    return switch (statementAsync) {
+    return MoneyAttentionBody(enabled: features.contains(WorkspaceFeature.eventsTab), child: switch (statementAsync) {
       AsyncData() when facesOn => MoneyFacesView(
           periodHeader: periodHeader,
           cards: faceCards,
@@ -1288,6 +1289,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           ),
         ),
       _ => const LoadingView(),
-    };
+    });
   }
 }

@@ -11161,6 +11161,7 @@
   "usageTitle": "Uso",
   "usageWas": "era {before}",
   "uxAdvancedSection": "Avanzado",
+  "uxAlertsFilterEmpty": "Ninguna actualización coincide con estos filtros.",
   "uxAttentionSummary": "{updates} novedades · {pending} decisiones pendientes",
   "@uxAttentionSummary": {
     "placeholders": {
@@ -11178,6 +11179,8 @@
   "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca tu presencia.",
   "uxBookingResourceUnavailable": "Recurso no disponible",
   "uxDeviceTime": "Tu hora",
+  "uxFinanceAlerts": "Avisos financieros",
+  "uxFinanceAlertsFailed": "No se pudieron abrir los avisos financieros. Inténtalo de nuevo.",
   "uxLinkedReference": "Recurso enlazado",
   "uxManageResource": "Gestionar recurso",
   "uxMoneyAllPeriods": "Todos los períodos · Crédito, facturas abiertas y reembolsos.",

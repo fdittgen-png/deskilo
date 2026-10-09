@@ -17856,6 +17856,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxAdvancedSection => 'Advanced';
 
   @override
+  String get uxAlertsFilterEmpty => 'No updates match these filters.';
+
+  @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates new updates · $pending awaiting your decision';
   }
@@ -17880,6 +17883,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uxDeviceTime => 'Your time';
+
+  @override
+  String get uxFinanceAlerts => 'Finance alerts';
+
+  @override
+  String get uxFinanceAlertsFailed =>
+      'Could not open finance alerts. Please try again.';
 
   @override
   String get uxLinkedReference => 'Linked resource';

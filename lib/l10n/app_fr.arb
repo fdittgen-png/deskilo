@@ -11161,6 +11161,7 @@
   "usageTitle": "Usage",
   "usageWas": "était {before}",
   "uxAdvancedSection": "Avancé",
+  "uxAlertsFilterEmpty": "Aucune actualité ne correspond à ces filtres.",
   "uxAttentionSummary": "{updates} nouveautés · {pending} décisions en attente",
   "@uxAttentionSummary": {
     "placeholders": {
@@ -11178,6 +11179,8 @@
   "uxBookingModesHelp": "Réserver conserve le créneau choisi. S’installer maintenant utilise le créneau actuel et indique votre présence.",
   "uxBookingResourceUnavailable": "Ressource indisponible",
   "uxDeviceTime": "Votre heure",
+  "uxFinanceAlerts": "Alertes financières",
+  "uxFinanceAlertsFailed": "Impossible d’ouvrir les alertes financières. Réessayez.",
   "uxLinkedReference": "Ressource liée",
   "uxManageResource": "Gérer la ressource",
   "uxMoneyAllPeriods": "Toutes les périodes · Crédit, factures ouvertes et remboursements.",

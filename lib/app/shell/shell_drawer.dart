@@ -219,6 +219,8 @@ class ShellDrawer extends ConsumerWidget {
           // calendar carries the decisions instead.
           trailing: e.key == 'drawer-events' && attention.total > 0
               ? Badge.count(count: attention.total, maxCount: 99)
+              : e.key == 'drawer-tab-${ShellBranch.money}' && attention.money > 0
+                  ? Badge.count(count: attention.money, maxCount: 99)
               : pendingEvents > 0 && e.key == 'drawer-tab-${ShellBranch.calendar}' &&
                   decisionSignalOnCalendar(features) ? Badge.count(count: pendingEvents, maxCount: 99) : null,
           onTap: e.onTap,

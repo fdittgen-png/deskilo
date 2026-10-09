@@ -11161,6 +11161,7 @@
   "usageTitle": "Nutzung",
   "usageWas": "war {before}",
   "uxAdvancedSection": "Erweitert",
+  "uxAlertsFilterEmpty": "Keine Meldungen entsprechen diesen Filtern.",
   "uxAttentionSummary": "{updates} neue Meldungen · {pending} ausstehende Entscheidungen",
   "@uxAttentionSummary": {
     "placeholders": {
@@ -11178,6 +11179,8 @@
   "uxBookingModesHelp": "Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.",
   "uxBookingResourceUnavailable": "Ressource nicht verfügbar",
   "uxDeviceTime": "Ihre Ortszeit",
+  "uxFinanceAlerts": "Finanzmeldungen",
+  "uxFinanceAlertsFailed": "Finanzmeldungen konnten nicht geöffnet werden. Bitte erneut versuchen.",
   "uxLinkedReference": "Verknüpfte Ressource",
   "uxManageResource": "Ressource verwalten",
   "uxMoneyAllPeriods": "Alle Zeiträume · Guthaben, offene Rechnungen und Erstattungen.",
