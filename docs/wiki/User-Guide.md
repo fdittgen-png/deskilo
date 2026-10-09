@@ -948,6 +948,8 @@ want for something discontinued rather than mistaken.
 
 **Configure by task.** General details, payments, community and invitations, appearance, new-member defaults, templates and data, and the danger zone have separate sections. General details opens first; open another section when you need it. Setup readiness stays above the tasks. Save remains at the bottom of the screen as you scroll. Closed sections retain their drafts, and Save opens and scrolls to invalid fields. Pages opened from a section keep their own save controls. The horizontal section menu stays visible: choose a section to open it and move straight to it. Scroll within the form when needed; drafts stay in place.
 
+**Reports (#2301).** In **Billing & payments → Reports**, use the horizontal sections: **Financial reports** for the invoice register (including accounting exports and annual archives), workspace status, and VAT; **Business analytics** for workspace performance; **Workspace documents** for configuration PDF, workspace report, printable space QR cards and Excel exports; **Templates** for document design. Only permitted, enabled actions appear. Personal statements remain in **Me → Finances**; member badge printing stays with the selected member. Workspace settings keeps XML backup/import and the workspace library, with a shortcut to Reports. The danger-zone heading and shortcut use red.
+
 The workspace's own screen, top to bottom:
 
 - **Identity** — name, country, currency (proposed from the country, editable), time zone, **workspace language** (invitations default to it; *sender's app language* is an option) and the postal **address** printed on invoices.
@@ -1162,7 +1164,7 @@ Four steps turn "scan the code on the desk" into the daily booking flow (§4a):
 1. In the **editor**, mark a table, an office or a level **Bookable as a whole** and give it a **price per half-day** — the table's or office's property sheet, or for a level the **layers icon right on its row**.
 2. Enable **Desk, office & level reservations** in **Features** (off by default).
 3. Grant each entitled member **"May reserve a whole desk, office or level"** — owners and admins set it in the member's management sheet, never for themselves. Owners and admins hold the right themselves without the switch, in the app and at the **kiosk** alike.
-4. Print the cards: **Workspace settings → Space QR codes (PDF)** — cut them out and stick each card on its space.
+4. Print the cards: **Reports → Workspace documents → Space QR codes (PDF)** — cut them out and stick each card on its space.
 
 An office reservation covers **all the desks inside it**; a level reservation covers the whole floor. Both are only possible while nothing inside is booked — and they show up as their own lines on the member's bill.
 
@@ -1749,7 +1751,7 @@ mistake for a real one.
 
 ### 11c. The report editor — every document, four presets, five languages
 
-The **Invoice PDF template** (pencil icon in the Invoices header, or *Workspace settings*) is a banded reporting tool for every document the app prints. Three report **bands** render onto the PDF — header, body (the invoice lines), footer — while the e-invoice XML is never touched.
+The **Invoice PDF template** (pencil icon in the Invoices header, or *Reports → Templates*) is a banded reporting tool for every document the app prints. Three report **bands** render onto the PDF — header, body (the invoice lines), footer — while the e-invoice XML is never touched.
 
 - **Placeholders and markup, as a guide (#966)** — in markup mode the flat run of every field is gone. One expander, *Placeholders and markup*, closed until you open it, holds: two sentences on how a band works; **Insert a field…**, the searchable picker grouped by topic (document, client, seller, amounts, bank details, legal mentions, usage, VAT, sites, status, loops, your texts) with a one-line meaning under every name, searchable by that meaning too; the **line markup** one sign per row with what it does; and three **ready-made pieces** (a line only when the value exists, one row per invoice line, the title that says invoice, credit note or proforma). Everything you tap lands at the caret of the band you last edited.
 
@@ -1789,7 +1791,7 @@ national form. A layout wins over the bands for the kind it is set on.
 
 - **Financial agreement** — every standing price that applies to a member: subscription, extra half-day, services, packages, accessory supplements and the whole-space prices, **desks and tables included**. Owners/admins send it from a member's action sheet; every member can quick-view/download/share their own from *Finances → Documents*.
 - **Payments report** — everything you paid, declared or had validated in a month: your little balance sheet, self-service on the same row.
-- **Workspace report** — identity, floor-plan counts, availability, features and prices: *Workspace settings → Workspace report*.
+- **Workspace report** — identity, floor-plan counts, availability, features and prices: *Reports → Workspace documents → Workspace report*.
 - **Document library** — *Settings → Documents*: the workspace's statutes, user guides, financial statements and meeting minutes, LINKED from whatever system you already use — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud or any https link (the drive keeps managing its own access; the app never stores foreign credentials). Every entry has a **visibility role**: every member, admins and owners, or owners only — enforced server-side, so a member never even downloads a list containing board documents. Admins and owners curate with the + button; a *Document library* feature toggle gates the whole thing.
 
 <p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>

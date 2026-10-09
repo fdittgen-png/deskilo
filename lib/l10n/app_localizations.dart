@@ -31124,6 +31124,36 @@ abstract class AppLocalizations {
   /// **'Workspace'**
   String get uxRealWorkspace;
 
+  /// No description provided for @uxReportsFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial reports'**
+  String get uxReportsFinance;
+
+  /// No description provided for @uxReportsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial reports, workspace documents and exports'**
+  String get uxReportsHint;
+
+  /// No description provided for @uxReportsTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get uxReportsTemplates;
+
+  /// No description provided for @uxReportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get uxReportsTitle;
+
+  /// No description provided for @uxReportsWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace documents'**
+  String get uxReportsWorkspace;
+
   /// No description provided for @uxResetFilters.
   ///
   /// In en, this message translates to:

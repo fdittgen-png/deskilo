@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../workspace/presentation/widgets/workspace_reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/widgets/environment_tile.dart';
@@ -31,6 +33,11 @@ List<Widget> workspaceSettingsTiles(
   required bool hasTwin,
 }) {
   final workspace = <Widget>[
+    if (workspaceReportsAvailable(features, perms, isAdmin: canAdminister))
+      ListTile(key: const ValueKey('settings-reports'),
+        leading: const Icon(Icons.summarize_outlined),
+        title: Text((l10n ?? AppLocalizationsEn()).uxReportsTitle),
+        onTap: () => context.push('/reports')),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(
         leading: const Icon(Icons.business_outlined),
@@ -66,15 +73,13 @@ List<Widget> workspaceSettingsTiles(
         title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
         onTap: () => context.push('/accessories'),
       ),
-    // #478: billing & reports as ONE entry — the invoicing hub with the
-    // report editor and the reminder rules in its header. #1307 — reading
-    // the workspace's invoices is viewFinances.
+    // #2301: invoice operations and Reports have distinct destinations.
     if (perms.contains(WorkspacePermission.viewFinances) &&
         features.contains(WorkspaceFeature.invoicing))
       ListTile(
         key: const ValueKey('settings-billing-reports'),
         leading: const Icon(Icons.receipt_long_outlined),
-        title: Text(l10n?.settingsBillingReports ?? 'Billing & reports'),
+        title: Text(l10n?.invoicesManage ?? 'Manage invoices'),
         onTap: () => context.push('/invoices'),
       ),
     // #925 — one screen for every number series.

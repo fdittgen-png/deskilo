@@ -17950,6 +17950,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxRealWorkspace => 'Workspace';
 
   @override
+  String get uxReportsFinance => 'Financial reports';
+
+  @override
+  String get uxReportsHint =>
+      'Financial reports, workspace documents and exports';
+
+  @override
+  String get uxReportsTemplates => 'Templates';
+
+  @override
+  String get uxReportsTitle => 'Reports';
+
+  @override
+  String get uxReportsWorkspace => 'Workspace documents';
+
+  @override
   String get uxResetFilters => 'Reset filters';
 
   @override

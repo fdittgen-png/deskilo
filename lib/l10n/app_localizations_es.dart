@@ -18086,6 +18086,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxRealWorkspace => 'Espacio real';
 
   @override
+  String get uxReportsFinance => 'Informes financieros';
+
+  @override
+  String get uxReportsHint =>
+      'Informes financieros, documentos del espacio y exportaciones';
+
+  @override
+  String get uxReportsTemplates => 'Plantillas';
+
+  @override
+  String get uxReportsTitle => 'Informes';
+
+  @override
+  String get uxReportsWorkspace => 'Documentos del espacio';
+
+  @override
   String get uxResetFilters => 'Restablecer filtros';
 
   @override

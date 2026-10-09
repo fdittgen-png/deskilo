@@ -59,7 +59,6 @@ import '../../../money/providers/money_providers.dart';
 import '../../providers/workspace_import_providers.dart';
 import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
-import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/new_member_defaults_tiles.dart';
 import '../../domain/new_member_defaults.dart';
@@ -76,6 +75,7 @@ import '../../../../core/locale/report_language.dart';
 import '../../../money/domain/report_data_letters.dart';
 import '../widgets/reset_confirm_dialog.dart';
 import '../widgets/workspace_form_group.dart';
+import '../widgets/workspace_reports.dart';
 import '../../../../l10n/app_localizations_en.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
@@ -85,7 +85,8 @@ import '../../../../l10n/app_localizations_en.dart';
 /// backup tools (XML export/import, configuration PDF, space-QR PDF)
 /// and the guarded workspace reset (0039).
 class WorkspaceSettingsScreen extends ConsumerStatefulWidget {
-  const WorkspaceSettingsScreen({super.key});
+  const WorkspaceSettingsScreen({this.reportsOnly = false, super.key});
+  final bool reportsOnly;
 
   @override
   ConsumerState<WorkspaceSettingsScreen> createState() =>
@@ -963,6 +964,12 @@ class _WorkspaceSettingsScreenState
     final labels = l10n ?? AppLocalizationsEn();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final helpTopic = l10n?.helpHintWorkspaceTopic ?? 'Workspace settings';
+    if (widget.reportsOnly) { return Scaffold(
+      appBar: AppBar(title: Text(labels.uxReportsTitle)),
+      body: workspace == null ? const LoadingView() : WorkspaceReports(
+        workspaceName: workspace.name,
+        documents: ref.watch(myPermissionsProvider).contains(WorkspacePermission.workspaceSettings)
+          ? _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic, reports: true) : const [])); }
     if (workspace != null && !_seeded) {
       _seeded = true;
       _countryCode = workspace.countryCode;
@@ -1011,7 +1018,7 @@ class _WorkspaceSettingsScreenState
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   WorkspaceFormGroup(id: 'tools', title: labels.uxWorkspaceTools, icon: Icons.import_export,
                     children: _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic)),
-                  WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber,
+                  WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber, destructive: true,
                     children: _dangerZoneTiles(context, l10n: l10n, workspace: workspace)),
                   const HelpHint(HelpHintId.workspaceSettings),
               ]),
@@ -1355,30 +1362,12 @@ class _WorkspaceSettingsScreenState
   List<Widget> _billingTools(BuildContext context, {
     required AppLocalizations? l10n, required String helpTopic,
   }) => [
-                  // #474 — the banded report editor (invoice + every
-                  // reminder level) and the dunning policy live in the
-                  // app parameters too, not only behind the Invoices
-                  // header. The whole screen is owner-only already.
-                  if (ref
-                      .watch(enabledFeaturesSyncProvider)
-                      .contains(WorkspaceFeature.invoicePdfTemplate))
-                  ListTile(
-                    key: const Key('workspaceSettingsReportEditor'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.edit_note_outlined),
-                    title: HelpDotTitle(
-                      l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
-                      helpTopic,
-                      anchor: HelpAnchor.reportsInvoiceTemplate,
-                    ),
-                    subtitle: Text(
-                      l10n?.invoiceTemplateHint ??
-                          'Three report bands rendered on the PDF.',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    onTap: () => showInvoiceTemplateSheet(context, ref),
-                  ),
+                  ListTile(key: const Key('workspaceSettingsReports'),
+                    leading: const Icon(Icons.summarize_outlined),
+                    title: Text((l10n ?? AppLocalizationsEn()).uxReportsTitle),
+                    subtitle: Text((l10n ?? AppLocalizationsEn()).uxReportsHint),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push('/reports')),
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
                       .contains(WorkspaceFeature.invoicing))
@@ -1423,8 +1412,9 @@ class _WorkspaceSettingsScreenState
 
   List<Widget> _toolsTiles(BuildContext context, {
     required AppLocalizations? l10n, required Workspace workspace,
-    required String helpTopic,
+    required String helpTopic, bool reports = false,
   }) => [
+                  if (!reports) ...[
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
                       .contains(WorkspaceFeature.workspaceLibrary))
@@ -1457,6 +1447,8 @@ class _WorkspaceSettingsScreenState
                     enabled: !_busy,
                     onTap: () => _exportXml(workspace),
                   ),
+                  ],
+                  if (reports) ...[
                   // Human-readable PDF snapshot — settings + every member +
                   // the whole floor plan. Owner-only like the rest.
                   ListTile(
@@ -1551,6 +1543,8 @@ class _WorkspaceSettingsScreenState
                       if (mounted) setState(() => _busy = false);
                     },
                   ),
+                  ],
+                  if (!reports)
                   // #165 — restore from an exported file. Replaces the
                   // floor plan (guarded by preview + destructive confirm);
                   // the whole screen is owner-only already.

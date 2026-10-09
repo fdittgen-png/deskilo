@@ -942,6 +942,8 @@ was man für etwas Eingestelltes will, nicht für etwas Falsches.
 
 **Nach Aufgabe einrichten.** Allgemeine Angaben, Zahlungen, Gemeinschaft und Einladungen, Darstellung, Vorgaben für neue Mitglieder, Vorlagen und Daten sowie der Gefahrenbereich haben eigene Abschnitte. Allgemeine Angaben ist zunächst geöffnet; öffnen Sie weitere Abschnitte nach Bedarf. Der Einrichtungsstand bleibt darüber. Speichern bleibt beim Scrollen unten sichtbar. Geschlossene Abschnitte behalten ihre Entwürfe; Speichern öffnet ungültige Felder und scrollt zu ihnen. Von hier geöffnete Seiten behalten ihre eigenen Speicheraktionen. Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
 
+**Berichte (#2301).** Unter **Abrechnung und Zahlungen → Berichte** führen horizontale Abschnitte zu **Finanzberichten** (Rechnungsregister mit Buchhaltungsexport und Jahresarchiv, Workspace-Status, Umsatzsteuer), **Business Analytics**, **Workspace-Dokumenten** (Konfigurations-PDF, Workspace-Bericht, QR-Karten und Excel-Export) und **Vorlagen**. Nur erlaubte, aktivierte Aktionen erscheinen. Persönliche Auszüge bleiben unter **Ich → Finanzen**, Mitgliedsausweise beim Mitglied. Die Workspace-Einstellungen behalten XML-Sicherung/-Import, Bibliothek und einen Link zu Berichten. Titel und Verknüpfung des Gefahrenbereichs sind rot.
+
 Der Bildschirm des Space, von oben nach unten:
 
 - **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Sprache des Arbeitsbereichs** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.
@@ -1166,7 +1168,7 @@ Vier Schritte machen „scann die Karte am Tisch" zum Alltag (§4a):
 1. Im **Editor** Büro oder Etage **als Ganzes buchbar** markieren, **Preis je Halbtag** setzen.
 2. **Büro- & Etagenreservierungen** in **Funktionen** aktivieren (standardmäßig aus).
 3. Jedem berechtigten Mitglied **„Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren"** gewähren — im Verwaltungsblatt, nie für sich selbst. Inhaber und Admins halten das Recht auch ohne Schalter, in der App wie am **Kiosk**.
-4. Karten drucken: **Workspace-Einstellungen → Raum-QR-Codes (PDF)** — ausschneiden, aufkleben.
+4. Karten drucken: **Berichte → Workspace-Dokumente → Raum-QR-Codes (PDF)** — ausschneiden, aufkleben.
 
 Eine Büro-Reservierung deckt **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide nur, solange nichts darin gebucht ist — als eigene Zeilen auf der Abrechnung.
 
@@ -1738,7 +1740,7 @@ unverwechselbar macht.
 
 ### 11c. Der Report-Editor — jedes Dokument, vier Vorlagen, fünf Sprachen
 
-Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Workspace-Einstellungen*) ist ein Banden-Reporting für jedes gedruckte Dokument. Drei **Banden** rendern aufs PDF — Kopf, Körper (die Rechnungszeilen), Fuß — das E-Rechnungs-XML bleibt unberührt.
+Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Berichte → Vorlagen*) ist ein Banden-Reporting für jedes gedruckte Dokument. Drei **Banden** rendern aufs PDF — Kopf, Körper (die Rechnungszeilen), Fuß — das E-Rechnungs-XML bleibt unberührt.
 
 - **Platzhalter und Markup als Leitfaden (#966)** — im Markup-Modus ist die endlose Reihe aller Felder verschwunden. Ein einziger Aufklapper, *Platzhalter und Markup*, geschlossen, bis Sie ihn öffnen, enthält: zwei Sätze dazu, wie ein Band funktioniert; **Feld einfügen…**, den durchsuchbaren Wähler nach Thema (Dokument, Kunde, Verkäufer, Beträge, Bankverbindung, rechtliche Hinweise, Verbrauch, MwSt., Standorte, Status, Schleifen, Ihre Texte) mit einer einzeiligen Bedeutung unter jedem Namen, auch nach dieser Bedeutung durchsuchbar; das **Zeilen-Markup**, ein Zeichen je Zeile mit seiner Wirkung; und drei **fertige Bausteine** (eine Zeile nur, wenn der Wert existiert, eine Zeile je Rechnungsposition, der Titel Rechnung, Gutschrift oder Proforma). Alles, was Sie antippen, landet an der Einfügemarke des zuletzt bearbeiteten Bands.
 
@@ -1779,7 +1781,7 @@ gewinnt gegen die Bänder für die Art, auf der es gesetzt ist.
 
 - **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Zubehör-Aufpreise und die Ganzraum-Preise, **Tische und Schreibtische eingeschlossen**. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
 - **Zahlungsbericht** — alles, was du in einem Monat gezahlt, erklärt oder validiert bekommen hast: deine kleine Bilanz, Selbstbedienung.
-- **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Workspace-Einstellungen → Space-Bericht*.
+- **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Berichte → Workspace-Dokumente → Space-Bericht*.
 - **Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Leitfäden, Abschlüsse, Protokolle — VERLINKT aus dem System, das du schon nutzt: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder jeder https-Link (der Drive verwaltet seine Zugriffe; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: jedes Mitglied, Admins & Inhaber, nur Inhaber — serverseitig erzwungen. Kuratiert per + ; die Funktion *Dokumentbibliothek* schaltet alles.
 
 <p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>

@@ -53,6 +53,7 @@ const Set<String> _openWithEveryFeatureOff = {
   '/payment-methods',
   '/features',
   '/workspace-settings',
+  '/reports', // #2301: relocated configuration PDFs; each optional report keeps its gate.
   '/validation',
   '/availability',
   '/members',

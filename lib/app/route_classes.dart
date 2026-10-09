@@ -149,6 +149,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/accessories', RouteClass.workspace),
   RouteRule('/features', RouteClass.workspace),
   RouteRule('/workspace-settings', RouteClass.workspace),
+  RouteRule('/reports', RouteClass.workspace),
   RouteRule('/validation', RouteClass.workspace),
   RouteRule('/availability', RouteClass.workspace),
   RouteRule('/bi', RouteClass.workspace), // #1923
