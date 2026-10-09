@@ -331,11 +331,6 @@ class AvailabilityScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n?.availabilityTitle ?? 'Availability'),
       ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: l10n?.availabilityAddClosure ?? 'Add closure day',
-        onPressed: () => _addClosure(context, ref),
-        child: const Icon(Icons.add),
-      ),
       body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (
           AsyncData(value: final open),
@@ -343,8 +338,7 @@ class AvailabilityScreen extends ConsumerWidget {
           AsyncData(value: final closures),
         ) =>
           ListView(
-            // #1181 — the add button overlays this list; it ends above it.
-            padding: const EdgeInsets.only(bottom: kFabSafeBottom),
+            padding: const EdgeInsets.only(bottom: AppSpacing.xl),
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.availability),
@@ -405,69 +399,42 @@ class AvailabilityScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
-              RadioGroup<BookingGranularity>(
-                groupValue: granularity,
-                onChanged: (value) => _setGranularity(context, ref, value),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.flexible,
-                      title: Text(
-                        l10n?.availabilityGranularityFlexible ??
-                            'Free time period',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.minutes5,
-                      title: Text(
-                        l10n?.availabilityGranularity5 ?? '5-minute slots',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.minutes15,
-                      title: Text(
-                        l10n?.availabilityGranularity15 ??
-                            '15-minute slots',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.minutes30,
-                      title: Text(
-                        l10n?.availabilityGranularity30 ??
-                            '30-minute slots',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.minutes60,
-                      title: Text(
-                        l10n?.availabilityGranularity60 ?? '1-hour slots',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.halfDay,
-                      title: Text(
-                        l10n?.availabilityGranularityHalfDay ??
-                            'Half days (morning & afternoon)',
-                      ),
-                    ),
-                    RadioListTile<BookingGranularity>(
-                      value: BookingGranularity.fullDay,
-                      title: Text(
-                        l10n?.availabilityGranularityFullDay ??
-                            'Full days only',
-                      ),
-                    ),
-                    if (workingHoursOn)
-                      RadioListTile<BookingGranularity>(
-                        value: BookingGranularity.hours,
-                        title: Text(
-                          l10n?.availabilityGranularityHours ??
-                              'Real hours (exact from-to, half/full days '
-                                  'as shortcuts)',
-                        ),
-                      ),
+              // #2313 — one choice, one control: a dropdown instead of
+              // eight radio rows pushing the rest of the page down.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.md),
+                child: DropdownButtonFormField<BookingGranularity>(
+                  key: const ValueKey('availability-granularity'),
+                  isExpanded: true,
+                  initialValue: granularity,
+                  // The section title above names it; no second label.
+                  items: [
+                    for (final (value, label) in [
+                      (BookingGranularity.flexible,
+                          l10n?.availabilityGranularityFlexible ?? 'Free time period'),
+                      (BookingGranularity.minutes5,
+                          l10n?.availabilityGranularity5 ?? '5-minute slots'),
+                      (BookingGranularity.minutes15,
+                          l10n?.availabilityGranularity15 ?? '15-minute slots'),
+                      (BookingGranularity.minutes30,
+                          l10n?.availabilityGranularity30 ?? '30-minute slots'),
+                      (BookingGranularity.minutes60,
+                          l10n?.availabilityGranularity60 ?? '1-hour slots'),
+                      (BookingGranularity.halfDay,
+                          l10n?.availabilityGranularityHalfDay ??
+                              'Half days (morning & afternoon)'),
+                      (BookingGranularity.fullDay,
+                          l10n?.availabilityGranularityFullDay ?? 'Full days only'),
+                      if (workingHoursOn)
+                        (BookingGranularity.hours,
+                            l10n?.availabilityGranularityHours ??
+                                'Real hours (exact from-to, half/full days '
+                                    'as shortcuts)'),
+                    ])
+                      DropdownMenuItem(value: value, child: Text(label)),
                   ],
+                  onChanged: (value) => _setGranularity(context, ref, value),
                 ),
               ),
               if (workingHoursOn) ...[
@@ -757,6 +724,15 @@ class AvailabilityScreen extends ConsumerWidget {
                   anchor: HelpAnchor.availabilityClosureDays,
                 ),
               ]),
+              // #2313 — adding a closure day is a row of its own section,
+              // not a floating button over every other section.
+              ListTile(
+                key: const ValueKey('availability-add-closure'),
+                leading: const Icon(Icons.add),
+                title: Text(l10n?.availabilityAddClosure ?? 'Add closure day'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _addClosure(context, ref),
+              ),
               if (holidaysOn)
                 ListTile(
                   key: const ValueKey('availability-public-holidays'),
@@ -797,7 +773,6 @@ class AvailabilityScreen extends ConsumerWidget {
                   ),
                 ),
               const CapacityKpiCard(), // #1918, gated inside
-              const SizedBox(height: 80), // keep the FAB off the last row
             ],
           ),
         (AsyncError(), _, _) ||

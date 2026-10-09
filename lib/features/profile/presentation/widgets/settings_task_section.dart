@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/motion/motion.dart';
+import '../../../../core/ui/section_jump_bar.dart';
 
 class SettingsTaskSection extends StatelessWidget {
   const SettingsTaskSection({required this.id, required this.title,
@@ -64,10 +65,10 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
       _focus.putIfAbsent(section.id, () => FocusNode(skipTraversal: true));
     }
     return Column(children: [
-      Padding(padding: AppSpacing.smAll, child: Wrap(spacing: AppSpacing.xs,
-        children: [for (final section in sections) TextButton(
-          key: ValueKey('settings-link-${section.id}'),
-          onPressed: () => _jump(section.id), child: Text(section.title))])),
+      // #2313 — the shared section bar: one row, never wrapped.
+      SectionJumpBar(items: [for (final section in sections) SectionJump(
+        key: 'settings-link-${section.id}', label: section.title,
+        onPressed: () => _jump(section.id))]),
       Expanded(child: SingleChildScrollView(
         key: PageStorageKey('settings-${widget.pane}'), padding: AppSpacing.gutterAll,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

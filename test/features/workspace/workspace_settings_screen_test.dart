@@ -122,8 +122,8 @@ void main() {
     final error = Theme.of(tester.element(danger)).colorScheme.error;
     expect(tile.textColor, error);
     expect(tile.collapsedTextColor, error);
-    final shortcut = tester.widget<TextButton>(find.byKey(const ValueKey('workspace-section-danger')));
-    expect(shortcut.style?.foregroundColor?.resolve({}), error);
+    final shortcut = tester.widget<ActionChip>(find.byKey(const ValueKey('workspace-section-danger')));
+    expect(shortcut.labelStyle?.color, error);
     await tester.tap(find.byKey(const ValueKey('workspace-section-tools')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsNothing);
