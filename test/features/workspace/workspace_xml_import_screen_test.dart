@@ -2,6 +2,7 @@
 //
 // #916 — importing a workspace XML previews first, applies configuration
 // before the plan, and maps each refusal to its own message.
+import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
@@ -222,6 +223,7 @@ Future<void> pumpWorkspaceSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
   await openWorkspaceSettingsGroups(tester, ids: const ['tools']);

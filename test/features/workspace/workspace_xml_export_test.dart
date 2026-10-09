@@ -2,6 +2,7 @@
 //
 // #1012 — exporting the workspace XML saves a file, leaves a trace, offers
 // Share, and reports a failed save.
+import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -63,6 +64,7 @@ Future<void> pumpWorkspaceSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
   await openWorkspaceSettingsGroups(tester);

@@ -2,6 +2,7 @@
 //
 // The front-camera switch in Settings → Preferences: on by default,
 // toggling writes the device-local preference the badge scanner reads.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +24,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await openSettingsSection(tester, 'advanced');
 
     final tile = find.byKey(const ValueKey('settings-front-camera'));
     await tester.scrollUntilVisible(

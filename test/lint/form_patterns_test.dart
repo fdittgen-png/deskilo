@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 253; // #2286 and #2291 use spacing tokens.
 const int _fallbackCeiling =
-    6464; // #2287 and #2291 replace headings with localized task groups.
+    6462; // #2287, #2288 and #2291 use localized task groups.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

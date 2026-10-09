@@ -23,7 +23,8 @@ import '../../providers/profile_providers.dart';
 import '../widgets/settings_advanced_section.dart';
 import '../widgets/settings_about_section.dart';
 import '../widgets/settings_workspace_sections.dart';
-import '../widgets/settings_section_header.dart';
+import '../widgets/settings_task_section.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import 'package:file_selector/file_selector.dart';
 import '../../../../app/route_classes.dart';
 import '../../../../core/files/file_picker.dart';
@@ -50,8 +51,14 @@ part '../widgets/account_settings_dialogs.dart';
 
 
 /// App settings. Sign-out lives here; more sections arrive with their Epics.
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
+  @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  int _scope = 0;
 
   /// Reverts THIS kiosk profile to a regular member (0056): confirm,
   /// call the self RPC, refresh the membership so the router's kiosk
@@ -116,7 +123,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final myProfile = ref.watch(myProfileProvider).value;
     final myMember = ref.watch(myMemberProvider).value;
@@ -128,7 +135,15 @@ class SettingsScreen extends ConsumerWidget {
     final devMode = ref.watch(devModeProvider).value ?? false;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    return Scaffold(
+    final labels = l10n ?? AppLocalizationsEn();
+    final tabHeight = MediaQuery.textScalerOf(context).scale(56).clamp(56.0, double.infinity);
+    final workspaceTiles = workspaceSettingsTiles(context, ref, l10n: l10n,
+      canAdminister: canAdminister, perms: perms, features: features,
+      isOwner: myMember?.isOwner ?? false,
+      hasTwin: ref.watch(currentWorkspaceProvider).value?.pairId.isNotEmpty ?? false);
+    final scope = workspaceTiles.isEmpty ? 0 : _scope;
+    return DefaultTabController(key: ValueKey(workspaceTiles.isNotEmpty),
+      length: workspaceTiles.isEmpty ? 1 : 2, initialIndex: scope, child: Scaffold(
       // #1598 — the screen answers to the name the entry used. It is the
       // same screen and the same route either way: the sections below
       // have asked the permission matrix since #1307, so a member who
@@ -140,27 +155,35 @@ class SettingsScreen extends ConsumerWidget {
             ? (l10n?.memberAccountTitle ?? 'My account')
             : (l10n?.settingsTitle ?? 'Settings')),
       ),
-      body: ListView(
+      body: Column(children: [
+        if (workspaceTiles.isNotEmpty) TabBar(key: const ValueKey('settings-scope'),
+          onTap: (index) => setState(() => _scope = index),
+          tabAlignment: TabAlignment.fill, tabs: [
+          Tab(key: const ValueKey('settings-personal-tab'), height: tabHeight, child: Text(labels.uxSettingsPersonal, textAlign: TextAlign.center)),
+          Tab(key: const ValueKey('settings-workspace-tab'), height: tabHeight, child: Text(labels.uxSettingsSpace, textAlign: TextAlign.center)),
+        ]),
+        Expanded(child: IndexedStack(index: scope, children: [SettingsTaskPane(pane: 'personal',
         children: [
           ListTile(
             leading: const Icon(Icons.switch_account_outlined),
             title: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
             onTap: () => context.go('/me'),
           ),
-          const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionAccount ?? 'My account'),
-          // #1823 — the account's own rows live in Me; this space keeps
-          // its exception and the way there.
-          ...spaceAccountTiles(context, ref),
+          SettingsTaskSection(id: 'account', title: labels.settingsSectionAccount,
+            children: spaceAccountTiles(context, ref)),
           ..._membershipTiles(context, ref, l10n: l10n, myProfile: myProfile, myMember: myMember, features: features),
-          ...workspaceSettingsTiles(context, ref, l10n: l10n, canAdminister: canAdminister, perms: perms, features: features,
-              isOwner: myMember?.isOwner ?? false,
-              hasTwin: ref.watch(currentWorkspaceProvider).value?.pairId.isNotEmpty ?? false),
           ...advancedSettingsTiles(context, ref, l10n: l10n, devMode: devMode),
           ...aboutSettingsTiles(context, ref, l10n: l10n, colorScheme: colorScheme),
         ],
-      ),
-    );
+      ), if (workspaceTiles.isNotEmpty) SettingsTaskPane(pane: 'workspace', children: [
+          if (ref.watch(currentWorkspaceProvider).value case final workspace?)
+            Padding(padding: AppSpacing.mdAll, child: Text(workspace.name,
+              style: Theme.of(context).textTheme.titleLarge)),
+          ...workspaceTiles,
+        ],
+      )])),
+      ]),
+    ));
   }
 
   /// #1307 — My membership: my standing in THIS workspace.
@@ -173,8 +196,7 @@ class SettingsScreen extends ConsumerWidget {
     required Set<WorkspaceFeature> features,
   }) =>
       [
-          const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionMembership ?? 'My membership'),
+          SettingsTaskSection(id: 'membership', title: (l10n ?? AppLocalizationsEn()).settingsSectionMembership, children: [
           // #2085 — what my roles give me here, every member included.
           if (features.contains(WorkspaceFeature.roleAssignment) &&
               myMember != null &&
@@ -339,10 +361,8 @@ class SettingsScreen extends ConsumerWidget {
               ),
               onTap: () => _revertKiosk(context, ref, me.workspaceId),
             ),
+          ]),
       ];
-
-  /// #1154 — the Advanced section — backend, push, developer, demo mode. One of the four slices of a build() that was 723
-  /// lines long; the tiles are unchanged, only the list is cut.
 }
 
 
@@ -440,6 +460,3 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
     );
   }
 }
-
-
-

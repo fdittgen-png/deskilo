@@ -5,6 +5,7 @@
 // tile), and tapping it hands the saver a real workbook — proven by
 // unzipping what was saved, the same bar a spreadsheet reader applies.
 
+import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -76,6 +77,7 @@ Future<List<({String name, Uint8List bytes})>> _pump(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
   await openWorkspaceSettingsGroups(tester);

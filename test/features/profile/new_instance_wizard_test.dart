@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 const _bundleJson = '''
 {"schema":[{"name":"0001_a.sql","sql":"create table a();"},{"name":"0002_b.sql","sql":"create table b();"}],
@@ -53,6 +54,7 @@ Future<({FakeSupabaseManagement api, InMemoryBackendSettingsStore store})> _pump
   await tester.pumpAndSettle();
   await tester.tap(find.byTooltip('Settings'));
   await tester.pumpAndSettle();
+  await openSettingsSection(tester, 'advanced');
   final tile = find.byKey(const ValueKey('backend-server-tile'));
   await tester.scrollUntilVisible(tile, 250, scrollable: find.byType(Scrollable).first);
   await tester.ensureVisible(tile);

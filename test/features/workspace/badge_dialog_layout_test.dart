@@ -38,6 +38,8 @@ Future<FakeWorkspaceRepository> openWithBadges(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('settings-link-membership')));
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('settings-my-badge')));
   await tester.pumpAndSettle();
   return workspace;

@@ -212,7 +212,7 @@ void main() {
 
   testWidgets('app open to a workspace setting changed: opening a day of the '
       'week', (tester) async {
-    const settingBudget = 3;
+    const settingBudget = 4; // #2288 makes personal/workspace scope an explicit choice.
     final workspace = FakeWorkspaceRepository.withWorkspace();
     await tester.pumpWidget(ProviderScope(
       overrides: standardTestOverrides(workspace: workspace),
@@ -222,6 +222,7 @@ void main() {
     final taps = Taps();
 
     await taps.on(tester, find.byTooltip('Settings'));
+    await taps.on(tester, find.byKey(const ValueKey('settings-workspace-tab')));
     final tile = find.text('Availability');
     await tester.scrollUntilVisible(tile, 200,
         scrollable: find.byType(Scrollable).first);
@@ -235,7 +236,7 @@ void main() {
         reason: 'the setting was actually saved');
     expect(taps.count, lessThanOrEqualTo(settingBudget),
         reason: 'changing an opening day took ${taps.count} taps, budget '
-            '$settingBudget (#1247): Settings, Availability, the day.');
+            '$settingBudget (#1247, #2288): Settings, Manage workspace, Availability, the day.');
   });
 
   testWidgets('onboarding to a usable workspace: a name, the suggested '

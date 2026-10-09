@@ -5,6 +5,7 @@
 // (actsAsOwner drives every owner gate); "Promote to owner now"
 // (activation) makes a co-owner a full owner. Succession on owner
 // removal is a server-side trigger — pinned by the migration, not here.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -49,6 +50,7 @@ Future<FakeWorkspaceRepository> pumpMembersWithAna(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
   return workspace;

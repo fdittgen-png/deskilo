@@ -2,6 +2,7 @@
 //
 // #945 — sites: the model and the screen.
 
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     final tile = find.byKey(const ValueKey('settings-sites'));
     await tester.scrollUntilVisible(tile, 300, scrollable: find.byType(Scrollable).first);
     await tester.ensureVisible(tile);

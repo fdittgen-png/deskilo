@@ -1823,6 +1823,10 @@ El comando imprime la posición de cada zona en milímetros y concluye **CONFORM
 
 ## 12. Ajustes y perfil
 
+El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
+
+**Elegir el ámbito.** Mis ajustes reúne el enlace a tu cuenta, tu membresía, los diagnósticos del dispositivo, la ayuda y cerrar sesión. Gestionar espacio contiene solo las herramientas de configuración y administración permitidas para tu rol, con el nombre del espacio. Abre los grupos cuando los necesites; Avanzado empieza cerrado. Ambas vistas conservan su posición al cambiar. Los miembros sin herramientas de administración acceden directamente a sus ajustes personales.
+
 Tu pantalla personal, de arriba abajo:
 
 ![](assets/help/images/settings-personal.jpg)
