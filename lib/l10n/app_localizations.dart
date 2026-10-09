@@ -18312,6 +18312,12 @@ abstract class AppLocalizations {
   /// **'Last used'**
   String get meSpaceLastUsed;
 
+  /// Tooltip of the count on a space side (production or development) on Me › Home: the notifications that belong to it.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}'**
+  String meSpaceNotifications(int count);
+
   /// No description provided for @meSpaceOpen.
   ///
   /// In en, this message translates to:

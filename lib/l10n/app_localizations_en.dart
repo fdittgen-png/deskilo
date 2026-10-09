@@ -10673,6 +10673,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meSpaceLastUsed => 'Last used';
 
   @override
+  String meSpaceNotifications(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count notifications wait here',
+      one: '1 notification waits here',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get meSpaceOpen => 'Open';
 
   @override

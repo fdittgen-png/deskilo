@@ -13,6 +13,7 @@
   "meCreateSpace": "Crear un espacio",
   "meManageSpaces": "Gestionar mis espacios",
   "meSpacePending": "Pendiente de aprobación",
+  "meSpaceNotifications": "{count, plural, =1{1 notificación te espera aquí} other{{count} notificaciones te esperan aquí}}",
   "meSpaceLastUsed": "Último usado",
   "meLeaveAction": "Salir de este espacio",
   "meLeaveOwner": "Los propietarios traspasan el espacio antes de salir",

@@ -102,6 +102,9 @@ const Set<String> _knownPairs = {
   // ADR 0035 — Me › Home shows what I owe across my spaces and opens Me ›
   // Finances, which is the money feature's own screen.
   'me -> money',
+  // #2313 — each of my spaces on Me › Home shows what waits there: the
+  // space I am in counts the decisions waiting for me, as the app icon does.
+  'me -> events',
   // #1835 — a visit is read for the signed-in account only, so the visits
   // providers ask who that is (auth), as every account read does.
   'visits -> auth',
