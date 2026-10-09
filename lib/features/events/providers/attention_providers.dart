@@ -107,7 +107,8 @@ typedef AttentionCounts = ({int total, int updates, int pending, int money});
 @riverpod
 AttentionCounts workspaceAttention(Ref ref) {
   T? loaded<T>(AsyncValue<T> value) => value.hasError || value.isReloading ? null : value.value;
-  if (!ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.eventsTab)) {
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  if (!features.contains(WorkspaceFeature.eventsTab)) {
     return (total: 0, updates: 0, pending: 0, money: 0);
   }
   final scope = ref.watch(attentionScopeProvider);
@@ -121,9 +122,10 @@ AttentionCounts workspaceAttention(Ref ref) {
   final pendingIds = {for (final e in pending) if (e.workspaceId == workspace) e.id};
   final newEvents = events.where((e) => e.workspaceId == workspace &&
       readState != null && e.createdAt.isAfter(readState.seenFor(categoryOfEvent(e)))).toList();
-  final unread = loaded(ref.watch(unreadNoteIdsProvider)) ?? const <String>{};
-  final notes = loaded(ref.watch(myNotesProvider)) ?? const [];
-  final broadcasts = {for (final n in notes)
+  final messages = features.contains(WorkspaceFeature.memberNotifications);
+  final unread = messages ? loaded(ref.watch(unreadNoteIdsProvider)) ?? const <String>{} : const <String>{};
+  final notes = messages ? loaded(ref.watch(myNotesProvider)) : null;
+  final broadcasts = {for (final n in notes ?? const <Never>[])
     if (n.workspaceId == workspace && n.isBroadcast && unread.contains(n.id)) n.id};
   final updates = {for (final e in newEvents) if (!pendingIds.contains(e.id)) e.id};
   final money = {for (final e in [...newEvents, ...pending])

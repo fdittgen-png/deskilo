@@ -117,6 +117,23 @@ void main() {
     expect(c.read(workspaceAttentionProvider).pending, 0);
   });
 
+  test('disabled broadcasts never fetch or count their messages', () async {
+    var fetched = false;
+    final c = ProviderContainer(overrides: [
+      ...standardTestOverrides(),
+      attentionScopeProvider.overrideWithValue('broadcasts-off'),
+      enabledFeaturesSyncProvider.overrideWithValue({WorkspaceFeature.eventsTab}),
+      myNotesProvider.overrideWith((ref) async { fetched = true; return [note('broadcast')]; }),
+    ]);
+    addTearDown(c.dispose);
+    final subscription = c.listen(workspaceAttentionProvider, (_, _) {});
+    addTearDown(subscription.close);
+    await c.read(activeWorkspaceIdProvider.future);
+    await c.pump();
+    expect(c.read(workspaceAttentionProvider).total, 0);
+    expect(fetched, isFalse);
+  });
+
   test('disabled Alerts has no badge and never requests its feed', () async {
     final c = ProviderContainer(overrides: [
       enabledFeaturesSyncProvider.overrideWithValue(const <WorkspaceFeature>{}),

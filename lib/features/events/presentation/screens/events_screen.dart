@@ -93,7 +93,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     if (categories.isEmpty) return;
     final newVisit = _seenThisShowing.isEmpty;
     _seenThisShowing.addAll(categories);
-    if (categories.contains(NotificationCategory.messages)) {
+    if (categories.contains(NotificationCategory.messages) &&
+        ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.memberNotifications)) {
       ref.read(unreadNoteCountProvider.notifier).markAllSeen();
     }
     if (filter.categories.isEmpty) ref.read(eventsSeenCutoffProvider.notifier).markOpened();

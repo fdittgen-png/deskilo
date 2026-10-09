@@ -281,4 +281,4 @@ final class WorkspaceAttentionProvider
 }
 
 String _$workspaceAttentionHash() =>
-    r'd31ab40cd0595d65fbd67b527f4224c1df57dfcb';
+    r'58a7ab45bb98b1c909229cf4fbf1efe1b1cd4aa6';
