@@ -288,6 +288,7 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                             s.state == ReadinessState.notApplicable
                         ? null
                         : TextButton(
+                            key: ValueKey('workspace-readiness-open-${s.route}'),
                             onPressed: () => context.push(s.route),
                             child: Text(l10n?.localSlotOpen ?? 'Set up'),
                           ),

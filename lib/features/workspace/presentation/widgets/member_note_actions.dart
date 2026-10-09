@@ -96,6 +96,7 @@ Future<bool> confirmMemberNoteDelete(BuildContext context) async {
           'Delete this message? This cannot be undone.'),
       actions: [
         TextButton(
+          key: const ValueKey('member-note-actions-cancel'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

@@ -198,6 +198,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioGroup<String>(
+              key: const ValueKey('rights-requests-tile-radio-group'),
               groupValue: _kind,
               onChanged: (value) => setState(() => _kind = value ?? _kind),
               child: Column(
@@ -226,6 +227,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('rights-requests-tile-text-button'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),

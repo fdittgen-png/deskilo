@@ -422,10 +422,12 @@ class _TextDialogState extends State<_TextDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('guide-draft-text-button'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(material.cancelButtonLabel),
         ),
         FilledButton(
+          key: const ValueKey('guide-draft-filled-button'),
           onPressed: () => Navigator.of(context).pop(_text.text),
           child: Text(material.okButtonLabel),
         ),

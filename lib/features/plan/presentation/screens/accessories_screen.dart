@@ -121,6 +121,7 @@ class AccessoriesScreen extends ConsumerWidget {
         title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
       ),
       floatingActionButton: FloatingActionButton(
+        key: const ValueKey('accessories-new'),
         tooltip: l10n?.accessoriesNew ?? 'New accessory',
         onPressed: () => _editSheet(context, ref),
         child: const Icon(Icons.add),
@@ -137,6 +138,7 @@ class AccessoriesScreen extends ConsumerWidget {
             children: [
               for (final accessory in accessories)
                 ListTile(
+                  key: ValueKey('accessories-inactive-${accessory.id}'),
                   leading: Icon(
                     accessory.active
                         ? Icons.devices_other_outlined
@@ -278,12 +280,14 @@ class _AccessorySheetState extends State<_AccessorySheet> {
           ),
           // #542 — per-accessory rate, defaulted to the workspace default.
           VatRateField(
+            key: const ValueKey('accessories-vat-rate-field'),
             rates: widget.rates,
             value: _vatRateId,
             onChanged: (id) => setState(() => _vatRateId = id),
           ),
           if (widget.accessory != null)
             SwitchListTile(
+              key: const ValueKey('accessories-active'),
               contentPadding: EdgeInsets.zero,
               title: Text(l10n?.accessoriesActive ?? 'Active'),
               value: _active,
@@ -291,6 +295,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
             ),
           const SizedBox(height: 8),
           FilledButton(
+            key: const ValueKey('accessories-save'),
             onPressed: _submit,
             child: Text(l10n?.commonSave ?? 'Save'),
           ),

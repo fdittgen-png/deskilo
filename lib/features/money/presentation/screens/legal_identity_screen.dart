@@ -657,6 +657,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               .watch(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.invoiceAddressWindow))
             AddressWindowField(
+              key: const ValueKey('legal-identity-address-window-field'),
               value: _addressWindow,
               countryCode: workspace.countryCode,
               onChanged: (window) =>

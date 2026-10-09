@@ -233,6 +233,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('context-thread-text-button'),
             onPressed: () => Navigator.of(dialog).pop(false),
             child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
           ),
@@ -326,6 +327,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       onInfo: message.mine && _isGroup
           ? () => showGroupReachSheet(context, ref, messageId: message.id)
           : null,
+      // recorder-key-exempt: a data callback; the sheet's actions are keyed.
       onChanged: () {
         ref
           ..invalidate(_provider)

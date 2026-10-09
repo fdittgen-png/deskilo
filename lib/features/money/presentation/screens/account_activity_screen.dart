@@ -41,6 +41,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
+            key: const ValueKey('account-activity-portal-connections'),
             tooltip: l10n?.portalConnections ?? 'Connected servers',
             onPressed: () => context.push('/connections'),
             icon: const Icon(Icons.dns_outlined),
@@ -57,6 +58,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                 Padding(
                   padding: AppSpacing.mdAll,
                   child: DropdownButtonFormField<AccountActivityKind>(
+                    key: const ValueKey('account-activity-invoices-title'),
                     initialValue: _kind,
                     items: [
                       for (final kind in AccountActivityKind.values)
@@ -141,6 +143,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
+                                key: const ValueKey('account-activity-chevron-left'),
                                 tooltip: MaterialLocalizations.of(context)
                                     .previousPageTooltip,
                                 onPressed: _pages.isEmpty
@@ -149,6 +152,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                 icon: const Icon(Icons.chevron_left),
                               ),
                               IconButton(
+                                key: const ValueKey('account-activity-chevron-right'),
                                 tooltip: MaterialLocalizations.of(context)
                                     .nextPageTooltip,
                                 onPressed: entries.length < 50
@@ -167,6 +171,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                       children: [
                         ConnectedActivity(key: ValueKey(account), kind: _kind),
                         TextButton(
+                          key: const ValueKey('account-activity-failed'),
                           onPressed: () => ref.invalidate(provider),
                           child: Text(
                             l10n?.accountActivityFailed ?? 'Could not load your financial history. Tap to retry.',

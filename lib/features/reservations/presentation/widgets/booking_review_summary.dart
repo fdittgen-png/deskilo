@@ -117,6 +117,7 @@ class BookingManagementOptions extends StatelessWidget {
       title: Text(words.uxManageResource),
       children: [
         TextButton.icon(
+          key: const ValueKey('booking-review-summary-plan-make-not-reservable'),
           icon: const Icon(Icons.block),
           label: Text(words.planMakeNotReservable),
           onPressed: onBlock,

@@ -150,6 +150,7 @@ class RoleHoldersSection extends ConsumerWidget {
             title: Text(names[m.id] ?? ''),
             trailing: !readOnly && refusal(m, granting: false) == null
                 ? IconButton(
+                    key: ValueKey('role-holders-section-remove-circle-outline-${m.id}'),
                     icon: const Icon(Icons.remove_circle_outline),
                     tooltip: MaterialLocalizations.of(context)
                         .deleteButtonTooltip,

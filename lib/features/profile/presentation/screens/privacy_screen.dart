@@ -206,6 +206,7 @@ class PrivacyScreen extends ConsumerWidget {
         ])),
         actions: [
           TextButton(
+            key: const ValueKey('privacy-directory-close'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.directoryClose ?? 'Close'),
           ),

@@ -42,6 +42,7 @@ class _LanguageDialog extends ConsumerWidget {
       ),
       children: [
         RadioGroup<String>(
+          key: const ValueKey('account-settings-dialogs-preferences-save-failed'),
           groupValue: current,
           onChanged: (code) async {
             await runGuarded(context, domain: 'profile', message: 'save language failed',
@@ -199,6 +200,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('account-settings-dialogs-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -235,6 +237,7 @@ class _ThemeDialog extends ConsumerWidget {
       ),
       children: [
         RadioGroup<ThemeMode>(
+          key: const ValueKey('account-settings-dialogs-preferences-save-failed-2'),
           groupValue: current,
           onChanged: (mode) async {
             await runGuarded(context, domain: 'profile', message: 'save theme failed',
@@ -295,6 +298,7 @@ class _NavigationDialog extends ConsumerWidget {
       ),
       children: [
         RadioGroup<NavigationStyle?>(
+          key: const ValueKey('account-settings-dialogs-navigation-default'),
           groupValue: current,
           onChanged: (style) {
             ref.read(navigationStyleControllerProvider.notifier).set(style);

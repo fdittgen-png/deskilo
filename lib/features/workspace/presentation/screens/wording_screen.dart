@@ -306,6 +306,7 @@ class _TermTile extends StatelessWidget {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('wording-text-button'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           ),

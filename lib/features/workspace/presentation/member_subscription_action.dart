@@ -53,6 +53,7 @@ Future<void> pickMemberSubscription(
               ),
               for (final level in offered)
                 ChoiceChip(
+                  key: ValueKey('member-subscription-action-percent-value-$level'),
                   label: Text(l10n?.percentValue(level) ?? '$level%'),
                   selected: member.subscriptionPct == level,
                   onSelected: (_) => Navigator.of(context).pop(level),
@@ -86,10 +87,12 @@ Future<void> pickMemberSubscription(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('member-subscription-action-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('member-subscription-action-save'),
           onPressed: () {
             final value = customShare(custom.text);
             if (value == null) return;

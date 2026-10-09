@@ -107,6 +107,7 @@ class _GroupInfoSheet extends ConsumerWidget {
                   onPressed: () => _rename(context, ref),
                 ),
               IconButton(
+                key: const ValueKey('group-info-sheet-close'),
                 tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -321,6 +322,7 @@ class _GroupInfoSheet extends ConsumerWidget {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('group-info-sheet-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
@@ -375,6 +377,7 @@ class _GroupInfoSheet extends ConsumerWidget {
         ),
         actions: [
           TextButton(
+            key: ValueKey('group-info-sheet-text-button-$maxLines'),
             onPressed: () => Navigator.of(dialog).pop(),
             child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
           ),

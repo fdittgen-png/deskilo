@@ -399,6 +399,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           WizardText(l10n?.instanceOrganisationLabel ?? 'Organisation',
               style: Theme.of(context).textTheme.labelLarge),
           RadioGroup<String>(
+            key: const ValueKey('new-instance-radio-group'),
             groupValue: _org,
             onChanged: (v) => setState(() => _org = v),
             child: Column(

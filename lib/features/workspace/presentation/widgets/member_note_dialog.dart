@@ -40,6 +40,7 @@ Future<void> showMemberNoteDialog(
       ),
       actions: [
         TextButton(
+          key: ValueKey('member-note-dialog-cancel-$recipientName'),
           onPressed: () => Navigator.of(dialogContext).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

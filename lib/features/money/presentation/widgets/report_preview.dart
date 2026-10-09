@@ -177,6 +177,7 @@ Future<void> showReportQuickPreview(
                     padding: const EdgeInsets.only(
                         right: AppSpacing.sm, bottom: AppSpacing.xs),
                     child: TextButton(
+                      key: const ValueKey('report-preview-directory-close'),
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
                           l10n?.directoryClose ?? 'Close'),

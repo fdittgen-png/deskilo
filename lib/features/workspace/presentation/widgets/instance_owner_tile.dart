@@ -99,6 +99,7 @@ class _InstanceOwnerSheetState extends ConsumerState<InstanceOwnerSheet> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('instance-owner-tile-text-button'),
             onPressed: () => Navigator.pop(ctx, false),
             child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel),
           ),

@@ -51,6 +51,7 @@ class LevelChipRow extends StatelessWidget {
             Padding(
               padding: AppSpacing.xsH,
               child: ChoiceChip(
+                key: const ValueKey('level-chip-row-choice-chip'),
                 label: Text(allLevelsLabel!),
                 selected: allLevelsSelected,
                 // 48dp Material tap minimum (#211).
@@ -62,6 +63,7 @@ class LevelChipRow extends StatelessWidget {
             Padding(
               padding: AppSpacing.xsH,
               child: ChoiceChip(
+                key: ValueKey('level-chip-row-choice-chip-2-${l.id}'),
                 label: Text(l.name),
                 selected: !allLevelsSelected && l.id == selectedLevelId,
                 materialTapTargetSize: MaterialTapTargetSize.padded,

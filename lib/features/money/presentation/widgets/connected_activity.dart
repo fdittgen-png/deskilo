@@ -30,6 +30,7 @@ class ConnectedActivity extends ConsumerWidget {
         ],
       ),
       AsyncError() => TextButton(
+        key: const ValueKey('connected-activity-portal-source-unavailable'),
         onPressed: () => ref.invalidate(connectedSourcesProvider),
         child: Text(
           l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
@@ -105,6 +106,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
+                      key: const ValueKey('connected-activity-chevron-left'),
                       tooltip: MaterialLocalizations.of(context)
                           .previousPageTooltip,
                       onPressed: _pages.isEmpty
@@ -113,6 +115,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
                       icon: const Icon(Icons.chevron_left),
                     ),
                     IconButton(
+                      key: const ValueKey('connected-activity-chevron-right'),
                       tooltip: MaterialLocalizations.of(context)
                           .nextPageTooltip,
                       onPressed: entries.length < 50
@@ -126,6 +129,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
               ],
             ),
             AsyncError() => TextButton(
+              key: const ValueKey('connected-activity-portal-source-unavailable-2'),
               onPressed: () => ref.invalidate(provider),
               child: Text(
                 l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',

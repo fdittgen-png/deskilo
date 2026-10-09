@@ -104,6 +104,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              key: const ValueKey('calendar-plan-cancel-reservation-button'),
               leading: const Icon(Icons.cancel_outlined),
               title: Text(
                 reservation.seriesId == null
@@ -116,6 +117,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             ),
             if (reservation.seriesId != null)
               ListTile(
+                key: const ValueKey('calendar-cancel-following'),
                 leading: const Icon(Icons.fast_forward_outlined),
                 title: Text(
                   l10n?.calendarCancelFollowing ??
@@ -192,6 +194,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           child: Row(
             children: [
               IconButton(
+                key: const ValueKey('calendar-previous-month'),
                 icon: const Icon(Icons.chevron_left),
                 tooltip: l10n?.calendarPreviousMonth ?? 'Previous month',
                 onPressed: () => _goToMonth(-1),
@@ -204,6 +207,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 ),
               ),
               IconButton(
+                key: const ValueKey('calendar-next-month'),
                 icon: const Icon(Icons.chevron_right),
                 tooltip: l10n?.calendarNextMonth ?? 'Next month',
                 onPressed: () => _goToMonth(1),
@@ -392,6 +396,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     itemBuilder: (context, index) {
                       final r = dayReservations[index];
                       return _ReservationCard(
+                        key: ValueKey('calendar-reservation-card-$index'),
                         reservation: r,
                         seatLabel: r.spaceNameFrom(targets),
                         occupant: _everyone ? (names[r.memberId] ?? '') : '',
@@ -435,6 +440,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 /// the same seat reads the same hue across days.
 class _ReservationCard extends StatelessWidget {
   const _ReservationCard({
+    super.key,
     required this.reservation,
     required this.seatLabel,
     required this.occupant,
@@ -499,6 +505,7 @@ class _ReservationCard extends StatelessWidget {
         borderRadius: AppRadius.lgAll,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
+          key: const ValueKey('calendar-reservation-actions-2'),
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -538,6 +545,7 @@ class _ReservationCard extends StatelessWidget {
                 ),
                 if (own)
                   IconButton(
+                    key: const ValueKey('calendar-reservation-actions'),
                     icon: const Icon(Icons.more_vert),
                     tooltip: l10n?.calendarReservationActions ??
                         'Reservation actions',
@@ -652,6 +660,7 @@ class _MonthGrid extends StatelessWidget {
                                   )
                                 : null;
                         return InkWell(
+                          key: ValueKey('calendar-circle-$col'),
                           onTap: () => onSelect(day),
                           borderRadius: AppRadius.mdAll,
                           child: SizedBox(

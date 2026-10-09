@@ -412,6 +412,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   Expanded(
                     flex: 2,
                     child: LevelChipRow(
+                      key: const ValueKey('kiosk-level-chip-row'),
                       levels: levels,
                       selectedLevelId: level.id,
                       onSelected: (id) => setState(() => _levelId = id),

@@ -457,6 +457,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                       section: final TemplateGallerySection s
                     ) =>
                       TemplateCard(
+                        key: ValueKey('template-gallery-template-card-$i'),
                         template: t,
                         selected: widget.onSelected == null
                             ? null
@@ -481,6 +482,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                               ),
                       ),
                     _ => _EmptySpaceCard(
+                        key: ValueKey('template-gallery-empty-space-card-$i'),
                         selected: widget.selectedId == null,
                         onTap: () => widget.onSelected?.call(null),
                       ),
@@ -498,7 +500,7 @@ class _EmptySpace {
 
 /// One template, as the gallery shows it: what it is for and what it gives.
 class _EmptySpaceCard extends StatelessWidget {
-  const _EmptySpaceCard({required this.selected, required this.onTap});
+  const _EmptySpaceCard({super.key, required this.selected, required this.onTap});
 
   final bool selected;
   final VoidCallback onTap;
@@ -511,6 +513,7 @@ class _EmptySpaceCard extends StatelessWidget {
       color:
           selected ? Theme.of(context).colorScheme.secondaryContainer : null,
       child: ListTile(
+        key: const ValueKey('template-gallery-onboarding-start-empty'),
         leading: Icon(selected ? Icons.check : Icons.crop_square_outlined),
         title: Text(l10n?.onboardingStartEmpty ?? 'Empty space'),
         subtitle: Text(l10n?.onboardingStartEmptyDesc ??

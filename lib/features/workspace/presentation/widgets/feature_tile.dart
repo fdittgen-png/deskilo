@@ -241,6 +241,7 @@ class _MoreAboutState extends State<_MoreAbout> {
         // switch row, and a 48 dp target here would fight the switch
         // for the row's height and for the tap.
         InkWell(
+          key: const ValueKey('feature-tile-less'),
           onTap: () => setState(() => _open = !_open),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),

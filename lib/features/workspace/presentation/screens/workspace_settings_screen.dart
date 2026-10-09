@@ -299,6 +299,7 @@ class _WorkspaceSettingsScreenState
             l10n,
             path,
             action: SnackBarAction(
+              key: const ValueKey('workspace-settings-share'),
               label: l10n?.commonShare ?? 'Share',
               onPressed: () => ref.read(fileSharerProvider)(
                 bytes: bytes,
@@ -1019,7 +1020,7 @@ class _WorkspaceSettingsScreenState
                   // #2313 — tips sit at the top of every screen.
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
-                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
+                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   WorkspaceFormGroup(id: 'tools', title: labels.uxWorkspaceTools, icon: Icons.import_export,

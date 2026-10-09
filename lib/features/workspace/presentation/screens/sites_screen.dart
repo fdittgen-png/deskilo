@@ -49,6 +49,7 @@ class SitesScreen extends ConsumerWidget {
                 Card(
                   key: ValueKey('site-${site.id}'),
                   child: ListTile(
+                    key: ValueKey('sites-default-${site.id}'),
                     leading: Icon(site.isDefault
                         ? Icons.home_work_outlined
                         : Icons.location_city_outlined),
@@ -170,6 +171,7 @@ class SitesScreen extends ConsumerWidget {
               child: Text(l10n?.siteDelete ?? 'Delete this site'),
             ),
           TextButton(
+            key: const ValueKey('sites-cancel'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

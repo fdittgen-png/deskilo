@@ -100,6 +100,7 @@ class ServicesScreen extends ConsumerWidget {
         title: Text(l10n?.servicesTitle ?? 'Services'),
       ),
       floatingActionButton: FloatingActionButton(
+        key: const ValueKey('services-new'),
         tooltip: l10n?.servicesNew ?? 'New service',
         onPressed: () => _editSheet(context, ref),
         child: const Icon(Icons.add),
@@ -114,6 +115,7 @@ class ServicesScreen extends ConsumerWidget {
             children: [
               for (final service in services)
                 ListTile(
+                  key: ValueKey('services-price-vat-included-${service.id}'),
                   leading: Icon(
                     service.active
                         ? Icons.local_cafe_outlined
@@ -299,12 +301,14 @@ class _ServiceSheetState extends State<_ServiceSheet> {
           // The price stays what the member pays; the rate only decides
           // how much of it is tax.
           VatRateField(
+            key: const ValueKey('services-vat-rate-field'),
             rates: widget.rates,
             value: _vatRateId,
             onChanged: (id) => setState(() => _vatRateId = id),
           ),
           if (widget.service != null)
             SwitchListTile(
+              key: const ValueKey('services-active'),
               contentPadding: EdgeInsets.zero,
               title: HelpDotTitle(
                 l10n?.servicesActive ?? 'Active',
@@ -317,6 +321,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             ),
           const SizedBox(height: 8),
           FilledButton(
+            key: const ValueKey('services-save'),
             onPressed: _submit,
             child: Text(l10n?.commonSave ?? 'Save'),
           ),

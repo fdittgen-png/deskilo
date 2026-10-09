@@ -396,6 +396,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ),
           Expanded(
             child: TextFormField(
+              key: ValueKey('billing-band-to-$index'),
               enabled: !isLast,
               initialValue: '${draft.toPct ?? ''}',
               keyboardType: TextInputType.number,
@@ -417,6 +418,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           const SizedBox(width: 8),
           Expanded(
             child: TextFormField(
+              key: ValueKey('billing-band-fee-$index'),
               initialValue: centsToMajor(draft.feeCents ?? 0),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -436,6 +438,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           const SizedBox(width: 8),
           Expanded(
             child: TextFormField(
+              key: ValueKey('billing-band-overage-$index'),
               initialValue: centsToMajor(draft.overageCents ?? 0),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -458,6 +461,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
             const SizedBox(width: 48)
           else
             IconButton(
+              key: ValueKey('billing-remove-band-$index'),
               icon: const Icon(Icons.remove_circle_outline),
               tooltip: l10n?.billingRemoveBand ?? 'Remove band',
               onPressed: () => _removeBand(draft),
@@ -537,12 +541,14 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         Row(
           children: [
             TextButton.icon(
+              key: const ValueKey('billing-add-band'),
               onPressed: _addBand,
               icon: const Icon(Icons.add),
               label: Text(l10n?.billingAddBand ?? 'Add band'),
             ),
             const Spacer(),
             FilledButton(
+              key: const ValueKey('billing-save'),
               onPressed: _saveBands,
               child: Text(l10n?.commonSave ?? 'Save'),
             ),
@@ -568,6 +574,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           children: [
             for (final preset in SubscriptionLevels.presets)
               FilterChip(
+                key: ValueKey('billing-percent-value-$preset'),
                 label: Text(l10n?.percentValue(preset) ?? '$preset%'),
                 selected: _enabledPresets.contains(preset),
                 onSelected: (selected) => setState(() {
@@ -589,6 +596,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           children: [
             Expanded(
               child: TextField(
+                key: const ValueKey('billing-level-value'),
                 controller: _newLevel,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -602,6 +610,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               ),
             ),
             IconButton(
+              key: const ValueKey('billing-add-level'),
               icon: const Icon(Icons.add),
               tooltip: l10n?.billingAddLevel ?? 'Add level',
               onPressed: _addLevel,
@@ -609,6 +618,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ],
         ),
         SwitchListTile(
+          key: const ValueKey('billing-allow-custom'),
           contentPadding: EdgeInsets.zero,
           title: HelpDotTitle(
             l10n?.billingAllowCustom ?? 'Allow negotiated custom value',
@@ -621,6 +631,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         Align(
           alignment: Alignment.centerRight,
           child: FilledButton(
+            key: const ValueKey('billing-save-2'),
             onPressed: _saveLevels,
             child: Text(l10n?.commonSave ?? 'Save'),
           ),
@@ -684,6 +695,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
                   vatLabel == null ? summary : '$summary · $vatLabel');
             }),
             trailing: Switch(
+              key: ValueKey('billing-switch-${package.id}'),
               value: package.active,
               onChanged: (_) => _togglePackage(package),
             ),
@@ -748,6 +760,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
               ),
             ),
             IconButton(
+              key: const ValueKey('billing-add-package'),
               icon: const Icon(Icons.add_circle_outline),
               tooltip: l10n?.billingAddPackage ?? 'Add package',
               onPressed: _addPackage,
@@ -755,6 +768,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ],
         ),
         VatRateField(
+          key: const ValueKey('billing-vat-rate-field'),
           rates: ref.watch(vatRatesProvider).value ?? const [],
           value: _pkgVatRateId,
           onChanged: (id) => setState(() => _pkgVatRateId = id),

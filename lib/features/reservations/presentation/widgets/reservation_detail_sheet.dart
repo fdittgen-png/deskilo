@@ -207,6 +207,7 @@ class ReservationDetailSheet extends ConsumerWidget {
             if (seatId != null) SeatAccessoryRow(seatId: seatId),
             const SizedBox(height: 16),
             FilledButton.icon(
+              key: const ValueKey('reservation-detail-sheet-calendar-show-on-plan'),
               icon: const Icon(Icons.map_outlined),
               onPressed: target == null
                   ? null
@@ -334,6 +335,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('reservation-detail-sheet-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
@@ -384,6 +386,7 @@ class ReservationDetailSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              key: const ValueKey('reservation-detail-sheet-plan-cancel-reservation-button'),
               leading: const Icon(Icons.event_busy_outlined),
               title: Text(
                 r.seriesId == null
@@ -397,6 +400,7 @@ class ReservationDetailSheet extends ConsumerWidget {
             ),
             if (r.seriesId != null)
               ListTile(
+                key: const ValueKey('reservation-detail-sheet-calendar-cancel-following'),
                 leading: const Icon(Icons.fast_forward_outlined),
                 title: Text(
                   l10n?.calendarCancelFollowing ??

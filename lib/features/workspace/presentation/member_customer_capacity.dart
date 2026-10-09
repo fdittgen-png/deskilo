@@ -61,6 +61,7 @@ Future<void> pickMemberCustomerCapacity(
         ),
         actions: [
           TextButton(
+            key: const ValueKey('member-customer-capacity-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

@@ -161,6 +161,7 @@ class BiScreen extends ConsumerWidget {
                 onOpen: (view, q) => go(q, view?.id ?? 'standard'),
               ),
             BiToolbar(
+              key: const ValueKey('bi-bi-toolbar'),
               query: query,
               modules: modules,
               today: today,

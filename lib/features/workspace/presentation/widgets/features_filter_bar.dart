@@ -99,6 +99,7 @@ class FeaturesFilterBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: FeatureMaturityFilterButton(
+                  key: const ValueKey('features-filter-bar-feature-maturity-filter-button'),
                   value: maturity, onChanged: onMaturity!),
             ),
         ],

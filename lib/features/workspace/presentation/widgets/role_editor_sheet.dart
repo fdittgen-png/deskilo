@@ -162,6 +162,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                 ),
               if (!_builtin) ...[
               SwitchListTile(
+                key: const ValueKey('role-editor-sheet-editor-active'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n?.roleEditorActive ?? 'In use'),
                 value: _active,

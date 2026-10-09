@@ -108,6 +108,7 @@ class ForwardTargetSheet extends ConsumerWidget {
                 }(),
                 AsyncError() => Center(
                   child: TextButton(
+                    key: const ValueKey('forward-target-sheet-retry'),
                     onPressed: () => ref.invalidate(unifiedInboxProvider),
                     child: Text(l10n?.commonRetry ?? 'Try again'),
                   ),

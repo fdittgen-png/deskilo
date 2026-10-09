@@ -37,6 +37,7 @@ Future<void> showSeriesResultDialog(
             ),
       actions: [
         FilledButton(
+          key: const ValueKey('series-result-dialog-ok'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonOk ?? 'OK'),
         ),

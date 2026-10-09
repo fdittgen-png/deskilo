@@ -200,6 +200,7 @@ class _BillingDialogState extends ConsumerState<_BillingDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('billing-rules-dialog-cancel'),
           onPressed: _busy ? null : () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

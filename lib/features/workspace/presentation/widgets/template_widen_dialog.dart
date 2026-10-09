@@ -71,6 +71,7 @@ Future<bool> showTemplateWidenDialog(
       ),
       actions: [
         TextButton(
+          key: ValueKey('template-widen-dialog-text-button-${to.name}'),
           onPressed: () => Navigator.of(ctx).pop(false),
           child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel),
         ),

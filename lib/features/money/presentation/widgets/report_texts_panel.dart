@@ -97,6 +97,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
           ),
           actions: [
             TextButton(
+              key: const ValueKey('report-texts-panel-cancel'),
               onPressed: () => Navigator.of(dialogContext).pop(),
               child: Text(l10n?.commonCancel ?? 'Cancel'),
             ),

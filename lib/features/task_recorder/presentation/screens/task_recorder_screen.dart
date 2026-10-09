@@ -402,10 +402,12 @@ class _NoteDialogState extends State<_NoteDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('task-recorder-text-button'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(material.cancelButtonLabel),
         ),
         FilledButton(
+          key: const ValueKey('task-recorder-filled-button'),
           onPressed: () => Navigator.of(context).pop(_text.text),
           child: Text(material.okButtonLabel),
         ),

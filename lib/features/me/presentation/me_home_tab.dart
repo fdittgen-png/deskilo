@@ -176,6 +176,7 @@ class _FinanceGlance extends ConsumerWidget {
         color: tone.withValues(alpha: .10),
         borderRadius: AppRadius.xlAll,
         child: InkWell(
+          key: const ValueKey('me-home-tab-finance-glance-owed'),
           borderRadius: AppRadius.xlAll,
           onTap: () => context.push(myFinancesRoute()),
           child: Padding(

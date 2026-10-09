@@ -65,6 +65,7 @@ class TemplatePicker extends ConsumerWidget {
               : !async.hasValue
               ? const LoadingView(key: ValueKey('template-picker-loading'))
               : TemplateGallery(
+            key: const ValueKey('template-picker-onboarding-start-from'),
             sections: [
               TemplateGallerySection(
                 title: l10n?.onboardingStartFrom ?? 'Start from',

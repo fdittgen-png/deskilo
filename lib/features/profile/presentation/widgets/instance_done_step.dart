@@ -36,6 +36,7 @@ class CopyableLink extends StatelessWidget {
   Widget build(BuildContext context) => Row(children: [
         Expanded(child: SelectableText(value)),
         IconButton(
+          key: const ValueKey('instance-done-step-copy'),
           tooltip: label,
           icon: const Icon(Icons.copy_outlined),
           onPressed: () => Clipboard.setData(ClipboardData(text: value)),

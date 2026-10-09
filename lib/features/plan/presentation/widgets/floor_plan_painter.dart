@@ -765,11 +765,13 @@ class FloorPlanPainter extends CustomPainter {
     return (Size size) => [
           for (final seat in plan.seats)
             CustomPainterSemantics(
+              key: ValueKey('plan-seat-semantics-${seat.id}'),
               rect: _toPx(seat.footprint),
               properties: SemanticsProperties(
                 label: labels[seat.id] ?? seat.name,
                 textDirection: semanticsDirection,
                 button: onSeatSemanticTap != null,
+                // recorder-key-exempt: the seat's node is keyed above.
                 onTap: onSeatSemanticTap == null
                     ? null
                     : () => onSeatSemanticTap!(seat),

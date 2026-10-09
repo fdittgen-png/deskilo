@@ -35,10 +35,12 @@ Future<String?> _promptName(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('editor-rename-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('editor-rename-save'),
           onPressed: () => Navigator.of(context).pop(controller.text.trim()),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),
@@ -63,6 +65,7 @@ class EditorScreen extends ConsumerWidget {
         title: Text(l10n?.editorTitle ?? 'Workspace editor'),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        key: const ValueKey('editor-add-level'),
         onPressed: workspace == null
             ? null
             : () async {
@@ -192,6 +195,7 @@ class _LevelList extends ConsumerWidget {
               ),
               MenuAnchor(
             builder: (context, controller, child) => IconButton(
+              key: ValueKey('editor-level-actions-$index'),
               icon: const Icon(Icons.more_vert),
               tooltip: l10n?.editorLevelActions ?? 'Level actions',
               onPressed: () =>
@@ -199,6 +203,7 @@ class _LevelList extends ConsumerWidget {
             ),
             menuChildren: [
               MenuItemButton(
+                key: ValueKey('editor-rename-level-$index'),
                 onPressed: () async {
                   final name = await _promptName(
                     context,
@@ -216,6 +221,7 @@ class _LevelList extends ConsumerWidget {
               // Whole-level booking (0050): bookable toggle + half-day
               // price, per level.
               MenuItemButton(
+                key: ValueKey('editor-level-bookable-toggle-$index'),
                 onPressed: () => showDialog<void>(
                   context: context,
                   builder: (_) => _LevelBookingDialog(level: level),
@@ -225,6 +231,7 @@ class _LevelList extends ConsumerWidget {
                 ),
               ),
               MenuItemButton(
+                key: ValueKey('editor-delete-2-$index'),
                 onPressed: () async {
                   final confirmed = await showDialog<bool>(
                     context: context,
@@ -234,10 +241,12 @@ class _LevelList extends ConsumerWidget {
                           Text(deleteLevelConfirmText(ref, l10n)),
                       actions: [
                         TextButton(
+                          key: ValueKey('editor-cancel-2-$index'),
                           onPressed: () => Navigator.of(context).pop(false),
                           child: Text(l10n?.commonCancel ?? 'Cancel'),
                         ),
                         FilledButton(
+                          key: ValueKey('editor-delete-$index'),
                           onPressed: () => Navigator.of(context).pop(true),
                           child: Text(l10n?.commonDelete ?? 'Delete'),
                         ),
@@ -345,6 +354,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('editor-cancel-3'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

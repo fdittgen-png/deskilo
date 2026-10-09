@@ -92,6 +92,7 @@ class _ThreadState extends ConsumerState<AccountThread> {
             ? const LoadingView()
             : Center(
                 child: TextButton(
+                  key: const ValueKey('account-thread-retry'),
                   onPressed: _lookup,
                   child: Text(l?.commonRetry ?? 'Try again'),
                 ),

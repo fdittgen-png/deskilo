@@ -261,6 +261,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               decoration: InputDecoration(
                 labelText: l10n?.authPasswordLabel ?? 'Password',
                 suffixIcon: IconButton(
+                  key: const ValueKey('auth-show-password'),
                   tooltip: _obscurePassword
                       ? (l10n?.authShowPassword ?? 'Show password')
                       : (l10n?.authHidePassword ?? 'Hide password'),
@@ -301,6 +302,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
+                  key: const ValueKey('auth-forgot-password'),
                   onPressed: _busy ? null : _resetPasswordSheet,
                   child: Text(
                     l10n?.authForgotPassword ?? 'Forgot password?',
@@ -327,6 +329,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               const SizedBox(height: 12),
             ],
             FilledButton(
+              key: const ValueKey('auth-sign-up-button'),
               onPressed: _busy ? null : _submit,
               child: _busy
                   ? const SizedBox(
@@ -434,6 +437,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             TextButton(
               // The e-mail and the name follow across the switch;
               // the password and the last answer do not.
+              key: const ValueKey('auth-toggle-to-sign-in'),
               onPressed: _busy
                   ? null
                   : () => setState(() {

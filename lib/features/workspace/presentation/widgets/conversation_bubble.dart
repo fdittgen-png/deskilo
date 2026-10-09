@@ -220,6 +220,7 @@ class ConversationBubble extends ConsumerWidget {
                 children: [
                   if (split.quote != null)
                     _QuotedBlock(
+                      key: const ValueKey('conversation-bubble-quoted-block'),
                       quote: split.quote!,
                       foreground: fg,
                       onTap: onQuoteTap == null
@@ -312,6 +313,7 @@ class ConversationBubble extends ConsumerWidget {
 /// every chat app uses, so a reply reads as a reply at a glance.
 class _QuotedBlock extends StatelessWidget {
   const _QuotedBlock({
+    super.key,
     required this.quote,
     required this.foreground,
     this.onTap,
@@ -325,6 +327,7 @@ class _QuotedBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
+      key: const ValueKey('conversation-bubble-gesture-detector'),
       onTap: onTap,
       child: Container(
       key: ValueKey('quote-${quote.id}'),

@@ -116,6 +116,7 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('space-codes-options-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

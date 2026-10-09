@@ -118,6 +118,7 @@ class _NewConversationSheetState
                   ),
                 ),
                 IconButton(
+                  key: const ValueKey('new-conversation-sheet-close'),
                   tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
                   icon: const Icon(Icons.close),
                   onPressed: () => Navigator.of(context).pop(),

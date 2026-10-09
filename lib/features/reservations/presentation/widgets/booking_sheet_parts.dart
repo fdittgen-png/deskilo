@@ -87,6 +87,7 @@ class BookingTimeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeFormat = appFormatOf(context); // #1150
     return ListTile(
+      key: const ValueKey('booking-sheet-parts-list-tile'),
       contentPadding: EdgeInsets.zero,
       title: Text(label),
       trailing: Text(timeFormat.time(value)),
@@ -119,6 +120,7 @@ class BookingDateTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
+    key: const ValueKey('booking-sheet-parts-list-tile-2'),
     contentPadding: EdgeInsets.zero,
     title: Text(label),
     trailing: Text(DateFormat.yMMMd().format(WorkspaceTime.wall(value))),

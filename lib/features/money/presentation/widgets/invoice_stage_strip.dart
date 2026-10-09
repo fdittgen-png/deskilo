@@ -171,6 +171,7 @@ class _StageTile extends StatelessWidget {
             ? scheme.onSecondaryContainer
             : scheme.onSurfaceVariant;
     return InkWell(
+      key: const ValueKey('invoice-stage-strip-ink-well'),
       onTap: onTap,
       borderRadius: AppRadius.mdAll,
       child: Container(

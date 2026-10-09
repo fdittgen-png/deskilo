@@ -84,11 +84,13 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('whatsapp-dialog-cancel'),
           onPressed:
               _saving ? null : () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('whatsapp-dialog-save'),
           onPressed: _saving ? null : _save,
           child: Text(l10n?.commonSave ?? 'Save'),
         ),

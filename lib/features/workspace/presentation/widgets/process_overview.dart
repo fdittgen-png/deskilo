@@ -131,7 +131,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
           : ListView(
               key: const ValueKey('process-hits'),
               children: [
-                for (final hit in hits) _HitTile(hit: hit, onTap: _openHit),
+                for (final hit in hits) _HitTile(key: ValueKey('process-overview-hit-tile-${hit.id}'), hit: hit, onTap: _openHit),
               ],
             );
     } else if (visible.isEmpty) {
@@ -250,7 +250,7 @@ class _ProcessOverviewState extends State<ProcessOverview> {
 
 /// One search result, with the path above it (process › subprocess).
 class _HitTile extends StatelessWidget {
-  const _HitTile({required this.hit, required this.onTap});
+  const _HitTile({super.key, required this.hit, required this.onTap});
 
   final ProcessSearchHit hit;
   final ValueChanged<ProcessSearchHit> onTap;

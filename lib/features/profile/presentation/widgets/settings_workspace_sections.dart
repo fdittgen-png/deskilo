@@ -40,18 +40,21 @@ List<Widget> workspaceSettingsTiles(
         onTap: () => context.push('/reports')),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-workspace-settings-title'),
         leading: const Icon(Icons.business_outlined),
         title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
         onTap: () => context.push('/workspace-settings'),
       ),
     if (perms.contains(WorkspacePermission.workspaceSettings))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-availability-title'),
         leading: const Icon(Icons.event_busy_outlined),
         title: Text(l10n?.availabilityTitle ?? 'Availability'),
         onTap: () => context.push('/availability'),
       ),
     if (perms.contains(WorkspacePermission.manageBilling))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-billing-title'),
         leading: const Icon(Icons.payments_outlined),
         title: Text(l10n?.billingTitle ?? 'Billing'),
         onTap: () => context.push('/billing'),
@@ -59,6 +62,7 @@ List<Widget> workspaceSettingsTiles(
     if (perms.contains(WorkspacePermission.manageServices) &&
         features.contains(WorkspaceFeature.services))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-services-title'),
         leading: const Icon(Icons.local_cafe_outlined),
         title: Text(l10n?.servicesTitle ?? 'Services'),
         onTap: () => context.push('/services'),
@@ -69,6 +73,7 @@ List<Widget> workspaceSettingsTiles(
     if ((perms.contains(WorkspacePermission.manageServices)) &&
         features.contains(WorkspaceFeature.accessorySupplements))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-accessories-title'),
         leading: const Icon(Icons.devices_other_outlined),
         title: Text(l10n?.accessoriesTitle ?? 'Accessories'),
         onTap: () => context.push('/accessories'),
@@ -106,6 +111,7 @@ List<Widget> workspaceSettingsTiles(
       ),
     if (perms.contains(WorkspacePermission.manageValidation))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-validation-title'),
         leading: const Icon(Icons.fact_check_outlined),
         title: Text(l10n?.validationTitle ?? 'Validation rules'),
         onTap: () => context.push('/validation'),
@@ -114,6 +120,7 @@ List<Widget> workspaceSettingsTiles(
     // space, so a module switched off can be switched back on (#146).
     if (perms.contains(WorkspacePermission.manageConfiguration))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-features-title'),
         leading: const Icon(Icons.toggle_on_outlined),
         title: Text(l10n?.featuresTitle ?? 'Features'),
         onTap: () => context.push('/features'),
@@ -126,6 +133,7 @@ List<Widget> workspaceSettingsTiles(
     // #2137 — or whoever holds manageMembers, through a role.
     if (perms.contains(WorkspacePermission.manageMembers))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-members-title'),
         leading: const Icon(Icons.group_outlined),
         title: Text(l10n?.membersTitle ?? 'Members & plans'),
         onTap: () => context.push('/members'),
@@ -133,6 +141,7 @@ List<Widget> workspaceSettingsTiles(
     if (perms.contains(WorkspacePermission.manageIntegrations) &&
         features.contains(WorkspaceFeature.onlinePayments))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-pay-config-title'),
         leading: const Icon(Icons.credit_card_outlined),
         title: Text(l10n?.payConfigTitle ?? 'Online payments'),
         onTap: () => context.push('/payment-config'),
@@ -140,6 +149,7 @@ List<Widget> workspaceSettingsTiles(
     if (perms.contains(WorkspacePermission.operateKiosk) &&
         features.contains(WorkspaceFeature.nfcBadges))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-nfc-config-title'),
         leading: const Icon(Icons.contactless_outlined),
         title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
         onTap: () => context.push('/nfc-config'),
@@ -158,6 +168,7 @@ List<Widget> workspaceSettingsTiles(
       ),
     if (perms.contains(WorkspacePermission.manageConfiguration))
       ListTile(
+        key: const ValueKey('settings-workspace-sections-workspace-code-title'),
         leading: const Icon(Icons.qr_code_2),
         title: Text(l10n?.workspaceCodeTitle ?? 'Workspace ID & QR'),
         onTap: () => context.push('/workspace-code'),

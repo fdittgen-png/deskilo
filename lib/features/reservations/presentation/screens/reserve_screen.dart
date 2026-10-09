@@ -675,6 +675,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
       final viewControls = <Widget>[
             // #1301 S2 — the time views behind one named control.
             ReserveViewMenu(
+              key: const ValueKey('reserve-reserve-view-menu'),
               view: _view,
               onChanged: (view) {
                 setState(() => _view = view);
@@ -931,6 +932,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     // pass) — hub-local browsing state (#187), never the plan tab's
     // persisted default (#159).
     final selector = LevelSelector(
+              key: const ValueKey('reserve-layers'),
               keyPrefix: 'reserve',
               levels: levels,
               current: level,

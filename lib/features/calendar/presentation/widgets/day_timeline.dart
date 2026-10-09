@@ -266,6 +266,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         // here is throwaway browsing state, never the persisted default.
         // Row height and tap target meet the 48dp Material minimum (#211).
         LevelChipRow(
+          key: const ValueKey('day-timeline-calendar-all-levels'),
           levels: levels,
           selectedLevelId: level?.id,
           onSelected: (id) =>
@@ -603,6 +604,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       key: DayTimeline.levelHeaderKey(level.id),
       height: TimelineAxis.levelHeaderRowHeight,
       child: InkWell(
+        key: const ValueKey('day-timeline-calendar-level-collapsed'),
         onTap: () => setState(() {
           if (!_collapsedLevels.remove(level.id)) {
             _collapsedLevels.add(level.id);

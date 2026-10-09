@@ -194,6 +194,7 @@ class HourCountTile extends StatelessWidget {
         leading: const Icon(Icons.timelapse_outlined),
         title: Text(title),
         trailing: DropdownButton<int>(
+          key: const ValueKey('availability-tiles-hour-option'),
           value: value.clamp(1, 16),
           underline: const SizedBox.shrink(),
           items: [

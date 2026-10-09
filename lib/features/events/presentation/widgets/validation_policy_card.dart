@@ -34,6 +34,7 @@ class ValidationPolicyCard extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       child: InkWell(
+        key: const ValueKey('validation-policy-card-help-hint-validation-topic'),
         borderRadius: AppRadius.mdAll,
         onTap: onEdit,
         child: Padding(

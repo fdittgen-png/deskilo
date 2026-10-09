@@ -295,6 +295,7 @@ class _BadgeManagerDialogState
             'Delete this revoked badge for good?'),
         actions: [
           TextButton(
+            key: const ValueKey('badge-manager-dialog-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
@@ -373,6 +374,7 @@ class _BadgeManagerDialogState
       ),
       trailing: badge.isActive
           ? TextButton(
+              key: ValueKey('badge-manager-dialog-revoke-${badge.id}'),
               onPressed: () => _revoke(badge),
               child: Text(l10n?.badgeRevoke ?? 'Revoke'),
             )
@@ -538,6 +540,7 @@ class _BadgeManagerDialogState
       ),
       actions: [
         TextButton(
+          key: const ValueKey('badge-manager-dialog-close'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonClose ?? 'Close'),
         ),

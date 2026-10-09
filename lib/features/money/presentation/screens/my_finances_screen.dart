@@ -92,6 +92,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
               children: [
                 if (options.length > 1 || _workspace != null)
                   FinancesWorkspaceFilter(
+                    key: const ValueKey('my-finances-finances-workspace-filter'),
                     options: options,
                     devIds: devIds,
                     selected: _workspace,

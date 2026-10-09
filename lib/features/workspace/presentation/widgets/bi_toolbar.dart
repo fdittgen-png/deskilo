@@ -68,7 +68,7 @@ class BiToolbar extends StatelessWidget {
         );
 
     Widget field<T>({
-      required String keyName,
+      required String fieldKey,
       required String label,
       required T value,
       required List<DropdownMenuItem<T>> items,
@@ -87,7 +87,7 @@ class BiToolbar extends StatelessWidget {
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<T>(
-            key: ValueKey('bi-$keyName'),
+            key: ValueKey('bi-$fieldKey'),
             value: value,
             isExpanded: true,
             isDense: true,
@@ -135,7 +135,7 @@ class BiToolbar extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           field<BiGrain>(
-            keyName: 'grain',
+            fieldKey: 'grain',
             label: l10n?.biGrain ?? 'Period length',
             value: query.grain,
             items: [
@@ -160,7 +160,7 @@ class BiToolbar extends StatelessWidget {
             ),
           ),
           field<BiComparison>(
-            keyName: 'comparison',
+            fieldKey: 'comparison',
             label: l10n?.biCompare ?? 'Compare with',
             value: query.comparison,
             items: [
@@ -193,7 +193,7 @@ class BiToolbar extends StatelessWidget {
                   onChanged(query.copyWith(comparedWith: compared.shift(by))),
             ),
           field<String>(
-            keyName: 'group',
+            fieldKey: 'group',
             label: l10n?.biGroupBy ?? 'Group by',
             value: query.groupBy ?? '',
             items: [
@@ -212,7 +212,7 @@ class BiToolbar extends StatelessWidget {
             ),
           ),
           field<BiSort>(
-            keyName: 'sort',
+            fieldKey: 'sort',
             label: grouped
                 ? l10n?.biSort ?? 'Order'
                 : l10n?.biSortUngrouped ?? 'Order (groups only)',

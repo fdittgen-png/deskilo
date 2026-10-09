@@ -37,6 +37,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
         title: Text(l10n?.applicationsTitle ?? 'Workspace requests'),
         actions: [
           IconButton(
+            key: const ValueKey('workspace-applications-pending-approval-refresh'),
             tooltip: l10n?.pendingApprovalRefresh ?? 'Check again',
             onPressed: () => ref.invalidate(provider),
             icon: const Icon(Icons.refresh),
@@ -93,6 +94,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
+                        key: const ValueKey('workspace-applications-chevron-left'),
                         tooltip: MaterialLocalizations.of(context)
                             .previousPageTooltip,
                         onPressed: _pages.isEmpty
@@ -101,6 +103,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                         icon: const Icon(Icons.chevron_left),
                       ),
                       IconButton(
+                        key: const ValueKey('workspace-applications-chevron-right'),
                         tooltip: MaterialLocalizations.of(context)
                             .nextPageTooltip,
                         onPressed: rows.length < 50
@@ -122,6 +125,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                           'Could not load your workspace requests. Please try again.',
                     ),
                     TextButton(
+                      key: const ValueKey('workspace-applications-retry'),
                       onPressed: () => ref.invalidate(provider),
                       child: Text(l10n?.commonRetry ?? 'Try again'),
                     ),

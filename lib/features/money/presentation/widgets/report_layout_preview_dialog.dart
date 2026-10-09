@@ -43,6 +43,7 @@ Future<void> showLayoutQuickPreview(
         content: Text(_describe(e)),
         actions: [
           TextButton(
+            key: ValueKey('report-layout-preview-dialog-close-$layoutXml'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonClose ?? 'Close'),
           ),
@@ -95,6 +96,7 @@ Future<void> showLayoutQuickPreview(
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.sm),
                 child: TextButton(
+                  key: ValueKey('report-layout-preview-dialog-close-2-$layoutXml'),
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(l10n?.commonClose ?? 'Close'),
                 ),

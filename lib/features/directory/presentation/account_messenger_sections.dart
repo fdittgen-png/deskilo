@@ -33,6 +33,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
     final id = '${person['id']}';
     final name = '${person['name'] ?? ''}';
     return ListTile(
+      key: ValueKey('account-messenger-person-$id'),
       title: Text(name),
       subtitle: widget.host.isEmpty
           ? null
@@ -56,12 +57,14 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
           for (final person in people) _person(context, person),
           if (people.length == 50)
             TextButton(
+              key: const ValueKey('account-messenger-sections-text-button'),
               onPressed: () =>
                   setState(() => _pages.add(people.last['id'] as String)),
               child: Text(MaterialLocalizations.of(context).nextPageTooltip),
             ),
           if (_pages.isNotEmpty)
             TextButton(
+              key: const ValueKey('account-messenger-sections-text-button-2'),
               onPressed: () => setState(_pages.removeLast),
               child: Text(
                 MaterialLocalizations.of(context).previousPageTooltip,
@@ -70,6 +73,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
         ],
       ),
       AsyncError() => TextButton(
+        key: const ValueKey('account-messenger-sections-portal-source-unavailable'),
         onPressed: () => ref.invalidate(provider),
         child: Text(
           l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
@@ -143,6 +147,7 @@ class _AccountConversationListState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
+                  key: const ValueKey('account-messenger-sections-chevron-left'),
                   tooltip: MaterialLocalizations.of(context)
                       .previousPageTooltip,
                   onPressed: _pages.isEmpty
@@ -151,6 +156,7 @@ class _AccountConversationListState
                   icon: const Icon(Icons.chevron_left),
                 ),
                 IconButton(
+                  key: const ValueKey('account-messenger-sections-chevron-right'),
                   tooltip: MaterialLocalizations.of(context).nextPageTooltip,
                   onPressed: conversations.length < 50
                       ? null
@@ -169,6 +175,7 @@ class _AccountConversationListState
         ],
       ),
       AsyncError() => TextButton(
+        key: const ValueKey('account-messenger-sections-portal-source-unavailable-2'),
         onPressed: () => ref.invalidate(provider),
         child: Text(
           l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',

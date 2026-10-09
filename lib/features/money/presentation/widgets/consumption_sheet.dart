@@ -90,6 +90,7 @@ Future<void> showConsumptionSheet(
             const SizedBox(height: 12),
             DropdownButtonFormField<ServiceItem>(
               // #731 — labels grew a stock suffix; never let them clip.
+              key: ValueKey('consumption-sheet-service-$subjectMemberId'),
               isExpanded: true,
               initialValue: service,
               decoration: InputDecoration(
@@ -118,6 +119,7 @@ Future<void> showConsumptionSheet(
                   child: Text(l10n?.consumptionQuantity ?? 'Quantity'),
                 ),
                 IconButton(
+                  key: ValueKey('consumption-sheet-a11y-decrease-$subjectMemberId'),
                   tooltip: l10n?.a11yDecrease ?? 'Decrease',
                   icon: const Icon(Icons.remove),
                   onPressed: quantity <= 1
@@ -129,6 +131,7 @@ Future<void> showConsumptionSheet(
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 IconButton(
+                  key: ValueKey('consumption-sheet-a11y-increase-$subjectMemberId'),
                   tooltip: l10n?.a11yIncrease ?? 'Increase',
                   icon: const Icon(Icons.add),
                   onPressed: quantity >= 999
@@ -139,6 +142,7 @@ Future<void> showConsumptionSheet(
             ),
             const SizedBox(height: 12),
             TextField(
+              key: ValueKey('consumption-sheet-period-label-$subjectMemberId'),
               controller: period,
               // #1449 — the button below reads this field, so it has to
               // be rebuilt when the field changes. Typing a period that

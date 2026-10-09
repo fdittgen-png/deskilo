@@ -194,6 +194,7 @@ class DocumentsScreen extends ConsumerWidget {
           ),
           actions: [
             TextButton(
+              key: const ValueKey('documents-cancel'),
               onPressed: () => Navigator.of(dialogContext).pop(false),
               child: Text(l10n?.commonCancel ?? 'Cancel'),
             ),
@@ -252,6 +253,7 @@ class DocumentsScreen extends ConsumerWidget {
         content: Text(document.title),
         actions: [
           TextButton(
+            key: const ValueKey('documents-cancel-2'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

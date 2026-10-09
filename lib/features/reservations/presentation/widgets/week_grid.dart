@@ -211,6 +211,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
         // Level chips like the day timeline (#187/#221) — throwaway
         // browsing state, never the persisted default.
         LevelChipRow(
+          key: const ValueKey('week-grid-calendar-all-levels'),
           levels: levels,
           selectedLevelId: level?.id,
           onSelected: (id) =>
@@ -613,6 +614,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     return SizedBox(
       width: dayWidth,
       child: InkWell(
+        key: ValueKey('week-grid-ink-well-${brightness.name}'),
         onTap: items.isEmpty ? null : () => _cellSheet(seat, day, items),
         child: Container(
           // Subtle column tint under the highlighted header — never the

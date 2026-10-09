@@ -587,6 +587,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   .firstOrNull;
               final hasBg = level?.hasBackground ?? false;
               return PopupMenuButton<String>(
+                key: const ValueKey('level-canvas-editor-background-image'),
                 icon: const Icon(Icons.image_outlined),
                 tooltip: l10n?.editorBackgroundImage ?? 'Background image',
                 onSelected: (v) {
@@ -1027,10 +1028,12 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         content: Text(deleteElementConfirmText(ref, l10n)),
         actions: [
           TextButton(
+            key: const ValueKey('level-canvas-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
           FilledButton(
+            key: const ValueKey('level-canvas-delete'),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n?.commonDelete ?? 'Delete'),
           ),

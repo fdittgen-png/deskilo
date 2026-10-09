@@ -37,10 +37,12 @@ class _CommentState extends State<ApplicationCommentDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('application-comment-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('application-comment-dialog-member-reject-join'),
           onPressed: () => Navigator.of(context).pop(_comment.text.trim()),
           child: Text(l10n?.memberRejectJoin ?? 'Reject membership'),
         ),

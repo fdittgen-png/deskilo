@@ -401,6 +401,7 @@ class _PreviewSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
+                  key: const ValueKey('deployment-cancel'),
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text(l10n?.commonCancel ?? 'Cancel'),
                 ),

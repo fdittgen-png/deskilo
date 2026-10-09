@@ -88,6 +88,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
         title: Text(l?.portalMessenger ?? 'Account messenger'),
         actions: [
           IconButton(
+            key: const ValueKey('account-messenger-portal-connections'),
             tooltip: l?.portalConnections ?? 'Connected servers',
             onPressed: () => context.push('/connections'),
             icon: const Icon(Icons.dns_outlined),
@@ -113,10 +114,12 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
             if (server.key.isNotEmpty)
               _AvailabilitySwitch(source: server.key, host: server.value),
           TextField(
+            key: const ValueKey('account-messenger-portal-find-people-2'),
             controller: _search,
             decoration: InputDecoration(
               labelText: l?.portalFindPeople ?? 'Find available people',
               suffixIcon: IconButton(
+                key: const ValueKey('account-messenger-portal-find-people'),
                 tooltip: l?.portalFindPeople ?? 'Find available people',
                 icon: const Icon(Icons.search),
                 onPressed: () => submit(_search.text),

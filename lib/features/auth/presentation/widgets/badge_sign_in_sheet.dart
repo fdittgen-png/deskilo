@@ -195,6 +195,7 @@ class _BadgeSignInSheetState extends ConsumerState<BadgeSignInSheet> {
           ],
           const SizedBox(height: 8),
           TextButton(
+            key: const ValueKey('badge-sign-in-sheet-sign-in-use-email'),
             onPressed: _busy ? null : () => Navigator.of(context).pop(),
             child: Text(l10n?.badgeSignInUseEmail ?? 'Use my e-mail instead'),
           ),

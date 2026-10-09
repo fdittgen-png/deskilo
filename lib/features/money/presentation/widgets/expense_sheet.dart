@@ -131,6 +131,7 @@ Future<void> showExpenseSheet(
         ),
         const FormGap(),
         DropdownButtonFormField<String>(
+          key: const ValueKey('expense-sheet-money-expense-category-label'),
           initialValue: category,
           decoration: InputDecoration(
             labelText: l10n?.moneyExpenseCategoryLabel ?? 'Category',

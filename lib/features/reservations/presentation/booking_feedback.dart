@@ -40,6 +40,7 @@ void announceBooking(
     action: onOpen == null
         ? null
         : SnackBarAction(
+            key: const ValueKey('booking-feedback-open-details'),
             label: l10n?.bookingOpenDetails ?? 'Details',
             onPressed: onOpen,
           ),

@@ -89,6 +89,7 @@ class CopyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: const ValueKey('how-to-pay-tiles-copy'),
       leading: Icon(icon),
       title: Text(title),
       subtitle: Text(value),

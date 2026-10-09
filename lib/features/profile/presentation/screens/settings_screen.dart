@@ -164,6 +164,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         Expanded(child: IndexedStack(index: scope, children: [SettingsTaskPane(pane: 'personal',
         children: [
           ListTile(
+            key: const ValueKey('settings-space-back-to-me'),
             leading: const Icon(Icons.switch_account_outlined),
             title: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
             onTap: () => context.go('/me'),
@@ -234,6 +235,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           // in the member directory (#232). Sits with WhatsApp in the
           // ungrouped personal area on top.
           ListTile(
+            key: const ValueKey('settings-profile-status-title'),
             leading: const Icon(Icons.mood_outlined),
             title: HelpDotTitle(
               l10n?.profileStatusTitle ?? 'Status',
@@ -448,10 +450,12 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('settings-cancel'),
           onPressed: _saving ? null : () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('settings-save'),
           onPressed: _saving ? null : _save,
           child: Text(l10n?.commonSave ?? 'Save'),
         ),

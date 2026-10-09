@@ -137,6 +137,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => _StoryboardPage(
+          key: const ValueKey('task-workbench-storyboard-page'),
           initial: board,
           onChanged: (next) {
             if (mounted) setState(() => _storyboard = next);
@@ -370,7 +371,7 @@ String refusalText(AppLocalizations? l10n, WorkbenchRefusal reason) =>
 
 /// The storyboard review on its own page: it scrolls by itself.
 class _StoryboardPage extends StatefulWidget {
-  const _StoryboardPage({required this.initial, required this.onChanged});
+  const _StoryboardPage({super.key, required this.initial, required this.onChanged});
 
   final Storyboard initial;
   final ValueChanged<Storyboard> onChanged;
@@ -392,6 +393,7 @@ class _StoryboardPageState extends State<_StoryboardPage> {
         ),
       ),
       body: StoryboardPreview(
+        key: const ValueKey('task-workbench-storyboard-preview'),
         storyboard: _board,
         onChanged: (next) {
           setState(() => _board = next);

@@ -152,12 +152,14 @@ class PendingDecisionsSection extends ConsumerWidget {
                 // tooltip); Accept keeps its word — a money
                 // decision deserves a labeled button.
                 IconButton(
+                  key: ValueKey('pending-decisions-section-event-reject-${event.id}'),
                   tooltip: l10n?.eventReject ?? 'Decline',
                   color: Theme.of(context).colorScheme.error,
                   onPressed: () => _decide(context, ref, event, false),
                   icon: const Icon(Icons.close),
                 ),
                 FilledButton.icon(
+                  key: ValueKey('pending-decisions-section-event-accept-${event.id}'),
                   style: FilledButton.styleFrom(
                     visualDensity: VisualDensity.compact,
                     backgroundColor: AppStatusColors.successOf(

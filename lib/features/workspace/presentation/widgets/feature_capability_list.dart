@@ -92,6 +92,7 @@ class FeatureCapabilityList extends StatelessWidget {
   Widget _tile(AppLocalizations? l10n, FeatureManifestEntry entry) {
     final requires = entry.requires;
     return FeatureTile(
+      key: ValueKey('feature-tile-${entry.feature.name}'),
       entry: entry,
       assessment:
           featureAssessmentOf(entry.feature, assessments: assessments),

@@ -190,6 +190,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('public-page-editor-text-button'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(material.cancelButtonLabel),
           ),
@@ -259,6 +260,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           ? (_failed
                 ? Center(
                     child: TextButton(
+                      key: const ValueKey('public-page-editor-retry'),
                       onPressed: () => _load(_workspace!),
                       child: Text(l?.commonRetry ?? 'Try again'),
                     ),
@@ -268,6 +270,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
               padding: AppSpacing.mdAll,
               children: [
                 SwitchListTile(
+                  key: const ValueKey('public-page-editor-portal-published'),
                   value: _published,
                   onChanged: _busy
                       ? null
@@ -307,6 +310,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextField(
+                          key: ValueKey('public-page-editor-text-field-$field'),
                           controller: _controllers[field],
                           enabled: !_busy,
                           maxLength: 4000,
@@ -335,6 +339,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   ),
                 ),
                 FilledButton(
+                  key: const ValueKey('public-page-editor-portal-save-preview'),
                   onPressed: _busy ? null : _save,
                   child: Text(
                     l?.portalSavePreview ??
@@ -378,6 +383,7 @@ class _InheritedStatus extends StatelessWidget {
         Text(status, style: Theme.of(context).textTheme.bodySmall),
         if (!following)
           TextButton(
+            key: const ValueKey('public-page-editor-portal-use-workspace-info'),
             onPressed: busy ? null : onReset,
             child: Text(
               l?.portalUseWorkspaceInfo ?? 'Use workspace information',

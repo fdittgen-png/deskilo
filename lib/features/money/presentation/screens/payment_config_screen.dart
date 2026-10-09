@@ -258,6 +258,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: field.options != null
                     ? DropdownButtonFormField<String>(
+                        key: ValueKey('payment-config-dropdown-button-form-field-${field.key}'),
                         initialValue: _controllers[field.key]!.text.isEmpty
                             ? field.options!.first
                             : _controllers[field.key]!.text,
@@ -301,6 +302,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
               children: [
                 if (widget.status.configured)
                   TextButton(
+                    key: const ValueKey('payment-config-pay-config-remove'),
                     onPressed: _remove,
                     child: Text(l10n?.payConfigRemove ?? 'Remove'),
                   ),

@@ -362,6 +362,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       FilterChip(
                         // 2024-01-01 was a Monday, so day-of-month == isodow:
                         // locale weekday names without hardcoded strings.
+                        key: ValueKey('availability-filter-chip-$weekday'),
                         label: Text(
                           DateFormat.E(locale)
                               .format(DateTime(2024, 1, weekday)),
@@ -461,6 +462,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
                 const WorkHoursProvenanceRow(),
                 WorkTimeTile(
+                  key: const ValueKey('availability-work-start'),
                   keySuffix: 'start',
                   title: l10n?.availabilityWorkStart ?? 'Day starts',
                   minutes: workHours.startMinutes,
@@ -473,6 +475,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   ),
                 ),
                 WorkTimeTile(
+                  key: const ValueKey('availability-half-boundary'),
                   keySuffix: 'boundary',
                   title:
                       l10n?.availabilityHalfBoundary ?? 'Half-day boundary',
@@ -486,6 +489,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   ),
                 ),
                 WorkTimeTile(
+                  key: const ValueKey('availability-work-end'),
                   keySuffix: 'end',
                   title: l10n?.availabilityWorkEnd ?? 'Day ends',
                   minutes: workHours.endMinutes,
@@ -501,6 +505,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 // granularity - half-day equivalents on the statement.
                 if (granularity == BookingGranularity.hours) ...[
                   HourCountTile(
+                    key: const ValueKey('availability-half-day-hours'),
                     keySuffix: 'half-day-hours',
                     title: l10n?.availabilityHalfDayHours ??
                         'Hours billed as a half day',
@@ -512,6 +517,7 @@ class AvailabilityScreen extends ConsumerWidget {
                     ),
                   ),
                   HourCountTile(
+                    key: const ValueKey('availability-full-day-hours'),
                     keySuffix: 'full-day-hours',
                     title: l10n?.availabilityFullDayHours ??
                         'Hours billed as a full day',
@@ -631,6 +637,7 @@ class AvailabilityScreen extends ConsumerWidget {
                 ),
                 // #628 — how many overlapping bookings a member may hold.
                 SimultaneousTile(
+                  key: const ValueKey('availability-simultaneous-tile'),
                   value: policies.simultaneousReservations,
                   onChanged: (v) => _setSimultaneous(context, ref, v),
                 ),
@@ -660,6 +667,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   ),
                 ),
                 LimitTile(
+                  key: const ValueKey('availability-policy-horizon-title'),
                   keySuffix: 'horizon',
                   icon: Icons.event_available_outlined,
                   title: l10n?.policyHorizonTitle ??
@@ -673,6 +681,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       BookingPolicies.advanceHorizonDaysKey, v),
                 ),
                 LimitTile(
+                  key: const ValueKey('availability-policy-min-duration-title'),
                   keySuffix: 'min-duration',
                   icon: Icons.hourglass_bottom_outlined,
                   title: l10n?.policyMinDurationTitle ?? 'Minimum duration',
@@ -685,6 +694,7 @@ class AvailabilityScreen extends ConsumerWidget {
                       BookingPolicies.minDurationMinutesKey, v),
                 ),
                 LimitTile(
+                  key: const ValueKey('availability-policy-max-duration-title'),
                   keySuffix: 'max-duration',
                   icon: Icons.hourglass_top_outlined,
                   title: l10n?.policyMaxDurationTitle ?? 'Maximum duration',
@@ -767,6 +777,7 @@ class AvailabilityScreen extends ConsumerWidget {
                   subtitle:
                       closure.reason.isEmpty ? null : Text(closure.reason),
                   trailing: IconButton(
+                    key: ValueKey('availability-delete-${closure.id}'),
                     tooltip: l10n?.commonDelete ?? 'Delete',
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _removeClosure(context, ref, closure),
@@ -822,10 +833,12 @@ class _ReasonDialogState extends State<_ReasonDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('availability-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('availability-save'),
           onPressed: () => Navigator.of(context).pop(_reason.text),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),

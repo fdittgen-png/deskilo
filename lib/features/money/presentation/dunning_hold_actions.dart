@@ -117,6 +117,7 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
                       'automatically, until the hold is released.',
             ),
             RadioGroup<String>(
+              key: const ValueKey('dunning-hold-actions-radio-group'),
               groupValue: _reason,
               onChanged: (value) => setState(() => _reason = value ?? _reason),
               child: Column(
@@ -144,6 +145,7 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('dunning-hold-actions-text-button'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),

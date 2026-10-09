@@ -162,6 +162,7 @@ class MonthGrid extends ConsumerWidget {
                   ? totalSeats - (occupied[day]?.length ?? 0)
                   : null;
               return _DayCell(
+                key: ValueKey('month-grid-reserve-closed-short-$index'),
                 day: day,
                 inMonth: inMonth,
                 isToday: DateUtils.isSameDay(day, today),
@@ -223,6 +224,7 @@ class MonthGrid extends ConsumerWidget {
 
 class _DayCell extends StatelessWidget {
   const _DayCell({
+    super.key,
     required this.day,
     required this.inMonth,
     required this.isToday,

@@ -273,6 +273,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                 ),
               if (_isTextual || _isNumeric)
                 TextField(
+                  key: const ValueKey('question-editor-sheet-editor-max-length'),
                   controller: _rule,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -284,6 +285,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   onChanged: (_) => setState(() {}),
                 ),
               SwitchListTile(
+                key: const ValueKey('question-editor-sheet-editor-required'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n?.questionEditorRequired ?? 'Must be answered'),
                 value: _required,
@@ -321,6 +323,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                     : (on) => setState(() => _personal = on),
               ),
               SwitchListTile(
+                key: const ValueKey('question-editor-sheet-editor-active'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n?.questionEditorActive ?? 'Asked now'),
                 value: _active,
@@ -334,6 +337,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
               ),
               for (final visibility in WorkspaceFieldVisibility.values)
                 RadioListTile<WorkspaceFieldVisibility>(
+                  key: ValueKey('question-editor-sheet-radio-list-tile-${visibility.name}'),
                   contentPadding: EdgeInsets.zero,
                   value: visibility,
                   // ignore: deprecated_member_use
