@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
+import 'package:deskilo/features/task_recorder/providers/recorder_providers.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
@@ -236,6 +238,8 @@ List<Override> standardTestOverrides({
     return repo;
   }();
   return [
+    // No disk in a widget test: a recording lives in memory.
+    recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
     // "8:00 AM" under en_US, which is right for that member and wrong for
     // a fixture that pins "08:00". The app honours the preference; the

@@ -37,6 +37,7 @@ import '../../guide/task_guide.dart';
 import '../ui_capture.dart';
 import 'guide_attention.dart';
 import 'guide_bubble.dart';
+import 'guide_bubble_menu.dart';
 import 'guide_step_text.dart';
 
 part 'guide_pane.dart';
@@ -61,6 +62,8 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
   // The wizard folded into a small circle the person can move.
   bool _minimized = false;
   Offset? _bubble;
+  // The circle, tapped: its menu of the pane's actions.
+  bool _bubbleMenu = false;
   int _attentionRevision = 0;
   String? _revealStep;
   Timer? _revealTimer;
@@ -208,6 +211,83 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
     });
   }
 
+  /// What the circle's menu offers: the pane's own actions, under the
+  /// same conditions as its buttons.
+  List<GuideBubbleAction> _bubbleActions(
+    GuideRun run,
+    GuideStep? step,
+    int mainIndex,
+    bool blocked,
+  ) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final notifier = ref.read(guideSessionProvider.notifier);
+    final steps = run.guide.steps;
+    final running = run.state == GuideRunState.running;
+    final waiting =
+        step != null && run.statusOf(step.id) == GuideStepStatus.waiting;
+    final route = step == null ? null : guideStepRoute(steps, step);
+    return [
+      GuideBubbleAction(
+        id: 'open',
+        icon: Icons.open_in_full,
+        label: l10n.guideHostRestore(
+          (mainIndex + 1).clamp(1, steps.length),
+          steps.length,
+        ),
+        perform: () => setState(() => _minimized = false),
+      ),
+      if (run.state == GuideRunState.paused)
+        GuideBubbleAction(
+          id: 'resume',
+          icon: Icons.play_arrow,
+          label: l10n.guideHostResume,
+          perform: notifier.resume,
+        ),
+      if (running && step != null && !blocked)
+        GuideBubbleAction(
+          id: 'show-me',
+          icon: Icons.near_me_outlined,
+          label: l10n.guideHostShowMe,
+          perform: () => _openStep(step),
+        ),
+      if (running && step != null && !blocked && route != null &&
+          widget.router != null)
+        GuideBubbleAction(
+          id: 'go-to-page',
+          icon: Icons.open_in_new,
+          label: guideDestinationLabel(l10n, route),
+          perform: () => _openStep(step),
+        ),
+      if (running && step != null && step.kind != GuideStepKind.perform)
+        GuideBubbleAction(
+          id: 'done',
+          icon: Icons.check,
+          label: l10n.guideHostDone,
+          perform: notifier.acknowledge,
+        ),
+      if (running && step != null && !waiting)
+        GuideBubbleAction(
+          id: 'skip',
+          icon: Icons.skip_next,
+          label: l10n.guideHostSkip,
+          perform: notifier.skip,
+        ),
+      if (running && mainIndex > 0 && !waiting)
+        GuideBubbleAction(
+          id: 'back',
+          icon: Icons.undo,
+          label: l10n.guideHostBack,
+          perform: notifier.back,
+        ),
+      GuideBubbleAction(
+        id: 'stop',
+        icon: Icons.stop_circle_outlined,
+        label: l10n.guideHostStop,
+        perform: notifier.stop,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = ref.watch(guideSessionProvider);
@@ -216,6 +296,7 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
       _follow(null);
       _minimized = false;
       _bubble = null;
+      _bubbleMenu = false;
       _showSteps = false;
       _revealTimer?.cancel();
       _revealTimer = null;
@@ -287,6 +368,14 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
             ),
           ),
         );
+        final bubbleAt = GuideBubble.clampTo(
+          _bubble ??
+              Offset(
+                box.maxWidth - guideBubbleSize - AppSpacing.md,
+                box.maxHeight - bottomClearance - guideBubbleSize,
+              ),
+          box.biggest,
+        );
         return Stack(
           children: [
             if (target != null && live && !blocked)
@@ -300,21 +389,29 @@ class _GuideHostLayerState extends ConsumerState<GuideHostLayer> {
                   ),
                 ),
               ),
-            if (minimized)
+            if (minimized) ...[
               GuideBubble(
-                position:
-                    _bubble ??
-                    Offset(
-                      box.maxWidth - guideBubbleSize - AppSpacing.md,
-                      box.maxHeight - bottomClearance - guideBubbleSize,
-                    ),
+                key: const ValueKey('guide-host-bubble-layer'),
+                position: bubbleAt,
                 bounds: box.biggest,
                 current: (mainIndex + 1).clamp(1, steps.length),
                 total: steps.length,
-                onMove: (p) => setState(() => _bubble = p),
-                onRestore: () => setState(() => _minimized = false),
-              )
-            else
+                onMove: (p) => setState(() {
+                  _bubble = p;
+                  _bubbleMenu = false;
+                }),
+                onTap: () => setState(() => _bubbleMenu = !_bubbleMenu),
+              ),
+              if (_bubbleMenu)
+                Overlay.wrap(
+                  child: GuideBubbleMenu(
+                    bubble: bubbleAt,
+                    bounds: box.biggest,
+                    actions: _bubbleActions(run, step, mainIndex, blocked),
+                    onDismiss: () => setState(() => _bubbleMenu = false),
+                  ),
+                ),
+            ] else
               Positioned(
                 left: 0,
                 right: 0,

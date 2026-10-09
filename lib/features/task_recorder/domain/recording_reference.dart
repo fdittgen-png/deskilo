@@ -23,6 +23,7 @@ String? guidePageForTarget(String? target) {
     '/res/:id': '/calendar',
     '/conversation/:conversationId': '/messages',
     '/space/:kind/:id': '/discover',
+    '/p/:id': '/discover',
     '/editor/level/:levelId': '/editor',
   }[target];
 }

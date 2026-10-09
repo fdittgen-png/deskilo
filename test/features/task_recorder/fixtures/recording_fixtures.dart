@@ -75,7 +75,6 @@ Map<String, Object?> canaryPayload([Map<String, Object?> legit = const {}]) => {
 final RecorderScope canaryScope = RecorderScope.of(
   backendUrl: kCanaryUrl,
   userId: kCanaryUserId,
-  workspaceId: kCanaryWorkspaceId,
 );
 
 final String canaryNamespace = RecorderScope.accountNamespace(

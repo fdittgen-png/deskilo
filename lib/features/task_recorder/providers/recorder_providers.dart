@@ -87,7 +87,6 @@ RecorderScope? recorderScope(Ref ref) {
   return RecorderScope.of(
     backendUrl: ref.watch(bootedBackendUrlProvider),
     userId: account,
-    workspaceId: ref.watch(activeWorkspaceIdProvider).value,
   );
 }
 

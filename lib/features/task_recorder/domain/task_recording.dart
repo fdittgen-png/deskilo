@@ -40,7 +40,8 @@ enum RecordingEndReason {
   /// The person stopped it.
   stopped('stopped'),
 
-  /// The account, workspace or installation changed under it.
+  /// The account or installation changed under it (entering Me or
+  /// another workspace does not, #2313).
   scopeChanged('scope_changed'),
 
   /// A step, size or duration limit was reached.

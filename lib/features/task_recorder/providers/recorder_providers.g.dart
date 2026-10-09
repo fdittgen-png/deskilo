@@ -255,7 +255,7 @@ final class RecorderScopeProvider
   }
 }
 
-String _$recorderScopeHash() => r'66244c1eb6cac2a36c033a0d9de13bd1d9207f17';
+String _$recorderScopeHash() => r'db39e3a272ae9cfda3e85eac6d0057bd4a270cba';
 
 /// Whether this workspace lets its people record a task here. Kept alive
 /// with the feature set it reads, so a running guide (#1867) can listen.

@@ -9,6 +9,7 @@
 import 'package:deskilo/core/help/help_arbiter.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
+import 'package:deskilo/features/task_recorder/guide/guide_runner.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_session.dart';
 import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
 import 'package:deskilo/features/task_recorder/presentation/guide_host/guide_host.dart';
@@ -270,8 +271,9 @@ void main() {
     await _end(tester, c);
   });
 
-  testWidgets('another account or workspace pauses the guide where it '
-      'started', (tester) async {
+  testWidgets('another account pauses the guide where it started', (
+    tester,
+  ) async {
     final c = await _pump(tester);
     _session(c).start(_guide(const [_tapSave]));
     await _settle(tester);
@@ -376,8 +378,10 @@ void main() {
     await _end(tester, c);
   });
 
-  testWidgets('the pane folds into a small circle that can be moved, and a '
-      'tap brings the pane back at the same step', (tester) async {
+  testWidgets('the pane folds into a small circle that can be moved; a tap '
+      'opens its menu, which brings the pane back at the same step', (
+    tester,
+  ) async {
     final c = await showControl(tester);
     await tester.pumpAndSettle();
     expect(_key('guide-host'), findsOneWidget);
@@ -407,9 +411,41 @@ void main() {
 
     await tester.tap(_key('guide-host-bubble'));
     await tester.pumpAndSettle();
+    expect(_key('guide-host-menu'), findsOneWidget);
+    expect(_key('guide-host'), findsNothing, reason: 'a tap opens the menu');
+    for (final id in ['open', 'show-me', 'skip', 'stop']) {
+      expect(_key('guide-host-menu-$id'), findsOneWidget, reason: id);
+    }
+    // Tapping beside the menu closes it; the circle stays.
+    await tester.tapAt(const Offset(5, 5));
+    await tester.pumpAndSettle();
+    expect(_key('guide-host-menu'), findsNothing);
+    expect(_key('guide-host-bubble'), findsOneWidget);
+
+    await tester.tap(_key('guide-host-bubble'));
+    await tester.pumpAndSettle();
+    await tester.tap(_key('guide-host-menu-open'));
+    await tester.pumpAndSettle();
     expect(_key('guide-host-bubble'), findsNothing);
+    expect(_key('guide-host-menu'), findsNothing);
     expect(_key('guide-host'), findsOneWidget);
     expect(_key('guide-host-step-g1'), findsOneWidget);
+    await _end(tester, c);
+  });
+
+  testWidgets('the circle\'s menu acts without unfolding the pane', (
+    tester,
+  ) async {
+    final c = await showControl(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(_key('guide-host-minimize'));
+    await tester.pumpAndSettle();
+    await tester.tap(_key('guide-host-bubble'));
+    await tester.pumpAndSettle();
+    await tester.tap(_key('guide-host-menu-stop'));
+    await tester.pumpAndSettle();
+    expect(c.read(guideSessionProvider).run!.state, GuideRunState.stopped);
+    expect(_key('guide-host-menu'), findsNothing);
     await _end(tester, c);
   });
 

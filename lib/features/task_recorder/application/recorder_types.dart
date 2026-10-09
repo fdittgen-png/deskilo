@@ -11,16 +11,15 @@ part of 'recorder_controller.dart';
 class RecorderScope {
   const RecorderScope._(this.digest);
 
+  /// The account on one installation. The active workspace is NOT part of
+  /// it (#2313): a recording follows the person from Me into a space,
+  /// from one space into another and back, as one task. Steps name pages
+  /// and controls, never a workspace, so nothing of a space travels.
   factory RecorderScope.of({
     required String backendUrl,
     required String userId,
-    String? workspaceId,
   }) => RecorderScope._(
-    cacheDigest('task-recorder-scope-v1', [
-      backendUrl,
-      userId,
-      workspaceId ?? '',
-    ], 32),
+    cacheDigest('task-recorder-scope-v2', [backendUrl, userId], 32),
   );
 
   /// The account part alone: names the private store's namespace.
