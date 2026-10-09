@@ -41,7 +41,7 @@ final class NotificationFilterProvider
 }
 
 String _$notificationFilterHash() =>
-    r'efc2227aab951f16c8c17abeb9b350b4fb973066';
+    r'f3eb5f80772cf1665f5a49c7eac74e7b3af726a5';
 
 /// The bell screen's filter, loaded from disk so the LAST choice greets
 /// the user — across restarts (#581). Every change persists eagerly.

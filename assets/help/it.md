@@ -1254,6 +1254,8 @@ I badge appartengono a **un solo spazio** — la finestra indica in quale stai r
 
 ## 9. Denaro (scheda Finanze)
 
+**Avvisi finanziari.** Il contatore blu di Finanze riunisce le novità finanziarie e le decisioni finanziarie in attesa. Apri Avvisi finanziari da Finanze per vedere solo questa categoria. Le altre novità restano non lette; le decisioni in sospeso restano conteggiate fino alla risoluzione. Lo zero è nascosto; oltre 99 viene mostrato 99+.
+
 Il tuo conto risponde a *quanto devo, quanto mi devono* — e *quanto posso ancora prenotare*. In verticale l'estratto del mese scorre sopra i pulsanti d'azione; in orizzontale le azioni passano in un pannello laterale e l'estratto riempie il resto. L'intestazione **‹ mese ›** sfoglia qualsiasi mese; il **pulsante PDF** esporta l'estratto visibile (§ sotto).
 
 **L'estratto, scheda per scheda:**

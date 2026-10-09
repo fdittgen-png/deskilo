@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
@@ -213,6 +214,7 @@ List<Override> standardTestOverrides({
   RealtimeSync? realtime,
   FakeAppBadge? badge,
   NoteSeenStore? noteSeen,
+  UpdateSeenStore Function(String)? updateSeenStore,
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
   ShellFlagStore? shellBarHidden,
@@ -364,6 +366,8 @@ List<Override> standardTestOverrides({
     // #586: the default booking period persists on-device.
     defaultPeriodStoreProvider
         .overrideWithValue(defaultPeriod ?? InMemoryDefaultPeriodStore()),
+    updateSeenStoreProvider.overrideWith((ref, key) =>
+        updateSeenStore?.call(key) ?? InMemoryUpdateSeenStore()),
     // #464: an in-memory read state — the prefs impl would need a
     // SharedPreferences mock in every widget test.
     noteSeenStoreProvider

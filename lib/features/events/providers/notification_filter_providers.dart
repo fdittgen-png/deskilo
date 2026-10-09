@@ -36,6 +36,12 @@ class NotificationFilter extends _$NotificationFilter {
     await _set(current.copyWith(categories: const {}));
   }
 
+  Future<void> showFinance() async {
+    await future;
+    if (!ref.mounted) return;
+    await _set(const NotificationFilterState(categories: {NotificationCategory.money}));
+  }
+
   Future<void> setRead(ReadFilter read) async {
     final current = state.value ?? const NotificationFilterState();
     await _set(current.copyWith(read: read));

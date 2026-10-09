@@ -2,9 +2,11 @@
 // Invariant: alert counts belong to one person, server and workspace;
 // reading new updates preserves pending decisions and the visible feed.
 import 'dart:convert';
+import 'dart:async';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/events/domain/notification_feed.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
@@ -33,6 +35,28 @@ void main() {
   MemberNote note(String id, {String? to}) => MemberNote(id: id, workspaceId: 'ws-1',
       fromMemberId: 'other', toMemberId: to, body: 'Update', createdAt: now);
   setUp(() => SharedPreferences.setMockInitialValues({}));
+
+  test('reading Finance preserves other categories and the visit unread rows', () async {
+    final clock = _Clock(before);
+    final c = ProviderContainer(overrides: [clockProvider.overrideWithValue(clock)]);
+    addTearDown(c.dispose);
+    await c.read(updatesSeenProvider('filtered').future);
+    clock.at = now;
+    await c.read(updatesSeenProvider('filtered').notifier)
+        .markOpened(categories: {NotificationCategory.money});
+    final read = c.read(updatesSeenProvider('filtered')).requireValue;
+    expect(read.seenFor(NotificationCategory.money), now);
+    expect(read.seenFor(NotificationCategory.reservations), before);
+    expect(read.visitFor(NotificationCategory.money), before);
+    await c.read(updatesSeenProvider('filtered').notifier)
+        .markOpened(categories: {NotificationCategory.reservations}, newVisit: false);
+    expect(c.read(updatesSeenProvider('filtered')).requireValue.visitFor(NotificationCategory.money), before);
+    final reloaded = ProviderContainer(overrides: [clockProvider.overrideWithValue(clock)]);
+    addTearDown(reloaded.dispose);
+    final persisted = await reloaded.read(updatesSeenProvider('filtered').future);
+    expect(persisted.seenFor(NotificationCategory.money), now);
+    expect(persisted.seenFor(NotificationCategory.members), before);
+  });
 
   test('a first visit establishes a baseline; a later visit keeps its new feed rows', () async {
     final clock = _Clock(before);
@@ -68,7 +92,7 @@ void main() {
     SharedPreferences.setMockInitialValues({'workspace_updates_seen_scope': before.toIso8601String()});
     final pending = event('decision', type: EventType.payment);
     final c = ProviderContainer(overrides: [
-      ...standardTestOverrides(clock: FixedClock(now)),
+      ...standardTestOverrides(clock: FixedClock(now), updateSeenStore: PrefsUpdateSeenStore.new),
       attentionScopeProvider.overrideWithValue('scope'),
       eventsProvider.overrideWith((ref) async => [event('invoice'), event('reminder', type: EventType.invoiceReminder), pending, event('foreign', workspace: 'ws-2')]),
       myPendingEventsProvider.overrideWith((ref) async => [pending]),
@@ -100,5 +124,24 @@ void main() {
     ]);
     addTearDown(c.dispose);
     expect(c.read(workspaceAttentionProvider), (total: 0, updates: 0, pending: 0, money: 0));
+  });
+
+  test('loading and failed updates never invent a Finance count', () async {
+    final response = Completer<List<WorkspaceEvent>>();
+    final c = ProviderContainer(overrides: [
+      ...standardTestOverrides(), attentionScopeProvider.overrideWithValue('loading'),
+      eventsProvider.overrideWith((ref) => response.future),
+    ]);
+    addTearDown(c.dispose);
+    final subscription = c.listen(workspaceAttentionProvider, (_, _) {});
+    addTearDown(subscription.close);
+    await c.read(activeWorkspaceIdProvider.future);
+    await c.pump();
+    expect(c.read(workspaceAttentionProvider).money, 0);
+    final failed = expectLater(c.read(eventsProvider.future), throwsStateError);
+    response.completeError(StateError('offline'));
+    await failed;
+    await c.pump();
+    expect(c.read(workspaceAttentionProvider).money, 0);
   });
 }

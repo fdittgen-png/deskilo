@@ -208,7 +208,12 @@ List<FeedItem> buildNotificationFeed({
   required Set<String> unreadNoteIds,
   required DateTime? eventsSeenBefore,
   required NotificationFilterState filter,
+  DateTime? Function(NotificationCategory)? seenForCategory,
 }) {
+  bool isNew(WorkspaceEvent event) {
+    final cutoff = seenForCategory?.call(categoryOfEvent(event)) ?? eventsSeenBefore;
+    return cutoff != null && event.createdAt.isAfter(cutoff);
+  }
   final items = <FeedItem>[
     for (final note in notes)
       NoteFeedItem(
@@ -220,8 +225,7 @@ List<FeedItem> buildNotificationFeed({
       EventFeedItem(
         event,
         at: event.createdAt,
-        unread: eventsSeenBefore != null &&
-            event.createdAt.isAfter(eventsSeenBefore),
+        unread: isNew(event),
         category: categoryOfEvent(event),
       ),
   ];

@@ -1287,6 +1287,8 @@ Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physi
 
 ## 9. Geld (Finanzen-Tab)
 
+**Finanzmeldungen.** Der blaue Finanzzähler umfasst neue Finanzmeldungen und ausstehende Finanzentscheidungen. Öffnen Sie Finanzmeldungen unter Finanzen, um nur diese Kategorie zu sehen. Andere Neuigkeiten bleiben ungelesen; ausstehende Entscheidungen bleiben bis zur Erledigung gezählt. Null wird ausgeblendet, über 99 erscheint 99+.
+
 Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel kann ich noch buchen*. Hochkant scrollt die Monatsabrechnung über den Aktionsknöpfen; quer wandern die Aktionen ins Seitenpanel. Die Kopfzeile **‹ Monat ›** blättert jeden Monat an; der **PDF-Knopf** exportiert die sichtbare Abrechnung.
 
 **Die Abrechnung, Karte für Karte:**

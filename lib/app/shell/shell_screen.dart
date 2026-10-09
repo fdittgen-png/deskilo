@@ -69,7 +69,7 @@ final Set<String> _sessionNotifiedNoteIds = <String>{};
 /// decisions (#1306) — badged only when there is something to badge. The count comes from the SAME query the list renders,
 /// so the badge cannot disagree with the screen it points at.
 Widget _messagesIcon(IconData icon, int unread) => unread > 0
-    ? Badge.count(count: unread, child: Icon(icon))
+    ? Badge.count(count: unread, maxCount: 99, child: Icon(icon))
     : Icon(icon);
 
 class ShellScreen extends ConsumerWidget {
@@ -322,8 +322,8 @@ class ShellScreen extends ConsumerWidget {
               label: tabTitles[ShellBranch.directory],
             ),
           ShellBranch.money => ShellDestination(
-              icon: Icon(shellBranchIcon(branch)),
-              selectedIcon: Icon(shellBranchIcon(branch, selected: true)),
+              icon: _messagesIcon(shellBranchIcon(branch), attention.money),
+              selectedIcon: _messagesIcon(shellBranchIcon(branch, selected: true), attention.money),
               label: tabTitles[ShellBranch.money],
             ),
           // #687 — the messaging centre, carrying its own unread count.

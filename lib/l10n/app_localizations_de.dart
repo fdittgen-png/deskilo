@@ -18045,6 +18045,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxAdvancedSection => 'Erweitert';
 
   @override
+  String get uxAlertsFilterEmpty =>
+      'Keine Meldungen entsprechen diesen Filtern.';
+
+  @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates neue Meldungen · $pending ausstehende Entscheidungen';
   }
@@ -18069,6 +18073,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get uxDeviceTime => 'Ihre Ortszeit';
+
+  @override
+  String get uxFinanceAlerts => 'Finanzmeldungen';
+
+  @override
+  String get uxFinanceAlertsFailed =>
+      'Finanzmeldungen konnten nicht geöffnet werden. Bitte erneut versuchen.';
 
   @override
   String get uxLinkedReference => 'Verknüpfte Ressource';

@@ -1,0 +1,5 @@
+{
+  "uxFinanceAlerts": "Finance alerts",
+  "uxFinanceAlertsFailed": "Could not open finance alerts. Please try again.",
+  "uxAlertsFilterEmpty": "No updates match these filters."
+}
