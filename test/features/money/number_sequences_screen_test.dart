@@ -2,6 +2,7 @@
 //
 // #925 — the one screen for every number series: reached from Settings
 // by the owner, live preview while typing, save through the repository.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ Future<FakeMoneyRepository> pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   return money;
 }
 

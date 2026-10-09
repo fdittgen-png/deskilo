@@ -3,6 +3,7 @@
 // App-start validation per role (#87): the app must reach the shell for
 // every role defined on the workspace membership (owner / admin / worker),
 // showing exactly the affordances that role grants (spec §2).
+import '../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -59,6 +60,7 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     expect(find.text('Members & plans'), findsOneWidget);
   });
 
@@ -78,6 +80,7 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     // 0044: admins reach member management too (reservation limits,
     // badges); owner-only knobs gate inside the screen.
     expect(find.text('Members & plans'), findsOneWidget);

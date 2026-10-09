@@ -4,6 +4,7 @@
 // identity form, shown as managed on its page, handed over through a
 // bound invitation (the sheet prefilled from the identity), and the
 // handover revocable.
+import '../../helpers/settings_sections.dart';
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
@@ -50,6 +51,7 @@ Future<FakeWorkspaceRepository> _pumpMembers(WidgetTester tester,
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   // #1307 — Members & plans sits in Administration, below This workspace.
   await tester.scrollUntilVisible(find.text('Members & plans'), 200,
       scrollable: find.byType(Scrollable).first);

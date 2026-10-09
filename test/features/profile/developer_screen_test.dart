@@ -2,6 +2,7 @@
 //
 // Developer mode: the trace list newest first, level filters, export to a
 // .log file, and clear.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
@@ -59,6 +60,7 @@ Future<void> pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await openSettingsSection(tester, 'advanced');
   // The settings list outgrew the test viewport (#147) and the section
   // headers (#188) push the Advanced section further down: bring it into
   // view. scrollUntilVisible stops once the tile is BUILT (cache extent),

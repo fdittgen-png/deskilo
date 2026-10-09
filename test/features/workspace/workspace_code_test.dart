@@ -2,6 +2,7 @@
 //
 // The workspace code screen: member and single-use admin invites, and a
 // validated new workspace ID.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -23,6 +24,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceCode(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   // The sectioned settings list (#188) pushes this last admin entry below
   // the 800×600 fold; scrollUntilVisible stops once the tile is BUILT
   // (cache extent), ensureVisible finishes the job.
@@ -154,6 +156,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
 
     expect(find.text('Workspace ID & QR'), findsNothing);
   });

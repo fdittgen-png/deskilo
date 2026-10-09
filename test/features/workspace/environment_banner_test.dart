@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<FakeWorkspaceRepository> _pump(
   WidgetTester tester, {
@@ -81,6 +82,7 @@ void main() {
     final context = tester.element(find.byType(Scaffold).first);
     unawaited(GoRouter.of(context).push('/settings'));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
 
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('workspace-environment')),

@@ -18137,6 +18137,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxResetFilters => 'Filter zurücksetzen';
 
   @override
+  String get uxSettingsPersonal => 'Meine Einstellungen';
+
+  @override
+  String get uxSettingsSpace => 'Workspace verwalten';
+
+  @override
   String get uxTestSpace => 'Testbereich';
 
   @override

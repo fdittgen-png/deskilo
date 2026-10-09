@@ -4,6 +4,7 @@
 // on the approval screen (workspace name only) until owner/admins
 // confirm through the members sheet or the events quorum; single-use
 // invitation codes are refused on a second redeem (0051).
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -92,6 +93,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 
@@ -131,6 +133,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.scrollUntilVisible(
       find.text('Validation rules'),
       100,

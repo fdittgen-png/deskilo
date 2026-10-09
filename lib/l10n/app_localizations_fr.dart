@@ -18147,6 +18147,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uxResetFilters => 'Réinitialiser les filtres';
 
   @override
+  String get uxSettingsPersonal => 'Mes réglages';
+
+  @override
+  String get uxSettingsSpace => 'Gérer l’espace';
+
+  @override
   String get uxTestSpace => 'Espace de test';
 
   @override

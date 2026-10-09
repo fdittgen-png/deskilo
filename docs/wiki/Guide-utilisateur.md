@@ -1940,6 +1940,11 @@ La commande imprime la position de chaque zone en millimètres et conclut **CONF
 
 ## 12. Réglages et profil
 
+Le menu horizontal des sections reste visible : choisissez une section pour l’ouvrir et y accéder directement. Faites défiler le formulaire selon vos besoins ; les brouillons sont conservés.
+
+**Choisir le périmètre.** Mes réglages regroupe le lien vers votre compte, votre adhésion, les diagnostics de l’appareil, l’aide et la déconnexion. Gérer l’espace contient uniquement les outils de configuration et d’administration autorisés pour votre rôle, avec le nom de l’espace. Ouvrez les groupes selon vos besoins ; Avancé est fermé au départ. Les deux vues conservent leur position de défilement. Les membres sans outils d’administration accèdent directement à leurs réglages personnels.
+
+
 Votre écran personnel, de haut en bas :
 
 <p><img src="images/settings-personal.jpg" width="240"></p>

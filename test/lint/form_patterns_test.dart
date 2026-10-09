@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 254; // #2286 uses the Money spacing tokens.
 const int _fallbackCeiling =
-    6467; // #2287 replaces the administration header with localized task groups.
+    6465; // #2287 and #2288 replace duplicated navigation and section headings.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

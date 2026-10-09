@@ -230,6 +230,9 @@ void main() {
       accessories: FakeAccessoryRepository()..seedSmallCatalog(),
     );
 
+    await tester.tap(find.byKey(const ValueKey('settings-workspace-tab')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Accessories'));
     await tester.tap(find.text('Accessories'));
     await tester.pumpAndSettle();
 

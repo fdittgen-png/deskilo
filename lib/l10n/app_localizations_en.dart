@@ -17948,6 +17948,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxResetFilters => 'Reset filters';
 
   @override
+  String get uxSettingsPersonal => 'My settings';
+
+  @override
+  String get uxSettingsSpace => 'Manage workspace';
+
+  @override
   String get uxTestSpace => 'Test space';
 
   @override
