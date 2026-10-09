@@ -43,9 +43,15 @@ String? attentionScope(Ref ref) {
 }
 
 class UpdateReadState {
-  const UpdateReadState(this.seenUntil, this.visitCutoff);
+  const UpdateReadState(this.seenUntil, this.visitCutoff,
+      {this.categories = const {}, this.visitCategories = const {}});
   final DateTime seenUntil;
   final DateTime visitCutoff;
+  final Map<NotificationCategory, DateTime> categories, visitCategories;
+  DateTime seenFor(NotificationCategory category) => _later(seenUntil, categories[category]);
+  DateTime visitFor(NotificationCategory category) => _later(visitCutoff, visitCategories[category]);
+  static DateTime _later(DateTime baseline, DateTime? value) =>
+      value != null && value.isAfter(baseline) ? value : baseline;
 }
 
 /// Badges clear immediately; the currently visible feed retains its new rows.
@@ -58,17 +64,35 @@ class UpdatesSeen extends _$UpdatesSeen {
     final stored = DateTime.tryParse(await store.read() ?? '');
     final cutoff = stored ?? now;
     if (stored == null) await store.write(cutoff.toUtc().toIso8601String());
-    return UpdateReadState(cutoff, cutoff);
+    final categories = <NotificationCategory, DateTime>{};
+    for (final category in NotificationCategory.values) {
+      final value = DateTime.tryParse(await _categoryStore(category).read() ?? '');
+      if (value != null) categories[category] = value;
+    }
+    return UpdateReadState(cutoff, cutoff, categories: categories, visitCategories: categories);
   }
 
-  Future<void> markOpened() async {
+  UpdateSeenStore _categoryStore(NotificationCategory category) =>
+      ref.read(updateSeenStoreProvider('workspace_updates_seen_${scope}_${category.wire}'));
+
+  Future<void> markOpened({Set<NotificationCategory> categories = const {},
+      bool newVisit = true}) async {
     try {
-      final previous = await future;
+      final loaded = await future;
       if (!ref.mounted) return;
+      final previous = state.value ?? loaded;
       final now = ref.read(clockProvider).now();
-      state = AsyncData(UpdateReadState(now, previous.seenUntil));
-      await ref.read(updateSeenStoreProvider('workspace_updates_seen_$scope'))
-          .write(now.toUtc().toIso8601String());
+      state = AsyncData(UpdateReadState(categories.isEmpty ? now : previous.seenUntil,
+        newVisit ? previous.seenUntil : previous.visitCutoff,
+        categories: {...previous.categories, for (final category in categories) category: now},
+        visitCategories: newVisit ? previous.categories : previous.visitCategories));
+      if (categories.isEmpty) {
+        await ref.read(updateSeenStoreProvider('workspace_updates_seen_$scope')).write(now.toUtc().toIso8601String());
+      } else {
+        for (final category in categories) {
+          await _categoryStore(category).write(now.toUtc().toIso8601String());
+        }
+      }
     } catch (e, st) {
       TraceLogger.instance.warn('events', 'update acknowledgement unavailable',
           error: e, stackTrace: st);
@@ -82,7 +106,9 @@ typedef AttentionCounts = ({int total, int updates, int pending, int money});
 /// An unread pending event counts once, and direct messages stay in Messages.
 @riverpod
 AttentionCounts workspaceAttention(Ref ref) {
-  if (!ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.eventsTab)) {
+  T? loaded<T>(AsyncValue<T> value) => value.hasError || value.isReloading ? null : value.value;
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  if (!features.contains(WorkspaceFeature.eventsTab)) {
     return (total: 0, updates: 0, pending: 0, money: 0);
   }
   final scope = ref.watch(attentionScopeProvider);
@@ -90,15 +116,16 @@ AttentionCounts workspaceAttention(Ref ref) {
   if (scope == null || workspace == null) {
     return (total: 0, updates: 0, pending: 0, money: 0);
   }
-  final cutoff = ref.watch(updatesSeenProvider(scope)).value?.seenUntil;
-  final events = ref.watch(eventsProvider).value ?? const [];
-  final pending = ref.watch(myPendingEventsProvider).value ?? const [];
+  final readState = loaded(ref.watch(updatesSeenProvider(scope)));
+  final events = loaded(ref.watch(eventsProvider)) ?? const [];
+  final pending = loaded(ref.watch(myPendingEventsProvider)) ?? const [];
   final pendingIds = {for (final e in pending) if (e.workspaceId == workspace) e.id};
   final newEvents = events.where((e) => e.workspaceId == workspace &&
-      cutoff != null && e.createdAt.isAfter(cutoff)).toList();
-  final unread = ref.watch(unreadNoteIdsProvider).value ?? const <String>{};
-  final notes = ref.watch(myNotesProvider).value ?? const [];
-  final broadcasts = {for (final n in notes)
+      readState != null && e.createdAt.isAfter(readState.seenFor(categoryOfEvent(e)))).toList();
+  final messages = features.contains(WorkspaceFeature.memberNotifications);
+  final unread = messages ? loaded(ref.watch(unreadNoteIdsProvider)) ?? const <String>{} : const <String>{};
+  final notes = messages ? loaded(ref.watch(myNotesProvider)) : null;
+  final broadcasts = {for (final n in notes ?? const <Never>[])
     if (n.workspaceId == workspace && n.isBroadcast && unread.contains(n.id)) n.id};
   final updates = {for (final e in newEvents) if (!pendingIds.contains(e.id)) e.id};
   final money = {for (final e in [...newEvents, ...pending])

@@ -30956,6 +30956,12 @@ abstract class AppLocalizations {
   /// **'Advanced'**
   String get uxAdvancedSection;
 
+  /// No description provided for @uxAlertsFilterEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No updates match these filters.'**
+  String get uxAlertsFilterEmpty;
+
   /// No description provided for @uxAttentionSummary.
   ///
   /// In en, this message translates to:
@@ -30997,6 +31003,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your time'**
   String get uxDeviceTime;
+
+  /// No description provided for @uxFinanceAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance alerts'**
+  String get uxFinanceAlerts;
+
+  /// No description provided for @uxFinanceAlertsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open finance alerts. Please try again.'**
+  String get uxFinanceAlertsFailed;
 
   /// No description provided for @uxLinkedReference.
   ///

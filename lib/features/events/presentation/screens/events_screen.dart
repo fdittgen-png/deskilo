@@ -21,7 +21,6 @@ import '../../domain/event_decision.dart';
 import '../../domain/notification_feed.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
-import '../../../workspace/presentation/screens/inbox_screen.dart';
 import '../../providers/event_providers.dart';
 import '../../providers/attention_providers.dart';
 import '../../providers/notification_filter_providers.dart';
@@ -52,43 +51,54 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   @override
   void initState() {
     super.initState();
-    // Opening the notification surface reads the messages (#464): the
-    // unread counters on the bell and the app icon clear here. The
-    // events-seen stamp advances too (#581) — but the PREVIOUS stamp
-    // keeps serving this visit, so "new" rows do not vanish mid-look.
-    // #821 — only when this face is actually SHOWING. The inbox keeps
-    // every face alive in an IndexedStack, so this state is built the
-    // moment the inbox opens on Chats — marking seen here unconditionally
-    // cleared the alerts badge for alerts nobody had looked at.
+    // Only a visible Alerts surface acknowledges its displayed categories.
+    // Inactive navigation branches stay mounted with their ticker disabled.
     WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
   }
 
-  bool _seenThisShowing = false;
+  final _seenThisShowing = <NotificationCategory>{};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
+  }
 
   /// Called from build: the face marks seen the first frame it SHOWS.
   void _followTab() {
-    ref.listen(inboxTabControllerProvider, (_, _) {
-        WidgetsBinding.instance
-            .addPostFrameCallback((_) => _markSeenIfShowing());
-      });
     ref.listen(attentionScopeProvider, (_, _) {
-      _seenThisShowing = false;
+      _seenThisShowing.clear();
+      WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
+    });
+    ref.listen(eventsProvider, (_, _) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
+    });
+    ref.listen(notificationFilterProvider, (_, _) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _markSeenIfShowing());
     });
   }
 
   void _markSeenIfShowing() {
     if (!mounted) return;
-    if (ref.read(inboxTabControllerProvider) != InboxTab.alerts) {
-      _seenThisShowing = false;
+    if (!TickerMode.valuesOf(context).enabled) {
+      _seenThisShowing.clear();
       return;
     }
+    if (ref.read(eventsProvider) is! AsyncData) return;
     final scope = ref.read(attentionScopeProvider);
-    if (scope == null || _seenThisShowing) return;
-    _seenThisShowing = true;
-    ref.read(unreadNoteCountProvider.notifier).markAllSeen();
-    ref.read(eventsSeenCutoffProvider.notifier).markOpened();
-    ref.read(updatesSeenProvider(scope).notifier).markOpened();
+    final filter = ref.read(notificationFilterProvider).value;
+    if (scope == null || filter == null || filter.read == ReadFilter.read) return;
+    final categories = (filter.categories.isEmpty
+        ? NotificationCategory.values.toSet() : filter.categories).difference(_seenThisShowing);
+    if (categories.isEmpty) return;
+    final newVisit = _seenThisShowing.isEmpty;
+    _seenThisShowing.addAll(categories);
+    if (categories.contains(NotificationCategory.messages) &&
+        ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.memberNotifications)) {
+      ref.read(unreadNoteCountProvider.notifier).markAllSeen();
+    }
+    if (filter.categories.isEmpty) ref.read(eventsSeenCutoffProvider.notifier).markOpened();
+    ref.read(updatesSeenProvider(scope).notifier).markOpened(categories: categories, newVisit: newVisit);
   }
 
 
@@ -295,6 +305,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                     .any((d) => d.memberId == myMember.id),
               );
             }).toList();
+            final matchingPending = pendingForMe.where((event) => filter.categories.isEmpty ||
+                filter.categories.contains(categoryOfEvent(event))).toList();
             final feed = buildNotificationFeed(
               events: all
                   .where((e) => !pendingForMe.contains(e))
@@ -302,6 +314,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               notes: notes,
               unreadNoteIds: unreadIds,
               eventsSeenBefore: seenBefore,
+              seenForCategory: scope == null ? null : ref.watch(updatesSeenProvider(scope)).value?.visitFor,
               filter: filter,
             );
             if (all.isEmpty && notes.isEmpty) {
@@ -329,10 +342,10 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 // #546 — the bell's unread filter narrows the whole
                 // screen to what is new; the pending decisions step
                 // aside while it is on.
-                if (!unreadOnly && pendingForMe.isNotEmpty) ...[
+                if (!unreadOnly && matchingPending.isNotEmpty) ...[
                   // #1306 — the same section the calendar shows when the
                   // bell is switched off.
-                  PendingDecisionsSection(pending: pendingForMe),
+                  PendingDecisionsSection(pending: matchingPending),
                   const Divider(),
                 ],
                 // #581 — ONE filter line: categories × read state, all
@@ -574,8 +587,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   Padding(
                     padding: AppSpacing.lgAll,
                     child: Text(
-                      l10n?.notesFilterEmpty ??
-                          'No unread messages — all caught up.',
+                      l10n?.uxAlertsFilterEmpty ??
+                          'No updates match these filters.',
                       key: const ValueKey('notes-filter-empty'),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),

@@ -1304,6 +1304,8 @@ Badges belong to **one workspace** — the dialog names which one you're registe
 
 ## 9. Money (Finances tab)
 
+**Finance alerts.** The blue Finance count combines new financial updates and financial decisions awaiting you. Open Finance alerts from Money to see only that category. Reading it keeps other updates unread, and pending decisions retain their count until resolved. Zero is hidden; counts above 99 display 99+.
+
 Your ledger answers *what do I owe, what am I owed* — and *how much can I still book*. In portrait the month's bill scrolls above the action buttons; in landscape the actions move into a side panel and the bill fills the rest. The **‹ month ›** header browses any month; the **PDF button** exports the visible bill (§ below).
 
 **The bill, card by card:**

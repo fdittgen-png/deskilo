@@ -1248,6 +1248,8 @@ Las credenciales pertenecen a **un solo espacio** — la ventana indica en cuál
 
 ## 9. El dinero (pestaña Finanzas)
 
+**Avisos financieros.** El contador azul de Finanzas reúne novedades financieras y decisiones financieras pendientes. Abre Avisos financieros desde Finanzas para ver solo esa categoría. Las demás novedades siguen sin leerse; las decisiones pendientes se cuentan hasta resolverse. El cero se oculta y los valores superiores a 99 se muestran como 99+.
+
 Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún*. En vertical, la factura del mes se desplaza sobre los botones de acción; en horizontal, las acciones pasan a un panel lateral y la factura llena el resto. La cabecera **‹ mes ›** navega cualquier mes; el **botón PDF** exporta la factura visible (§ más abajo).
 
 **La factura, tarjeta por tarjeta:**

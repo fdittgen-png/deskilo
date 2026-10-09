@@ -1337,6 +1337,8 @@ Les badges appartiennent à **un espace** — le dialogue nomme lequel, enregist
 
 ## 9. Argent (onglet Finances)
 
+**Alertes financières.** Le compteur bleu des Finances réunit les nouvelles informations financières et les décisions financières qui vous attendent. Ouvrez Alertes financières depuis Finances pour ne voir que cette catégorie. La lecture conserve les autres nouveautés comme non lues ; les décisions en attente restent comptées jusqu’à leur résolution. Zéro est masqué ; au-delà de 99, le compteur affiche 99+.
+
 Votre compte répond à *que dois-je, que me doit-on* — et *combien puis-je encore réserver*. En portrait, le relevé du mois défile au-dessus des boutons d'action ; en paysage les actions passent dans un panneau latéral et le relevé remplit le reste. L'en-tête **‹ mois ›** parcourt n'importe quel mois ; le **bouton PDF** exporte le relevé visible (§ plus bas).
 
 **Le relevé, carte par carte :**

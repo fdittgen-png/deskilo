@@ -160,6 +160,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.byKey(ValueKey('my-invoice-${s.settlement}')), 160, scrollable: find.descendant(of: find.byKey(const ValueKey('money-face-body-invoices')), matching: find.byType(Scrollable)));
     expect(find.byKey(ValueKey('my-invoice-${s.settlement}')), findsOneWidget);
     expect(find.byKey(ValueKey('my-invoice-${s.a}')), findsNothing);
     expect(find.byKey(ValueKey('my-invoice-folded-${s.a}')), findsOneWidget);

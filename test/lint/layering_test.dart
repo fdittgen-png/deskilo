@@ -246,7 +246,7 @@ const Map<String, int> _pairBudget = {
   // are read in both files now.
   'events -> plan': 2,
   'events -> reservations': 4,
-  'events -> workspace': 22, // #2294: scoped update counts read workspace identity and the existing Events feature gate; no repository access.
+  'events -> workspace': 21, // #2295: remove the obsolete inbox-tab visibility dependency.
   'kiosk -> events': 1,
   'kiosk -> members': 1,
   'kiosk -> plan': 7,
@@ -266,7 +266,7 @@ const Map<String, int> _pairBudget = {
   'members -> reservations': 14,
   'members -> workspace': 36, // 2026-10-03 #1916 35→36: the member page states the customer capacity through workspace/presentation/member_customer_capacity.dart, beside the VAT treatment dialog it mirrors; 2026-10-02 #2085 34→35: the member page hosts the Roles card (workspace/presentation/widgets/member_roles_card.dart), which gives the roles workspace/ defines.
   'money -> calendar': 1,
-  'money -> events': 30,
+  'money -> events': 32, // #2295: Finance reads the existing authorized attention count and opens its filtered feed; no repository access.
   'money -> members': 2,
   'money -> plan': 14,
   'money -> profile': 8, // 2026-09-28 #1791: payment choice reads and edits existing personal defaults; checkout consumes that same preference.

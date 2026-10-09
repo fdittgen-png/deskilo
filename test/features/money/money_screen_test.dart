@@ -442,7 +442,7 @@ void main() {
     );
 
     // Going forward again returns to the current period.
-    await tester.tap(find.byIcon(Icons.chevron_right));
+    await tester.tap(find.widgetWithIcon(IconButton, Icons.chevron_right));
     await tester.pumpAndSettle();
     expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
   });

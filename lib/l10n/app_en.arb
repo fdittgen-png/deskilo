@@ -20387,6 +20387,7 @@
     }
   },
   "uxAdvancedSection": "Advanced",
+  "uxAlertsFilterEmpty": "No updates match these filters.",
   "uxAttentionSummary": "{updates} new updates · {pending} awaiting your decision",
   "@uxAttentionSummary": {
     "placeholders": {
@@ -20404,6 +20405,8 @@
   "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
   "uxBookingResourceUnavailable": "Resource unavailable",
   "uxDeviceTime": "Your time",
+  "uxFinanceAlerts": "Finance alerts",
+  "uxFinanceAlertsFailed": "Could not open finance alerts. Please try again.",
   "uxLinkedReference": "Linked resource",
   "uxManageResource": "Manage resource",
   "uxMoneyAllPeriods": "All periods · Credit, open invoices and refunds.",
