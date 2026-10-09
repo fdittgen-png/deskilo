@@ -84,6 +84,8 @@ const Set<String> uiKeys = {
   'auth-social-deskilo',
   'auto-validate-admin',
   'auto-validate-owner',
+  'availability-add-closure',
+  'availability-granularity',
   'availability-holiday-import',
   'availability-public-holidays',
   'backend-default-panel',

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/ui/section_jump_bar.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
@@ -95,12 +96,11 @@ class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
       _groups.putIfAbsent(group.id, GlobalKey<_WorkspaceFormGroupState>.new);
     }
     return Column(children: [
-      Padding(padding: AppSpacing.smAll, child: Wrap(spacing: AppSpacing.xs,
-        children: [for (final group in groups) TextButton(
-          key: ValueKey('workspace-section-${group.id}'),
-          style: group.destructive ? TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error) : null,
-          onPressed: () => _groups[group.id]?.currentState?.open(),
-          child: Text(group.title))])),
+      // #2313 — the shared section bar: one row, never wrapped.
+      SectionJumpBar(items: [for (final group in groups) SectionJump(
+        key: 'workspace-section-${group.id}', label: group.title,
+        destructive: group.destructive,
+        onPressed: () => _groups[group.id]?.currentState?.open())]),
       Expanded(child: SingleChildScrollView(padding: AppSpacing.gutterAll,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           for (final child in widget.children)

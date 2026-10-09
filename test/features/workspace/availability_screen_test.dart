@@ -106,17 +106,17 @@ void main() {
     await pumpAvailability(tester);
 
     expect(find.text('Booking granularity'), findsOneWidget);
-    expect(find.text('Free time period'), findsOneWidget);
-    expect(find.text('5-minute slots'), findsOneWidget);
-    expect(find.text('15-minute slots'), findsOneWidget);
-    expect(find.text('30-minute slots'), findsOneWidget);
-    expect(find.text('1-hour slots'), findsOneWidget);
-    expect(find.text('Half days (morning & afternoon)'), findsOneWidget);
-    expect(find.text('Full days only'), findsOneWidget);
-    final group = tester.widget<RadioGroup<BookingGranularity>>(
-      find.byType(RadioGroup<BookingGranularity>),
-    );
-    expect(group.groupValue, BookingGranularity.flexible);
+    // #2313 — one dropdown: the choice shows in the field.
+    expect(_chosen('Free time period'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(_grid));
+    await tester.tap(find.byKey(_grid));
+    await tester.pumpAndSettle();
+    for (final option in const [
+      '5-minute slots', '15-minute slots', '30-minute slots', '1-hour slots',
+      'Half days (morning & afternoon)', 'Full days only',
+    ]) {
+      expect(find.text(option), findsOneWidget, reason: option);
+    }
   });
 
   testWidgets('picking a minute slot persists that granularity (0032)',
@@ -124,18 +124,14 @@ void main() {
     final workspace = FakeWorkspaceRepository.withWorkspace();
     await pumpAvailability(tester, workspace: workspace);
 
-    await tester.ensureVisible(find.text('30-minute slots'));
-    await tester.tap(find.text('30-minute slots'));
-    await tester.pumpAndSettle();
+    await _pick(tester, '30-minute slots');
 
     expect(
       workspace.bookingGranularities['ws-1'],
       BookingGranularity.minutes30,
     );
 
-    await tester.ensureVisible(find.text('Full days only'));
-    await tester.tap(find.text('Full days only'));
-    await tester.pumpAndSettle();
+    await _pick(tester, 'Full days only');
 
     expect(
       workspace.bookingGranularities['ws-1'],
@@ -150,8 +146,7 @@ void main() {
       ..openWeekdays['ws-1'] = [1, 3, 5];
     await pumpAvailability(tester, workspace: workspace);
 
-    await tester.tap(find.text('Half days (morning & afternoon)'));
-    await tester.pumpAndSettle();
+    await _pick(tester, 'Half days (morning & afternoon)');
 
     expect(
       workspace.bookingGranularities['ws-1'],
@@ -159,14 +154,10 @@ void main() {
     );
     // The granularity write must not clobber the other booking_rules keys.
     expect(workspace.openWeekdays['ws-1'], [1, 3, 5]);
-    final group = tester.widget<RadioGroup<BookingGranularity>>(
-      find.byType(RadioGroup<BookingGranularity>),
-    );
-    expect(group.groupValue, BookingGranularity.halfDay);
+    expect(_chosen('Half days (morning & afternoon)'), findsOneWidget);
 
     // And back to flexible.
-    await tester.tap(find.text('Free time period'));
-    await tester.pumpAndSettle();
+    await _pick(tester, 'Free time period');
     expect(
       workspace.bookingGranularities['ws-1'],
       BookingGranularity.flexible,
@@ -177,8 +168,14 @@ void main() {
       'with the 8:00-17:00 defaults (#446)', (tester) async {
     await pumpAvailability(tester);
 
-    await tester.ensureVisible(
-        find.text('Real hours (exact from–to, half/full days as shortcuts)'));
+    await tester.ensureVisible(find.byKey(_grid));
+    await tester.tap(find.byKey(_grid));
+    await tester.pumpAndSettle();
+    expect(find.text('Real hours (exact from–to, half/full days as shortcuts)'),
+        findsOneWidget);
+    await tester.tapAt(Offset.zero); // close the menu
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Working hours'));
     expect(find.text('Working hours'), findsOneWidget);
     expect(find.byKey(const ValueKey('work-hours-start')), findsOneWidget);
     expect(find.byKey(const ValueKey('work-hours-boundary')), findsOneWidget);
@@ -269,7 +266,8 @@ void main() {
       (tester) async {
     final workspace = await pumpAvailability(tester);
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.ensureVisible(find.byKey(const ValueKey('availability-add-closure')));
+    await tester.tap(find.byKey(const ValueKey('availability-add-closure')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('OK')); // accept today in the date picker
     await tester.pumpAndSettle();
@@ -570,4 +568,19 @@ void main() {
       expect(find.byKey(const ValueKey('work-hours-reset-default')), findsOneWidget);
     });
   });
+}
+
+const _grid = ValueKey('availability-granularity');
+
+/// The booking-grid dropdown showing [label] as its choice.
+Finder _chosen(String label) =>
+    find.descendant(of: find.byKey(_grid), matching: find.text(label));
+
+/// Opens the booking-grid dropdown and picks [label] (#2313).
+Future<void> _pick(WidgetTester tester, String label) async {
+  await tester.ensureVisible(find.byKey(_grid));
+  await tester.tap(find.byKey(_grid));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(label).last);
+  await tester.pumpAndSettle();
 }
