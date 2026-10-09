@@ -12,6 +12,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 /// The label of a face, as the tab and the help hint call it.
 String moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
@@ -212,31 +213,15 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     );
     final monthly = face != MoneyFace.invoices;
 
-    final tabs = LayoutBuilder(builder: (context, constraints) => TabBar(
-      key: const ValueKey('money-faces'),
+    // #2313 — the app's one horizontal menu.
+    final tabs = AppTabBar(
+      barKey: const ValueKey('money-faces'),
       controller: _controller,
-      indicator: BoxDecoration(color: scheme.surface, borderRadius: AppRadius.mdAll,
-          border: Border.all(color: scheme.outlineVariant)),
-      indicatorSize: TabBarIndicatorSize.tab,
-      indicatorPadding: AppSpacing.xsAll,
-      dividerColor: Colors.transparent,
-      labelColor: scheme.primary,
-      unselectedLabelColor: scheme.onSurfaceVariant,
-      labelStyle: theme.textTheme.labelLarge?.strong,
-      splashBorderRadius: AppRadius.mdAll,
-      // Scroll when full labels need more space; preserve their text size.
-      isScrollable: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130,
-      tabAlignment: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130
-          ? TabAlignment.start : TabAlignment.fill,
-      labelPadding: const EdgeInsets.symmetric(horizontal: 16),
       tabs: [
         for (final f in MoneyFace.values)
-          Tab(
-            key: ValueKey('money-face-${f.name}'),
-            child: Text(moneyFaceLabel(l10n, f)),
-          ),
+          AppTab(moneyFaceLabel(l10n, f), key: ValueKey('money-face-${f.name}')),
       ],
-    ));
+    );
 
     return Theme(
       data: theme.copyWith(

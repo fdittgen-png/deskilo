@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/section_jump.dart';
 
 Future<FakeWorkspaceRepository> _pumpSettings(
   WidgetTester tester, {
@@ -35,7 +36,7 @@ Future<FakeWorkspaceRepository> _pumpSettings(
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
   await openSettingsSection(tester, 'advanced');
-  await tester.tap(find.byKey(const ValueKey('settings-link-advanced')));
+  await tapSection(tester, 'settings-link-advanced');
   await tester.pumpAndSettle();
   return workspace;
 }

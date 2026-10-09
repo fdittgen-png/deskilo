@@ -1538,6 +1538,7 @@ const Set<String> uiKeys = {
   'seat-add-accessories',
   'seat-hours',
   'seat-tap',
+  'section-jump-more',
   'send-e-invoice',
   'service-coffee',
   'service-locker',

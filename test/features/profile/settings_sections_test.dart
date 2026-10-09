@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/settings_sections.dart';
+import '../../helpers/section_jump.dart';
 
 Future<void> pumpSettingsAs(
   WidgetTester tester, {
@@ -70,7 +71,7 @@ void main() {
     await pumpSettingsAs(tester, isAdmin: true, isOwner: true, size: const Size(320, 1100));
     expect(find.byKey(const ValueKey('settings-personal-tab')), findsOneWidget);
     expect(find.byKey(const ValueKey('settings-workspace-tab')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('settings-link-membership')));
+    await tapSection(tester, 'settings-link-membership');
     await tester.pumpAndSettle();
     expect(find.text('Status'), findsOneWidget);
     expect(find.text('Workspace'), findsNothing);
@@ -92,7 +93,7 @@ void main() {
     expect(find.text('Workspace'), findsNothing);
     expect(dy(tester, 'My account'), lessThan(dy(tester, 'My account is in Me')));
     expect(dy(tester, 'My membership'), lessThan(dy(tester, 'Status')));
-    await tester.tap(find.byKey(const ValueKey('settings-link-advanced')));
+    await tapSection(tester, 'settings-link-advanced');
     await tester.pumpAndSettle();
     expect(find.text('Developer mode'), findsOneWidget);
     await showWorkspaceSettings(tester);

@@ -45,6 +45,7 @@ import '../../providers/personal_preferences_providers.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/preference_scope_controls.dart';
 import '../widgets/whatsapp_dialog.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 part '../widgets/account_settings_tiles.dart';
 part '../widgets/account_settings_dialogs.dart';
@@ -136,7 +137,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final labels = l10n ?? AppLocalizationsEn();
-    final tabHeight = MediaQuery.textScalerOf(context).scale(56).clamp(56.0, double.infinity);
     final workspaceTiles = workspaceSettingsTiles(context, ref, l10n: l10n,
       canAdminister: canAdminister, perms: perms, features: features,
       isOwner: myMember?.isOwner ?? false,
@@ -156,11 +156,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             : (l10n?.settingsTitle ?? 'Settings')),
       ),
       body: Column(children: [
-        if (workspaceTiles.isNotEmpty) TabBar(key: const ValueKey('settings-scope'),
-          onTap: (index) => setState(() => _scope = index),
-          tabAlignment: TabAlignment.fill, tabs: [
-          Tab(key: const ValueKey('settings-personal-tab'), height: tabHeight, child: Text(labels.uxSettingsPersonal, textAlign: TextAlign.center)),
-          Tab(key: const ValueKey('settings-workspace-tab'), height: tabHeight, child: Text(labels.uxSettingsSpace, textAlign: TextAlign.center)),
+        if (workspaceTiles.isNotEmpty) AppTabBar(barKey: const ValueKey('settings-scope'),
+          onTap: (index) => setState(() => _scope = index), tabs: [
+          AppTab(labels.uxSettingsPersonal, key: const ValueKey('settings-personal-tab')),
+          AppTab(labels.uxSettingsSpace, key: const ValueKey('settings-workspace-tab')),
         ]),
         Expanded(child: IndexedStack(index: scope, children: [SettingsTaskPane(pane: 'personal',
         children: [

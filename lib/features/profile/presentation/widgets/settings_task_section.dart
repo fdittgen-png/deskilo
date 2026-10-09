@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/motion/motion.dart';
-import '../../../../core/ui/section_jump_bar.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 class SettingsTaskSection extends StatelessWidget {
   const SettingsTaskSection({required this.id, required this.title,

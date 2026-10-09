@@ -26,6 +26,7 @@ import '../widgets/invoicing_dashboard.dart';
 import '../widgets/invoice_journey_view.dart';
 import '../widgets/invoice_process_sheet.dart';
 import '../widgets/invoice_stage_strip.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 
 /// The invoicing HUB (field request: "the user sees what to invoice, what
 /// to remind, what has been invoiced") — three tabs over one archive:
@@ -266,19 +267,13 @@ class InvoicesScreen extends ConsumerWidget {
         appBar: AppBar(
           title: Text(l10n?.invoicingHubTitle ?? 'Invoicing'),
           actions: [tools],
-          bottom: TabBar(tabs: [
-            Tab(
-              key: const ValueKey('invoice-tab-todo'),
-              text: l10n?.invoiceTabToInvoice ?? 'To invoice',
-            ),
-            Tab(
-              key: const ValueKey('invoice-tab-open'),
-              text: l10n?.invoiceTabOpen ?? 'Open',
-            ),
-            Tab(
-              key: const ValueKey('invoice-tab-archive'),
-              text: l10n?.invoiceTabArchive ?? 'Archive',
-            ),
+          bottom: AppTabBar.bottom(context, tabs: [
+            AppTab(l10n?.invoiceTabToInvoice ?? 'To invoice',
+                key: const ValueKey('invoice-tab-todo')),
+            AppTab(l10n?.invoiceTabOpen ?? 'Open',
+                key: const ValueKey('invoice-tab-open')),
+            AppTab(l10n?.invoiceTabArchive ?? 'Archive',
+                key: const ValueKey('invoice-tab-archive')),
           ]),
         ),
         floatingActionButton: FloatingActionButton.extended(
