@@ -27,6 +27,17 @@ flutter test test/ux test/a11y test/app test/core/cache test/core/realtime \
 | Privacy / rights / contact / security responsibility review | BLOCKED | — | Needs the operator and the accountant; not fabricated |
 | Critical journey at narrow width, large text, keyboard, screen reader | PARTIAL | `test/a11y/responsive_matrix_test.dart` (360 dp, 2× text, keyboard, motion off), `screen_guidelines_test.dart`, `matrix_coverage_test.dart`; the new unavailable states (#1848) are covered by `unavailable_availability_test.dart` | Confirmation that every critical-journey screen is a matrix row, and a semantic-order walk of the journey |
 
+## Accessibility follow-up — 9 October 2026 (#1974)
+
+The matrix now measures Members, personal Settings, workspace administration,
+Workspace settings and Workspace reports at narrow/wide widths, twice-normal
+text, keyboard entry, labelled touch targets/contrast and reduced motion.
+`flutter test test/a11y` passes 107 tests. Missed navigation taps now fail the
+matrix instead of leaving it on the previous screen. The workspace-type switch
+was missing its spoken label; merging its label and switch semantics fixes the
+observed guideline failure. This improves the named screen coverage; it does
+not substitute for the outstanding chained application reload and operator review.
+
 ## What this changes
 
 * The pilot exclusion set is now a named, tested list; widening it is a reviewed change.

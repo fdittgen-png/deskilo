@@ -30,6 +30,9 @@ import '../features/plan/accessories_screen_test.dart' show pumpAccessories;
 import '../features/reservations/reserve_hub_test.dart' show pumpHub;
 import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/onboarding_layout.dart' show pumpOnboardingLayout;
+import '../features/members/members_screen_test.dart' show pumpMembers;
+import '../features/profile/settings_sections_test.dart' show pumpSettingsAs;
+import '../features/workspace/workspace_settings_screen_test.dart' show pumpWorkspaceSettings;
 
 /// The six conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,
@@ -148,21 +151,19 @@ final List<MatrixRow> kMatrix = [
             'control of its own; keyboard placement is #1582 follow-up '
             '(2026-09-20)',
       }),
-  // NOT measured. Their helpers hard-code a tall viewport so their own
-  // assertions reach every tile, and a size set before the call is
-  // silently overwritten — a row that measures the HELPER instead of
-  // the screen is worse than no row. Widening each helper with an
-  // optional `size:` is one line, and the only reason it has not
-  // happened is that nobody could see the hole.
+  // #1974: measure the actual pilot administration forms at the requested
+  // viewport. The redesigned settings distinguish personal and workspace
+  // tasks; both scopes and the reports destination need their own row.
   MatrixRow('Members',
-      gaps: _unmeasured(
-          'pumpMembersWith hard-codes 800x2200 — #1582 (2026-09-20)')),
+      pump: (t, size) async { await pumpMembers(t, size: size); }, axes: _all),
   MatrixRow('Settings',
-      gaps: _unmeasured(
-          'pumpSettingsAs hard-codes 800x3600 — #1582 (2026-09-20)')),
+      pump: (t, size) => pumpSettingsAs(t, isAdmin: true, isOwner: true, size: size), axes: _all),
+  MatrixRow('Workspace administration',
+      pump: (t, size) => pumpSettingsAs(t, isAdmin: true, isOwner: true, manage: true, size: size), axes: _all),
   MatrixRow('Workspace settings',
-      gaps: _unmeasured(
-          'pumpWorkspaceSettings hard-codes 800x3200 — #1582 (2026-09-20)')),
+      pump: (t, size) async { await pumpWorkspaceSettings(t, expand: false, size: size); }, axes: _all),
+  MatrixRow('Workspace reports',
+      pump: (t, size) async { await pumpWorkspaceSettings(t, reports: true, size: size); }, axes: _all),
   MatrixRow('Member directory',
       gaps: _unmeasured('pumpDirectory takes no size and needs a seeded '
           'repository per case — #1582 (2026-09-20)')),

@@ -29,6 +29,8 @@ import 'matrix.dart';
 const _roomy = Size(1200, 3400);
 
 void main() {
+  setUp(() { WidgetController.hitTestWarningShouldBeFatal = true; });
+  tearDown(() { WidgetController.hitTestWarningShouldBeFatal = false; });
   for (final row in matrixRowsFor(MatrixAxis.semantics)) {
     testWidgets('${row.screen} meets the accessibility guidelines',
         (tester) async {
