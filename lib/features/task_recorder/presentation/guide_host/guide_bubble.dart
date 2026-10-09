@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The task wizard, minimised: the pane folds into one small circle the
-// person can drag out of the way and tap to bring the pane back. The
-// pointer on the control stays; only the explanation is put aside.
+// person can drag out of the way. A tap opens its menu of the pane's
+// actions (guide_bubble_menu.dart, #2313), the guide itself among them.
+// The pointer on the control stays; only the explanation is put aside.
 
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class GuideBubble extends StatelessWidget {
     required this.current,
     required this.total,
     required this.onMove,
-    required this.onRestore,
+    required this.onTap,
     super.key,
   });
 
@@ -29,10 +30,14 @@ class GuideBubble extends StatelessWidget {
   final int current;
   final int total;
   final ValueChanged<Offset> onMove;
-  final VoidCallback onRestore;
+  /// Opens the circle's menu.
+  final VoidCallback onTap;
 
   /// Keeps the circle fully on the layer.
-  Offset clamp(Offset p) => Offset(
+  Offset clamp(Offset p) => clampTo(p, bounds);
+
+  /// Keeps a circle at [p] fully within [bounds].
+  static Offset clampTo(Offset p, Size bounds) => Offset(
     p.dx.clamp(0.0, (bounds.width - guideBubbleSize).clamp(0.0, double.infinity)),
     p.dy.clamp(0.0, (bounds.height - guideBubbleSize).clamp(0.0, double.infinity)),
   );
@@ -54,12 +59,12 @@ class GuideBubble extends StatelessWidget {
         key: const ValueKey('guide-host-bubble-semantics'),
         button: true,
         label: label,
-        onTap: onRestore,
+        onTap: onTap,
         child: ExcludeSemantics(
           child: GestureDetector(
             key: const ValueKey('guide-host-bubble'),
             behavior: HitTestBehavior.opaque,
-            onTap: onRestore,
+            onTap: onTap,
             onPanUpdate: (d) => onMove(clamp(at + d.delta)),
             child: Material(
               elevation: 6,

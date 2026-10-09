@@ -31,10 +31,11 @@
 //
 // ## Scope
 //
-// A recording belongs to one account, workspace and installation
-// ([RecorderScope], a digest). When the scope changes under it, it ends
-// (`scope_changed`) before anything from the new scope can enter.
-// Recording again needs a new, explicit [start].
+// A recording belongs to one account on one installation ([RecorderScope],
+// a digest). Entering Me or another workspace is not a scope change: the
+// task goes on (#2313). When the account or the installation changes under
+// it, it ends (`scope_changed`) before anything from the new scope can
+// enter. Recording again needs a new, explicit [start].
 
 import 'dart:async';
 import 'dart:convert';

@@ -148,7 +148,12 @@ view and repeats its highlight. **All steps** links to individual steps without
 marking intervening work done. In-flight commands keep their current step until
 the answer arrives. Dialogs and controls requiring a prior choice are opened by
 following those preceding steps; a link never submits a form or invents a record.
-Switching the active account or workspace still pauses the guide.
+Switching the active account (or installation) pauses the guide; entering Me
+or another workspace does not (#2313): a recording and a guide follow the
+person through Me and every space as one task, since steps name pages and
+controls, never a workspace. The minimised guide's circle opens a menu of the
+pane's actions (open the guide, Open & highlight, go to page, Done, Skip,
+Back, Resume, Stop).
 
 ## Versioning
 

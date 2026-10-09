@@ -168,11 +168,9 @@ void main() {
       () async {
     await c.start(scope: canaryScope);
     c.record(RecorderActions.openReserve);
-    // Same user id and workspace id, another installation: another scope.
+    // Same user id, another installation: another scope.
     final elsewhere = RecorderScope.of(
-        backendUrl: 'https://other.invalid',
-        userId: kCanaryUserId,
-        workspaceId: kCanaryWorkspaceId);
+        backendUrl: 'https://other.invalid', userId: kCanaryUserId);
     expect(elsewhere, isNot(canaryScope));
     c.scopeChanged(canaryScope); // the same scope changes nothing
     expect(c.state, RecorderState.recording);

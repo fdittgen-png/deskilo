@@ -83,6 +83,14 @@ void main() {
     },
   );
 
+  test('a public profile is recorded on its form, Discover', () async {
+    await recorder.start(scope: canaryScope);
+    recorder.setPage('/p/:id');
+    recorder.annotate('Read the profile');
+    expect(recorder.snapshot!.steps.single.page, '/discover');
+    expect(recorder.state, RecorderState.recording);
+  });
+
   test(
     'an unknown form stops before an unlinked step can be persisted',
     () async {
