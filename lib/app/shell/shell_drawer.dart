@@ -23,7 +23,6 @@ import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../l10n/app_localizations.dart';
-import '../../features/workspace/domain/bi_modules.dart';
 import 'shell_destinations.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
@@ -137,12 +136,6 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-availability', Icons.event_busy_outlined,
             l10n?.availabilityTitle ?? 'Availability',
             () => go('/availability'), route: '/availability'),
-      // #1923 — the BI area, on every platform.
-      if (biAvailable(
-          features: features,
-          permissions: ref.watch(myPermissionsProvider)))
-        _Entry('drawer-bi', Icons.insights_outlined,
-            l10n?.biTitle ?? 'Business analytics', () => go('/bi'), route: '/bi'),
       if (may(WorkspacePermission.manageRoles) &&
           features.contains(WorkspaceFeature.roleManagement))
         _Entry('drawer-roles', Icons.admin_panel_settings_outlined,
@@ -153,9 +146,6 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
             l10n?.invoicesManage ?? 'Manage invoices',
             () => go('/invoices'), route: '/invoices'),
-      if (workspaceReportsAvailable(features, ref.watch(myPermissionsProvider), isAdmin: ref.watch(myMemberProvider).value?.isAdmin ?? false))
-        _Entry('drawer-reports', Icons.summarize_outlined,
-          labels.uxReportsTitle, () => go('/reports'), route: '/reports'),
       if (may(WorkspacePermission.manageIntegrations))
         _Entry('drawer-payment-methods', Icons.account_balance_wallet_outlined,
             l10n?.paymentInstructionsTitle ?? 'Payment instructions',
@@ -188,6 +178,32 @@ class ShellDrawer extends ConsumerWidget {
         _Entry('drawer-editor', Icons.design_services_outlined,
             l10n?.editorOpenTooltip ?? 'Edit workspace', () => go('/editor'), route: '/editor'),
     ];
+    // #2313 — Reporting: every report and the BI in one group, one
+    // sub-item per section the Reports page would show this reader.
+    final member = ref.watch(myMemberProvider).value;
+    final sections = reportingSections(
+      features: features,
+      permissions: perms,
+      isAdmin: member?.isAdmin ?? false,
+      actsAsOwner: member?.actsAsOwner ?? false,
+    );
+    final section = GoRouterState.of(context).uri.queryParameters['section'];
+    bool onSection(String id) => path == '/reports' &&
+        (section ?? sections.where((s) => s != 'analytics').firstOrNull) == id;
+    final reporting = <_Entry>[
+      if (sections.contains('finance'))
+        _Entry('drawer-reports-finance', Icons.account_balance_outlined, labels.uxReportsFinance,
+            () => go('/reports?section=finance'), selected: onSection('finance')),
+      if (sections.contains('documents'))
+        _Entry('drawer-reports-documents', Icons.summarize_outlined, labels.uxReportsWorkspace,
+            () => go('/reports?section=documents'), selected: onSection('documents')),
+      // #1923 — the BI area, on every platform.
+      if (sections.contains('analytics'))
+        _Entry('drawer-bi', Icons.insights_outlined, labels.biTitle, () => go('/bi'), route: '/bi'),
+      if (sections.contains('templates'))
+        _Entry('drawer-reports-templates', Icons.edit_note_outlined, labels.uxReportsTemplates,
+            () => go('/reports?section=templates'), selected: onSection('templates')),
+    ];
     final account = <_Entry>[
       if (features.contains(WorkspaceFeature.documents) &&
           (may(WorkspacePermission.viewDocuments) ||
@@ -209,10 +225,16 @@ class ShellDrawer extends ConsumerWidget {
           () => go('/settings')),
     ];
 
+    // #2313 — one line per entry: a label that wraps onto three lines in
+    // a sidebar reads as fragments; it is cut with an ellipsis instead and
+    // the tooltip-free full name stays in the semantics label.
     Widget tile(_Entry e) => ListTile(
           key: ValueKey(e.key),
           leading: Icon(e.icon),
-          title: Text(e.label),
+          title: Text(e.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          horizontalTitleGap: AppSpacing.md,
+          minLeadingWidth: 24,
           selected: e.selected || (e.route != null &&
               (path == e.route || path.startsWith('${e.route}/'))),
           shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
@@ -230,21 +252,29 @@ class ShellDrawer extends ConsumerWidget {
           onTap: e.onTap,
         );
 
-    Widget group(String id, String title, IconData icon, Set<String> keys) {
-      final entries = administration.where((e) => keys.contains(e.key)).toList();
-      final active = entries.any((e) => path == e.route || path.startsWith('${e.route}/'));
+    Widget group(String id, String title, IconData icon, Set<String> keys,
+        {List<_Entry>? from}) {
+      final entries = (from ?? administration).where((e) => keys.contains(e.key)).toList();
+      final active = entries.any((e) => e.selected || path == e.route || path.startsWith('${e.route}/'));
       if (entries.isEmpty) return const SizedBox.shrink();
       return ExpansionTile(
         key: PageStorageKey('drawer-group-$id-$active'),
         initiallyExpanded: active,
-        leading: Icon(icon), title: Text(title),
+        tilePadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        leading: Icon(icon),
+        title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
         shape: const Border(), collapsedShape: const Border(),
         children: [for (final e in entries) tile(e)],
       );
     }
 
+    // #2313 — one type for every entry and every group title (Material's
+    // navigation-drawer label), so the menu reads as one list.
     final content = SafeArea(
-        child: ListView(
+        child: ListTileTheme(
+          data: ListTileThemeData(titleTextStyle: theme.textTheme.labelLarge
+              ?.copyWith(color: theme.colorScheme.onSurface)),
+          child: ListView(
           padding: AppSpacing.smH,
           children: [
             Padding(
@@ -273,6 +303,12 @@ class ShellDrawer extends ConsumerWidget {
             ),
             const Divider(),
             for (final e in navigation) tile(e),
+            if (reporting.isNotEmpty) ...[
+              const Divider(),
+              group('reporting', labels.uxNavReporting, Icons.analytics_outlined, {
+                for (final e in reporting) e.key,
+              }, from: reporting),
+            ],
             if (administration.isNotEmpty) ...[
               const Divider(),
               group('people', labels.uxNavPeople, Icons.group_outlined, {
@@ -280,7 +316,7 @@ class ShellDrawer extends ConsumerWidget {
               }),
               group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
                 'drawer-invoices', 'drawer-billing', 'drawer-payment-methods',
-                'drawer-payment-config', 'drawer-bi', 'drawer-reports',
+                'drawer-payment-config',
               }),
               group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
                 'drawer-workspace-settings', 'drawer-availability', 'drawer-services',
@@ -291,7 +327,7 @@ class ShellDrawer extends ConsumerWidget {
             for (final e in account) tile(e),
           ],
         ),
-      );
+      ));
     return permanent
         ? Material(key: const ValueKey('shell-sidebar'),
             color: theme.colorScheme.surfaceContainerLow, child: content)

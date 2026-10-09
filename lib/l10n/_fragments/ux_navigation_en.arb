@@ -1,5 +1,9 @@
 {
   "uxNavPeople": "People & access",
   "uxNavFinance": "Billing & payments",
-  "uxNavWorkspace": "Workspace setup"
+  "uxNavWorkspace": "Workspace setup",
+  "uxNavReporting": "Reporting",
+  "@uxNavReporting": {
+    "description": "#2313 the menu group that holds every report and the business analytics"
+  }
 }

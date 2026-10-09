@@ -18101,7 +18101,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxNavPeople => 'Miembros y acceso';
 
   @override
-  String get uxNavWorkspace => 'Configuración del espacio';
+  String get uxNavReporting => 'Informes';
+
+  @override
+  String get uxNavWorkspace => 'Configurar el espacio';
 
   @override
   String get uxOpenWorkspace => 'Abrir espacio';

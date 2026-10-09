@@ -85,8 +85,11 @@ import '../../../../l10n/app_localizations_en.dart';
 /// backup tools (XML export/import, configuration PDF, space-QR PDF)
 /// and the guarded workspace reset (0039).
 class WorkspaceSettingsScreen extends ConsumerStatefulWidget {
-  const WorkspaceSettingsScreen({this.reportsOnly = false, super.key});
+  const WorkspaceSettingsScreen({this.reportsOnly = false, this.reportSection, super.key});
   final bool reportsOnly;
+
+  /// #2313 — the Reporting tab to open (`/reports?section=`).
+  final String? reportSection;
 
   @override
   ConsumerState<WorkspaceSettingsScreen> createState() =>
@@ -968,6 +971,7 @@ class _WorkspaceSettingsScreenState
       appBar: AppBar(title: Text(labels.uxReportsTitle)),
       body: workspace == null ? const LoadingView() : WorkspaceReports(
         workspaceName: workspace.name,
+        initialSection: widget.reportSection,
         documents: ref.watch(myPermissionsProvider).contains(WorkspacePermission.workspaceSettings)
           ? _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic, reports: true) : const [])); }
     if (workspace != null && !_seeded) {

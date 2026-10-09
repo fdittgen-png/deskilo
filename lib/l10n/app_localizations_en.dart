@@ -17964,6 +17964,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uxNavPeople => 'People & access';
 
   @override
+  String get uxNavReporting => 'Reporting';
+
+  @override
   String get uxNavWorkspace => 'Workspace setup';
 
   @override

@@ -18148,10 +18148,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxMyBookings => 'Meine Buchungen';
 
   @override
-  String get uxNavFinance => 'Abrechnung und Zahlungen';
+  String get uxNavFinance => 'Abrechnung & Zahlungen';
 
   @override
   String get uxNavPeople => 'Mitglieder und Zugang';
+
+  @override
+  String get uxNavReporting => 'Reporting';
 
   @override
   String get uxNavWorkspace => 'Workspace einrichten';

@@ -88,7 +88,8 @@ Future<bool> _drawerHas(WidgetTester tester, String key) async {
     of: find.byType(ShellDrawer),
     matching: find.byType(Scrollable),
   );
-  final group = find.byKey(const PageStorageKey('drawer-group-finance-false'));
+  // #2313 — the BI lives in the Reporting group.
+  final group = find.byKey(const PageStorageKey('drawer-group-reporting-false'));
   if (group.evaluate().isNotEmpty) {
     await tester.ensureVisible(group);
     await tester.pumpAndSettle();
