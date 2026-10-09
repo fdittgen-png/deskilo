@@ -98,6 +98,14 @@ void main() {
     expect(money.invoices, isEmpty);
     expect(banner, findsOneWidget);
 
+    money.invoiceMissing = ['invoice_feature_disabled'];
+    await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('disabled in this workspace'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.pumpAndSettle();
+    expect(money.invoices, isEmpty);
+
     // Complete → the same form issues, once.
     money.invoiceMissing = const [];
     await tester.tap(find.byKey(const ValueKey('invoice-period-prev')));

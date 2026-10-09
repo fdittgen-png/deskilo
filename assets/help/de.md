@@ -1321,6 +1321,8 @@ Der Monatssaldo steht zuerst; Nutzung und Kosten folgen. Hilfetipps stehen nach 
 
 **Grenzen der Rechnungsausstellung (#1917).** Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.
 
+Wenn Abo- oder Verbrauchsrechnungen deaktiviert sind, lässt sich diese Rechnungsart auch im Assistenten nicht ausstellen. Monatsrechnungen bleiben bei aktivierter Rechnungsstellung verfügbar; bestehende Dokumente und Kontoauszüge bleiben lesbar.
+
 **Ihre Rechnungen · Alle Zeiträume.** Die Zusammenfassung zeigt offene Beträge und überfällige Rechnungen einmal, dann alle Ihre Rechnungen, neueste zuerst. Der Abrechnungsmonat filtert dieses Archiv nicht. Öffnen Sie **Finanzverwaltung des Workspaces** über der Zusammenfassung für Rechnungsregister, Workspace-Status und Kostenteilung gemäß Ihrer Rolle und den aktivierten Funktionen. Rechnungszeilen öffnen weiterhin Details, Dokumente und Zahlungen.
 
 **Der Weg (#812).** Jede Zeile trägt außerdem die **Verlaufsleiste** der Rechnung — *Ausgestellt · Zahlung · Bestätigung · Abgeschlossen*, der aktuelle Schritt umringt — und **Sie sind dran** in einem Satz: *X bis Datum zahlen*, *Sie haben X gemeldet — der Space bestätigt es*, *Ihre Zahlung ist verbucht — der Space ordnet sie zu*, *bezahlt am … — abgeschlossen*. **So funktioniert es** auf der Kopfkarte öffnet die vier Schritte mit dem, was der Space tut und was Sie tun. Funktion *Der Weg einer Rechnung* (unter Rechnungen).

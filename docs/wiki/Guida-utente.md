@@ -1397,6 +1397,8 @@ Il saldo mensile apre questa vista; seguono l’utilizzo e gli addebiti. I sugge
 
 **Limiti di emissione (#1917).** Le fatture transfrontaliere, con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.
 
+Disattivando le fatture di abbonamento o di utilizzo, non è possibile emetterle nemmeno dalla procedura guidata. Le fatture mensili complete restano disponibili se la fatturazione è attiva; i documenti esistenti e gli estratti conto restano consultabili.
+
 **Le tue fatture · Tutti i periodi.** Il riepilogo mostra una sola volta importi aperti e ritardi, poi tutte le tue fatture, dalle più recenti. Il mese dell’estratto non filtra questo archivio. Espandi **Strumenti finanziari dello spazio** sopra il riepilogo per registro, situazione dello spazio e ripartizione dei costi disponibili secondo il ruolo e le funzionalità attive. Le righe aprono ancora dettagli, documenti e pagamento.
 
 **Il percorso (#812).** Ogni riga porta anche la **barra del percorso** della fattura — *Emessa · Pagamento · Conferma · Chiusa*, il passo corrente cerchiato — e **tocca a te** in una frase: *paga X entro il data*, *hai dichiarato X — lo spazio lo sta confermando*, *il tuo pagamento è registrato — lo spazio lo abbina*, *pagata il … — chiusa*. **Come funziona** sulla scheda di testa apre i quattro passi con ciò che fa lo spazio e ciò che fai tu. Funzione *Il percorso di una fattura* (sotto Fatture).

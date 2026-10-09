@@ -5011,6 +5011,7 @@
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
   "invoiceFacturXExplain": "Eine Datei: die Rechnung für Menschen, mit dem maschinenlesbaren XML darin. Das erwarten die meisten Plattformen.",
   "invoiceFacturXShare": "Factur-X (PDF) teilen",
+  "invoiceFeatureDisabled": "Diese Rechnungsart ist in diesem Workspace deaktiviert. Bestehende Rechnungen und Kontoauszüge bleiben verfügbar.",
   "invoiceFilterAllMembers": "Alle Mitglieder",
   "invoiceFilterAllMonths": "Alle Monate",
   "invoiceFilterClear": "Filter zurücksetzen",
@@ -5148,6 +5149,7 @@
       }
     }
   },
+  "invoiceIssuingUnavailable": "Rechnungserstellung nicht verfügbar",
   "invoiceKindFull": "Ganzer Monat",
   "invoiceKindSettlement": "Zusammengefasste Rechnungen",
   "invoiceKindSubscription": "Abo, im Voraus",

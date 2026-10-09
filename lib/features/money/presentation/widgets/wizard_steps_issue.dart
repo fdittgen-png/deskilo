@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/invoice.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
@@ -153,6 +155,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
     final items = wiz.issueItems;
     final todo = items.where((i) => !i.done).toList();
     final selected = todo.where((i) => !_skipped.contains(i.memberId)).length;
+    final enabled = wiz.issuingEnabled;
     if (!wiz.loading && items.isEmpty) {
       return WizardNothing(
         l10n?.wizardIssueNothing ?? 'Nothing to issue for this period.',
@@ -161,6 +164,12 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
     }
     return ListView(
       children: [
+        if (!enabled)
+          InlineBanner(
+            icon: Icons.info_outline,
+            severity: InlineBannerSeverity.info,
+            text: l10n?.invoiceFeatureDisabled ?? AppLocalizationsEn().invoiceFeatureDisabled,
+          ),
         WizardHint(l10n?.wizardIssueHint ??
             'Untick a member to leave them out of this batch. Members '
                 'already covered are shown as done.'),
@@ -204,7 +213,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
             icon: const Icon(Icons.receipt_long_outlined),
             label: Text(l10n?.wizardIssueAll(selected) ??
                 'Issue $selected invoices'),
-            onPressed: _busy || selected == 0 ? null : () => _issueAll(todo),
+            onPressed: !enabled || _busy || selected == 0 ? null : () => _issueAll(todo),
           ),
       ],
     );

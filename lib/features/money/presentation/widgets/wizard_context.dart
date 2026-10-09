@@ -40,6 +40,7 @@ class WizardContext {
     required this.events,
     required this.previews,
     required this.loading,
+    required this.issuingEnabled,
   });
 
   final WizardState state;
@@ -59,6 +60,7 @@ class WizardContext {
 
   /// True while any of the lists is still on its first load.
   final bool loading;
+  final bool issuingEnabled;
 
   Iterable<({String id, String name})> get activeMembers => [
         for (final m in members)
@@ -96,6 +98,8 @@ class WizardContext {
     final now = ref.watch(clockProvider).now();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final period = wizardPeriod(state.run, now);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final kind = wizardKind(state.run);
     final invoices = ref.watch(invoicesProvider);
     final matches = ref.watch(invoiceMatchesProvider);
     final reminders = ref.watch(invoiceRemindersProvider);
@@ -104,7 +108,10 @@ class WizardContext {
     return WizardContext(
       state: state,
       period: period,
-      kind: wizardKind(state.run),
+      kind: kind,
+      issuingEnabled: features.contains(WorkspaceFeature.invoicing) &&
+          features.contains(kind == InvoiceKind.subscription
+              ? WorkspaceFeature.subscriptionInvoices : WorkspaceFeature.usageInvoices),
       now: now,
       workspaceId: workspace?.id ?? '',
       currency: moneyFormat(workspace?.currencyCode),
