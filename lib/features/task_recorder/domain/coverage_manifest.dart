@@ -334,6 +334,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/accessories', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/features', CoverageStatus.recorded),
   RouteCoverage('/workspace-settings', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/reports', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/validation',
     CoverageStatus.recorded,

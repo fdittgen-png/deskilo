@@ -905,6 +905,8 @@ quiere para algo descatalogado, no para algo equivocado.
 
 **Configurar por tarea.** Datos generales, pagos, comunidad e invitaciones, apariencia, valores para nuevos miembros, plantillas y datos y zona de riesgo tienen secciones separadas. Datos generales se abre primero; abre otras secciones cuando las necesites. La preparación permanece encima. Guardar sigue visible abajo al desplazarte. Las secciones cerradas conservan sus borradores; Guardar abre los campos no válidos y los muestra. Las páginas abiertas desde una sección mantienen sus propios controles para guardar. El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
 
+**Informes (#2301).** En **Facturación y pagos → Informes**, las secciones horizontales agrupan **Informes financieros** (registro de facturas con exportación contable y archivo anual, estado del espacio, IVA), **Análisis**, **Documentos del espacio** (configuración PDF, informe del espacio, tarjetas QR y Excel) y **Plantillas**. Solo aparecen acciones habilitadas y autorizadas. Los extractos personales siguen en **Yo → Finanzas** y las tarjetas de miembro en su ficha. Los ajustes conservan la copia/importación XML, la biblioteca y un enlace a Informes. El título y el acceso de la zona de peligro aparecen en rojo.
+
 La pantalla propia del espacio, de arriba abajo:
 
 - **Identidad** — nombre, país, moneda (propuesta según el país, editable), zona horaria, **idioma del espacio** (las invitaciones lo usan por defecto; *idioma de la app del remitente* es una opción) y la **dirección** postal impresa en las facturas.
@@ -1108,7 +1110,7 @@ Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserv
 1. En el **editor**, marca una mesa, una oficina o una planta como **Reservable en su totalidad** y dale un **precio por media jornada** — la ficha de propiedades de la mesa o de la oficina, o para una planta el **icono de capas directamente en su fila**.
 2. Activa **Reservas de mesa, oficina y planta** en **Funciones** (desactivada por defecto).
 3. Concede a cada miembro autorizado **«Puede reservar una mesa, oficina o planta entera»** — propietarios y admins lo fijan en la ficha de gestión del miembro, nunca para sí mismos. Los propietarios y admins tienen ese derecho sin el interruptor, tanto en la app como en el **quiosco**.
-4. Imprime las tarjetas: **Ajustes del espacio → Códigos QR de espacios (PDF)** — recórtalas y pega cada tarjeta en su espacio.
+4. Imprime las tarjetas: **Informes → Documentos del espacio → Códigos QR de espacios (PDF)** — recórtalas y pega cada tarjeta en su espacio.
 
 Una reserva de oficina cubre **todas las mesas de su interior**; una reserva de planta cubre la planta entera. Ambas solo son posibles mientras nada de su interior esté reservado — y aparecen como líneas propias en la factura del miembro.
 
@@ -1670,7 +1672,7 @@ confundir una factura de prueba con una real.
 
 ### 11c. El editor de informes — cada documento, cuatro modelos, cinco idiomas
 
-La **Plantilla del PDF de factura** (icono de lápiz en la cabecera de Facturas, o *Ajustes del espacio*) es una herramienta de informes por bandas para cada documento que imprime la app. Tres **bandas** de informe se renderizan en el PDF — cabecera, cuerpo (las líneas de la factura), pie — mientras que el XML de la factura electrónica nunca se toca.
+La **Plantilla del PDF de factura** (icono de lápiz en la cabecera de Facturas, o *Informes → Plantillas*) es una herramienta de informes por bandas para cada documento que imprime la app. Tres **bandas** de informe se renderizan en el PDF — cabecera, cuerpo (las líneas de la factura), pie — mientras que el XML de la factura electrónica nunca se toca.
 
 - **Campos y marcado, como guía (#966)** — en modo marcado, la larga lista de todos los campos ha desaparecido. Un solo desplegable, *Campos y marcado*, cerrado hasta que lo abra, contiene: dos frases sobre cómo funciona una banda; **Insertar un campo…**, el selector con búsqueda agrupado por tema (documento, cliente, vendedor, importes, datos bancarios, menciones legales, consumo, IVA, sedes, situación, bucles, sus textos) con un significado de una línea bajo cada nombre, buscable también por ese significado; el **marcado de línea**, un signo por fila con su efecto; y tres **piezas listas** (una línea solo si el valor existe, una fila por línea de factura, el título que dice factura, nota de crédito o proforma). Todo lo que toque se coloca en el cursor de la banda editada por última vez.
 
@@ -1713,7 +1715,7 @@ para el tipo en el que está puesto.
 
 - **Acuerdo financiero** — cada precio vigente que se aplica a un miembro: suscripción, media jornada extra, servicios, paquetes, suplementos de accesorios y los precios de los espacios enteros, **mesas incluidas**. Propietarios y admins lo envían desde la ficha de acciones de un miembro; cada miembro puede ver/descargar/compartir el suyo en *Finanzas → Documentos*.
 - **Informe de pagos** — todo lo que pagaste, declaraste o te validaron en un mes: tu pequeño balance, en autoservicio en la misma fila.
-- **Informe del espacio** — identidad, recuentos del plano, disponibilidad, funciones y precios: *Ajustes del espacio → Informe del espacio*.
+- **Informe del espacio** — identidad, recuentos del plano, disponibilidad, funciones y precios: *Informes → Documentos del espacio → Informe del espacio*.
 - **Biblioteca de documentos** — *Ajustes → Documentos*: los estatutos, guías de usuario, estados financieros y actas del espacio, ENLAZADOS desde el sistema que ya uses — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o cualquier enlace https (el drive sigue gestionando sus propios accesos; la app nunca guarda credenciales ajenas). Cada entrada tiene un **rol de visibilidad**: todos los miembros, admins y propietarios, o solo propietarios — aplicado en el servidor, de modo que un miembro ni siquiera descarga una lista que contenga documentos de la junta. Los admins y propietarios la gestionan con el botón +; un interruptor de función *Biblioteca de documentos* activa todo el conjunto.
 
 ![](assets/help/images/documents-library.jpg)

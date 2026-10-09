@@ -46,7 +46,7 @@ Future<void> _reveal(WidgetTester tester, String key) async {
       matching: find.byType(Scrollable));
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
-    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' || 'drawer-bi' => 'Billing & payments',
+    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' || 'drawer-bi' || 'drawer-reports' => 'Billing & payments',
     'drawer-workspace-settings' || 'drawer-availability' || 'drawer-services' || 'drawer-accessories' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
     _ => null,
   };
@@ -68,6 +68,30 @@ Future<void> _reveal(WidgetTester tester, String key) async {
 }
 
 void main() {
+  for (final invoicing in [true, false]) {
+  testWidgets('billing opens permitted reports for admin; invoicing=$invoicing', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: {'invoicing': invoicing, 'workspaceStatus': true});
+    workspace.myMember = workspace.myMember.copyWith(isOwner: false, isAdmin: true);
+    await _pump(tester, web: true, workspace: workspace);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    if (!invoicing) {
+      expect(find.byKey(const ValueKey('drawer-reports')), findsNothing);
+      expect(find.text('Billing & payments'), findsNothing);
+      return;
+    }
+    await _reveal(tester, 'drawer-reports');
+    await tester.tap(find.byKey(const ValueKey('drawer-reports')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('workspace-section-documents')), findsNothing);
+    expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsNothing);
+    expect(find.byKey(const ValueKey('reports-status')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('reports-register')));
+    await tester.pumpAndSettle();
+    expect(find.text('Invoice register'), findsOneWidget);
+  });
+  }
+
   testWidgets('on the web the bar is gone and the drawer carries every '
       'destination', (tester) async {
     await _pump(tester, web: true);

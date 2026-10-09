@@ -8,12 +8,12 @@ import '../../../../l10n/app_localizations.dart';
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
   const WorkspaceFormGroup({required this.id, required this.title,
-    required this.icon, required this.children, this.initiallyExpanded = false,
+    required this.icon, required this.children, this.initiallyExpanded = false, this.destructive = false,
     super.key});
   final String id, title;
   final IconData icon;
   final List<Widget> children;
-  final bool initiallyExpanded;
+  final bool initiallyExpanded, destructive;
 
   static bool validate(FormState? form) {
     if (form == null) return false;
@@ -63,6 +63,10 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
     child: ExpansionTile(key: ValueKey('workspace-group-${widget.id}'),
       controller: _controller, maintainState: true,
+      textColor: widget.destructive ? Theme.of(context).colorScheme.error : null,
+      collapsedTextColor: widget.destructive ? Theme.of(context).colorScheme.error : null,
+      iconColor: widget.destructive ? Theme.of(context).colorScheme.error : null,
+      collapsedIconColor: widget.destructive ? Theme.of(context).colorScheme.error : null,
       expansionAnimationStyle: AnimationStyle(duration: motionDuration(context, kThemeAnimationDuration)),
       onExpansionChanged: (open) { if (!open) FocusScope.of(context).unfocus(); setState(() {}); },
       initiallyExpanded: widget.initiallyExpanded,
@@ -94,6 +98,7 @@ class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
       Padding(padding: AppSpacing.smAll, child: Wrap(spacing: AppSpacing.xs,
         children: [for (final group in groups) TextButton(
           key: ValueKey('workspace-section-${group.id}'),
+          style: group.destructive ? TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error) : null,
           onPressed: () => _groups[group.id]?.currentState?.open(),
           child: Text(group.title))])),
       Expanded(child: SingleChildScrollView(padding: AppSpacing.gutterAll,
@@ -101,7 +106,7 @@ class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
           for (final child in widget.children)
             if (child is WorkspaceFormGroup) WorkspaceFormGroup(key: _groups[child.id],
               id: child.id, title: child.title, icon: child.icon,
-              initiallyExpanded: child.initiallyExpanded, children: child.children)
+              initiallyExpanded: child.initiallyExpanded, destructive: child.destructive, children: child.children)
             else child,
         ]))),
     ]);

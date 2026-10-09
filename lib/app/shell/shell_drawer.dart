@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 //
 // The WEB shell's navigation: a hamburger drawer instead of the bottom
 // bar and its raised Reserve button. A browser window has the width a
@@ -150,8 +151,11 @@ class ShellDrawer extends ConsumerWidget {
               may(WorkspacePermission.issueInvoices)) &&
           features.contains(WorkspaceFeature.invoicing))
         _Entry('drawer-invoices', Icons.receipt_long_outlined,
-            l10n?.settingsBillingReports ?? 'Billing & reports',
+            l10n?.invoicesManage ?? 'Manage invoices',
             () => go('/invoices'), route: '/invoices'),
+      if (workspaceReportsAvailable(features, ref.watch(myPermissionsProvider), isAdmin: ref.watch(myMemberProvider).value?.isAdmin ?? false))
+        _Entry('drawer-reports', Icons.summarize_outlined,
+          labels.uxReportsTitle, () => go('/reports'), route: '/reports'),
       if (may(WorkspacePermission.manageIntegrations))
         _Entry('drawer-payment-methods', Icons.account_balance_wallet_outlined,
             l10n?.paymentInstructionsTitle ?? 'Payment instructions',
@@ -276,7 +280,7 @@ class ShellDrawer extends ConsumerWidget {
               }),
               group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
                 'drawer-invoices', 'drawer-billing', 'drawer-payment-methods',
-                'drawer-payment-config', 'drawer-bi',
+                'drawer-payment-config', 'drawer-bi', 'drawer-reports',
               }),
               group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
                 'drawer-workspace-settings', 'drawer-availability', 'drawer-services',

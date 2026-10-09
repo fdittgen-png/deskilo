@@ -18150,6 +18150,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxRealWorkspace => 'Arbeitsbereich';
 
   @override
+  String get uxReportsFinance => 'Finanzberichte';
+
+  @override
+  String get uxReportsHint => 'Finanzberichte, Workspace-Dokumente und Exporte';
+
+  @override
+  String get uxReportsTemplates => 'Vorlagen';
+
+  @override
+  String get uxReportsTitle => 'Berichte';
+
+  @override
+  String get uxReportsWorkspace => 'Workspace-Dokumente';
+
+  @override
   String get uxResetFilters => 'Filter zurücksetzen';
 
   @override

@@ -44,6 +44,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   FakeMoneyRepository? money,
   bool settle = true,
   bool expand = true,
+  bool reports = false,
   Size size = const Size(800, 4600),
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
@@ -78,11 +79,59 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
   }
-  if (expand) await openWorkspaceSettingsGroups(tester);
+  if (reports) {
+    await tester.tap(find.byKey(const ValueKey('workspace-section-payments')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('workspaceSettingsReports')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('workspace-section-documents')));
+    await tester.pumpAndSettle();
+  } else if (expand) { await openWorkspaceSettingsGroups(tester); }
   return workspace;
 }
 
 void main() {
+  testWidgets('Reports opens the document designer and Back keeps its Templates tab', (tester) async {
+    await pumpWorkspaceSettings(tester, reports: true);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-templates')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reports-templates')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('report-editor-page')), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reports-templates')), findsOneWidget);
+  });
+
+  testWidgets('danger heading and shortcut stay red; reports leave configuration', (tester) async {
+    await pumpWorkspaceSettings(tester, expand: false);
+    final danger = find.byKey(const ValueKey('workspace-group-danger'));
+    final tile = tester.widget<ExpansionTile>(danger);
+    final error = Theme.of(tester.element(danger)).colorScheme.error;
+    expect(tile.textColor, error);
+    expect(tile.collapsedTextColor, error);
+    final shortcut = tester.widget<TextButton>(find.byKey(const ValueKey('workspace-section-danger')));
+    expect(shortcut.style?.foregroundColor?.resolve({}), error);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-tools')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsNothing);
+    expect(find.byKey(const Key('workspaceSettingsExportXml')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-payments')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('workspaceSettingsReports')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('workspaceSettingsSave')), findsNothing);
+    expect(find.byKey(const Key('workspaceSettingsExportXml')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-documents')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-finance')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reports-register')));
+    await tester.pumpAndSettle();
+    expect(find.text('Invoice register'), findsOneWidget);
+  });
+
   testWidgets('workspace tasks disclose fields while Save remains visible', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
@@ -127,7 +176,7 @@ void main() {
     money.reportImages['company-logo'] = base64Decode(
         'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==');
     var saved = false;
-    await pumpWorkspaceSettings(tester, money: money,
+    await pumpWorkspaceSettings(tester, money: money, reports: true,
         floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
         saver: ({required bytes, required fileName}) async {
           expect(latin1.decode(bytes), matches(RegExp(r'/Subtype\s*/Image')));
@@ -427,6 +476,7 @@ void main() {
     await showWorkspaceSettings(tester);
 
     expect(find.text('Workspace'), findsNothing);
+    expect(find.byKey(const ValueKey('settings-reports')), findsNothing);
   });
 
   testWidgets(
@@ -437,6 +487,7 @@ void main() {
     await pumpWorkspaceSettings(
       tester,
       floorPlan: floorPlan,
+      reports: true,
       saver: ({required bytes, required fileName}) async {
         saved.add(fileName);
         expect(bytes, isNotEmpty);
@@ -465,6 +516,7 @@ void main() {
     final floorPlan = FakeFloorPlanRepository()..seedSmallPlan();
     await pumpWorkspaceSettings(
       tester,
+      reports: true,
       floorPlan: floorPlan,
       saver: ({required bytes, required fileName}) async {
         saved.add(fileName);

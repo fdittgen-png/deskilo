@@ -912,6 +912,8 @@ vuole per qualcosa di dismesso, non per qualcosa di sbagliato.
 
 **Configura per attività.** Informazioni generali, pagamenti, comunità e inviti, aspetto, valori per nuovi membri, modelli e dati e zona di rischio hanno sezioni separate. Informazioni generali si apre per prima; apri le altre quando servono. Lo stato di preparazione rimane sopra. Salva resta visibile in basso durante lo scorrimento. Le sezioni chiuse conservano le bozze; Salva apre i campi non validi e li mostra. Le pagine aperte da una sezione mantengono i propri comandi di salvataggio. Il menu orizzontale delle sezioni resta visibile: scegli una sezione per aprirla e raggiungerla direttamente. Scorri il modulo quando serve; le bozze vengono conservate.
 
+**Report (#2301).** In **Fatturazione e pagamenti → Report**, le sezioni orizzontali raggruppano **Report finanziari** (registro fatture con esportazioni contabili e archivio annuale, situazione dello spazio, IVA), **Analisi**, **Documenti dello spazio** (configurazione PDF, report dello spazio, schede QR ed Excel) e **Modelli**. Appaiono solo azioni attive e autorizzate. Gli estratti personali restano in **Io → Finanze** e i badge nella scheda del membro. Le impostazioni mantengono backup/importazione XML, biblioteca e collegamento ai Report. Titolo e collegamento della zona di pericolo sono rossi.
+
 La schermata propria dello spazio, dall'alto in basso:
 
 - **Identità** — nome, paese, valuta (proposta dal paese, modificabile), fuso orario, **lingua dello spazio** (gli inviti la usano per impostazione predefinita; *lingua dell'app del mittente* è un'opzione) e l'**indirizzo** postale stampato sulle fatture.
@@ -1118,7 +1120,7 @@ Quattro passi trasformano «scansiona il codice sul tavolo» nel flusso di preno
 1. Nell'**editor**, marca un ufficio o un piano come **Prenotabile per intero** e assegnagli un **prezzo per mezza giornata** — la scheda proprietà dell'ufficio, o per un piano l'**icona livelli direttamente sulla sua riga**.
 2. Attiva **Prenotazioni di tavolo, ufficio e piano** in **Funzionalità** (disattivata per impostazione predefinita).
 3. Concedi a ogni membro autorizzato **«Può prenotare un tavolo, ufficio o piano intero»** — proprietari e admin lo impostano nella scheda di gestione del membro, mai per se stessi. Proprietari e admin hanno il diritto anche senza l'interruttore, nell'app come al **chiosco**.
-4. Stampa le schede: **Impostazioni dello spazio → Codici QR degli spazi (PDF)** — ritagliale e attacca ogni scheda sul suo spazio.
+4. Stampa le schede: **Report → Documenti dello spazio → Codici QR degli spazi (PDF)** — ritagliale e attacca ogni scheda sul suo spazio.
 
 Una prenotazione di ufficio copre **tutti i tavoli al suo interno**; una prenotazione di piano copre l'intero piano. Entrambe sono possibili solo finché nulla all'interno è prenotato — e compaiono come righe a sé sulla fattura del membro.
 
@@ -1680,7 +1682,7 @@ impossibile da confondere con una reale.
 
 ### 11c. L'editor di report — ogni documento, quattro modelli, cinque lingue
 
-Il **Modello PDF della fattura** (icona matita nell'intestazione Fatture, o *Impostazioni dello spazio*) è uno strumento di reporting a bande per ogni documento che l'app stampa. Tre **bande** di report vengono rese sul PDF — intestazione, corpo (le righe della fattura), piè di pagina — mentre l'XML della fattura elettronica non viene mai toccato.
+Il **Modello PDF della fattura** (icona matita nell'intestazione Fatture, o *Report → Modelli*) è uno strumento di reporting a bande per ogni documento che l'app stampa. Tre **bande** di report vengono rese sul PDF — intestazione, corpo (le righe della fattura), piè di pagina — mentre l'XML della fattura elettronica non viene mai toccato.
 
 - **Campi e marcatura, come guida (#966)** — in modalità marcatura la lunga fila di tutti i campi è sparita. Un solo pannello, *Campi e marcatura*, chiuso finché non lo aprite, contiene: due frasi su come funziona una banda; **Inserisci un campo…**, il selettore con ricerca raggruppato per tema (documento, cliente, venditore, importi, coordinate bancarie, diciture legali, consumo, IVA, sedi, situazione, cicli, i vostri testi) con un significato di una riga sotto ogni nome, ricercabile anche per quel significato; la **marcatura di riga**, un segno per riga con il suo effetto; e tre **pezzi pronti** (una riga solo se il valore esiste, una riga per ogni riga di fattura, il titolo che dice fattura, nota di credito o proforma). Tutto ciò che toccate finisce al cursore della banda modificata per ultima.
 
@@ -1723,7 +1725,7 @@ per il tipo su cui è impostato.
 
 - **Accordo finanziario** — ogni prezzo in vigore che si applica a un membro: abbonamento, mezza giornata extra, servizi, pacchetti, supplementi accessori e i prezzi degli spazi interi, **tavoli compresi**. Proprietari/admin lo inviano dalla scheda azioni di un membro; ogni membro può vedere in anteprima/scaricare/condividere il proprio da *Finanze → Documenti*.
 - **Report dei pagamenti** — tutto ciò che hai pagato, dichiarato o fatto convalidare in un mese: il tuo piccolo bilancio, self-service sulla stessa riga.
-- **Report dello spazio** — identità, conteggi della piantina, disponibilità, funzionalità e prezzi: *Impostazioni dello spazio → Report dello spazio*.
+- **Report dello spazio** — identità, conteggi della piantina, disponibilità, funzionalità e prezzi: *Report → Documenti dello spazio → Report dello spazio*.
 - **Biblioteca documenti** — *Impostazioni → Documenti*: lo statuto dello spazio, le guide, i bilanci e i verbali, COLLEGATI dal sistema che già usi — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o qualsiasi link https (il drive continua a gestire i propri permessi; l'app non conserva mai credenziali altrui). Ogni voce ha un **ruolo di visibilità**: tutti i membri, admin e proprietari, o solo proprietari — applicato lato server, così un membro non scarica nemmeno un elenco che contiene documenti del consiglio. Admin e proprietari curano con il pulsante +; l'interruttore della funzionalità *Biblioteca documenti* attiva il tutto.
 
 ![](assets/help/images/documents-library.jpg)

@@ -937,6 +937,8 @@ qu'on veut pour quelque chose d'arrêté, pas d'erroné.
 
 **Configurer par tâche.** Informations générales, paiements, communauté et invitations, apparence, valeurs par défaut des nouveaux membres, modèles et données et zone sensible ont des sections séparées. Les informations générales sont ouvertes au départ ; ouvrez une autre section selon votre besoin. La préparation reste au-dessus des tâches. Enregistrer reste en bas de l’écran pendant le défilement. Les sections fermées conservent leurs brouillons ; Enregistrer ouvre les champs invalides et les fait défiler à l’écran. Les pages ouvertes depuis une section gardent leur propre bouton d’enregistrement. Le menu horizontal des sections reste visible : choisissez une section pour l’ouvrir et y accéder directement. Faites défiler le formulaire selon vos besoins ; les brouillons sont conservés.
 
+**Rapports (#2301).** Dans **Facturation et paiements → Rapports**, les sections horizontales regroupent les **Rapports financiers** (registre des factures avec exports comptables et archives annuelles, situation de l’espace, TVA), les **Analyses** pour les indicateurs, les **Documents de l’espace** (configuration PDF, rapport de l’espace, cartes QR et export Excel) et les **Modèles**. Seules les actions autorisées et activées apparaissent. Les relevés personnels restent dans **Moi → Finances**, et les badges dans la fiche du membre. Les réglages conservent les sauvegardes/imports XML, la bibliothèque et un lien vers Rapports. Le titre et le raccourci de la zone de danger sont rouges.
+
 L'écran de l'espace, de haut en bas :
 
 - **Identité** — nom, pays, devise (proposée d'après le pays, modifiable), fuseau horaire, **langue de l'espace** (les invitations y sont rédigées par défaut ; *langue de l'app de l'expéditeur* est une option) et l'**adresse** postale imprimée sur les factures.
@@ -1143,7 +1145,7 @@ Quatre étapes font de « scanner le code sur la table » le flux quotidien (§4
 1. Dans l'**éditeur**, marquez une table, un bureau ou un niveau **Réservable en entier** et donnez-lui un **prix par demi-journée** — la feuille de la table ou du bureau, ou pour un niveau l'**icône calques sur sa ligne**.
 2. Activez **Réservations de table, bureau et niveau** dans **Fonctionnalités** (coupé par défaut).
 3. Accordez à chaque membre habilité **« Peut réserver une table, un bureau ou un niveau entier »** — propriétaires et admins le règlent dans la feuille de gestion du membre, jamais pour eux-mêmes. Propriétaires et admins détiennent le droit sans l'interrupteur, dans l'app comme à la **borne**.
-4. Imprimez les cartes : **Réglages de l'espace → Codes QR des espaces (PDF)** — découpez et collez chaque carte sur son espace.
+4. Imprimez les cartes : **Rapports → Documents de l’espace → Codes QR des espaces (PDF)** — découpez et collez chaque carte sur son espace.
 
 Une réservation de bureau couvre **toutes ses tables** ; une réservation de niveau couvre l'étage entier. Les deux ne sont possibles que si rien à l'intérieur n'est réservé — et apparaissent en lignes propres sur le relevé du membre.
 
@@ -1708,7 +1710,7 @@ facture d'essai impossible à confondre avec une vraie.
 
 ### 11c. L'éditeur de rapports — chaque document, quatre modèles, cinq langues
 
-Le **Modèle de PDF de facture** (crayon dans l'en-tête Factures, ou *Réglages de l'espace*) est un outil de rapport à bandes pour chaque document imprimé. Trois **bandes** se rendent sur le PDF — en-tête, corps (les lignes de la facture), pied — et le XML de facture électronique n'est jamais touché.
+Le **Modèle de PDF de facture** (crayon dans l'en-tête Factures, ou *Rapports → Modèles*) est un outil de rapport à bandes pour chaque document imprimé. Trois **bandes** se rendent sur le PDF — en-tête, corps (les lignes de la facture), pied — et le XML de facture électronique n'est jamais touché.
 
 - **Champs et balisage, sous forme de guide (#966)** — en mode balisage, la longue liste de tous les champs a disparu. Un seul volet, *Champs et balisage*, fermé tant que vous ne l'ouvrez pas, contient : deux phrases sur le fonctionnement d'une bande ; **Insérer un champ…**, le sélecteur cherchable groupé par thème (document, client, vendeur, montants, coordonnées bancaires, mentions légales, consommation, TVA, sites, situation, boucles, vos textes) avec une signification d'une ligne sous chaque nom, cherchable aussi par cette signification ; le **balisage de ligne**, un signe par ligne avec son effet ; et trois **morceaux prêts à l'emploi** (une ligne seulement si la valeur existe, une ligne par ligne de facture, le titre qui dit facture, avoir ou proforma). Tout ce que vous touchez se place au curseur de la bande modifiée en dernier.
 
@@ -1751,7 +1753,7 @@ sur les bandes pour le type sur lequel elle est posée.
 
 - **Accord financier** — chaque prix en vigueur pour un membre : abonnement, demi-journée supplémentaire, services, forfaits, suppléments d'accessoires et les prix des espaces entiers, **tables et bureaux compris**. Propriétaires/admins l'envoient depuis la feuille de gestion d'un membre ; chaque membre consulte/télécharge/partage le sien depuis *Finances → Documents*.
 - **Rapport des paiements** — tout ce que vous avez payé, déclaré ou fait valider dans un mois : votre petit bilan, en libre-service sur la même ligne.
-- **Rapport de l'espace** — identité, comptages du plan, disponibilité, fonctionnalités et prix : *Réglages de l'espace → Rapport de l'espace*.
+- **Rapport de l'espace** — identité, comptages du plan, disponibilité, fonctionnalités et prix : *Rapports → Documents de l’espace → Rapport de l'espace*.
 - **Bibliothèque de documents** — *Réglages → Documents* : statuts, guides, états financiers et comptes rendus de l'espace, LIÉS depuis le système que vous utilisez déjà — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud ou tout lien https (le drive garde la main sur ses accès ; l'app ne stocke jamais d'identifiants étrangers). Chaque entrée a un **rôle de visibilité** : tout membre, admins et propriétaires, ou propriétaires seuls — appliqué côté serveur. Admins et propriétaires alimentent au bouton + ; la fonctionnalité *Bibliothèque de documents* conditionne le tout.
 
 ![](assets/help/images/documents-library.jpg)
