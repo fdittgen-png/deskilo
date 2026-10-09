@@ -13,6 +13,7 @@ import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../data/money_repository.dart';
 import 'demo_history_seed.dart';
+import 'demo_people_seed.dart';
 
 String _period(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
 
@@ -62,8 +63,8 @@ void seedDemoMoneyStory(
     currency: 'EUR',
     memberName: name,
     memberAddress: '',
-    workspaceName: 'Test Space',
-    workspaceAddress: '',
+    workspaceName: demoSpaceName,
+    workspaceAddress: demoSpaceAddress,
     issuerName: 'Ada Lindqvist',
     signature: 'demo',
     replacesInvoiceId: replaces,

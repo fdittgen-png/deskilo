@@ -23,6 +23,7 @@ import '../data/money_repository.dart';
 import '../data/reservation_repository.dart';
 import '../data/workspace_repository.dart';
 import 'demo_space_seed.dart';
+import 'demo_people_seed.dart';
 
 /// The first day the demo's history covers.
 DateTime demoHistoryStart(DateTime now) => DateTime(now.year - 3, 1, 1);
@@ -209,8 +210,8 @@ void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
           currency: 'EUR',
           memberName: regular.name,
           memberAddress: '',
-          workspaceName: 'Test Space',
-          workspaceAddress: '',
+          workspaceName: demoSpaceName,
+          workspaceAddress: demoSpaceAddress,
           issuerName: 'Ada Lindqvist',
           signature: 'demo',
           dueOn: issued.add(const Duration(days: 10)),

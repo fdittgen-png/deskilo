@@ -17,6 +17,7 @@
 // way a real screen does, and expects the fixture.
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/core/demo/seed/demo_people_seed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -49,7 +50,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('Test Space'),
+      // #2313 — the demo space has its own name.
+      find.text(demoSpaceName),
       findsOneWidget,
       reason: 'the demo workspace came from the fixture. "none" means the '
           'provider was hosted outside the Demo container and answered '

@@ -40,6 +40,7 @@ import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
+import 'seed/demo_people_seed.dart';
 import 'seed/demo_space_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
@@ -105,6 +106,10 @@ class DemoFixture {
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
     final calendar = FakeCalendarRepository();
+    final fields = FakeWorkspaceFields();
+    final roles = FakeWorkspaceRoles();
+    seedDemoFields(fields);
+    seedDemoRoles(roles);
     final accessories = FakeAccessoryRepository();
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
@@ -122,6 +127,10 @@ class DemoFixture {
     seedDemoDecisions(events, today);
     seedDemoHistoryDecisions(events, today);
     seedDemoAccessories(accessories, floorPlan);
+    seedDemoIdentity(workspaces);
+    seedDemoBadges(workspaces, today);
+    seedDemoDocuments(workspaces);
+    seedDemoConversations(workspaces, today);
     seedDemoCalendar(calendar,
         reservations: reservations, money: money, events: events);
     final problems = validateDemoFixture(
@@ -153,8 +162,8 @@ class DemoFixture {
       deployments: FakeDeploymentRepository(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),
-      fields: FakeWorkspaceFields(),
-      roles: FakeWorkspaceRoles(),
+      fields: fields,
+      roles: roles,
       realtime: FakeRealtimeSync(),
       notifications: FakeNotificationService(),
       badge: FakeAppBadge(),
