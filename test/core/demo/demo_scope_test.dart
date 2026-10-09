@@ -70,7 +70,8 @@ void main() {
         .read(workspaceRepositoryProvider)
         .setWorkspaceBranding('ws-1', {'seed_color': '#1F3A5F'});
 
-    expect(fixture.workspaces.brandings['ws-1'], {'seed_color': '#1F3A5F'});
+    // #2313 — merged into the demo space's own branding, as on a server.
+    expect(fixture.workspaces.brandings['ws-1']?['seed_color'], '#1F3A5F');
     expect(live.brandings, isEmpty,
         reason: 'the live repository never saw it — there is no path from '
             'the demo scope to it');

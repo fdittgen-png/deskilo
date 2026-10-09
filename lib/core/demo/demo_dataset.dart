@@ -24,6 +24,7 @@ import 'data/profile_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
 import 'seed/demo_history_seed.dart';
+import 'seed/demo_people_seed.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
 /// and in the guides.
@@ -381,8 +382,8 @@ Invoice _demoInvoice({
       currency: 'EUR',
       memberName: memberName,
       memberAddress: '',
-      workspaceName: 'Test Space',
-      workspaceAddress: '',
+      workspaceName: demoSpaceName,
+      workspaceAddress: demoSpaceAddress,
       issuerName: 'Ada Lindqvist',
       signature: 'demo',
     );
