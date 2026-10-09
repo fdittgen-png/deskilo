@@ -8,6 +8,15 @@
 // one reader of that map; nothing else parses a hex string. Pure Dart:
 // colours are ARGB integers here, `Color` is the presentation's.
 
+import 'workspace.dart';
+import 'workspace_feature.dart';
+
+/// #2313 — whether [space] itself has branding on: ITS flags, not the
+/// active space's — the Me list and the entry show several at once.
+bool brandingOn(Workspace space) =>
+    effectiveFeatures(resolveEnabledFeatures(space.featureFlags))
+        .contains(WorkspaceFeature.workspaceBranding);
+
 /// The keys of `workspaces.branding` — the three the server accepts.
 abstract final class BrandingKeys {
   static const seedColor = 'seed_color';
@@ -15,6 +24,23 @@ abstract final class BrandingKeys {
   static const seatPalette = 'seat_palette';
   static const symbolText = 'symbol_text';
   static const symbolColor = 'symbol_color';
+
+  /// #2313 (0397) — how the colour is drawn where the space is told apart.
+  static const pattern = 'pattern';
+}
+
+/// #2313 — the curated patterns a space's colour is drawn in on its card,
+/// its chip and the entry transition (the server's list, 0397).
+enum BrandPattern {
+  solid,
+  stripes,
+  dots,
+  grid,
+  waves;
+
+  /// The stored value, or null for anything else.
+  static BrandPattern? fromWire(Object? raw) =>
+      values.where((p) => p.name == raw).firstOrNull;
 }
 
 /// The curated colours a workspace symbol may wear (the server's list, 0378).
@@ -66,6 +92,7 @@ class WorkspaceBranding {
     this.seedArgb,
     this.officePalette = const [],
     this.seatPalette,
+    this.pattern,
   });
 
   /// Reads the stored map; a malformed value reads as absent, never as a
@@ -82,6 +109,7 @@ class WorkspaceBranding {
       seatPalette: json[BrandingKeys.seatPalette] is String
           ? json[BrandingKeys.seatPalette] as String
           : null,
+      pattern: BrandPattern.fromWire(json[BrandingKeys.pattern]),
     );
   }
 
@@ -94,8 +122,15 @@ class WorkspaceBranding {
   /// The curated seat palette key; null for the product's.
   final String? seatPalette;
 
+  /// #2313 — how the colour is drawn on the space's card, chip and entry;
+  /// null when the owner chose none (a plain fill).
+  final BrandPattern? pattern;
+
   bool get isEmpty =>
-      seedArgb == null && officePalette.isEmpty && seatPalette == null;
+      seedArgb == null &&
+      officePalette.isEmpty &&
+      seatPalette == null &&
+      pattern == null;
 }
 
 /// True when another of [others] (id → branding) already wears [mine].

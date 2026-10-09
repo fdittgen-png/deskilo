@@ -2768,6 +2768,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get coloursLight => 'Hell';
 
   @override
+  String get coloursLogoHint =>
+      'Ihr Logo erscheint auch, während jemand diesen Bereich öffnet.';
+
+  @override
   String coloursMalformed(String text) {
     return '$text ist keine Farbe: als #RRGGBB schreiben.';
   }
@@ -2775,6 +2779,31 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get coloursNeverTheirs =>
       'Die DesKilo-Marke, die Farben der Platzzustände und das Produktions-Banner gehören dem Produkt, in jedem Bereich.';
+
+  @override
+  String get coloursPatternDots => 'Punkte';
+
+  @override
+  String get coloursPatternGrid => 'Raster';
+
+  @override
+  String get coloursPatternHint =>
+      'Wie Ihre Farbe auf der Karte dieses Bereichs unter Ich, auf seinem Chip und beim Öffnen gezeichnet wird – damit man ihn von anderen Bereichen unterscheidet.';
+
+  @override
+  String get coloursPatternSaved => 'Muster gespeichert.';
+
+  @override
+  String get coloursPatternSolid => 'Einfarbig';
+
+  @override
+  String get coloursPatternStripes => 'Streifen';
+
+  @override
+  String get coloursPatternTitle => 'Muster';
+
+  @override
+  String get coloursPatternWaves => 'Wellen';
 
   @override
   String get coloursPreview => 'So sieht es aus';

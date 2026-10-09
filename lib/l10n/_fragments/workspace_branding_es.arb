@@ -192,5 +192,14 @@
   "symbolTaken": "Otro espacio ya usa estas letras en este color. Elija otro color u otras letras — o use una foto.",
   "@symbolTaken": {
     "description": "workspace symbol"
-  }
+  },
+  "coloursPatternTitle": "Motivo",
+  "coloursPatternHint": "Cómo se dibuja tu color en la tarjeta de este espacio en Yo, en su chip y al abrirse, para distinguirlo de los demás espacios.",
+  "coloursPatternSolid": "Liso",
+  "coloursPatternStripes": "Rayas",
+  "coloursPatternDots": "Lunares",
+  "coloursPatternGrid": "Cuadrícula",
+  "coloursPatternWaves": "Ondas",
+  "coloursPatternSaved": "Motivo guardado.",
+  "coloursLogoHint": "Tu logotipo también se muestra mientras alguien abre este espacio."
 }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../workspace/domain/workspace_branding.dart';
+import '../../workspace/presentation/widgets/brand_swatch.dart';
 import 'hold_to_move.dart';
 
 /// One of my spaces on Me › Home: a soft card with the identity on top —
@@ -20,7 +22,13 @@ class MeWorkspaceRow extends StatelessWidget {
     this.controls,
     this.environmentHint,
     this.dragIndex,
+    this.brand,
   });
+
+  /// #2313 — the space's own colour and pattern, drawn as a band down the
+  /// card's leading edge so it is told apart from the others; null when
+  /// the space shows none.
+  final ({Color color, BrandPattern? pattern})? brand;
   final bool lastUsed;
 
   /// The place of this card in its (reorderable) list; null when the list
@@ -94,7 +102,7 @@ class MeWorkspaceRow extends StatelessWidget {
             width: 1.5,
           ),
         ),
-        child: Padding(
+        child: _withBand(Padding(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.lg,
             AppSpacing.md,
@@ -123,7 +131,31 @@ class MeWorkspaceRow extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        )),
+      ),
+    );
+  }
+
+  Widget _withBand(Widget card) {
+    final band = brand;
+    if (band == null) return card;
+    return ClipRRect(
+      borderRadius: AppRadius.xxlAll,
+      child: Stack(
+        children: [
+          card,
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 8,
+            child: BrandSwatch(
+              key: const ValueKey('me-space-brand'),
+              color: band.color,
+              pattern: band.pattern,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1777,6 +1777,7 @@
   "@coloursLight": {
     "description": "#1289 colours screen: the light scheme sample"
   },
+  "coloursLogoHint": "Il tuo logo appare anche mentre qualcuno apre questo spazio.",
   "coloursMalformed": "{text} non è un colore: scrivetelo come #RRGGBB.",
   "@coloursMalformed": {
     "description": "#1289 colours screen: what was typed is not a colour",
@@ -1790,6 +1791,14 @@
   "@coloursNeverTheirs": {
     "description": "#1289 colours screen: what a workspace may never restyle"
   },
+  "coloursPatternDots": "Pois",
+  "coloursPatternGrid": "Griglia",
+  "coloursPatternHint": "Come il tuo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.",
+  "coloursPatternSaved": "Motivo salvato.",
+  "coloursPatternSolid": "Tinta unita",
+  "coloursPatternStripes": "Righe",
+  "coloursPatternTitle": "Motivo",
+  "coloursPatternWaves": "Onde",
   "coloursPreview": "Come appare",
   "@coloursPreview": {
     "description": "#1289 colours screen: the preview heading"

@@ -108,6 +108,16 @@ class WorkspaceColours {
     return ColourApplied(hexes.join(' '));
   }
 
+  /// #2313 — the pattern the colour is drawn in where the space is told
+  /// apart from the others; null removes it (a plain fill).
+  Future<void> choosePattern({
+    required String workspaceId,
+    required BrandPattern? pattern,
+  }) => _workspaces.setWorkspaceBranding(
+    workspaceId,
+    {BrandingKeys.pattern: pattern?.name},
+  );
+
   /// REMOVES the seed rather than storing the product's own colour as
   /// one: a stored copy would freeze this space against every future
   /// change to the product palette, with nothing on screen to say why.

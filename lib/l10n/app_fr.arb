@@ -1777,6 +1777,7 @@
   "@coloursLight": {
     "description": "#1289 colours screen: the light scheme sample"
   },
+  "coloursLogoHint": "Votre logo s’affiche aussi pendant l’ouverture de cet espace.",
   "coloursMalformed": "{text} n’est pas une couleur : écrivez-la #RRGGBB.",
   "@coloursMalformed": {
     "description": "#1289 colours screen: what was typed is not a colour",
@@ -1790,6 +1791,14 @@
   "@coloursNeverTheirs": {
     "description": "#1289 colours screen: what a workspace may never restyle"
   },
+  "coloursPatternDots": "Pois",
+  "coloursPatternGrid": "Quadrillage",
+  "coloursPatternHint": "La façon dont votre couleur est dessinée sur la carte de cet espace dans Moi, sur sa pastille et à son ouverture, pour qu’on le distingue de ses autres espaces.",
+  "coloursPatternSaved": "Motif enregistré.",
+  "coloursPatternSolid": "Uni",
+  "coloursPatternStripes": "Rayures",
+  "coloursPatternTitle": "Motif",
+  "coloursPatternWaves": "Vagues",
   "coloursPreview": "Ce que cela donne",
   "@coloursPreview": {
     "description": "#1289 colours screen: the preview heading"

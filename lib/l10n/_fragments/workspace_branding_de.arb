@@ -192,5 +192,14 @@
   "symbolTaken": "Ein anderer Arbeitsbereich nutzt diese Buchstaben bereits in dieser Farbe. Wählen Sie eine andere Farbe oder andere Buchstaben — oder verwenden Sie ein Foto.",
   "@symbolTaken": {
     "description": "workspace symbol"
-  }
+  },
+  "coloursPatternTitle": "Muster",
+  "coloursPatternHint": "Wie Ihre Farbe auf der Karte dieses Bereichs unter Ich, auf seinem Chip und beim Öffnen gezeichnet wird – damit man ihn von anderen Bereichen unterscheidet.",
+  "coloursPatternSolid": "Einfarbig",
+  "coloursPatternStripes": "Streifen",
+  "coloursPatternDots": "Punkte",
+  "coloursPatternGrid": "Raster",
+  "coloursPatternWaves": "Wellen",
+  "coloursPatternSaved": "Muster gespeichert.",
+  "coloursLogoHint": "Ihr Logo erscheint auch, während jemand diesen Bereich öffnet."
 }

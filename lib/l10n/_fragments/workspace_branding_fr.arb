@@ -192,5 +192,14 @@
   "symbolTaken": "Un autre espace utilise déjà ces lettres dans cette couleur. Choisissez une autre couleur ou d’autres lettres — ou utilisez une photo.",
   "@symbolTaken": {
     "description": "workspace symbol"
-  }
+  },
+  "coloursPatternTitle": "Motif",
+  "coloursPatternHint": "La façon dont votre couleur est dessinée sur la carte de cet espace dans Moi, sur sa pastille et à son ouverture, pour qu’on le distingue de ses autres espaces.",
+  "coloursPatternSolid": "Uni",
+  "coloursPatternStripes": "Rayures",
+  "coloursPatternDots": "Pois",
+  "coloursPatternGrid": "Quadrillage",
+  "coloursPatternWaves": "Vagues",
+  "coloursPatternSaved": "Motif enregistré.",
+  "coloursLogoHint": "Votre logo s’affiche aussi pendant l’ouverture de cet espace."
 }

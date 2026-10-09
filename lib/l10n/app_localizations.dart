@@ -4789,6 +4789,12 @@ abstract class AppLocalizations {
   /// **'Light'**
   String get coloursLight;
 
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Your logo is also shown while someone opens this space.'**
+  String get coloursLogoHint;
+
   /// #1289 colours screen: what was typed is not a colour
   ///
   /// In en, this message translates to:
@@ -4800,6 +4806,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The DesKilo mark, the colours of the seat states and the production banner are the product’s, in every space.'**
   String get coloursNeverTheirs;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Dots'**
+  String get coloursPatternDots;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Grid'**
+  String get coloursPatternGrid;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'How your colour is drawn on this space’s card in Me, on its chip and while it opens, so people tell it apart from their other spaces.'**
+  String get coloursPatternHint;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern saved.'**
+  String get coloursPatternSaved;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Plain'**
+  String get coloursPatternSolid;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Stripes'**
+  String get coloursPatternStripes;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern'**
+  String get coloursPatternTitle;
+
+  /// #2313 colours screen: the brand pattern / logo
+  ///
+  /// In en, this message translates to:
+  /// **'Waves'**
+  String get coloursPatternWaves;
 
   /// #1289 colours screen: the preview heading
   ///
