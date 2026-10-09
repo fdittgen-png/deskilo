@@ -91,6 +91,18 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
 }
 
 void main() {
+  testWidgets('Reports opens the document designer and Back keeps its Templates tab', (tester) async {
+    await pumpWorkspaceSettings(tester, reports: true);
+    await tester.tap(find.byKey(const ValueKey('workspace-section-templates')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('reports-templates')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('report-editor-page')), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reports-templates')), findsOneWidget);
+  });
+
   testWidgets('danger heading and shortcut stay red; reports leave configuration', (tester) async {
     await pumpWorkspaceSettings(tester, expand: false);
     final danger = find.byKey(const ValueKey('workspace-group-danger'));
