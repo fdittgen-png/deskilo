@@ -54,6 +54,10 @@ class HelpDot extends ConsumerWidget {
       padding: EdgeInsets.zero,
       iconSize: 17,
       color: scheme.primary.withValues(alpha: .75),
+      // #2313 — a round, borderless mark. The app's icon-button theme
+      // outlines every button (the title bar's look); beside a field or
+      // in a list row that box was the heaviest thing on the form.
+      style: IconButton.styleFrom(shape: const CircleBorder()),
       icon: const Icon(Icons.help_outline),
       onPressed: () => context.push(
         Uri(path: '/help', queryParameters: {

@@ -20430,6 +20430,10 @@
   "uxMyBookings": "My bookings",
   "uxNavFinance": "Billing & payments",
   "uxNavPeople": "People & access",
+  "uxNavReporting": "Reporting",
+  "@uxNavReporting": {
+    "description": "#2313 the menu group that holds every report and the business analytics"
+  },
   "uxNavWorkspace": "Workspace setup",
   "uxOpenWorkspace": "Open workspace",
   "uxPreferencesSection": "Preferences",

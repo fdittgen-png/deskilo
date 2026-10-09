@@ -46,7 +46,9 @@ Future<void> _reveal(WidgetTester tester, String key) async {
       matching: find.byType(Scrollable));
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
-    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' || 'drawer-bi' || 'drawer-reports' => 'Billing & payments',
+    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
+    // #2313 — every report and the BI in their own group.
+    'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
     'drawer-workspace-settings' || 'drawer-availability' || 'drawer-services' || 'drawer-accessories' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
     _ => null,
   };
@@ -69,19 +71,19 @@ Future<void> _reveal(WidgetTester tester, String key) async {
 
 void main() {
   for (final invoicing in [true, false]) {
-  testWidgets('billing opens permitted reports for admin; invoicing=$invoicing', (tester) async {
+  testWidgets('Reporting opens the permitted financial reports for an admin; invoicing=$invoicing', (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: {'invoicing': invoicing, 'workspaceStatus': true});
     workspace.myMember = workspace.myMember.copyWith(isOwner: false, isAdmin: true);
     await _pump(tester, web: true, workspace: workspace);
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
     if (!invoicing) {
-      expect(find.byKey(const ValueKey('drawer-reports')), findsNothing);
+      expect(find.byKey(const ValueKey('drawer-reports-finance')), findsNothing);
       expect(find.text('Billing & payments'), findsNothing);
       return;
     }
-    await _reveal(tester, 'drawer-reports');
-    await tester.tap(find.byKey(const ValueKey('drawer-reports')));
+    await _reveal(tester, 'drawer-reports-finance');
+    await tester.tap(find.byKey(const ValueKey('drawer-reports-finance')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('workspace-section-documents')), findsNothing);
     expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsNothing);
@@ -91,6 +93,33 @@ void main() {
     expect(find.text('Invoice register'), findsOneWidget);
   });
   }
+
+  testWidgets('#2313 — Reporting holds every report section, and each '
+      'sub-item opens its own tab', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+        featureFlags: const {'invoicing': true, 'workspaceStatus': true});
+    await _pump(tester, web: true, workspace: workspace);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    // Not under Billing & payments any more.
+    await _reveal(tester, 'drawer-invoices');
+    expect(find.byKey(const ValueKey('drawer-reports-finance')), findsNothing);
+
+    await _reveal(tester, 'drawer-reports-documents');
+    await tester.tap(find.byKey(const ValueKey('drawer-reports-documents')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('workspaceSettingsExportPdf')), findsOneWidget,
+        reason: 'the documents tab opens, not the first one');
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+    await _reveal(tester, 'drawer-reports-finance');
+    await tester.tap(find.byKey(const ValueKey('drawer-reports-finance')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('reports-register')), findsOneWidget);
+  });
 
   testWidgets('on the web the bar is gone and the drawer carries every '
       'destination', (tester) async {

@@ -839,7 +839,7 @@ GoRouter router(Ref ref) {
         path: '/reports',
         redirect: (context, state) => workspaceReportsAvailable(
           ref.read(enabledFeaturesSyncProvider), ref.read(myPermissionsProvider), isAdmin: ref.read(myMemberProvider).value?.isAdmin ?? false) ? null : '/settings',
-        builder: (context, state) => const WorkspaceSettingsScreen(reportsOnly: true),
+        builder: (context, state) => WorkspaceSettingsScreen(reportsOnly: true, reportSection: state.uri.queryParameters['section']), // #2313
       ),
       GoRoute(
         path: '/workspace-settings',

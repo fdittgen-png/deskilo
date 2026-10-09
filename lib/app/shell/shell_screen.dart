@@ -449,7 +449,8 @@ class ShellScreen extends ConsumerWidget {
       // opacity layer above it animates, keyed by the active branch.
       body: Row(children: [
         if (wideNavigation) ...[
-          SizedBox(width: 220, child: FocusTraversalGroup(child: navigation(permanent: true))),
+          // #2313 — wide enough for a menu label on one line.
+          SizedBox(width: 272, child: FocusTraversalGroup(child: navigation(permanent: true))),
           const VerticalDivider(width: 1),
         ],
         // A branch route's semantics must not hide the sibling navigation.

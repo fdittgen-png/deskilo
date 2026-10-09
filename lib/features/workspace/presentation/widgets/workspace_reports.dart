@@ -23,10 +23,42 @@ bool workspaceReportsAvailable(Set<WorkspaceFeature> features,
     (features.contains(WorkspaceFeature.invoicePdfTemplate) &&
       permissions.any({WorkspacePermission.designDocuments, WorkspacePermission.manageDocuments}.contains));
 
+/// #2313 — the sections of the Reporting area this reader may open, in menu
+/// order: `finance`, `documents`, `analytics`, `templates`. The drawer's
+/// Reporting group and the Reports page's tabs both come from here, so a
+/// sub-item is never offered for a tab the page would not show.
+List<String> reportingSections({
+  required Set<WorkspaceFeature> features,
+  required Set<WorkspacePermission> permissions,
+  bool isAdmin = false,
+  bool actsAsOwner = false,
+}) {
+  bool on(WorkspaceFeature f) => features.contains(f);
+  bool may(WorkspacePermission p) => permissions.contains(p);
+  final finance = (on(WorkspaceFeature.invoicing) &&
+          (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.issueInvoices))) ||
+      (on(WorkspaceFeature.workspaceStatus) && isAdmin &&
+          permissions.any({WorkspacePermission.viewMyMoney, WorkspacePermission.viewFinances,
+            WorkspacePermission.issueInvoices, WorkspacePermission.manageBilling}.contains)) ||
+      (on(WorkspaceFeature.invoicing) && on(WorkspaceFeature.vatDeclarations) && actsAsOwner &&
+          (may(WorkspacePermission.manageBilling) || may(WorkspacePermission.viewFinances)));
+  return [
+    if (finance) 'finance',
+    if (may(WorkspacePermission.workspaceSettings)) 'documents',
+    if (biAvailable(features: features, permissions: permissions)) 'analytics',
+    if (on(WorkspaceFeature.invoicePdfTemplate) &&
+        (may(WorkspacePermission.designDocuments) || may(WorkspacePermission.manageDocuments)))
+      'templates',
+  ];
+}
+
 class WorkspaceReports extends ConsumerWidget {
-  const WorkspaceReports({required this.workspaceName, required this.documents, super.key});
+  const WorkspaceReports({required this.workspaceName, required this.documents, this.initialSection, super.key});
   final String workspaceName;
   final List<Widget> documents;
+
+  /// #2313 — the tab the Reporting menu asked for (`/reports?section=`).
+  final String? initialSection;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context) ?? AppLocalizationsEn();
@@ -64,7 +96,9 @@ class WorkspaceReports extends ConsumerWidget {
           onTap: () => showInvoiceTemplateSheet(context, ref)),
       ]),
     ];
-    return DefaultTabController(length: sections.length, child: Column(children: [
+    final initial = sections.indexWhere((s) => s.$1 == initialSection);
+    return DefaultTabController(length: sections.length, initialIndex: initial < 0 ? 0 : initial,
+      child: Column(children: [
       ListTile(title: Text(workspaceName), subtitle: Text(l.uxReportsHint)),
       TabBar(isScrollable: true, tabAlignment: TabAlignment.start, tabs: [
         for (final section in sections) Tab(key: ValueKey('workspace-section-${section.$1}'), text: section.$2),

@@ -31124,6 +31124,12 @@ abstract class AppLocalizations {
   /// **'People & access'**
   String get uxNavPeople;
 
+  /// #2313 the menu group that holds every report and the business analytics
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting'**
+  String get uxNavReporting;
+
   /// No description provided for @uxNavWorkspace.
   ///
   /// In en, this message translates to:
