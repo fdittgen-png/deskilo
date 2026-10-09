@@ -2186,6 +2186,8 @@ Ce que chaque rôle, dans chacun de vos espaces, peut lire de vous. C'est
 l'énoncé de ce que le serveur applique, pas un jeu d'interrupteurs — la
 réponse est la même que cet écran soit ouvert ou non.
 
+**Bloquer une personne (#2211).** Le blocage arrête les messages personnels dans les deux sens, y compris les transferts et les avis de capture d’écran. Les anciens messages restent dans la conversation. Débloquez la personne pour permettre à nouveau les envois. Les discussions d’espace et de groupe suivent leurs propres règles.
+
 ### Exporter mes données
 
 Tout ce que DesKilo détient sur vous, en un fichier que vous gardez. Il

@@ -2140,6 +2140,8 @@ Was jede Rolle in jedem deiner Räume über dich lesen kann. Es ist die
 Aussage darüber, was der Server durchsetzt, kein Satz Schalter — die
 Antwort ist dieselbe, ob dieser Bildschirm offen ist oder nicht.
 
+**Eine Person blockieren (#2211).** Eine Blockierung stoppt persönliche Nachrichten in beide Richtungen, einschließlich Weiterleitungen und Screenshot-Hinweisen. Frühere Nachrichten bleiben im Gespräch. Hebe die Blockierung auf, um Nachrichten wieder zuzulassen. Workspace- und Gruppengespräche folgen ihren eigenen Regeln.
+
 ### Meine Daten exportieren
 
 Alles, was DesKilo über dich hält, als Datei, die du behältst. Sie wird

@@ -2154,6 +2154,8 @@ Cosa ogni ruolo, in ciascuno dei tuoi spazi, può leggere di te. È
 l'enunciato di ciò che il server impone, non una serie di interruttori —
 la risposta è la stessa che questa schermata sia aperta o no.
 
+**Bloccare una persona (#2211).** Il blocco interrompe i messaggi personali in entrambe le direzioni, inclusi gli inoltri e gli avvisi di screenshot. I messaggi precedenti restano nella conversazione. Sblocca la persona per consentire nuovi invii. Le conversazioni dello spazio e di gruppo seguono le proprie regole.
+
 ### Esportare i miei dati
 
 Tutto ciò che DesKilo tiene su di te, come file che conservi. È prodotto
