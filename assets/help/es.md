@@ -1332,6 +1332,8 @@ El saldo mensual encabeza esta vista; le siguen el uso y los cargos. Los consejo
 
 ### 9e. La vista Facturas
 
+**Límites de emisión (#1917).** Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.
+
 **Tus facturas · Todos los períodos.** El resumen muestra una sola vez los importes abiertos y los retrasos, seguido de todas tus facturas, más recientes primero. El mes del extracto no filtra este archivo. Despliega **Herramientas financieras del espacio** encima del resumen para el registro, la situación del espacio y el reparto de costes disponibles según tu rol y las funciones activadas. Las filas conservan sus detalles, documentos y acceso al pago.
 
 **El recorrido (#812).** Cada fila lleva además la **barra de recorrido** de la factura — *Emitida · Pago · Confirmación · Cerrada*, el paso actual rodeado — y **le toca** en una frase: *pague X antes del fecha*, *declaró X — el espacio lo está confirmando*, *su pago está registrado — el espacio lo concilia*, *pagada el … — cerrada*. **Cómo funciona** en la tarjeta de cabecera abre los cuatro pasos con lo que hace el espacio y lo que hace usted. Función *El recorrido de una factura* (bajo Facturas).

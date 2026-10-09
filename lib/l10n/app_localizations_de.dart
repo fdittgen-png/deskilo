@@ -7950,6 +7950,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportSage => 'Sage 50 (Audit-Journal)';
 
   @override
+  String get invoiceExternalIssuingTitle =>
+      'Diese Rechnung außerhalb der App ausstellen';
+
+  @override
   String get invoiceFacturXDownload => 'Factur-X (PDF) herunterladen';
 
   @override
@@ -8297,6 +8301,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceMissingVatRate =>
       'Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)';
+
+  @override
+  String get invoiceMissingVatTreatment =>
+      'Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.';
 
   @override
   String get invoiceMissingVatZeroLine =>

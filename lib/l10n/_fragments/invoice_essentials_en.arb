@@ -41,5 +41,7 @@
   },
   "@invoiceMissingVatNotRegistered": {
     "description": "#1917 essentials key vat_charged_not_registered (0393)"
-  }
+  },
+  "invoiceMissingVatTreatment": "Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
+  "invoiceExternalIssuingTitle": "Issue this invoice outside the app"
 }

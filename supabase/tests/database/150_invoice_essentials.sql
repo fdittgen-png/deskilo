@@ -29,11 +29,11 @@ select is(pg_temp.missing('{"seller":{"street":"s","vat_regime":"vat_registered"
   array['seller_vat_id','vat_rate_unresolved'],
   'a VAT-registered seller needs its identifier — and, with no default rate, a rate (#1917)');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":""},"buyer":{"name":"B"}}',
-  '[{"category":"E"}]'), array['exemption_reason'], 'an exempt line needs its legal basis');
+  '[{"category":"E"}]'), array['exemption_reason','vat_treatment_unreviewed'], 'an exempt line needs its basis and reviewed classification');
 select is(pg_temp.missing('{"seller":{"city":"c","vat_regime":"exempt","tax_exemption_reason":"art. 261"},"buyer":{"name":"B"}}',
-  '[{"category":"E"}]'), array[]::text[], 'and with the basis it is complete');
+  '[{"category":"E"}]'), array['vat_treatment_unreviewed'], 'a free-text basis alone cannot qualify the exemption');
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","vat_id":""}}', '[{"category":"AE"}]'),
-  array['buyer_vat_id'], 'reverse charge needs the buyer''s VAT identifier');
+  array['buyer_vat_id','vat_treatment_unreviewed'], 'reverse charge needs more than the buyer''s VAT identifier');
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"","company":""}}'),
   array['buyer_name'], 'a document needs someone to address it to');
 select is(pg_temp.missing('{"seller":{"city":"c"},"buyer":{"name":"B","street":"","city":""}}'),

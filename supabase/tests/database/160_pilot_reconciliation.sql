@@ -6,8 +6,10 @@
 -- credit: it lowers the balance and the invoice total, and it is never in
 -- the VAT base. And the 0 % lines of a seller that does not charge VAT are
 -- what they should be: the stricter essentials of 0393 let it issue.
+-- The member submits through record_payment; a different authenticated
+-- operator confirms. A repeated confirmation cannot create another credit.
 begin;
-select plan(13);
+select plan(19);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -35,16 +37,28 @@ begin
   perform set_config('deskilo.pilot.ws', ws::text, false);
   perform set_config('deskilo.pilot.m', mm::text, false);
   perform set_config('request.jwt.claims', json_build_object('sub',uo,'role','authenticated')::text, false);
-  -- An approved expense share (no validation policy: applied at once).
-  perform public.distribute_expense(ws,'Café',1200,'custom','2026-09',
-    jsonb_build_array(jsonb_build_object('member_id',mm,'amount_cents',1200)));
-  -- A manual payment, as the confirmed record_payment posts it.
-  insert into public.ledger_entries(workspace_id,member_id,kind,category,amount_cents,description,period)
-   values (ws,mm,'credit','payment',2000,'virement','2026-09');
 end;
 $seed$;
 
 select pg_temp.seed();
+set local role authenticated;
+select is(current_user::text,'authenticated','payment journey runs as authenticated');
+select public.distribute_expense(current_setting('deskilo.pilot.ws')::uuid,'Café',1200,'custom','2026-09',
+ jsonb_build_array(jsonb_build_object('member_id',current_setting('deskilo.pilot.m')::uuid,'amount_cents',1200)));
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-000000191702","role":"authenticated"}',true);
+select set_config('deskilo.pilot.payment',public.record_payment(current_setting('deskilo.pilot.ws')::uuid,
+ current_setting('deskilo.pilot.m')::uuid,2000,'virement','bank_transfer','2026-09-15','2026-09')::text,true);
+select is((public.member_statement(current_setting('deskilo.pilot.m')::uuid,'2026-09')->>'balance_cents')::int,-6700,
+ 'unconfirmed payment does not reduce the balance');
+select is((select status from public.events where id=current_setting('deskilo.pilot.payment')::uuid),'pending',
+ 'manual payment awaits confirmation');
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-000000191701","role":"authenticated"}',true);
+select lives_ok($$select public.respond_to_event(current_setting('deskilo.pilot.payment')::uuid,true)$$,
+ 'operator confirms the members payment');
+select throws_ok($$select public.respond_to_event(current_setting('deskilo.pilot.payment')::uuid,true)$$,
+ 'P0001','already decided','retrying the confirmation cannot post a second credit');
+select is((select count(*)::int from public.ledger_entries where event_id=current_setting('deskilo.pilot.payment')::uuid),1,
+ 'confirmed command posts exactly one ledger row');
 
 create or replace function pg_temp.st() returns jsonb language sql as $$
   select public.member_statement(current_setting('deskilo.pilot.m')::uuid, '2026-09');
@@ -89,5 +103,6 @@ select throws_ok($$select public.save_vat_declaration(current_setting('deskilo.p
     '2026-09-01', '2026-09-30', '[]'::jsonb, 0, 0, 'EUR', 0)$$,
   'P0001', 'the workspace is not VAT registered', 'and no VAT return is filed from the app');
 
+reset role;
 select * from finish();
 rollback;

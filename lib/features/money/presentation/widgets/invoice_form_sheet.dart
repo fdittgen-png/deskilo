@@ -470,7 +470,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           InlineBanner(
             key: const ValueKey('invoice-missing-essentials'),
             icon: Icons.rule_folder_outlined,
-            text: '${l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
+            text: '${_missing.contains('vat_treatment_unreviewed')
+                ? l10n?.invoiceExternalIssuingTitle ?? AppLocalizationsEn().invoiceExternalIssuingTitle
+                : l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
             severity: InlineBannerSeverity.error,
           ),
@@ -519,5 +521,7 @@ String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
           AppLocalizationsEn().invoiceMissingVatZeroLine,
       'vat_charged_not_registered' => l10n?.invoiceMissingVatNotRegistered ??
           AppLocalizationsEn().invoiceMissingVatNotRegistered,
+      'vat_treatment_unreviewed' => l10n?.invoiceMissingVatTreatment ??
+          AppLocalizationsEn().invoiceMissingVatTreatment,
       _ => key,
     };

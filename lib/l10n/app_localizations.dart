@@ -13572,6 +13572,12 @@ abstract class AppLocalizations {
   /// **'Sage 50 (audit trail)'**
   String get invoiceExportSage;
 
+  /// No description provided for @invoiceExternalIssuingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue this invoice outside the app'**
+  String get invoiceExternalIssuingTitle;
+
   /// E-invoice sheet: the hybrid PDF+XML document (0073)
   ///
   /// In en, this message translates to:
@@ -14165,6 +14171,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)'**
   String get invoiceMissingVatRate;
+
+  /// No description provided for @invoiceMissingVatTreatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.'**
+  String get invoiceMissingVatTreatment;
 
   /// #1917 essentials key vat_line_zero_unexplained (0393)
   ///
