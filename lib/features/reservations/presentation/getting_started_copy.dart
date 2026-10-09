@@ -41,10 +41,9 @@ abstract final class GettingStartedCopy {
                   'explains how this workspace works.',
         GettingStartedReason.booked =>
           l10n?.gettingStartedBooked(
-                hint.booking!.id,
                 bookingState(l10n, hint.booking!.state),
               ) ??
-              'Your booking ${hint.booking!.id} is ${hint.booking!.state}.',
+              'Your booking is ${bookingState(l10n, hint.booking!.state)}.',
         GettingStartedReason.setupIncomplete => () {
           final area = hint.setupStep?.area;
           final step = area == null
@@ -58,7 +57,8 @@ abstract final class GettingStartedCopy {
       };
 
   static String booking(AppLocalizations? l10n, BookingEvidence b) =>
-      '${b.id} · ${bookingState(l10n, b.state)}';
+      [if (b.spaceName.trim().isNotEmpty) b.spaceName,
+        bookingState(l10n, b.state)].join(' · ');
 
   /// The real state name, in the reader's language; an unknown wire
   /// value is shown as it came rather than guessed at.

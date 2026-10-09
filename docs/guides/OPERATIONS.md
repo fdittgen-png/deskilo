@@ -110,6 +110,22 @@ look. What CI cannot rehearse is the part above that
 touches a real project — storage and the `auth` step — so read those
 twice on the day (#1310).
 
+**Local application rehearsal (#1974).** `scripts/restore_check.sh
+--application` also exercises native Auth and private Storage against two
+fresh disposable local Supabase stacks. Supply distinct, nonexistent absolute
+directories with `--source` and `--target`, acknowledge `--disposable`, and
+use `--apply` to execute (otherwise it only validates the plan). `--report`
+names a new file for the nonsecret result. Existing projects are refused;
+cleanup removes only the stacks created by this run.
+
+The target retains its installation identity and its own MCP settings. Source
+grants, identity bindings, federation clients, sessions and MCP configuration never
+travel with the business data. Seeded singleton settings are configuration,
+not account authority: they survive restoration unchanged, while MCP stays
+disabled. The rehearsal deliberately gives the source a different endpoint
+and compares the target settings before and after restoration. This local
+proof does not claim hosted recovery or email delivery.
+
 ## Rollback
 
 **The schema does not roll back, and that is deliberate.** There are no

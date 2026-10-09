@@ -34,7 +34,7 @@ set -uo pipefail
 # Dispatch before the legacy drill discovers or touches any running container.
 if [ "${1:-}" = "--application" ]; then
   shift
-  exec python3 "$(dirname "$0")/recovery/application.py" "$@"
+  exec python3 -B "$(dirname "$0")/recovery/application.py" "$@"
 fi
 
 COPY_DB="${DESKILO_RESTORE_COPY_DB:-deskilo_restore_check}"

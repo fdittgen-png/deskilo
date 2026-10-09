@@ -746,6 +746,15 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.labelScale != labelScale || oldDelegate.identifierStyle != identifierStyle ||
       oldDelegate.cellSize != cellSize;
 
+  // #2307 — a booking can change while the seat still reads "your seat".
+  // Semantic actions must then use the new closure, independently of ink.
+  @override
+  bool shouldRebuildSemantics(FloorPlanPainter oldDelegate) =>
+      oldDelegate.plan != plan || oldDelegate.cellSize != cellSize ||
+      oldDelegate.semanticsDirection != semanticsDirection ||
+      !mapEquals(oldDelegate.semanticLabels, semanticLabels) ||
+      oldDelegate.onSeatSemanticTap != onSeatSemanticTap;
+
   /// One semantics node per seat (#402). Without this, the app's core
   /// surface is a single unlabeled picture to TalkBack/VoiceOver — the
   /// hidden cost of choosing a canvas over widgets, paid here.

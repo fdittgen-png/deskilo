@@ -32,7 +32,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.environmentPairs);
     return Column(children: [
-      ListTile(
+      MergeSemantics(child: ListTile(
       key: const ValueKey('workspace-environment'),
       leading: Icon(workspace.isDevelopment
           ? Icons.construction_outlined
@@ -49,7 +49,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
         onChanged: (toProduction) =>
             _set(context, ref, workspace, toProduction: toProduction),
       ),
-      ),
+      )),
       // #987 — the other side of the pair.
       if (pairsOn)
         ListTile(

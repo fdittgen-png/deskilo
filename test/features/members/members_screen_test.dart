@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/presentation/screens/members_screen.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,11 @@ Future<FakeWorkspaceRepository> pumpMembers(
   FileSaver? saver,
   FakeNfcUidReader? nfc,
   Map<String, dynamic> featureFlags = const {},
+  Size size = const Size(800, 2200),
 }) async {
   // The settings list grew (Help + Linked accounts, 0051): keep the
   // Members & plans entry on-stage in the lazy list.
-  tester.view.physicalSize = const Size(800, 2200);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace =
@@ -64,8 +66,11 @@ Future<FakeWorkspaceRepository> pumpMembers(
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
+  await tester.ensureVisible(find.text('Members & plans'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
+  expect(find.byType(MembersScreen), findsOneWidget);
   return workspace;
 }
 

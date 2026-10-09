@@ -19,7 +19,7 @@
   "gettingStartedNoSpaces": "Aquí todavía no se puede reservar nada. Tu membresía muestra lo que incluye tu acceso.",
   "gettingStartedAvailabilityUnknown": "No se pudo cargar la disponibilidad. La ayuda explica cómo funcionan las reservas aquí.",
   "gettingStartedMembershipUnknown": "No se pudo cargar tu membresía ahora mismo. La ayuda explica cómo funciona este espacio.",
-  "gettingStartedBooked": "Tu reserva {id} está {state}. Tu membresía muestra qué más está incluido.",
+  "gettingStartedBooked": "Tu reserva está {state}. Tu membresía muestra qué más está incluido.",
   "gettingStartedAllowance": "{count, plural, =1{Puedes tener una reserva a la vez.} other{Puedes tener {count} reservas a la vez.}}",
   "gettingStartedStateReserved": "reservada",
   "gettingStartedStateCheckedIn": "registrada",

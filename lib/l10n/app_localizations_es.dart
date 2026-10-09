@@ -6010,8 +6010,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo cargar la disponibilidad. La ayuda explica cómo funcionan las reservas aquí.';
 
   @override
-  String gettingStartedBooked(String id, String state) {
-    return 'Tu reserva $id está $state. Tu membresía muestra qué más está incluido.';
+  String gettingStartedBooked(String state) {
+    return 'Tu reserva está $state. Tu membresía muestra qué más está incluido.';
   }
 
   @override

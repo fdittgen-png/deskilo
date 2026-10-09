@@ -5968,8 +5968,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Availability could not be loaded. The help explains how booking works here.';
 
   @override
-  String gettingStartedBooked(String id, String state) {
-    return 'Your booking $id is $state. Your membership shows what else is included.';
+  String gettingStartedBooked(String state) {
+    return 'Your booking is $state. Your membership shows what else is included.';
   }
 
   @override
