@@ -1298,6 +1298,8 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 
 ### 9c. La vista Extracto
 
+El saldo mensual encabeza esta vista; le siguen el uso y los cargos. Los consejos aparecen después del contenido y las acciones.
+
 **Primero el mes seleccionado.** Días incluidos, usados y restantes, suscripción, servicios y suplementos, paquetes, posiciones pendientes, abonos, factura y saldo describen el período elegido. Debajo, despliega **Tu cuenta** para ver crédito, facturas abiertas y reembolsos de **todos los períodos**. Su posición neta es distinta del saldo mensual. Los precios negociados están en **Documentos**, junto a tu acuerdo vigente.
 
 ![](assets/help/images/statement-account.jpg)

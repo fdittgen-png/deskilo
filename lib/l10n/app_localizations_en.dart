@@ -6605,7 +6605,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      'Negotiated a deal? The card shows your prices beside the tariff, since when, and who can see them — the owners and finance admins, every read on the record.';
+      'Your negotiated prices are in Documents, beside your agreement. The card compares them with the tariff and explains who can see them; other people’s views are recorded.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic => 'Price negotiations';
