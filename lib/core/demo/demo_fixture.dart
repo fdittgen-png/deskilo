@@ -34,6 +34,12 @@ import 'data/workspace_repository.dart';
 import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
+import 'seed/demo_booking_seed.dart';
+import 'seed/demo_calendar_seed.dart';
+import 'seed/demo_decision_seed.dart';
+import 'seed/demo_flags.dart';
+import 'seed/demo_money_seed.dart';
+import 'seed/demo_space_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
 /// subject is implicit.
@@ -82,21 +88,35 @@ class DemoFixture {
   /// so "today" is always a working day inside the opening hours.
   factory DemoFixture.build({DateTime? now}) {
     final today = now ?? kTestNow;
-    final workspaces = FakeWorkspaceRepository.withWorkspace();
+    // #2313 — the features a fresh space keeps off are on in the demo.
+    final workspaces =
+        FakeWorkspaceRepository.withWorkspace(featureFlags: demoFeatureFlags);
     final floorPlan = FakeFloorPlanRepository();
     seedDemoPlan(floorPlan);
+    seedDemoSpace(floorPlan);
     // #1565 — the ONE actor the implicit-subject repositories read. They
     // are built with a reader rather than a captured id, so a persona
     // switch moves both of them at once and neither can drift.
     final actor = DemoActor(initialDemoPersona.memberId);
     final reservations = FakeReservationRepository(actor: () => actor.memberId);
-    final money = FakeMoneyRepository();
     final events = FakeEventRepository(actor: () => actor.memberId);
+    // #2313 — a service charge or an expense recorded in the demo files
+    // its event, as on a server.
+    final money = FakeMoneyRepository(events: events);
+    final calendar = FakeCalendarRepository();
+    final accessories = FakeAccessoryRepository();
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
+    seedDemoBookings(reservations, floorPlan, today);
     seedDemoMoney(money, today);
+    seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoEvents(events, today);
+    seedDemoDecisions(events, today);
+    seedDemoAccessories(accessories, floorPlan);
+    seedDemoClosures(workspaces, today);
+    seedDemoCalendar(calendar,
+        reservations: reservations, money: money, events: events);
     final problems = validateDemoFixture(
       workspaces: workspaces,
       plan: floorPlan,
@@ -118,10 +138,10 @@ class DemoFixture {
       floorPlan: floorPlan,
       reservations: reservations,
       events: events,
-      calendar: FakeCalendarRepository(),
+      calendar: calendar,
       money: money,
       credits: FakeCreditRepository(),
-      accessories: FakeAccessoryRepository(),
+      accessories: accessories,
       profiles: demoProfiles(),
       deployments: FakeDeploymentRepository(),
       files: FakeWorkspaceFiles(),

@@ -15,6 +15,7 @@
 // promise: the fixture is an object graph with no client behind it, and
 // two fixtures share no instance.
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -88,6 +89,9 @@ void main() {
     final before = journey.fixture.reservations.reservations.length;
 
     await tester.tapAt(seatCenter(tester));
+    // #2313 — the demo books whole levels too, so the plan also
+    // listens for a double tap: a single tap lands after its timeout.
+    await tester.pump(kDoubleTapTimeout);
     await tester.pumpAndSettle();
     expect(find.byType(BookingSheet), findsOneWidget,
         reason: 'the product\'s own sheet, not a demo-only one');
@@ -143,24 +147,29 @@ void main() {
     final pending = journey.fixture.events.events
         .where((e) => e.status == EventStatus.pending)
         .toList();
+    // #2313 — several kinds of request wait, Dov's join among them.
     expect(
-      pending,
-      hasLength(1),
+      pending.length,
+      greaterThanOrEqualTo(5),
       reason: 'a demonstration of a validation workflow must not open on '
           '"nothing to decide"',
     );
+    final join = pending.firstWhere((e) => e.id == 'demo-join-request');
+    final before = journey.fixture.events.decisions.length;
 
     // #1565 — the administrator answers, and the trail says so. This
     // used to set the fake's responder by hand, which is exactly why
     // nobody noticed the responder never followed the persona: the test
     // supplied the answer it was checking.
     await becomePersona(tester, DemoPersona.admin);
-    await journey.fixture.events.respond(pending.single.id, accept: true);
+    await journey.fixture.events.respond(join.id, accept: true);
 
-    expect(journey.fixture.events.decisions, hasLength(1));
-    expect(journey.fixture.events.decisions.single.accept, isTrue);
+    expect(journey.fixture.events.decisions, hasLength(before + 1));
+    final mine = journey.fixture.events.decisions
+        .singleWhere((d) => d.eventId == join.id);
+    expect(mine.accept, isTrue);
     expect(
-      journey.fixture.events.decisions.single.memberId,
+      mine.memberId,
       DemoPersona.admin.memberId,
       reason: 'the decision belongs to whoever the visitor is looking '
           'through, not to the owner the fixture was built as',
@@ -178,6 +187,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tapAt(seatCenter(tester));
+    // #2313 — the demo books whole levels too, so the plan also
+    // listens for a double tap: a single tap lands after its timeout.
+    await tester.pump(kDoubleTapTimeout);
     await tester.pumpAndSettle();
     expect(find.byType(BookingSheet), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('booking-confirm')));
@@ -249,6 +261,9 @@ void main() {
     final other = DemoJourney.start();
 
     await tester.tapAt(seatCenter(tester));
+    // #2313 — the demo books whole levels too, so the plan also
+    // listens for a double tap: a single tap lands after its timeout.
+    await tester.pump(kDoubleTapTimeout);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('booking-confirm')));
     await tester.pumpAndSettle();

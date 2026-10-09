@@ -142,12 +142,16 @@ void main() {
       'hers', () async {
     controller().viewAs(DemoPersona.admin);
     final fixture = session().fixture;
-    final pending = fixture.events.events.single;
+    // #2313 — Dov's request to join, among the others waiting.
+    final pending = fixture.events.events
+        .firstWhere((e) => e.id == 'demo-join-request');
 
     await fixture.events.respond(pending.id, accept: true);
 
     expect(
-      fixture.events.decisions.single.memberId,
+      fixture.events.decisions
+          .singleWhere((d) => d.eventId == pending.id)
+          .memberId,
       DemoPersona.admin.memberId,
       reason: 'the decision trail must name member-3; an audit that '
           'credits the owner for somebody else\'s decision demonstrates '

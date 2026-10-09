@@ -6,10 +6,18 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-155 literal(s) in 5 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+163 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
+| `lib/core/demo/seed/demo_calendar_seed.dart:41` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:202` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:205` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:211` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:217` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:233` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:10` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:11` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:12` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
@@ -168,6 +176,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 ## Why each file keeps its literals
 
+- **`lib/core/demo/seed/demo_calendar_seed.dart`** (3) — demo records: calendar rows as a space stores them
+- **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/features/money/domain/vat_catalogue.dart`** (86) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
 - **`lib/features/money/domain/coa_preview.dart`** (45) — the French chart of accounts (PCG): «Clients», «TVA collectée» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
 - **`lib/features/money/domain/vat_declaration.dart`** (10) — CA3 and UStVA box names, in French and German, as the forms print them.

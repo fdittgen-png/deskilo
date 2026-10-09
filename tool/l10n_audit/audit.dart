@@ -89,6 +89,19 @@ final _neverShown = RegExp(
 /// new literal in one of these files fails the lint until somebody
 /// writes down why it belongs to the same class.
 const Map<String, ({int allowed, String reason})> classifiedLiterals = {
+  // #2313 — the demo session's own records: invented data stored as a
+  // space would store it (a cleaning contract, its VAT rates, calendar
+  // rows), never interface text; a real space's records are not
+  // translated either.
+  'lib/core/demo/seed/demo_calendar_seed.dart': (
+    allowed: 3,
+    reason: 'demo records: calendar rows as a space stores them',
+  ),
+  'lib/core/demo/seed/demo_money_seed.dart': (
+    allowed: 5,
+    reason: 'demo records: VAT rate labels and an expense title as a '
+        'space stores them',
+  ),
   'lib/features/money/domain/vat_catalogue.dart': (
     allowed: 86,
     reason: 'statutory VAT rate names, each in the language its own tax '

@@ -435,7 +435,10 @@ List<String> validateDemoFixture({
     if (!memberIds.contains(invoice.memberId)) {
       problems.add('invoice ${invoice.number}: no member ${invoice.memberId}');
     }
-    if (invoice.totalCents <= 0) {
+    // A credit note is negative by nature, and names what it corrects.
+    final creditNote =
+        invoice.totalCents < 0 && invoice.replacesInvoiceId != null;
+    if (invoice.totalCents <= 0 && !creditNote) {
       problems.add('invoice ${invoice.number}: nothing to pay');
     }
   }
