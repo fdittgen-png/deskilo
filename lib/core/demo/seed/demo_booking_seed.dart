@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2313 — the bookings beyond the three the plan story needs: a weekly
-// series, half-days, a whole meeting room, a cancellation and the past
-// weeks that give the usage and the statements something to count.
+// series, half-days, a whole meeting room and a cancellation. The years
+// before and the months ahead are demo_history_seed.dart's.
 // Placed relative to the seeded instant; never on the plan's first seat
 // at "now", so a visitor can always book there.
 import '../../../features/reservations/domain/reservation.dart';
@@ -56,8 +56,9 @@ void seedDemoBookings(
   // The weekday of "now" decides where the series falls: every week on
   // the same day, four weeks ahead.
   reservations.reservations.addAll([
-    // Bruno this afternoon: a half-day that leaves the morning free.
-    booking('demo-bruno-afternoon', 'member-2', 0, 13, 18, seat: 'demo-seat-2'),
+    // Bruno tomorrow afternoon: a half-day. Not today — the visitor books
+    // as Bruno today, and one person holds one place at a time.
+    booking('demo-bruno-afternoon', 'member-2', 1, 13, 18, seat: 'demo-seat-2'),
     // Ada tomorrow morning, on the window seat.
     booking('demo-ada-tomorrow', 'member-1', 1, 9, 13, seat: window),
     // Bruno's weekly studio seat for the coming month.
@@ -90,39 +91,5 @@ void seedDemoBookings(
       seat: 'demo-seat-1',
       status: ReservationStatus.cancelled,
     ),
-    // The past weeks: what the usage, the statements and the reports
-    // count. Weekdays only, so no booking falls on a closed weekend.
-    for (var d = 2; d <= 20; d++)
-      if (day.subtract(Duration(days: d)).weekday <= DateTime.friday) ...[
-        booking(
-          'demo-history-ada-$d',
-          'member-1',
-          -d,
-          9,
-          18,
-          seat: window,
-          status: ReservationStatus.completed,
-        ),
-        if (d.isEven)
-          booking(
-            'demo-history-bruno-$d',
-            'member-2',
-            -d,
-            9,
-            13,
-            seat: 'demo-seat-1',
-            status: ReservationStatus.completed,
-          ),
-        if (d % 3 == 0)
-          booking(
-            'demo-history-chiara-$d',
-            'member-3',
-            -d,
-            13,
-            18,
-            seat: DemoSpace.studioSeats.last,
-            status: ReservationStatus.completed,
-          ),
-      ],
   ]);
 }

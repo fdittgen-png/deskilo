@@ -179,6 +179,9 @@ void main() {
   testWidgets('#1565 — journey: book as a member, through the persona '
       'control, and the booking is that member\'s', (tester) async {
     final journey = await pumpDemo(tester);
+    final seeded = {
+      for (final r in journey.fixture.reservations.reservations) r.id,
+    };
 
     await becomePersona(tester, DemoPersona.member);
     // The persona switch rebuilds the Demo container, so the hub has to
@@ -195,7 +198,12 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('booking-confirm')));
     await tester.pumpAndSettle();
 
-    final booking = journey.fixture.reservations.reservations.last;
+    // #2313 — the booking this journey made, not whichever row is last:
+    // `.last` read a seeded booking of Bruno's when the new one had been
+    // refused, and the test stayed green over a booking that never was.
+    final booking = journey.fixture.reservations.reservations
+        .where((r) => !seeded.contains(r.id))
+        .single;
     expect(
       booking.memberId,
       DemoPersona.member.memberId,

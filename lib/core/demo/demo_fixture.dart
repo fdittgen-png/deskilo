@@ -38,6 +38,7 @@ import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
+import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_space_seed.dart';
 
@@ -109,12 +110,18 @@ class DemoFixture {
     seedDemoPeople(workspaces);
     seedDemoReservations(reservations, floorPlan, today);
     seedDemoBookings(reservations, floorPlan, today);
+    // #2313 — four years, from January three years back to the end of
+    // this year: holidays first, so no booking falls on one.
+    seedDemoClosures(workspaces, today);
+    seedDemoHolidays(workspaces, today);
+    seedDemoHistoryBookings(reservations, floorPlan, workspaces, today);
     seedDemoMoney(money, today);
+    seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);
+    seedDemoHistoryDecisions(events, today);
     seedDemoAccessories(accessories, floorPlan);
-    seedDemoClosures(workspaces, today);
     seedDemoCalendar(calendar,
         reservations: reservations, money: money, events: events);
     final problems = validateDemoFixture(

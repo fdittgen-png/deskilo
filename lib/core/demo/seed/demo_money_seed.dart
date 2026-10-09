@@ -12,6 +12,7 @@ import '../../../features/money/domain/usage_record.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../data/money_repository.dart';
+import 'demo_history_seed.dart';
 
 String _period(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
 
@@ -70,49 +71,35 @@ void seedDemoMoneyStory(
     dueOn: issued.add(const Duration(days: 10)),
   );
 
+  // The fee of last month, after the yearly rises of the history.
+  int fee(int base) => demoMonthlyCents(base, lastMonth.year, now);
+  // Two months back: the history's bill, which a credit note corrects.
+  final adaBefore = 'demo-h-inv-member-1-$before';
   money.invoices.addAll([
     invoice(
       'demo-invoice-chiara',
       'member-3',
       'Chiara Rossi',
-      'F-2026-0009',
+      demoInvoiceNumber(lastMonth, 3),
       lastMonth,
       last,
-      18000,
+      fee(18000),
     ),
-    invoice(
-      'demo-invoice-ada-old',
-      'member-1',
-      'Ada Lindqvist',
-      'F-2026-0004',
-      twoMonthsAgo,
-      before,
-      18000,
-    ),
-    invoice(
-      'demo-invoice-bruno-old',
-      'member-2',
-      'Bruno Kessler',
-      'F-2026-0005',
-      twoMonthsAgo,
-      before,
-      9000,
-    ),
-    // A credit note: one day of Ada's older month given back.
+    // A credit note: one day of Ada's month before last given back.
     invoice(
       'demo-credit-ada',
       'member-1',
       'Ada Lindqvist',
-      'AV-2026-0001',
+      'AV-${twoMonthsAgo.year}-0001',
       twoMonthsAgo.add(const Duration(days: 5)),
       before,
       -2000,
-      replaces: 'demo-invoice-ada-old',
-      replacesNumber: 'F-2026-0004',
+      replaces: adaBefore,
+      replacesNumber: demoInvoiceNumber(twoMonthsAgo, 1),
     ),
   ]);
 
-  // The payments behind the paid invoices, and their matches.
+  // The payments behind last month's paid invoices, and their matches.
   void paid(
     String invoiceId,
     String member,
@@ -148,52 +135,36 @@ void seedDemoMoneyStory(
   paid(
     'demo-invoice-ada',
     'member-1',
-    18000,
+    fee(18000),
     lastMonth.add(const Duration(days: 3)),
     last,
   );
   paid(
     'demo-invoice-chiara',
     'member-3',
-    18000,
+    fee(18000),
     lastMonth.add(const Duration(days: 5)),
     last,
   );
-  paid(
-    'demo-invoice-ada-old',
-    'member-1',
-    18000,
-    twoMonthsAgo.add(const Duration(days: 4)),
-    before,
-  );
-  paid(
-    'demo-invoice-bruno-old',
-    'member-2',
-    9000,
-    twoMonthsAgo.add(const Duration(days: 9)),
-    before,
-  );
 
-  // The subscription charges the statements and the account read.
-  for (final (member, cents) in [
+  // Last month's subscription charges (the history books the others).
+  for (final (member, base) in [
     ('member-1', 18000),
     ('member-2', 9000),
     ('member-3', 18000),
   ]) {
-    for (final (period, at) in [(before, twoMonthsAgo), (last, lastMonth)]) {
-      money.ledger.add(
-        LedgerEntry(
-          id: 'demo-sub-$member-$period',
-          memberId: member,
-          kind: LedgerKind.charge,
-          category: LedgerCategory.subscription,
-          amountCents: cents,
-          description: 'Subscription',
-          period: period,
-          createdAt: at,
-        ),
-      );
-    }
+    money.ledger.add(
+      LedgerEntry(
+        id: 'demo-sub-$member-$last',
+        memberId: member,
+        kind: LedgerKind.charge,
+        category: LedgerCategory.subscription,
+        amountCents: fee(base),
+        description: 'Subscription',
+        period: last,
+        createdAt: lastMonth,
+      ),
+    );
   }
 
   // France's rates (the cast lives in Pézenas): standard, two reduced,
@@ -232,10 +203,10 @@ void seedDemoMoneyStory(
       memberId: 'member-3',
       title: 'Cleaning service',
       amountCents: 12000,
-      startsOn: DateTime(now.year, now.month - 3, 1),
+      startsOn: DateTime(now.year - 1, 1, 1),
       unit: ScheduleUnit.month,
       status: ScheduleStatus.active,
-      occurrencesDone: 3,
+      occurrencesDone: 12 + now.month - 1,
       nextDue: firstOfMonth,
     ),
   );
