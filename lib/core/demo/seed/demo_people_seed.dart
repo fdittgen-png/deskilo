@@ -32,6 +32,9 @@ void seedDemoIdentity(FakeWorkspaceRepository workspaces) {
     countryCode: 'FR',
     timezone: 'Europe/Paris',
     address: demoSpaceAddress,
+    // VAT-registered, so the rates, the VAT on bills and the
+    // declarations (demo_commerce_seed.dart) all apply.
+    vatRegime: 'vat_registered',
     branding: const {
       'seed_color': '#0F766E',
       'pattern': 'stripes',
