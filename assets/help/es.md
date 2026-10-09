@@ -903,6 +903,8 @@ quiere para algo descatalogado, no para algo equivocado.
 
 ### Ajustes del espacio (Espacio de coworking)
 
+**Configurar por tarea.** Datos generales, pagos, comunidad e invitaciones, apariencia, valores para nuevos miembros, plantillas y datos y zona de riesgo tienen secciones separadas. Datos generales se abre primero; abre otras secciones cuando las necesites. La preparación permanece encima. Guardar sigue visible abajo al desplazarte. Las secciones cerradas conservan sus borradores; Guardar abre los campos no válidos y los muestra. Las páginas abiertas desde una sección mantienen sus propios controles para guardar. El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
+
 La pantalla propia del espacio, de arriba abajo:
 
 - **Identidad** — nombre, país, moneda (propuesta según el país, editable), zona horaria, **idioma del espacio** (las invitaciones lo usan por defecto; *idioma de la app del remitente* es una opción) y la **dirección** postal impresa en las facturas.
@@ -1301,6 +1303,8 @@ Cada informe de la app — la factura mensual, las facturas, los proformas, las 
 **Cada documento como carta estándar (#874).** Con *Estándar de carta para cada documento* activo, un documento que el propietario nunca diseñó — factura, proforma, estado, acuerdo financiero, informe de pagos, informe de consumo, cada nivel de recordatorio — se imprime como carta posicionada: membrete a 20 mm, destinatario en la ventana del sobre DL (110 mm de ancho, 45 mm de alto), bloque de identificación desde 90 mm, un pie en cada página con los datos bancarios y la referencia, una tira corta en las páginas 2+. Doble por las marcas y la dirección aparece. Un diseño propio siempre gana; `dart run tool/report.dart default --kind usage` imprime un diseño de partida.
 
 ### 9c. La vista Extracto
+
+El saldo mensual encabeza esta vista; le siguen el uso y los cargos. Los consejos aparecen después del contenido y las acciones.
 
 **Primero el mes seleccionado.** Días incluidos, usados y restantes, suscripción, servicios y suplementos, paquetes, posiciones pendientes, abonos, factura y saldo describen el período elegido. Debajo, despliega **Tu cuenta** para ver crédito, facturas abiertas y reembolsos de **todos los períodos**. Su posición neta es distinta del saldo mensual. Los precios negociados están en **Documentos**, junto a tu acuerdo vigente.
 
@@ -1822,6 +1826,10 @@ El comando imprime la posición de cada zona en milímetros y concluye **CONFORM
 **Imágenes**: `<image name="logo" h="12mm"/>` coloca una imagen de la biblioteca del informe; se ve en la vista previa y se imprime en el PDF.
 
 ## 12. Ajustes y perfil
+
+El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
+
+**Elegir el ámbito.** Mis ajustes reúne el enlace a tu cuenta, tu membresía, los diagnósticos del dispositivo, la ayuda y cerrar sesión. Gestionar espacio contiene solo las herramientas de configuración y administración permitidas para tu rol, con el nombre del espacio. Abre los grupos cuando los necesites; Avanzado empieza cerrado. Ambas vistas conservan su posición al cambiar. Los miembros sin herramientas de administración acceden directamente a sus ajustes personales.
 
 Tu pantalla personal, de arriba abajo:
 

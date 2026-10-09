@@ -3,6 +3,7 @@
 // #881 — payment conditions: the workspace's default, a member's own
 // keys on top; printed as the effective ones; changed only by a
 // validated request from an authorised admin, read-only for the member.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_terms.dart';
@@ -118,6 +119,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.settings_outlined));
       await tester.pumpAndSettle();
+      await showWorkspaceSettings(tester);
       await tester.scrollUntilVisible(find.text('Members & plans'), 200,
           scrollable: find.byType(Scrollable).first);
       await tester.ensureVisible(find.text('Members & plans'));

@@ -3,6 +3,7 @@
 // Members & plans. Since the UX pass, every per-member action lives in
 // the row's MANAGEMENT SHEET (tap the row → labeled tiles) instead of a
 // pile of icon buttons — tests open the sheet first.
+import '../../helpers/settings_sections.dart';
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
@@ -62,6 +63,7 @@ Future<FakeWorkspaceRepository> pumpMembers(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
   return workspace;
@@ -99,6 +101,7 @@ Future<void> pumpMembersWith(
   }
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Members & plans'));
   await tester.pumpAndSettle();
 }
@@ -526,6 +529,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 
@@ -598,6 +602,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
 
     expect(find.text('Members & plans'), findsNothing);
   });
@@ -647,6 +652,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 

@@ -946,6 +946,8 @@ want for something discontinued rather than mistaken.
 
 ### Workspace settings (Coworking space)
 
+**Configure by task.** General details, payments, community and invitations, appearance, new-member defaults, templates and data, and the danger zone have separate sections. General details opens first; open another section when you need it. Setup readiness stays above the tasks. Save remains at the bottom of the screen as you scroll. Closed sections retain their drafts, and Save opens and scrolls to invalid fields. Pages opened from a section keep their own save controls. The horizontal section menu stays visible: choose a section to open it and move straight to it. Scroll within the form when needed; drafts stay in place.
+
 The workspace's own screen, top to bottom:
 
 - **Identity** — name, country, currency (proposed from the country, editable), time zone, **workspace language** (invitations default to it; *sender's app language* is an option) and the postal **address** printed on invoices.
@@ -1358,6 +1360,8 @@ Every report in the app — the bill, invoices, proformas, credit notes, your se
 **Every document as a standard letter (#874).** With *Letter standard for every document* on, a document the owner never designed — invoice, proforma, statement, financial agreement, payments report, consumption report, every reminder level — prints as a positioned letter: the letterhead at 20 mm, the recipient inside the DL envelope window (110 mm across, 45 mm down), the identification block resuming at 90 mm, one footer on every page with the bank details and the reference, a short strip on pages 2+. Fold on the marks and the address shows. A designed layout always wins; `dart run tool/report.dart default --kind usage` prints a default to start from.
 
 ### 9c. The Statement face
+
+The monthly balance leads this view; usage and charges follow. Help tips sit after the content and actions.
 
 **The selected month first.** Days included, used and left, subscription, consumed services and supplements, packages, pending positions, credits, the issued invoice and its balance describe the selected period. Below this detail, expand **Your account** to read credit, open invoices and refunds across **all periods**. Its net position is separate from the monthly balance. Negotiated prices are in **Documents**, beside your current agreement.
 
@@ -1883,6 +1887,11 @@ Every report has this — invoice, proforma, statement, financial agreement, pay
 An import is **refused with the reason** when the file is not readable JSON, is not a DesKilo design, was written by a newer version, is for a report this workspace does not have, or belongs to a **different** report — a design is never silently retargeted. An accepted import lands in the editor, not in the workspace: nothing changes until you press **Save**, so you can preview it first and leave without keeping it.
 
 ## 12. Settings & profile
+
+The horizontal section menu stays visible: choose a section to open it and move straight to it. Scroll within the form when needed; drafts stay in place.
+
+**Choose the scope.** My settings holds your account shortcut, membership controls, device diagnostics, help and sign out. Manage workspace contains only the configuration and administration tools permitted by your role, labeled with the workspace name. Its task groups open when needed; Advanced starts closed. The two scopes keep their scroll position as you switch. Members without administration tools see their personal settings directly.
+
 
 Your personal screen, top to bottom:
 

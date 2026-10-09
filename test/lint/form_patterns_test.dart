@@ -28,9 +28,9 @@ import 'lint_sources.dart';
 /// Ceilings measured 2026-10-07, then lowered by the expense sheet's move to
 /// the kit and the e-mail autofill fixes. Lower them as forms move.
 const int _rawFieldCeiling = 207;
-const int _literalGapCeiling = 255; // #2284 removes duplicate Money spacing.
+const int _literalGapCeiling = 253; // #2286 and #2291 use spacing tokens.
 const int _fallbackCeiling =
-    6467; // #2287 replaces the administration header with localized task groups.
+    6462; // #2287, #2288 and #2291 use localized task groups.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

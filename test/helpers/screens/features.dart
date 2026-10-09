@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../mock_providers.dart';
+import '../settings_sections.dart';
 
 Future<FakeWorkspaceRepository> pumpSettings(
   WidgetTester tester, {
@@ -24,6 +25,7 @@ Future<FakeWorkspaceRepository> pumpSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   return workspace;
 }
 

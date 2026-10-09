@@ -49,6 +49,8 @@ class WorkspaceLocaleFields extends ConsumerWidget {
           key: ValueKey('workspace-currency-${value.text}'),
           child: DropdownButtonFormField<String>(
         key: const Key('workspaceSettingsCurrency'),
+        isExpanded: true,
+        itemHeight: null,
         initialValue: Currencies.selectable.contains(currency.text)
             ? currency.text
             : null,

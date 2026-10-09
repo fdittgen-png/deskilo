@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/ui/app_frame.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/money_face.dart';
@@ -36,7 +37,7 @@ Widget moneySectionLabel(BuildContext context, String text) => Padding(
 /// Action labels wrap at the user's chosen text size.
 Widget fittedLabel(String text) => Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.start,
     );
 
 /// Actions use one column when width or enlarged text needs it.
@@ -61,6 +62,21 @@ class MoneyActionGrid extends StatelessWidget {
           );
         },
       );
+}
+
+/// The workspace's existing commands, separate from the personal archive.
+class MoneyWorkspaceTools extends StatelessWidget {
+  const MoneyWorkspaceTools({super.key, required this.actions});
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) => Card(child: ExpansionTile(
+    key: const ValueKey('money-workspace-tools'),
+    title: Text((AppLocalizations.of(context) ?? AppLocalizationsEn()).uxMoneyWorkspaceTools),
+    leading: const Icon(Icons.business_outlined),
+    childrenPadding: AppSpacing.gutterAll,
+    children: actions,
+  ));
 }
 
 /// #486 — the month's BOTTOM LINE, leading the landscape side panel and
@@ -116,7 +132,7 @@ HelpHintId moneyFaceHint(MoneyFace face) => switch (face) {
 
 /// Finances destinations: monthly views share a period chooser; invoices
 /// cover all periods. The screen owns providers and actions; this widget
-/// owns the tabs and responsive layout (actions left, cards right when wide).
+/// owns the tabs and one responsive reading flow.
 ///
 /// WHY THE TAB LIVES IN A PROVIDER. A calendar row that lands on a
 /// payment wants the Payments face; an invoice link the Invoices face.
@@ -163,6 +179,8 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     final face = ref.watch(moneyFaceControllerProvider);
     if (_controller.index != face.index) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -185,14 +203,27 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     };
     final scopeHeader = Padding(
       key: ValueKey('money-scope-${face.name}'),
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: Text(scope, style: Theme.of(context).textTheme.bodyMedium),
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(moneyFaceLabel(l10n, face), style: theme.textTheme.headlineSmall?.strong),
+        const SizedBox(height: AppSpacing.xs),
+        Text(scope, style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
+      ]),
     );
     final monthly = face != MoneyFace.invoices;
 
     final tabs = LayoutBuilder(builder: (context, constraints) => TabBar(
       key: const ValueKey('money-faces'),
       controller: _controller,
+      indicator: BoxDecoration(color: scheme.surface, borderRadius: AppRadius.mdAll,
+          border: Border.all(color: scheme.outlineVariant)),
+      indicatorSize: TabBarIndicatorSize.tab,
+      indicatorPadding: AppSpacing.xsAll,
+      dividerColor: Colors.transparent,
+      labelColor: scheme.primary,
+      unselectedLabelColor: scheme.onSurfaceVariant,
+      labelStyle: theme.textTheme.labelLarge?.strong,
+      splashBorderRadius: AppRadius.mdAll,
       // Scroll when full labels need more space; preserve their text size.
       isScrollable: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130,
       tabAlignment: constraints.maxWidth < 700 || MediaQuery.textScalerOf(context).scale(100) > 130
@@ -207,50 +238,39 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
       ],
     ));
 
-    return Column(
+    return Theme(
+      data: theme.copyWith(
+        outlinedButtonTheme: OutlinedButtonThemeData(style: OutlinedButton.styleFrom(
+          minimumSize: const Size(0, 56), padding: AppSpacing.lgAll,
+          alignment: Alignment.centerLeft,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
+        )),
+        filledButtonTheme: FilledButtonThemeData(style: FilledButton.styleFrom(
+          minimumSize: const Size(0, 56), padding: AppSpacing.lgAll,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
+        )),
+      ),
+      child: Column(
       children: [
-        Material(color: Theme.of(context).colorScheme.surface, child: tabs),
+        Padding(padding: AppSpacing.gutterAll, child: Material(
+          color: scheme.surfaceContainerLow, borderRadius: AppRadius.lgAll, child: tabs,
+        )),
         Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              if (phoneLandscape(constraints)) {
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: (constraints.maxWidth * 0.32).clamp(280.0, 400.0),
-                      child: SingleChildScrollView(
-                        padding: AppSpacing.mdAll,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            scopeHeader,
-                            if (monthly) widget.periodHeader,
-                            hint,
-                            ...actions,
-                          ],
-                        ),
-                      ),
-                    ),
-                    const VerticalDivider(width: 1),
-                    Expanded(
-                      child: ListView(
-                        key: ValueKey('money-face-body-${face.name}'),
-                        padding: AppSpacing.mdAll,
-                        children: cards,
-                      ),
-                    ),
-                  ],
-                );
-              }
-              return ListView(
-                key: ValueKey('money-face-body-${face.name}'),
-                padding: AppSpacing.mdAll,
-                children: [scopeHeader, if (monthly) widget.periodHeader, hint, ...cards, ...actions],
-              );
-            },
+          child: ListView(
+            key: ValueKey('money-face-body-${face.name}'),
+            padding: AppSpacing.gutterAll,
+            children: [
+              scopeHeader,
+              if (monthly) Padding(padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+                  child: Card(child: widget.periodHeader)),
+              for (final item in [...cards, ...actions])
+                if (item is! SizedBox) Padding(padding: const EdgeInsets.only(bottom: AppSpacing.md), child: item),
+              hint,
+            ],
           ),
         ),
       ],
+      ),
     );
   }
 }

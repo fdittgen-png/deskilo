@@ -968,6 +968,8 @@ qu'on veut pour quelque chose d'arrêté, pas d'erroné.
 
 ### Réglages de l'espace (Espace de coworking)
 
+**Configurer par tâche.** Informations générales, paiements, communauté et invitations, apparence, valeurs par défaut des nouveaux membres, modèles et données et zone sensible ont des sections séparées. Les informations générales sont ouvertes au départ ; ouvrez une autre section selon votre besoin. La préparation reste au-dessus des tâches. Enregistrer reste en bas de l’écran pendant le défilement. Les sections fermées conservent leurs brouillons ; Enregistrer ouvre les champs invalides et les fait défiler à l’écran. Les pages ouvertes depuis une section gardent leur propre bouton d’enregistrement. Le menu horizontal des sections reste visible : choisissez une section pour l’ouvrir et y accéder directement. Faites défiler le formulaire selon vos besoins ; les brouillons sont conservés.
+
 L'écran de l'espace, de haut en bas :
 
 - **Identité** — nom, pays, devise (proposée d'après le pays, modifiable), fuseau horaire, **langue de l'espace** (les invitations y sont rédigées par défaut ; *langue de l'app de l'expéditeur* est une option) et l'**adresse** postale imprimée sur les factures.
@@ -1391,6 +1393,8 @@ Chaque rapport de l'application — relevé, factures, proformas, avoirs, vos do
 **Chaque document en lettre normalisée (#874).** Avec *Standard lettre pour chaque document* activé, un document jamais conçu par le propriétaire — facture, proforma, relevé, accord financier, rapport de paiements, rapport de consommation, chaque niveau de rappel — s'imprime en lettre positionnée : l'en-tête à 20 mm, le destinataire dans la fenêtre de l'enveloppe DL (110 mm en largeur, 45 mm en hauteur), le bloc d'identification reprenant à 90 mm, un pied sur chaque page avec les coordonnées bancaires et la référence, un bandeau court sur les pages 2+. Pliez sur les repères et l'adresse apparaît. Une maquette conçue l'emporte toujours ; `dart run tool/report.dart default --kind usage` imprime une maquette de départ.
 
 ### 9c. Le volet Relevé
+
+Le solde mensuel ouvre cette vue ; l’usage et les frais suivent. Les astuces viennent après le contenu et les actions.
 
 **Le mois sélectionné en premier.** Jours inclus, utilisés et restants, abonnement, services et suppléments, forfaits, postes en attente, avoirs, facture émise et solde décrivent la période choisie. Sous ce détail, développez **Votre compte** pour lire le crédit, les factures ouvertes et les remboursements de **toutes les périodes**. Sa position nette est distincte du solde mensuel. Les conditions négociées sont dans **Documents**, avec votre accord en vigueur.
 
@@ -1941,6 +1945,11 @@ La commande imprime la position de chaque zone en millimètres et conclut **CONF
 **Images** : `<image name="logo" h="12mm"/>` place une image de la bibliothèque du rapport ; elle apparaît dans l'aperçu et dans le PDF.
 
 ## 12. Réglages et profil
+
+Le menu horizontal des sections reste visible : choisissez une section pour l’ouvrir et y accéder directement. Faites défiler le formulaire selon vos besoins ; les brouillons sont conservés.
+
+**Choisir le périmètre.** Mes réglages regroupe le lien vers votre compte, votre adhésion, les diagnostics de l’appareil, l’aide et la déconnexion. Gérer l’espace contient uniquement les outils de configuration et d’administration autorisés pour votre rôle, avec le nom de l’espace. Ouvrez les groupes selon vos besoins ; Avancé est fermé au départ. Les deux vues conservent leur position de défilement. Les membres sans outils d’administration accèdent directement à leurs réglages personnels.
+
 
 Votre écran personnel, de haut en bas :
 

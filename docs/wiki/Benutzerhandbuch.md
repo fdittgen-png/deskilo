@@ -940,6 +940,8 @@ was man für etwas Eingestelltes will, nicht für etwas Falsches.
 
 ### Workspace-Einstellungen (Coworking-Space)
 
+**Nach Aufgabe einrichten.** Allgemeine Angaben, Zahlungen, Gemeinschaft und Einladungen, Darstellung, Vorgaben für neue Mitglieder, Vorlagen und Daten sowie der Gefahrenbereich haben eigene Abschnitte. Allgemeine Angaben ist zunächst geöffnet; öffnen Sie weitere Abschnitte nach Bedarf. Der Einrichtungsstand bleibt darüber. Speichern bleibt beim Scrollen unten sichtbar. Geschlossene Abschnitte behalten ihre Entwürfe; Speichern öffnet ungültige Felder und scrollt zu ihnen. Von hier geöffnete Seiten behalten ihre eigenen Speicheraktionen. Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
+
 Der Bildschirm des Space, von oben nach unten:
 
 - **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Sprache des Arbeitsbereichs** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.
@@ -1345,6 +1347,8 @@ Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine
 **Jedes Dokument als Normbrief (#874).** Mit *Briefstandard für jedes Dokument* druckt ein nie gestaltetes Dokument — Rechnung, Proforma, Abrechnung, Finanzvereinbarung, Zahlungsbericht, Verbrauchsbericht, jede Mahnstufe — als positionierter Brief: Briefkopf bei 20 mm, Empfänger im DL-Fensterfeld (110 mm quer, 45 mm tief), Identifikationsblock ab 90 mm, ein Fuß auf jeder Seite mit Bankverbindung und Referenz, ein kurzer Streifen auf den Seiten 2+. An den Marken falten und die Anschrift erscheint. Eine gestaltete Vorlage gewinnt immer; `dart run tool/report.dart default --kind usage` gibt eine Startvorlage aus.
 
 ### 9c. Die Ansicht Abrechnung
+
+Der Monatssaldo steht zuerst; Nutzung und Kosten folgen. Hilfetipps stehen nach den Inhalten und Aktionen.
 
 **Der gewählte Monat zuerst.** Enthaltene, genutzte und verbleibende Tage, Abonnement, Leistungen und Zuschläge, Pakete, offene Posten, Gutschriften, Rechnung und Saldo beschreiben den gewählten Zeitraum. Darunter öffnet **Ihr Konto** Guthaben, offene Rechnungen und Erstattungen aus **allen Zeiträumen**. Die Nettoposition ist vom Monatssaldo getrennt. Verhandelte Preise stehen unter **Dokumente** bei Ihrer aktuellen Vereinbarung.
 
@@ -1895,6 +1899,11 @@ Der Befehl druckt jede Zone in Millimetern und schließt mit **CONFORMS** oder l
 **Bilder**: `<image name="logo" h="12mm"/>` setzt ein Bild aus der Berichtsbibliothek; es erscheint in der Vorschau und im PDF.
 
 ## 12. Einstellungen & Profil
+
+Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
+
+**Den Bereich wählen.** Meine Einstellungen enthält den Kontolink, Ihre Mitgliedschaft, Gerätediagnose, Hilfe und Abmelden. Workspace verwalten zeigt nur die für Ihre Rolle erlaubten Einrichtungs- und Verwaltungswerkzeuge mit dem Namen des Workspace. Öffnen Sie Aufgabengruppen bei Bedarf; Erweitert ist zunächst geschlossen. Beide Ansichten behalten ihre Scrollposition. Mitglieder ohne Verwaltungswerkzeuge sehen direkt ihre persönlichen Einstellungen.
+
 
 Dein persönlicher Bildschirm, von oben nach unten:
 

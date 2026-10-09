@@ -5,6 +5,7 @@
 // Documents face and sees who can look; an owner (or finance admin)
 // proposes it from the member's sheet; it goes through validation;
 // the feed narrates it. The server side (0137) has its own harness.
+import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
@@ -12,6 +13,7 @@ import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -105,6 +107,30 @@ void main() {
     await pumpFaces(tester);
     await face(tester, MoneyFace.documents);
     expect(find.text('You are on the workspace tariff.'), findsOneWidget);
+  });
+
+  testWidgets('negotiated amounts stay on one line at 320 dp and doubled text', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final money = FakeMoneyRepository()..negotiations['member-1'] = _deal;
+    await pumpFaces(tester, money: money, size: const Size(320, 800));
+    await face(tester, MoneyFace.documents);
+    final card = find.byKey(const ValueKey('negotiation-card'));
+    await tester.scrollUntilVisible(card, 200, scrollable: find.byType(Scrollable).last);
+    final fee = find.byKey(const ValueKey('negotiation-row-fee'));
+    for (final value in ['€150.00', '€250.00']) {
+      final amount = tester.renderObject<RenderParagraph>(find.descendant(of: fee, matching: find.text(value)));
+      final boxes = amount.getBoxesForSelection(TextSelection(baseOffset: 0, extentOffset: value.length));
+      expect(boxes.map((box) => box.top).toSet(), hasLength(1));
+      expect(amount.didExceedMaxLines, isFalse);
+    }
+    final access = find.byKey(const ValueKey('negotiation-who-can-see'));
+    await tester.ensureVisible(access);
+    await tester.pumpAndSettle();
+    await tester.tap(access);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('access-rule-negotiations')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('the feature off hides the card', (tester) async {
@@ -335,6 +361,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
     await openSheet(tester, 'Ana');

@@ -12,6 +12,7 @@
 // pending with its undo.
 import 'dart:async';
 import 'dart:convert';
+import '../../helpers/settings_sections.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_config.dart';
@@ -144,6 +145,7 @@ Future<InMemoryBackendSettingsStore> pumpServerScreen(
   await tester.pumpAndSettle();
   await tester.tap(find.byTooltip('Settings'));
   await tester.pumpAndSettle();
+  await openSettingsSection(tester, 'advanced');
   await tester.scrollUntilVisible(
     find.byKey(const ValueKey('backend-server-tile')),
     250,

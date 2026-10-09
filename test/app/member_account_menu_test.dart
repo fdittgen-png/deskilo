@@ -23,6 +23,7 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../helpers/settings_sections.dart';
 import 'package:go_router/go_router.dart';
 
 import '../helpers/mock_providers.dart';
@@ -202,7 +203,8 @@ void main() {
 
       expect(await _push(tester, '/settings'), '/settings');
       expect(_appBarText('Settings'), findsOneWidget);
-      expect(find.text('This workspace'), findsOneWidget);
+      await showWorkspaceSettings(tester);
+      expect(find.text('This workspace'), findsNWidgets(2));
     });
   });
 

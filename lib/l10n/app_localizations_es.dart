@@ -6649,7 +6649,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatementTipNegotiation =>
-      '¿Condiciones negociadas? La tarjeta muestra tus precios junto a la tarifa, desde cuándo, y quién puede verlos — los propietarios y los admins de finanzas, cada lectura registrada.';
+      'Tus precios negociados están en Documentos, junto a tu acuerdo. La tarjeta los compara con la tarifa y muestra quién puede consultarlos; las consultas de otras personas quedan registradas.';
 
   @override
   String get helpHintMoneyStatementTipNegotiationTopic =>
@@ -18100,6 +18100,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uxResetFilters => 'Restablecer filtros';
 
   @override
+  String get uxSettingsPersonal => 'Mis ajustes';
+
+  @override
+  String get uxSettingsSpace => 'Gestionar espacio';
+
+  @override
   String get uxTestSpace => 'Espacio de prueba';
 
   @override
@@ -18107,7 +18113,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Espacio de prueba: reservas y facturas de ensayo';
 
   @override
+  String get uxWorkspaceAppearance => 'Apariencia y textos';
+
+  @override
+  String get uxWorkspaceCommunity => 'Comunidad e invitaciones';
+
+  @override
+  String get uxWorkspaceGeneral => 'Datos generales';
+
+  @override
   String get uxWorkspaceTime => 'Hora del espacio';
+
+  @override
+  String get uxWorkspaceTools => 'Plantillas y datos';
 
   @override
   String get validationAdminsMay => 'Los admins pueden validar';

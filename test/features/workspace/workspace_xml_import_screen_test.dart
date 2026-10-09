@@ -2,6 +2,7 @@
 //
 // #916 — importing a workspace XML previews first, applies configuration
 // before the plan, and maps each refusal to its own message.
+import '../../helpers/settings_sections.dart';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
@@ -26,6 +27,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/workspace_settings_groups.dart';
 
 /// Import boundary fake (fakes over mocks): records calls, optionally
 /// throws. Own class here — the shared helpers stay untouched (#165).
@@ -221,8 +223,10 @@ Future<void> pumpWorkspaceSettings(
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
+  await showWorkspaceSettings(tester);
   await tester.tap(find.text('Workspace'));
   await tester.pumpAndSettle();
+  await openWorkspaceSettingsGroups(tester, ids: const ['tools']);
 }
 
 Future<void> tapImportTile(WidgetTester tester) async {

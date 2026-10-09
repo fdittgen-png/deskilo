@@ -910,6 +910,8 @@ vuole per qualcosa di dismesso, non per qualcosa di sbagliato.
 
 ### Impostazioni dello spazio (Spazio di coworking)
 
+**Configura per attività.** Informazioni generali, pagamenti, comunità e inviti, aspetto, valori per nuovi membri, modelli e dati e zona di rischio hanno sezioni separate. Informazioni generali si apre per prima; apri le altre quando servono. Lo stato di preparazione rimane sopra. Salva resta visibile in basso durante lo scorrimento. Le sezioni chiuse conservano le bozze; Salva apre i campi non validi e li mostra. Le pagine aperte da una sezione mantengono i propri comandi di salvataggio. Il menu orizzontale delle sezioni resta visibile: scegli una sezione per aprirla e raggiungerla direttamente. Scorri il modulo quando serve; le bozze vengono conservate.
+
 La schermata propria dello spazio, dall'alto in basso:
 
 - **Identità** — nome, paese, valuta (proposta dal paese, modificabile), fuso orario, **lingua dello spazio** (gli inviti la usano per impostazione predefinita; *lingua dell'app del mittente* è un'opzione) e l'**indirizzo** postale stampato sulle fatture.
@@ -1311,6 +1313,8 @@ Ogni report dell'app — l'estratto, le fatture, le proforma, le note di credito
 **Ogni documento come lettera standard (#874).** Con *Standard lettera per ogni documento* attivo, un documento mai progettato dal proprietario — fattura, proforma, estratto, accordo finanziario, report dei pagamenti, report dei consumi, ogni livello di sollecito — si stampa come lettera posizionata: intestazione a 20 mm, destinatario nella finestra della busta DL (110 mm in larghezza, 45 mm in altezza), blocco di identificazione da 90 mm, un piè di pagina su ogni pagina con le coordinate bancarie e il riferimento, una breve striscia dalle pagine 2+. Piega sui segni e l'indirizzo appare. Un layout progettato vince sempre; `dart run tool/report.dart default --kind usage` stampa un layout di partenza.
 
 ### 9c. La vista Estratto
+
+Il saldo mensile apre questa vista; seguono l’utilizzo e gli addebiti. I suggerimenti vengono dopo i contenuti e le azioni.
 
 **Prima il mese selezionato.** Giorni inclusi, usati e rimasti, abbonamento, servizi e supplementi, pacchetti, posizioni in attesa, crediti, fattura e saldo descrivono il periodo scelto. Sotto, espandi **Il tuo conto** per credito, fatture aperte e rimborsi di **tutti i periodi**. La posizione netta è distinta dal saldo mensile. I prezzi negoziati sono in **Documenti**, accanto all’accordo attuale.
 
@@ -1832,6 +1836,10 @@ Il comando stampa la posizione di ogni zona in millimetri e conclude con **CONFO
 **Immagini**: `<image name="logo" h="12mm"/>` inserisce un'immagine dalla libreria del report; compare nell'anteprima e si stampa nel PDF.
 
 ## 12. Impostazioni e profilo
+
+Il menu orizzontale delle sezioni resta visibile: scegli una sezione per aprirla e raggiungerla direttamente. Scorri il modulo quando serve; le bozze vengono conservate.
+
+**Scegli l’ambito.** Le mie impostazioni raccoglie il collegamento all’account, la tua adesione, la diagnostica del dispositivo, l’aiuto e l’uscita. Gestisci spazio contiene solo gli strumenti di configurazione e amministrazione consentiti al tuo ruolo, con il nome dello spazio. Apri i gruppi quando servono; Avanzate parte chiuso. Entrambe le viste mantengono la posizione di scorrimento. I membri senza strumenti di amministrazione vedono direttamente le proprie impostazioni.
 
 La tua schermata personale, dall'alto in basso:
 
