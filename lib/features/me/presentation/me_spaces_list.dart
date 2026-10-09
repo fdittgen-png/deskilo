@@ -18,6 +18,7 @@ import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../providers/space_prefs_provider.dart';
 import 'me_space_card.dart';
+import '../../workspace/presentation/widgets/brand_swatch.dart';
 import 'me_workspace_row.dart';
 import 'space_row_controls.dart';
 
@@ -299,6 +300,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint
           : null,
       avatar: WorkspaceAvatar(workspace: group.first),
+      // #2313 — production's identity when the pair has one.
+      brand: spaceBrand(sides.first),
       name: group.first.name,
       lastUsed: group.any((s) => s.id == widget.lastUsedId),
       detail: {

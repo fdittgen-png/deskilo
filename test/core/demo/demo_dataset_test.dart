@@ -82,11 +82,12 @@ void main() {
     final fixture = DemoFixture.build();
     final seats = fixture.floorPlan.seats;
 
-    expect(seats, hasLength(4));
-    expect(seats.map((s) => s.id).toSet(), hasLength(4),
+    // #2313 — four on the ground floor, two in the first floor's studio.
+    expect(seats, hasLength(6));
+    expect(seats.map((s) => s.id).toSet(), hasLength(6),
         reason: 'two seats with one id are one seat everywhere it counts');
-    expect(seats.map((s) => s.name).toSet(), hasLength(4),
-        reason: 'four chairs a visitor cannot tell apart');
+    expect(seats.map((s) => s.name).toSet(), hasLength(6),
+        reason: 'six chairs a visitor cannot tell apart');
     for (final seat in seats) {
       expect(seat.id, isNot(contains(r'$')));
       expect(seat.name, isNot(contains(r'$')));
@@ -103,7 +104,7 @@ void main() {
 
     expect(taken, hasLength(1));
     final free = fixture.floorPlan.seats.where((s) => !taken.contains(s.id));
-    expect(free, hasLength(3), reason: 'somewhere left to sit');
+    expect(free, hasLength(5), reason: 'somewhere left to sit');
   });
 
   test('a seat id used twice is named by the validator', () {

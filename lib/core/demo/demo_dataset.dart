@@ -23,6 +23,7 @@ import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
+import 'seed/demo_history_seed.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
 /// and in the guides.
@@ -336,19 +337,19 @@ void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
         id: 'demo-invoice-ada',
         memberId: 'member-1',
         memberName: 'Ada Lindqvist',
-        number: 'F-2026-0007',
+        number: demoInvoiceNumber(lastMonth, 1),
         issuedAt: lastMonth,
         period: period,
-        totalCents: 18000,
+        totalCents: demoMonthlyCents(18000, lastMonth.year, now),
       ),
       _demoInvoice(
         id: 'demo-invoice-bruno',
         memberId: 'member-2',
         memberName: 'Bruno Kessler',
-        number: 'F-2026-0008',
+        number: demoInvoiceNumber(lastMonth, 2),
         issuedAt: lastMonth,
         period: period,
-        totalCents: 9000,
+        totalCents: demoMonthlyCents(9000, lastMonth.year, now),
       ),
     ]);
 }
@@ -435,7 +436,10 @@ List<String> validateDemoFixture({
     if (!memberIds.contains(invoice.memberId)) {
       problems.add('invoice ${invoice.number}: no member ${invoice.memberId}');
     }
-    if (invoice.totalCents <= 0) {
+    // A credit note is negative by nature, and names what it corrects.
+    final creditNote =
+        invoice.totalCents < 0 && invoice.replacesInvoiceId != null;
+    if (invoice.totalCents <= 0 && !creditNote) {
       problems.add('invoice ${invoice.number}: nothing to pay');
     }
   }

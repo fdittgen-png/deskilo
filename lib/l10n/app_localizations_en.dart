@@ -2744,6 +2744,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coloursLight => 'Light';
 
   @override
+  String get coloursLogoHint =>
+      'Your logo is also shown while someone opens this space.';
+
+  @override
   String coloursMalformed(String text) {
     return '$text is not a colour: write it as #RRGGBB.';
   }
@@ -2751,6 +2755,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get coloursNeverTheirs =>
       'The DesKilo mark, the colours of the seat states and the production banner are the product’s, in every space.';
+
+  @override
+  String get coloursPatternDots => 'Dots';
+
+  @override
+  String get coloursPatternGrid => 'Grid';
+
+  @override
+  String get coloursPatternHint =>
+      'How your colour is drawn on this space’s card in Me, on its chip and while it opens, so people tell it apart from their other spaces.';
+
+  @override
+  String get coloursPatternSaved => 'Pattern saved.';
+
+  @override
+  String get coloursPatternSolid => 'Plain';
+
+  @override
+  String get coloursPatternStripes => 'Stripes';
+
+  @override
+  String get coloursPatternTitle => 'Pattern';
+
+  @override
+  String get coloursPatternWaves => 'Waves';
 
   @override
   String get coloursPreview => 'What it looks like';

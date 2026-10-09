@@ -1554,7 +1554,7 @@ final class WorkspaceEmblemOfProvider
   }
 }
 
-String _$workspaceEmblemOfHash() => r'75727ddccede0b9c87bd64738cc7ebea877f7d3f';
+String _$workspaceEmblemOfHash() => r'2bce7f4aaa26727350af47ff640b434ae4ef2ea4';
 
 /// #1289 — one workspace's emblem, or null when it has none or the flag
 /// is off. Kept alive and keyed, so the drawer and the switcher share

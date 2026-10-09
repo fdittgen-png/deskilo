@@ -490,13 +490,13 @@ List<Color> workspaceOfficePalette(Ref ref) {
 /// one download per space rather than one per widget.
 @Riverpod(keepAlive: true)
 Future<Uint8List?> workspaceEmblemOf(Ref ref, String workspaceId) async {
-  if (!ref.watch(enabledFeaturesSyncProvider).contains(
-        WorkspaceFeature.workspaceBranding,
-      )) {
-    return null;
-  }
-  return ref.watch(workspaceRepositoryProvider)
-      .fetchWorkspaceEmblem(workspaceId);
+  // #2313 — the space's OWN flag: Me and the entry show other spaces'.
+  final repository = ref.watch(workspaceRepositoryProvider);
+  final activeOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.workspaceBranding);
+  final spaces = await ref.watch(myWorkspacesProvider.future);
+  final space = spaces.where((w) => w.id == workspaceId).firstOrNull;
+  if (!(space == null ? activeOn : brandingOn(space))) return null;
+  return repository.fetchWorkspaceEmblem(workspaceId);
 }
 
 /// The active workspace's emblem; null while nothing is loaded.
