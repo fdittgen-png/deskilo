@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-// Invariant: Finance's badge opens the counted category without reading
-// other updates; unresolved decisions retain their count.
+// Invariant: Finance opens only the counted category; other updates and pending decisions keep their counts.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/notification_feed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';

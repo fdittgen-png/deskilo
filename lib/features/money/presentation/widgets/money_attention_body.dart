@@ -8,7 +8,6 @@ import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/providers/attention_providers.dart';
 import '../../../events/providers/notification_filter_providers.dart';
 
-/// Finance counts have an explicit destination across every Money view.
 class MoneyAttentionBody extends ConsumerWidget {
   const MoneyAttentionBody({required this.enabled, required this.child, super.key});
   final bool enabled;

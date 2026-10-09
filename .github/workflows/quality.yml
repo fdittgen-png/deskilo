@@ -73,7 +73,7 @@ jobs:
     # repository had no protection, and it was out of date.)
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
-    timeout-minutes: 45 # 2026-09-26: the full suite passed 26 min on Flutter 3.47.5; 30 cut it off
+    timeout-minutes: 60 # 2026-10-09 #2302: two 45-minute runs cut off passing tests before coverage.
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
