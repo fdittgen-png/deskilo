@@ -54,9 +54,10 @@ Sie möchten den kürzesten Weg zu einem Space, den man buchen kann. Die App fü
 
 1. **Öffnungstage, Zeitzone und Währung**: eine Zeitzone, eine Währung und mindestens ein geöffneter Wochentag.
 2. **Buchbare Plätze im Grundriss**: mindestens ein Platz.
-3. **Rollen und wer Anfragen bestätigt**: zählt nur, wenn eine Regel für Buchungen mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.
+3. **Rollen und wer Anfragen bestätigt**: zählt nur, wenn eine Validierungsregel, gleich welcher Art, mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.
+4. **Was Mitglieder dürfen**: Mitglieder halten **Buchen und Reservierungen nutzen**. Ein neuer Space gewährt ihnen nichts, ein beitretendes Mitglied kann also nicht buchen, bis Sie es unter [Rollen](app:/roles) ankreuzen.
 
-Eine vierte Zeile, **Server und Datenbankversion**, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers.
+Eine weitere Zeile, **Server und Datenbankversion**, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers. Und solange **Rechnungen** eingeschaltet ist, ist auch **Rechtliche Identität und Adresse des Space** erforderlich: Die Liste markiert sie mit **Vor der Rechnungsstellung nötig**, weil ohne sie keine Rechnung ausgestellt werden kann.
 
 *Was optional ist und auf später warten kann*
 
@@ -72,8 +73,8 @@ Jeden dieser Punkte können Sie mit **Später** zurückstellen und wieder hervor
 **Gut zu wissen**
 
 - Die Liste nennt, wer handelt: **Sie**, **Der Serverbetreiber** oder **Eine Datenbankadministration**.
-- Optional heißt nicht unwichtig: Sobald Sie Rechnungen stellen, ist Ihre rechtliche Identität für diese Funktion Pflicht. Die Liste nennt sie eine Angabe, die Ihre Funktionen brauchen.
-- Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; sie verweigert erst das Ausstellen einer Rechnung und sagt, was fehlt.
+- Optional heißt nicht unwichtig: Bankdaten, ein Zahlungsanbieter oder ein Standort sind Angaben, die Ihre Funktionen brauchen, und die Liste nennt sie.
+- Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; die Liste und [Was auf Sie wartet](help:user.collaborate.attention) nennen sie, und das Ausstellen einer Rechnung wird verweigert, mit dem Hinweis, was fehlt.
 
 **Siehe auch:** [Ihren Space prüfen](help:setup.place.check) · [Die Karte „Erste Schritte“ und die Tipps](help:user.start.get-started)
 
@@ -118,7 +119,7 @@ Sie möchten einen Vorsprung, ohne an fremde Entscheidungen gebunden zu sein. Be
 
 **Gut zu wissen**
 
-- Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie Angaben, die Ihre Funktionen brauchen.
+- Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie (die rechtliche Identität, bei eingeschalteten **Rechnungen**, als eigenen Bereich).
 - In einem aus einer Vorlage erstellten Space können Rechnungen eingeschaltet sein, ohne dass Sie etwas ausstellen können, solange die Identität fehlt.
 - Wenden Sie eine Vorlage auf einen Space an, der schon Tarife hat, ersetzt sie dessen Gebührenstufen: Nutzen Sie sie für einen neuen Space.
 
@@ -162,7 +163,7 @@ Sie möchten wissen, bei welchen Entscheidungen Sie sich Zeit lassen sollten. Di
 | Format und Folge der Rechnungsnummer | Die nächste Nummer lässt sich erhöhen, nie senken. Nach der ersten Rechnung können Sie vom Datum nicht mehr weniger drucken, als die Reihe zeigt. | Das Format in der Vorschau ansehen, die Steuerberatung fragen, dann ausstellen. |
 | Der Monat einer ausgestellten Rechnung | Ist der Monat eines Mitglieds einmal abgerechnet, ist er gesperrt; Schließtage und Feiertagsimporte überspringen ihn. | Schließtage vor dem Monatsende festlegen. |
 | Umsatzsteuerregelung und Steuersätze | Sätze werden nach Datum versioniert und nie bearbeitet; eine übermittelte Umsatzsteuererklärung wird nie neu berechnet. | Ab einem Datum einen neuen Satz hinzufügen; die Regelung mit der Steuerberatung entscheiden. |
-| Land, Währung, Zeitzone | Beträge werden als Zahlen ohne Umrechnung gespeichert; die Währung zu ändern, sobald Geld im Spiel ist, ist unsicher. | Sie am ersten Tag richtig wählen; siehe [Den Ort aufbauen](help:setup.place.overview). |
+| Land, Währung, Zeitzone | Beträge werden als Zahlen ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von Währung oder Land ab. Die Zeitzone wird nie gesperrt, aber jeder Tag wird in ihr gezählt. | Sie am ersten Tag richtig wählen; siehe [Den Ort aufbauen](help:setup.place.overview). |
 | Ersetzen des Grundrisses | Ein Plan-Import wird abgelehnt, sobald Buchungen existieren. | Etagen und Räume einzeln im Editor bearbeiten. |
 | Workspace-ID | Sie ist das, was Mitglieder eintippen und worauf die gedruckten QR-Codes zeigen. Sie können sie (4 bis 20 Buchstaben oder Ziffern) mit **Workspace-ID ändern** ändern, aber die alte ID funktioniert sofort nicht mehr. | Eine kurze, einprägsame ID wählen, bevor Sie etwas drucken; wenn nötig, früh ändern. |
 | Test oder echt | Ein echter Space stellt Rechnungen aus, die geschuldet sind; Dokumente des Test-Spaces tragen ein Wasserzeichen. | In einem Test-Space beginnen, übertragen, wenn Sie bereit sind. |

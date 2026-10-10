@@ -68,11 +68,11 @@ Costruisce il luogo e i suoi orari in uno spazio di prova, così che un membro p
 5. Aggiunga un giorno di chiusura. Vedi [Giorni di chiusura](help:user.workspace.availability.closure-days).
 6. Mantenga le funzioni predefinite. Apra [Funzionalità](app:/features) solo per leggere che cosa è attivo.
 7. Faccia una prenotazione a proprio nome, poi check-in e check-out. Vedi [Check-in e check-out](help:user.reserve.check-in).
-8. Condivida l'ID dello spazio con una persona e la lasci entrare. Vedi [L'ID dello spazio](help:user.workspace.code).
+8. In [Ruoli](app:/roles), spunti i permessi di uso quotidiano sulla scheda **Utente**, poi condivida l'ID dello spazio con una persona e la lasci entrare. Vedi [L'ID dello spazio](help:user.workspace.code).
 
 **Da sapere**
 
-- Uno spazio può essere prenotato quando ha un fuso orario, una valuta, almeno un giorno della settimana aperto e almeno un posto. Tutto il resto può aspettare.
+- Uno spazio può essere prenotato quando ha un fuso orario, una valuta, almeno un giorno della settimana aperto, almeno un posto e membri che possiedono **Prenotare e usare le prenotazioni**. Tutto il resto può aspettare.
 - Una planimetria non può essere sostituita da un'importazione quando esiste una prenotazione.
 
 *Ha finito quando*
@@ -194,7 +194,7 @@ Le decisioni che incontrerà hanno dei nomi. Ecco che cosa significa ciascuno in
 | Azzeramento della numerazione | Con quale frequenza il numero di fattura riparte da capo. Non può essere più frequente della data stampata sulla fattura. |
 | Coppia di ambienti | Un lato di prova e un lato reale di uno stesso spazio. |
 | Modello | Una configurazione salvata (planimetria, regole, tariffe, ruoli) che può applicare a un nuovo spazio. Non porta mai con sé identità né dati di pagamento. |
-| Prontezza | La lista di controllo in cima alle impostazioni dello spazio che dice che cosa manca prima che le persone possano prenotare. |
+| Prontezza | La lista di controllo in cima alle impostazioni dello spazio che dice che cosa manca prima che le persone possano prenotare, e prima della prima fattura. |
 | Trattenuta | Una funzione attiva che attende un'altra funzione spenta. |
 | Chiosco | Uno schermo condiviso alla porta dove i membri fanno check-in e check-out. |
 | Badge | Una tessera o un tag che un membro mostra per fare check-in a un chiosco. |
@@ -237,7 +237,7 @@ L'intera configurazione su una pagina. *Reversibile* Le dice se può cambiare id
 
 | Passo | Dove nell'app | Quanto tempo | Reversibile? |
 |---|---|---|---|
-| 1. Paese, valuta, fuso orario, lingua | [Impostazioni dello spazio](app:/workspace-settings) | 5 minuti | Sì, ma non cambi la valuta quando esiste già del denaro |
+| 1. Paese, valuta, fuso orario, lingua | [Impostazioni dello spazio](app:/workspace-settings) | 5 minuti | Sì, fino al primo documento o pagamento; poi la valuta e il paese sono bloccati |
 | 2. Planimetria | [Editor dello spazio](app:/editor) | 30 minuti | Sì, fino alla prima prenotazione; poi si modifica un oggetto alla volta |
 | 3. Regole di apertura | Disponibilità | 10 minuti | Sì |
 | 4. Funzionalità | [Funzionalità](app:/features) | 10 minuti | Sì. Spegnere ferma il nuovo utilizzo e non cancella nulla |

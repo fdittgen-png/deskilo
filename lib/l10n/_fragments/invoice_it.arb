@@ -304,7 +304,7 @@
   "legalIdentityCity": "Città",
   "legalIdentityPostalCode": "Codice postale",
   "legalIdentitySaved": "Identità legale salvata.",
-  "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l'export XML resta disattivato.",
+  "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è in vigore alcuna aliquota predefinita: nessuna fattura può essere emessa finché non ne aggiunge una. Le aliquote si modificano con «Gestione IVA» attivata.",
   "addressCountryLabel": "Paese",
   "addressVatIdLabel": "Partita IVA (se fatturi come impresa)",
   "invoiceProformaAction": "Fattura proforma",
@@ -764,6 +764,10 @@
   "eventInvoiceReminderLine": "Sollecito {level}: fattura {number} — {amount} ancora dovuti",
   "dunningAutomatic": "Solleciti automatici",
   "dunningAutomaticHint": "Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.",
+  "paymentRemindersWhen": "Quando viene eseguito: ogni mattina sul server, se l'installazione pianifica attività (pg_cron); altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
   "eventPriceNegotiationItems": "{count} articoli",

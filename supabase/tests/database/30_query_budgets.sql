@@ -35,7 +35,7 @@ select has_index('public', 'reservations', 'reservations_member_idx',
   'and "my bookings" has its own');
 select has_index('public', 'ledger_entries', 'ledger_member_period_idx',
   'a member''s statement for one period has its index');
--- 0399: the register reads through the unique (workspace_id, number)
+-- 0400: the register reads through the unique (workspace_id, number)
 -- index; the single-column one it duplicated is gone.
 select has_index('public', 'invoices', 'invoices_workspace_id_number_key',
   'the invoice register has its index');

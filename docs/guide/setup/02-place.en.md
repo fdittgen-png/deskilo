@@ -34,7 +34,7 @@ You want the space to know where it lives. These four choices drive more than th
 2. Pick the **Country**; the **Currency** and **Time zone** follow, and you can correct them. For Atelier du Marché: France, EUR, Europe/Paris.
 3. Pick the **Workspace language**, then tap **Save**.
 
-> **Careful** Choose country and currency right on day one. Amounts are stored as plain numbers, so changing the currency after money exists would mislabel everything already counted.
+> **Careful** Choose country and currency right on day one. Amounts are stored as plain numbers, so once the space has issued a document or recorded money, the server refuses to change either: "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved."
 
 **Good to know**
 
@@ -143,7 +143,7 @@ You want proof that the space is ready, before you invite anyone. Two cards say 
 
 **Good to know**
 
-- Ready means ready for a first booking: opening days, time zone, currency, at least one seat, and enough validators.
+- Ready means ready for a first booking: opening days, time zone, currency, at least one seat, members who may book, and enough validators.
 - Anything optional, such as tariffs or payments, can be set aside with **Later** and does not block opening.
 - Both cards depend on the feature *Get started card*.
 - **Not now** hides the card on this device; the view menu on the plan brings it back with **Get started**.

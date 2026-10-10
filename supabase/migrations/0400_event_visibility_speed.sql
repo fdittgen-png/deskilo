@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0399 -- reading the events stops costing an administrator a second.
+-- 0400 -- reading the events stops costing an administrator a second.
 --
 -- Measured on the dev project (pg_stat_statements over 95 days): the
 -- app's two slowest reads were `events` by workspace (mean 1 003 ms,
@@ -71,4 +71,4 @@ drop index if exists public.validation_policies_workspace_idx;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(399);
+select public.set_deskilo_schema_version(400);

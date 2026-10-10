@@ -72,6 +72,14 @@ void main() {
           KnownRefusal.session);
     });
 
+    test('a locked currency or country (#2332, DK423)', () {
+      final e = _pg('money_locale_locked: the currency and the country are '
+          'fixed once this space has issued a document or recorded money',
+          code: 'DK423');
+      expect(knownRefusalOf(e), KnownRefusal.moneyLocaleLocked);
+      expect(knownRefusalText(null, e), contains('currency and the country'));
+    });
+
     test('already decided, and changed meanwhile', () {
       expect(knownRefusalOf(_pg('already decided')), KnownRefusal.alreadyDecided);
       expect(knownRefusalOf(_pg('you already decided this event')),

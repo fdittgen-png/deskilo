@@ -6,7 +6,7 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Setup Assistant",
    "setupLanguage": "Language",
-   "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it (Workspace settings → Import workspace) to create settings, accessories and floor plan; the &lt;setup&gt; section of the same file carries everything else.",
+   "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it into a space you created (Workspace → Import workspace (XML)). Each answer says whether the import applies it, whether it is typed in the app, or whether it stays in the file only; the last step lists what remains to do in the app.",
    "setupGuideHtml": "The complete user guide — with a screenshot of every screen, long forms merged into one image — is {link} (English · Français · Deutsch · Español · Italiano) and in the app (Settings → Help).",
    "setupGuideLink": "on the wiki ↗",
    "setupSecretsHtml": "<b>Only put a token or credential here if you are filling in this document privately.</b> The exported file is plain text: for e-invoicing and online payments you can leave the fields empty and enter the secrets directly in the app, where they go to the server and never come back.",
@@ -296,7 +296,7 @@ window.SETUP_L10N={
    "colValidFrom": "Valid from",
    "legalAddRate": "Add a rate",
    "legalSuggestRates": "Suggest the usual rates: {country} ({rates} %)",
-   "legalNoVatManagementHint": "VAT-registered without “VAT management”: invoices will go out without rates. Switch the feature on to enter your rates.",
+   "legalNoVatManagementHint": "VAT-registered without “VAT management”: the app has no rate to apply and refuses to issue invoices. Switch the feature on to enter your rates.",
    "legalVatExigibility": "VAT falls due",
    "legalVatExigibilityHint": "When the tax becomes due: on invoicing, or when the customer pays. In France services are taxed on receipts unless the business opts for invoices. This choice decides what a period declares, and it is printed on every invoice.",
    "legalInvoiceNumbering": "Invoice numbering",
@@ -571,7 +571,7 @@ window.SETUP_L10N={
    "reviewGateBlocked": "The export will open once these {n} item(s) are resolved:",
    "reviewNothingLost": "Nothing is lost: your answers stay saved in this browser while you go back.",
    "reviewComplete": "Configuration complete and consistent.",
-   "reviewImportHint": "Export the XML, then import it in the app: Workspace settings → Import workspace.",
+   "reviewImportHint": "Export the XML, then import it in the app: Workspace → Import workspace (XML).",
    "reviewProcesses": "Processes",
    "reviewProcessCount": "{n} of {total} capabilities on: {list}",
    "reviewProcessOff": "not used",
@@ -587,7 +587,28 @@ window.SETUP_L10N={
    "capacityNotStated": "Not stated",
    "capacityBusiness": "Businesses",
    "capacityConsumer": "Consumers",
-   "legalCustomerCapacityHint": "Decides which payment clauses an invoice prints: the statutory late-penalty, recovery-indemnity and discount wording applies only to business customers. Each member can be set apart in the app."
+   "legalCustomerCapacityHint": "Decides which payment clauses an invoice prints: the statutory late-penalty, recovery-indemnity and discount wording applies only to business customers. Each member can be set apart in the app.",
+   "destImport": "Applied by import",
+   "destImportHint": "The app applies this answer when you import the file.",
+   "destApp": "Type in the app",
+   "destAppHint": "The import cannot carry this answer: enter it in the app.",
+   "destFile": "File only",
+   "destFileHint": "Kept in the file for your records; the app never reads it.",
+   "identityCountryInvoices": "DesKilo issues invoices",
+   "identityCountryInvoicesHint": "DesKilo issues invoices itself for {list} only; elsewhere invoices are issued outside the app and DesKilo keeps the statements.",
+   "identityWarnInvoicingCountry": "Invoicing is on, but DesKilo issues invoices for {list} only: for a space in {country} the app refuses to issue them. Issue invoices outside the app, or switch Invoicing off.",
+   "featuresWarnOnlineProvider": "Online payments stay unavailable until a payment provider is connected in the app; until then members pay with the payment details given here.",
+   "legalErrRegisteredNoVatManagement": "VAT-registered without {feature}: the app has no rate to apply and refuses to issue any invoice. Switch the feature on and enter your rates.",
+   "reviewToDoTitle": "Still to do in the app",
+   "reviewToDoHint": "The file cannot carry these. Every answer marked “Applied by import” is applied when you import the file.",
+   "todoCreateSpace": "Create the space in the app and name it “{name}”: the import fills an existing space and never renames it.",
+   "todoInviteMembers": "Invite the {n} people listed in the Members step from the app (Members → Invite a member): the file keeps the list for your records only.",
+   "todoInviteNobody": "Invite your first members from the app (Members → Invite a member).",
+   "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
+   "todoVatPeriod": "Choose the VAT declaration period ({period}) in the app when you prepare the first declaration.",
+   "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
+   "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
+   "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."
   },
   "feature": {
    "calendarTab": [
@@ -720,7 +741,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "VAT management",
-    "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying."
+    "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused."
    ],
    "vatDeclarations": [
     "VAT declarations",
@@ -1244,7 +1265,17 @@ window.SETUP_L10N={
    "designDocuments": "Design the documents",
    "viewPersonalData": "Read members' personal data",
    "manageIntegrations": "Manage integrations",
-   "manageConfiguration": "Manage the configuration"
+   "manageConfiguration": "Manage the configuration",
+   "deployToProd": "Deploy to production",
+   "deployToDev": "Deploy to development",
+   "accessProd": "Enter the production workspace",
+   "viewAnalytics": "Read the workspace figures",
+   "useMessages": "Use the messenger",
+   "makeReservations": "Book and use reservations",
+   "viewCalendar": "See the calendar",
+   "viewDirectory": "See the member directory",
+   "viewMyMoney": "See their own account and invoices",
+   "viewDocuments": "See the shared documents"
   },
   "domain": {
    "payment": "Payment",
@@ -1308,7 +1339,7 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Assistant de configuration",
    "setupLanguage": "Langue",
-   "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe (Réglages de l'espace → Importer l'espace) pour créer réglages, accessoires et plan ; la section &lt;setup&gt; du même fichier porte tout le reste.",
+   "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe dans un espace que vous avez créé (Espace de coworking → Importer l'espace (XML)). Chaque réponse indique si l'import l'applique, si elle se saisit dans l'app ou si elle reste dans le fichier seulement ; la dernière étape liste ce qui reste à faire dans l'app.",
    "setupGuideHtml": "Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est {link} (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).",
    "setupGuideLink": "sur le wiki ↗",
    "setupSecretsHtml": "<b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.",
@@ -1598,7 +1629,7 @@ window.SETUP_L10N={
    "colValidFrom": "Valide à partir du",
    "legalAddRate": "Ajouter un taux",
    "legalSuggestRates": "Proposer les taux usuels : {country} ({rates} %)",
-   "legalNoVatManagementHint": "Assujetti sans « Gestion de la TVA » : les factures partiront sans taux. Activez la fonctionnalité pour saisir vos taux.",
+   "legalNoVatManagementHint": "Assujetti sans « Gestion de la TVA » : l'app n'a aucun taux à appliquer et refuse d'émettre les factures. Activez la fonctionnalité pour saisir vos taux.",
    "legalVatExigibility": "Exigibilité de la TVA",
    "legalVatExigibilityHint": "Quand la taxe devient due : à la facture, ou au paiement du client. En France les prestations de services sont sur les encaissements sauf option pour les débits. Ce choix décide de ce qu'une période déclare, et il est imprimé sur chaque facture.",
    "legalInvoiceNumbering": "Numérotation des factures",
@@ -1873,7 +1904,7 @@ window.SETUP_L10N={
    "reviewGateBlocked": "L'export s'ouvrira quand ces {n} point(s) seront réglés :",
    "reviewNothingLost": "Rien n'est perdu : vos réponses restent enregistrées dans ce navigateur pendant que vous revenez en arrière.",
    "reviewComplete": "Configuration complète et cohérente.",
-   "reviewImportHint": "Exportez le XML, puis importez-le dans l'app : Réglages de l'espace → Importer l'espace.",
+   "reviewImportHint": "Exportez le XML, puis importez-le dans l'app : Espace de coworking → Importer l'espace (XML).",
    "reviewProcesses": "Processus",
    "reviewProcessCount": "{n} capacités sur {total} activées : {list}",
    "reviewProcessOff": "non utilisé",
@@ -1889,7 +1920,28 @@ window.SETUP_L10N={
    "capacityNotStated": "Non précisé",
    "capacityBusiness": "Professionnels",
    "capacityConsumer": "Consommateurs",
-   "legalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture : les mentions légales de pénalités, d'indemnité de recouvrement et d'escompte ne concernent que les clients professionnels. Chaque membre peut être précisé à part dans l'application."
+   "legalCustomerCapacityHint": "Décide des clauses de paiement imprimées sur la facture : les mentions légales de pénalités, d'indemnité de recouvrement et d'escompte ne concernent que les clients professionnels. Chaque membre peut être précisé à part dans l'application.",
+   "destImport": "Appliqué à l'import",
+   "destImportHint": "L'app applique cette réponse quand vous importez le fichier.",
+   "destApp": "À saisir dans l'app",
+   "destAppHint": "L'import ne peut pas porter cette réponse : saisissez-la dans l'app.",
+   "destFile": "Fichier seulement",
+   "destFileHint": "Conservé dans le fichier pour mémoire ; l'app ne le lit jamais.",
+   "identityCountryInvoices": "DesKilo émet les factures",
+   "identityCountryInvoicesHint": "DesKilo émet lui-même les factures pour {list} uniquement ; ailleurs, les factures sont émises hors de l'app et DesKilo tient les relevés.",
+   "identityWarnInvoicingCountry": "La facturation est activée, mais DesKilo n'émet des factures que pour {list} : pour un espace en {country}, l'app refuse de les émettre. Émettez les factures hors de l'app, ou désactivez la facturation.",
+   "featuresWarnOnlineProvider": "Les paiements en ligne restent indisponibles tant qu'aucun prestataire de paiement n'est connecté dans l'app ; d'ici là, les membres paient avec les coordonnées de paiement données ici.",
+   "legalErrRegisteredNoVatManagement": "Assujetti à la TVA sans {feature} : l'app n'a aucun taux à appliquer et refuse d'émettre toute facture. Activez la fonctionnalité et saisissez vos taux.",
+   "reviewToDoTitle": "Reste à faire dans l'app",
+   "reviewToDoHint": "Le fichier ne peut pas porter ces éléments. Toute réponse marquée « Appliqué à l'import » est appliquée quand vous importez le fichier.",
+   "todoCreateSpace": "Créez l'espace dans l'app et nommez-le « {name} » : l'import remplit un espace existant et ne le renomme jamais.",
+   "todoInviteMembers": "Invitez depuis l'app les {n} personnes listées à l'étape des membres (Membres → Inviter un membre) : le fichier garde la liste pour mémoire seulement.",
+   "todoInviteNobody": "Invitez vos premiers membres depuis l'app (Membres → Inviter un membre).",
+   "todoOnlineProvider": "Connectez le prestataire de paiement en ligne dans l'app : ses clés ne vont jamais dans le fichier.",
+   "todoVatPeriod": "Choisissez la périodicité de la déclaration de TVA ({period}) dans l'app en préparant la première déclaration.",
+   "todoEinvoice": "Saisissez l'adresse et les identifiants de la plateforme de facturation électronique dans l'app : le fichier ne les applique jamais.",
+   "todoInvoiceOutside": "Les factures d'un espace en {country} sont émises hors de l'app.",
+   "todoImportFile": "Importez le fichier dans cet espace : Espace de coworking → Importer l'espace (XML). Si l'espace a « Configuration dans le fichier de l'espace » désactivée, l'app demande avant d'appliquer la configuration."
   },
   "feature": {
    "calendarTab": [
@@ -2022,7 +2074,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestion de la TVA",
-    "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer."
+    "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer. Un espace assujetti à la TVA en a besoin, avec un taux par défaut, pour émettre une facture : sans eux, l'émission est refusée."
    ],
    "vatDeclarations": [
     "Déclarations de TVA",
@@ -2546,7 +2598,17 @@ window.SETUP_L10N={
    "designDocuments": "Concevoir les documents",
    "viewPersonalData": "Consulter les données personnelles des membres",
    "manageIntegrations": "Gérer les intégrations",
-   "manageConfiguration": "Gérer la configuration"
+   "manageConfiguration": "Gérer la configuration",
+   "deployToProd": "Déployer en production",
+   "deployToDev": "Déployer en développement",
+   "accessProd": "Entrer dans l'espace de production",
+   "viewAnalytics": "Consulter les chiffres de l'espace",
+   "useMessages": "Utiliser la messagerie",
+   "makeReservations": "Réserver et utiliser les réservations",
+   "viewCalendar": "Voir le calendrier",
+   "viewDirectory": "Voir l'annuaire des membres",
+   "viewMyMoney": "Voir son propre compte et ses factures",
+   "viewDocuments": "Voir les documents partagés"
   },
   "domain": {
    "payment": "Paiement",
@@ -2610,7 +2672,7 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Konfigurationsassistent",
    "setupLanguage": "Sprache",
-   "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie (Workspace-Einstellungen → Workspace importieren) und legt Einstellungen, Zubehör und Grundriss an; der Abschnitt &lt;setup&gt; derselben Datei enthält alles Übrige.",
+   "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie in einen Raum, den Sie angelegt haben (Workspace → Workspace importieren (XML)). Jede Antwort sagt, ob der Import sie übernimmt, ob sie in der App eingetragen wird oder ob sie nur in der Datei bleibt; der letzte Schritt listet, was in der App noch zu tun ist.",
    "setupGuideHtml": "Das vollständige Benutzerhandbuch — mit einem Screenshot jedes Bildschirms, lange Formulare zu einem Bild zusammengefügt — finden Sie {link} (English · Français · Deutsch · Español · Italiano) und in der App (Einstellungen → Hilfe).",
    "setupGuideLink": "im Wiki ↗",
    "setupSecretsHtml": "<b>Tragen Sie hier nur dann ein Token oder Zugangsdaten ein, wenn Sie dieses Dokument privat ausfüllen.</b> Die exportierte Datei ist Klartext: Für E-Rechnungen und Online-Zahlungen können Sie die Felder leer lassen und die Geheimnisse direkt in der App eingeben, von wo sie an den Server gehen und nie zurückkommen.",
@@ -2900,7 +2962,7 @@ window.SETUP_L10N={
    "colValidFrom": "Gültig ab",
    "legalAddRate": "Satz hinzufügen",
    "legalSuggestRates": "Übliche Sätze vorschlagen: {country} ({rates} %)",
-   "legalNoVatManagementHint": "Umsatzsteuerpflichtig ohne „USt-Verwaltung“: Die Rechnungen gehen ohne Sätze hinaus. Aktivieren Sie die Funktion, um Ihre Sätze einzutragen.",
+   "legalNoVatManagementHint": "Umsatzsteuerpflichtig ohne „USt-Verwaltung“: Die App hat keinen Satz anzuwenden und verweigert die Rechnungen. Aktivieren Sie die Funktion, um Ihre Sätze einzutragen.",
    "legalVatExigibility": "Entstehung der Umsatzsteuer",
    "legalVatExigibilityHint": "Wann die Steuer entsteht: mit der Rechnung oder mit der Zahlung des Kunden. In Frankreich werden Dienstleistungen nach vereinnahmten Entgelten besteuert, sofern nicht zur Soll-Besteuerung optiert wurde. Diese Wahl bestimmt, was ein Zeitraum meldet, und steht auf jeder Rechnung.",
    "legalInvoiceNumbering": "Rechnungsnummerierung",
@@ -3175,7 +3237,7 @@ window.SETUP_L10N={
    "reviewGateBlocked": "Der Export wird freigegeben, sobald diese {n} Punkt(e) erledigt sind:",
    "reviewNothingLost": "Nichts geht verloren: Ihre Antworten bleiben in diesem Browser gespeichert, während Sie zurückgehen.",
    "reviewComplete": "Konfiguration vollständig und stimmig.",
-   "reviewImportHint": "Exportieren Sie das XML und importieren Sie es dann in der App: Workspace-Einstellungen → Workspace importieren.",
+   "reviewImportHint": "Exportieren Sie das XML und importieren Sie es dann in der App: Workspace → Workspace importieren (XML).",
    "reviewProcesses": "Prozesse",
    "reviewProcessCount": "{n} von {total} Fähigkeiten aktiv: {list}",
    "reviewProcessOff": "nicht genutzt",
@@ -3191,7 +3253,28 @@ window.SETUP_L10N={
    "capacityNotStated": "Nicht angegeben",
    "capacityBusiness": "Unternehmer",
    "capacityConsumer": "Verbraucher",
-   "legalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt: die gesetzlichen Texte zu Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden. Jedes Mitglied lässt sich in der App einzeln festlegen."
+   "legalCustomerCapacityHint": "Entscheidet, welche Zahlungsklauseln eine Rechnung druckt: die gesetzlichen Texte zu Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Unternehmer als Kunden. Jedes Mitglied lässt sich in der App einzeln festlegen.",
+   "destImport": "Beim Import übernommen",
+   "destImportHint": "Die App übernimmt diese Antwort, wenn Sie die Datei importieren.",
+   "destApp": "In der App eintragen",
+   "destAppHint": "Der Import kann diese Antwort nicht übertragen: Tragen Sie sie in der App ein.",
+   "destFile": "Nur in der Datei",
+   "destFileHint": "Zur Erinnerung in der Datei; die App liest es nie.",
+   "identityCountryInvoices": "DesKilo stellt Rechnungen aus",
+   "identityCountryInvoicesHint": "DesKilo stellt Rechnungen selbst nur für {list} aus; anderswo werden Rechnungen außerhalb der App ausgestellt und DesKilo führt die Abrechnungen.",
+   "identityWarnInvoicingCountry": "Die Rechnungsstellung ist aktiviert, aber DesKilo stellt Rechnungen nur für {list} aus: Für einen Raum in {country} verweigert die App die Ausstellung. Stellen Sie Rechnungen außerhalb der App aus oder deaktivieren Sie die Rechnungsstellung.",
+   "featuresWarnOnlineProvider": "Online-Zahlungen bleiben nicht verfügbar, bis in der App ein Zahlungsanbieter verbunden ist; bis dahin zahlen Mitglieder mit den hier angegebenen Zahlungsdaten.",
+   "legalErrRegisteredNoVatManagement": "Umsatzsteuerpflichtig ohne {feature}: Die App hat keinen Satz anzuwenden und verweigert jede Rechnung. Aktivieren Sie die Funktion und tragen Sie Ihre Sätze ein.",
+   "reviewToDoTitle": "Noch in der App zu erledigen",
+   "reviewToDoHint": "Die Datei kann diese Punkte nicht übertragen. Jede mit „Beim Import übernommen“ markierte Antwort wird beim Import der Datei übernommen.",
+   "todoCreateSpace": "Legen Sie den Raum in der App an und nennen Sie ihn „{name}“: Der Import füllt einen bestehenden Raum und benennt ihn nie um.",
+   "todoInviteMembers": "Laden Sie die {n} im Schritt Mitglieder aufgeführten Personen aus der App ein (Mitglieder → Mitglied einladen): Die Datei bewahrt die Liste nur zur Erinnerung auf.",
+   "todoInviteNobody": "Laden Sie Ihre ersten Mitglieder aus der App ein (Mitglieder → Mitglied einladen).",
+   "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
+   "todoVatPeriod": "Wählen Sie den Zeitraum der USt-Voranmeldung ({period}) in der App, wenn Sie die erste Voranmeldung vorbereiten.",
+   "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
+   "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
+   "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."
   },
   "feature": {
    "calendarTab": [
@@ -3324,7 +3407,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "USt-Verwaltung",
-    "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter."
+    "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter. Ein umsatzsteuerpflichtiger Space braucht sie, samt Standardsatz, um eine Rechnung auszustellen: Ohne sie wird die Ausstellung abgelehnt."
    ],
    "vatDeclarations": [
     "USt-Voranmeldungen",
@@ -3848,7 +3931,17 @@ window.SETUP_L10N={
    "designDocuments": "Dokumente gestalten",
    "viewPersonalData": "Persönliche Daten der Mitglieder lesen",
    "manageIntegrations": "Integrationen verwalten",
-   "manageConfiguration": "Konfiguration verwalten"
+   "manageConfiguration": "Konfiguration verwalten",
+   "deployToProd": "In die Produktion ausrollen",
+   "deployToDev": "In die Entwicklung ausrollen",
+   "accessProd": "Den Produktionsraum betreten",
+   "viewAnalytics": "Kennzahlen des Arbeitsbereichs lesen",
+   "useMessages": "Den Messenger nutzen",
+   "makeReservations": "Buchen und Reservierungen nutzen",
+   "viewCalendar": "Den Kalender sehen",
+   "viewDirectory": "Das Mitgliederverzeichnis sehen",
+   "viewMyMoney": "Das eigene Konto und die eigenen Rechnungen sehen",
+   "viewDocuments": "Die geteilten Dokumente sehen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -3912,7 +4005,7 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Asistente de configuración",
    "setupLanguage": "Idioma",
-   "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que tus respuestas anteriores hacen posibles (las funciones que no activas, el régimen de IVA que no tienes, el país que no aplica — no se te pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Tus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa (Ajustes del espacio → Importar el espacio) para crear ajustes, accesorios y plano; la sección &lt;setup&gt; del mismo archivo contiene todo lo demás.",
+   "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que tus respuestas anteriores hacen posibles (las funciones que no activas, el régimen de IVA que no tienes, el país que no aplica — no se te pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Tus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
    "setupGuideHtml": "La guía de usuario completa — con una captura de cada pantalla, los formularios largos fusionados en una imagen — está {link} (English · Français · Deutsch · Español · Italiano) y en la app (Ajustes → Ayuda).",
    "setupGuideLink": "en la wiki ↗",
    "setupSecretsHtml": "<b>Pon aquí un token o una credencial solo si rellenas este documento en privado.</b> El archivo exportado es texto plano: para la facturación electrónica y los pagos en línea puedes dejar los campos vacíos e introducir los secretos directamente en la app, donde van al servidor y nunca vuelven.",
@@ -4202,7 +4295,7 @@ window.SETUP_L10N={
    "colValidFrom": "Válido desde",
    "legalAddRate": "Añadir un tipo",
    "legalSuggestRates": "Proponer los tipos habituales: {country} ({rates} %)",
-   "legalNoVatManagementHint": "Sujeto a IVA sin «Gestión del IVA»: las facturas saldrán sin tipos. Activa la función para introducir tus tipos.",
+   "legalNoVatManagementHint": "Sujeto a IVA sin «Gestión del IVA»: la app no tiene ningún tipo que aplicar y se niega a emitir las facturas. Activar la función para introducir los tipos.",
    "legalVatExigibility": "Devengo del IVA",
    "legalVatExigibilityHint": "Cuándo se devenga el impuesto: al facturar o cuando paga el cliente. En Francia, las prestaciones de servicios tributan con el cobro salvo opción por la factura. Esta elección decide lo que declara un periodo y se imprime en cada factura.",
    "legalInvoiceNumbering": "Numeración de las facturas",
@@ -4477,7 +4570,7 @@ window.SETUP_L10N={
    "reviewGateBlocked": "La exportación se abrirá cuando se resuelvan estos {n} punto(s):",
    "reviewNothingLost": "No se pierde nada: tus respuestas siguen guardadas en este navegador mientras vuelves atrás.",
    "reviewComplete": "Configuración completa y coherente.",
-   "reviewImportHint": "Exporta el XML y luego impórtalo en la app: Ajustes del espacio → Importar el espacio.",
+   "reviewImportHint": "Exportar el XML y luego importarlo en la app: Espacio de coworking → Importar el espacio (XML).",
    "reviewProcesses": "Procesos",
    "reviewProcessCount": "{n} de {total} capacidades activas: {list}",
    "reviewProcessOff": "sin usar",
@@ -4493,7 +4586,28 @@ window.SETUP_L10N={
    "capacityNotStated": "Sin indicar",
    "capacityBusiness": "Empresas",
    "capacityConsumer": "Consumidores",
-   "legalCustomerCapacityHint": "Decide qué cláusulas de pago imprime una factura: los textos legales de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales. Cada miembro puede indicarse aparte en la aplicación."
+   "legalCustomerCapacityHint": "Decide qué cláusulas de pago imprime una factura: los textos legales de intereses de demora, indemnización por costes de cobro y descuento solo se aplican a clientes empresariales. Cada miembro puede indicarse aparte en la aplicación.",
+   "destImport": "Aplicado al importar",
+   "destImportHint": "La app aplica esta respuesta al importar el archivo.",
+   "destApp": "Introducir en la app",
+   "destAppHint": "La importación no puede llevar esta respuesta: hay que introducirla en la app.",
+   "destFile": "Solo en el archivo",
+   "destFileHint": "Se guarda en el archivo como recordatorio; la app nunca lo lee.",
+   "identityCountryInvoices": "DesKilo emite facturas",
+   "identityCountryInvoicesHint": "DesKilo emite facturas por sí mismo solo para {list}; en otros países las facturas se emiten fuera de la app y DesKilo lleva los extractos.",
+   "identityWarnInvoicingCountry": "La facturación está activada, pero DesKilo solo emite facturas para {list}: para un espacio en {country}, la app se niega a emitirlas. Emitir las facturas fuera de la app, o desactivar la facturación.",
+   "featuresWarnOnlineProvider": "Los pagos en línea no están disponibles hasta que se conecte un proveedor de pagos en la app; mientras tanto, los miembros pagan con los datos de pago indicados aquí.",
+   "legalErrRegisteredNoVatManagement": "Sujeto a IVA sin {feature}: la app no tiene ningún tipo que aplicar y se niega a emitir cualquier factura. Activar la función e introducir los tipos.",
+   "reviewToDoTitle": "Pendiente en la app",
+   "reviewToDoHint": "El archivo no puede llevar estos elementos. Toda respuesta marcada «Aplicado al importar» se aplica al importar el archivo.",
+   "todoCreateSpace": "Crear el espacio en la app con el nombre «{name}»: la importación rellena un espacio existente y nunca le cambia el nombre.",
+   "todoInviteMembers": "Invitar desde la app a las {n} personas de la lista del paso de miembros (Miembros → Invitar a un miembro): el archivo guarda la lista solo como recordatorio.",
+   "todoInviteNobody": "Invitar a los primeros miembros desde la app (Miembros → Invitar a un miembro).",
+   "todoOnlineProvider": "Conectar el proveedor de pagos en línea en la app: sus claves nunca van en el archivo.",
+   "todoVatPeriod": "Elegir la periodicidad de la declaración de IVA ({period}) en la app al preparar la primera declaración.",
+   "todoEinvoice": "Introducir en la app la dirección y las credenciales de la plataforma de facturación electrónica: el archivo nunca las aplica.",
+   "todoInvoiceOutside": "Las facturas de un espacio en {country} se emiten fuera de la app.",
+   "todoImportFile": "Importar el archivo en ese espacio: Espacio de coworking → Importar el espacio (XML). Si el espacio tiene desactivada «Configuración en el archivo del espacio», la app pregunta antes de aplicar la configuración."
   },
   "feature": {
    "calendarTab": [
@@ -4626,7 +4740,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestión del IVA",
-    "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose."
+    "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose. Un espacio sujeto a IVA la necesita, junto con un tipo por defecto, para emitir una factura: sin ellos la emisión se rechaza."
    ],
    "vatDeclarations": [
     "Declaraciones de IVA",
@@ -5150,7 +5264,17 @@ window.SETUP_L10N={
    "designDocuments": "Diseñar los documentos",
    "viewPersonalData": "Consultar los datos personales de los miembros",
    "manageIntegrations": "Gestionar integraciones",
-   "manageConfiguration": "Gestionar la configuración"
+   "manageConfiguration": "Gestionar la configuración",
+   "deployToProd": "Desplegar en producción",
+   "deployToDev": "Desplegar en desarrollo",
+   "accessProd": "Entrar en el espacio de producción",
+   "viewAnalytics": "Consultar las cifras del espacio",
+   "useMessages": "Usar la mensajería",
+   "makeReservations": "Reservar y usar las reservas",
+   "viewCalendar": "Ver el calendario",
+   "viewDirectory": "Ver el directorio de miembros",
+   "viewMyMoney": "Ver su propia cuenta y sus facturas",
+   "viewDocuments": "Ver los documentos compartidos"
   },
   "domain": {
    "payment": "Pago",
@@ -5214,7 +5338,7 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Assistente di configurazione",
    "setupLanguage": "Lingua",
-   "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le tue risposte precedenti rendono possibili (le funzionalità che non attivi, il regime IVA che non hai, il paese che non si applica — non ti viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le tue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa (Impostazioni dello spazio → Importa lo spazio) per creare impostazioni, accessori e piantina; la sezione &lt;setup&gt; dello stesso file contiene tutto il resto.",
+   "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le tue risposte precedenti rendono possibili (le funzionalità che non attivi, il regime IVA che non hai, il paese che non si applica — non ti viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le tue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
    "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",
    "setupGuideLink": "sul wiki ↗",
    "setupSecretsHtml": "<b>Inserisci un token o una credenziale qui solo se compili questo documento in privato.</b> Il file esportato è testo in chiaro: per la fatturazione elettronica e i pagamenti online puoi lasciare vuoti i campi e inserire i segreti direttamente nell'app, dove vanno al server senza mai tornare indietro.",
@@ -5504,7 +5628,7 @@ window.SETUP_L10N={
    "colValidFrom": "Valida dal",
    "legalAddRate": "Aggiungi un'aliquota",
    "legalSuggestRates": "Proponi le aliquote usuali: {country} ({rates} %)",
-   "legalNoVatManagementHint": "Soggetto IVA senza «Gestione IVA»: le fatture partiranno senza aliquote. Attiva la funzionalità per inserire le tue aliquote.",
+   "legalNoVatManagementHint": "Soggetto IVA senza «Gestione IVA»: l'app non ha alcuna aliquota da applicare e rifiuta di emettere le fatture. Attivare la funzionalità per inserire le aliquote.",
    "legalVatExigibility": "Esigibilità dell’IVA",
    "legalVatExigibilityHint": "Quando l'imposta diventa dovuta: all'emissione della fattura o al pagamento del cliente. In Francia le prestazioni di servizi sono all'incasso salvo opzione per la fattura. Questa scelta decide cosa dichiara un periodo ed è stampata su ogni fattura.",
    "legalInvoiceNumbering": "Numerazione delle fatture",
@@ -5779,7 +5903,7 @@ window.SETUP_L10N={
    "reviewGateBlocked": "L'esportazione si aprirà quando questi {n} punto/i saranno risolti:",
    "reviewNothingLost": "Non si perde nulla: le tue risposte restano salvate in questo browser mentre torni indietro.",
    "reviewComplete": "Configurazione completa e coerente.",
-   "reviewImportHint": "Esporta l'XML, poi importalo nell'app: Impostazioni dello spazio → Importa lo spazio.",
+   "reviewImportHint": "Esportare l'XML, poi importarlo nell'app: Spazio di coworking → Importa lo spazio (XML).",
    "reviewProcesses": "Processi",
    "reviewProcessCount": "{n} capacità su {total} attive: {list}",
    "reviewProcessOff": "non usato",
@@ -5795,7 +5919,28 @@ window.SETUP_L10N={
    "capacityNotStated": "Non indicato",
    "capacityBusiness": "Professionisti",
    "capacityConsumer": "Consumatori",
-   "legalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura: i testi legali su interessi di mora, risarcimento delle spese di recupero e sconto valgono solo per clienti professionisti. Ogni membro può essere indicato a parte nell'app."
+   "legalCustomerCapacityHint": "Decide quali clausole di pagamento stampa una fattura: i testi legali su interessi di mora, risarcimento delle spese di recupero e sconto valgono solo per clienti professionisti. Ogni membro può essere indicato a parte nell'app.",
+   "destImport": "Applicato all'importazione",
+   "destImportHint": "L'app applica questa risposta quando il file viene importato.",
+   "destApp": "Da inserire nell'app",
+   "destAppHint": "L'importazione non può portare questa risposta: va inserita nell'app.",
+   "destFile": "Solo nel file",
+   "destFileHint": "Conservato nel file come promemoria; l'app non lo legge mai.",
+   "identityCountryInvoices": "DesKilo emette le fatture",
+   "identityCountryInvoicesHint": "DesKilo emette da sé le fatture solo per {list}; altrove le fatture si emettono fuori dall'app e DesKilo tiene gli estratti.",
+   "identityWarnInvoicingCountry": "La fatturazione è attiva, ma DesKilo emette fatture solo per {list}: per uno spazio in {country} l'app rifiuta di emetterle. Emettere le fatture fuori dall'app, oppure disattivare la fatturazione.",
+   "featuresWarnOnlineProvider": "I pagamenti online restano non disponibili finché nell'app non è collegato un fornitore di pagamento; fino ad allora i membri pagano con i dati di pagamento indicati qui.",
+   "legalErrRegisteredNoVatManagement": "Soggetto IVA senza {feature}: l'app non ha alcuna aliquota da applicare e rifiuta di emettere qualsiasi fattura. Attivare la funzionalità e inserire le aliquote.",
+   "reviewToDoTitle": "Ancora da fare nell'app",
+   "reviewToDoHint": "Il file non può portare questi elementi. Ogni risposta segnata «Applicato all'importazione» viene applicata quando il file viene importato.",
+   "todoCreateSpace": "Creare lo spazio nell'app con il nome «{name}»: l'importazione riempie uno spazio esistente e non lo rinomina mai.",
+   "todoInviteMembers": "Invitare dall'app le {n} persone elencate nel passaggio dei membri (Membri → Invita un membro): il file conserva l'elenco solo come promemoria.",
+   "todoInviteNobody": "Invitare i primi membri dall'app (Membri → Invita un membro).",
+   "todoOnlineProvider": "Collegare il fornitore di pagamenti online nell'app: le sue chiavi non vanno mai nel file.",
+   "todoVatPeriod": "Scegliere la periodicità della dichiarazione IVA ({period}) nell'app preparando la prima dichiarazione.",
+   "todoEinvoice": "Inserire nell'app l'indirizzo e le credenziali della piattaforma di fatturazione elettronica: il file non le applica mai.",
+   "todoInvoiceOutside": "Le fatture di uno spazio in {country} si emettono fuori dall'app.",
+   "todoImportFile": "Importare il file in quello spazio: Spazio di coworking → Importa lo spazio (XML). Se nello spazio «Configurazione nel file dello spazio» è disattivata, l'app chiede prima di applicare la configurazione."
   },
   "feature": {
    "calendarTab": [
@@ -5928,7 +6073,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestione IVA",
-    "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi."
+    "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi. Uno spazio soggetto a IVA ne ha bisogno, insieme a un'aliquota predefinita, per emettere una fattura: senza di essi l'emissione viene rifiutata."
    ],
    "vatDeclarations": [
     "Dichiarazioni IVA",
@@ -6452,7 +6597,17 @@ window.SETUP_L10N={
    "designDocuments": "Progettare i documenti",
    "viewPersonalData": "Consultare i dati personali dei membri",
    "manageIntegrations": "Gestire le integrazioni",
-   "manageConfiguration": "Gestire la configurazione"
+   "manageConfiguration": "Gestire la configurazione",
+   "deployToProd": "Distribuire in produzione",
+   "deployToDev": "Distribuire in sviluppo",
+   "accessProd": "Entrare nello spazio di produzione",
+   "viewAnalytics": "Consultare i dati dello spazio",
+   "useMessages": "Usare la messaggistica",
+   "makeReservations": "Prenotare e usare le prenotazioni",
+   "viewCalendar": "Vedere il calendario",
+   "viewDirectory": "Vedere l'elenco dei membri",
+   "viewMyMoney": "Vedere il proprio conto e le proprie fatture",
+   "viewDocuments": "Vedere i documenti condivisi"
   },
   "domain": {
    "payment": "Pagamento",

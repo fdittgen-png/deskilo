@@ -459,6 +459,86 @@ void main() {
     expect(find.text('Something went wrong. Please try again.'), findsNothing);
   });
 
+  // #2331 — the configuration transfer is not a hidden prerequisite: a
+  // space that has it off is ASKED, never silently skipped.
+  group('#2331 — a space with the configuration transfer off', () {
+    Future<(RecordingImportRepository, FakeWorkspaceRepository)> pumpOff(
+        WidgetTester tester) async {
+      final importRepository = RecordingImportRepository();
+      final workspaceRepository = FakeWorkspaceRepository.withWorkspace(
+          featureFlags: const {'configurationTransfer': false});
+      // Like the questionnaire's file, this one states the switch — OFF —
+      // among its own flags.
+      final file = importableXml(configuration: kTestConfiguration)
+          .replaceFirst('<feature key="adminSeatBlocking" enabled="true"/>',
+              '<feature key="adminSeatBlocking" enabled="true"/>'
+                  '<feature key="configurationTransfer" enabled="false"/>');
+      expect(parseWorkspaceXml(file).settings.featureFlags,
+          containsPair('configurationTransfer', false));
+      await pumpWorkspaceSettings(
+        tester,
+        picker: (_) async => xmlFile(file),
+        importRepository: importRepository,
+        workspaceRepository: workspaceRepository,
+        floorPlan: CountingFloorPlanRepository()..seedSmallPlan(),
+      );
+      await tapImportTile(tester);
+      return (importRepository, workspaceRepository);
+    }
+
+    testWidgets('is asked first; switching it on applies the configuration '
+        'and the file\'s own flags do not switch it back off',
+        (tester) async {
+      final (importRepository, workspaceRepository) = await pumpOff(tester);
+      expect(find.text('This file carries a configuration'), findsOneWidget);
+      expect(find.text('Replace floor plan?'), findsNothing,
+          reason: 'asked before the preview, nothing applied yet');
+      expect(importRepository.configurations, isEmpty);
+
+      await tester.tap(find.byKey(const Key('configurationTransferSwitchOn')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
+          findsOneWidget);
+      await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
+      await tester.pumpAndSettle();
+
+      expect(importRepository.configurations, [kTestConfiguration]);
+      expect(importRepository.calls, hasLength(1));
+      expect(
+          workspaceRepository.workspaces.single
+              .featureFlags['configurationTransfer'],
+          isTrue);
+      expect(find.text('Workspace imported.'), findsOneWidget);
+    });
+
+    testWidgets('importing without it says so in the preview and applies '
+        'the rest', (tester) async {
+      final (importRepository, workspaceRepository) = await pumpOff(tester);
+      await tester.tap(find.byKey(const Key('configurationTransferSkip')));
+      await tester.pumpAndSettle();
+      expect(find.text('Configuration: not applied.'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
+      await tester.pumpAndSettle();
+
+      expect(importRepository.configurations, isEmpty);
+      expect(importRepository.calls, hasLength(1));
+      expect(
+          workspaceRepository.workspaces.single
+              .featureFlags['configurationTransfer'],
+          isNot(isTrue));
+    });
+
+    testWidgets('cancelling applies nothing', (tester) async {
+      final (importRepository, workspaceRepository) = await pumpOff(tester);
+      await tester.tap(find.byKey(const Key('configurationTransferCancel')));
+      await tester.pumpAndSettle();
+      expect(find.text('Replace floor plan?'), findsNothing);
+      expect(importRepository.configurations, isEmpty);
+      expect(importRepository.calls, isEmpty);
+      expect(workspaceRepository.lastLocaleUpdate, isNull);
+    });
+  });
+
   testWidgets('#916 — a v2 file (no configuration) imports as before',
       (tester) async {
     final importRepository = RecordingImportRepository();

@@ -25,11 +25,14 @@ import '../core/cache/cache_scope.dart';
 Future<void> initializeApp({
   StartupStages stages = const StartupStages(),
 }) async {
-  final stored = await stages.readStored();
+  // #2343 — a build without a default server reaches this only after
+  // the first-start choice stored one ([needsServerChoice]).
+  final endpoint = await stages.readStored() ?? compiledDefaultEndpoint;
+  if (endpoint == null) throw StateError('no server chosen');
   // #1124 — the cache is named after the server the rows came from, and
   // that is this one for the rest of the process, whatever Settings is
   // holding by the time somebody reads a row.
-  bootBackendUrl = stored?.url ?? BackendConfig.supabaseUrl;
+  bootBackendUrl = endpoint.url;
   final origin = Uri.parse(bootBackendUrl);
   const secrets = PlatformAuthSecretStore();
   final callback = Uri.parse(kIsWeb
@@ -41,14 +44,23 @@ Future<void> initializeApp({
       currentUser: () => Supabase.instance.client.auth.currentUser?.id);
   bootAuthCallbackDispatcher = dispatch;
   await stages.initializeSupabase(
-    url: stored?.url ?? BackendConfig.supabaseUrl,
-    key: stored?.key ?? BackendConfig.supabaseKey,
+    url: endpoint.url,
+    key: endpoint.key,
     dispatch: dispatch,
     secrets: secrets,
     origin: origin,
   );
   await stages.attachCallback(dispatch, guard, secrets);
 }
+
+/// #2343 — true when this build ships no default server and the device
+/// has not chosen one yet: the first start must ask before anything is
+/// contacted.
+Future<bool> needsServerChoice({
+  bool hasDefault = BackendConfig.hasDefault,
+  Future<BackendEndpoint?> Function() readStored = _readStored,
+}) async =>
+    !hasDefault && await readStored() == null;
 
 /// #2015 — the four asynchronous stages of the essential start-up, as seams.
 ///

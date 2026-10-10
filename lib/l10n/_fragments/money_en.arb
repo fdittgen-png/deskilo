@@ -356,7 +356,7 @@
   "@featureVatManagementTitle": {
     "description": "Feature toggle title: VAT management (#544)"
   },
-  "featureVatManagementDesc": "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.",
+  "featureVatManagementDesc": "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -582,15 +582,14 @@
   "scheduledExpensesTitle": "Scheduled expenses",
   "scheduledExpensesIntro": "Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.",
   "scheduledExpensesEmpty": "No scheduled expense yet.",
-
   "scheduledExpensesFinished": "Ended and rejected ({count})",
-
   "@scheduledExpensesFinished": {
-
     "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected.",
-
-    "placeholders": { "count": { "type": "int" } }
-
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "scheduleNew": "Schedule a recurring expense",
   "scheduleCancel": "End this schedule",

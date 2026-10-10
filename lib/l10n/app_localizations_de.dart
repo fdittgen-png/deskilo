@@ -544,6 +544,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Einzurichten: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count eingeschaltete Funktionen warten auf „$feature“',
+      one: '1 eingeschaltete Funktion wartet auf „$feature“',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'Wartet seit $date';
   }
@@ -5714,7 +5730,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter.';
+      'Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter. Ein umsatzsteuerpflichtiger Space braucht sie, samt Standardsatz, um eine Rechnung auszustellen: Ohne sie wird die Ausstellung abgelehnt.';
 
   @override
   String get featureVatManagementTitle => 'USt-Verwaltung';
@@ -8996,7 +9012,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Dieser Space verlangt Mehrwertsteuer, es ist aber kein Satz angelegt: Rechnungen weisen keine Steuer aus und der XML-Export bleibt deaktiviert.';
+      'Dieser Space verlangt Mehrwertsteuer, es gilt aber kein Standardsatz: Es kann keine Rechnung ausgestellt werden, bis Sie einen anlegen. Sätze bearbeiten Sie bei eingeschalteter „USt-Verwaltung“.';
 
   @override
   String get legendBlocked => 'Gesperrt';
@@ -12156,6 +12172,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentProviderWero => 'Wero (über Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn eine Verwaltungsperson Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13777,8 +13797,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readinessAreaInvitations => 'Die ersten Mitglieder einladen';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'Rechtliche Identität und Adresse des Space';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)';
+
+  @override
+  String get readinessAreaMemberPermissions => 'Was Mitglieder dürfen';
 
   @override
   String get readinessAreaPayments => 'Wie Mitglieder bezahlen';
@@ -13805,6 +13832,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Vor der Rechnungsstellung: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Bereit für eine erste Buchung';
 
   @override
@@ -13812,6 +13844,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Nötig für eine erste Buchung';
+
+  @override
+  String get readinessNeededInvoicing => 'Vor der Rechnungsstellung nötig';
 
   @override
   String readinessNext(String step) {
@@ -13833,6 +13868,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'Ihre Anfrage wartet auf die Datenbankadministration';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Ohne sie kann keine Rechnung ausgestellt werden';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'Mitglieder können noch nicht buchen: Erteilen Sie ihnen unter Rollen „Buchen und Reservierungen nutzen“';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13988,6 +14031,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.';
 
   @override
   String get refusalPermission =>
@@ -15669,6 +15716,54 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get seriesSkippedTitle => 'Übersprungen (bereits belegt):';
+
+  @override
+  String get serverChoiceExistingTitle => 'Ein bestehender Server';
+
+  @override
+  String get serverChoiceIntro =>
+      'Diese Version von DesKilo kommt ohne Server. Wählen Sie, wo Ihre Spaces liegen. Sie können das später unter Einstellungen → Erweitert → Server ändern.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Legen Sie ein kostenloses Supabase-Projekt an und lassen Sie die App alles installieren, was DesKilo braucht: das Schema, die Funktionen und die Anmelderegeln.';
+
+  @override
+  String get serverChoiceNewTitle => 'Ein eigener neuer Server';
+
+  @override
+  String get serverChoiceReferenceAction => 'Referenzserver verwenden';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Betrieben vom Autor von DesKilo mit derselben freien Software wie jeder andere Server. Er trägt auch das globale Verzeichnis der Spaces.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'Der Referenzserver';
+
+  @override
+  String get serverChoiceTitle => 'Server wählen';
+
+  @override
+  String get serverConnectIntro =>
+      'Treten Sie einem Server bei, auf dem Sie bereits ein Konto haben, oder legen Sie einen neuen an.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'Noch kein Konto dort? Verwenden Sie diesen Server auf diesem Gerät und registrieren Sie sich dort.';
+
+  @override
+  String get serverConnectNoCode =>
+      'Die Zwischenablage enthält keinen Servercode.';
+
+  @override
+  String get serverConnectPasteCode => 'Servercode einfügen';
+
+  @override
+  String get serverConnectReference => 'Referenzserver';
+
+  @override
+  String get serverConnectUseHere => 'Auf diesem Gerät verwenden';
 
   @override
   String get serviceOutOfStock => 'Ausverkauft';
@@ -19715,8 +19810,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceXmlImport => 'Workspace importieren (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „$feature“ deaktiviert, daher würde der Import sie nicht übernehmen. Aktivieren Sie die Funktion, um sie jetzt zu übernehmen.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „$feature“ deaktiviert, und nur wer seine Konfiguration ändern darf, kann die Funktion aktivieren. Der Import kann ohne sie fortfahren.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'Diese Datei enthält eine Konfiguration';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Ohne Konfiguration importieren';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn =>
+      'Aktivieren und übernehmen';
 
   @override
   String get workspaceXmlImportConfirm => 'Ersetzen und importieren';
@@ -19738,6 +19855,10 @@ class AppLocalizationsDe extends AppLocalizations {
   ) {
     return 'Konfiguration: $settings Einstellungen, $rows Zeilen in $tables Tabellen';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Konfiguration: nicht übernommen.';
 
   @override
   String workspaceXmlImportPreviewCounts(

@@ -31,7 +31,13 @@ import '../widgets/instance_run_step.dart';
 /// retryable on its own; the token lives in this state and nowhere
 /// else.
 class NewInstanceScreen extends ConsumerStatefulWidget {
-  const NewInstanceScreen({super.key});
+  const NewInstanceScreen({super.key, this.onFinish});
+
+  /// #2343 — what the finish does with the new endpoint when the wizard
+  /// runs BEFORE any server exists (the first start of a build without a
+  /// default): no workspace to read, no session to sign out, no route to
+  /// return to. Null = the in-app wizard, which switches this device.
+  final Future<void> Function(BackendEndpoint endpoint)? onFinish;
 
   @override
   ConsumerState<NewInstanceScreen> createState() => _NewInstanceScreenState();
@@ -74,7 +80,10 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   void initState() {
     super.initState();
     _password = generateDatabasePassword();
-    final workspace = ref.read(currentWorkspaceProvider).value;
+    // #2343 — before the first server there is no workspace to read.
+    final workspace = widget.onFinish == null
+        ? ref.read(currentWorkspaceProvider).value
+        : null;
     _name.text = workspace?.name ?? '';
     _region = defaultRegionFor(workspace?.countryCode ?? '');
   }
@@ -227,6 +236,12 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   Future<void> _useHere() async {
     final endpoint = _endpoint;
     if (endpoint == null) return;
+    if (widget.onFinish case final finish?) {
+      await _run('use new instance', () async {
+        await finish(BackendEndpoint(endpoint.url, endpoint.key));
+      });
+      return;
+    }
     final l10n = AppLocalizations.of(context);
     final ok = await _run('switch device', () async {
       await ref
@@ -420,6 +435,9 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         TextField(
           key: const ValueKey('instance-project-name'),
           controller: _name,
+          // #2343 — the create button reads this field: with no workspace
+          // to prefill it (the first start), typing must enable it.
+          onChanged: (_) => setState(() {}),
           decoration: InputDecoration(
             labelText: l10n?.instanceProjectName ?? 'Project name',
             border: const OutlineInputBorder(),

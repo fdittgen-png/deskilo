@@ -454,7 +454,7 @@ Enumera los tipos de IVA que pueden usar sus facturas. Lo que pagan los miembros
 - Los tipos habituales son un punto de partida. Qué operación va con qué tipo es una pregunta para su gestor.
 - El tipo por defecto lo usan las suscripciones y todo lo que no tiene tipo propio.
 - Un tipo que todavía usa una factura o un servicio se conserva, desactivado, en lugar de eliminarse.
-- Si no hay ningún tipo mientras está sujeto a IVA, las facturas no muestran impuesto y la exportación XML queda desactivada.
+- Si no hay ningún tipo por defecto en vigor mientras está sujeto a IVA, no se puede emitir ninguna factura; la pantalla de identidad legal lo advierte.
 - Esta pantalla requiere la función **Gestión del IVA**; la entrada de tipos de IVA de la pantalla de identidad legal solo aparece con el régimen de sujeto a IVA.
 
 **Véase también:** [Grupos de IVA](help:user.money.vat.groups) · [Cambio por ley](help:user.money.vat.change-by-law)
@@ -1000,6 +1000,7 @@ Quiere que los recordatorios salgan solos.
 - Una vez al día, las facturas que han superado su plazo de pago registrado reciben el nivel siguiente, por el importe aún pendiente.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
+- Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
 
 **Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
 

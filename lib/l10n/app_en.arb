@@ -645,6 +645,27 @@
       }
     }
   },
+  "attentionSetUp": "Set up: {area}",
+  "@attentionSetUp": {
+    "description": "#2332: attentionSetUp",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "attentionUnblock": "{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
+  "@attentionUnblock": {
+    "description": "#2332: attentionUnblock",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
   "attentionWaitingSince": "Waiting since {date}",
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince",
@@ -6573,7 +6594,7 @@
   "@featureVatGroupsDesc": {
     "description": "#947 VAT groups: featureVatGroupsDesc"
   },
-  "featureVatManagementDesc": "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.",
+  "featureVatManagementDesc": "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -10409,7 +10430,7 @@
   "@legalIdentityVatId": {
     "description": "VAT number field label"
   },
-  "legalIdentityVatWarning": "This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.",
+  "legalIdentityVatWarning": "This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.",
   "@legalIdentityVatWarning": {
     "description": "Warning shown for the VAT-registered regime"
   },
@@ -14081,6 +14102,10 @@
   "@paymentProviderWero": {
     "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
   },
+  "paymentRemindersWhen": "When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "paymentRoutingNumberLabel": "Routing number",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
@@ -15856,9 +15881,17 @@
   "@readinessAreaInvitations": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessAreaLegalIdentity": "The space's legal identity and address",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
   "readinessAreaLocalSetup": "Details your features need (identity, bank, platforms)",
   "@readinessAreaLocalSetup": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessAreaMemberPermissions": "What members may do",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
   },
   "readinessAreaPayments": "How members pay",
   "@readinessAreaPayments": {
@@ -15893,6 +15926,15 @@
       }
     }
   },
+  "readinessBlockedInvoicing": "Before invoicing: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
   "readinessFirstBookingReady": "Ready for a first booking",
   "@readinessFirstBookingReady": {
     "description": "#1636 workspace_readiness"
@@ -15904,6 +15946,10 @@
   "readinessNeededFirst": "Needed for a first booking",
   "@readinessNeededFirst": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessNeededInvoicing": "Needed before invoicing",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
   },
   "readinessNext": "Next: {step}",
   "@readinessNext": {
@@ -15929,6 +15975,14 @@
   "readinessReasonEligibilityRequested": "Your request waits for a database administrator",
   "@readinessReasonEligibilityRequested": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessReasonInvoicingNeedsIdentity": "No invoice can be issued without it",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessReasonMembersCannotBook": "Members cannot book yet: in Roles, grant them “Book and use reservations”",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
   },
   "readinessReasonNoEvidence": "No export or restore recorded yet",
   "@readinessReasonNoEvidence": {
@@ -16056,6 +16110,10 @@
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
+  },
+  "refusalMoneyLocaleLocked": "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.",
+  "@refusalMoneyLocaleLocked": {
+    "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "You do not have the permission for this. An owner of the space can grant it in Role management.",
   "@refusalPermission": {
@@ -17820,6 +17878,20 @@
   "@seriesSkippedTitle": {
     "description": "Heading above the list of conflicted series instances"
   },
+  "serverChoiceExistingTitle": "A server that already exists",
+  "serverChoiceIntro": "This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.",
+  "serverChoiceNewBody": "Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.",
+  "serverChoiceNewTitle": "A new server of your own",
+  "serverChoiceReferenceAction": "Use the reference server",
+  "serverChoiceReferenceBody": "Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.",
+  "serverChoiceReferenceTitle": "The reference server",
+  "serverChoiceTitle": "Choose your server",
+  "serverConnectIntro": "Join a server where you already have an account, or create a new one.",
+  "serverConnectNoAccount": "No account there yet? Use this server on this device and sign up there.",
+  "serverConnectNoCode": "The clipboard holds no server code.",
+  "serverConnectPasteCode": "Paste a server code",
+  "serverConnectReference": "Reference server",
+  "serverConnectUseHere": "Use on this device",
   "serviceOutOfStock": "Out of stock",
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
   "serviceStockCount": "{count} in stock",
@@ -22195,9 +22267,39 @@
   "@workspaceXmlImport": {
     "description": "Owner settings tile starting the XML import flow: file pick, preview, destructive confirm (#165)"
   },
+  "workspaceXmlImportConfigurationOffBody": "The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, so the import would not apply them. Switch it on to apply them now.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, and only somebody who may change its configuration can switch it on. The import can continue without them.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffTitle": "This file carries a configuration",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
   "workspaceXmlImportConfigurationOnly": "The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationSkip": "Import without the configuration",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Switch it on and apply",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
   },
   "workspaceXmlImportConfirm": "Replace and import",
   "@workspaceXmlImportConfirm": {
@@ -22230,6 +22332,10 @@
         "type": "int"
       }
     }
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Configuration: not applied.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   },
   "workspaceXmlImportPreviewCounts": "Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}",
   "@workspaceXmlImportPreviewCounts": {

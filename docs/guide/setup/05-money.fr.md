@@ -258,7 +258,7 @@ Vous décidez à partir de quand un paiement est en retard, et qui relance.
 **Bon à savoir**
 
 - Le délai avant la première relance est aussi lu comme votre délai de paiement. Réglez-le avec les [Conditions de paiement](help:user.money.legal.payment-terms).
-- Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si **Les admins émettent des factures** est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde.
+- Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si **Les admins émettent des factures** est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde. L'interrupteur et la description de la fonctionnalité le disent aussi ; l'opérateur de votre serveur sait ce qui s'applique.
 - La fonction **Relances de paiement** ne fait que rendre les règles disponibles. Une relance ne part toute seule que si **Relances automatiques** est activé dans les règles de relance, ce qui n'est pas le cas tant que vous ne l'avez pas choisi.
 - Elles ignorent une facture dont un paiement est en attente ou suspendu, et une facture sans délai de paiement enregistré.
 - Le membre reçoit une alerte dans son fil et, si les notifications push sont configurées, une notification générique ; voir [Informer les gens](help:setup.notify.overview).
@@ -285,7 +285,7 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 **Bon à savoir**
 
 - Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.
-- Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre.
+- Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent.
 - Une déclaration est une aide au dépôt, établie à partir de vos factures émises. Vérifiez-la avant de la déposer, et ne la marquez comme déposée qu'une fois que c'est fait.
 - Le journal des déclarations a sa propre série de numéros.
 
@@ -308,7 +308,7 @@ Vous voulez savoir, avant la première facture, ce que vous ne pourrez plus chan
 | Numéro de facture | Les numéros se suivent sans trou et sont attribués dans la base de données au moment de l'émission. Le prochain numéro peut être relevé, jamais abaissé. Un changement de format s'applique à partir de là. Une remise à zéro ne peut pas être plus fréquente que la date que le numéro imprime. | À la première émission |
 | Un mois facturé | Un mois comportant une facture pour un membre est clos pour ce membre. Les jours de fermeture et les imports de jours fériés ignorent ces mois et les nomment. | À la première facture de ce mois |
 | Taux de TVA | Les taux sont versionnés par date, jamais modifiés. Une déclaration de TVA soumise n'est jamais recalculée. | À la première utilisation |
-| Devise et pays | Les montants sont stockés en unités mineures entières, sans conversion. Aucune protection n'empêche de les modifier plus tard : décidez avant la première réservation. | Avant la première réservation |
+| Devise et pays | Les montants sont stockés en unités mineures entières, sans conversion. Dès que l'espace a émis un document ou enregistré de l'argent, le serveur refuse de changer l'un ou l'autre. | Au premier document ou paiement |
 
 **Étapes**
 

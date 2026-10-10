@@ -89,7 +89,11 @@ const answers = (features) => ({
   mentions:{legalForm:'SAS',register:'',terms:'30 days',penalty:'',recovery:'40',escompte:'',insurance:'',special:''},
   reminders:{levels:3,firstDays:10,betweenDays:7,automatic:false},
   validation:{required:2,ownerSignOff:true},
+  // 'service' is the page's key for the service_charge event type, and
+  // 'named' a scope the server does not know (#2331): both must arrive in
+  // the server's own words.
   domains:{payment:{on:true,required:2,ownerSignOff:true,validators:'members'},reservation_delete:{on:true,required:1,ownerSignOff:false},
+    service:{on:true,required:3,ownerSignOff:false},
     price_negotiation:{on:true,required:1,ownerSignOff:false,validators:'named'}},
   autoValidate:{admin:true,owner:false},
   members:[{name:'Ada',email:'ada@example.com',role:'admin',pct:'100',overage:'packages',wholeSpaces:true,simultaneous:'3',limit:'5'},
@@ -142,6 +146,9 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null } = {}) {
 //                not the owner's answers
 //   defaults     a first visit that only names the space and turns the
 //                configuration transfer on
+//   transfer-off a first visit that switches the configuration transfer
+//                OFF — the file must carry the configuration all the same
+//                (#2331), the app asks before applying it
 const EXPORT_MODES = {
   answered: (features) => answers(features),
   'policies-off': (features) => {
@@ -149,6 +156,7 @@ const EXPORT_MODES = {
     return { ...a, features: { ...a.features, bookingPolicies: false } };
   },
   defaults: () => ({ name: 'Defaults Space', features: { configurationTransfer: true } }),
+  'transfer-off': () => ({ name: 'Transfer Off Space', features: { configurationTransfer: false } }),
 };
 const exportFlag = process.argv.find((a) => a.startsWith('--export-xml'));
 if (exportFlag) {
