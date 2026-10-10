@@ -299,7 +299,7 @@ es una lectura, y puede volver a tomarse tras una corrección.
 | Integración | Qué hace | Sin ella |
 |---|---|---|
 | **Proveedor de pago** | cobra un pago contra una factura | los pagos se registran a mano; nada más cambia |
-| **Canal de WhatsApp** | envía un recordatorio o un aviso por WhatsApp | el mensaje se queda en la bandeja de la app |
+| **WhatsApp** | abre WhatsApp en el dispositivo: el enlace del grupo del espacio y el número que un miembro decide compartir; el servidor no envía nada a WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | no aparece ningún botón de WhatsApp |
 | **Push** | entrega notificaciones a un dispositivo | las notificaciones aparecen al abrir la app |
 | **Plataforma de facturación electrónica** | transmite la factura estructurada | el PDF se produce y se envía por otros medios |
 
@@ -308,6 +308,8 @@ una tabla que el archivo de espacio y todos los despliegues se saltan:
 ninguna exportación lleva jamás una clave. Y **una integración sin
 configurar se degrada, no rompe**: la funcionalidad que la necesita queda
 desactivada, la pantalla lo dice, y nada lanza una excepción.
+
+**No hay integración de correo electrónico.** DesKilo no envía correos electrónicos propios: los únicos son los correos de cuenta del servicio de inicio de sesión del servidor (confirmación de alta, restablecimiento de contraseña, un código de inicio de sesión). Todo lo demás llega a la persona en la app: el feed de eventos y la campana, el push cuando Firebase está configurado y, en la app instalada (no en el navegador), un recordatorio local de registro de entrada 15 minutos antes de una reserva ([el recordatorio](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 <!-- anchor: admin.instances.overview -->
 ## Instancias

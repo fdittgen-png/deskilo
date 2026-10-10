@@ -511,7 +511,7 @@ Vuole usare DesKilo dove lavora. Lo stesso account e gli stessi dati La seguono.
 - L'immagine disco per macOS dalla pagina delle versioni è firmata e notarizzata da Apple; la apra normalmente.
 - Il programma di installazione per Windows non è firmato: Windows SmartScreen segnala un editore sconosciuto; scelga Ulteriori informazioni, poi Esegui comunque.
 - La lettura del tag di una sedia funziona nei browser Chromium su Android (servono HTTPS e un tocco); le app Android e iPhone leggono i tag direttamente.
-- Una build senza servizi Google e senza push dal cloud è compilata ed è stata inviata a F-Droid; non è ancora nello store F-Droid. In essa le notifiche sono locali e la posta in arrivo fa fede.
+- Una build senza servizi Google e senza push dal cloud è preparata per F-Droid; se si può già installare da F-Droid lo indica la [pagina di stato F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). In essa le notifiche sono locali e la posta in arrivo fa fede.
 - Gli aggiornamenti arrivano dal canale da cui ha installato: Google Play, TestFlight, la pagina delle versioni oppure ricaricando l'app web.
 
 **Vedi anche:** [Il Suo badge](help:user.profile.settings.badge)

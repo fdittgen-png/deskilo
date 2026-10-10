@@ -118,7 +118,7 @@ t('planned, unevidenced or unknown is never shown as available', () => {
       }
     }
   }
-  assert.ok(capabilityRows('en').some((r) => r.id === 'mcp.write' && r.state === 'planned'));
+  assert.ok(capabilityRows('en').some((r) => r.id === 'recovery.storage_auth' && r.state === 'planned'));
 });
 
 const zeros = { currency: 'EUR', backend_plan: '0', storage_free: '0', storage_used: '0', storage_price: '0', backup: '0', pay_count: '0', pay_average: '0', pay_percent: '0', pay_fixed: '0', admin_hours: '0', hourly_value: '0', setup_hours: '0', assistant_funding: 'user' };

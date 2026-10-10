@@ -2,7 +2,7 @@
 
 # Capabilities and their evidence
 
-Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipped** or still **roadmap**; whether a test **gated** at every commit covers it; whether a dated record was **recorded** against the component as it is now; and whether that record has gone **stale** because the component moved on. A dash is `unverified`. A local stub or a replayed database is a local integration, never a provider sandbox, and one provider's record says nothing about another (#1634).
+Manifest `2026-10-10.1`. Four things are kept apart: whether the code is **shipped** or still **roadmap**; whether a test **gated** at every commit covers it; whether a dated record was **recorded** against the component as it is now; and whether that record has gone **stale** because the component moved on. A dash is `unverified`. A local stub or a replayed database is a local integration, never a provider sandbox, and one provider's record says nothing about another (#1634).
 
 | Capability | Code | `unit` | `local_integration` | `provider_sandbox` | `named_runtime` | `operator_pilot` |
 |---|---|---|---|---|---|---|
@@ -20,9 +20,9 @@ Manifest `2026-09-25.2`. Four things are kept apart: whether the code is **shipp
 | [recovery.database_restore](#recoverydatabase_restore) | shipped | — | gated | — | — | — |
 | [recovery.storage_auth](#recoverystorage_auth) | roadmap | — | — | — | — | — |
 | [demo](#demo) | shipped | gated | — | — | — | — |
-| [mcp.read](#mcpread) | roadmap | — | — | — | — | — |
-| [mcp.write](#mcpwrite) | roadmap | — | — | — | — | — |
-| [mcp.consent](#mcpconsent) | roadmap | — | — | — | — | — |
+| [mcp.read](#mcpread) | shipped | gated | gated | — | — | — |
+| [mcp.write](#mcpwrite) | shipped | gated | gated | — | — | — |
+| [mcp.consent](#mcpconsent) | shipped | gated | gated | — | — | — |
 | [calendar.interchange](#calendarinterchange) | roadmap | — | — | — | — | — |
 
 ## booking
@@ -201,28 +201,49 @@ A self-contained workspace with invented people, bookings and money, and no back
 
 An MCP client reads a workspace's plan, bookings and members within the scopes the owner granted.
 
-- **Code:** roadmap
-- **Needs:** The MCP feature, default off, and a scoped operation contract.
-- **Limits:** Not delivered; open issues cannot make it shipped. Comparable products already offer MCP.
+- **Code:** shipped
+- **Needs:** MCP ships off. The infrastructure operator switches it on for one installation after mcp-inspect has measured that target (docs/guides/OPERATIONS.md, MCP section); the workspace feature mcpAccess, default off, and an exposure policy decide what a workspace offers.
+- **Limits:** Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here. Whether MCP is switched on for a given installation is that installation's state, not the code's.
 - **Delivered by:** #1607, #1609, #1616, #1620
+- `unit` · **gated** · [`test/tool/mcp_contract_test.dart`](../../test/tool/mcp_contract_test.dart)
+- `unit` · **gated** · [`test/core/mcp/mcp_envelope_test.dart`](../../test/core/mcp/mcp_envelope_test.dart)
+- `unit` · **gated** · [`test/features/mcp/mcp_native_contract_parity_test.dart`](../../test/features/mcp/mcp_native_contract_parity_test.dart)
+- `unit` · **gated** · [`test/tool/mcp_runbook_test.dart`](../../test/tool/mcp_runbook_test.dart)
+- `local_integration` · **gated** · [`supabase/tests/database/61_mcp_token_containment.sql`](../../supabase/tests/database/61_mcp_token_containment.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/62_mcp_my_operations.sql`](../../supabase/tests/database/62_mcp_my_operations.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/63_mcp_bounded_reads.sql`](../../supabase/tests/database/63_mcp_bounded_reads.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/80_mcp_output_minimization.sql`](../../supabase/tests/database/80_mcp_output_minimization.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/94_mcp_disclosure.sql`](../../supabase/tests/database/94_mcp_disclosure.sql)
 
 ## mcp.write
 
 An MCP client books, cancels or submits on a member's behalf through the same business RPCs the app uses, idempotently.
 
-- **Code:** roadmap
-- **Needs:** mcp.read, scoped authorization and atomic dispatch.
-- **Limits:** Not delivered.
+- **Code:** shipped
+- **Needs:** mcp.read switched on; the workspace's exposure policy and the person's own permissions for the operation; high-impact actions are confirmed by the person in the app.
+- **Limits:** Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.
 - **Delivered by:** #1612, #1619, #1620, #1624
+- `unit` · **gated** · [`test/features/mcp/mcp_confirmation_test.dart`](../../test/features/mcp/mcp_confirmation_test.dart)
+- `unit` · **gated** · [`test/features/mcp/mcp_provenance_test.dart`](../../test/features/mcp/mcp_provenance_test.dart)
+- `local_integration` · **gated** · [`supabase/tests/database/59_mcp_policy_and_dispatch.sql`](../../supabase/tests/database/59_mcp_policy_and_dispatch.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/60_mcp_action_confirmations.sql`](../../supabase/tests/database/60_mcp_action_confirmations.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/75_mcp_reservation_tools.sql`](../../supabase/tests/database/75_mcp_reservation_tools.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/78_mcp_validation_decisions.sql`](../../supabase/tests/database/78_mcp_validation_decisions.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/82_mcp_workflow_matrices.sql`](../../supabase/tests/database/82_mcp_workflow_matrices.sql)
 
 ## mcp.consent
 
 A member consents to an MCP client per installation, sees what it may do, and revokes it.
 
-- **Code:** roadmap
-- **Needs:** Target-local OAuth consent and per-workspace exposure policies.
-- **Limits:** Not delivered.
+- **Code:** shipped
+- **Needs:** mcp.read switched on; the installation's own OAuth consent and per-workspace exposure policies.
+- **Limits:** Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.
 - **Delivered by:** #1610, #1615, #1633
+- `unit` · **gated** · [`test/features/mcp/mcp_consent_test.dart`](../../test/features/mcp/mcp_consent_test.dart)
+- `unit` · **gated** · [`test/features/mcp/mcp_consent_status_test.dart`](../../test/features/mcp/mcp_consent_status_test.dart)
+- `unit` · **gated** · [`test/features/mcp/mcp_scoped_revocation_test.dart`](../../test/features/mcp/mcp_scoped_revocation_test.dart)
+- `local_integration` · **gated** · [`supabase/tests/database/64_mcp_connection_consent.sql`](../../supabase/tests/database/64_mcp_connection_consent.sql)
+- `local_integration` · **gated** · [`supabase/tests/database/141_mcp_consent_status.sql`](../../supabase/tests/database/141_mcp_consent_status.sql)
 
 ## calendar.interchange
 

@@ -125,7 +125,9 @@ Git discipline — branch off `master`, PRs only, green CI before merge, squash-
   `deskilo_push`, and the F-Droid build swaps in `deskilo_push_foss`,
   which has no Google dependency. *CI · F-Droid no-GMS audit* proves it
   on every pull request; *Publish · F-Droid release APKs* ships the
-  binaries F-Droid reproduces against. FCM is the push transport for
+  binaries F-Droid reproduces against (publication: the
+  [F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
+  FCM is the push transport for
   store builds only.
 - iOS: TestFlight via fastlane (owner-held App Store Connect secrets), internal groups plus an external group with a public link.
 - Desktop: Windows ships as an MSI from the `windows-msi` workflow, macOS as a Developer-ID-signed, Apple-notarised, stapled DMG from `macos-app` — both attached to the release on a `v*` tag. (Spec §12 left the macOS channel open; it is settled as notarised direct download.)

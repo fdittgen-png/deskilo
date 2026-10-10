@@ -511,7 +511,7 @@ Vous voulez utiliser DesKilo là où vous travaillez. Le même compte et les mê
 - L'image disque macOS de la page des versions est signée et notariée par Apple ; ouvrez-la normalement.
 - L'installateur Windows n'est pas signé : Windows SmartScreen signale un éditeur inconnu ; choisissez Informations complémentaires, puis Exécuter quand même.
 - La lecture d'une étiquette de chaise fonctionne dans les navigateurs Chromium sur Android (HTTPS et un toucher nécessaires) ; les apps Android et iPhone lisent directement les étiquettes.
-- Une version sans services Google, sans notifications push dans le cloud, est construite et a été soumise à F-Droid ; elle n'est pas encore dans le catalogue F-Droid. Sur cette version, les notifications sont locales et la boîte de réception fait foi.
+- Une version sans services Google, sans notifications push dans le cloud, est préparée pour F-Droid ; si elle peut déjà être installée depuis F-Droid, la [page d'état F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status) le dit. Sur cette version, les notifications sont locales et la boîte de réception fait foi.
 - Les mises à jour arrivent par le canal depuis lequel vous avez installé l'app : Google Play, TestFlight, la page des versions, ou en rechargeant l'app web.
 
 **Voir aussi:** [Votre badge](help:user.profile.settings.badge)

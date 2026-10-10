@@ -216,7 +216,9 @@ Single codebase for all targets. Platform-specific behavior degrades gracefully:
   dependency, and *Publish · F-Droid release APKs* ships the signed
   binaries F-Droid reproduces against. (An earlier note in this file said
   F-Droid support had been dropped; ADR 0012 reversed that, and the
-  workflows are the evidence.)
+  workflows are the evidence.) Whether F-Droid publishes it yet is stated
+  once, in the
+  [F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status).
 
   The route in is **reproducible build, not F-Droid signing**: the recipe
   in `fdroiddata` MR !47409 carries `binary:` per ABI pointing at the

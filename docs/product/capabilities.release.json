@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_version": "2026-09-25.2",
+  "manifest_version": "2026-10-10.1",
   "scopes": [
     "unit",
     "local_integration",
@@ -528,10 +528,10 @@
     {
       "id": "mcp.read",
       "outcome": "An MCP client reads a workspace's plan, bookings and members within the scopes the owner granted.",
-      "status": "roadmap",
+      "status": "shipped",
       "features": [],
-      "prerequisites": "The MCP feature, default off, and a scoped operation contract.",
-      "limitations": "Not delivered; open issues cannot make it shipped. Comparable products already offer MCP.",
+      "prerequisites": "MCP ships off. The infrastructure operator switches it on for one installation after mcp-inspect has measured that target (docs/guides/OPERATIONS.md, MCP section); the workspace feature mcpAccess, default off, and an exposure policy decide what a workspace offers.",
+      "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here. Whether MCP is switched on for a given installation is that installation's state, not the code's.",
       "issues": [
         1607,
         1609,
@@ -539,21 +539,67 @@
         1620
       ],
       "scopes": {
-        "unit": "unverified",
-        "local_integration": "unverified",
+        "unit": "gated",
+        "local_integration": "gated",
         "provider_sandbox": "unverified",
         "named_runtime": "unverified",
         "operator_pilot": "unverified"
       },
-      "evidence": []
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/tool/mcp_contract_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/core/mcp/mcp_envelope_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_native_contract_parity_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/tool/mcp_runbook_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/61_mcp_token_containment.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/62_mcp_my_operations.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/63_mcp_bounded_reads.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/80_mcp_output_minimization.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/94_mcp_disclosure.sql",
+          "standing": "gated"
+        }
+      ]
     },
     {
       "id": "mcp.write",
       "outcome": "An MCP client books, cancels or submits on a member's behalf through the same business RPCs the app uses, idempotently.",
-      "status": "roadmap",
+      "status": "shipped",
       "features": [],
-      "prerequisites": "mcp.read, scoped authorization and atomic dispatch.",
-      "limitations": "Not delivered.",
+      "prerequisites": "mcp.read switched on; the workspace's exposure policy and the person's own permissions for the operation; high-impact actions are confirmed by the person in the app.",
+      "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
       "issues": [
         1612,
         1619,
@@ -561,34 +607,96 @@
         1624
       ],
       "scopes": {
-        "unit": "unverified",
-        "local_integration": "unverified",
+        "unit": "gated",
+        "local_integration": "gated",
         "provider_sandbox": "unverified",
         "named_runtime": "unverified",
         "operator_pilot": "unverified"
       },
-      "evidence": []
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_confirmation_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_provenance_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/59_mcp_policy_and_dispatch.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/60_mcp_action_confirmations.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/75_mcp_reservation_tools.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/78_mcp_validation_decisions.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/82_mcp_workflow_matrices.sql",
+          "standing": "gated"
+        }
+      ]
     },
     {
       "id": "mcp.consent",
       "outcome": "A member consents to an MCP client per installation, sees what it may do, and revokes it.",
-      "status": "roadmap",
+      "status": "shipped",
       "features": [],
-      "prerequisites": "Target-local OAuth consent and per-workspace exposure policies.",
-      "limitations": "Not delivered.",
+      "prerequisites": "mcp.read switched on; the installation's own OAuth consent and per-workspace exposure policies.",
+      "limitations": "Proved against the repository and a replayed database only; no provider, named-runtime or operator-pilot record is kept here.",
       "issues": [
         1610,
         1615,
         1633
       ],
       "scopes": {
-        "unit": "unverified",
-        "local_integration": "unverified",
+        "unit": "gated",
+        "local_integration": "gated",
         "provider_sandbox": "unverified",
         "named_runtime": "unverified",
         "operator_pilot": "unverified"
       },
-      "evidence": []
+      "evidence": [
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_consent_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_consent_status_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "unit",
+          "ref": "test/features/mcp/mcp_scoped_revocation_test.dart",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/64_mcp_connection_consent.sql",
+          "standing": "gated"
+        },
+        {
+          "scope": "local_integration",
+          "ref": "supabase/tests/database/141_mcp_consent_status.sql",
+          "standing": "gated"
+        }
+      ]
     },
     {
       "id": "calendar.interchange",

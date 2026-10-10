@@ -305,7 +305,7 @@ essere ripreso dopo una correzione.
 | Integrazione | Che cosa fa | Senza di essa |
 |---|---|---|
 | **Fornitore di pagamento** | incassa un pagamento a fronte di una fattura | i pagamenti si registrano a mano; nient'altro cambia |
-| **Canale WhatsApp** | manda un sollecito o un avviso su WhatsApp | il messaggio resta nella posta dell'app |
+| **WhatsApp** | apre WhatsApp sul dispositivo: il link del gruppo dello spazio e il numero che un membro sceglie di condividere; il server non invia nulla a WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | non compare alcun pulsante WhatsApp |
 | **Push** | consegna le notifiche a un dispositivo | le notifiche compaiono all'apertura dell'app |
 | **Piattaforma di fatturazione elettronica** | trasmette la fattura strutturata | il PDF è prodotto e inviato per altre vie |
 
@@ -314,6 +314,8 @@ una tabella che il file di spazio e ogni deployment saltano: nessun
 export porta quindi mai una chiave. E **un'integrazione non configurata
 degrada, non si rompe**: la funzionalità che la richiede è spenta, la
 schermata lo dice, e nulla solleva eccezioni.
+
+**Non c'è alcuna integrazione e-mail.** DesKilo non invia e-mail proprie: le sole e-mail sono quelle dell'account del servizio di accesso del server (conferma di iscrizione, reimpostazione della password, un codice di accesso). Tutto il resto raggiunge una persona nell'app: il feed degli eventi e la campanella, le push quando Firebase è configurato e, nell'app installata (non nel browser), un promemoria di check-in locale 15 minuti prima di una prenotazione ([il promemoria](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 <!-- anchor: admin.instances.overview -->
 ## Istanze

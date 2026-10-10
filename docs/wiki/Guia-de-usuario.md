@@ -1506,10 +1506,10 @@ Usted quiere saber qué le avisa y, si lo prefiere, desactivar los avisos en est
 
 **Conviene saber**
 
-- Se le avisa de las solicitudes que esperan su confirmación y de los mensajes.
+- Se le avisa de las solicitudes que esperan su confirmación y de los mensajes: en el feed y en la campana, por push cuando su instalación tiene el push configurado y, en la app instalada (no en el navegador), con un recordatorio en su dispositivo 15 minutos antes de una reserva en la que aún no ha registrado su entrada.
+- DesKilo no envía correos electrónicos propios: los únicos son los de su cuenta (confirmación de alta, restablecimiento de contraseña).
 - El contador de la campana y del icono de la app suma sus confirmaciones pendientes y sus mensajes sin leer.
-- Desactivado, la app sigue funcionando; no se envía nada a este dispositivo. No hay interruptores distintos por categoría.
-- Si su sistema bloquea las notificaciones de la app, permítalas en los ajustes del sistema.
+- Desactivado, la app sigue funcionando; no se envía nada a este dispositivo. No hay interruptores distintos por categoría. Si su sistema bloquea las notificaciones de la app, permítalas en los ajustes del sistema.
 
 **Véase también:** [Eventos y confirmaciones](#eventos-y-confirmaciones) · [Tus datos, tus derechos](#tus-datos-tus-derechos)
 
@@ -6042,7 +6042,7 @@ Quiere usar DesKilo allí donde trabaja. La misma cuenta y los mismos datos le s
 - La imagen de disco para macOS de la página de versiones está firmada y notarizada por Apple; ábrala con normalidad.
 - El instalador de Windows no está firmado: Windows SmartScreen avisa de un editor desconocido; elija Más información y luego Ejecutar de todas formas.
 - La lectura de una etiqueta de silla funciona en navegadores Chromium en Android (hacen falta HTTPS y un toque); las aplicaciones de Android y de iPhone leen las etiquetas directamente.
-- Una compilación sin servicios de Google y sin notificaciones push en la nube está construida y se ha enviado a F-Droid; todavía no está en la tienda de F-Droid. En ella, las notificaciones son locales y la bandeja de entrada es la fuente de verdad.
+- Una compilación sin servicios de Google y sin notificaciones push en la nube está preparada para F-Droid; si ya puede instalarse desde F-Droid lo indica la [página de estado de F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). En ella, las notificaciones son locales y la bandeja de entrada es la fuente de verdad.
 - Las actualizaciones llegan por el canal desde el que instaló: Google Play, TestFlight, la página de versiones o recargando la aplicación web.
 
 **Véase también:** [Su credencial](#su-credencial)

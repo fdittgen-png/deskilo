@@ -446,10 +446,10 @@ Vous voulez savoir ce qui vous alerte, et couper les alertes sur cet appareil si
 
 **Bon à savoir**
 
-- Vous êtes alerté des demandes qui attendent votre confirmation et des messages.
+- Vous êtes alerté des demandes qui attendent votre confirmation et des messages : dans le fil et sur la cloche, par push si votre installation a configuré le push et, dans l'application installée (pas dans le navigateur), par un rappel sur votre appareil 15 minutes avant une réservation pour laquelle vous ne vous êtes pas encore enregistré.
+- DesKilo n'envoie aucun e-mail de lui-même : les seuls e-mails sont ceux de votre compte (confirmation d'inscription, réinitialisation du mot de passe).
 - Le nombre sur la cloche et sur l'icône de l'application additionne vos confirmations en attente et vos messages non lus.
-- Désactivé, l'application continue de fonctionner ; rien n'est envoyé à cet appareil. Il n'y a pas d'interrupteurs séparés par catégorie.
-- Si votre système bloque les notifications de l'application, autorisez-les dans les réglages du système.
+- Désactivé, l'application continue de fonctionner ; rien n'est envoyé à cet appareil. Il n'y a pas d'interrupteurs séparés par catégorie. Si votre système bloque les notifications de l'application, autorisez-les dans les réglages du système.
 
 **Voir aussi:** [Événements et confirmations](help:user.collaborate.events) · [Vos données, vos droits](help:user.privacy.consent)
 

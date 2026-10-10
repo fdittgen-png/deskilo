@@ -446,10 +446,10 @@ You want to know what alerts you, and to switch alerts off on this device if you
 
 **Good to know**
 
-- You are alerted to requests waiting for your confirmation and to messages.
+- You are alerted to requests waiting for your confirmation and to messages: in the feed and on the bell, by push when your installation has push set up, and, in the installed app (not in the browser), by a reminder on your device 15 minutes before a booking you have not checked in to yet.
+- DesKilo sends no e-mail of its own: the only e-mails are your account's (sign-up confirmation, password reset).
 - The count on the bell and the app icon adds your pending confirmations and unread messages.
-- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category.
-- If your system blocks the app's notifications, allow them in the system settings.
+- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category. If your system blocks the app's notifications, allow them in the system settings.
 
 **See also:** [Events & confirmations](help:user.collaborate.events) · [Your data, your rights](help:user.privacy.consent)
 
