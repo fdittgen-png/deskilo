@@ -13,7 +13,9 @@ import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/presentation/screens/workspace_status_screen.dart';
+import 'package:deskilo/features/workspace/data/supabase_kpi_repository.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
+import 'package:deskilo/features/workspace/domain/bi_result.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
@@ -23,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
 
@@ -354,5 +357,51 @@ void main() {
     await _open(tester, '/bi?cards=finance.invoiced');
     expect(find.byKey(const ValueKey('bi-forbidden')), findsOneWidget);
     expect(find.text('€0.00'), findsNothing);
+  });
+
+  group('a failed read answers at once', () {
+    test('a final answer is never retried', () {
+      for (final e in <Object>[
+        const KpiUnavailable('no server'),
+        const KpiForbidden(),
+        const FormatException('bad'),
+        const PostgrestException(message: 'timeout', code: '57014'),
+      ]) {
+        expect(kpiRetry(0, e), isNull, reason: '$e');
+      }
+      expect(biRetry(0, const BiRefused({})), isNull);
+    });
+
+    test('a transport failure is tried twice, quickly', () {
+      final e = TimeoutException('slow');
+      expect(kpiRetry(0, e), const Duration(milliseconds: 200));
+      expect(kpiRetry(1, e), const Duration(milliseconds: 400));
+      expect(kpiRetry(2, e), isNull);
+    });
+
+    test('an unavailable figure fails the card without the 76 s of '
+        'retries it used to wait through', () async {
+      final finance = _Finance()
+        ..failure = const KpiUnavailable('no server in this mode');
+      final container = ProviderContainer(
+        overrides: [
+          financeKpiRepositoryProvider.overrideWithValue(finance),
+          clockProvider.overrideWithValue(FixedClock(DateTime(2026, 3, 20))),
+        ],
+      );
+      addTearDown(container.dispose);
+      final provider = biModuleResultProvider(
+        'ws-1',
+        'finance.invoiced',
+        const BiQueryContext(comparison: BiComparison.previousPeriod),
+      );
+      final sub = container.listen(provider, (_, _) {});
+      addTearDown(sub.close);
+      await expectLater(
+        container.read(provider.future).timeout(const Duration(seconds: 2)),
+        throwsA(isA<KpiUnavailable>()),
+      );
+      expect(finance.calls, hasLength(2), reason: 'current and compared, once');
+    });
   });
 }

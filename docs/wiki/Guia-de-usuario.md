@@ -1021,7 +1021,7 @@ La lista es larga y usted solo busca reservas. Los chips bajo la barra la acotan
 
 **Pasos**
 
-1. Toque **Mis reservas** para conservar solo las reservas. Tóquelo de nuevo para verlo todo.
+1. Toque **Mis reservas** para conservar solo sus propias reservas. Tóquelo de nuevo para verlo todo.
 2. O elija chips como **Reservas**, **Registros** y **Salidas**; **Todo** muestra todos los tipos.
 3. Para deshacer sus elecciones, toque **Restablecer filtros**, el botón del embudo.
 4. Una línea sobre los chips repite lo que ve, por ejemplo Yo · Reservas.

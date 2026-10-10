@@ -1021,7 +1021,7 @@ L'elenco è lungo e Lei cerca solo prenotazioni. I chip sotto la barra lo restri
 
 **Passaggi**
 
-1. Tocchi **Le mie prenotazioni** per tenere solo le prenotazioni. Lo tocchi di nuovo per vedere tutto.
+1. Tocchi **Le mie prenotazioni** per tenere solo le Sue prenotazioni. Lo tocchi di nuovo per vedere tutto.
 2. Oppure scelga chip come **Prenotazioni**, **Presenze** e **Check-out**; **Tutti** mostra ogni tipo.
 3. Per annullare le sue scelte, tocchi **Reimposta filtri**, il pulsante a forma di imbuto.
 4. Una riga sopra i chip ripete ciò che vede, per esempio Io · Prenotazioni.

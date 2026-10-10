@@ -28,6 +28,7 @@ import '../domain/default_booking_period.dart';
 import '../application/book_seat.dart';
 import '../application/booking_recovery.dart';
 import 'widgets/booking_recovery_sheet.dart';
+import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 import '../domain/walk_up_window.dart';
@@ -38,6 +39,8 @@ import 'booking_feedback.dart';
 import 'booking_trace_points.dart';
 import 'widgets/booking_sheet.dart';
 import 'widgets/message_reserver.dart';
+import 'widgets/reservation_detail_sheet.dart'
+    show ownBookingRemovalOf, requestBookingDeletion;
 import 'widgets/series_result_dialog.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/trace/guarded.dart';
@@ -339,11 +342,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       now: now,
       granularity: granularity,
     );
+    final removal = ownBookingRemovalOf(ref, mine); // #2328
     final action = await showMySeatSheet(
       context,
       seat: seat,
       mine: mine,
       now: now,
+      cancellable: removal == OwnBookingRemoval.cancel,
+      deletionRequestable: removal == OwnBookingRemoval.requestDeletion,
       granularity: granularity,
     );
     traceMySeatAction(mine: mine, action: action, windowOpen: windowOpen);
@@ -351,6 +357,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       recordTaskStep(ref, RecorderActions.closeMyReservation); // #1881
     }
     if (action == null || !mounted) return;
+    if (action == 'requestDeletion') {
+      await requestBookingDeletion(context, ref, mine);
+      return;
+    }
     final repo = ref.read(reservationRepositoryProvider);
     // #1881 — the attempt before the command, its real answer after.
     final command = myReservationCommand(action);

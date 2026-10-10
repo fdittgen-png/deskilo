@@ -12,6 +12,7 @@ none: it is read as reassurance.
 
 | what it protects | file |
 |---|---|
+| The Activity analysis invoiced and collected figures come from the demo's own invoices and matches, with the server's predicates: void and settlement invoices left out, credit notes apart, collected by the month of the match (#2339) | `test/core/demo/demo_finance_kpi_test.dart` |
 | Demo entry, the explanation before consent, leaving — and that a whole visit leaves the device's own preferences byte-for-byte as it found them (#1564) | `test/core/demo/demo_entry_test.dart` |
 | Isolation: the overrides are complete — every repository, every outward edge, the schema probe, the push pair and every per-device preference (#1564) | `test/core/demo/demo_scope_test.dart` |
 | Isolation reaches the providers screens actually read | `test/core/demo/demo_scope_reach_test.dart` |

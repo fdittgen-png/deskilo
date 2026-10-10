@@ -22,6 +22,8 @@
 // the question stays open.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -29,6 +31,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../providers/attention_providers.dart';
+import '../widgets/local_setup_views.dart' show eventTypeWord;
 
 class AttentionScreen extends ConsumerWidget {
   const AttentionScreen({super.key});
@@ -77,11 +80,11 @@ class AttentionScreen extends ConsumerWidget {
   }
 }
 
-/// One line: what it is about, what the decision is, and since when.
+/// One line: the decision as a sentence in the reader's language, and
+/// since when (#2326 — the provider's keys are never printed).
 ///
 /// The line IS the button — the design forbids a detail page between a
-/// person and the decision — so the whole row is the tap target even
-/// while the destinations are being wired.
+/// person and the decision — so a tap opens the screen where it is made.
 class _Row extends StatelessWidget {
   const _Row({super.key, required this.item});
 
@@ -90,17 +93,19 @@ class _Row extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // English only where no localization is installed (a bare test app).
+    final l10n = AppLocalizations.of(context) ??
+        lookupAppLocalizations(const Locale('en'));
+    final locale = Localizations.maybeLocaleOf(context)?.toLanguageTag();
+    final since = DateFormat.yMMMd(locale).format(item.waitingSince.toLocal());
     return ListTile(
       key: const ValueKey('attention-chevron-right'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(_iconFor(item.kind)),
-      title: Text(
-        item.count > 1 ? '${item.decision} · ${item.count}' : item.decision,
-        style: theme.textTheme.bodyLarge,
-      ),
-      subtitle: Text(item.subject),
+      title: Text(attentionTitle(l10n, item), style: theme.textTheme.bodyLarge),
+      subtitle: Text(l10n.attentionWaitingSince(since)),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () {},
+      onTap: () => context.push(attentionRoute(item.action)),
     );
   }
 
@@ -112,3 +117,20 @@ class _Row extends StatelessWidget {
         AttentionKind.configuration => Icons.tune_outlined,
       };
 }
+
+/// The sentence a line reads, in the reader's language.
+String attentionTitle(AppLocalizations l10n, Attention item) =>
+    switch (item.action) {
+      AttentionAction.decide =>
+        l10n.attentionDecide(eventTypeWord(l10n, item.subject)),
+      AttentionAction.admit => l10n.attentionAdmit(item.count),
+      AttentionAction.issue => l10n.attentionIssue(item.count),
+    };
+
+/// Where a tap takes the person: the screen where that decision is made.
+/// Each route's own redirect handles a feature or permission that is off.
+String attentionRoute(AttentionAction action) => switch (action) {
+      AttentionAction.decide => '/events',
+      AttentionAction.admit => '/members',
+      AttentionAction.issue => '/invoicing/wizard',
+    };

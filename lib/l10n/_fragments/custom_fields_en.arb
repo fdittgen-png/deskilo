@@ -16,6 +16,42 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "attentionDecide": "Decide: {subject}",
+  "@attentionDecide": {
+    "description": "#2326: attentionDecide",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "attentionAdmit": "{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
+  "@attentionAdmit": {
+    "description": "#2326: attentionAdmit",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attentionIssue": "{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
+  "@attentionIssue": {
+    "description": "#2326: attentionIssue",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attentionWaitingSince": "Waiting since {date}",
+  "@attentionWaitingSince": {
+    "description": "#2326: attentionWaitingSince",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "featureCustomFieldsTitle": "Questions this space asks",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

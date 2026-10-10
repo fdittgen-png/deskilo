@@ -65,7 +65,7 @@ Future<List<Attention>> attention(Ref ref) async {
         kind:
             isMoneyEvent(event.type) ? AttentionKind.money : AttentionKind.person,
         subject: event.type.dbName,
-        decision: 'decide',
+        action: AttentionAction.decide,
         waitingSince: event.createdAt,
       ),
     );
@@ -80,7 +80,7 @@ Future<List<Attention>> attention(Ref ref) async {
       Attention(
         kind: AttentionKind.person,
         subject: 'members',
-        decision: 'admit',
+        action: AttentionAction.admit,
         // The oldest of them, so the line's age is the wait that has
         // gone on longest rather than the most recent arrival.
         // `joinedAt` is null until the join is confirmed, which is
@@ -102,7 +102,7 @@ Future<List<Attention>> attention(Ref ref) async {
       Attention(
         kind: AttentionKind.month,
         subject: 'invoicing',
-        decision: 'issue',
+        action: AttentionAction.issue,
         waitingSince: now,
         count: overview.toInvoice.length,
       ),

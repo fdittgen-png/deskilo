@@ -4,6 +4,7 @@
 // seat several people share must say who has it and when. One
 // derivation (seatDaySegments) feeds the divided fill on the plan and
 // the day sheet behind the tap.
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
@@ -335,7 +336,12 @@ void main() {
 
   testWidgets('#1813 — two of MY bookings on one seat: each opens its own '
       'sheet, and cancelling the afternoon leaves the morning', (tester) async {
-    final env = await pumpPlan(tester, seedReservations: (repo) {
+    // At 07:00 on the workspace clock both are still ahead: a STARTED
+    // booking offers Request deletion instead of Cancel (#2328, the rule
+    // both sheets read), and the device clock in `flutter test` is
+    // UTC-7, so kTestNow is already evening in Berlin.
+    final env = await pumpPlan(tester, clock: FixedClock(_at(7)),
+        seedReservations: (repo) {
       for (final (id, from, to) in [
         ('res-morning', 8, 12),
         ('res-afternoon', 13, 17),

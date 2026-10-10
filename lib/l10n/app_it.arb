@@ -324,6 +324,22 @@
   "assistantSetupStepWorkspace": "Attivi gli assistenti per questo spazio di lavoro",
   "assistantSetupTitle": "Configurazione degli assistenti",
   "assistantSetupTurnOn": "Attiva",
+  "attentionAdmit": "{count, plural, =1{Ammettere 1 persona che chiede di unirsi} other{Ammettere {count} persone che chiedono di unirsi}}",
+  "@attentionAdmit": {
+    "description": "#2326: attentionAdmit"
+  },
+  "attentionDecide": "Da decidere: {subject}",
+  "@attentionDecide": {
+    "description": "#2326: attentionDecide"
+  },
+  "attentionIssue": "{count, plural, =1{Fatturare il mese a 1 membro} other{Fatturare il mese a {count} membri}}",
+  "@attentionIssue": {
+    "description": "#2326: attentionIssue"
+  },
+  "attentionWaitingSince": "In attesa dal {date}",
+  "@attentionWaitingSince": {
+    "description": "#2326: attentionWaitingSince"
+  },
   "authAlreadyRegistered": "Questo indirizzo non può essere usato per creare un account. Acceda o reimposti la password.",
   "authConnectServer": "Collegarsi al server di un'organizzazione",
   "authContinueWith": "oppure continua con",

@@ -992,6 +992,30 @@ abstract class AppLocalizations {
   /// **'Turn on'**
   String get assistantSetupTurnOn;
 
+  /// #2326: attentionAdmit
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}'**
+  String attentionAdmit(int count);
+
+  /// #2326: attentionDecide
+  ///
+  /// In en, this message translates to:
+  /// **'Decide: {subject}'**
+  String attentionDecide(String subject);
+
+  /// #2326: attentionIssue
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
+  String attentionIssue(int count);
+
+  /// #2326: attentionWaitingSince
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting since {date}'**
+  String attentionWaitingSince(String date);
+
   /// Inline refusal when the server itself discloses that the address is taken
   ///
   /// In en, this message translates to:

@@ -20,7 +20,7 @@ final class BiModuleResultProvider
     required BiModuleResultFamily super.from,
     required (String, String, BiQueryContext) super.argument,
   }) : super(
-         retry: null,
+         retry: biRetry,
          name: r'biModuleResultProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -59,7 +59,7 @@ final class BiModuleResultProvider
   }
 }
 
-String _$biModuleResultHash() => r'900ab2ac90d01eeb9fe3c93638665d880e82cdf0';
+String _$biModuleResultHash() => r'a3829148dea4c39c0d49b51bcfd1bbdc716582ec';
 
 final class BiModuleResultFamily extends $Family
     with
@@ -69,7 +69,7 @@ final class BiModuleResultFamily extends $Family
         > {
   BiModuleResultFamily._()
     : super(
-        retry: null,
+        retry: biRetry,
         name: r'biModuleResultProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
@@ -117,7 +117,7 @@ final class BiModuleSeriesProvider
     required BiModuleSeriesFamily super.from,
     required (String, String, BiGrain, BiPeriod, int) super.argument,
   }) : super(
-         retry: null,
+         retry: biRetry,
          name: r'biModuleSeriesProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -163,7 +163,7 @@ final class BiModuleSeriesProvider
   }
 }
 
-String _$biModuleSeriesHash() => r'7479d35a8aae07516119536a6632790881617d5d';
+String _$biModuleSeriesHash() => r'79957d850da793cefa4b889b2c2eb3c5ac41647d';
 
 /// The module's own figure for each of the [count] periods ending at
 /// [end], oldest first. Each is the same read the page makes for one
@@ -179,7 +179,7 @@ final class BiModuleSeriesFamily extends $Family
         > {
   BiModuleSeriesFamily._()
     : super(
-        retry: null,
+        retry: biRetry,
         name: r'biModuleSeriesProvider',
         dependencies: null,
         $allTransitiveDependencies: null,

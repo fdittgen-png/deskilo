@@ -15,15 +15,21 @@ import '../../../../core/i18n/format_controller.dart';
 /// caller reads the clock, performs the repository calls and maps
 /// errors; presence gating lives in [Reservation.checkInWindowOpen].
 
-/// Sheet on MY reservation: check out / check in / cancel, returned as
-/// 'checkout' / 'checkin' / 'cancel' (null = dismissed). Outside the
-/// check-in window (#408) the check-in tile is disabled and explains
-/// itself — [now] must be the REAL clock, never the browsed instant.
+/// Sheet on MY reservation: check out / check in / cancel / request
+/// deletion, returned as 'checkout' / 'checkin' / 'cancel' /
+/// 'requestDeletion' (null = dismissed). Outside the check-in window
+/// (#408) the check-in tile is disabled and explains itself — [now] must
+/// be the REAL clock, never the browsed instant. [cancellable] and
+/// [deletionRequestable] come from the #2328 rule (`ownBookingRemoval`)
+/// the booking's detail sheet reads too, so both offer the same action
+/// for the same state.
 Future<String?> showMySeatSheet(
   BuildContext context, {
   required Seat seat,
   required Reservation mine,
   required DateTime now,
+  required bool cancellable,
+  required bool deletionRequestable,
   BookingGranularity? granularity,
 }) {
   final l10n = AppLocalizations.of(context);
@@ -93,14 +99,24 @@ Future<String?> showMySeatSheet(
                               'longer possible.'),
               ),
             ),
-          ListTile(
-            key: ValueKey('check-in-sheets-plan-cancel-reservation-button-${granularity?.name}'),
-            leading: const Icon(Icons.cancel_outlined),
-            title: Text(
-              l10n?.planCancelReservationButton ?? 'Cancel reservation',
+          if (cancellable)
+            ListTile(
+              key: ValueKey('check-in-sheets-plan-cancel-reservation-button-${granularity?.name}'),
+              leading: const Icon(Icons.cancel_outlined),
+              title: Text(
+                l10n?.planCancelReservationButton ?? 'Cancel reservation',
+              ),
+              onTap: () => Navigator.of(context).pop('cancel'),
+            )
+          else if (deletionRequestable)
+            ListTile(
+              key: ValueKey('check-in-sheets-request-deletion-button-${granularity?.name}'),
+              leading: const Icon(Icons.delete_outline),
+              title: Text(
+                l10n?.reservationDeleteRequestButton ?? 'Request deletion',
+              ),
+              onTap: () => Navigator.of(context).pop('requestDeletion'),
             ),
-            onTap: () => Navigator.of(context).pop('cancel'),
-          ),
           const SizedBox(height: 8),
         ],
       ),
