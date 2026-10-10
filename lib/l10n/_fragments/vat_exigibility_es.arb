@@ -12,7 +12,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió. La elección se imprime en cada factura.",
+  "vatExigibilitySubtitle": "La regla legal depende del país: el cobro en Francia, el mes del servicio en Alemania y España, la factura o el pago (lo que ocurra primero) en Italia, el Reino Unido y Canadá, la factura en Suiza. Decide lo que declara un periodo y se imprime en cada factura.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -23,5 +23,34 @@
   "vatDeclarationBasisInvoice": "Base: facturas (IVA sobre los documentos emitidos durante el periodo).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  },
+  "vatTaxPointServicePeriod": "Al prestarse el servicio (anticipos con el cobro)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
+  },
+  "vatTaxPointEarlierOf": "Con la factura o el pago, lo que ocurra primero",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — regla legal",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclarationBasisServicePeriod": "Base: periodo del servicio (IVA del mes en que se presta el servicio; anticipos en el mes de su cobro).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
+  },
+  "vatDeclarationBasisEarlierOf": "Base: factura o pago, lo que ocurrió primero (IVA en la fecha más temprana de las dos).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
+  "vatTaxPointNoticeFr": "En Francia, las prestaciones de servicios tributan con el cobro salvo opción por los débitos. Este espacio nunca eligió: sus declaraciones siguen ahora los cobros. Si usted optó por los débitos, elíjalo en Identidad legal y facturación electrónica.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
   }
 }

@@ -1474,7 +1474,7 @@ The screen is [Legal identity & e-invoicing](https://fdittgen-png.github.io/desk
 > 3. If I charge no VAT, which legal wording justifies it?
 > 4. Which mentions must appear on my invoices (payment term, late-payment penalty, recovery indemnity, early-payment discount, insurance)?
 > 5. How should invoices be numbered, and does the number restart each year or each month?
-> 6. Does VAT fall due when I invoice or when I am paid?
+> 6. When does VAT on my services fall due under my country's rule (payment, service month, invoice), and should I opt for another basis?
 > 7. Must I send e-invoices to a government platform, and which one?
 > 8. Do I need periodic VAT returns, and how often?
 
@@ -2482,7 +2482,7 @@ The decisions you will meet have names. This is what each one means in DesKilo.
 | Fee band | The price of a subscription, by the percentage of the allowance the member takes. |
 | Validation domain | A kind of request with its own rule: a booking, an expense, a refund and others. |
 | Quorum | The number of validators a request needs. More than the people who can validate leaves it waiting. |
-| Exigibility | The moment VAT falls due: at invoicing or at payment. |
+| Exigibility | The moment VAT falls due — the tax point: on receipt of payment, in the month the service is performed or at the invoice, as the country's law sets, unless the business opted for another basis. |
 | Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
 | Environment pair | A test side and a real side of one space. |
 | Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |

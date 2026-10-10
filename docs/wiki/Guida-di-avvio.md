@@ -1474,7 +1474,7 @@ La schermata è [Identità legale e fatturazione elettronica](https://fdittgen-p
 > 3. Se non applico l'IVA, quale formulazione di legge lo giustifica?
 > 4. Quali menzioni devono comparire sulle mie fatture (termine di pagamento, penale per ritardato pagamento, indennità di recupero, sconto per pagamento anticipato, assicurazione)?
 > 5. Come vanno numerate le fatture, e il numero riparte ogni anno o ogni mese?
-> 6. L'IVA diventa esigibile quando fatturo o quando vengo pagato?
+> 6. Quando diventa esigibile l'IVA sui miei servizi secondo la regola del mio Paese (incasso, mese della prestazione, fattura), e devo optare per un'altra base, come l'IVA per cassa?
 > 7. Devo inviare fatture elettroniche a una piattaforma pubblica, e a quale?
 > 8. Mi servono dichiarazioni IVA periodiche, e con quale frequenza?
 
@@ -2482,7 +2482,7 @@ Le decisioni che incontrerà hanno dei nomi. Ecco che cosa significa ciascuno in
 | Fascia tariffaria | Il prezzo di un abbonamento, in base alla percentuale della quota che il membro sceglie. |
 | Dominio di convalida | Un tipo di richiesta con una propria regola: una prenotazione, una spesa, un rimborso e altri. |
 | Quorum | Il numero di convalidatori di cui una richiesta ha bisogno. Un numero maggiore delle persone che possono convalidare la lascia in attesa. |
-| Esigibilità | Il momento in cui l'IVA diventa dovuta: alla fatturazione o al pagamento. |
+| Esigibilità | Il momento in cui l'IVA diventa dovuta: all'incasso, nel mese della prestazione o alla fattura, secondo la legge del Paese, salvo opzione per un'altra base (l'IVA per cassa in Italia). |
 | Azzeramento della numerazione | Con quale frequenza il numero di fattura riparte da capo. Non può essere più frequente della data stampata sulla fattura. |
 | Coppia di ambienti | Un lato di prova e un lato reale di uno stesso spazio. |
 | Modello | Una configurazione salvata (planimetria, regole, tariffe, ruoli) che può applicare a un nuovo spazio. Non porta mai con sé identità né dati di pagamento. |

@@ -5858,6 +5858,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get fecAccountVat => 'IVA incassata';
 
   @override
+  String get fecAccountVatPending => 'IVA a debito non ancora esigibile';
+
+  @override
   String get fecAccountsIntro =>
       'Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — li sostituisca con quelli del suo commercialista.';
 
@@ -18840,12 +18843,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclXml => 'Esporta XML';
 
   @override
+  String get vatDeclarationBasisEarlierOf =>
+      'Base: fattura o pagamento, il primo dei due (IVA alla data più precoce).';
+
+  @override
   String get vatDeclarationBasisInvoice =>
       'Base: fatture (IVA sui documenti emessi nel periodo).';
 
   @override
   String get vatDeclarationBasisPayment =>
       'Base: incassi (IVA sui pagamenti ricevuti nel periodo).';
+
+  @override
+  String get vatDeclarationBasisServicePeriod =>
+      'Base: periodo della prestazione (IVA nel mese in cui la prestazione è eseguita; acconti nel mese dell\'incasso).';
 
   @override
   String get vatEffectiveDate => 'Data di effetto (AAAA-MM-GG)';
@@ -18864,7 +18875,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'All\'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che ha emesso. La scelta è stampata su ogni fattura.';
+      'La regola di legge dipende dal Paese: l\'incasso in Francia, il mese della prestazione in Germania e Spagna, la fattura o il pagamento se anteriore in Italia, nel Regno Unito e in Canada, la fattura in Svizzera. Decide ciò che un periodo dichiara ed è stampata su ogni fattura.';
 
   @override
   String get vatExigibilityTitle => 'Esigibilità dell’IVA';
@@ -18981,6 +18992,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatSince => 'dal';
+
+  @override
+  String get vatTaxPointEarlierOf =>
+      'Alla fattura o al pagamento, se anteriore';
+
+  @override
+  String vatTaxPointLegalDefault(String rule) {
+    return '$rule — regola di legge';
+  }
+
+  @override
+  String get vatTaxPointNoticeFr =>
+      'In Francia le prestazioni di servizi sono tassate all\'incasso, salvo opzione per i débits. Questo spazio non ha mai scelto: le sue dichiarazioni seguono ora gli incassi. Se ha optato per i débits, lo scelga in Identità legale e fatturazione elettronica.';
+
+  @override
+  String get vatTaxPointServicePeriod =>
+      'All\'esecuzione della prestazione (acconti all\'incasso)';
 
   @override
   String get vatTitle => 'IVA';

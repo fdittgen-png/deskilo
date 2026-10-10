@@ -30,7 +30,7 @@ import 'lint_sources.dart';
 const int _rawFieldCeiling = 207;
 const int _literalGapCeiling = 252; // #2286 and #2291 use spacing tokens.
 const int _fallbackCeiling =
-    6361; // 2026-10-10 #2327: the demo persona labels read the catalogue. 2026-10-10 #2328: the deletion request reads the catalogue; 2026-10-09 #2313: the scenario tips read the catalogue, not inline English.
+    6353; // 2026-10-10 #2327: the demo persona labels read the catalogue. 2026-10-10 #2328: the deletion request reads the catalogue; 2026-10-09 #2313: the scenario tips read the catalogue, not inline English.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

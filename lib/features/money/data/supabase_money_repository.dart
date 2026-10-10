@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice.dart';
 import '../domain/vat_declaration.dart';
+import '../domain/vat_tax_point.dart';
 import '../domain/member_account.dart';
 import '../domain/billing_rules.dart';
 import '../domain/expense_repartition.dart';
@@ -685,6 +686,32 @@ class SupabaseMoneyRepository implements MoneyRepository {
           eventId: row['event_id'] as String?,
         ),
     };
+  }
+
+  @override
+  Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(
+    String workspaceId,
+  ) async {
+    // #2355 — paged to the end like the matches: a declaration built
+    // from a cut read would drop instalments without a word.
+    final rows = await fetchAllPages(
+      table: 'invoice_match_payments',
+      build: () => _client
+          .from('invoice_match_payments')
+          .select('id, invoice_id, amount_cents, matched_at')
+          .eq('workspace_id', workspaceId)
+          .order('id', ascending: true),
+    );
+    final out = <String, List<TaxPointPayment>>{};
+    for (final row in rows) {
+      out.putIfAbsent(row['invoice_id'] as String, () => []).add(
+            TaxPointPayment(
+              DateTime.parse(row['matched_at'] as String).toLocal(),
+              (row['amount_cents'] as num).toInt(),
+            ),
+          );
+    }
+    return out;
   }
 
   @override

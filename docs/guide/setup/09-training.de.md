@@ -190,7 +190,7 @@ Die Entscheidungen, denen Sie begegnen werden, haben Namen. Hier steht, was jede
 | Gebührenband | Der Preis eines Abos, nach dem Prozentsatz des Kontingents, den das Mitglied nimmt. |
 | Validierungsbereich | Eine Art von Anfrage mit eigener Regel: eine Buchung, eine Ausgabe, eine Erstattung und andere. |
 | Quorum | Die Zahl der Validierer, die eine Anfrage braucht. Mehr, als es Personen zum Validieren gibt, lässt sie warten. |
-| Fälligkeit | Der Moment, in dem die Umsatzsteuer fällig wird: bei der Rechnungsstellung oder bei der Zahlung. |
+| Fälligkeit | Der Moment, in dem die Umsatzsteuer entsteht: bei Zahlungseingang, im Monat der Leistung oder mit der Rechnung, wie das Gesetz des Landes es bestimmt, sofern das Unternehmen keine andere Grundlage gewählt hat (Ist-Versteuerung). |
 | Neubeginn der Nummerierung | Wie oft die Rechnungsnummer wieder von vorn beginnt. Das darf nicht häufiger sein als das auf der Rechnung gedruckte Datum. |
 | Umgebungspaar | Eine Testseite und eine echte Seite eines Space. |
 | Vorlage | Eine gespeicherte Einrichtung (Plan, Regeln, Tarife, Rollen), die Sie auf einen neuen Space anwenden können. Sie übernimmt nie Identität oder Zahlungsangaben. |

@@ -5859,6 +5859,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fecAccountVat => 'IVA recaudado';
 
   @override
+  String get fecAccountVatPending => 'IVA repercutido pendiente de devengo';
+
+  @override
   String get fecAccountsIntro =>
       'Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.';
 
@@ -18810,12 +18813,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclXml => 'Exportar XML';
 
   @override
+  String get vatDeclarationBasisEarlierOf =>
+      'Base: factura o pago, lo que ocurrió primero (IVA en la fecha más temprana de las dos).';
+
+  @override
   String get vatDeclarationBasisInvoice =>
       'Base: facturas (IVA sobre los documentos emitidos durante el periodo).';
 
   @override
   String get vatDeclarationBasisPayment =>
       'Base: cobros (IVA sobre los pagos recibidos durante el periodo).';
+
+  @override
+  String get vatDeclarationBasisServicePeriod =>
+      'Base: periodo del servicio (IVA del mes en que se presta el servicio; anticipos en el mes de su cobro).';
 
   @override
   String get vatEffectiveDate => 'Fecha de efecto (AAAA-MM-DD)';
@@ -18835,7 +18846,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió. La elección se imprime en cada factura.';
+      'La regla legal depende del país: el cobro en Francia, el mes del servicio en Alemania y España, la factura o el pago (lo que ocurra primero) en Italia, el Reino Unido y Canadá, la factura en Suiza. Decide lo que declara un periodo y se imprime en cada factura.';
 
   @override
   String get vatExigibilityTitle => 'Devengo del IVA';
@@ -18952,6 +18963,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatSince => 'desde el';
+
+  @override
+  String get vatTaxPointEarlierOf =>
+      'Con la factura o el pago, lo que ocurra primero';
+
+  @override
+  String vatTaxPointLegalDefault(String rule) {
+    return '$rule — regla legal';
+  }
+
+  @override
+  String get vatTaxPointNoticeFr =>
+      'En Francia, las prestaciones de servicios tributan con el cobro salvo opción por los débitos. Este espacio nunca eligió: sus declaraciones siguen ahora los cobros. Si usted optó por los débitos, elíjalo en Identidad legal y facturación electrónica.';
+
+  @override
+  String get vatTaxPointServicePeriod =>
+      'Al prestarse el servicio (anticipos con el cobro)';
 
   @override
   String get vatTitle => 'IVA';

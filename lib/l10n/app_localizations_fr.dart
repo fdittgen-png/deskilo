@@ -5871,6 +5871,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fecAccountVat => 'TVA collectée';
 
   @override
+  String get fecAccountVatPending => 'TVA collectée en attente d\'exigibilité';
+
+  @override
   String get fecAccountsIntro =>
       'Un FEC est fait d\'écritures comptables : il lui faut des numéros de compte. Voici les comptes du plan comptable général — remplacez-les par ceux de votre comptable si besoin.';
 
@@ -18870,12 +18873,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclXml => 'Export XML';
 
   @override
+  String get vatDeclarationBasisEarlierOf =>
+      'Base : facture ou paiement, au premier des deux (TVA à la plus précoce des deux dates).';
+
+  @override
   String get vatDeclarationBasisInvoice =>
       'Base : débits (TVA sur les factures émises pendant la période).';
 
   @override
   String get vatDeclarationBasisPayment =>
       'Base : encaissements (TVA sur les paiements reçus pendant la période).';
+
+  @override
+  String get vatDeclarationBasisServicePeriod =>
+      'Base : période de la prestation (TVA du mois où la prestation est exécutée ; acomptes au mois de leur encaissement).';
 
   @override
   String get vatEffectiveDate => 'Date d\'effet (AAAA-MM-JJ)';
@@ -18894,7 +18905,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'Sur les encaissements, une période déclare ce que les clients ont payé pendant celle-ci ; sur les débits, ce que vous avez facturé. Le choix est imprimé sur chaque facture.';
+      'La règle légale dépend du pays : les encaissements en France, le mois de la prestation en Allemagne et en Espagne, la facture ou le paiement au premier des deux en Italie, au Royaume-Uni et au Canada, la facture en Suisse. Elle décide de ce qu\'une période déclare et figure sur chaque facture.';
 
   @override
   String get vatExigibilityTitle => 'Exigibilité de la TVA';
@@ -19011,6 +19022,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatSince => 'depuis le';
+
+  @override
+  String get vatTaxPointEarlierOf =>
+      'À la facture ou au paiement, au premier des deux';
+
+  @override
+  String vatTaxPointLegalDefault(String rule) {
+    return '$rule — règle légale';
+  }
+
+  @override
+  String get vatTaxPointNoticeFr =>
+      'En France, les prestations de services sont taxées sur les encaissements, sauf option pour les débits. Cet espace n\'avait jamais choisi : ses déclarations suivent désormais les encaissements. Si vous avez opté pour les débits, choisissez-le dans Identité légale et facturation électronique.';
+
+  @override
+  String get vatTaxPointServicePeriod =>
+      'À l\'exécution de la prestation (acomptes à l\'encaissement)';
 
   @override
   String get vatTitle => 'TVA';

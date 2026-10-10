@@ -205,7 +205,7 @@ La schermata è [Identità legale e fatturazione elettronica](app:/legal-identit
 > 3. Se non applico l'IVA, quale formulazione di legge lo giustifica?
 > 4. Quali menzioni devono comparire sulle mie fatture (termine di pagamento, penale per ritardato pagamento, indennità di recupero, sconto per pagamento anticipato, assicurazione)?
 > 5. Come vanno numerate le fatture, e il numero riparte ogni anno o ogni mese?
-> 6. L'IVA diventa esigibile quando fatturo o quando vengo pagato?
+> 6. Quando diventa esigibile l'IVA sui miei servizi secondo la regola del mio Paese (incasso, mese della prestazione, fattura), e devo optare per un'altra base, come l'IVA per cassa?
 > 7. Devo inviare fatture elettroniche a una piattaforma pubblica, e a quale?
 > 8. Mi servono dichiarazioni IVA periodiche, e con quale frequenza?
 

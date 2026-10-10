@@ -28,6 +28,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
@@ -231,7 +232,10 @@ void main() {
       final legal = InvoiceLegal.fromJson(ws.invoiceLegal);
       expect(legal.legalForm, 'SAS');
       expect(legal.paymentTerms, '30 days');
-      expect(legal.onPaymentBasis, isTrue);
+      // #2355 — the harness answers 'payment', the pre-#2355 word for
+      // cash: it arrives as the cash option, receipts in France.
+      expect(legal.vatTaxPoint, VatTaxPointOption.cash);
+      expect(legal.taxPointBasis(ws.countryCode).onReceipts, isTrue);
       expect(legal.isAssociation, isFalse);
       final dunning = DunningRules.fromJson(
         Map<String, dynamic>.from(space.row['dunning_rules'] as Map),

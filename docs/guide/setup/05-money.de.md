@@ -205,7 +205,7 @@ Der Bildschirm heißt [Rechtliche Identität & E-Rechnung](app:/legal-identity).
 > 3. Wenn ich keine Umsatzsteuer berechne: Mit welchem Gesetzestext begründe ich das?
 > 4. Welche Angaben müssen auf meinen Rechnungen stehen (Zahlungsziel, Verzugszinsen, Einziehungspauschale, Skonto, Versicherung)?
 > 5. Wie sind Rechnungen zu nummerieren, und beginnt die Nummer jedes Jahr oder jeden Monat neu?
-> 6. Wird die Umsatzsteuer mit der Rechnung fällig oder mit der Zahlung (Soll- oder Ist-Versteuerung)?
+> 6. Wann entsteht die Umsatzsteuer auf meine Leistungen nach der Regel meines Landes (Zahlung, Leistungsmonat, Rechnung), und soll ich eine andere Grundlage wählen, etwa die Ist-Versteuerung?
 > 7. Muss ich E-Rechnungen an eine staatliche Plattform senden, und an welche?
 > 8. Brauche ich regelmäßige Umsatzsteuer-Voranmeldungen, und wie oft?
 

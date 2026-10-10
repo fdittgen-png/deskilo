@@ -1474,7 +1474,7 @@ La pantalla es [Identidad legal y facturación electrónica](https://fdittgen-pn
 > 3. Si no cobro IVA, ¿qué texto legal lo justifica?
 > 4. ¿Qué menciones deben figurar en mis facturas (plazo de pago, penalización por demora, indemnización por cobro, descuento por pronto pago, seguro)?
 > 5. ¿Cómo deben numerarse las facturas, y la numeración se reinicia cada año o cada mes?
-> 6. ¿El IVA se devenga cuando facturo o cuando me pagan?
+> 6. ¿Cuándo se devenga el IVA de mis servicios según la regla de mi país (cobro, mes del servicio, factura), y debo optar por otra base, como el criterio de caja?
 > 7. ¿Debo enviar facturas electrónicas a una plataforma pública, y a cuál?
 > 8. ¿Necesito declaraciones periódicas de IVA, y con qué frecuencia?
 
@@ -2482,7 +2482,7 @@ Las decisiones con las que se encontrará tienen nombre. Esto es lo que signific
 | Tramo de tarifa | El precio de una suscripción, según el porcentaje del derecho que toma el miembro. |
 | Dominio de validación | Un tipo de solicitud con su propia regla: una reserva, un gasto, un reembolso y otros. |
 | Quórum | El número de validadores que necesita una solicitud. Más que las personas que pueden validar la deja en espera. |
-| Exigibilidad | El momento en que se devenga el IVA: al facturar o al cobrar. |
+| Exigibilidad | El momento en que se devenga el IVA: con el cobro, en el mes del servicio o con la factura, según la ley del país, salvo opción por otra base (el criterio de caja en España). |
 | Reinicio de numeración | Cada cuánto vuelve a empezar el número de factura. No puede ser más frecuente que la fecha impresa en la factura. |
 | Par de entornos | Un lado de prueba y un lado real de un mismo espacio. |
 | Plantilla | Una configuración guardada (plano, reglas, tarifas, roles) que puede aplicar a un espacio nuevo. Nunca incluye la identidad ni los datos de pago. |

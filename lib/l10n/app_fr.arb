@@ -3875,6 +3875,10 @@
   },
   "fecAccountRevenue": "Ventes",
   "fecAccountVat": "TVA collectée",
+  "fecAccountVatPending": "TVA collectée en attente d'exigibilité",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  },
   "fecAccountsIntro": "Un FEC est fait d'écritures comptables : il lui faut des numéros de compte. Voici les comptes du plan comptable général — remplacez-les par ceux de votre comptable si besoin.",
   "fecAccountsTitle": "Comptes à utiliser",
   "fecMissingSiren": "Le FEC porte le nom de votre numéro d'immatriculation — renseignez-le d'abord dans Identité légale.",
@@ -11516,6 +11520,10 @@
   "@vatDeclXml": {
     "description": "Machine-readable export button"
   },
+  "vatDeclarationBasisEarlierOf": "Base : facture ou paiement, au premier des deux (TVA à la plus précoce des deux dates).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
   "vatDeclarationBasisInvoice": "Base : débits (TVA sur les factures émises pendant la période).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
@@ -11523,6 +11531,10 @@
   "vatDeclarationBasisPayment": "Base : encaissements (TVA sur les paiements reçus pendant la période).",
   "@vatDeclarationBasisPayment": {
     "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisServicePeriod": "Base : période de la prestation (TVA du mois où la prestation est exécutée ; acomptes au mois de leur encaissement).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
   },
   "vatEffectiveDate": "Date d'effet (AAAA-MM-JJ)",
   "@vatEffectiveDate": {
@@ -11541,7 +11553,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "Sur les encaissements, une période déclare ce que les clients ont payé pendant celle-ci ; sur les débits, ce que vous avez facturé. Le choix est imprimé sur chaque facture.",
+  "vatExigibilitySubtitle": "La règle légale dépend du pays : les encaissements en France, le mois de la prestation en Allemagne et en Espagne, la facture ou le paiement au premier des deux en Italie, au Royaume-Uni et au Canada, la facture en Suisse. Elle décide de ce qu'une période déclare et figure sur chaque facture.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -11645,6 +11657,27 @@
   "vatSince": "depuis le",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatTaxPointEarlierOf": "À la facture ou au paiement, au premier des deux",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — règle légale",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTaxPointNoticeFr": "En France, les prestations de services sont taxées sur les encaissements, sauf option pour les débits. Cet espace n'avait jamais choisi : ses déclarations suivent désormais les encaissements. Si vous avez opté pour les débits, choisissez-le dans Identité légale et facturation électronique.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
+  },
+  "vatTaxPointServicePeriod": "À l'exécution de la prestation (acomptes à l'encaissement)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
   },
   "vatTitle": "TVA",
   "vatTreatmentAuto": "Automatique",

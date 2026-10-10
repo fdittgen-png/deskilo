@@ -205,7 +205,7 @@ L'écran est [Identité légale et facturation électronique](app:/legal-identit
 > 3. Si je ne facture pas de TVA, quelle mention légale le justifie ?
 > 4. Quelles mentions doivent figurer sur mes factures (délai de paiement, pénalité de retard, indemnité forfaitaire de recouvrement, escompte pour paiement anticipé, assurance) ?
 > 5. Comment numéroter les factures, et la numérotation repart-elle chaque année ou chaque mois ?
-> 6. La TVA est-elle exigible à la facturation ou à l'encaissement ?
+> 6. Quand la TVA sur mes prestations devient-elle exigible selon la règle de mon pays (encaissement, mois de la prestation, facture), et dois-je opter pour une autre base, comme les débits ?
 > 7. Dois-je envoyer des factures électroniques à une plateforme publique, et laquelle ?
 > 8. Ai-je besoin de déclarations de TVA périodiques, et à quel rythme ?
 

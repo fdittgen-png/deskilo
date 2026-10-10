@@ -87,5 +87,9 @@
   "vatKeptRate": "A rate still used by an invoice or a service is kept, deactivated.",
   "@vatKeptRate": {
     "description": "Explains that a referenced rate is deactivated, not deleted"
+  },
+  "fecAccountVatPending": "VAT collected, not yet due",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
   }
 }

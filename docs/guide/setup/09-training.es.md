@@ -190,7 +190,7 @@ Las decisiones con las que se encontrará tienen nombre. Esto es lo que signific
 | Tramo de tarifa | El precio de una suscripción, según el porcentaje del derecho que toma el miembro. |
 | Dominio de validación | Un tipo de solicitud con su propia regla: una reserva, un gasto, un reembolso y otros. |
 | Quórum | El número de validadores que necesita una solicitud. Más que las personas que pueden validar la deja en espera. |
-| Exigibilidad | El momento en que se devenga el IVA: al facturar o al cobrar. |
+| Exigibilidad | El momento en que se devenga el IVA: con el cobro, en el mes del servicio o con la factura, según la ley del país, salvo opción por otra base (el criterio de caja en España). |
 | Reinicio de numeración | Cada cuánto vuelve a empezar el número de factura. No puede ser más frecuente que la fecha impresa en la factura. |
 | Par de entornos | Un lado de prueba y un lado real de un mismo espacio. |
 | Plantilla | Una configuración guardada (plano, reglas, tarifas, roles) que puede aplicar a un espacio nuevo. Nunca incluye la identidad ni los datos de pago. |

@@ -190,7 +190,7 @@ Les décisions que vous allez rencontrer ont des noms. Voici ce que chacun signi
 | Palier tarifaire | Le prix d'un abonnement, selon le pourcentage du quota que prend le membre. |
 | Domaine de validation | Un type de demande avec sa propre règle : une réservation, une note de frais, un remboursement et d'autres. |
 | Quorum | Le nombre de validateurs dont une demande a besoin. Plus que le nombre de personnes qui peuvent valider, et elle reste en attente. |
-| Exigibilité | Le moment où la TVA devient due : à la facturation ou au paiement. |
+| Exigibilité | Le moment où la TVA devient due — le fait générateur : à l'encaissement, au mois de la prestation ou à la facture, selon la loi du pays, sauf option pour une autre base (les débits en France). |
 | Remise à zéro de la numérotation | La fréquence à laquelle le numéro de facture repart de zéro. Elle ne peut pas être plus fréquente que la date imprimée sur la facture. |
 | Paire d'environnements | Un côté test et un côté réel d'un même espace. |
 | Modèle | Une configuration enregistrée (plan, règles, tarifs, rôles) que vous pouvez appliquer à un nouvel espace. Il ne reprend jamais l'identité ni les coordonnées de paiement. |

@@ -4543,21 +4543,22 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Destinatari:** Proprietario
 
-Sceglie se l'IVA viene conteggiata all'emissione della fattura o all'incasso.
+L'IVA di ogni fattura diventa esigibile il giorno che fissa la legge del suo Paese: all'incasso, all'esecuzione della prestazione o alla fattura. Lei mantiene questa regola o sceglie l'opzione che il suo Paese consente.
 
 ![](assets/help/images/user-money-vat-due--f.it.b8fa17aa9.jpg)
 
 **Passaggi**
 
 1. Scelga **Soggetto IVA (applica IVA)** come regime.
-2. In **Esigibilità dell’IVA**, scelga **Alla fattura (criterio ordinario)** o **All'incasso (IVA per cassa)**.
+2. In **Esigibilità dell’IVA**, mantenga la prima opzione, la regola di legge del suo Paese, o scelga l'opzione che il suo Paese consente: **All'incasso (IVA per cassa)** in Italia, **Alla fattura (criterio ordinario)** in Francia.
 3. Tocchi **Salva**.
 
 **Da sapere**
 
-- All'incasso, un periodo dichiara ciò che i clienti hanno pagato in quel periodo; alla fattura, ciò che Lei ha emesso.
-- La scelta è stampata su ogni fattura e guida la [dichiarazione IVA](help:user.money.vat.declaration).
-- Quale criterio si applichi a Lei è una questione fiscale per il Suo commercialista.
+- La regola di legge per le prestazioni di servizi: l'incasso in Francia; il mese in cui la prestazione è eseguita in Germania e Spagna, gli acconti all'incasso; la fattura o il pagamento, se anteriore, in Italia, nel Regno Unito e in Canada; la fattura in Svizzera.
+- All'incasso, una fattura pagata a rate cade in tanti periodi quanti sono i pagamenti; con l'IVA per cassa, ciò che non è incassato diventa esigibile un anno dopo l'operazione. Una nota di credito conta alla sua emissione (all'incasso, al rimborso), mai nel periodo della fattura che corregge.
+- La scelta è stampata su ogni fattura e guida allo stesso modo la [dichiarazione IVA](help:user.money.vat.declaration), il rapporto IVA e le esportazioni FEC e DATEV.
+- Quale opzione si applichi a Lei è una questione fiscale per il Suo commercialista.
 
 **Vedi anche:** [La dichiarazione IVA periodica](help:user.money.vat.declaration)
 
@@ -7319,7 +7320,7 @@ La schermata è [Identità legale e fatturazione elettronica](app:/legal-identit
 > 3. Se non applico l'IVA, quale formulazione di legge lo giustifica?
 > 4. Quali menzioni devono comparire sulle mie fatture (termine di pagamento, penale per ritardato pagamento, indennità di recupero, sconto per pagamento anticipato, assicurazione)?
 > 5. Come vanno numerate le fatture, e il numero riparte ogni anno o ogni mese?
-> 6. L'IVA diventa esigibile quando fatturo o quando vengo pagato?
+> 6. Quando diventa esigibile l'IVA sui miei servizi secondo la regola del mio Paese (incasso, mese della prestazione, fattura), e devo optare per un'altra base, come l'IVA per cassa?
 > 7. Devo inviare fatture elettroniche a una piattaforma pubblica, e a quale?
 > 8. Mi servono dichiarazioni IVA periodiche, e con quale frequenza?
 
@@ -8291,7 +8292,7 @@ Le decisioni che incontrerà hanno dei nomi. Ecco che cosa significa ciascuno in
 | Fascia tariffaria | Il prezzo di un abbonamento, in base alla percentuale della quota che il membro sceglie. |
 | Dominio di convalida | Un tipo di richiesta con una propria regola: una prenotazione, una spesa, un rimborso e altri. |
 | Quorum | Il numero di convalidatori di cui una richiesta ha bisogno. Un numero maggiore delle persone che possono convalidare la lascia in attesa. |
-| Esigibilità | Il momento in cui l'IVA diventa dovuta: alla fatturazione o al pagamento. |
+| Esigibilità | Il momento in cui l'IVA diventa dovuta: all'incasso, nel mese della prestazione o alla fattura, secondo la legge del Paese, salvo opzione per un'altra base (l'IVA per cassa in Italia). |
 | Azzeramento della numerazione | Con quale frequenza il numero di fattura riparte da capo. Non può essere più frequente della data stampata sulla fattura. |
 | Coppia di ambienti | Un lato di prova e un lato reale di uno stesso spazio. |
 | Modello | Una configurazione salvata (planimetria, regole, tariffe, ruoli) che può applicare a un nuovo spazio. Non porta mai con sé identità né dati di pagamento. |

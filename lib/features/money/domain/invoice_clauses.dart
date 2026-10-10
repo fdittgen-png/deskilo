@@ -233,7 +233,7 @@ class LegalClauseSnapshot {
       registration: legal.registration,
       insurance: legal.insurance,
       specialMentions: legal.specialMentions,
-      vatExigibility: legal.vatExigibility,
+      vatExigibility: legal.exigibilityIn(sellerCountry),
     );
   }
 }

@@ -3875,6 +3875,10 @@
   },
   "fecAccountRevenue": "Ventas",
   "fecAccountVat": "IVA recaudado",
+  "fecAccountVatPending": "IVA repercutido pendiente de devengo",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  },
   "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.",
   "fecAccountsTitle": "Cuentas a utilizar",
   "fecMissingSiren": "El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.",
@@ -11516,6 +11520,10 @@
   "@vatDeclXml": {
     "description": "Machine-readable export button"
   },
+  "vatDeclarationBasisEarlierOf": "Base: factura o pago, lo que ocurrió primero (IVA en la fecha más temprana de las dos).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
   "vatDeclarationBasisInvoice": "Base: facturas (IVA sobre los documentos emitidos durante el periodo).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
@@ -11523,6 +11531,10 @@
   "vatDeclarationBasisPayment": "Base: cobros (IVA sobre los pagos recibidos durante el periodo).",
   "@vatDeclarationBasisPayment": {
     "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisServicePeriod": "Base: periodo del servicio (IVA del mes en que se presta el servicio; anticipos en el mes de su cobro).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
   },
   "vatEffectiveDate": "Fecha de efecto (AAAA-MM-DD)",
   "@vatEffectiveDate": {
@@ -11541,7 +11553,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió. La elección se imprime en cada factura.",
+  "vatExigibilitySubtitle": "La regla legal depende del país: el cobro en Francia, el mes del servicio en Alemania y España, la factura o el pago (lo que ocurra primero) en Italia, el Reino Unido y Canadá, la factura en Suiza. Decide lo que declara un periodo y se imprime en cada factura.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -11645,6 +11657,27 @@
   "vatSince": "desde el",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatTaxPointEarlierOf": "Con la factura o el pago, lo que ocurra primero",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — regla legal",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTaxPointNoticeFr": "En Francia, las prestaciones de servicios tributan con el cobro salvo opción por los débitos. Este espacio nunca eligió: sus declaraciones siguen ahora los cobros. Si usted optó por los débitos, elíjalo en Identidad legal y facturación electrónica.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
+  },
+  "vatTaxPointServicePeriod": "Al prestarse el servicio (anticipos con el cobro)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
   },
   "vatTitle": "IVA",
   "vatTreatmentAuto": "Automático",

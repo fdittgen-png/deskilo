@@ -3875,6 +3875,10 @@
   },
   "fecAccountRevenue": "Erlöse",
   "fecAccountVat": "Vereinnahmte Steuer",
+  "fecAccountVatPending": "Umsatzsteuer, noch nicht fällig",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  },
   "fecAccountsIntro": "Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetzen Sie sie durch die Ihrer Buchhaltung.",
   "fecAccountsTitle": "Zu buchende Konten",
   "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.",
@@ -11516,6 +11520,10 @@
   "@vatDeclXml": {
     "description": "Machine-readable export button"
   },
+  "vatDeclarationBasisEarlierOf": "Grundlage: Rechnung oder Zahlung, je nachdem, was zuerst erfolgte (Steuer zum früheren der beiden Daten).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
   "vatDeclarationBasisInvoice": "Grundlage: vereinbarte Entgelte (Steuer auf im Zeitraum gestellte Rechnungen).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
@@ -11523,6 +11531,10 @@
   "vatDeclarationBasisPayment": "Grundlage: vereinnahmte Entgelte (Steuer auf im Zeitraum erhaltene Zahlungen).",
   "@vatDeclarationBasisPayment": {
     "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisServicePeriod": "Grundlage: Leistungszeitraum (Steuer im Monat der Leistung; Anzahlungen im Monat des Zahlungseingangs).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
   },
   "vatEffectiveDate": "Wirksam ab (JJJJ-MM-TT)",
   "@vatEffectiveDate": {
@@ -11541,7 +11553,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "Nach vereinnahmten Entgelten meldet ein Zeitraum, was Kunden darin bezahlt haben; nach vereinbarten Entgelten, was Sie gestellt haben. Die Wahl steht auf jeder Rechnung.",
+  "vatExigibilitySubtitle": "Die gesetzliche Regel hängt vom Land ab: Zahlungseingang in Frankreich, Leistungsmonat in Deutschland und Spanien, Rechnung oder Zahlung (was zuerst erfolgt) in Italien, im Vereinigten Königreich und in Kanada, die Rechnung in der Schweiz. Sie bestimmt, was ein Zeitraum meldet, und steht auf jeder Rechnung.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -11645,6 +11657,27 @@
   "vatSince": "ab",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatTaxPointEarlierOf": "Mit Rechnung oder Zahlung, je nachdem, was zuerst erfolgt",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — gesetzliche Regel",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTaxPointNoticeFr": "In Frankreich werden Dienstleistungen nach Zahlungseingang besteuert, sofern das Unternehmen nicht zur Besteuerung nach Rechnungsstellung (débits) optiert hat. Dieser Bereich hat nie gewählt; seine Erklärungen folgen jetzt den Zahlungseingängen. Wenn Sie optiert haben, wählen Sie dies unter Rechtliche Identität & E-Rechnung.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
+  },
+  "vatTaxPointServicePeriod": "Mit Ausführung der Leistung (Anzahlungen bei Zahlungseingang)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
   },
   "vatTitle": "Mehrwertsteuer",
   "vatTreatmentAuto": "Automatisch",

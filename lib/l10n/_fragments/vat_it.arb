@@ -21,5 +21,9 @@
   "vatPdfNet": "Imponibile",
   "vatPdfVat": "IVA",
   "fecAccountVat": "IVA incassata",
-  "vatKeptRate": "Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata."
+  "vatKeptRate": "Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.",
+  "fecAccountVatPending": "IVA a debito non ancora esigibile",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  }
 }

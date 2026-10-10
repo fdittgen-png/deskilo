@@ -6,10 +6,8 @@
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
 import '../../../core/i18n/currencies.dart';
-import 'billing_rules.dart';
 import 'invoice.dart';
-import 'vat_declaration.dart';
-import 'vat_rate.dart';
+import 'vat_tax_point.dart';
 
 /// One invoice × one rate.
 class VatReportPosition {
@@ -28,6 +26,9 @@ class VatReportPosition {
 
   final String invoiceId;
   final String number;
+
+  /// #2355 — the TAX POINT of this position (the issue date on the
+  /// invoice-date rule, the payment's day on receipts…), a calendar date.
   final DateTime issuedAt;
   final String customer;
   final double percent;
@@ -78,99 +79,64 @@ class VatReport {
   int get documentCount => positions.map((p) => p.invoiceId).toSet().length;
 }
 
-/// Documents of [start]..[end] (inclusive days), voided ones and
-/// documents folded into a settlement excluded (the settlement carries
-/// them), each split by rate. [zeroCategory] is the seller's category
-/// for a zero rate (O or E) on pre-0072 documents.
+/// The tax points of [start]..[end] (inclusive days), one position per
+/// document, date and rate, voided documents and settlements excluded
+/// (the settlement's sources carry the VAT). [zeroCategory] is the
+/// seller's category for a zero rate the document did not freeze.
 ///
-/// #896 — on the CASH basis ([matches] given, one entry per payment) a
-/// period holds the payments received inside it, not the documents
-/// issued inside it: a position is then a payment, dated the day it was
-/// matched, apportioned across the document's rates by
-/// [paymentSharesByRate] — the very function the declaration uses, so
-/// the accountant's list and the return can never disagree.
+/// #2355 — the positions are the tax-point engine's (`vat_tax_point.dart`)
+/// under [basis], the very amounts the declaration sums, so the
+/// accountant's list and the return can never disagree: on the invoice
+/// date a position is the document; on receipts it is a payment, dated
+/// the day it was received; on the service period it is the month the
+/// service was performed. [matches] are the accounting view's (a
+/// settlement's payment allocated onto its sources) and [instalments]
+/// the payments recorded one by one.
 VatReport buildVatReport(
   Iterable<Invoice> invoices, {
   required DateTime start,
   required DateTime end,
   required String zeroCategory,
-  Map<String, InvoiceMatch>? matches,
+  Map<String, InvoiceMatch> matches = const {},
+  Map<String, List<TaxPointPayment>> instalments = const {},
+  VatTaxPointBasis basis = VatTaxPointBasis.invoiceDate,
 }) {
-  final endExclusive = DateTime(end.year, end.month, end.day + 1);
   final positions = <VatReportPosition>[];
   String customerOf(Invoice invoice) =>
       invoice.buyerParty?.name.isNotEmpty == true
           ? invoice.buyerParty!.name
           : invoice.memberName;
-  if (matches != null) {
-    final byId = {for (final invoice in invoices) invoice.id: invoice};
-    for (final match in matches.values) {
-      final invoice = byId[match.invoiceId];
-      // #1076 — skip the SETTLEMENT, never its sources. A settlement is
-      // a management document; the revenue and the VAT live on the
-      // invoices it regroups, which were issued, numbered and declared
-      // (see `accountingView`). Skipping `isFolded` here dropped exactly
-      // those, and the caller had already removed the settlement — so
-      // neither document survived and the report read zero.
-      if (invoice == null ||
-          invoice.isVoided ||
-          invoice.kind == InvoiceKind.settlement) {
-        continue;
-      }
-      if (match.matchedAt.isBefore(start) ||
-          !match.matchedAt.isBefore(endExclusive)) {
-        continue;
-      }
-      // The category the document froze for each rate, so a
-      // reverse-charged or exempt supply keeps saying why it bears no
-      // tax when the money for it arrives.
-      final categories = {
-        for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
-          total.percent: total.category,
-      };
-      for (final entry in paymentSharesByRate(invoice, match.paidCents)
-          .entries) {
-        final split = vatSplit(entry.value, entry.key);
-        positions.add(VatReportPosition(
-          invoiceId: invoice.id,
-          number: invoice.number,
-          issuedAt: match.matchedAt,
-          customer: customerOf(invoice),
-          percent: entry.key,
-          category: categories[entry.key] ??
-              (entry.key == 0 ? zeroCategory : 'S'),
-          netCents: split.netCents,
-          vatCents: split.vatCents,
-          grossCents: entry.value,
-          reversesNumber: invoice.replacesNumber,
-        ));
-      }
-    }
-  } else {
-    for (final invoice in invoices) {
-      // #1076 — see the cash-basis branch above.
-      if (invoice.isVoided || invoice.kind == InvoiceKind.settlement) {
-        continue;
-      }
-      if (invoice.issuedAt.isBefore(start) ||
-          !invoice.issuedAt.isBefore(endExclusive)) {
-        continue;
-      }
-      for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory)) {
-        positions.add(VatReportPosition(
-          invoiceId: invoice.id,
-          number: invoice.number,
-          issuedAt: invoice.issuedAt,
-          customer: customerOf(invoice),
-          percent: total.percent,
-          category: total.category,
-          netCents: total.netCents,
-          vatCents: total.vatCents,
-          grossCents: total.grossCents,
-          reversesNumber: invoice.replacesNumber,
-        ));
-      }
-    }
+  final byId = {for (final invoice in invoices) invoice.id: invoice};
+  final amounts = vatTaxPointLedger(
+    byId.values,
+    matches: matches,
+    instalments: instalments,
+    basis: basis,
+  );
+  final categories = <String, Map<double, String>>{};
+  for (final amount in amounts) {
+    if (!amount.within(start, end)) continue;
+    final invoice = byId[amount.invoiceId]!;
+    // The category the document froze for each rate, so a
+    // reverse-charged or exempt supply keeps saying why it bears no tax
+    // whenever its tax point falls.
+    final frozen = categories.putIfAbsent(invoice.id, () => {
+          for (final total in invoice.vatBreakdown(zeroCategory: zeroCategory))
+            total.percent: total.category,
+        });
+    positions.add(VatReportPosition(
+      invoiceId: invoice.id,
+      number: invoice.number,
+      issuedAt: amount.on,
+      customer: customerOf(invoice),
+      percent: amount.percent,
+      category:
+          frozen[amount.percent] ?? (amount.percent == 0 ? zeroCategory : 'S'),
+      netCents: amount.netCents,
+      vatCents: amount.vatCents,
+      grossCents: amount.grossCents,
+      reversesNumber: invoice.replacesNumber,
+    ));
   }
   positions.sort((a, b) {
     final byDate = a.issuedAt.compareTo(b.issuedAt);

@@ -6712,6 +6712,10 @@
   "@fecAccountVat": {
     "description": "FEC export: label of the collected-VAT account"
   },
+  "fecAccountVatPending": "VAT collected, not yet due",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  },
   "fecAccountsIntro": "A FEC is made of accounting entries, so it needs account numbers. These are the French chart defaults — change them to your accountant's.",
   "@fecAccountsIntro": {
     "description": "Dialog body: why it asks"
@@ -21266,6 +21270,10 @@
   "@vatDeclXml": {
     "description": "Machine-readable export button"
   },
+  "vatDeclarationBasisEarlierOf": "Basis: invoice or payment, whichever came first (VAT on the earlier of the two dates).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
   "vatDeclarationBasisInvoice": "Basis: invoices (VAT on documents issued during the period).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
@@ -21273,6 +21281,10 @@
   "vatDeclarationBasisPayment": "Basis: receipts (VAT on payments received during the period).",
   "@vatDeclarationBasisPayment": {
     "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisServicePeriod": "Basis: service period (VAT in the month the service was performed; advance payments in the month received).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
   },
   "vatEffectiveDate": "Effective date (YYYY-MM-DD)",
   "@vatEffectiveDate": {
@@ -21294,7 +21306,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.",
+  "vatExigibilitySubtitle": "The legal default depends on your country: receipts in France, the month of the service in Germany and Spain, invoice or payment whichever comes first in Italy, the United Kingdom and Canada, the invoice in Switzerland. It decides what a period declares and is printed on every invoice.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -21446,6 +21458,27 @@
   "vatSince": "since",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatTaxPointEarlierOf": "On the invoice or the payment, whichever comes first",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — legal default",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTaxPointNoticeFr": "Services in France are taxed on receipts unless the business opted for the debits. This space never chose, so its declarations now follow receipts. If you opted for the debits, choose it under Legal identity & e-invoicing.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
+  },
+  "vatTaxPointServicePeriod": "When the service is performed (advance payments when received)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
   },
   "vatTitle": "VAT",
   "@vatTitle": {

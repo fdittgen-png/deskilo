@@ -27,13 +27,14 @@ import '../invoice_documents.dart';
 import '../report_layout_actions.dart';
 import '../../domain/vat_regime.dart';
 import '../../domain/accounting_view.dart';
-import '../../domain/invoice_legal.dart';
 import '../../application/declare_vat.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../vat_report_actions.dart';
+import '../vat_tax_point_labels.dart';
+import '../widgets/vat_tax_point_notice.dart';
 
 /// Periodic VAT declarations (#534/0107): the owner picks a filing
 /// period (month or quarter), the app aggregates the period's issued
@@ -90,10 +91,9 @@ class _VatDeclarationsScreenState
           await ref.read(invoicesProvider.future),
           await ref.read(invoiceMatchesProvider.future),
         );
-        // #896/#1449 — on the cash basis a period holds what was PAID
-        // inside it, not what was issued; the lines and the count of
-        // documents behind them follow the same date, and that rule
-        // lives in application/declare_vat.dart.
+        // #2355 — a period holds the tax points inside it: the
+        // country's rule or the owner's option, over every payment
+        // recorded one by one. The rule lives in domain/vat_tax_point.dart.
         await ref.read(vatDeclarationCommandProvider).declare(
               workspaceId: workspace.id,
               currency: workspace.currencyCode,
@@ -101,8 +101,8 @@ class _VatDeclarationsScreenState
               periodEnd: period.end,
               invoices: view.invoices,
               matches: view.matches,
-              onPaymentBasis:
-                  InvoiceLegal.fromJson(workspace.invoiceLegal).onPaymentBasis,
+              basis: workspaceTaxPointBasis(
+                  workspace.invoiceLegal, workspace.countryCode),
             );
       },
     );
@@ -112,14 +112,10 @@ class _VatDeclarationsScreenState
   /// #896 — one sentence naming the basis this workspace declares on.
   String _basisNote(AppLocalizations? l10n) {
     final workspace = ref.read(currentWorkspaceProvider).value;
-    final onPayment =
-        InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-            .onPaymentBasis;
-    return onPayment
-        ? (l10n?.vatDeclarationBasisPayment ??
-            'Basis: receipts (VAT on payments received during the period).')
-        : (l10n?.vatDeclarationBasisInvoice ??
-            'Basis: invoices (VAT on documents issued during the period).');
+    return vatTaxPointBasisNote(
+        l10n,
+        workspaceTaxPointBasis(
+            workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''));
   }
 
   Map<String, Object?> _reportData(VatDeclaration declaration) {
@@ -302,6 +298,14 @@ class _VatDeclarationsScreenState
                   key: const ValueKey('vat-decl-basis'),
                   icon: Icons.event_available_outlined,
                   text: _basisNote(l10n),
+                ),
+                VatTaxPointNotice(
+                  eligible: workspace != null &&
+                      needsVatTaxPointNotice(
+                        country: workspace.countryCode,
+                        vatRegime: workspace.vatRegime,
+                        invoiceLegal: workspace.invoiceLegal,
+                      ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 // New declaration: period + generate.

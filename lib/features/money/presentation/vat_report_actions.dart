@@ -18,6 +18,8 @@ import '../domain/accounting_view.dart';
 import '../domain/invoice_legal.dart';
 import '../domain/vat_regime.dart';
 import '../domain/vat_report.dart';
+import '../domain/vat_tax_point.dart';
+import 'vat_tax_point_labels.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
@@ -25,6 +27,14 @@ import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
 import '../domain/report_data.dart';
+
+/// #2355 — the basis a space declares on: its [country]'s tax point, or
+/// the option its owner chose in [invoiceLegal].
+VatTaxPointBasis workspaceTaxPointBasis(
+  Map<dynamic, dynamic> invoiceLegal,
+  String country,
+) =>
+    InvoiceLegal.fromJson(invoiceLegal).taxPointBasis(country);
 
 /// The period's report from the invoices already loaded for the hub.
 Future<VatReport> loadVatReport(
@@ -41,21 +51,21 @@ Future<VatReport> loadVatReport(
     await ref.read(invoicesProvider.future),
     matches,
   );
-  // #896 — on the cash basis the period holds the payments received in
-  // it, so the report is built from the matches, not the issue dates.
-  final onPayment =
-      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-          .onPaymentBasis;
-  return buildVatReport(
-    view.invoices,
-    start: start,
-    end: end,
-    zeroCategory: vatRegimeFromWire(workspace?.vatRegime ?? 'not_subject')
-        .taxCategoryCode,
-    // #1076 — the view's matches, not the raw ones: the settlement's
-    // payment has been ALLOCATED to the sources that carry the VAT.
-    matches: onPayment ? view.matches : null,
-  );
+  // #2355 — the period holds the tax points that fall inside it, on the
+  // basis the declaration uses: the same engine, the same payments.
+  return ref.read(vatDeclarationCommandProvider).report(
+        workspaceId: workspace?.id ?? '',
+        invoices: view.invoices,
+        start: start,
+        end: end,
+        zeroCategory: vatRegimeFromWire(workspace?.vatRegime ?? 'not_subject')
+            .taxCategoryCode,
+        // #1076 — the view's matches, not the raw ones: the settlement's
+        // payment has been ALLOCATED to the sources that carry the VAT.
+        matches: view.matches,
+        basis: workspaceTaxPointBasis(
+            workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''),
+      );
 }
 
 /// The Liquid data of the VAT report — the same legal mentions and
@@ -97,17 +107,13 @@ Map<String, Object?> vatReportData(
     'lines': const <Map<String, Object?>>[],
     'vat': const <Map<String, Object?>>[],
     'vat_period': periodLabel,
-    // #896 — the reader must know WHICH period this is: what was paid
-    // inside it, or what was issued inside it.
+    // #896/#2355 — the reader must know WHICH dates this period holds:
+    // what was paid inside it, issued inside it, or performed inside it.
     'vat_basis_note':
-        InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {})
-                .onPaymentBasis
-            ? (l10n?.vatDeclarationBasisPayment ??
-                'Basis: receipts (VAT on payments received during the '
-                    'period).')
-            : (l10n?.vatDeclarationBasisInvoice ??
-                'Basis: invoices (VAT on documents issued during the '
-                    'period).'),
+        vatTaxPointBasisNote(
+            l10n,
+            workspaceTaxPointBasis(workspace?.invoiceLegal ?? const {},
+                workspace?.countryCode ?? '')),
     'vat_period_net': money(report.netCents),
     'vat_period_vat': money(report.vatCents),
     'vat_period_gross': money(report.grossCents),

@@ -4766,21 +4766,22 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Public:** Propriétaire
 
-Vous choisissez si la TVA est comptée à l'émission de la facture ou à l'encaissement.
+La TVA de chaque facture devient exigible le jour que fixe la loi de votre pays — à l'encaissement, à l'exécution de la prestation ou à la facture. Vous gardez cette règle, ou vous choisissez l'option que votre pays permet.
 
 <p><img src="images/user-money-vat-due--f.fr.b8fa17aa9.jpg" width="280"></p>
 
 **Étapes**
 
 1. Choisissez **Assujetti à la TVA (facture la TVA)** comme régime.
-2. Dans **Exigibilité de la TVA**, choisissez **Sur les débits (à la facture)** ou **Sur les encaissements (au paiement)**.
+2. Dans **Exigibilité de la TVA**, gardez la première option, la règle légale de votre pays, ou choisissez l'option que votre pays permet : **Sur les débits (à la facture)** en France, **Sur les encaissements (au paiement)** ailleurs.
 3. Touchez **Enregistrer**.
 
 **Bon à savoir**
 
-- Sur les encaissements, une période déclare ce que les clients ont payé pendant cette période ; sur les débits, ce que vous avez émis.
-- Le choix est imprimé sur chaque facture et pilote la [déclaration de TVA](#la-déclaration-périodique-de-tva).
-- La base qui vous concerne est une question fiscale pour votre comptable.
+- La règle légale pour les prestations de services : les encaissements en France ; le mois où la prestation est exécutée en Allemagne et en Espagne, les acomptes à leur encaissement ; la facture ou le paiement, au premier des deux, en Italie, au Royaume-Uni et au Canada ; la facture en Suisse.
+- Sur les encaissements, une facture payée en plusieurs fois tombe dans autant de périodes que de paiements. Un avoir compte à son émission (sur les encaissements, à son remboursement), jamais dans la période de la facture qu'il corrige.
+- Le choix est imprimé sur chaque facture — l'option pour les débits avec la mention légale — et pilote à l'identique la [déclaration de TVA](#la-déclaration-périodique-de-tva), le rapport de TVA et les exports FEC et DATEV. Un espace français qui n'avait jamais choisi suit les encaissements, et son propriétaire en est averti une fois.
+- L'option qui vous concerne est une question fiscale pour votre comptable.
 
 **Voir aussi:** [La déclaration périodique de TVA](#la-déclaration-périodique-de-tva)
 

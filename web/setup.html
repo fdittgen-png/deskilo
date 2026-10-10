@@ -384,7 +384,12 @@ const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly'
 const RESETS_FOR={none:['never'],year:['never','yearly'],year_month:['never','yearly','monthly']};
 function numResets(){const ok=RESETS_FOR[S.numbering.datePart]||['never'];if(!ok.includes(S.numbering.reset)){S.numbering.reset=ok[ok.length-1];save()}return NUMRESET.filter(([v])=>ok.includes(v))}
 function numResetHint(){return S.numbering.datePart==='year_month'?'':T('numResetHint')}
-const VATEXIGIBILITY=[['invoice','exigInvoice'],['payment','exigPayment']];
+// #2355 — the VAT tax point: the country's legal rule, the invoice date
+// (France's option for the debits) or cash. The app keeps only what the
+// seller's country allows. A questionnaire saved before #2355 said
+// 'payment' for cash; it reads as 'cash'.
+const VATEXIGIBILITY=[['standard','exigStandard'],['invoice','exigInvoice'],['cash','exigPayment']];
+const taxPointOf=v=>v==='payment'?'cash':(VATEXIGIBILITY.some(o=>o[0]===v)?v:'standard');
 const OUTSIDE=[['charged','outsideCharged','outsideChargedDesc'],['free','outsideFree','outsideFreeDesc'],['walkup_only','outsideWalkup','outsideWalkupDesc'],['off','outsideOff','outsideOffDesc']];
 const outsideOpts=()=>OUTSIDE.map(([v,n,d])=>[v,T(n)+' — '+T(d)]);
 const outsideName=v=>{const o=OUTSIDE.find(x=>x[0]===v);return o?T(o[1]):''};
@@ -418,7 +423,7 @@ const DEFAULTS={
  sites:[],levels:[{name:T('defaultFirstLevel'),offices:[newOffice(1)]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
- org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
+ org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'standard',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),permsV:2,
@@ -446,6 +451,7 @@ function restore(stored){
  return out;
 }
 let S=restore(JSON.parse(localStorage.getItem(LS)||'null'));
+S.vatExigibility=taxPointOf(S.vatExigibility);
 // #600 -> #634: a questionnaire saved while the retired "minute bookings
 // within working hours" switch existed reads as the mode that replaced
 // it, exactly as the server maps the legacy booking_rules key.
@@ -871,7 +877,7 @@ const STEPS=[
    services:()=>n(S.services)?T('cfgServices',{n:n(S.services),list:S.services.filter(x=>x.name.trim()).map(x=>x.name+' '+money(x.price)).join(', ')}):T('cfgServicesNone'),
    accessorySupplements:()=>n(S.accessories)?T('cfgAccessories',{n:n(S.accessories),list:S.accessories.filter(x=>x.name.trim()).map(x=>T('cfgPerHalfDayItem',{name:x.name,price:money(x.supp)})).join(', ')}):T('cfgAccessoriesNone'),
    onlinePayments:()=>T('cfgOnlinePayments'),
-   invoicing:()=>[T(({not_subject:'cfgRegimeNotSubject',exempt:'cfgRegimeExempt',registered:'cfgRegimeRegistered'})[S.vatRegime]),registered()?T(S.vatExigibility==='payment'?'cfgExigPayment':'cfgExigInvoice'):null,S.regNumber?T('cfgRegNumber',{n:S.regNumber}):null,S.street||S.city?[S.street,S.postal,S.city].filter(Boolean).join(' '):null,isEU()?T(S.einvoice.url?'cfgEinvoiceConfigured':'cfgEinvoiceTodo'):T('cfgNonEu')].filter(Boolean).join(' · '),
+   invoicing:()=>[T(({not_subject:'cfgRegimeNotSubject',exempt:'cfgRegimeExempt',registered:'cfgRegimeRegistered'})[S.vatRegime]),registered()?T(({standard:'cfgExigStandard',invoice:'cfgExigInvoice',cash:'cfgExigPayment'})[taxPointOf(S.vatExigibility)]):null,S.regNumber?T('cfgRegNumber',{n:S.regNumber}):null,S.street||S.city?[S.street,S.postal,S.city].filter(Boolean).join(' '):null,isEU()?T(S.einvoice.url?'cfgEinvoiceConfigured':'cfgEinvoiceTodo'):T('cfgNonEu')].filter(Boolean).join(' · '),
    adminInvoicing:()=>T('cfgAdminInvoicing'),
    pdfExport:()=>T('cfgPdfExport'),
    seriesBooking:()=>T('cfgSeriesBooking'),
@@ -1106,7 +1112,8 @@ function configurationTree(){
   subscription_levels:{enabled_presets:levels.filter(x=>SUB_PRESETS.includes(x)),extra_levels:levels.filter(x=>!SUB_PRESETS.includes(x)),allow_custom:!!S.freeLevel},
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
    recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
-   seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_exigibility:S.vatExigibility||'invoice'},
+   seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:taxPointOf(S.vatExigibility),
+   ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[taxPointOf(S.vatExigibility)]||{})},
  };
  // #2331 — the role matrix, in the column's shape (role -> permission
  // names). Written only while the page asks for it; a role row REPLACES
@@ -1199,7 +1206,7 @@ function exportXml(){
  push('    <services>');
  if(on('services'))S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
  push('    </services>');
- push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-exigibility="${S.vatExigibility}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
+ push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-tax-point="${taxPointOf(S.vatExigibility)}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
  if(on('vatManagement')&&registered())S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"${on('vatGroups')&&r.group?` group="${r.group}"`:``}${on('vatRateHistory')&&r.validFrom?` valid-from="${r.validFrom}"`:``}/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
  if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic===true}"/>`);
@@ -1251,7 +1258,7 @@ function parseBack(text){
   Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
  S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
- const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=le.getAttribute('vat-exigibility')||S.vatExigibility;le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')==='true'}}
+ const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=taxPointOf(le.getAttribute('vat-tax-point')||le.getAttribute('vat-exigibility')||S.vatExigibility);le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')==='true'}}
 S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')||'',street:st.getAttribute('street')||'',postal:st.getAttribute('postal-code')||'',city:st.getAttribute('city')||'',legalId:st.getAttribute('legal-id')||''}));
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}

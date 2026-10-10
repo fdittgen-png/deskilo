@@ -205,7 +205,7 @@ The screen is [Legal identity & e-invoicing](app:/legal-identity). Have these re
 > 3. If I charge no VAT, which legal wording justifies it?
 > 4. Which mentions must appear on my invoices (payment term, late-payment penalty, recovery indemnity, early-payment discount, insurance)?
 > 5. How should invoices be numbered, and does the number restart each year or each month?
-> 6. Does VAT fall due when I invoice or when I am paid?
+> 6. When does VAT on my services fall due under my country's rule (payment, service month, invoice), and should I opt for another basis?
 > 7. Must I send e-invoices to a government platform, and which one?
 > 8. Do I need periodic VAT returns, and how often?
 

@@ -2,11 +2,12 @@
 //
 // #1449 — what a VAT period declares, and what the platform said back.
 //
-// **The basis.** On the accrual basis a period holds what was ISSUED in
-// it, on the cash basis what was PAID in it — and the difference is not
-// only the line totals but WHICH DOCUMENTS stand behind them, because
-// the count printed on the form must be counted on the same date as the
-// money. A voided invoice is behind nothing; a document counts once.
+// **The basis.** A period holds the tax points that fall inside it
+// (#2355, `vat_tax_point.dart`): issued, paid, or performed, as the
+// seller's country and option say — and the difference is not only the
+// line totals but WHICH DOCUMENTS stand behind them, because the count
+// printed on the form must be counted on the same date as the money. A
+// voided invoice is behind nothing; a document counts once.
 //
 // **The answer.** Filed is something the platform GRANTS, so a refusal
 // carries the reason it gave. Both derivations sat in a closure on the
@@ -14,6 +15,8 @@
 import '../domain/invoice.dart';
 import '../domain/money_repository.dart';
 import '../domain/vat_declaration.dart';
+import '../domain/vat_report.dart';
+import '../domain/vat_tax_point.dart';
 
 /// The numbers one filing period declares.
 class VatDeclarationDraft {
@@ -33,38 +36,34 @@ class VatDeclarationDraft {
   final int invoiceCount;
 }
 
-/// The draft for [periodStart]..[periodEnd], on the declared basis.
+/// The draft for [periodStart]..[periodEnd], on the declared [basis]
+/// (#2355: the country's tax point, or the option the workspace chose).
+/// [instalments] are the payments recorded one by one per invoice.
 VatDeclarationDraft vatDeclarationDraft({
   required Iterable<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
+  Map<String, List<TaxPointPayment>> instalments = const {},
   required DateTime periodStart,
   required DateTime periodEnd,
-  required bool onPaymentBasis,
+  required VatTaxPointBasis basis,
 }) {
-  final lines = onPaymentBasis
-      ? computeVatDeclarationLinesOnPayment(
-          invoices: invoices,
-          matches: matches,
-          periodStart: periodStart,
-          periodEnd: periodEnd,
-        )
-      : computeVatDeclarationLines(invoices, periodStart, periodEnd);
+  final amounts = vatTaxPointLedger(
+    invoices,
+    matches: matches,
+    instalments: instalments,
+    basis: basis,
+  );
+  final lines = vatDeclarationLinesOf(amounts, periodStart, periodEnd);
   var net = 0;
   var vat = 0;
   for (final line in lines) {
     net += line.netCents;
     vat += line.vatCents;
   }
-  final last = periodEnd.add(const Duration(days: 1));
-  final ids = <String>{};
-  for (final invoice in invoices) {
-    if (invoice.voidedAt != null) continue;
-    final on =
-        onPaymentBasis ? matches[invoice.id]?.matchedAt : invoice.issuedAt;
-    if (on != null && !on.isBefore(periodStart) && on.isBefore(last)) {
-      ids.add(invoice.id);
-    }
-  }
+  final ids = {
+    for (final a in amounts)
+      if (a.within(periodStart, periodEnd)) a.invoiceId,
+  };
   return VatDeclarationDraft(
     lines: lines,
     totalNetCents: net,
@@ -104,14 +103,17 @@ class VatDeclarations {
     required DateTime periodEnd,
     required Iterable<Invoice> invoices,
     required Map<String, InvoiceMatch> matches,
-    required bool onPaymentBasis,
+    required VatTaxPointBasis basis,
   }) async {
     final draft = vatDeclarationDraft(
       invoices: invoices,
       matches: matches,
+      // #2355 — every payment recorded one by one: on receipts an
+      // instalment-paid invoice declares each part in its own period.
+      instalments: await _money.fetchInvoiceInstalments(workspaceId),
       periodStart: periodStart,
       periodEnd: periodEnd,
-      onPaymentBasis: onPaymentBasis,
+      basis: basis,
     );
     await _money.saveVatDeclaration(
       workspaceId: workspaceId,
@@ -124,6 +126,29 @@ class VatDeclarations {
       invoiceCount: draft.invoiceCount,
     );
   }
+
+  /// #2355 — the VAT report of [start]..[end] on [basis]: the same tax
+  /// points, from the same payments, the declaration sums.
+  Future<VatReport> report({
+    required String workspaceId,
+    required Iterable<Invoice> invoices,
+    required Map<String, InvoiceMatch> matches,
+    required DateTime start,
+    required DateTime end,
+    required String zeroCategory,
+    required VatTaxPointBasis basis,
+  }) async =>
+      buildVatReport(
+        invoices,
+        start: start,
+        end: end,
+        zeroCategory: zeroCategory,
+        matches: matches,
+        instalments: workspaceId.isEmpty
+            ? const {}
+            : await _money.fetchInvoiceInstalments(workspaceId),
+        basis: basis,
+      );
 
   /// Sends the declaration document and reports what came back.
   Future<VatTransmission> transmit({

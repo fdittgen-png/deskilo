@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:xml/xml.dart';
 
-import 'billing_rules.dart';
 import 'invoice.dart';
-import 'vat_rate.dart';
+import 'vat_tax_point.dart';
 import '../../../core/data/system_columns.dart';
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
@@ -116,128 +115,20 @@ class VatDeclaration implements SystemStamped {
       );
 }
 
-/// Aggregates a period's ISSUED invoices into declaration lines with the
-/// EXACT arithmetic the invoices were built with: per-line [vatSplit]
-/// (gross-inclusive → net + tax, rounded per line), summed per rate —
-/// the declaration therefore matches every issued document to the cent.
-///
-/// Voided invoices are excluded (their replacement, if issued in the
-/// period, counts on its own). Credit notes (negative invoices) count
-/// with their sign, exactly as the authority nets them. Lines at 0 %
-/// (credits, exempt positions) are reported as the zero-rate base.
+/// Aggregates a period's ISSUED invoices into declaration lines — the
+/// tax-point engine on the invoice-date rule (`vat_tax_point.dart`),
+/// with the EXACT arithmetic the invoices were built with: per-line
+/// `vatSplit`, summed per rate, so the lines match every issued document
+/// to the cent. Voided invoices and settlements are excluded; credit
+/// notes count with their sign. A declaration on another basis reads
+/// [vatDeclarationLinesOf] over [vatTaxPointLedger] with that basis.
 List<VatDeclarationLine> computeVatDeclarationLines(
   Iterable<Invoice> invoices,
   DateTime periodStart,
   DateTime periodEnd,
-) {
-  final gross = <double, int>{};
-  final net = <double, int>{};
-  final count = <double, Set<String>>{};
-  for (final invoice in invoices) {
-    if (invoice.voidedAt != null) continue;
-    // #831 — a settlement carries its sources' lines; they are declared once.
-    if (invoice.kind == InvoiceKind.settlement) continue;
-    final day = DateTime(
-        invoice.issuedAt.year, invoice.issuedAt.month, invoice.issuedAt.day);
-    if (day.isBefore(periodStart) || day.isAfter(periodEnd)) continue;
-    for (final line in invoice.lines) {
-      final split = vatSplit(line.amountCents, line.vatPercent);
-      gross[line.vatPercent] =
-          (gross[line.vatPercent] ?? 0) + line.amountCents;
-      net[line.vatPercent] = (net[line.vatPercent] ?? 0) + split.netCents;
-      count.putIfAbsent(line.vatPercent, () => <String>{}).add(invoice.id);
-    }
-  }
-  final percents = gross.keys.toList()..sort((a, b) => b.compareTo(a));
-  return [
-    for (final p in percents)
-      VatDeclarationLine(
-        percent: p,
-        grossCents: gross[p]!,
-        netCents: net[p]!,
-        vatCents: gross[p]! - net[p]!,
-        invoiceCount: count[p]!.length,
-      ),
-  ];
-}
-
-/// #896 — a payment, rate by rate.
-///
-/// A customer pays a document, not a rate; the authorities apportion the
-/// payment across the rates in proportion to what each weighs in the
-/// document, so a part payment carries part of every rate. The largest
-/// share takes the rounding remainder, so the cents add up to exactly
-/// what was received. Shared by the declaration and the VAT report, so
-/// the two can never disagree about the same payment.
-Map<double, int> paymentSharesByRate(Invoice invoice, int paidCents) {
-  final perRate = <double, int>{};
-  for (final line in invoice.lines) {
-    perRate[line.vatPercent] =
-        (perRate[line.vatPercent] ?? 0) + line.amountCents;
-  }
-  final total = perRate.values.fold(0, (sum, cents) => sum + cents);
-  if (total == 0 || paidCents == 0) return const {};
-  final shares = <double, int>{};
-  var placed = 0;
-  for (final entry in perRate.entries) {
-    final share = (paidCents * entry.value / total).round();
-    shares[entry.key] = share;
-    placed += share;
-  }
-  if (shares.isNotEmpty && placed != paidCents) {
-    final widest = shares.keys
-        .reduce((a, b) => perRate[a]!.abs() >= perRate[b]!.abs() ? a : b);
-    shares[widest] = shares[widest]! + (paidCents - placed);
-  }
-  shares.removeWhere((_, cents) => cents == 0);
-  return shares;
-}
-
-/// #896 — the declaration on the CASH basis: the tax falls due the day
-/// the customer pays, not the day the document was issued (CGI 269-2-c
-/// for services in France, § 20 UStG's Ist-Versteuerung, IVA per cassa).
-/// Each payment matched inside the period is split across the invoice's
-/// rates in proportion to what each rate weighs in it — a part payment
-/// therefore carries part of every rate, which is how the authorities
-/// apportion one.
-List<VatDeclarationLine> computeVatDeclarationLinesOnPayment({
-  required Iterable<Invoice> invoices,
-  required Map<String, InvoiceMatch> matches,
-  required DateTime periodStart,
-  required DateTime periodEnd,
-}) {
-  final gross = <double, int>{};
-  final net = <double, int>{};
-  final count = <double, Set<String>>{};
-  final byId = {for (final invoice in invoices) invoice.id: invoice};
-  for (final match in matches.values) {
-    final invoice = byId[match.invoiceId];
-    if (invoice == null || invoice.voidedAt != null) continue;
-    if (invoice.kind == InvoiceKind.settlement) continue;
-    final day = DateTime(
-        match.matchedAt.year, match.matchedAt.month, match.matchedAt.day);
-    if (day.isBefore(periodStart) || day.isAfter(periodEnd)) continue;
-    final shares = paymentSharesByRate(invoice, match.paidCents);
-    for (final entry in shares.entries) {
-      if (entry.value == 0) continue;
-      final split = vatSplit(entry.value, entry.key);
-      gross[entry.key] = (gross[entry.key] ?? 0) + entry.value;
-      net[entry.key] = (net[entry.key] ?? 0) + split.netCents;
-      count.putIfAbsent(entry.key, () => <String>{}).add(invoice.id);
-    }
-  }
-  final percents = gross.keys.toList()..sort((a, b) => b.compareTo(a));
-  return [
-    for (final p in percents)
-      VatDeclarationLine(
-        percent: p,
-        grossCents: gross[p]!,
-        netCents: net[p]!,
-        vatCents: gross[p]! - net[p]!,
-        invoiceCount: count[p]!.length,
-      ),
-  ];
-}
+) =>
+    vatDeclarationLinesOf(
+        vatTaxPointLedger(invoices), periodStart, periodEnd);
 
 /// One box of a country's official return form the declaration lines map
 /// onto (#534) — e.g. CA3 line 08 or UStVA Kennzahl 81.

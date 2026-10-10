@@ -4766,21 +4766,22 @@ Cuando cobra IVA y factura a una empresa de otro país de la UE, el impuesto pue
 
 **Público:** Propietario
 
-Elige si el IVA se cuenta al emitir la factura o al cobrarla.
+El IVA de cada factura se devenga el día que fija la ley de su país: con el cobro, al prestarse el servicio o con la factura. Usted conserva esa regla o elige la opción que su país permite.
 
 <p><img src="images/user-money-vat-due--f.es.b8fa17aa9.jpg" width="280"></p>
 
 **Pasos**
 
 1. Elija **Sujeto a IVA (cobra IVA)** como régimen.
-2. En **Devengo del IVA**, elija **Con la factura (criterio general)** o **Con el cobro (criterio de caja)**.
+2. En **Devengo del IVA**, conserve la primera opción, la regla legal de su país, o elija la opción que su país permite: **Con el cobro (criterio de caja)** en España, **Con la factura (criterio general)** en Francia.
 3. Pulse **Guardar**.
 
 **Conviene saber**
 
-- Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió.
-- La elección se imprime en cada factura y determina la [declaración de IVA](#la-declaración-periódica-de-iva).
-- Qué criterio le corresponde es una cuestión fiscal para su gestor.
+- La regla legal para los servicios: el cobro en Francia; el mes en que se presta el servicio en Alemania y España, los anticipos al cobrarse; la factura o el pago, lo que ocurra primero, en Italia, el Reino Unido y Canadá; la factura en Suiza.
+- Con el cobro, una factura pagada a plazos cae en tantos periodos como pagos tuvo; con el criterio de caja, lo no cobrado se devenga el 31 de diciembre del año siguiente. Una nota de crédito cuenta al emitirse (con el cobro, al reembolsarse), nunca en el periodo de la factura que corrige.
+- La elección se imprime en cada factura y determina por igual la [declaración de IVA](#la-declaración-periódica-de-iva), el informe de IVA y las exportaciones FEC y DATEV.
+- Qué opción le corresponde es una cuestión fiscal para su gestor.
 
 **Véase también:** [La declaración periódica de IVA](#la-declaración-periódica-de-iva)
 

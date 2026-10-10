@@ -12,7 +12,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "All'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che ha emesso. La scelta è stampata su ogni fattura.",
+  "vatExigibilitySubtitle": "La regola di legge dipende dal Paese: l'incasso in Francia, il mese della prestazione in Germania e Spagna, la fattura o il pagamento se anteriore in Italia, nel Regno Unito e in Canada, la fattura in Svizzera. Decide ciò che un periodo dichiara ed è stampata su ogni fattura.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -23,5 +23,34 @@
   "vatDeclarationBasisInvoice": "Base: fatture (IVA sui documenti emessi nel periodo).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
+  },
+  "vatTaxPointServicePeriod": "All'esecuzione della prestazione (acconti all'incasso)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
+  },
+  "vatTaxPointEarlierOf": "Alla fattura o al pagamento, se anteriore",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — regola di legge",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclarationBasisServicePeriod": "Base: periodo della prestazione (IVA nel mese in cui la prestazione è eseguita; acconti nel mese dell'incasso).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
+  },
+  "vatDeclarationBasisEarlierOf": "Base: fattura o pagamento, il primo dei due (IVA alla data più precoce).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
+  "vatTaxPointNoticeFr": "In Francia le prestazioni di servizi sono tassate all'incasso, salvo opzione per i débits. Questo spazio non ha mai scelto: le sue dichiarazioni seguono ora gli incassi. Se ha optato per i débits, lo scelga in Identità legale e fatturazione elettronica.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
   }
 }

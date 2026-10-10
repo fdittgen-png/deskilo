@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -219,8 +220,13 @@ void main() {
 
     final legal =
         InvoiceLegal.fromJson(workspace.workspaces.single.invoiceLegal);
-    expect(legal.vatExigibility, 'payment');
-    expect(legal.onPaymentBasis, isTrue);
+    // #2355 — a German space offers its Soll rule (the service month) as
+    // the legal default and Ist-Versteuerung as the option; the cash
+    // choice is stored with the two-value key the invoice snapshot reads.
+    expect(legal.vatTaxPoint, VatTaxPointOption.cash);
+    expect(legal.taxPointBasis('DE').onReceipts, isTrue);
+    expect(workspace.workspaces.single.invoiceLegal['vat_exigibility'],
+        'payment');
   });
 
   testWidgets(

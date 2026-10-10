@@ -205,7 +205,7 @@ La pantalla es [Identidad legal y facturación electrónica](app:/legal-identity
 > 3. Si no cobro IVA, ¿qué texto legal lo justifica?
 > 4. ¿Qué menciones deben figurar en mis facturas (plazo de pago, penalización por demora, indemnización por cobro, descuento por pronto pago, seguro)?
 > 5. ¿Cómo deben numerarse las facturas, y la numeración se reinicia cada año o cada mes?
-> 6. ¿El IVA se devenga cuando facturo o cuando me pagan?
+> 6. ¿Cuándo se devenga el IVA de mis servicios según la regla de mi país (cobro, mes del servicio, factura), y debo optar por otra base, como el criterio de caja?
 > 7. ¿Debo enviar facturas electrónicas a una plataforma pública, y a cuál?
 > 8. ¿Necesito declaraciones periódicas de IVA, y con qué frecuencia?
 

@@ -7,6 +7,7 @@ import 'fee_band.dart';
 
 import 'invoice.dart';
 import 'vat_declaration.dart';
+import 'vat_tax_point.dart';
 import 'member_account.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
@@ -318,6 +319,14 @@ abstract class MoneyRepository {
   /// invoiceId → its match (0067). status 'pending' while a validation
   /// quorum decides; a reject deletes the row (the invoice reopens).
   Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId);
+
+  /// #2355 — invoiceId → every payment matched to it, one by one
+  /// (`invoice_match_payments`, 0101): an invoice paid in instalments
+  /// falls into as many VAT periods as it had payments on a receipts
+  /// basis. Empty for an invoice whose match records no junction row.
+  Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(
+    String workspaceId,
+  );
 
   Future<Statement> fetchStatement(String memberId, String period);
 
