@@ -3463,6 +3463,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoPersonaAdmin => 'Un\'amministratrice';
 
   @override
+  String get demoPersonaKiosk => 'Il tablet del chiosco';
+
+  @override
   String get demoPersonaMember => 'Un membro';
 
   @override

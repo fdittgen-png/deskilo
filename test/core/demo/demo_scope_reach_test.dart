@@ -50,8 +50,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      // #2313 — the demo space has its own name.
-      find.text(demoSpaceName),
+      // #2313 — the demo space has its own name; #2327 — its development
+      // twin carries it too.
+      find.textContaining(demoSpaceName),
       findsOneWidget,
       reason: 'the demo workspace came from the fixture. "none" means the '
           'provider was hosted outside the Demo container and answered '

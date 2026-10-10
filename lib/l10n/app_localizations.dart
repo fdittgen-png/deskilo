@@ -6013,6 +6013,12 @@ abstract class AppLocalizations {
   /// **'An administrator'**
   String get demoPersonaAdmin;
 
+  /// #2327 demo personas: demoPersonaKiosk
+  ///
+  /// In en, this message translates to:
+  /// **'The kiosk tablet'**
+  String get demoPersonaKiosk;
+
   /// #1376 demo personas: demoPersonaMember
   ///
   /// In en, this message translates to:
