@@ -144,6 +144,7 @@ List<Widget> aboutSettingsTiles(
           // the billing validation message).
           const Divider(),
           ListTile(
+            key: const ValueKey('settings-about-section-auth-sign-out'),
             leading: Icon(Icons.logout, color: colorScheme.error),
             title: Text(
               l10n?.authSignOut ?? 'Sign out',

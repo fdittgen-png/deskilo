@@ -91,6 +91,7 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListTile(
+      key: const ValueKey('attention-chevron-right'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(_iconFor(item.kind)),
       title: Text(

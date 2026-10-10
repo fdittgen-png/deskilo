@@ -62,12 +62,14 @@ Future<String?> showMySeatSheet(
           ),
           if (mine.status == ReservationStatus.checkedIn)
             ListTile(
+              key: ValueKey('check-in-sheets-plan-check-out-button-${granularity?.name}'),
               leading: const Icon(Icons.logout),
               title: Text(l10n?.planCheckOutButton ?? 'Check out'),
               onTap: () => Navigator.of(context).pop('checkout'),
             )
           else if (mine.checkInWindowOpen(now, granularity: granularity))
             ListTile(
+              key: ValueKey('check-in-sheets-plan-check-in-button-${granularity?.name}'),
               leading: const Icon(Icons.login),
               title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n?.planCheckInButton ?? 'Check in')),
               onTap: () => Navigator.of(context).pop('checkin'),
@@ -92,6 +94,7 @@ Future<String?> showMySeatSheet(
               ),
             ),
           ListTile(
+            key: ValueKey('check-in-sheets-plan-cancel-reservation-button-${granularity?.name}'),
             leading: const Icon(Icons.cancel_outlined),
             title: Text(
               l10n?.planCancelReservationButton ?? 'Cancel reservation',
@@ -144,6 +147,7 @@ Future<String?> showCheckInOtherSheet(
             ),
             if (offerCheckIn)
               ListTile(
+                key: const ValueKey('check-in-sheets-check-in-for'),
                 leading: const Icon(Icons.login),
                 title: Text(l10n?.planCheckInFor(name) ?? 'Check in $name'),
                 onTap: () => Navigator.of(context).pop('checkin'),
@@ -168,6 +172,7 @@ Future<String?> showCheckInOtherSheet(
                 onTap: () => Navigator.of(context).pop('message'),
               ),
             ListTile(
+              key: const ValueKey('check-in-sheets-overrule-remove'),
               leading: const Icon(Icons.person_remove_outlined),
               title: Text(
                 l10n?.planOverruleRemove ?? 'Remove reservation (overrule)',

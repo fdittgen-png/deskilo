@@ -141,6 +141,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
           onPressed: _uploading ? null : () => _upload(context, ref),
         ),
         TextButton(
+          key: const ValueKey('report-image-picker-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

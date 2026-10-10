@@ -100,6 +100,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
           // The task wizard (recording, guides, task files) has its own
           // entry in the menus; Help keeps only what helps.
           IconButton(
+            key: const ValueKey('help-support-title'),
             tooltip: l10n?.supportTitle ?? 'Support details',
             icon: const Icon(Icons.support_agent),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
@@ -158,6 +159,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
                   color: Theme.of(context).colorScheme.primary,
                   decoration: TextDecoration.underline,
                 ),
+                // recorder-key-exempt: a link style inside the guide text.
                 onTap: (url) {
                   final uri = Uri.tryParse(url);
                   if (uri != null) ref.read(linkLauncherProvider)(uri);

@@ -10,6 +10,7 @@ class AccountPortalEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return PopupMenuButton<String>(
+      key: const ValueKey('account-portal-entry-portal-discover'),
       tooltip: l?.portalDiscover ?? 'Find a workspace',
       icon: const Icon(Icons.public),
       // #1823 — Me is the account's home: gone to, not stacked.

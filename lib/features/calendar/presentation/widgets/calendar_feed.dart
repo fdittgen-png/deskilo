@@ -174,6 +174,7 @@ class CalendarFeed extends ConsumerWidget {
               ),
             for (final item in byDay[day] ?? const <CalendarItem>[])
               CalendarItemRow(
+                key: ValueKey('calendar-feed-calendar-item-row-${item.id}'),
                 item: item,
                 memberName: names[item.memberId] ?? '',
                 coloured: coloured,

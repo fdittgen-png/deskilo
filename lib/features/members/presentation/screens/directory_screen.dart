@@ -528,6 +528,7 @@ Future<void> showMemberProfileSheet(
               else
                 for (final reservation in memberReservations)
                   _ReservationTile(
+                    key: ValueKey('directory-reservation-tile-${reservation.id}'),
                     reservation: reservation,
                     seatName: reservation.spaceNameFrom(targetNames),
                     onTap: () {
@@ -568,6 +569,7 @@ Future<void> showMemberProfileSheet(
                 const SizedBox(height: AppSpacing.sm),
               ],
               TextButton(
+                key: const ValueKey('directory-contact-close'),
                 onPressed: () => Navigator.of(sheetContext).pop(),
                 child: Text(l10n?.directoryClose ?? 'Close'),
               ),
@@ -596,6 +598,7 @@ class _GroupTile extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       child: ListTile(
+        key: const ValueKey('directory-open-group'),
         leading: const Icon(Icons.groups_outlined),
         title: Text(l10n?.directoryOpenGroup ?? 'Open WhatsApp group'),
         trailing: const Icon(Icons.open_in_new),
@@ -679,6 +682,7 @@ class _MemberRow extends StatelessWidget {
     final online = presence.kind == DirectoryPresenceKind.online;
     final onSite = reservationInfo is CheckedInNow;
     final tile = ListTile(
+      key: const ValueKey('directory-whatsapp'),
       leading: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -857,6 +861,7 @@ class _MemberRow extends StatelessWidget {
 /// opens the full [ReservationDetailSheet] for that booking.
 class _ReservationTile extends StatelessWidget {
   const _ReservationTile({
+    super.key,
     required this.reservation,
     required this.seatName,
     required this.onTap,

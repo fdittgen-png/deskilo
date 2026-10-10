@@ -161,11 +161,13 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
                 ),
               ),
               SwitchListTile(
+                key: const ValueKey('connection-dialog-portal-use-code'),
                 value: _code,
                 onChanged: _busy ? null : (v) => setState(() => _code = v),
                 title: Text(l?.portalUseCode ?? 'Use an email code'),
               ),
               TextButton(
+                key: const ValueKey('connection-dialog-portal-send-code'),
                 onPressed: _busy ? null : () => _submit(requestCode: true),
                 child: Text(l?.portalSendCode ?? 'Send sign-in code'),
               ),
@@ -175,10 +177,12 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('connection-dialog-text-button'),
           onPressed: _busy ? null : () => Navigator.of(context).pop(),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),
         FilledButton(
+          key: const ValueKey('connection-dialog-save'),
           onPressed: _busy ? null : _submit,
           child: Text(l?.commonSave ?? 'Save'),
         ),

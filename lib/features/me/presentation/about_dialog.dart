@@ -60,6 +60,7 @@ class _AboutDialogState extends State<AboutMeDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('about-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

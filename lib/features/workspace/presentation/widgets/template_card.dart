@@ -81,6 +81,7 @@ class TemplateCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
+            key: const ValueKey('template-card-compare-remove'),
             leading: Icon(isSelected ? Icons.check : Icons.grid_view_outlined),
             title: Text(template.name),
             subtitle: Text(lines.where((l) => l.isNotEmpty).join('\n')),

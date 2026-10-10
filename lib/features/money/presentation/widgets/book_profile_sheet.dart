@@ -226,6 +226,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
             ),
             const SizedBox(height: AppSpacing.sm),
             RadioGroup<BookAuthority>(
+              key: const ValueKey('book-profile-sheet-radio-group'),
               groupValue: _authority,
               onChanged: (v) => setState(() => _authority = v!),
               child: Column(

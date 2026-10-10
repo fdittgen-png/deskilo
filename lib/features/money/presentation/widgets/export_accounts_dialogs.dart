@@ -91,6 +91,7 @@ Future<FecAccounts?> showFecAccountsDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('export-accounts-dialogs-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -183,6 +184,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('export-accounts-dialogs-cancel-2'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -269,6 +271,7 @@ Future<SageAccounts?> showSageAccountsDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('export-accounts-dialogs-cancel-3'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -345,6 +348,7 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('export-accounts-dialogs-cancel-4'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

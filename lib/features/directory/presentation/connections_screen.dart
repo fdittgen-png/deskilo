@@ -20,6 +20,7 @@ class ConnectionsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l?.portalConnections ?? 'Connected servers')),
       floatingActionButton: FloatingActionButton(
+        key: const ValueKey('connections-portal-connect'),
         onPressed: () => showDialog<bool>(
           context: context,
           builder: (_) => const ConnectionDialog(),
@@ -41,6 +42,7 @@ class ConnectionsScreen extends ConsumerWidget {
         ),
         AsyncError() => Center(
           child: TextButton(
+            key: const ValueKey('connections-retry'),
             onPressed: () => ref.invalidate(connectedSourcesProvider),
             child: Text(l?.commonRetry ?? 'Try again'),
           ),
@@ -143,6 +145,7 @@ class _ConnectionTile extends ConsumerWidget {
       ),
       isThreeLine: true,
       trailing: IconButton(
+        key: const ValueKey('connections-portal-disconnect'),
         tooltip: l?.portalDisconnect ?? 'Disconnect',
         icon: const Icon(Icons.link_off),
         onPressed: () async {

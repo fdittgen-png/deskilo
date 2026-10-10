@@ -111,6 +111,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('recording-review-text-button'),
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           ),

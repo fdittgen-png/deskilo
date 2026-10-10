@@ -81,6 +81,7 @@ Future<void> pickMemberVatTreatment(
         ),
         actions: [
           TextButton(
+            key: const ValueKey('member-vat-treatment-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

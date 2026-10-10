@@ -18,6 +18,7 @@ class AdminVisibilityTile extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final visible = ref.watch(adminVisibilityProvider(member.workspaceId));
     return SwitchListTile(
+      key: const ValueKey('admin-visibility-tile-portal-admin-visible'),
       value: visible.value ?? false,
       title: Text(l?.portalAdminVisible ?? 'Show me as a public administrator'),
       onChanged: visible.hasValue

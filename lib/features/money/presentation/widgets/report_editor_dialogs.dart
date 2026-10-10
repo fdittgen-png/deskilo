@@ -23,6 +23,7 @@ Future<bool> confirmReportReplace(BuildContext context) async {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('report-editor-dialogs-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

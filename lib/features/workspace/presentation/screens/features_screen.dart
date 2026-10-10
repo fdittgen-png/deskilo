@@ -110,6 +110,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
           : Column(
               children: [
                 FeaturesViewSwitch(
+                  key: const ValueKey('features-features-view-switch'),
                   switches: _switches,
                   onChanged: (value) => setState(() => _switches = value),
                 ),
@@ -133,6 +134,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                   ),
                   Expanded(
                     child: FeatureCapabilityList(
+                      key: const ValueKey('features-feature-capability-list'),
                       rows: rows,
                       raw: raw,
                       assessments: widget.assessments,

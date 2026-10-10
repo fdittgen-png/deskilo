@@ -186,6 +186,7 @@ class _AudienceSheetState extends State<_AudienceSheet> {
               shrinkWrap: true,
               children: [
                 RadioGroup<VisibilityAudience>(
+                  key: const ValueKey('visibility-card-radio-group'),
                   groupValue: _audience,
                   onChanged: (a) => setState(() => _audience = a ?? _audience),
                   child: Column(

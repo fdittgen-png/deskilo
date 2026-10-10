@@ -108,6 +108,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
             ListTile(
               title: Text(widget.application.workspaceName),
               trailing: IconButton(
+                key: const ValueKey('workspace-application-thread-close'),
                 tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(Icons.close),
@@ -124,6 +125,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
+                          key: const ValueKey('workspace-application-thread-chevron-left'),
                           tooltip: MaterialLocalizations.of(context)
                               .previousPageTooltip,
                           onPressed: rows.length < 50
@@ -134,6 +136,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                           icon: const Icon(Icons.chevron_left),
                         ),
                         IconButton(
+                          key: const ValueKey('workspace-application-thread-chevron-right'),
                           tooltip: MaterialLocalizations.of(context)
                               .nextPageTooltip,
                           onPressed: _pages.isEmpty
@@ -184,6 +187,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                 ),
                 AsyncError() => Center(
                   child: TextButton(
+                    key: const ValueKey('workspace-application-thread-retry'),
                     onPressed: () => ref.invalidate(provider),
                     child: Text(l10n?.commonRetry ?? 'Try again'),
                   ),
@@ -210,6 +214,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                     ),
                   ),
                   IconButton(
+                    key: const ValueKey('workspace-application-thread-member-note-send'),
                     onPressed: _sending ? null : _send,
                     tooltip: l10n?.memberNoteSend ?? 'Send',
                     icon: const Icon(Icons.send_outlined),

@@ -94,10 +94,12 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('workspace-code-cancel'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
           FilledButton(
+            key: const ValueKey('workspace-code-save'),
             onPressed: () =>
                 Navigator.of(context).pop(controller.text.trim()),
             child: Text(l10n?.commonSave ?? 'Save'),
@@ -292,6 +294,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   OutlinedButton.icon(
+                    key: const ValueKey('workspace-code-copied'),
                     onPressed: () async {
                       await Clipboard.setData(ClipboardData(text: code));
                       if (!context.mounted) return;
@@ -308,6 +311,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                   if (!isAdminInvite) ...[
                     const SizedBox(width: 12),
                     FilledButton.icon(
+                      key: const ValueKey('workspace-code-edit'),
                       onPressed: () => _editCode(context),
                       icon: const Icon(Icons.edit),
                       label: Text(
@@ -319,6 +323,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
+                key: const ValueKey('workspace-code-share-png'),
                 onPressed: () => _sharePng(context, code, payload),
                 icon: const Icon(Icons.image_outlined),
                 label: Text(

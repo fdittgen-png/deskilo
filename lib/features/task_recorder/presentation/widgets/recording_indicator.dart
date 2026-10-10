@@ -277,6 +277,7 @@ class _Pill extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
+              key: const ValueKey('recording-indicator-task-recorder-recording'),
               customBorder: const StadiumBorder(),
               onTap: onOpen,
               child: ConstrainedBox(
@@ -349,6 +350,7 @@ class _PillButton extends StatelessWidget {
     label: label,
     excludeSemantics: true,
     child: InkWell(
+      key: const ValueKey('recording-indicator-ink-well'),
       customBorder: const CircleBorder(),
       onTap: onTap,
       child: SizedBox.square(

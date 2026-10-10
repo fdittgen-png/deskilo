@@ -372,6 +372,7 @@ class OpenInvoicesTab extends ConsumerWidget {
           Card(
             key: ValueKey('invoice-open-${entry.invoice.id}'),
             child: InkWell(
+              key: ValueKey('invoice-open-tap-${entry.invoice.id}'),
               // The card reads the invoice; the buttons act on it.
               onTap: () => onOpen(entry),
               borderRadius: AppRadius.lgAll,
@@ -756,6 +757,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
               )
             else
               RadioGroup<String>(
+                key: const ValueKey('invoicing-dashboard-radio-group'),
                 groupValue: _paymentId,
                 onChanged: (value) => setState(() {
                   _paymentId = value;
@@ -790,6 +792,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               RadioGroup<String>(
+                key: const ValueKey('invoicing-dashboard-invoice-match-credit-note'),
                 groupValue: _overResolution,
                 onChanged: (v) =>
                     setState(() => _overResolution = v ?? _overResolution),
@@ -837,6 +840,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('invoicing-dashboard-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

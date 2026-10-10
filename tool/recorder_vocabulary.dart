@@ -281,14 +281,16 @@ String labelsText() {
 /// per feature: the generic recorder can only name them as gaps.
 Map<String, int> unkeyedByFeature() {
   final out = <String, int>{};
+  // `(?=\S)` first: `\s*` must not give back a space for `null` to hide in.
   final callback = RegExp(
-    r'\b(onPressed|onTap|onChanged|onSelected|onSubmitted):\s*(?!null\b)',
+    r'\b(onPressed|onTap|onChanged|onSelected|onSubmitted):\s*(?=\S)(?!null\b)',
   );
   for (final f in sourceFiles()) {
     if (!f.path.contains('/presentation/')) continue;
     final text = f.readAsStringSync();
     for (final m in callback.allMatches(text)) {
       if (_callHasKey(text, m.start)) continue;
+      if (_exempt(text, m.start)) continue;
       final parts = f.path.split('/');
       final at = parts.indexOf('features');
       final feature = at >= 0 && at + 1 < parts.length
@@ -302,6 +304,18 @@ Map<String, int> unkeyedByFeature() {
   return out;
 }
 
+/// A callback that is not a control (a link style, a canvas's semantics,
+/// a data callback) says so on its line or the one above:
+/// `// recorder-key-exempt: <why>`.
+bool _exempt(String text, int at) {
+  final lineStart = text.lastIndexOf('\n', at) + 1;
+  final above = text.lastIndexOf('\n', lineStart - 2) + 1;
+  final lineEnd = text.indexOf('\n', at);
+  return text
+      .substring(above, lineEnd < 0 ? text.length : lineEnd)
+      .contains('recorder-key-exempt:');
+}
+
 /// Whether the constructor call around [at] names a `key:`.
 bool _callHasKey(String text, int at) {
   var depth = 0;
@@ -311,7 +325,9 @@ bool _callHasKey(String text, int at) {
     if (c == '(' || c == '[' || c == '{') {
       if (depth == 0) {
         final call = _callText(text, i);
-        return RegExp(r'(^|[\s(,])key:\s').hasMatch(_topLevel(call));
+        // A `fooKey:` argument is a key the widget hands to its control.
+        return RegExp(r'(^|[\s(,])(key|[a-z]\w*Key):\s')
+            .hasMatch(_topLevel(call));
       }
       depth--;
     }

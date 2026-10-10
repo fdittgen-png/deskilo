@@ -64,6 +64,7 @@ class MemberNoteBody extends ConsumerWidget {
     // WidgetSpan icons distort — taps landed on nothing. An InkWell
     // hit-tests like any widget and gives touch feedback for free.
     InlineSpan link({
+      required Key key,
       required IconData icon,
       required String label,
       required VoidCallback onTap,
@@ -71,6 +72,7 @@ class MemberNoteBody extends ConsumerWidget {
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
           child: InkWell(
+            key: key,
             onTap: onTap,
             borderRadius: AppRadius.smAll,
             child: Row(
@@ -93,11 +95,13 @@ class MemberNoteBody extends ConsumerWidget {
           switch (segment) {
             NoteText(:final text) => _mentioned(text, base),
             NoteReservationRef(:final id, :final label) => link(
+                key: ValueKey('member-note-reservation-$id'),
                 icon: Icons.event_available_outlined,
                 label: label,
                 onTap: () => openReservationById(context, ref, id),
               ),
             NoteSpaceRef(:final kind, :final id, :final label) => link(
+                key: ValueKey('member-note-space-${kind.name}-$id'),
                 icon: _spaceIcon(kind),
                 label: label,
                 onTap: () =>
@@ -106,6 +110,7 @@ class MemberNoteBody extends ConsumerWidget {
             // #842 — an alert, a validation trail, or the financial
             // document the message is about.
             NoteRecordRef(:final kind, :final id, :final label) => link(
+                key: ValueKey('member-note-record-${kind.name}-$id'),
                 icon: noteRecordIcon(kind),
                 label: label,
                 onTap: () =>

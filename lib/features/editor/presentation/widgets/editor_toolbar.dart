@@ -71,6 +71,7 @@ class EditorToolbar extends StatelessWidget {
             ])
               Expanded(
                 child: _ToolButton(
+                  key: ValueKey('editor-tool-button-${tool.name}'),
                   tool: tool,
                   icon: icon,
                   label: label,
@@ -90,6 +91,7 @@ class EditorToolbar extends StatelessWidget {
 
 class _ToolButton extends StatelessWidget {
   const _ToolButton({
+    super.key,
     required this.tool,
     required this.icon,
     required this.label,

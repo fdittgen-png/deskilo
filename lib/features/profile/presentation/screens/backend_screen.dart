@@ -175,6 +175,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('backend-copy-link'),
             onPressed: () async {
               await Clipboard.setData(ClipboardData(text: payload));
               if (context.mounted) Navigator.of(context).pop();
@@ -182,6 +183,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
             child: Text(l10n?.backendCopyLink ?? 'Copy'),
           ),
           FilledButton(
+            key: const ValueKey('backend-close'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonClose ?? 'Close'),
           ),

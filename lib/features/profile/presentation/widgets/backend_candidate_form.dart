@@ -361,6 +361,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
+              key: ValueKey('backend-candidate-form-paste-$hint'),
               tooltip: l10n?.backendPaste ?? 'Paste',
               icon: const Icon(Icons.content_paste, size: 20),
               onPressed: () async {

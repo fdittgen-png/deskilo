@@ -154,6 +154,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('dunning-rules-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

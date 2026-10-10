@@ -26,12 +26,14 @@ Future<void> _photoSheet(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
+            key: const ValueKey('account-settings-tiles-profile-photo-choose'),
             leading: const Icon(Icons.add_a_photo_outlined),
             title: Text(l10n?.profilePhotoChoose ?? 'Choose a photo'),
             onTap: () => Navigator.of(sheetContext).pop('choose'),
           ),
           if (profile.hasAvatar)
             ListTile(
+              key: const ValueKey('account-settings-tiles-profile-photo-remove'),
               leading: const Icon(Icons.delete_outline),
               title: Text(l10n?.profilePhotoRemove ?? 'Remove photo'),
               onTap: () => Navigator.of(sheetContext).pop('remove'),
@@ -128,6 +130,7 @@ Widget _languageTile(BuildContext context, WidgetRef ref,
   final l10n = AppLocalizations.of(context);
   final localeOverride = ref.watch(personalLocaleProvider);
   return ListTile(
+    key: const ValueKey('account-settings-tiles-language-title'),
     leading: const Icon(Icons.language),
     title: HelpDotTitle(
       l10n?.languageTitle ?? 'Language',
@@ -152,6 +155,7 @@ Widget _themeTile(BuildContext context, WidgetRef ref,
     {required bool defaultsOnly}) {
   final l10n = AppLocalizations.of(context);
   return ListTile(
+    key: const ValueKey('account-settings-tiles-theme-title'),
     leading: const Icon(Icons.brightness_6_outlined),
     title: HelpDotTitle(
       l10n?.themeTitle ?? 'Theme',
@@ -261,6 +265,7 @@ List<Widget> accountSettingsTiles(
     // my workspaces. Rides the whatsappIntegration feature.
     if (profile && features.contains(WorkspaceFeature.whatsappIntegration))
       ListTile(
+        key: ValueKey('account-settings-tiles-whatsapp-title-${only?.name}'),
         leading: const Icon(Icons.chat_outlined),
         title: HelpDotTitle(
           l10n?.whatsappTitle ?? 'WhatsApp',

@@ -349,7 +349,7 @@ class _BookingSheetState extends State<BookingSheet> {
             ]),
             if (offerModes) ...[
               const SizedBox(height: AppSpacing.sm),
-              BookingModeSelector(walkUp: _walkUp, onChanged: _setMode),
+              BookingModeSelector(key: const ValueKey('booking-sheet-booking-mode-selector'), walkUp: _walkUp, onChanged: _setMode),
             ],
             if (offerModes)
               Text(words.uxBookingModesHelp,

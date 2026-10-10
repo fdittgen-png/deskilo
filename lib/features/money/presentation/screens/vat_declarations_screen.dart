@@ -239,6 +239,7 @@ class _VatDeclarationsScreenState
                 'portal or your accountant). It becomes immutable.'),
         actions: [
           TextButton(
+            key: const ValueKey('vat-declarations-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),
@@ -278,7 +279,7 @@ class _VatDeclarationsScreenState
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(onPressed: () => context.go('/money')),
+        leading: BackButton(key: const ValueKey('vat-declarations-back-button'), onPressed: () => context.go('/money')),
         title: Text(l10n?.vatDeclTitle ?? 'VAT declaration'),
       ),
       body: regime != VatRegime.vatRegistered

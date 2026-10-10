@@ -116,6 +116,7 @@ class _Fill extends StatelessWidget {
     return Tooltip(
       message: hex,
       child: InkWell(
+        key: const ValueKey('office-palette-editor-close'),
         onTap: removable ? onRemove : null,
         borderRadius: AppRadius.mdAll,
         child: Container(

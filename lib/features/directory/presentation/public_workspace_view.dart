@@ -117,6 +117,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     final withdrawn = live is AsyncData<PublicWorkspace?> && live.value == null;
     final workspace = live?.value ?? this.workspace;
     Widget link(String field, String label) => TextButton.icon(
+      key: ValueKey('public-workspace-view-open-$field'),
       icon: const Icon(Icons.open_in_new),
       label: Text(label),
       onPressed: () {
@@ -195,6 +196,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                       contact['available'] == true &&
                       contact['user_id'] is String
                   ? IconButton(
+                      key: ValueKey('public-workspace-chat-${contact['user_id']}'),
                       tooltip: l?.portalChat ?? 'Chat',
                       icon: const Icon(Icons.chat_outlined),
                       onPressed: preview

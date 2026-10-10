@@ -285,6 +285,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           OfficePaletteEditor(
+            key: const ValueKey('colours-office-palette-editor'),
             fills: fills,
             busy: _busy,
             onChanged: (next) => setState(() => _fills = next),
@@ -332,6 +333,7 @@ class _Swatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
+        key: const ValueKey('colours-check'),
         onTap: onTap,
         borderRadius: AppRadius.mdAll,
         child: Container(

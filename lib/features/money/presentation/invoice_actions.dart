@@ -99,6 +99,7 @@ Future<void> settleCreditInvoiceDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('invoice-actions-cancel'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -174,6 +175,7 @@ Future<void> requestInvoiceWriteoffDialog(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('invoice-actions-cancel-2'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -481,6 +483,7 @@ Future<void> voidInvoiceWithConfirm(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('invoice-actions-cancel-3'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
@@ -893,6 +896,7 @@ Future<void> issueInvoicesForAll(
       ),
       actions: [
         TextButton(
+          key: ValueKey('invoice-actions-cancel-4-$period'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

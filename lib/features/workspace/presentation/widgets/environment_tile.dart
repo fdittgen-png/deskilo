@@ -116,6 +116,7 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
                   'Invoices already issued do not change.'),
           actions: [
             TextButton(
+              key: const ValueKey('environment-tile-cancel'),
               onPressed: () => Navigator.of(context).pop(false),
               child: Text(l10n?.commonCancel ?? 'Cancel'),
             ),

@@ -355,6 +355,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   child: Row(
                     children: [
                       FilterChip(
+                        key: const ValueKey('events-filter-all'),
                         label: Text(l10n?.eventsFilterAll ?? 'All'),
                         selected: filter.categories.isEmpty,
                         visualDensity: VisualDensity.compact,

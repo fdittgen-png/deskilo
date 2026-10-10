@@ -346,6 +346,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final signOut = IconButton(
+      key: const ValueKey('onboarding-auth-sign-out'),
       icon: const Icon(Icons.logout),
       tooltip: l10n?.authSignOut ?? 'Sign out',
       onPressed: _busy ? null : () async => signOutAndForget(ref),
@@ -386,7 +387,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           'Your entries will be lost. This does not cancel a request already sent.',
       onStepBack: _step == 0 ? null : () => _goTo(_step - 1),
       builder: (back) => WizardScaffold(
-      leading: Navigator.of(context).canPop() ? BackButton(onPressed: back) : null,
+      leading: Navigator.of(context).canPop() ? BackButton(key: const ValueKey('onboarding-back-button'), onPressed: back) : null,
       scrollForm: true,
       busy: _busy,
       status: _failure == null ? null : _feedback,
@@ -479,6 +480,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           DropdownButtonFormField<String>(
+            key: const ValueKey('onboarding-workspace-country-label'),
             isExpanded: true,
             itemHeight: null,
             initialValue: _countryCode,
@@ -519,6 +521,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
           const SizedBox(height: 12),
           CreationShapeSelector(
+            key: const ValueKey('onboarding-creation-shape-selector'),
             value: _shape,
             enabled: !_busy,
             onChanged: (shape) => setState(() => _shape = shape),
@@ -529,6 +532,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _startFromStepBody() => Consumer(builder: (context, ref, _) {
         _resolveDefaultTemplate(ref);
         return TemplatePicker(
+          key: const ValueKey('onboarding-template-picker'),
           selectedId: _templateId,
           onChanged: (id) => setState(() {
             _templateId = id;

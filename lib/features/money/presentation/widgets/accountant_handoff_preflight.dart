@@ -110,6 +110,7 @@ Future<bool> showAccountantHandoffPreflight(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('accountant-handoff-preflight-cancel'),
           onPressed: () => Navigator.pop(context, false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

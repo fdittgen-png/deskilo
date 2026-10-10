@@ -112,6 +112,7 @@ class ProcessCard extends StatelessWidget {
             label: [copy.title, stateLabel, ...counts, ...warnings].join('. '),
             onTap: onToggle,
             child: InkWell(
+              key: const ValueKey('process-card-expand-less'),
               onTap: onToggle,
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),

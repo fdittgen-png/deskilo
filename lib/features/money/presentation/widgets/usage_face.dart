@@ -232,6 +232,7 @@ class UsageRecordCard extends ConsumerWidget {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('usage-face-cancel'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

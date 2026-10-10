@@ -20,11 +20,13 @@ class MemberEmploymentTile extends ConsumerWidget {
     final value = ref.watch(employmentStatusProvider(member));
     if (value.hasError) {
       return TextButton(
+        key: const ValueKey('member-employment-tile-retry'),
         onPressed: () => ref.invalidate(employmentStatusProvider(member)),
         child: Text(l?.commonRetry ?? 'Try again'),
       );
     }
     return SwitchListTile(
+      key: const ValueKey('member-employment-tile-portal-employed'),
       value: value.value ?? false,
       title: Text(l?.portalEmployed ?? 'Employed by this workspace'),
       subtitle: Text(

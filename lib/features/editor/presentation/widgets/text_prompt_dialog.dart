@@ -30,10 +30,12 @@ Future<String?> showTextPrompt(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('text-prompt-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('text-prompt-dialog-save'),
           onPressed: () => Navigator.of(context).pop(controller.text.trim()),
           child: Text(l10n?.commonSave ?? 'Save'),
         ),

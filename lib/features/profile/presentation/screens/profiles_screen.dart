@@ -51,7 +51,7 @@ class ProfilesScreen extends ConsumerWidget {
         title: Text(l10n?.profilesTitle ?? 'Profiles'),
         actions: [
           const ApplicationRequestsEntry(), const AccountPortalEntry(),
-          IconButton(tooltip: l10n?.accountActivityTitle ?? 'My consumption and payments',
+          IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n?.accountActivityTitle ?? 'My consumption and payments',
             onPressed: () => context.push('/account-activity'),
             icon: const Icon(Icons.receipt_long_outlined)),
           // #763 — one dot for the whole switcher, in the app bar.
@@ -63,6 +63,7 @@ class ProfilesScreen extends ConsumerWidget {
       floatingActionButton: unavailable
           ? null
           : FloatingActionButton.extended(
+              key: const ValueKey('profiles-add'),
               onPressed: () => context.push('/onboarding'),
               icon: const Icon(Icons.add),
               label: Text(l10n?.profilesAdd ?? 'Add a profile'),
@@ -121,6 +122,7 @@ class ProfilesScreen extends ConsumerWidget {
                   margin: const EdgeInsets.only(bottom: AppSpacing.md),
                   color: isActive ? Theme.of(context).colorScheme.surfaceContainer : null,
                   child: ListTile(
+                    key: ValueKey('profiles-environment-dev-${workspace.id}'),
                     contentPadding: AppSpacing.lgAll,
                     // #917 — the environment, at a glance and before
                     // the tap: green is a real workspace, orange one to

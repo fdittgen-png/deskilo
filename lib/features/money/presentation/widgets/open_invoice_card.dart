@@ -338,6 +338,7 @@ class OpenInvoiceCard extends StatelessWidget {
 
     return Card(
       child: InkWell(
+        key: const ValueKey('open-invoice-card-invoice-open-age'),
         onTap: () => actions.onOpen(entry),
         borderRadius: AppRadius.lgAll,
         child: Padding(

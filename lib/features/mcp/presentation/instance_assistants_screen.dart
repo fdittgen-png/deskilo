@@ -158,6 +158,7 @@ class _InstanceAssistantsScreenState
         ),
         actions: [
           TextButton(
+            key: const ValueKey('instance-assistants-text-button'),
             onPressed: () => Navigator.pop(context, false),
             child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           ),

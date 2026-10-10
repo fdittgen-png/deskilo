@@ -147,7 +147,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
               style: Theme.of(context).textTheme.bodySmall,
             )),
             if (lookup?.hasError == true)
-              IconButton(onPressed: () => ref.invalidate(directoryAddressLocationProvider(address)),
+              IconButton(key: const ValueKey('directory-map-retry'), onPressed: () => ref.invalidate(directoryAddressLocationProvider(address)),
                 tooltip: l?.commonRetry ?? 'Try again', icon: const Icon(Icons.refresh)),
           ]),
         ),
@@ -198,6 +198,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         RichAttributionWidget(
           attributions: [
             TextSourceAttribution(
+              key: const ValueKey('directory-map-text-source-attribution'),
               'OpenStreetMap contributors',
               onTap: () => ref.read(linkLauncherProvider)(
                 Uri.parse('https://www.openstreetmap.org/copyright'),

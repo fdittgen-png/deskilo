@@ -424,6 +424,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   // chip must stay last.
                   for (final candidate in PaymentMethod.displayOrder)
                     ChoiceChip(
+                      key: ValueKey('money-choice-chip-${candidate.name}'),
                       label: Text(paymentMethodLabel(l10n, candidate)),
                       selected: method == candidate,
                       onSelected: (selected) => setSheetState(
@@ -489,6 +490,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               ),
               const SizedBox(height: 16),
               FilledButton(
+                key: const ValueKey('money-submit-payment'),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: Text(
                   l10n?.moneySubmitPayment ?? 'Submit for confirmation',
@@ -567,6 +569,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             ),
             const SizedBox(height: 16),
             FilledButton(
+              key: const ValueKey('money-submit-payment-2'),
               onPressed: () => Navigator.of(context).pop(true),
               child: Text(
                 l10n?.moneySubmitPayment ?? 'Submit for confirmation',
@@ -634,6 +637,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             for (final package in packages)
               Card(
                 child: ListTile(
+                  key: ValueKey('money-buy-package-days-${package.id}'),
                   title: Text(package.name),
                   subtitle: Text(
                     l10n?.buyPackageDays(package.days) ??
@@ -734,6 +738,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         ),
         actions: [
           TextButton(
+            key: const ValueKey('money-close'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(l10n?.commonClose ?? 'Close'),
           ),
@@ -911,6 +916,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final periodHeader = Row(
       children: [
         IconButton(
+          key: const ValueKey('money-chevron-left'),
           tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
           icon: const Icon(Icons.chevron_left),
           onPressed: () => _shiftMonth(-1),
@@ -923,12 +929,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           ),
         ),
         IconButton(
+          key: const ValueKey('money-chevron-right'),
           tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
           icon: const Icon(Icons.chevron_right),
           onPressed: _isCurrentPeriod ? null : () => _shiftMonth(1),
         ),
         if (features.contains(WorkspaceFeature.pdfExport))
           IconButton(
+            key: const ValueKey('money-bill-pdf-export'),
             icon: const Icon(Icons.picture_as_pdf_outlined),
             tooltip: l10n?.billPdfExport ?? 'Export bill as PDF',
             onPressed: visibleStatement == null
@@ -978,6 +986,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     Widget sectionLabel(String text) => moneySectionLabel(context, text);
     Widget fitted(String text) => fittedLabel(text);
     final recordPayment = FilledButton.icon(
+      key: const ValueKey('money-record-payment'),
       onPressed: () => _recordPaymentSheet(currency),
       icon: const Icon(Icons.payments_outlined),
       label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
@@ -993,6 +1002,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           )
         : null;
     final submitExpense = OutlinedButton.icon(
+      key: const ValueKey('money-submit-expense'),
       onPressed: () => _submitExpenseSheet(currency),
       icon: const Icon(Icons.receipt_long_outlined),
       label: fitted(l10n?.moneySubmitExpense ?? 'Submit an expense'),
@@ -1018,6 +1028,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // Consumption follows the services feature (#146).
     final addConsumption = features.contains(WorkspaceFeature.services)
         ? OutlinedButton.icon(
+            key: const ValueKey('money-consumption-add'),
             onPressed: () {
               final me = ref.read(myMemberProvider).value;
               if (me == null) return;

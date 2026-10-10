@@ -104,6 +104,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
               'This changes ${sensitive.join(', ')}. Apply?'),
           actions: [
             TextButton(
+                key: const ValueKey('template-apply-sheet-text-button'),
                 onPressed: () => Navigator.of(ctx).pop(false),
                 child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
             FilledButton(
@@ -320,6 +321,7 @@ class _GroupRow extends StatelessWidget {
       );
     } else {
       row = CheckboxListTile(
+        key: const ValueKey('template-apply-sheet-checkbox-list-tile'),
         contentPadding: EdgeInsets.zero,
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(title),

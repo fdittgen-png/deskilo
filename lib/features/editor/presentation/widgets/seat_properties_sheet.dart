@@ -171,6 +171,7 @@ Future<void> showSeatPropertiesSheet(
                   children: [
                     for (final accessory in catalog)
                       FilterChip(
+                        key: ValueKey('seat-properties-sheet-filter-chip-${accessory.id}'),
                         label: Text(_accessoryLabel(accessory, currency)),
                         selected:
                             selectedAccessories.contains(accessory.id),
@@ -220,6 +221,7 @@ Future<void> showSeatPropertiesSheet(
                 ),
               ),
               SwitchListTile(
+                key: ValueKey('seat-properties-sheet-editor-blocked-label-$levelId'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   l10n?.editorBlockedLabel ?? 'Blocked (maintenance)',
@@ -229,6 +231,7 @@ Future<void> showSeatPropertiesSheet(
               ),
               const SizedBox(height: 12),
               FilledButton(
+                key: ValueKey('seat-properties-sheet-save-$levelId'),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: Text(l10n?.commonSave ?? 'Save'),
               ),

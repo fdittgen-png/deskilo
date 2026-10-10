@@ -61,6 +61,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
       ),
       actions: [
         TextButton(
+          key: const ValueKey('reset-confirm-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),

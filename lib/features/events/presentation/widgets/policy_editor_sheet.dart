@@ -173,6 +173,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
+                      key: const ValueKey('policy-editor-sheet-a11y-decrease'),
                       tooltip: l10n?.a11yDecrease ?? 'Decrease',
                       icon: const Icon(Icons.remove),
                       onPressed: _requiredCount > 1
@@ -187,6 +188,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       style: theme.textTheme.titleMedium,
                     ),
                     IconButton(
+                      key: const ValueKey('policy-editor-sheet-a11y-increase'),
                       tooltip: l10n?.a11yIncrease ?? 'Increase',
                       icon: const Icon(Icons.add),
                       onPressed: _requiredCount < _maxRequired
@@ -227,6 +229,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 ]),
               if (_scope == 'admins')
               SwitchListTile(
+                key: const ValueKey('policy-editor-sheet-validation-admins-may'),
                 contentPadding: EdgeInsets.zero,
                 title: HelpDotTitle(
                   l10n?.validationAdminsMay ?? 'Admins may validate',
@@ -250,6 +253,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                     runSpacing: 4,
                     children: [
                       FilterChip(
+                        key: const ValueKey('policy-editor-sheet-validation-all-admins'),
                         label: Text(l10n?.validationAllAdmins ?? 'All admins'),
                         selected: _selectedAdminIds.isEmpty,
                         onSelected: (_) => setState(() {
@@ -259,6 +263,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                       ),
                       for (final admin in widget.admins)
                         FilterChip(
+                          key: ValueKey('policy-editor-sheet-admin-${admin.id}'),
                           label: Text(admin.name),
                           selected: _selectedAdminIds.contains(admin.id),
                           onSelected: (selected) => setState(() {
@@ -276,6 +281,7 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                   ),
                 ),
               SwitchListTile(
+                key: const ValueKey('policy-editor-sheet-validation-owner-required'),
                 contentPadding: EdgeInsets.zero,
                 title: HelpDotTitle(
                   l10n?.validationOwnerRequired ??
@@ -403,11 +409,13 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
+                    key: const ValueKey('policy-editor-sheet-cancel'),
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(l10n?.commonCancel ?? 'Cancel'),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
+                    key: const ValueKey('policy-editor-sheet-save'),
                     onPressed: _save,
                     child: Text(l10n?.commonSave ?? 'Save'),
                   ),

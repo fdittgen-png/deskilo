@@ -207,6 +207,7 @@ class WizardEntryCard extends ConsumerWidget {
       margin: const EdgeInsets.fromLTRB(
           AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
       child: InkWell(
+        key: const ValueKey('wizard-context-invoice-wizard-action'),
         onTap: () => openInvoicingWizard(context, run: run),
         child: Padding(
           padding: const EdgeInsets.symmetric(

@@ -61,6 +61,7 @@ class NoteRow extends ConsumerWidget {
     final canDelete = sentByMe || !note.isBroadcast;
     final canReply = !sentByMe;
     final tile = ListTile(
+      key: const ValueKey('note-row-campaign'),
       leading: Icon(
         sentByMe
             ? (note.isBroadcast

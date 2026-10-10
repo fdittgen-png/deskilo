@@ -47,6 +47,7 @@ class CreationShapeSelector extends StatelessWidget {
         Text(l10n?.onboardingShapeLabel ?? 'What to create',
             style: Theme.of(context).textTheme.titleSmall),
         RadioGroup<CreationShape>(
+          key: const ValueKey('onboarding-creation-shape-test'),
           groupValue: value,
           onChanged: (shape) {
             if (enabled && shape != null) onChanged(shape);

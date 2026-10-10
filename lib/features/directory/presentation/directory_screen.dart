@@ -46,6 +46,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     void select(PublicWorkspace w) => setState(() => _selected = w);
     Widget card(PublicWorkspace w) => Card(
       child: ListTile(
+        key: ValueKey('directory-locate-${w.source}-${w.id}'),
         selected: _selected?.id == w.id && _selected?.source == w.source,
         title: Text(w.name),
         subtitle: Text(w.text('address')),
@@ -168,10 +169,12 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     final searchField = Padding(
             padding: AppSpacing.mdAll,
             child: TextField(
+              key: const ValueKey('directory-portal-search-2'),
               controller: _search,
               decoration: InputDecoration(
                 labelText: l?.portalSearch ?? 'Search workspaces',
                 suffixIcon: IconButton(
+                  key: const ValueKey('directory-portal-search'),
                   tooltip: l?.portalSearch ?? 'Search workspaces',
                   icon: const Icon(Icons.search),
                   onPressed: () => setState(() {
@@ -196,12 +199,14 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             : Text(l?.portalDiscover ?? 'Find a workspace'),
         actions: [
           IconButton(
+            key: const ValueKey('directory-portal-list'),
             tooltip: _map ? (l?.portalList ?? 'List') : (l?.portalMap ?? 'Map'),
             icon: Icon(_map ? Icons.list : Icons.map_outlined),
             onPressed: () => setState(() => _map = !_map),
           ),
           if (ref.watch(authStateProvider).value != null)
             IconButton(
+              key: const ValueKey('directory-portal-register-directory'),
               tooltip:
                   l?.portalRegisterDirectory ??
                   'Publish a server in the directory',
@@ -228,6 +233,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                 children: [
                   if (result.unavailable.isNotEmpty)
                     TextButton(
+                      key: const ValueKey('directory-portal-directory-unavailable'),
                       onPressed: () => ref.invalidate(provider),
                       child: Text(
                         '${l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.'}\n${result.unavailable.join('\n')}',
@@ -249,6 +255,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
+                        key: const ValueKey('directory-chevron-left'),
                         tooltip: MaterialLocalizations.of(context)
                             .previousPageTooltip,
                         onPressed: _page == 0
@@ -260,6 +267,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                         icon: const Icon(Icons.chevron_left),
                       ),
                       IconButton(
+                        key: const ValueKey('directory-chevron-right'),
                         tooltip: MaterialLocalizations.of(context)
                             .nextPageTooltip,
                         onPressed: !result.moreWorkspaces
@@ -276,6 +284,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                     children: [
                       if (_sources > 0)
                         TextButton(
+                          key: const ValueKey('directory-text-button'),
                           onPressed: () => setState(() {
                             _sources--;
                             _page = 0;
@@ -288,6 +297,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                         ),
                       if (result.moreSources)
                         TextButton(
+                          key: const ValueKey('directory-portal-more-directories'),
                           onPressed: () => setState(() {
                             _sources++;
                             _page = 0;
@@ -305,6 +315,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
               ),
               AsyncError() => Center(
                 child: TextButton(
+                  key: const ValueKey('directory-portal-directory-unavailable-2'),
                   onPressed: () => ref.invalidate(provider),
                   child: Text(
                     l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.',

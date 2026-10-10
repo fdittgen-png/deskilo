@@ -61,6 +61,7 @@ List<Widget> advancedSettingsTiles(
           // members inherit the state without seeing the switch.
           if (ref.watch(myMemberProvider).value?.canAdminister ?? false)
             SwitchListTile(
+              key: const ValueKey('settings-advanced-section-developer-mode'),
               secondary: const Icon(Icons.developer_mode_outlined),
               title: Text(l10n?.developerMode ?? 'Developer mode'),
               subtitle: Text(
@@ -72,6 +73,7 @@ List<Widget> advancedSettingsTiles(
             ),
           if (devMode)
             ListTile(
+              key: const ValueKey('settings-advanced-section-developer-title'),
               leading: const Icon(Icons.receipt_long_outlined),
               title: Text(l10n?.developerTitle ?? 'Developer'),
               onTap: () => context.push('/developer'),

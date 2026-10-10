@@ -113,8 +113,8 @@ class SeatListView extends ConsumerWidget {
     // #1825 — a closed day mutes the structure, as the canvas does.
     final titleStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
         color: dayOpen ? null : Theme.of(context).disabledColor);
-    Widget header(String key, IconData icon, String name, double indent,
-        {VoidCallback? onTap, String? subtitle}) =>
+    Widget header(IconData icon, String name, double indent,
+        {required String key, VoidCallback? onTap, String? subtitle}) =>
         ListTile(
           key: ValueKey(key),
           contentPadding: EdgeInsetsDirectional.only(start: 16 + indent, end: 16),
@@ -169,8 +169,8 @@ class SeatListView extends ConsumerWidget {
     // offers it (its stricter rule); structure otherwise stays the rail's.
     if (wholeLevel) {
       final taken = blocking(SpaceKind.level, levelId: plan.levelId);
-      rows.add(header('list-level-${plan.levelId}', Icons.layers_outlined,
-          level!.name, 0,
+      rows.add(header(Icons.layers_outlined, level!.name, 0,
+          key: 'list-level-${plan.levelId}',
           onTap: spaceTap(whole: true, taken: taken),
           subtitle: wholeLine(
             offered: true,
@@ -208,10 +208,10 @@ class SeatListView extends ConsumerWidget {
       final officeOffered = onSpaceTap != null && office.bookableAsWhole;
       if (!duplicate) {
         rows.add(header(
-          'list-office-${office.id}',
           Icons.meeting_room_outlined,
           officeName,
           0,
+          key: 'list-office-${office.id}',
           onTap: spaceTap(
               officeId: office.id, whole: office.bookableAsWhole, taken: officeTaken),
           subtitle: wholeLine(
@@ -226,8 +226,8 @@ class SeatListView extends ConsumerWidget {
       for (final desk in shown) {
         final deskTaken = blocking(SpaceKind.desk,
             deskId: desk.id, officeId: office.id, levelId: office.levelId);
-        rows.add(header('list-desk-${desk.id}', Icons.table_restaurant_outlined,
-            desk.name, 16,
+        rows.add(header(Icons.table_restaurant_outlined, desk.name, 16,
+            key: 'list-desk-${desk.id}',
             onTap: spaceTap(
                 deskId: desk.id, whole: desk.bookableAsWhole, taken: deskTaken),
             subtitle: wholeLine(

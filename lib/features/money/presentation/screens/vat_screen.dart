@@ -177,6 +177,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         ),
         actions: [
           TextButton(
+            key: ValueKey('vat-cancel-$index'),
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(l10n?.commonCancel ?? 'Cancel'),
           ),

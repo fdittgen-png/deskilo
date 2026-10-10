@@ -180,7 +180,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_declaration.dart:333` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_declaration.dart:339` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_declaration.dart:345` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/presentation/widgets/report_texts_panel.dart:190` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/presentation/widgets/report_texts_panel.dart:191` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
 

@@ -74,6 +74,7 @@ class MembersScreen extends ConsumerWidget {
       if (reportsOn && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-send-agreement'),
           icon: Icons.handshake_outlined,
           label: l10n?.memberSendAgreement ??
               'Send the financial agreement',
@@ -90,6 +91,7 @@ class MembersScreen extends ConsumerWidget {
           active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-messages-action'),
           icon: Icons.chat_outlined,
           label: l10n?.memberMessagesAction ?? 'Messages',
           onTap: () => openDirectConversation(
@@ -104,6 +106,7 @@ class MembersScreen extends ConsumerWidget {
       if (pending && !isSelf)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-approve'),
           icon: Icons.how_to_reg_outlined,
           label: l10n?.memberApprove ?? 'Approve membership',
           onTap: () => decideMemberJoin(context, ref, member, approve: true),
@@ -111,6 +114,7 @@ class MembersScreen extends ConsumerWidget {
       if (pending && !isSelf)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-reject-join'),
           icon: Icons.person_off_outlined,
           label: l10n?.memberRejectJoin ?? 'Reject membership',
           onTap: () => decideMemberJoin(context, ref, member, approve: false),
@@ -118,6 +122,7 @@ class MembersScreen extends ConsumerWidget {
       if (servicesOn && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-consumption-add-for-member'),
           icon: Icons.room_service_outlined,
           label: l10n?.consumptionAddForMember(name) ?? 'Add service for $name',
           onTap: () => showConsumptionSheet(
@@ -130,6 +135,7 @@ class MembersScreen extends ConsumerWidget {
       if (isOwner && !member.isKiosk)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-subscription-label'),
           icon: Icons.percent,
           label: l10n?.memberSubscriptionLabel ?? 'Subscription',
           topic: membersTopic,
@@ -150,6 +156,7 @@ class MembersScreen extends ConsumerWidget {
       if (isOwner && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-overage-policy-label'),
           icon: member.overagePolicy == OveragePolicy.blocked
               ? Icons.speed_outlined
               : Icons.speed,
@@ -160,6 +167,7 @@ class MembersScreen extends ConsumerWidget {
       if (staff && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-reservation-limit-label'),
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
           topic: membersTopic,
@@ -170,6 +178,7 @@ class MembersScreen extends ConsumerWidget {
       if (staff && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-simultaneous-limit-label'),
           icon: Icons.splitscreen_outlined,
           label: l10n?.memberSimultaneousLimitLabel ??
               'Simultaneous reservations',
@@ -181,6 +190,7 @@ class MembersScreen extends ConsumerWidget {
       if (staff && levelBookingOn && !isSelf && !member.isKiosk && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-level-permission-allowed'),
           icon: member.canReserveLevel
               ? Icons.layers
               : Icons.layers_outlined,
@@ -195,6 +205,7 @@ class MembersScreen extends ConsumerWidget {
       if (!member.isKiosk && !member.isOwner && active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-badges-tooltip'),
           icon: Icons.qr_code_2_outlined,
           label: l10n?.memberBadgesTooltip ?? 'Badges',
           topic: l10n?.helpHintBadgesTopic ?? 'NFC badges',
@@ -209,6 +220,7 @@ class MembersScreen extends ConsumerWidget {
           canGiveRoles(ref.read(myMemberProvider).value, perms))
         _sheetAction(
           context,
+          key: const ValueKey('members-action-roles-add'),
           icon: Icons.badge_outlined,
           label: l10n?.memberRolesAdd ?? 'Add a role',
           onTap: () => showRoleAssignSheet(context, ref, member, name),
@@ -216,6 +228,7 @@ class MembersScreen extends ConsumerWidget {
       if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-make-member'),
           icon: member.isAdmin
               ? Icons.remove_moderator_outlined
               : Icons.add_moderator_outlined,
@@ -235,6 +248,7 @@ class MembersScreen extends ConsumerWidget {
           active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-co-owner-action'),
           icon: switch (member.coOwner) {
             CoOwnerStatus.active => Icons.workspace_premium,
             CoOwnerStatus.passive => Icons.workspace_premium_outlined,
@@ -250,6 +264,7 @@ class MembersScreen extends ConsumerWidget {
           active)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-co-owner-activate'),
           icon: Icons.military_tech_outlined,
           label: l10n?.coOwnerActivate ?? 'Promote to owner now',
           onTap: () => activateMemberCoOwner(context, ref, member),
@@ -263,6 +278,7 @@ class MembersScreen extends ConsumerWidget {
           (member.isKiosk || kioskOn))
         _sheetAction(
           context,
+          key: const ValueKey('members-action-unmake-kiosk'),
           icon: member.isKiosk
               ? Icons.tablet_mac
               : Icons.tablet_mac_outlined,
@@ -278,6 +294,7 @@ class MembersScreen extends ConsumerWidget {
       if (isSelf && member.isKiosk)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-unmake-kiosk-2'),
           icon: Icons.tablet_mac,
           label: l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member',
           onTap: () => revertMyKiosk(context, ref, member),
@@ -287,6 +304,7 @@ class MembersScreen extends ConsumerWidget {
       if (isOwner && member.status != MemberStatus.exited)
         _sheetAction(
           context,
+          key: const ValueKey('members-action-reactivate'),
           icon: member.status == MemberStatus.paused
               ? Icons.play_circle_outline
               : Icons.pause_circle_outline,
@@ -326,6 +344,7 @@ class MembersScreen extends ConsumerWidget {
   /// the SCREEN's context (the sheet's dies with the pop).
   Widget _sheetAction(
     BuildContext context, {
+    required Key key,
     required IconData icon,
     required String label,
     required VoidCallback onTap,
@@ -335,6 +354,7 @@ class MembersScreen extends ConsumerWidget {
     // pop closes the SHEET — the action then runs on the screen's context.
     return Builder(
       builder: (tileContext) => ListTile(
+        key: key,
         leading: Icon(icon),
         title: topic == null ? Text(label) : HelpDotTitle(label, topic,
           anchor: HelpAnchor.membersActions,
@@ -406,12 +426,14 @@ class MembersScreen extends ConsumerWidget {
           // ID & QR and billing surfaces — hidden from plain admins.
           if (isOwner)
             IconButton(
+              key: const ValueKey('members-invite'),
               icon: const Icon(Icons.person_add_outlined),
               tooltip: l10n?.membersInvite ?? 'Invite a member',
               onPressed: () => context.push('/workspace-code'),
             ),
           if (isOwner)
           IconButton(
+            key: const ValueKey('members-billing-title'),
             icon: const Icon(Icons.tune),
             tooltip: l10n?.billingTitle ?? 'Billing',
             onPressed: () => context.push('/billing'),
@@ -425,6 +447,7 @@ class MembersScreen extends ConsumerWidget {
               const HelpHint(HelpHintId.members),
               for (final member in members)
                 ListTile(
+                  key: ValueKey('members-member-kiosk-label-${member.id}'),
                   leading: CircleAvatar(
                     child: Text(
                       (names[member.id] ?? '?').isEmpty

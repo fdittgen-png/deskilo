@@ -156,6 +156,7 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
                 'Delete « ${t.name} »? People you shared it with lose access.'),
             actions: [
               TextButton(
+                  key: ValueKey('workspace-library-text-button-$action'),
                   onPressed: () => Navigator.of(ctx).pop(false),
                   child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
               FilledButton(

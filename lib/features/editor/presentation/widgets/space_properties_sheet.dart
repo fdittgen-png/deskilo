@@ -96,6 +96,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
             ),
             const SizedBox(height: 12),
             FilledButton(
+              key: ValueKey('space-properties-sheet-save-$keyPrefix'),
               onPressed: () => Navigator.of(context).pop(true),
               child: Text(l10n?.commonSave ?? 'Save'),
             ),

@@ -165,11 +165,13 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
         title: Text(l10n?.developerTitle ?? 'Developer'),
         actions: [
           IconButton(
+            key: const ValueKey('developer-export'),
             icon: const Icon(Icons.ios_share),
             tooltip: l10n?.developerExport ?? 'Export trace',
             onPressed: _export,
           ),
           IconButton(
+            key: const ValueKey('developer-clear'),
             icon: const Icon(Icons.delete_outline),
             tooltip: l10n?.developerClear ?? 'Clear trace',
             onPressed: () => ref.read(traceLoggerProvider).clear(),
@@ -222,18 +224,21 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
               spacing: 8,
               children: [
                 ChoiceChip(
+                  key: const ValueKey('developer-filter-all'),
                   label: Text(l10n?.developerFilterAll ?? 'All'),
                   selected: _filter == _TraceFilter.all,
                   onSelected: (_) =>
                       setState(() => _filter = _TraceFilter.all),
                 ),
                 ChoiceChip(
+                  key: const ValueKey('developer-filter-errors'),
                   label: Text(l10n?.developerFilterErrors ?? 'Errors'),
                   selected: _filter == _TraceFilter.errors,
                   onSelected: (_) =>
                       setState(() => _filter = _TraceFilter.errors),
                 ),
                 ChoiceChip(
+                  key: const ValueKey('developer-filter-warnings'),
                   label: Text(l10n?.developerFilterWarnings ?? 'Warnings+'),
                   selected: _filter == _TraceFilter.warnings,
                   onSelected: (_) =>

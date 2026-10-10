@@ -66,6 +66,7 @@ Future<void> showWorkspaceOwnersSheet(
                           title: Text(owner.name),
                           subtitle: Text(owner.email),
                           trailing: IconButton(
+                            key: ValueKey('workspace-owner-copy-email-${owner.memberId}'),
                             tooltip: l10n?.profilesCopyEmail ?? 'Copy e-mail',
                             icon: const Icon(Icons.copy_outlined),
                             onPressed: () async {

@@ -178,6 +178,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
               names: ref.read(memberNamesProvider).value ?? const {},
             )
           : null,
+      // recorder-key-exempt: a data callback; the sheet's actions are keyed.
       onChanged: () {
         ref
           ..invalidate(conversationMessagesProvider(widget.conversationId))
@@ -383,6 +384,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         ),
         if (!widget.asPage)
           IconButton(
+            key: const ValueKey('conversation-thread-close'),
             tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
@@ -526,6 +528,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         AppSpacing.lg,
       ),
       child: MemberNoteComposer(
+        key: const ValueKey('conversation-thread-member-note-composer'),
         autofocus: false,
         seedBody: hub
             ? (ref.read(conversationDraftsProvider)[conversationId] ??

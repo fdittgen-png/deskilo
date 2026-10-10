@@ -114,6 +114,7 @@ class LocalReadinessCard extends ConsumerWidget {
                     ? null
                     : Text(l10n?.localSlotRecommended ?? 'Recommended'),
                 trailing: TextButton(
+                  key: ValueKey('local-setup-open-${s.route}'),
                   onPressed: () => context.push(s.route),
                   child: Text(l10n?.localSlotOpen ?? 'Set up'),
                 ),

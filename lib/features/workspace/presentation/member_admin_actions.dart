@@ -340,6 +340,7 @@ Future<void> pickMemberReservationLimit(
             runSpacing: 4,
             children: [
               ChoiceChip(
+                key: const ValueKey('member-admin-actions-reservation-limit-none'),
                 label: Text(
                   l10n?.memberReservationLimitNone ?? 'No limit',
                 ),
@@ -349,6 +350,7 @@ Future<void> pickMemberReservationLimit(
               ),
               for (final preset in presets)
                 ChoiceChip(
+                  key: ValueKey('member-admin-actions-choice-chip-$preset'),
                   label: Text(preset.toString()),
                   selected: member.maxActiveReservations == preset,
                   onSelected: (_) => Navigator.of(context).pop(preset),
@@ -372,10 +374,12 @@ Future<void> pickMemberReservationLimit(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('member-admin-actions-cancel'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
         FilledButton(
+          key: const ValueKey('member-admin-actions-save'),
           onPressed: () {
             final value = int.tryParse(custom.text.trim());
             if (value == null || value < 1 || value > 100) return;
@@ -462,6 +466,7 @@ Future<void> pickMemberSimultaneousLimit(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('member-admin-actions-cancel-2'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(l10n?.commonCancel ?? 'Cancel'),
         ),
