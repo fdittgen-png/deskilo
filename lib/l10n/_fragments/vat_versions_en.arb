@@ -52,7 +52,7 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "memberVatTreatmentExplainer": "Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.",
+  "memberVatTreatmentExplainer": "Who this member is for VAT. Automatic: a desk, an office or a room is taxed where the building stands, so it carries your VAT for every customer; only a general service (one not connected with the premises) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. The other choices apply to every line.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },

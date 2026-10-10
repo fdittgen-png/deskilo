@@ -1,0 +1,28 @@
+{
+  "@@locale": "es",
+  "featureSupplyClassificationTitle": "Lugar de prestación por servicio",
+  "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.",
+  "supplyClassLabel": "Lugar de prestación",
+  "supplyClassProperty": "Vinculado a los locales",
+  "supplyClassGeneral": "Servicio general (no vinculado a los locales)",
+  "supplyClassHelper": "Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.",
+  "invoiceMissingBuyerCapacity": "Si el miembro es una empresa o un consumidor: de ello depende un servicio general a un cliente en el extranjero",
+  "vatTreatmentReverseChargeHint": "El cliente autoliquida el IVA: solo para servicios no vinculados a los locales.",
+  "vatTreatmentExampleTitle": "Para una empresa de otro país de la UE:",
+  "vatTreatmentExamplePremises": "Puesto, oficina, sala: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleGeneral": "Servicios generales: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  }
+}

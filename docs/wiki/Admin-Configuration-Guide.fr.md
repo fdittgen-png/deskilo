@@ -70,13 +70,24 @@ zéro, exonéré, hors champ. Un service, un tarif, un accessoire et un
 forfait portent un groupe, pas un pourcentage : la table des taux d'un
 pays peut donc changer sous eux sans toucher au catalogue.
 
-Les **traitements** sont ce que la contrepartie en fait : national,
-entreprise intracommunautaire (autoliquidation, le client s'impose
-lui-même au titre de l'art. 196), particulier intracommunautaire,
-export. Le pays et le numéro de TVA du client décident lequel
-s'applique, et le contrôle de facturation électronique refuse d'envoyer
-un document en autoliquidation tant que ce numéro de TVA est absent :
-c'est lui qui prouve que la taxe est la leur.
+**Le lieu d'imposition** vient d'abord (#2354). Un poste, un bureau ou une
+salle est un service rattaché à l'immeuble : il porte votre TVA où que
+vive le client, professionnel ou consommateur (art. 47 de la directive
+TVA). Un service du catalogue indique s'il est **Rattaché aux locaux**
+(par défaut) ou une **Prestation générale (non rattachée aux locaux)**,
+comme le traitement du courrier ou la domiciliation, et chaque prestation
+enregistrée garde ce choix.
+
+Les **traitements** sont ce que la contrepartie fait d'une prestation
+générale : TVA nationale, autoliquidation pour une entreprise d'un autre
+pays de l'UE (le client s'impose lui-même au titre de l'art. 196), ou hors
+champ pour une entreprise hors de l'UE. La qualité déclarée du client
+(professionnel ou consommateur) et son pays décident lequel s'applique,
+jamais la seule présence d'un numéro de TVA ; un consommateur, en France
+ou ailleurs, paie votre TVA, il n'y a donc pas de traitement distinct pour
+un particulier intracommunautaire. Le contrôle de facturation électronique
+refuse d'envoyer un document en autoliquidation tant que le numéro de TVA
+du client est absent : c'est lui qui prouve que la taxe est la sienne.
 
 **Le moment où la TVA devient exigible** est un réglage de l'espace :
 *sur les débits* (exigible à l'émission) ou *sur les encaissements*

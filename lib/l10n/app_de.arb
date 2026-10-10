@@ -3737,6 +3737,8 @@
   "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
+  "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.",
+  "featureSupplyClassificationTitle": "Leistungsort je Leistung",
   "featureSupplyExpensesDesc": "Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.",
   "featureSupplyExpensesTitle": "Vorräte aus Ausgaben",
   "featureSurfaceCalendarHint": "Was ansteht, nach Tag und nach Monat.",
@@ -5274,6 +5276,7 @@
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
+  "invoiceMissingBuyerCapacity": "Ob das Mitglied Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab",
   "invoiceMissingBuyerName": "Der Name oder die Firma des Mitglieds",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
@@ -5301,7 +5304,7 @@
   },
   "invoiceMissingVatNotRegistered": "Keine MwSt. auf den Positionen: der Raum berechnet keine MwSt., aber für das Abonnement oder ein Zubehör ist ein Satz eingestellt",
   "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)",
-  "invoiceMissingVatTreatment": "Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.",
+  "invoiceMissingVatTreatment": "Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.",
   "invoiceMissingVatZeroLine": "Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund",
   "invoiceNoOpen": "Keine offenen Rechnungen.",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
@@ -6831,7 +6834,7 @@
   "memberSubscriptionCustom": "Individuell (1–100)",
   "memberSubscriptionLabel": "Abo",
   "memberUnmakeKiosk": "Kiosk zu Mitglied zurücksetzen",
-  "memberVatTreatmentExplainer": "Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.",
+  "memberVatTreatmentExplainer": "Wer dieses Mitglied für die Umsatzsteuer ist. Automatisch: Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt, also mit Ihrer Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (ohne Bezug zu den Räumlichkeiten) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Leistungsempfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Die anderen Auswahlmöglichkeiten gelten für alle Positionen.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },
@@ -10573,6 +10576,10 @@
   "subprocessStructureDesc": "Standorte und die Verfügbarkeit von Planobjekten verwalten.",
   "subprocessTax": "Umsatzsteuerverwaltung",
   "subprocessTaxDesc": "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.",
+  "supplyClassGeneral": "Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)",
+  "supplyClassHelper": "Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.",
+  "supplyClassLabel": "Leistungsort",
+  "supplyClassProperty": "Mit den Räumlichkeiten verbunden",
   "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
   "supportDay": "Letzte 24 Stunden",
   "supportDemo": "Demo: simulierter lokaler Kontext",
@@ -11688,6 +11695,23 @@
   "@vatTreatmentDomestic": {
     "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
   },
+  "vatTreatmentExampleGeneral": "Allgemeine Dienstleistungen: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExamplePremises": "Arbeitsplatz, Büro, Raum: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleTitle": "Für ein Unternehmen in einem anderen EU-Land:",
   "vatTreatmentExempt": "Befreiter Käufer",
   "@vatTreatmentExempt": {
     "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
@@ -11704,6 +11728,7 @@
   "@vatTreatmentReverseCharge": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
   },
+  "vatTreatmentReverseChargeHint": "Der Kunde schuldet die Umsatzsteuer – nur für Leistungen, die nicht mit den Räumlichkeiten verbunden sind.",
   "vatUntil": "bis",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"

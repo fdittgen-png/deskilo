@@ -71,14 +71,27 @@ ein Zubehör und ein Paket tragen eine Gruppe, keinen Prozentwert: Die
 Satztabelle eines Landes kann sich also unter ihnen ändern, ohne den
 Katalog anzufassen.
 
-**Behandlungen** sind, was die Gegenseite daraus macht: Inland,
-innergemeinschaftlich an Unternehmen (Steuerschuldnerschaft des
-Empfängers, die Kundin versteuert selbst nach Art. 196),
-innergemeinschaftlich an Verbraucher, Ausfuhr. Land und
-Umsatzsteuer-ID der Kundin entscheiden, was gilt, und die
-E-Rechnungsprüfung verweigert den Versand eines Dokuments mit
-Steuerschuldnerschaft des Empfängers, solange diese Umsatzsteuer-ID
-fehlt — sie ist der Nachweis, dass die Steuer die ihre ist.
+**Der Ort der Besteuerung** kommt zuerst (#2354). Ein Arbeitsplatz, ein
+Büro oder ein Raum ist eine Leistung, die mit dem Gebäude verbunden ist:
+Er trägt Ihre Umsatzsteuer, wo immer die Kundin lebt, ob Unternehmerin
+oder Verbraucherin (Art. 47 der Mehrwertsteuerrichtlinie). Eine Leistung
+des Katalogs gibt an, ob sie **Mit den Räumlichkeiten verbunden** ist
+(Voreinstellung) oder eine **Allgemeine Dienstleistung (nicht mit den
+Räumlichkeiten verbunden)**, etwa Postbearbeitung oder ein virtuelles
+Büro, und jede erfasste Leistung behält diese Wahl.
+
+**Behandlungen** sind, was die Gegenseite aus einer allgemeinen
+Dienstleistung macht: Inlands-Umsatzsteuer, Steuerschuldnerschaft des
+Empfängers für ein Unternehmen in einem anderen EU-Land (die Kundin
+versteuert selbst nach Art. 196) oder nicht steuerbar für ein Unternehmen
+außerhalb der EU. Die angegebene Kundeneigenschaft (Unternehmer oder
+Verbraucher) und das Land entscheiden, was gilt, nie die bloße
+Umsatzsteuer-ID; eine Verbraucherin zahlt im In- wie im Ausland Ihre
+Umsatzsteuer, eine eigene Behandlung für innergemeinschaftliche
+Verbraucher gibt es daher nicht. Die E-Rechnungsprüfung verweigert den
+Versand eines Dokuments mit Steuerschuldnerschaft des Empfängers, solange
+die Umsatzsteuer-ID der Kundin fehlt — sie ist der Nachweis, dass die
+Steuer die ihre ist.
 
 **Wann die MwSt. fällig wird**, ist eine Einstellung des Bereichs:
 *nach vereinbarten Entgelten* (fällig bei Ausstellung) oder *nach

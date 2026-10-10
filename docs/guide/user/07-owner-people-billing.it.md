@@ -258,7 +258,8 @@ Vuole indicare all'app che cos'è questo membro ai fini dell'IVA, così le sue f
 
 **Da sapere**
 
-- **Automatico** applica la regola abituale: inversione contabile per un'impresa di un altro Stato dell'UE.
+- **Automatico** applica il luogo della prestazione: una postazione, un ufficio o una sala porta la Sua IVA per qualsiasi cliente; solo un servizio generico (vedi [Luogo della prestazione di un servizio](#luogo-della-prestazione-di-un-servizio)) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Un consumatore paga la Sua IVA ovunque viva. La finestra mostra cosa fa il trattamento scelto di ogni tipo di riga.
+- **Inversione contabile** è pensata solo per un membro che acquista servizi non connessi ai locali: vale per tutte le righe.
 - Lo stesso gruppo offre **Qualità del cliente** (**Professionista**, **Consumatore** o **Non indicata**), che stabilisce quali clausole di pagamento stampa una fattura. Richiede il permesso di emettere fatture.
 - **Inversione contabile**, **Fuori UE** e **Acquirente esente** vengono registrati, ma le fatture di questi membri non si possono ancora emettere nell'app: si emettono fuori dall'app con il Suo commercialista.
 - La funzione **IVA secondo il cliente** deve essere attiva perché compaia la riga del trattamento IVA, visibile ad amministratori e proprietari; le aliquote si impostano in [Aliquote IVA](help:user.money.vat.rates).
@@ -501,6 +502,11 @@ Ciò che dice la riga della fattura. Se lo rinomina, cambiano solo i nuovi docum
 #### Prezzo del servizio
 
 Il prezzo di un'unità, lordo: il membro paga esattamente questo importo e l'IVA ne fa parte. L'**Aliquota IVA** decide soltanto quanta parte è imposta.
+
+<!-- anchor: user.money.services.supply -->
+#### Luogo della prestazione di un servizio
+
+Dove è dovuta l'IVA su questo servizio. **Connesso ai locali**, il valore predefinito, mantiene la Sua IVA per qualsiasi cliente: una postazione, un ufficio, una sala e ciò che si usa sul posto sono tassati dove si trova l'immobile. Scelga **Servizio generico (non connesso ai locali)** solo per ciò che non è legato all'edificio, come la gestione della posta o un ufficio virtuale: per un'impresa di un altro Paese UE quella riga va allora in inversione contabile, e per un'impresa fuori dall'UE è fuori campo; un consumatore paga sempre la Sua IVA. Ogni addebito registrato conserva la scelta valida in quel momento. Il campo compare quando Lei applica l'IVA e la funzione **Luogo della prestazione per servizio** è attiva.
 
 <!-- anchor: user.money.services.active -->
 #### Attivo

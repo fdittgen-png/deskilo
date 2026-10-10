@@ -8,6 +8,10 @@
 // 289 CGI for France, § 19 UStG for Germany) and EN 16931 BR-E-10.
 import 'vat_regime.dart';
 
+// #2354 — the EU set and the place-of-supply rule live in core/vat (pure,
+// shared with the member screens); money code keeps importing them here.
+export '../../../core/vat/place_of_supply.dart';
+
 /// The statutory mention for a seller that charges no VAT, per country,
 /// used when the owner left the exemption reason empty (BT-120 must
 /// not be blank on a category E invoice, BR-E-10).
@@ -92,34 +96,6 @@ const Map<String, String> _vatIdBodies = {
   'CH': r'E\d{9}(MWST|TVA|IVA)?',
 };
 
-/// #895 — the member states whose businesses self-assess the tax on a
-/// cross-border supply (EL is Greece's VAT prefix).
-const Set<String> euMemberStates = {
-  'AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','EL','HR','HU',
-  'IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK',
-};
-
-bool isEuCountry(String code) =>
-    euMemberStates.contains(code.trim().toUpperCase());
-
-/// Whether a supply is REVERSE-CHARGED: a VAT-registered seller invoicing
-/// a business in ANOTHER member state charges no tax — the customer
-/// self-assesses (Directive art. 196). Mirrors `create_invoice` (0157);
-/// a workspace that never invoices businesses abroad opts out.
-bool reverseChargeApplies({
-  required VatRegime sellerRegime,
-  required String sellerCountry,
-  required String buyerCountry,
-  required String buyerVatId,
-  bool optedOut = false,
-}) =>
-    !optedOut &&
-    sellerRegime == VatRegime.vatRegistered &&
-    buyerVatId.trim().isNotEmpty &&
-    isEuCountry(sellerCountry) &&
-    isEuCountry(buyerCountry) &&
-    sellerCountry.trim().toUpperCase() != buyerCountry.trim().toUpperCase();
-
 /// The mention such a document must carry (BT-120), in the seller's
 /// language — the customer reads it as the reason no tax is charged.
 String reverseChargeMention(String sellerCountry) =>
@@ -151,18 +127,21 @@ String exemptionCodeForCategory(
       _ => regime.exemptionReasonCode(sellerCountry),
     };
 
-/// #985 — the mention a supply outside the EU prints.
+/// #985 — the mention a supply outside the EU prints. #2354: only a
+/// general service to a business established outside the EU is one
+/// (art. 44) — never a desk, which is supplied where the building stands.
 String exportMention(String sellerCountry) =>
     switch (sellerCountry.trim().toUpperCase()) {
-      'FR' => 'TVA non applicable — opération située hors de l\'Union '
-          'européenne (art. 259 du CGI).',
+      'FR' => 'TVA non applicable — prestation de services située hors de '
+          "l'Union européenne (art. 44 de la directive 2006/112/CE).",
       'DE' || 'AT' => 'Nicht im Inland steuerbare Leistung — Leistungsort '
-          'außerhalb der EU (§ 3a UStG).',
+          'außerhalb der EU (Art. 44 der Richtlinie 2006/112/EG).',
       'ES' => 'Operación no sujeta — localizada fuera de la Unión Europea '
-          '(art. 69 Ley 37/1992).',
+          '(art. 44 de la Directiva 2006/112/CE).',
       'IT' => 'Operazione non soggetta — territorialmente fuori '
-          "dall'Unione europea (art. 7-ter DPR 633/72).",
-      _ => 'VAT not applicable — supply outside the European Union.',
+          "dall'Unione europea (art. 44 della direttiva 2006/112/CE).",
+      _ => 'VAT not applicable — service supplied outside the European '
+          'Union (art. 44 of Council Directive 2006/112/EC).',
     };
 
 /// #985 — the exemption text a document prints for [category]: the

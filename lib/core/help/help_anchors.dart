@@ -378,6 +378,7 @@ abstract final class HelpAnchor {
 
   /// Whether it can still be sold.
   static const serviceActive = 'user.money.services.active';
+  static const serviceSupply = 'user.money.services.supply'; // #2354 where its VAT is due
 
   // ── money · electronic invoicing ───────────────────────────────────
   /// Where a structured invoice goes, and with which credentials.
@@ -569,6 +570,7 @@ abstract final class HelpAnchor {
     serviceName,
     servicePrice,
     serviceActive,
+    serviceSupply,
     workspaceCountry,
     workspaceCurrencyTimezone,
     workspaceLanguage,

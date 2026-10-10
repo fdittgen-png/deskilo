@@ -1,0 +1,28 @@
+{
+  "@@locale": "it",
+  "featureSupplyClassificationTitle": "Luogo della prestazione per servizio",
+  "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali.",
+  "supplyClassLabel": "Luogo della prestazione",
+  "supplyClassProperty": "Connesso ai locali",
+  "supplyClassGeneral": "Servizio generico (non connesso ai locali)",
+  "supplyClassHelper": "Una postazione, un ufficio o una sala è tassato dove si trova l'immobile, per qualsiasi cliente. Scelga «servizio generico» solo per ciò che non è legato ai locali, come la gestione della posta o un ufficio virtuale: un'impresa di un altro Paese UE assolve allora l'IVA con l'inversione contabile.",
+  "invoiceMissingBuyerCapacity": "Se il membro è un'impresa o un consumatore: ne dipende un servizio generico a un cliente estero",
+  "vatTreatmentReverseChargeHint": "Il cliente assolve l'IVA: solo per servizi non connessi ai locali.",
+  "vatTreatmentExampleTitle": "Per un'impresa di un altro Paese UE:",
+  "vatTreatmentExamplePremises": "Postazione, ufficio, sala: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleGeneral": "Servizi generici: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  }
+}

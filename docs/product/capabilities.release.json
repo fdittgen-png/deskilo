@@ -1379,6 +1379,12 @@
       "capabilities": []
     },
     {
+      "key": "supplyClassification",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "supplyExpenses",
       "maturity": "beta",
       "lifecycle": "active",

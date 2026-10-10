@@ -3890,7 +3890,8 @@ Vuole indicare all'app che cos'è questo membro ai fini dell'IVA, così le sue f
 
 **Da sapere**
 
-- **Automatico** applica la regola abituale: inversione contabile per un'impresa di un altro Stato dell'UE.
+- **Automatico** applica il luogo della prestazione: una postazione, un ufficio o una sala porta la Sua IVA per qualsiasi cliente; solo un servizio generico (vedi [Luogo della prestazione di un servizio](help:user.money.services.supply)) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Un consumatore paga la Sua IVA ovunque viva. La finestra mostra cosa fa il trattamento scelto di ogni tipo di riga.
+- **Inversione contabile** è pensata solo per un membro che acquista servizi non connessi ai locali: vale per tutte le righe.
 - Lo stesso gruppo offre **Qualità del cliente** (**Professionista**, **Consumatore** o **Non indicata**), che stabilisce quali clausole di pagamento stampa una fattura. Richiede il permesso di emettere fatture.
 - **Inversione contabile**, **Fuori UE** e **Acquirente esente** vengono registrati, ma le fatture di questi membri non si possono ancora emettere nell'app: si emettono fuori dall'app con il Suo commercialista.
 - La funzione **IVA secondo il cliente** deve essere attiva perché compaia la riga del trattamento IVA, visibile ad amministratori e proprietari; le aliquote si impostano in [Aliquote IVA](help:user.money.vat.rates).
@@ -4114,6 +4115,10 @@ Ciò che dice la riga della fattura. Se lo rinomina, cambiano solo i nuovi docum
 #### Prezzo del servizio
 
 Il prezzo di un'unità, lordo: il membro paga esattamente questo importo e l'IVA ne fa parte. L'**Aliquota IVA** decide soltanto quanta parte è imposta.
+
+#### Luogo della prestazione di un servizio
+
+Dove è dovuta l'IVA su questo servizio. **Connesso ai locali**, il valore predefinito, mantiene la Sua IVA per qualsiasi cliente: una postazione, un ufficio, una sala e ciò che si usa sul posto sono tassati dove si trova l'immobile. Scelga **Servizio generico (non connesso ai locali)** solo per ciò che non è legato all'edificio, come la gestione della posta o un ufficio virtuale: per un'impresa di un altro Paese UE quella riga va allora in inversione contabile, e per un'impresa fuori dall'UE è fuori campo; un consumatore paga sempre la Sua IVA. Ogni addebito registrato conserva la scelta valida in quel momento. Il campo compare quando Lei applica l'IVA e la funzione **Luogo della prestazione per servizio** è attiva.
 
 #### Attivo
 
@@ -4534,7 +4539,7 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Da sapere**
 
-- Attivata: l'app riconosce un'impresa con una partita IVA in un altro Stato membro. Oggi l'app non emette direttamente queste fatture: Lei le emette fuori dall'app con il Suo commercialista.
+- Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. Oggi l'app non emette direttamente le fatture in inversione contabile: Lei le emette fuori dall'app con il Suo commercialista.
 - Disattivata: la disattivi se non fattura mai a imprese all'estero.
 - L'opzione compare solo per il regime di soggetto IVA.
 
@@ -5078,7 +5083,7 @@ Fattura un mese a un membro.
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
 - Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
-- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.
+- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).
 - Una fattura emessa è firmata e immutabile.
 
 **Vedi anche:** [L'assistente di chiusura mensile](help:user.invoicing.wizard)
@@ -8429,13 +8434,24 @@ accessorio e un pacchetto portano un gruppo, non una percentuale: la
 tabella delle aliquote di un paese può quindi cambiare sotto di loro
 senza toccare il catalogo.
 
-I **trattamenti** sono ciò che la controparte ne fa: interno,
-intracomunitario verso imprese (inversione contabile, il cliente assolve
-l'imposta secondo l'art. 196), intracomunitario verso consumatori,
-esportazione. Il paese e la partita IVA del cliente decidono quale si
-applica, e il controllo della fatturazione elettronica rifiuta di inviare
-un documento in inversione contabile finché quella partita IVA manca:
-è ciò che prova che l'imposta è sua.
+**Il luogo di imposizione** viene prima (#2354). Una postazione, un
+ufficio o una sala è un servizio connesso all'immobile: porta la Sua IVA
+ovunque viva il cliente, impresa o consumatore (art. 47 della direttiva
+IVA). Un servizio del catalogo indica se è **Connesso ai locali**
+(predefinito) o un **Servizio generico (non connesso ai locali)**, come la
+gestione della posta o un ufficio virtuale, e ogni addebito registrato
+conserva questa scelta.
+
+I **trattamenti** sono ciò che la controparte fa di un servizio generico:
+IVA interna, inversione contabile per un'impresa di un altro Paese UE (il
+cliente assolve l'imposta secondo l'art. 196), o fuori campo per
+un'impresa fuori dall'UE. La qualità dichiarata del cliente (impresa o
+consumatore) e il suo paese decidono quale si applica, mai la sola
+presenza di una partita IVA; un consumatore, in Italia o altrove, paga la
+Sua IVA, quindi non esiste un trattamento a parte per i consumatori
+intracomunitari. Il controllo della fatturazione elettronica rifiuta di
+inviare un documento in inversione contabile finché manca la partita IVA
+del cliente: è ciò che prova che l'imposta è sua.
 
 **Quando l'IVA diventa esigibile** è un'impostazione dello spazio: *sulle
 fatture* (esigibile all'emissione) oppure *sugli incassi* (esigibile il

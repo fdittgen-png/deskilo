@@ -7,17 +7,9 @@ import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
-/// The 27 EU member states — the e-invoice affordance shows only for
-/// workspaces established in one of them (field decision: EU
-/// guidelines apply to EU workspaces).
-const Set<String> euCountryCodes = {
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
-  'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
-  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
-};
-
-bool isEuCountry(String countryCode) =>
-    euCountryCodes.contains(countryCode.toUpperCase());
+// #2354 — the 27 member states live once, in vat_compliance.dart; the
+// e-invoice affordance shows only for workspaces established in one.
+export 'vat_compliance.dart' show euMemberStates, isEuCountry;
 
 /// EN 16931 e-invoice as UBL 2.1 XML (the EU norm's primary syntax,
 /// Directive 2014/55/EU), CustomizationID `urn:cen.eu:en16931:2017`.

@@ -5625,6 +5625,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Abo-Rechnungen';
 
   @override
+  String get featureSupplyClassificationDesc =>
+      'Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.';
+
+  @override
+  String get featureSupplyClassificationTitle => 'Leistungsort je Leistung';
+
+  @override
   String get featureSupplyExpensesDesc =>
       'Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.';
 
@@ -8167,6 +8174,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Ob das Mitglied Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab';
+
+  @override
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
 
   @override
@@ -8202,7 +8213,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.';
+      'Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -11017,7 +11028,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.';
+      'Wer dieses Mitglied für die Umsatzsteuer ist. Automatisch: Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt, also mit Ihrer Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (ohne Bezug zu den Räumlichkeiten) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Leistungsempfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Die anderen Auswahlmöglichkeiten gelten für alle Positionen.';
 
   @override
   String get memberVatTreatmentLabel => 'USt-Behandlung';
@@ -16388,6 +16399,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
 
   @override
+  String get supplyClassGeneral =>
+      'Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)';
+
+  @override
+  String get supplyClassHelper =>
+      'Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.';
+
+  @override
+  String get supplyClassLabel => 'Leistungsort';
+
+  @override
+  String get supplyClassProperty => 'Mit den Räumlichkeiten verbunden';
+
+  @override
   String get supportChanged =>
       'Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.';
 
@@ -19043,6 +19068,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatTreatmentDomestic => 'Inlands-USt';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Allgemeine Dienstleistungen: $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Arbeitsplatz, Büro, Raum: $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Für ein Unternehmen in einem anderen EU-Land:';
+
+  @override
   String get vatTreatmentExempt => 'Befreiter Käufer';
 
   @override
@@ -19055,6 +19094,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatTreatmentReverseCharge =>
       'Steuerschuldnerschaft des Empfängers';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'Der Kunde schuldet die Umsatzsteuer – nur für Leistungen, die nicht mit den Räumlichkeiten verbunden sind.';
 
   @override
   String get vatUntil => 'bis';

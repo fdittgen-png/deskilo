@@ -3737,6 +3737,8 @@
   "featureSpaceQrCodesDesc": "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar.",
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
+  "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.",
+  "featureSupplyClassificationTitle": "Lugar de prestación por servicio",
   "featureSupplyExpensesDesc": "Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.",
   "featureSupplyExpensesTitle": "Suministros desde gastos",
   "featureSurfaceCalendarHint": "Qué ocurre, por día y por mes.",
@@ -5274,6 +5276,7 @@
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
+  "invoiceMissingBuyerCapacity": "Si el miembro es una empresa o un consumidor: de ello depende un servicio general a un cliente en el extranjero",
   "invoiceMissingBuyerName": "El nombre o la empresa del miembro",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
@@ -5301,7 +5304,7 @@
   },
   "invoiceMissingVatNotRegistered": "Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio",
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
-  "invoiceMissingVatTreatment": "Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.",
+  "invoiceMissingVatTreatment": "Las facturas con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.",
   "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
   "invoiceNoOpen": "No hay facturas abiertas.",
   "invoiceNothingToInvoice": "Nada registrado este mes — nada que facturar.",
@@ -6831,7 +6834,7 @@
   "memberSubscriptionCustom": "Personalizado (1–100)",
   "memberSubscriptionLabel": "Suscripción",
   "memberUnmakeKiosk": "Revertir quiosco a miembro",
-  "memberVatTreatmentExplainer": "Quién es este miembro a efectos de IVA: la regla automática (inversión del sujeto pasivo para una empresa de otro Estado de la UE), IVA nacional en todo caso, inversión del sujeto pasivo, fuera de la UE o un comprador exento con el motivo impreso en la factura.",
+  "memberVatTreatmentExplainer": "Quién es este miembro a efectos de IVA. Automático: un puesto, una oficina o una sala tributa donde se encuentra el inmueble, con su IVA para cualquier cliente; solo un servicio general (no vinculado a los locales) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Las demás opciones se aplican a todas las líneas.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },
@@ -10573,6 +10576,10 @@
   "subprocessStructureDesc": "Gestionar sedes y disponibilidad de elementos del plano.",
   "subprocessTax": "Gestión del IVA",
   "subprocessTaxDesc": "Gestionar grupos, tipos y declaraciones de IVA.",
+  "supplyClassGeneral": "Servicio general (no vinculado a los locales)",
+  "supplyClassHelper": "Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.",
+  "supplyClassLabel": "Lugar de prestación",
+  "supplyClassProperty": "Vinculado a los locales",
   "supportChanged": "El contexto cambió. Prepare una nueva vista previa.",
   "supportDay": "Últimas 24 horas",
   "supportDemo": "Demo: contexto local simulado",
@@ -11688,6 +11695,23 @@
   "@vatTreatmentDomestic": {
     "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
   },
+  "vatTreatmentExampleGeneral": "Servicios generales: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExamplePremises": "Puesto, oficina, sala: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleTitle": "Para una empresa de otro país de la UE:",
   "vatTreatmentExempt": "Comprador exento",
   "@vatTreatmentExempt": {
     "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
@@ -11704,6 +11728,7 @@
   "@vatTreatmentReverseCharge": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
   },
+  "vatTreatmentReverseChargeHint": "El cliente autoliquida el IVA: solo para servicios no vinculados a los locales.",
   "vatUntil": "hasta el",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"

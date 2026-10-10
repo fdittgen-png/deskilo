@@ -2836,7 +2836,8 @@
 </ol>
 <h4 class="lbl lbl-know">Da sapere</h4>
 <ul>
-<li><strong>Automatico</strong> applica la regola abituale: inversione contabile per un'impresa di un altro Stato dell'UE.</li>
+<li><strong>Automatico</strong> applica il luogo della prestazione: una postazione, un ufficio o una sala porta la Sua IVA per qualsiasi cliente; solo un servizio generico (vedi <a href="#user.money.services.supply">Luogo della prestazione di un servizio</a>) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Un consumatore paga la Sua IVA ovunque viva. La finestra mostra cosa fa il trattamento scelto di ogni tipo di riga.</li>
+<li><strong>Inversione contabile</strong> è pensata solo per un membro che acquista servizi non connessi ai locali: vale per tutte le righe.</li>
 <li>Lo stesso gruppo offre <strong>Qualità del cliente</strong> (<strong>Professionista</strong>, <strong>Consumatore</strong> o <strong>Non indicata</strong>), che stabilisce quali clausole di pagamento stampa una fattura. Richiede il permesso di emettere fatture.</li>
 <li><strong>Inversione contabile</strong>, <strong>Fuori UE</strong> e <strong>Acquirente esente</strong> vengono registrati, ma le fatture di questi membri non si possono ancora emettere nell'app: si emettono fuori dall'app con il Suo commercialista.</li>
 <li>La funzione <strong>IVA secondo il cliente</strong> deve essere attiva perché compaia la riga del trattamento IVA, visibile ad amministratori e proprietari; le aliquote si impostano in <a href="#user.money.vat.rates">Aliquote IVA</a>.</li>
@@ -2985,6 +2986,8 @@
 <p>Ciò che dice la riga della fattura. Se lo rinomina, cambiano solo i nuovi documenti.</p>
 <h4>Prezzo del servizio</h4>
 <p>Il prezzo di un'unità, lordo: il membro paga esattamente questo importo e l'IVA ne fa parte. L'<strong>Aliquota IVA</strong> decide soltanto quanta parte è imposta.</p>
+<h4>Luogo della prestazione di un servizio</h4>
+<p>Dove è dovuta l'IVA su questo servizio. <strong>Connesso ai locali</strong>, il valore predefinito, mantiene la Sua IVA per qualsiasi cliente: una postazione, un ufficio, una sala e ciò che si usa sul posto sono tassati dove si trova l'immobile. Scelga <strong>Servizio generico (non connesso ai locali)</strong> solo per ciò che non è legato all'edificio, come la gestione della posta o un ufficio virtuale: per un'impresa di un altro Paese UE quella riga va allora in inversione contabile, e per un'impresa fuori dall'UE è fuori campo; un consumatore paga sempre la Sua IVA. Ogni addebito registrato conserva la scelta valida in quel momento. Il campo compare quando Lei applica l'IVA e la funzione <strong>Luogo della prestazione per servizio</strong> è attiva.</p>
 <h4>Attivo</h4>
 <p>Quando modifica un servizio, l'interruttore <strong>Attivo</strong> decide se può ancora essere venduto. Lo disattivi per qualcosa di dismesso; l'elenco lo mostra in grigio e scrive <strong>Inattivo</strong>.</p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-services-overview.it.b8fa17aa9.jpg" alt="Un servizio"></div></figure></div></article><article class="section" id="user.money.accessories" data-roles="admin owner"><header><h3>Accessori <a class="permalink" href="#user.money.accessories" aria-label="link">#</a></h3><div class="roles"><span class="role role-admin">Amministratore</span><span class="role role-owner">Proprietario</span></div></header><div class="body"><p>Noleggia attrezzatura insieme a un posto, come un monitor o una sedia, e applica un supplemento per ogni mezza giornata.</p>
@@ -3265,7 +3268,7 @@
 </ol>
 <h4 class="lbl lbl-know">Da sapere</h4>
 <ul>
-<li>Attivata: l'app riconosce un'impresa con una partita IVA in un altro Stato membro. Oggi l'app non emette direttamente queste fatture: Lei le emette fuori dall'app con il Suo commercialista.</li>
+<li>Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. Oggi l'app non emette direttamente le fatture in inversione contabile: Lei le emette fuori dall'app con il Suo commercialista.</li>
 <li>Disattivata: la disattivi se non fattura mai a imprese all'estero.</li>
 <li>L'opzione compare solo per il regime di soggetto IVA.</li>
 </ul>
@@ -3635,7 +3638,7 @@
 <li>Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il <strong>Saldo</strong>.</li>
 <li>Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.</li>
 <li>Se manca un dato obbligatorio, <strong>Completi questi dati prima dell'emissione</strong> lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).</li>
-<li>In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.</li>
+<li>In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).</li>
 <li>Una fattura emessa è firmata e immutabile.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.invoicing.wizard">L'assistente di chiusura mensile</a></p>

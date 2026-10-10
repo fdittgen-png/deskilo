@@ -4066,7 +4066,8 @@ Vous voulez indiquer à l'app qui est ce membre au regard de la TVA, pour que se
 
 **Bon à savoir**
 
-- **Automatique** applique la règle habituelle : autoliquidation pour une entreprise établie dans un autre État de l'UE.
+- **Automatique** applique le lieu de prestation : un poste, un bureau ou une salle porte votre TVA pour tout client ; seule une prestation générale (voir [Lieu de prestation d'un service](#lieu-de-prestation-dun-service)) est autoliquidée par une entreprise d'un autre pays de l'UE, ou hors champ pour une entreprise hors de l'UE. Un consommateur paie votre TVA où qu'il vive. La boîte de dialogue montre ce que le traitement choisi fait de chaque type de ligne.
+- **Autoliquidation** ne convient qu'à un membre qui achète des services non rattachés aux locaux : elle s'applique à toutes les lignes.
 - Le même groupe propose **Qualité du client** (**Professionnel**, **Consommateur** ou **Non précisée**), qui détermine les clauses de paiement qu'une facture imprime. Elle demande le droit d'émettre des factures.
 - **Autoliquidation**, **Hors UE** et **Acheteur exonéré** sont enregistrés, mais les factures de ces membres ne peuvent pas encore être émises dans l'app : elles sont émises hors de l'app avec votre comptable.
 - La fonctionnalité **TVA selon le client** doit être activée pour que la ligne Traitement de la TVA apparaisse, pour les administrateurs et les propriétaires ; les taux se règlent dans [Taux de TVA](#définir-les-taux).
@@ -4309,6 +4310,11 @@ Ce que dit la ligne de facture. Renommez-le et seuls les nouveaux documents chan
 #### Prix du service
 
 Le prix d'une unité, TTC : le membre paie exactement cette somme, TVA comprise. Le **Taux de TVA** décide seulement quelle part en est de la taxe.
+
+<!-- anchor: user.money.services.supply -->
+#### Lieu de prestation d'un service
+
+Où la TVA de ce service est due. **Rattaché aux locaux**, la valeur par défaut, garde votre TVA pour tout client : un poste, un bureau, une salle et ce qui s'utilise sur place sont imposés là où se trouve l'immeuble. Choisissez **Prestation générale (non rattachée aux locaux)** uniquement pour ce qui n'est pas lié à l'immeuble, comme le traitement du courrier ou la domiciliation : pour une entreprise d'un autre pays de l'UE, cette ligne est alors autoliquidée, et pour une entreprise hors de l'UE elle est hors champ ; un consommateur paie toujours votre TVA. Chaque prestation enregistrée garde le choix en vigueur à ce moment. Le champ apparaît quand vous facturez la TVA et que la fonctionnalité **Lieu de prestation par service** est activée.
 
 <!-- anchor: user.money.services.active -->
 #### Actif
@@ -4756,7 +4762,7 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Bon à savoir**
 
-- Activée : l'app reconnaît une entreprise dotée d'un numéro de TVA dans un autre État membre. Aujourd'hui, l'app n'émet pas elle-même ces factures : vous les émettez hors de l'app avec votre comptable.
+- Activée : une prestation générale (non rattachée aux locaux) à une entreprise d'un autre pays de l'UE est autoliquidée. Un poste, un bureau ou une salle ne l'est jamais : il porte votre TVA, quel que soit le numéro de TVA du client. Aujourd'hui, l'app n'émet pas elle-même les factures autoliquidées : vous les émettez hors de l'app avec votre comptable.
 - Désactivée : désactivez-la si vous ne facturez jamais d'entreprises à l'étranger.
 - L'option n'apparaît que pour le régime des assujettis à la TVA.
 
@@ -5325,7 +5331,7 @@ Vous facturez un membre pour un mois.
 - Les factures sont dérivées des données suivies et ne se composent pas à la main. La dernière ligne est le **Solde**.
 - Un mois ne peut être facturé qu'une fois par membre, et un mois encore en cours vous avertit que les positions peuvent changer.
 - Si une information obligatoire manque, **Complétez ces informations avant d'émettre** la liste (adresse, numéro de TVA, fondement de l'exonération, taux de TVA ; aussi le pays de l'espace, qui doit être la France ou l'Allemagne).
-- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, pour des clients nationaux. Les factures transfrontalières, en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable.
+- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, y compris pour des clients à l'étranger : un poste, un bureau ou une salle porte votre TVA où que vive le client. Les factures en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable, et une prestation générale à un client à l'étranger demande d'abord sa qualité (professionnel ou consommateur).
 - Une facture émise est signée et immuable.
 
 **Voir aussi:** [Assistant de clôture](#lassistant-de-clôture)

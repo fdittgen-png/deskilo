@@ -135,4 +135,5 @@ const Set<String> workspaceFeatureKeys = {
   'roleAssignment',
   'taskRecorder',
   'messageMentions',
+  'supplyClassification',
 };

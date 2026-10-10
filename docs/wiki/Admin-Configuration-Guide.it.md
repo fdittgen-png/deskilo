@@ -73,13 +73,24 @@ accessorio e un pacchetto portano un gruppo, non una percentuale: la
 tabella delle aliquote di un paese può quindi cambiare sotto di loro
 senza toccare il catalogo.
 
-I **trattamenti** sono ciò che la controparte ne fa: interno,
-intracomunitario verso imprese (inversione contabile, il cliente assolve
-l'imposta secondo l'art. 196), intracomunitario verso consumatori,
-esportazione. Il paese e la partita IVA del cliente decidono quale si
-applica, e il controllo della fatturazione elettronica rifiuta di inviare
-un documento in inversione contabile finché quella partita IVA manca:
-è ciò che prova che l'imposta è sua.
+**Il luogo di imposizione** viene prima (#2354). Una postazione, un
+ufficio o una sala è un servizio connesso all'immobile: porta la Sua IVA
+ovunque viva il cliente, impresa o consumatore (art. 47 della direttiva
+IVA). Un servizio del catalogo indica se è **Connesso ai locali**
+(predefinito) o un **Servizio generico (non connesso ai locali)**, come la
+gestione della posta o un ufficio virtuale, e ogni addebito registrato
+conserva questa scelta.
+
+I **trattamenti** sono ciò che la controparte fa di un servizio generico:
+IVA interna, inversione contabile per un'impresa di un altro Paese UE (il
+cliente assolve l'imposta secondo l'art. 196), o fuori campo per
+un'impresa fuori dall'UE. La qualità dichiarata del cliente (impresa o
+consumatore) e il suo paese decidono quale si applica, mai la sola
+presenza di una partita IVA; un consumatore, in Italia o altrove, paga la
+Sua IVA, quindi non esiste un trattamento a parte per i consumatori
+intracomunitari. Il controllo della fatturazione elettronica rifiuta di
+inviare un documento in inversione contabile finché manca la partita IVA
+del cliente: è ciò che prova che l'imposta è sua.
 
 **Quando l'IVA diventa esigibile** è un'impostazione dello spazio: *sulle
 fatture* (esigibile all'emissione) oppure *sugli incassi* (esigibile il

@@ -2836,7 +2836,8 @@
 </ol>
 <h4 class="lbl lbl-know">Good to know</h4>
 <ul>
-<li><strong>Automatic</strong> applies the usual rule: reverse charge for a business in another EU state.</li>
+<li><strong>Automatic</strong> applies the place of supply: a desk, an office or a room carries your VAT for every customer; only a general service (see <a href="#user.money.services.supply">Place of supply of a service</a>) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. A consumer pays your VAT wherever they live. The dialog shows what the chosen treatment does to each kind of line.</li>
+<li><strong>Reverse charge</strong> is meant only for a member who buys services not connected with the premises: it applies to every line.</li>
 <li>The same group offers <strong>Customer capacity</strong> (<strong>Business</strong>, <strong>Consumer</strong> or <strong>Not stated</strong>), which decides which payment clauses an invoice prints. It needs the permission to issue invoices.</li>
 <li><strong>Reverse charge</strong>, <strong>Outside the EU</strong> and <strong>Exempt buyer</strong> are recorded, but the invoices of such members cannot be issued in the app yet: they are issued outside the app with your accountant.</li>
 <li>The <strong>VAT by counterparty</strong> feature must be on for the VAT treatment row, which administrators and owners see; the rates are set in <a href="#user.money.vat.rates">VAT rates</a>.</li>
@@ -2985,6 +2986,8 @@
 <p>What the invoice line says. Rename it and only new documents change.</p>
 <h4>Service price</h4>
 <p>The price of one unit, gross: the member pays exactly this, and VAT is part of it. The <strong>VAT rate</strong> only decides how much of it is tax.</p>
+<h4>Place of supply of a service</h4>
+<p>Where the VAT on this service is due. <strong>Connected with the premises</strong>, the default, keeps your VAT for every customer: a desk, an office, a room and whatever is used on the premises are taxed where the building stands. Choose <strong>General service (not connected with the premises)</strong> only for what is not tied to the building, such as mail handling or a virtual office: for a business in another EU country that line is then reverse-charged, and for a business outside the EU it is outside the scope; a consumer still pays your VAT. Each charge keeps the choice it was recorded with. The field shows when you charge VAT and the <strong>Place of supply per service</strong> feature is on.</p>
 <h4>Active</h4>
 <p>When editing a service, the <strong>Active</strong> switch decides whether it can still be sold. Switch it off for something discontinued; the list greys it and writes <strong>Inactive</strong>.</p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-services-overview.en.b8fa17aa9.jpg" alt="A service"></div></figure></div></article><article class="section" id="user.money.accessories" data-roles="admin owner"><header><h3>Accessories <a class="permalink" href="#user.money.accessories" aria-label="link">#</a></h3><div class="roles"><span class="role role-admin">Administrator</span><span class="role role-owner">Owner</span></div></header><div class="body"><p>You rent equipment with a place, such as a monitor or a chair, and charge a supplement for each half-day.</p>
@@ -3265,7 +3268,7 @@
 </ol>
 <h4 class="lbl lbl-know">Good to know</h4>
 <ul>
-<li>On: the app recognises a business with a VAT number in another member state. Today the app does not issue those invoices itself: you issue them outside the app with your accountant.</li>
+<li>On: a general service (not connected with the premises) to a business in another EU country is reverse-charged. A desk, an office or a room never is: it carries your VAT, whatever the customer's VAT number. Today the app does not issue reverse-charged invoices itself: you issue them outside the app with your accountant.</li>
 <li>Off: turn it off if you never invoice businesses abroad.</li>
 <li>The option appears only for the VAT-registered regime.</li>
 </ul>
@@ -3635,7 +3638,7 @@
 <li>Invoices are derived from tracked data and cannot be composed by hand. The bottom line is the <strong>Balance due</strong>.</li>
 <li>A month can only be invoiced once per member, and a month still running warns you that positions may change.</li>
 <li>If a required detail is missing, <strong>Complete these details before issuing</strong> lists it (address, VAT number, exemption basis, VAT rate; also the workspace country, which must be France or Germany).</li>
-<li>In this version, issuing in the app is available for workspaces in France or Germany, for domestic customers. Cross-border, reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant.</li>
+<li>In this version, issuing in the app is available for workspaces in France or Germany, including for customers abroad: a desk, an office or a room carries your VAT wherever the customer lives. Reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant, and a general service to a customer abroad needs the customer's capacity (business or consumer) first.</li>
 <li>An issued invoice is signed and immutable.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.invoicing.wizard">Month-close wizard</a></p>

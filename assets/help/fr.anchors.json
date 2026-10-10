@@ -195,6 +195,7 @@
   "user.money.services.overview": "Un service",
   "user.money.services.name": "Nom du service",
   "user.money.services.price": "Prix du service",
+  "user.money.services.supply": "Lieu de prestation d'un service",
   "user.money.services.active": "Actif",
   "user.money.accessories": "Accessoires",
   "user.money.payments.methods": "Moyens de paiement et instructions",

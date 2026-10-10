@@ -3737,6 +3737,8 @@
   "featureSpaceQrCodesDesc": "Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.",
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
+  "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali.",
+  "featureSupplyClassificationTitle": "Luogo della prestazione per servizio",
   "featureSupplyExpensesDesc": "Una spesa può essere una scorta per lo spazio (capsule di caffè, sacchetti per aspirapolvere…): convalidata, rifornisce o crea un servizio consumabile con prezzo unitario, e i consumi scalano la scorta.",
   "featureSupplyExpensesTitle": "Scorte dalle spese",
   "featureSurfaceCalendarHint": "Che cosa succede, per giorno e per mese.",
@@ -5274,6 +5276,7 @@
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
+  "invoiceMissingBuyerCapacity": "Se il membro è un'impresa o un consumatore: ne dipende un servizio generico a un cliente estero",
   "invoiceMissingBuyerName": "Il nome o la ragione sociale del socio",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
@@ -5301,7 +5304,7 @@
   },
   "invoiceMissingVatNotRegistered": "Nessuna IVA sulle righe: lo spazio non applica l'IVA, ma un'aliquota è impostata sull'abbonamento o su un accessorio",
   "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
-  "invoiceMissingVatTreatment": "Le fatture transfrontaliere, con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.",
+  "invoiceMissingVatTreatment": "Le fatture con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.",
   "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
   "invoiceNoOpen": "Nessuna fattura aperta.",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
@@ -6831,7 +6834,7 @@
   "memberSubscriptionCustom": "Personalizzato (1–100)",
   "memberSubscriptionLabel": "Abbonamento",
   "memberUnmakeKiosk": "Riporta il chiosco a membro",
-  "memberVatTreatmentExplainer": "Chi è questo membro ai fini IVA: la regola automatica (inversione contabile per un'impresa di un altro Stato UE), IVA nazionale in ogni caso, inversione contabile, fuori UE o un acquirente esente con il motivo stampato sulla fattura.",
+  "memberVatTreatmentExplainer": "Chi è questo membro ai fini IVA. Automatico: una postazione, un ufficio o una sala è tassato dove si trova l'immobile, con la Sua IVA per qualsiasi cliente; solo un servizio generico (non connesso ai locali) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Le altre scelte valgono per tutte le righe.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },
@@ -10573,6 +10576,10 @@
   "subprocessStructureDesc": "Gestire sedi e disponibilità degli elementi della planimetria.",
   "subprocessTax": "Gestione dell’IVA",
   "subprocessTaxDesc": "Gestire gruppi, aliquote e dichiarazioni IVA.",
+  "supplyClassGeneral": "Servizio generico (non connesso ai locali)",
+  "supplyClassHelper": "Una postazione, un ufficio o una sala è tassato dove si trova l'immobile, per qualsiasi cliente. Scelga «servizio generico» solo per ciò che non è legato ai locali, come la gestione della posta o un ufficio virtuale: un'impresa di un altro Paese UE assolve allora l'IVA con l'inversione contabile.",
+  "supplyClassLabel": "Luogo della prestazione",
+  "supplyClassProperty": "Connesso ai locali",
   "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
   "supportDay": "Ultime 24 ore",
   "supportDemo": "Demo: contesto locale simulato",
@@ -11688,6 +11695,23 @@
   "@vatTreatmentDomestic": {
     "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
   },
+  "vatTreatmentExampleGeneral": "Servizi generici: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExamplePremises": "Postazione, ufficio, sala: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleTitle": "Per un'impresa di un altro Paese UE:",
   "vatTreatmentExempt": "Acquirente esente",
   "@vatTreatmentExempt": {
     "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
@@ -11704,6 +11728,7 @@
   "@vatTreatmentReverseCharge": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
   },
+  "vatTreatmentReverseChargeHint": "Il cliente assolve l'IVA: solo per servizi non connessi ai locali.",
   "vatUntil": "fino al",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"

@@ -1,7 +1,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #1917: unreviewed cross-border, reverse-charge, export and exemption
--- classifications refuse actual authenticated issuance before numbering.
--- Domestic ordinary charges remain usable; existing invoice snapshots persist.
+-- #1917: unreviewed reverse-charge, export and exemption classifications
+-- refuse actual authenticated issuance before numbering. Domestic ordinary
+-- charges remain usable; existing invoice snapshots persist.
+-- #2354: a buyer abroad is no longer refused as such — a desk is supplied
+-- where the building stands, so it carries the seller's VAT (167).
 begin;
 select plan(11);
 
@@ -56,28 +58,30 @@ update public.profiles set country_code='DE',vat_id='DE123456789'
  where id='00000000-0000-4000-8000-000000191702';
 set local role authenticated;
 select is(public.invoice_issue_readiness(current_setting('deskilo.pilot.ws')::uuid,
- current_setting('deskilo.pilot.m')::uuid,'2026-09'),array['vat_treatment_unreviewed'],
- 'readiness gives the UI the same specific refusal before issuance');
-select throws_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
- current_setting('deskilo.pilot.m')::uuid,'2026-09')$$,'DKI01','invoice_essentials_missing',
- 'an unreviewed foreign VAT ID must not establish reverse-charge eligibility');
-select is((select count(*)::int from public.invoices where member_id=current_setting('deskilo.pilot.m')::uuid),1,
- 'unreviewed classification creates no additional invoice');
+ current_setting('deskilo.pilot.m')::uuid,'2026-09'),'{}'::text[],
+ 'a foreign VAT ID establishes nothing: the desk keeps the seller''s VAT (#2354)');
+select lives_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
+ current_setting('deskilo.pilot.m')::uuid,'2026-09')$$,
+ 'the cross-border desk invoice is issued with domestic VAT');
+select is((select count(*)::int from public.invoices i, jsonb_array_elements(i.vat_totals) t
+ where i.member_id=current_setting('deskilo.pilot.m')::uuid and i.period='2026-09'
+   and t->>'category'='AE'),0,
+ 'no reverse charge is inferred from a foreign VAT ID');
 reset role;
 update public.members set vat_treatment='domestic' where id=current_setting('deskilo.pilot.m')::uuid;
 set local role authenticated;
-select throws_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
- current_setting('deskilo.pilot.m')::uuid,'2026-10')$$,'DKI01','invoice_essentials_missing',
- 'a domestic override cannot qualify an unreviewed cross-border invoice');
+select lives_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
+ current_setting('deskilo.pilot.m')::uuid,'2026-10')$$,
+ 'a domestic override issues a cross-border desk invoice too');
 reset role;
 update public.members set vat_treatment='export',vat_exemption_reason='Synthetic unreviewed reason'
  where id=current_setting('deskilo.pilot.m')::uuid;
 set local role authenticated;
 select throws_ok($$select public.create_invoice(current_setting('deskilo.pilot.ws')::uuid,
- current_setting('deskilo.pilot.m')::uuid,'2026-10')$$,'DKI01','invoice_essentials_missing',
+ current_setting('deskilo.pilot.m')::uuid,'2026-11')$$,'DKI01','invoice_essentials_missing',
  'an unreviewed export selection must not establish export eligibility');
-select is((select count(*)::int from public.invoices where member_id=current_setting('deskilo.pilot.m')::uuid),1,
- 'export refusal also creates no additional invoice');
+select is((select count(*)::int from public.invoices where member_id=current_setting('deskilo.pilot.m')::uuid),3,
+ 'export refusal creates no additional invoice');
 
 reset role;
 update public.profiles set country_code='FR' where id='00000000-0000-4000-8000-000000191702';

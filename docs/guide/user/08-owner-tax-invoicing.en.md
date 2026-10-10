@@ -295,7 +295,7 @@ When you charge VAT and invoice a business in another EU country, the tax can be
 
 **Good to know**
 
-- On: the app recognises a business with a VAT number in another member state. Today the app does not issue those invoices itself: you issue them outside the app with your accountant.
+- On: a general service (not connected with the premises) to a business in another EU country is reverse-charged. A desk, an office or a room never is: it carries your VAT, whatever the customer's VAT number. Today the app does not issue reverse-charged invoices itself: you issue them outside the app with your accountant.
 - Off: turn it off if you never invoice businesses abroad.
 - The option appears only for the VAT-registered regime.
 
@@ -864,7 +864,7 @@ You invoice a member for a month.
 - Invoices are derived from tracked data and cannot be composed by hand. The bottom line is the **Balance due**.
 - A month can only be invoiced once per member, and a month still running warns you that positions may change.
 - If a required detail is missing, **Complete these details before issuing** lists it (address, VAT number, exemption basis, VAT rate; also the workspace country, which must be France or Germany).
-- In this version, issuing in the app is available for workspaces in France or Germany, for domestic customers. Cross-border, reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant.
+- In this version, issuing in the app is available for workspaces in France or Germany, including for customers abroad: a desk, an office or a room carries your VAT wherever the customer lives. Reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant, and a general service to a customer abroad needs the customer's capacity (business or consumer) first.
 - An issued invoice is signed and immutable.
 
 **See also:** [Month-close wizard](help:user.invoicing.wizard)

@@ -19,7 +19,9 @@ mixin _$ServiceItem {
 /// workspace's default rate. The price stays VAT-INCLUSIVE either way.
  String get vatRateId;/// #731 — units on the shelf; null = not tracked (a service, not a
 /// supply).
- int? get stock;/// #992 — the server's stamp on this row.
+ int? get stock;/// #2354 — where the service is supplied for VAT: connected with the
+/// premises (the default) or a general service.
+ SupplyClass get supplyClass;/// #992 — the server's stamp on this row.
  SystemColumns get system;
 /// Create a copy of ServiceItem
 /// with the given fields replaced by the non-null parameter values.
@@ -32,20 +34,20 @@ $ServiceItemCopyWith<ServiceItem> get copyWith => _$ServiceItemCopyWithImpl<Serv
 @override
 bool operator ==(Object other) {
   final _this = this as ServiceItem;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.active, _this.active) || other.active == _this.active)&&(identical(other.vatRateId, _this.vatRateId) || other.vatRateId == _this.vatRateId)&&(identical(other.stock, _this.stock) || other.stock == _this.stock)&&(identical(other.system, _this.system) || other.system == _this.system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.workspaceId, _this.workspaceId) || other.workspaceId == _this.workspaceId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.priceCents, _this.priceCents) || other.priceCents == _this.priceCents)&&(identical(other.active, _this.active) || other.active == _this.active)&&(identical(other.vatRateId, _this.vatRateId) || other.vatRateId == _this.vatRateId)&&(identical(other.stock, _this.stock) || other.stock == _this.stock)&&(identical(other.supplyClass, _this.supplyClass) || other.supplyClass == _this.supplyClass)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
 int get hashCode {
   final _this = this as ServiceItem;
-  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.name,_this.priceCents,_this.active,_this.vatRateId,_this.stock,_this.system);
+  return Object.hash(runtimeType,_this.id,_this.workspaceId,_this.name,_this.priceCents,_this.active,_this.vatRateId,_this.stock,_this.supplyClass,_this.system);
 }
 
 @override
 String toString() {
   final _this = this as ServiceItem;
-  return 'ServiceItem(id: ${_this.id}, workspaceId: ${_this.workspaceId}, name: ${_this.name}, priceCents: ${_this.priceCents}, active: ${_this.active}, vatRateId: ${_this.vatRateId}, stock: ${_this.stock}, system: ${_this.system})';
+  return 'ServiceItem(id: ${_this.id}, workspaceId: ${_this.workspaceId}, name: ${_this.name}, priceCents: ${_this.priceCents}, active: ${_this.active}, vatRateId: ${_this.vatRateId}, stock: ${_this.stock}, supplyClass: ${_this.supplyClass}, system: ${_this.system})';
 }
 
 
@@ -56,7 +58,7 @@ abstract mixin class $ServiceItemCopyWith<$Res>  {
   factory $ServiceItemCopyWith(ServiceItem value, $Res Function(ServiceItem) _then) = _$ServiceItemCopyWithImpl;
 @useResult
 $Res call({
- String id, String workspaceId, String name, int priceCents, bool active, String vatRateId, int? stock, SystemColumns system
+ String id, String workspaceId, String name, int priceCents, bool active, String vatRateId, int? stock, SupplyClass supplyClass, SystemColumns system
 });
 
 
@@ -73,7 +75,7 @@ class _$ServiceItemCopyWithImpl<$Res>
 
 /// Create a copy of ServiceItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? stock = freezed,Object? system = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? stock = freezed,Object? supplyClass = null,Object? system = null,}) {
   return _then(ServiceItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -82,7 +84,8 @@ as String,priceCents: null == priceCents ? _self.priceCents : priceCents // igno
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
 as String,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
-as int?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as int?,supplyClass: null == supplyClass ? _self.supplyClass : supplyClass // ignore: cast_nullable_to_non_nullable
+as SupplyClass,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }
@@ -165,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SupplyClass supplyClass,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServiceItem() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.supplyClass,_that.system);case _:
   return orElse();
 
 }
@@ -186,10 +189,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.act
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SystemColumns system)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SupplyClass supplyClass,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _ServiceItem():
-return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.system);}
+return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.supplyClass,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -203,10 +206,10 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.act
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SystemColumns system)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String workspaceId,  String name,  int priceCents,  bool active,  String vatRateId,  int? stock,  SupplyClass supplyClass,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _ServiceItem() when $default != null:
-return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.system);case _:
+return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.active,_that.vatRateId,_that.stock,_that.supplyClass,_that.system);case _:
   return null;
 
 }
@@ -218,7 +221,7 @@ return $default(_that.id,_that.workspaceId,_that.name,_that.priceCents,_that.act
 
 
 class _ServiceItem implements ServiceItem {
-  const _ServiceItem({required this.id, required this.workspaceId, required this.name, required this.priceCents, required this.active, this.vatRateId = '', this.stock, this.system = SystemColumns.none});
+  const _ServiceItem({required this.id, required this.workspaceId, required this.name, required this.priceCents, required this.active, this.vatRateId = '', this.stock, this.supplyClass = SupplyClass.property, this.system = SystemColumns.none});
   
 
 @override final  String id;
@@ -232,6 +235,9 @@ class _ServiceItem implements ServiceItem {
 /// #731 — units on the shelf; null = not tracked (a service, not a
 /// supply).
 @override final  int? stock;
+/// #2354 — where the service is supplied for VAT: connected with the
+/// premises (the default) or a general service.
+@override@JsonKey() final  SupplyClass supplyClass;
 /// #992 — the server's stamp on this row.
 @override@JsonKey() final  SystemColumns system;
 
@@ -245,18 +251,18 @@ _$ServiceItemCopyWith<_ServiceItem> get copyWith => __$ServiceItemCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceItem&&(identical(other.id, id) || other.id == id)&&(identical(other.workspaceId, workspaceId) || other.workspaceId == workspaceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.priceCents, priceCents) || other.priceCents == priceCents)&&(identical(other.active, active) || other.active == active)&&(identical(other.vatRateId, vatRateId) || other.vatRateId == vatRateId)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.supplyClass, supplyClass) || other.supplyClass == supplyClass)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,workspaceId,name,priceCents,active,vatRateId,stock,system);
+    return Object.hash(runtimeType,id,workspaceId,name,priceCents,active,vatRateId,stock,supplyClass,system);
 }
 
 @override
 String toString() {
-    return 'ServiceItem(id: $id, workspaceId: $workspaceId, name: $name, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, stock: $stock, system: $system)';
+    return 'ServiceItem(id: $id, workspaceId: $workspaceId, name: $name, priceCents: $priceCents, active: $active, vatRateId: $vatRateId, stock: $stock, supplyClass: $supplyClass, system: $system)';
 }
 
 
@@ -267,7 +273,7 @@ abstract mixin class _$ServiceItemCopyWith<$Res> implements $ServiceItemCopyWith
   factory _$ServiceItemCopyWith(_ServiceItem value, $Res Function(_ServiceItem) _then) = __$ServiceItemCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String workspaceId, String name, int priceCents, bool active, String vatRateId, int? stock, SystemColumns system
+ String id, String workspaceId, String name, int priceCents, bool active, String vatRateId, int? stock, SupplyClass supplyClass, SystemColumns system
 });
 
 
@@ -284,7 +290,7 @@ class __$ServiceItemCopyWithImpl<$Res>
 
 /// Create a copy of ServiceItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? stock = freezed,Object? system = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? workspaceId = null,Object? name = null,Object? priceCents = null,Object? active = null,Object? vatRateId = null,Object? stock = freezed,Object? supplyClass = null,Object? system = null,}) {
   return _then(_ServiceItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,workspaceId: null == workspaceId ? _self.workspaceId : workspaceId // ignore: cast_nullable_to_non_nullable
@@ -293,7 +299,8 @@ as String,priceCents: null == priceCents ? _self.priceCents : priceCents // igno
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,vatRateId: null == vatRateId ? _self.vatRateId : vatRateId // ignore: cast_nullable_to_non_nullable
 as String,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
-as int?,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as int?,supplyClass: null == supplyClass ? _self.supplyClass : supplyClass // ignore: cast_nullable_to_non_nullable
+as SupplyClass,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }

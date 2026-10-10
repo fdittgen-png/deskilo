@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../../../core/vat/supply_class.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 
@@ -85,4 +88,63 @@ String vatRateOption(VatRate rate) {
       ? rate.percent.toStringAsFixed(0)
       : rate.percent.toString();
   return '${rate.label} ($percent %)';
+}
+
+/// #2354 — where a catalogue service is supplied for VAT.
+///
+/// Renders NOTHING unless the workspace charges VAT and
+/// `supplyClassification` is on: a seller that charges no VAT has no
+/// place of supply to choose, and with the feature off every new charge
+/// is connected with the premises (the server's default). The server
+/// freezes the choice on each charge; this field only edits the service.
+class SupplyClassField extends ConsumerWidget {
+  const SupplyClassField({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final SupplyClass value;
+  final ValueChanged<SupplyClass> onChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final regime = vatRegimeFromWire(
+      ref.watch(currentWorkspaceProvider).value?.vatRegime,
+    );
+    if (regime != VatRegime.vatRegistered ||
+        !ref
+            .watch(enabledFeaturesSyncProvider)
+            .contains(WorkspaceFeature.supplyClassification)) {
+      return const SizedBox.shrink();
+    }
+    final l10n =
+        AppLocalizations.of(context) ??
+        lookupAppLocalizations(const Locale('en'));
+    return DropdownButtonFormField<SupplyClass>(
+      key: const ValueKey('supply-class-field'),
+      initialValue: value,
+      isExpanded: true,
+      decoration: InputDecoration(
+        labelText: l10n.supplyClassLabel,
+        helperText: l10n.supplyClassHelper,
+        helperMaxLines: 5,
+        suffixIcon: HelpDot(
+          l10n.helpHintMoneyPaymentsTipSupplyTopic,
+          anchor: HelpAnchor.serviceSupply,
+        ),
+      ),
+      items: [
+        for (final supply in SupplyClass.values)
+          DropdownMenuItem(
+            value: supply,
+            child: Text(switch (supply) {
+              SupplyClass.property => l10n.supplyClassProperty,
+              SupplyClass.general => l10n.supplyClassGeneral,
+            }, overflow: TextOverflow.ellipsis),
+          ),
+      ],
+      onChanged: (picked) => onChanged(picked ?? SupplyClass.property),
+    );
+  }
 }

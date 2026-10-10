@@ -368,6 +368,9 @@ window.SETUP_L10N={
    "servicesWhy": "What members consume on top of their seat: services by the unit (lockers, printing…) and accessory supplements per half day.",
    "servicesServices": "Services (lockers, printing…)",
    "servicesVatCol": "VAT % (empty = default)",
+   "servicesSupplyCol": "Place of supply",
+   "servicesSupplyProperty": "Connected with the premises",
+   "servicesSupplyGeneral": "General service",
    "servicesAdd": "Add a service",
    "servicesAccessories": "Seat accessories (screen, standing desk…)",
    "servicesAccessoriesHint": "The supplement is charged per booked half day. 0 = free.",
@@ -1116,6 +1119,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Mentions in groups",
     "In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody."
+   ],
+   "supplyClassification": [
+    "Place of supply per service",
+    "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises."
    ]
   },
   "process": {
@@ -1703,6 +1710,9 @@ window.SETUP_L10N={
    "servicesWhy": "Ce que les membres consomment en plus de leur place : services à l'unité (casiers, impression…) et suppléments d'accessoires par demi-journée.",
    "servicesServices": "Services (casiers, impression…)",
    "servicesVatCol": "TVA % (vide = défaut)",
+   "servicesSupplyCol": "Lieu de prestation",
+   "servicesSupplyProperty": "Rattaché aux locaux",
+   "servicesSupplyGeneral": "Prestation générale",
    "servicesAdd": "Ajouter un service",
    "servicesAccessories": "Accessoires de place (écran, bureau debout…)",
    "servicesAccessoriesHint": "Le supplément se facture par demi-journée réservée. 0 = gratuit.",
@@ -2451,6 +2461,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Mentions dans les groupes",
     "Dans un groupe, on peut mentionner une personne par son nom. Seules les personnes de la conversation peuvent être mentionnées, et la personne mentionnée est notifiée même si elle a mis la conversation en sourdine. Désactivé, un nom écrit après @ reste du texte et ne notifie personne."
+   ],
+   "supplyClassification": [
+    "Lieu de prestation par service",
+    "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux."
    ]
   },
   "process": {
@@ -3038,6 +3052,9 @@ window.SETUP_L10N={
    "servicesWhy": "Was Mitglieder zusätzlich zu ihrem Platz verbrauchen: Services pro Einheit (Schließfächer, Drucken…) und Zubehör-Aufpreise pro halbem Tag.",
    "servicesServices": "Services (Schließfächer, Drucken…)",
    "servicesVatCol": "USt. % (leer = Standard)",
+   "servicesSupplyCol": "Leistungsort",
+   "servicesSupplyProperty": "Mit den Räumlichkeiten verbunden",
+   "servicesSupplyGeneral": "Allgemeine Dienstleistung",
    "servicesAdd": "Service hinzufügen",
    "servicesAccessories": "Platz-Zubehör (Bildschirm, Stehpult…)",
    "servicesAccessoriesHint": "Der Aufpreis wird pro gebuchtem halben Tag berechnet. 0 = kostenlos.",
@@ -3786,6 +3803,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Erwähnungen in Gruppen",
     "In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden."
+   ],
+   "supplyClassification": [
+    "Leistungsort je Leistung",
+    "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden."
    ]
   },
   "process": {
@@ -4373,6 +4394,9 @@ window.SETUP_L10N={
    "servicesWhy": "Lo que los miembros consumen además de su asiento: servicios por unidad (taquillas, impresión…) y suplementos de accesorios por media jornada.",
    "servicesServices": "Servicios (taquillas, impresión…)",
    "servicesVatCol": "IVA % (vacío = predeterminado)",
+   "servicesSupplyCol": "Lugar de prestación",
+   "servicesSupplyProperty": "Vinculado a los locales",
+   "servicesSupplyGeneral": "Servicio general",
    "servicesAdd": "Añadir un servicio",
    "servicesAccessories": "Accesorios del asiento (pantalla, escritorio elevable…)",
    "servicesAccessoriesHint": "El suplemento se factura por media jornada reservada. 0 = gratis.",
@@ -5121,6 +5145,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Menciones en grupos",
     "En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie."
+   ],
+   "supplyClassification": [
+    "Lugar de prestación por servicio",
+    "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales."
    ]
   },
   "process": {
@@ -5708,6 +5736,9 @@ window.SETUP_L10N={
    "servicesWhy": "Ciò che i membri consumano oltre al proprio posto: servizi a unità (armadietti, stampa…) e supplementi accessori per mezza giornata.",
    "servicesServices": "Servizi (armadietti, stampa…)",
    "servicesVatCol": "IVA % (vuoto = predefinita)",
+   "servicesSupplyCol": "Luogo della prestazione",
+   "servicesSupplyProperty": "Connesso ai locali",
+   "servicesSupplyGeneral": "Servizio generico",
    "servicesAdd": "Aggiungi un servizio",
    "servicesAccessories": "Accessori del posto (schermo, scrivania in piedi…)",
    "servicesAccessoriesHint": "Il supplemento si addebita per mezza giornata prenotata. 0 = gratuito.",
@@ -6456,6 +6487,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Menzioni nei gruppi",
     "In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno."
+   ],
+   "supplyClassification": [
+    "Luogo della prestazione per servizio",
+    "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali."
    ]
   },
   "process": {

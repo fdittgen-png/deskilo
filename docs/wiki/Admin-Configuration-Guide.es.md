@@ -69,13 +69,25 @@ cero, exento, no sujeto. Un servicio, una cuota, un accesorio y un
 paquete llevan un grupo, no un porcentaje: la tabla de tipos de un país
 puede cambiar bajo ellos sin tocar el catálogo.
 
-Los **tratamientos** son lo que la contraparte hace con ello: interior,
-intracomunitario a empresas (inversión del sujeto pasivo, el cliente se
-autoliquida según el art. 196), intracomunitario a consumidores,
-exportación. El país y el número de IVA del cliente deciden cuál se
-aplica, y la comprobación de facturación electrónica se niega a enviar un
-documento con inversión del sujeto pasivo mientras falte ese número de
-IVA, porque es lo que prueba que el impuesto es suyo.
+**El lugar de tributación** va primero (#2354). Un puesto, una oficina o
+una sala es un servicio vinculado al inmueble: lleva su IVA viva donde
+viva el cliente, empresa o consumidor (art. 47 de la Directiva del IVA).
+Un servicio del catálogo indica si está **Vinculado a los locales** (por
+defecto) o es un **Servicio general (no vinculado a los locales)**, como
+la gestión del correo o una oficina virtual, y cada cargo registrado
+conserva esa elección.
+
+Los **tratamientos** son lo que la contraparte hace con un servicio
+general: IVA interior, inversión del sujeto pasivo para una empresa de
+otro país de la UE (el cliente se autoliquida según el art. 196), o fuera
+del ámbito para una empresa fuera de la UE. La condición declarada del
+cliente (empresa o consumidor) y su país deciden cuál se aplica, nunca la
+mera presencia de un número de IVA; un consumidor, en España o fuera,
+paga su IVA, por lo que no existe un tratamiento aparte para consumidores
+intracomunitarios. La comprobación de facturación electrónica se niega a
+enviar un documento con inversión del sujeto pasivo mientras falte el
+número de IVA del cliente, porque es lo que prueba que el impuesto es
+suyo.
 
 **Cuándo se devenga el IVA** es un ajuste del espacio: *por facturas*
 (devengado al emitir) o *por cobros* (devengado el día en que el cliente
