@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Rebuilds the screenshots of the welcome page (web/welcome/img) from the
-# guide pipeline's demo captures (docs/wiki/images/<shot>.<lang>.<stamp>.jpg).
+# user and setup guide pipeline's demo captures
+# (docs/wiki/images/<shot>.<lang>.<stamp>.jpg).
 # The demo workspace "Atelier du Marché" holds invented people and figures
 # only, so every capture here is safe to publish. Run it after the guide
 # screenshots are regenerated:  tool/welcome_media.sh
@@ -15,6 +16,8 @@ out=web/welcome/img
 mkdir -p "$out"
 
 # Keep this list in step with the data-shot attributes in web/welcome/index.html.
+# A user-guide shot drops its "user-" prefix on the page; a setup-guide shot
+# keeps its "setup-" prefix.
 shots=(
   user-reserve-hub
   user-reserve-day-view
@@ -26,6 +29,11 @@ shots=(
   user-collaborate-contact
   user-me-home
   user-space-editor-seat
+  user-features-switches
+  setup-before-template
+  user-money-reports-editor
+  user-advanced-record
+  user-advanced-wizard
 )
 
 for shot in "${shots[@]}"; do
