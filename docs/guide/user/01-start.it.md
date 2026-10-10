@@ -51,12 +51,32 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 
 **Vedi anche:** [La matrice dei ruoli](help:user.roles.matrix) · [Aderire a uno spazio](help:user.start.join)
 
+<!-- anchor: user.start.paths -->
+### Tre percorsi in questa guida
+
+**Destinatari:** Tutti
+
+Non deve leggere tutto prima. Scelga il percorso che corrisponde a ciò che vuole fare ora: ogni passo è una sezione di questa guida, nell'ordine in cui Le serve.
+
+| Percorso | Passi, in ordine | Fatto quando |
+|---|---|---|
+| Prima volta come membro | [Creare un account o accedere](help:user.start.account) → [Aderire a uno spazio](help:user.start.join) → [Prenotare un posto](help:user.reserve.book) → [Leggere il proprio estratto](help:user.money.statement) → [Check-in e check-out](help:user.reserve.check-in) | Ha prenotato, sa quanto costa e ha registrato l'arrivo e l'uscita. |
+| Mettere in servizio uno spazio | [Pochi posti condivisi](help:setup.features.profile-tiny) → [Disegnare stanze, scrivanie e posti](help:user.space.editor.rooms) → [Orari di lavoro](help:user.workspace.availability.working-hours) → [Limiti di prenotazione](help:user.workspace.availability.limits) → [Invitare un membro](help:user.members.invite) → [La scheda Calendario](help:user.reserve.calendar) | Un membro che ha invitato ha prenotato e Lei vede la prenotazione. |
+| La prima chiusura del mese | [La fatturazione in sintesi](help:user.money.invoicing) → [Che cosa emette l'app e che cosa resta al Suo commercialista](help:user.invoicing.scope) → [L'assistente di chiusura mensile](help:user.invoicing.wizard) → [Sollecitare e saldare le fatture aperte](help:user.invoicing.open) → [Esportazioni contabili](help:user.invoicing.accounting-export) | Il mese è fatturato nei limiti dell'app, i pagamenti sono abbinati e il file è dal Suo commercialista. |
+
+**Da sapere**
+
+- Uno spazio piccolo ha bisogno solo dei primi due percorsi. Fatturazione, IVA e funzioni avanzate possono aspettare finché lo spazio non ne ha bisogno, e disattivare una funzione non cancella nulla.
+- La guida di avvio spiega il perché e l'ordine per un nuovo spazio; questa guida spiega i gesti.
+
+**Vedi anche:** [Che cos'è DesKilo e chi fa cosa](help:user.start.what-is) · [L’ordine in cui attivare le cose](help:setup.features.order)
+
 <!-- anchor: user.start.account -->
 ### Creare un account o accedere
 
 **Destinatari:** Tutti
 
-Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce.
+Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce sullo stesso server.
 
 <p><img src="images/user-start-account.it.jpg" width="280"></p>
 
@@ -78,6 +98,28 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 - **Entra con un invito** nella schermata di accesso tiene a mente lo scopo: crea il suo account, poi incolla il suo invito.
 
 **Vedi anche:** [Reimpostare una password dimenticata](help:user.start.forgot-password) · [Aderire a uno spazio](help:user.start.join) · [I suoi dati, i suoi diritti](help:user.privacy.consent)
+
+<!-- anchor: user.start.identity -->
+### Il Suo account, i Suoi spazi e il Suo server
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa La segue da uno spazio all'altro e perché l'app a volte Le chiede di accedere di nuovo. Questa guida usa quattro parole, sempre nello stesso senso:
+
+| Parola | La domanda a cui risponde | Che cos'è |
+|---|---|---|
+| Account | Chi sono? | La Sua e-mail, la password, il nome e le impostazioni personali. Risiede su un server. |
+| Adesione | Che cosa posso fare in questo spazio? | Il Suo ruolo, il Suo piano, le Sue prenotazioni e il Suo denaro in uno spazio. Ogni spazio fissa le proprie regole. |
+| Server | Dove è conservato questo spazio? | L'installazione che memorizza lo spazio: il server di riferimento condiviso, o uno che un'organizzazione gestisce da sé. |
+| Sessione | Ho effettuato l'accesso qui? | Il Suo accesso su questo dispositivo, a un solo server alla volta. |
+
+**Da sapere**
+
+- Un account vale per tutti gli spazi dello stesso server: aderire a un altro spazio lì aggiunge un'adesione, non un account.
+- Uno spazio conservato su un altro server richiede un account su quel server. Aprirlo cambia server e Le chiede di accedere lì; il Suo account sul primo server resta com'è.
+- Cambiare server La disconnette, perché il Suo account risiede sul server che lascia.
+
+**Vedi anche:** [Creare un account o accedere](help:user.start.account) · [Io: la sua casa e i suoi spazi](help:user.me.home) · [Il suo server](help:user.backend.server)
 
 <!-- anchor: user.start.forgot-password -->
 ### Reimpostare una password dimenticata

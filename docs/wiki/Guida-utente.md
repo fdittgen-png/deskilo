@@ -112,12 +112,32 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 
 **Vedi anche:** [La matrice dei ruoli](#la-matrice-dei-ruoli) · [Aderire a uno spazio](#aderire-a-uno-spazio)
 
+<!-- anchor: user.start.paths -->
+### Tre percorsi in questa guida
+
+**Destinatari:** Tutti
+
+Non deve leggere tutto prima. Scelga il percorso che corrisponde a ciò che vuole fare ora: ogni passo è una sezione di questa guida, nell'ordine in cui Le serve.
+
+| Percorso | Passi, in ordine | Fatto quando |
+|---|---|---|
+| Prima volta come membro | [Creare un account o accedere](#creare-un-account-o-accedere) → [Aderire a uno spazio](#aderire-a-uno-spazio) → [Prenotare un posto](#prenotare-un-posto) → [Leggere il proprio estratto](#leggere-il-proprio-estratto) → [Check-in e check-out](#check-in-e-check-out) | Ha prenotato, sa quanto costa e ha registrato l'arrivo e l'uscita. |
+| Mettere in servizio uno spazio | [Pochi posti condivisi](Guida-di-avvio#pochi-posti-condivisi) → [Disegnare stanze, scrivanie e posti](#disegnare-stanze-scrivanie-e-posti) → [Orari di lavoro](#orari-di-lavoro) → [Limiti di prenotazione](#limiti-di-prenotazione) → [Invitare un membro](#invitare-un-membro) → [La scheda Calendario](#la-scheda-calendario) | Un membro che ha invitato ha prenotato e Lei vede la prenotazione. |
+| La prima chiusura del mese | [La fatturazione in sintesi](#la-fatturazione-in-sintesi) → [Che cosa emette l'app e che cosa resta al Suo commercialista](#che-cosa-emette-lapp-e-che-cosa-resta-al-suo-commercialista) → [L'assistente di chiusura mensile](#lassistente-di-chiusura-mensile) → [Sollecitare e saldare le fatture aperte](#sollecitare-e-saldare-le-fatture-aperte) → [Esportazioni contabili](#esportazioni-contabili) | Il mese è fatturato nei limiti dell'app, i pagamenti sono abbinati e il file è dal Suo commercialista. |
+
+**Da sapere**
+
+- Uno spazio piccolo ha bisogno solo dei primi due percorsi. Fatturazione, IVA e funzioni avanzate possono aspettare finché lo spazio non ne ha bisogno, e disattivare una funzione non cancella nulla.
+- La guida di avvio spiega il perché e l'ordine per un nuovo spazio; questa guida spiega i gesti.
+
+**Vedi anche:** [Che cos'è DesKilo e chi fa cosa](#che-cosè-deskilo-e-chi-fa-cosa) · [L’ordine in cui attivare le cose](Guida-di-avvio#lordine-in-cui-attivare-le-cose)
+
 <!-- anchor: user.start.account -->
 ### Creare un account o accedere
 
 **Destinatari:** Tutti
 
-Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce.
+Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce sullo stesso server.
 
 <p><img src="images/user-start-account.it.b8fa17aa9.jpg" width="280"></p>
 
@@ -139,6 +159,28 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 - **Entra con un invito** nella schermata di accesso tiene a mente lo scopo: crea il suo account, poi incolla il suo invito.
 
 **Vedi anche:** [Reimpostare una password dimenticata](#reimpostare-una-password-dimenticata) · [Aderire a uno spazio](#aderire-a-uno-spazio) · [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti)
+
+<!-- anchor: user.start.identity -->
+### Il Suo account, i Suoi spazi e il Suo server
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa La segue da uno spazio all'altro e perché l'app a volte Le chiede di accedere di nuovo. Questa guida usa quattro parole, sempre nello stesso senso:
+
+| Parola | La domanda a cui risponde | Che cos'è |
+|---|---|---|
+| Account | Chi sono? | La Sua e-mail, la password, il nome e le impostazioni personali. Risiede su un server. |
+| Adesione | Che cosa posso fare in questo spazio? | Il Suo ruolo, il Suo piano, le Sue prenotazioni e il Suo denaro in uno spazio. Ogni spazio fissa le proprie regole. |
+| Server | Dove è conservato questo spazio? | L'installazione che memorizza lo spazio: il server di riferimento condiviso, o uno che un'organizzazione gestisce da sé. |
+| Sessione | Ho effettuato l'accesso qui? | Il Suo accesso su questo dispositivo, a un solo server alla volta. |
+
+**Da sapere**
+
+- Un account vale per tutti gli spazi dello stesso server: aderire a un altro spazio lì aggiunge un'adesione, non un account.
+- Uno spazio conservato su un altro server richiede un account su quel server. Aprirlo cambia server e Le chiede di accedere lì; il Suo account sul primo server resta com'è.
+- Cambiare server La disconnette, perché il Suo account risiede sul server che lascia.
+
+**Vedi anche:** [Creare un account o accedere](#creare-un-account-o-accedere) · [Io: la sua casa e i suoi spazi](#io-la-sua-casa-e-i-suoi-spazi) · [Il suo server](#il-suo-server)
 
 <!-- anchor: user.start.forgot-password -->
 ### Reimpostare una password dimenticata
@@ -4473,6 +4515,7 @@ Per i proprietari e gli amministratori di fatturazione: chi è Lei come venditor
 > **Attenzione** DesKilo stampa ciò che Lei dichiara e verifica che i dati richiesti siano presenti. Non certifica le Sue fatture, il Suo trattamento IVA né la Sua contabilità. Ogni volta che una sezione qui sotto dice «confermi con il Suo commercialista», lo faccia.
 
 In questo capitolo:
+- Che cosa emette l'app da sé e che cosa resta al Suo commercialista
 - La Sua identità legale e le menzioni stampate su ogni fattura
 - IVA: regime, numero, aliquote, gruppi e dichiarazione periodica
 - Fatturazione elettronica: dove viene inviata la fattura leggibile dalle macchine
@@ -4480,6 +4523,33 @@ In questo capitolo:
 - Emettere e chiudere un mese: la schermata Fatturazione, l'assistente di chiusura mensile, il raggruppamento, le spese condivise
 - I solleciti di pagamento
 - Il registro fatture, le esportazioni contabili e l'analisi aziendale
+
+<!-- anchor: user.invoicing.scope -->
+### Che cosa emette l'app e che cosa resta al Suo commercialista
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole sapere, prima di affidarsi, quali fatture DesKilo emette da sé e quali continua a emettere con il Suo commercialista. Questo è il perimetro di questa versione.
+
+| Situazione | Nell'app | Fuori dall'app |
+|---|---|---|
+| Uno spazio in Francia o in Germania, soggetto a IVA o fuori dal campo dell'IVA | Fatture emesse, numerate, inviate e seguite | — |
+| Una postazione, un ufficio o una sala, qualunque sia il cliente, anche all'estero | Emesse con la Sua IVA: il luogo della prestazione è l'edificio | — |
+| Uno spazio in un altro paese | Prenotazioni, estratti e pagamenti | Le fatture, con il Suo commercialista |
+| Il regime esente da IVA | — | Le fatture, con il Suo commercialista |
+| Inversione contabile, esportazione, acquirente esente | Registrato sul membro | Le fatture, con il Suo commercialista |
+| Fattura elettronica | Il file EN 16931, inviato alla piattaforma che configura | La scelta della piattaforma e ciò che il sistema nazionale Le chiede |
+| Contabilità | Esportazioni ricostruite da fatture e pagamenti | Il libro mastro, la chiusura e i conti |
+| Dichiarazione IVA | Gli importi, calcolati da fatture e pagamenti | La presentazione all'amministrazione fiscale |
+
+**Da sapere**
+
+- La fattura elettronica ha tre passi: DesKilo produce la fattura strutturata; il connettore la invia alla Sua piattaforma; la piattaforma la recapita al cliente e all'amministrazione secondo il sistema nazionale. Un file valido è solo il primo passo.
+- In Francia solo una piattaforma autorizzata (plateforme agréée) può trasmettere fatture nell'ambito della riforma, e DesKilo non lo è: configuri la piattaforma che sceglie. Tutte le imprese interessate devono poter ricevere fatture elettroniche dal 1° settembre 2026; le PMI e le microimprese devono emetterle dal 1° settembre 2027.
+- DesKilo non tiene una contabilità in partita doppia: il Suo commercialista completa i file esportati.
+- Questa tabella cambia con l'app. Quando una riga passa nell'app, questa sezione lo dice.
+
+**Vedi anche:** [Emettere una fattura](#emettere-una-fattura) · [La piattaforma di fatturazione elettronica](#la-piattaforma-di-fatturazione-elettronica) · [Esportazioni contabili](#esportazioni-contabili) · [Regime IVA](#regime-iva)
 
 <!-- anchor: user.money.legal.identity -->
 ### La Sua identità legale
@@ -5020,6 +5090,7 @@ Indica a DesKilo dove inviare le Sue fatture come file leggibili dalle macchine.
 - Funziona qualsiasi piattaforma che accetti un caricamento con un token: una piattaforma accreditata, un punto di accesso Peppol, una piattaforma nazionale.
 - Il token è conservato sul server e non viene mai più mostrato.
 - Il file valido è una fattura EN 16931. Se il Suo Paese richieda una piattaforma, e quale, lo confermi con il Suo commercialista.
+- Inviare il file è il secondo di tre passi: veda [Che cosa emette l'app e che cosa resta al Suo commercialista](#che-cosa-emette-lapp-e-che-cosa-resta-al-suo-commercialista).
 
 **Vedi anche:** [Inviare una fattura elettronica](#inviare-una-fattura-elettronica) · [Identità legale](#la-sua-identità-legale)
 

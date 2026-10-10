@@ -19,14 +19,14 @@ tool/guide_labels.dart                checks that every **bold label** is a labe
 
 | file | audience | content |
 |---|---|---|
-| `01-start` | everyone | what DesKilo is, roles, account, the demo, join/create/find a workspace, **Me** and my spaces, profiles, finding your way around, the setup questionnaire |
+| `01-start` | everyone | what DesKilo is, roles, three paths through the guide, account, account/membership/server/session, the demo, join/create/find a workspace, **Me** and my spaces, profiles, finding your way around, the setup questionnaire |
 | `02-reserve` | members | the plan, the booking sheet, series, scan, check in/out, the calendar, saving a booking |
 | `03-collaborate` | members, administrators | the members directory, events & confirmations, validation rules, messages, notifications, discover & the public network |
 | `04-me-settings` | everyone | personal settings, language & formats, badge, privacy & your data, your own server |
 | `05-money` | members, billing administrators | statement, payments, invoices, usage, finance alerts, price negotiation, submitting and approving an expense, the document library as a member |
 | `06-owner-space` | owners | editor, workspace ID & QR, availability, features, workspace settings, wording & colours & branding, roles & co-owners, kiosk, badges, the document library, exports & import |
 | `07-owner-people-billing` | owners, billing administrators | members & plans, the member's subscription, billing (fee bands, levels, packages, schedule), services & accessories, payment methods & provider, scheduled expenses |
-| `08-owner-tax-invoicing` | owners, billing administrators | VAT rates & declaration, legal identity & mentions, e-invoicing, report designer & invoice template, the invoicing workflow (month-close, settlement, shared expenses), payment reminders, accountant exports, business analytics |
+| `08-owner-tax-invoicing` | owners, billing administrators | what the app issues and what stays outside (keep it current), VAT rates & declaration, legal identity & mentions, e-invoicing, report designer & invoice template, the invoicing workflow (month-close, settlement, shared expenses), payment reminders, accountant exports, business analytics |
 | `09-advanced` | owners, operators | the two environments, deployment, assistants (MCP), the task recorder and guided tours, the demo workspace, platforms, troubleshooting, glossary |
 
 ## One section = one thing a person wants to do

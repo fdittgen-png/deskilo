@@ -51,12 +51,32 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 
 **Siehe auch:** [Die Rollenmatrix](help:user.roles.matrix) · [Einem Workspace beitreten](help:user.start.join)
 
+<!-- anchor: user.start.paths -->
+### Drei Wege durch dieses Handbuch
+
+**Zielgruppe:** Alle
+
+Sie müssen nicht erst alles lesen. Wählen Sie den Weg, der zu dem passt, was Sie jetzt tun möchten: Jeder Schritt ist ein Abschnitt dieses Handbuchs, in der Reihenfolge, in der Sie ihn brauchen.
+
+| Weg | Schritte, der Reihe nach | Fertig, wenn |
+|---|---|---|
+| Zum ersten Mal als Mitglied | [Konto erstellen oder anmelden](help:user.start.account) → [Einem Workspace beitreten](help:user.start.join) → [Einen Platz buchen](help:user.reserve.book) → [Ihre Abrechnung lesen](help:user.money.statement) → [Ein- und Auschecken](help:user.reserve.check-in) | Sie haben gebucht, wissen, was es kostet, und haben sich an- und abgemeldet. |
+| Einen Space in Betrieb nehmen | [Ein paar gemeinsame Plätze](help:setup.features.profile-tiny) → [Räume, Tische und Plätze zeichnen](help:user.space.editor.rooms) → [Arbeitszeiten](help:user.workspace.availability.working-hours) → [Buchungsgrenzen](help:user.workspace.availability.limits) → [Ein Mitglied einladen](help:user.members.invite) → [Der Kalender-Tab](help:user.reserve.calendar) | Ein Mitglied, das Sie eingeladen haben, hat gebucht, und Sie sehen die Buchung. |
+| Der erste Monatsabschluss | [Rechnungsstellung im Überblick](help:user.money.invoicing) → [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope) → [Der Monatsabschluss-Assistent](help:user.invoicing.wizard) → [Offene Rechnungen nachverfolgen und begleichen](help:user.invoicing.open) → [Buchhaltungsexporte](help:user.invoicing.accounting-export) | Der Monat ist im Umfang der App abgerechnet, die Zahlungen sind zugeordnet und die Datei liegt bei Ihrer Steuerberatung. |
+
+**Gut zu wissen**
+
+- Ein kleiner Space braucht nur die ersten beiden Wege. Rechnungen, Umsatzsteuer und die erweiterten Funktionen können warten, bis der Space sie braucht, und das Ausschalten einer Funktion löscht nichts.
+- Die Einrichtungsanleitung erklärt das Warum und die Reihenfolge für einen neuen Space; dieses Handbuch erklärt die Handgriffe.
+
+**Siehe auch:** [Was DesKilo ist und wer was tut](help:user.start.what-is) · [Die Reihenfolge beim Einschalten](help:setup.features.order)
+
 <!-- anchor: user.start.account -->
 ### Konto erstellen oder anmelden
 
 **Zielgruppe:** Alle
 
-Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie beitreten.
+Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie auf demselben Server beitreten.
 
 <p><img src="images/user-start-account.de.jpg" width="280"></p>
 
@@ -78,6 +98,28 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 - **Mit Einladung beitreten** auf dem Anmeldebildschirm merkt sich Ihr Vorhaben: Sie legen Ihr Konto an und fügen dann Ihre Einladung ein.
 
 **Siehe auch:** [Vergessenes Passwort zurücksetzen](help:user.start.forgot-password) · [Einem Workspace beitreten](help:user.start.join) · [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
+
+<!-- anchor: user.start.identity -->
+### Ihr Konto, Ihre Spaces und Ihr Server
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was Sie von einem Space zum nächsten begleitet und warum die App Sie manchmal erneut anmelden lässt. Dieses Handbuch verwendet vier Wörter, immer im selben Sinn:
+
+| Wort | Die Frage, die es beantwortet | Was es ist |
+|---|---|---|
+| Konto | Wer bin ich? | Ihre E-Mail, Ihr Passwort, Ihr Name und Ihre persönlichen Einstellungen. Es liegt auf einem Server. |
+| Mitgliedschaft | Was darf ich in diesem Space? | Ihre Rolle, Ihr Tarif, Ihre Buchungen und Ihr Geld in einem Space. Jeder Space legt seine eigenen Regeln fest. |
+| Server | Wo wird dieser Space aufbewahrt? | Die Installation, die den Space speichert: der gemeinsame Referenzserver oder einer, den eine Organisation selbst betreibt. |
+| Sitzung | Bin ich hier angemeldet? | Ihre Anmeldung auf diesem Gerät, bei jeweils einem Server. |
+
+**Gut zu wissen**
+
+- Ein Konto gilt für alle Spaces auf demselben Server: Wer dort einem weiteren Space beitritt, erhält eine Mitgliedschaft, kein neues Konto.
+- Ein Space auf einem anderen Server braucht ein Konto auf diesem Server. Ihn zu öffnen wechselt den Server und bittet Sie, sich dort anzumelden; Ihr Konto auf dem ersten Server bleibt, wie es ist.
+- Ein Serverwechsel meldet Sie ab, weil Ihr Konto auf dem Server liegt, den Sie verlassen.
+
+**Siehe auch:** [Konto erstellen oder anmelden](help:user.start.account) · [Ich: Ihr Zuhause und Ihre Spaces](help:user.me.home) · [Ihr eigener Server](help:user.backend.server)
 
 <!-- anchor: user.start.forgot-password -->
 ### Vergessenes Passwort zurücksetzen

@@ -6,6 +6,7 @@ For owners and billing administrators: who you are as a seller, how VAT is handl
 > **Careful** DesKilo prints what you declare and checks that the required details are present. It does not certify your invoices, your VAT treatment or your books. Whenever a section below says "confirm with your accountant", please do.
 
 In this chapter:
+- What the app issues itself, and what stays with your accountant
 - Your legal identity and the mentions printed on every invoice
 - VAT: regime, number, rates, groups and the periodic declaration
 - E-invoicing: where the machine-readable invoice is sent
@@ -13,6 +14,33 @@ In this chapter:
 - Issuing and closing a month: the Invoicing screen, the month-close wizard, regrouping, shared expenses
 - Payment reminders
 - The invoice register, accounting exports and business analytics
+
+<!-- anchor: user.invoicing.scope -->
+### What the app issues, and what stays with your accountant
+
+**Audience:** Owner · Billing administrator
+
+You want to know, before you rely on it, which invoices DesKilo issues itself and which you still issue with your accountant. This is the scope of this version.
+
+| Situation | In the app | Outside the app |
+|---|---|---|
+| A space in France or Germany, VAT-registered or outside the scope of VAT | Invoices issued, numbered, sent and followed up | — |
+| A desk, an office or a room, whoever the customer is, also abroad | Issued with your VAT: the place of supply is the building | — |
+| A space in another country | Bookings, statements and payments | The invoices, with your accountant |
+| The VAT-exempt regime | — | The invoices, with your accountant |
+| Reverse charge, export, exempt buyer | Recorded on the member | The invoices, with your accountant |
+| E-invoicing | The EN 16931 file, posted to the platform you configure | The choice of platform and what the national scheme asks of you |
+| Accounting | Exports rebuilt from invoices and payments | The ledger, the closing and the accounts |
+| VAT return | The figures, computed from invoices and payments | Filing it with the tax authority |
+
+**Good to know**
+
+- E-invoicing has three steps: DesKilo produces the structured invoice; the connector posts it to your platform; the platform carries it to the customer and the authority under the national scheme. A valid file is only the first step.
+- In France, only a registered platform (plateforme agréée) can carry invoices under the reform, and DesKilo is not one: configure the platform you choose. Every business concerned must be able to receive e-invoices from 1 September 2026; small and medium businesses and micro-businesses must issue them from 1 September 2027.
+- DesKilo keeps no double-entry ledger: your accountant completes the exported files.
+- This table changes with the app. When a line moves into the app, this section says so.
+
+**See also:** [Issue an invoice](help:user.invoicing.new-invoice) · [The e-invoicing platform](help:user.money.einvoice.overview) · [Accounting exports](help:user.invoicing.accounting-export) · [VAT regime](help:user.money.vat.regime)
 
 <!-- anchor: user.money.legal.identity -->
 ### Your legal identity
@@ -553,6 +581,7 @@ You tell DesKilo where to post your invoices as machine-readable files.
 - Any platform that accepts an upload with a token works: an approved platform, a Peppol access point, a national platform.
 - The token is stored on the server and never shown again.
 - The valid file is an EN 16931 invoice. Whether your country requires a platform, and which, is something to confirm with your accountant.
+- Posting the file is the second of three steps: see [What the app issues, and what stays with your accountant](help:user.invoicing.scope).
 
 **See also:** [Sending an e-invoice](help:user.money.einvoice.send) · [Legal identity](help:user.money.legal.identity)
 
