@@ -26852,6 +26852,90 @@ abstract class AppLocalizations {
   /// **'Skipped (already taken):'**
   String get seriesSkippedTitle;
 
+  /// No description provided for @serverChoiceExistingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A server that already exists'**
+  String get serverChoiceExistingTitle;
+
+  /// No description provided for @serverChoiceIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.'**
+  String get serverChoiceIntro;
+
+  /// No description provided for @serverChoiceNewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.'**
+  String get serverChoiceNewBody;
+
+  /// No description provided for @serverChoiceNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new server of your own'**
+  String get serverChoiceNewTitle;
+
+  /// No description provided for @serverChoiceReferenceAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the reference server'**
+  String get serverChoiceReferenceAction;
+
+  /// No description provided for @serverChoiceReferenceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.'**
+  String get serverChoiceReferenceBody;
+
+  /// No description provided for @serverChoiceReferenceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The reference server'**
+  String get serverChoiceReferenceTitle;
+
+  /// No description provided for @serverChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your server'**
+  String get serverChoiceTitle;
+
+  /// No description provided for @serverConnectIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a server where you already have an account, or create a new one.'**
+  String get serverConnectIntro;
+
+  /// No description provided for @serverConnectNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No account there yet? Use this server on this device and sign up there.'**
+  String get serverConnectNoAccount;
+
+  /// No description provided for @serverConnectNoCode.
+  ///
+  /// In en, this message translates to:
+  /// **'The clipboard holds no server code.'**
+  String get serverConnectNoCode;
+
+  /// No description provided for @serverConnectPasteCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a server code'**
+  String get serverConnectPasteCode;
+
+  /// No description provided for @serverConnectReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference server'**
+  String get serverConnectReference;
+
+  /// No description provided for @serverConnectUseHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Use on this device'**
+  String get serverConnectUseHere;
+
   /// No description provided for @serviceOutOfStock.
   ///
   /// In en, this message translates to:

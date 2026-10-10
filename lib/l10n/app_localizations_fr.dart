@@ -15685,6 +15685,54 @@ class AppLocalizationsFr extends AppLocalizations {
   String get seriesSkippedTitle => 'Ignorées (déjà prises) :';
 
   @override
+  String get serverChoiceExistingTitle => 'Un serveur qui existe déjà';
+
+  @override
+  String get serverChoiceIntro =>
+      'Cette version de DesKilo est livrée sans serveur. Choisissez où vivent vos espaces. Vous pourrez le changer plus tard dans Paramètres → Avancé → Serveur.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Créez un projet Supabase gratuit et laissez l’application y installer tout ce dont DesKilo a besoin : le schéma, les fonctions et les règles de connexion.';
+
+  @override
+  String get serverChoiceNewTitle => 'Un nouveau serveur à vous';
+
+  @override
+  String get serverChoiceReferenceAction => 'Utiliser le serveur de référence';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Exploité par l’auteur de DesKilo avec le même logiciel libre que tous les autres serveurs. Il héberge aussi l’annuaire global des espaces.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'Le serveur de référence';
+
+  @override
+  String get serverChoiceTitle => 'Choisissez votre serveur';
+
+  @override
+  String get serverConnectIntro =>
+      'Rejoignez un serveur sur lequel vous avez déjà un compte, ou créez-en un nouveau.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'Pas encore de compte sur ce serveur ? Utilisez-le sur cet appareil et inscrivez-vous-y.';
+
+  @override
+  String get serverConnectNoCode =>
+      'Le presse-papiers ne contient aucun code de serveur.';
+
+  @override
+  String get serverConnectPasteCode => 'Coller un code de serveur';
+
+  @override
+  String get serverConnectReference => 'Serveur de référence';
+
+  @override
+  String get serverConnectUseHere => 'Utiliser sur cet appareil';
+
+  @override
   String get serviceOutOfStock => 'Épuisé';
 
   @override

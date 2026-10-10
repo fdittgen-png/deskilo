@@ -15520,6 +15520,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seriesSkippedTitle => 'Skipped (already taken):';
 
   @override
+  String get serverChoiceExistingTitle => 'A server that already exists';
+
+  @override
+  String get serverChoiceIntro =>
+      'This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.';
+
+  @override
+  String get serverChoiceNewTitle => 'A new server of your own';
+
+  @override
+  String get serverChoiceReferenceAction => 'Use the reference server';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'The reference server';
+
+  @override
+  String get serverChoiceTitle => 'Choose your server';
+
+  @override
+  String get serverConnectIntro =>
+      'Join a server where you already have an account, or create a new one.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'No account there yet? Use this server on this device and sign up there.';
+
+  @override
+  String get serverConnectNoCode => 'The clipboard holds no server code.';
+
+  @override
+  String get serverConnectPasteCode => 'Paste a server code';
+
+  @override
+  String get serverConnectReference => 'Reference server';
+
+  @override
+  String get serverConnectUseHere => 'Use on this device';
+
+  @override
   String get serviceOutOfStock => 'Out of stock';
 
   @override

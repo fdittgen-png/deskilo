@@ -1,13 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/backend_uri.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../providers/directory_providers.dart';
 import 'connection_outcome_text.dart';
 
@@ -112,6 +118,104 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
     }
   }
 
+  /// #2343 — fills the two fields from a known server.
+  void _fill(BackendEndpoint endpoint) => setState(() {
+    _url.text = endpoint.url;
+    _key.text = endpoint.key;
+  });
+
+  /// #2343 — a `deskilo://server` code an organisation shared, pasted
+  /// instead of typing a 40-character key on a phone.
+  Future<void> _paste() async {
+    final l = AppLocalizations.of(context)!;
+    final data = await Clipboard.getData(Clipboard.kTextPlain);
+    if (!mounted) return;
+    final descriptor = BackendUriCodec.decodeDescriptor(data?.text ?? '');
+    if (descriptor == null) {
+      AppSnack.error(
+        context,
+        l.serverConnectNoCode,
+      );
+      return;
+    }
+    _fill(descriptor.endpoint);
+  }
+
+  /// #2343 — leaves the dialog for a route of the app: the server screen
+  /// (no account on that server yet: use it here and sign up) or the
+  /// instance wizard (a server that does not exist yet).
+  void _leaveFor(String location, {Object? extra}) {
+    final router = GoRouter.of(context);
+    Navigator.of(context).pop();
+    router.push(location, extra: extra);
+  }
+
+  /// The candidate on the form, when it is a well-formed endpoint.
+  BackendEndpoint? get _candidate {
+    final url = canonicalBackendUrl(_url.text);
+    final key = _key.text.trim();
+    if (url == null || validateBackendEndpoint(url, key) != null) return null;
+    return BackendEndpoint(url, key);
+  }
+
+  /// #2343 — joining and creating, above the sign-in form.
+  List<Widget> _joinOrCreate(AppLocalizations l) => [
+    Text(l.serverConnectIntro),
+    Wrap(
+      spacing: 8,
+      children: [
+        ActionChip(
+          key: const ValueKey('connection-dialog-reference'),
+          avatar: const Icon(Icons.public_outlined, size: 18),
+          label: Text(l.serverConnectReference),
+          onPressed: _busy ? null : () => _fill(referenceEndpoint),
+        ),
+        ActionChip(
+          key: const ValueKey('connection-dialog-paste-code'),
+          avatar: const Icon(Icons.content_paste_outlined, size: 18),
+          label: Text(l.serverConnectPasteCode),
+          onPressed: _busy ? null : _paste,
+        ),
+      ],
+    ),
+  ];
+
+  /// #2343 — the two ways out when this form cannot be used: no account
+  /// on that server yet, or no server yet at all.
+  List<Widget> _otherWays(AppLocalizations l) {
+    final wizard = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.instanceWizard);
+    final candidate = _candidate;
+    return [
+      const SizedBox(height: AppSpacing.sm),
+      Text(
+        l.serverConnectNoAccount,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextButton(
+          key: const ValueKey('connection-dialog-use-here'),
+          onPressed: _busy || candidate == null
+              ? null
+              : () => _leaveFor(
+                  '/server',
+                  extra: BackendDescriptor(candidate),
+                ),
+          child: Text(l.serverConnectUseHere),
+        ),
+      ),
+      if (wizard)
+        OutlinedButton.icon(
+          key: const ValueKey('connection-dialog-new-instance'),
+          onPressed: _busy ? null : () => _leaveFor('/server/new-instance'),
+          icon: const Icon(Icons.auto_fix_high_outlined),
+          label: Text(l.instanceCreateButton),
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -126,15 +230,21 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (!widget.publishDirectory)
+              ..._joinOrCreate(AppLocalizations.of(context)!),
             TextField(
+              key: const ValueKey('connection-dialog-url'),
               controller: _url,
+              onChanged: (_) => setState(() {}),
               enabled: !_busy,
               decoration: InputDecoration(
                 labelText: l?.backendUrlLabel ?? 'Project URL',
               ),
             ),
             TextField(
+              key: const ValueKey('connection-dialog-key'),
               controller: _key,
+              onChanged: (_) => setState(() {}),
               enabled: !_busy,
               decoration: InputDecoration(
                 labelText: l?.backendKeyLabel ?? 'Publishable key',
@@ -171,6 +281,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
                 onPressed: _busy ? null : () => _submit(requestCode: true),
                 child: Text(l?.portalSendCode ?? 'Send sign-in code'),
               ),
+              ..._otherWays(AppLocalizations.of(context)!),
             ],
           ],
         ),
