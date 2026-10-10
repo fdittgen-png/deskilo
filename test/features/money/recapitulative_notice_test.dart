@@ -3,6 +3,12 @@
 // #2354 — Invoicing says an EU sales list is due while something was
 // reverse-charged last month or this month, and says nothing otherwise or
 // with the feature off.
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/presentation/widgets/recapitulative_notice.dart';
@@ -10,6 +16,7 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
@@ -87,5 +94,50 @@ void main() {
   testWidgets('the feature off: no notice', (tester) async {
     await _pump(tester, invoices: [_ae(lastMonth)], enabled: false);
     expect(find.byKey(const ValueKey('recapitulative-notice')), findsNothing);
+  });
+
+  testWidgets('VAT declarations export the period\'s list as a CSV', (
+    tester,
+  ) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      vatRegime: 'vat_registered',
+    );
+    final money = FakeMoneyRepository()
+      ..invoices.add(_ae(DateTime(kTestNow.year, kTestNow.month, 3)));
+    final saved = <({String name, Uint8List bytes})>[];
+    await tester.binding.setSurfaceSize(const Size(900, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money, workspace: workspace),
+          fileSaverProvider.overrideWithValue(({
+            required bytes,
+            required fileName,
+          }) async {
+            saved.add((name: fileName, bytes: bytes));
+            return fileName;
+          }),
+        ],
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final context = tester.element(find.byType(Scaffold).first);
+    unawaited(GoRouter.of(context).push('/vat-declarations'));
+    await tester.pumpAndSettle();
+
+    final button = find.byKey(const ValueKey('vat-recap-csv'));
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+
+    expect(saved, hasLength(1));
+    expect(saved.single.name, startsWith('eu-sales-list-'));
+    expect(
+      utf8.decode(saved.single.bytes),
+      contains(',DE,123456789,Kunde,15.00,1'),
+    );
   });
 }
