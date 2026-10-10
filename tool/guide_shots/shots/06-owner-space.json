@@ -1,0 +1,607 @@
+{
+ "shots": [
+  {
+   "id": "user-space-editor-levels",
+   "persona": "owner",
+   "shows": "the floors list: drag handle, layers button, actions menu, Add level",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "wait": 800
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-space-editor-rooms",
+   "persona": "owner",
+   "full": false,
+   "shows": "a room selected on the floor, with its bar",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "click": "Ground floor"
+    },
+    {
+     "wait": 2500
+    },
+    {
+     "at": [
+      75,
+      330
+     ]
+    },
+    {
+     "wait": 1000
+    }
+   ]
+  },
+  {
+   "id": "user-space-editor-office",
+   "persona": "owner",
+   "full": false,
+   "shows": "the office properties sheet with the bookable switch on",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "click": "Ground floor"
+    },
+    {
+     "wait": 2500
+    },
+    {
+     "at": [
+      75,
+      330
+     ]
+    },
+    {
+     "wait": 800
+    },
+    {
+     "click": [
+      "Properties",
+      "Propriétés",
+      "Eigenschaften",
+      "Propiedades",
+      "Proprietà"
+     ]
+    },
+    {
+     "wait": 1200
+    },
+    {
+     "click": "@editorBookableAsWhole"
+    },
+    {
+     "wait": 1000
+    }
+   ]
+  },
+  {
+   "id": "user-space-editor-seat",
+   "persona": "owner",
+   "full": false,
+   "shows": "the seat sheet",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "click": "Ground floor"
+    },
+    {
+     "wait": 2500
+    },
+    {
+     "at": [
+      93,
+      303
+     ]
+    },
+    {
+     "wait": 800
+    },
+    {
+     "click": [
+      "Properties",
+      "Propriétés",
+      "Eigenschaften",
+      "Propiedades",
+      "Proprietà"
+     ]
+    },
+    {
+     "wait": 1200
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-code",
+   "persona": "owner",
+   "shows": "the member invite: QR code and workspace ID",
+   "steps": [
+    {
+     "hash": "#/workspace-code"
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-code-admin",
+   "persona": "owner",
+   "shows": "the administrator invite tab",
+   "steps": [
+    {
+     "hash": "#/workspace-code"
+    },
+    {
+     "click": "@inviteRoleAdmin"
+    },
+    {
+     "wait": 2500
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-code-invite",
+   "persona": "owner",
+   "full": false,
+   "shows": "the invite sheet",
+   "steps": [
+    {
+     "hash": "#/workspace-code"
+    },
+    {
+     "click": "@inviteSectionTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-availability",
+   "persona": "owner",
+   "clip": false,
+   "shows": "the availability screen, cut by control",
+   "steps": [
+    {
+     "hash": "#/availability"
+    }
+   ],
+   "parts": [
+    {
+     "id": "open-weekdays",
+     "from": "@availabilityOpenWeekdays",
+     "to": "@availabilityGranularityTitle",
+     "pad": 0
+    },
+    {
+     "id": "granularity",
+     "from": "@availabilityGranularityTitle",
+     "to": "@availabilityWorkHoursTitle",
+     "pad": 0
+    },
+    {
+     "id": "working-hours",
+     "from": "@availabilityWorkHoursTitle",
+     "to": "@availabilityPoliciesTitle",
+     "pad": 0
+    },
+    {
+     "id": "policies",
+     "from": "@availabilityPoliciesTitle",
+     "to": "@legendProfileTitle",
+     "pad": 0
+    },
+    {
+     "id": "outside-hours",
+     "from": "@policyOutsideHoursTitle",
+     "to": "@policySimultaneousTitle",
+     "pad": 0
+    },
+    {
+     "id": "limits",
+     "from": "@policySimultaneousTitle",
+     "to": "@availabilityClosureDays",
+     "pad": 0
+    },
+    {
+     "id": "closure-days",
+     "from": "@availabilityClosureDays",
+     "to": ["January 1, 2023","1 janvier 2023","1. Januar 2023","1 de enero de 2023","1 gennaio 2023"],
+     "pad": 0
+    }
+   ]
+  },
+  {
+   "id": "user-features-processes",
+   "persona": "owner",
+   "full": false,
+   "shows": "one card per business process with its state",
+   "steps": [
+    {
+     "hash": "#/features"
+    }
+   ]
+  },
+  {
+   "id": "user-features-switches",
+   "persona": "owner",
+   "full": false,
+   "shows": "the Switches view",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@featuresViewSwitches"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-roles-matrix",
+   "persona": "owner",
+   "full": false,
+   "shows": "the role matrix",
+   "steps": [
+    {
+     "hash": "#/roles"
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings",
+   "persona": "owner",
+   "clip": false,
+   "shows": "general details of the workspace",
+   "steps": [
+    {
+     "hash": "#/workspace-settings"
+    }
+   ],
+   "parts": [
+    {
+     "id": "country",
+     "clip": [
+      0,
+      252,
+      390,
+      82
+     ]
+    },
+    {
+     "id": "currency-timezone",
+     "clip": [
+      0,
+      316,
+      390,
+      148
+     ]
+    },
+    {
+     "id": "language",
+     "clip": [
+      0,
+      436,
+      390,
+      125
+     ]
+    },
+    {
+     "id": "address",
+     "clip": [
+      0,
+      548,
+      390,
+      95
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-community",
+   "persona": "owner",
+   "shows": "community and invitations group",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "scroll": 700,
+     "wait": 1500
+    },
+    {
+     "click": "@uxWorkspaceCommunity"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "whatsapp-group",
+     "clip": [
+      0,
+      792,
+      390,
+      165
+     ]
+    },
+    {
+     "id": "invitation-message",
+     "clip": [
+      0,
+      962,
+      390,
+      440
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-appearance",
+   "persona": "owner",
+   "shows": "appearance and wording group",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "scroll": 700,
+     "wait": 1500
+    },
+    {
+     "click": "@uxWorkspaceAppearance"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "desk-transparency",
+     "clip": [
+      0,
+      1203,
+      390,
+      160
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-members",
+   "persona": "owner",
+   "shows": "new members group",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "scroll": 700,
+     "wait": 1500
+    },
+    {
+     "click": "@newMemberDefaultsTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "defaults",
+     "clip": [
+      0,
+      922,
+      390,
+      280
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-tools",
+   "persona": "owner",
+   "shows": "templates and data group",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "scroll": 700,
+     "wait": 1500
+    },
+    {
+     "click": "@uxWorkspaceTools"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "tools",
+     "clip": [
+      0,
+      982,
+      390,
+      310
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-colours",
+   "persona": "owner",
+   "shows": "colours screen",
+   "steps": [
+    {
+     "hash": "#/settings/colours",
+     "wait": 4500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "colours",
+     "clip": [
+      0,
+      50,
+      390,
+      430
+     ]
+    },
+    {
+     "id": "pattern",
+     "clip": [
+      0,
+      485,
+      390,
+      155
+     ]
+    },
+    {
+     "id": "branding",
+     "clip": [
+      0,
+      850,
+      390,
+      430
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-wording",
+   "persona": "owner",
+   "full": false,
+   "shows": "wording screen",
+   "steps": [
+    {
+     "hash": "#/settings/wording",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-settings-public-page",
+   "persona": "owner",
+   "full": false,
+   "shows": "public workspace page",
+   "steps": [
+    {
+     "hash": "#/settings/public-page",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "user-roles-space",
+   "persona": "owner",
+   "full": false,
+   "shows": "roles this space defines",
+   "steps": [
+    {
+     "hash": "#/settings/roles-of-this-space",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "user-badges-nfc",
+   "persona": "owner",
+   "full": false,
+   "shows": "nfc config",
+   "steps": [
+    {
+     "hash": "#/nfc-config",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "user-documents-add",
+   "persona": "owner",
+   "full": false,
+   "shows": "add document dialog",
+   "steps": [
+    {
+     "hash": "#/documents",
+     "wait": 4000
+    },
+    {
+     "at": [
+      345,
+      723
+     ]
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-workspace-export-reports",
+   "persona": "owner",
+   "full": false,
+   "shows": "reports, workspace documents",
+   "steps": [
+    {
+     "hash": "#/reports?section=documents",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "user-space-editor-level-booking",
+   "persona": "owner",
+   "full": false,
+   "shows": "the whole-level booking dialog",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "click": "@levelBookableToggle"
+    },
+    {
+     "wait": 1200
+    }
+   ]
+  }
+ ]
+}

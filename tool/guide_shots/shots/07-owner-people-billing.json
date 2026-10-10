@@ -1,0 +1,468 @@
+{
+ "shots": [
+  {
+   "id": "user-members-list",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the members list",
+   "steps": [
+    {
+     "hash": "#/members"
+    }
+   ]
+  },
+  {
+   "id": "user-members-managed",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the managed profile form",
+   "steps": [
+    {
+     "hash": "#/members/managed"
+    }
+   ]
+  },
+  {
+   "id": "user-members-page",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "a member page: who, what is booked, contact and money",
+   "steps": [
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "top",
+     "clip": [
+      0,
+      0,
+      390,
+      700
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-members-actions",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Manage cards of a member page",
+   "steps": [
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "membership",
+     "from": "@memberPageGroupMembership",
+     "to": "@memberPageGroupBooking"
+    },
+    {
+     "id": "booking",
+     "from": "@memberPageGroupBooking",
+     "to": "@memberPageGroupBilling"
+    },
+    {
+     "id": "billing",
+     "from": "@memberPageGroupBilling",
+     "to": "@memberPageGroupAccess"
+    }
+   ]
+  },
+  {
+   "id": "user-members-pending",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "a pending member's page",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Dov"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "membership",
+     "from": "@memberPageGroupMembership"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-members-subscription",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Subscription dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "scroll": 600
+    },
+    {
+     "click": "@memberSubscriptionLabel"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-members-overage-policy",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the When days run out dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "scroll": 600
+    },
+    {
+     "click": "@memberOveragePolicyLabel"
+    }
+   ],
+   "full": false,
+   "fresh": true
+  },
+  {
+   "id": "user-members-reservation-limit",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Reservation limit dialog",
+   "steps": [
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "click": "@memberReservationLimitLabel"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-members-simultaneous",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Simultaneous reservations dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "click": "@memberSimultaneousLimitLabel"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-members-vat-treatment",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the VAT treatment dialog",
+   "steps": [
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "click": "@memberVatTreatmentLabel"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-members-negotiation",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the price negotiation sheet",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "scroll": 600
+    },
+    {
+     "click": "@negotiationProposeTitle"
+    }
+   ],
+   "full": false,
+   "fresh": true
+  },
+  {
+   "id": "user-members-co-ownership",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Co-ownership dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "click": "@coOwnerAction"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-billing-fee-bands",
+   "persona": "owner",
+   "view": "tablet",
+   "shows": "the Billing screen",
+   "steps": [
+    {
+     "hash": "#/billing"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "bands",
+     "from": "@billingFeeBands",
+     "to": "@billingLevels"
+    },
+    {
+     "id": "levels",
+     "from": "@billingLevels",
+     "to": "@billingPackages"
+    },
+    {
+     "id": "packages",
+     "from": "@billingPackages",
+     "to": "@billingNewPackage"
+    },
+    {
+     "id": "new",
+     "from": "@billingNewPackage",
+     "to": "@carnetsTitle"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-money-services-overview",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the services catalogue",
+   "steps": [
+    {
+     "hash": "#/services"
+    }
+   ]
+  },
+  {
+   "id": "user-money-services-name",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "a service sheet",
+   "steps": [
+    {
+     "hash": "#/services"
+    },
+    {
+     "click": "@servicesNew"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-accessories",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the accessories catalogue",
+   "steps": [
+    {
+     "hash": "#/accessories"
+    }
+   ]
+  },
+  {
+   "id": "user-money-accessories-edit",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "an accessory sheet",
+   "steps": [
+    {
+     "hash": "#/accessories"
+    },
+    {
+     "click": "@accessoriesNew"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-payments-methods",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Payment instructions",
+   "steps": [
+    {
+     "hash": "#/payment-methods"
+    }
+   ]
+  },
+  {
+   "id": "user-money-payments-provider",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Online payments providers",
+   "steps": [
+    {
+     "hash": "#/payment-config"
+    }
+   ]
+  },
+  {
+   "id": "user-money-expenses-schedule",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Scheduled expenses sheet",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    },
+    {
+     "scroll": 900
+    },
+    {
+     "click": "@scheduledExpensesTitle"
+    }
+   ],
+   "full": false,
+   "fresh": true
+  },
+  {
+   "id": "user-money-expenses-what",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the new scheduled expense form",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    },
+    {
+     "scroll": 900
+    },
+    {
+     "click": "@scheduledExpensesTitle"
+    },
+    {
+     "click": "@scheduleNew"
+    }
+   ],
+   "fresh": true,
+   "full": false
+  }
+ ]
+}

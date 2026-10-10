@@ -1,0 +1,224 @@
+{
+ "shots": [
+  {
+   "id": "setup-money-paths",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-money-paths",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-money-bands",
+   "persona": "owner",
+   "view": "tablet",
+   "shows": "setup-money-bands",
+   "steps": [
+    {
+     "hash": "#/billing"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "bands",
+     "from": "@billingFeeBands",
+     "to": "@billingLevels"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "setup-money-packages",
+   "persona": "owner",
+   "view": "tablet",
+   "shows": "setup-money-packages",
+   "steps": [
+    {
+     "hash": "#/billing"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "packages",
+     "from": "@billingPackages",
+     "to": "@billingNewPackage"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "setup-money-payment-instructions",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-money-payment-instructions",
+   "steps": [
+    {
+     "hash": "#/payment-methods"
+    }
+   ]
+  },
+  {
+   "id": "setup-money-legal",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-money-legal",
+   "steps": [
+    {
+     "hash": "#/legal-identity"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "top",
+     "clip": [
+      0,
+      0,
+      390,
+      700
+     ]
+    }
+   ]
+  },
+  {
+   "id": "setup-money-reminders",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-money-reminders",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "@invoicingTools"
+    },
+    {
+     "click": "@dunningSettingsTitle"
+    },
+    {
+     "at": [
+      120,
+      131
+     ]
+    }
+   ],
+   "full": false,
+   "fresh": true
+  },
+  {
+   "id": "setup-money-vat",
+   "persona": "owner",
+   "view": "tablet",
+   "shows": "setup-money-vat",
+   "steps": [
+    {
+     "hash": "#/vat"
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "rates",
+     "from": null,
+     "to": "@vatKeptRate",
+     "pad": 6
+    }
+   ]
+  },
+  {
+   "id": "setup-money-numbering",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-money-numbering",
+   "steps": [
+    {
+     "hash": "#/settings/number-sequences",
+     "wait": 2500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-notify-features",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-notify-features",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@featuresViewSwitches"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "fill": [
+      "@featuresSearchLabel",
+      "notification"
+     ]
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-notify-events",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-notify-events",
+   "steps": [
+    {
+     "click": "@demoPersonaOwner"
+    },
+    {
+     "hash": "#/events",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-notify-validation",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-notify-validation",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-notify-push",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "setup-notify-push",
+   "steps": [
+    {
+     "hash": "#/privacy",
+     "wait": 5000
+    }
+   ],
+   "fresh": true,
+   "full": false,
+   "clip": [
+    0,
+    570,
+    390,
+    150
+   ]
+  }
+ ]
+}

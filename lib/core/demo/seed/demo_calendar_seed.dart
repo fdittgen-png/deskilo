@@ -135,7 +135,7 @@ void seedDemoCalendar(
         id: 'cal-ev-${e.id}',
         at: e.createdAt,
         memberId: e.subjectMemberId,
-        title: e.type.name,
+        title: '${e.type.dbName}.submitted',
         status: e.status.name,
         link: EventLink(e.id),
       ),

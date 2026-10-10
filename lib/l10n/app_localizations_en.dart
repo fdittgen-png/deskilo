@@ -6395,7 +6395,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Issue a printable QR badge or register an NFC card; revoke lost badges any time.';
 
   @override
-  String get helpHintBadgesTopic => 'NFC badges';
+  String get helpHintBadgesTopic => 'NFC badge';
 
   @override
   String get helpHintCalendar =>
@@ -6476,7 +6476,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.';
 
   @override
-  String get helpHintMoneyDocumentsTopic => 'The Documents face';
+  String get helpHintMoneyDocumentsTopic => 'Documents';
 
   @override
   String get helpHintMoneyInvoices =>
@@ -6486,7 +6486,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintMoneyInvoicesTip2Topic => 'Automatic payment reminders';
 
   @override
-  String get helpHintMoneyInvoicesTopic => 'The Invoices face';
+  String get helpHintMoneyInvoicesTopic => 'Invoices';
 
   @override
   String get helpHintMoneyPayments =>
@@ -6499,14 +6499,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services and Accessories';
 
   @override
-  String get helpHintMoneyPaymentsTopic => 'The Payments face';
+  String get helpHintMoneyPaymentsTopic => 'Payment';
 
   @override
   String get helpHintMoneyStatement =>
       'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.';
 
   @override
-  String get helpHintMoneyStatementTopic => 'The Statement face';
+  String get helpHintMoneyStatementTopic => 'Statement';
 
   @override
   String get helpHintMoneyTopic => 'Money';

@@ -94,8 +94,9 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
   // rows), never interface text; a real space's records are not
   // translated either.
   'lib/core/demo/seed/demo_calendar_seed.dart': (
-    allowed: 3,
-    reason: 'demo records: calendar rows as a space stores them',
+    allowed: 4,
+    reason: 'demo records: calendar rows as a space stores them, an event '
+        'titled `type.action` as the server writes it',
   ),
   'lib/core/demo/seed/demo_people_seed.dart': (
     allowed: 8,

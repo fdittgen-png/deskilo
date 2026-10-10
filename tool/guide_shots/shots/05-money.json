@@ -1,0 +1,343 @@
+{
+ "shots": [
+  {
+   "id": "user-money-statement",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Statement face",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    }
+   ],
+   "full": false,
+   "clip": false,
+   "parts": [
+    {
+     "id": "top",
+     "steps": [
+      {
+       "click": "@moneyFaceStatement",
+       "wait": 1800
+      }
+     ],
+     "clip": [
+      0,
+      0,
+      390,
+      760
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-money-statement-invoiced",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "an invoiced month",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    }
+   ],
+   "full": false,
+   "clip": false,
+   "parts": [
+    {
+     "id": "card",
+     "steps": [
+      {
+       "click": "@moneyFaceStatement",
+       "wait": 1800
+      },
+      {
+       "click": [
+        "Previous month",
+        "Mois précédent",
+        "Vorheriger Monat",
+        "Mes anterior",
+        "Mese precedente"
+       ],
+       "wait": 2500
+      },
+      {
+       "scroll": 420,
+       "wait": 900
+      }
+     ],
+     "clip": [
+      0,
+      0,
+      390,
+      712
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-money-payments",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Payments face",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    1000
+   ]
+  },
+  {
+   "id": "user-money-payments-record",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-payments-record",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    },
+    {
+     "click": "@moneyRecordPayment"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-invoices",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Invoices face",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    },
+    {
+     "click": "@moneyFaceInvoices"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    760
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-invoices-detail",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-invoices-detail",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    },
+    {
+     "click": "@moneyFaceInvoices"
+    },
+    {
+     "click": "F-2026-"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-usage",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Usage face",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    780
+   ]
+  },
+  {
+   "id": "user-money-alerts",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-alerts",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@uxFinanceAlerts"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-reports",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Documents face",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    },
+    {
+     "click": "@moneyFaceDocuments"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    960
+   ]
+  },
+  {
+   "id": "user-money-reports-actions",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-reports-actions",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    },
+    {
+     "click": "@moneyFaceDocuments"
+    },
+    {
+     "click": "@reportDocPayments"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-negotiation",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "negotiated prices",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFaceUsage"
+    },
+    {
+     "click": "@moneyFaceDocuments"
+    }
+   ],
+   "full": false,
+   "clip": false,
+   "parts": [
+    {
+     "id": "card",
+     "from": "@negotiationCardTitle",
+     "to": "@moneyMyAgreement"
+    }
+   ]
+  },
+  {
+   "id": "user-money-expense",
+   "persona": "member",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-expense",
+   "steps": [
+    {
+     "hash": "#/money"
+    },
+    {
+     "click": "@moneyFacePayments"
+    },
+    {
+     "scroll": 700
+    },
+    {
+     "click": "@moneySubmitExpense"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-money-expense-approve",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-expense-approve",
+   "steps": [
+    {
+     "hash": "#/events"
+    }
+   ],
+   "full": false,
+   "clip": [
+    0,
+    0,
+    390,
+    560
+   ]
+  },
+  {
+   "id": "user-money-invoicing",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "user-money-invoicing",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    }
+   ],
+   "full": false,
+   "clip": [
+    0,
+    0,
+    390,
+    360
+   ]
+  }
+ ]
+}

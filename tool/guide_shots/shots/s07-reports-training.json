@@ -1,0 +1,116 @@
+{
+ "shots": [
+  {
+   "id": "setup-reports-hub",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Reports screen",
+   "steps": [
+    {
+     "hash": "#/reports"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-reports-documents",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the Workspace documents tab of Reports",
+   "steps": [
+    {
+     "hash": "#/reports"
+    },
+    {
+     "click": "@uxReportsWorkspace"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-reports-presets",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the report editor with the ready-made templates",
+   "steps": [
+    {
+     "hash": "#/report-editor"
+    },
+    {
+     "click": "@invoiceTemplatePresets"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-reports-professional",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the report editor with the Professional preset",
+   "steps": [
+    {
+     "hash": "#/report-editor"
+    },
+    {
+     "click": "@invoiceTemplatePresets"
+    },
+    {
+     "click": "@reportPresetProfessional"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-reports-export",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the accounting export sheet",
+   "steps": [
+    {
+     "hash": "#/invoice-register"
+    },
+    {
+     "click": "@invoiceAccountingExport"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-reports-assistants",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "Assistant access",
+   "steps": [
+    {
+     "hash": "#/settings/assistants"
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "setup-training-roles",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the role matrix",
+   "steps": [
+    {
+     "hash": "#/roles"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "full": false
+  }
+ ]
+}

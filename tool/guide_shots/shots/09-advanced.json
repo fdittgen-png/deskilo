@@ -1,0 +1,66 @@
+{
+ "shots": [
+  {
+   "id": "user-advanced-environments",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Me: the space card with its Open workspace button (a paired space shows a second Test space button)",
+   "steps": [
+    {
+     "hash": "#/me"
+    }
+   ]
+  },
+  {
+   "id": "user-advanced-assistants-policy",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "Assistant access: what a workspace offers to assistants",
+   "steps": [
+    {
+     "hash": "#/settings/assistants"
+    }
+   ]
+  },
+  {
+   "id": "user-advanced-wizard",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the task wizard: guides, recordings, tools",
+   "steps": [
+    {
+     "hash": "#/task-wizard"
+    }
+   ]
+  },
+  {
+   "id": "user-advanced-record",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "the task recorder: disclosure and Start recording",
+   "steps": [
+    {
+     "hash": "#/task-recorder"
+    }
+   ]
+  },
+  {
+   "id": "user-advanced-support",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "shows": "Support details",
+   "steps": [
+    {
+     "hash": "#/help"
+    },
+    {
+     "click": "@supportTitle"
+    }
+   ]
+  }
+ ]
+}

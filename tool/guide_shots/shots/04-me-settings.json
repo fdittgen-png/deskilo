@@ -1,0 +1,798 @@
+{
+ "shots": [
+  {
+   "id": "user-settings-overview",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Settings: My settings and Manage workspace, with My account, My membership and Advanced",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    430
+   ]
+  },
+  {
+   "id": "user-settings-scope",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Only for this workspace switch",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    195,
+    390,
+    238
+   ]
+  },
+  {
+   "id": "user-profile-settings-photo",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the photo row in Me",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    120,
+    390,
+    85
+   ]
+  },
+  {
+   "id": "user-profile-settings-photo-sheet",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "the photo chooser",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "click": "@profilePhotoTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-profile-settings-whatsapp",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "the WhatsApp dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "click": "@whatsappTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-profile-settings-language",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "the language chooser",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "click": "@languageTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-profile-settings-theme",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "the theme chooser",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "click": "@themeTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-profile-settings-personal-info",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the personal information form",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings/personal-info"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    50,
+    390,
+    460
+   ]
+  },
+  {
+   "id": "user-profile-settings-address",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the postal block of the form",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings/personal-info"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    355,
+    390,
+    155
+   ]
+  },
+  {
+   "id": "user-profile-settings-vat-id",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the VAT number field",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings/personal-info"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    585,
+    390,
+    85
+   ]
+  },
+  {
+   "id": "user-profile-settings-payment-terms",
+   "persona": "member",
+   "view": "phone",
+   "shows": "My payment conditions",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings/payment-terms"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    50,
+    390,
+    150
+   ]
+  },
+  {
+   "id": "user-profile-settings-status",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "the status dialog",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "click": "@profileStatusTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-profile-settings-badge",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "my badge",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "click": "@myBadgeTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-profile-settings-badge-pin",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "my PIN",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "click": "@badgePinSectionTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-profile-settings-restore-hints",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the restore hints row",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    668,
+    390,
+    62
+   ]
+  },
+  {
+   "id": "user-profile-settings-regional-formats",
+   "persona": "member",
+   "view": "phone",
+   "shows": "numbers and dates",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/formats"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    135,
+    390,
+    175
+   ]
+  },
+  {
+   "id": "user-profile-settings-clock",
+   "persona": "member",
+   "view": "phone",
+   "shows": "clock",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/formats"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    310,
+    390,
+    100
+   ]
+  },
+  {
+   "id": "user-profile-settings-device-zone",
+   "persona": "member",
+   "view": "phone",
+   "shows": "time zone switch",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/formats"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    415,
+    390,
+    140
+   ]
+  },
+  {
+   "id": "user-profile-settings-front-camera",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the front camera switch",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/settings"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "scroll": 700
+    },
+    {
+     "click": "@settingsSectionAdvanced",
+     "nth": 1
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    860,
+    390,
+    520
+   ]
+  },
+  {
+   "id": "user-profile-settings-linked-accounts",
+   "persona": "member",
+   "view": "phone",
+   "shows": "linked accounts",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/linked-accounts"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-privacy-overview",
+   "persona": "member",
+   "view": "phone",
+   "shows": "Privacy & data",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-privacy-visibility",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "who can see my data",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "click": "@privacyWhoCanSee"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-privacy-export",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the export row",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    262,
+    390,
+    108
+   ]
+  },
+  {
+   "id": "user-privacy-erase",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the erase row",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    368,
+    390,
+    135
+   ]
+  },
+  {
+   "id": "user-privacy-requests",
+   "persona": "member",
+   "view": "phone",
+   "full": false,
+   "shows": "rights requests",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "click": "@rightsRequestsTitle"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-privacy-push",
+   "persona": "member",
+   "view": "phone",
+   "shows": "push on this device",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/privacy"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    612,
+    390,
+    135
+   ]
+  },
+  {
+   "id": "user-privacy-consent",
+   "persona": "member",
+   "view": "phone",
+   "shows": "your data your rights",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/consent?review=1"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    50,
+    390,
+    520
+   ]
+  },
+  {
+   "id": "user-privacy-audiences",
+   "persona": "member",
+   "view": "phone",
+   "shows": "Who sees me card",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "parts": [
+    {
+     "id": "card",
+     "from": "@visibilityTitle",
+     "to": "@blockedPeopleTitle"
+    }
+   ],
+   "clip": false
+  },
+  {
+   "id": "user-privacy-public-profile",
+   "persona": "member",
+   "view": "phone",
+   "shows": "public profile switch",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/me?tab=me"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    1665,
+    390,
+    92
+   ]
+  },
+  {
+   "id": "user-backend-server",
+   "persona": "member",
+   "view": "phone",
+   "shows": "the server screen",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/server"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": [
+    0,
+    50,
+    390,
+    500
+   ]
+  },
+  {
+   "id": "user-backend-how",
+   "persona": "member",
+   "view": "phone",
+   "shows": "use your own server expanded",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "hash": "#/server"
+    },
+    {
+     "click": "@backendHowTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "fresh": true
+  }
+ ]
+}

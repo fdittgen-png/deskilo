@@ -30,7 +30,7 @@
   "helpHintWorkspace": "Pays, devise, langue et coordonnées de facturation — documents et taxes suivent ces réglages.",
   "helpHintWorkspaceTopic": "Réglages de l'espace",
   "helpHintBadges": "Émettez un badge QR imprimable ou enregistrez une carte NFC ; révoquez un badge perdu à tout moment.",
-  "helpHintBadgesTopic": "badges RFID",
+  "helpHintBadgesTopic": "badge NFC",
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
@@ -43,15 +43,15 @@
     "description": "#718/#719 - help hints"
   },
   "helpHintMoneyPayments": "Régler et demander : le solde, comment le régler ou payer en ligne, enregistrer un paiement — et soumettre une dépense, demander des demi-journées ou ajouter une consommation.",
-  "helpHintMoneyPaymentsTopic": "Le volet Paiements",
+  "helpHintMoneyPaymentsTopic": "Paiement",
   "helpHintMoneyPaymentsTip3Topic": "paiements en ligne",
   "helpHintMoneyStatement": "Le mois tel qu'il est : votre compte, jours utilisés et restants, abonnement, services, forfaits, positions ouvertes, avoirs et le solde. Parcourez les mois avec les flèches.",
-  "helpHintMoneyStatementTopic": "Le volet Relevé",
+  "helpHintMoneyStatementTopic": "Relevé",
   "helpHintMoneyInvoices": "Vos factures : ce qui est ouvert et pour quand, chaque facture qui vous a été émise avec son état, un geste vers le détail et vers le paiement.",
-  "helpHintMoneyInvoicesTopic": "Le volet Factures",
+  "helpHintMoneyInvoicesTopic": "Factures",
   "helpHintMoneyInvoicesTip2Topic": "Relances de paiement automatiques",
   "helpHintMoneyDocuments": "Vos documents : vos conditions, le rapport des paiements, le relevé du mois en PDF, la bibliothèque de documents.",
-  "helpHintMoneyDocumentsTopic": "Le volet Documents",
+  "helpHintMoneyDocumentsTopic": "Documents",
   "helpHintMoneyPaymentsTipSupplyTopic": "Services et Accessoires",
   "helpHintMembersTipNegotiationTopic": "Négociations tarifaires",
   "helpDotTooltip": "Ouvrir le guide",

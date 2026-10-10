@@ -1,2365 +1,6172 @@
 # Benutzerhandbuch
 
-Alles, was Mitglieder, Admins und Inhaber brauchen, um DesKilo zu nutzen. *Andere Sprachen: [English](User-Guide) · [Français](Guide-utilisateur) · [Español](Guia-de-usuario) · [Italiano](Guida-utente).*
+**DesKilo — Ihr Raum, gemeinsam genutzt.** *Andere Sprachen: [English](User-Guide) · [Français](Guide-utilisateur) · [Español](Guia-de-usuario) · [Italiano](Guida-utente).*
 
-> Die Screenshots in diesem Handbuch zeigen die App auf Französisch — jeder Bildschirm existiert identisch in allen fünf Sprachen (English, Français, Deutsch, Español, Italiano); umschalten unter **Einstellungen → Sprache**.
->
-> <img src="images/settings-language.jpg" width="200">
+<!-- anchor: user.guide.about -->
+## Ein Coworking-Space, geführt von denen, die ihn nutzen
 
-**Meine Räume und die Karte (#2155).** Unter Ich → Start hat jeder Raum eine kompakte Zeile. **Arbeitsbereich öffnen** und **Testbereich** stehen nebeneinander; das Verlaufssymbol markiert die zuletzt genutzte Umgebung. Jede Umgebung behält ihr Menü. Auf kleinen Bildschirmen steht die Identität über den Schaltflächen. In Entdecken zentriert **Auf der Karte anzeigen** den Raum; die Zentrierschaltfläche stellt diese Ansicht wieder her. Veröffentlichte Koordinaten haben Vorrang. Fehlen sie, sucht das Öffnen der Karte für ein einzelnes Ergebnis oder dessen Auswahl die öffentliche Adresse über Photon (OpenStreetMap). Der ausdrücklich ungefähre Standort kann nur die Straße bezeichnen und ändert die Veröffentlichung nicht. Bei Fehlern erneut versuchen oder den Eigentümer um genaue Koordinaten bitten. Der Gerätestandort wird nicht abgefragt.
+Stellen Sie sich einen Raum vor, in dem Freiberufler, Macherinnen und kleine Teams Tische, einen Wasserkocher und ein WLAN-Passwort teilen — und in dem nur drei Fragen zählen: *Wo kann ich heute sitzen, was schulde ich, und wer muss zustimmen?* DesKilo beantwortet diese drei Fragen für Gemeinschaften, die ihren eigenen Raum betreiben.
 
-## 1. Erste Schritte
+- **Wissen, wo man sitzen kann.** Ein lebendiger Raumplan, Buchungen für halbe Tage oder Stunden, Ein- und Auschecken, ein gemeinsamer Kalender.
+- **Wissen, was man schuldet.** Ein ehrliches Konto pro Mitglied: Beitrag, zusätzliche Tage, gemeinsame Ausgaben, Zahlungen, Abrechnungen und Rechnungen — dieselben Zahlen für das Mitglied und für die Person, die den Raum führt.
+- **Auf Ihre Art.** Rollen, Freigaben, Öffnungszeiten, Preise, Wortlaut und Farben legen Sie selbst fest, in wenigen Bildschirmen, ohne Vermieterplattform dazwischen.
+- **Teil eines Netzwerks sein.** Ein persönliches Konto begleitet Sie in jeden Raum, dem Sie beitreten; Räume, die gefunden werden wollen, veröffentlichen eine Seite, und Menschen können sich privat schreiben.
 
-### Konto anlegen
+DesKilo ist freie Software (AGPL-3.0). Es läuft auf Telefon, Tablet, Computer und im Browser, spricht Deutsch, Englisch, Französisch, Spanisch und Italienisch und hält die Daten Ihrer Gemeinschaft portabel: Nutzen Sie den gehosteten Dienst oder betreiben Sie das Backend selbst.
 
-App öffnen und mit E-Mail, Passwort (8+ Zeichen) und Anzeigenamen registrieren — oder **mit Google fortfahren**. Das Auge zeigt oder verbirgt das Passwort beim Tippen. *Passwort vergessen?* schickt dir einen **Einmal-Code** per E-Mail, den du zusammen mit dem neuen Passwort zurück in die App tippst — bewusst ein Code statt eines Links, damit das Zurücksetzen auch dort funktioniert, wo Deep-Links nicht greifen. Eine Google-Anmeldung lässt sich später unter **Einstellungen → Verknüpfte Konten** an ein bestehendes E-Mail-Konto anhängen.
+<!-- anchor: user.guide.start-your-own -->
+## Einen eigenen Raum gründen
 
-### Workspace anlegen — oder beitreten
+Für den Anfang brauchen Sie kein Gebäude, keinen Businessplan und kein IT-Team. Ein paar Schreibtische im Hinterzimmer, der Sitzungsraum eines Vereins, zwei Etagen über einem Café: Wo Menschen zum Arbeiten zusammenkommen, gibt DesKilo ihnen einen buchbaren Plan, Regeln, auf die sie sich einigen, und ein Konto, das niemand mehr in einer Tabelle führen muss.
 
-Nach der Anmeldung bietet der Startbildschirm zwei Wege:
+In etwa zwanzig Minuten haben Sie einen Raum, dem man beitreten kann: einen Namen, einen Plan, Öffnungszeiten und jemanden, der zustimmt. Geld, Rechnungen, ein Kiosk an der Tür und ein eigener Look kommen später — wenn Sie sie wollen, in der Reihenfolge, die Ihnen passt. Probieren Sie zuerst alles im Demo-Arbeitsbereich aus, der niemandem gehört und nichts kostet, und folgen Sie dann der [Einrichtungsanleitung](Einrichtungsanleitung#so-nutzen-sie-diese-anleitung) vom ersten Schritt bis zur ersten Buchung.
 
-- **Workspace anlegen** — du wirst **Inhaber**. Name, Land (bestimmt die Standardwährung) und Zeitzone wählen; danach zeichnest du deinen Grundriss im Editor (§8).
-- **Workspace beitreten** — die geteilte **Workspace-ID** eintippen, oder **QR-Code scannen** und die Kamera auf den Einladungs-QR an der Wand richten. Deine Anfrage landet als **ausstehend**: *Neues Mitglied* ist eine der Validierungs-Domänen (§7), ein Validierer lässt dich ein — und danach hältst du genau die Rolle, die die Einladung trägt (§2).
+> **Tipp** Öffnen Sie die Demo, wechseln Sie zwischen Inhaberin, Administrator und Mitglied und buchen Sie einen Schreibtisch. Zehn Minuten dort sagen mehr als jede Beschreibung.
 
-### Der Einrichtungsfragebogen — einen Space vorbereiten, bevor du die App öffnest
+<!-- anchor: user.guide.join -->
+## Beim Projekt mitmachen
 
-Einen Workspace anzulegen heißt Dutzende Entscheidungen, die in einem Dutzend verschiedener Bildschirme wohnen: wie eine Buchung aussehen darf, was ein Monat kostet, was das Gesetz auf einer Rechnung verlangt, wer was validiert. Die App lässt dich diese eine nach der anderen treffen, sobald du ihnen begegnest. Der **Einrichtungsfragebogen** lässt dich alle auf einmal treffen, *bevor* du beginnst — auf einem großen Bildschirm, wenn es hilft mit deiner Steuerberatung oder deinem Vorstand, ohne irgendetwas Laufendes anzurühren:
+DesKilo entsteht offen, in einer kleinen Gemeinschaft, und es ist Platz für Sie:
 
-<https://fdittgen-png.github.io/deskilo/setup.html>
+- **Ausprobieren und uns sagen, was auffällt.** Installieren Sie die App (die Web-App braucht nichts; der geschlossene Android-Test und die iPhone-Beta über TestFlight stehen Testern offen) und berichten Sie, was Sie überrascht.
+- **Ihr Wissen teilen.** Wer einen Coworking-Space betreibt, lernt Dinge, die kein Entwickler kennt. Sagen Sie uns, was Ihre Gemeinschaft braucht und was im Weg stand.
+- **Die Anleitungen übersetzen und verbessern.** Dieses Handbuch und die Einrichtungsanleitung sind Textdateien in fünf Sprachen, mit Screenshots, die ein einziger Befehl neu aufnimmt; eine Korrektur ist eine kleine Änderung.
+- **Mitbauen.** Code, Roadmap und offene Issues sind öffentlich, samt den Konventionen, die neue Mitwirkende brauchen.
+- **Hosten.** Betreiben Sie ein eigenes Backend für Ihre Gemeinschaft oder bitten Sie um die Nutzung des Referenz-Deployments.
 
-Es ist eine einzige Webseite. Nichts zu installieren, kein Konto, nichts wird irgendwohin geschickt: Deine Antworten werden in deinem eigenen Browser gespeichert, du kannst den Tab also schließen und später zu ihnen zurückkehren.
+[Das Projekt auf GitHub](https://github.com/fdittgen-png/deskilo) · [Web-App öffnen](https://fdittgen-png.github.io/deskilo/) · [Android-Test](https://play.google.com/apps/testing/de.deskilo.app) · [iPhone-Beta](https://testflight.apple.com/join/RgFX9zBe)
 
-<p><img src="images/setup-wizard.jpg" width="240"></p>
+<!-- anchor: user.guide.how-to-read -->
+## So nutzen Sie dieses Handbuch
 
-*Der Assistent: zwölf Schritte in Abhängigkeitsreihenfolge, jede Frage sagt, wo die Einstellung in der App liegt, mit einem **?**, das diesen Leitfaden am passenden Abschnitt öffnet.*
+**Zielgruppe:** Alle
 
-**So nutzt du ihn**
+Jeder Abschnitt beantwortet eine Frage — *„Wie kann ich …?“* — und nennt zuerst, für wen er gedacht ist, damit Sie überspringen können, was Sie nicht betrifft. Die Screenshots stammen aus dem Demo-Arbeitsbereich *Atelier du Marché*, dessen Personen und Zahlen erfunden sind.
 
-1. **Beantworte die Schritte der Reihe nach** — Identität, Funktionen, Verfügbarkeit, Grundriss, Abonnements, rechtliche Identität & USt., Leistungen, Zahlungshinweise, Rollen & Validierung, Mitglieder. Jeder Schritt fragt nur, was deine früheren Antworten möglich machen: keine USt-Sätze, wenn du nicht steuerpflichtig bist, keine E-Rechnungsplattform außerhalb der EU, keine Tagespaket-Option für ein Mitglied, solange kein Paket existiert, keine Kindfunktion, solange ihre Elternfunktion aus ist.
-2. **Prüfe die Funktionsübersicht.** Sie listet jede Funktion, die die App einschalten wird, und *wie deine eigenen Antworten sie konfigurieren*. Wähle ab, was du nicht willst: Es wird deaktiviert exportiert und seine Konfiguration bleibt weg — du kannst es später jederzeit unter Einstellungen → Funktionen einschalten.
-3. **Lies den Prüfschritt.** Er trennt, was vollständig ist, was eine zu bestätigende Entscheidung ist und was tatsächlich blockiert, je mit einem Sprung direkt zu der Frage, die es behebt.
-4. **Exportiere das XML**, dann öffne die App: **Einstellungen → Workspace → Space importieren (XML)** legt die Einstellungen, das Zubehör und den Grundriss direkt an. Der `<setup>`-Abschnitt derselben Datei trägt alles, was der Import nicht übernimmt — Abrechnung, rechtliche Identität, Rollen, Mitglieder —, sodass du diese Bildschirme einen nach dem anderen fertigstellen kannst; jede Frage hat dir gesagt, wo ihre Antwort liegt.
-5. **Bewahre die Datei auf.** Sie zurück in die Seite zu laden setzt dort fort, wo du aufgehört hast — auch eine Datei, die vor der Existenz einer Einstellung exportiert wurde; diese kommt dann schlicht mit ihrem Standardwert zurück.
+*Wählen Sie Ihren Weg*
 
-<p><img src="images/setup-feature-summary.jpg" width="240"></p>
-
-*Die Funktionsübersicht: was die App einschalten wird, konfiguriert durch Ihre eigenen Antworten — wählen Sie ab, was Sie nicht wollen.*
-
-**Eine Warnung.** Die exportierte Datei ist Klartext. Trage ein E-Rechnungs-Token oder den Schlüssel eines Zahlungsanbieters nur ein, wenn du privat antwortest; sonst lass diese Felder leer und tippe die Geheimnisse in der App, wo sie direkt zum Server gehen und nie zurückkommen.
-
-**Ihn zu überspringen kostet nichts.** Jede Antwort, die er sammelt, ist eine Einstellung, die du auch später in der App treffen — und ändern — kannst. Der Fragebogen ist eine Abkürzung für die erste Stunde, kein Tor.
-
-### Profile — ein Konto, mehrere Spaces
-
-Die Raumnamen stehen in der Profilliste im Vordergrund. Öffnen Sie einen gekoppelten Raum und wählen Sie Entwicklung zum Ausprobieren oder Produktion mit fälligen Rechnungen; die aktive Umgebung ist markiert. Rollen sind ergänzender Text, weitere Plattformräume stehen in einem eigenen aufklappbaren Abschnitt (#2289).
-
-Ein Konto kann mehreren Workspaces angehören. **Einstellungen → Profile** listet alle: jede Zeile zeigt den Namen des Space, **deine Rolle dort** (Mitglied, Admin, Inhaber) und die Workspace-ID. Das **Häkchen** markiert das aktive Profil; der **Stern** dein **Standardprofil** — das, mit dem die App öffnet, auf jedem Gerät und selbst nach Neuinstallation (die Wahl ist beim Konto gespeichert). Zeile antippen zum Wechseln, **+ Profil hinzufügen** für einen weiteren Space. Alles in der App ist auf den aktiven Workspace beschränkt. Seit #996 **merkt sich die App den Wechsel**: ein Tipp auf ein anderes Profil oder die andere Seite eines Paars macht es zum Standard beim Start — der Stern folgt, und Sie landen nach einem Neustart nie wieder in einem Raum oder einer Umgebung, die Sie verlassen hatten.
-
-<p><img src="images/profiles.jpg" width="240"></p>
-
-*Profile: jeder Workspace Ihres Kontos, Ihre Rolle dort, der Stern für das Standardprofil, das Häkchen für das aktive.*
-
-### Orientierung
-
-Die App hat bis zu fünf Ziele am unteren Rand: **Nachrichten** (§16), **Kalender** (§5), den großen zentralen **Reservieren**-Knopf (§4), **Mitglieder** (§6) und **Finanzen** (§9). Nachrichten und Reservieren sind immer da; Kalender, Mitglieder und Finanzen kommen und gehen mit ihrer Funktion (§8). **Nachrichten ist der Posteingang**: deine Unterhaltungen und der Ereignis- und Bestätigungs-Feed (§7) sind seine zwei Flächen, und die **Glocke** in der Kopfzeile springt direkt zur zweiten, mit dem Zähler dessen, was auf dich wartet. Das **Zahnrad** zu den **Einstellungen** (§12) steht in jeder Kopfzeile. Quer gehalten und auf Tablets wechseln die meisten Bildschirme in eine **geteilte Ansicht** — Bedienelemente im Seitenpanel, Inhalt füllt den Rest. **Ohne Glocke (#1306).** Ein Space kann den Ereignis-Feed unter Funktionen abschalten. Die Entscheidungen, die auf dich warten, wandern dann in den **Kalender**: sein Ziel trägt die Zahl, und der Kalender öffnet sich mit ihnen oben angeheftet, *Annehmen* einen Tipp entfernt — solange der Kalender Entscheidungen auf seiner Zeitleiste zeigt.
-
-**Alles bleibt live.** Was irgendjemand ändert — eine Buchung, ein neues Mitglied, eine Einstellung — wird binnen Sekunden auf jedes verbundene Gerät geschoben, auch auf das, das die Änderung machte. Kein Neustart, kein Ziehen zum Aktualisieren.
-
-**Im Web: Seitenleiste oder Menü.** Breite Browserfenster zeigen die Hauptziele in einer Seitenleiste. Kleine Fenster und vergrößerte Schrift nutzen das **☰-Menü**. Beide zeigen die für deine Rolle und die aktivierten Funktionen verfügbaren Ziele, mit einer eigenen Gruppe Verwaltung und sichtbarem Zurück zu Mir. Telefone und Desktop-Apps behalten deine Navigationseinstellung.
-
-**Mehr Platz: die Leiste wegwischen (#1173).** Wischen Sie die untere Leiste **nach unten** — oder tippen Sie doppelt darauf — und die Tabs gleiten weg; der runde **Reservieren**-Knopf bleibt, wo er ist. Die Leiste folgt dabei Ihrem Finger, sodass Sie sehen, wohin sie geht: Loslassen vor der Hälfte bringt sie zurück, nach der Hälfte bleibt sie weg. Ein kurzer Ruck entscheidet für sich, egal wie weit er ging (#1265). Der Inhalt bekommt den ganzen Streifen zurück, was im Raumplan der Unterschied zwischen vier und fünf Sitzreihen ist. Drei Wege holen die Leiste zurück: **nach oben** wischen im selben Streifen, den Reservieren-Knopf **lange drücken**, oder dessen Aktion *Navigation einblenden* mit einem Screenreader. Die Wahl merkt sich dieses Gerät, und der Hinweis erscheint genau einmal. **Die Titelleiste geht mit (#1322)**, die Ansicht ist also wirklich Vollbild: Beide Leisten folgen gemeinsam Ihrem Finger und kommen gemeinsam zurück. Die Statusleiste des Telefons und der Entwicklungsstreifen bleiben. Scannen, Editor, Datenschutz und Einstellungen kehren mit den Leisten zurück, und solange eine Entscheidung auf Sie wartet, trägt der Reservieren-Knopf den Zähler der Glocke.
-
-**Persönliche Ziele und lesbare Nachrichten (#2274, #2269).** Startseite, Entdecken, Nachrichten und Profil/Einstellungen haben jeweils eine beständige Me-URL. Neuladen oder ein kopierter Link stellt das Ziel nach dem Start wieder her; Zurück/Vorwärts folgt den Zielwechseln und besuchte Tabs behalten ihren Sitzungszustand. Posteingangsvorschauen zeigen Ressourcenbezeichnungen. Endet eine Vorschau mitten in einem Verweis, erscheint die vorhandene Bezeichnung mit Auslassungspunkten oder Verknüpfte Ressource, wenn sie fehlt. Die Originalnachricht bleibt unverändert; Ressourcendetails werden für die Vorschau nicht abgerufen.
-
-**Einstieg und Orientierung (#2273, #2275, #2277).** Arbeitsbereich öffnen führt zum regulären Bereich; Testbereich öffnet die auf der Karte erklärte Übungsumgebung. Der Echt-/Testkontext bleibt im Bereich sichtbar. Profil und Konto steht in der Navigation. Die festen Verknüpfungen Profil, Datenschutz, Einstellungen und Erweitert springen zum jeweiligen Abschnitt. Einstellungen beginnt mit Sprache, Design und verfügbaren regionalen Formaten. Sichtbarkeit, öffentliches Profil und Vorschau bleiben unter Datenschutz zusammen. Breite Webansichten zeigen Ziele in einer Seitenleiste mit Zurück zu Mir und der Gruppe Verwaltung. Kleine Fenster und vergrößerte Schrift nutzen das kompakte Menü. Kalendersteuerung und Hinweise zum Grundriss lassen sich bei vergrößerter Schrift scrollen, sodass Aktivitäten und Aktionen erreichbar bleiben.
-
-**Meine Buchungen finden (#2276).** Meine Buchungen steht über den Kategorien und zeigt die eigenen Reservierungen. Die Zusammenfassung nennt Person und Kategorien; Filter zurücksetzen zeigt wieder die eigene Aktivität aller verfügbaren Kategorien bei unveränderter Datumsauswahl. Buchungszeilen nennen zugängliche Stockwerke, Ressourcen und Zustände. Fehlende Quellen behalten ihre Beschriftung oder zeigen Ressource nicht verfügbar. Jede Zeile öffnet weiterhin ihre Quelle.
-
-**Navigation im Workspace.** Alltägliche Ziele bleiben sichtbar. Die Verwaltung ist in **Mitglieder und Zugang**, **Abrechnung und Zahlungen** und **Workspace einrichten** gegliedert. Öffnen Sie eine Gruppe für die Werkzeuge Ihrer Rolle; bei der Rückkehr bleibt sie geöffnet. Zurück zu Ich und persönliche Kontoziele bleiben getrennt.
-
-## 2. Rollen & Einladungen
-
-DesKilo hat drei additive Rollen und darüber die Co-Inhaberschaft als Aufsatz, plus ein Gerätekonto:
-
-| Rolle | Kann |
+| Sie sind … | Hier beginnen |
 |---|---|
-| **Mitglied** | Ein-/auschecken, reservieren, Ausgaben einreichen, eigene Ereignisse und eigenes Konto sehen und verwalten |
-| **Admin** | Alles wie ein Mitglied, plus: *für jeden* handeln (Buchungen, Zahlungen, Ausgaben — unter Bestätigung, §7), Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten, Badges ausstellen |
-| **Inhaber** | Alles wie ein Admin, plus: den physischen Space bearbeiten, Pläne und Preise definieren, Rollen, Kiosk-Geräte und Einstellungen verwalten |
-| **Co-Inhaber** | *Aktiv*: die Inhaber-Berechtigungen sofort, plus automatische Nachfolge. *Passiv*: ein wartender Nachfolger ohne Extra-Berechtigungen heute |
-| **Kiosk** | Ein Wandtablet-Konto (§10) — zeigt nur den Plan; echte Mitglieder handeln per Badge |
+| Neu bei DesKilo | [Erste Schritte](#erste-schritte) |
+| Ein Mitglied, das Plätze bucht | [Reservieren](#reservieren) · [Geld](#finanzen) |
+| Ein Administrator | [Zusammenarbeit](#zusammenarbeiten-mitglieder-anfragen-nachrichten-und-das-weitere-netzwerk) · [Mitglieder und Tarife](#mitglieder-tarife-und-abrechnung) |
+| Ein Inhaber, der seinen Raum einrichtet | [Ihr Raum](#ihr-space-von-ihnen-eingerichtet-workspace-einstellungen) · [Abrechnung](#mitglieder-tarife-und-abrechnung) · [Steuern und Rechnungen](#steuern-rechnungsstellung-und-buchhaltung) |
+| Betreiber einer Installation | [Erweitert](#erweitert) |
 
-Ein Teil davon ist nicht in Stein gemeißelt: die Inhaberin justiert in der Matrix der **Rollenverwaltung** (§8) **elf Administrations-Berechtigungen** nach — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten. Was die Matrix *nicht* regiert, ist der Alltag — einchecken, reservieren, für ein anderes Mitglied handeln, den Space bearbeiten: das bleibt, wo die Tabelle oben es hinstellt, und hängt stattdessen an den Funktionen und den Schaltern je Mitglied. Seit #982 trägt die Matrix auch, was vorher nur ein Eigentümer oder Admin konnte: **Standorte und Ebenen**, **Tarife und Abrechnungsregeln**, **Reservierungen anderer**, **Kiosk und Badges**, **Exporte**, **Dokumentgestaltung**, **persönliche Daten der Mitglieder**, **Integrationen** und **Konfiguration**. Eine nie bearbeitete Admin-Zeile behält genau, was Admins konnten (Standorte, Reservierungen, Kiosk, Exporte, persönliche Daten); wer eine Zeile bearbeitet, bestimmt die ganze Zeile.
+**Gut zu wissen**
 
-**Jede Einladung ist an eine Rolle gebunden.** Auf dem Inhaber-Bildschirm *Workspace-ID & QR* tragen zwei Tabs zwei Einladungen, jede mit eigenem QR und Code:
+- In der App öffnet jedes `?` neben einem Feld dieses Handbuch an der passenden Stelle.
+- Die Zeile „Zielgruppe“ nennt die kleinste betroffene Gruppe: *Mitglied*, *Administrator:in*, *Inhaber*, *Mitinhaber*, *Abrechnungsadministrator:in* oder *Betreiber:in*. Was Sie in der App sehen, hängt von Ihrer Rolle und von den vom Inhaber aktivierten Funktionen ab.
+- Blauer Text ist ein Link: zu einem anderen Abschnitt oder direkt zum Bildschirm.
 
-- **Mitglieder-Einladung** — die Workspace-ID selbst, unter dem Namen des Space. Drucken, an die Wand, frei teilen: Wer sie scannt oder eintippt, **beantragt** den Beitritt als einfaches Mitglied, und ein Validierer lässt ihn ein (§7). Schaltflächen: **ID kopieren**, **Als PNG teilen**, **Workspace-ID ändern** (die generierte ID durch eine merkbare ersetzen, 4–20 Buchstaben/Ziffern) und **Jemanden einladen**.
-- **Admin-Einladung** — ein **persönlicher Einmal-Code**, von einem Inhaber für genau eine Person geprägt. Der Bildschirm sagt es klar: *dieser Code lässt EINE Person als Admin ein, dann verfällt er* (ungenutzte Codes nach 14 Tagen). Nur an die gemeinte Person geben; pro Admin einen neuen mit **Neuer Admin-Code**.
-- **Einladungen sprechen die Sprache des Eingeladenen** — das Einladungsblatt schreibt die Nachricht in der gewählten Sprache (fünf verfügbar), standardmäßig in der **Sprache des Arbeitsbereichs** aus den *Workspace-Einstellungen*. Die Inhaberin kann den Einladungstext dort auch **pro Sprache** anpassen, mit Platzhaltern wie `{firstName}`, `{workspaceName}`, `{inviteLink}`, `{downloadUrl}`, `{role}`; eine leere Sprache nutzt die eingebaute Übersetzung.
+<!-- anchor: user.start.overview -->
+## Erste Schritte
 
-**Eine Inhaber-Einladung gibt es nicht — mit Absicht** (die Fußzeile erinnert daran). Inhaberschaft vergibt nur ein bestehender Inhaber, in *Mitglieder & Tarife*. Ein Workspace behält immer mindestens einen Inhaber. Einen **Admin** ernennen oder zurückstufen läuft über die Validierung (§7) — wirksam, sobald die Validierer bestätigen.
+DesKilo ist der Ort, an dem eine Gemeinschaft, die sich einen Arbeitsbereich teilt, ihre Plätze bucht, ihre Mitgliedschaften führt und abrechnet, was zu zahlen ist. Dieses Kapitel führt Sie vom ersten Start bis zu einem Space, in dem Sie arbeiten können.
 
-**Co-Inhaber halten den Workspace am Leben.** Die Inhaberin ernennt jedes Mitglied oder jeden Admin zum Co-Inhaber (*Mitglieder & Tarife → das Mitglied → Co-Inhaberschaft*), in zwei Varianten: ein **aktiver** Co-Inhaber arbeitet sofort mit Inhaber-Berechtigungen; ein **passiver** hat heute keine zusätzlichen. In beiden Fällen ist die Nachfolge automatisch: Verlässt der letzte Inhaber den Space — Austritt, Entfernung, Konto weg — wird der beste Co-Inhaber (aktiv vor passiv) **sofort Inhaber**, serverseitig, ohne Zutun. Übergabe geht auch jederzeit bewusst mit *Jetzt zum Inhaber machen*. Eine Nuance: Validierungsregeln, die die Unterschrift des *Inhabers* verlangen (§7), meinen immer einen buchstäblichen Inhaber, keinen aktiven Co-Inhaber.
+In diesem Kapitel:
+- [Was DesKilo ist und wer was tut](#was-deskilo-ist-und-wer-was-tut)
+- [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden)
+- [Vergessenes Passwort zurücksetzen](#vergessenes-passwort-zurücksetzen)
+- [Den Demobereich erkunden](#den-demobereich-erkunden)
+- [Einem Workspace beitreten](#einem-workspace-beitreten)
+- [Einen Workspace erstellen](#einen-workspace-erstellen)
+- [Einen Workspace finden](#einen-workspace-finden)
+- [Ich: Ihr Zuhause und Ihre Spaces](#ich-ihr-zuhause-und-ihre-spaces)
+- [Ihre Spaces ordnen](#ihre-spaces-ordnen)
+- [Profile: ein Konto, mehrere Spaces](#profile-ein-konto-mehrere-spaces)
+- [Sich zurechtfinden](#sich-zurechtfinden)
+- [Die Karte „Erste Schritte“ und die Tipps](#die-karte-erste-schritte-und-die-tipps)
+- [Einen Space mit dem Einrichtungsfragebogen vorbereiten](#einen-space-mit-dem-einrichtungsfragebogen-vorbereiten)
 
-Der QR codiert einen Link, der die vergebene Rolle nennt (`deskilo://join?role=…`). Manipulation ändert nichts — der Server leitet die Rolle aus dem Code selbst ab: die Workspace-ID tritt immer als Mitglied bei, eine persönliche Einladung genau in ihrer geprägten Rolle, einmal. Ein weitergeleiteter, schon benutzter — oder verfallener — Admin-Code lässt niemanden ein.
+<!-- anchor: user.start.what-is -->
+### Was DesKilo ist und wer was tut
 
-**Per Nachricht einladen** (*Jemanden einladen*): jeder WhatsApp/SMS/Teilen-Versand prägt seinen eigenen persönlichen Einmal-Code und baut eine fertige Nachricht in der Sprache des Eingeladenen. Der Empfänger kann die ganze Nachricht kopieren und ins Beitrittsfeld der App einfügen — der Code wird automatisch erkannt.
+**Zielgruppe:** Alle
 
-## 3. Der Grundriss (im Reservieren-Hub)
+Sie möchten wissen, wofür die App da ist und was Sie darin tun dürfen. DesKilo beantwortet drei alltägliche Fragen eines gemeinsam genutzten Arbeitsbereichs: Wo kann ich arbeiten, was schulde ich, und wer muss das genehmigen? Rund um die Spaces steht **Ich**, Ihr eigenes Konto, das Sie in jeden Space begleitet, dem Sie angehören.
 
-Der Plan zeigt die aktive Ebene deines Space: Büros, Tische und Plätze, farbcodiert — **frei**, **reserviert**, **besetzt**, **meiner**, **gesperrt**. Er öffnet **sofort mit den letzten bekannten Daten** und aktualisiert im Hintergrund — bei wackligem WLAN siehst du den letzten Stand statt eines leeren Bildschirms. Konnte dieser Stand nicht aktualisiert werden, sagt es ein Banner — *Offline — Verfügbarkeit von 09:30* — mit **Erneut versuchen**, denn ein frei angezeigter Platz kann inzwischen belegt sein (#1305). Ein besetzter Platz zeigt, wer da ist — als **Initiale**, oder als **Foto**, sobald die Person eines hinterlegt hat und die Inhaberin *Mitgliederfotos auf dem Plan* aktiviert hat —, dazu ein **Häkchen-Badge** nach dem Einchecken und einen **grünen Punkt**, wenn die Person gerade online ist. Ganze Vornamen erscheinen dort, wo Platz für sie ist: auf dem Schloss-Chip einer Ganzraum-Buchung und in der Listenansicht. Ist ein **ganzer Tisch, Raum oder eine Etage** reserviert, sagt es der Raum selbst — farbige Fläche, kräftiger Rand und ein **Schloss-Chip mit dem Namen** in der Mitte; das Raumlabel liest *Bureau 2 · Florian*. Jeder sieht es: auf dem Plan, im Reservieren-Hub, am Kiosk.
+<p><img src="images/user-start-what-is.de.b8fa17aa9.jpg" width="280"></p>
 
-Der Plan kann wie dein echter Raum aussehen: die Inhaberin kann ein **Foto des Raums als Ebenen-Hintergrund** setzen und frei **skalierbare Illustrationsbilder** (Pflanzen, Sofas…) platzieren. Der Regler **Tisch-Transparenz** in den Einstellungen lässt das Foto durch die gezeichneten Tische scheinen.
+Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen addieren sich: Alle sind Mitglied, die anderen Rollen kommen obendrauf.
 
-Navigation:
-
-- Oben: das **Ansicht**-Menü, das nennt, was du gerade siehst (*Plan ▾*), und die anderen Ansichten öffnet — **Tag**, **Woche** und **Monat**, zum Erkunden statt zum Buchen (#1301); der **Karte/Liste**-Umschalter (die Liste zeigt dieselben Plätze als Zeilen), der **Datums-Chip** (antippen für einen anderen Tag) und die Fenster-Bedienelemente, die der Granularität deines Space folgen (§8): drei **Tageszeit-Chips** — Vormittag, Nachmittag, ganzer Tag —, wo der Space in Halbtagen bucht; nur *Ganzer Tag*, wo er in ganzen Tagen bucht; **Von → Bis**-Regler auf einem Minutenraster oder in freier Zeitwahl; und unter *echten Uhrzeiten* beides.
-- Die Leinwand **passt sich automatisch ein**; **Pinch-Zoom** oder **+ / −**, **Scrollleisten** an den Rändern, **Einpassen**-Knopf zum Zentrieren.
-- Die Etage wählst du am **Ebenen-Rail** rechts (1, 2, …); sein **Ebenen-Icon** wirkt auf die ganze Etage (unten). Im **Querformat** wandern die Bedienelemente in ein Seitenpanel.
-
-Vom Plan aus buchen:
-
-- **Spontan einchecken**: freien Platz antippen → das Blatt schlägt *jetzt* bis zu einem kanonischen Ende vor → bestätigen. Bei Halbtagen und ganzen Tagen zieht der Server den Start anschließend **auf den Anfang des Slots zurück**: um 10:00 ankommen, *bis 12:00* bestätigen — gebucht und verbraucht ist der ganze Vormittag 8:00–12:00 (§4b). Hat jemand den Platz später reserviert, wird dein Ende gekappt und du erfährst es.
-- **Auf eine Reservierung einchecken**: Einchecken heißt *du bist da*. Bei Halbtagen, ganzen Tagen und echten Uhrzeiten öffnet **jede Ankunft am Tag der Buchung** das Fenster — um 10:00 kannst du schon auf deinen 12:00-Nachmittag einchecken. Auf einem Minutenraster öffnet es 15 Minuten vor deinem Start, oder einen Rasterschritt früher, wenn dieser länger ist (5-, 15- und 30-Minuten-Raster behalten also die 15 Minuten, ein Stundenraster öffnet eine Stunde früher). Es schließt am Ende der Reservierung; außerhalb ist der Knopf deaktiviert und nennt die Öffnungszeit. Admins können ein Mitglied an seinem Platz einchecken (solange *für andere buchen* aktiv ist).
-- **Auschecken**: manuell — und es **kürzt die Buchung auf jetzt**, der Platz wird also sofort für alle anderen frei. Es ist standardmäßig **persönlich**: ein Admin (die Inhaberin eingeschlossen) beendet den Check-in eines anderen erst, wenn *Admins dürfen Mitglieder auschecken* aktiv ist (§8). Mit **Auto-Ein-/Auschecken** schließen sich vergessene Buchungen selbst — der Durchlauf läuft bei jedem Lesen, eine offen gebliebene Vormittagsbuchung wird also ab 12:01 an ihrem eigenen Ende abgeschlossen, nicht erst um Mitternacht.
-- **Ganze Räume**: **Doppeltipp** auf Tisch, Raum oder freien Boden — oder das **Ebenen-Icon** am Rail — für **den ganzen Tisch, das Büro oder die Etage**. **Ein einziges Blatt** trägt alles: den Namen des Raums, den Zeitraum-Picker (z. B. *Do, 6. Aug. 10:13 → 12:00*) mit denselben Wiederholungen wie ein Platz, für Admins den optionalen Wähler **Für das Mitglied** und den Bestätigen-Knopf.
-- **Das Buchungsblatt** behält die Buchung im Blick: Platz, Datum, Uhrzeit und **Reservieren**. **Wiederholen** und, für Betreiber, *Nicht reservierbar machen* warten unter **Weitere Optionen** (#1301). Nach dem Buchen bietet die Bestätigung **Details**, das die neue Reservierung mit dem nächsten Schritt öffnet: einchecken, verschieben, stornieren.
-- **Nicht reservierbar machen**: unter *Weitere Optionen* auf dem Buchungsblatt nehmen Inhaber und Admins (mit *Admins dürfen Sitze sperren*) den Sitz ab jetzt außer Betrieb — er liest sich auf dem Plan als **gesperrt**, bis er im Sitzblatt des Editors wieder freigegeben wird.
-- **Zeit-Scroller**: ein von→bis-Fenster (oder Vormittag / Nachmittag / Ganztag, je nach Granularität) zeigt die Belegung zu jedem künftigen Zeitpunkt.
-- Plätze können **Zubehör** tragen (Monitor, Stehpult…), manches mit Aufpreis je halbem Tag auf deiner Abrechnung.
-- Buchungen zählen auf deine **Monatstage** (§9) — darüber hinaus blockt oder berechnet die App, je nach Konfiguration. Eine Ausnahme: eine Buchung, die **ganz außerhalb der Öffnungszeiten** liegt, kann gratis oder befreit sein — je nachdem, welche Regel für Zeiten außerhalb im Space gilt (§4b).
-
-<p><img src="images/reserve-plan-closed.jpg" width="240"></p>
-
-*Der Plan im Reservieren-Hub an einem Schließtag: das Schließungsbanner, der Ansichtswechsel, das Datum und die Tagesabschnitt-Chips, die Ebenenleiste (1 · 2 · Ebenen) und die Zoomsteuerung.*
-
-**Ein Platz, der nur einen Teil des Tages gebucht ist, sieht auch so aus (#903).** Die Plan liest den Platz von links nach rechts als den offenen Tag: eine Buchung bis mittags füllt die linke Hälfte des Pads, eine ab nachmittags die rechte, und ein ganztägig gehaltener Platz füllt sich ganz wie bisher. Eine Haarlinie trennt zwei benachbarte Buchungen, damit sie nie als eine gelesen werden, und jede Spanne trägt die Farbe dessen, der sie hält — deine oder die eines anderen.
-
-**Wer heute auf diesem Platz sitzt.** Tippe auf einen Platz mit **mehr als einer Buchung** und statt der üblichen Karte öffnet sich der Tag: jede Spanne mit Uhrzeit, Person und Stand (vorbei, jetzt, später), und jede freie Spanne als etwas, das du nehmen kannst — tippe darauf und die gewohnte Buchungskarte öffnet sich genau auf diesem Fenster. Ein Platz mit einer einzigen Buchung verhält sich wie immer. Das Ganze hängt an der Funktion *Tagesverlauf eines Platzes*.
-
-## 4. Reservierungen (Reservieren-Hub)
-
-Nach erfolgreichem Beitritt oder Anlegen wird der zurückgegebene Arbeitsbereich für die aktuelle Sitzung aktiv, ohne den gespeicherten Standard zu ändern. Eine bereits angeforderte Aufgabe behält ihren Kontext; eine verspätete Antwort ersetzt keine neuere Konto-, Instanz- oder Arbeitsbereichsauswahl. (#1654)
-
-**Erste Schritte** (#1654) ist eine freiwillige Hilfe im Reservieren-Hub. Die Karte nennt den aktiven Arbeitsbereich und seine Umgebung und schlägt anhand der verfügbaren Informationen eine Aktion vor: Zeit wählen, Mitgliedschaft ansehen oder Hilfe öffnen. Das Öffnen einer Aktion bucht nichts. **Jetzt nicht** blendet die Karte für dieses Konto, diesen Server und diesen Arbeitsbereich aus; über das Ansichtsmenü lässt sie sich wieder öffnen. Eine erfolgreiche Buchung aktualisiert die Karte anhand der zurückgegebenen Reservierung; ein Fehler gilt nicht als Abschluss. Lange Hinweise lassen sich scrollen, damit die Aktionen auch bei großer Schrift erreichbar bleiben. Das Abschalten der Hilfe lässt normale Buchungen verfügbar.
-
-Die Buchungsübersicht nennt den gebuchten Platz und seinen aktuellen Status. Bei aktivierter Barrierefreiheit bietet das erneute Öffnen des Platzes nach dem Einchecken sofort **Auschecken** an, ohne die App neu zu laden. (#2307)
-
-Bei großer Schrift oder einem kurzen Fenster lassen sich die Steuerelemente des Hubs scrollen, um Datum und Ansicht zu erreichen; der Grundriss behält einen eigenen sichtbaren Bereich (#1654).
-
-Öffne den **Reservieren**-Hub (Mittelknopf). Oben: zwei Reihen von Bedienelementen. Die erste sagt, **was** du siehst: die vier **Ansichts-Knöpfe** und, auf dem Plan, der Umschalter **Plan / Liste**. Die zweite sagt **wann**: der **Datums-Chip**, ein **Jetzt**-Knopf, sobald du von heute weggeblättert hast, und die **Tageszeit-Chips**. Die **Etagen-Chips** (*Alle Etagen* oder eine je Ebene) sitzen auf dem Plan selbst, der **QR-Scan** (§4a) in der Kopfzeile, neben Editor und Glocke. Dann vier Ansichten:
-
-- **Plan** — der Grundriss, gefiltert auf dein Fenster; freien Platz antippen und buchen.
-- **Tag** — jeder Platz als Zeitleisten-Zeile für den gewählten Tag (08:00 → 17:00 oder deine Zeiten, die rote Linie ist *jetzt*); freie Strecke antippen zum Buchen, den eigenen Block für Details.
-- **Woche** — ein Raster Plätze × Tage für die ISO-Woche, ein Tagesband (*Mo 3 … So 9*) darüber; jede Zelle trägt die Halbtage mit der Initiale des Belegers.
-- **Monat** — ein Verfügbarkeitskalender: jeder Tag zeigt seinen **Frei-Zähler** (z. B. *10/12*); Tag antippen führt in dessen Tagesansicht.
-
-**Ein Platz zur Zeit — standardmäßig**: der Space legt fest, wie viele sich überschneidende Reservierungen ein Mitglied halten darf, und diese Zahl ist **1**, solange die Inhaberin sie nicht erhöht (§8). Bei 1 wird woanders buchen oder einchecken, während eine läuft, abgelehnt; Einchecken schließt in jedem Fall frühere Check-ins, deren Buchung endete. Admins und Inhaber können **übersteuern**: ein besetzter/reservierter Platz bietet *Reservierung entfernen (übersteuern)* — Mitglied und alle Admins werden über den Feed benachrichtigt.
-
-Reservierungen folgen der **Granularität** des Space (§8 Verfügbarkeit) — Halbtage, nur ganze Tage, echte Uhrzeiten (exakt von–bis, Halb-/Ganztag als Kurzwahl) oder freie Zeiten auf dem Raster. Halb- und Ganztage decken die **Arbeitszeiten** ab (Standard 8:00–17:00, Halbtagsgrenze 12:00). Sie respektieren **Öffnungstage**, **Schließtage** und die Buchungsregeln (Buchungshorizont, Mindest- und Maximaldauer). **Eine Buchung endet immer an dem Tag, an dem sie beginnt** — nichts läuft über Mitternacht; ein Aufenthalt, der morgen weitergeht, ist die Buchung von morgen, morgen angelegt (§4b). Wiederkehrender Bedarf? Eine **Serie** buchen (täglich, werktags, wöchentlich) — geschlossene Tage und Konflikte werden übersprungen und gemeldet.
-
-**Eine vergangene oder eingecheckte Buchung zu löschen ist ein Antrag, keine Aktion.** Eine Buchung mit vergangenem Start — oder mit Check-in — lässt sich nicht direkt stornieren: das Blatt bietet **Löschung beantragen**. Inhaber oder Admin entscheiden die eine Abrechnungsfrage: Check-in vergessen (die Buchung bleibt) oder nie genutzt (sie wird entfernt)? Der Antrag erscheint im Ereignis-Feed mit deinem optionalen Grund; künftige unberührte Buchungen behalten das Ein-Tipp-Storno. Der ganze Weg fährt auf der Funktion **Lösch-Anträge für Buchungen**: ist sie aus, hat eine begonnene oder eingecheckte Buchung weder Storno-Knopf noch Antrag — sie bleibt schlicht auf der Zeile stehen.
-
-<p><img src="images/reserve-day.jpg" width="240"></p>
-
-*Die Tagesansicht: jeder Platz als Zeitleisten-Zeile, die rote Linie markiert jetzt — eine freie Strecke antippen zum Buchen.*
-
-<p><img src="images/reserve-week.jpg" width="240"></p>
-
-*Die Wochenansicht: ein Raster Plätze × Tage mit den Halbtagen jedes Tages, die Initiale des Belegers in der Zelle.*
-
-<p><img src="images/reserve-month.jpg" width="240"></p>
-
-*Die Monatsansicht zählt die freien Plätze je Tag (8/10); ein Tag antippen führt in seine Tagesansicht.*
-
-<p><img src="images/reserve-booking-sheet.jpg" width="240"></p>
-
-*Das Buchungsblatt: Vormittag / Nachmittag / Ganzer Tag, Buchen für (Admins), Wiederholen — und Nicht reservierbar machen, für Inhaber und Admins.*
-
-### 4a. Einen Raumcode scannen
-
-Jeder Platz, Tisch, jedes Büro und jede Etage kann eine gedruckte **QR-Karte** tragen (§8). **Scan-Knopf** im Hub, Karte anvisieren — oder Code eintippen — und die App identifiziert den Raum und zeigt genau, was *du* dort darfst:
-
-- **Platz-Karte** — genau diesen Platz reservieren oder einchecken, sofort.
-- **Tisch-Karte** — die Plätze des Tischs mit Live-Zustand; einen freien wählen. Hat die Inhaberin den Tisch als Ganzes buchbar markiert, bietet die Karte zusätzlich den **ganzen Tisch** an, mit seinem Preis je Halbtag — genau wie eine Büro- oder Etagen-Karte.
-- **Büro- oder Etagen-Karte** — wenn die Inhaberin ihn buchbar machte, *Büro- & Etagenreservierungen* aktiv ist **und** du das persönliche Recht hältst (§8) — Inhaber und Admins immer — reservierst du das **ganze Büro oder die Etage** — gleicher Zeitraum-Picker, gleiche **Serien**; der Preis je Halbtag wird gezeigt und landet auf deiner Abrechnung. Sonst erklärt das Blatt warum, und ein Büro fällt auf seine Plätze zurück.
-
-**Ein Scan öffnet das Blatt des Kiosks.** Den Code eines **Platzes** zu lesen — die gedruckte QR-Karte oder den NFC-Tag am Stuhl — bietet genau das an, was der Kiosk beim Antippen dieses Platzes anbietet: dieselben drei Aktionen (**Einchecken**, **Reservieren**, **Auschecken**), denselben aus den Space-Einstellungen abgeleiteten Zeitraum. Der einzige Unterschied: du bist bereits angemeldet, also entfällt der Badge-Schritt (§4b). Tisch-, Büro- und Etagen-Karten öffnen ihr eigenes Ganzraum-Blatt, wie oben beschrieben; **NFC-Tags lösen nur Plätze auf**, ein Stuhl-Tag ist also die eine Tipp-und-buche-Abkürzung.
-
-**Konflikte schützen in beide Richtungen:** ein Büro/eine Etage ist nicht reservierbar, solange ein Platz darin im Fenster belegt ist — und kein Platz, solange sein Büro/seine Etage als Ganzes reserviert ist.
-
-### 4b. Wie sich Buchungen verhalten
-
-Jede Regel unten wird **auf dem Server** durchgesetzt, an einer einzigen gemeinsamen Stelle, die jeder Buchungsweg aufruft. Alle Zeiten sind Ortszeit des Space; die Beispiele nehmen den Standard-Arbeitstag an (08:00 – 12:00 – 17:00).
-
-**Im Voraus buchen.** Wie ein Zeitfenster aussehen darf, hängt von der Granularität des Space ab (§8 Verfügbarkeit):
-
-| Du möchtest | Halbtage | Ganze Tage | Minutenraster (5/15/30/60 min) | Echte Uhrzeiten / freier Zeitraum |
-|---|---|---|---|---|
-| Den Vormittag (8–12) | ✅ | ❌ — muss den ganzen Tag abdecken | ✅ wenn die Ränder auf dem Raster liegen | ✅ |
-| Den Nachmittag (12–17) | ✅ | ❌ | ✅ | ✅ |
-| Den ganzen Arbeitstag (8–17) | ✅ | ✅ | ✅ | ✅ |
-| Ein ungewöhnliches Fenster (9–15) | ❌ | ❌ | ✅ wenn auf dem Raster | ✅ |
-| Vor Öffnung / nach Feierabend (Start 6:00, 17–21) | nur als Spontan-Check-in | nur als Spontan-Check-in | ✅ — die Raster sind frei | ✅ |
-| Neben dem Raster (10:02) | — | — | ❌ — die Ablehnung nennt das Raster | — |
-
-Die letzte Zeile dieser Tabelle ist die einzige, die eine Granularität allein von der Form her ausschließen kann; alles Übrige an einem Fenster entscheiden Regeln, die **auf jeder Granularität gleichermaßen** gelten:
-
-- Die Zukunft ist offen bis zum **Buchungshorizont** (Standard 90 Tage) und dahinter gesperrt.
-- **Mindest- und Maximaldauer** gelten überall, nicht nur auf Rastern: bei der Standard-Mindestdauer von 30 Minuten wird ein Spontan-Check-in, der um 11:45 auf die 12:00-Grenze zielt, als zu kurz abgelehnt — früher kommen oder den Nachmittag nehmen.
-- **Eine Buchung endet an dem Tag, an dem sie beginnt.** Kein Fenster darf über Mitternacht laufen, auf keiner Granularität: ein Abend, der weitergeht, wird zur Buchung von morgen, morgen angelegt. Die Ablehnung liest *„Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen."* Der Spontan-Check-in, der bis **Mitternacht (Ortszeit)** läuft, bleibt erlaubt — Mitternacht ist das Ende genau dieses Tages, kein Übertritt. Dass jede Buchung in einem einzigen Tag bleibt, ist der Grund, warum sich Belegung, Kontingent und Abrechnung eines Tages allein an diesem Tag beantworten lassen.
-- Eine Buchung an einem **bereits beendeten Tag** (gestern und früher) wird abgelehnt — *„liegt vollständig in der Vergangenheit"* — außer die Inhaberin hat **Vergangene Buchungen erlauben** eingeschaltet. Das Fenster von heute Vormittag später am selben Tag zu buchen geht immer.
-- Ein **Spontan-Check-in muss heute beginnen**: eine schon eingecheckte Buchung für morgen anzulegen wird abgelehnt.
-- Ein **Schließtag** lehnt mit Namen ab; ein belegter Platz lehnt ab; und ein Mitglied hält nur so viele **sich überschneidende** Buchungen, wie sein Kontingent erlaubt (unten).
-- Die Regel **Außerhalb der Öffnungszeiten** (§8) entscheidet, was ein Fenster wert ist, das den Arbeitstag verlässt — oder ob es überhaupt zustande kommt (unten).
-
-All das wird an **einer einzigen gemeinsamen Stelle auf dem Server** durchgesetzt. Deshalb bieten Plan, Reservieren-Hub, ein QR- oder NFC-Scan und das Wandtablet genau das an, was auch akzeptiert wird, und deshalb lehnt der Kiosk exakt das ab, was der Plan ablehnt — ein „aber am Kiosk ging es doch" gibt es nicht. Eine Anfrage, die durch einen veralteten Bildschirm rutscht, wird mit benanntem Grund abgelehnt.
-
-**Bevor du fragst, sagt es dir die App (#814).** Jede dieser Regeln wird auf dem Gerät von der **Buchungsprüfung** gespiegelt (Funktionen → *Buchungsprüfung*, unter *Buchungsregeln*, standardmäßig an): der Tipp auf den Plan, die Tipps auf freie Slots in der Tages- und Wochenansicht, das Buchungsblatt, das Kiosk-Blatt und das QR/NFC-Scan-Blatt prüfen das Zeitfenster **bevor** sie es anbieten gegen die Verfügbarkeitsparameter und nennen denselben Grund wie der Server — *an diesem Tag geschlossen*, *liegt ganz in der Vergangenheit*, *zu weit voraus — Buchungen sind N Tage im Voraus möglich*, *zu kurz*, *zu lang*, *eine Buchung endet am Tag, an dem sie beginnt*, *außerhalb der Öffnungszeiten*. Ein abgelehntes Fenster deaktiviert **Reservieren** mit dem Grund unter dem Zeitraum; am Kiosk wird der Badge dafür schlicht nicht angenommen, und das Scan-Blatt lehnt einen geschlossenen Tag sofort ab, genau wie der Kiosk. Die **Tages-, Wochen- und Monatsansicht** zeichnen geschlossene Tage als geschlossen — gedämpfte Spalten, kein Tipp auf freie Slots, *Zu* statt der Zahl freier Plätze — und eine **Legende** unter den Bedienelementen benennt die Platzzustände (*Frei · Reserviert · Eingecheckt · Meine · Gesperrt · Geschlossen*). Wo die Inhaberin **Admins dürfen Mitglieder auschecken** eingeschaltet hat, bietet das Admin-Blatt auf einem belegten Platz **{name} auschecken** an. Im Browser, der keinen Kamera-Scanner hat, sagen Scan- und Kiosk-Blatt das und verweisen auf den getippten Code und das NFC-Tag. Seit #1000 nennt die Zeile ihren Monat — „September 100 %“ — damit jede Rechnung als der Monat lesbar ist, für den sie gilt.
-
-**Wie viele Plätze gleichzeitig.** Der Space legt eine Zahl **gleichzeitiger Reservierungen** fest (§8); sie ist standardmäßig **1** — genau der bisherige eine Platz zur Zeit. Eine Inhaberin oder ein Admin kann einem einzelnen Mitglied in *Mitglieder & Tarife* ein höheres Kontingent gewähren, und diese persönliche Erlaubnis sticht die Zahl des Space; niemand setzt die eigene. Dasselbe Kontingent regiert die **Check-ins**: wer 2 Plätze halten darf, kann an 2 Plätzen zugleich eingecheckt sein. Ist das Kontingent erreicht, folgt die gewohnte Ablehnung — *du hast in diesem Zeitraum bereits eine Reservierung* bzw. *bereits woanders eingecheckt*.
-
-**Außerhalb der Öffnungszeiten.** Ein Fenster, das den Arbeitstag verlässt — ein früher Morgen 6:00–8:00, ein Abend 17:00–21:00, die Spontan-Überstunde bis Mitternacht (Ortszeit) —, unterliegt einer einzigen Regel des Space mit **vier** sich gegenseitig ausschließenden Antworten (§8), auf jeder Granularität denselben.
-
-| Stufe | Eine Buchung (oder ein Spontan-Check-in) außerhalb der Zeiten |
+| Rolle | Wofür sie gedacht ist |
 |---|---|
-| **Aus** | ❌ auf jeder Granularität abgelehnt — auch die Abend-Überstunde, die tagesbasierte Granularitäten sonst immer erlauben, und auch eine Buchung, die bloß **über** das Tagesende hinausläuft (16:00–20:00) oder vor der Öffnung beginnt |
-| **Nur spontan** | ✅ der Spontan-Check-in, an **beiden Rändern des Tages** — die frühe Ankunft um 6:00 ebenso wie die Abend-Überstunde bis Mitternacht — ❌ dieses Fenster **im Voraus** zu buchen, und ❌ eine Buchung über das Tagesende hinaus |
-| **Gratis** | ✅ erlaubt, aber nie gezählt und nie berechnet: die Buchung ist reine Information — andere sehen, dass der Raum belegt ist, und ein Check-in zeigt, wo die Person zu finden ist |
-| **Berechnet** (der Standard) | ✅ erlaubt und wie gewöhnliche Nutzung gezählt — **außer** an einem Tag, an dem du schon eine reguläre Buchung innerhalb der Zeiten hältst: der Teil außerhalb fährt dann gratis mit |
+| Mitglied | Plätze buchen, ein- und auschecken, Nachrichten schreiben, das eigene Geld im Blick behalten. |
+| Administrator:in | Alles, was ein Mitglied tut, dazu das Handeln für andere Mitglieder und das Genehmigen von Anfragen, soweit die Inhaberin oder der Inhaber es erlaubt hat. |
+| Inhaber | Alles: der Raumplan, die Preise, die Rollen und die Einstellungen des Spaces. Ein Space behält immer mindestens eine Inhaberin oder einen Inhaber. |
+| Mitinhaber | Ein aktiver Mitinhaber hat schon jetzt die Rechte des Inhabers. Ein Nachfolger, die passive Variante, übernimmt, wenn der Inhaber geht oder ihn befördert. |
+| Kiosk-Gerät | Ein Tablet an der Wand, das den Plan zeigt. Mitglieder handeln dort mit ihrem Badge. |
 
-Diese Ausnahme ist der Sinn des Standards: sie unterbindet „nur außerhalb der Zeiten buchen, um nicht zu zahlen", ohne ein Mitglied doppelt zu belasten, das seinen Tag schon verbraucht hat. Zwei Feinheiten. **Gratis und Berechnet schauen nur auf Fenster, die *ganz* außerhalb der Zeiten liegen** — eine Buchung, die die Arbeitszeiten auch nur um eine Minute berührt, ist eine gewöhnliche, gezählte Buchung. **Aus und Nur spontan lehnen weiter reichend ab**: sie lehnen auch das überlaufende Fenster ab, denn ein Space, der um 17:00 schließt, hat bis 18:00 nichts gebucht zu sein. In *Nur spontan* ist der ausgemusterte Schalter **Minutenbuchungen innerhalb der Arbeitszeiten** aufgegangen — dieselbe Idee, jetzt auf jeder Granularität. Ein Space, der den alten Schalter noch trägt, liest sich als *Nur spontan*, mit einer bewussten Verbesserung: der alte Schalter ließ nur die *Abend*-Ankunft durch, während eine Stufe, die nach Spontaneität benannt ist, niemanden abweisen sollte, der um 6:00 vor der Tür steht. Abgelehnt wird das Vorausbuchen; für das Hereinschneien ist sie da. Die Formregeln der Granularität gelten obendrauf weiter, hier öffnet sich also kein beliebiges Fenster.
+**Schritte**
 
-**Spontan-Check-ins rasten auf den Slot ein.** Ein Spontan-Check-in (freien Platz antippen, QR/NFC scannen, oder am Kiosk) bucht von *jetzt* bis zu einem kanonischen Rand — der Halbtagsgrenze, dem Tagesende oder einem Rasterrand. Bei tagesbasierter Granularität deckt die Buchung den **ganzen Slot, zu dem das Ende gehört**: um 10:00 ankommen und *bis 12:00* wählen bucht den vollen Vormittag 8:00–12:00; erweist sich das zurückgezogene Fenster als nicht verfügbar — die Buchung eines anderen, eine eigene, die sich überschneidet, ein gesperrter Platz, ein als Ganzes belegter Tisch, ein Büro oder eine Etage —, ankert die Buchung stattdessen an deiner Ankunft und behält das Ende des Slots. Am oder nach dem Ende des Arbeitstags darf ein Spontan-Check-in bis **Mitternacht (Ortszeit)** laufen (Abend-Überstunden — auf jeder Granularität, außer **Außerhalb der Öffnungszeiten** steht auf *Aus*, die einzige Regel, die sie ablehnt); dort ist Schluss, denn eine Buchung endet an dem Tag, an dem sie beginnt. Und ein Spontan-Check-in muss **heute** beginnen: eine „eingecheckte" Buchung für morgen wird abgelehnt.
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings), das **Mein Konto** heißt, wenn Sie nichts verwalten.
+2. Wählen Sie **Was du hier tun kannst**.
+3. Lesen Sie, welche Rolle Ihnen welche Möglichkeit gibt. Ein Mitglied sieht **Wie alle Mitglieder**; eine Administratorin oder ein Administrator sieht zusätzlich **Aus der Rolle Administrator:in**.
 
-**Ein Scan verhält sich wie der Kiosk.** Einen **Platz** zu scannen — seine gedruckte QR-Karte oder den NFC-Tag am Stuhl — öffnet genau das Blatt, das der Kiosk beim Antippen dieses Platzes öffnet: **Einchecken**, **Reservieren** oder **Auschecken**, auf denselben aus den Space-Einstellungen abgeleiteten Zeiträumen, ohne den Badge-Schritt, denn du bist schon angemeldet. (Tisch-, Büro- und Etagen-QR-Karten öffnen stattdessen das Ganzraum-Blatt, §4a; NFC-Tags lösen nur Plätze auf.) Danach entscheidet der Raum:
+**Gut zu wissen**
 
-| Was du scannst | Was das Blatt tut |
+- Die Inhaberin oder der Inhaber legt in der Rollenmatrix fest, was Administratoren und andere Rollen tun dürfen. Zwei Spaces können sich daher unterscheiden.
+- Ein Space kann neben diesen noch weitere Rollen haben, zum Beispiel eine für die Abrechnung. Sie erscheinen in derselben Liste.
+- Es gibt keine Einladung, die jemanden zum Inhaber macht: Nur ein bestehender Inhaber überträgt die Inhaberschaft.
+
+**Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix) · [Einem Workspace beitreten](#einem-workspace-beitreten)
+
+<!-- anchor: user.start.account -->
+### Konto erstellen oder anmelden
+
+**Zielgruppe:** Alle
+
+Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie beitreten.
+
+<p><img src="images/user-start-account.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die App. Der Anmeldebildschirm fragt nach Ihrer **E-Mail** und Ihrem **Passwort**.
+2. Zum Anmelden tippen Sie auf **Anmelden**.
+3. Für ein neues Konto tippen Sie auf **Neu hier? Konto erstellen**, tragen einen **Anzeigename** ein und tippen auf **Konto erstellen**. Das Passwort braucht mindestens 8 Zeichen.
+4. Wenn der Server es anbietet, tippen Sie unter **oder weiter mit** auf **Google**.
+5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sieh in dein E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
+
+<p><img src="images/user-start-account--create.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die Augen-Schaltfläche neben dem Passwort zeigt oder verbirgt, was Sie eintippen.
+- Bei der ersten Anmeldung werden Sie gebeten, die Datenschutzbestimmungen zu lesen und zu akzeptieren, bevor sich irgendetwas anderes öffnet.
+- Ein neues Konto ohne Space landet auf [Ich](https://fdittgen-png.github.io/deskilo/#/me), wo Sie einen Space finden, ihm beitreten oder einen gründen können.
+- **Mit Einladung beitreten** auf dem Anmeldebildschirm merkt sich Ihr Vorhaben: Sie legen Ihr Konto an und fügen dann Ihre Einladung ein.
+
+**Siehe auch:** [Vergessenes Passwort zurücksetzen](#vergessenes-passwort-zurücksetzen) · [Einem Workspace beitreten](#einem-workspace-beitreten) · [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
+
+<!-- anchor: user.start.forgot-password -->
+### Vergessenes Passwort zurücksetzen
+
+**Zielgruppe:** Alle
+
+Sie wissen Ihr Passwort nicht mehr. Sie erhalten per E-Mail einen Einmalcode und setzen damit ein neues. Es gibt keinen Link zum Anklicken, deshalb funktioniert es auch dort, wo sich Links nicht in der App öffnen.
+
+<p><img src="images/user-start-forgot-password.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf dem Anmeldebildschirm auf **Passwort vergessen?**.
+2. Geben Sie Ihre **E-Mail** ein und tippen Sie auf **Code senden**.
+3. Öffnen Sie die E-Mail und kopieren Sie den Code.
+4. Tragen Sie ihn bei **Code aus der E-Mail** ein, wählen Sie ein **Neues Passwort** und tippen Sie auf **Neues Passwort setzen**.
+
+**Gut zu wissen**
+
+- Die Meldung **Passwort aktualisiert — du bist angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
+- Ein ungültiger oder abgelaufener Code wird abgelehnt: Fordern Sie einen neuen an.
+- Wird der Code akzeptiert, das Passwort aber nicht gespeichert, tippen Sie auf **Neues Passwort erneut speichern**.
+
+**Siehe auch:** [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden)
+
+<!-- anchor: user.start.demo -->
+### Den Demobereich erkunden
+
+**Zielgruppe:** Alle
+
+Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener Space, Atelier du Marché: Die Personen, Buchungen und Rechnungen sind ausgedacht, nichts, was Sie tun, erreicht einen echten Space, und ein Konto brauchen Sie nicht.
+
+<p><img src="images/user-start-demo.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
+2. Lesen Sie den Hinweis und tippen Sie dann auf **Loslegen**.
+3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Die Inhaberin**, **Ein Mitglied** oder **Eine Verwaltung**. Jedes Antippen des Namens springt zum nächsten.
+4. Tippen Sie auf **Demo zurücksetzen**, um alles wieder auf den Anfang zu stellen.
+5. Tippen Sie auf **Demo verlassen**, wenn Sie fertig sind.
+
+<p><img src="images/user-start-demo--bar.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die Leiste trägt die Aufschrift **Demo** und bleibt über jedem Bildschirm, damit Sie sie nicht mit einem echten Space verwechseln.
+- Denselben Bildschirm als Inhaber, als Administratorin und als Mitglied zu sehen, ist der schnellste Weg zu lernen, was jede Rolle kann.
+- Die Demo bleibt auf diesem Gerät. Wenn Sie sie verlassen, entsteht kein Konto.
+
+**Siehe auch:** [Was DesKilo ist und wer was tut](#was-deskilo-ist-und-wer-was-tut) · [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden)
+
+<!-- anchor: user.start.join -->
+### Einem Workspace beitreten
+
+**Zielgruppe:** Alle
+
+Sie haben eine Workspace-ID, einen QR-Code oder eine Einladungsnachricht erhalten und möchten hinein. Sie beantragen den Beitritt als Mitglied, und ein Administrator lässt Sie ein.
+
+<p><img src="images/user-start-join.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Melden Sie sich an und tippen Sie auf [Ich](https://fdittgen-png.github.io/deskilo/#/me) auf **Mit Code beitreten**. Vom Anmeldebildschirm bringt Sie **Mit Einladung beitreten** dorthin, sobald Sie ein Konto haben.
+2. Lassen Sie auf **Willkommen bei DesKilo** die Auswahl **Workspace beitreten** stehen.
+3. Tragen Sie die Workspace-ID bei **Einladungscode** ein oder fügen Sie die ganze Einladungsnachricht ein: Die ID wird automatisch gefunden. **Einfügen** liest sie aus der Zwischenablage, und **QR-Code scannen** öffnet die Kamera für einen gedruckten Code.
+4. Tippen Sie auf **Einladung prüfen**. Die Karte **Vor dem Beitritt prüfen** nennt den Workspace, seinen Server, die angebotene Rolle und ob ein Administrator zustimmen muss.
+5. Tippen Sie auf **Bereich beitreten**.
+
+**Gut zu wissen**
+
+- Bis ein Administrator zustimmt, sehen Sie **Mitgliedschaft im Bereich wartet auf Freigabe**. **Erneut prüfen** aktualisiert die Anzeige; Ihre anderen Spaces und Ihr Konto bleiben verfügbar.
+- Sie treten genau mit der Rolle bei, die die Einladung enthält. Die Workspace-ID führt immer als Mitglied hinein; ein persönlicher Admin-Code gilt einmalig und führt als Administrator hinein.
+- Ein abgelaufener oder ersetzter Code wird auf dem Bildschirm erklärt: Bitten Sie den Absender um einen aktuellen.
+- Im Browser kann die Kamera nicht scannen: Tippen Sie die ID ein oder fügen Sie die Nachricht ein.
+- Nennt die Karte einen anderen Server, schaltet **Diesen Server verwenden** dieses Gerät darauf um.
+
+**Siehe auch:** [Die Workspace-ID](#die-workspace-id) · [Ich: Ihr Zuhause und Ihre Spaces](#ich-ihr-zuhause-und-ihre-spaces)
+
+<!-- anchor: user.start.create -->
+### Einen Workspace erstellen
+
+**Zielgruppe:** Alle
+
+Sie leiten eine Gemeinschaft und möchten einen eigenen Space. Sie werden sofort dessen Inhaber.
+
+<p><img src="images/user-start-create.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einen Workspace erstellen](https://fdittgen-png.github.io/deskilo/#/onboarding) über **Space gründen** auf [Ich](https://fdittgen-png.github.io/deskilo/#/me).
+2. Tragen Sie einen **Name des Workspace** ein und tippen Sie auf **Weiter**. **Vorgeschlagene Einstellungen verwenden** springt direkt zum letzten Schritt.
+3. Wählen Sie bei **Wo** das **Land**; **Währung** und **Zeitzone** folgen daraus, und Sie können sie ändern.
+4. Wählen Sie auf demselben Bildschirm unter **Was erstellt wird** zwischen **Ein Test-Arbeitsbereich**, **Ein echter Arbeitsbereich** und **Ein verknüpftes Test- und Echt-Paar**.
+5. Wählen Sie bei **Beginnen mit** **Leerer Raum**, um Ihren eigenen Plan zu zeichnen, oder eine fertige Vorlage.
+6. Lesen Sie bei **Bestätigen**, was erstellt wird, und tippen Sie auf **Workspace erstellen**.
+
+<p><img src="images/user-start-create--where.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die Auswahl beginnt bei **Ein Test-Arbeitsbereich**, der zum Ausprobieren sicher ist: Jeder Bildschirm und jedes Dokument weist darauf hin, und es gibt keine echte Abrechnung. Ein echter Workspace stellt Rechnungen aus, die geschuldet sind.
+- Das Paar gibt Ihnen zwei Spaces mit demselben Namen, einen zum Ausprobieren und einen echten. Beide gehören Ihnen.
+- Geht die Antwort unterwegs verloren, behält die App Ihre Eingaben und bietet **Wie gesendet wiederholen** an, damit Sie den Space nie doppelt anlegen.
+- Der neue Space öffnet sich, sobald er existiert. Seine Einrichtung behandeln die Kapitel für Inhaber.
+
+**Siehe auch:** [Einen Space mit dem Einrichtungsfragebogen vorbereiten](#einen-space-mit-dem-einrichtungsfragebogen-vorbereiten) · [Die Workspace-ID](#die-workspace-id)
+
+<!-- anchor: user.start.find -->
+### Einen Workspace finden
+
+**Zielgruppe:** Alle
+
+Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, die eine Seite veröffentlichen, erscheinen in einem öffentlichen Verzeichnis.
+
+<p><img src="images/user-start-find.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf dem Anmeldebildschirm auf **Arbeitsplatz finden** oder öffnen Sie auf [Ich](https://fdittgen-png.github.io/deskilo/#/me) **Entdecken**.
+2. Tragen Sie einen Namen oder einen Ort bei **Workspaces suchen** ein.
+3. Wechseln Sie mit der Schaltfläche oben zwischen **Karte** und **Liste**.
+4. Öffnen Sie ein Ergebnis, um die öffentliche Seite zu lesen. Dort bittet **Workspace-Profil beantragen** um die Aufnahme, und **Eintreten** öffnet einen Space, dem Sie bereits angehören.
+
+**Gut zu wissen**
+
+- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. Diese Demo hat keinen, deshalb ist die Karte hier leer.
+- Sie können ohne Konto stöbern; zum Beitreten brauchen Sie eines.
+
+**Siehe auch:** [Einem Workspace beitreten](#einem-workspace-beitreten)
+
+<!-- anchor: user.me.home -->
+### Ich: Ihr Zuhause und Ihre Spaces
+
+**Zielgruppe:** Alle
+
+Sie möchten einen Ort, der zeigt, wer Sie sind und welchen Spaces Sie angehören. **Ich** gehört Ihnen allein und übernimmt nie die Farben eines Spaces. Unter Ihrem Namen listet **Meine Spaces** jeden Space als eine Karte auf.
+
+<p><img src="images/user-me-home.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me). Schulden Sie irgendwo Geld, steht oben eine Karte mit **Zu zahlen**, die Ihre Finanzen öffnet.
+2. Suchen Sie Ihren Space unter **Meine Spaces**. Ein echter Space hat die Schaltfläche **Arbeitsbereich öffnen**; ein Space mit Testzwilling hat zusätzlich **Testbereich**.
+3. Tippen Sie auf die Schaltfläche, um einzutreten. Der Bildschirm füllt sich mit Farbe, Muster und Logo des Spaces, dann öffnet sich der Space.
+4. Tippen Sie unter der Liste auf **Mit Code beitreten** oder **Space gründen**, um einen weiteren hinzuzufügen.
+
+<p><img src="images/user-me-home--card.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die kleine Uhr auf einer Schaltfläche markiert die Seite, die Sie zuletzt benutzt haben.
+- Die kleine Zahl auf einer Schaltfläche zählt, was dort auf Sie wartet, getrennt für den echten Space und seinen Testzwilling. Halten Sie die Schaltfläche gedrückt, um den ganzen Satz zu lesen.
+- Das Muster am linken Rand der Karte ist die Identität des Spaces. Sind Animationen ausgeschaltet, öffnet sich der Space einfach.
+- Ein Space, der noch **Wartet auf Freigabe**, zeigt das statt Ihrer Rolle.
+- Ein Space auf einem anderen Server zeigt *Auf … öffnen* mit dem Namen dieses Servers; beim Öffnen wechselt die App den Server und bittet Sie, sich dort anzumelden.
+
+**Siehe auch:** [Ihre Spaces ordnen](#ihre-spaces-ordnen) · [Profile: ein Konto, mehrere Spaces](#profile-ein-konto-mehrere-spaces)
+
+<!-- anchor: user.me.organise -->
+### Ihre Spaces ordnen
+
+**Zielgruppe:** Alle
+
+Sie gehören mehreren Spaces an und möchten Ihre eigene Reihenfolge. Herzen, Gruppen, Sterne und die Reihenfolge gehören Ihnen und bleiben auf diesem Gerät.
+
+<p><img src="images/user-me-organise.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf [Ich](https://fdittgen-png.github.io/deskilo/#/me) auf die drei Punkte an der Karte eines Spaces.
+2. Wählen Sie **Zu den Favoriten hinzufügen**: Der Space wandert zu **Favoriten** und zeigt ein Herz.
+3. Wählen Sie **In Gruppe verschieben…**, um ihn in eine andere Gruppe zu legen, oder tippen Sie auf die Ordner-Schaltfläche über der Liste für **Neue Gruppe**.
+4. Tippen Sie auf einen der fünf Sterne, um den Space zu bewerten, oder auf **Keine Bewertung**, um die Bewertung zu entfernen.
+5. Tragen Sie bei **Meine Spaces durchsuchen** etwas ein, um zu filtern, und wählen Sie mit der Sortier-Schaltfläche **Meine Reihenfolge**, **Zuletzt genutzt**, **Am besten bewertet** oder **A–Z**.
+
+<p><img src="images/user-me-organise--favourite.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Halten Sie in **Meine Reihenfolge** eine Karte eine Sekunde lang gedrückt, um sie zu ziehen, oder nutzen Sie **Nach oben** und **Nach unten**.
+- Tippen Sie auf den Namen einer Gruppe, um sie einzuklappen. Selbst angelegte Gruppen lassen sich über ihr Menü umbenennen oder löschen; **Favoriten** und **Andere** sind immer da.
+- **Diesen Space verlassen** steht im selben Menü. Sie sind dann kein Mitglied mehr; Buchungen, Rechnungen und Nachrichten bleiben beim Space. Inhaber übergeben den Space zuerst.
+- **Meine Spaces verwalten** ganz unten öffnet die Profilliste.
+
+**Siehe auch:** [Profile: ein Konto, mehrere Spaces](#profile-ein-konto-mehrere-spaces) · [Meine Daten löschen](#meine-daten-löschen)
+
+<!-- anchor: user.profile.profiles -->
+### Profile: ein Konto, mehrere Spaces
+
+**Zielgruppe:** Alle
+
+Ein Konto kann zu vielen Spaces gehören. Jeder Space gibt Ihnen dort ein Profil: Ihre Rolle und Ihre eigenen Daten. Die Profilliste zeigt alle und entscheidet, mit welchem die App sich öffnet.
+
+<p><img src="images/user-profile-profiles--row.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Profile](https://fdittgen-png.github.io/deskilo/#/profiles) oder tippen Sie auf [Ich](https://fdittgen-png.github.io/deskilo/#/me) auf **Meine Spaces verwalten**.
+2. Lesen Sie jede Zeile: den Namen des Spaces, Ihre Rolle dort und die Umgebung, in der er liegt.
+3. Tippen Sie auf eine Zeile, um zu diesem Profil zu wechseln. Das Häkchen steht für **Aktives Profil**. Die App öffnet sich beim nächsten Mal damit, auf jedem Gerät.
+4. Um ein Profil zum Standard zu machen, ohne zu ihm zu wechseln, tippen Sie auf den Stern (**Beim Start als Standard verwenden**); ein zweiter Tipp hebt es wieder auf.
+5. Tippen Sie auf **Profil hinzufügen**, um einem weiteren Space beizutreten oder einen zu gründen.
+
+**Gut zu wissen**
+
+- Ein Space mit Testzwilling zeigt eine Zeile, die sich in zwei Auswahlmöglichkeiten öffnet: **Entwicklung — zum Ausprobieren** und **Produktion — die Rechnungen sind geschuldet**. Tippen Sie auf die gewünschte; das Häkchen folgt.
+- Alles, was Sie in der App sehen, gehört zum aktiven Space.
+- Ihr Konto, Ihr Foto und Ihre Sprache gehören nicht zu einem Profil: Sie liegen in Ich und sind überall gleich.
+
+**Siehe auch:** [Ich: Ihr Zuhause und Ihre Spaces](#ich-ihr-zuhause-und-ihre-spaces) · [Einem Workspace beitreten](#einem-workspace-beitreten)
+
+<!-- anchor: user.start.navigation -->
+### Sich zurechtfinden
+
+**Zielgruppe:** Alle
+
+Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in einem Menü, und ein paar Schaltflächen sitzen oben.
+
+<p><img src="images/user-start-navigation--menu.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie oben links auf die Schaltfläche ☰. Das Menü öffnet sich mit dem Namen Ihres Spaces, **Zurück zu Ich** und den täglichen Zielen: **Reservieren**, **Kalender**, **Mitglieder**, **Finanzen**.
+2. Tippen Sie auf ein Ziel, um es zu öffnen. Eine blaue Zahl daneben zählt, was dort wartet.
+3. Öffnen Sie **Reporting**, **Mitglieder und Zugang**, **Abrechnung & Zahlungen** oder **Workspace einrichten**, um die Verwaltungswerkzeuge zu sehen, die Ihre Rolle zulässt.
+4. Ganz unten sind **Dokumente**, **Datenschutz & Daten** und **Einstellungen** immer griffbereit.
+5. Tippen Sie oben rechts auf den Avatar oder auf **Zurück zu Ich**, um den Space zu verlassen und zu [Ich](https://fdittgen-png.github.io/deskilo/#/me) zurückzukehren.
+
+<p><img src="images/user-start-navigation--groups.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die Ziele kommen und gehen mit den Funktionen, die der Inhaber eingeschaltet hat, und mit Ihrer Rolle. Ein einfaches Mitglied sieht keine der Verwaltungsgruppen.
+- Wenn Ihr Space Ereignisse eingeschaltet hat, sammelt **Ereignisse** oben rechts (das Ablagesymbol mit einer Zahl), was geschehen ist und was auf Ihre Entscheidung wartet; enthält der Kalender die Hinweise, nutzen Sie dessen Ansicht **Hinweise**. **Raumcode scannen** und **Workspace bearbeiten** erscheinen auf dem Reservieren-Bildschirm, wenn Sie sie nutzen dürfen.
+- In einem breiten Fenster bleibt das Menü als Seitenleiste offen. Ein schmales Fenster oder vergrößerte Schrift nutzt das Menü ☰.
+- In den Apps für Smartphones und Computer können Sie mit dem [Navigationsstil](#navigationsstil) in den Einstellungen die klassische untere Leiste mit der runden Schaltfläche **Reservieren** wählen. Wischen Sie diese Leiste nach unten für eine Vollbildansicht; wischen Sie nach oben oder drücken Sie lange auf die Schaltfläche **Reservieren**, um sie zurückzuholen. Ein Browser nutzt immer das Menü.
+
+<p><img src="images/user-start-navigation--header.de.b8fa17aa9.jpg" width="280"></p>
+
+<p><img src="images/user-start-navigation--sidebar.de.b8fa17aa9.jpg" width="560"></p>
+
+**Siehe auch:** [Navigationsstil](#navigationsstil) · [Ich: Ihr Zuhause und Ihre Spaces](#ich-ihr-zuhause-und-ihre-spaces)
+
+<!-- anchor: user.start.get-started -->
+### Die Karte „Erste Schritte“ und die Tipps
+
+**Zielgruppe:** Alle
+
+Sie öffnen einen Space und wissen nicht, was Sie zuerst tun sollen. Die Karte **Erste Schritte** nennt Ihnen einen nächsten Schritt, und kurze Tipps erklären jeden Bildschirm.
+
+<p><img src="images/user-start-get-started--card.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve). Die Karte **Erste Schritte in** Ihrem Space erscheint oben auf dem Plan.
+2. Folgen Sie der angebotenen Aktion, zum Beispiel **Zeit zum Buchen wählen**.
+3. Tippen Sie auf **Jetzt nicht**, um sie wegzulegen.
+4. Um sie zurückzuholen, öffnen Sie oben auf dem Plan das Ansichtsmenü, das **Plan** anzeigt, und wählen Sie **Erste Schritte**.
+
+**Gut zu wissen**
+
+- Für Inhaber oder Administratoren sagt die Karte, was fehlt, bevor jemand buchen kann, mit **Einrichtung abschließen**.
+- Tipps sind kleine Karten auf jedem Bildschirm. **Hinweis ausblenden** verbirgt einen, und **Nächster Tipp** zeigt einen anderen.
+- Sie können jeden ausgeblendeten Tipp mit [Hinweise wiederherstellen](#hinweise-wiederherstellen) wieder anzeigen.
+
+**Siehe auch:** [Hinweise wiederherstellen](#hinweise-wiederherstellen) · [Sich zurechtfinden](#sich-zurechtfinden)
+
+<!-- anchor: user.start.questionnaire -->
+### Einen Space mit dem Einrichtungsfragebogen vorbereiten
+
+**Zielgruppe:** Inhaber
+
+Sie stehen kurz davor, einen Space zu eröffnen, und müssen viele Entscheidungen treffen: wie eine Buchung aussieht, was ein Monat kostet, was eine Rechnung enthalten muss. Der Einrichtungsfragebogen lässt Sie alle auf einmal treffen, vor dem Start, auf einem großen Bildschirm und, wenn Sie möchten, gemeinsam mit Ihrer Steuerberatung oder Ihrem Vorstand.
+
+**Schritte**
+
+1. Öffnen Sie den Fragebogen im Browser: [setup.html](https://fdittgen-png.github.io/deskilo/setup.html). Es ist nichts zu installieren und kein Konto nötig.
+2. Beantworten Sie die Schritte der Reihe nach: *Identität*, *Funktionen*, *Verfügbarkeit*, *Raumplan*, *Abonnements*, *Rechtliche Identität und USt*, *Leistungen und Zubehör*, *Zahlungsanweisungen*, *Rollen und Freigaben*, *Mitglieder und Einladungen*. Jeder Schritt fragt nur, was Ihre früheren Antworten möglich machen.
+3. Lesen Sie die *Funktionsübersicht* und entfernen Sie das Häkchen bei dem, was Sie nicht möchten: Diese Funktion bleibt in der App ausgeschaltet und nichts dazu wird exportiert.
+4. Beheben Sie bei *Prüfen und exportieren* die blockierenden Punkte und tippen Sie dann auf **XML exportieren**.
+5. Öffnen Sie in der App die Workspace-Einstellungen und wählen Sie **Workspace importieren (XML)**, um die Einstellungen, das Zubehör und den Raumplan anzulegen.
+6. Bewahren Sie die Datei auf. *Datei laden…* bringt Ihre Antworten später zurück, und **Zurücksetzen** beginnt von vorn.
+
+**Gut zu wissen**
+
+- Ihre Antworten werden in Ihrem eigenen Browser gespeichert und nirgendwohin gesendet. Sie können den Tab schließen und später wiederkommen.
+- Die Datei ist reiner Text: Lassen Sie Token und Schlüssel leer und tragen Sie sie stattdessen in der App ein.
+- Jede Frage sagt, wo die Einstellung in der App liegt, sodass Sie den Rest Bildschirm für Bildschirm abschließen können.
+- Es zu überspringen kostet nichts: Jede Antwort ist eine Einstellung, die Sie später in der App vornehmen oder ändern können.
+
+**Siehe auch:** [Einen Workspace erstellen](#einen-workspace-erstellen) · [Den Space importieren (XML)](#den-space-importieren-xml)
+
+<!-- anchor: user.reserve.overview -->
+## Reservieren
+
+Einen Platz zu buchen ist das Herzstück von DesKilo: Sie sehen sich den Plan Ihres Spaces an, wählen Tag und Uhrzeit, tippen auf einen freien Platz und bestätigen. Dieses Kapitel folgt diesem Weg und behandelt dann, was drumherum geschieht: die Regeln, denen Sie begegnen, Ein- und Auschecken, das Ändern einer Buchung und den Kalender, in dem alles Terminierte liegt.
+
+In diesem Kapitel:
+- [Die Reservierungsübersicht und der Raumplan](#die-reservierungsübersicht-und-der-raumplan)
+- [Sich auf dem Plan zurechtfinden](#sich-auf-dem-plan-zurechtfinden)
+- [Die Plätze als Liste sehen](#die-plätze-als-liste-sehen)
+- [Tag und Uhrzeit wählen](#tag-und-uhrzeit-wählen)
+- [Tagesansicht](#tagesansicht)
+- [Wochenansicht](#wochenansicht)
+- [Monatsansicht](#monatsansicht)
+- [Einen Platz buchen](#einen-platz-buchen)
+- [Das Buchungsblatt](#das-buchungsblatt)
+- [Sofort einchecken, wenn Sie schon da sind](#sofort-einchecken-wenn-sie-schon-da-sind)
+- [Einen ganzen Tisch, Raum oder eine ganze Etage buchen](#einen-ganzen-tisch-raum-oder-eine-ganze-etage-buchen)
+- [Für jemand anderen buchen](#für-jemand-anderen-buchen)
+- [Eine Buchung wiederholen](#eine-buchung-wiederholen)
+- [Die Regeln, denen Sie beim Buchen begegnen](#die-regeln-denen-sie-beim-buchen-begegnen)
+- [Schließtage und Feiertage](#schließtage-und-feiertage)
+- [Ein- und Auschecken](#ein--und-auschecken)
+- [Einen Raumcode scannen](#einen-raumcode-scannen)
+- [Eine Buchung ändern oder stornieren](#eine-buchung-ändern-oder-stornieren)
+- [Wenn eine Buchung auf Bestätigung wartet](#wenn-eine-buchung-auf-bestätigung-wartet)
+- [Der Kalender-Tab](#der-kalender-tab)
+- [Agenda, Woche und Monat im Kalender](#agenda-woche-und-monat-im-kalender)
+- [Entscheidungen, die im Kalender auf Sie warten](#entscheidungen-die-im-kalender-auf-sie-warten)
+- [Den Kalender filtern](#den-kalender-filtern)
+- [Eine Buchung im eigenen Kalender speichern](#eine-buchung-im-eigenen-kalender-speichern)
+
+<!-- anchor: user.reserve.hub -->
+### Die Reservierungsübersicht und der Raumplan
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten sehen, welche Plätze frei sind. Die Reservierungsübersicht öffnet sich auf dem Raumplan einer Etage Ihres Spaces, gezeichnet für den Tag und die Uhrzeit, die Sie gerade ansehen.
+
+<p><img src="images/user-reserve-hub.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve).
+2. Lesen Sie den Plan: Jeder Platz trägt seinen Namen, ein kleines Symbol und eine Farbe, die sagt, was er ist.
+3. Tippen Sie auf einen Platz, um mit ihm zu handeln. Ein freier Platz öffnet das Buchungsblatt; Ihr eigener Platz bietet Einchecken und Stornieren an; bei dem Platz eines anderen erfahren Sie, wer ihn hat und bis wann.
+4. Die Legende unter dem Datum erklärt die Farben. Sie ist auf dem Plan und in der Tages-, Wochen- und Monatsansicht dieselbe.
+
+| Zustand | Was er bedeutet |
 |---|---|
-| Einen Raum, auf den du eine Buchung hältst | geht weiter zum Check-in **dieser** Buchung |
-| Einen freien Raum | der Check-in bucht ihn implizit, auf den Slot eingerastet wie jeder Spontan-Check-in |
-| Einen Raum, den die Buchung eines anderen blockiert | nennt den Inhaber und bietet **Nachricht schreiben** — das Gespräch öffnet sich mit der blockierenden Buchung als Referenz |
+| **Frei** | Niemand hat den Platz in der gewählten Zeit. |
+| **Reserviert** | Jemand hat ihn gebucht. |
+| **Eingecheckt** | Die Person, die gebucht hat, ist angekommen. |
+| **Meine** | Es ist Ihre Buchung. |
+| **Gesperrt** | Der Platz ist außer Betrieb, zum Beispiel wegen Wartung. |
+| **Geschlossen** | Der Space ist an diesem Tag geschlossen (Tages-, Wochen- und Monatsansicht). |
 
-Dieselbe Aktion *dem Inhaber schreiben* liegt auf dem **Plan**, wenn du einen von jemand anderem belegten Platz antippst. Am Kiosk nennt stattdessen die Quittung den Inhaber und verweist auf die App: ein Wandgerät schreibt nie Nachrichten für dich.
+**Gut zu wissen**
 
-**Einchecken.** Bei Halbtagen, ganzen Tagen und echten Uhrzeiten öffnet das Fenster für den **ganzen gebuchten Tag**: um 10:00 kannst du schon auf deinen 12:00-Nachmittag einchecken, denn der Slot *ist* der Arbeitstag. Auf einem Minutenraster öffnet es **15 Minuten vor** deinem Start — oder einen **Rasterschritt** früher, wo dieser länger ist, sodass 5-, 15- und 30-Minuten-Raster die 15 Minuten behalten und ein Stundenraster eine volle Stunde früher öffnet. Das Blatt liest immer die echte Uhr, ein Blick auf ein künftiges Datum verdeckt also nie den heutigen Check-in auf deine eigene Buchung. Einchecken an einem anderen Tag („die Buchung von morgen heute"), nach dem Ende der Reservierung, doppelt oder an einem Schließtag wird mit Grund abgelehnt. Bist du noch **woanders** eingecheckt: eine noch laufende Buchung blockiert ihn, sobald dein Kontingent erreicht ist (1 standardmäßig, die erste laufende Buchung blockiert also schon — *dort erst auschecken*); eine bereits abgelaufene schließt sich still — gestempelt auf ihr eigenes Ende — und der neue Check-in geht durch. Ein Admin kann ein Mitglied einchecken, solange *Für andere buchen* aktiv ist (§8 Funktionen).
+- Ein belegter Platz zeigt, wer dort ist: einen Anfangsbuchstaben oder ein Foto, wenn die Person eines festgelegt hat und Ihr Space Fotos auf dem Plan zeigt. Ein kleiner grüner Punkt bedeutet, dass die Person die App gerade benutzt.
+- Ein ganzer Tisch, Raum oder eine ganze Etage, die gebucht sind, sagen das auf dem Plan, mit dem Namen der Person, die sie hat.
+- Manche Spaces zeigen weniger Zustände: Ein gebuchter und ein eingecheckter Platz sehen dann gleich aus, und gesperrt heißt **Nicht verfügbar**.
+- Konnte die aktuelle Verfügbarkeit nicht geladen werden, meldet ein Banner **offline** mit der Zeit der letzten Daten und einer Schaltfläche **Erneut versuchen**, denn ein als frei gezeigter Platz kann inzwischen vergeben sein.
 
-**Auschecken.** Auschecken vor dem reservierten Ende **kürzt die Buchung auf jetzt** — der Platz wird sofort für alle frei. Nach einem frühen Check-in am selben Tag hält Auschecken vor dem reservierten Start die **echte Anwesenheit** fest (vom Check-in-Moment bis jetzt). Vergessen und später zurückgekommen? Der Check-out geht noch: das gebuchte Ende bleibt, der Stempel ist wahrhaftig. Auschecken ohne Check-in — oder doppelt — wird abgelehnt. Standardmäßig ist der **Check-out persönlich**: ein Admin kann den laufenden Check-in eines Mitglieds nur beenden, wenn die Inhaberin **Admins dürfen Mitglieder auschecken** eingeschaltet hat (§8). Ein nie geschlossener Check-in schließt sich von selbst, sobald du nach seinem Ende woanders eincheckst — oder, mit **Auto-Ein-/Auschecken**, beim Tagesende-Durchlauf.
+**Siehe auch:** [Tag und Uhrzeit wählen](#tag-und-uhrzeit-wählen) · [Das Buchungsblatt](#das-buchungsblatt)
 
-**No-Shows.** Eine nie eingecheckte Reservierung bleibt einfach *reserviert* in der Historie. Mit **Auto-Ein-/Auschecken** markiert der Tagesende-Durchlauf den vergangenen Tag als wahrgenommen — eingecheckt am Start, ausgecheckt am Ende, abgeschlossen.
+<!-- anchor: user.reserve.plan-levels -->
+### Sich auf dem Plan zurechtfinden
 
-**Stornieren.**
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-| Fall | Was passiert |
-|---|---|
-| Deine künftige Buchung | ✅ mit einem Tipp storniert |
-| Deine laufende, eingecheckte Buchung | ❌ kein direktes Storno — das Blatt bietet **Löschung beantragen** (§4) und **Früher beenden** (unten) an, denn die Anwesenheit hat bereits stattgefunden |
-| Den Rest des Tages zurückgeben | ✅ **Früher beenden** auf einer laufenden Buchung: bei Halbtagen und ganzen Tagen rückt es das Ende auf die Halbtagsgrenze, solange diese noch bevorsteht; auf Rastern öffnet es einen eingerasteten Picker, der alles ablehnt, was nicht noch bevorsteht. Der Start ist unverrückbar, und die freigegebene Zeit ist sofort für andere buchbar |
-| Eine abgeschlossene oder schon stornierte Buchung | ❌ nichts mehr zu stornieren |
-| Die Buchung von jemand anderem | ❌ als Mitglied; ✅ als Admin/Inhaberin — der Eingriff (§4), im Ereignis-Feed dem Admin zugeschrieben |
-| Eine Serie, „diese und folgende" | ✅ storniert die verbleibenden *reservierten* Termine ab diesem Datum; eingecheckte und abgeschlossene behalten ihre Historie |
-| Eine **vergangene oder eingecheckte** Buchung, die weg soll | ein **Löschantrag** (§4): ein Validierer bestätigt (entfernt) oder lehnt ab (bleibt); ein neuer Antrag ersetzt einen offenen, und künftige Buchungen stornierst du direkt |
+Sie möchten die Etage, den Raum oder den Tisch erreichen, den Sie im Sinn haben. Der Plan lässt sich verschieben, zoomen und von einer Etage zur anderen umschalten.
 
-**Freigaben.** Wo die Inhaberin eine Validierungsregel auf **Ganzraum-Reservierungen** gelegt hat (§7), blockiert die Buchung den Raum sofort und wartet auf das Quorum — eine Ablehnung storniert sie; keine Regel, kein Freigabeschritt. Löschanträge fahren im selben Rahmen. **Niemand validiert das eigene Ereignis** — mit einer Ausnahme, die die Inhaberin bewusst einschaltet: in den Validierungsregeln (§7) lassen zwei unabhängige Schalter **Admins** und/oder **Inhaber** *ihre eigenen* Anträge auf **Reservierungslöschung** sofort erledigen, statt auf einen Validierer zu warten. Beide sind **standardmäßig aus**, sie reichen ausschließlich an Reservierungslöschungen, und eine automatisch erledigte Löschung ist im Ereignis-Feed als solche markiert — immer unterscheidbar von einer von anderen geprüften.
+<p><img src="images/user-reserve-plan-levels.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie oben rechts auf dem Plan auf den Namen der Etage, zum Beispiel 1. Etage, und wählen Sie eine andere. Ihre Wahl bleibt für das nächste Mal erhalten, wenn Sie die Übersicht öffnen.
+2. Zoomen Sie mit zwei Fingern oder mit **Vergrößern** und **Verkleinern**. Ziehen Sie die Bildlaufleisten an den Rändern, um sich zu bewegen.
+3. Tippen Sie auf **Plan an den Bildschirm anpassen**, um die ganze Etage wieder ins Bild zu holen.
+4. Lesen Sie die Raumnamen in der Ecke jedes Raums. Tippen Sie auf einen Platz darin, um ihn zu buchen.
+
+**Gut zu wissen**
+
+- Die Etagenauswahl bietet nur dann ein Menü, wenn Ihr Space mehr als eine Etage hat.
+- Eine Etage, ein Raum oder ein Tisch, der als Ganzes buchbar ist, zeigt eine eigene Schaltfläche oder reagiert auf Doppeltippen: siehe [Einen ganzen Tisch, Raum oder eine ganze Etage buchen](#einen-ganzen-tisch-raum-oder-eine-ganze-etage-buchen).
+
+**Siehe auch:** [Die Plätze als Liste sehen](#die-plätze-als-liste-sehen) · [Tagesansicht](#tagesansicht)
+
+<!-- anchor: user.reserve.list -->
+### Die Plätze als Liste sehen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie mögen Zeilen lieber als eine Zeichnung, oder der Plan ist auf einem kleinen Bildschirm schwer zu lesen. Die Liste zeigt dieselben Plätze, Etage für Etage und Tisch für Tisch.
+
+<p><img src="images/user-reserve-list.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) auf **Listenansicht**, die Schaltfläche neben dem Ansichtsmenü.
+2. Suchen Sie den Platz. Jede Zeile nennt ihn und sagt, ob er frei, reserviert oder Ihrer ist.
+3. Tippen Sie bei einer freien Zeile auf **Reservieren**, um das Buchungsblatt zu öffnen.
+4. Um zur Zeichnung zurückzukehren, tippen Sie auf **Planansicht**.
+
+**Gut zu wissen**
+
+- Die Liste folgt dem gewählten Tag und der gewählten Uhrzeit, genau wie der Plan.
+- Sind Favoriten und Bewertungen eingeschaltet, trägt jede Zeile außerdem ein Herz (**Zu Favoriten hinzufügen**) und Sterne.
+
+**Siehe auch:** [Tag und Uhrzeit wählen](#tag-und-uhrzeit-wählen) · [Das Buchungsblatt](#das-buchungsblatt)
+
+<!-- anchor: user.reserve.when -->
+### Tag und Uhrzeit wählen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten für einen anderen Tag buchen oder für eine Zeit, die nicht jetzt ist. Die zwei Reihen von Bedienelementen oben in der Übersicht sagen, was Sie ansehen und wann.
+
+<p><img src="images/user-reserve-when.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf das Datum, zum Beispiel 14. Mai, und wählen Sie einen Tag im Kalender. Sie können bis zu einem Jahr vorausschauen.
+2. Wählen Sie die Uhrzeit. Bucht Ihr Space halbe Tage, tippen Sie auf **Vormittag**, **Nachmittag** oder **Ganzer Tag**. Bucht er stundenweise oder in einem freien Zeitraum, tippen Sie auf die erste Zeit, um **Von** festzulegen, und auf die zweite, um **Bis** festzulegen.
+3. Lesen Sie die Zeile unter den Bedienelementen: Sie nennt den Tag, den Zeitraum und die Stunden in der Zeitzone des Workspace und, wenn sie abweicht, in Ihrer.
+4. Um zu heute zurückzukehren, tippen Sie auf **Jetzt**.
+
+**Gut zu wissen**
+
+- Welche Bedienelemente Sie sehen, richtet sich nach den Regeln des Spaces: Manche Spaces buchen halbe Tage, manche nur ganze Tage, manche jede Zeit in einem Raster.
+- Auf dem Smartphone sind die Tagesabschnitt-Chips kleine Symbole für einen halben oder ganzen Tag. Halten Sie eines gedrückt, um seinen Namen und seine Stunden zu lesen.
+- Der Plan antwortet für die gewählte Zeit: Ein als frei gezeigter Platz ist für die ganze Dauer frei.
+- Wo pro halbem Tag gebucht wird, ist der Zeitraum, mit dem Sie beginnen, Ihr üblicher, festgelegt unter [Standard-Buchungszeitraum](#standard-buchungszeitraum).
+
+**Siehe auch:** [Die Reservierungsübersicht und der Raumplan](#die-reservierungsübersicht-und-der-raumplan) · [Einen Platz buchen](#einen-platz-buchen)
+
+<!-- anchor: user.reserve.day-view -->
+### Tagesansicht
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten sehen, wer im Lauf des Tages wo ist, nicht nur in einem Moment. Die Ansicht **Tag** legt jeden Platz als Zeile entlang der Stunden aus.
+
+<p><img src="images/user-reserve-day-view.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) das Ansichtsmenü, das zunächst **Plan** anzeigt, und wählen Sie **Tag**.
+2. Wählen Sie den Tag mit der Datumsschaltfläche. Wählen Sie eine Etage mit den Chips über den Zeilen: **Alle Etagen** oder eine Etage.
+3. Lesen Sie die Balken. Jeder ist eine Buchung, mit dem Namen der Person, die sie hat; Ihre heben sich in der Farbe von **Meine** ab.
+4. Tippen Sie auf eine freie Strecke einer Zeile, um diesen Platz für die gewählte Zeit zu buchen. Tippen Sie auf Ihre eigene Buchung, um ihre Details zu öffnen; tippen Sie auf die einer anderen Person, um zu sehen, wer sie hält und bis wann.
+
+**Gut zu wissen**
+
+- Ein geschlossener Tag wird als geschlossen gezeichnet und lässt sich nicht buchen.
+- Das Menü hinter dem Bedienelement **Ansicht** enthält auch **Woche** und **Monat**.
+
+**Siehe auch:** [Wochenansicht](#wochenansicht) · [Eine Buchung ändern oder stornieren](#eine-buchung-ändern-oder-stornieren)
+
+<!-- anchor: user.reserve.week-view -->
+### Wochenansicht
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten in den nächsten Tagen einen freien Vormittag oder Nachmittag finden. Die Ansicht **Woche** zeigt die Plätze an der Seite und die Wochentage in der Breite.
+
+<p><img src="images/user-reserve-week-view.de.b8fa17aa9.jpg" width="420"></p>
+
+**Schritte**
+
+1. Öffnen Sie das Ansichtsmenü und wählen Sie **Woche**.
+2. Suchen Sie Ihren Tag. Jeder Tag hat zwei Zellen nebeneinander, den Vormittag und den Nachmittag. Eine gefüllte Zelle zeigt den Anfangsbuchstaben der Person, die sie hat.
+3. Tippen Sie auf eine leere Zelle, um diese Tageshälfte auf diesem Platz zu buchen.
+4. Tippen Sie oben auf einen Tagesnamen, um in der Ansicht **Tag** zu diesem Tag zu springen.
+
+**Gut zu wissen**
+
+- Geschlossene Tage sind grau und tragen ein Schließzeichen.
+- Wählen Sie mit den Chips über dem Raster **Alle Etagen** oder eine Etage.
+
+**Siehe auch:** [Tagesansicht](#tagesansicht) · [Monatsansicht](#monatsansicht)
+
+<!-- anchor: user.reserve.month-view -->
+### Monatsansicht
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten wissen, an welchen Tagen noch Platz ist. Die Ansicht **Monat** zählt für jeden Tag die freien Plätze.
+
+<p><img src="images/user-reserve-month-view.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie das Ansichtsmenü und wählen Sie **Monat**.
+2. Lesen Sie jeden Tag: die Zahl der freien Plätze von der Gesamtzahl, zum Beispiel 6/6. Geschlossene Tage zeigen **Zu**.
+3. Tippen Sie auf einen Tag, um ihn in der Ansicht **Tag** zu öffnen, wo Sie sehen, wer gebucht hat.
+
+**Gut zu wissen**
+
+- Die Zählung umfasst alle Etagen des Spaces.
+- Heute ist eingekreist.
+
+**Siehe auch:** [Schließtage und Feiertage](#schließtage-und-feiertage) · [Tagesansicht](#tagesansicht)
+
+<!-- anchor: user.reserve.book -->
+### Einen Platz buchen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten einen Platz für einen bestimmten Tag und eine bestimmte Zeit. Vom Plan aus sind es wenige Tipps: der Tag, die Zeit, der Platz und eine Bestätigung.
+
+**Schritte**
+
+1. Öffnen Sie [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) und wählen Sie Tag und Uhrzeit, wie unter [Tag und Uhrzeit wählen](#tag-und-uhrzeit-wählen) beschrieben.
+2. Wählen Sie die Etage, wenn Ihr Space mehrere hat.
+3. Tippen Sie auf einen freien Platz. Das Buchungsblatt öffnet sich dafür.
+4. Prüfen Sie die Zeile, die den Platz und den Zeitraum nennt, ändern Sie, was nötig ist, und tippen Sie auf **Reservieren**.
+5. Eine Meldung bestätigt die Buchung. Tippen Sie darin auf **Details**, um die neue Buchung zu öffnen.
+
+**Gut zu wissen**
+
+- Es ist nichts gebucht, bis Sie auf **Reservieren** tippen.
+- Wurde der Platz vor einer Sekunde vergeben, sagt Ihnen das die App, statt ihn doppelt zu buchen.
+- Bricht die Verbindung ab, nachdem Sie getippt haben, können Sie auf dem Bildschirm **Ihre Buchungsanfrage** prüfen, was passiert ist, dieselbe Anfrage fortsetzen oder sie verwerfen. Eine Anfrage wird nie zweimal gebucht.
+- An einem geschlossenen Tag sagt der Plan **An diesem Tag geschlossen** und bietet den nächsten offenen Tag an.
+
+**Siehe auch:** [Das Buchungsblatt](#das-buchungsblatt) · [Die Regeln, denen Sie beim Buchen begegnen](#die-regeln-denen-sie-beim-buchen-begegnen)
 
 <!-- anchor: user.reservations.booking-sheet -->
-#### Das Buchungsblatt
+### Das Buchungsblatt
 
-Was sich öffnet, wenn du einen freien Platz antippst: das Fenster, ob du
-sofort eincheckst, und für eine Administratorin, für wen es ist. Das
-Blatt schlägt nur vor — jede Regel prüft der Server beim Bestätigen,
-sodass ein vor einer Sekunde vergebener Platz hier abgelehnt statt
-doppelt gebucht wird.
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-### 4c. Eine Buchung im eigenen Kalender speichern (#1643)
+Sie haben auf einen freien Platz getippt, und das Blatt öffnet sich. Es zeigt, was Sie buchen wollen, und lässt Sie es vor der Bestätigung anpassen. Das Blatt schlägt nur vor: Die Regeln des Spaces werden geprüft, wenn Sie bestätigen.
 
-Jede Oberfläche, die eine **Ihrer eigenen** Buchungen öffnet — der Plan,
-Tag, Woche, die Kalender-Zeitleiste — bietet **Kalenderdatei speichern**.
-Sie schreibt eine Standard-`.ics`-Datei (RFC 5545), die jeder Kalender
-importiert: Google, Outlook, Apple, Thunderbird oder der Ihres Telefons.
-Bevor etwas gespeichert wird, sehen Sie genau, was die Datei sagen wird —
-den gebuchten Platz, die Zeit, den Namen des Coworking-Spaces als Ort,
-den Status — und unter *Dateiinhalt* die Datei selbst.
+<p><img src="images/user-reservations-booking-sheet.de.b8fa17aa9.jpg" width="280"></p>
 
-**Was die Datei enthält, und was nie.** Die Zeit als Zeitpunkt (in UTC,
-sie landet also in Ihrem Kalender zur richtigen Stunde, wo immer Sie sind
-und über eine Zeitumstellung hinweg), den gebuchten Platz, den Namen des
-Spaces und *Bestätigt* oder *Storniert*. Sonst nichts: keinen Betrag,
-keinen Namen, keine E-Mail-Adresse, keine Notiz, keinen Link, keine
-Einladung an irgendwen — und eine stornierte Buchung wird als storniert
-exportiert, nie als laufender Termin.
+**Schritte**
 
-**Eine Momentaufnahme, kein Abonnement.** Die Datei beschreibt die
-Buchung, wie sie im Moment des Speicherns ist. Wird die Buchung später
-verschoben oder storniert, ändert sich eine bereits gespeicherte oder
-geteilte Datei nicht, und eine geteilte Datei lässt sich nicht
-zurückholen. Dieselbe Buchung erneut zu speichern erzeugt eine Datei mit
-derselben Kennung, sodass die meisten Kalender den früheren Termin
-ersetzen statt einen zweiten anzulegen — das entscheidet aber der
-Importeur, nicht die App. Hat sich die Buchung zwischen Vorschau und
-Ihrem Tipp auf *Speichern* geändert, wird nichts geschrieben: Die
-Vorschau wird aufgefrischt und bittet Sie, noch einmal hinzusehen.
+1. Lesen Sie die Zusammenfassung: Workspace, Etage, Tisch und Platz, für wen die Buchung gilt, der Tag, die Stunden und die Wiederholung.
+2. Passen Sie den Zeitraum an. Bei halben Tagen tippen Sie auf **Vormittag**, **Nachmittag** oder **Ganzer Tag**. In einem Zeitraster legen Sie **Von** und **Bis** fest; in einem Minutenraster bestimmt ein Regler namens **Dauer** die Länge.
+3. Öffnen Sie **Weitere Optionen**, um die Buchung zu wiederholen.
+4. Fügen Sie den Platz optional mit dem Herz zu Ihren Favoriten hinzu oder bewerten Sie ihn mit den Sternen.
+5. Tippen Sie auf **Reservieren**.
 
-Die Datei landet in Ihren Downloads (auf einem Gerät: der Ordner
-Downloads; im Browser: wo Ihr Browser Downloads ablegt). Sie ist eine
-**Funktion**, die ein Eigentümer unter *Einstellungen → Funktionen*
-ausschalten kann; sie ist standardmäßig an. Die App schreibt in keinen
-Kalender, und nichts wird synchronisiert.
+**Gut zu wissen**
 
-**Buchungszeitraum (#2270).** Die Zusammenfassung unter den Bedienelementen zeigt Wochentag, vollständiges Datum, gegebenenfalls Heute oder Morgen, den gewählten Zeitraum und genaue Arbeitsbereichszeiten mit Zeitzone. Bei abweichender persönlicher Zeitzone erscheint auch Ihre Ortszeit. Änderungen des Zeitraums oder individueller Zeiten aktualisieren sie vor der Platzauswahl. Breite Bildschirme benennen die Optionen; auf schmalen bleibt der gewählte Zeitraum in der Zusammenfassung lesbar.
+- Ist der gewählte Zeitraum nicht erlaubt, nennt eine rote Zeile unter dem Zeitraum den Grund, und **Reservieren** bleibt ausgegraut.
+- Folgt auf demselben Platz eine weitere Buchung, sagt das Blatt, dass der Platz ab dieser Zeit reserviert ist, und beendet Ihre Buchung dort.
+- Administratoren sehen **Buchen für** und, um einen Platz zu sperren, **Ressource verwalten**.
+- Umfasst der gewählte Zeitraum den jetzigen Moment, erscheint ein Schalter **Sofort einchecken**, standardmäßig aus.
 
-**Den Plan lesen (#2271).** Der gewählte Stockwerksname bleibt auf dem Plan sichtbar, auch bei nur einem Stockwerk; das Menü zeigt vollständige Namen. Plätze tragen ein deckendes Namensschild und ein Symbol aus der Legende: offener Kreis für frei, Schloss für reserviert, Haken für anwesend, Stern für den eigenen Platz und Sperrsymbol für blockiert. Bei dichten Plänen vergrößern Sie die Ansicht, um Namen zu lesen. Screenreader behalten vollständige Namen und Zustände bei jeder Zoomstufe. In der Listenansicht steht die Stockwerksauswahl über den Zeilen und verdeckt keine Buchungsaktion.
+**Siehe auch:** [Sofort einchecken, wenn Sie schon da sind](#sofort-einchecken-wenn-sie-schon-da-sind) · [Eine Buchung wiederholen](#eine-buchung-wiederholen) · [Für jemand anderen buchen](#für-jemand-anderen-buchen)
 
-**Vor Bestätigung prüfen (#2272).** Das Formular nennt Arbeitsbereich, Etage/Ressource, Person, vollständiges Datum, genaue Zeiten, Zeitzone und Wiederholung vor der Buchungsentscheidung. Es zeigt an, wenn endgültige Kosten und Kontingentberechnung nicht verfügbar sind. Reservieren behält den Zeitraum; Jetzt einchecken nutzt den aktuellen Zeitraum und meldet Anwesenheit. Der separate Schalter ergänzt eine aktuelle Reservierung um Anwesenheit. Die Bestätigung bleibt beim Scrollen sichtbar. Favoriten und Bewertungen folgen den Buchungsoptionen; Wartung steht für berechtigte Personen unter Ressource verwalten. In der Platzliste öffnet Reservieren das Formular; Bewertungen haben eine eigene Aktion (#2268).
+<!-- anchor: user.reserve.walk-up -->
+### Sofort einchecken, wenn Sie schon da sind
 
-## 5. Kalender (Kalender-Tab)
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-Der Monat auf einen Blick, mit zwei Reichweiten und zwei Formen:
+Sie stehen an einem freien Platz und möchten ihn sofort nehmen. Auf dem Plan von heute bietet das Buchungsblatt zwei Aktionen nebeneinander an.
 
-**Der Kalender ist ein Wähler, keine Bühne (#718).** Wähle einen **Tag** oder einen **Zeitraum**; du siehst einen einzigen Feed von allem Datierten, das du sehen darfst — Buchungen, Check-ins und Check-outs, Meldungen, Nachrichten, Rechnungen, Zahlungen, Verbrauch, Erinnerungen — nach Tag gruppiert, per Chip nach Art gefiltert, und **jede Zeile öffnet ihre Quelle** (die Buchung, die Unterhaltung, die Meldung, die Rechnung, den Monat in Finanzen). Wer die Finanz- oder Mitglieder-Berechtigung hat, kann ein anderes Mitglied ansehen; Arten, die der Server für dieses Mitglied nicht erlaubt, erscheinen **gesperrt**, nie als leerer Tag. Der Schild öffnet *Wer sieht das*, mit dem Zugriffsprotokoll.
+<p><img src="images/user-reserve-walk-up.de.b8fa17aa9.jpg" width="280"></p>
 
-**Drei Ansichten (#818).** Mit *Kalenderansichten* an (Standard) öffnet der Tab die **Agenda** — alles Datierte der **nächsten 30 Tage**, gruppiert unter *Heute · Morgen · Wochentag*, die Pfeile springen 30 Tage, **Heute** zurück. **Woche** zeigt einen Streifen aus sieben Pillen (Wochentag, Zahl, farbige Marker, Anzahl) mit dem Feed der ganzen Woche darunter; **Monat** ein kompaktes Raster, in dem jeder Tag bis zu drei **Marker** trägt — *Buchungen & Anwesenheit*, *Hinweise & Nachrichten*, *Finanzen* — heute umringt, der gewählte Tag gefüllt, **geschlossene Tage** gedämpft und durchgestrichen; ein Tipp auf einen Tag lädt ihn darunter (die Legende unter dem Raster benennt die Farben). Ein geschlossener Tag sagt es im Feed, mit dem Grund. Der Feed trägt zudem zwei Fakten, die er bisher nicht hatte: die **Zahlungsfälligkeit** jeder offenen Rechnung (Ausstellungsdatum + Mahnfrist) und jede fällig werdende **geplante Ausgabe**. Die Art-Chips und die Mitgliederauswahl grenzen die Abfrage wie bisher ein; das Schild öffnet *Wer sieht das*. Aus bleibt der schlichte Tag-oder-Zeitraum-Wähler.
+**Schritte**
 
-- **Meine / Alle** — deine eigenen Buchungen oder die der ganzen Community; **jedes Mitglied** hat diesen Umschalter, denn Plan und Wochenraster des Reservieren-Hubs zeigen die Belegung aller ohnehin. Die Punkte unter einem Tag sagen alles auf einen Blick: **rot** = du hast eine Buchung, **blau** = andere Mitglieder haben eine, **beide Punkte** = beides. Heute ist umringt.
-- Der **Form-Umschalter** daneben wechselt die untere Hälfte zwischen **Listenansicht** (jede Reservierung als Karte: Zeitfenster, Mitglied, Raum) und **Zeitleistenansicht** (Plätze × die Stunden des gewählten Tages). Das Wochenraster Plätze × *Tage* wohnt im Reservieren-Hub (§4), nicht hier.
-- Die **Etagen-Chips** filtern die **Zeitleiste**.
-- Einen Tag antippen lädt ihn unten. Im Querformat geteilte Ansicht.
+1. Öffnen Sie [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) auf heute, ohne eine andere Zeit zu wählen, und tippen Sie auf einen freien Platz.
+2. Wählen Sie oben im Blatt **Reservieren** oder **Jetzt einchecken**.
+3. **Reservieren** behält den gewählten Zeitraum. **Jetzt einchecken** schaltet auf den aktuellen Zeitraum um und markiert Sie als anwesend.
+4. Tippen Sie zur Bestätigung auf **Einchecken**.
 
-<p><img src="images/calendar-agenda.jpg" width="240"></p>
+**Gut zu wissen**
 
-*Der Kalender-Tab: ein Tag oder ein Zeitraum, die Art-Chips, ein Feed nach Tagen gruppiert — jede Zeile öffnet ihre Quelle.*
+- Das Einchecken endet dort, wo die nächste Buchung auf diesem Platz beginnt, und das Blatt sagt es Ihnen.
+- Ein spontanes Einchecken muss heute beginnen.
+- Wo pro halbem Tag gebucht wird, endet das Einchecken mit dem aktuellen halben Tag oder mit dem Tag, wenn Ihr üblicher Zeitraum der ganze Tag ist.
 
-## 6. Mitgliederverzeichnis (Mitglieder-Tab)
+**Siehe auch:** [Ein- und Auschecken](#ein--und-auschecken) · [Die Regeln, denen Sie beim Buchen begegnen](#die-regeln-denen-sie-beim-buchen-begegnen)
 
+<!-- anchor: user.reserve.whole-space -->
+### Einen ganzen Tisch, Raum oder eine ganze Etage buchen
 
-<p><img src="images/member-profile-sheet.jpg" width="240"></p>
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-*Das Profil eines Mitglieds: die heutige Buchung, der Kontakt und — wo Sie sie sehen dürfen — seine Finanzposition.*
+Sie brauchen den ganzen Tisch, den ganzen Raum oder die ganze Etage, für eine Besprechung oder einen Tag. Spaces, die dafür eingerichtet sind, lassen sich als Ganzes buchen.
 
-**Tippe ein Mitglied für sein Profil an (#704).** Foto, Rolle und Status; was es gebucht hat und ob es gerade eingecheckt ist; und **Kontakt** — die freiwillig geteilte WhatsApp-Nummer für alle, die **E-Mail-Adresse und der Tarifanteil für Admins**. Wo du die Zahlen sehen darfst — **deine eigenen immer, fremde mit der Berechtigung *Finanzen sehen*** — trägt das Profil außerdem **Finanzen**: die Nettoposition (wer wem was schuldet), die offenen Rechnungen mit dem jeweiligen Rest, die eingegangenen Zahlungen und den gerade laufenden Monat. Dieselbe Karte wie im Finanzen-Tab, damit beide sich nicht widersprechen können.
+<p><img src="images/user-reserve-whole-space.de.b8fa17aa9.jpg" width="280"></p>
 
-**Eine Seite pro Mitglied (#825).** Ein Tipp auf ein Mitglied öffnet jetzt eine **ganze Seite**: Foto mit Präsenzpunkt, Rollen-Chips, die eigene Statuszeile, **wann es zuletzt gesehen wurde** („Vor 20 Std. gesehen“, keine nackte Zahl) und seit wann es Mitglied ist. Eine Karte **Gerade jetzt** sagt in einem Satz, ob es eingecheckt ist, in dieser Minute reserviert hat oder wann die **nächste** Buchung ansteht — antippen, oder jede kommende Zeile, öffnet die Buchung. Darunter die **Schnellaktionen**: Nachrichten, WhatsApp und (für Admins) E-Mail, dazu *Leistung hinzufügen* und *Finanzvereinbarung senden*, wo sie gelten. Kontakt- und Finanzkarte folgen unverändert. **Admins und Eigentümer** erhalten auf derselben Seite den Abschnitt **Verwalten** — *Mitgliedschaft* (genehmigen oder ablehnen, pausieren, Rolle, Miteigentum, Kiosk), *Buchungsregeln* (Reservierungslimit, gleichzeitige Reservierungen, ganze Ebene als Schalter), *Abrechnung* (Abonnement, wenn die Tage aufgebraucht sind, Verhandlungen) und *Ausweise & Zugang* — jede Zeile zeigt ihren **aktuellen Wert**, nichts muss geöffnet werden, um bekannt zu sein. Die Zeilen in *Einstellungen → Mitglieder & Tarife* öffnen dieselbe Seite.
+**Schritte**
 
-Sieh, wer zur Community gehört:
+1. Tippen Sie auf dem Plan doppelt auf den Tisch, den Raum oder die leere Etage. Für eine Etage können Sie auch auf **Etage reservieren** tippen, die Schaltfläche unter der Etagenauswahl.
+2. Das Blatt nennt den Space, den Zeitraum und, falls es einen gibt, den **Preis je Halbtag**.
+3. Tippen Sie auf **Einchecken**, um ihn jetzt zu nehmen, oder auf **Reservieren**, um ihn für den gezeigten Zeitraum zu buchen.
+4. Wählen Sie im Buchungsblatt, das sich öffnet, den Zeitraum und tippen Sie auf **Reservieren**.
 
-- Jede Karte zeigt **Foto** (oder Initiale), **Rollen-Chip**, **Status** („bis Freitag in Berlin…"), einen **online / zuletzt gesehen**-Indikator (*Online*, *10 min*, *2 T*) und einen **Reservierungs-Chip**: eingecheckter Platz, *Jetzt reserviert* oder nächste Buchung.
-- Ein Mitglied antippen öffnet das **Detailblatt** — Rolle, Präsenz, **kommende Reservierungen**, **Nachrichten**.
-- **Nachrichten**: ein **Unterhaltungs-Thread** pro Mitglied (bis 500 Zeichen je Nachricht) — vom Tab **Nachrichten** (§16), vom Mitgliedsblatt oder dem Verzeichnis-Profil aus öffnen, den ganzen Austausch als Sprechblasen lesen und an derselben Stelle senden. Jede Nachricht erreicht die Gegenseite doppelt: als **Push ganz ohne Inhalt** (*„Du hast eine neue Nachricht"* — aus Datenschutzgründen) und, sobald die App läuft, als lokale Benachrichtigung, die deinen Namen und den Text zeigt.). Der volle Text bleibt im Tab **Nachrichten** lesbar, für Empfänger und Absender (der Push selbst trägt keinen Inhalt, aus Datenschutz). Admins haben ein **Alle Admins benachrichtigen**-Megafon — in *Mitglieder & Tarife* (Einstellungen → Administration), nicht im Mitglieder-Tab, der gar keine eigene Kopfzeile hat —, das jeden Admin samt Inhaber erreicht. Abschaltbar über *Mitglieder-Benachrichtigungen*. Beim Schreiben lassen sich per Chip **eine Reservierung oder ein laufender Check-in — eigene wie die anderer Mitglieder** — oder **ein Raum** (Sitz, Tisch, Büro oder Etage) **verlinken** — die Referenz erscheint beidseitig als antippbarer Link: ein Reservierungs-Link öffnet diese Reservierung, ein Raum-Link das Buchungsblatt des Raums, ideal um eine künftige Buchung zu besprechen.
-- Das **Nachrichten-Icon** einer Karte schreibt dem Mitglied auf **WhatsApp** (wenn es seine Nummer teilt); der **Gruppen-Knopf** öffnet die WhatsApp-Gruppe der Community.
-- Eigenes Foto, Status und Nummern-Sichtbarkeit in den **Einstellungen** (§12).
-- Admins und Inhaber sehen zusätzlich die **E-Mail** jedes Mitglieds — einfache Mitglieder nicht: Kontakt bleibt die Opt-in-WhatsApp-Nummer.
+**Gut zu wissen**
 
-<p><img src="images/members-directory.jpg" width="240"></p>
+- Ein Mitglied braucht das Recht, ganze Spaces zu buchen; Inhaber und Administratoren haben es. Ohne dieses Recht sagt das Blatt **Sie dürfen keinen ganzen Tisch, kein Büro und keine ganze Etage reservieren.**
+- Ein ganzer Space lässt sich nicht buchen, solange einer seiner Plätze in diesem Zeitraum belegt ist, und kein Platz lässt sich buchen, solange sein Tisch, Raum oder seine Etage als Ganzes gebucht ist.
+- Verlangt der Inhaber eine Freigabe, sperrt eine Buchung eines ganzen Spaces den Space sofort und wartet auf die Prüfenden; lehnen sie ab, wird sie storniert.
 
-*Das Verzeichnis: Foto oder Initiale, Rollen-Chip, Status, online/zuletzt gesehen und die nächste Reservierung auf jeder Karte.*
+**Siehe auch:** [Wenn eine Buchung auf Bestätigung wartet](#wenn-eine-buchung-auf-bestätigung-wartet) · [Einen Raumcode scannen](#einen-raumcode-scannen)
 
-## 7. Ereignisse & Bestätigungen (Nachrichten → Ereignisse)
+<!-- anchor: user.reserve.for-someone -->
+### Für jemand anderen buchen
 
-**Blaue Zähler.** Meldungen zählt neue Workspace-Meldungen (einschließlich Rechnungen, Erinnerungen und Änderungen), ungelesene Rundnachrichten und ausstehende Entscheidungen, jeden Eintrag genau einmal. Beim Öffnen werden neue Meldungen als gesehen markiert; Entscheidungen bleiben bis zur Erledigung sichtbar. Dieses Gerät merkt sich Meldungen getrennt nach Person, Server und Workspace. In Ich zählt Nachrichten ungelesene Nachrichten der verbundenen Server; stummgeschaltete oder archivierte Gespräche bleiben ohne Zähler. Bei null verschwindet er; über 99 erscheint **99+**.
+**Zielgruppe:** Administrator:in · Inhaber
 
-**Wo es liegt.** Der Feed ist die zweite Fläche des Tabs **Nachrichten**, und die **Glocke** in jeder Kopfzeile führt direkt dorthin, mit dem Zähler dessen, was auf dich wartet. Ein Ort hält die Meldungen — dort eine lesen heißt, sie überall gelesen zu haben. Mit den überarbeiteten Nachrichten heißt der Tab **Hinweise** und markiert sich nur als gelesen, solange er die sichtbare Fläche ist — hinüberzuwechseln ist Lesen, ihn hinter den Chats zu haben nicht.
+Sie möchten einen Platz im Namen eines Mitglieds buchen. Administratoren können das Mitglied im Buchungsblatt auswählen.
 
-Der Ereignis-Feed ist die Prüfspur deines Space: Buchungen erstellt/geändert/storniert, Zahlungen erfasst, Rechnungen bezahlt, Ausgaben eingereicht, Extratage-Anträge, Rollenwechsel, Löschanträge. Mitglieder sehen ihre eigenen Ereignisse; Admins und Inhaber alles. **Filter-Chips** (Alle · Reservierung · Zahlung · Ausgabe · …) engen die Liste ein — deine Wahl wird gemerkt — und ein **Gruppieren nach**-Menü faltet den Feed in Gruppen nach Typ, Tag oder Mitglied (das Gruppensymbol antippen führt zur flachen Liste zurück); jede Zeile trägt ihr Status-Icon — **Sanduhr** wartend, **grünes Häkchen** bestätigt — und Geld-Ereignisse zeigen *wer wann validierte* direkt auf der Zeile.
+<p><img src="images/user-reserve-for-someone.de.b8fa17aa9.jpg" width="280"></p>
 
-**Wartet auf deine Bestätigung:** Handelt ein Admin *für jemand anderen* — bucht dir einen Platz, erfasst deine Zahlung, stuft einen Admin zurück — bleibt es **bis zur Bestätigung offen**. Offenes ist oben angepinnt mit rotem ✕ und grünem **Annehmen**, plus Benachrichtigung. Eigene Aktionen auf dich selbst brauchen nie eine Bestätigung.
+**Schritte**
 
-**Nachrichten sind umgezogen.** Mitgliedernachrichten leben jetzt in einem eigenen Tab **Nachrichten** (§16), nicht mehr hier — eine Nachricht an zwei Orten ist eine, die man an einem als gelesen markiert und am anderen weiter ungelesen sieht. Dieser Feed behält die eine Art ohne eigene Unterhaltung: eine **Rundnachricht an alle Admins**.
+1. Tippen Sie in [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) auf einen freien Platz, um das Buchungsblatt zu öffnen.
+2. Öffnen Sie **Buchen für** und wählen Sie das Mitglied.
+3. Die Zusammenfassung lautet nun **Buchung für** dieses Mitglied, und die Schaltfläche wechselt zu **Zur Bestätigung senden**.
+4. Tippen Sie auf **Zur Bestätigung senden**. Eine Meldung lautet **Zur Bestätigung an** das Mitglied **gesendet**.
 
-**Validierungsquorum:** für Geld und Rollen definiert die Inhaberin, *wer* zustimmen muss und *wie viele*. **Niemand validiert das eigene Ereignis** — nur eine andere Person (eine von der Inhaberin konfigurierte Ausnahme für Reservierungslöschungen, unten); ohne anderen Validierer wartet der Antrag. Bleibt eine Anfrage 7 Tage unbeantwortet, hängt der Ausgang davon ab, in welche Richtung sie zielt. Was **du selbst eingereicht** hast — eine Löschung, zusätzliche halbe Tage, eine Restbetrag-Stornierung — **verfällt**: nichts Teures wird still gewährt. Was ein Admin **für dich getan** hat — eine Buchung angelegt oder geändert, eine Zahlung erfasst — **bestätigt sich dagegen automatisch**, denn es ist bereits geschehen und der Feed bat dich nur um Kenntnisnahme; eine Buchung, die ein Admin für dich anlegte, gilt dann als gewährt und verbraucht dein Kontingent. Eine verfallene **Rechnungszahlung** — Zuordnung, Erstattung oder Zusammenfassung, die niemand rechtzeitig entschied — gibt frei, was sie hielt: Zahlung, Gutschrift und zusammengefasste Rechnungen stehen wieder da, wo sie waren (#816).
+**Gut zu wissen**
 
-Die Inhaberin justiert das je **Domäne** unter **Einstellungen → Validierungsregeln** — vierzehn Karten, eine pro Ereignistyp, jede erbend von der **Standardregel** bis zur Bearbeitung: *Standardregel, Zahlung, Ausgabe, Leistung, Zusätzliche halbe Tage, Buchungslöschung, Rollenwechsel, Neues Mitglied, Reservierung, Ganzraum-Reservierungen, Rechnungszahlung*, *Restbetrag-Stornierung*, *Preisverhandlung* und *Geplante Ausgabe*. Eine Regel setzt die nötigen Validierungen, *welche* Admins validieren dürfen (alle oder benannte) und ob der Inhaber immer unterschreiben muss. Die Regel **Buchungslöschung** trägt zwei weitere Schalter — *Admins löschen ohne Validierung* und *Inhaber löschen ohne Validierung*, beide **standardmäßig aus** — die eine, bewusste Ausnahme zu „niemand validiert das eigene Ereignis": der eigene Löschantrag erledigt sich selbst und bleibt im Feed als **automatisch validiert** markiert. Sie gelten für Reservierungslöschungen und für nichts sonst. Seit #982 haben sechs weitere Vorgänge eine Karte: **Rechnungsstellung**, **Rechnungsstorno**, **Erstattung**, **Mitgliedschaftsänderung**, **Abonnementänderung** und **Änderung der Berechtigungsmatrix**. Jeder wirkt ohne Regel sofort und wartet auf die Entscheidung, sobald eine Regel existiert — genau wie das Löschen einer Buchung; eine Regel zu einem Geldvorgang trägt außerdem eine **Betragsschwelle** (*Nur über diesem Betrag*), sodass „Rechnungen über 500 € brauchen zwei Freigaben" eine Regel ist.
+- Das Mitglied muss zustimmen, bevor die Buchung besteht. Es findet die Anfrage in seinem Kalender und in seinen Benachrichtigungen.
+- Eine für jemand anderen gemachte Buchung wird nie eingecheckt und kann sich nicht wiederholen.
+- Das Feld **Buchen für** erscheint nur, wenn der Inhaber Administratoren erlaubt, für Mitglieder zu buchen. Für eine ganze Etage entscheidet der Inhaber, wer sie zuweisen darf.
 
-<p><img src="images/validation-rules.jpg" width="240"> <img src="images/validation-rule-edit.jpg" width="240"></p>
+**Siehe auch:** [Wenn eine Buchung auf Bestätigung wartet](#wenn-eine-buchung-auf-bestätigung-wartet) · [Entscheidungen, die im Kalender auf Sie warten](#entscheidungen-die-im-kalender-auf-sie-warten)
 
-<p><img src="images/messages-events.jpg" width="240"></p>
+<!-- anchor: user.reserve.series -->
+### Eine Buchung wiederholen
 
-*Die Ereignisse-Seite von Nachrichten: Art-Chips, Ungelesen / Gelesen und Gruppieren nach Typ · Datum · Mitglied.*
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie sitzen jeden Dienstag am selben Platz oder einen Monat lang an jedem Werktag. Eine wiederkehrende Buchung legt alle Termine auf einmal an.
+
+<p><img src="images/user-reserve-series.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie das Buchungsblatt auf einem freien Platz und am ersten gewünschten Tag.
+2. Öffnen Sie **Weitere Optionen**.
+3. Wählen Sie unter **Wiederholen** **Täglich**, **Jeden Werktag** oder **Wöchentlich**. Standard ist **Keine Wiederholung**.
+4. Legen Sie **Wiederholen bis** fest, das letzte Datum. Das Blatt schlägt vier Wochen im Voraus vor.
+5. Tippen Sie auf **Reservieren**. Ein Dialog sagt Ihnen, wie viele Buchungen angelegt wurden.
+
+**Gut zu wissen**
+
+- Termine, die sich nicht buchen ließen, sind im Dialog aufgelistet und werden übersprungen. Die übrigen bleiben bestehen.
+- Um eine wiederkehrende Buchung zu stornieren, öffnen Sie einen ihrer Termine und wählen **Diesen Termin stornieren** oder **Diesen und folgende stornieren**.
+- Sie können eine einzelne Buchung auch über **Zeit ändern** in ihren Details in eine wiederkehrende verwandeln.
+- Wiederholen wird nicht angeboten, wenn Sie für jemand anderen buchen.
+
+**Siehe auch:** [Eine Buchung ändern oder stornieren](#eine-buchung-ändern-oder-stornieren) · [Das Buchungsblatt](#das-buchungsblatt)
+
+<!-- anchor: user.reserve.policies -->
+### Die Regeln, denen Sie beim Buchen begegnen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie wollten buchen, und die App hat abgelehnt, oder Sie fragen sich, was erlaubt ist. Ihr Inhaber legt die Regeln des Spaces fest; das ist, was Sie davon sehen.
+
+| Regel | Was Sie sehen |
+|---|---|
+| Öffnungszeiten und offene Tage | Der Plan und die Ansichten folgen dem Arbeitstag, standardmäßig 08:00 bis 17:00 Uhr, mit der Teilung der halben Tage um 12:00 Uhr. Ein geschlossener Tag sagt **An diesem Tag geschlossen**. |
+| Außerhalb der Öffnungszeiten | Hängt vom Space ab. Aus: **Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.** Nur spontan: Sie können vor Ort einchecken, aber nicht im Voraus buchen. Frei: erlaubt, nie gezählt oder berechnet. Berechnet: erlaubt und als Nutzung gezählt, außer an einem Tag, an dem Sie bereits eine reguläre Buchung haben. |
+| Vergangene Buchungen | Eine Buchung an einem Tag, der bereits zu Ende ist, wird abgelehnt, es sei denn, der Inhaber erlaubt vergangene Buchungen: **Diese Buchung liegt vollständig in der Vergangenheit.** Früher am selben Tag wird sie als vergangener Besuch erfasst. |
+| Grenzen | Eine Buchung hat einen weitesten Horizont (**Zu weit voraus**, standardmäßig 90 Tage), eine kürzeste und eine längste Dauer (**Zu kurz**, **Zu lang**) und endet an dem Tag, an dem sie beginnt. |
+| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Du hast in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
+| Reservierungslimit | **Reservierungslimit erreicht**, wenn Sie die meisten offenen Buchungen halten, die Ihnen erlaubt sind. |
+| Tage in Ihrem Tarif | Sind die Tage Ihres Tarifs aufgebraucht, gilt die Einstellung des Inhabers für Sie: Buchungen können enden, Sie werden eventuell gebeten, ein Paket zu kaufen, oder die zusätzlichen Tage werden berechnet. |
+
+**Schritte**
+
+1. Wird ein Zeitraum abgelehnt, lesen Sie die rote Zeile darunter im Buchungsblatt.
+2. Ändern Sie den Tag, die Zeit oder den Platz, oder fragen Sie einen Administrator.
+3. Sind Ihre Tage aufgebraucht, öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money), um Ihren Tarif zu sehen, und tippen Sie, wo angeboten, auf **Zusätzliche halbe Tage beantragen**.
+
+**Gut zu wissen**
+
+- Dieselben Regeln gelten auf dem Plan, in der Reservierungsübersicht, bei einem gescannten Code und am Kiosk an der Wand.
+- Die App prüft einen Zeitraum, bevor sie ihn anbietet, daher erscheinen die meisten Ablehnungen im Blatt und nicht erst nach dem Tippen.
+
+**Siehe auch:** [Buchungsrichtlinien](#buchungsregeln) · [Gleichzeitige Reservierungen](#gleichzeitige-reservierungen) · [Reservierungslimit](#reservierungslimit)
+
+<!-- anchor: user.reserve.closed-days -->
+### Schließtage und Feiertage
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten wissen, warum ein Tag nicht buchbar ist. Ihr Space ist an manchen Wochentagen und an den vom Inhaber hinzugefügten Schließtagen geschlossen, zum Beispiel an Feiertagen.
+
+<p><img src="images/user-reserve-closed-days.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie den Tag in [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve). Ein geschlossener Tag zeigt ein Banner, **An diesem Tag geschlossen**.
+2. Tippen Sie auf die Abkürzung im Banner, die „Anzeigen“ und den nächsten offenen Tag nennt, um dorthin zu springen.
+3. In **Monat** zeigen geschlossene Tage **Zu**; in **Woche** sind sie grau mit einem Zeichen; in **Tag** sind sie als geschlossen markiert, unter dem Legendeneintrag **Geschlossen**.
+4. Im Kalender sind geschlossene Tage durchgestrichen, und die Liste des Tages nennt **Geschlossen** mit dem Grund, wenn der Inhaber einen angegeben hat.
+
+**Gut zu wissen**
+
+- An einem geschlossenen Tag tragen die Plätze das Symbol für gesperrt und lassen sich weder buchen noch einchecken.
+- Feiertage erscheinen genau wie jeder andere Schließtag.
+
+**Siehe auch:** [Monatsansicht](#monatsansicht) · [Schließtage](#schließtage) · [Offene Wochentage](#geöffnete-wochentage)
+
+<!-- anchor: user.reserve.check-in -->
+### Ein- und Auschecken
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie kommen an Ihrem Platz an und gehen später wieder. Einchecken sagt, dass Sie da sind; Auschecken gibt frei, was Sie nicht mehr brauchen.
+
+<p><img src="images/user-reserve-check-in.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve), suchen Sie den Tag Ihrer Buchung und tippen Sie auf Ihren eigenen Platz, den mit der Markierung **Meine**.
+2. Tippen Sie auf **Einchecken**. Ist es ausgegraut, sagt es Ihnen, wann es öffnet, zum Beispiel „Einchecken ab 14. Mai“.
+3. Wenn Sie gehen, tippen Sie erneut auf Ihren Platz und dann auf **Auschecken**. Der Rest der Buchung wird sofort für andere freigegeben.
+4. Die Buchung lautet dann **Abgeschlossen: ausgecheckt um** und die Uhrzeit.
+
+**Gut zu wissen**
+
+- Das Einchecken öffnet 15 Minuten vor dem Beginn oder einen Rasterschritt vorher, wenn das Raster gröber ist. Wo pro halbem Tag, pro Tag oder pro echter Stunde gebucht wird, öffnet es für den ganzen Tag der Buchung.
+- Es schließt, wenn die Buchung endet: **Diese Reservierung ist vorbei — Einchecken ist nicht mehr möglich.**
+- Sind Sie noch an einem anderen Ort eingecheckt, checken Sie dort zuerst aus.
+- Ist das automatische Ein- und Auschecken an, schließt sich eine Buchung, die niemand ein- oder ausgecheckt hat, selbst ab, sobald ihre Zeit vorbei ist. Ohne diese Funktion lautet eine Buchung, bei der Sie nicht eingecheckt haben, **Dieser Zeitraum ist ohne Check-in vorbei.**
+- An einem Kiosk an der Wand checken Sie mit Ihrem Badge ein; siehe [Ihr Badge](#ihr-badge) und [NFC-Badge-Check-in](#nfc-badge-check-in).
+
+**Siehe auch:** [Einen Raumcode scannen](#einen-raumcode-scannen) · [Eine Buchung ändern oder stornieren](#eine-buchung-ändern-oder-stornieren)
+
+<!-- anchor: user.reserve.scan -->
+### Einen Raumcode scannen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie stehen vor einem Tisch, einem Raum oder einem Platz mit einer QR-Karte oder vor einem Stuhl mit einem NFC-Tag. Das Scannen zeigt, was Sie dort tun können, ohne den Plan zu durchsuchen.
+
+<p><img src="images/user-reserve-scan.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Reservieren](https://fdittgen-png.github.io/deskilo/#/reserve) auf **Raumcode scannen**, das Scannersymbol oben auf dem Bildschirm.
+2. Richten Sie die Kamera auf die Karte oder tippen Sie die aufgedruckte Nummer bei **Code** ein und tippen Sie auf **Bestätigen**. Halten Sie Ihr Smartphone an den NFC-Tag eines Stuhls, wo das Gerät es unterstützt.
+3. Wählen Sie bei einem Platz **Einchecken**, **Reservieren** oder **Auschecken**, dieselben Aktionen wie am Kiosk, ohne den Badge-Schritt.
+4. Bei einem Tisch, einem Büro oder einer Etage zeigt das Blatt Zustand, Zeitraum und **Preis je Halbtag**; tippen Sie auf **Einchecken**, **Reservieren** oder **Auf dem Plan anzeigen**.
+
+**Gut zu wissen**
+
+- Hat jemand anderes den Space, sagt das Blatt, wer, und bietet an, dieser Person eine Nachricht zu schreiben.
+- Ein Code, der nicht aus diesem Workspace stammt, sagt **Kein Raumcode dieses Workspace.** Ein entfernter Space sagt **Dieser Code passt zu keinem Raum mehr.**
+- Im Browser ist die Kamera nicht verfügbar: Tippen Sie stattdessen den Code ein. Ein NFC-Tag identifiziert nur Plätze.
+- Das Scannersymbol erscheint nur, wenn Ihr Space QR-Codes verwendet.
+
+**Siehe auch:** [Einen ganzen Tisch, Raum oder eine ganze Etage buchen](#einen-ganzen-tisch-raum-oder-eine-ganze-etage-buchen) · [Ein- und Auschecken](#ein--und-auschecken)
+
+<!-- anchor: user.reserve.change -->
+### Eine Buchung ändern oder stornieren
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Ihre Pläne haben sich geändert. Sie können eine Buchung verschieben, verkürzen, verlängern oder stornieren, solange sie nicht genutzt wurde.
+
+<p><img src="images/user-reserve-change.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Buchung: Tippen Sie in der Ansicht **Tag** oder **Woche** darauf, im Kalender, oder tippen Sie auf **Details** in der Meldung, die auf eine Buchung folgt.
+2. Bei einer Buchung, die noch nicht begonnen hat, tippen Sie auf **Zeit ändern**, um einen anderen Zeitraum zu wählen, oder auf **Reservierung stornieren**, um sie zu entfernen.
+3. Wählen Sie bei einer wiederkehrenden Buchung **Diesen Termin stornieren** oder **Diesen und folgende stornieren**.
+4. Bei einer Buchung, in die Sie eingecheckt sind, erscheinen **Länger bleiben** und **Früher beenden**, wenn die Regeln des Spaces ein späteres oder früheres Ende erlauben. Der Beginn verschiebt sich nicht.
+5. Tippen Sie bei einer Buchung, die begonnen hat, eingecheckt oder abgeschlossen ist, und wenn Ihr Space Löschanfragen erlaubt, auf **Löschung beantragen**, nennen Sie auf Wunsch einen Grund und tippen Sie auf **Anfrage senden**.
+
+**Gut zu wissen**
+
+- **Löschung beantragen** löscht nichts: Ein Inhaber oder Administrator entscheidet, ob das Einchecken nur vergessen wurde, dann bleibt die Buchung, oder ob die Buchung nie genutzt wurde, dann wird sie entfernt.
+- Ein Administrator kann die Buchung eines anderen mit **Reservierung entfernen (übersteuern)** entfernen; das Mitglied und die Administratoren werden informiert.
+- **Auf dem Plan anzeigen** springt zum Platz auf dem Plan.
+
+**Siehe auch:** [Ein- und Auschecken](#ein--und-auschecken) · [Eine Buchung im eigenen Kalender speichern](#eine-buchung-im-eigenen-kalender-speichern) · [Eine Buchung wiederholen](#eine-buchung-wiederholen)
+
+<!-- anchor: user.reserve.awaiting -->
+### Wenn eine Buchung auf Bestätigung wartet
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Eine Buchung oder Anfrage lautet **wartet auf Bestätigung**. Das heißt nicht, dass etwas schiefgegangen ist: Jemand muss noch Ja sagen.
+
+**Schritte**
+
+1. Sehen Sie nach, was wartet: Der Kalender listet es mit den Worten **wartet auf Bestätigung**, und eine an Sie gerichtete Entscheidung steht ganz oben.
+2. Ist es Ihre Entscheidung, tippen Sie im Kalender auf **Annehmen** oder auf das Kreuz.
+3. Warten Sie auf jemand anderen, ist von Ihnen nichts nötig; die Antwort kommt als Benachrichtigung und im Kalender.
+
+Was auf eine Bestätigung wartet:
+
+- Eine Buchung, die ein Administrator für Sie gemacht hat: Sie bestätigen sie.
+- Eine Buchung eines ganzen Spaces, wenn der Inhaber verlangt, dass Prüfende sie freigeben. Der Space bleibt gesperrt, solange sie wartet, und eine Ablehnung storniert die Buchung.
+- Eine Anfrage, eine bereits begonnene, eingecheckte oder abgeschlossene Buchung zu löschen.
+
+**Gut zu wissen**
+
+- Wer prüfen darf und wie viele zustimmen müssen, ist die Regel des Inhabers; siehe [Validierungsregeln](#validierungsregeln-bereich-für-bereich).
+- Eine Anfrage zeigt ihren Fortschritt, zum Beispiel 1/2 Validierungen, und später ihr Ergebnis: bestätigt, abgelehnt, zurückgewiesen oder abgelaufen.
+
+**Siehe auch:** [Für jemand anderen buchen](#für-jemand-anderen-buchen) · [Entscheidungen, die im Kalender auf Sie warten](#entscheidungen-die-im-kalender-auf-sie-warten)
+
+<!-- anchor: user.reserve.calendar -->
+### Der Kalender-Tab
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten alles Terminierte an einem Ort: Ihre Buchungen, Check-ins, Hinweise, Nachrichten, fällige Zahlungen. Der Kalender-Tab listet es nach Tag, und jede Zeile öffnet ihre Quelle.
+
+<p><img src="images/user-reserve-calendar.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Kalender](https://fdittgen-png.github.io/deskilo/#/calendar). Er öffnet sich auf der **Agenda**: die nächsten 30 Tage, gruppiert unter **Heute**, **Morgen** und den Tagesnamen.
+2. Springen Sie mit den Pfeilen jeweils 30 Tage weiter oder tippen Sie auf das Datum für eine Tagesauswahl. Die Schaltfläche oben rechts bringt Sie zurück zu **Heute**.
+3. Tippen Sie auf eine Zeile, um sie zu öffnen: Eine Buchung öffnet ihre Details, eine Nachricht ihre Unterhaltung, eine Rechnung ihr Blatt.
+4. Grenzen Sie die Liste mit den Chips darunter ein, wie unter [Den Kalender filtern](#den-kalender-filtern) beschrieben.
+
+**Gut zu wissen**
+
+- Buchungen erscheinen für alle im Space, weil der Plan allen die Belegung zeigt. Nachrichten und Geld bleiben privat für Sie und für die Personen, die die Regeln des Spaces zulassen.
+- Ein Mitglied mit der Finanz- oder Mitgliederberechtigung kann die Liste mit dem Chip **Ich** auf ein anderes Mitglied umstellen. Was der Server nicht erlaubt, erscheint als gesperrt, nicht als leerer Tag.
+- Behält Ihr Space den einfacheren Kalender, wählen Sie statt der drei Ansichten einen Tag oder einen Tagesbereich.
+
+**Siehe auch:** [Agenda, Woche und Monat im Kalender](#agenda-woche-und-monat-im-kalender) · [Eine Buchung im eigenen Kalender speichern](#eine-buchung-im-eigenen-kalender-speichern)
+
+<!-- anchor: user.reserve.calendar-views -->
+### Agenda, Woche und Monat im Kalender
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten eine Woche oder einen Monat auf einen Blick sehen. Der Kalender bietet drei Arten, hinzuschauen.
+
+<p><img src="images/user-reserve-calendar-views.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie in der Leiste oben **Agenda**, **Woche** oder **Monat**. Die vierte Schaltfläche, **Hinweise**, zeigt Ihre Hinweise, wenn Ihr Space sie anbietet.
+2. Tippen Sie in **Woche** auf einen der sieben Tage, um seine Liste darunter zu lesen.
+3. Tippen Sie in **Monat** auf einen Tag im Raster. Unter jedem Tag zeigen bis zu drei Punkte, was er enthält: Buchungen und Anwesenheit, Hinweise und Nachrichten, Geld. Heute ist eingekreist.
+4. Geschlossene Tage sind grau und durchgestrichen.
+
+**Gut zu wissen**
+
+- In **Monat** zeigt die Liste darunter nur den gewählten Tag; in **Woche** listet sie die ganze Woche.
+- Die Pfeile springen je nach Ansicht um eine Woche oder einen Monat.
+- Der Kalender zeigt auch das Fälligkeitsdatum einer Zahlung und jede geplante Ausgabe, die fällig wird.
+
+**Siehe auch:** [Der Kalender-Tab](#der-kalender-tab) · [Schließtage und Feiertage](#schließtage-und-feiertage)
+
+<!-- anchor: user.reserve.calendar-decisions -->
+### Entscheidungen, die im Kalender auf Sie warten
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf deine Bestätigung**.
+
+<p><img src="images/user-reserve-calendar-decisions.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Kalender](https://fdittgen-png.github.io/deskilo/#/calendar). Jede wartende Entscheidung ist eine Karte mit einem kurzen Text und dem Datum, an dem sie gesendet wurde.
+2. Lesen Sie die Karte. Sie kann zeigen, wie viele Validierungen sie hat, zum Beispiel 1/2 Validierungen.
+3. Tippen Sie auf **Annehmen**, um zuzustimmen, oder auf das Kreuz, um abzulehnen.
+4. Öffnen Sie die Ansicht **Hinweise**, um die ganze Liste mit ihrem Verlauf zu sehen.
+
+**Gut zu wissen**
+
+- Die Schaltfläche **Hinweise** in der Leiste zeigt, wie viele Entscheidungen auf Sie warten.
+- Haben Sie geantwortet, verlässt die Entscheidung die Spitze und erscheint mit ihrem Ergebnis in der Liste.
+
+**Siehe auch:** [Wenn eine Buchung auf Bestätigung wartet](#wenn-eine-buchung-auf-bestätigung-wartet) · [Validierungsregeln](#validierungsregeln-bereich-für-bereich)
+
+<!-- anchor: user.reserve.calendar-filters -->
+### Den Kalender filtern
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Die Liste ist lang, und Sie suchen nur Buchungen. Die Chips unter der Leiste grenzen sie ein.
+
+<p><img src="images/user-reserve-calendar-filters.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf **Meine Buchungen**, um nur Buchungen zu behalten. Tippen Sie erneut darauf, um alles zu sehen.
+2. Oder wählen Sie Chips wie **Buchungen**, **Check-ins** und **Check-outs**; **Alle** zeigt jede Art.
+3. Um Ihre Auswahl rückgängig zu machen, tippen Sie auf **Filter zurücksetzen**, die Trichter-Schaltfläche.
+4. Eine Zeile über den Chips wiederholt, was Sie sehen, zum Beispiel Ich · Buchungen.
+
+**Gut zu wissen**
+
+- Mehrere Chips können gleichzeitig aktiv sein.
+- Welche Chips angeboten werden, hängt davon ab, was Ihr Space eingeschaltet hat, zum Beispiel Validierungen.
+
+**Siehe auch:** [Der Kalender-Tab](#der-kalender-tab) · [Agenda, Woche und Monat im Kalender](#agenda-woche-und-monat-im-kalender)
+
+<!-- anchor: user.reserve.calendar-file -->
+### Eine Buchung im eigenen Kalender speichern
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten eine Buchung im Kalender Ihres Smartphones oder Computers haben. Die App schreibt eine Standard-Kalenderdatei, die Google, Outlook, Apple und andere importieren.
+
+<p><img src="images/user-reserve-calendar-file.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie eine Ihrer eigenen Buchungen, in der Ansicht **Tag**, der Ansicht **Woche** oder im Kalender.
+2. Tippen Sie auf **Kalenderdatei speichern**.
+3. Lesen Sie die Vorschau: den **Termin**, **Wann**, **Ort**, **Status** und den Namen der **Datei**. Öffnen Sie **Dateiinhalt**, um die Datei selbst zu lesen.
+4. Tippen Sie auf **Speichern**. Die App speichert die Datei, meist in Ihrem Download-Ordner, und sagt Ihnen, wo; öffnen Sie sie mit Ihrem Kalender.
+
+**Gut zu wissen**
+
+- Die Datei enthält die Zeit, den Ort, den Namen des Workspace und ob die Buchung bestätigt oder storniert ist. Keinen Betrag, keinen Namen, keine E-Mail-Adresse.
+- Sie ist eine Momentaufnahme: Ändert sich die Buchung später, ändert sich eine bereits gespeicherte Datei nicht.
+- Hat sich die Buchung zwischen der Vorschau und **Speichern** geändert, wird nichts geschrieben, und die Vorschau aktualisiert sich.
+- Ihr Inhaber kann diese Funktion ausschalten.
+
+**Siehe auch:** [Eine Buchung ändern oder stornieren](#eine-buchung-ändern-oder-stornieren) · [Der Kalender-Tab](#der-kalender-tab)
+
+<!-- anchor: user.collaborate.overview -->
+## Zusammenarbeiten: Mitglieder, Anfragen, Nachrichten und das weitere Netzwerk
+
+In diesem Kapitel:
+- [Das Mitgliederverzeichnis](#das-mitgliederverzeichnis) und [die Seite eines Mitglieds](#die-seite-eines-mitglieds)
+- [Einem Mitglied schreiben](#einem-mitglied-schreiben)
+- [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen), [annehmen oder ablehnen](#eine-anfrage-annehmen-oder-ablehnen) und [Was auf Sie wartet](#was-auf-sie-wartet)
+- [Validierungsregeln, Bereich für Bereich](#validierungsregeln-bereich-für-bereich) (Administratoren und Inhaber)
+- [Nachrichten](#nachrichten), [neue Unterhaltungen und Gruppen](#eine-unterhaltung-oder-eine-gruppe-beginnen), [Nachrichtenanfragen](#nachrichtenanfragen) und [Blockieren](#jemanden-blockieren)
+- [Benachrichtigungen](#benachrichtigungen)
+- [Entdecken](#entdecken), [Ihr öffentliches Profil](#ihr-öffentliches-profil) und [Ihre Besuche als Gast](#ihre-besuche-als-gast)
+
+<!-- anchor: user.collaborate.directory -->
+### Das Mitgliederverzeichnis
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten sehen, wer in Ihrem Workspace ist, wer heute da ist und wer gleich kommt.
+
+<p><img src="images/user-collaborate-directory.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Mitglieder](https://fdittgen-png.github.io/deskilo/#/directory) im Menü (oder in der unteren Leiste, wenn Sie den klassischen Navigationsstil gewählt haben).
+2. Lesen Sie jede Karte: Foto oder Initialen, Name, Rollenabzeichen (**Inhaber** oder **Administrator:in**; einfache Mitglieder tragen keines), die Statuszeile der Person und zwei kleine Chips.
+3. Lesen Sie die Chips. Der erste ist die Buchung: **Eingecheckt** mit dem Platz, **Jetzt reserviert** oder die nächste Buchung (Tag, Uhrzeit, Platz). Der zweite sagt **Online** oder wann die Person zuletzt gesehen wurde.
+4. Tippen Sie auf eine Karte, um [die Seite des Mitglieds](#die-seite-eines-mitglieds) zu öffnen.
+5. Ziehen Sie die Liste nach unten, um sie zu aktualisieren.
+
+**Gut zu wissen**
+
+- Es werden nur aktive Mitglieder aufgelistet, in alphabetischer Reihenfolge.
+- Administratoren und Inhaber sehen unter dem Namen auch die E-Mail-Adresse jeder Person. Mitglieder nicht: Zwischen Mitgliedern bleibt der Kontakt freiwillig.
+- Hat Ihr Inhaber eine WhatsApp-Gruppe eingerichtet, steht über der Liste eine Zeile **WhatsApp-Gruppe öffnen**.
+
+**Siehe auch:** [Die Seite eines Mitglieds](#die-seite-eines-mitglieds) · [Einem Mitglied schreiben](#einem-mitglied-schreiben)
+
+<!-- anchor: user.collaborate.member-page -->
+### Die Seite eines Mitglieds
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten wissen, ob ein Kollege oder eine Kollegin da ist, wann er oder sie als Nächstes kommt und wie Sie ihn oder sie erreichen.
+
+<p><img src="images/user-collaborate-member-page.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Mitglieder](https://fdittgen-png.github.io/deskilo/#/directory) auf eine Karte.
+2. Lesen Sie die obere Karte: Foto, Rolle, Anwesenheit und die eigene Statuszeile der Person. Weiter unten sehen Sie, wie lange sie schon Mitglied ist.
+3. Lesen Sie **Gerade jetzt**: ob die Person eingecheckt ist, in dieser Minute eine Buchung hat oder wann ihre nächste Buchung ist. Tippen Sie auf eine Buchung, um sie zu öffnen.
+4. Nutzen Sie die Schaltflächen: **Nachrichten**, **Auf WhatsApp schreiben** und, für Administratoren, **E-Mail**.
+
+**Gut zu wissen**
+
+- **Kontakt** zeigt eine WhatsApp-Nummer nur, wenn die Person sich entschieden hat, sie zu teilen.
+- Wo Sie sie sehen dürfen, stehen Geldwerte (offene Rechnungen, Zahlungen, der laufende Monat) auf derselben Seite. Ihre eigenen sehen Sie immer; die einer anderen Person nur mit dem Recht, Finanzen einzusehen.
+- Administratoren und Inhaber erhalten außerdem einen Bereich **Verwalten** mit **Mitgliedschaft**, **Buchungsregeln**, **Abrechnung** und **Ausweise & Zugang**, wobei jede Zeile ihren aktuellen Wert zeigt.
+
+**Siehe auch:** [Einem Mitglied schreiben](#einem-mitglied-schreiben) · [Die Aktionen des Mitglieds](#die-aktionen-des-mitglieds)
+
+<!-- anchor: user.collaborate.contact -->
+### Einem Mitglied schreiben
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten einen Kollegen oder eine Kollegin etwas fragen, ohne den Workspace zu verlassen.
+
+<p><img src="images/user-collaborate-contact.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Mitglieder](https://fdittgen-png.github.io/deskilo/#/directory), tippen Sie auf eine Karte, um die Seite des Mitglieds zu öffnen, und tippen Sie dann auf **Nachrichten**.
+2. Schreiben Sie in das Feld **Deine Nachricht**.
+3. Tippen Sie auf **Senden**.
+
+**Gut zu wissen**
+
+- Nachrichten lesen sich von der ältesten zur neuesten, unter Tagestrennern. Ein Haken unter Ihrer Nachricht bedeutet, dass sie zugestellt wurde; ein blauer Doppelhaken bedeutet, dass sie gelesen wurde.
+- Tippen Sie auf **…** neben einer Sprechblase für die Nachrichtenaktionen (mit einem Emoji reagieren, markieren, kopieren, innerhalb von 15 Minuten bearbeiten, weiterleiten, löschen). Die Büroklammer hängt eine Reservierung oder einen Space an; die andere Person sieht einen Link, der sie öffnet.
+- Dafür braucht Ihr Workspace die Funktion **Mitglieder-Benachrichtigungen**.
+
+**Siehe auch:** [Nachrichten](#nachrichten)
+
+<!-- anchor: user.collaborate.events -->
+### Ereignisse und Bestätigungen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten sehen, was im Workspace geschehen ist und was auf eine Antwort wartet.
+
+<p><img src="images/user-collaborate-events.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der oberen Leiste auf **Ereignisse** (das Ablagesymbol mit einer Zahl) oder öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events) im Menü. Die Seite öffnet sich auf **Hinweise**.
+2. Lesen Sie oben **Wartet auf deine Bestätigung**: Anfragen, die Sie brauchen.
+3. Lesen Sie den Verlauf darunter. Jede Zeile sagt, was geschehen ist; eine Sanduhr bedeutet ausstehend, ein grüner Haken bedeutet bestätigt. Geldzeilen zeigen, wer sie validiert hat und wann.
+4. Grenzen Sie den Verlauf mit den Chips ein: **Alle**, **Nachrichten**, **Reservierung**, **Check-ins**, **Finanzen**, **Mitglieder**, dann **Ungelesen** oder **Gelesen**.
+5. Tippen Sie neben **Gruppieren nach** auf **Typ**, **Datum** oder **Mitglied**, um den Verlauf in Gruppen zu falten; tippen Sie auf das Gruppensymbol, um zur flachen Liste zurückzukehren.
+
+**Gut zu wissen**
+
+- Ein Ereignis entsteht, sobald etwas gebucht, geändert oder storniert wird, eine Zahlung oder Ausgabe erfasst wird, zusätzliche halbe Tage oder eine Löschung beantragt werden, sich eine Rolle ändert oder jemand beitritt.
+- Mitglieder sehen ihre eigenen Ereignisse; Administratoren und Inhaber sehen die aller.
+- Ihr Filter wird gemerkt. Die Zahl an der Schaltfläche Ereignisse zählt neue Mitteilungen und auf Sie wartende Entscheidungen.
+- **Meine Nachrichten öffnen** oben führt Sie zu Ihren [Unterhaltungen](#nachrichten).
+
+**Siehe auch:** [Eine Anfrage annehmen oder ablehnen](#eine-anfrage-annehmen-oder-ablehnen) · [Validierungsregeln](#validierungsregeln-bereich-für-bereich)
+
+<!-- anchor: user.collaborate.accept -->
+### Eine Anfrage annehmen oder ablehnen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Jemand hat Sie gebeten, etwas zu bestätigen, und Sie möchten antworten.
+
+<p><img src="images/user-collaborate-accept.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events).
+2. Suchen Sie die Anfrage unter **Wartet auf deine Bestätigung**.
+3. Tippen Sie auf **Annehmen** oder auf das rote Kreuz, um **Ablehnen** zu wählen.
+
+**Gut zu wissen**
+
+- Wenn ein Administrator etwas für Sie tut (einen Platz bucht, Ihre Zahlung erfasst), bleibt es ausstehend, bis Sie bestätigen. Was Sie für sich selbst tun, braucht nie Ihre eigene Bestätigung.
+- Niemand bestätigt die eigene Anfrage: Sie wartet auf eine andere Person oder auf die Ausnahme der Regel ([Validierungsregeln](#validierungsregeln-bereich-für-bereich)).
+- Nach sieben Tagen ohne Antwort wird ein Vorgang, der etwas anlegt oder ändert (etwa eine Buchung, die ein Administrator für Sie vornimmt), automatisch bestätigt; eine Löschung oder eine Belastung läuft stattdessen ab.
+- Eine Zeile kann einen Fortschritt wie „1/2 Validierungen“ zeigen, wenn die Regel mehrere verlangt.
+
+**Siehe auch:** [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen) · [Erforderliche Validierungen](#erforderliche-validierungen)
+
+<!-- anchor: user.collaborate.attention -->
+### Was auf Sie wartet
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten einen Ort, der antwortet: Braucht mich heute etwas?
+
+**Schritte**
+
+1. Öffnen Sie [Was auf Sie wartet](https://fdittgen-png.github.io/deskilo/#/attention).
+2. Lesen Sie die Zeilen der Reihe nach: Jede ist eine Entscheidung (zum Beispiel eine Anfrage zur Bestätigung oder eine Person, die auf Aufnahme wartet), die teuersten Verzögerungen zuerst.
+3. Tippen Sie auf eine Zeile, um sie zu erledigen.
+
+**Gut zu wissen**
+
+- Dieser Bildschirm existiert nur, wenn Ihr Workspace die Funktion **Was auf Sie wartet** eingeschaltet hat; ohne sie führt die Adresse zurück zur Startseite.
+- Mehrere gleiche Entscheidungen erscheinen als eine Zeile. Wartet nichts, sagt der Bildschirm **Nichts wartet auf Sie**.
+
+**Siehe auch:** [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen)
 
 <!-- anchor: user.validation.overview -->
-### Prüfregeln, Domäne für Domäne
+### Validierungsregeln, Bereich für Bereich
 
-Jede Art von Handlung — ein Beitritt, eine gelöschte Reservierung, eine
-ausgebuchte Rechnung, gewährte Zusatz-Halbtage — hat ihre eigene Regel,
-die sagt, ob ein Mensch entscheiden muss, bevor sie wirkt, und wer. Eine
-Entscheidung ist immer ein Ereignis: wer, wann und worüber. Nichts wird
-still geprüft.
+**Zielgruppe:** Inhaber
+
+Sie entscheiden für jede Art von Handlung, ob zuerst eine Person sie bestätigen muss, und wer.
+
+<p><img src="images/user-validation-overview.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) (sie stehen auch in den Einstellungen).
+2. Lesen Sie die drei Gruppen: **Finanzen**, **Buchungen** und **Personen und Rollen**. Jede nennt, was unverändert bleibt, bis die Handlung angenommen ist.
+3. Lesen Sie eine Karte von links nach rechts: Jemand fragt an, die Personen, die validieren dürfen, es tritt in Kraft. Eine Karte sagt **Erbt den Standard** oder **Angepasst**.
+4. Tippen Sie auf eine Karte, um ihre Regel zu bearbeiten. Tippen Sie auf **Standardregel**, um zu ändern, was alle anderen Karten erben.
+
+**Gut zu wissen**
+
+- Eine Regel deckt Handlungen ab wie Zahlungen, Ausgaben, Leistungen, zusätzliche halbe Tage, Buchungslöschungen, Reservierungen, Rollenwechsel, neue Mitglieder, Rechnungen, Erstattungen und Abonnementänderungen.
+- Jede Entscheidung ist ein Ereignis: wer entschieden hat, wann und worüber. Nichts wird stillschweigend validiert.
+- Das Banner oben gilt für jede Regel: **Niemand gibt das Eigene frei**.
+- Sie brauchen die Berechtigung, Validierungsregeln zu konfigurieren; Inhaber haben sie immer.
+
+**Siehe auch:** [Erforderliche Validierungen](#erforderliche-validierungen) · [Die Rollenmatrix](#die-rollenmatrix)
 
 <!-- anchor: user.validation.required-count -->
-### Erforderliche Bestätigungen
+### Erforderliche Validierungen
 
-Wie viele Personen bestätigen müssen, bevor die Handlung durchgeht. Eine
-ist der Normalfall; zwei bei Geld. Höher zu setzen als die Zahl derer,
-die bestätigen *dürfen*, wird abgelehnt: eine Regel, die niemand
-erfüllen kann, blockiert die Handlung für immer.
+**Zielgruppe:** Inhaber
+
+Sie legen fest, wie viele Personen bestätigen müssen, bevor die Handlung durchgeht.
+
+<p><img src="images/user-validation-required-count.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf eine Karte.
+2. Tippen Sie neben **Erforderliche Validierungen** auf Plus oder Minus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine ist der Normalfall; zwei sind bei Geld üblich.
+- Verlangen Sie mehr Validierungen, als es Personen gibt, die sie geben dürfen, warnt das Blatt **Nicht genügend berechtigte Validierer.** und speichert nicht: Eine Regel, die niemand erfüllen kann, würde die Handlung für immer blockieren.
+
+**Siehe auch:** [Wer validieren darf](#wer-validieren-darf)
 
 <!-- anchor: user.validation.who-may -->
-### Wer bestätigen darf
+### Wer validieren darf
 
-Entweder **jede Administratorin** oder eine benannte Liste, die du
-wählst. Eine benannte Liste überlebt es, wenn jemand später
-Administratorin wird — Administratorin zu sein fügt dich nicht still
-einer Liste hinzu, die jemand bewusst gewählt hat.
+**Zielgruppe:** Inhaber
+
+Sie legen fest, welche Personen die Bestätigung geben dürfen.
+
+<p><img src="images/user-validation-who-may.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf eine Karte.
+2. Wählen Sie unter **Wer prüft** **Admins**, **Benannte Personen** oder **Alle Mitglieder**.
+3. Lassen Sie bei **Admins** **Admins dürfen validieren** eingeschaltet und wählen Sie **Alle Admins** oder tippen Sie auf die Namen bestimmter Administratoren. Schalten Sie es aus, validieren nur Inhaber.
+4. Wählen Sie bei **Benannte Personen** genau die Personen, die Sie möchten.
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Inhaber darf immer validieren.
+- Eine benannte Liste ist eine bewusste Entscheidung: Wer später Administrator wird, wird ihr nicht hinzugefügt.
+- Die Auswahl des Geltungsbereichs erscheint, wenn Ihr Workspace die Funktion Validierungsbereiche eingeschaltet hat; sonst arbeitet eine Regel mit Administratoren.
+
+**Siehe auch:** [Ein Inhaber ist erforderlich](#ein-inhaber-ist-erforderlich)
 
 <!-- anchor: user.validation.owner-required -->
-### Eine Eigentümerin ist erforderlich
+### Ein Inhaber ist erforderlich
 
-Mindestens eine der Bestätigungen muss von einer Eigentümerin kommen,
-was auch immer die Zahl sagt. Für die Fälle, in denen die Zustimmung
-einer Administratorin allein nicht reichen soll.
+**Zielgruppe:** Inhaber
+
+Für manche Handlungen genügt die Zustimmung eines Administrators allein nicht.
+
+<p><img src="images/user-validation-owner-required.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf eine Karte.
+2. Schalten Sie **Inhaber muss immer validieren** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Mindestens eine der Bestätigungen kommt dann von einem Inhaber, was auch immer die geforderte Anzahl sagt. Die Karte zeigt „und der Inhaber, immer“.
+
+**Siehe auch:** [Erforderliche Validierungen](#erforderliche-validierungen) · [Ein Inhaber darf die eigene Anfrage bestätigen](#ein-inhaber-darf-die-eigene-anfrage-bestätigen)
 
 <!-- anchor: user.validation.owner-self -->
-### Eine Eigentümerin darf die eigene Anfrage bestätigen
+### Ein Inhaber darf die eigene Anfrage bestätigen
 
-Aus wartet die eigene Anfrage einer Eigentümerin trotzdem auf jemand
-anderen. An gehört sie ihr. Dieser Schalter entscheidet, ob ein Raum mit
-einer einzigen Person überhaupt funktioniert.
+**Zielgruppe:** Inhaber
+
+Sie führen einen Space allein und müssen Ihre eigenen Anfragen selbst erledigen können.
+
+<p><img src="images/user-validation-owner-self.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf eine Karte.
+2. Schalten Sie **Die Inhaberschaft darf das Eigene freigeben** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ist es aus, wartet die eigene Anfrage eines Inhabers auf jemand anderen. Ist es an, erledigt der Inhaber sie selbst.
+- Das ist allein die Ausnahme des Inhabers: Ein Administrator validiert nie seine eigene Handlung.
+- Der Schalter erscheint, wenn Ihr Workspace die Funktion Validierungskette eingeschaltet hat.
+
+**Siehe auch:** [Die eigene Anfrage eines Inhabers automatisch validieren](#die-eigene-anfrage-eines-inhabers-automatisch-validieren)
 
 <!-- anchor: user.validation.sequential -->
-### Eine nach der anderen
+### Nacheinander
 
-Bestätigungen werden in der Reihenfolge der Liste gesammelt statt in
-beliebiger. Langsamer, und die richtige Form, wenn die zweite Person die
-Entscheidung der ersten sehen soll.
+**Zielgruppe:** Inhaber
+
+Sie möchten die Bestätigungen der Reihe nach einholen, damit die zweite Person die Entscheidung der ersten sieht.
+
+<p><img src="images/user-validation-sequential.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf eine Karte.
+2. Schalten Sie **Nacheinander** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die nächste Validierung wird erbeten, sobald die vorherige durch ist, und der Validierungsverlauf nummeriert jeden Schritt.
+- Es ist langsamer; nutzen Sie es, wenn die Reihenfolge zählt.
+- Bei Geldregeln können Sie zusätzlich **Nur über diesem Betrag** festlegen: Kleinere Beträge gelten sofort.
+
+**Siehe auch:** [Erforderliche Validierungen](#erforderliche-validierungen)
 
 <!-- anchor: user.validation.auto-validate-owner -->
-### Eigene Anfrage einer Eigentümerin automatisch bestätigen
+### Die eigene Anfrage eines Inhabers automatisch validieren
 
-Die Anfrage wird **bereits erledigt** eingetragen statt erst gestellt
-und dann bestätigt — so wird niemand über eine geschlossene Frage
-benachrichtigt. Das Ereignis existiert weiterhin, als vom System
-entschieden markiert, sodass die Prüfspur ungebrochen bleibt.
+**Zielgruppe:** Inhaber
+
+Sie möchten keine Benachrichtigung zu einer Frage, die bereits geklärt ist.
+
+<p><img src="images/user-validation-auto-validate-owner.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf die Karte **Buchungslöschung**.
+2. Schalten Sie **Inhaber löschen ohne Validierung** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der eigene Löschantrag eines Inhabers erledigt sich dann selbst und bleibt im Verlauf als **Automatisch bestätigt** markiert, sodass die Spur lückenlos bleibt.
+- Dieser Schalter existiert nur bei der Regel **Buchungslöschung** und ist standardmäßig aus.
+
+**Siehe auch:** [Die eigene Anfrage eines Administrators automatisch validieren](#die-eigene-anfrage-eines-administrators-automatisch-validieren)
 
 <!-- anchor: user.validation.auto-validate-admin -->
-### Eigene Anfrage einer Administratorin automatisch bestätigen
+### Die eigene Anfrage eines Administrators automatisch validieren
 
-Dasselbe für Administratorinnen, und bewusst **unabhängig** vom
-Eigentümer-Schalter: jede Eigentümerin trägt auch die
-Administratorenrolle, ein einziger Schalter hätte also nie „Eigentümer
-ja, Admins nein" ausdrücken können.
+**Zielgruppe:** Inhaber
 
-## 8. Für Inhaber: Editor & Einstellungen
+Sie möchten, dass Administratoren ihre eigenen Buchungen ohne Warten löschen.
 
-Die Administration wohnt in drei Abschnitten der **Einstellungen**, und jeder Eintrag erscheint nur für die, die die Berechtigung halten, die er verlangt (#1307): **Dieser Space** — *Workspace* (die Workspace-Einstellungen), *Verfügbarkeit*, *Abrechnung*, *Dienste*, *Zubehör*, *Abrechnung & Berichte* (der Rechnungs-Hub mit Berichtseditor und Mahnregeln in seiner Kopfzeile), *Nummernkreise*, *Zahlungshinweise*, *Validierungsregeln* und *Funktionen*; **Verwaltung** — *Mitglieder & Tarife*, *Online-Zahlungen*, *RFID-/NFC-Badges*, *Standorte* und *Workspace-ID & QR*; **Governance** — *Rollenverwaltung*, *Ausrollung* und die Umgebung des Space (manche hängen an ihrer Funktion: *Zubehör*, *Online-Zahlungen*, *RFID-/NFC-Badges*…). Eine Regel: **der Einstellungs-Eintrag einer Funktion erscheint nur, solange sie aktiviert ist** — *Online-Zahlungen* in **Funktionen** aus, und ihr Konfigurationsbildschirm verschwindet (und kommt beim Reaktivieren zurück). **Funktionen** selbst ist immer da.
+<p><img src="images/user-validation-auto-validate-admin.de.b8fa17aa9.jpg" width="280"></p>
 
-**Einen Raum Schritt für Schritt anlegen (#1303).** Die Einrichtung führt durch **Name → Wo → Beginnen mit → Bestätigen**. *Wo* enthält das Land (von diesem Gerät vorgeschlagen), die Währung, die Zeitzone, ob der Raum zum Ausprobieren dient oder echt ist, und das Dev/Prod-Paar; *Beginnen mit* ist die Vorlagengalerie. **Zurück** behält alles bereits Eingegebene. *Vorgeschlagene Einstellungen verwenden* führt gleich im ersten Schritt zu **Bestätigen**, das genau auflistet, was angelegt wird, bevor **Workspace erstellen** kommt. Lässt sich eine Vorlage nicht anwenden, bietet der Bestätigungsschritt **Ohne Vorlage erstellen** an — niemand bleibt hängen. Noch bevor etwas angelegt wird, nennt **Bestätigen** auch, was die gewählte Vorlage einrichtet (*Richtet ein: Raum und Plan, Wortwahl…*). Kann dieser Server die Vorlage gar nicht anwenden, steht das genau dort: **Workspace erstellen** bleibt gesperrt, und **Ohne Vorlage erstellen** wird stattdessen angeboten.
+**Schritte**
 
-Auf kleinen Bildschirmen, bei großer Schrift oder geöffneter Tastatur scrollen das Erstellungsformular und seine Aktionen bei Bedarf gemeinsam. Der aktuelle Schritt bleibt lesbar und Zurück bewahrt die Eingaben (#1653).
+1. Tippen Sie in [Validierungsregeln](https://fdittgen-png.github.io/deskilo/#/validation) auf die Karte **Buchungslöschung**.
+2. Schalten Sie **Admins löschen ohne Validierung** ein.
+3. Tippen Sie auf **Speichern**.
 
-Zurück und Escape führen zum vorherigen Schritt. Beim Verlassen eines ausgefüllten Entwurfs können Sie weiterbearbeiten oder verwerfen; ein unberührtes Formular wird direkt geschlossen. Vorlagenfilter scrollen horizontal und lassen Platz für Ergebnisse (#1653).
+**Gut zu wissen**
 
-Workspace erstellen behält beim Senden seine Beschriftung und nimmt nur eine Anfrage gleichzeitig an. Bleibt das Ergebnis unbestätigt, erhält eine Meldung im Formular die Eingaben für denselben erneuten Versuch; das Verlassen der Ansicht storniert keine Serveränderung (#1653).
+- Er ist unabhängig vom Schalter für Inhaber: Jeder Inhaber ist auch Administrator, ein einziger Schalter könnte also nicht „Inhaber ja, Administratoren nein“ sagen.
+- Standardmäßig aus und nur für Buchungslöschungen.
 
-Vorgeschlagene Schritte gelten als übersprungen, nicht als abgeschlossen. Auf kleinen Bildschirmen öffnet die Schrittüberschrift die Übersicht. Zurück bewahrt die Eingaben; Übergänge beachten reduzierte Bewegung (#1653).
+**Siehe auch:** [Die eigene Anfrage eines Inhabers automatisch validieren](#die-eigene-anfrage-eines-inhabers-automatisch-validieren)
 
-**Land, Währung, Zeitzone (#711).** Die Länderauswahl deckt jetzt die 32 Länder ab, für die die App Steuern erklären kann (EU-27, Schweiz, Norwegen, Vereinigtes Königreich, USA, Kanada). Die Währung ist eine **Auswahl** der Codes, die die App formatieren kann — jede mit Symbol und der richtigen Zahl Nachkommastellen: der Yen hat keine, der Dinar drei, und jeder Betrag, jede Rechnung und jede Online-Zahlung hält sich daran. Die Zeitzone ist eine **durchsuchbare Liste** der IANA-Zonen, die die Uhr installieren kann; ein Tippfehler lässt sich nicht mehr speichern. **Ein neuer Space beginnt im Land deines Geräts (#1303):** Währung und Zeitzone folgen, alle drei vor dem Anlegen änderbar — `fr_CH` schlägt die Schweiz vor, ein auf Deutsch gestelltes Telefon Deutschland, und was der Katalog nicht kennt, Frankreich.
+<!-- anchor: user.collaborate.messages -->
+### Nachrichten
 
+**Zielgruppe:** Alle
 
-### Der Space-Editor
+Sie möchten alle Ihre Unterhaltungen in einer Liste, gleich zu welchem Space oder Server sie gehören.
 
-Den **Editor** öffnest du aus der Kopfzeile des Reservieren-Hubs. Der **Space-Editor** listet die Etagen — ziehen zum Umordnen, das **Ebenen-Icon** markiert eine Etage *als Ganzes buchbar*, das **⋮**-Menü benennt um oder löscht, **+ Etage hinzufügen** erweitert. Eine Etage öffnen und mit der Werkzeugleiste zeichnen — **Auswahl · Büro · Tisch · Platz · Bild · Löschen**:
+<p><img src="images/user-collaborate-messages.de.b8fa17aa9.jpg" width="280"></p>
 
-- Ein **Büro** bekommt Namen, *als Ganzes buchbar* und einen **Preis je Halbtag**.
-- Ein **Tisch** bekommt Namen, dieselbe Ganztisch-Option und einen eigenen **Preis je Halbtag**.
-- Ein **Platz** bekommt Namen, **Sitzrichtung** (↑ → ↓ ←), optionalen **Stuhltyp**, sein **Zubehör** (je mit optionalem Halbtags-Aufpreis) und **Gesperrt (Wartung)**. Sein Feld **NFC/RFID-Tag** nimmt die UID des Stuhl-Tags in Hex — per Tag-Taste gelesen oder getippt —, damit ein Tipp auf den Stuhl diesen Sitz auflöst (§4a).
-- **Bild** platziert eine skalierbare Illustration; das Foto-Icon setzt das **Hintergrundfoto** der Ebene.
-- Einen Raum mit Historie zu löschen ist Sache der **Inhaberin**, und mit aktivem *Räume mit Historie löschen* (Standard: an) geht es einfach: Buchungen, die den Raum referenzierten, behalten eine Textkopie dessen, was er war, und jede noch reservierte Buchung darauf wird automatisch storniert. Ist die Funktion aus, muss ein Raum mit künftigen Reservierungen erst von Hand geräumt werden.
+**Schritte**
 
-<p><img src="images/space-editor-floors.jpg" width="240"></p>
+1. Öffnen Sie [Nachrichten](https://fdittgen-png.github.io/deskilo/#/me?tab=messages) in Ich.
+2. Lesen Sie jede Zeile: den Titel, den Zusammenhang (zum Beispiel „In“ einem Space, „Von Person zu Person“, „Gruppe“), die letzte Nachricht und die Zahl der ungelesenen.
+3. Filtern Sie mit **Alle**, **Ungelesen** oder **Archiviert**, öffnen Sie **Markiert** für die Nachrichten, die Sie markiert haben, oder tippen Sie auf die Lupe, um zu suchen.
+4. Halten Sie eine Zeile gedrückt, um sie mit **Oben anheften**, **Benachrichtigungen stumm**, **Als ungelesen markieren** oder **Archivieren** zu bearbeiten.
+5. Tippen Sie auf eine Zeile, um die Unterhaltung zu öffnen.
 
-*Die Etagenliste des Raumeditors: ziehen zum Umordnen, das Ebenen-Icon markiert eine als Ganzes buchbare Etage.*
+**Gut zu wissen**
 
-<p><img src="images/space-editor-canvas.jpg" width="240"></p>
+- Unterhaltungen von Ihren anderen verbundenen Servern erscheinen in derselben Liste, mit dem Namen des Servers.
+- Eine Nachricht, die Sie geschrieben haben, zeigt einen Haken, wenn sie zugestellt ist, und einen blauen Doppelhaken, sobald sie gelesen wurde.
+- Eine archivierte Unterhaltung behält ihren Verlauf. Eine stummgeschaltete bleibt still, wird aber weiter mitgezählt.
+- Aus dem Workspace führt **Meine Nachrichten öffnen** (in den Hinweisen) hierher.
 
-*Eine Etage auf dem Raster mit der unteren Werkzeugleiste — Auswahl · Büro · Tisch · Platz · Bild · Löschen.*
+**Siehe auch:** [Einem Mitglied schreiben](#einem-mitglied-schreiben) · [Eine Unterhaltung oder eine Gruppe beginnen](#eine-unterhaltung-oder-eine-gruppe-beginnen)
 
-<p><img src="images/space-editor-seat.jpg" width="240"></p>
+<!-- anchor: user.collaborate.messages-new -->
+### Eine Unterhaltung oder eine Gruppe beginnen
 
-*Das Blatt eines Sitzes: Name, Sitzrichtung, Stuhltyp, Zubehör, das NFC/RFID-Tag-Feld und der Gesperrt-Schalter.*
+**Zielgruppe:** Alle
 
-### Workspace-ID & QR
+Sie möchten jemandem Neuen schreiben oder mehreren Personen auf einmal.
 
-Die rollengebundenen Einladungen (§2): Mitglieder-Einladung = die Workspace-ID (ersetzbar, kopierbar, QR als PNG), Admin-Einladung = persönliche Einmal-Codes.
+<p><img src="images/user-collaborate-messages-new.de.b8fa17aa9.jpg" width="280"></p>
 
-<p><img src="images/workspace-id-qr.jpg" width="240"></p>
+**Schritte**
 
-*Workspace-ID & QR: die Mitgliedereinladung (QR + ID — kopieren, ändern, als PNG teilen, jemanden einladen) und der Admin-Einladungs-Tab.*
+1. Tippen Sie in [Nachrichten](https://fdittgen-png.github.io/deskilo/#/me?tab=messages) auf **Neue Unterhaltung**.
+2. Geben Sie unter **Erreichbare Personen suchen** einen Namen ein und tippen Sie auf die Lupe.
+3. Tippen Sie auf die Person; der Chat öffnet sich.
+4. Für eine Gruppe tippen Sie stattdessen auf **Neue Gruppe**, geben ihr einen **Gruppenname**, wählen **Personen hinzufügen** und tippen auf **Gruppe erstellen**.
 
-<!-- anchor: user.workspace.code -->
-#### Die Raum-ID
+<p><img src="images/user-collaborate-messages-group.de.b8fa17aa9.jpg" width="280"></p>
 
-Vier bis zwanzig Buchstaben oder Ziffern, DesKilo-weit eindeutig. Sie ist
-zugleich der lesbare Name des Raums und die **Walk-in-Einladung**: wer
-sie hat, kann um Beitritt bitten, und jeder Beitritt wartet weiterhin auf
-die Bestätigung einer Administratorin. Änderst du sie, hört die alte
-sofort auf zu wirken — drucke den QR neu.
+**Gut zu wissen**
 
-### Verfügbarkeit
+- Sie finden Personen, die sich dafür entschieden haben, erreichbar zu sein: Jede Person entscheidet unter **Wer ein Gespräch mit mir beginnen darf**.
+- Tippen Sie in einer Gruppe auf ihren Namen, um die Mitglieder zu sehen; ein Administrator kann Personen hinzufügen oder entfernen, die Gruppe umbenennen oder erlauben, dass nur Administratoren schreiben (**Nur Admins dürfen schreiben**). Jeder kann **Gruppe verlassen**.
+- Eine lange Nachricht ist auf 4000 Zeichen begrenzt.
 
-#### Öffnungstage und Granularität
+**Siehe auch:** [Nachrichtenanfragen](#nachrichtenanfragen)
 
-- **Öffnungstage** — Chips Mo…So.
-- **Buchungsgranularität** — *freier Zeitraum*, *5/15/30/60-Minuten-Raster*, *Halbtage (Vormittag & Nachmittag)*, *nur ganze Tage* oder *echte Uhrzeiten* (exakt von–bis, Halb-/Ganztag als Kurzwahl).
+<!-- anchor: user.collaborate.message-requests -->
+### Nachrichtenanfragen
 
-<p><img src="images/availability-basics.jpg" width="240"></p>
+**Zielgruppe:** Alle
 
-*Öffnungstage und die Wahl der Granularität — wie eine Buchung aussehen darf, beginnt hier.*
+Jemand, von dem Sie nicht hören wollten, hat Ihnen geschrieben, und Sie entscheiden, was geschieht.
 
-#### Arbeitszeiten
+**Schritte**
 
-- **Arbeitszeiten** — Tagesbeginn, Halbtagsgrenze, Tagesende (Standard 08:00 / 12:00 / 17:00). Halb- und Ganztags-Slots überall — Buchen, Einchecken, Abrechnen — folgen diesen Zeiten; unter *echten Uhrzeiten* legst du auch fest, wie viele Stunden als halber und ganzer Tag abrechnen.
-- **Schließtage** — datierte Ausnahmen, per **+**.
+1. Öffnen Sie [Nachrichten](https://fdittgen-png.github.io/deskilo/#/me?tab=messages). Eine Karte **Nachrichtenanfragen** erscheint über Ihren Unterhaltungen, wenn es eine gibt.
+2. Lesen Sie die erste Nachricht.
+3. Tippen Sie auf **Annehmen**, um daraus eine Unterhaltung zu machen, auf **Ignorieren**, um sie auszublenden, oder auf **Blockieren**, um jeden Kontakt zu beenden.
 
-<p><img src="images/availability-hours.jpg" width="240"></p>
+**Gut zu wissen**
 
-*Die Arbeitszeiten: Tagesbeginn, Halbtagsgrenze, Tagesende — jeder Halbtags- und Ganztags-Slot folgt ihnen.*
+- Die Karte sagt es deutlich: Diese Personen gehören nicht zu denen, von denen Sie sich ansprechen lassen wollten, und sie erfahren nicht, was Sie entscheiden.
+- Wer Ihnen zuerst schreiben darf, legen Sie in Ich unter **Wer ein Gespräch mit mir beginnen darf** fest.
 
-#### Buchungsregeln
+**Siehe auch:** [Jemanden blockieren](#jemanden-blockieren) · [Wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann)
 
-- **Buchungsregeln** — vier Einträge, die die Regeln aus §4b lockern oder straffen (der Abschnitt folgt der Funktion *Buchungsregeln*); die zwei Schalter sind **standardmäßig aus**:
-  - **Vergangene Buchungen erlauben** — Mitglieder können eine bereits beendete Buchung nachtragen (gestern und früher). Aus, werden solche Buchungen abgelehnt; ein Fenster früher am *selben Tag* zu buchen bleibt immer erlaubt. Einschalten für Spaces, die Anwesenheit nachträglich erfassen.
-  - **Admins dürfen Mitglieder auschecken** — ein Admin kann den laufenden Check-in eines Mitglieds beenden. Aus, ist der Check-out strikt persönlich. Nützlich, wo das Personal abends den Raum schließt.
-  - **Außerhalb der Öffnungszeiten** — eine Frage, vier sich gegenseitig ausschließende Antworten, auf jeder Granularität dieselben: *Was ist außerhalb des Arbeitstags möglich?* **Aus** — nichts: keine Vorausbuchung, kein Spontan-Check-in, und eine Buchung über das Tagesende hinaus (oder vor der Öffnung) wird ebenfalls abgelehnt. **Nur spontan** — der Spontan-Check-in bleibt möglich, Abend-Überstunden bis Mitternacht eingeschlossen, während Vorausbuchen außerhalb der Zeiten abgelehnt wird; hierin ist der alte Schalter **Minutenbuchungen innerhalb der Arbeitszeiten** aufgegangen, und Spaces, die ihn anhatten, lesen sich so. **Gratis** — erlaubt, nie gezählt und nie berechnet (reine Anwesenheitsinformation). **Berechnet** (der **Standard**) — wie gewöhnliche Nutzung gezählt, außer an einem Tag, an dem das Mitglied schon eine reguläre Buchung innerhalb der Zeiten hält: der Teil außerhalb fährt dann gratis mit.
-  - **Gleichzeitige Reservierungen pro Mitglied** — wie viele sich überschneidende Buchungen ein Mitglied halten darf, Check-ins eingeschlossen. **1** standardmäßig: ein Platz zur Zeit. Eine Inhaberin oder ein Admin kann einem einzelnen Mitglied in *Mitglieder & Tarife* ein höheres Kontingent gewähren (nie sich selbst), und diese persönliche Erlaubnis sticht diese Zahl.
+<!-- anchor: user.collaborate.block -->
+### Jemanden blockieren
 
-<p><img src="images/availability-outside.jpg" width="240"></p>
+**Zielgruppe:** Alle
 
-*Die Regel für außerhalb der Öffnungszeiten: eine Frage, vier sich gegenseitig ausschließende Antworten — auf jeder Granularität dieselben.*
+Sie möchten, dass eine Person Sie nicht mehr sieht und Ihnen nicht mehr schreibt.
 
-#### Buchungsgrenzen
+<p><img src="images/user-collaborate-me-privacy--blocked.de.b8fa17aa9.jpg" width="280"></p>
 
-  Direkt darunter stehen die **Buchungsgrenzen** — drei Zahlen, die der Server immer schon durchgesetzt hat und die die App nun einstellen kann:
+**Schritte**
 
-  - **Vorausbuchungs-Horizont** — wie viele Tage im Voraus eine Buchung beginnen darf (Standard **90**); darüber hinaus wird sie mit Begründung abgelehnt.
-  - **Mindestdauer** — die kürzeste akzeptierte Buchung (Standard **30 Minuten**), bei jeder Granularität. Genau deshalb wird eine Ankunft um 11:45 für die 12:00-Grenze als zu kurz abgelehnt.
-  - **Höchstdauer** — die längste akzeptierte (Standard **24 Stunden**). Da eine Buchung an ihrem Starttag endet, ist ein ganzer Tag die Obergrenze, und die Auswahl bietet nichts darüber.
+1. Tippen Sie bei einer Nachrichtenanfrage auf **Blockieren** oder in einer Unterhaltung auf **Person blockieren**.
+2. Bestätigen Sie.
+3. Um es rückgängig zu machen, öffnen Sie Ich, dann **Blockierte Personen**, und tippen Sie neben dem Namen auf **Blockierung aufheben**.
 
-  Setzt man das Minimum über das Maximum, sagt der Bildschirm das — der Server prüft jede Grenze für sich und würde schlicht jede Buchung ablehnen, ohne je zu erklären warum.
+**Gut zu wissen**
 
-<p><img src="images/availability-limits.jpg" width="240"></p>
+- Eine Blockierung wirkt in beide Richtungen: Keiner von Ihnen sieht oder erreicht den anderen.
+- Die Person erfährt es nicht.
 
-*Die Buchungsgrenzen — Vorausbuchungs-Horizont, Mindest- und Höchstdauer — und die Schließtage darunter.*
+**Siehe auch:** [Nachrichtenanfragen](#nachrichtenanfragen)
 
-  Die beiden **Auto-Validierungs**-Schalter — *Admins löschen ohne Validierung*, *Inhaber löschen ohne Validierung* — stehen nicht hier: sie leben bei den Validierungsregeln (§7), standardmäßig aus, und reichen nur an Reservierungslöschungen.
+<!-- anchor: user.collaborate.notifications -->
+### Benachrichtigungen
 
-<!-- anchor: user.workspace.availability.open-weekdays -->
-#### Öffnungstage
+**Zielgruppe:** Alle
 
-An welchen Wochentagen der Raum überhaupt offen ist. Eine Buchung, die
-einen geschlossenen Tag berührt, wird mit diesem Grund abgelehnt, und
-der Plan zeichnet den Tag als geschlossen statt als leer.
+Sie möchten wissen, was Sie alarmiert, und auf diesem Gerät Benachrichtigungen ausschalten, wenn Sie es vorziehen.
 
-<!-- anchor: user.workspace.availability.granularity -->
-#### Granularität
+<p><img src="images/user-collaborate-notifications.de.b8fa17aa9.jpg" width="280"></p>
 
-Was eine Buchung sein darf: ein **halber Tag**, ein **ganzer Tag** oder
-ein **Slot** auf einem Raster von N Minuten. Eine Buchung, die nicht auf
-dem Raster liegt, wird abgelehnt und bekommt die Schrittweite genannt,
-damit sie niemand raten muss.
+**Schritte**
 
-<!-- anchor: user.workspace.availability.working-hours -->
-#### Arbeitszeiten
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Schalten Sie mit **Push-Benachrichtigungen auf diesem Gerät** Push ein oder aus.
+3. Um eine Unterhaltung stummzuschalten, halten Sie sie in [Nachrichten](https://fdittgen-png.github.io/deskilo/#/me?tab=messages) gedrückt und wählen **Benachrichtigungen stumm**.
 
-Anfang und Ende des Arbeitstages. Zusammen mit der Granularität
-entscheiden sie, was ein halber Tag ist — die Einheit, in der jedes
-Kontingent, jede Quote und jede Rechnungszeile zählt.
+**Gut zu wissen**
 
-**Woher die Zeiten stammen (#1307).** Ein Chip unter der Überschrift zeigt, ob die Zeiten der *Produktstandard* sind, *Aus Vorlage „…“* stammen oder eine *Einstellung des Raums* sind. **Auf Vorlage zurücksetzen** stellt die Zeiten der zuletzt angewendeten Vorlage wieder her; **Auf Produktstandard zurücksetzen** entfernt die eigenen Zeiten des Raums. Bearbeitet wird weiterhin in den Feldern darunter.
+- Sie werden über Anfragen benachrichtigt, die auf Ihre Bestätigung warten, und über Nachrichten.
+- Die Zahl an der Glocke und am App-Symbol addiert Ihre ausstehenden Bestätigungen und ungelesenen Nachrichten.
+- Ist es aus, funktioniert die App weiter; an dieses Gerät wird nichts gesendet. Es gibt keine getrennten Schalter je Kategorie.
+- Blockiert Ihr System die Benachrichtigungen der App, erlauben Sie sie in den Systemeinstellungen.
 
-<!-- anchor: user.workspace.availability.closure-days -->
-#### Schließtage
+**Siehe auch:** [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen) · [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
 
-Daten, an denen der Raum unabhängig vom Wochentag zu ist: Feiertage,
-eine Woche im August, ein Tag für die Klempnerin. Eine Buchung, die
-einen berührt, wird abgelehnt und sagt es.
+<!-- anchor: user.collaborate.discover -->
+### Entdecken
 
-<!-- anchor: user.workspace.availability.policies -->
-#### Buchungsregeln
+**Zielgruppe:** Alle
 
-Die Regeln, die der Server auf jedem Erstellungsweg durchsetzt — App,
-gescannter QR, Wandkiosk — damit eine einmal geschriebene Regel alle
-drei bindet.
+Sie möchten Workspaces finden, die sich selbst veröffentlichen, und deren Gastgebern schreiben.
 
-<!-- anchor: user.workspace.availability.allow-past -->
-#### Vergangene Buchungen erlauben
+<p><img src="images/user-collaborate-discover.de.b8fa17aa9.jpg" width="280"></p>
 
-Aus wird eine Buchung, die ganz in der Vergangenheit liegt, abgelehnt.
-An ist sie erlaubt. Eine rückwirkende Buchung **am selben Tag** bleibt
-in beiden Fällen zulässig: wer sich um neun hingesetzt hat, soll das um
-zehn noch sagen dürfen.
+**Schritte**
 
-<!-- anchor: user.workspace.availability.admin-checkout -->
-#### Administratorinnen dürfen auschecken
+1. Öffnen Sie [Entdecken](https://fdittgen-png.github.io/deskilo/#/me?tab=discover) in Ich. Es öffnet sich auf der Karte.
+2. Tippen Sie bei **Workspaces suchen** etwas ein und tippen Sie auf die Lupe.
+3. Wischen Sie durch die Karten unter der Karte oder tippen Sie auf das Pin-Symbol einer Karte, um **Auf der Karte anzeigen** zu wählen.
+4. Tippen Sie auf die Listen-Schaltfläche, um zu **Liste** zu wechseln, und auf die Karten-Schaltfläche, um zu **Karte** zurückzukehren.
+5. Tippen Sie auf einen Workspace, um seine öffentliche Seite zu lesen: Beschreibung, Adresse, Kontakte, Website, öffentlicher Raumplan.
+6. Nutzen Sie **An die Gastgeber schreiben**, die Chat-Schaltfläche neben einem Gastgeber, **Eintreten** oder **Workspace-Profil beantragen**, je nachdem, was der Workspace anbietet.
 
-Erlaubt einer Administratorin, die Anwesenheit einer anderen Person zu
-beenden. Nützlich, wenn ein Mitglied ohne Auschecken geht und der Platz
-sonst bis Tagesende belegt bliebe.
+**Gut zu wissen**
 
-<!-- anchor: user.workspace.availability.outside-hours -->
-#### Außerhalb der Öffnungszeiten
+- Es erscheinen nur Workspaces, deren Inhaber **Im öffentlichen Verzeichnis sichtbar** gewählt hat. Passt keiner, sagt der Bildschirm **Keine veröffentlichten Workspaces gefunden.**
+- Wenn Sie jemandem schreiben oder um Aufnahme bitten, verbindet Sie die App zuerst mit dem Server dieses Workspace und fragt Sie, bevor etwas gesendet wird.
+- Ihre Nachrichten mit Personen auf anderen Servern erscheinen in [Nachrichten](#nachrichten); verwalten Sie diese Server unter **Verbundene Server**.
+- Inhaber veröffentlichen ihre Seite in ihren Einstellungen.
 
-Vier Antworten, jede mit eigenem Ablehnungssatz: **aus** (abgelehnt),
-**nur spontan** (ein spontanes Einchecken geht, im Voraus buchen
-nicht), **frei** oder **berechnet** (erlaubt und gezählt). Eine Buchung,
-die nur überlappt, gilt unter den strengen Modi als außerhalb; die
-Abrechnung zählt nur eine Buchung, die *ganz* draußen liegt.
+**Siehe auch:** [Eine Unterhaltung oder eine Gruppe beginnen](#eine-unterhaltung-oder-eine-gruppe-beginnen)
 
-<!-- anchor: user.workspace.availability.limits -->
-#### Buchungsgrenzen
+<!-- anchor: user.collaborate.public-profile -->
+### Ihr öffentliches Profil
 
-Der Vorlaufhorizont (wie weit im Voraus gebucht werden kann), die
-minimale und maximale Dauer einer Buchung, und wie viele zeitlich
-überlappende Buchungen ein Mitglied halten darf. Jede Ablehnung nennt
-die Grenze und ihren Wert: die Meldung ist die Regel.
+**Zielgruppe:** Alle
 
-### Funktionen
+Sie möchten, dass Menschen außerhalb Ihrer Spaces ein paar Worte über Sie lesen können.
 
-**Zuerst die Prozesse** (#1327). Der Bildschirm öffnet mit einer Karte je Geschäftsprozess — *Arbeitsbereich und Zugang*, *Abrechnung und Zahlungen* und die übrigen — statt mit hundert Schaltern. Jede Karte nennt ihren Zustand in Worten neben einem Symbol: **Aktiv** (jede Funktion des Prozesses wirkt), **Teilweise** (einige), **Verfügbar** (noch keine ist an) oder **Handlungsbedarf** (eine Funktion ist eingeschaltet, wartet aber auf eine ausgeschaltete Voraussetzung). Sie zählt die aktiven Teilprozesse und die eingeschalteten Funktionen und warnt, wenn das Einschalten des ganzen Prozesses auch eine Funktion aus einem anderen Prozess bräuchte. Tippen Sie auf eine Karte, um ihre Teilprozesse und den Stand jeder Funktion zu sehen; tippen Sie auf eine Funktion, um zu ihrem Schalter zu gelangen. Ein einziges Suchfeld erreicht Prozesse, Teilprozesse und Funktionen und zeigt jeden Treffer unter seinem Pfad (*Arbeitsbereich und Zugang › Zutritt*); die Chips **Alle**, **Aktiv**, **Verfügbar** und **Handlungsbedarf** grenzen die Karten ein — ein teilweiser Prozess zählt als aktiv und als verfügbar. Die Ansicht **Schalter** über der Liste behält jeden Schalter, ihre Suche und den Chip **Geändert**. **Einen Prozess ein- oder ausschalten (#1329).** Eine geöffnete Karte bietet **Einschalten** und **Ausschalten** für den ganzen Prozess und für jeden Teilprozess. Beides öffnet dieselbe Vorschau, bevor etwas geschrieben wird: was umgeschaltet wird, was *ebenfalls nötig* ist und aus einem anderen Prozess mitkommt, was *wieder funktioniert*, weil seine Voraussetzung zurückkehrt, und was *bereits an* ist. Etwas auszuschalten, das andere Funktionen noch brauchen, wird zuerst abgelehnt: Sie wählen, alles so zu lassen, das Gewünschte auszuschalten und die Einstellungen der abhängigen Funktionen zu behalten (sie funktionieren nicht, bis die Voraussetzung zurückkommt), oder die abhängigen Funktionen ebenfalls auszuschalten. Geschrieben wird gegen genau das, was die Vorschau zeigte; hat jemand die Funktionen inzwischen geändert, wird nichts geschrieben, die Vorschau wird erneuert und Sie werden erneut gefragt. Erfolg meldet die App erst, wenn sie das Ergebnis zurückgelesen hat. **Was eine Funktion ist und warum sie an ist (#1328).** Tippen Sie auf eine Funktion einer Karte, wird sie erklärt, bevor sich etwas ändert: ihr Ort (*Prozess › Teilprozess*), was sie bietet, was sie **benötigt** (mit *in ‹Prozess›*, wenn die Voraussetzung woanders liegt), was sie **verwendet**, und warum sie gerade an oder aus ist — *eingeschaltet*, *eingeschaltet und benötigt von …* oder *blockiert: sie benötigt …, das ausgeschaltet ist*. Der technische Schlüssel liegt hinter **Technische Details**. **Bei den Schaltern ändern** führt zu ihrem Schalter.
+<p><img src="images/user-collaborate-me-privacy--public-profile.de.b8fa17aa9.jpg" width="280"></p>
 
-<p><img src="images/features-tree.jpg" width="240"></p>
+**Schritte**
 
-*Die Schalter-Ansicht des Funktionen-Bildschirms: jedes Modul mit seiner Beschreibung; ein eingerücktes Kind braucht seinen Elternteil.*
+1. Öffnen Sie Ich, dann den Abschnitt **Datenschutz**.
+2. Schalten Sie **Öffentliches Profil** ein und bestätigen Sie **Veröffentlichen**.
+3. Tippen Sie auf **Link kopieren** und teilen Sie ihn.
+4. Schalten Sie es jederzeit aus, um es zurückzuziehen.
 
-Ganze Module je Workspace ein- oder ausschalten — jeder Schalter trägt seine Beschreibung: Kalender-Tab, Ereignis-Tab, Gruppierung der Benachrichtigungen, Finanzen-Tab, Leistungen, Zubehör-Aufpreise, Online-Zahlungen, Rechnungen, Admins stellen Rechnungen aus, Rechnungs-PDF-Vorlage, Mahnwesen, USt-Verwaltung, USt-Voranmeldungen, E-Rechnungszustellung an Kunden, PDF-Export, Serienbuchung, Für andere buchen, Push-Benachrichtigungen, Admins können Plätze sperren, Tisch-, Büro- & Etagen-Reservierungen, Admins können Etagen zuweisen, Kiosk-Modus, RFID-/NFC-Badges, QR-Badges, Mitgliederfotos am Kiosk, Mitgliederverzeichnis, WhatsApp-Integration, Raum-QR-Codes, NFC/RFID-Tags an Stühlen, Mitgliederfotos auf dem Plan, Mit-Inhaberinnen, Auto-Check-in/-out am Tagesende, Datenexport (Excel), Arbeitszeiten, Buchungsregeln, Mitglieder-Benachrichtigungen, Dokumentbibliothek, Mitgliederberichte, Lösch-Anträge für Buchungen, Rollenverwaltung, Räume mit Historie löschen, Hilfe-Hinweise und Oberflächen-Animationen. Ein Modul aus = *alle* seine Bildschirme und Knöpfe verschwinden für jedes Mitglied.
+**Gut zu wissen**
 
-Die Liste ist **hierarchisch**: eine Funktion, die eine andere braucht, sitzt eingerückt darunter mit *Benötigt…*, ausgegraut solange der Elternteil aus ist — *Finanzen* trägt Leistungen, Zubehör-Aufpreise, Online-Zahlungen und Rechnungen; *Rechnungen* die Admin-Delegation, die PDF-Vorlage, das Mahnwesen, die USt-Verwaltung (mit den Voranmeldungen wiederum darunter) und die E-Rechnungszustellung an Kunden; *Kiosk-Modus* gleich drei Kinder — RFID-/NFC-Badges, QR-Badges und Mitgliederfotos am Kiosk; *Tisch-, Büro- & Etagen-Reservierungen* das Zuweisen durch Admins; *Verzeichnis* die WhatsApp-Integration; *Ereignis-Tab* die Feed-Gruppierung. Elternteil aus = ganzer Teilbaum weg; die gespeicherte Wahl des Kindes kehrt unversehrt zurück.
+- Jeder mit dem Link, angemeldet oder nicht, liest Ihren Namen, Ihren Beruf und Ihre Kurzbiografie. Kontaktdaten, Anwesenheit und Spaces bleiben privat.
+- Ein Link zu einem zurückgezogenen oder unbekannten Profil sagt **Dieses Profil ist nicht öffentlich.**
+- **Wie andere mich sehen** zeigt vorab, was jedes Publikum sieht.
 
-<details><summary>Der vollständige Verfügbarkeits-Bildschirm und die Funktionsliste, je in einem Bild</summary>
+**Siehe auch:** [Wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann)
 
-<p><img src="images/availability-full.jpg" width="240"> <img src="images/features-full.jpg" width="240"></p>
+<!-- anchor: user.collaborate.guest-visits -->
+### Ihre Besuche als Gast
 
-</details>
+**Zielgruppe:** Alle
 
-<!-- anchor: user.features.switch -->
-#### Ein Funktionsschalter
+Sie haben darum gebeten, einen Space zu besuchen, ohne Mitglied zu werden, und möchten das verfolgen.
 
-Jede Funktionalität ist ein Schalter. Schalte ihn ein und **alle** ihre
-Oberflächen erscheinen — die Kachel, der Reiter, die Schaltfläche, der
-Deep Link; schalte ihn aus und keine bleibt, auch keine gemerkte URL.
-Was ein Schalter nie rückgängig macht, ist bereits angewandte
-Arithmetik: eine Rechnung, die bei eingeschalteter Funktion ausgestellt
-wurde, behält, was sie sagt. Manche Schalter brauchen erst einen
-anderen, und einer, der auf seinen übergeordneten wartet, sagt das,
-statt still zu scheitern.
+**Schritte**
 
-### Mitglieder & Tarife
+1. Öffnen Sie Ich, dann Home.
+2. Suchen Sie **Meine Besuche**: Jeder Besuch zeigt den Space, die Zeit und einen Status (**Angefragt**, **Bestätigt**, **Abgelehnt**, **Abgesagt** oder **Abgelaufen**).
+3. Um einen noch bevorstehenden zurückzuziehen, tippen Sie auf **Diesen Besuch absagen**.
 
-Ein Mitglied antippen öffnet sein **Verwaltungsblatt** — jede Mitglieds-Aktion an einem Ort: **Finanzvereinbarung senden** (§11d), **Nachrichten**, **Service hinzufügen** (Service, Menge, Abrechnungsmonat → *zur Bestätigung einreichen*), **Abonnement** (der Prozentsatz), **Wenn die Tage aufgebraucht sind** (die Überziehungs-Politik, §9), **Reservierungslimit** (wie viele **offene** Reservierungen das Mitglied insgesamt halten darf, wann immer sie liegen), **Gleichzeitige Reservierungen** (wie viele Buchungen sich **zeitlich überschneiden** dürfen — das persönliche Kontingent, das die Zahl des Space sticht, §4b; zwei verschiedene Obergrenzen, also die Beschriftungen lesen), **Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren**, **Badges** (§10), **Zum Admin ernennen** (validiert, §7), **Co-Inhaberschaft**, **Zum Kiosk-Gerät machen** — oder **Kiosk zu Mitglied zurücksetzen** auf einem Gerätekonto —, **Mitgliedschaft bestätigen** bzw. **Ablehnen** bei einem ausstehenden Beitritt, und **Mitgliedschaft pausieren**. Jede Zeile zeigt die **E-Mail** unter dem Namen.
+**Gut zu wissen**
 
-<p><img src="images/members-plans-list.jpg" width="240"></p>
+- Ein Besuch ist keine Mitgliedschaft: Er gibt keine Rolle und kein Abonnement.
+- Die Liste erscheint nur, wenn Sie Besuche haben, und nur dort, wo der Space die Funktion **Gastbesuche** eingeschaltet hat.
 
-*Mitglieder & Tarife: E-Mail, Tarifanteil und Rollen-Chips je Zeile; Megafon, Hinzufügen und Filter in der Leiste.*
+**Siehe auch:** [Entdecken](#entdecken)
 
-<p><img src="images/member-management-sheet.jpg" width="240"> <img src="images/member-add-service.jpg" width="240"></p>
+<!-- anchor: user.settings.overview -->
+## Einstellungen & Profil und Ihre Daten
 
-*Das Verwaltungsblatt eines Mitglieds — jede Mitglieds-Aktion an einem Ort — und daneben der Dialog Eine Leistung hinzufügen: die Leistung, die Menge und der Monat, in dem sie landet.*
+Alles Persönliche an DesKilo liegt an zwei Orten: in **Ich**, das in jedem Workspace Ihnen gehört, und in den **Einstellungen**, wo ein einzelner Workspace aufbewahrt, was zu Ihrer Mitgliedschaft dort gehört. Dieses Kapitel führt durch beides, dann durch Ihre Datenschutzrechte und die Möglichkeit, einen eigenen Server zu betreiben.
 
-<p><img src="images/member-management-sheet-self.jpg" width="240"></p>
+In diesem Kapitel:
+- [Wie die Einstellungen aufgebaut sind](#wie-die-einstellungen-aufgebaut-sind) und [der Schalter nur für diesen Workspace](#eine-einstellung-nur-für-diesen-workspace-wählen)
+- Ihr Konto: [Foto](#ihr-konto-und-foto), [persönliche Angaben](#persönliche-angaben), [Adresse](#ihre-adresse), [USt-IdNr.](#ihre-ust-idnr), [Zahlungsbedingungen](#ihre-zahlungsbedingungen), [WhatsApp](#ihre-whatsapp-nummer), [Status](#ihre-statuszeile), [Standard-Buchungszeitraum](#standard-buchungszeitraum)
+- Ihr Badge: [das Badge](#ihr-badge) und [seine PIN](#ihre-badge-pin)
+- Wie die App aussieht und liest: [Sprache](#app-sprache), [Design](#design), [Navigation](#navigationsstil), [Zahlen und Daten](#zahlen-und-daten), [Uhr](#uhr), [Zeitzone](#zeiten-in-meiner-zeitzone-anzeigen), [Hinweise](#hinweise-wiederherstellen), [Frontkamera](#frontkamera-zum-scannen), [verknüpfte Konten](#verknüpfte-konten)
+- Datenschutz und Ihre Daten: [wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann), [wer mich sieht](#wählen-wer-mich-sieht), [öffentliches Profil](#ein-öffentliches-profil-veröffentlichen), [Export](#meine-daten-exportieren), [Löschen](#meine-daten-löschen), [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte), [Push](#push-benachrichtigungen-auf-diesem-gerät), [Ihre Rechte](#ihre-daten-ihre-rechte)
+- [Ihr eigener Server](#ihr-eigener-server)
 
-*Das eigene Blatt ist kürzer: niemand gewährt sich selbst Rechte (keine Admin-, Ganzraum- oder Überschneidungs-Zeilen auf sich selbst).*
+<!-- anchor: user.settings.organisation -->
+### Wie die Einstellungen aufgebaut sind
 
-<p><img src="images/member-subscription.jpg" width="240"> <img src="images/member-reservation-limit.jpg" width="240"></p>
+**Zielgruppe:** Alle
 
-*Der Abonnement-Dialog (der Prozentsatz des Mitglieds) und der Reservierungslimit-Dialog (die Obergrenze offener Reservierungen).*
+Sie möchten wissen, wo eine Einstellung liegt, bevor Sie danach suchen.
 
-<!-- anchor: user.members.subscription -->
-#### Die Raumbibliothek
+<p><img src="images/user-settings-overview.de.b8fa17aa9.jpg" width="280"></p>
 
-*Einstellungen → Raumbibliothek* (#1120), wenn die Funktion aktiv ist.
+**Schritte**
 
-**Aus der Bibliothek beginnen.** Suchen Sie nach Name, Beschreibung oder Schlagwort und grenzen Sie mit den Schlagwort-Chips ein — beides kombiniert sich; eine Karte sagt, was die Vorlage mitbringt: ihren Plan in Zahlen, *mit ihren Einstellungen*, wenn auch Öffnungszeiten, Preise oder Regeln mitreisen (#1280). Jede Vorlage, die Sie sehen dürfen — die
-eingebaute, die öffentlichen und die mit Ihrer E-Mail-Adresse geteilten.
-*Änderungen ansehen* zeigt Gruppe für Gruppe, was die Vorlage hier täte: **Neue** Gruppen sind angehakt, Gruppen, die **Bestehendes ändern**, werden angeboten, bleiben aber ohne Haken, **schon gleiche** Gruppen haben nichts anzuwenden, und eine Gruppe, die **Aufmerksamkeit braucht**, sagt warum und ist nicht wählbar. **N Änderungen anwenden** wendet genau das Angehakte an — nie die ganze Vorlage — und Preise oder Rollen fragen noch einmal nach. Wenden Sie eine neuere Version einer schon angewendeten Vorlage an, ist, was Sie seither geändert haben, als **Hier angepasst** markiert und ohne Haken — ein Update macht Ihre eigene Entscheidung nie stillschweigend rückgängig. Unter einer Gruppe, die Funktionen schaltet, listet die Vorschau jeden Schalter nach **Geschäftsprozess** — *Abrechnung & Zahlungen: Rechnungsstellung an* — denselben Prozessen wie der Funktionen-Bildschirm; die Vorlage trägt weiterhin Funktionsschlüssel, und die App schreibt genau die Änderungsmenge, die sie angezeigt hat (#1330). Ebenen, Räume, Tische und Plätze werden **nach Namen** zusammengeführt; Vorhandenes wird nie entfernt.
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings). Nennt Ihr Workspace sie **Mein Konto**, ist es derselbe Bildschirm.
+2. Bleiben Sie auf **Meine Einstellungen** für alles, was Sie betrifft. Inhaber und Administratoren sehen zusätzlich **Workspace verwalten**, das die Konfiguration des Workspace enthält; Mitglieder, die nichts verwalten, sehen keinen zweiten Tab.
+3. Springen Sie mit den drei Abkürzungen unter den Tabs: **Mein Konto**, **Meine Mitgliedschaft**, **Erweitert**.
+4. Öffnen Sie **Zurück zu Ich**, um zu Ihrer Seite Ich zurückzukehren.
 
-**Ihre Vorlagen.** *Diesen Raum als Vorlage speichern* nimmt einen
-Schnappschuss Ihres Grundrisses. Preise, Planbilder und die Adresse Ihres
-Standorts werden vor dem Speichern entfernt. Das Blatt fragt, **was mitreist** — haken Sie die zu veröffentlichenden Gruppen an, eine Vorlage nur mit Öffnungszeiten ist in Ordnung — und nennt, was den Raum **nie** verlässt (Bankdaten, Standorte und ihre Adressen, Rechtskennungen, Einladungstexte, Dokumentlinks und -gestaltung) und **welche Namen mit dem Plan reisen**, denn Räume und Tische werden nach Namen zusammengeführt und lassen sich daher nicht verbergen. Fügen Sie **Schlagwörter** hinzu, damit andere sie finden (#1280). Jede Vorlage ist *Nur ich*,
-bis Sie es ändern: *Von mir eingeladene Personen* (per E-Mail — die
-Einladung wirkt, sobald sich diese Adresse anmeldet; ob dort ein Konto
-besteht, wird nicht verraten) oder *Alle*, womit sie in die Bibliothek
-kommt.
+**Gut zu wissen**
 
-**Mehr als ein Grundriss** (#1276). Eine Vorlage trägt auch, wie der
-Raum arbeitet: Öffnungszeiten und Buchungsregeln, Tarife, Leistungen,
-Pakete, Zubehör, Validierungsregeln, die Rollenmatrix, Erinnerungen,
-Schließtage, Nummernformate (nie die Zähler), das Lexikon und das
-Funktionsprofil. Was nur Ihrem Raum gehört, reist nie mit — Standorte
-und ihre Adressen, Ihre Rechtskennungen und USt-IdNr., Pflichtangaben,
-Bankdaten, Einladungstexte, Dokumentlinks und Dokumentgestaltung. Der
-Server entfernt sie vor dem Speichern, egal was die App geschickt hat.
-Anwenden führt zusammen: Schließtage, Ihre Preise im Plan und alles
-andere, was der Raum schon hat, bleiben bestehen. Eine Ausnahme: Eine Gebührenstaffel der Vorlage ersetzt Ihre als
-Ganzes, denn ihre Stufen decken gemeinsam 0–100 % ab und zwei Staffeln
-lassen sich nicht verschränken. Erneutes Speichern unter
-demselben Namen aktualisiert die Vorlage und erhöht ihre Version, und
-jede Anwendung wird mit dem vorherigen Stand festgehalten. Eine Vorlage
-aus einem neueren DesKilo, die dieser Server nicht versteht, wird
-abgelehnt, nie halb angewendet.
+- **Mein Konto** ist eine kurze Karte: Sie verweist auf Ich, wo Ihr Foto, Ihre Sprache, Ihr Design und Ihre Anmeldungen für jeden Workspace liegen.
+- **Meine Mitgliedschaft** betrifft nur diesen Workspace: was Sie hier tun können, Ihr Badge und Ihre PIN, Ihr Status, Ihr Standard-Buchungszeitraum, Ihre Zahlungsbedingungen und die Dokumente.
+- **Erweitert** beginnt geschlossen. Es betrifft dieses Gerät: den Server, Push, die Frontkamera.
+- Unter den Abschnitten finden Sie auch **Hilfe**, die App-Version, die Datenschutzerklärung und **Abmelden**.
 
-Zwei Vorlagen sind eingebaut: **A tiny space** (zwei Ebenen, acht Plätze) und **Association de coworking (France)**. Die zweite ist, was ein französischer Coworking-Verein meist vom ersten Tag an braucht: Halbtage von 7 bis 13 Uhr und von 13 bis 19 Uhr, Montag bis Freitag; die Feiertage dieses und des nächsten Jahres für das Land des Raums als Schließtage (nie in einem schon abgerechneten Monat); Beiträge zu 50 % und 100 % mit 50 € und 100 €; keine Mehrwertsteuer; Französisch als Sprache des Raums, mit den Worten des Vereins (*Place*, *Étage*, *Réservations*); Validierungen im Kalender, Ereignis-Tab und Mitgliederverzeichnis ausgeschaltet; und zwei Etagen zum Buchen (#1282). Land, Währung und Zeitzone kommen immer aus der Einrichtung.
+**Siehe auch:** [Der Schalter nur für diesen Workspace](#eine-einstellung-nur-für-diesen-workspace-wählen) · [Ihr eigener Server](#ihr-eigener-server)
 
-Ein neuer Raum beginnt immer mit einem Zimmer, unabhängig von dieser
-Funktion: die Einrichtung bietet *Beginnen mit* an, die eingebaute
-Vorlage vorausgewählt.
+<!-- anchor: user.settings.scope -->
+### Eine Einstellung nur für diesen Workspace wählen
 
-#### Welche Umgebungen eine Einladung gibt
+**Zielgruppe:** Alle
 
-Wenn Ihr Raum einen Produktionszwilling hat, stellt das Einladungsblatt
-eine Frage: **Auch Zugang zur Produktion geben?** (#1119)
+Sie möchten in einem Workspace Englisch und in den anderen Französisch, oder nur in einem davon ein dunkles Design.
 
-Dem Testraum tritt die Person in jedem Fall bei. Die Produktion kommt
-obendrauf, nie stattdessen — der Testzwilling ist der Ort zum
-Ausprobieren, und wer nur in der Produktion existierte, könnte dort nicht
-geprobt werden.
+<p><img src="images/user-settings-scope.de.b8fa17aa9.jpg" width="280"></p>
 
-Die Rolle entscheidet weiterhin. Hält die eingeladene Rolle *Zugang zur
-Produktion* nicht, weigert sich die Einladung, angelegt zu werden, statt
-später beim Einlösen zu scheitern. Eine Einladung gewährt nie, was die
-Rollenmatrix verweigert.
+**Schritte**
 
-Einzuschalten unter *Einstellungen → Funktionen → Die Umgebungen wählen,
-für die eine Person freigeschaltet wird*; standardmäßig aus.
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und sehen Sie sich **Mein Konto** an.
+2. Schalten Sie **Nur für diesen Arbeitsbereich** ein. Die Zeilen für Sprache, Design und Regionales erscheinen gleich dort.
+3. Ändern Sie, was Sie möchten. Es gilt nur für diesen Workspace.
+4. Zum Rückgängigmachen tippen Sie auf **Meine Standardwerte verwenden**.
 
-#### Wie die Mitgliedschaft begann
+**Gut zu wissen**
 
-Jedes Mitglied trägt eine dezente Zeile, die sagt, wie es hierherkam
-(#1110): **Hat diesen Raum gegründet**, **Per Einladung beigetreten**
-oder **Profil von einer Verwaltung angelegt**.
+- Ist der Schalter aus, bearbeiten Sie Ihre Standardwerte, die überall gelten.
+- Eine Einstellung, die Sie nur für diesen Workspace geändert haben, steht in der Karte unter **In diesem Space**.
+- Der Schalter umfasst Sprache, Erscheinungsbild und regionale Formate, sonst nichts.
 
-Das ist eine Tatsache, kein Status, und ändert nichts an dem, was jemand
-darf. Ein Profil, das eine Verwaltung angelegt und übergeben hat, sagt
-das auch nach der Übernahme weiterhin — das Datum der Übernahme ist
-etwas anderes.
+**Siehe auch:** [App-Sprache](#app-sprache) · [Design](#design) · [Zahlen und Daten](#zahlen-und-daten)
 
-Wer es sieht: das Mitglied selbst und wer Mitglieder verwaltet. Sonst
-niemand. Einzuschalten unter *Einstellungen → Funktionen → Wie jedes
-Mitglied hierherkam*; standardmäßig aus.
+<!-- anchor: user.profile.settings.photo -->
+### Ihr Konto und Foto
 
-#### Das Abonnement eines Mitglieds
+**Zielgruppe:** Alle
 
-Der Prozentsatz der Arbeitshalbtage des Monats, auf den das Mitglied
-Anspruch hat. Er wählt die Preisstufe, und die Stufe entscheidet, was der
-Monat kostet. Ein ausgehandelter Wert außerhalb der Liste geht nur, wo
-der Raum ihn erlaubt.
+Sie möchten, dass Menschen Sie im Verzeichnis, auf dem Plan und in Nachrichten erkennen.
 
-<!-- anchor: user.members.overage-policy -->
-#### Wenn die Tage aufgebraucht sind
+<p><img src="images/user-profile-settings-photo.de.b8fa17aa9.jpg" width="280"></p>
+<p><img src="images/user-profile-settings-photo-sheet.de.b8fa17aa9.jpg" width="280"></p>
 
-Was jenseits des Kontingents passiert, für dieses Mitglied: weitere
-Buchungen ablehnen, sie zum Überschreitungspreis berechnen, oder ein
-Tagespaket kaufen lassen. Bis du hier etwas setzt, gilt die Vorgabe des
-Raums.
+**Schritte**
 
-<!-- anchor: user.members.reservation-limit -->
-#### Reservierungsgrenze
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me). Ihr Konto sind die Blöcke **Profil**, **Einstellungen**, **Erweitert** und **Datenschutz** dieser Seite.
+2. Tippen Sie auf **Foto**.
+3. Wählen Sie **Foto auswählen** und suchen Sie ein Bild aus, oder wählen Sie **Foto entfernen**.
 
-Wie viele **offene** Reservierungen dieses Mitglied insgesamt halten
-darf. Das begrenzt den Rückstau und ist etwas anderes als die
-Gleichzeitigkeitsgrenze darunter.
+**Gut zu wissen**
 
-<!-- anchor: user.members.simultaneous -->
-#### Gleichzeitige Reservierungen
+- Die Zeile sagt **Zum Hinzufügen eines Fotos tippen**, bis Sie eines haben, danach **Zum Ändern tippen**.
+- Wer Ihr Foto sieht, entscheiden Sie: siehe [Wer mich sieht](#wählen-wer-mich-sieht).
+- Ihr Konto gehört Ihnen über Workspaces hinweg; Ihre Stellung in einem Workspace steht in dessen Einstellungen.
 
-Wie viele Buchungen dieses Mitglied halten darf, die sich **zeitlich
-überlappen**. Standard ist eine, und sie verhindert, dass jemand zwei
-Plätze für denselben Nachmittag hält. Die eigene kannst du nie setzen.
-
-<!-- anchor: user.members.vat-treatment -->
-#### MwSt-Behandlung
-
-Was die Gegenseite aus der Steuer macht: Inland, innergemeinschaftliches
-Unternehmen mit Reverse-Charge, innergemeinschaftliche Verbraucherin
-oder Ausfuhr. Sie ergibt sich aus Land und USt-IdNr. des Mitglieds und
-wird bei Ausstellung auf jedem Dokument eingefroren.
-
-<!-- anchor: user.members.negotiation -->
-#### Preisverhandlung
-
-Ein mit diesem Mitglied vereinbarter Preis, der vom Katalog abweicht. Er
-wird als Verhandlung festgehalten statt über den Tarif getippt: das
-Dokument sagt, was vereinbart wurde, und der Katalog bleibt wahr.
-
-<!-- anchor: user.members.co-ownership -->
-#### Miteigentum
-
-Hebt ein Mitglied zur Miteigentümerin. Eine Miteigentümerin hat die
-Rechte einer Eigentümerin und zählt überall als eine, wo eine Regel eine
-verlangt — auch bei der Regel, dass die letzte aktive Eigentümerin nie
-entfernt werden kann.
-
-<!-- anchor: user.members.actions -->
-#### Die Handlungen an einem Mitglied
-
-Alles, was eine Administratorin für ein Mitglied tun kann — Abonnement,
-Überschreitung, Vereinbarung, Pause, Grenzen, Ausweise, Rolle — in einem
-Blatt gesammelt, damit nichts auf einem anderen Bildschirm gesucht werden
-muss.
-
-### Abrechnung
-
-- **Tarifstufen** — die Preisleiter der Prozent-Abos: jede Stufe nennt *ab X %*, *bis Y %*, die monatliche **Gebühr** und den **Überziehungssatz** je Extra-Halbtag. **+ Stufe hinzufügen** verlängert die Leiter.
-- **Abo-Stufen** — welche Prozentsätze Mitglieder wählen dürfen (Chips: 25 % · 50 % · 75 % · 100 % plus eigene), und ein Schalter **frei verhandelter Wert**.
-- **Tagespakete** — Tage für einen Preis (Name · Tage · Preis), je mit Aktivierungs-Schalter; Mitglieder mit *Paket*-Politik kaufen sie, wenn ihre Tage ausgehen.
-
-<p><img src="images/billing-tiers.jpg" width="240"></p>
-
-*Tarifstufen (ab % · bis % · Gebühr · Überziehungssatz) und die Abo-Stufen, die Mitglieder wählen dürfen.*
-
-<p><img src="images/billing-packages.jpg" width="240"></p>
-
-*Tagespakete: Tage für einen Preis, je mit eigenem Aktivierungs-Schalter.*
-
-<!-- anchor: user.money.billing.fee-bands -->
-#### Preisstufen
-
-Die Preisleiter hinter den prozentualen Abonnements. Jede Stufe deckt
-einen Abschnitt der Skala ab und sagt, was ein Monat darin kostet. Der
-Tarif eines Mitglieds wählt eine Stufe; die Stufe entscheidet über
-Grundpreis und Überschreitungspreis, nie umgekehrt.
-
-<!-- anchor: user.money.billing.band-to -->
-#### Bis %
-
-Die Obergrenze der Stufe. Die nächste beginnt, wo diese endet: die
-Leiter hat weder Lücke noch Überlappung, und ein Prozentsatz fällt
-immer in genau eine Stufe.
-
-<!-- anchor: user.money.billing.band-fee -->
-#### Monatlicher Grundpreis
-
-Was ein Monat in dieser Stufe kostet, ob das Kontingent genutzt wird
-oder nicht. Er trägt seine eigene MwSt-Gruppe: der Satz folgt dem
-Katalog, statt hier eingetippt zu werden.
-
-<!-- anchor: user.money.billing.band-overage -->
-#### Überschreitung
-
-Der Preis eines halben Tages über dem Kontingent. Leer gelassen werden
-zusätzliche Halbtage abgelehnt statt berechnet; gesetzt werden sie zu
-diesem Preis auf derselben Rechnung abgerechnet.
-
-<!-- anchor: user.money.billing.levels -->
-#### Abo-Stufen
-
-Welche Prozentsätze ein Mitglied wählen darf — die Chips, die es beim
-Tarif sieht. Ergänze eigene Werte neben den üblichen 25 · 50 · 75 ·
-100.
-
-<!-- anchor: user.money.billing.level-value -->
-#### Wert der Stufe
-
-Ein Prozentsatz von 1 bis 100. Er ist ein Anteil der Arbeitshalbtage
-des Monats — deshalb folgt das Kontingent dem Kalender und nicht einer
-festen Tageszahl.
-
-<!-- anchor: user.money.billing.custom-level -->
-#### Ausgehandelten Wert erlauben
-
-Lässt eine Administratorin für ein Mitglied einen Prozentsatz setzen,
-der nicht in der Liste steht. Standardmäßig aus: ein Wert, den sonst
-niemand sieht, ist ein Wert, den sonst niemand prüfen kann.
-
-<!-- anchor: user.money.billing.packages -->
-#### Tagespakete
-
-Eine Anzahl Tage zu einem Preis, gekauft wenn die Tage gebraucht
-werden, statt monatlich abonniert. Jedes Paket hat seinen eigenen
-Schalter: ein altes kann aufhören verkauft zu werden, ohne aus den
-Rechnungen zu verschwinden, die es tragen.
-
-<!-- anchor: user.money.billing.package-new -->
-#### Neues Paket
-
-Name, Tage und Preis, dann hinzufügen. Ein Paket ist kaufbar, sobald es
-aktiv ist.
-
-<!-- anchor: user.money.billing.package-name -->
-#### Paketname
-
-Was ein Mitglied im Verkauf sieht und was die Rechnungszeile sagt.
-Benenne es um, und nur künftige Dokumente ändern sich: eine
-ausgestellte Rechnung behält den Namen, unter dem verkauft wurde.
-
-<!-- anchor: user.money.billing.package-days -->
-#### Tage des Pakets
-
-Wie viele Tage das Paket gewährt. Sie werden bei Nutzung verbraucht und
-verfallen nicht mit dem Monat.
-
-<!-- anchor: user.money.billing.package-price -->
-#### Preis des Pakets
-
-Der Preis des ganzen Pakets, mit eigener MwSt-Gruppe. Die
-Rechnungszeile zeigt den Preis und den Satz, der am Verkaufstag galt.
-
-<!-- anchor: user.money.billing.schedule -->
-#### Rechnungszeitplan
-
-Wann der Monat abgerechnet wird. Die Abo-Zeile wird **vor** dem Monat
-ausgestellt, den sie abdeckt, und die Nutzungszeilen folgen ihr —
-deshalb kann eine Rechnung einen Monat nennen, der noch nicht war.
-
-### Services und Zubehör
-
-Die Kataloge hinter §9 — Extras der Inhaberin (Schließfächer, Druck…, je mit Preis und optionalem MwSt-Satz) und Platz-Ausstattung mit optionalen Halbtags-Aufpreisen. Zwei einfache Listen mit **+**.
-
-<p><img src="images/services-catalog.jpg" width="240"> <img src="images/services-new-service.jpg" width="240"></p>
-
-*Der Leistungskatalog und eine neue Leistung — Name, Preis, eigener MwSt-Satz, wo das Regime einen erhebt.*
-
-<p><img src="images/accessories-catalog.jpg" width="240"> <img src="images/accessory-edit-dialog.jpg" width="240"></p>
-
-*Der Zubehörkatalog und der Editor eines Zubehörs — der Aufpreis berechnet sich je reserviertem Halbtag.*
-
-**Bestand (#731).** Eine Leistung aus einem Vorrat zeigt *N auf Lager* / *Ausverkauft*; ein Verbrauch über den Bestand hinaus wird abgelehnt.
-
-<!-- anchor: user.money.services.overview -->
-#### Eine Leistung
-
-Alles Verkaufte, das kein Platz ist: eine Stunde Besprechungsraum, ein
-Druckpaket, ein Schließfach, ein Kaffee-Abo. Eine Leistung kann von
-einer Administratorin auf eine Rechnung gesetzt oder an ein Paket
-gehängt werden.
-
-<!-- anchor: user.money.services.name -->
-#### Name der Leistung
-
-Was die Rechnungszeile sagt. Umbenennen ändert nur künftige Dokumente:
-eine ausgestellte Rechnung behält den Namen, unter dem verkauft wurde.
-
-<!-- anchor: user.money.services.price -->
-#### Preis der Leistung
-
-Der Preis einer Einheit, mit eigener MwSt-Gruppe — der Satz folgt dem
-Katalog statt hier getippt zu werden, sodass eine Satzänderung nie in
-ein bereits ausgestelltes Dokument zurückgreift.
-
-<!-- anchor: user.money.services.active -->
-#### Aktiv
-
-Ob die Leistung noch verkauft werden kann. Ausschalten stoppt neue
-Verkäufe und lässt jede Rechnung, die sie trägt, unberührt — genau das,
-was man für etwas Eingestelltes will, nicht für etwas Falsches.
-
-### Workspace-Einstellungen (Coworking-Space)
-
-**Nach Aufgabe einrichten.** Allgemeine Angaben, Zahlungen, Gemeinschaft und Einladungen, Darstellung, Vorgaben für neue Mitglieder, Vorlagen und Daten sowie der Gefahrenbereich haben eigene Abschnitte. Allgemeine Angaben ist zunächst geöffnet; öffnen Sie weitere Abschnitte nach Bedarf. Der Einrichtungsstand bleibt darüber. Speichern bleibt beim Scrollen unten sichtbar. Geschlossene Abschnitte behalten ihre Entwürfe; Speichern öffnet ungültige Felder und scrollt zu ihnen. Von hier geöffnete Seiten behalten ihre eigenen Speicheraktionen. Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
-
-**Berichte (#2301).** Unter **Abrechnung und Zahlungen → Berichte** führen horizontale Abschnitte zu **Finanzberichten** (Rechnungsregister mit Buchhaltungsexport und Jahresarchiv, Workspace-Status, Umsatzsteuer), **Business Analytics**, **Workspace-Dokumenten** (Konfigurations-PDF, Workspace-Bericht, QR-Karten und Excel-Export) und **Vorlagen**. Nur erlaubte, aktivierte Aktionen erscheinen. Persönliche Auszüge bleiben unter **Ich → Finanzen**, Mitgliedsausweise beim Mitglied. Die Workspace-Einstellungen behalten XML-Sicherung/-Import, Bibliothek und einen Link zu Berichten. Titel und Verknüpfung des Gefahrenbereichs sind rot.
-
-Der Bildschirm des Space, von oben nach unten:
-
-- **Identität** — Name, Land, Währung (aus dem Land vorgeschlagen, änderbar), Zeitzone, **Sprache des Arbeitsbereichs** (Einladungen standardmäßig darin; *App-Sprache des Absenders* ist eine Option) und die **Postadresse** auf den Rechnungen.
-
-<p><img src="images/workspace-identity.jpg" width="240"></p>
-
-*Identität: das Land bestimmt die vorgeschlagene Währung und Zeitzone; die Sprache des Arbeitsbereichs schreibt die Einladungen.*
-- **Zahlungen & Abrechnung** — die **Zahlungshinweise** auf einer offenen Abrechnung (IBAN, PayPal.me, Wero-Nummer, Lydia, Wisetag, Verwendungszweck-Hinweis — leeres Feld = nichts angezeigt), und **Rechtliche Identität & E-Rechnung** (§11a).
-
-<p><img src="images/workspace-billing-links.jpg" width="240"> <img src="images/payment-instructions.jpg" width="240"></p>
-
-*Zahlungen & Abrechnung: die zwei Einträge zu Zahlungshinweisen und rechtlicher Identität — und das Formular der Zahlungshinweise selbst, Feld für Feld.*
-- **WhatsApp-Gruppe** — der Gruppenlink im Verzeichnis.
-- **Einladungsnachricht** — die Vorlagen je Sprache (§2).
-
-<p><img src="images/workspace-invitation.jpg" width="240"></p>
-
-*Die Einladungsnachricht je Sprache, mit ihren Platzhaltern, und der Tisch-Transparenz-Regler darunter.*
-- **Tisch-Transparenz** — der Regler fürs Hintergrundfoto.
-- **Rechnungs-PDF-Vorlage** und **Mahnregeln** — Abkürzungen zum Report-Editor und zur Mahnkonfiguration (§11).
-- **Exporte** — *Space exportieren (XML)* (Einstellungen + Plan, ohne persönliche Daten), *Konfiguration exportieren (PDF)* (Vollschnappschuss: Einstellungen, Mitglieder, Plan), *Space-Bericht* (alles über den Space via Report-Vorlage „Space"), *Raum-QR-Codes (PDF)* (eine Karte je Platz, Tisch, Büro, Etage, zehn je A4), *Daten exportieren (Excel)* (eine Mappe: Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Blatt), *Space importieren (XML)* (stellt Einstellungen und Plan wieder her; ersetzt den aktuellen Plan). Jeder Export landet in den **Downloads**.
-- **Die ganze Konfiguration reist mit (#916)** — mit *Konfiguration in der Raumdatei* an (Voreinstellung) trägt *Raum exportieren (XML)* auch einen Abschnitt `<configuration>`: Tarife und Pakete, MwSt.-Sätze, die rechtliche Identität und jeden Rechnungsvermerk, Buchungs- und Freigaberegeln, Rollen, Mahnregeln, Dokumentvorlagen, Standorte, Schließtage und Dokumentlinks — dazu Preise des Grundrisses, Ganzbuchung, Standortnamen und Platz-Tags. *Raum importieren (XML)* wendet diesen Abschnitt zuerst an, auch auf einen Raum mit Buchungen; nur der Grundriss selbst bleibt abgelehnt, sobald Reservierungen existieren, und der Import sagt es. Nie in der Datei: der Einladungscode, Zugangsdaten für E-Rechnung und Zahlungsanbieter, Mitglieder, Reservierungen, Rechnungen und Zahlungen. Einen Raum exportieren, die Datei anderswo importieren und erneut exportieren ergibt Byte für Byte dieselbe Datei.
-
-<p><img src="images/workspace-exports.jpg" width="240"></p>
-
-*Der Exporte-Block — XML, Konfigurations-PDF, Space-Bericht, Raum-QR-Codes, Excel, XML-Import — und die Gefahrenzone.*
-- **Der Einrichtungsfragebogen** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 erklärt ihn vollständig): die eigenständige Seite, die eine ganze Konfiguration sammelt, *bevor* die App existiert. **Space importieren (XML)** oben ist die Stelle, an der ihre Datei landet — Einstellungen, Zubehör und Grundriss direkt; der `<setup>`-Abschnitt der Datei trägt Abrechnung, rechtliche Identität, Rollen und Mitglieder für die Bildschirme, denen sie gehören.
-- **Gefahrenzone** — **Space zurücksetzen**: löscht alle Buchungen, die Buchhaltung und den Plan; behält Einstellungen und Mitglieder. Durch getippte Bestätigung geschützt.
-
-<details><summary>Der ganze Workspace-Bildschirm in einem Bild</summary>
-
-<p><img src="images/workspace-settings-full.jpg" width="240"></p>
-
-</details>
-
-**Ein Speichern, alles oder nichts (#1451).** **Speichern** schreibt das ganze Formular in einem Schritt: Land, Währung und Zeitzone, WhatsApp-Gruppe, Adresse, Sprache des Raums, Einladungsvorlagen, Transparenz der Tische und wie ein neues Mitglied startet. Wird ein Teil abgelehnt, bleibt nichts davon gespeichert. Hat jemand anderes diese Einstellungen geändert, während das Formular offen war, wird nichts gespeichert, die App sagt es, und Ihre Eingaben bleiben stehen. Erneutes Speichern nach einer verlorenen Verbindung speichert nichts doppelt.
-
-<!-- anchor: user.workspace.settings.country -->
-#### Land
-
-Wo die Organisation ansässig ist. Es entscheidet über die
-Standardwährung, den angebotenen MwSt-Satzkatalog und den gesetzlichen
-Wortlaut, den ein befreiter oder nicht steuerbarer Verkäufer druckt, wenn
-du selbst keinen schreibst.
-
-<!-- anchor: user.workspace.settings.currency-timezone -->
-#### Währung und Zeitzone
-
-Die Währung, in der jeder Preis und jedes Dokument ausgedrückt wird, und
-die Zone, in der die Uhr des Raums läuft. **Die Zeitzone ist nicht
-kosmetisch**: ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag
-zählen in ihr, sodass ein Mitglied im Ausland den Tag des Raums sieht und
-nicht den eigenen.
-
-<!-- anchor: user.workspace.settings.language -->
-#### Sprache des Raums
-
-Die Sprache, die der Raum standardmäßig spricht. Einladungen werden darin
-geschrieben, und ein Dokument fällt darauf zurück, wenn die lesende
-Person keine eigene Sprache hat.
-
-Das ist **nicht deine eigene App-Sprache**. Die stellst du unter
-*Einstellungen → Sprache* ein, sie ändert, was **du** siehst, und betrifft
-sonst niemanden. Diese hier gehört dem Raum und ändert, was der Raum
-**anderen schreibt**.
-
-<!-- anchor: user.workspace.settings.address -->
-#### Briefkopfanschrift
-
-Die frei geschriebene Anschrift, die ein Papierdokument druckt. Sie ist
-von der **strukturierten Anschrift** der rechtlichen Identität getrennt,
-die die E-Rechnung trägt — eine Maschine kann eine Zeile nicht
-zuverlässig zerlegen, und wer einen Brief liest, möchte lieber die Zeile.
-
-<!-- anchor: user.workspace.settings.whatsapp-group -->
-#### WhatsApp-Gruppe
-
-Die Gruppe, in der ein Hinweis veröffentlicht werden kann. Optional und
-ohne weitere Wirkung: ohne sie bleibt eine Nachricht im Posteingang der
-App.
-
-<!-- anchor: user.workspace.settings.invitation-message -->
-#### Einladungstext
-
-Der Text, den eine Einladung trägt, je Sprache. Einmal geschrieben nutzt
-ihn jede Einladung in dieser Sprache; Code und Link fügt die App hinzu —
-füge also nie selbst einen in den Text ein.
-
-**Sprache der Nachricht** über dem Feld sagt, welcher der fünf Entwürfe
-zu sehen ist. Es ist keine Einstellung: davon wird nichts gespeichert,
-und es öffnet jedes Mal mit der Sprache des Raums.
-
-<!-- anchor: user.workspace.settings.wording -->
-#### Wortwahl
-
-Die Wörter, die dieser Bereich anstelle der Produktbegriffe verwendet.
-Benennen Sie einen Platz, die Beschriftungen der Legende, die Tabs oder
-die Buchungsbegriffe um — je Sprache — und alles Übrige behält die
-Formulierung des Produkts.
-
-Der Produktbegriff steht immer unter Ihrem eigenen, damit Sie sehen,
-was Sie ersetzen. **Zurücksetzen** entfernt Ihr Wort, statt das des
-Produkts an seiner Stelle zu speichern: Ein zurückgesetzter Begriff
-folgt dem Produkt, wenn sich dessen Formulierung später ändert.
-
-Die Begriffe sind nach ihrem Ort gruppiert und nicht nach Namen
-aufgelistet — zwei davon lauten auf Englisch *Reserve*, und die Gruppe
-unterscheidet sie.
-
-<!-- anchor: user.workspace.settings.colours -->
-#### Farben
-
-*Einstellungen → Arbeitsbereich → Farben*, mit eingeschalteten *Farben
-des Arbeitsbereichs* (*Einstellungen → Funktionen*). Wählen Sie eine der
-acht Farben oder geben Sie ein beliebiges `#RRGGBB` ein: Der Bildschirm
-zeigt vor dem Speichern, was daraus wird — das helle und das dunkle
-Thema, das die App daraus ableitet, nebeneinander.
-
-Die App behält ihre Kontrastgarantien, welche Farbe sie auch erhält. Wo
-ein Ton auf einer Fläche zu hell zum Lesen wäre, dunkelt die App ihn ab
-— der Farbton gehört Ihnen, die Lesbarkeit dem Produkt — und eine Farbe,
-die sie nicht lesbar machen könnte, wird abgelehnt, mit Nennung des
-Paares, und nichts wird gespeichert. **Produktfarben** entfernt Ihre
-Farbe, statt die des Produkts an ihrer Stelle zu speichern: Dieser
-Bereich folgt dem Produkt, wenn sich dessen Palette später ändert.
-
-Die Farbe kommt auch mit der Datei des Konfigurationsassistenten, einem
-importierten Bereichs-XML (`brand-color` an `<settings>`) oder einer
-Vorlage und reist als Gruppe *Farben* zu einem Zwilling — vor dem
-Speichern auf dieselbe Weise gemessen.
-
-Die DesKilo-Marke, die Farben der Platzzustände und das
-Produktions-Banner gehören nie einem Bereich.
-
-**Emblem.** Das eigene kleine Zeichen des Bereichs, **unter** dem Namen
-der App im Menü — und sonst nirgends. Wählen Sie ein PNG, JPEG oder
-WebP: Die App zeichnet es auf höchstens 512 Pixel neu und speichert
-dieses Ergebnis; die Metadaten der Datei, die bei einem Foto den
-Aufnahmeort enthalten, verlassen Ihr Gerät nie. **Entfernen** nimmt es
-weg. Ein Bereich ohne Emblem, oder ein Bild, das langsam ist oder sich
-nicht dekodieren lässt, sieht genau aus wie bisher.
-
-Das Emblem ersetzt nie das DesKilo-Logo, und es erscheint nicht in der
-Profilauswahl, wo der farbige Punkt sagt, ob ein Bereich echt ist oder
-ein Ort zum Ausprobieren — ein Sicherheitssignal ist keine
-Werbefläche.
-
-**Raumfarben.** Unter der Markenfarbe malt *Raumfarben* den Plan mit
-Ihren eigenen Tönen statt mit den acht des Produkts. Fügen Sie bis zu
-acht hinzu — der Plan liest die Reihenfolge, ein Raum behält also seine
-Farbe, wenn Sie eine weitere ergänzen — tippen Sie eine an, um sie zu
-entfernen, und **Produktfarben** gibt die Palette zurück. Bleibt es
-leer, sieht der Plan genau aus wie bisher.
-
-<!-- anchor: user.workspace.settings.desk-transparency -->
-#### Transparenz der Tische
-
-Wie viel des Hintergrundbildes unter einem Tisch im Plan durchscheint.
-Höher, wenn der Plan über einer Fotografie liegt und die Möblierung
-zählt; niedriger, wenn die Plätze mehr zählen als der Raum.
-
-<!-- anchor: user.workspace.export.space-xml -->
-#### Raum exportieren (XML)
-
-Der ganze Raum als eine Datei: der Grundriss und — mit *Konfiguration in
-der Raumdatei* eingeschaltet — Tarife, MwSt-Sätze, die rechtliche
-Identität und alle Rechnungsangaben, Buchungs- und Prüfregeln, Rollen,
-Mahnregeln, Dokumentgestaltungen, Standorte, Schließtage und
-Dokumentlinks. **Nie in der Datei:** der Einladungscode, E-Rechnungs- und
-Zahlungszugangsdaten, Mitglieder, Reservierungen, Rechnungen und
-Zahlungen.
-
-<!-- anchor: user.workspace.export.space-import -->
-#### Raum importieren (XML)
-
-Wendet diese Datei hier an. Der Konfigurationsteil wird auch auf einen
-Raum angewandt, der bereits Buchungen hat; nur der Grundriss selbst wird
-abgelehnt, sobald Reservierungen existieren, und der Import sagt es,
-statt still zu scheitern.
-
-<!-- anchor: user.workspace.export.config-pdf -->
-#### Konfiguration exportieren (PDF)
-
-Jeder Parameter des Raums als lesbares, unterschreibbares Dokument, das
-man der Buchhaltung geben kann. Es ist eine Momentaufnahme, keine
-Sicherung — die XML-Datei ist die, die sich zurücklesen lässt.
-
-<!-- anchor: user.workspace.export.workspace-report -->
-#### Raumbericht
-
-Der Raum selbst als Dokument: Standorte, Etagen, Plätze, Tarife und die
-geltenden Regeln. Nützlich als Anlage zu einem Mietvertrag oder einer
-Versicherungsakte.
-
-<!-- anchor: user.workspace.export.space-qr -->
-#### Platz-QR-Codes (PDF)
-
-Ein druckbares Blatt mit QR-Codes, einer je Platz. Klebe sie auf die
-Tische, und ein Mitglied kann buchen oder einchecken, indem es den Platz
-scannt, an dem es steht.
-
-<!-- anchor: user.workspace.export.excel -->
-#### Daten exportieren (Excel)
-
-Die Betriebsdaten — Mitglieder, Reservierungen, Nutzung, Rechnungen,
-Zahlungen — als Tabelle, für die Auswertung, die die App nicht macht. Es
-ist ein Export, keine Übertragung: nichts liest ihn zurück.
-
-Er kommt als **ein ZIP** (#1310): `workspace.xlsx`, eine `manifest.json`,
-die angibt, wie viele Zeilen jeder Tab enthält, aus welcher Schemaversion
-die Daten stammen und einen SHA-256 je Datei, sowie `files/` mit den
-gespeicherten Dateien des Space — Planhintergründe und -bilder,
-Berichtsbilder. Jede Tabelle wird bis zum Ende gelesen; ein Export, der
-nicht vollständig sein kann, scheitert mit einer Meldung, statt weniger zu
-speichern. Konten reisen nicht mit: Personen treten erneut bei und
-übernehmen ihr Profil auf einem anderen Server.
-
-### Raum-QR-Codes & Ganzraum-Reservierungen
-
-Vier Schritte machen „scann die Karte am Tisch" zum Alltag (§4a):
-
-1. Im **Editor** Büro oder Etage **als Ganzes buchbar** markieren, **Preis je Halbtag** setzen.
-2. **Büro- & Etagenreservierungen** in **Funktionen** aktivieren (standardmäßig aus).
-3. Jedem berechtigten Mitglied **„Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren"** gewähren — im Verwaltungsblatt, nie für sich selbst. Inhaber und Admins halten das Recht auch ohne Schalter, in der App wie am **Kiosk**.
-4. Karten drucken: **Berichte → Workspace-Dokumente → Raum-QR-Codes (PDF)** — ausschneiden, aufkleben.
-
-Eine Büro-Reservierung deckt **alle Tische darin**; eine Etagen-Reservierung die ganze Etage. Beide nur, solange nichts darin gebucht ist — als eigene Zeilen auf der Abrechnung.
-
-### Co-Inhaber
-
-1. *Mitglieder & Tarife → das Mitglied → **Co-Inhaberschaft*** — **aktiv** (Inhaber-Berechtigungen jetzt) oder **passiv** (Nachfolger in Wartestellung).
-2. Übergabe jederzeit mit ***Jetzt zum Inhaber machen***.
-3. Verlässt der letzte Inhaber den Space, wird der beste Co-Inhaber **automatisch befördert** — aktiv vor passiv. Das Netz wirkt auch bei ausgeschalteter *Co-Inhaber*-Funktion (sie verbirgt nur die Ernennungs-Knöpfe).
-
-### Rollenverwaltung
-
-Eine zentrale Matrix entscheidet, **welche Rolle welche Berechtigung hält** — Rollen & Berechtigungen verwalten, Mitglieder verwalten, Validierungsregeln konfigurieren, Workspace-Einstellungen bearbeiten, Rechnungen ausstellen & Zahlungen zuordnen, Finanzen einsehen, Dokumentbibliothek verwalten, Services & Pakete verwalten, Ausgaben genehmigen, Geschäftsvereinbarungen einsehen und verwalten. Zu finden unter *Einstellungen → Governance → Rollenverwaltung* (Funktion muss aktiv sein):
-
-- Die **Inhaberin hält immer alle Berechtigungen** — ihre Zeile ist gesperrt (Schloss-Icon).
-- Wer *Rollen & Berechtigungen verwalten* hält, bearbeitet die anderen Zeilen. Ein **Co-Inhaber** startet mit allem („kann weniger haben"); ein **Admin** mit den heutigen Admin-Fähigkeiten; ein **Mitglied** ohne alles.
-- Alle anderen mit irgendeiner Berechtigung sehen die Matrix **schreibgeschützt** — der Bildschirm sagt es: *„Nur lesen: das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben"* — mit dem Chip **Deine Rolle**.
-- Unberührte Matrix = Standardwerte. Der Server erzwingt dieselbe Matrix in jedem Rechnungs-RPC — ausstellen, ersetzen, stornieren, mahnen, zuordnen, erstatten, ausbuchen und zusammenfassen fragen alle `has_permission` (#816) — UI und Datenbank können nicht auseinanderlaufen; ein Mitglied mit *Rechnungen ausstellen* nutzt es wie ein Admin.
-
-**Wer prüft (#732).** Eine Regel nennt ihren **Geltungsbereich**: *Admins* (der Inhaber und alle Admins oder die aufgeführten), *Benannte Personen* (der Inhaber und genau die gewählten Personen — auch ein einfaches Mitglied kann prüfen) oder *Alle Mitglieder*. Anzahl und Inhaber-Freigabe behalten ihre Bedeutung, und niemand prüft je das eigene Ereignis. Funktion *Prüfer nach Rolle oder Person*.
-
-<p><img src="images/roles-matrix.jpg" width="240"></p>
-
-*Rollenverwaltung: die Inhaber-Karte gesperrt, die Mitinhaber-Karte standardmäßig voll gewährt — die Admin- und Mitglied-Karten folgen mit denselben elf Berechtigungen.*
-
-<!-- anchor: user.roles.matrix -->
-#### Die Rollenmatrix
-
-Rollen an der einen Seite, Berechtigungen an der anderen. Jede Zelle ist
-ein Schalter, außer denen, die eine Eigentümerin immer hat. Eine
-Berechtigung wird über eine einzige Funktion beim Server erfragt: eine
-Zelle zu entziehen entzieht sie überall zugleich — der Bildschirm
-versteckt die Schaltfläche, und der Aufruf dahinter lehnt ohnehin ab.
-
-### Online-Zahlungen einrichten
-
-Jede Community kassiert auf ihr **eigenes** Anbieterkonto; die App behält Geheimschlüssel nie auf einem Gerät — sie leben auf dem Server.
-
-1. **Einstellungen → Online-Zahlungen** (nur Inhaber).
-2. Anbieter wählen und Schlüssel aus dessen Dashboard einfügen:
-   - **PayPal** — Client ID, Secret, Umgebung (mit *sandbox* beginnen), Webhook ID, Rückkehr-URL.
-   - **Kreditkarte (Stripe)** — Secret key, Webhook-Signiergeheimnis, Rückkehr-URL.
-   - **Mollie** — API-Schlüssel, Rückkehr-URL (iDEAL, Bancontact, Karten…).
-   - **Wero (via Mollie)** — derselbe Mollie-Schlüssel, mit Wero im Mollie-Konto aktiviert.
-3. **Speichern** — ein grüner *Konfiguriert*-Chip erscheint. **Online-Zahlungen** in den Funktionen aktivieren, und Mitglieder sehen **Online zahlen** auf offenen Abrechnungen.
-
-<p><img src="images/online-payments-config.jpg" width="240"></p>
-
-*Eine Karte je Anbieter — PayPal gezeigt; Stripe, Mollie und Wero folgen derselben Form: Schlüssel hinein, ein Konfiguriert-Chip zurück.*
-
-Ein gespeichertes Geheimnis wird nie wieder angezeigt — Feld leer lassen zum Behalten, tippen zum Ersetzen, **Entfernen** löscht den Anbieter. Gebühren sind Anbietergebühren (~1,5–3 % je Zahlung, keine Grundgebühr); DesKilo schlägt nichts auf, Überweisung/IBAN bleibt gratis.
-
-Startet eine Zahlung nicht: **Einstellungen → Erweitert → Entwicklermodus** an und den **Entwickler**-Bildschirm öffnen — die *payments*-Spur zeigt, welche Anbieter konfiguriert sind und welche Felder fehlen.
-
-<p><img src="images/developer-screen.jpg" width="240"></p>
-
-#### Die Anbieter-Dashboards, Schritt für Schritt
-
-**Test- und Live-Umgebung strikt trennen**: jeder Anbieter hat Schlüssel je Modus, und alle in DesKilo eingefügten müssen zum selben Modus gehören. `<project-ref>` ist deine Supabase-Projektreferenz.
-
-**PayPal** — [developer.paypal.com](https://developer.paypal.com) → **Apps & Credentials**; **Sandbox/Live** umschalten (Environment-Feld muss passen); **REST-API-App anlegen** (Client ID + Secret); **Webhook** `https://<project-ref>.supabase.co/functions/v1/paypal-webhook` mit *Payment capture completed* (+ *denied* / *order voided*), **Webhook ID** kopieren — der Webhook ist Pflicht, so landet die Zahlung auf der Abrechnung; alles in DesKilo einfügen.
-
-**Stripe** — [dashboard.stripe.com](https://dashboard.stripe.com) → **Developers**; Test/Live entscheidet die Schlüssel; nur der **Secret key** wird gebraucht; unter **Payment methods** die Netze aktivieren (**Frankreich? Cartes Bancaires explizit aktivieren**); Webhook `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` mit `checkout.session.completed`, Signiergeheimnis kopieren.
-
-**Mollie** — [my.mollie.com](https://my.mollie.com) → **API keys** (Test/Live steckt im Schlüssel); Methoden aktivieren: **iDEAL**, **Bancontact**, Karten — und **Wero**, die EPI-Wallet für Konto-zu-Konto-Zahlungen in DE/FR/BE. **Mollie** und **Wero** sind in DesKilo zwei Anbieterkarten mit demselben Schlüssel. Redirect/Webhook setzt DesKilo automatisch.
-
-#### Weitere Zahlarten (Ausblick)
-
-| Anbieter | Fokus | Einordnung |
-|---|---|---|
-| **Apple Pay / Google Pay** | Mobile Wallets | Im Stripe-/Mollie-Dashboard aktivieren — erscheinen automatisch auf der Zahlseite. |
-| **Klarna** | Später zahlen | Ebenso: in Stripe/Mollie einschalten. |
-| **Adyen** | Enterprise | Nicht integriert — wäre ein neuer Anbieter (Beiträge willkommen). |
-| **Braintree** | Drop-in (PayPal) | Nicht integriert — die direkte PayPal-Integration deckt das ab. |
-
-<!-- anchor: user.money.payments.provider -->
-#### Der Zahlungsanbieter
-
-Welcher Dienst kassiert — PayPal, Stripe, Mollie oder Wero über Mollie.
-Eine Sonde meldet, welche Anbieter bereit sind und welche Felder noch
-fehlen; du erfährst es hier statt aus einer fehlgeschlagenen Zahlung.
-
-<!-- anchor: user.money.payments.credentials -->
-#### Zugangsdaten des Anbieters
-
-Die Schlüssel, die der Anbieter dir ausgestellt hat. Sie sind **nur
-schreibbar**: du kannst ein Feld ersetzen oder einen Anbieter löschen,
-aber die Werte werden nie wieder angezeigt, weder dir noch irgendeinem
-Client — der Bildschirm liest nur die Schlüsselnamen zurück. Ein leeres
-Feld behält das Gespeicherte. Sie liegen auf dem Raum und gelangen nie in
-eine Raumdatei oder ein Deployment.
-
-<!-- anchor: user.money.payments.methods -->
-#### Zahlungsarten
-
-Welche Zahlungswege der Raum annimmt und wie jeder auf einem Dokument
-heißt — Überweisung, Karte, bar, Scheck. Die Bezeichnung ist das, was
-Rechnung und Quittung drucken.
-
-### RFID/NFC-Badges einrichten
-
-Physische Karten zum Einchecken per Tap — ohne Telefon.
-
-1. **Einstellungen → RFID/NFC-Badges** (nur Inhaber). **NFC-Badge-Check-in** aktivieren, die **Gerätestatus-Zeile** lesen — *bereit*, *NFC in Android aus* oder *keine NFC-Hardware*. Android-Telefone und -Tablets mit NFC sowie **iPhones** können einen Tag lesen; iPads haben überhaupt keine NFC-Hardware.
-2. Jedem Mitglied eine Karte: **Mitglieder & Tarife → das Mitglied → Badges → Karte registrieren**, Karte ans Gerät halten. Jede lesbare Chipkarte geht (MIFARE, NTAG…). Mitglieder können es auch **selbst**: **Einstellungen → Mein Badge** prägt ihr druckbares QR-Badge und registriert die eigene Karte.
-3. Am **Kiosk** (§10) einsetzen. Verlorene Karte im Badges-Dialog widerrufen; **ein widerrufenes Badge nach rechts wischen** löscht es endgültig (nach Bestätigung).
-
-Badges gehören **einem Workspace** — der Dialog nennt welchem. Dieselbe physische Karte kann in mehreren Workspaces dienen. Ein QR-Badge **als PDF** druckt zehn Kartenformat-Kopien auf eine A4-Seite.
-
-<p><img src="images/nfc-config.jpg" width="240"></p>
-
-*Schritt 1 — der NFC-Schalter und die Gerätestatus-Zeile, die sagt, ob dieses Gerät eine Karte lesen kann.*
-
-<p><img src="images/member-badges-dialog.jpg" width="240"></p>
-
-*Schritt 2 — die Badges eines Mitglieds: QR-Badge und registrierte Karte, je mit Widerruf und eigenem Schalter „meldet mich an“.*
-
-<p><img src="images/my-badge-code.jpg" width="240"></p>
-
-*Selbstbedienung: Einstellungen → Mein Badge prägt das druckbare QR-Badge; der Badge-Code gehört Ihnen allein.*
-
-## 9. Geld (Finanzen-Tab)
-
-**Finanzmeldungen.** Der blaue Finanzzähler umfasst neue Finanzmeldungen und ausstehende Finanzentscheidungen. Öffnen Sie Finanzmeldungen unter Finanzen, um nur diese Kategorie zu sehen. Andere Neuigkeiten bleiben ungelesen; ausstehende Entscheidungen bleiben bis zur Erledigung gezählt. Null wird ausgeblendet, über 99 erscheint 99+.
-
-Dein Konto beantwortet *was schulde ich, was schuldet man mir* — und *wie viel kann ich noch buchen*. Hochkant scrollt die Monatsabrechnung über den Aktionsknöpfen; quer wandern die Aktionen ins Seitenpanel. Die Kopfzeile **‹ Monat ›** blättert jeden Monat an; der **PDF-Knopf** exportiert die sichtbare Abrechnung.
-
-**Die Abrechnung, Karte für Karte:**
-
-- **Dieser Monat** — wie viele **Tage** dein Abo diesen Monat enthält, wie viele **genutzt**, wie viele **übrig**, mit Fortschrittsbalken. Ein gebuchter Vormittag zählt 0,5 Tage — es sei denn, er liegt ganz außerhalb der Öffnungszeiten und die Regel des Space für Zeiten außerhalb stellt ihn gratis oder befreit ihn (§4b): dieselbe Regel treibt hier das Kontingent und dort den Betrag. Die Abo-Karte darunter rechnet es vor (*3 von 42 Halbtagen genutzt, 21 Öffnungstage*).
-- **Überziehung** — die halben Tage über deinen Plan hinaus, zum Satz deiner Tarifstufe.
-- **Bezogene Leistungen** — jede Konsumation und die Servicesumme.
-- **Zubehör-Aufpreise** — die Halbtags-Extras der Plätze, die du gebucht hast.
-- **Etagen-, Büro- und Tisch-Reservierungen** — Ganzraum-Buchungen, jede zu ihrem Preis je Halbtag.
-- **Tagespakete** — diesen Monat gekaufte Pakete.
-- **Offene Posten** — alles, was noch auf Validierung wartet, in einer orange umrandeten Karte: diese Beträge stehen noch nicht auf der Abrechnung.
-- **Zahlungen & Gutschriften** — erfasste Zahlungen, genehmigte Erstattungen, Gutschriften, Anpassungen.
-- **Rechnungskarte** — sobald der Monat fakturiert ist: Nummer, Status, Betrag, bezahlt, Rest (§9a).
-- **Dein Konto** — die echte monatsübergreifende Position, wenn es eine gibt (§9a).
-- **Saldo** — beglichen / offen, darunter die **Zahlungshinweise** und **Online zahlen**, wenn etwas fällig ist.
-
-**Wenn die Tage aufgebraucht sind** — die Wahl der Inhaberin, je Mitglied:
-
-- **Blockiert** (Standard) — keine Buchungen mehr; frag einen Admin oder beantrage **Extra-Halbtage** direkt aus dem Finanzen-Tab (Validierer genehmigen; genehmigte Tage kosten den Überziehungssatz).
-- **Nach Verbrauch** — weiterbuchen; jeder Extra-Tag kostet den Überziehungssatz deiner Stufe.
-- **Pakete** — **Paket kaufen**, ein Tagespaket wählen; Tage steigen sofort, der Preis landet auf der Monatsabrechnung.
-
-Ein Mitglied kann auch **kein Abo** haben — ein gelegentlicher Besucher (#1279): keine Monatsgebühr, keine Abo-Zeile auf der Rechnung und keine inklusiven Halbtage, gebucht wird also über ein Paket oder Guthaben. **Kein Abo** und **Nach Verbrauch** gehen nie zusammen, denn das hieße kostenlos buchen; App und Server lehnen die Kombination ab.
-
-**Mehrfachkarten** (Funktionen → *Mehrfachkarten*, unter Rechnungen; standardmäßig aus) sind vorausbezahlte Halbtage (#1279). Die Inhaberin legt sie in **Abrechnung** an (Name, Halbtage, Preis und eine Gültigkeit in Monaten — oder keine: dann laufen sie nie ab), und wer Rechnungen ausstellt, verkauft eine von der Seite eines Mitglieds. Der Verkauf wird **einmal** berechnet, auf der Monatsabrechnung. Danach wird jeder Halbtag, den ein Mitglied über sein Abo hinaus bucht, von seinen Mehrfachkarten genommen — die am frühesten ablaufenden zuerst, über so viele Monate wie nötig; eine stornierte Buchung gibt ihren Halbtag zurück. Verbrauchen kommt nicht auf die Rechnung, und ein durch eine Mehrfachkarte gedeckter Halbtag wird nie zusätzlich als Überziehung berechnet. Die Mitgliederseite zeigt, wie viele Halbtage übrig sind.
-
-**Die Aktionen, nach Sinn gruppiert:**
-
-- **Zahlen** — **Zahlung erfassen** („ich habe gezahlt") mit Methode, dem **Datum der Geldbewegung** (Standard: heute) und dem **Monat, den sie begleicht** (Standard: der laufende; ein Schritt zurück für Rückstand, vor für Vorauszahlung) — die andere Seite bestätigt. Dieser Monat entscheidet, auf welcher Abrechnung und Rechnung die Gutschrift landet. **Online zahlen** (falls aktiv) begleicht den fälligen Betrag sofort — **PayPal, Kreditkarte (Stripe), Mollie oder Wero**.
-- **Anträge** — **Ausgabe einreichen** (Kaffee für den Space? ein anderer Admin genehmigt — keine Selbst-Genehmigung), **Extra-Halbtage beantragen**, **Konsumation hinzufügen**.
-- **Dokumente** — **Rechnungen** (deine sind hier immer lesbar; für Aussteller der Rechnungs-Hub, §11), **Meine Konditionen** (rendert das Dokument mit dem Titel *Finanzvereinbarung*) und der **monatliche Zahlungsbericht**, Selbstbedienung (§11).
-
-Finanzen hat **fünf Ziele**: **Abrechnung · Zahlungen · Rechnungen · Nutzung · Dokumente**. Monatsauswahl und Abrechnungs-PDF gehören zu den Monatsansichten; **Rechnungen umfasst alle Zeiträume** und hat keine Monatsauswahl. Auf kleinen Bildschirmen lassen sich die vollständigen Tabnamen bei Bedarf scrollen.
-
-<!-- anchor: user.badges.nfc -->
-#### Einchecken per NFC-Ausweis
-
-Schaltet das Auflegen einer Karte statt des QR-Scans frei. Die UID der
-Karte wird als **Hash** gespeichert, nie als sie selbst: ein Ausweis
-kann widerrufen, aber nie wieder aus DesKilo ausgelesen werden. Nur
-Android; anderswo leistet der QR-Ausweis dasselbe.
-
-### 9a. Sobald der Monat fakturiert ist, entscheidet die Rechnung
-
-- Deine Abrechnung zeigt eine **Rechnungskarte** — Nummer, Status, Betrag, bereits bezahlt, Restbetrag — und der Monat gilt als **beglichen**, sobald die Rechnung bezahlt, ihr Rest erlassen oder ihre Gutschrift erstattet ist — auch wenn die Zahlung erst in einem späteren Monat erfasst wurde. Eine **teilweise bezahlte** Rechnung hält den Monat offen, genau um den **Restbetrag** (den zieht auch *Online zahlen* ein). Ein **Gutschrift**-Monat zeigt, was der Space dir schuldet — du musst nichts zahlen.
-- **Dein Konto** — sobald du freies Guthaben hältst (eine Gutschrift oder überzählige Zahlungen eines vergangenen Monats), zeigt der Finanzen-Tab deine echte monatsübergreifende Position im aufklappbaren Konto unter der Monatsübersicht: **Guthaben auf dem Konto**, jede **offene Rechnung** mit Restbetrag, ausstehende Erstattungen und die **Nettoposition**. Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen an. Monate vor Beginn deiner Mitgliedschaft schulden nichts.
-
-### 9b. Schnellansicht, Speichern, Teilen — jeder Bericht
-
-Jeder Bericht der App — Abrechnung, Rechnungen, Proformas, Gutschriften, deine Selbstservice-Dokumente — bietet dieselben drei Aktionen: **Schnellansicht** (das gerenderte Dokument auf dem Bildschirm, bevor ein PDF entsteht), **PDF herunterladen** und **PDF teilen** (an jede App — WhatsApp, Mail, …).
-
-**Berichte sprechen die Sprache des Lesers:** ein Dokument druckt in der Sprache des **Mitglieds**, wenn dafür eine Vorlage existiert, sonst in der **Sprache des Arbeitsbereichs** und, wenn auch die fehlt, in der **Sprache des Landes** des Space (§11, Vorlagen je Sprache). Hat dieses Land keine eindeutige Sprache, rät die App nicht — sie verweigert und bittet darum, *erst die Sprache des Arbeitsbereichs zu setzen*.
-
-**Jedes Dokument als Normbrief (#874).** Mit *Briefstandard für jedes Dokument* druckt ein nie gestaltetes Dokument — Rechnung, Proforma, Abrechnung, Finanzvereinbarung, Zahlungsbericht, Verbrauchsbericht, jede Mahnstufe — als positionierter Brief: Briefkopf bei 20 mm, Empfänger im DL-Fensterfeld (110 mm quer, 45 mm tief), Identifikationsblock ab 90 mm, ein Fuß auf jeder Seite mit Bankverbindung und Referenz, ein kurzer Streifen auf den Seiten 2+. An den Marken falten und die Anschrift erscheint. Eine gestaltete Vorlage gewinnt immer; `dart run tool/report.dart default --kind usage` gibt eine Startvorlage aus.
-
-### 9c. Die Ansicht Abrechnung
-
-Der Monatssaldo steht zuerst; Nutzung und Kosten folgen. Hilfetipps stehen nach den Inhalten und Aktionen.
-
-**Der gewählte Monat zuerst.** Enthaltene, genutzte und verbleibende Tage, Abonnement, Leistungen und Zuschläge, Pakete, offene Posten, Gutschriften, Rechnung und Saldo beschreiben den gewählten Zeitraum. Darunter öffnet **Ihr Konto** Guthaben, offene Rechnungen und Erstattungen aus **allen Zeiträumen**. Die Nettoposition ist vom Monatssaldo getrennt. Verhandelte Preise stehen unter **Dokumente** bei Ihrer aktuellen Vereinbarung.
-
-<p><img src="images/statement-account.jpg" width="240"></p>
-
-*Beispiele für Kontodetails und verhandelte Preise. Öffnen Sie Ihr Konto unter der Monatsübersicht; verhandelte Preise stehen unter Dokumente.*
-
-<p><img src="images/statement-balance.jpg" width="240"></p>
-
-*Der untere Teil der Abrechnung: Leistungen, offene Posten in Prüfung, Zahlungen & Gutschriften und der Saldo.*
-
-### 9d. Die Ansicht Zahlungen
-
-**Zahlen, dann anfragen.** Überfällige Rechnungen, Monatssaldo, Zahlungsanweisungen und Zahlungsaktionen bilden die Zahlungsgruppe. **Anfragen** gruppiert Ausgaben, geplante Ausgaben, zusätzliche halbe Tage und Verbrauch getrennt. Der Link zu allen Workspaces folgt diesen Aktionen.
-
-**Vorräte (#731).** Kaffeekapseln oder Staubsaugerbeutel für den Raum gekauft? In **Ausgabe einreichen** schalten Sie *Das ist ein Vorrat für den Raum* ein, benennen den Artikel (oder wählen einen bestehenden), die Menge und was ein Verbrauch kosten soll (vorbelegt mit Betrag ÷ Menge). Nach der Genehmigung werden Sie wie gewohnt erstattet **und** der Artikel steht mit diesem Bestand als verbrauchbare Leistung im Regal; wer ihn nutzt, trägt einen Verbrauch ein und zahlt, der Bestand sinkt, und bei null kann der Artikel bis zum nächsten Vorrat nicht verbraucht werden. Funktion *Vorräte aus Ausgaben* (braucht Leistungen).
-
-<p><img src="images/finances-payments.jpg" width="240"></p>
-
-*Die Ansicht Zahlungen: der Saldo mit Status, Zahlung erfassen, dann Ausgabe einreichen, Halbtage anfragen, Verbrauch hinzufügen.*
-
-### 9e. Die Ansicht Rechnungen
-
-**Grenzen der Rechnungsausstellung (#1917).** Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.
-
-Wenn Abo- oder Verbrauchsrechnungen deaktiviert sind, lässt sich diese Rechnungsart auch im Assistenten nicht ausstellen. Monatsrechnungen bleiben bei aktivierter Rechnungsstellung verfügbar; bestehende Dokumente und Kontoauszüge bleiben lesbar.
-
-**Ihre Rechnungen · Alle Zeiträume.** Die Zusammenfassung zeigt offene Beträge und überfällige Rechnungen einmal, dann alle Ihre Rechnungen, neueste zuerst. Der Abrechnungsmonat filtert dieses Archiv nicht. Öffnen Sie **Finanzverwaltung des Workspaces** über der Zusammenfassung für Rechnungsregister, Workspace-Status und Kostenteilung gemäß Ihrer Rolle und den aktivierten Funktionen. Rechnungszeilen öffnen weiterhin Details, Dokumente und Zahlungen.
-
-**Der Weg (#812).** Jede Zeile trägt außerdem die **Verlaufsleiste** der Rechnung — *Ausgestellt · Zahlung · Bestätigung · Abgeschlossen*, der aktuelle Schritt umringt — und **Sie sind dran** in einem Satz: *X bis Datum zahlen*, *Sie haben X gemeldet — der Space bestätigt es*, *Ihre Zahlung ist verbucht — der Space ordnet sie zu*, *bezahlt am … — abgeschlossen*. **So funktioniert es** auf der Kopfkarte öffnet die vier Schritte mit dem, was der Space tut und was Sie tun. Funktion *Der Weg einer Rechnung* (unter Rechnungen).
-
-<p><img src="images/finances-invoices.jpg" width="240"> <img src="images/invoice-detail.jpg" width="240"></p>
-
-*Die Ansicht Rechnungen — die Kopfkarte und jede an Sie ausgestellte Rechnung — und das Detailblatt einer Rechnung: Positionen, Saldo, Signatur, Schnellansicht / PDF / Teilen.*
-
-### 9f. Die Ansicht Dokumente
-
-**Der Rest der Unterlagen:** **Meine Konditionen** (Ihre Finanzvereinbarung), der **monatliche Zahlungsbericht**, **die Monatsabrechnung als PDF** und die **Dokumentbibliothek**, wenn der Workspace eine führt (§11d). In Funktionen → *Finanzen in drei Ansichten* lässt sich die einspaltige Ansicht zurückholen.
-
-<p><img src="images/finances-documents.jpg" width="240"></p>
-
-*Die Ansicht Dokumente: Meine Konditionen, der Zahlungsbericht, die Monatsabrechnung als PDF, die Dokumentenbibliothek.*
-
-### 9g. Preisverhandlungen
-
-**Der Tarif ist der Standard; Ihre Konditionen sind Ihre.** Ein Inhaber oder Finanz-Admin kann für ein Mitglied eine **Preisverhandlung** vorschlagen — Monatsbeitrag, Überschreitungssatz je halben Tag, Rabatt auf Zuschläge (Zubehör, Ganzraum-Reservierungen) — je optional, sonst der Tarif. Der Vorschlag landet unter Ereignisse bei den Prüfern der Regel (Domäne *Preisverhandlung* oder Standardregel); bestätigt, gilt er ab dem gewählten Monat und ersetzt die vorigen Konditionen. Unter **Dokumente** zeigt die Karte *Meine verhandelten Preise* den durchgestrichenen Tarif neben Ihren Preisen, seit wann, und **Wer das sehen kann**: Sie, die Inhaber und die Finanz-Admins — jeder Zugriff durch andere wird protokolliert und dort aufgeführt (§14). Funktion *Preisverhandlungen*.
-
-**Leistungen, Pakete und Auslastung (#744).** Die Konditionen können auch die **Auslastung** festlegen — den Anteil der Öffnungstage, der monatlich enthalten ist, verhandelt mit seinem Preis (nach Prüfung auf das Mitglied angewendet, der vorige Wert daneben) — und einen **Stückpreis je Leistung und je Paket**: ein Verbrauch oder ein Paketkauf wird zum Preis des Mitglieds berechnet, der Katalogpreis durchgestrichen in den Blättern und auf der Karte.
-
-### 9h. Geplante Ausgaben
-
-**Abos zahlen sich von selbst — aber nie ohne Sie.** Jedes Mitglied, gleich welcher Rolle, kann **eine wiederkehrende Ausgabe planen** (Internet, Telefon, Strom…): ein Betrag, eine erste Fälligkeit, eine Regel — alle X Tage, Wochen, Monate oder Jahre — und eine Laufzeit (*X Mal*, *bis zu einem Datum*, oder beides; was zuerst endet, beendet). Der **Plan selbst wird zuerst validiert** (eigene Domäne *Geplante Ausgabe*), der Betrag darauf ist also ein von den Validierern gebilligter. Danach **materialisiert jede Fälligkeit eine Okkurrenz und legt sie Ihnen vor** — auf der Zahlungsseite; nichts wird je stillschweigend verbucht:
-
-- **Zum validierten Betrag** bestätigt, wird die Ausgabe sofort Ihren Ausgaben hinzugefügt — bereits erledigt, denn der Plan war gebilligt.
-- **Zu einem anderen Betrag** bestätigt, ist eine kurze **Erklärung Pflicht**; die Ausgabe durchläuft dann die normale Ausgaben-Validierung. Bestätigt → hinzugefügt; **abgelehnt → sie kommt zu Ihnen zurück**, Betrag und/oder Beschreibung ändern und erneut senden.
-
-Die Liste Ihrer Pläne (Status, Regel, nächste Fälligkeit) und das Formular *Wiederkehrende Ausgabe planen* liegen hinter **Finanzen → Zahlungen → Geplante Ausgaben**; ein Plan endet dort mit einem Tipp. Funktion *Geplante Ausgaben* (unter dem Finanzen-Tab).
-
-<!-- anchor: user.money.expenses.schedule -->
-#### Eine geplante Ausgabe
-
-Eine Kosten, die wiederkehrt — der Internetanschluss, die Reinigung, die
-Miete. Du beschreibst sie einmal, und die App legt jede Fälligkeit an
-ihrem Tag an, sodass niemand daran denken muss. Jede Fälligkeit geht
-weiterhin durch die Prüfung, die die Ausgaben verlangen: das Planen legt
-die Anfrage an, es genehmigt sie nicht.
-
-<!-- anchor: user.money.expenses.what -->
-#### Was
-
-Der Name, den jede Fälligkeit trägt. Er steht auf der Kontozeile und in
-der Prüfanfrage — schreib ihn so, wie du ihn in sechs Monaten lesen
-möchtest.
-
-<!-- anchor: user.money.expenses.amount -->
-#### Betrag
-
-Was eine Fälligkeit kostet. Eine Änderung wirkt nur auf noch nicht
-angelegte Fälligkeiten; die bereits gebuchten behalten den Betrag, mit
-dem sie angelegt wurden.
-
-<!-- anchor: user.money.expenses.description -->
-#### Beschreibung
-
-Der längere Text für die prüfende Person. Optional, und der Platz für
-eine Vertragsnummer oder eine Lieferantenreferenz.
-
-<!-- anchor: user.money.expenses.starts-on -->
-#### Erste Fälligkeit
-
-Das Datum, an dem die erste fällig wird. Jede spätere zählt von hier —
-sie zu verschieben verschiebt die ganze Reihe.
-
-<!-- anchor: user.money.expenses.every -->
-#### Alle
-
-Der Abstand zwischen zwei Fälligkeiten — jeden Monat, jedes Quartal,
-jedes Jahr. Zusammen mit der ersten Fälligkeit legt er jedes
-Fälligkeitsdatum fest, das die Reihe je haben wird.
-
-<!-- anchor: user.money.expenses.times -->
-#### Anzahl
-
-Wie viele Fälligkeiten angelegt werden. Leer lassen für eine Reihe ohne
-Ende, und *Bis* nehmen, wenn das Ende ein Datum ist und keine Anzahl.
-
-<!-- anchor: user.money.expenses.ends-on -->
-#### Bis
-
-Das Datum, nach dem nichts mehr angelegt wird. Optional: ohne es läuft
-die Reihe, bis du sie stoppst — richtig für eine Miete, falsch für eine
-Ratenzahlung über zwölf Monate.
-
-### 9i. Der Verbrauchsbericht
-
-Da die Teilnahme **vor ihrem Monat abgerechnet** und währenddessen **verbraucht** wird, verdient der Monat ein Schlusswort. **Verbrauchsbericht des Monats** — auf der Nutzungsseite und unter den Dokumenten — ist ein Brief an das Mitglied: was die Teilnahme bezahlt hat (Beitrag, enthaltene Halbtage), was tatsächlich verbraucht wurde (Halbtage, Zuschläge), was übrig ist oder überschritten wurde, und darunter **jeder Nutzungseintrag** des Monats mit seiner gezählten Zeit. Die Zahlen sind die der Abrechnung und der Einträge — nichts wird neu berechnet. Wie jeder Brief lässt er sich ansehen, speichern oder teilen, gedruckt mit dem Briefkopf des Space und, einmal gestaltet, mit eigener Vorlage (der Editor führt ihn als *Verbrauchsbericht*).
-
-## 10. Kiosk-Modus (Wandtablet)
-
-Ein Android-Tablet oder iPad an die Tür:
-
-1. Die Inhaberin legt ein normales Konto fürs Gerät an, tritt dem Space bei und markiert es als **Kiosk** in *Mitglieder & Tarife* (*In Kiosk verwandeln*).
-2. **Der Kiosk-Modus startet nie von selbst.** Bei jedem Start fragt das Tablet *Kiosk-Modus starten?* — Bestätigen sperrt: nur Vollbild-Plan, Zurück deaktiviert, und unter **Android** pinnt sich die App selbst, sodass sich nichts anderes öffnen lässt — den Kiosk-Modus zu verlassen heißt dort, das Tablet neu zu starten. Ein **iPad** kennt dieses Pinnen nicht, dort greift nur die Routensperre — für dasselbe Ergebnis den **Geführten Zugriff** von iOS einschalten (Einstellungen → Bedienungshilfen). *Nicht jetzt* öffnet die App normal. Die Kiosk-Markierung ist jederzeit widerrufbar: am Gerät unter **Einstellungen → Kiosk-Gerät** oder durch die Inhaberin.
-3. Jedes Mitglied trägt ein **Badge** — vom Admin geprägt oder selbst (**Einstellungen → Mein Badge**, §8): druckbares **QR-Badge** und/oder **RFID/NFC-Karte**. Jedes hängt an seiner eigenen Funktion (**QR-Badges**, **RFID-/NFC-Badges**), beide unter *Kiosk-Modus* — ein Space kann also die eine Kennung anbieten, die andere oder beide.
-4. Am Kiosk: Platz (oder **Diese Etage** — was aktive Ganzraum-Reservierungen *und* eine als buchbar markierte Etage voraussetzt) antippen — **EIN Blatt** öffnet sich mit allem darauf: **Einchecken** vorausgewählt (ein Tipp wechselt zu **Reservieren** oder **Auschecken**), der **Zeitraum bereits aus den Einstellungen abgeleitet**, und der **Badge-Leser aktiv** darunter. Bei Halbtagen ist der Tagesteil vorausgewählt, in dem du gerade stehst (Vormittag / Nachmittag / Tag-Chips zum Wechseln — ein laufendes Fenster startet *jetzt*, bereits vergangene Tagesteile werden gar nicht erst angeboten, und deaktiviert ist ein noch *künftiger* Teil, solange **Einchecken** die gewählte Aktion ist, denn im Voraus da sein kann niemand; nach Feierabend bleibt ein einzelnes *Rest des Tages*, das bis Mitternacht läuft und keine Minute weiter, denn eine Buchung endet an dem Tag, an dem sie beginnt). Bei Zeit-Granularitäten: Von/Bis-Picker auf dem Slot-Raster, der Start eines Check-ins auf *jetzt* fixiert. Das Blatt **nennt die Regel, der es folgt** — Granularität und die heutigen Arbeitszeit-Fenster — es bietet also genau, was die Einstellungen erlauben; ein **geschlossener Tag** wird sofort per Banner gesagt statt am Ende zu scheitern. Eine schon begonnene Reservierung bietet zusätzlich **Sofort einchecken?** (standardmäßig an): eine einzige Badge-Präsentation bucht die Reservierung *bereits eingecheckt*. Dann Badge zeigen:
-   - **RFID/NFC-Karte antippen.** Solange der Leser scharf ist, bleibt die Kamera aus; ist NFC aus oder fehlt, sagt es das Blatt.
-   - Oder **QR-Badge scannen** — mit der eigenen Kamera (Frontkamera als Standard; umschalten unter *Einstellungen → Mit der Frontkamera scannen*). Auch USB/Bluetooth-Scanner oder Tippen des Codes geht.
-5. **Das Badge IST die Bestätigung:** es führt sofort aus, und ein **selbst-schließender Beleg** zeigt, *wen* der Kiosk erkannt hat — samt **Profilfoto**, wo die Funktion *Mitgliederfotos am Kiosk* aktiv ist —, *was* passiert ist, *wo* und *bis wann*; danach ist die Wand frei für das nächste Mitglied. Der Wandplan zeigt die Fotos der Anwesenden genauso. Der glückliche Pfad sind zwei Gesten: Platz antippen, Badge zeigen.
-
-**Was die Wand bewusst nicht kann.** Tippst du einen Platz an, den jemand anders hält, **nennt der Kiosk den Inhaber und verweist auf dein Telefon**: ein Wandgerät schreibt nie eine Nachricht im Namen eines Mitglieds, denn davorstehen könnte jeder. Die Aktion *dem Inhaber schreiben* für einen belegten Raum wohnt in der App (§4b). Alles, was der Kiosk *anbietet*, prüfen dieselben Serverregeln wie in der App — die Sperre für vergangene Tage, die Regel, dass ein Spontan-Check-in heute beginnen muss, und die Ein-Tages-Regel eingeschlossen —, die Wand lehnt also exakt das ab, was der Plan ablehnt.
-
-Deine Identität existiert nur für den Moment der Operation: die Kennung geht **nur für diese Operation** zum Server — einmal zum Erkennen, einmal für die Aktion — und **nichts wird gespeichert**, weder auf dem Tablet noch sonst wo. Die Buchung läuft **auf deinen Namen**, und in der Sekunde, in der sie durch ist, bist du wieder „abgemeldet". (**iPads haben kein NFC** — dort ist der Kamera-QR-Weg der richtige.)
-
-## 11. Fakturierung (Inhaber & Abrechnungs-Admins)
-
-*Inhaber stellen Rechnungen aus; Admins auch, sobald sie die Berechtigung **Rechnungen ausstellen & Zahlungen zuordnen** halten (Rollenverwaltung, §8 — oder die alte Delegation **Admins stellen Rechnungen aus**). Die Funktion **Rechnungen** wohnt unter Finanzen.*
-
-**Bankdaten für Länder ohne IBAN (#711).** Unter *Zahlungshinweise*, neben der IBAN: Bankname, Kontonummer, ein Routing-Code so benannt, wie dein Land ihn nennt — *sort code* im UK, *routing number* in den USA, *transit · institution* in Kanada — und ein BIC/SWIFT für Auslandsüberweisungen. Nur gefüllte Felder erscheinen auf der Karte „So bezahlst du“.
-
-Eine DesKilo-Rechnung wird generiert, nie komponiert: ihre Positionen sind **ausschließlich aus den erfassten Monatsdaten abgeleitet** — Abo, Überziehung, Aufpreise, Services, Pakete — minus Zahlungen und Gutschriften des Monats, sodass die letzte Zeile **der fällige Saldo ist**. Jedes Dokument friert die Postadressen ein (deine unter **Einstellungen → Persönliche Angaben**) und wird bei Ausstellung **digital signiert** — es ändert sich nie mehr. Ein **detaillierter Anhang** (Bewegungen und Anwesenheiten) hängt per Schalter an.
-
-**Der Weg einer Rechnung (#812).** Mit der Funktion *Der Weg einer Rechnung* (standardmäßig an) erzählt das Hub den Prozess, statt Zustände aufzulisten. Eine **Stufenleiste** ersetzt die Übersichts-Pillen — *1 · Auszustellen · 2 · Einzuziehen · 3 · Zu bestätigen · 4 · Abgeschlossen* — mit Live-Zählern (Einzuziehen zum Restwert, die überfälligen rot; Zu bestätigen sammelt jede Rechnung, deren nächster Zug nicht beim Mitglied liegt: eine gemeldete Zahlung, die ein anderer Admin bestätigt, eine verbuchte Zahlung, die zuzuordnen ist, eine Zuordnung oder Ausbuchung vor den Prüfern, eine zu erstattende Gutschrift); jede Kachel führt zu ihrem Tab. Jede **offene Karte** trägt die **Verlaufsleiste** (*Ausgestellt · Zahlung · Bestätigung · Abgeschlossen*) und den **nächsten Zug** als Satz — *Warten auf die Zahlung von Flo: 250 € — fällig 27. Mai*, *Flo schuldet 250 € — 6 Tage überfällig*, *Flo hat eine Zahlung von 250 € gemeldet — ein anderer Admin bestätigt sie unter Ereignisse*, *eine Zahlung von 250 € ist verbucht — ordnen Sie sie dieser Rechnung zu*, *Zahlung zugeordnet — Entscheidung der Prüfer steht aus*, *Gutschrift — 8 € an Flo erstatten und erfassen*. Die Aktion, die dieser Zug von Ihnen erwartet, ist der **einzige beschriftete Button** der Karte (*Mahnung 2 senden*, *Als bezahlt markieren*, *Erstattung erfassen*, *Ereignisse öffnen*); der Rest bleibt Icon mit Tooltip. Das **Detailblatt** öffnet mit derselben Leiste und demselben Satz, seine datierten Fakten unter der Überschrift *Verlauf*, und die erwartete Aktion steht an erster Stelle. Das **?** in der Kopfzeile öffnet **So funktioniert die Fakturierung** — die vier Schritte, je mit der Seite des Space und der des Mitglieds — dasselbe Blatt, das Mitglieder aus ihrer Ansicht Rechnungen öffnen.
-
-Aussteller öffnen **Finanzen → Rechnungen**: ein Drei-Tab-Hub unter einem Live-Übersichtsstreifen (*N zu fakturieren · N offen · X ausstehend · N zu erstatten · Y*):
-
-- **Zu fakturieren** — jedes Mitglied, dessen Vormonat abrechenbare Daten und noch keine Rechnung hat: je Mitglied ausstellen (mit Vorschau der abgeleiteten Positionen) oder **Alle fakturieren** — mit Bestätigungsdialog (Anzahl, Monat, Summe). **Neue Rechnung** öffnet dasselbe Blatt für jedes Mitglied und jeden Monat — Mitglieder-Picker, ‹ Monat ›, die Positionen, der Saldo, der **Anhang**-Schalter und **Rechnung ausstellen** (grüner *Rechnung ausgestellt.*-Balken). **Eine aktive Rechnung je Mitglied und Monat**. Das Blatt öffnet auf dem **abgeschlossenen Monat**; der laufende warnt, denn er ist nur einmal fakturierbar.
-- **Offen** — ausgestellte Rechnungen, älteste zuerst; über 30 Tage wird rot. Jede Aktion ist ein Icon mit Tooltip (stornieren · Proforma · Mahnung · als bezahlt markieren). **Karte antippen = Rechnung lesen.** **Zahlungserinnerung senden** erfasst die Mahnung und teilt das PDF — die Karte zeigt *Erinnert ×N*. **Als fehlerhaft markieren** storniert zur Korrektur (ein Dialog warnt: unumkehrbar): sie wandert durchgestrichen ins Archiv, eine **Ersatzrechnung** leitet den Monat neu ab. **Als bezahlt markieren** ordnet eine echte Zahlung zu (unten). **Eine Teilzahlung schließt keine Rechnung**: sie bleibt offen, Badge *Teilweise bezahlt* mit Restbetrag, bis der Rest ausdrücklich **über das Validierungs-Framework storniert** wird — erst dann Archiv als *Teilweise bezahlt · Restbetrag storniert*. **Eine NEGATIVE Rechnung ist eine Gutschrift** — der SPACE schuldet dem Mitglied: PDF-Titel *Gutschrift*, keine Mahnungen, kein Zuordnen von Mitgliedszahlungen; die Karte zeigt *Zu erstatten* mit **Erstattung erfassen** — die Auszahlung bucht gegen das Mitgliedskonto (validiert, wenn eine Regel greift; Ablehnung öffnet wieder), das Dokument schließt als *Erstattet*. Der Übersichtsstreifen trennt beide Richtungen: *N offen · X ausstehend* zählt positive Rechnungen zum **Restwert** (500 € mit 280 € bezahlt zählt 220 €), *N zu erstatten · Y* summiert die offenen Gutschriften.
-- **Archiv** — geschlossene Rechnungen, filterbar nach Mitglied und Monat, sortierbar; stornierte **standardmäßig ausgeblendet** — *Stornierte anzeigen* holt die Korrekturkette zurück; **Filter zurücksetzen** holt alles. Jede Zeile: Status-Chip (*Bezahlt*, *Teilweise bezahlt*, *Fehlerhaft* durchgestrichen, Gutschriften mit Negativbetrag), Monat, Betrag, **PDF herunterladen**. **Zeile antippen = Rechnung öffnen** — Positionen, Saldo, Empfänger, Stand (*Bezahlt €300.00 am 6. Aug.*, *Erinnert ×1…*, *Anhang: 5 Bewegungen, 10 Check-ins*), Ersetzungskette, Signatur — und jede noch erlaubte Aktion: **Schnellansicht**, **PDF herunterladen**, **PDF teilen**, **E-Rechnung (XML)**, mahnen, als bezahlt markieren, als fehlerhaft markieren, Ersatz ausstellen.
-
-**Als bezahlt markieren heißt: eine echte Zahlung zuordnen — oder ein Guthaben anrechnen.** Der Dialog listet die registrierten Zahlungen — erfasste Überweisungen und bestätigte Online-Zahlungen — und du ordnest die Rechnung einer zu; kein Betrag zu tippen (noch keine? der Dialog sagt es: *erst erfassen oder bestätigen*). Er listet auch die **Guthaben des Mitglieds** (Gutschrift-Überschuss): eines zuzuordnen rechnet die Gutschrift auf die Rechnung an, vergangene Monate eingeschlossen — die übliche Alternative zur Auszahlung, für Vereine wie Unternehmen. Jedes Guthaben wird genau einmal ausgegeben. **Mehr** gezahlt? **Gutschrift über den Überschuss** oder erzwungen akzeptieren mit Pflichtnotiz. **Weniger**? Mit Pflichtnotiz akzeptieren. Alle mit Rechnungszugriff werden benachrichtigt; die Inhaberin kann eine **Rechnungszahlung**-Validierungsregel (§7) setzen — die Zuordnung wartet aufs Quorum, eine Ablehnung öffnet wieder.
-
-**Eine bezahlte Rechnung ist endgültig.** Einmal zugeordnet: nie mehr stornieren, ersetzen, ändern — Korrekturen vor der Zahlung, per Storno + Ersatz. Eine Zahlung unter dem Betrag, mit Notiz akzeptiert, zeigt **teilweise bezahlt**.
-
-**Proforma.** Zwei der drei Hub-Tabs tragen eine Proforma-Aktion: auf **Zu fakturieren** als Angebot — keine Nummer, keine Signatur, Stempel PROFORMA, **nichts wird ausgestellt**; auf **Offen** als Zahlungsaufforderung, die nicht als Original durchgeht. Beide mit Schnellansicht / Download / Teilen.
-
-**Stempel.** Eine stornierte Rechnung trägt ein diagonales **FEHLERHAFT** über jeder Seite. Derselbe Stempel sagt **PROFORMA** auf einem Angebot und **KOPIE** auf jeder Rechnung, die nicht ihr Aussteller rendert.
-
-<p><img src="images/dunning-rules.jpg" width="240"></p>
-
-*Die Mahnregeln: Stufen, Tage bis zur ersten Mahnung, Tage zwischen den Stufen — und der Schalter Automatische Mahnungen.*
-
-**Mahnungen (Mahnwesen).** Die Inhaberin setzt die **Mahnregeln** (Häkchenlisten-Icon in der Kopfzeile, oder *Workspace-Einstellungen → Mahnregeln*): Anzahl Stufen, Tage bis zur ersten, Tage dazwischen. Überfällige Rechnungen tragen **„Mahnung N fällig"**, die Glocke wird rot — nichts geht für dich raus, solange **Automatische Mahnungen** nicht an ist (§11e). Eine manuelle Mahnung wird mit ihrer Stufe erfasst und landet im Feed des Mitglieds genau wie eine automatische (#816). Der Versand erzeugt einen **Mahnbrief** (Stufe 1 freundlich, höhere fester) aus der Vorlage der Stufe — fertig in deiner Sprache, gedruckt in der Sprache des *Mitglieds*, je Stufe editierbar mit `{{ reminder_level }}`, `{{ reminder_date }}`, `{{ days_open }}`.
-
-<p><img src="images/invoice-register.jpg" width="240"></p>
-
-*Das Register: eine Zeile je Rechnung, die Summe am Fuß, der Jahres-Picker und die Buchhaltungs-Export-Taste (SAF-T / FEC).*
-
-**Das Register.** Das Listen-Icon öffnet ein Ein-Zeilen-Register: **Datum · Name · Betrag · Status**, nach Datum sortiert (Kopfzeile antippen dreht die Richtung), Summe am Fuß, **Jahres**-Picker ab zwei Jahren. Sein Export-Knopf öffnet **Buchhaltungs-Export**: **SAF-T (XML, international)** und — für einen französischen Space — **FEC (Frankreich, bei Prüfung verlangt)**.
-
-**Die Periode an die Buchhaltung übergeben.** Aus dem Register exportieren Aussteller **SAF-T** — das OECD-*Standard Audit File for Tax*. Es deckt genau das Register: das Unternehmen, jeden Kunden, jede Rechnung mit Zeilen und Summen, die begleichenden Zahlungen. Stornierte bleiben als *annulliert* — eine Prüfdatei löscht nichts. Bewusst fehlt der **Kontenplan**: DesKilo erfindet keine Kontonummern; das Mapping macht die Buchhaltung.
-
-**Frankreich: das FEC.** Ein französischer Space bekommt das **FEC** (*Fichier des Écritures Comptables*, art. L47 A-I du LPF): eine tabulierte Flachdatei von **Buchungen**, benannt `<SIREN>FEC<JJJJMMTT>.txt`, mit den 18 vorgeschriebenen Spalten. Kontonummern fragt der Export vorher ab — vorbelegt mit dem *plan comptable général* (411, 706, 512). Jede Rechnung bucht brutto Forderung an Ertrag; Gutschriften und die begleichende Zahlung buchen zu ihren Daten, gelettert mit der Rechnungsnummer. Stornierte fehlen. Mitglieder sehen nur, was sie betrifft. Seit #927 wird die Buchungsnummer aus dem gebuchten Dokument abgeleitet — `VE-` plus Rechnungsnummer, `BQ-…-P` für die Zahlung — statt je Datei gezählt: Zwei Exporte überlappender Zeiträume tragen so dieselbe Nummer für dieselbe Buchung, wie die Datei es verlangt.
-
-<p><img src="images/invoices-admin.jpg" width="240"></p>
-
-*Der Hub der Aussteller: Zu fakturieren · Offen · Archiv unter dem Live-Übersichtsstreifen; eine offene Rechnung mit ihren vier Aktionen (stornieren · Proforma · Mahnung · als bezahlt markieren).*
-
-<p><img src="images/invoices-to-invoice.jpg" width="240"> <img src="images/invoice-new-sheet.jpg" width="240"></p>
-
-*Zu fakturieren ohne Rest und der Zusammenfassungs-Chip — und das Blatt Neue Rechnung: Mitglied, Monat, die abgeleiteten Positionen, der Schalter für den ausführlichen Anhang.*
-
-### 11a. Rechtliche Identität, MwSt & Pflichtangaben
-
-**Vor dem ersten Export die rechtliche Identität ausfüllen.** Unter *Workspace-Einstellungen → **Rechtliche Identität & E-Rechnung*** erklärt die Inhaberin:
-
-- Das **MwSt-Regime** — es bestimmt die von EN 16931 verlangte Nummer: außerhalb der MwSt eine **Registernummer** (SIREN, HRB, CIF…); als Kleinunternehmer eine **USt-IdNr.** plus **Befreiungsgrund** (das Feld schlägt die passenden Formeln vor). Das Regime gilt durchgängig: nur ein steuerpflichtiger Space stempelt je einen Satz, unter jedem anderen Regime verschwinden die MwSt-Picker.
-- Die strukturierte **Adresse** (Straße, PLZ, Ort).
-- Die **E-Rechnungs-Plattform** (§11b).
-- Die **Rechnungs-Pflichtangaben**, mit **Organisationstyp** — *Unternehmen* vs. *Verein (loi 1901)*: Rechtsform & Kapital, Register (Unternehmen: Handelsregister; Vereine: **RNA W… · SIRET falls vergeben**), Zahlungsbedingungen, Verzugszinsen, die **40-€-Beitreibungspauschale**, Skonto, Berufshaftpflicht, besondere Vermerke. Leere Klauseln drucken die gesetzliche Standardformel — Vereinsdokumente lassen die reinen B2B-Klausel-Defaults weg (was du eintippst, druckt trotzdem).
-
-Mitglieder ergänzen ihr **Land** — und ihre USt-IdNr., wenn sie als Unternehmen fakturieren — neben ihrer Adresse unter *Einstellungen → Persönliche Angaben*. DesKilo prüft alles **vor** der E-Rechnung und verweigert mit benanntem fehlendem Element.
-
-**Deine persönlichen Angaben (#886).** *Einstellungen → Persönliche Angaben* enthält, was jedes Dokument über dich druckt: Vorname und **Nachname** (auf Dokumenten in Großbuchstaben wie auf amtlicher Post), optional eine **Firma**, Straße, Postleitzahl, Ort, Land, Telefon, die **E-Mail, an die deine Dokumente gehen**, und — wenn du als Unternehmen fakturierst — USt-IdNr. und Registernummer. Das Formular zeigt den Block genau so, wie ihn das Fenster des Briefumschlags zeigen wird: Name, Firma, Straße, `PLZ ORT`, das Land nur, wenn du im Ausland wohnst. Listen und Dokumente nennen dich bei diesem Namen; die freie Adresse älterer Versionen bleibt der Rückfall, bis das Formular ausgefüllt ist.
-
-**Verwaltete Profile (#887).** Jemand tritt dem Verein bei, bevor er die App hat? Ein Admin öffnet **Mitglieder → Verwaltetes Profil anlegen** und füllt dasselbe Identitätsformular aus. Das Mitglied existiert sofort — du buchst Plätze für es, stellst seine Rechnungen aus (gedruckt mit der eingetragenen Identität), setzt sein Abo — und seine Seite trägt den Chip **Verwaltet**. Ist die Person so weit, erzeugt **An die Person übergeben** einen persönlichen, an dieses Profil gebundenen Code (QR, Link oder Nachricht wie jede Einladung). Sie legt ihr Konto an, gibt den Code ein und übernimmt das Profil: Reservierungen, Rechnungen und Abo bleiben ihre, die eingetragene Identität landet in ihren eigenen Einstellungen (ab jetzt ihre Daten — nur leere Felder werden gefüllt), und die Mitgliedschaft durchläuft die übliche Beitrittsbestätigung. **Übergabe zurückziehen** entzieht einen unbenutzten Code.
-
-**Wer ein verwaltetes Profil verwaltet (#914/#915).** Ein verwaltetes Profil enthält die Identität einer echten Person, bevor sie ein Konto hat: Anschrift, Telefon, E-Mail, Steuernummern. Diese Felder sind für andere Mitglieder nicht mehr lesbar — nur Name und Firma bleiben es, weil die Mitgliederliste sie braucht. Der Rest liegt hinter einer **Regel**, und jede Einsicht wird **festgehalten**. Standard ist die bisherige Regel: jede Inhaberin und jeder Admin. Schalten Sie *Wer ein Profil verwaltet* ein, um sie nach Rolle, nach benannten Personen oder beidem einzugrenzen. Die Inhaberin darf die Regel immer **ändern** — sonst würde ein Profil unverwaltbar, dessen einziger benannter Admin geht — erreicht die Daten aber nur, wenn die Regel sie nennt. Die Regel schützt Identität und Übergabe; Buchen und Fakturieren bleiben normale Verwaltung. Übernimmt die Person ihr Profil, zeigt *Einstellungen → Datenschutz → Wer sieht was* die geltende Regel und alle, die ihre Daten wirklich geöffnet oder geändert haben.
-
-**Entwicklung oder Produktion (#917).** Ein Space erklärt, ob er echt ist. Ein **Entwicklungs-Space** sagt das auf einem Band, das auf jedem Bildschirm steht, und jedes Dokument, das er druckt, trägt „ENTWICKLUNG“ quer über die Seite — vor jedem anderen Stempel, denn eine Proberechnung, die zugleich eine Gutschrift ist, ist zuallererst eine Rechnung, die es nicht gibt. Die Wahl erfolgt **bei der Erstellung** und lautet standardmäßig Entwicklung: Die vorsichtige Antwort auf „ist das echt?“ ist nein, solange niemand etwas anderes sagt. Alle vor dieser Version angelegten Spaces sind daher Entwicklungs-Spaces. Nur die **Inhaberin** darf einen Space zur Produktion erklären — ein Admin kann die Markierung nicht stillschweigend von den Dokumenten nehmen, die er ausstellt — und die App fragt nach und sagt, was dann aufhört. Bereits ausgestellte Rechnungen ändern sich nicht: Das Wasserzeichen entsteht beim Drucken.
-
-**Ein Kunde kann ein Unternehmen sein (#910).** Ein verwaltetes Profil braucht keinen Vornamen: eine **Firmenbezeichnung** genügt. Fehlt ein Personenname, wird das Unternehmen zum Adressaten — auf der Rechnung, in den Listen, im Zahlungsverlauf — und entfällt dann in der Anschrift darunter, weil es bereits die Zeile darüber ist. Wird eine Person genannt, ändert sich nichts: Das Unternehmen bleibt im Adressblock zwischen Name und Straße. Auch bereits ausgestellte Dokumente profitieren — die Firmenbezeichnung war dort von Anfang an eingefroren, sie wurde nur nicht gelesen.
-
-**Zuerst das Unternehmen, dann die Person (#912).** Trägt ein Kunde eine Firmenbezeichnung UND einen Personennamen, richtet sich das Dokument an das **Unternehmen** — es schuldet die Rechnung — und nennt die Person in der Zeile darunter, mit der von ihr gewählten Anrede:
-
-> SASU KaloA
-> Herr Guilhem MARTIN
-> 209 rue Jean Bart, Immeuble AGORA 1B
-> 31670 LABÈGE
-
-Die **Anrede** ist ein Feld Ihrer persönlichen Angaben: *Herr*, *Frau* oder *Keine*, was nur den Namen druckt. Sie wird nie aus einem Vornamen erraten, und jeder Leser sieht sie in seiner Sprache — *Monsieur* auf Französisch, *Sig.* auf Italienisch. Ohne Unternehmen ändert sich nichts: Die Person bleibt der Adressat.
-
-**Das Fälligkeitsdatum steht auf dem Dokument (#910).** Jede Rechnung druckt jetzt ihr **Zahlungsdatum**, berechnet aus der Frist Ihrer Mahnregeln — dieselbe Frist, die die App im Zahlungsverlauf herunterzählt, sodass beide nicht mehr zwei verschiedene Daten nennen können. Ein Entwurf kann es mit `due_date` beliebig platzieren. Und ein einseitiges Dokument trägt keine Seitenzahl mehr: „1/1“ sagt niemandem etwas.
-
-**DesKilo-Preise sind brutto.** Was du als Preis eintippst, zahlt das Mitglied. MwSt einschalten ändert keinen geschuldeten Betrag — es sagt, wie viel davon Steuer ist. Unter einem steuerpflichtigen Regime sagt es der Katalog laut: jede Service- und Paket-Zeile nennt ihren enthaltenen Satz (*inkl. 19 % USt*), im Abrechnungs-Editor wählt der Eigentümer den USt-Satz des Tarifs (Standard: der Workspace-Standardsatz) und sieht beim Tippen den USt-Anteil jedes Betrags, jede Ausstattung kann ihren eigenen Satz tragen (Standard: der Workspace-Standardsatz), und jedes Preisfeld erinnert daran, dass es brutto ist.
-
-<!-- anchor: user.money.vat.rates -->
-#### Sätze setzen
-
-*Rechtliche Identität → **MwSt-Sätze***. Leere Liste = MwSt aus. **Übliche Sätze verwenden** füllt Standard-, Zwischen- und ermäßigten Satz deines Landes — ein Entwurf, keine Steuerberatung. Ein Satz ist der **Standard** (Stern). Service und Paket tragen je ihren eigenen Satz. Entfernen löscht nie — referenzierte Sätze bleiben deaktiviert erhalten. All das ist der Funktionsschalter *USt-Verwaltung*: ausgeschaltet verschwinden Satz-Editor und alle Satz-Auswahlen, gespeicherte Sätze gelten weiter — die Steuer-Arithmetik selbst ist nie abschaltbar — und der Schalter *USt-Voranmeldungen* hängt darunter.
-
-<!-- anchor: user.money.vat.declaration -->
-#### Die periodische USt-Voranmeldung
-
-(*MwSt-Sätze → Umsatzsteuer-Voranmeldung*, nur steuerpflichtige Spaces). Zeitraum wählen — Monat oder Quartal, was dein Regime verlangt — und **Erstellen**: die App aggregiert die ausgestellten Rechnungen des Zeitraums je Satz **mit exakt der Arithmetik der Rechnungen**, die Voranmeldung stimmt also mit jedem Dokument auf den Cent überein. Das Ergebnis zeigt Bemessungsgrundlage und USt je Satz, abgebildet auf die **Kennzahlen des amtlichen Formulars** (UStVA Kz 81/86 in Deutschland, CA3-Zeilen 08/09/9B/11 in Frankreich, generische Liste sonst). Jede Voranmeldung exportiert als **PDF** und **maschinenlesbares XML**; ist unter E-Rechnung eine Upload-Plattform konfiguriert, sendet **Übermitteln** sie elektronisch dorthin und protokolliert die Quittung — sonst die Zahlen in ELSTER/das Portal übertragen und **Als abgegeben markieren**. In beiden Fällen wird die Voranmeldung unveränderlich, mit Kanal und Beleg. Der Katalog vorgeschlagener Sätze deckt alle EU-Staaten, die Schweiz (samt 3,8 % Beherbergung), Norwegen und die kanadischen Provinzen ab; die USA haben keine Bundes-MwSt — die App sagt es, statt zu raten. Eine Abgabehilfe, keine Steuerberatung.
-
-**Was es am Dokument ändert.** Eine danach ausgestellte Rechnung trägt die Aufschlüsselung wie ausgestellt: Satzspalte, Netto und eine Zeile je Satz. Die **E-Rechnung (XML)** trägt, was EN 16931 verlangt (UBL und CII); **SAF-T** deklariert jeden Satz; das **FEC** bucht brutto gegen netto plus ein **Umsatzsteuer**-Konto (445710, änderbar).
-
-**Eine ausgestellte Rechnung ändert sich nie.** Braucht ein Dokument neue Zahlen: **fehlerhaft** markieren und **Ersatz** ausstellen — die Korrekturkette ist auf beiden sichtbar.
-
-**Wie Belege nummeriert werden (#925).** Jedes Journal — Rechnungen, Gutschriften, USt-Voranmeldungen, Mitgliedsnummern, Zahlungsreferenzen — hat seinen **Nummernkreis**, genommen in der Datenbank in dem Moment, in dem der Beleg ausgestellt wird: lückenlos (ein Beleg, der scheitert, verbraucht nichts), exakt, egal wie viele Admins gleichzeitig ausstellen, und im Jahr **Ihrer** Zeitzone, nicht UTC. Die Inhaberin stellt das Format auf einem Bildschirm ein, *Einstellungen → Nummernkreise*: Präfix, Jahr oder Monat, Stellen, Neustart, mit Vorschau der nächsten Nummer. Das Format gilt für das Kommende; ein ausgestellter Beleg ändert sich nie, und der Zähler kann erhöht, nie gesenkt werden. **Ein Nummernkreis wiederholt nie eine Nummer (#1320):** Er beginnt höchstens so oft neu, wie er sein Datum druckt — ohne Datum nie, mit Jahr höchstens jährlich —, deshalb bietet der Bildschirm nur diese Neustarts an. Ein geänderter Neustart gilt ab dem nächsten Zeitraum, nie im laufenden, und das Datum aus einem Kreis zu entfernen, der schon Nummern vergeben hat, verlangt im selben Schritt ein neues Präfix oder Suffix.
-
-**Ein Unternehmen in einem anderen EU-Land fakturieren (#895).** Ein steuerpflichtiger Space berechnet einem **Unternehmen in einem anderen Mitgliedstaat** keine MwSt: dieser Kunde schuldet die Steuer selbst (Art. 196). Trägt das Profil des Kunden eine USt-IdNr. und ein anderes Land als deines, wird die Rechnung **ohne Steuer** ausgestellt, nennt die von der Norm verlangte Kategorie (AE) und druckt den gesetzlichen Hinweis — *Steuerschuldnerschaft des Leistungsempfängers* oder was dein Land spricht. Der Preis bleibt der Tarif: nichts wird addiert, nichts abgezogen. Die E-Rechnungsprüfung verweigert den Versand, solange die USt-IdNr. des Kunden fehlt — sie ist der Beweis, dass die Steuer seine ist. Ein Space, der nie Unternehmen im Ausland fakturiert, schaltet das Ganze unter *Rechtliche Identität → Reverse-Charge für EU-Unternehmen* aus.
-
-**Eine Gemeinde, ein Krankenhaus, den Staat fakturieren (#922).** Eine Einreichung bei **Chorus Pro** verlangt für die meisten öffentlichen Stellen eine **Auftragsnummer** (BT-13) oder einen **Dienststellencode** (BT-10). Beide werden **bei der Ausstellung** erfasst, auf dem Dokument eingefroren, unter der Mitgliedsnummer gedruckt und im XML — UBL wie Factur-X — dort geführt, wo die Norm sie vorsieht. Die E-Rechnungs-Prüfung **warnt**, wenn eine Rechnung ohne beides an die öffentliche Plattform geht; sie blockiert nicht, denn ein Mitglied ist keine Gemeinde.
-
-**Wann die Steuer entsteht (#896).** Ein steuerpflichtiger Space meldet entweder **nach vereinbarten Entgelten** — die Steuer entsteht mit der Rechnung — oder **nach vereinnahmten Entgelten** (*Ist-Versteuerung*) — sie entsteht an dem Tag, an dem der Kunde zahlt. Frankreich stellt Dienstleistungen standardmäßig auf die Vereinnahmung, Italien nennt es *IVA per cassa*. Die Wahl steht in *Rechtliche Identität → Entstehung der Umsatzsteuer*. Nach vereinnahmten Entgelten meldet ein Zeitraum **die darin eingegangenen Zahlungen** statt der ausgestellten Rechnungen: eine Teilzahlung trägt anteilig einen Teil jedes Satzes des Dokuments, und die Rundung geht an den größten Satz, damit die Summe genau dem Eingang entspricht. Der Umsatzsteuerbericht folgt derselben Regel — eine Position ist dort eine Zahlung, datiert auf den Tag des Eingangs — Bericht und Meldung können also nicht auseinanderlaufen. Jede Rechnung druckt den passenden Hinweis, und der Meldebildschirm nennt die verwendete Grundlage.
-
-**Eine Gutschrift gibt auch die Steuer zurück (#894).** Eine Gutschrift, die eine mehrwertsteuerpflichtige Belastung storniert, nennt jetzt den Satz, den sie zurückgibt: die Aufschlüsselung des Belegs zeigt diese Steuer negativ und die Voranmeldung rechnet sie heraus — eine verteilte und zurückgegebene Ausgabe (#828) wird zum Satz storniert, zu dem sie berechnet wurde. Bewegtes Geld — eine Zahlung, eine Auslagenerstattung — trägt keinen Satz und rührt die Steuer nie an, wie bisher. Ein Beleg mit negativer Summe wird in der E-Rechnung als **Gutschrift (381)** typisiert, nicht als Rechnung.
-
-**Zahlungsbedingungen je Mitglied (#881).** Der Wortlaut oben ist der Standard des Space für alle. Ein Mitglied kann **eigene** tragen — ein längeres Zahlungsziel für einen Großkunden etwa. Sie werden nie direkt am Mitglied eingetragen: ein Admin mit der Berechtigung *Änderung der Zahlungsbedingungen beantragen* öffnet die Mitgliederseite, **Zahlungsbedingungen → Änderung beantragen**, füllt nur die abweichenden Felder (ein leeres Feld behält den Wortlaut des Space) und nennt einen Grund; der Antrag wird eine Bestätigungskarte **Zahlungsbedingungen**, entschieden wie jede andere Domäne (standardmäßig der Eigentümer), und die Abweichung gilt nach der Bestätigung. Das Mitglied sieht die wirksamen Bedingungen nur lesend auf seiner Seite und unter **Einstellungen → Zahlungsbedingungen**, beschriftet *Standard des Space* oder *Eigene des Mitglieds*; jede Rechnung und Mahnung druckt die wirksamen, und eine Vorlage kann `payment_terms_source` prüfen. *Wieder den Standard des Space verwenden* beantragt das Ende der Abweichung — über dieselbe Bestätigung.
-**MwSt — die Konformitäts-Checkliste (#878).** Geprüft am 05.09.2026 gegen die Richtlinie 2006/112/EG und EN 16931 (ADR 0015). Was gilt: Das Regime des Verkäufers ist **auf jedem Beleg eingefroren** (ein Verein, der steuerbefreit wird, behält seine früheren nicht steuerbaren Rechnungen wie sie sind); die Aufschlüsselung je Satz ist ebenso eingefroren, je Zeile gerundet wie auf dem Server; die Nummerierung ist fortlaufend und Belege ändern sich nie (storniert und neu ausgestellt). Was die App jetzt für dich tut: Belege eines **befreiten oder nicht steuerbaren Verkäufers drucken den gesetzlichen Hinweis ihres Landes** (FR Art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, sonst die Richtlinie), wenn du in *Rechtliche Identität* nichts geschrieben hast; die E-Rechnungsprüfung **warnt, wenn die USt-IdNr. eines Kunden nicht die Form ihres Landes hat**. Was beim Eigentümer bleibt: den Satzkatalog bei einer Satzänderung pflegen; ein steuerpflichtiger Verkäufer braucht eine USt-IdNr. Die drei bei der Prüfung erfassten Grenzen sind geschlossen: Gutschriften stornieren die Steuer (#894), das innergemeinschaftliche Reverse-Charge wird bei der Ausstellung entschieden (#895), und die Ist-Versteuerung ist eine Einstellung des Space (#896).
-**Der MwSt-Bericht (#878).** Unter *MwSt-Voranmeldungen*, für den gewählten Monat oder das Quartal: **MwSt-Bericht (PDF)** — jede steuerbare Position (Beleg, Datum, Kunde, netto, Satz, MwSt, brutto, Kategorie, ggf. das stornierte Original), Zwischensummen je Satz und Kategorie, Summen des Zeitraums — als Brief zum Ansehen, Speichern, Teilen und wie jedes Dokument gestaltbar (*MwSt-Bericht* im Editor); **MwSt-Bericht (CSV)** — dieselben Positionen, semikolongetrennt, für die Buchhaltung.
-
-<!-- anchor: user.money.legal.seller-kind -->
-#### Art der Organisation
-
-*Unternehmen / Firma* oder *Verein (loi 1901)*. Diese Wahl entscheidet, welche Klauseln ein Dokument standardmäßig druckt: Verzugszinsen, Beitreibungspauschale und Skonto sind Pflichten **zwischen Gewerbetreibenden**, also lassen die Rechnungen eines Vereins sie weg. Was du selbst schreibst, wird immer gedruckt, unabhängig von der Art.
-
-<!-- anchor: user.money.legal.legal-form -->
-#### Rechtsform und Kapital
-
-Was die Organisation rechtlich ist, unter ihrem Namen gedruckt: *GmbH mit Stammkapital 25 000 €*, *Association loi 1901*. Leer gelassen druckt ein Unternehmen nichts und ein Verein seine satzungsmäßige Form.
-
-<!-- anchor: user.money.legal.registration -->
-#### Registereintrag
-
-Der Eintrag, mit dem man dich prüfen kann: **HRB** und Registergericht für eine Gesellschaft, **RNA W…** und die **SIRET**, sofern vergeben, für einen Verein. Danach sucht die Buchhaltung deiner Kundin, und ohne ihn verweigert die E-Rechnungsprüfung den Versand.
-
-<!-- anchor: user.money.legal.payment-terms -->
-#### Zahlungsbedingungen
-
-Wann das Geld fällig ist — *zahlbar bei Rechnungserhalt, innerhalb von 30 Tagen* als Voreinstellung. Es steht auf jeder Rechnung, und die Mahnregeln zählen von dort.
-
-<!-- anchor: user.money.legal.late-penalty -->
-#### Verzugszinsen
-
-Die Zinsen, die eine verspätete Zahlung trägt. Zwischen Gewerbetreibenden ist die Angabe Pflicht; die Voreinstellung nennt den geltenden gesetzlichen Satz. Ein Verein druckt hier nichts, solange du nichts schreibst.
-
-<!-- anchor: user.money.legal.recovery -->
-#### Beitreibungspauschale
-
-Die **40 €** pauschal für Beitreibungskosten bei Verzug zwischen Gewerbetreibenden. Gleiche Regel: Pflicht zwischen Gewerbetreibenden, für einen Verein weggelassen, immer gedruckt, wenn du sie schreibst.
-
-<!-- anchor: user.money.legal.escompte -->
-#### Skonto
-
-Ob frühe Zahlung einen Abzug bringt. Die meisten Räume gewähren keinen, und die Voreinstellung sagt das in den Worten, die das Gesetz erwartet — *kein Skonto* zu sagen ist zwischen Gewerbetreibenden selbst eine Pflichtangabe.
-
-<!-- anchor: user.money.legal.insurance -->
-#### Berufshaftpflicht
-
-Versicherer, Vertrag und räumliche Geltung. Für reglementierte Berufe verlangt; leer wird nichts gedruckt.
-
-<!-- anchor: user.money.legal.special-mentions -->
-#### Besondere Angaben
-
-Alles Weitere, was dein Gewerbe oder dein Land verlangt, nach den anderen gedruckt. Der Platz für eine Mitgliedsnummer, eine Schlichtungsstelle oder eine Klausel, die deine Buchhaltung wünscht.
-
-<!-- anchor: user.money.vat.regime -->
-#### Steuerregime
-
-Ob der Raum **nicht der MwSt unterliegt**, als Kleinunternehmen **befreit** ist oder **MwSt berechnet**. Diese Wahl entscheidet, welche Nummer die Norm EN 16931 von dir verlangt und welchen gesetzlichen Satz ein Dokument druckt. Das Regime wird **bei Ausstellung auf jedem Dokument eingefroren**: eine Änderung schreibt nie eine bereits versandte Rechnung um.
-
-<!-- anchor: user.money.vat.number -->
-#### Umsatzsteuer-Identifikationsnummer
-
-Die innergemeinschaftliche Nummer, in der Form ihres Landes geprüft. Sie ist die Voraussetzung für den Versand, wenn du MwSt berechnest, und der Beleg dafür, dass die Steuer bei Reverse-Charge der Kundin zufällt.
-
-<!-- anchor: user.money.vat.account -->
-#### MwSt-Konto
-
-Das Konto im Kontenplan, auf das vereinnahmte MwSt gebucht wird. Buchhaltungsexporte und die Auswertungen der Buchhaltung folgen ihm.
-
-<!-- anchor: user.money.vat.exemption-reason -->
-#### Grund der Steuerbefreiung
-
-Der Satz, den ein befreiter oder nicht steuerbarer Verkäufer drucken muss. Leer gelassen druckt DesKilo den gesetzlichen Wortlaut deines Landes — *art. 293 B du CGI* in Frankreich, *§ 19 UStG* in Deutschland, sonst die Richtlinie.
-
-<!-- anchor: user.money.legal.legal-id -->
-#### Registernummer
-
-SIREN, SIRET, HRB, CIF — die Kennung, die die Norm von einem Verkäufer ohne MwSt verlangt. Ohne sie kann eine E-Rechnung aus einem nicht steuerbaren Raum nicht ausgestellt werden.
-
-<!-- anchor: user.money.legal.address -->
-#### Strukturierte Anschrift
-
-Straße, Postleitzahl und Ort als drei getrennte Felder, neben der freien Briefkopfanschrift. Der Briefkopf ist, was ein Papierdokument druckt; **die strukturierte Anschrift ist, was die E-Rechnung trägt**, denn eine Maschine kann eine Zeile nicht zuverlässig zerlegen.
-
-### 11b. Wohin die E-Rechnung muss (EU)
-
-Die Aktion **E-Rechnung (XML)** öffnet ein Blatt, das es fürs Land des Space beantwortet: welcher Kanal für Geschäftskunden, ob eine Plattform dazwischen sitzt, welcher Kanal für öffentliche Käufer. Vier Modelle:
-
-- **Peppol** — ein Access Point liefert an den Kunden; keine Staatsplattform dazwischen. Belgiens B2B-Mandat funktioniert so; Peppol erreicht öffentliche Käufer EU-weit (Richtlinie 2014/55/EU).
-- **Zugelassene Plattformen** — Frankreich: eine *plateforme agréée* routet und meldet dem Fiskus. Öffentlicher Sektor bleibt **Chorus Pro**.
-- **Clearance** — Italien (**SdI**), Polen (**KSeF**), Rumänien (**RO e-Factura**): die Plattform empfängt *zuerst*; jede verlangt eigene Syntax — das Blatt warnt, dass die EN-16931-Datei nicht die ihre ist; für Peppol, öffentliche Käufer und Auslandskunden nutzen, konvertieren lässt die Plattform oder die Buchhaltung.
-- **Kein Kanalzwang** — Deutschland heute: Empfang seit 2025 Pflicht, Ausstellung phasenweise; E-Mail-Anhang ist legal; XRechnung und ZUGFeRD erwartet. Öffentlich: **OZG-RE / ZRE** oder Peppol.
-
-**Factur-X — eine Datei, beide Leser.** Das Blatt bietet zuerst **Factur-X (PDF)**: ein normal aussehendes Rechnungs-PDF mit der Maschinenrechnung *darin* (EN-16931-Daten als CII). Der Mensch sieht die Rechnung, die Plattform findet `factur-x.xml`. Das nackte **XML** bleibt darunter verfügbar.
-
-**Senden, ohne die App zu verlassen.** Die Inhaberin registriert die Plattform unter *Rechtliche Identität → **E-Rechnungs-Plattform***: **Upload-URL**, **Token/Kennung**, bei Bedarf **Authorization-Header** und **Dateifeldname**. Jede Plattform mit Credential-Upload geht. Der Token bleibt serverseitig. Danach führt das Blatt mit **An die Plattform senden**: das Factur-X-Dokument geht direkt raus; das Detailblatt protokolliert Abgang, Antwort und zurückgegebene ID. Jeder Versuch wird geloggt.
-
-**Eine zweite Strecke, direkt zum Kunden.** Die staatliche Plattform zu erreichen heißt nicht, den Käufer erreicht zu haben, und etliche Kunden betreiben ihren eigenen Empfangsdienst. Derselbe Bildschirm nimmt darum ein **zweites Ziel** entgegen — den Endpunkt des Kunden, mit eigener URL, eigenem Token, eigener Authorization-Header-Form und eigenem Dateifeldnamen —, und das Versandblatt bietet danach beide Strecken an, jede mit ihrer eigenen Übertragungshistorie. Das fährt auf der Funktion **E-Rechnungszustellung an Kunden** unter *Rechnungen*; bleibt sie aus, gibt es allein die Plattform-Strecke, genau wie bisher.
-
-**Proben ohne Risiko.** Derselbe Bildschirm nimmt **Testumgebungen** (UAT/Dev: je URL + Token). Mit aktivem **Entwicklermodus** bietet der Versand die Umgebungswahl; ein Test wird als solcher markiert; die Produktions-URL dient nie einer Probe.
-
-DesKilo überträgt nichts auf eigene Rechnung: es produziert das Dokument und übergibt es deiner Plattform. Mandatskalender bewegen sich: prüfe deine Steuerverwaltung.
-
-<!-- anchor: user.money.einvoice.overview -->
-#### Die E-Rechnungs-Plattform
-
-Wohin eine strukturierte Rechnung übermittelt wird, und mit welchen
-Zugangsdaten. Ein Dokument kann an **zwei Ziele gleichzeitig** gehen: an
-die von deinem Land vorgeschriebene Plattform und an den eigenen Dienst
-der Kundin. Beides darf leer bleiben. Zugangsdaten liegen auf dem Raum
-und gelangen nie in eine Raumdatei oder ein Deployment: ein Export, den
-du weitergibst, trägt die Konfiguration, nicht die Schlüssel.
-
-<!-- anchor: user.money.einvoice.endpoint -->
-#### Upload-URL
-
-Die Adresse, an die die Rechnung gesendet wird. Übernimm sie aus der
-Dokumentation der Plattform — ein abschließender Schrägstrich oder ein
-fehlendes Versionssegment ist der übliche Grund für eine Übertragung,
-die ohne verwertbare Meldung scheitert.
-
-<!-- anchor: user.money.einvoice.token -->
-#### Token oder Zugangsdaten
-
-Das Geheimnis, das dich gegenüber der Plattform ausweist. Einmal
-gespeichert wird es nie wieder angezeigt, auch dir nicht: der Bildschirm
-sagt *gesetzt* und sonst nichts. Neu eingeben ersetzt es, leer lassen
-behält es.
-
-<!-- anchor: user.money.einvoice.auth-header -->
-#### Auth-Header
-
-Der HTTP-Header, in dem das Token reist — bei den meisten Plattformen
-`Authorization`, bei einigen ein herstellereigener Name. Zeigt die
-Dokumentation `Bearer <token>`, gehört der Headername hierhin und das
-nackte Token darüber.
-
-<!-- anchor: user.money.einvoice.file-field -->
-#### Name des Dateifelds
-
-Der Name des Multipart-Formularfelds, unter dem das Dokument
-hochgeladen wird. Die Plattformen unterscheiden sich (`file`, `invoice`,
-`document`), und ein falscher Name erzeugt eine Ablehnung, die gar kein
-Feld nennt.
-
-<!-- anchor: user.money.einvoice.uat -->
-#### UAT-URL und -Token
-
-Die Abnahmeumgebung der Plattform, in der eine echte Übertragung gegen
-echte Prüfung geprobt werden kann, ohne etwas auszustellen. Fülle sie
-vor dem ersten Echtversand aus, nicht danach.
-
-<!-- anchor: user.money.einvoice.dev -->
-#### Entwicklungs-URL und -Token
-
-Der Endpunkt, den ein **Entwicklungsraum** benutzt. Er kann keine
-staatliche Plattform erreichen — das ist es, was eine Testrechnung
-unverwechselbar macht.
-
-### 11c. Der Report-Editor — jedes Dokument, vier Vorlagen, fünf Sprachen
-
-Die **Rechnungs-PDF-Vorlage** (Stift in der Kopfzeile, oder *Berichte → Vorlagen*) ist ein Banden-Reporting für jedes gedruckte Dokument. Drei **Banden** rendern aufs PDF — Kopf, Körper (die Rechnungszeilen), Fuß — das E-Rechnungs-XML bleibt unberührt.
-
-- **Platzhalter und Markup als Leitfaden (#966)** — im Markup-Modus ist die endlose Reihe aller Felder verschwunden. Ein einziger Aufklapper, *Platzhalter und Markup*, geschlossen, bis Sie ihn öffnen, enthält: zwei Sätze dazu, wie ein Band funktioniert; **Feld einfügen…**, den durchsuchbaren Wähler nach Thema (Dokument, Kunde, Verkäufer, Beträge, Bankverbindung, rechtliche Hinweise, Verbrauch, MwSt., Standorte, Status, Schleifen, Ihre Texte) mit einer einzeiligen Bedeutung unter jedem Namen, auch nach dieser Bedeutung durchsuchbar; das **Zeilen-Markup**, ein Zeichen je Zeile mit seiner Wirkung; und drei **fertige Bausteine** (eine Zeile nur, wenn der Wert existiert, eine Zeile je Rechnungsposition, der Titel Rechnung, Gutschrift oder Proforma). Alles, was Sie antippen, landet an der Einfügemarke des zuletzt bearbeiteten Bands.
-
-- **Ein Report je Dokument**: Chips wechseln zwischen **Rechnung · Proforma · Abrechnung · Vereinbarung · Zahlungen · Space · Mahnstufen**. Die Proforma fällt auf die Rechnungsbanden zurück; eine angepasste Abrechnung ersetzt das eingebaute Monats-PDF.
-- **Je Sprache**: eine zweite Chip-Reihe — *Standard (alle Sprachen)* · EN · FR · DE · ES · IT — speichert eine Übersetzungs-Schicht je Dokument; der Report eines Mitglieds druckt in *seiner* Sprache, wenn eine Vorlage existiert.
-- **Markup oder Visuell**: **Markup** editiert die Banden als Text — [Liquid](https://shopify.github.io/liquid/)-Bedingungen und -Schleifen (`{{ number }}`, `{% if proforma %}…{% endif %}`, `{% for line in lines %}…{% endfor %}`) plus einfaches Zeilen-Markup: `#` Titel, `##` Abschnitt, `>` Kleindruck, `---` Trenner, `a | b` Tabellenzeile, `=` Fettzeile, `::: … ||| … :::` Spalten nebeneinander (der Verkäufer-links/Kunde-rechts-Block und die rechtsbündigen Summen einer französischen Facture), `![name]` ein Bild aus der **Bildbibliothek** (*Bild einfügen*). **Visuell** ist eine seitentreue Design-Fläche in der Tradition der Profi-Tools (Crystal Reports, Docentric): die drei Banden werden **auf einer weißen A4-Seite** an den Rändern des Dokuments editiert, in seiner exakten Druck-Typografie — gleiche Schrift, Größen, Farben und rechtsbündige Betragsspalten wie das erzeugte PDF — mit benannten Bandleisten, gestrichelten Seitenumbruch-Hilfslinien und Zoom (anpassen, 75/100/150 %). `{{ Tokens }}` bleiben markiert; Zeile antippen zum Editieren, hinzufügen, verschieben, Datenfelder aus der Palette einfügen. Ein **Entwurf ↔ Vorschau**-Schalter mischt die ungespeicherten Banden mit echten (oder Beispiel-)Daten durch die echte Engine auf derselben Seite — Felder raus, Werte rein.
-- **Vorlagen-Galerie** (*Vorlagen*): vier fertige Presets je Dokument — **Klassisch · Einfach · Detailliert · Formeller Brief**. Jedes Rechnungs-Preset trägt schon die Pflichtangaben (§11a).
-- **Schnellansicht** rendert sofort in der App — deine neueste Rechnung, oder simulierte Beispieldaten (*Beispieldaten*-Wasserzeichen) — ohne PDF-Umweg; **Vorschau** erzeugt das PDF; **Auf Standard zurücksetzen** liefert das eingebaute Layout als Arbeitsbeispiel. Eine kaputte Vorlage blockiert nie ein Dokument; Storno-Wasserzeichen, Signatur, Anhang und Seitenzahlen bleiben fix.
-- **Vollbild-Designer** (Option *Berichtsdesigner*): Der Editor öffnet sich als **eigene Seite** im visuellen Modus, mit **Rückgängig / Wiederholen** und **Speichern** in der Leiste. Tippen Sie ein Element an, wird es **in seiner eigenen Typografie** bearbeitet — der Titel in Titelgröße, das Kleingedruckte klein. Das **+** unter dem aktiven Element fügt darunter ein **typisiertes Element** ein (Titel, Abschnitt, Text, Kleingedrucktes, Tabellenzeile, Trennlinie, Abstand, Bild, Spalten, Logik); die Schaltfläche **{ }** öffnet eine **durchsuchbare Feldauswahl**, gruppiert nach Dokument, Mitglied, Beträgen, Pflichtangaben und Schleifen; **lange drücken und ziehen** sortiert eine Zeile um, ihr Menü schickt sie in **ein anderes Band**. Ein Bild trägt seine **Größe** (klein, mittel, groß) und **Ausrichtung** (links, Mitte, rechts), geschrieben als `![name|l|center]`. *Vorlagen* und *Zurücksetzen* fragen, bevor sie ein vorhandenes Layout ersetzen; das Verlassen mit ungespeicherter Arbeit fragt ebenfalls. Lässt sich eine Vorlage nicht erzeugen, **sagt die Vorschau, welches Band und warum**, statt eines allgemeinen Fehlers. Auf breitem Bildschirm liegen **Entwurf und Vorschau nebeneinander**, und die Seite zählt, auf wie viele Seiten das Dokument gedruckt wird. Die drei strukturellen Dokumente — **Kontenrahmen · Mitgliedsausweise · QR-Karten der Plätze** — haben eigene Chips.
-
-Variablen (Rechnungsfamilie): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ period_month }}`, `{{ period_year }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (je mit `label`, `kind`, `pct`, `month`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — und der Rechts-Satz: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
-
-<p><img src="images/report-designer-markup.jpg" width="240"></p>
-
-*Der Markup-Modus: die drei Banden als Text, die Variablenlegende, die Chips pro Dokument und pro Sprache.*
-
-<p><img src="images/report-designer-design.jpg" width="240"> <img src="images/report-designer-preview.jpg" width="240"></p>
-
-*Der visuelle Modus — Entwurf editiert beschriftete Bänder auf der echten A4-Seite; Vorschau mischt die ungespeicherten Bänder mit echten Daten durch die echte Engine.*
-
-<!-- anchor: user.money.reports.invoice-template -->
-#### Die Rechnungs-PDF-Vorlage
-
-Mit welcher Gestaltung eine Rechnung gedruckt wird, und die Texte, die
-diese Gestaltung trägt. Eine Gestaltung gibt es je Dokumentart und je
-Sprache; wer keine eigene Sprache hat, bekommt die des Raums.
-
-<!-- anchor: user.money.reports.editor -->
-#### Der Berichtseditor
-
-Wo die Gestaltung eines Dokuments geschrieben wird. Zwei Wege hinein:
-**Bänder** — Kopf, Körper, Fortsetzung, Fuß, ein Zeichen je Zeile — und
-ein **positioniertes Layout** in XML für ein Dokument, das einem
-Fensterumschlag oder einem amtlichen Formular genügen muss. Ein Layout
-gewinnt gegen die Bänder für die Art, auf der es gesetzt ist.
-
-### 11d. Die Report-Suite & die Dokumentbibliothek
-
-- **Finanzvereinbarung** — jeder für ein Mitglied geltende Preis: Abo, Extra-Halbtag, Services, Pakete, Zubehör-Aufpreise und die Ganzraum-Preise, **Tische und Schreibtische eingeschlossen**. Inhaber/Admins senden sie vom Verwaltungsblatt; jedes Mitglied holt seine unter *Finanzen → Dokumente*.
-- **Zahlungsbericht** — alles, was du in einem Monat gezahlt, erklärt oder validiert bekommen hast: deine kleine Bilanz, Selbstbedienung.
-- **Space-Bericht** — Identität, Plan-Zählungen, Verfügbarkeit, Funktionen und Preise: *Berichte → Workspace-Dokumente → Space-Bericht*.
-- **Dokumentbibliothek** — *Einstellungen → Dokumente*: Satzung, Leitfäden, Abschlüsse, Protokolle — VERLINKT aus dem System, das du schon nutzt: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder jeder https-Link (der Drive verwaltet seine Zugriffe; die App speichert nie fremde Zugangsdaten). Jeder Eintrag hat eine **Sichtbarkeitsrolle**: jedes Mitglied, Admins & Inhaber, nur Inhaber — serverseitig erzwungen. Kuratiert per + ; die Funktion *Dokumentbibliothek* schaltet alles.
-
-<p><img src="images/documents-library.jpg" width="240"> <img src="images/documents-add-dialog.jpg" width="240"></p>
-
-*Die Dokumentenbibliothek und das Hinzufügen eines Dokuments: Titel, Link, Speicherort, Kategorie, sichtbar für.*
-
-<!-- anchor: user.documents.title -->
-#### Titel des Dokuments
-
-Was die Bibliothek zeigt und wonach ein Mitglied sucht. Es ist der
-einzige Teil eines Eintrags, den jemand liest — schreib ihn für diese
-Person.
-
-<!-- anchor: user.documents.url -->
-#### Link
-
-Die `https://…`-Adresse, unter der das Dokument liegt. DesKilo speichert
-den Link, nicht die Datei; deshalb behält das Dokument die Zugriffsregeln,
-die sein eigener Dienst durchsetzt.
-
-<!-- anchor: user.documents.provider -->
-#### Abgelegt bei
-
-Welcher Dienst es hält — ein Laufwerk, ein Wiki, ein Dateiserver. Ein
-Etikett für die lesende Person, keine Verbindung: nichts wird für dich
-abgerufen.
-
-<!-- anchor: user.documents.category -->
-#### Kategorie
-
-Wie die Bibliothek den Eintrag gruppiert. Kategorien erfindest du selbst;
-die Liste bietet an, was der Raum schon benutzt.
-
-<!-- anchor: user.documents.role -->
-#### Sichtbar für
-
-Welche Rollen den Eintrag überhaupt sehen dürfen. Das setzt der Server
-durch, es wird nicht nur in der Liste versteckt: ein Mitglied ohne die
-Rolle bekommt die Zeile nicht.
-
-### 11e. Automatische Zahlungserinnerungen
-
-Mit **Automatische Zahlungserinnerungen** (Funktionen, Kind von *Zahlungserinnerungen*) und dem Schalter **Automatische Mahnungen** in den Mahnregeln (Rechnungen → Mahnregeln) wenden sich die Mahnstufen von selbst an: jeden Morgen — und immer, wenn ein Inhaber oder Admin Finanzen öffnet — erhält eine **offene** Rechnung, deren Wartezeit abgelaufen ist (die *Tage bis zur ersten Mahnung* ab Ausstellung, dann die *Tage zwischen Mahnungen* nach der vorigen), ihre nächste Stufe. Das Mitglied sieht einen Hinweis **Zahlungserinnerung** unter Ereignisse („Mahnstufe 2: Rechnung X — Betrag noch offen“) und bekommt eine Push-Nachricht; seine Ansicht Rechnungen liest *überfällig seit N Tagen*. Stufen überschreiten nie die eingestellte Zahl; eine zugeordnete Rechnung wird nie gemahnt; Schalter aus, bleibt Mahnen ein manueller Schritt wie bisher.
-
-<!-- anchor: user.money.reminders.rules -->
-#### Mahnregeln
-
-Wie viele Mahnungen eine offene Rechnung bekommt, wie lange nach
-Fälligkeit jede geht, und was jede sagt. Einmal täglich rücken die
-offenen überfälligen Rechnungen auf ihre nächste Stufe; eine bereits
-erreichte Stufe wird nie erneut versandt.
-
-<!-- anchor: user.money.reminders.automatic -->
-#### Automatische Mahnungen
-
-Aus werden Mahnungen von Hand versandt. An rückt einmal täglich jede
-offene überfällige Rechnung auf ihre nächste Stufe und sendet, was diese
-Stufe sagt. Eine bereits erreichte Stufe wird nie zweimal gesendet — das
-Einschalten überschwemmt also niemanden mit dem Rückstand.
-
-### 11f. Rechnungen zusammenfassen (Abrechnung)
-
-**Ein Dokument statt drei.** Ein Mitglied im geteilten Abrechnungszyklus (§11) kann zugleich eine Abonnementrechnung, eine Monatsendrechnung und den Rest des Vormonats halten. **In eine Rechnung zusammenfassen** (Zusammenführen-Icon in der Kopfzeile Rechnungen, Funktion *Rechnungen zusammenfassen*) faltet die offenen, unbezahlten Rechnungen eines Mitglieds in eine **Abrechnungsrechnung** mit ihrer Summe. Die Quellen werden **nicht storniert**: sie bleiben im Archiv genau wie ausgestellt, jede zeigt auf die Abrechnung, die nun ihren Saldo trägt, und die Abrechnung listet jede Quelle mit ihren Positionen. Von da an wird die Abrechnung geschuldet, bezahlt und gemahnt; eine Quelle kann nicht mehr allein storniert, ersetzt oder zugeordnet werden. Die MwSt wird nicht neu ausgewiesen — jede Quelle hat ihre Steuer bereits erklärt, die Zeilen der Abrechnung tragen 0 % und nennen die Rechnungen, die sie tragen.
-
-**Validiert wie jede Zahlung.** Eine Abrechnung ist ein Ereignis *Rechnungszahlung*: wo die Inhaberin eine Regel auf diese Domäne gelegt hat (§7), wartet sie auf die Prüfer; eine **Ablehnung** — oder ein Verfall — storniert das Abrechnungsdokument und gibt seine Quellen frei, die wieder einzeln geschuldet sind. **Stornieren** einer Abrechnung (*Als fehlerhaft markieren*) gibt ihre Quellen ebenso frei.
-
-**Zusammengefasste Rechnungen ordnen sich unter der Sammelrechnung ein (#831).** Die Sammelrechnung trägt jetzt **jede Position der Rechnungen, die sie ersetzt**, unter deren Nummern gruppiert, mit ihrer MwSt. — sie ist für sich vollständig, und sie ist es, die geschuldet, gemahnt, zugeordnet und abgeschlossen wird. Die zusammengefassten Rechnungen verlassen die offene Liste, das Archiv und die Liste des Mitglieds als eigene Zeilen und **ordnen sich unter der Sammelrechnung ein** („Zusammengefasst in INV-…“), im Hub wie auf der Mitgliedsseite. Öffnet man eine, sagt ein Banner das; jede Aktion ist aus; es bleibt ihr **PDF, gestempelt mit der Nummer, in der sie aufging**. Für die Buchhaltung ist das Sammeldokument transparent: jeder Export und die Umsatzsteuererklärung tragen die Originalrechnungen, und die auf die Sammelrechnung eingegangene Zahlung wird ihnen zugeordnet, älteste zuerst — jedes Original wird genau so ausgeziffert, als wäre es allein bezahlt worden. In der App liest sich ein Original als „Bezahlt über INV-…“, sobald seine Sammelrechnung bezahlt ist. Beim Herunterladen, Teilen oder in der Vorschau einer Sammelrechnung wird gefragt, ob die ersetzten Rechnungen angehängt werden sollen: angehängt folgt jede auf eigenen Seiten, hinter der neuen und ohne sie zu überlagern, als zusammengefasst gestempelt.
-
-### 11g. Der Monatsabschluss-Assistent
-
-Die drei Assistenten — **Monatsabschluss**, **Rechnungen zusammenfassen**, **Ausgabe verteilen** — haben eine Form (#872): nummerierte Schritte oben, der Inhalt des Schritts, dann **Zurück · i / n · Weiter** und eine abschließende Aktion im letzten Schritt. Einmal gelernt; jeder Eintrag der Leiste heißt *Assistent · …*.
-
-Der **Monatsabschluss-Assistent** (Option *Rechnungsassistent*; der Zauberstab in der Rechnungskopfzeile oder die Karte oben in *Auszustellen*) reiht die ganze Rechnungsarbeit zu **einem geführten Prozess** mit Schrittleiste: **Prüfen** (welcher Lauf, welcher Zeitraum, was ansteht), **Ausstellen** (die Rechnungen des Laufs in einem Stapel — bereits abgedeckte Mitglieder erscheinen erledigt, abwählen schließt aus), **Versenden** (jedes PDF teilen oder herunterladen), **Mahnen** (alles nach Ihren Mahnregeln Überfällige, mit einem Tipp erfasst und benachrichtigt, der Brief je Zeile), **Zahlungen** (bestätigen oder ablehnen, was Mitglieder gemeldet haben; eine Überweisung oder Barzahlung für ein Mitglied **erfassen** — es bestätigt sie von seiner Seite), **Zuordnen** (jede offene Rechnung gegen das Guthaben des Mitglieds; Zeilen mit Guthaben sind bereit), **Abschließen** (mehrere Rechnungen eines Mitglieds zu einer zusammenfassen, einen Rest abschreiben, eine Gutschrift erstatten — jeweils über die Bestätigung) und **Zusammenfassung** (was der Lauf getan hat und was offen bleibt, mit wer am Zug ist). Zwei Läufe: **Monatsanfang** für die im Voraus bezahlten Abonnements (aus Ihrem Vorlauffenster vorgeschlagen), **Monatsende** für Nutzung, Verbrauch und Zusatzkosten des abgelaufenen Monats.
-
-### 11h. Gemeinsame Ausgaben, verteilt
-
-**Ausgabe verteilen** (Option *Gemeinsame Ausgaben*; das Verteilen-Symbol in der Rechnungskopfzeile) nimmt gemeinsame Kosten — Reinigung, schnelleres Internet, ein kaputter Stuhl — und verteilt sie auf die Mitglieder: **gleiche** Anteile, **anteilig zum Abonnement**, **anteilig zur Nutzung** (genutzte Halbtage im Zeitraum) oder ein **eigener Schlüssel** je Mitglied. Jeder Anteil wird vorab gezeigt, die Cents gehen genau auf, und nichts wird gebucht, bevor Sie bestätigen. Die Anteile werden als Anpassungspositionen auf den gewählten Zeitraum gebucht und erscheinen so auf der **nächsten Nutzungsrechnung** jedes Mitglieds (der Monatsendlauf des Assistenten, §11g). Schalten Sie **Umkehrung** ein, um Geld zurückzugeben: dieselbe Verteilung bucht **Gutschriften**, die mit den Kosten des Monats verrechnet werden und, wenn sie sie übersteigen, eine **Gutschrift** ergeben, die der Workspace erstattet (§11). Eine Verteilung ist ein eigener Ereignistyp: mit einer Bestätigungsregel für *Gemeinsame Ausgabe* wartet sie auf das Quorum und bucht nach der Bestätigung; ohne Regel gilt die Entscheidung des Ausstellers. Der Verlauf unter dem Formular zeigt jede Verteilung und ihren Stand.
-
-### 11i. Nutzung: was jede Buchung wirklich gekostet hat
-
-**Nutzung** (Funktion *Nutzungssätze*; eine Ansicht des Finanzen-Tabs) zeigt die gezählten Buchungen des Monats, je eine Karte, mit drei bewusst getrennten Zahlen: das **gebuchte** Fenster, die Zeit, in der Sie tatsächlich **anwesend** waren, und was davon **berechnet** wird. Die Buchung ist die Zusage; die Anwesenheit ist die Tatsache.
-
-Daraus folgen zwei Regeln, und die Karten sagen beide deutlich. Eine Buchung, **zu der niemand kam, wird voll berechnet** — nicht zu erscheinen ist kein Rabatt. Und eine Buchung, die Sie **früher verlassen** haben, wird ebenfalls voll berechnet, bis jemand anderes zustimmt: die Karte bietet **Die Zeit berechnen, in der ich da war**. Über diese Bitte entscheiden Sie nie selbst; sie geht an die Personen, die Ihre Freigaberegel *Früher gegangen* benennt, und ohne Regel gilt sie sofort. Angenommen, verschiebt sich das Ende der Buchung selbst auf den Zeitpunkt des Auscheckens, sodass Abrechnung, Halbtages-Obergrenze und Rechnung folgen — und die Karte sagt weiterhin, was die berechnete Zeit **war**.
-
-Sie sehen Ihre eigenen Sätze; wer das Geld des Space sehen darf, sieht alle. Admins und Inhaberschaft können einen Satz **entfernen**, und wo eine Regel *Nutzungssatz entfernen* konfiguriert ist, gibt das betroffene Mitglied sie frei.
-
-### 11j. Eine Berichtsvorlage herausgeben und zurücknehmen
-
-**Diese Vorlage exportieren** (Funktion *Berichtsvorlagen exportieren und importieren*, im Berichtseditor) schreibt das Layout des offenen Berichts in eine JSON-Datei. **Vorlage importieren** liest eine zurück.
-
-Die Datei ist kein bloßer Auszug. Neben den drei Bändern trägt sie einen `howToEdit`-Block: wofür jedes Band da ist, die Liquid-Syntax, jede vom Renderer akzeptierte Markup-Zeile, Bildgrößen und -ausrichtungen sowie die vollständige Platzhalterliste — genug, damit eine Person oder ein Werkzeug wie Claude sie öffnen, das Layout ändern und zurückgeben kann, ohne zu raten. Der Block wird bei jedem Export neu erzeugt: ihn zu ändern bewirkt nichts und kann keine Vorlage beschädigen; eingelesen werden nur `kind`, `language` und `design`.
-
-Jeder Bericht hat das — Rechnung, Proforma, Abrechnung, Vereinbarung, Zahlungsbericht, Space-Bericht, Kontenplan, Mitgliedsausweise, Space-QR-Karten und jede Mahnstufe — und ein später hinzugefügter Bericht bekommt es automatisch.
-
-Ein Import wird **mit Begründung abgelehnt**, wenn die Datei kein lesbares JSON ist, keine DesKilo-Vorlage, aus einer neueren Version stammt, einen hier nicht vorhandenen Bericht betrifft oder zu einem **anderen** Bericht gehört — eine Vorlage wird nie stillschweigend umgelenkt. Ein angenommener Import landet im Editor, nicht im Space: nichts ändert sich, bis Sie **Speichern** drücken.
-
-### 11k. Eigene Texte, je Sprache (#880)
-
-Manche Formulierungen gehören dir, nicht der Vorlage: ein Gruß, ein saisonaler Hinweis, ein Rechtsabsatz, der Name der Bank. Das Panel **Texte** am Fuß des Report-Editors hält sie als `Schlüssel → Wert`. **Text hinzufügen** fragt nach einem Schlüssel (Buchstaben, Ziffern, Unterstriche — `gruss`), dann schreibst du den Wert; jede Band oder positionierte Vorlage druckt ihn über den Platzhalter `text.gruss` in doppelten geschweiften Klammern, den die Feldauswahl unter **Ihre Texte** anbietet. Ändere den Wert und jedes Dokument ändert sich — die Vorlage bleibt unberührt. Mit gewähltem Sprach-Chip bearbeitet das Panel die Werte dieser Sprache; ein leerer fällt auf die Standardsprache zurück, genau wie Dokumente. Ein nie befüllter Schlüssel druckt nichts (und eine Bedingung darauf bleibt falsch). Eine exportierte Vorlagendatei trägt die Texte ihrer Sprache in einem `<texts>`-Element; der Import bringt sie zurück.
-
-### Positionierte Layouts (XML)
-
-Ein Bericht kann durch ein **Layout** beschrieben werden, das festlegt, wo jedes Element sitzt — in Millimetern, Zentimetern, Pixeln oder als Prozent seines Rahmens — statt durch aufeinanderfolgende Bänder. Hat ein Dokument ein Layout, wird es gedruckt; sonst drucken die Bänder wie bisher. Beides besteht nebeneinander: Sie stellen ein Dokument nach dem anderen um.
-
-**Der Ablauf**: im Berichtsdesigner **XML exportieren**; die Datei bearbeiten (Sie oder Claude); lokal prüfen; **XML importieren**; speichern. Die exportierte Datei erklärt sich selbst: die Zonen (Kopf auf Seite 1, Leiste auf den Folgeseiten, Empfänger im Umschlagfenster, Rumpf, fester Fuß auf jeder Seite), die Elemente, die Einheiten und die verfügbaren Felder.
-
-**Vor dem Import prüfen** — ohne die App zu starten:
-
-```
-dart run tool/report.dart check mein-layout.xml
-```
-
-Der Befehl druckt jede Zone in Millimetern und schließt mit **CONFORMS** oder listet die Abweichungen (Anschrift außerhalb des Fensters, Text im Band 45–90 mm, fehlender Fuß …). PDF öffnen, falten, in einen DL-Fensterumschlag stecken.
-
-**Bilder**: `<image name="logo" h="12mm"/>` setzt ein Bild aus der Berichtsbibliothek; es erscheint in der Vorschau und im PDF.
-
-## 12. Einstellungen & Profil
-
-Das horizontale Abschnittsmenü bleibt sichtbar: Wählen Sie einen Abschnitt, um ihn zu öffnen und direkt dorthin zu gelangen. Scrollen Sie bei Bedarf im Formular; Entwürfe bleiben erhalten.
-
-**Den Bereich wählen.** Meine Einstellungen enthält den Kontolink, Ihre Mitgliedschaft, Gerätediagnose, Hilfe und Abmelden. Workspace verwalten zeigt nur die für Ihre Rolle erlaubten Einrichtungs- und Verwaltungswerkzeuge mit dem Namen des Workspace. Öffnen Sie Aufgabengruppen bei Bedarf; Erweitert ist zunächst geschlossen. Beide Ansichten behalten ihre Scrollposition. Mitglieder ohne Verwaltungswerkzeuge sehen direkt ihre persönlichen Einstellungen.
-
-
-Dein persönlicher Bildschirm, von oben nach unten:
-
-<p><img src="images/settings-personal.jpg" width="240"></p>
-
-*Der persönliche Block: Profile, Foto, Region & Formate, WhatsApp, Status, Standard-Buchungszeitraum, Adresse, Hilfe, Badge.*
-
-<p><img src="images/settings-admin.jpg" width="240"></p>
-
-*Für Inhaber folgt der Abschnitt Administration — jeder Admin-Bildschirm aus §8 beginnt hier.*
-
-<p><img src="images/settings-preferences.jpg" width="240"></p>
-
-*Einstellungen und Erweitert: Sprache, Design, Frontkamera-Scan, Push-Status, Entwicklermodus.*
-
-<p><img src="images/settings-about.jpg" width="240"></p>
-
-*Über: Version, Autor, die Open-Source-Lizenz, die Datenschutzerklärung, Fehlermeldungen und wie man das Projekt unterstützt.*
-
-<p><img src="images/profiles.jpg" width="240"> <img src="images/region-formats.jpg" width="240"> <img src="images/linked-accounts.jpg" width="240"> <img src="images/settings-language.jpg" width="240"></p>
-
-*Vier der persönlichen Bildschirme: Profile, Region & Formate, Verknüpfte Konten und die Sprachauswahl.*
-
-<p><img src="images/settings-whatsapp-dialog.jpg" width="240"> <img src="images/settings-status-dialog.jpg" width="240"> <img src="images/settings-address-dialog.jpg" width="240"> <img src="images/settings-default-period-dialog.jpg" width="240"></p>
-
-*Die vier persönlichen Dialoge: WhatsApp-Nummer, Statuszeile, Postadresse, Standard-Buchungszeitraum.*
-
-<p><img src="images/settings-theme-dialog.jpg" width="240"> <img src="images/settings-photo-sheet.jpg" width="240"> <img src="images/developer-screen.jpg" width="240"></p>
-
-*Design, das Foto-Blatt und der Entwickler-Trace-Bildschirm.*
-
-<details><summary>Der ganze Einstellungsbildschirm in einem Bild</summary>
-
-<p><img src="images/settings-full.jpg" width="240"></p>
-
-</details>
-
-**Datenschutz & Daten (#719)** — wer deine Daten sehen kann, wer es tat, Export, Löschung, die Richtlinie. Siehe §14.
-
-**Region & Formate (#711).** Wie *du* liest, was der Bereich zeigt: **Zahlen & Daten** in einer Region deiner Wahl (`de_CH`, `en_GB`, `de_AT` … unabhängig von der App-Sprache), die **Uhr** (24 h, 12 h oder was die Region tut) und ob Zeiten in der **Zone des Bereichs** erscheinen — der, in der gebucht wird, und der Standard — oder in **deiner Gerätezone**, gekennzeichnet, wo beide abweichen. Eine Vorschauzeile zeigt, was die drei Wahlen ergeben. Die Währung bleibt die des Bereichs; nur ihre Schreibweise ist deine. Auf deinem Profil gespeichert, also auf jedem Gerät gleich.
-
-- **Profile** (§1) und dein **Foto** (antippen — wählen oder entfernen). In einem Raum mit mehreren Standorten nennt das Profil auch Ihren **Heimatstandort** — die Adresse auf Ihren Dokumenten und die Ebenen, die standardmäßig Ihre sind — und ein Tipp darauf lässt Sie den Standort selbst wechseln (#974).
-- **Mein Konto** (#1307) — wer du bist und wie die App mit dir spricht, in jedem Space: dein **Foto**; **Persönliche Angaben** (oder **Adresse**) — deine Postadresse (auf deinen Rechnungen), Land und optionale USt-IdNr.; **WhatsApp** — deine Nummer, nur sichtbar, wenn du sie einträgst (§6); **Region & Formate**; **Verknüpfte Konten** — Google-Anmeldung ans E-Mail-Konto hängen; **Mein Badge** (§8); **Sprache** (Systemstandard oder eine von fünf); **Thema** (System / Hell / Dunkel); **Navigation** (Standard des Geräts, die klassische untere Leiste mit dem runden Knopf oder das Menü wie im Web — im Web passen sich Seitenleiste oder kompaktes Menü automatisch an, die Wahl erscheint dort nicht); und **Hilfe-Hinweise wieder anzeigen** — das holt jeden ausgeblendeten Kontext-Tipp zurück. Diese Tipps sind kleine Karussells auf den Formularen selbst: mehrere Hinweise je Bildschirm, vor- und zurückwischbar, jeder mit einem *Mehr erfahren*-Link, der direkt in den passenden Abschnitt dieses Handbuchs springt.
-- **Meine Mitgliedschaft** — deine Stellung in *diesem* Space: **Status** — eine freie Zeile (40 Zeichen) im Verzeichnis; **Standard-Buchungszeitraum** (das Fenster, mit dem die Buchungsblätter öffnen, damit dein üblicher Halbtag oder dein Von–Bis schon eingetragen ist); deine **Zahlungsbedingungen**; **Dokumente** — die Dokumentbibliothek (§11d). Das Verzeichnis selbst ist das Ziel **Mitglieder** der unteren Leiste, kein Eintrag hier.
-- **Dieser Space**, **Verwaltung** und **Governance** — nur für die, die die Berechtigung halten, die jeder Eintrag verlangt (§8): wie der Space funktioniert, seine Mitglieder und Geräte, und was der Space ist.
-- **Erweitert** — dieses Gerät: der **Server**, mit dem es spricht, sein Push-Status, **Mit der Frontkamera scannen** (für Wandtablets), der workspace-weite **Entwicklermodus**, der **Entwickler**-Trace-Bildschirm (§8 Zahlungen) und der **Demomodus** (auf diesem Gerät wird jeder Name, jede E-Mail, Telefonnummer und Postadresse auf dem Bildschirm an Ort und Stelle unscharf — der echte Text, bis zur Unlesbarkeit weichgezeichnet, das Layout unverändert — damit Screenshots und Aufnahmen keine persönlichen Daten tragen; nichts wird verborgen und jedes Formular bleibt bearbeitbar).
-- **Hilfe & Info** — **Hilfe**, das eingebaute Handbuch in deiner Sprache; die App-Version, der Autor (Florian DITTGEN), die Freie-Software-Lizenz (AGPL-3.0-or-later) mit dem Code auf GitHub, die Datenschutzerklärung, ein Link zum Fehlermelden, und wie man **das Projekt unterstützt** (PayPal, Revolut).
-- **Abmelden**.
-
-### Dein eigener Server — die App auf das Supabase deiner Community richten
-
-Standardmäßig spricht die App mit ihrem eigenen Server, und hier musst du dich um nichts kümmern. Aber das Backend von DesKilo ist Teil des Quellcodes — das Schema, die Row-Level-Security-Richtlinien und die Edge Functions —, also kann eine Community **ihr eigenes Supabase-Projekt** betreiben und jedes Byte darauf behalten. **Einstellungen → Erweitert → Server** stellt dieses Gerät um, ganz ohne neuen App-Build:
-
-1. **Ein Projekt anlegen** auf supabase.com — die kostenlose Stufe reicht zum Start.
-2. **Das Schema installieren**: führe die SQL-Dateien aus `supabase/migrations` des Quell-Repositorys der Reihe nach aus.
-3. **Die Zugangsdaten kopieren**: im Supabase-Dashboard liegen unter *Project Settings → API keys* die **Project URL** und der **Publishable Key** (der Publishable Key ist dafür gemacht, in einer Client-App mitzureisen; was die Daten schützt, ist die Row-Level Security auf dem Server).
-4. **Eintragen** unter Einstellungen → Server — füge jedes Feld ein, drücke **Verbindung testen**, dann **Speichern**.
-
-**Neue Instanz anlegen (#977).** Der Server-Bildschirm trägt auch einen Assistenten für Menschen, die einen Coworking-Raum betreiben, keine Datenbank. Legen Sie ein kostenloses Konto auf supabase.com an, erstellen Sie dort ein persönliches Zugriffstoken (Account → Access Tokens) und fügen Sie es im Assistenten ein: er listet Ihre Organisationen, legt das Projekt in der Region an, die Ihrem Raum am nächsten liegt (oder nimmt ein bestehendes leeres), installiert jede Migration der App der Reihe nach mit Fortschrittsbalken, stellt jede Funktion bereit, schaltet die E-Mail-Bestätigung mit erlaubten App-Links ein und lässt schließlich dieses Gerät auf den neuen Server zeigen — der QR auf dem Server-Bildschirm holt dann die Mitglieder. Jeder Schritt lässt sich einzeln wiederholen; das Token wird nie gespeichert. Jede Migration wird beim Installieren verbucht (#1314): Eine geschlossene App oder eine verlorene Verbindung setzt dort fort, wo sie stand, und führt nie eine Migration zweimal aus; die Diagnose (`dart run tool/instance.dart doctor`) liest das Schema als gesund. Eine vorher gebaute Instanz verbuchte nichts: `dart run tool/instance.dart record --ref … --through <NNNN>` markiert die Migrationen, die sie schon hat, ohne sie auszuführen. Wer ein Terminal vorzieht, bekommt denselben Builder: `dart run tool/instance.dart create --token … --org … --name …`.
-
-**Ein bestehendes Projekt verwenden (#1308).** Wählen Sie eines Ihrer bestehenden Projekte, liest der Assistent zuerst, was es enthält, ohne etwas zu ändern: ein leeres Projekt wird vollständig installiert; ein DesKilo-Schema mit Version wird nur um die fehlenden Migrationen **aktualisiert** (oder braucht nichts, wenn es aktuell ist); eine abgebrochene Installation wird fortgesetzt. Ein Projekt, dessen public-Schema Tabellen enthält, die DesKilo nie anlegt, das eine andere Postgres-Hauptversion hat, nicht betriebsbereit ist oder dessen Migrationen andere Werkzeuge erfasst haben, **braucht Aufmerksamkeit**: der Grund wird angezeigt, nichts läuft, und *Anderes Projekt wählen* führt zur Liste zurück. Dieselbe Prüfung findet die Funktionen, die das Projekt schon hat, und ob seine Anmeldeeinstellungen schon passen: öffnen Sie den Assistenten erneut für ein halb fertiges Projekt, werden nur die fehlenden Funktionen bereitgestellt, und ein bereits korrekter Anmeldeschritt entfällt. Bevor das Gerät den neuen Server nutzt, führt der letzte Schritt die **Sicherheitsprüfung** aus (dieselbe wie `dart run tool/instance.dart doctor`): *Geschützt* lässt weitermachen, ein Alarm hält **Diese Instanz auf diesem Gerät verwenden** gesperrt und nennt, was zu beheben ist, eine Warnung wird angezeigt, ohne zu blockieren. Ein persönliches Zugriffstoken öffnet Ihr ganzes Supabase-Konto, solange es besteht; der Assistent sagt das vor dem Einfügen und erinnert am Ende daran, dass Sie es widerrufen können — DesKilo hat keine Kopie behalten.
-
-Der Test sagt dir, welcher Teil nicht stimmt, statt einfach fehlzuschlagen: *diese Adresse war nicht erreichbar*, *der Key wurde abgelehnt* oder *die Tabellen fehlen* — Letzteres heißt, das Projekt hat geantwortet, aber Schritt 2 ist noch nicht erledigt.
-
-**Mitglieder tippen davon nichts ein.** Sobald das Gerät der Inhaberin auf dem Server der Community läuft, zeigt die **QR-Schaltfläche** auf diesem Bildschirm einen Code; jedes Mitglied scannt ihn in seinen eigenen Einstellungen → Server und landet auf derselben Instanz.
-
-**Wem der Server gehört und ob er aktuell ist (#1309).** Bei einem eigenen Projekt nennt der Bildschirm es — *Ihr Supabase-Projekt ‹ref›* — und sagt, wem es gehört: Ihrer Supabase-Organisation. Das Projekt wurde dort mit Ihrem eigenen Token angelegt, das der Assistent nur im Speicher hielt; DesKilo behält also keinen Zugriff und kann es nicht verwaisen lassen. **In Supabase öffnen** führt zum Dashboard dieses Projekts, wo Supabase nach der Anmeldung fragt. Eine Versionszeile vergleicht das Schema des Servers mit dem, was diese App braucht: *Aktuell* oder *Aktualisierung nötig* samt dem Weg, nur Fehlendes anzuwenden. Nach einem erfolgreichen Test steht die Uhrzeit des letzten da. **Server der App verwenden** ändert nur dieses Gerät und berührt Ihr Supabase-Projekt nie. **Vollständige Prüfung starten** auf demselben Bildschirm führt die Sicherheitsprüfung des Einrichtungsassistenten auf Wunsch aus: fügen Sie ein persönliches Zugriffstoken nur für diese Prüfung ein, und der Bildschirm antwortet *Geschützt* oder *Handlungsbedarf* mit den Befunden. Das Token dient nur dieser Prüfung und wird nie gespeichert.
-
-Das Umstellen meldet dich ab und greift beim nächsten Öffnen der App — die Sitzung gehörte zum anderen Server. **Server der App verwenden** kehrt jederzeit zum Standard zurück.
-
-<!-- anchor: user.profile.settings.whatsapp -->
-### Deine WhatsApp-Nummer
-
-Für die Mitglieder deiner Räume im Verzeichnis sichtbar, damit man dich
-erreichen kann, ohne die App zu verlassen. Optional, und sie zu löschen
-entfernt sie überall zugleich.
-
-<!-- anchor: user.profile.settings.status -->
-### Deine Statuszeile
-
-Eine kurze Zeile neben deinem Namen im Verzeichnis — *Im Gespräch ·
-zurück um 14:00*. Du setzt sie und du löschst sie; niemand sonst kann sie
-ändern.
-
-<!-- anchor: user.profile.settings.default-period -->
-### Standard-Buchungszeitraum
-
-Welche Tageshälfte eine Buchung annimmt, wenn du nichts sagst. Sie wählt
-nur vor: jeder Buchungsbildschirm lässt dich wählen, und die Granularität
-des Raums entscheidet, was die Hälften sind.
+**Siehe auch:** [Profile](#profile-ein-konto-mehrere-spaces) · [Wer mich sieht](#wählen-wer-mich-sieht)
 
 <!-- anchor: user.profile.settings.personal-info -->
 ### Persönliche Angaben
 
-Vorname, Nachname, Firma, die strukturierte Anschrift, Telefon und
-E-Mail. Das ist es, was ein Dokument druckt, das dich als Käuferin nennt
-— eine Rechnung mit bloßem Anzeigenamen heißt, dieser Bildschirm ist
-leer.
+**Zielgruppe:** Alle
+
+Sie möchten, dass Ihre Rechnungen und Briefe Ihren Namen und Ihre Angaben richtig tragen.
+
+<p><img src="images/user-profile-settings-personal-info.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Persönliche Angaben**.
+2. Wählen Sie eine **Anrede**, wenn Sie eine vor Ihrem Namen gedruckt haben möchten, und füllen Sie dann **Vorname**, **Nachname**, **Firma (optional)**, die Adresse, **Telefon** und **E-Mail für Dokumente** aus.
+3. Prüfen Sie **Auf Ihren Dokumenten**, das zeigt, wie es gedruckt wird.
+4. Beantworten Sie die Fragen, die Ihr Workspace unter einer eigenen Überschrift ergänzt, und tippen Sie dann auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ihr Nachname und Ihr Ort werden in Großbuchstaben geschrieben, wie auf amtlicher Post.
+- Ein leeres Formular zeigt **Noch nicht ausgefüllt**.
+- Die Antworten auf die Fragen Ihres Workspace sind personenbezogene Daten: Sie gehören zu Ihrem Export und werden gelöscht, wenn Sie den Space verlassen.
+
+**Siehe auch:** [Ihre Adresse](#ihre-adresse) · [Ihre USt-IdNr.](#ihre-ust-idnr)
 
 <!-- anchor: user.profile.settings.address -->
-### Deine Anschrift
+### Ihre Adresse
 
-Die frei geschriebene Anschrift auf deinen Rechnungen. Wo es
-*Persönliche Angaben* gibt, lösen sie sie ab; das Feld bleibt für Räume,
-die noch nicht gewechselt haben.
+**Zielgruppe:** Alle
+
+Sie möchten, dass Rechnungen an die richtige Stelle gehen.
+
+<p><img src="images/user-profile-settings-address.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Persönliche Angaben**.
+2. Füllen Sie **Straße und Hausnummer**, **Postleitzahl** und **Ort** aus.
+3. Wählen Sie Ihr **Land** und tippen Sie dann auf **Speichern**.
+
+**Gut zu wissen**
+
+- Nutzt Ihr Workspace das Formular für persönliche Angaben nicht, zeigt Ich stattdessen eine einfachere Zeile **Adresse** mit einer Auswahl **Land**.
+- Die Adresse wird auf Ihren Rechnungen gedruckt.
+
+**Siehe auch:** [Persönliche Angaben](#persönliche-angaben)
 
 <!-- anchor: user.profile.settings.vat-id -->
-### Deine USt-IdNr.
+### Ihre USt-IdNr.
 
-Nur ausfüllen, wenn du als Unternehmen abgerechnet wirst. Sie entscheidet,
-ob eine grenzüberschreitende Rechnung **ohne Steuer** im Reverse-Charge
-ausgestellt wird — und die E-Rechnungsprüfung verweigert den Versand
-eines solchen Dokuments, solange sie fehlt.
+**Zielgruppe:** Alle
+
+Sie werden als Unternehmen abgerechnet und möchten, dass die Rechnung Ihre Umsatzsteuer-Identifikationsnummer zeigt.
+
+<p><img src="images/user-profile-settings-vat-id.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Persönliche Angaben**.
+2. Tragen Sie Ihre Nummer bei **USt-IdNr. (optional)** ein.
+3. Ergänzen Sie Ihr **Handelsregister / Kennung (optional)**, falls Sie eines haben, und tippen Sie dann auf **Speichern**.
+
+**Gut zu wissen**
+
+- Lassen Sie es leer, wenn Sie Privatperson sind.
+- Ob eine Rechnung Umsatzsteuer enthält, hängt von dieser Nummer und vom Land ab; der Workspace wendet seine eigenen Regeln an.
+
+**Siehe auch:** [Persönliche Angaben](#persönliche-angaben)
 
 <!-- anchor: user.profile.settings.payment-terms -->
-### Deine Zahlungsbedingungen
+### Ihre Zahlungsbedingungen
 
-Die Bedingungen, die eigens für dich gelten, wenn eine Administratorin
-welche ausgehandelt hat. Leer gelten die des Raums.
+**Zielgruppe:** Mitglied
 
-<!-- anchor: user.profile.settings.restore-hints -->
-### Hinweise zurückholen
+Sie möchten wissen, zu welchen Bedingungen Sie abgerechnet werden.
 
-Bringt jeden ausgeblendeten Hilfehinweis zurück. Sonst wird nichts
-zurückgesetzt.
+<p><img src="images/user-profile-settings-payment-terms.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und tippen Sie unter **Meine Mitgliedschaft** auf **Zahlungsbedingungen**.
+2. Lesen Sie das Abzeichen: **Standard des Spaces** oder **Eigene des Mitglieds**, wenn mit Ihnen Bedingungen vereinbart wurden.
+3. Lesen Sie die Bedingungen: Sie können sie nicht selbst ändern. Um sie ändern zu lassen, wenden Sie sich an eine:n Administrator:in.
+
+**Gut zu wissen**
+
+- Ein:e Administrator:in oder Inhaber mit der Berechtigung schlägt eine Änderung auf Ihrer Mitgliedsseite vor: **Änderung beantragen**, nur die zu ändernden Felder (ein leer gelassenes Feld behält den Wortlaut des Workspace), ein **Grund (optional)**, dann **Antrag senden**.
+- Der Workspace legt diese Bedingungen fest; eine Änderung durchläuft seine Validierung und gilt, sobald sie validiert ist.
+
+**Siehe auch:** [Ihre USt-IdNr.](#ihre-ust-idnr)
+
+<!-- anchor: user.profile.settings.whatsapp -->
+### Ihre WhatsApp-Nummer
+
+**Zielgruppe:** Alle
+
+Sie möchten, dass Kolleginnen und Kollegen Sie auf WhatsApp erreichen, oder die Nummer nicht mehr teilen.
+
+<p><img src="images/user-profile-settings-whatsapp.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **WhatsApp**.
+2. Tragen Sie Ihre Nummer bei **WhatsApp-Nummer** ein, mit der Landesvorwahl.
+3. Tippen Sie auf **Speichern**. Um nichts mehr zu teilen, leeren Sie das Feld und speichern.
+
+**Gut zu wissen**
+
+- Es steht auf **Nicht geteilt**, bis Sie es festlegen.
+- Wer die Nummer sieht, legen Sie unter **WhatsApp und E-Mail** in [Wer mich sieht](#wählen-wer-mich-sieht) fest.
+- Die Zeile erscheint nur, wenn Ihr Workspace WhatsApp nutzt.
+
+**Siehe auch:** [Wer mich sieht](#wählen-wer-mich-sieht)
+
+<!-- anchor: user.profile.settings.status -->
+### Ihre Statuszeile
+
+**Zielgruppe:** Mitglied
+
+Sie möchten eine kurze Zeile neben Ihrem Namen, etwa „Im Gespräch · ab 14:00 wieder da“.
+
+<p><img src="images/user-profile-settings-status.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und tippen Sie unter **Meine Mitgliedschaft** auf **Status**.
+2. Tragen Sie Ihre Zeile bei **Status** ein.
+3. Tippen Sie auf **Speichern**. Zum Löschen leeren Sie das Feld und speichern.
+
+**Gut zu wissen**
+
+- Sie ist optional und kurz; das Feld hält Sie an seiner Grenze auf.
+- Mitglieder Ihrer Workspaces sehen sie im Mitgliederverzeichnis.
+- Es steht **Kein Status**, bis Sie einen schreiben.
+
+**Siehe auch:** [Wer mich sieht](#wählen-wer-mich-sieht)
+
+<!-- anchor: user.profile.settings.default-period -->
+### Standard-Buchungszeitraum
+
+**Zielgruppe:** Mitglied
+
+Sie buchen meist denselben halben Tag und möchten ihn schon vorgewählt haben.
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und tippen Sie unter **Meine Mitgliedschaft** auf **Standard-Buchungszeitraum**.
+2. Wählen Sie **Vormittag**, **Nachmittag**, **Ganzer Tag** oder **Keine Präferenz (ganzer Tag)**.
+
+**Gut zu wissen**
+
+- Es wählt nur vor: Sie können den Zeitraum bei jeder Buchung weiterhin ändern.
+- Die Zeile erscheint nur, wenn die Buchungseinrichtung Ihres Workspace eine Auswahl anbietet.
+
+**Siehe auch:** [Das Buchungsblatt](#das-buchungsblatt)
 
 <!-- anchor: user.profile.settings.badge -->
-### Dein Ausweis
+### Ihr Badge
 
-Der QR- oder NFC-Ausweis, der dich an der Tür und am Kiosk erkennt. Die
-App speichert nur einen Hash davon: ein Ausweis kann widerrufen, aber nie
-zurückgelesen werden — deshalb heißt einen verlorenen ersetzen, einen
-neuen auszugeben, nicht den alten wiederzubekommen.
+**Zielgruppe:** Mitglied
+
+Sie möchten ein Badge oder eine Karte, die Sie an der Tür oder am Kiosk ausweist.
+
+<p><img src="images/user-profile-settings-badge.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und tippen Sie unter **Meine Mitgliedschaft** auf **Mein Badge**.
+2. Tippen Sie auf **Neuer Badge**, um Ihren QR-Code zu erhalten, dann auf **Als PDF speichern**, um ihn zu drucken, oder tippen Sie auf **Karte registrieren** und halten Sie Ihre RFID- oder NFC-Karte an die Rückseite des Geräts.
+3. Um ein Badge außer Dienst zu stellen, tippen Sie auf **Widerrufen**.
+
+**Gut zu wissen**
+
+- Ein neuer QR-Code wird nur einmal angezeigt: Speichern Sie ihn sofort.
+- Ein widerrufenes Badge funktioniert sofort nicht mehr. Stellen Sie lieber ein neues aus, als das alte zu suchen.
+- **Meldet mich an** ist standardmäßig aus: Ein Badge, das Sie eincheckt, meldet Sie nicht an, bis Sie es einschalten, und dafür brauchen Sie zuerst eine PIN.
+- **Neuer Badge** setzt die Funktion **QR-Badges** voraus und **Karte registrieren** die Funktion **RFID-/NFC-Badges**; Ihr Workspace bietet möglicherweise nur eine davon an.
+
+**Siehe auch:** [Ihre Badge-PIN](#ihre-badge-pin)
 
 <!-- anchor: user.profile.settings.badge-pin -->
-### Deine Ausweis-PIN
+### Ihre Badge-PIN
 
-Ein kurzer Code, der neben dem Ausweis verlangt wird, wo ein Raum zwei
-Faktoren will. Er schützt die Handlungen, die ein Ausweis erlaubt, nicht
-den Ausweis selbst.
+**Zielgruppe:** Mitglied
+
+Sie möchten sich durch Scannen Ihres Badges anmelden, statt Ihre E-Mail einzutippen.
+
+<p><img src="images/user-profile-settings-badge-pin.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und tippen Sie unter **Meine Mitgliedschaft** auf **Meine PIN**.
+2. Wählen Sie **PIN setzen**, geben Sie sie bei **Neue PIN** ein, wiederholen Sie sie bei **Wiederholen** und speichern Sie.
+3. Öffnen Sie **Mein Badge** und schalten Sie **Meldet mich an** für das gewünschte Badge ein.
+
+**Gut zu wissen**
+
+- Die Zeile lautet **Noch keine PIN** oder **PIN gesetzt**.
+- Nur Sie können sie festlegen, und niemand, auch kein Inhaber, kann sie wieder auslesen.
+- **PIN ändern** ersetzt sie; **PIN entfernen** schaltet die Badge-Anmeldung für alle Ihre Badges aus.
+
+**Siehe auch:** [Ihr Badge](#ihr-badge)
 
 <!-- anchor: user.profile.settings.language -->
-### Sprache der App
+### App-Sprache
 
-Die Sprache der App auf **diesem Gerät**, unabhängig von der Sprache des
-Raums und der deiner Dokumente. Auf der Systemeinstellung folgt sie dem
-Telefon.
+**Zielgruppe:** Alle
+
+Sie möchten die App in Ihrer eigenen Sprache.
+
+<p><img src="images/user-profile-settings-language.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Sprache**.
+2. Wählen Sie eine Sprache oder **Systemstandard**, um Ihrem Smartphone zu folgen.
+
+**Gut zu wissen**
+
+- Sie gilt für jeden Workspace, es sei denn, Sie legen für einen einzelnen Workspace eine fest mit [Nur für diesen Arbeitsbereich](#eine-einstellung-nur-für-diesen-workspace-wählen).
+- Jede Sprache steht in ihrem eigenen Namen, sodass Sie Ihre immer finden.
+
+**Siehe auch:** [Zahlen und Daten](#zahlen-und-daten)
 
 <!-- anchor: user.profile.settings.theme -->
 ### Design
 
-Hell, dunkel oder die Signaturmischung — auch das je Gerät. Die
-Systemeinstellung folgt dem Hell-Dunkel-Schalter des Telefons.
+**Zielgruppe:** Alle
+
+Sie möchten die App heller oder dunkler.
+
+<p><img src="images/user-profile-settings-theme.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Design**.
+2. Wählen Sie **Systemstandard**, **Hell** oder **Dunkel**.
+
+**Gut zu wissen**
+
+- **Systemstandard** folgt dem eigenen Hell-Dunkel-Schalter Ihres Smartphones.
+- Wie die Sprache lässt es sich nur für einen Workspace festlegen.
+
+**Siehe auch:** [App-Sprache](#app-sprache)
 
 <!-- anchor: user.profile.settings.navigation -->
 ### Navigationsstil
 
-Ob die App über eine untere Leiste oder eine seitliche Schiene
-navigiert. Auf breitem Bildschirm gibt die Schiene dem Plan mehr Raum;
-auf dem Telefon ist die Leiste leichter zu erreichen.
+**Zielgruppe:** Alle
 
-### Mein Konto statt Einstellungen (#1598)
+Sie bevorzugen die untere Leiste oder das Menü, das Sie vom Web kennen.
 
-Ein Raum kann festlegen, dass ein Mitglied, das nichts verwaltet, dort
-**Mein Konto** findet, wo das Zahnrad **Einstellungen** steht — in der
-Leiste oben und im Menü auf breitem Bildschirm. Dahinter liegt derselbe
-Bildschirm nach demselben Tippen: Profil und Foto, die Mitgliedschaft,
-Sprache und regionale Formate, die Rechte an den eigenen Daten, die
-Hilfe, der Profilwechsel und das Abmelden sind genau dort, wo sie waren.
-Nur Name und Symbol ändern sich, damit niemand sein eigenes Konto hinter
-einem Wort suchen muss, das nach fremden Einstellungen klingt.
+**Schritte**
 
-Wem eine Rolle etwas anvertraut — Eigentümerin, Mit-Eigentümer,
-Verwalter oder ein Mitglied, dem eine der eigenen Rollen dieses Raums
-etwas überträgt — behält **Einstellungen** und alles, was sich darin
-öffnet. Der Eintrag folgt den Berechtigungen, nicht dem Titel: eine
-Übertragung von heute Morgen erscheint ohne Neustart.
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Navigation**.
+2. Wählen Sie **Standard für dieses Gerät**, **Klassisch: die untere Leiste und der runde Knopf** oder **Menü: das Hamburger-Menü wie im Web**.
 
-Es ist ein Name, kein Schloss. Nichts wird entzogen und nichts gewährt:
-die Verwaltungsbildschirme weisen genau dieselben Personen ab wie
-vorher, ob man sie über ein Menü erreicht oder ihre Adresse eintippt.
+**Gut zu wissen**
 
-Eigentümer schalten es unter *Einstellungen → Funktionen* ein. Ein Raum,
-der es aus lässt, behält das Zahnrad genau so, wie es ist.
+- Die Zeile ist in der Webversion ausgeblendet, die immer das Menü nutzt, und erscheint nur, wenn Ihr Workspace sie anbietet.
 
-### MCP-Schnittstelle (#1607)
-
-Ein Arbeitsbereich kann die **MCP-Schnittstelle** bereitstellen, damit
-ein KI-Assistent mit DesKilo verbunden werden kann. Der Schalter sagt
-nur die Verfügbarkeit: das Einschalten trägt niemanden ein, genehmigt
-keine Anfrage, vergibt keine Rolle und registriert keinen Client. Wer
-sie nutzen möchte, braucht weiterhin eine Freigabe, die der Eigentümer
-konfiguriert **und** der Instanzadministrator genehmigt — zwei getrennte
-Schritte, auch wenn eine Person beide Rollen innehat —, und jeder Vorgang
-des Assistenten unterliegt weiterhin den Berechtigungen, Funktionen und
-Regeln, die die App ohnehin anwendet. Ausgeschaltet verbirgt die
-Schnittstelle ihre Einstiegspunkte und weist Aufrufe ab; bestehende
-Freigaben bleiben sichtbar und widerrufbar. Der Schalter reist wie jede
-andere Funktion mit einer Vorlage; Freigaben, Genehmigungen und
-Einwilligungen reisen nie, sodass das Einschalten auf einer Kopie eines
-Arbeitsbereichs nichts öffnet. Eigentümer schalten sie unter
-*Einstellungen → Funktionen* ein; standardmäßig ist sie aus.
-
-### Der Demobereich
-
-Ein erfundener Bereich, den jede Person vom Anmeldebildschirm aus öffnen
-kann, ohne Konto. Er hat eigene Personen, eigene Buchungen und eigene
-Rechnungen sowie ein **Zurücksetzen**, das alles genau so wiederherstellt.
-**Ansicht als** zeigt denselben Bereich als Mitglied, als Verwaltung oder
-als Inhaberin, sodass sichtbar wird, was jede von ihnen sieht.
-
-Nichts davon erreicht einen echten Bereich, und nichts verlässt das
-Gerät. Das Verlassen vergisst die Sitzung, und das Schließen der App
-ebenso: der nächste Besuch beginnt wieder im selben erfundenen Bereich.
-
-Er ist kein Weg, einen **echten** Bereich zu zeigen, ohne dessen
-Mitglieder zu zeigen. Alles darin ist erfunden, es gibt also nichts zu
-verbergen; ein echter Bereich auf dem Bildschirm zeigt weiterhin die
-echten Personen darin — es sei denn, der **Aufnahmemodus** ist an, was
-der nächste Abschnitt ist.
-
-### Aufnahmemodus (#1514)
-
-Für die Fälle, in denen der **echte** Arbeitsraum gezeigt werden muss —
-ein Hilfevideo, ein Bildschirmfoto in einer Anleitung, ein Bild für den
-Store, eine Folie auf einer Konferenz. Schalten Sie den
-**Aufnahmemodus** ein, und jeder Name, jede E-Mail-Adresse,
-Telefonnummer, Anschrift und jedes Profilfoto auf dem Bildschirm gehört
-einer erfundenen Person. Plan, Buchungen, Plätze und Beträge bleiben
-genau die dieses Raums.
-
-Die Ersetzung geschieht vor der Darstellung und nicht darüber; es gibt
-also nichts zu vergessen: Ein Bildschirm kann keinen echten Namen
-zeigen, weil ihn nie ein echter Name erreicht. Dasselbe Mitglied ist
-immer dieselbe erfundene Person — auf dem Plan, im Verzeichnis und auf
-einer Rechnung —, sodass eine Aufnahme nachvollziehbar bleibt.
-
-Solange er aktiv ist, steht auf jedem Bildschirm ein Banner, damit
-niemand zehn Minuten lang filmt und glaubt, er sei an — und niemand
-einen Tag lang mit erfundenen Namen arbeitet und sie für echt hält.
-Schalten Sie ihn in *Einstellungen → Funktionen* aus, sobald die
-Aufnahmen fertig sind.
-
-Zweierlei ist zu wissen. Solange er aktiv ist, verweigern die
-Identitätsformulare das Speichern: Was sie zeigen, ist erfunden, und
-Speichern würde damit die echten Angaben einer Person überschreiben. Und
-nichts kann verbergen, was jemand selbst geschrieben hat — eine
-Nachricht, eine Notiz, die Bezeichnung eines Platzes. Lesen Sie den
-Bildschirm, bevor Sie ihn filmen.
-
-Muss das Bild nicht von *diesem* Raum sein, nehmen Sie den
-Demo-Arbeitsraum: Dort ist von Anfang an alles erfunden.
-
-<!-- anchor: user.profile.settings.front-camera -->
-### Frontkamera zum Scannen
-
-Nutzt das vordere statt des hinteren Objektivs. Für ein Wandtablet,
-dessen Rückkamera zur Wand zeigt.
-
-<!-- anchor: user.profile.profiles -->
-### Profile
-
-Ein Konto, mehrere Räume. Der Umschalter zeigt jeden Raum, zu dem du
-gehörst, ein Entwicklungs-/Produktionspaar als eine Karte mit zwei
-Chips, und ein Wechsel wird zu deiner Voreinstellung — ein Neustart
-öffnet dort, wo du aufgehört hast.
+**Siehe auch:** [Wie die Einstellungen aufgebaut sind](#wie-die-einstellungen-aufgebaut-sind)
 
 <!-- anchor: user.profile.settings.regional-formats -->
 ### Zahlen und Daten
 
-Nach welchen Konventionen Zahlen und Daten auf **diesem Gerät**
-geschrieben werden. Bewusst von der Sprache der App getrennt: man mag
-eine englische App wollen, die deutsche Daten schreibt.
+**Zielgruppe:** Alle
+
+Sie möchten Beträge und Daten so geschrieben haben, wie Sie sie lesen, unabhängig von der Sprache der App.
+
+<p><img src="images/user-profile-settings-regional-formats.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Region & Formate](https://fdittgen-png.github.io/deskilo/#/formats).
+2. Tippen Sie auf **Zahlen & Daten** und wählen Sie eine Region oder **Automatisch**, um der Sprache der App zu folgen.
+3. Prüfen Sie die Vorschauzeile darüber: Sie zeigt einen Betrag, ein Datum und eine Uhrzeit so, wie Sie sie sehen werden.
+
+**Gut zu wissen**
+
+- Es ist unabhängig von der Sprache: Eine englische App kann französische Daten schreiben.
+- Es lässt sich mit [Nur für diesen Arbeitsbereich](#eine-einstellung-nur-für-diesen-workspace-wählen) nur für einen Workspace festlegen.
+- Die Zeile erscheint nur, wenn Ihr Workspace **Region & Formate** nutzt.
+
+**Siehe auch:** [Uhr](#uhr)
 
 <!-- anchor: user.profile.settings.clock -->
 ### Uhr
 
-Zwölf oder vierundzwanzig Stunden. Es ändert, wie Zeiten geschrieben
-werden, nie was sie bedeuten.
+**Zielgruppe:** Alle
+
+Sie bevorzugen Uhrzeiten im 24-Stunden- oder im 12-Stunden-Format.
+
+<p><img src="images/user-profile-settings-clock.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Region & Formate](https://fdittgen-png.github.io/deskilo/#/formats).
+2. Wählen Sie unter **Uhr** **Auto**, **24h** oder **12h**.
+
+**Gut zu wissen**
+
+- **Auto** macht, was Ihre Region macht.
+- Es ändert, wie Uhrzeiten geschrieben werden, nie, was sie bedeuten.
+- Die Zeile erscheint nur, wenn Ihr Workspace **Region & Formate** nutzt.
+
+**Siehe auch:** [Zeiten in meiner Zeitzone anzeigen](#zeiten-in-meiner-zeitzone-anzeigen)
 
 <!-- anchor: user.profile.settings.device-zone -->
 ### Zeiten in meiner Zeitzone anzeigen
 
-Aus sind die Zeiten die des Raums — was eine Buchung tatsächlich ist. An
-werden sie dorthin umgerechnet, wo du bist. Nützlich unterwegs, und vor
-dem Vergleich mit dem Bildschirm einer Kollegin besser wieder aus.
+**Zielgruppe:** Alle
 
-<!-- anchor: user.backend.server -->
-### Dein eigener Server
+Sie sind unterwegs und möchten Uhrzeiten so, wie Ihre eigene Uhr sie zeigt.
 
-Mit welchem Supabase-Projekt diese App spricht. Voreingestellt ist das
-von DesKilo; richte sie auf ein Projekt, das du selbst betreibst, und die
-App gehört dir von Anfang bis Ende. Ein Wechsel meldet dich ab, denn ein
-Konto existiert auf einem Server, nicht in der App.
+<p><img src="images/user-profile-settings-device-zone.de.b8fa17aa9.jpg" width="280"></p>
 
-<!-- anchor: user.backend.how -->
-### Wie du deinen eigenen betreibst
+**Schritte**
 
-Das Bündel baut aus jeder Migration in Reihenfolge, den Edge Functions,
-den Buckets und dem Seed eine zweite Datenbank. Das ist es, was ein
-selbst betriebenes DesKilo mit dem Referenz-DesKilo identisch macht statt
-zu einer Abzweigung.
+1. Öffnen Sie [Region & Formate](https://fdittgen-png.github.io/deskilo/#/formats).
+2. Schalten Sie **Zeiten in meiner Zeitzone anzeigen** ein.
+
+**Gut zu wissen**
+
+- Ist es aus, stehen die Zeiten in der Zone des Workspace, in der gebucht wird. Das ist die Voreinstellung.
+- Ist es an, folgen die Zeiten Ihrem Gerät und sind gekennzeichnet, wo sie von denen des Workspace abweichen.
+- Die Zeile erscheint nur, wenn Ihr Workspace **Region & Formate** nutzt.
+
+**Siehe auch:** [Uhr](#uhr)
+
+<!-- anchor: user.profile.settings.restore-hints -->
+### Hinweise wiederherstellen
+
+**Zielgruppe:** Alle
+
+Sie haben die Hilfe-Hinweise ausgeblendet und möchten sie nun zurück.
+
+<p><img src="images/user-profile-settings-restore-hints.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me).
+2. Tippen Sie auf **Hilfe-Hinweise wieder anzeigen**.
+
+**Gut zu wissen**
+
+- Eine Meldung bestätigt: **Die Hilfe-Hinweise werden wieder angezeigt.**
+- Sonst wird nichts zurückgesetzt.
+- Die Zeile erscheint nur, wenn Ihr Workspace Hilfe-Hinweise nutzt.
+
+**Siehe auch:** [Wie die Einstellungen aufgebaut sind](#wie-die-einstellungen-aufgebaut-sind)
+
+<!-- anchor: user.profile.settings.front-camera -->
+### Frontkamera zum Scannen
+
+**Zielgruppe:** Alle
+
+Sie scannen Badges mit einem an der Wand montierten Tablet, dessen Rückkamera zur Wand zeigt.
+
+<p><img src="images/user-profile-settings-front-camera.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) und öffnen Sie **Erweitert**.
+2. Schalten Sie **Mit der Frontkamera scannen** ein, um die Kamera auf der Bildschirmseite zu nutzen, oder aus für die Rückkamera.
+
+**Gut zu wissen**
+
+- Sie ist standardmäßig an und gilt nur für dieses Gerät.
+
+**Siehe auch:** [Ihr Badge](#ihr-badge)
+
+<!-- anchor: user.profile.settings.linked-accounts -->
+### Verknüpfte Konten
+
+**Zielgruppe:** Alle
+
+Sie möchten sich außer mit Ihrer E-Mail auch mit einer anderen Identität anmelden, etwa einem Google-Konto.
+
+<p><img src="images/user-profile-settings-linked-accounts.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und tippen Sie auf **Verknüpfte Konten**.
+2. Tippen Sie neben einem Anbieter auf **Verknüpfen** und schließen Sie den Vorgang im Browser ab.
+3. Um eines zu entfernen, tippen Sie auf **Trennen**.
+
+**Gut zu wissen**
+
+- Eine verknüpfte Identität zeigt **Verknüpft**.
+
+**Siehe auch:** [Profile](#profile-ein-konto-mehrere-spaces)
 
 <!-- anchor: user.privacy.visibility -->
-### Wer meine Daten sehen kann
+### Datenschutz: wer meine Daten sehen kann
 
-Was jede Rolle in jedem deiner Räume über dich lesen kann. Es ist die
-Aussage darüber, was der Server durchsetzt, kein Satz Schalter — die
-Antwort ist dieselbe, ob dieser Bildschirm offen ist oder nicht.
+**Zielgruppe:** Alle
 
-**Eine Person blockieren (#2211).** Eine Blockierung stoppt persönliche Nachrichten in beide Richtungen, einschließlich Weiterleitungen und Screenshot-Hinweisen. Frühere Nachrichten bleiben im Gespräch. Hebe die Blockierung auf, um Nachrichten wieder zuzulassen. Workspace- und Gruppengespräche folgen ihren eigenen Regeln.
+Sie möchten wissen, wer was über Sie lesen kann und wer tatsächlich nachgesehen hat.
+
+<p><img src="images/user-privacy-overview.de.b8fa17aa9.jpg" width="280"></p>
+<p><img src="images/user-privacy-visibility.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Tippen Sie auf **Wer meine Daten sehen kann**.
+3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf deine Daten zugegriffen hat**.
+
+**Gut zu wissen**
+
+- Ihre Daten werden nie verfolgt oder verkauft. Rollen entscheiden, wer sie liest, und der Server setzt das durch.
+- Das Blatt nennt die Regel; es gibt daran nichts einzuschalten. Um zu wählen, was andere Mitglieder von Ihrem Profil sehen, nutzen Sie [Wer mich sieht](#wählen-wer-mich-sieht).
+
+**Siehe auch:** [Wer mich sieht](#wählen-wer-mich-sieht) · [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
+
+<!-- anchor: user.privacy.audiences -->
+### Wählen, wer mich sieht
+
+**Zielgruppe:** Alle
+
+Sie möchten Punkt für Punkt entscheiden, wer Ihren Namen, Ihre Kurzbiografie, Ihre Kontaktdaten und Ihre Anwesenheit sieht.
+
+<p><img src="images/user-privacy-audiences--card.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und scrollen Sie zu **Datenschutz**, zur Karte **Wer mich sieht**.
+2. Tippen Sie auf einen Punkt: **Über mich**, **Name und Foto**, **Beruf und Kurzprofil**, **WhatsApp und E-Mail**, **Heute im Space** oder **Wer ein Gespräch mit mir beginnen darf**.
+3. Wählen Sie ein Publikum, zum Beispiel **Niemand**, **Mitglieder meiner Spaces** oder **Mitglieder ausgewählter Spaces**, haken Sie Spaces an, wenn Sie welche gewählt haben, und tippen Sie auf **Speichern**.
+4. Prüfen Sie **Wie andere mich sehen** am Fuß der Karte.
+
+**Gut zu wissen**
+
+- Nichts ist öffentlich, es sei denn, Sie wählen es.
+- Wenn Sie ein Publikum erweitern, werden Sie zuerst um Bestätigung gebeten.
+- **Blockierte Personen** unter der Karte listet, wen Sie blockiert haben; diese Personen können Sie weder sehen noch erreichen, und Sie können sie nicht erreichen. Tippen Sie auf **Blockierung aufheben**, um es rückgängig zu machen.
+- **Alle Angemeldeten** wird nur für manche Einträge angeboten, etwa **Name und Foto** und **Beruf und Kurzprofil**. **WhatsApp und E-Mail** und **Heute im Space** gehen nie über Ihre eigenen Spaces hinaus.
+
+**Siehe auch:** [Öffentliches Profil](#ein-öffentliches-profil-veröffentlichen) · [Wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann)
+
+<!-- anchor: user.privacy.public-profile -->
+### Ein öffentliches Profil veröffentlichen
+
+**Zielgruppe:** Alle
+
+Sie möchten eine Seite mit Ihrem Namen und ein paar Worten, die Menschen ohne Konto lesen können.
+
+<p><img src="images/user-privacy-public-profile.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me?tab=me) und suchen Sie **Öffentliches Profil** in der Karte **Wer mich sieht**.
+2. Schalten Sie es ein und bestätigen Sie mit **Veröffentlichen**.
+3. Tippen Sie auf **Link kopieren**, um ihn zu teilen.
+
+**Gut zu wissen**
+
+- Jeder mit dem Link liest Ihren Namen, Ihren Beruf und Ihre Kurzbiografie. Kontaktdaten, Anwesenheit und Spaces bleiben privat.
+- Ist es aus, sehen Personen, die nicht angemeldet sind, nichts von Ihnen.
+
+**Siehe auch:** [Wählen, wer mich sieht](#wählen-wer-mich-sieht)
 
 <!-- anchor: user.privacy.export -->
 ### Meine Daten exportieren
 
-Alles, was DesKilo über dich hält, als Datei, die du behältst. Sie wird
-auf Anfrage erzeugt statt bereitgehalten und sagt deshalb, was in dem
-Moment wahr ist, in dem du fragst.
+**Zielgruppe:** Alle
+
+Sie möchten eine Kopie von allem, was DesKilo über Sie speichert.
+
+<p><img src="images/user-privacy-export.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Tippen Sie auf **Meine Daten exportieren**.
+3. Speichern oder teilen Sie die erzeugte Datei.
+
+**Gut zu wissen**
+
+- Es ist eine einzige JSON-Datei, die in dem Moment erstellt wird, in dem Sie darum bitten.
+- Die Zeile erscheint nur, wenn Ihr Workspace den Datenexport anbietet.
+
+**Siehe auch:** [Anträge auf Betroffenenrechte](#anträge-auf-betroffenenrechte)
 
 <!-- anchor: user.privacy.erase -->
 ### Meine Daten löschen
 
-Entfernt dich und was dir gehört. Nicht löschbar ist, was das Gesetz dem
-**Raum** aufzubewahren vorschreibt: eine ausgestellte Rechnung ist ein
-Dokument der Organisation und bleibt bei der Käuferidentität, mit der sie
-ausgestellt wurde. Der Bildschirm sagt vorher, welche Räume das betrifft.
+**Zielgruppe:** Alle
+
+Sie möchten einen Workspace verlassen und Ihre Daten löschen lassen.
+
+<p><img src="images/user-privacy-erase.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Tippen Sie auf **Diesen Bereich verlassen und meine Daten löschen**.
+3. Lesen Sie, was geschehen wird, geben Sie das Bestätigungswort ein und tippen Sie auf **Löschen**.
+
+**Gut zu wissen**
+
+- Es storniert Ihre offenen Buchungen und schwärzt Ihre Nachrichten in diesem Bereich. Ihr Profil wird geleert, wenn dies Ihr letzter Space ist; vergangene Buchungen bleiben als Belegungsnachweis des Bereichs.
+- Buchhaltungsunterlagen bleiben für die gesetzliche Aufbewahrungsfrist erhalten, mit Kennung und nicht mit Namen.
+- Die Zeile erscheint zusammen mit dem Datenexport. Für einen Inhaber ist sie ausgegraut; er muss den Workspace zuvor übergeben, unter Mitinhaberschaft.
+
+**Siehe auch:** [Meine Daten exportieren](#meine-daten-exportieren)
+
+<!-- anchor: user.privacy.requests -->
+### Anträge auf Betroffenenrechte
+
+**Zielgruppe:** Alle
+
+Sie möchten den Workspace um eine Kopie, eine Berichtigung, eine Einschränkung oder die Löschung bitten und einen Nachweis behalten.
+
+<p><img src="images/user-privacy-requests.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy) und tippen Sie auf **Meine Anträge auf Betroffenenrechte**.
+2. Tippen Sie auf **Antrag stellen** und wählen Sie, was Sie verlangen: eine Kopie Ihrer Daten einsehen, sie mitnehmen, sie berichtigen, ihre Nutzung einschränken, einer Nutzung widersprechen oder sie löschen.
+3. Ergänzen Sie **Einzelheiten (optional)** und tippen Sie auf **Antrag senden**.
+
+**Gut zu wissen**
+
+- Der Space antwortet innerhalb eines Kalendermonats; das Blatt zeigt das Datum.
+- Jeder Antrag zeigt, ob er eingegangen, verlängert (mit neuem Datum und Grund), beantwortet oder abgelehnt wurde.
+
+**Siehe auch:** [Meine Daten exportieren](#meine-daten-exportieren) · [Meine Daten löschen](#meine-daten-löschen)
+
+<!-- anchor: user.privacy.push -->
+### Push-Benachrichtigungen auf diesem Gerät
+
+**Zielgruppe:** Alle
+
+Sie möchten verhindern, dass Benachrichtigungen an dieses Gerät gesendet werden, oder sie wieder einschalten.
+
+<p><img src="images/user-privacy-push.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Schalten Sie **Push-Benachrichtigungen auf diesem Gerät** aus oder ein.
+
+**Gut zu wissen**
+
+- Ist es aus, funktioniert die App weiter, und an dieses Gerät wird nichts gesendet.
+- Ist es an, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst.
+
+**Siehe auch:** [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
 
 <!-- anchor: user.privacy.consent -->
-### Deine Daten, deine Rechte
+### Ihre Daten, Ihre Rechte
 
-Was erhoben wird, warum, auf welcher Rechtsgrundlage und wie lange es
-aufbewahrt wird. Eine eingeholte Einwilligung wird mit Datum
-festgehalten, sodass du sehen kannst, wozu du wann zugestimmt hast.
+**Zielgruppe:** Alle
 
-## 13. Benachrichtigungen
+Sie möchten noch einmal nachlesen, was Sie zu Ihren Daten akzeptiert haben.
 
-Check-in-Erinnerungen, offene Bestätigungen, Ausgaben-Entscheidungen — und wenn ein Admin **eine deiner Buchungen entfernt** (übersteuern), werden du und die Admins benachrichtigt. Zustellung lokal zuerst; Server-Push kommt fertig auf Android, iPhone/iPad, Browser und macOS (Firebase Cloud Messaging) — *Einstellungen → Erweitert* zeigt den Gerätestatus. Das Icon-Badge zählt offene Bestätigungen **plus ungelesene Nachrichten** — Android, iPhone/iPad, macOS-Dock, Windows-Leiste, installierte Web-Apps. Mitglieder-Nachrichten werden **einmal je Gerät mit Absender und vollem Text** angesagt — auch was bei geschlossener App kam. Diese Ansage erzeugt immer **die App selbst, lokal**: das Push-Payload trägt nie einen Namen, eine Uhrzeit oder ein Wort der Nachricht (§6) — was über das Netz geht, sagt nur, dass etwas angekommen ist. Eine **stummgeschaltete** Unterhaltung (§16) bleibt still: Für sie wird nichts angekündigt, sie zählt aber weiterhin auf ihrer Zeile und auf dem Badge.
+<p><img src="images/user-privacy-consent.de.b8fa17aa9.jpg" width="280"></p>
 
-## 14. Datenschutz
+**Schritte**
 
-**Einwilligung (#751).** Beim ersten Öffnen der App durch ein Konto — und erneut, sobald sich dieser Text ändert — zeigt ein Einwilligungsbildschirm alles: was verarbeitet wird, was nie getan wird, wer was sehen kann, wer verantwortlich ist, wie lange, Ihre Rechte und wo Sie es nachlesen. Nichts anderes ist erreichbar, bis Sie *Ich habe das gelesen und akzeptiere* ankreuzen — die Zustimmung (Version und Datum) wird auf Ihrem Konto gespeichert und folgt Ihnen über Geräte hinweg. Jederzeit nachlesbar unter **Einstellungen → Datenschutz & Daten → Ihre Daten, Ihre Rechte**, hier in der Hilfe oder im Projekt-Wiki.
+1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
+2. Tippen Sie auf **Ihre Daten, Ihre Rechte**.
+3. Lesen Sie den Text: was verarbeitet wird, was nie geschieht, wer was sieht, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
 
-Minimale Daten: Name, E-Mail, Plan, Buchungen, Konto. Du kontrollierst Foto, Status und Nummern-Sichtbarkeit; auf dem Plan zeigt ein Platz von dir eine Initiale oder dein Foto, wo die Inhaberin Mitgliederfotos aktiviert hat. Badges liegen nur als Hashes — ein verlorenes wird widerrufen, nicht erraten. Kein Tracking, keine Fremd-Analytik. Deine Kontozeilen und Rechnungen bleiben bei der Kontolöschung **unverändert erhalten** — sie sind die Buchhaltungsbelege des Raums, nicht deine zum Zurückziehen, und das Gesetz verpflichtet die Gemeinschaft, sie für die gesetzliche Frist aufzubewahren. Gelöscht wird dein Profil: Name, Foto, WhatsApp-Nummer, Status, Adresse und USt-IdNr. Sie werden nicht anonymisiert; der Name auf einer bereits ausgestellten Rechnung bleibt dort stehen.
+**Gut zu wissen**
 
-**DSGVO (#719).** DesKilo ist für die Datenschutz-Grundverordnung gebaut: Daten in der EU, kein Tracking, keine Analytik, Zugriff nach Rolle und serverseitig durchgesetzt, und vier Rechte, die du selbst unter **das Schild-Symbol oben in der Leiste (Datenschutz & Daten)** ausübst: **wer meine Daten sehen kann** (die Regel je Kategorie und die Personen, die sie gerade nennt), **wer auf meine Daten zugegriffen hat** (ein vom Server geschriebenes Protokoll jeder Einsicht in deine Finanzen oder Nachrichten durch andere — nie umgehbar), **meine Daten exportieren** (eine JSON-Datei, Art. 20) und **mit Löschung austreten** (Art. 17: Buchungen storniert, Nachrichten geleert, Profil gelöscht; Buchhaltungsbelege bleiben für die in der Richtlinie genannte gesetzliche Frist, referenziert über eine ID, nicht einen Namen). Nachrichten lesen nur die Personen der Unterhaltung, unabhängig von der Rolle; Rechnungen und Zahlungen nur du und Inhaber der Finanz-Berechtigung.
+- Er zeigt das Datum und die Version, die Sie akzeptiert haben; ändert sich der Text, werden Sie erneut um Ihre Zustimmung gebeten.
+- **Datenschutzerklärung**, gleich darunter, öffnet die vollständige Erklärung online.
 
-## 15. Plattformen
+**Siehe auch:** [Wer meine Daten sehen kann](#datenschutz-wer-meine-daten-sehen-kann)
 
-Android (Google Play), iPhone/iPad, Desktop — **macOS** (DMG: DesKilo in Programme ziehen) und **Windows** (MSI-Installer) aus jedem Release — und der **Browser**: dieselbe App, nichts zu installieren. Deine Daten folgen deinem Konto.
+<!-- anchor: user.backend.server -->
+### Ihr eigener Server
 
-Der Browser kann mehr, als man erwartet: **Web NFC funktioniert** in Chromium-Browsern unter Android über HTTPS — so lässt sich ein Stuhl-Tag vom Telefon-Browser aus einrichten — die installierten **Android- und iPhone-Apps lesen Tags direkt**, meist der bequemere Weg. Was er nicht kann, ist wie der Kiosk per Kamera einen QR-Code scannen. Alles andere — Plan, Buchungen, Mitglieder, Geld, Rechnungen, PDFs — ist dieselbe App. Beim ersten Start des macOS-DMG: Rechtsklick → *Öffnen* (die Build ist noch nicht von Apple notariell beglaubigt).
+**Zielgruppe:** Alle
 
-## 16. Nachrichten
-Der Tab **Nachrichten** ist die Messaging-Zentrale Ihres Bereichs: alle Unterhaltungen in einer Liste, die neueste oben, Personen und Gruppen gemeinsam. Eine Zeile zeigt die letzte Nachricht, die Uhrzeit und die Anzahl ungelesener. Tippen Sie auf den **Stift**, um eine neue zu beginnen.
+Standardmäßig nutzt die App den Dienst von DesKilo. Ihre Gemeinschaft betreibt womöglich einen eigenen Server, und Sie möchten sich damit verbinden.
 
-**Person oder Gruppe, ein Blatt.** Wählen Sie eine Person für einen privaten Chat; wählen Sie zwei oder mehr und ein **Namensfeld erscheint** — das ist eine Gruppe. Der Name ist **in Ihrem Bereich eindeutig**, niemand muss raten, welchem *Team* er schreibt; ist er vergeben, sagt die App es und Sie ändern ein Wort.
+<p><img src="images/user-backend-server.de.b8fa17aa9.jpg" width="280"></p>
 
-**Auf einen Blick unterscheidbar.** Eine Person zeigt ihr Foto im Kreis. Eine Gruppe zeigt ein **eckiges Abzeichen** mit Gruppensymbol und — solange niemand geschrieben hat — ihre Mitgliederzahl.
+**Schritte**
 
-**In einer Unterhaltung.** Nachrichten stehen von alt nach neu als Sprechblasen, mit Emojis und aktiven **Verweisen**: ein Reservierungslink öffnet die Reservierung, ein Bereichslink dessen Buchungsblatt, jeweils mit *Auf dem Plan zeigen*. Das Eingabefeld sitzt darunter. **Lange auf eine Blase tippen, um sie zu löschen**, mit Rückfrage. Ihre eigenen Nachrichten tragen einen Haken: **grau = zugestellt**, **blau = gelesen**.
+1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings), dann **Erweitert**, dann **Server**.
+2. Wählen Sie **Mit bestehender Organisation verbinden**.
+3. Tippen Sie auf **Server-QR scannen** oder fügen Sie den Code bei **Server-Code** ein.
+4. Speichern Sie. Die App meldet Sie ab und nutzt den neuen Server, sobald sie das nächste Mal geöffnet wird.
 
-**Die Liste in Ordnung halten.** Chips über der Liste engen sie auf **Alle**, **Ungelesen** oder **Archiviert** ein. **Lange auf eine Zeile drücken**, um sie oben **anzuheften**, **stummzuschalten**, als **ungelesen zu markieren**, um später darauf zurückzukommen, oder zu **archivieren** — eine archivierte Unterhaltung verlässt die Liste, behält ihren Verlauf und kehrt von selbst zurück, sobald jemand darin schreibt. Eine Nadel und eine durchgestrichene Glocke auf der Zeile zeigen, was was ist.
+**Gut zu wissen**
 
-**Eine Unterhaltung ist eine Seite.** Sie öffnet sich in voller Höhe mit einem Zurück-Pfeil, und ihre Adresse lässt sich teilen oder als Lesezeichen sichern. Nachrichten stehen unter **Tagestrennern**, eine Blase zeigt also nur die Uhrzeit; **Frühere Nachrichten laden** oben holt älteren Verlauf. Was Sie tippen und nicht senden, bleibt als **Entwurf** für diese Unterhaltung. **Nach rechts wischen** zitiert eine Nachricht, und ein Tipp auf den zitierten Block in einer Antwort springt zum Original; **nach links wischen** nimmt eine eigene, noch ungelesene Nachricht zurück. Die **Büroklammer** hängt eine Reservierung oder einen Platz an, und ein Zähler erscheint, wenn Sie sich der Längengrenze nähern.
+- Sie brauchen nie einen Administratorschlüssel.
+- **Server der App verwenden** bringt Sie jederzeit zum Standard zurück.
+- Ihr Konto liegt auf einem Server, deshalb meldet Sie der Wechsel ab.
 
-**Eine beginnen.** Tippen Sie auf den Stift, dann auf eine Person — der Chat öffnet sich sofort. Der Schalter **Gruppe** lässt Sie mehrere Personen wählen und der Gruppe ihren Namen geben.
+**Siehe auch:** [So betreiben Sie einen eigenen](#so-betreiben-sie-einen-eigenen)
 
-**Tippen Sie oben auf den Namen.** In einem privaten Chat öffnet das **Profil** der Person — die heutige Buchung, ob sie eingecheckt ist, ihr Status und wie man sie erreicht. In einer Gruppe öffnet es die **Mitgliederliste**, in der ein Gruppen-Admin Personen hinzufügt oder entfernt und jeder austreten kann. Ein Austritt lässt eine Gruppe nie ohne Admin zurück.
+<!-- anchor: user.backend.how -->
+### So betreiben Sie einen eigenen
 
-**Die Suche** (die Lupe) sucht an drei Stellen: **Personen**, **Gruppen** und die **Wörter in Nachrichten**. Ein Treffer bringt Sie direkt zur Person, zur Gruppe oder zur Nachricht.
+**Zielgruppe:** Alle
 
-**Keine Fotos, keine Dateien.** Nachrichten tragen Text, dazu Verweise auf eine Reservierung oder einen Bereich. Das ist Absicht: eine Coworking-App ist kein Dateispeicher.
+Sie leiten eine Gemeinschaft und möchten DesKilo selbst hosten.
 
-**Benachrichtigungen.** Eine *empfangene* Nachricht meldet sich und zählt auf dem Tab **Nachrichten**; das Öffnen der Unterhaltung setzt den Zähler zurück. Nachrichten erscheinen nicht mehr in der Glocke — die ist für Bestätigungen und Ereignisse. Einzige Ausnahme: eine **Rundnachricht an alle Admins**, die keine Unterhaltung hat und dort bleibt.
+<p><img src="images/user-backend-how.de.b8fa17aa9.jpg" width="280"></p>
 
-<p><img src="images/messages-discussions.jpg" width="240"></p>
+**Schritte**
 
-*Die Unterhaltungsliste: Personen und Gruppen gemeinsam, Ungelesen-Zähler, der Stift für eine neue.*
+1. Öffnen Sie den Bildschirm **Server** und tippen Sie auf **Eigenen Server verwenden**.
+2. Folgen Sie den vier angezeigten Schritten: ein Projekt auf supabase.com anlegen, das Schema installieren, die Projekt-URL und den veröffentlichbaren Schlüssel kopieren, beides einfügen und **Verbindung testen**.
+3. Oder tippen Sie auf **Neue Instanz anlegen** für die geführte Einrichtung.
 
-<p><img src="images/messages-conversation.jpg" width="240"></p>
+**Gut zu wissen**
 
-*Ein privater Chat: Sprechblasen von alt nach neu, die grauen/blauen Lesebestätigungen auf den eigenen Nachrichten.*
+- Der Test sagt Ihnen, was nicht stimmt: nicht erreichbare Adresse, abgelehnter Schlüssel oder fehlende Tabellen.
+- Mitglieder treten demselben Server bei, indem sie den QR-Code auf diesem Bildschirm scannen.
+- Die Betreiberseite, Umgebungen und Bereitstellung, steht im Kapitel für Fortgeschrittene.
 
-<p><img src="images/messages-conversation-links.jpg" width="240"></p>
+**Siehe auch:** [Ihr eigener Server](#ihr-eigener-server)
 
-*Eine Gruppennachricht mit einem Reservierungs- und einem Raum-Link — beide aktiv, beide mit dem Sprung „Auf dem Plan zeigen".*
+<!-- anchor: user.money.overview -->
+## Finanzen
 
-### Plattformbetreiber
+Alles, was Sie schulden, bezahlt haben und was Ihnen in Rechnung gestellt wurde, finden Sie im Reiter **Finanzen**: ein Ort, um den Monat zu lesen, zu begleichen, eine Rechnung zu finden und eine Änderung zu beantragen.
 
-Das Konto, das die Installation betreibt, sieht unter *Profile* **alle Arbeitsbereiche** der Datenbank: die eigenen wie gewohnt, die anderen **ausgegraut** mit Umgebung und Mitgliederzahl. Ein Tipp auf einen ausgegrauten Bereich zeigt dessen **Inhaber** mit E-Mail — und dieser Zugriff wird protokolliert, sichtbar für die Inhaber des betroffenen Bereichs. Ein Inhaber hat immer eine E-Mail-Adresse: Die App verweigert das Anlegen eines Bereichs oder die Ernennung eines Mitinhabers ohne eine.
-### Lage des Arbeitsbereichs und geführte Umlage (#934)
+In diesem Kapitel:
+- [Ihre Abrechnung lesen](#ihre-abrechnung-lesen) und [was eine Rechnung ändert](#wenn-ein-monat-in-rechnung-gestellt-wurde)
+- [Offenes bezahlen](#offenes-bezahlen) und [eine Zahlung erfassen](#eine-zahlung-erfassen)
+- [Ihre Rechnungen](#ihre-rechnungen) und [was jede Buchung gekostet hat](#was-jede-buchung-gekostet-hat)
+- [Finanzmeldungen](#finanzmeldungen), [Berichte](#berichte-schnellansicht-download-teilen) und [Ihre verhandelten Preise](#ihre-verhandelten-preise)
+- [Ein Dokument öffnen](#ein-dokument-aus-der-bibliothek-öffnen) aus der Bibliothek
+- [Eine Ausgabe einreichen](#eine-ausgabe-einreichen) und [eine Ausgabe genehmigen oder ablehnen](#eine-ausgabe-genehmigen-oder-ablehnen)
+- [Wie Beträge angezeigt werden](#wie-beträge-angezeigt-werden) und [Ihre Finanzen in allen Workspaces](#ihre-finanzen-in-allen-workspaces)
+- Für Abrechnungsadministrator:innen: [Rechnungsstellung im Überblick](#rechnungsstellung-im-überblick)
 
-*Geld → Lage des Arbeitsbereichs* zeigt Inhabern und Admins über einen frei gewählten Zeitraum, was der Arbeitsbereich **in Rechnung gestellt** (netto nach Gutschriften), **eingenommen**, **erstattet** und **umgelegt** hat, dann dasselbe Mitglied für Mitglied mit Abonnementanteil — und druckt es als Bericht. *Kosten umlegen* schlägt jeden Anteil **anteilig zum Abonnement** vor, erlaubt Ausnahmen und Gewichte, bucht die Anteile wie bisher (Zeilen auf der nächsten Verbrauchsrechnung) und **merkt sich die Regel** für den nächsten Monat.
+<!-- anchor: user.money.statement -->
+### Ihre Abrechnung lesen
 
-### Vollständige Buchhaltungsexporte (#936)
+**Zielgruppe:** Mitglied
 
-FEC und DATEV-Datei führen neben Verkauf und Bank nun ein **Einkaufsjournal**: an Mitglieder erstattete Auslagen und umgelegte gemeinsame Kosten. Eine **Gutschrift** wird als stornierter Verkauf gebucht (sie fehlte). Das Aufwandskonto wird beim Export abgefragt wie die anderen. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit **DEV** markierte Datei: das ist nicht die echte Buchhaltung.
+Sie möchten wissen, wo der Monat steht: was Sie genutzt haben, was es kostet und was noch zu begleichen ist.
 
-### Standorte (#945)
+<p><img src="images/user-money-statement--top.de.b8fa17aa9.jpg" width="280"></p>
 
-Ein Arbeitsbereich kann **mehrere Adressen** haben. *Einstellungen → Standorte*: der Standard-Standort trägt die Adresse des Arbeitsbereichs; fügen Sie je weiterer Adresse einen Standort hinzu (Straße, PLZ, Ort, Registrierung der Betriebsstätte) und ordnen Sie ihm seine Ebenen zu. Jedes Mitglied hat einen **Heimatstandort** (Mitgliedsseite): diese Adresse tragen seine Belege. Das Löschen eines Standorts gibt Ebenen und Mitglieder an den Standard-Standort zurück.
+**Schritte**
 
-### Standorte auf Belegen (#946)
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und bleiben Sie auf **Abrechnung**.
+2. Blättern Sie mit den Pfeilen neben dem Monatsnamen zu anderen Monaten.
+3. Lesen Sie zuerst **Saldo**: **Ausstehend** in Rot bedeutet, dass Sie den Betrag schulden, **Beglichen** bedeutet, dass nichts mehr offen ist.
+4. Lesen Sie darunter **Diesen Monat**: die genutzten Tage von den Tagen, die Ihr Tarif enthält, und die verbleibenden Tage.
+5. Lesen Sie die folgenden Karten: Ihr Abonnement, zusätzliche halbe Tage, Services, Pakete, offene Posten und **Zahlungen & Gutschriften**.
 
-Mit mehreren Standorten trägt eine Rechnung **Adresse und Registrierung des Heimatstandorts** des Mitglieds auf der Verkäuferseite (der Standard-Standort behält die Adresse des Arbeitsbereichs), nennt den Standort unter der Kopfzeile und führt — wenn die Anwesenheitsdetails gedruckt werden — die **anderen Standorte** auf, an denen das Mitglied im Monat gearbeitet hat. Die E-Rechnung folgt derselben Adresse.
-### Nummern je Standort (#948)
+**Gut zu wissen**
 
-In Frankreich gehören USt-Nummer und Befreiung zur juristischen Person; jede Betriebsstätte hat ihre eigene **SIRET**, die der Standort trägt. Ein Standort, der eine **eigene juristische Person** ist, kann zusätzlich eigene USt-Nummer und Befreiungsvermerk tragen — Belege an diesem Standort übernehmen sie. Das ist meist das Zeichen für einen eigenen Arbeitsbereich; der Bildschirm sagt es.
+- Ein gebuchter Vor- oder Nachmittag zählt als halber Tag, daher sehen Sie vielleicht Werte wie 0,5 Tage.
+- Die Karte nennt auch die Regel Ihres Tarifs. Bei Abrechnung nach Verbrauch zeigt sie immer den Satz für Zusatztage; bei den beiden anderen Regeln weist sie Sie darauf hin, eine:n Administrator:in zu fragen oder ein Paket zu kaufen, sobald alle Ihre Tage genutzt sind.
+- Eine Zeile mit dem Vermerk „wartet auf Bestätigung“ muss noch von jemandem bestätigt werden und zählt noch nicht.
+- Tippen Sie auf das PDF-Symbol neben dem Monat, um die Abrechnung zu exportieren.
+
+**Siehe auch:** [Offenes bezahlen](#offenes-bezahlen) · [Was jede Buchung gekostet hat](#was-jede-buchung-gekostet-hat)
+
+<!-- anchor: user.money.statement.invoiced -->
+### Wenn ein Monat in Rechnung gestellt wurde
+
+**Zielgruppe:** Mitglied
+
+Sie möchten wissen, welcher Betrag maßgeblich ist, sobald der Workspace Ihnen für einen Monat eine Rechnung geschickt hat.
+
+<p><img src="images/user-money-statement-invoiced--card.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und gehen Sie mit dem linken Pfeil zum abgerechneten Monat zurück.
+2. Suchen Sie die Karte **Rechnung** (oder **Gutschrift**, wenn die Summe negativ ist) mit ihrer Nummer.
+3. Lesen Sie den Status auf der Karte, dann **Rechnungsbetrag**; eine teilweise bezahlte Rechnung zeigt außerdem **Bereits bezahlt** und **Restbetrag**.
+
+**Gut zu wissen**
+
+- Sobald ein Monat in Rechnung gestellt ist, entscheidet die Rechnung, ob er beglichen ist. Die Zahlung, die sie ausgleicht, geht meist erst in einem späteren Monat ein; der Saldo des Monats ist daher nicht mehr maßgeblich.
+- Eine Gutschrift lautet „Der Workspace schuldet Ihnen diesen Betrag“: Sie müssen nichts bezahlen.
+
+**Siehe auch:** [Ihre Rechnungen](#ihre-rechnungen)
+
+<!-- anchor: user.money.payments -->
+### Offenes bezahlen
+
+**Zielgruppe:** Mitglied
+
+Sie möchten Ihren Saldo begleichen und wissen, wie der Workspace das Geld erwartet.
+
+<p><img src="images/user-money-payments.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie **Zahlungen**.
+2. Prüfen Sie **Saldo** unter **Zahlen**; überfällige Rechnungen aus allen Zeiträumen werden darüber hervorgehoben.
+3. Lesen Sie die **Zahlungshinweise**: die Bankverbindung, den anzugebenden Verwendungszweck und die anderen Zahlungswege, die der Workspace akzeptiert. Tippen Sie auf eine IBAN oder einen Wert, um ihn zu kopieren.
+4. Wenn die Schaltfläche vorhanden ist, tippen Sie auf **Online bezahlen**.
+5. Haben Sie auf anderem Weg bezahlt, [erfassen Sie die Zahlung](#eine-zahlung-erfassen).
+
+**Gut zu wissen**
+
+- Die Hinweise erscheinen nur, solange etwas offen ist, und nur, wenn der Workspace sie eingerichtet hat. Fehlen sie, fragen Sie Ihre Administrator:in, wie Sie bezahlen können.
+- Eine Online-Zahlung, die der Anbieter noch nicht bestätigt hat, erscheint als **Online-Zahlung ausstehend**: Der Saldo zeigt weiterhin den offenen Betrag, bis sie bestätigt ist.
+- Unter **Anfragen** können Sie außerdem eine Ausgabe einreichen, **Zusätzliche halbe Tage beantragen** oder, wenn Ihr Tarif mit Paketen arbeitet, **Paket kaufen**.
+
+**Siehe auch:** [Eine Zahlung erfassen](#eine-zahlung-erfassen) · [Eine Ausgabe einreichen](#eine-ausgabe-einreichen)
+
+<!-- anchor: user.money.payments.record -->
+### Eine Zahlung erfassen
+
+**Zielgruppe:** Mitglied
+
+Sie haben per Überweisung, bar oder auf anderem Weg bezahlt und möchten, dass der Workspace es erfährt.
+
+<p><img src="images/user-money-payments-record.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money), wählen Sie **Zahlungen** und tippen Sie auf **Zahlung erfassen**.
+2. Geben Sie den **Betrag** ein.
+3. Tippen Sie auf die Zahlungsart: **Überweisung**, **Bar**, **PayPal**, **TWINT**, **Karte**, **Wero**, **Lydia**, **Wise** oder **Sonstiges**. Tippen Sie erneut darauf, um die Auswahl aufzuheben.
+4. Prüfen Sie **Zahlungsdatum** und **Gilt für**, den Monat, den diese Zahlung begleicht.
+5. Fügen Sie eine **Notiz (optional)** hinzu und tippen Sie auf **Zur Bestätigung einreichen**.
+
+**Gut zu wissen**
+
+- Ihre Zahlung ist beim Absenden noch nicht endgültig. Sie wartet als „wartet auf Bestätigung“, bis die vom Workspace bestimmten Personen sie bestätigen, wie in den [Validierungsregeln](#validierungsregeln-bereich-für-bereich) festgelegt. Erst dann begleicht sie Ihren Saldo.
+- Ihr Zahlungsdatum darf nicht in der Zukunft liegen. **Gilt für** reicht bis einen Monat voraus, um im Voraus zu bezahlen.
+
+**Siehe auch:** [Offenes bezahlen](#offenes-bezahlen) · [Finanzmeldungen](#finanzmeldungen)
+
+<!-- anchor: user.money.invoices -->
+### Ihre Rechnungen
+
+**Zielgruppe:** Mitglied
+
+Sie möchten eine Rechnung finden, sehen, ob sie bezahlt ist, und ihr PDF erhalten.
+
+<p><img src="images/user-money-invoices.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie **Rechnungen**.
+2. Lesen Sie die Liste, die neueste zuerst. Jede Zeile zeigt die Nummer, einen Status-Chip, den Monat, das Datum und den Betrag.
+3. Tippen Sie auf eine Rechnung, um sie zu öffnen.
+4. Tippen Sie auf **Schnellansicht**, um sie auf dem Bildschirm zu lesen, auf **PDF herunterladen**, um sie zu speichern, oder auf **PDF teilen**, um sie zu versenden.
+
+<p><img src="images/user-money-invoices-detail.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Die Status sind **Offen**, **Wartet auf Bestätigung**, **Bezahlt**, **Teilweise bezahlt**, **Teilweise bezahlt · Restbetrag storniert** und **Erstattet**. Eine offene Rechnung nennt ihre Fälligkeit oder die Zahl der Tage, die sie überfällig ist, und wie viele Erinnerungen Sie erhalten haben.
+- Tippen Sie bei einer offenen Rechnung auf das Zahlungssymbol, um zu **Zahlungen** zu gelangen.
+- Ist die Liste leer, hat der Workspace Ihnen noch nichts in Rechnung gestellt; er stellt einen Monat nach dem Abschluss in Rechnung.
+- Rechnungen lassen sich nicht bearbeiten. Eine falsche Rechnung wird als **Fehlerhaft** markiert und durch eine neue ersetzt; die fehlerhafte verschwindet aus Ihrer Liste. Werden Rechnungen zu einer zusammengefasst, ersetzt die zusammengefasste Rechnung sie in Ihrer Liste.
+
+**Siehe auch:** [Offenes bezahlen](#offenes-bezahlen) · [Ihre Finanzen in allen Workspaces](#ihre-finanzen-in-allen-workspaces)
+
+<!-- anchor: user.money.usage -->
+### Was jede Buchung gekostet hat
+
+**Zielgruppe:** Mitglied · Administrator:in
+
+Sie möchten Buchung für Buchung sehen, was in diesem Monat berechnet wurde.
+
+<p><img src="images/user-money-usage.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie **Nutzung**.
+2. Wählen Sie den Monat mit den Pfeilen.
+3. Lesen Sie jede Karte: den Tag, die Uhrzeit, den Platz, dann **Gebucht**, **Anwesend** und **Berechnet**.
+4. Tippen Sie bei einer Buchung, die Sie früher verlassen haben, auf **Die Zeit berechnen, in der ich da war**, nennen Sie auf Wunsch einen Grund und tippen Sie auf **Anfragen**.
+5. Für eine Zusammenfassung des Monats tippen Sie auf **Verbrauchsbericht des Monats**.
+
+**Gut zu wissen**
+
+- Eine Buchung, bei der niemand eingecheckt hat, wird vollständig berechnet, und die Karte weist darauf hin.
+- Über Ihre Anfrage entscheiden nie Sie selbst: Jemand anderes nimmt sie an oder lehnt sie ab. Eine korrigierte Zeile zeigt weiterhin, was sie vorher war.
+- Administratoren können beantragen, **Diesen Satz entfernen**.
+
+**Siehe auch:** [Berichte](#berichte-schnellansicht-download-teilen) · [Das Buchungsblatt](#das-buchungsblatt)
+
+<!-- anchor: user.money.alerts -->
+### Finanzmeldungen
+
+**Zielgruppe:** Mitglied · Administrator:in
+
+Sie möchten sehen, was in Gelddingen auf Sie wartet, ohne den ganzen Feed zu lesen.
+
+<p><img src="images/user-money-alerts.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money).
+2. Tippen Sie auf **Finanzmeldungen**, die Zeile ganz oben. Die Zahl an der Glocke zeigt, wie viele warten.
+3. Lesen Sie die Liste: zuerst die Anfragen, die Sie bestätigen müssen, dann die Geldereignisse.
+
+**Gut zu wissen**
+
+- Das ist die gewohnte Meldungsansicht der [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events), bereits auf Geld gefiltert.
+- Zahlungen, Ausgaben und zusätzliche halbe Tage, die Sie eingereicht haben, erscheinen hier, solange sie auf Bestätigung warten, und zeigen, wer sie bestätigt oder abgelehnt hat.
+- Die Zeile erscheint, wenn die Funktion **Ereignis-Tab** eingeschaltet ist.
+
+**Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](#eine-ausgabe-genehmigen-oder-ablehnen)
+
+<!-- anchor: user.money.reports -->
+### Berichte: Schnellansicht, Download, Teilen
+
+**Zielgruppe:** Mitglied
+
+Sie möchten ein Dokument über Ihr eigenes Geld, zum Lesen, Aufbewahren oder Weitergeben an Ihre Buchhaltung.
+
+<p><img src="images/user-money-reports.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie **Dokumente**.
+2. Wählen Sie mit den Pfeilen den Monat, für Berichte, die von einem Monat abhängen.
+3. Tippen Sie auf einen Bericht: **Meine Konditionen**, **Zahlungsbericht**, **Verbrauchsbericht** oder **Monatsabrechnung (PDF)**.
+4. Wählen Sie **Schnellansicht**, **PDF herunterladen** oder **PDF teilen**.
+
+<p><img src="images/user-money-reports-actions.de.b8fa17aa9.jpg" width="280"></p>
+
+**Gut zu wissen**
+
+- Dieselben drei Möglichkeiten erscheinen bei jedem Bericht und jeder Rechnung.
+- Die **Schnellansicht** zeigt das Dokument auf dem Bildschirm, ohne etwas zu speichern.
+- Ein Bericht, den Sie nicht sehen, ist in Ihrem Workspace nicht eingeschaltet.
+
+**Siehe auch:** [Ihre Rechnungen](#ihre-rechnungen) · [Ihre verhandelten Preise](#ihre-verhandelten-preise)
+
+<!-- anchor: user.money.negotiation -->
+### Ihre verhandelten Preise
+
+**Zielgruppe:** Mitglied
+
+Sie möchten wissen, ob Sie den Tarif des Workspace zahlen oder einen eigens für Sie vereinbarten Preis.
+
+<p><img src="images/user-money-negotiation--card.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und wählen Sie **Dokumente**.
+2. Lesen Sie **Meine verhandelten Preise**: Bei **Monatsbeitrag**, **Überschreitung je halben Tag** und **Rabatt auf Zuschläge** zeigt **Tarif**, was alle zahlen, und **Meine**, was Sie zahlen.
+3. Tippen Sie auf **Wer das sehen kann**, um zu erfahren, wer Ihre Preise lesen darf.
+
+**Gut zu wissen**
+
+- „Sie sind im Tarif des Workspace“ bedeutet, dass keine Vereinbarung gilt; Ihre Spalte zeigt einen Strich.
+- Gilt eine Vereinbarung, nennt die Karte den Monat, seit dem sie gilt, und der Tarifwert ist durchgestrichen.
+- Eine für Sie vorgeschlagene Vereinbarung wartet als „wartet auf Bestätigung“ und gilt erst nach der Bestätigung.
+- Eine Vereinbarung können Sie hier nicht ändern; eine Administrator:in schlägt sie vor. Siehe [Preisverhandlung](#preisverhandlung).
+
+**Siehe auch:** [Ihre Abrechnung lesen](#ihre-abrechnung-lesen)
+
+<!-- anchor: user.money.documents.library -->
+### Ein Dokument aus der Bibliothek öffnen
+
+**Zielgruppe:** Mitglied
+
+Sie möchten die Satzung, eine Anleitung oder die Abschlüsse lesen, die Ihr Workspace geteilt hat.
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money), wählen Sie **Dokumente** und tippen Sie auf **Dokumentbibliothek**, oder gehen Sie direkt zu [Dokumente](https://fdittgen-png.github.io/deskilo/#/documents).
+2. Suchen Sie Ihr Dokument unter seiner Kategorie: **Satzung & Rechtliches**, **Finanzberichte**, **Protokolle**, **Anleitungen & Handbücher** oder **Weitere Dokumente**.
+3. Tippen Sie darauf. Es öffnet sich in Ihrem Browser von dort, wo es gespeichert ist.
+
+**Gut zu wissen**
+
+- Sie sehen nur die Dokumente, die Ihre Rolle lesen darf; ein Schloss kennzeichnet jene, die auf **Admins und Inhaber** oder **Nur Inhaber** beschränkt sind.
+- Die Bibliothek enthält Links. Wer die Datei öffnen darf, wird dort entschieden, wo sie gespeichert ist, nicht in DesKilo.
+- Administratoren mit der entsprechenden Berechtigung fügen Dokumente hinzu und entfernen sie; siehe [Dokumenttitel](#dokumenttitel).
+
+**Siehe auch:** [Berichte](#berichte-schnellansicht-download-teilen)
+
+<!-- anchor: user.money.expense -->
+### Eine Ausgabe einreichen
+
+**Zielgruppe:** Mitglied
+
+Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen erstattet.
+
+<p><img src="images/user-money-expense.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money), wählen Sie **Zahlungen** und tippen Sie auf **Ausgabe einreichen**.
+2. Geben Sie den **Betrag** ein.
+3. Wählen Sie eine **Kategorie**: **Kaffee & Küche**, **Ausstattung**, **Verbrauchsmaterial** oder **Sonstiges**.
+4. Schreiben Sie eine **Beschreibung**.
+5. Wenn Sie etwas gekauft haben, das Mitglieder nutzen werden, schalten Sie **Das ist ein Vorrat für den Raum** ein (die Option erscheint, wenn Ihr Workspace **Vorräte aus Ausgaben** eingeschaltet hat) und tragen Sie den Artikel, die Menge und den Einzelpreis ein.
+6. Tippen Sie auf **Zur Bestätigung einreichen**.
+
+**Gut zu wissen**
+
+- Sie sehen „Ausgabe eingereicht – wartet auf Genehmigung“. Die Ausgabe zählt erst, wenn sie bestätigt ist.
+- Ein bestätigter Vorrat kommt als Service ins Regal: Mitglieder, die ihn nutzen, bezahlen dafür.
+- Wiederkehrende Kosten haben einen eigenen Zugang, **Geplante Ausgaben**, neben dieser Schaltfläche.
+
+**Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](#eine-ausgabe-genehmigen-oder-ablehnen)
+
+<!-- anchor: user.money.expense.approve -->
+### Eine Ausgabe genehmigen oder ablehnen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
+
+<p><img src="images/user-money-expense-approve.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events) oder tippen Sie in [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) auf **Finanzmeldungen**.
+2. Suchen Sie unter **Wartet auf deine Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
+3. Tippen Sie auf **Annehmen**, um sie zu bestätigen, oder auf das Kreuz, um sie **Ablehnen**.
+
+**Gut zu wissen**
+
+- Manche Ausgaben brauchen mehr als eine Bestätigung. Die Zeile zeigt, wie viele erledigt sind, etwa „1/2 Bestätigungen“.
+- Wer bestätigen darf und wie viele Bestätigungen nötig sind, legen die [Validierungsregeln](#validierungsregeln-bereich-für-bereich) fest.
+- Jede Entscheidung bleibt an der Zeile: wer bestätigt oder abgelehnt hat und wann. Das Mitglied sieht das Ergebnis.
+- **Finanzmeldungen** in Finanzen erscheint nur, wenn die Funktion **Ereignis-Tab** eingeschaltet ist.
+
+**Siehe auch:** [Finanzmeldungen](#finanzmeldungen)
+
+<!-- anchor: user.money.amounts -->
+### Wie Beträge angezeigt werden
+
+**Zielgruppe:** Alle
+
+Sie möchten eine Zahl lesen, ohne sich zu fragen, was sie enthält.
+
+**Gut zu wissen**
+
+- Beträge verwenden die Währung Ihres Workspace und Ihr Zahlenformat. Eine Rechnung behält die Währung, in der sie ausgestellt wurde.
+- In der Abrechnung tragen Kosten ein Minuszeichen, Zahlungen und Gutschriften ein Plus. Ein roter Saldo ist Geld, das Sie schulden.
+- Wo ein Preis die Umsatzsteuer enthält, steht das dabei, zum Beispiel „inkl. 20 % USt.“. Das Rechnungs-PDF listet die enthaltene Umsatzsteuer auf.
+- Erhebt Ihr Workspace keine Umsatzsteuer, wird keine angezeigt.
+- Tage werden in ganzen und halben Tagen angezeigt.
+
+**Siehe auch:** [Ihre Abrechnung lesen](#ihre-abrechnung-lesen) · [Ihre Rechnungen](#ihre-rechnungen)
+
+<!-- anchor: user.money.finances -->
+### Ihre Finanzen in allen Workspaces
+
+**Zielgruppe:** Mitglied
+
+Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und Erinnerungen an einem Ort sehen.
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money), wählen Sie **Zahlungen** oder **Rechnungen** und tippen Sie bei Ihrem Space auf der Karte **Ihre Finanzen in allen Workspaces** auf *Für … öffnen*.
+2. Wählen Sie einen Reiter: **Ausstehend**, **Bezahlt**, **Zahlungen** oder **Erinnerungen**.
+3. Wenn Sie mehreren Spaces angehören, filtern Sie oben nach Space.
+
+**Gut zu wissen**
+
+- **Ausstehend** zeigt „Nichts zu zahlen – Sie sind auf dem aktuellen Stand“, wenn Sie nichts schulden.
+- **Erinnerungen** listet die erhaltenen Erinnerungen mit ihrer Stufe auf.
+- Vollständiger Verlauf, Nutzung und andere Server sind von demselben Bildschirm aus erreichbar.
+
+**Siehe auch:** [Ihre Rechnungen](#ihre-rechnungen)
+
+<!-- anchor: user.money.invoicing -->
+### Rechnungsstellung im Überblick
+
+**Zielgruppe:** Abrechnungsadministrator:in · Inhaber
+
+Sie stellen die Rechnungen des ganzen Workspace aus und verfolgen sie nach und möchten wissen, wo Sie anfangen.
+
+<p><img src="images/user-money-invoicing.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
+2. Lesen Sie die Reiter: **Zu berechnen** listet Mitglieder, die für den Monat noch abzurechnen sind, **Offen** die ausgestellten, unbezahlten Rechnungen und **Archiv** die abgeschlossenen.
+3. Lesen Sie die Zeile mit vier Schritten unter dem Banner: **Auszustellen**, **Einzuziehen**, **Zu bestätigen** und **Abgeschlossen**, jeweils mit einer Anzahl.
+4. Tippen Sie auf **Monatsabschluss-Assistent**, um einen Monat abzurechnen, oder auf **Neue Rechnung** für eine einzelne.
+5. Tippen Sie auf das Werkzeugsymbol für das Rechnungsregister, die Mahnregeln, die PDF-Vorlage der Rechnung und **Meine Finanzen**.
+
+**Gut zu wissen**
+
+- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird als fehlerhaft markiert und ersetzt.
+- Der vollständige Ablauf vom Monatsabschluss über den Ausgleich bis zu den Erinnerungen steht in Kapitel 08: [Mahnregeln](#mahnregeln) und [Die PDF-Vorlage der Rechnung](#die-pdf-vorlage-der-rechnung) sind gute Stellen zum Weiterlesen.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln)
+
+<!-- anchor: user.space.overview -->
+## Ihr Space, von Ihnen eingerichtet (Workspace-Einstellungen)
+
+Dieses Kapitel richtet sich an die Menschen, die einen Space betreiben: Inhaber, Mitinhaber und die Administratoren, denen sie die Einstellungen anvertrauen. Hier zeichnen Sie die Etagen, legen fest, wer wann kommen darf, wählen die Funktionen, geben dem Space sein Aussehen und seine Wörter und ziehen eine Kopie von allem.
+
+In diesem Kapitel:
+- [Etagen, Räume und Tische zeichnen](#space-editor-etagen-hinzufügen-umbenennen-und-löschen)
+- [Mit der Workspace-ID einladen](#die-workspace-id)
+- [Festlegen, wann der Space geöffnet ist](#geöffnete-wochentage)
+- [Funktionen ein- und ausschalten](#ganze-prozesse-ein--oder-ausschalten)
+- [Die Workspace-Einstellungen ausfüllen](#land)
+- [Dem Space Farben und Wörter geben](#wortwahl)
+- [Festlegen, wer was darf](#die-rollenmatrix)
+- [Ein Wand-Tablet und Badges betreiben](#kiosk-modus-ein-wand-tablet-für-den-check-in)
+- [Eine Dokumentenbibliothek führen](#ein-dokument-zur-bibliothek-hinzufügen)
+- [Den Space exportieren und importieren](#den-space-exportieren-xml)
+
+> **Tipp** Die meisten Bildschirme dieses Kapitels finden Sie im Menü unter **Workspace**, **Verfügbarkeit**, **Funktionen** und **Rollen**. Jeder Eintrag erscheint nur für Personen mit der nötigen Berechtigung, und manche nur, solange ihre Funktion eingeschaltet ist. Administrator:innen sehen diese Bildschirme nur, wenn der Inhaber ihnen die Berechtigung in der Rollenmatrix gegeben hat.
+
+<!-- anchor: user.space.editor.levels -->
+### Space-Editor: etagen hinzufügen, umbenennen und löschen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten dem Gebäude seine Etagen geben, in der Reihenfolge, die man erwartet. Der **Workspace-Editor** listet jede Etage des Spaces auf.
+
+<p><img src="images/user-space-editor-levels.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Workspace-Editor](https://fdittgen-png.github.io/deskilo/#/editor) oder tippen Sie auf dem Bildschirm Reservieren auf **Workspace bearbeiten**.
+2. Tippen Sie auf **Etage hinzufügen**, tragen Sie den Namen ein und tippen Sie auf **Speichern**.
+3. Ziehen Sie den Griff links neben einer Etage, um die Reihenfolge zu ändern.
+4. Tippen Sie auf die drei Punkte (**Etagen-Aktionen**), um eine Etage zu **Umbenennen** oder zu **Löschen**.
+5. Tippen Sie auf eine Etage, um darauf zu zeichnen.
+
+**Gut zu wissen**
+
+- Das Löschen einer Etage entfernt jedes Büro, jeden Tisch und jeden Platz darauf. Die Bestätigung sagt, was mit Buchungen geschieht, die darauf verweisen.
+- Die Zeile unter jeder Etage zeigt, ob sie **Als Ganzes buchbar** oder **Nicht als Ganzes buchbar** ist.
+- Ohne Etage zeigt der Editor **Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.**
+
+**Siehe auch:** [Eine ganze Etage buchbar machen](#mitglieder-eine-ganze-etage-buchen-lassen) · [Räume, Tische und Plätze zeichnen](#räume-tische-und-plätze-zeichnen)
+
+<!-- anchor: user.space.editor.level-booking -->
+### Mitglieder eine ganze Etage buchen lassen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass ein Team für einen Tag eine komplette Etage übernehmen kann.
+
+<p><img src="images/user-space-editor-level-booking.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie im [Workspace-Editor](https://fdittgen-png.github.io/deskilo/#/editor) in der Zeile der Etage auf die Ebenen-Schaltfläche.
+2. Schalten Sie **Als Ganzes buchbar** ein.
+3. Tragen Sie den **Preis je Halbtag** ein.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Ebenen-Schaltfläche ist gefüllt, wenn die Etage als Ganzes buchbar ist.
+- Eine ganze Etage, ein ganzes Büro oder einen ganzen Tisch zu buchen, setzt außerdem die Funktion **Tisch-, Büro- & Etagen-Reservierungen** voraus. Jedes Mitglied braucht das Recht, Etagen zu reservieren; Administratoren haben es automatisch. Siehe [Ein Funktionsschalter](#ein-funktionsschalter).
+
+**Siehe auch:** [Eigenschaften von Büro und Tisch](#ein-büro-oder-einen-tisch-benennen-und-mit-einem-preis-versehen)
+
+<!-- anchor: user.space.editor.rooms -->
+### Räume, Tische und Plätze zeichnen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass der Plan auf dem Bildschirm wie die echte Etage aussieht. Alles liegt in einem Raum: Sie zeichnen einen Raum, setzen Tische hinein und dann Plätze an die Tische.
+
+<p><img src="images/user-space-editor-rooms.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie eine Etage im [Workspace-Editor](https://fdittgen-png.github.io/deskilo/#/editor). Eine leere Etage bietet **Ersten Raum zeichnen** an.
+2. Tippen Sie auf **Büro** und ziehen Sie auf dem Raster, um einen Raum zu zeichnen.
+3. Tippen Sie auf **Tisch** und ziehen Sie im Raum, um einen Tisch zu zeichnen.
+4. Tippen Sie auf **Platz** und dann auf einen Tisch, um ihm einen Platz hinzuzufügen.
+5. Tippen Sie auf **Bild** und dann auf die Stelle, an der eine Illustration stehen soll.
+6. Tippen Sie auf ein Element, um es auszuwählen. Die Leiste unten bietet **Duplizieren**, **Eigenschaften** und **Löschen**.
+
+**Gut zu wissen**
+
+- Tippen Sie ein zweites Mal auf das aktive Werkzeug, legen Sie es wieder ab, und die Zeichenfläche wechselt zurück zum Auswählen.
+- Die App lehnt eine Form ab, die **Überschneidet ein vorhandenes Element.** oder **Muss vollständig innerhalb eines Büros liegen.** Plätze lassen sich nur auf einem Tisch setzen, und ein voller Tisch meldet **Auf diesem Tisch ist kein Platz mehr.**
+- Die Bild-Schaltfläche oben rechts setzt, ersetzt oder entfernt das **Hintergrundbild** der Etage, zum Beispiel einen Scan des echten Plans.
+- Das Löschen eines Raums nimmt seine Tische und Plätze mit.
+
+**Siehe auch:** [Eigenschaften eines Platzes](#einen-platz-einrichten) · [Tisch-Transparenz](#tisch-transparenz)
+
+<!-- anchor: user.space.editor.office -->
+### Ein Büro oder einen Tisch benennen und mit einem Preis versehen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass ein Raum oder ein Tisch einen eigenen Namen trägt und als Ganzes buchbar ist.
+
+<p><img src="images/user-space-editor-office.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie das Büro oder den Tisch auf der Etage aus und tippen Sie auf **Eigenschaften**.
+2. Ändern Sie **Name des Büros** (oder **Name des Tisches**).
+3. Schalten Sie **Als Ganzes buchbar** ein, wenn jemand es komplett mit allem darin reservieren darf.
+4. Tragen Sie den **Preis je Halbtag** ein, der erscheint.
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Das Preisfeld erscheint nur, solange der Schalter an ist.
+- Ein als Ganzes buchbarer Raum lässt sich nur reservieren, solange nichts darin gebucht ist.
+
+**Siehe auch:** [Eine ganze Etage buchbar machen](#mitglieder-eine-ganze-etage-buchen-lassen) · [Eigenschaften eines Platzes](#einen-platz-einrichten)
+
+<!-- anchor: user.space.editor.seat -->
+### Einen Platz einrichten
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass ein Platz zeigt, wohin der Stuhl blickt, was dazugehört und wann er außer Betrieb ist.
+
+<p><img src="images/user-space-editor-seat.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie den Platz auf der Etage aus und tippen Sie auf **Eigenschaften**.
+2. Ändern Sie **Name des Platzes**.
+3. Wählen Sie die **Sitzrichtung**: Der Pfeil zeigt auf dem Plan, wohin der Stuhl blickt.
+4. Wählen Sie einen **Stuhltyp**.
+5. Tippen Sie auf das **Zubehör**, das zu diesem Platz gehört. Ein Preis daneben ist ein Aufpreis je Halbtag.
+6. Trägt der Platz einen Tag, geben Sie seine Nummer bei **NFC/RFID-Tag** ein oder nutzen Sie **Jetzt einen Tag lesen**. Das Tag-Feld erscheint, wenn die Funktion **NFC/RFID-Tags an Stühlen** eingeschaltet ist, und zum Lesen brauchen Sie ein Gerät, das Tags lesen kann.
+7. Schalten Sie **Gesperrt (Wartung)** ein, um den Platz außer Betrieb zu nehmen, und tippen Sie dann auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Tag-Nummer kann nur zu einem Stuhl gehören: **Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.**
+- Gibt es noch kein Zubehör, bietet das Blatt **Noch keine Ausstattung — jetzt einrichten** an.
+
+**Siehe auch:** [NFC-Badge-Check-in](#nfc-badge-check-in)
+
+<!-- anchor: user.workspace.code -->
+### Die Workspace-ID
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass Menschen Ihren Space finden und den Beitritt anfragen. Der Bildschirm **Workspace-ID & QR** zeigt die Einladung für Mitglieder: einen QR-Code und die ID dahinter.
+
+<p><img src="images/user-workspace-code.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Workspace-ID & QR](https://fdittgen-png.github.io/deskilo/#/workspace-code). Der Tab **Mitglieder-Einladung** ist geöffnet.
+2. Tippen Sie auf **ID kopieren**, um die ID irgendwo einzufügen, oder auf **Als PNG teilen**, um den QR-Code zu drucken oder zu veröffentlichen.
+3. Um eine einprägsame ID zu wählen, tippen Sie auf **Workspace-ID ändern**, geben 4 bis 20 Buchstaben oder Ziffern ein und tippen auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die ID ist in ganz DesKilo einmalig. Ist sie vergeben oder nicht 4 bis 20 Buchstaben oder Ziffern lang, sagt die App „Diese ID wurde abgelehnt“.
+- Wer den Code scannt oder die ID eingibt, fragt den Beitritt als Mitglied an. Ohne Freigabe kommt niemand hinein.
+- Sobald Sie die ID ändern, funktioniert die alte nicht mehr. Drucken Sie den QR-Code neu.
+- Der Tab **Einladung als Administrator:in** ist für Inhaber und Mitinhaber.
+
+**Siehe auch:** [Einladung als Administrator:in](#einen-administrator-einladen) · [Jemanden einladen](#jemanden-per-nachricht-einladen)
+
+<!-- anchor: user.workspace.code.admin -->
+### Einen Administrator einladen
+
+**Zielgruppe:** Inhaber
+
+Sie möchten jemanden dazuholen, der den Space mitleiten hilft. Der Tab **Einladung als Administrator:in** gibt Ihnen einen Code für genau eine Person.
+
+<p><img src="images/user-workspace-code-admin.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Workspace-ID & QR](https://fdittgen-png.github.io/deskilo/#/workspace-code) und tippen Sie auf **Einladung als Administrator:in**.
+2. Geben Sie der vorgesehenen Person den Code oder seinen QR-Code.
+3. Für den nächsten Administrator tippen Sie auf **Neuer Code für Administrator:innen**.
+
+**Gut zu wissen**
+
+- Der Code nimmt eine Person als Administrator auf, dann läuft er ab.
+- Es gibt keine Einladung als Inhaber. Nur ein Inhaber kann die Inhaberschaft übertragen, unter **Mitglieder & Tarife**.
+
+**Siehe auch:** [Die Workspace-ID](#die-workspace-id) · [Die Rollenmatrix](#die-rollenmatrix)
+
+<!-- anchor: user.workspace.code.invite -->
+### Jemanden per Nachricht einladen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten eine freundliche, fertige Einladung schicken statt eines nackten Codes.
+
+<p><img src="images/user-workspace-code-invite.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie auf [Workspace-ID & QR](https://fdittgen-png.github.io/deskilo/#/workspace-code) auf **Jemanden einladen**.
+2. Füllen Sie **Vorname (optional)**, **Nachname (optional)** und, wenn Sie möchten, die Telefonnummer aus.
+3. Tippen Sie unter **Rollen bei der Ankunft** auf jede Rolle, die diese Person beim Beitritt erhalten soll.
+4. Wählen Sie die **Sprache der Nachricht**.
+5. Senden Sie sie mit **WhatsApp**, **SMS** oder **Teilen…**.
+
+**Gut zu wissen**
+
+- Die Nachricht erklärt die Schritte: herunterladen, Konto anlegen, beitreten. Sie ist in der gewählten Sprache verfasst und geht von der [Sprache des Arbeitsbereichs](#sprache-des-arbeitsbereichs) aus.
+- Jede Nachricht trägt ihren eigenen persönlichen Code. Einen eigenen Text können Sie unter [Einladungstext](#einladungstext) schreiben.
+
+**Siehe auch:** [Die Workspace-ID](#die-workspace-id)
+
+<!-- anchor: user.workspace.availability.open-weekdays -->
+### Geöffnete Wochentage
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass der Space nur an den Tagen geöffnet ist, an denen Sie arbeiten. Der Bildschirm **Verfügbarkeit** beginnt mit den Wochentagen.
+
+<p><img src="images/user-workspace-availability--open-weekdays.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability).
+2. Tippen Sie unter **Geöffnete Wochentage** auf einen Tag, um ihn zu öffnen oder zu schließen.
+
+**Gut zu wissen**
+
+- Mindestens ein Wochentag muss geöffnet bleiben.
+- Eine Buchung, die einen geschlossenen Wochentag berührt, wird abgelehnt, und der Plan zeigt diesen Tag als geschlossen.
+
+**Siehe auch:** [Schließtage](#schließtage) · [Buchungsraster](#buchungsraster)
+
+<!-- anchor: user.workspace.availability.granularity -->
+### Buchungsraster
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Buchungen einem Rhythmus folgen, der zu Ihrem Space passt: halbe Tage, ganze Tage oder beliebige Zeiten.
+
+<p><img src="images/user-workspace-availability--granularity.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability).
+2. Wählen Sie unter **Buchungsraster** die Form einer Buchung.
+
+**Gut zu wissen**
+
+- Zur Wahl stehen **Freier Zeitraum**, **5-Minuten-Slots**, **15-Minuten-Slots**, **30-Minuten-Slots**, **1-Stunden-Slots**, **Halbe Tage (Vormittag & Nachmittag)**, **Nur ganze Tage** und **Echte Uhrzeiten (exakt von–bis, Halb-/Ganztage als Schnellwahl)**. **Echte Uhrzeiten** erscheint, wenn die Funktion **Arbeitszeiten** eingeschaltet ist.
+- Der Plan, das Buchungsblatt, ein gescannter Code und der Kiosk bieten nur an, was das Raster erlaubt.
+
+**Siehe auch:** [Arbeitszeiten](#arbeitszeiten)
+
+<!-- anchor: user.workspace.availability.working-hours -->
+### Arbeitszeiten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass ein Vormittag, ein Nachmittag und ein Tag überall dasselbe bedeuten.
+
+<p><img src="images/user-workspace-availability--working-hours.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability).
+2. Tippen Sie unter **Arbeitszeiten** auf **Tagesbeginn**, **Halbtagsgrenze** und **Tagesende** und stellen Sie jeweils die Zeit ein.
+3. Bei dem Raster *Echte Uhrzeiten* legen Sie zusätzlich **Stunden, die als halber Tag gelten** und **Stunden, die als ganzer Tag gelten** fest.
+
+**Gut zu wissen**
+
+- Halbtags- und Ganztagsfenster in Reservierungen, Check-in und Abrechnung folgen diesen Zeiten.
+- Das kleine Etikett unter dem Titel sagt, ob die Zeiten der Produktstandard sind, aus einer Vorlage stammen oder Ihre eigenen sind. **Auf Vorlage zurücksetzen** und **Auf Produktstandard zurücksetzen** holen sie zurück.
+- Der Tag muss der Reihe nach laufen: Beginn, dann Halbtagsgrenze, dann Ende.
+- Dieser Abschnitt gehört zur Funktion **Arbeitszeiten**.
+
+**Siehe auch:** [Außerhalb der Öffnungszeiten](#außerhalb-der-öffnungszeiten)
+
+<!-- anchor: user.workspace.availability.closure-days -->
+### Schließtage
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten den Space für einen Feiertag, eine Augustwoche oder einen Tag für den Klempner schließen, ohne dass jemand bucht.
+
+<p><img src="images/user-workspace-availability--closure-days.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) und gehen Sie zu **Schließtage**.
+2. Tippen Sie auf **Schließtag hinzufügen**, wählen Sie das Datum und, wenn Sie möchten, einen **Grund (optional)**.
+3. Um einen zu entfernen, tippen Sie auf den Papierkorb daneben.
+
+**Gut zu wissen**
+
+- Eine Buchung an einem Schließtag wird abgelehnt, und der Grund wird angezeigt.
+- Tage, die schon abgerechnet sind, kann der Feiertage-Generator nicht zu Schließtagen machen.
+
+**Siehe auch:** [Feiertage](#feiertage)
+
+<!-- anchor: user.workspace.availability.public-holidays -->
+### Feiertage
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten die Feiertage eines ganzen Jahres auf einmal als Schließtage eintragen.
+
+**Schritte**
+
+1. Tippen Sie in [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) unter **Schließtage** auf **Feiertage hinzufügen**.
+2. Wählen Sie das Jahr mit den Pfeilen. Das Blatt listet die Daten auf, die zu Schließtagen würden.
+3. Tippen Sie auf die Schaltfläche unten, um sie anzulegen.
+4. Lieber eine Open-Data-Liste? Tippen Sie auf **Feiertage importieren (Open Data)**, wählen Sie die Region und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Vor Ihrer Bestätigung wird nichts angelegt, und bereits vorhandene Tage sind markiert.
+- Bereits abgerechnete Monate werden übersprungen.
+- Diese Einträge erscheinen, wenn die Funktion **Feiertage** eingeschaltet ist. **Feiertage importieren (Open Data)** braucht außerdem die Funktion **Feiertage importieren**.
+
+**Siehe auch:** [Schließtage](#schließtage)
+
+<!-- anchor: user.workspace.availability.policies -->
+### Buchungsregeln
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten die Buchungsregeln lockern oder verschärfen. Was Sie hier festlegen, gilt für jeden Weg zu buchen: die App, einen gescannten Code und den Kiosk.
+
+<p><img src="images/user-workspace-availability--policies.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) und gehen Sie zu **Buchungsregeln**.
+2. Schalten Sie die gewünschten Regeln ein oder aus.
+3. Legen Sie unter **Außerhalb der Öffnungszeiten** und **Buchungsgrenzen** den Rest fest.
+
+**Gut zu wissen**
+
+- Die beiden Schalter sind standardmäßig aus.
+- Dieser Abschnitt gehört zur Funktion **Buchungsregeln**.
+- Die Zeile **Was der Plan unterscheidet** darunter erklärt die Zustände, die Mitglieder auf dem Plan sehen.
+
+**Siehe auch:** [Vergangene Buchungen erlauben](#vergangene-buchungen-erlauben) · [Admins dürfen Mitglieder auschecken](#administratoren-dürfen-auschecken) · [Buchungsgrenzen](#buchungsgrenzen)
+
+<!-- anchor: user.workspace.availability.allow-past -->
+### Vergangene Buchungen erlauben
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Mitglieder eine Buchung nachträglich erfassen können, in einem Space, der Anwesenheit später festhält.
+
+**Schritte**
+
+1. Schalten Sie in [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) unter **Buchungsregeln** **Vergangene Buchungen erlauben** ein.
+
+**Gut zu wissen**
+
+- Ist es aus, wird eine Buchung abgelehnt, die an einem früheren Tag schon zu Ende war.
+- Ein früheres Zeitfenster am selben Tag zu buchen, ist immer erlaubt.
+
+**Siehe auch:** [Buchungsregeln](#buchungsregeln)
+
+<!-- anchor: user.workspace.availability.admin-checkout -->
+### Administratoren dürfen auschecken
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass das Personal abends den Raum schließt und vergessene Check-ins beendet.
+
+**Schritte**
+
+1. Schalten Sie in [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) unter **Buchungsregeln** **Admins dürfen Mitglieder auschecken** ein.
+
+**Gut zu wissen**
+
+- Ist es aus, ist das Auschecken streng persönlich.
+- Ist es an, kann ein Administrator den laufenden Check-in eines Mitglieds beenden.
+
+**Siehe auch:** [Buchungsregeln](#buchungsregeln)
+
+<!-- anchor: user.workspace.availability.outside-hours -->
+### Außerhalb der Öffnungszeiten
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten festlegen, was geschieht, wenn jemand früh kommt oder lange bleibt. Eine Antwort gilt für jedes Raster.
+
+<p><img src="images/user-workspace-availability--outside-hours.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Suchen Sie in [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) **Außerhalb der Öffnungszeiten**.
+2. Wählen Sie **Aus**, **Nur spontan**, **Frei** oder **Berechnet**.
+
+**Gut zu wissen**
+
+- **Aus**: nichts außerhalb der Zeiten, keine Vorausbuchung, kein spontanes Kommen.
+- **Nur spontan**: Spontane Check-ins bleiben möglich, auch abendliche Überstunden, aber eine Vorausbuchung außerhalb der Zeiten wird abgelehnt.
+- **Frei**: erlaubt, nie gezählt und nie berechnet.
+- **Berechnet**: erlaubt und wie normale Nutzung gezählt, außer an einem Tag, an dem das Mitglied schon eine reguläre Buchung hat.
+- Eine Buchung, die die Arbeitszeiten berührt, ist eine normale Buchung.
+
+**Siehe auch:** [Arbeitszeiten](#arbeitszeiten)
+
+<!-- anchor: user.workspace.availability.limits -->
+### Buchungsgrenzen
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten festlegen, wie weit im Voraus gebucht werden darf, wie kurz oder lang eine Buchung sein darf und wie viele jemand gleichzeitig halten darf.
+
+<p><img src="images/user-workspace-availability--limits.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Suchen Sie in [Verfügbarkeit](https://fdittgen-png.github.io/deskilo/#/availability) **Gleichzeitige Reservierungen pro Mitglied** und nutzen Sie die Schaltflächen Minus und Plus.
+2. Legen Sie unter **Buchungsgrenzen** den **Vorausbuchungs-Horizont**, die **Mindestdauer** und die **Höchstdauer** fest.
+
+**Gut zu wissen**
+
+- **Gleichzeitige Reservierungen pro Mitglied** ist die Zahl überlappender Buchungen, die ein Mitglied halten darf. Bei 1 bleibt es bei einem Platz zur Zeit.
+- Eine Buchung endet an dem Tag, an dem sie beginnt, also ist ein ganzer Tag das Längste.
+- Die Mindestdauer darf die Höchstdauer nicht überschreiten, sonst würde keine Buchung angenommen. Der Bildschirm warnt Sie.
+- Jede Ablehnung nennt die Grenze und ihren Wert.
+
+**Siehe auch:** [Buchungsregeln](#buchungsregeln)
+
+<!-- anchor: user.features.processes -->
+### Ganze Prozesse ein- oder ausschalten
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten einen Überblick, was der Space kann, und einen ganzen Bereich auf einmal einschalten. Der Bildschirm **Funktionen** öffnet sich mit einer Karte je Geschäftsprozess.
+
+<p><img src="images/user-features-processes.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Funktionen](https://fdittgen-png.github.io/deskilo/#/features). Die Ansicht **Prozesse** ist geöffnet.
+2. Lesen Sie jede Karte: ihren Zustand, wie viele Unterprozesse aktiv sind und wie viele Funktionen laufen.
+3. Öffnen Sie eine Karte und tippen Sie auf **Einschalten** oder **Ausschalten** für den ganzen Prozess oder einen Unterprozess.
+4. Lesen Sie die Vorschau und bestätigen Sie dann.
+
+**Gut zu wissen**
+
+- Eine Karte ist **Aktiv**, wenn alle ihre Funktionen laufen, **Teilweise**, wenn einige laufen, **Verfügbar**, wenn noch keine an ist, und **Braucht Aufmerksamkeit**, wenn eine Funktion an ist, aber auf eine ausgeschaltete Voraussetzung wartet.
+- Die Chips **Alle**, **Aktiv**, **Verfügbar** und **Braucht Aufmerksamkeit** grenzen die Karten ein, und **Prozesse und Funktionen suchen** erreicht alles.
+- Die Vorschau listet auf, was eingeschaltet wird, was **Ebenfalls nötig** aus einem anderen Prozess ist und was schon an ist. Etwas auszuschalten, das andere Funktionen brauchen, wird abgelehnt, bis Sie wählen, was mit diesen geschieht.
+
+**Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.features.switch -->
+### Ein Funktionsschalter
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten eine einzelne Funktion ein- oder ausschalten.
+
+<p><img src="images/user-features-switches.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) und tippen Sie auf **Schalter**.
+2. Finden Sie die Funktion mit **Funktionen durchsuchen** oder grenzen Sie die Liste mit **Geändert** oder **Reife** ein.
+3. Legen Sie ihren Schalter um.
+
+**Gut zu wissen**
+
+- Schalten Sie eine Funktion ein, erscheint jeder Teil von ihr: der Tab, die Schaltfläche, der Link. Schalten Sie sie aus, bleibt nichts davon übrig, nicht einmal ein gespeicherter Link.
+- Eine Funktion, die eine andere braucht, steht darunter mit **Benötigt** und sagt „Wartet auf die Funktion darüber“, solange die übergeordnete aus ist. Ihre eigene Wahl bleibt erhalten.
+- Eine Funktion einzuschalten kann auch einschalten, was sie braucht. Die App sagt es Ihnen.
+- Eine Funktion, die noch nicht als stabil geprüft ist, fragt zuerst nach Ihrer Bestätigung: Sie kann sich ändern und hat bekannte Grenzen.
+- Was bereits geschehen ist, bleibt geschehen. Eine Rechnung, die bei eingeschalteter Funktion ausgestellt wurde, behält ihren Inhalt.
+
+**Siehe auch:** [Ganze Prozesse ein- oder ausschalten](#ganze-prozesse-ein--oder-ausschalten)
+
+<!-- anchor: user.workspace.settings.country -->
+### Land
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass der Space weiß, wo er seinen Sitz hat. **Workspace** öffnet sich bei **Allgemeine Angaben**.
+
+<p><img src="images/user-workspace-settings--country.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings).
+2. Wählen Sie unter **Allgemeine Angaben** das **Land**.
+3. Tippen Sie unten auf **Speichern**.
+
+**Gut zu wissen**
+
+- Das Land schlägt die Währung und die Zeitzone vor und bestimmt, welche Umsatzsteuersätze angeboten werden.
+- **Speichern** schreibt das ganze Formular zusammen. Hat zwischenzeitlich jemand diese Einstellungen geändert, wird nichts gespeichert, und was Sie eingegeben haben, bleibt auf dem Bildschirm.
+
+**Siehe auch:** [Währung und Zeitzone](#währung-und-zeitzone)
+
+<!-- anchor: user.workspace.settings.currency-timezone -->
+### Währung und Zeitzone
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Preise und Tage so gezählt werden, wie Ihr Space zählt.
+
+<p><img src="images/user-workspace-settings--currency-timezone.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) unter **Allgemeine Angaben** die **Währung**.
+2. Suchen Sie die **Zeitzone** und wählen Sie sie aus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben.
+- Die Zeitzone ist nicht nur Kosmetik: Ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag werden alle in ihr gezählt, sodass ein Mitglied im Ausland den Tag des Spaces sieht und nicht seinen eigenen.
+
+**Siehe auch:** [Land](#land)
+
+<!-- anchor: user.workspace.settings.language -->
+### Sprache des Arbeitsbereichs
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Einladungen und Dokumente die Sprache Ihrer Gemeinschaft sprechen.
+
+<p><img src="images/user-workspace-settings--language.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) unter **Allgemeine Angaben** die **Sprache des Arbeitsbereichs**.
+2. Wählen Sie eine Sprache oder **App-Sprache des Absenders**.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Einladungen werden standardmäßig in dieser Sprache geschrieben.
+- Sie ist nicht Ihre eigene App-Sprache. Diese ändert nur, was Sie sehen, und liegt in Ihren persönlichen Einstellungen.
+
+**Siehe auch:** [Einladungstext](#einladungstext)
+
+<!-- anchor: user.workspace.settings.address -->
+### Adresse im Briefkopf
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten Ihre Postadresse auf dem Papier, das der Space verschickt.
+
+<p><img src="images/user-workspace-settings--address.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Füllen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) unter **Allgemeine Angaben** **Adresse des Workspace** aus.
+2. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Es ist freier Text, der so auf Briefen und Rechnungen gedruckt wird.
+- Die strukturierte Adresse, die eine E-Rechnung braucht, ist ein eigener Eintrag unter der rechtlichen Identität.
+
+**Siehe auch:** [Land](#land)
+
+<!-- anchor: user.workspace.settings.whatsapp-group -->
+### WhatsApp-Gruppe
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Mitglieder die WhatsApp-Gruppe Ihrer Gemeinschaft finden.
+
+<p><img src="images/user-workspace-settings-community--whatsapp-group.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Gemeinschaft und Einladungen**.
+2. Fügen Sie den Einladungslink der Gruppe bei **Link zur WhatsApp-Gruppe** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Link muss ein Einladungslink von chat.whatsapp.com sein, sonst sagt das Feld es.
+- Lassen Sie es leer, um nichts anzuzeigen.
+
+**Siehe auch:** [Einladungstext](#einladungstext)
+
+<!-- anchor: user.workspace.settings.invitation-message -->
+### Einladungstext
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Einladungen nach Ihnen klingen, in jeder Sprache, die Sie nutzen.
+
+<p><img src="images/user-workspace-settings-community--invitation-message.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Gemeinschaft und Einladungen**.
+2. Wählen Sie unter **Sprache der Nachricht**, in welcher Sprache Sie den Text bearbeiten.
+3. Schreiben Sie den Text. Tippen Sie auf ein Etikett wie {firstName} oder {inviteLink}, um es dort einzufügen, wo der Cursor steht.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Lassen Sie das Feld leer, um die eingebaute Nachricht in dieser Sprache zu verwenden.
+- Die Zeile **Sprache der Nachricht** sagt nur, welcher Entwurf auf dem Bildschirm steht. Sie wird nicht gespeichert und öffnet sich jedes Mal mit der Sprache des Workspace.
+- Die Etiketten werden beim Senden einer Einladung gefüllt. Der Code und der Link kommen von der App, fügen Sie sie also nicht selbst ein.
+
+**Siehe auch:** [Jemanden per Nachricht einladen](#jemanden-per-nachricht-einladen)
+
+<!-- anchor: user.workspace.settings.new-members -->
+### Neue Mitglieder gleich starten lassen
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass alle, die beitreten, mit demselben Abonnement und derselben Regel beginnen, wenn ihre Tage aufgebraucht sind.
+
+<p><img src="images/user-workspace-settings-members--defaults.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Neue Mitglieder**.
+2. Stellen Sie den Prozentsatz **Abonnement** mit den Schaltflächen Minus und Plus ein.
+3. Wählen Sie **Gesperrt, sobald aufgebraucht**, **Nutzungsabhängig zahlen** oder **Muss ein Paket kaufen**.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bis Sie wählen, starten neue Mitglieder bei 100 %, und Buchungen sind gesperrt, sobald das Kontingent aufgebraucht ist.
+- Das eigene Abonnement eines Mitglieds legen Sie später auf dessen Seite fest.
+
+**Siehe auch:** [Das Abonnement eines Mitglieds](#das-abo-eines-mitglieds)
+
+<!-- anchor: user.workspace.settings.wording -->
+### Wortwahl
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass die App Ihre Wörter verwendet: einen anderen Namen für einen Platz, für einen Status auf dem Plan, für einen Tab.
+
+<p><img src="images/user-workspace-settings-wording.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Darstellung und Bezeichnungen** und tippen Sie auf **Wortwahl**.
+2. Finden Sie ein Wort mit **Wort suchen** oder tippen Sie auf **Nur geänderte**, um zu sehen, was Sie umbenannt haben.
+3. Tippen Sie auf den Stift daneben und geben Sie Ihr Wort ein, je Sprache.
+
+**Gut zu wissen**
+
+- Das Wort des Produkts bleibt unter Ihrem sichtbar, sodass Sie sehen, was Sie ersetzen.
+- **Zurücksetzen** entfernt Ihr Wort, statt das des Produkts zu kopieren. Der Begriff folgt dann dem Produkt, wenn sich dessen Wortlaut ändert.
+- Die Begriffe sind danach gruppiert, wo sie erscheinen: **Legende**, **Der Bereich**, **Navigation**, **Buchung**.
+
+**Siehe auch:** [Farben](#farben)
+
+<!-- anchor: user.workspace.settings.colours -->
+### Farben
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass die App Ihre Farbe trägt. Wählen Sie eine, und die App leitet daraus ihr helles und ihr dunkles Design ab.
+
+<p><img src="images/user-workspace-settings-colours--colours.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Darstellung und Bezeichnungen** und tippen Sie auf **Farben**. Die Zeile ist da, solange **Farben des Arbeitsbereichs** in den Funktionen eingeschaltet ist.
+2. Tippen Sie auf eine der Farben oder geben Sie einen Code wie #0F766E bei **Farbe** ein.
+3. Prüfen Sie **So sieht es aus**, in **Hell** und **Dunkel**.
+4. Tippen Sie auf **Speichern**. **Produktfarben** entfernt Ihre.
+
+**Gut zu wissen**
+
+- Die App wahrt ihren eigenen Kontrast. Wäre eine Farbe irgendwo unlesbar, wird sie abgelehnt, und der Bildschirm nennt das Paar.
+- Unter **Raumfarben** können Sie bis zu acht eigene Farben für die Räume auf dem Plan hinzufügen.
+- Das DesKilo-Zeichen, die Farben der Platzzustände und das Banner der Produktivumgebung werden nie umgestaltet.
+
+**Siehe auch:** [Muster](#muster) · [Symbol und Emblem](#symbol-und-emblem)
+
+<!-- anchor: user.workspace.settings.pattern -->
+### Muster
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass sich Ihr Space leicht von den anderen unterscheiden lässt, denen eine Person angehört.
+
+<p><img src="images/user-workspace-settings-colours--pattern.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Farben](https://fdittgen-png.github.io/deskilo/#/settings/colours).
+2. Tippen Sie unter **Muster** auf **Einfarbig**, **Streifen**, **Punkte**, **Raster** oder **Wellen**.
+
+**Gut zu wissen**
+
+- Das Muster zeichnet Ihre Farbe auf die Karte dieses Spaces in Ich, auf seinen Chip und während der Space sich öffnet.
+- Es wird gespeichert, sobald Sie es antippen.
+
+**Siehe auch:** [Farben](#farben)
+
+<!-- anchor: user.workspace.settings.branding -->
+### Symbol und Emblem
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten ein kleines Zeichen, das für den Space steht: Buchstaben auf einer Farbe oder Ihr eigenes Logo.
+
+<p><img src="images/user-workspace-settings-colours--branding.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Farben](https://fdittgen-png.github.io/deskilo/#/settings/colours) und gehen Sie zu **Symbol**.
+2. Geben Sie ein oder zwei **Buchstaben** ein, wählen Sie eine Farbe und tippen Sie auf **Speichern**.
+3. Tippen Sie unter **Emblem** auf **Bild auswählen**, um Ihr Logo hinzuzufügen. **Entfernen** nimmt es weg.
+
+**Gut zu wissen**
+
+- Buchstaben auf einer Farbe sind in einem Workspace einmalig. Hat ein anderer Space schon dieselben, bittet die App Sie, die Farbe oder die Buchstaben zu ändern.
+- Das Emblem steht im Menü unter dem Namen der App und während jemand diesen Space öffnet. Es wird höchstens 512 Pixel breit neu gezeichnet, und die eigenen Angaben des Fotos, etwa wo es aufgenommen wurde, werden nicht behalten.
+- Das Emblem ersetzt nie das DesKilo-Logo.
+
+**Siehe auch:** [Farben](#farben)
+
+<!-- anchor: user.workspace.settings.desk-transparency -->
+### Tisch-Transparenz
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie haben den Plan über ein Foto gezeichnet und möchten, dass der Raum durch die Möbel scheint.
+
+<p><img src="images/user-workspace-settings-appearance--desk-transparency.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) **Darstellung und Bezeichnungen**.
+2. Ziehen Sie den Regler **Tisch-Transparenz**. Der Wert erscheint als *Deckkraft*.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Senken Sie die Deckkraft, damit das Hintergrundfoto einer Etage durch die Tische scheint.
+- Stellen Sie sie auf 100 %, wenn die Plätze wichtiger sind als der Raum.
+
+**Siehe auch:** [Räume, Tische und Plätze zeichnen](#räume-tische-und-plätze-zeichnen)
+
+<!-- anchor: user.workspace.settings.public-page -->
+### Öffentliche Workspace-Seite
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass Menschen außerhalb Ihres Spaces ihn finden und sehen, was er bietet.
+
+<p><img src="images/user-workspace-settings-public-page.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Öffentliche Workspace-Seite](https://fdittgen-png.github.io/deskilo/#/settings/public-page) oder tippen Sie oben in **Workspace** darauf.
+2. Schalten Sie **Im öffentlichen Verzeichnis sichtbar** ein.
+3. Wählen Sie die Art des Gastgebers und füllen Sie **Beschreibung**, **Öffentliche Adresse**, **Öffentliche E-Mail**, **Öffentliche Telefonnummer** und **Website** aus.
+4. Tippen Sie auf **Speichern und externe Ansicht öffnen**.
+
+**Gut zu wissen**
+
+- Felder mit **Aus den Arbeitsbereichsangaben** folgen den eigenen Angaben des Workspace. **Arbeitsbereichsangaben verwenden** stellt sie wieder her, nachdem Sie sie geändert haben.
+- **Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen** ersetzt jedes Feld, das eine Entsprechung im Workspace hat.
+- Administratoren können selbst wählen, ob sie als öffentliche Administratoren angezeigt werden.
+
+**Siehe auch:** [Entdecken und das öffentliche Netzwerk](#entdecken)
+
+<!-- anchor: user.roles.matrix -->
+### Die Rollenmatrix
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten festlegen, welche Berechtigungen jede Rolle hat. **Rollen** zeigt eine Karte je Rolle mit einem Haken für jede Berechtigung, die sie hat.
+
+<p><img src="images/user-roles-matrix.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rollen](https://fdittgen-png.github.io/deskilo/#/roles).
+2. Setzen oder entfernen Sie auf der Karte einer Rolle den Haken bei einer Berechtigung wie **Rollen & Berechtigungen verwalten**, **Mitglieder verwalten**, **Workspace-Einstellungen bearbeiten** oder **Rechnungen ausstellen & Zahlungen zuordnen**.
+
+**Gut zu wissen**
+
+- Jeder hat genau eine Basisrolle: Nutzer, Administrator, Mitinhaber oder Inhaber. Weitere Rollen kommen hinzu und nehmen nie etwas weg.
+- Der Inhaber hat immer jede Berechtigung, deshalb ist diese Karte gesperrt. Ein Mitinhaber darf weniger haben.
+- Wer keine Rollen verwalten darf, sieht die Matrix nur lesend, mit hervorgehobener **Ihre Rolle**.
+- Eine Berechtigung wird vom Server an jeder Stelle geprüft, daher entfernt das Abwählen sie überall auf einmal.
+- Der Eintrag **Rollen** erscheint, wenn die Funktion **Rollenverwaltung** eingeschaltet ist.
+
+**Siehe auch:** [Rollen, die dieser Space festlegt](#rollen-die-dieser-space-festlegt) · [Mitinhaber](#mitinhaber)
+
+<!-- anchor: user.roles.space -->
+### Rollen, die dieser Space festlegt
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie möchten Rollen, die zu Ihrem Space passen, etwa Gastgeber oder Buchhalter, zusätzlich zu den grundlegenden.
+
+<p><img src="images/user-roles-space.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Rollen](https://fdittgen-png.github.io/deskilo/#/roles) auf **Die Rollen dieses Bereichs** oder öffnen Sie [Rollen dieses Spaces](https://fdittgen-png.github.io/deskilo/#/settings/roles-of-this-space). Dieser Bildschirm erscheint, wenn die Funktion **Rollen, die dieser Bereich festlegt** eingeschaltet ist.
+2. Tippen Sie auf **Rolle hinzufügen**.
+3. Geben Sie der Rolle einen Namen und wählen Sie dann, **Was sie ergänzt**.
+4. Tippen Sie auf **Rolle speichern**.
+5. Um sie einem Mitglied zu geben, öffnen Sie die Seite des Mitglieds, suchen Sie **Rollen** und tippen Sie auf **Rolle hinzufügen**.
+
+**Gut zu wissen**
+
+- Jede Rolle ergänzt Berechtigungen zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und der Inhaber behält immer jede Berechtigung.
+- Eine Rolle, die Sie nicht mehr wollen, lässt sich beiseitelegen, indem Sie **In Gebrauch** ausschalten.
+- Der Schlüssel der Rolle ändert sich nie: Die Personen, die sie haben, verweisen darauf.
+- Niemand kann sich selbst eine Rolle geben. Eine Rolle, die Rollen verwaltet, kann nur der Inhaber vergeben.
+
+**Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix)
+
+<!-- anchor: user.roles.co-owners -->
+### Mitinhaber
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass der Space weiterbesteht, falls Sie einmal zurücktreten.
+
+**Schritte**
+
+1. Öffnen Sie [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) und wählen Sie das Mitglied.
+2. Wählen Sie unter **Mit-Inhaberschaft** einen aktiven Mitinhaber oder einen Nachfolger.
+3. Um jetzt zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+
+**Gut zu wissen**
+
+- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolgerin**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
+- Geht der letzte Inhaber, wird der am besten geeignete Mitinhaber automatisch Inhaber, aktive vor Nachfolgern.
+- Mitinhaber gehören zur Funktion **Mit-Inhaberinnen**.
+
+**Siehe auch:** [Mit-Inhaberschaft](#mit-inhaberschaft) · [Die Rollenmatrix](#die-rollenmatrix)
+
+<!-- anchor: user.kiosk.mode -->
+### Kiosk-Modus: ein Wand-Tablet für den Check-in
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten ein Tablet an der Tür, an dem sich Menschen mit einem Badge einchecken.
+
+**Schritte**
+
+1. Legen Sie ein Konto für das Tablet an, treten Sie damit dem Workspace bei und nutzen Sie in [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) bei diesem Mitglied **Zum Kiosk-Gerät machen**.
+2. Achten Sie darauf, dass **Kiosk-Modus** in [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) eingeschaltet ist.
+3. Öffnen Sie auf dem Tablet die App. Sie fragt **Kiosk-Modus starten?**. Tippen Sie auf **Kiosk-Modus starten**.
+4. Ein Mitglied tippt auf einen Platz oder auf **Diese Etage** und hält ein Badge hin: eine Karte oder einen gedruckten QR-Code.
+
+**Gut zu wissen**
+
+- Der Kiosk-Modus startet nie von selbst. **Jetzt nicht — App normal öffnen** öffnet die App wie gewohnt, was bei der Einrichtung praktisch ist.
+- Im Kiosk-Modus zeigt das Tablet nur den Plan. Um ihn zu verlassen, starten Sie das Tablet neu. Um das Konto wieder zu einem normalen Mitglied zu machen, nutzen Sie **Kiosk-Gerät** unter **Einstellungen** auf dem Gerät oder **Kiosk zu Mitglied zurücksetzen** in **Mitglieder & Tarife**.
+- Das Blatt, das sich öffnet, nennt die Regel, der es folgt. An einem Schließtag sagt der Kiosk gleich zu Beginn „Der Workspace ist heute geschlossen“.
+- Das Badge ist die Bestätigung: Es identifiziert das Mitglied, führt die Aktion aus, und der Bildschirm leert sich für die nächste Person. Ein Platz, den jemand anderes hält, zeigt, wer ihn hält, und verweist Sie auf die App.
+- Badges haben ihre eigenen Funktionen, **RFID-/NFC-Badges** und QR-Badges, beide unter **Kiosk-Modus**.
+- Ein Wand-Tablet lässt sich hier nicht zeigen: Der Kiosk startet nur auf einem Gerät, das als solches markiert ist.
+
+**Siehe auch:** [NFC-Badge-Check-in](#nfc-badge-check-in) · [Raum-QR-Codes (PDF)](#raum-qr-codes-pdf)
+
+<!-- anchor: user.badges.nfc -->
+### NFC-Badge-Check-in
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass Mitglieder sich mit dem Antippen einer Karte einchecken, ohne Smartphone.
+
+<p><img src="images/user-badges-nfc.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [RFID-/NFC-Badges](https://fdittgen-png.github.io/deskilo/#/nfc-config).
+2. Schalten Sie **NFC-Badge-Check-in aktivieren** ein.
+3. Lesen Sie die Zeile **Dieses Gerät**: Sie sagt, ob dieses Gerät Karten lesen kann.
+4. Geben Sie jedem Mitglied eine Karte in [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members): Öffnen Sie die Badges des Mitglieds, tippen Sie auf **Karte registrieren** und halten Sie die Karte an die Rückseite des Geräts.
+
+**Gut zu wissen**
+
+- Sie brauchen ein Android-Gerät mit NFC. iPads haben kein NFC, und QR-Badges funktionieren dort weiterhin.
+- Die Badge-Verwaltung lässt Sie auch einen **Neuer Badge** ausstellen, einen **Widerrufen** und **Als PDF speichern** zum Drucken. Ein widerrufenes Badge lässt sich endgültig löschen.
+- **Meldet mich an** ist standardmäßig aus: Ein Badge, das Sie eincheckt, meldet Sie nicht an, bis das Mitglied es wählt.
+- Jedes Mitglied kann sein eigenes Badge auch in seinen persönlichen Einstellungen erstellen.
+
+**Siehe auch:** [Ein Wand-Tablet für den Check-in](#kiosk-modus-ein-wand-tablet-für-den-check-in)
+
+<!-- anchor: user.documents.add -->
+### Ein Dokument zur Bibliothek hinzufügen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten Satzung, Anleitungen, Abschlüsse und Protokolle an einem Ort für die Mitglieder sammeln, die sie brauchen. Die Bibliothek enthält Links, keine Dateien.
+
+<p><img src="images/user-documents-add.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Dokumente](https://fdittgen-png.github.io/deskilo/#/documents) und tippen Sie auf die Plus-Schaltfläche.
+2. Füllen Sie **Bezeichnung** und **Link (https://…)** aus.
+3. Wählen Sie **Gespeichert auf**, **Kategorie** und **Sichtbar für**.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Bibliothek braucht die Funktion **Dokumentbibliothek** und die Berechtigung, sie zu verwalten.
+- Entfernen Sie ein Dokument über seinen Papierkorb: Es fragt zuerst **Dokument entfernen?**
+- Mitglieder, die die Bibliothek öffnen dürfen, sehen die Dokumente, die sie sehen dürfen, nach Kategorie gruppiert.
+
+**Siehe auch:** [Dokumenttitel](#dokumenttitel) · [Link](#link) · [Sichtbar für](#sichtbar-für)
+
+<!-- anchor: user.documents.title -->
+### Dokumenttitel
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass Mitglieder ein Dokument auf einen Blick erkennen.
+
+**Schritte**
+
+1. Tragen Sie im Formular zum Hinzufügen eines Dokuments die **Bezeichnung** ein.
+
+**Gut zu wissen**
+
+- Ein Dokument braucht einen Titel und einen https://-Link, sonst wird **Speichern** abgelehnt.
+- Schreiben Sie ihn für die Leserin oder den Leser, denn es ist die Zeile, die sie in der Bibliothek sehen.
+
+**Siehe auch:** [Ein Dokument zur Bibliothek hinzufügen](#ein-dokument-zur-bibliothek-hinzufügen)
+
+<!-- anchor: user.documents.url -->
+### Link
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass sich das Dokument dort öffnet, wo es schon liegt.
+
+**Schritte**
+
+1. Fügen Sie den Freigabelink aus Ihrem Laufwerk bei **Link (https://…)** ein.
+
+**Gut zu wissen**
+
+- DesKilo speichert den Link, nicht die Datei. Die Zugriffsrechte werden weiter dort verwaltet, wo das Dokument liegt.
+- Der Link muss mit https:// beginnen.
+
+**Siehe auch:** [Gespeichert auf](#gespeichert-auf)
+
+<!-- anchor: user.documents.provider -->
+### Gespeichert auf
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass Mitglieder sehen, wo das Dokument aufbewahrt wird.
+
+**Schritte**
+
+1. Wählen Sie **Gespeichert auf**: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud oder Link.
+
+**Gut zu wissen**
+
+- Es ist ein Etikett mit einem Symbol. Es wird nichts für Sie abgerufen.
+
+**Siehe auch:** [Link](#link)
+
+<!-- anchor: user.documents.category -->
+### Kategorie
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten, dass sich die Bibliothek wie ein aufgeräumtes Regal liest.
+
+**Schritte**
+
+1. Wählen Sie eine **Kategorie**: **Satzung & Rechtliches**, **Anleitungen & Handbücher**, **Finanzberichte**, **Protokolle** oder **Weitere Dokumente**.
+
+**Gut zu wissen**
+
+- Die Bibliothek gruppiert Dokumente unter diesen Überschriften und zeigt nur eine Überschrift, die ein Dokument enthält.
+
+**Siehe auch:** [Sichtbar für](#sichtbar-für)
+
+<!-- anchor: user.documents.role -->
+### Sichtbar für
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie möchten manche Dokumente für alle und manche nur für den Vorstand.
+
+**Schritte**
+
+1. Wählen Sie **Sichtbar für**: **Alle Mitglieder**, **Admins und Inhaber** oder **Nur Inhaber**.
+
+**Gut zu wissen**
+
+- Der Server setzt es durch. Ein Mitglied, das ein Dokument nicht sehen darf, erhält es gar nicht erst.
+
+**Siehe auch:** [Ein Dokument zur Bibliothek hinzufügen](#ein-dokument-zur-bibliothek-hinzufügen)
+
+<!-- anchor: user.workspace.export.space-xml -->
+### Den Space exportieren (XML)
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten eine Datei mit Etagenplan und Einstellungen, als Sicherung, zur Wiederverwendung oder zum Umzug in einen anderen Space.
+
+<p><img src="images/user-workspace-settings-tools--tools.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) und gehen Sie zu **Vorlagen und Daten**.
+2. Tippen Sie auf **Workspace exportieren (XML)**.
+
+**Gut zu wissen**
+
+- Sie enthält Einstellungen und den Etagenplan. Nie enthält sie Mitglieder, Buchungen oder Geldangaben, auch nicht den Einladungscode oder Zahlungszugangsdaten.
+- Ist **Konfiguration in der Raumdatei** an, enthält die Datei auch Tarife, Umsatzsteuersätze, Regeln, Rollen und mehr.
+- Die Datei wird auf Ihrem Gerät gespeichert.
+
+**Siehe auch:** [Den Space importieren (XML)](#den-space-importieren-xml)
+
+<!-- anchor: user.workspace.export.space-import -->
+### Den Space importieren (XML)
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten eine exportierte Datei auf einen Space anwenden.
+
+**Schritte**
+
+1. Tippen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) unter **Vorlagen und Daten** auf **Workspace importieren (XML)**.
+2. Wählen Sie die Datei und lesen Sie die Vorschau: Etagen, Büros, Tische, Plätze und Konfiguration.
+3. Tippen Sie auf **Ersetzen und importieren**.
+
+**Gut zu wissen**
+
+- Sie ersetzt den aktuellen Etagenplan und überschreibt die Einstellungen. Das lässt sich nicht rückgängig machen.
+- Sobald ein Space Buchungen hat, wird nur die Konfiguration angewendet. Der Etagenplan bleibt erhalten, und die App sagt es.
+- Eine Datei, die nicht lesbar oder nicht von DesKilo ist, wird mit einer klaren Meldung abgelehnt.
+
+**Siehe auch:** [Den Space exportieren (XML)](#den-space-exportieren-xml)
+
+<!-- anchor: user.workspace.export.config-pdf -->
+### Die Konfiguration exportieren (PDF)
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten ein Dokument mit jedem Parameter, zum Lesen, Unterschreiben oder um es einem Steuerberater zu geben.
+
+<p><img src="images/user-workspace-export-reports.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Berichte](https://fdittgen-png.github.io/deskilo/#/reports?section=documents) und wählen Sie **Workspace-Dokumente**.
+2. Tippen Sie auf **Konfiguration exportieren (PDF)**.
+
+**Gut zu wissen**
+
+- Es ist ein vollständiger Schnappschuss von Einstellungen, Mitgliedern und Etagenplan. Es ist ein Nachweis, keine Sicherung: Nur die XML-Datei lässt sich wieder importieren.
+
+**Siehe auch:** [Den Space exportieren (XML)](#den-space-exportieren-xml)
+
+<!-- anchor: user.workspace.export.workspace-report -->
+### Arbeitsbereichsbericht
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten den Space als Dokument: seine Plätze, Preise und Regeln.
+
+**Schritte**
+
+1. Öffnen Sie [Berichte](https://fdittgen-png.github.io/deskilo/#/reports?section=documents) und wählen Sie **Workspace-Dokumente**.
+2. Tippen Sie auf **Arbeitsbereichsbericht**.
+
+**Gut zu wissen**
+
+- Er wird aus der Workspace-Vorlage des Berichtseditors erstellt, sein Aussehen folgt also dem Design, das Sie gewählt haben.
+
+**Siehe auch:** [Die Konfiguration exportieren (PDF)](#die-konfiguration-exportieren-pdf)
+
+<!-- anchor: user.workspace.export.space-qr -->
+### Raum-QR-Codes (PDF)
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten eine QR-Karte an jedem Platz, Tisch, Büro und jeder Etage, damit Menschen durch Scannen buchen oder einchecken.
+
+**Schritte**
+
+1. Öffnen Sie [Berichte](https://fdittgen-png.github.io/deskilo/#/reports?section=documents) und wählen Sie **Workspace-Dokumente**.
+2. Tippen Sie auf **Raum-QR-Codes (PDF)**.
+3. Wählen Sie **Kartengröße**, **Größe des QR-Codes** und die **Informationen auf der Karte** und tippen Sie dann auf **Speichern**.
+4. Drucken, schneiden und kleben Sie jede Karte an ihren Platz.
+
+**Gut zu wissen**
+
+- Es braucht die Funktion **Raum-QR-Codes**.
+- Das Scannen einer Karte öffnet dasselbe Blatt, das der Kiosk zeigt.
+
+**Siehe auch:** [Ein Wand-Tablet für den Check-in](#kiosk-modus-ein-wand-tablet-für-den-check-in)
+
+<!-- anchor: user.workspace.export.excel -->
+### Die Daten exportieren (Excel)
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten Ihre Zahlen für eigene Auswertungen in einer Tabelle.
+
+**Schritte**
+
+1. Öffnen Sie [Berichte](https://fdittgen-png.github.io/deskilo/#/reports?section=documents) und wählen Sie **Workspace-Dokumente**.
+2. Tippen Sie auf **Daten exportieren (Excel)**.
+
+**Gut zu wissen**
+
+- Sie kommt als eine ZIP-Datei: eine Arbeitsmappe mit einem Tab für Buchungen, Zahlungen, Rechnungen, Mitglieder und Etagenplan, ein Verzeichnis, das die Zeilen zählt, und die gespeicherten Dateien des Spaces.
+- Es braucht die Funktion **Datenexport (Excel)** und die Berechtigung, Daten zu exportieren. Es ist nur ein Export: Nichts liest ihn wieder ein.
+
+**Siehe auch:** [Den Space exportieren (XML)](#den-space-exportieren-xml)
+
+<!-- anchor: user.workspace.sites -->
+### Standorte
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie betreiben mehr als eine Adresse und möchten, dass jede Etage und jedes Mitglied zum richtigen Standort gehört.
+
+**Schritte**
+
+1. Schalten Sie **Standorte** in [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) ein.
+2. Öffnen Sie [Standorte](https://fdittgen-png.github.io/deskilo/#/settings/sites) und tippen Sie auf **Standort hinzufügen**.
+3. Füllen Sie **Name des Standorts**, **Straße**, **Postleitzahl**, **Ort** und die Etagen aus, die dazugehören.
+
+**Gut zu wissen**
+
+- Der Standardstandort trägt die Adresse des Workspace. Der Heimatstandort eines Mitglieds ist die Adresse auf seinen Dokumenten.
+- **Diesen Standort löschen** schickt seine Etagen und Mitglieder zurück an den Standardstandort.
+- Ein Standort, der eine eigene juristische Person ist, kann seine eigene Registrierung und Umsatzsteuernummer tragen.
+
+<!-- anchor: user.people.overview -->
+## Mitglieder, Tarife und Abrechnung
+
+Dieses Kapitel richtet sich an Inhaber und Abrechnungsadministratoren. Es folgt dem Geld von der Person bis zur Preisliste: wer in Ihrem Space ist und in welchem Tarif, wie jeder Tarif bepreist ist, was Sie sonst noch verkaufen, wie Mitglieder Sie bezahlen und welche Kosten Sie selbst tragen.
+
+In diesem Kapitel:
+- [Mitglieder & Tarife](#mitglieder--tarife): die Liste, die Mitgliederseite und alles, was Sie für eine Person einstellen können
+- [Abrechnung](#gebührenbänder): Gebührenbänder, Abo-Stufen, Tagespakete und der Rechnungsplan
+- [Leistungen und Zubehör](#eine-leistung): die Extras, die Sie verkaufen
+- [Zahlungshinweise und Online-Zahlungen](#zahlungsarten-und-zahlungshinweise): wie Mitglieder Sie bezahlen
+- [Geplante Ausgaben](#geplante-ausgaben): Kosten, die von selbst wiederkehren
+
+<!-- anchor: user.members.list -->
+### Mitglieder & Tarife
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, wer in Ihrem Space ist und in welchem Tarif, und jede Person öffnen, um ihre Einstellungen zu ändern.
+
+<p><img src="images/user-members-list.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) im Menü.
+2. Lesen Sie jede Zeile: die E-Mail-Adresse, den Anteil des Tarifs (oder **Kein Abo**), die Rolle und, wenn er vom Üblichen abweicht, einen Status: **Ausstehend**, **Pausiert** oder **Ausgetreten**.
+3. Tippen Sie auf eine Zeile, um die [Mitgliederseite](#die-mitgliederseite) dieser Person zu öffnen.
+
+**Gut zu wissen**
+
+- Eine Zeile zeigt außerdem die Chips **max** und **gleichzeitig**, wenn Sie ein [Reservierungslimit](#reservierungslimit) oder mehr als eine [gleichzeitige Reservierung](#gleichzeitige-reservierungen) festgelegt haben.
+- Je nach eingeschalteten Funktionen bietet die obere Leiste (Symbolschaltflächen mit Kurzinfo) **Alle Admins benachrichtigen**, **Verwaltetes Profil anlegen** und, für Inhaber, **Mitglied einladen** und **Abrechnung**.
+- Administratoren erreichen diesen Bildschirm ebenfalls; die Bedienelemente, die Geld oder Rollen ändern, bleiben beim Inhaber.
+
+**Siehe auch:** [Ein Mitglied einladen](#ein-mitglied-einladen) · [Abrechnung](#gebührenbänder)
+
+<!-- anchor: user.members.invite -->
+### Ein Mitglied einladen
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass jemand Ihrem Space beitritt.
+
+**Schritte**
+
+1. Tippen Sie in [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) auf **Mitglied einladen**.
+2. Teilen Sie die Workspace-ID oder ihren QR-Code, wie unter [Die Workspace-ID](#die-workspace-id) beschrieben.
+3. Wenn die Person den Beitritt anfragt, erscheint ihre Zeile als **Ausstehend**. Öffnen Sie sie und wählen Sie **Mitgliedschaft bestätigen** oder **Mitgliedschaft ablehnen**.
+
+**Gut zu wissen**
+
+- Beim Ablehnen können Sie einen kurzen Kommentar hinzufügen.
+- Bis Sie entscheiden, hat die Person keinen Zugang zum Space.
+
+**Siehe auch:** [Ausstehende und pausierte Mitglieder](#ausstehende-und-pausierte-mitglieder) · [Ein verwaltetes Profil anlegen](#ein-verwaltetes-profil-anlegen)
+
+<!-- anchor: user.members.managed -->
+### Ein verwaltetes Profil anlegen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Jemand hat noch kein Konto, Sie möchten aber für diese Person buchen, Rechnungen stellen und alles verwalten. Sie legen ein Profil an, führen es selbst und übergeben es, wenn die Person beitritt.
+
+<p><img src="images/user-members-managed.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) auf **Verwaltetes Profil anlegen**.
+2. Tragen Sie die Identität der Person ein und speichern Sie. Die Mitgliederseite trägt dann einen Chip **Verwaltet**.
+3. Um die Angaben später zu korrigieren, öffnen Sie die Mitgliederseite und wählen **Identität bearbeiten**.
+4. Wenn die Person bereit ist, wählen Sie **An die Person übergeben**. Das erzeugt einen persönlichen Code, der an dieses Profil gebunden ist.
+5. Sie haben es sich anders überlegt, bevor der Code verwendet wurde? Wählen Sie **Übergabe zurückziehen**.
+
+**Gut zu wissen**
+
+- Wer den Code verwendet, übernimmt das Profil mit seinen Reservierungen, Rechnungen und seinem Abo, sobald Sie die Mitgliedschaft bestätigen.
+- An ein verwaltetes Mitglied kann niemand eine Nachricht senden, denn niemand würde sie lesen.
+- Die Funktion muss unter [Funktionen](#ein-funktionsschalter) eingeschaltet sein.
+
+**Siehe auch:** [Die Mitgliederseite](#die-mitgliederseite)
+
+<!-- anchor: user.members.page -->
+### Die Mitgliederseite
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten alles über eine Person auf einer Seite haben: wer sie ist, was sie gebucht hat, wie Sie sie erreichen, was sie schuldet und jede Einstellung, die Sie ändern können.
+
+<p><img src="images/user-members-page--top.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) auf ein Mitglied.
+2. Lesen Sie den oberen Teil der Seite: **Gerade jetzt** zeigt die nächsten Buchungen, danach folgen die Kontaktdaten und die finanzielle Lage.
+3. Nutzen Sie die Schaltflächen unter dem Namen für eine schnelle Aktion. Je nach Funktionen und Ihren Rechten sehen Sie einige davon: **Nachrichten**, **E-Mail**, **Leistung hinzufügen** oder **Finanzvereinbarung senden**.
+4. Springen Sie zu **Verwalten**, um die Einstellungen der Person zu ändern, gruppiert als **Mitgliedschaft**, **Buchungsregeln**, **Abrechnung** und **Ausweise & Zugang**.
+
+**Gut zu wissen**
+
+- Jede Einstellungszeile zeigt ihren aktuellen Wert, sodass Sie sie selten öffnen müssen, um die Antwort zu kennen.
+- Ihre eigene Seite ist kürzer: Niemand kann sich selbst Rechte geben.
+- Ist die Seite für Ihren Space nicht eingeschaltet, erscheinen dieselben Aktionen in einer Liste, wenn Sie auf die Zeile tippen.
+
+**Siehe auch:** [Die Aktionen des Mitglieds](#die-aktionen-des-mitglieds) · [Rollen und Mit-Inhaber](#die-rollenmatrix)
+
+<!-- anchor: user.members.actions -->
+### Die Aktionen des Mitglieds
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten wissen, welche Einstellung wo liegt und wer sie ändern darf.
+
+<p><img src="images/user-members-actions--membership.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie eine [Mitgliederseite](#die-mitgliederseite) und gehen Sie zu **Verwalten**.
+2. Wählen Sie unter **Mitgliedschaft** **Mitgliedschaft pausieren** oder **Mitgliedschaft reaktivieren**, legen Sie die [Mit-Inhaberschaft](#mit-inhaberschaft) fest oder wählen Sie **Zum Kiosk-Gerät machen**.
+3. Legen Sie unter **Buchungsregeln** das [Reservierungslimit](#reservierungslimit), die [Gleichzeitigen Reservierungen](#gleichzeitige-reservierungen) und die [USt-Behandlung](#ust-behandlung) fest; der Schalter **Buchungen ganzer Bereiche** erscheint, wenn die Funktion eingeschaltet ist.
+4. Legen Sie unter **Abrechnung** das [Abo](#das-abo-eines-mitglieds), [Wenn die Tage aufgebraucht sind](#wenn-die-tage-aufgebraucht-sind) und die [Preisverhandlung](#preisverhandlung) fest.
+5. Öffnen Sie unter **Ausweise & Zugang** **Badges**, um die Badges der Person auszustellen oder zu widerrufen.
+
+**Gut zu wissen**
+
+- Änderungen an Abrechnung und Mitgliedschaft liegen beim Inhaber. Administratoren legen die Buchungslimits fest.
+- Ihre eigenen Limits oder Ihre eigene Mit-Inhaberschaft können Sie nie ändern.
+- Die meisten dieser Zeilen gibt es nur bei aktiven Mitgliedern.
+
+**Siehe auch:** [Buchungsregeln](#reservierungslimit) · [Gruppe Abrechnung](#das-abo-eines-mitglieds)
+
+<!-- anchor: user.members.pending -->
+### Ausstehende und pausierte Mitglieder
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Neuzugang wartet auf Ihre Entscheidung oder ein Mitglied macht eine Pause, und der Space soll entsprechend damit umgehen.
+
+<p><img src="images/user-members-pending--membership.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie das Mitglied, dessen Zeile **Ausstehend** anzeigt.
+2. Wählen Sie unter **Mitgliedschaft** **Mitgliedschaft bestätigen**, um die Person einzulassen, oder **Mitgliedschaft ablehnen**, um sie abzulehnen.
+3. Um ein aktives Mitglied anzuhalten, öffnen Sie seine Seite und wählen **Mitgliedschaft pausieren**.
+4. Um es zurückzuholen, wählen Sie **Mitgliedschaft reaktivieren**.
+
+**Gut zu wissen**
+
+- Die Entscheidung über ein neues Mitglied kann auch über die Validierungsregeln getroffen werden, wie unter [Validierungsregeln](#validierungsregeln-bereich-für-bereich) beschrieben.
+- Das Pausieren ist Inhabern vorbehalten und behält den gesamten Verlauf.
+- Ein Mitglied, das gegangen ist, zeigt **Ausgetreten** und kann nicht pausiert werden.
+
+**Siehe auch:** [Ein Mitglied einladen](#ein-mitglied-einladen)
+
+<!-- anchor: user.members.subscription -->
+### Das Abo eines Mitglieds
+
+**Zielgruppe:** Inhaber
+
+Sie möchten festlegen, auf welchen Anteil der Tage des Monats ein Mitglied Anspruch hat. Der Anteil bestimmt das Gebührenband, und das Band bestimmt den Monatspreis.
+
+<p><img src="images/user-members-subscription.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Abrechnung** und tippen Sie auf **Abo**.
+2. Wählen Sie **Kein Abo**, eine der angebotenen Stufen oder geben Sie unter **Individuell (1–100)** eine Zahl ein.
+3. Tippen Sie auf eine Stufe, um sie zu übernehmen, oder bei einem individuellen Wert auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die angebotenen Stufen sind die, die Sie unter [Abo-Stufen](#abo-stufen) gewählt haben.
+- Als Inhaber können Sie immer einen individuellen Wert eingeben.
+- **Kein Abo** ist für Besucher, die Mehrfachkarten kaufen. Es lässt sich nicht mit Abrechnung nach Verbrauch kombinieren: Wählen Sie zuerst einen Block oder ein Paket.
+
+**Siehe auch:** [Gebührenbänder](#gebührenbänder) · [Wenn die Tage aufgebraucht sind](#wenn-die-tage-aufgebraucht-sind)
+
+<!-- anchor: user.members.overage-policy -->
+### Wenn die Tage aufgebraucht sind
+
+**Zielgruppe:** Inhaber
+
+Sie möchten entscheiden, was geschieht, wenn ein Mitglied sein ganzes Monatskontingent genutzt hat.
+
+<p><img src="images/user-members-overage-policy.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Abrechnung** und tippen Sie auf **Wenn die Tage aufgebraucht sind**.
+2. Wählen Sie **Weitere Buchung sperren**, **Mehrverbrauch berechnen (nach Verbrauch)** oder **Paketkauf verlangen**.
+
+**Gut zu wissen**
+
+- Die Abrechnung nach Verbrauch ist für ein Mitglied ohne Abo ausgegraut, weil es sonst kostenlos buchen könnte.
+- Der Preis für den Mehrverbrauch stammt aus dem [Gebührenband](#mehrverbrauch); die Pakete stammen aus den [Tagespaketen](#tagespakete).
+
+**Siehe auch:** [Das Abo eines Mitglieds](#das-abo-eines-mitglieds)
+
+<!-- anchor: user.members.reservation-limit -->
+### Reservierungslimit
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten begrenzen, wie viele offene Reservierungen ein Mitglied insgesamt halten kann.
+
+<p><img src="images/user-members-reservation-limit.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Buchungsregeln** und tippen Sie auf **Reservierungslimit**.
+2. Tippen Sie auf **Kein Limit**, eine Vorgabe (1, 2, 3, 5 oder 10) oder geben Sie unter **Individuell (1–100)** eine Zahl ein.
+3. Tippen Sie bei einer eigenen Zahl auf **Speichern**.
+
+**Gut zu wissen**
+
+- Es zählt alle offenen Reservierungen, egal wann sie liegen. Das ist etwas anderes als [gleichzeitige Reservierungen](#gleichzeitige-reservierungen), die Überschneidungen zählen.
+- Die Liste zeigt **max** und die Zahl neben dem Mitglied.
+- Ihr eigenes Limit können Sie nicht festlegen.
+
+**Siehe auch:** [Buchungslimits](#buchungsgrenzen)
+
+<!-- anchor: user.members.simultaneous -->
+### Gleichzeitige Reservierungen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten einem Mitglied erlauben, zeitlich überlappende Buchungen zu halten, zum Beispiel zwei Plätze gleichzeitig.
+
+<p><img src="images/user-members-simultaneous.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Buchungsregeln** und tippen Sie auf **Gleichzeitige Reservierungen**.
+2. Wählen Sie **Standard des Spaces** oder eine Zahl: 1, 2, 3 oder 5.
+
+**Gut zu wissen**
+
+- **Standard des Spaces** folgt der Zahl, die unter [Verfügbarkeit](#buchungsregeln) festgelegt ist; eins bedeutet einen Platz zur Zeit.
+- Es ist nicht dasselbe wie das [Reservierungslimit](#reservierungslimit), das alle offenen Buchungen zählt.
+- Ihre eigene Zahl können Sie nicht festlegen.
+
+**Siehe auch:** [Buchungsrichtlinien](#buchungsregeln)
+
+<!-- anchor: user.members.vat-treatment -->
+### USt-Behandlung
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten der App sagen, wer dieses Mitglied umsatzsteuerlich ist, damit seine Rechnungen die richtige Steuer tragen.
+
+<p><img src="images/user-members-vat-treatment.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Buchungsregeln** und tippen Sie auf **USt-Behandlung**.
+2. Wählen Sie **Automatisch**, **Inlands-USt**, **Steuerschuldnerschaft des Empfängers**, **Außerhalb der EU** oder **Befreiter Käufer**.
+3. Geben Sie bei **Befreiter Käufer** den **Befreiungsgrund (auf der Rechnung gedruckt)** ein.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- **Automatisch** wendet die übliche Regel an: Steuerschuldnerschaft des Empfängers bei einem Unternehmen in einem anderen EU-Staat.
+- Dieselbe Gruppe bietet die **Kundeneigenschaft** (**Unternehmer**, **Verbraucher** oder **Nicht angegeben**), die bestimmt, welche Zahlungsklauseln eine Rechnung druckt. Dafür brauchen Sie das Recht, Rechnungen auszustellen.
+- **Steuerschuldnerschaft des Empfängers**, **Außerhalb der EU** und **Befreiter Käufer** werden erfasst, aber die Rechnungen solcher Mitglieder lassen sich in der App noch nicht ausstellen: Sie werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+- Die Funktion **USt nach Kunde** muss eingeschaltet sein, damit die Zeile USt-Behandlung erscheint, und zwar für Administratoren und Inhaber; die Sätze legen Sie unter [Steuersätze](#die-sätze-festlegen) fest.
+
+**Siehe auch:** [USt-Regime](#steuerregime)
+
+<!-- anchor: user.members.negotiation -->
+### Preisverhandlung
+
+**Zielgruppe:** Abrechnungsadministrator:in · Inhaber
+
+Sie haben mit einem Mitglied einen Preis vereinbart, der von Ihrem Tarif abweicht, und möchten ihn als Vereinbarung erfassen, statt den Tarif zu überschreiben.
+
+<p><img src="images/user-members-negotiation.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Abrechnung** und tippen Sie auf **Preisverhandlung**.
+2. Füllen Sie nur aus, was abweicht: **Auslastung**, **Monatsbeitrag**, **Überschreitung je halben Tag**, **Rabatt auf Zuschläge** oder einen Stückpreis unter **Leistungen und Pakete**.
+3. Fügen Sie bei Bedarf eine **Notiz** hinzu.
+4. Tippen Sie auf **Zur Prüfung vorschlagen**.
+
+**Gut zu wissen**
+
+- Ein leer gelassenes Feld behält den Tarif.
+- Die Vereinbarung wartet auf die Validierung, bevor sie gilt, wie unter [Validierungsregeln](#validierungsregeln-bereich-für-bereich) beschrieben.
+- Sobald sie aktiv ist, sieht das Mitglied sie auf seiner Finanzseite, mit **Wer das sehen kann**. Personen, die Verhandlungen nur ansehen dürfen, sehen sie als **Nur lesen**.
+
+**Siehe auch:** [Gebührenbänder](#gebührenbänder)
+
+<!-- anchor: user.members.co-ownership -->
+### Mit-Inhaberschaft
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass jemand die Inhaberschaft mit Ihnen teilt oder übernimmt, falls Sie gehen.
+
+<p><img src="images/user-members-co-ownership.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Mitgliedschaft** und tippen Sie auf **Mit-Inhaberschaft**.
+2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktive Mit-Inhaberin* oder **Nachfolgerin**.
+3. Um eine Mit-Inhaberin sofort zur vollen Inhaberin zu machen, wählen Sie **Jetzt zur Inhaberin machen**.
+
+**Gut zu wissen**
+
+- Eine aktive Mit-Inhaberin hat sofort Inhaber-Rechte und übernimmt automatisch, wenn Sie gehen.
+- Eine Nachfolgerin wird Inhaberin, wenn sie befördert wird oder der Inhaber geht.
+- Die Zeile zeigt in der Mitgliederliste **Mit-Inhaberin** oder **Nachfolgerin**.
+- Sie setzt voraus, dass die Funktion **Mit-Inhaberinnen** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
+
+**Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix)
+
+<!-- anchor: user.money.billing.fee-bands -->
+### Gebührenbänder
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten Ihre Tarife bepreisen: was ein Monat für jeden Anteil der Tage kostet und was ein zusätzlicher halber Tag kostet.
+
+<p><img src="images/user-money-billing-fee-bands--bands.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Abrechnung](https://fdittgen-png.github.io/deskilo/#/billing) im Menü.
+2. Legen Sie unter **Gebührenbänder** in jeder Zeile **Bis %**, **Monatsbeitrag** und **Mehrverbrauch** fest.
+3. Tippen Sie auf **Band hinzufügen**, um das letzte Band zu teilen, oder auf das Minuszeichen, um eines zu entfernen.
+4. Wählen Sie den **Steuersatz**, mit dem der Tarif besteuert wird. Er wird gespeichert, sobald Sie ihn wählen.
+5. Tippen Sie auf **Speichern**, um die Bänder zu speichern.
+
+**Gut zu wissen**
+
+- Jede Zeile beginnt dort, wo die vorherige endet, und die letzte endet immer bei 100 %. Passen die Bänder nicht zusammen, meldet der Bildschirm „Bänder müssen aufsteigen und bei 100 % enden.“
+- Die Preise sind Bruttopreise: Die Umsatzsteuer ist enthalten, wenn Ihr Space sie erhebt.
+- Beim Entfernen eines Bands wird sein Bereich mit dem davor zusammengeführt.
+
+**Siehe auch:** [Das Abo eines Mitglieds](#das-abo-eines-mitglieds) · [Abo-Stufen](#abo-stufen)
+
+<!-- anchor: user.money.billing.band-to -->
+#### Bis %
+
+Die Obergrenze des Bands, von 1 bis 100. Das nächste Band beginnt dort, wo dieses endet, sodass ein Prozentsatz immer in genau ein Band fällt. Das letzte Band ist fest auf 100 gesetzt.
+
+<!-- anchor: user.money.billing.band-fee -->
+#### Monatsbeitrag
+
+Was ein Monat in diesem Band kostet. Wenn Sie Umsatzsteuer erheben, zeigt die Zeile den enthaltenen Steueranteil.
+
+<!-- anchor: user.money.billing.band-overage -->
+#### Mehrverbrauch
+
+Der Preis für einen halben Tag über dem Kontingent, für Mitglieder, deren Regelung die Abrechnung nach Verbrauch ist.
+
+<!-- anchor: user.money.billing.levels -->
+### Abo-Stufen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten wählen, welche Prozentsätze Sie anbieten, wenn Sie jemandem einen Tarif geben.
+
+<p><img src="images/user-money-billing-fee-bands--levels.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Suchen Sie in der [Abrechnung](https://fdittgen-png.github.io/deskilo/#/billing) die **Abo-Stufen**.
+2. Tippen Sie auf eine Vorgabe (25 %, 50 %, 75 %, 100 %), um sie ein- oder auszuschalten.
+3. Um eigene hinzuzufügen, geben Sie unter **Stufe (1–100)** eine Zahl ein und tippen auf **Stufe hinzufügen**.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die gewählten Stufen sind die, die beim [Abo](#das-abo-eines-mitglieds) eines Mitglieds angeboten werden.
+- Entfernen Sie eine selbst hinzugefügte Stufe mit dem Kreuz auf ihrem Chip.
+
+**Siehe auch:** [Gebührenbänder](#gebührenbänder)
+
+<!-- anchor: user.money.billing.level-value -->
+#### Stufenwert
+
+Ein Prozentsatz von 1 bis 100: der Anteil der Tage des Monats, den der Tarif enthält.
+
+<!-- anchor: user.money.billing.custom-level -->
+#### Verhandelten Wert erlauben
+
+Der Schalter **Individuell verhandelten Wert erlauben** wird zusammen mit den Stufen gespeichert. Als Inhaber können Sie im **Abo** eines Mitglieds immer einen eigenen Prozentsatz eingeben, unabhängig von diesem Schalter.
+
+<!-- anchor: user.money.billing.packages -->
+### Tagespakete
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten Mitgliedern, deren Kontingent aufgebraucht ist, Tagesblöcke verkaufen.
+
+<p><img src="images/user-money-billing-fee-bands--packages.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Suchen Sie in der [Abrechnung](https://fdittgen-png.github.io/deskilo/#/billing) die **Tagespakete**. Jede Zeile zeigt die Tage, den Preis und einen Schalter.
+2. Schalten Sie ein Paket aus, um es nicht mehr zu verkaufen, oder wieder ein, um es erneut zu verkaufen.
+3. Um ein Paket anzulegen, folgen Sie [Neues Paket](#neues-paket).
+
+**Gut zu wissen**
+
+- Mitglieder, deren Regelung **Paketkauf verlangen** lautet, kaufen diese, wenn ihre Tage aufgebraucht sind.
+- Ein bereits verkauftes Paket behält Preis, Tage und Satz. Um sie zu ändern, schalten Sie es aus und fügen ein neues hinzu.
+
+**Siehe auch:** [Wenn die Tage aufgebraucht sind](#wenn-die-tage-aufgebraucht-sind)
+
+<!-- anchor: user.money.billing.package-new -->
+### Neues Paket
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten Ihrer Preisliste einen Tagesblock hinzufügen.
+
+<p><img src="images/user-money-billing-fee-bands--new.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Geben Sie in der [Abrechnung](https://fdittgen-png.github.io/deskilo/#/billing) unter **Neues Paket** den Namen, die Tage und den Preis ein.
+2. Wählen Sie den **Steuersatz**.
+3. Tippen Sie auf **Paket hinzufügen**.
+
+**Gut zu wissen**
+
+- Das Paket ist ab dem Moment, in dem es erscheint, eingeschaltet im Verkauf.
+- Ist die Funktion Mehrfachkarten eingeschaltet, steht darunter ein Editor für **Mehrfachkarten**.
+
+**Siehe auch:** [Tagespakete](#tagespakete)
+
+<!-- anchor: user.money.billing.package-name -->
+#### Paketname
+
+Was Mitglieder beim Kauf sehen und was die Rechnungszeile sagt.
+
+<!-- anchor: user.money.billing.package-days -->
+#### Tage des Pakets
+
+Wie viele Tage das Paket gewährt, einen oder mehr.
+
+<!-- anchor: user.money.billing.package-price -->
+#### Paketpreis
+
+Der Preis des ganzen Pakets, brutto. Die Zeile zeigt die Tage, den Preis und, wenn Umsatzsteuer anfällt, die enthaltene Umsatzsteuer.
+
+<!-- anchor: user.money.billing.schedule -->
+### Rechnungsplan
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten wählen, wann die beiden automatischen Rechnungen hinausgehen: das Abo vor dem Monat und der Verbrauch des Monats danach.
+
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) und die Gruppe **Zahlungen & Abrechnung**.
+2. Tippen Sie auf **Rechnungsplan**.
+3. Schalten Sie unter **Abo, im Voraus** **Automatisch erstellen** ein oder aus und wählen Sie **Tage vor Monatsbeginn**. Die Zeile darunter nennt das sich ergebende Datum.
+4. Schalten Sie unter **Der gerade beendete Monat** **Automatisch erstellen** ein oder aus. Schalten Sie **Auch wenn nichts zu zahlen ist** ein, um ein Dokument mit dem Betrag null zu senden.
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Jede Hälfte braucht ihre Funktion, eingeschaltet unter [Funktionen](#ein-funktionsschalter): „Abo-Rechnungen“ und „Monatsend-Rechnungen“.
+- Die Abo-Rechnung kann daher einen Monat nennen, der noch nicht begonnen hat.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln) · [Gebührenbänder](#gebührenbänder)
+
+<!-- anchor: user.money.services.overview -->
+### Eine Leistung
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie verkaufen etwas, das kein Sitzplatz ist: ein Schließfach, Drucken, Kaffee. Sie legen es einmal an und fügen es mit einem Tipp zum Monat eines Mitglieds hinzu.
+
+<p><img src="images/user-money-services-overview.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Leistungen](https://fdittgen-png.github.io/deskilo/#/services) im Menü.
+2. Tippen Sie auf eine Leistung, um sie zu bearbeiten, oder auf die Plus-Schaltfläche, um eine **Neue Leistung** anzulegen.
+3. Tragen Sie den [Namen](#name-der-leistung), den [Preis](#preis-der-leistung) und, wenn Sie Umsatzsteuer erheben, den **Steuersatz** ein.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Eine Leistung wird nie gelöscht, nur deaktiviert, weil Rechnungen auf sie verweisen.
+- Eine Leistung, die aus einem Bestand stammt, zeigt, wie viele noch übrig sind, oder **Ausverkauft**.
+- Um eine für ein Mitglied zu erfassen, nutzen Sie **Leistung hinzufügen** auf seiner Seite.
+
+**Siehe auch:** [Zubehör](#zubehör) · [Die Mitgliederseite](#die-mitgliederseite)
+
+<!-- anchor: user.money.services.name -->
+#### Name der Leistung
+
+Was die Rechnungszeile sagt. Wenn Sie sie umbenennen, ändern sich nur neue Dokumente.
+
+<!-- anchor: user.money.services.price -->
+#### Preis der Leistung
+
+Der Preis einer Einheit, brutto: Das Mitglied zahlt genau diesen Betrag, und die Umsatzsteuer ist darin enthalten. Der **Steuersatz** bestimmt nur, wie viel davon Steuer ist.
+
+<!-- anchor: user.money.services.active -->
+#### Aktiv
+
+Beim Bearbeiten einer Leistung entscheidet der Schalter **Aktiv**, ob sie noch verkauft werden kann. Schalten Sie ihn bei einer eingestellten Leistung aus; die Liste graut sie aus und schreibt **Inaktiv**.
+
+<!-- anchor: user.money.accessories -->
+### Zubehör
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie vermieten Ausstattung zu einem Platz, etwa einen Monitor oder einen Stuhl, und berechnen für jeden halben Tag einen Aufpreis.
+
+<p><img src="images/user-money-accessories-edit.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Zubehör](https://fdittgen-png.github.io/deskilo/#/accessories) im Menü.
+2. Tippen Sie auf ein Zubehör oder auf die Plus-Schaltfläche für ein **Neues Zubehör**.
+3. Tragen Sie **Bezeichnung** und **Aufpreis pro halbem Tag** ein; wählen Sie den **Steuersatz**, wenn Ihr Space Umsatzsteuer erhebt.
+4. Schalten Sie **Aktiv** aus, um es nicht mehr anzubieten, und tippen Sie dann auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Liste zeigt jeden Aufpreis als Betrag „pro halbem Tag“ oder **Kein Aufpreis**.
+- Wie Leistungen werden Zubehörteile deaktiviert, nie gelöscht.
+- Die Funktion muss unter [Funktionen](#ein-funktionsschalter) eingeschaltet sein.
+
+**Siehe auch:** [Eine Leistung](#eine-leistung)
+
+<!-- anchor: user.money.payments.methods -->
+### Zahlungsarten und Zahlungshinweise
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten, dass Mitglieder wissen, wie sie Sie per Überweisung oder Wallet bezahlen, ohne dass Sie jedes Mal die Angaben schicken müssen.
+
+<p><img src="images/user-money-payments-methods.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [Zahlungshinweise](https://fdittgen-png.github.io/deskilo/#/payment-methods) im Menü.
+2. Füllen Sie aus, was zutrifft: **IBAN**, **Bankname**, **Kontonummer**, die Bankleitzahl, **BIC / SWIFT**.
+3. Fügen Sie die Wallets hinzu, die Sie akzeptieren: **PayPal.me-Link oder -Name**, **Wero-Telefonnummer**, **Lydia-Telefonnummer oder -Nutzername**, **Wisetag oder Wise-Zahlungslink**.
+4. Fügen Sie einen **Hinweis zum Verwendungszweck** hinzu, wenn Mitglieder etwas angeben sollen.
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Mitglieder sehen diese Angaben auf einer unbezahlten Abrechnung. Lassen Sie alles leer, um nichts anzuzeigen.
+- Das Feld für die Bankleitzahl trägt den Namen nach Ihrem Land: Sort Code, Routing Number oder Bankleitzahl.
+- Das ist manuelle Zahlung. Damit Mitglieder in der App per Karte bezahlen können, siehe [Der Zahlungsanbieter](#der-zahlungsanbieter).
+
+**Siehe auch:** [Zugangsdaten des Anbieters](#zugangsdaten-des-anbieters)
+
+<!-- anchor: user.money.payments.provider -->
+### Der Zahlungsanbieter
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass Mitglieder eine offene Rechnung online auf Ihr eigenes Anbieterkonto bezahlen.
+
+<p><img src="images/user-money-payments-provider.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Schalten Sie die Funktion Online-Zahlungen unter [Funktionen](#ein-funktionsschalter) ein.
+2. Öffnen Sie [Online-Zahlungen](https://fdittgen-png.github.io/deskilo/#/payment-config) im Menü.
+3. Suchen Sie den Anbieter, den Sie nutzen: **PayPal**, **Kreditkarte (Stripe)**, **Mollie — iDEAL, Bancontact…** oder **Wero (über Mollie)**.
+4. Tragen Sie seine Schlüssel ein, wie unter [Zugangsdaten des Anbieters](#zugangsdaten-des-anbieters) beschrieben, und tippen Sie auf **Speichern**.
+5. Prüfen Sie, dass auf der Karte **Eingerichtet** steht.
+
+**Gut zu wissen**
+
+- Jeder Anbieter ist eine eigene Karte mit einem Status-Chip, **Eingerichtet** oder **Nicht eingerichtet**.
+- Wero wird über Mollie bezahlt: Tragen Sie auf der Wero-Karte denselben Mollie-API-Schlüssel und dieselbe Rückkehr-URL ein wie auf der Mollie-Karte.
+- Anbieter berechnen eigene Gebühren. Der manuelle Überweisungsweg bleibt kostenlos.
+- **Entfernen** löscht einen Anbieter.
+
+**Siehe auch:** [Zahlungsarten](#zahlungsarten-und-zahlungshinweise)
+
+<!-- anchor: user.money.payments.credentials -->
+#### Zugangsdaten des Anbieters
+
+Die Schlüssel stammen aus dem eigenen Dashboard des Anbieters: **Client-ID**, **Secret**, **Umgebung**, **Webhook-ID** und **Rückkehr-URL** für PayPal; **Secret Key**, **Webhook-Signaturgeheimnis** und **Rückkehr-URL** für Stripe; **API-Schlüssel** und **Rückkehr-URL** für Mollie und Wero. Halten Sie Test- und Live-Schlüssel getrennt: Alle Schlüssel, die Sie eingeben, müssen zum selben Modus gehören.
+
+Geheimnisse werden auf dem Server gespeichert und nie wieder angezeigt. Ein gespeichertes zeigt **Gesetzt — leer lassen zum Behalten**; geben Sie einen neuen Wert ein, um es zu ersetzen.
+
+<!-- anchor: user.money.expenses.schedule -->
+### Geplante Ausgaben
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie bezahlen etwas, das wiederkehrt, etwa Internet oder Strom. Sie beschreiben es einmal, und die App legt Ihnen jeden Fälligkeitstermin vor.
+
+<p><img src="images/user-money-expenses-schedule.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und den Bereich **Zahlungen**.
+2. Tippen Sie auf **Geplante Ausgaben**. Bestehende Pläne zeigen ihren Betrag, ihre Regel, ihren Status und den nächsten Termin.
+3. Tippen Sie auf **Wiederkehrende Ausgabe planen** und füllen Sie das Formular aus, wie unter [Was](#was) und den folgenden Feldern beschrieben.
+4. Tippen Sie auf **Planen**.
+
+**Gut zu wissen**
+
+- Ein neuer Plan ist **Wartet auf Validierung**, bis die Prüfenden ihn bestätigen, danach **Aktiv**. Er kann auch als **Abgelehnt** oder **Beendet** enden.
+- Jeder Fälligkeitstermin wird Ihnen dann vorgelegt, bevor er zählt: Bestätigen Sie ihn zum validierten Betrag oder zu einem anderen Betrag mit einer Erklärung, der erneut validiert wird.
+- Tippen Sie auf **Diesen Plan beenden**, um einen zu stoppen. Beendete stehen unter **Beendet und abgelehnt**.
+- Die Funktion muss unter [Funktionen](#ein-funktionsschalter) eingeschaltet sein.
+
+**Siehe auch:** [Validierungsregeln](#validierungsregeln-bereich-für-bereich)
+
+<!-- anchor: user.money.expenses.what -->
+#### Was
+
+<p><img src="images/user-money-expenses-what.de.b8fa17aa9.jpg" width="280"></p>
+
+Der Name, den jedes Auftreten trägt, zum Beispiel Internet. Schreiben Sie ihn so, wie Sie ihn später lesen möchten. Der **Betrag** ist, was ein Auftreten kostet, und die **Beschreibung** ist ein optionaler Text für die Person, die validiert.
+
+<!-- anchor: user.money.expenses.amount -->
+#### Betrag
+
+Was ein Auftreten kostet, in der Währung Ihres Workspace. Ein anderer Betrag bei der Bestätigung braucht eine Erklärung und wird erneut validiert.
+
+<!-- anchor: user.money.expenses.description -->
+#### Beschreibung
+
+Optionaler Text für die Prüfenden, etwa eine Vertragsnummer oder eine Lieferantenreferenz.
+
+<!-- anchor: user.money.expenses.starts-on -->
+#### Erstes Auftreten
+
+Das Datum, an dem das erste fällig wird. Jedes spätere Datum zählt von hier an.
+
+<!-- anchor: user.money.expenses.every -->
+#### Alle
+
+Das Intervall, eine Zahl und eine Einheit: Tage, Wochen, Monate oder Jahre. Alle 1 Monat bedeutet „monatlich“.
+
+<!-- anchor: user.money.expenses.times -->
+#### Anzahl der Wiederholungen
+
+Das Feld **Wiederholungen (leer = bis zum Enddatum)**: wie viele Auftreten angelegt werden.
+
+<!-- anchor: user.money.expenses.ends-on -->
+#### Bis
+
+**Bis (optional)** ist das Datum, nach dem nichts mehr angelegt wird. Bei Zahl und Datum zusammen endet die Serie mit dem, was zuerst eintritt. Ohne beides läuft sie, bis Sie sie beenden.
+
+<!-- anchor: user.invoicing.overview -->
+## Steuern, Rechnungsstellung und Buchhaltung
+
+Für Inhaber und Abrechnungsadministratoren: wer Sie als Verkäufer sind, wie die Umsatzsteuer behandelt wird, wohin E-Rechnungen gehen, wie Ihre Dokumente aussehen und wie der monatliche Rhythmus aus Ausstellen, Versenden und Nachfassen von Rechnungen abläuft.
+
+> **Achtung** DesKilo druckt, was Sie angeben, und prüft, ob die erforderlichen Angaben vorhanden sind. Es bescheinigt weder Ihre Rechnungen noch Ihre Umsatzsteuerbehandlung noch Ihre Buchführung. Wo ein Abschnitt unten „mit Ihrer Buchhaltung klären“ sagt, tun Sie das bitte.
+
+In diesem Kapitel:
+- Ihre rechtliche Identität und die Angaben, die auf jeder Rechnung stehen
+- Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
+- E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
+- Die PDF-Vorlage der Rechnung und der Berichtseditor
+- Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
+- Zahlungserinnerungen
+- Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
+
+<!-- anchor: user.money.legal.identity -->
+### Ihre rechtliche Identität
+
+**Zielgruppe:** Inhaber
+
+Sie möchten, dass Ihre Rechnungen Sie richtig benennen: wer Sie sind, wie Sie eingetragen sind und wie Sie Umsatzsteuer berechnen.
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) und tippen Sie auf **Rechtliche Identität & E-Rechnung**, oder gehen Sie direkt zu [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity).
+2. Arbeiten Sie von oben nach unten: zuerst das Steuerregime, dann die Kennungen, die Adresse und die **Rechnungsangaben**.
+3. Tippen Sie unten auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Bildschirm zeigt nur die Felder, die Ihr Steuerregime braucht. Ändern Sie das Regime, folgt das Formular.
+- Bereits ausgestellte Rechnungen behalten die Identität, mit der sie signiert wurden. Eine Änderung gilt für die nächsten.
+- Nur Inhaber können diesen Bildschirm öffnen.
+
+**Siehe auch:** [Steuerregime](#steuerregime) · [Art der Organisation](#art-der-organisation) · [E-Rechnung](#die-e-rechnungs-plattform)
+
+<!-- anchor: user.money.legal.seller-kind -->
+### Art der Organisation
+
+**Zielgruppe:** Inhaber
+
+Sie führen entweder ein Unternehmen oder einen gemeinnützigen Verein, und Ihre Rechnungen sollen entsprechend lauten.
+
+<p><img src="images/user-money-legal-seller-kind--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity) und blättern Sie zu den **Rechnungsangaben**.
+2. Wählen Sie **Unternehmen** oder **Verein (gemeinnützig)**.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bei einem Verein ändern sich die Beispieltexte (zum Beispiel eine Eintragung wie RNA statt eines Handelsregisters). Welche Zahlungsklauseln gedruckt werden, hängt von Ihrem Land und von der Eigenschaft des Kunden ab, nicht von der Organisationsform.
+- Ein Verein ohne wirtschaftliche Tätigkeit liegt normalerweise außerhalb der Umsatzsteuer. Der Bildschirm warnt Sie, wenn Sie für einen Verein „steuerfrei“ wählen; klären Sie die richtige Wahl mit Ihrer Buchhaltung.
+
+**Siehe auch:** [Kundeneigenschaft](#standard-kundeneigenschaft) · [Steuerregime](#steuerregime)
+
+<!-- anchor: user.money.legal.customer-capacity -->
+### Standard-Kundeneigenschaft
+
+**Zielgruppe:** Inhaber
+
+Geschäftskunden und Privatpersonen schulden nicht dieselben Zahlungsklauseln. Sie legen den Standard für den Workspace fest.
+
+<p><img src="images/user-money-legal-customer-capacity--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Suchen Sie bei den **Rechnungsangaben** die **Standard-Kundeneigenschaft**.
+2. Wählen Sie **Nicht angegeben**, **Unternehmer** oder **Verbraucher**.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die gesetzlichen Standardwerte für Verzugszinsen, Beitreibungspauschale und Skonto gelten nur für Geschäftskunden eines Space in Frankreich; für andere Länder wird nichts gedruckt, außer was Sie selbst geschrieben haben. Ein Verbraucher erhält die Beitreibungspauschale nie.
+- Die eigene Kundeneigenschaft eines Mitglieds hat Vorrang vor diesem Standard.
+- Jede Rechnung behält die Klauseln, mit denen sie ausgestellt wurde.
+
+**Siehe auch:** [Verzugszinsen](#verzugszinsen) · [Beitreibungspauschale](#beitreibungspauschale)
+
+<!-- anchor: user.money.legal.legal-form -->
+### Rechtsform und Kapital
+
+**Zielgruppe:** Inhaber
+
+Ihre Rechnungen nennen die Rechtsform Ihres Unternehmens und, wo es zutrifft, sein Stammkapital.
+
+<p><img src="images/user-money-legal-legal-form--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Rechtsform & Kapital**.
+2. Geben Sie die Zeile so ein, wie sie gedruckt werden soll, zum Beispiel „GmbH, Stammkapital 25.000 €“ (ein Verein könnte „Eingetragener Verein“ schreiben).
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Text wird so gedruckt, wie Sie ihn eingeben, bis zu 300 Zeichen. Klären Sie den genauen Wortlaut, der für Ihre Rechtsform vorgeschrieben ist, mit Ihrer Buchhaltung.
+
+**Siehe auch:** [Handelsregister](#handelsregister)
+
+<!-- anchor: user.money.legal.registration -->
+### Handelsregister
+
+**Zielgruppe:** Inhaber
+
+Sie zeigen, wo Ihre Organisation eingetragen ist.
+
+<p><img src="images/user-money-legal-registration--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Handelsregister**.
+2. Geben Sie die Eintragungszeile ein, zum Beispiel „Amtsgericht München, HRB 123456“. Ein Verein könnte eine Vereinsregisternummer eingeben, und eine SIRET, falls er eine hat.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Diese Zeile ist eine Angabe, die auf dem Dokument gedruckt wird. Die Kennung, die die E-Rechnung selbst braucht, ist je nach Regime die [Registernummer](#registernummer) oder die [Umsatzsteuer-ID](#umsatzsteuer-id).
+
+**Siehe auch:** [Rechtsform und Kapital](#rechtsform-und-kapital)
+
+<!-- anchor: user.money.legal.payment-terms -->
+### Zahlungsbedingungen
+
+**Zielgruppe:** Inhaber
+
+Sie geben an, wann Rechnungen fällig sind.
+
+<p><img src="images/user-money-legal-payment-terms--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Zahlungsbedingungen**.
+2. Geben Sie Ihre Bedingungen ein, zum Beispiel „Zahlung innerhalb von 30 Tagen ab Rechnungsdatum“.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, drucken Rechnungen „Zahlung bei Erhalt.“
+- Ein Mitglied kann eigene Zahlungsbedingungen haben; diese werden dann auf den Dokumenten dieses Mitglieds gedruckt.
+- Mahnungen lesen diesen Text nicht: Sie zählen ab dem Rechnungsdatum plus **Tage bis zur ersten Erinnerung** in den Mahnregeln. Die Zahlungsbedingungen sind nur das, was das Dokument druckt.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln)
+
+<!-- anchor: user.money.legal.late-penalty -->
+### Verzugszinsen
+
+**Zielgruppe:** Inhaber
+
+Sie geben an, was bei verspäteter Zahlung gilt.
+
+<p><img src="images/user-money-legal-late-penalty--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Verzugszinsen**.
+2. Geben Sie Ihre Klausel ein oder lassen Sie das Feld leer.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, wird nichts für Sie erfunden, außer bei einem Space in Frankreich, der einem Geschäftskunden eine Rechnung stellt: Dann wird der gesetzliche Wortlaut gedruckt (das Dreifache des gesetzlichen Zinssatzes).
+- Klären Sie mit Ihrer Buchhaltung, welche Klausel für Ihr Land gilt.
+
+**Siehe auch:** [Standard-Kundeneigenschaft](#standard-kundeneigenschaft)
+
+<!-- anchor: user.money.legal.recovery -->
+### Beitreibungspauschale
+
+**Zielgruppe:** Inhaber
+
+Sie geben die feste Pauschale für Beitreibungskosten an.
+
+<p><img src="images/user-money-legal-recovery--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Mahnpauschale**.
+2. Geben Sie Ihre Klausel ein oder lassen Sie das Feld leer.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, wird die feste Pauschale von 40 € nur auf Rechnungen eines Space in Frankreich an einen Geschäftskunden gedruckt.
+- Ein Verbraucher erhält diese Angabe nie.
+
+**Siehe auch:** [Standard-Kundeneigenschaft](#standard-kundeneigenschaft)
+
+<!-- anchor: user.money.legal.escompte -->
+### Skonto
+
+**Zielgruppe:** Inhaber
+
+Sie geben an, ob frühes Zahlen einen Nachlass bringt.
+
+<p><img src="images/user-money-legal-escompte--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Skonto**.
+2. Geben Sie die Bedingungen Ihres Nachlasses ein oder lassen Sie das Feld leer.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, drucken Rechnungen eines Space in Frankreich an einen Geschäftskunden „Kein Skonto bei früher Zahlung.“; anderswo entfällt die Zeile, sofern Sie keine schreiben.
+
+**Siehe auch:** [Zahlungsbedingungen](#zahlungsbedingungen)
+
+<!-- anchor: user.money.legal.insurance -->
+### Berufshaftpflicht
+
+**Zielgruppe:** Inhaber
+
+Wenn Ihre Tätigkeit verlangt, dass Sie Ihre Berufshaftpflichtversicherung nennen, wird sie auf Ihren Rechnungen gedruckt.
+
+<p><img src="images/user-money-legal-insurance--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Berufshaftpflicht**.
+2. Geben Sie den Versicherer, die Police und den räumlichen Geltungsbereich so ein, wie sie lauten sollen.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Es gibt keinen Standard: Ein leeres Feld druckt nichts.
+- Ob Sie die Angabe machen müssen, hängt von Ihrer Tätigkeit ab. Fragen Sie Ihre Buchhaltung.
+
+**Siehe auch:** [Besondere Angaben](#besondere-angaben)
+
+<!-- anchor: user.money.legal.special-mentions -->
+### Besondere Angaben
+
+**Zielgruppe:** Inhaber
+
+Eine eigene Zeile, die auf jeder Rechnung stehen muss.
+
+<p><img src="images/user-money-legal-special-mentions--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie bei den **Rechnungsangaben** auf **Besondere Angaben**.
+2. Geben Sie den Text ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ist das Feld leer, wird nichts gedruckt.
+- Unter den Angaben legt das **Adressfenster**, sobald die Funktion **Adressfenster** eingeschaltet ist, fest, wo die Adresse des Empfängers sitzt, damit sie durch ein Fensterkuvert sichtbar ist.
+
+**Siehe auch:** [Die PDF-Vorlage der Rechnung](#die-pdf-vorlage-der-rechnung)
+
+<!-- anchor: user.money.vat.regime -->
+### Steuerregime
+
+**Zielgruppe:** Inhaber
+
+Sie erklären, wie Ihre Organisation umsatzsteuerlich dasteht. Die Wahl entscheidet, welche Nummer Ihre Dokumente brauchen.
+
+<p><img src="images/user-money-vat-regime--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity).
+2. Wählen Sie beim **Steuerregime** **Nicht der Umsatzsteuer unterliegend**, **Umsatzsteuerfrei (Kleinunternehmerregelung)** oder **Umsatzsteuerpflichtig (berechnet USt.)**.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Nicht der Umsatzsteuer unterliegend: Es wird keine Umsatzsteuer-ID gedruckt; die Registernummer identifiziert Sie.
+- Steuerfrei oder steuerpflichtig: Ihre Umsatzsteuer-ID wird verlangt.
+- Die Wahl des Regimes ist eine steuerliche Entscheidung, keine Software-Einstellung. Klären Sie sie mit Ihrer Buchhaltung, bevor Sie Rechnungen ausstellen.
+- In dieser Version stellt die App Rechnungen selbst aus, für Spaces in Frankreich oder Deutschland, an inländische Kunden, unter dem Regime „umsatzsteuerpflichtig“ oder „außerhalb des Anwendungsbereichs“. Rechnungen unter dem Regime „steuerfrei“ werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+
+**Siehe auch:** [Umsatzsteuer-ID](#umsatzsteuer-id) · [Registernummer](#registernummer)
+
+<!-- anchor: user.money.vat.reverse-charge -->
+### Reverse-Charge für EU-Unternehmen
+
+**Zielgruppe:** Inhaber
+
+Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in Rechnung stellen, kann die Steuer vom Kunden geschuldet sein.
+
+<p><img src="images/user-money-vat-reverse-charge--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie **Umsatzsteuerpflichtig (berechnet USt.)** als Regime.
+2. Schalten Sie **Reverse-Charge für EU-Unternehmen** ein oder aus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ein: Die App erkennt ein Unternehmen mit Umsatzsteuer-ID in einem anderen Mitgliedstaat. Heute stellt die App diese Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
+- Aus: Schalten Sie es aus, wenn Sie nie Unternehmen im Ausland in Rechnung stellen.
+- Die Option erscheint nur beim Regime „umsatzsteuerpflichtig“.
+
+**Siehe auch:** [USt-Behandlung eines Mitglieds](#ust-behandlung)
+
+<!-- anchor: user.money.vat.due -->
+### Wann die Umsatzsteuer entsteht
+
+**Zielgruppe:** Inhaber
+
+Sie wählen, ob die Umsatzsteuer beim Ausstellen der Rechnung oder bei Zahlungseingang gezählt wird.
+
+<p><img src="images/user-money-vat-due--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie **Umsatzsteuerpflichtig (berechnet USt.)** als Regime.
+2. Wählen Sie bei **Entstehung der Umsatzsteuer** **Nach vereinbarten Entgelten (Soll)** oder **Nach vereinnahmten Entgelten (Ist)**.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bei Zahlungseingängen meldet ein Zeitraum, was Kunden darin bezahlt haben; bei Rechnungen, was Sie ausgestellt haben.
+- Die Wahl wird auf jeder Rechnung gedruckt und bestimmt die [Umsatzsteuererklärung](#die-periodische-umsatzsteuererklärung).
+- Welche Grundlage für Sie gilt, ist eine steuerliche Frage für Ihre Buchhaltung.
+
+**Siehe auch:** [Die periodische Umsatzsteuererklärung](#die-periodische-umsatzsteuererklärung)
+
+<!-- anchor: user.money.vat.account -->
+### Steuerkonto
+
+**Zielgruppe:** Inhaber
+
+Ihre Buchhaltung möchte die vereinnahmte Umsatzsteuer auf einem bestimmten Konto verbucht haben.
+
+<p><img src="images/user-money-vat-account--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Wählen Sie **Umsatzsteuerpflichtig (berechnet USt.)** als Regime.
+2. Geben Sie Ihre Kontonummer im **Steuerkonto** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Buchhaltungsexport verbucht die vereinnahmte Umsatzsteuer auf diesem Konto. Bleibt das Feld leer, wird 445710 verwendet.
+
+**Siehe auch:** [Buchhaltungsexporte](#buchhaltungsexporte)
+
+<!-- anchor: user.money.vat.number -->
+### Umsatzsteuer-ID
+
+**Zielgruppe:** Inhaber
+
+Ihre Umsatzsteuer-Identifikationsnummer erscheint auf Ihren Rechnungen und E-Rechnungen.
+
+<p><img src="images/user-money-vat-number--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity).
+2. Geben Sie die Nummer bei der **Umsatzsteuer-ID** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Das Feld erscheint bei den Regimen „steuerfrei“ und „steuerpflichtig“. Außerhalb der Umsatzsteuer wird es durch die Registernummer ersetzt.
+- Ihre Mitglieder haben in ihren Einstellungen eine eigene Umsatzsteuer-ID für ihre Dokumente.
+
+**Siehe auch:** [Registernummer](#registernummer)
+
+<!-- anchor: user.money.vat.exemption-reason -->
+### Grund der Steuerbefreiung
+
+**Zielgruppe:** Inhaber
+
+Wenn keine Umsatzsteuer berechnet wird, verlangt das Gesetz meist, dass der Grund auf der Rechnung steht.
+
+<p><img src="images/user-money-vat-exemption-reason--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity).
+2. Geben Sie die Rechtsgrundlage bei **Grund der Steuerbefreiung** ein, zum Beispiel „Kein Ausweis von Umsatzsteuer, da Kleinunternehmer gemäß § 19 UStG“.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die App kann nicht wissen, welche Grundlage für Sie gilt. Lassen Sie sich den genauen Wortlaut von Ihrer Buchhaltung geben.
+- Der Wortlaut wird auf der Rechnung gedruckt. Zurzeit stellt die App unter dem Regime „steuerfrei“ keine Rechnungen selbst aus: Sie werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+
+**Siehe auch:** [Steuerregime](#steuerregime)
+
+<!-- anchor: user.money.legal.legal-id -->
+### Registernummer
+
+**Zielgruppe:** Inhaber
+
+Wenn Sie außerhalb der Umsatzsteuer stehen, identifiziert Sie Ihre Registernummer auf E-Rechnungen.
+
+<p><img src="images/user-money-legal-legal-id--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Stellen Sie das **Steuerregime** auf **Nicht der Umsatzsteuer unterliegend**.
+2. Geben Sie die Nummer bei der **Registernummer** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bei den anderen Regimen wird dieses Feld durch die Umsatzsteuer-ID ersetzt.
+- Ein Verein nutzt meist seine Eintragung (zum Beispiel RNA oder SIRET, falls vergeben).
+
+**Siehe auch:** [Handelsregister](#handelsregister)
+
+<!-- anchor: user.money.legal.address -->
+### Strukturierte Adresse
+
+**Zielgruppe:** Inhaber
+
+Eine E-Rechnung braucht Ihre Adresse in einzelnen Teilen, nicht als ein Textblock.
+
+<p><img src="images/user-money-legal-address--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](https://fdittgen-png.github.io/deskilo/#/legal-identity).
+2. Füllen Sie **Straße**, **Postleitzahl** und **Ort** aus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Straße beginnt mit der Adresse, die schon in den Workspace-Einstellungen steht, sodass Sie sie ergänzen, statt sie neu einzutippen.
+- Ohne die Postanschrift des Workspace können keine Rechnungen ausgestellt werden.
+
+**Siehe auch:** [Adresse im Briefkopf](#adresse-im-briefkopf)
+
+<!-- anchor: user.money.vat.rates -->
+### Die Sätze festlegen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie listen die Umsatzsteuersätze auf, die Ihre Rechnungen verwenden dürfen. Was Mitglieder zahlen, ändert sich nicht: Die Preise enthalten die Umsatzsteuer, und die Steuer wird daraus herausgerechnet.
+
+<p><img src="images/user-money-vat-rates--f.de.b8fa17aa9.jpg" width="320"></p>
+
+**Schritte**
+
+1. Öffnen Sie [USt](https://fdittgen-png.github.io/deskilo/#/vat) (tippen Sie unter **Rechtliche Identität & E-Rechnung** auf **Steuersätze**).
+2. Tippen Sie bei leerer Liste auf **Übliche Sätze übernehmen** (wenn Ihr Land einen Katalog hat), um mit den Sätzen Ihres Landes zu beginnen, oder auf **Satz hinzufügen** und füllen Sie den Namen und **Satz %** aus (0 bis 99,99).
+3. Tippen Sie bei genau einem Satz auf den Stern, um ihn zum Standard zu machen.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die üblichen Sätze sind ein Ausgangspunkt. Welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Buchhaltung.
+- Der Standardsatz wird von Abos und von allem verwendet, was keinen eigenen Satz hat.
+- Ein Satz, den noch eine Rechnung oder eine Leistung verwendet, wird deaktiviert beibehalten statt gelöscht.
+- Ohne Satz zeigen Rechnungen bei Umsatzsteuerpflicht keine Steuer, und der XML-Export bleibt deaktiviert.
+- Dieser Bildschirm setzt die Funktion **USt-Verwaltung** voraus; der Eintrag Steuersätze im Bildschirm der rechtlichen Identität erscheint nur beim Regime „umsatzsteuerpflichtig“.
+
+**Siehe auch:** [Steuergruppen](#steuergruppen) · [Änderung per Gesetz](#einen-satz-per-gesetz-ändern)
 
 <!-- anchor: user.money.vat.groups -->
-### USt-Gruppen (#947)
+### Steuergruppen
 
-Jeder Satz trägt jetzt die **steuerliche Gruppe** dessen, was er besteuert: Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, **Pfand** (in Deutschland mit der Ware besteuert, andernorts außerhalb der USt) oder **verbrauchsteuerpflichtig** (Bier, Spirituosen, Zuckergetränke: Verbrauchsteuer im Preis, Regelsatz). *Einstellungen → USt* zeigt, was in Ihrem Land in welche Gruppe fällt. Ein nicht steuerbarer Verein behält Kategorie O. Ein nicht steuerbares Pfand neben besteuerten Zeilen kann nicht als E-Rechnung gehen (EN 16931): die App sagt es, Sie stellen es gesondert.
-### Ausrollung zwischen den beiden Seiten (#988, #990)
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-Unter **Einstellungen → Governance → Ausrollung** — sichtbar, solange die Funktion *Ausrollungen* an ist, der Raum seinen Zwilling hat und Sie eine Ausroll-Berechtigung halten — wandern Konfiguration und Stammdaten **Entität für Entität** zwischen den beiden Seiten: *Identität & Rechtliches, USt, Tarife, Services, Pakete, Zubehör, Standorte, Buchungsregeln, Freigaberegeln, Rollenmatrix, Mahnregeln, Dokumentvorlagen, Dokumentlinks, Schließtage, Einladungsvorlagen, Funktionen*. Kreuzen Sie eine Entität an, wird angekreuzt, was sie braucht (Services brauchen die USt-Sätze). **Die Richtung ist die Seite, auf der Sie stehen**: von der Entwicklungsseite heißt der Knopf *In die PROD ausrollen*, von der Produktionsseite *In die DEV ausrollen*. Nichts bewegt sich, bevor eine **Vorschau** je Entität sagt, was auf der anderen Seite hinzukäme, sich änderte und wegfiele; eine Vorschau ohne Änderung sagt es und rollt nichts aus. Jede Ausrollung landet im **Journal** — wer, wann, in welche Richtung, welche Entitäten — mit *Zurückrollen* auf der letzten, das zurücklegt, was die andere Seite vorher hatte. Mitglieder, Reservierungen, Konten, Rechnungen, Zahlungen und Ereignisse reisen nie; Zugangsdaten und Nummernzähler auch nicht. Der Grundriss reist weiterhin über die Raumdatei. Seit #1004 werden auch die **Grundrisse** ausgerollt — Ebenen mit Standort, Preisen und Ganzbuchung, Büros, Tische und Plätze mit Stühlen, Ausstattung und Zubehör, Hintergründe und Planbilder — als **Zusammenführung**: was die andere Seite hat, wird ergänzt oder aktualisiert, was nur diese Seite hat, wird gemeldet und behalten, denn ein Platz kann eine Buchung tragen; Badges und Sperren reisen nie, die Bilder werden mitkopiert. Seit #1010 sind auch die **Zahlungshinweise** (der Bankblock einer Rechnung) eine Entität, und das Ausrollen der **Dokumentvorlagen** kopiert deren Bilder — das Logo — mit, wie der Grundriss. Seit #1006 geht eine Ausrollung immer **in die Seite, auf der Sie stehen**: auf der Produktionsseite heißt der Knopf *Aus der DEV holen*, auf der Entwicklungsseite *Aus der PROD holen* — nichts kann versehentlich auf die andere Seite geschoben werden — und nach der Vorschau nennt eine **Bestätigung** die Seite, die geschrieben wird, und die Entitäten, bevor sich etwas bewegt. Es braucht die Berechtigung der Zielrichtung (*In die Produktion ausrollen* auf der Prod, *In die Entwicklung ausrollen* auf der Dev) auf der Seite, auf der Sie stehen. Die Liste ist gruppiert in *Konfiguration*, *Stammdaten* und *Berichte* (die Dokumentvorlagen: jede Berichtsart, Voreinstellung und Sprache).
+Eine Gruppe sagt, um welche Art von Satz es sich handelt, damit die Rechnung ihn in die richtige Kategorie einordnet.
 
-### Umgebungspaare und die Ausroll-Berechtigungen (#987, #989)
+<p><img src="images/user-money-vat-groups.de.b8fa17aa9.jpg" width="320"></p>
 
-Ein Raum wird jetzt **zusammen mit seinem Zwilling** angelegt: Entwicklungs- und Produktionsseite teilen Name, Land, Währung und Zeitzone, Sie besitzen beide, und **Profile** zeigt das Paar als **eine Karte mit zwei Chips, DEV und PROD** — ein Tipp auf einen Chip wechselt die Seite. Ein Raum von vor den Paaren, oder allein angelegt (*Das Paar Entwicklung und Produktion anlegen* abwählen), bekommt seinen Zwilling auf Wunsch unter **Einstellungen → Erweitert → Zwilling anlegen**: die Konfiguration wird einmal kopiert, sonst nichts. Das Paar lässt sich mit der Funktion *Umgebungspaare* abschalten; dann bleiben zwei gewöhnliche Einträge. Seit #1550 wird ein Raum, der **mit** seinem Zwilling angelegt wird, gleich mit eingeschalteter Funktion angelegt — ein Paar zu verlangen und dann zwei Räume zu sehen, war ein Widerspruch der App —, während ein allein angelegter Raum sie aus behält. Über das Paar entscheidet EINE Seite, die Entwicklungsseite: wird die Funktion auf der DEV eingeschaltet, erscheint die Karte, ohne dass eine zweite PROD-Zeile stehen bleibt. Räume, die zwischen dem 11.09.2026 und der Korrektur entstanden sind, werden mit dem nächsten Update repariert.
+**Schritte**
 
-Drei Berechtigungen kommen in die Rollenmatrix: **In die Produktion ausrollen**, **In die Entwicklung ausrollen** und **Den Produktionsraum betreten**. Wer in die Produktion ausrollen darf, darf immer in die Entwicklung ausrollen. Inhaber und Mitinhaber halten alle drei; Admins halten *In die Entwicklung ausrollen* und *Den Produktionsraum betreten*; Mitglieder nichts, bis Sie es geben. Daraus folgen zwei Regeln: **ein Mitglied der Produktionsseite ist immer Mitglied der Entwicklungsseite** (die Mitgliedschaft wird gespiegelt, Rolle und Status eingeschlossen), und **eine Rolle betritt die Produktionsseite nur, solange sie diese Berechtigung hält** — eine Einladung, ein Beitritt oder eine Übernahme in die Prod wird sonst abgelehnt, und die App sagt warum.
+1. Öffnen Sie [USt](https://fdittgen-png.github.io/deskilo/#/vat).
+2. Wählen Sie bei jedem Satz, sobald die Funktion **USt-Gruppen** eingeschaltet ist, eine **Gruppe**: **Regelsatz**, **Zwischensatz**, **Ermäßigt**, **Stark ermäßigt**, **Nullsatz**, **Steuerfrei**, **Nicht steuerbar**, **Pfand (außerhalb der USt)** oder **Verbrauchsteuerpflichtig**.
+3. Füllen Sie bei einer steuerfreien oder nicht steuerbaren Gruppe den erscheinenden **Befreiungsvermerk** aus.
+4. Tippen Sie auf **Speichern**.
 
-### USt wie in einem ERP — datierte Satzversionen, ein Steuerzeitpunkt, der Kunde (#985)
+**Gut zu wissen**
 
-Zwei Funktionen unter *USt-Verwaltung* machen aus den Sätzen, was ein ERP eine **Buchungseinrichtung** nennt.
+- **Was in welche Gruppe fällt** listet Beispiele für Ihr Land auf, nur als Orientierung.
+- Eine Zeile außerhalb der Umsatzsteuer, etwa ein Pfand zur Rückgabe, darf nicht mit besteuerten Zeilen in einem Dokument stehen; stellen Sie sie gesondert aus.
 
-- **USt-Satzversionen.** Ein Satz ist eine **Familie datierter Versionen**. Ändert das Gesetz einen Satz, tippen Sie in der Zeile auf **Änderung per Gesetz**, geben den neuen Prozentsatz und das Wirksamkeitsdatum ein: der alte Wert endet an diesem Datum, der Nachfolger beginnt am selben Tag, und jeder Service, jedes Paket, jedes Zubehör und jedes Abonnement, das auf die alte Zeile zeigte, zeigt weiter darauf — die App durchläuft die Familie und wendet **den am Steuerzeitpunkt geltenden Wert** an. Nichts wird an Ort und Stelle geändert, nichts umgehängt. Der **Steuerzeitpunkt** eines abgerechneten Monats ist sein letzter Tag oder das Rechnungsdatum, wenn der Monat im Voraus berechnet wird (die Anzahlungsregel); eine bei der Buchung gestempelte Belastung (ein Service, ein Paket) behält ihren Stempel. Ein vor der Änderung beendeter Monat wird also zum alten Wert besteuert, auch wenn seine Rechnung danach ausgestellt — oder neu ausgestellt — wird, und nur die Leistungen nach der Änderung tragen den neuen Wert. Der Konfigurationsexport nimmt Versionen und Familie mit.
-- **USt nach Kunde.** Auf der Seite eines Mitglieds sagt **USt-Behandlung**, wer dieser Käufer steuerlich ist: *Automatisch* (die bisherige Regel: Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), *Inlands-USt* unabhängig vom Land (ein Arbeitsplatz ist eine grundstücksbezogene Leistung), *Steuerschuldnerschaft des Empfängers* (Kategorie AE), *Außerhalb der EU* (Kategorie G, mit dem gesetzlichen Hinweis) oder *Befreiter Käufer* mit dem auf der Rechnung gedruckten Grund (Kategorie E). Die Rechnung wendet die Matrix Kunde × Produkt an: eine befreite oder nicht steuerbare Gruppe bleibt, was sie ist; eine steuerbare Gruppe nimmt die Kategorie des Kunden. Die E-Rechnung trägt die Kategorie und ihren VATEX-Code.
+**Siehe auch:** [Die Sätze festlegen](#die-sätze-festlegen)
 
-Der Länderkatalog benennt die **Gruppe** jedes vorgeschlagenen Satzes (normal, mittel, ermäßigt, stark ermäßigt): das Vorbelegen eines Raums ergibt in jedem Land eine Zeile je gesetzlicher Gruppe, und die Änderung per Gesetz ist überall dieselbe.
+<!-- anchor: user.money.vat.change-by-law -->
+### Einen Satz per Gesetz ändern
 
-### Jahresarchiv (#957)
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-*Buchhaltungsexporte → Jahresarchiv* lädt ein einziges Zip herunter, benannt nach Registernummer und Jahr: jede Rechnung als PDF/A-3 mit eingebetteter E-Rechnung, das **Rechnungsregister** (Nummer, Datum, Betrag, Status und das Integritätswort jedes Belegs), den FEC mit den Standardkonten und die Prüfspur. Ein Entwicklungs-Arbeitsbereich erzeugt eine mit DEV markierte Datei.
+Ein Satz ändert sich ab einem bestimmten Datum. Frühere Leistungen behalten den alten Wert; der neue gilt ab diesem Tag.
 
-### Was Sie erwartet (#1247)
+<p><img src="images/user-money-vat-change-by-law.de.b8fa17aa9.jpg" width="320"></p>
 
-*Was Sie erwartet* ist ein Bildschirm, der eine einzige Frage beantwortet: **Wartet etwas auf mich?** Schalten Sie die Funktion **Entscheidungsfläche** ein, und er erscheint unter `/attention`. Jede Zeile ist eine Entscheidung — die Ereignisse, die auf Ihre Antwort warten, die Personen, die auf Aufnahme warten, der Monat, in dem Mitglieder Abrechenbares und noch keine Rechnung haben — mit dem Gegenstand, der Entscheidung und der Wartezeit. Mehrere Mitglieder, die auf dieselbe Entscheidung warten, sind **eine Zeile**, nicht je eine: *für 7 Mitglieder abrechnen*.
+**Schritte**
 
-Die Reihenfolge ist nicht die des Eintreffens, sondern das, **was die Verzögerung kostet**. Zuerst das Geld (eine Zahlung, die niemand bestätigt, ist stehende Liquidität), dann eine Person, die auf Sie wartet, dann ein Monat, der abgeschlossen werden muss, dann die Instanz selbst, dann eine Konfiguration, die nicht tut, was sie ankündigt.
+1. Öffnen Sie [USt](https://fdittgen-png.github.io/deskilo/#/vat) und stellen Sie sicher, dass der Satz gespeichert ist.
+2. Tippen Sie beim Satz auf die Schaltfläche **Änderung per Gesetz**.
+3. Geben Sie **Neuer Satz %** und **Wirksam ab (JJJJ-MM-TT)** ein.
+4. Tippen Sie im Dialog auf **Speichern**, dann auf dem Bildschirm auf **Speichern**.
 
-Was **nicht** darauf steht, ist ebenso gewollt. Belegung, Salden und ungelesene Nachrichten sind Zahlen, keine Entscheidungen: auf eine Zahl kann niemand handeln, und jede gehört dem Bildschirm, der sie führt. Eine Fläche, die alles ordnet, ordnet nichts. Wartet nichts, sagt der Bildschirm es — *Nichts wartet auf Sie* — statt eine leere Liste zu zeigen, die Sie deuten müssen.
+**Gut zu wissen**
 
-Die Funktion bleibt aus, bis Sie sie verlangen, und sie steht **neben** der Glocke, nicht an ihrer Stelle.
+- Der alte Satz endet an diesem Datum und ein neuer beginnt; der Stern wandert mit, wenn es der Standard war.
+- Bereits Ausgestelltes wird nicht umgehängt.
 
-**Analysen lesen (#1982).** Die Auslastung ist reservierte Sitzzeit geteilt durch angebotene Sitzzeit, nicht gemessene Anwesenheit. Vergangene, laufende und zukünftige Zeiträume erklären die Bedeutung ihrer Zahlen; der Berechnungszeitpunkt verwendet die Workspace-Zeit. Laufende Zeiträume enthalten zukünftige Tage. Zukünftige Buchungen sind keine Nachfrageprognose; vergangene Zeiträume werden aus heutigen Daten neu berechnet, nicht mit dem damaligen Wissensstand. Unvollständige oder veraltete Zeiträume liefern keine Leistungsänderung. Daten aktualisieren behält die Auswahl. Nicht reservierte und gesperrte Sitzstunden bleiben getrennt. Fehlende oder ungültige Daten sind nicht verfügbar, niemals null.
+**Siehe auch:** [Die Sätze festlegen](#die-sätze-festlegen)
 
-Der Finanzstatus erklärt seine Zwischensumme: Rechnungsbeträge abzüglich Gutschriften, Erstattungen und Guthaben. Sie ist weder Gewinn noch Bankguthaben. Zugeordnete und eingegangene Zahlungen überschneiden sich; sie dürfen nicht addiert werden.
+<!-- anchor: user.money.vat.declaration -->
+### Die periodische Umsatzsteuererklärung
 
-Im Web-BI wählt **Analysen** je nach Berechtigung und aktivierten Funktionen Kapazität, fakturierte und vereinnahmte Beträge. Fakturierte Beträge folgen den Rechnungsmonaten; vereinnahmte Beträge dem Monat der Zahlungszuordnung zur Rechnung, nicht dem Datum eines Kontoauszugs. Gutschriften erscheinen gesondert. **Ansicht speichern** behält die Auswahl privat oder mit entsprechenden Rechten für das Team. Eine Standardansicht lädt aktuelle Daten mit den aktuellen Berechtigungen; sie speichert keine Kopie der Zahlen.
+**Zielgruppe:** Inhaber
+
+Sie möchten eine fertige Zusammenfassung der Umsatzsteuer eines Zeitraums, um sie beim Finanzamt einzureichen oder Ihrer Buchhaltung zu übergeben.
+
+<p><img src="images/user-money-vat-declaration.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [Umsatzsteuererklärung](https://fdittgen-png.github.io/deskilo/#/vat-declarations).
+2. Wählen Sie den **Zeitraum** und tippen Sie auf **Erstellen**.
+3. Öffnen Sie das Ergebnis mit **PDF** oder **XML-Export**, oder sehen Sie sich den **MwSt-Bericht (PDF)** und den **MwSt-Bericht (CSV)** an.
+4. Wenn Sie sie selbst eingereicht haben, tippen Sie auf **Als abgegeben markieren**.
+
+**Gut zu wissen**
+
+- Es gibt sie nur beim Regime „umsatzsteuerpflichtig“. Der Hinweis oben sagt, ob der Zeitraum Rechnungen oder Zahlungseingänge zählt.
+- Sie ist eine Einreichungshilfe, erzeugt aus den im Zeitraum ausgestellten Rechnungen, keine Steuerberatung. Prüfen Sie sie vor dem Einreichen anhand Ihrer Buchhaltung.
+- Eine abgegebene Erklärung lässt sich nicht mehr ändern.
+- Ist unter [E-Rechnung](#die-e-rechnungs-plattform) eine Plattform eingerichtet, kann eine Schaltfläche **Übermitteln** sie senden.
+
+**Siehe auch:** [Wann die Umsatzsteuer entsteht](#wann-die-umsatzsteuer-entsteht) · [Buchhaltungsexporte](#buchhaltungsexporte)
+
+<!-- anchor: user.money.einvoice.overview -->
+### Die E-Rechnungs-Plattform
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden soll.
+
+<p><img src="images/user-money-einvoice-overview--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config) (auch erreichbar über **Rechtliche Identität & E-Rechnung**).
+2. Füllen Sie **Upload-URL** und **Token oder Zugangsdaten** aus, dazu die beiden optionalen Felder, wenn Ihre Plattform sie verlangt.
+3. Tippen Sie auf **Speichern**. **Plattform entfernen** löscht die Einstellungen.
+
+**Gut zu wissen**
+
+- Jede Plattform, die einen Upload mit einem Token annimmt, funktioniert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform.
+- Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
+- Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
+
+**Siehe auch:** [Eine E-Rechnung senden](#eine-e-rechnung-senden) · [Rechtliche Identität](#ihre-rechtliche-identität)
+
+<!-- anchor: user.money.einvoice.endpoint -->
+### Upload-URL
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Die Adresse, unter der Ihre Plattform Rechnungen entgegennimmt.
+
+<p><img src="images/user-money-einvoice-endpoint--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Fügen Sie die Adresse bei **Upload-URL** ein, genau so, wie Ihre Plattform sie dokumentiert.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Sie stammt aus der Dokumentation Ihrer Plattform oder von Ihrem Anbieter.
+
+**Siehe auch:** [Token oder Zugangsdaten](#token-oder-zugangsdaten)
+
+<!-- anchor: user.money.einvoice.token -->
+### Token oder Zugangsdaten
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Das Geheimnis, das der Plattform beweist, dass der Upload von Ihnen stammt.
+
+<p><img src="images/user-money-einvoice-token--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Fügen Sie den Schlüssel bei **Token oder Zugangsdaten** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Nach dem Speichern steht auf dem Bildschirm „Ein Token ist gespeichert“. Geben Sie nur dann einen neuen ein, wenn Sie ihn ersetzen wollen.
+- Er wird auf dem Server aufbewahrt und kommt nie wieder heraus.
+
+**Siehe auch:** [Auth-Header](#auth-header)
+
+<!-- anchor: user.money.einvoice.auth-header -->
+### Auth-Header
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Der Name des Headers, der den Token trägt.
+
+<p><img src="images/user-money-einvoice-auth-header--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Erwartet Ihre Plattform einen anderen Header als den üblichen, geben Sie seinen Namen bei **Auth-Header (Standard Authorization)** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, wird `Authorization` verwendet.
+
+**Siehe auch:** [Feldname der Datei](#feldname-der-datei)
+
+<!-- anchor: user.money.einvoice.file-field -->
+### Feldname der Datei
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Der Name des Formularfelds, das die Rechnungsdatei trägt.
+
+<p><img src="images/user-money-einvoice-file-field--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Erwartet Ihre Plattform einen anderen Feldnamen, geben Sie ihn bei **Feldname der Datei (Standard file)** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Bleibt das Feld leer, wird `file` verwendet.
+
+**Siehe auch:** [Upload-URL](#upload-url)
+
+<!-- anchor: user.money.einvoice.customer-delivery -->
+### Zustelldienst des Kunden
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ihr Kunde erhält seine Rechnungen vielleicht nicht über eine staatliche Plattform, sondern über seinen eigenen Peppol-Zugangspunkt, ein Portal oder einen vereinbarten Upload-Dienst.
+
+<p><img src="images/user-money-einvoice-customer-delivery--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Füllen Sie beim **Zustelldienst des Kunden** dieselben vier Felder aus wie oben.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Er ist von der staatlichen Plattform getrennt. Beide können eingerichtet sein, und jede Rechnung bietet beide Sendewege an.
+
+**Siehe auch:** [Eine E-Rechnung senden](#eine-e-rechnung-senden)
+
+<!-- anchor: user.money.einvoice.uat -->
+### UAT-Endpunkt und -Token
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten üben, bevor Sie echte Rechnungen senden.
+
+<p><img src="images/user-money-einvoice-uat--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Füllen Sie unter **Testumgebungen (UAT / Dev)** **UAT-Upload-URL** und **UAT-Token oder Zugangsdaten** aus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Wahl der Umgebung erscheint beim Senden nur, solange der Entwicklermodus eingeschaltet ist.
+- Ein Testversand wird als Testversand protokolliert.
+
+**Siehe auch:** [Dev-Endpunkt und -Token](#dev-endpunkt-und--token)
+
+<!-- anchor: user.money.einvoice.dev -->
+### Dev-Endpunkt und -Token
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ein zweiter Test-Endpunkt, für die Entwicklung.
+
+<p><img src="images/user-money-einvoice-dev--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [E-Rechnungs-Plattform](https://fdittgen-png.github.io/deskilo/#/einvoice-config).
+2. Füllen Sie unter **Testumgebungen (UAT / Dev)** **Dev-Upload-URL** und **Dev-Token oder Zugangsdaten** aus.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Es gelten dieselben Regeln wie bei UAT. Der echte Versand geht immer an den Produktiv-Endpunkt.
+
+**Siehe auch:** [UAT-Endpunkt und -Token](#uat-endpunkt-und--token)
+
+<!-- anchor: user.money.einvoice.send -->
+### Eine E-Rechnung senden
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten eine ausgestellte Rechnung in ihrer maschinenlesbaren Form übergeben.
+
+**Schritte**
+
+1. Öffnen Sie eine Rechnung unter [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) und tippen Sie auf **E-Rechnung (XML)**.
+2. Lesen Sie die Prüfung oben im Blatt: Sie sagt, ob die Datei bereit ist oder was fehlt.
+3. Tippen Sie auf **An die staatliche Plattform senden**, **An den Dienst des Kunden senden**, oder laden Sie die Datei herunter bzw. teilen Sie sie (**Factur-X (PDF) herunterladen** trägt das XML im PDF).
+
+**Gut zu wissen**
+
+- Fehlt etwas, listet das Blatt es auf. **Rechtliche Identität vervollständigen** führt Sie zum Bildschirm, der es behebt.
+- Eine Rechnung, die signiert wurde, bevor Sie Ihre Identität vervollständigt haben, behält, womit sie ausgestellt wurde. Markieren Sie sie als fehlerhaft und stellen Sie eine Ersatzrechnung aus, wenn es darauf ankommt.
+- Welchen Weg ein Kunde nutzen muss, hängt von Ihrem Land und vom Kunden ab. Klären Sie das mit Ihrer Buchhaltung.
+
+**Siehe auch:** [Die E-Rechnungs-Plattform](#die-e-rechnungs-plattform) · [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung)
+
+<!-- anchor: user.money.reports.invoice-template -->
+### Die PDF-Vorlage der Rechnung
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten, dass Ihre Rechnungen nach Ihnen aussehen: Logo, Layout, Wortlaut.
+
+<p><img src="images/user-money-reports-invoice-template.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Berichte](https://fdittgen-png.github.io/deskilo/#/reports?section=templates) und den Reiter **Vorlagen**.
+2. Tippen Sie auf **Berichtseditor**.
+
+**Gut zu wissen**
+
+- Die Vorlage ändert nur das PDF. Das XML der E-Rechnung wird nie angetastet.
+- Jede Person mit der Berechtigung, Dokumente zu gestalten, kann das tun.
+- Eine Vorlage, die sich nicht darstellen lässt, blockiert nie ein Dokument: Das eingebaute Layout übernimmt.
+
+**Siehe auch:** [Der Berichtseditor](#der-berichtseditor)
+
+<!-- anchor: user.money.reports.editor -->
+### Der Berichtseditor
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie gestalten ein Dokument auf einer Seite, statt Code zu schreiben.
+
+<p><img src="images/user-money-reports-editor.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie den [Berichtseditor](https://fdittgen-png.github.io/deskilo/#/report-editor).
+2. Wählen Sie das Dokument mit den Chips (Rechnung, Proforma, Abrechnung, Mahnungen und die anderen Berichte).
+3. Tippen Sie im **Entwurf** auf eine Zeile, um sie zu bearbeiten, fügen Sie Zeilen hinzu oder ziehen Sie zum Umsortieren. Tippen Sie auf **Vorschau**, um es mit Ihren Daten zu sehen.
+4. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Der Modus **Markup** bearbeitet dieselben Bänder als Text.
+- **Bild einfügen** setzt ein Logo, einen Stempel oder eine Unterschrift aus der Bildbibliothek ein.
+- Die **Schnellvorschau** stellt sofort mit Ihrer neuesten Rechnung dar, oder mit Beispieldaten, wenn es keine gibt. **Auf Standard zurücksetzen** bringt das eingebaute Layout zurück.
+- **Diese Vorlage exportieren** und **Vorlage importieren** bringen einen Entwurf als Datei hinein und heraus. Die Option **Positioniertes Layout (XML)** ist für Dokumente gedacht, die zu einem Fensterkuvert oder einem nationalen Formular passen müssen.
+- Beim Verlassen mit ungespeicherter Arbeit werden Sie vorher gefragt.
+
+**Siehe auch:** [Vorlagen und Voreinstellungen](#fertige-vorlagen) · [Sprachen](#ein-entwurf-pro-sprache)
+
+<!-- anchor: user.money.reports.presets -->
+### Fertige Vorlagen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie beginnen mit einem fertigen Entwurf und ändern, was Sie möchten.
+
+<p><img src="images/user-money-reports-presets.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie den [Berichtseditor](https://fdittgen-png.github.io/deskilo/#/report-editor) und wählen Sie ein Dokument.
+2. Tippen Sie auf **Vorlagen** und wählen Sie **Professionell**, **Klassisch**, **Einfach**, **Ausführlich** oder **Formeller Brief**.
+3. Bestätigen Sie das Ersetzen, wenn die App fragt, bearbeiten Sie dann und **Speichern** Sie.
+
+**Gut zu wissen**
+
+- Das Ersetzen eines Layouts lässt sich mit **Rückgängig** zurücknehmen.
+- Die strukturellen Berichte (Kontenplan, Badges, QR-Karten) haben ein mitgeliefertes Layout.
+- Rechnungsvorlagen tragen bereits Ihre rechtlichen Angaben. Sie drucken weiterhin nur, was Sie unter den [Rechnungsangaben](#ihre-rechtliche-identität) eingegeben haben.
+
+**Siehe auch:** [Der Berichtseditor](#der-berichtseditor)
+
+<!-- anchor: user.money.reports.languages -->
+### Ein Entwurf pro Sprache
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ihre Mitglieder lesen ihre Dokumente in ihrer eigenen Sprache.
+
+<p><img src="images/user-money-reports-languages--f.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie den [Berichtseditor](https://fdittgen-png.github.io/deskilo/#/report-editor).
+2. Wählen Sie unter dem Dokument **Standard (alle Sprachen)** oder eine der Sprachen EN, FR, DE, ES, IT.
+3. Bearbeiten Sie die Bänder für diese Sprache und **Speichern** Sie. **Für diese Sprache den Standard verwenden** entfernt einen eigenen Entwurf.
+
+**Gut zu wissen**
+
+- Ein Punkt an einer Sprache bedeutet, dass sie einen eigenen Entwurf hat; sonst erbt sie den Standard.
+- Das Dokument eines Mitglieds wird in dessen Sprache gedruckt, wenn dafür ein Entwurf existiert, sonst in der Standardsprache des Workspace.
+
+**Siehe auch:** [Sprache des Workspace](#sprache-des-arbeitsbereichs)
+
+<!-- anchor: user.invoicing.hub -->
+### Der Bildschirm Rechnungsstellung
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie sehen auf einen Blick, was auszustellen, was einzuziehen und was abgeschlossen ist.
+
+<p><img src="images/user-invoicing-hub.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
+2. Lesen Sie den Streifen: **Auszustellen**, **Einzuziehen**, **Zu bestätigen**, **Abgeschlossen**.
+3. Arbeiten Sie in den drei Reitern: **Zu berechnen** (Mitglieder mit erfasster Nutzung, noch nicht abgerechnet), **Offen** (ausgestellt, unbezahlt) und **Archiv** (bezahlt oder abgeschlossen).
+4. Tippen Sie auf das Werkzeugsymbol für die anderen Werkzeuge.
+
+**Gut zu wissen**
+
+- Sie sehen die Rechnungen des gesamten Workspace. Ihre eigenen stehen in Ihren Finanzen, unter **Meine Finanzen**.
+- Rechnungen werden nie bearbeitet oder gelöscht: Eine falsche wird als fehlerhaft markiert und ersetzt.
+- Der Eintrag **So funktioniert die Fakturierung** erklärt, wer bei welchem Schritt am Zug ist.
+
+**Siehe auch:** [Neue Rechnung](#eine-rechnung-ausstellen) · [Offene Rechnungen](#offene-rechnungen-nachverfolgen-und-begleichen)
+
+<!-- anchor: user.invoicing.new-invoice -->
+### Eine Rechnung ausstellen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie stellen einem Mitglied einen Monat in Rechnung.
+
+<p><img src="images/user-invoicing-new-invoice.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Neue Rechnung** oder in einer Zeile von **Zu berechnen** auf **Ausstellen**.
+2. Wählen Sie das **Mitglied** und den Monat. Die Positionen stammen aus dem Erfassten.
+3. Schalten Sie **Detaillierten Anhang aufnehmen (Check-ins, Services, Zahlungen)** ein, wenn Sie ihn wünschen.
+4. Tippen Sie auf **Rechnung ausstellen**. Unter **Zu berechnen** stellt **Alle berechnen** jede Zeile aus.
+
+**Gut zu wissen**
+
+- Rechnungen werden aus erfassten Daten abgeleitet und lassen sich nicht von Hand zusammenstellen. Die letzte Zeile ist der **Saldo**.
+- Ein Monat kann pro Mitglied nur einmal abgerechnet werden, und bei einem laufenden Monat werden Sie gewarnt, dass sich Positionen ändern können.
+- Fehlt eine erforderliche Angabe, listet **Vor der Ausstellung bitte ergänzen** sie auf (Adresse, Umsatzsteuer-ID, Befreiungsgrundlage, Steuersatz; auch das Land des Space, das Frankreich oder Deutschland sein muss).
+- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, für inländische Kunden. Grenzüberschreitende Rechnungen, Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+- Eine ausgestellte Rechnung ist signiert und unveränderlich.
+
+**Siehe auch:** [Monatsabschluss-Assistent](#der-monatsabschluss-assistent)
+
+<!-- anchor: user.invoicing.open -->
+### Offene Rechnungen nachverfolgen und begleichen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie verfolgen, was unbezahlt ist, und schließen es sauber ab.
+
+<p><img src="images/user-invoicing-open.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) den Reiter **Offen** und tippen Sie auf eine Rechnung.
+2. Nutzen Sie die angebotenen Aktionen: **Zahlungserinnerung senden**, **Als bezahlt markieren** (eine erfasste Zahlung zuordnen), **Restbetrag stornieren**, **Als fehlerhaft markieren** oder das PDF teilen.
+3. Bezahlte Rechnungen wandern ins **Archiv**.
+
+**Gut zu wissen**
+
+- Eine Rechnung gilt als bezahlt, sobald ihr eine echte Zahlung zugeordnet ist. Eine Differenz braucht eine Notiz oder, bei einem Überschuss, eine Gutschrift.
+- Das Stornieren eines Restbetrags läuft über die Validierung.
+- **Als fehlerhaft markieren** lässt sich nicht rückgängig machen. Tun Sie es vor der Zahlung, nie danach.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln) · [Rechnungen zusammenfassen](#rechnungen-zu-einer-zusammenfassen)
+
+<!-- anchor: user.invoicing.wizard -->
+### Der Monatsabschluss-Assistent
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ein geführter Weg für die Geldroutine: ausstellen, senden, mahnen, Zahlungen erfassen, zuordnen und abschließen.
+
+<p><img src="images/user-invoicing-wizard.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Monatsabschluss-Assistent** (oder öffnen Sie den [Assistenten zur Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoicing/wizard)).
+2. Wählen Sie den Lauf: **Monatsanfang** (Abos, die Mitglieder im Voraus für den kommenden Monat zahlen) oder **Monatsende** (Nutzung, Verbrauch und Zusatzkosten des gerade beendeten Monats). Das Datum schlägt einen vor.
+3. Folgen Sie den Schritten: **Prüfen**, **Ausstellen**, **Senden**, **Mahnen**, **Zahlungen**, **Zuordnen**, **Abschließen**, **Zusammenfassung**.
+4. Tippen Sie bei jedem Schritt auf **Weiter** und am Ende auf **Fertig**.
+
+**Gut zu wissen**
+
+- Sie können ein Mitglied abwählen, um es aus einem Stapel auszunehmen; bereits erledigte Mitglieder erscheinen als erledigt.
+- Die **Zusammenfassung** listet auf, was der Lauf getan hat und was noch offen ist und wer am Zug ist.
+- Ein Schritt, in dem nichts zu tun ist, sagt das.
+
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung) · [Rechnungen zusammenfassen](#rechnungen-zu-einer-zusammenfassen)
+
+<!-- anchor: user.invoicing.settlement -->
+### Rechnungen zu einer zusammenfassen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ein Mitglied hat mehrere offene Rechnungen und soll nur eine bezahlen.
+
+<p><img src="images/user-invoicing-settlement.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Zu einer Rechnung zusammenfassen**.
+2. Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.
+3. Bestätigen Sie. Sie werden gefragt, ob die zusammengefassten Rechnungen angehängt werden sollen.
+
+**Gut zu wissen**
+
+- Die neue Rechnung ist, was geschuldet und angemahnt wird. Die Originale bleiben dahinter lesbar.
+- Zeilen und Umsatzsteuer werden übernommen; die Umsatzsteuererklärung zählt die Originale nur einmal.
+
+**Siehe auch:** [Offene Rechnungen](#offene-rechnungen-nachverfolgen-und-begleichen)
+
+<!-- anchor: user.invoicing.shared-expense -->
+### Eine gemeinsame Ausgabe verteilen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ein Kostenpunkt, den die Gemeinschaft teilt, wird auf die Mitglieder aufgeteilt.
+
+<p><img src="images/user-invoicing-shared-expense.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Ausgabe verteilen**.
+2. Beschreiben Sie **Die Ausgabe** und wählen Sie dann **Verteilen nach**: **Gleich**, **Abo**, **Nutzung** oder **Eigener Schlüssel**.
+3. Prüfen Sie die **Anteile**, wählen Sie jemanden ab, um ihn **Ausnehmen**, und tippen Sie auf **Anteile buchen**.
+
+**Gut zu wissen**
+
+- Sobald sie gebucht sind (nach der Freigabe, falls eine Regel sie verlangt), landen die Anteile als Zeilen auf der nächsten Nutzungsrechnung jedes Mitglieds.
+- **Umkehrung — als Gutschriften zurückgeben** gibt das Geld zurück.
+- **Diese Regel merken** schlägt die angepasste Regel im nächsten Monat erneut vor.
+
+**Siehe auch:** [Der Monatsabschluss-Assistent](#der-monatsabschluss-assistent)
+
+<!-- anchor: user.money.reminders.rules -->
+### Mahnregeln
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie entscheiden, wann und wie oft eine überfällige Rechnung angemahnt wird.
+
+<p><img src="images/user-money-reminders-rules.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Mahnregeln**.
+2. Legen Sie die **Anzahl der Mahnstufen**, die **Tage bis zur ersten Erinnerung** und die **Tage zwischen den Mahnungen** fest.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Mahnungen drucken die Zahlungsangaben, die Sie eingerichtet haben.
+- Eine Mahnung wird zur Rechnung vermerkt und erscheint als Badge *Erinnert*.
+
+**Siehe auch:** [Automatische Mahnungen](#automatische-mahnungen) · [Zahlungsbedingungen](#zahlungsbedingungen)
+
+<!-- anchor: user.money.reminders.automatic -->
+### Automatische Mahnungen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten, dass Mahnungen von selbst hinausgehen.
+
+<p><img src="images/user-money-reminders-automatic.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die **Mahnregeln** in den Werkzeugen der Rechnungsstellung.
+2. Schalten Sie **Automatische Mahnungen** ein.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Einmal am Tag erhalten Rechnungen, die ihre festgehaltene Zahlungsfrist überschritten haben, ihre nächste Stufe, über den noch offenen Betrag.
+- Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
+- Aus: Sie senden jede Mahnung selbst.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln)
+
+<!-- anchor: user.invoicing.register -->
+### Das Rechnungsregister
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Alle Rechnungen in einer sortierbaren Liste.
+
+<p><img src="images/user-invoicing-register.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie das [Rechnungsregister](https://fdittgen-png.github.io/deskilo/#/invoice-register).
+2. Wählen Sie das **Jahr** oder **Alle Jahre**.
+3. Sortieren Sie nach **Datum**, **Bezeichnung** oder **Betrag**; die Summe steht unten.
+
+**Gut zu wissen**
+
+- Mitglieder sehen ihre eigenen; wer Rechnungen ausstellt, sieht die des Workspace.
+- Der Buchhaltungsexport beginnt hier.
+
+**Siehe auch:** [Buchhaltungsexporte](#buchhaltungsexporte)
+
+<!-- anchor: user.invoicing.accounting-export -->
+### Buchhaltungsexporte
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie übergeben Ihrer Buchhaltung die Rechnungen und Zahlungen des Jahres.
+
+<p><img src="images/user-invoicing-accounting-export.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie das [Rechnungsregister](https://fdittgen-png.github.io/deskilo/#/invoice-register) und tippen Sie auf **Buchhaltungsexport**.
+2. Wählen Sie im **Buchhaltungs-Export** ein Format, etwa **FEC (Frankreich, im Prüfungsfall verlangt)**, **SAF-T (XML, international)**, **Buchhaltungs-CSV**, **Prüfpfad** oder **Jahresarchiv (zip)**. Die Liste hängt von Ihrem Land ab; einige Länder fügen eigene hinzu, etwa **DATEV (Buchungsstapel)**.
+3. Lesen Sie unter **Vor dem Speichern** die Prüfung und tippen Sie dann auf **Datei und Bericht speichern**.
+
+**Gut zu wissen**
+
+- Jedes Format sagt, was es beansprucht. „Zum Import und zur Prüfung durch Ihre Buchhaltung – keine Einreichung“ ist keine Steuererklärung.
+- DesKilo führt kein doppeltes Hauptbuch: Die Dateien werden aus Rechnungen und Zahlungen neu aufgebaut, und Ihre Buchhaltung vervollständigt sie.
+- Eine Datei ist gesperrt, bis Probleme in der Quelle behoben sind.
+- Bei einigen Formaten steht der Hinweis, dass DesKilo in Ihrem Land keine zertifizierte Software ist.
+
+**Siehe auch:** [Steuerkonto](#steuerkonto) · [Das Rechnungsregister](#das-rechnungsregister)
+
+<!-- anchor: user.invoicing.bi -->
+### Business-Analysen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie sehen sich an, wie der Workspace abschneidet.
+
+**Schritte**
+
+1. Öffnen Sie die [Business-Analysen](https://fdittgen-png.github.io/deskilo/#/bi) oder im Menü **Reporting**.
+2. Wählen Sie die **Zeitraumlänge** (**Monat**, **Quartal**, **Jahr**), einen Vergleich und, wo angeboten, eine Gruppierung.
+3. Lesen Sie die Analysen nach Bereich, etwa **Finanzen** (**Fakturiert**, **Eingenommen**) und **Flächen und Kapazität**.
+4. Speichern Sie unter **Ansichten** eine Ansicht oder tippen Sie auf **Als PDF exportieren**.
+
+**Gut zu wissen**
+
+- Sie sehen nur Analysen, die Sie lesen dürfen.
+- Eingenommen sind Zahlungen, die Rechnungen zugeordnet sind. Es ist kein Gewinn: Es sind keine Kosten in der Zahl.
+- Der laufende Zeitraum ist unvollständig; seine Zahlen ändern sich noch.
+
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung)
+
+<!-- anchor: user.advanced.overview -->
+## Erweitert
+
+**Zielgruppe:** Inhaber · Betreiber:in
+
+Das, was die tägliche Arbeit umgibt: die Testseite eines Space und die echte, Assistenten, der Aufgabenrekorder mit seinen geführten Touren, die Demo, die Apps auf jedem Gerät und was zu tun ist, wenn etwas nicht funktioniert.
+
+In diesem Kapitel:
+- [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten) · [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist) · [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen) · [Status des Workspace und das Jahresarchiv](#status-des-workspace-und-das-jahresarchiv)
+- [Ihr eigener Server](#einen-eigenen-server-betreiben)
+- [Assistenten](#assistenten-was-sie-sind) · [Einen Assistenten verbinden](#einen-assistenten-verbinden) · [Freigaben](#freigaben-und-bestätigungen-für-assistenten) · [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
+- [Der Aufgabenrekorder](#der-aufgabenrekorder-und-geführte-touren) · [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Eine Aufzeichnung prüfen](#eine-aufzeichnung-prüfen-bearbeiten-und-exportieren) · [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen) · [Einer Anleitung folgen](#einer-anleitung-folgen) · [Das Kreismenü](#das-kreismenü) · [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren) · [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
+- [Der Demo-Workspace](#der-demo-workspace) · [Aufnahmemodus](#aufnahmemodus)
+- [Plattformen](#deskilo-auf-ihren-geräten) · [Supportdetails](#supportdetails) · [Wenn etwas nicht funktioniert](#wenn-etwas-nicht-funktioniert)
+- [Die Wörter der App](#die-wörter-der-app) · [Barrierefreiheit und Tastatur](#barrierefreiheit-und-tastatur) · [Mehr Hilfe](#wo-es-mehr-hilfe-gibt)
+
+<!-- anchor: user.advanced.environments -->
+### Ein Space hat zwei Seiten
+
+**Zielgruppe:** Inhaber
+
+Sie möchten einen Ort zum Ausprobieren, ohne die echten Buchungen und Rechnungen anzufassen. Ein Space kann als Paar angelegt werden: eine Testseite und eine echte Seite mit demselben Namen.
+
+<p><img src="images/user-advanced-environments.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Lassen Sie beim Anlegen eines Space **Das Paar Entwicklung und Produktion anlegen** angehakt. Beide Seiten gehören Ihnen von der ersten Sekunde an.
+2. Sie haben schon einen einzelnen Space? Öffnen Sie die [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings), gehen Sie zu **Governance** und tippen Sie auf **Zwilling anlegen**. Die Konfiguration wird einmal kopiert.
+3. Ab dann sind die beiden Seiten unabhängig. Nur eine Ausrollung bringt etwas von der einen auf die andere.
+
+**Gut zu wissen**
+
+- Die Entwicklungsseite heißt **Entwicklung — zum Ausprobieren**. Die Produktionsseite heißt **Produktion — die Rechnungen sind geschuldet**.
+- Jedes auf der Entwicklungsseite gedruckte Dokument trägt ein Wasserzeichen, damit es nicht mit einem echten verwechselt wird.
+- **Zwilling anlegen** erscheint nur, wenn die Funktion **Umgebungspaare** eingeschaltet ist, und nur für den Inhaber. Das Ausspielen zwischen den Seiten liegt bei den Inhabern der Deploy-Berechtigungen.
+- Mitglieder, Buchungen, Rechnungen und Zahlungen werden nie zwischen den Seiten kopiert.
+
+**Siehe auch:** [Eine Seite betreten](#die-echte-oder-die-testseite-betreten) · [Ein Testspace](#wofür-ein-testspace-da-ist)
+
+<!-- anchor: user.advanced.enter-environment -->
+### Die echte oder die Testseite betreten
+
+**Zielgruppe:** Alle
+
+Sie möchten einen Space auf der Seite öffnen, die Sie brauchen. Ihr Konto sieht beide Seiten eines Paars, jede mit einer eigenen Schaltfläche.
+
+**Schritte**
+
+1. Öffnen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me) und suchen Sie den Space unter **Meine Spaces**.
+2. Tippen Sie auf **Arbeitsbereich öffnen** für die echte Seite oder auf **Testbereich** für die Seite zum Üben.
+3. Oder öffnen Sie die [Profile](https://fdittgen-png.github.io/deskilo/#/profiles): Das Paar ist eine Karte. Tippen Sie darauf, dann auf **Umgebung wählen** zwischen **DEV** und **PROD**.
+
+**Gut zu wissen**
+
+- Eine Seite, die Sie nicht betreten dürfen, ist ausgegraut und tut nichts.
+- Wer Mitglied der echten Seite ist, ist immer auch Mitglied der Testseite.
+- Die Test-Schaltfläche trägt den Hinweis „Testbereich: Übungsbuchungen und -rechnungen“; die echte „Echte Buchungen und Rechnungen“.
+
+**Siehe auch:** [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf)
+
+<!-- anchor: user.advanced.test-space -->
+### Wofür ein Testspace da ist
+
+**Zielgruppe:** Inhaber
+
+Sie wollen Preise, Regeln oder den Plan ändern und zuerst die Wirkung sehen. Tun Sie es im Testspace.
+
+**Schritte**
+
+1. Betreten Sie die Testseite mit **Testbereich**.
+2. Konfigurieren Sie, importieren Sie eine Space-Datei, laden Sie eine Kollegin oder einen Kollegen ein, stellen Sie eine Probe-Rechnung aus, verschieben Sie Plätze, drucken Sie.
+3. Wenn alles stimmt, [rollen Sie es auf die echte Seite aus](#zwischen-den-beiden-seiten-ausrollen).
+
+**Gut zu wissen**
+
+- Der Schalter **Art des Space** in den [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) (unter **Governance**) sagt, welche Art ein Space ist. Nur Inhaber sehen ihn.
+- Wenn Sie einen Space zur Produktion erklären, fragt die App **Diesen Space zur Produktion erklären?** — das Banner verschwindet und Dokumente verlieren ihr Wasserzeichen. Bereits ausgestellte Rechnungen behalten das Wasserzeichen, das sie hatten.
+- Erklären Sie einen Space nur dann zur Produktion, wenn die Rechnungen, die ihn verlassen, wirklich geschuldet sind.
+- Wenn Sie jemanden einladen, können Sie wählen, ob die Person auch den Produktions-Space erreicht: **Testbereich** oder **Produktions-Workspace**. Dem Testspace tritt sie in jedem Fall bei.
+
+**Siehe auch:** [Ein Space hat zwei Seiten](#ein-space-hat-zwei-seiten)
+
+<!-- anchor: user.advanced.deploy-permissions -->
+### Wer ausrollen und in die Produktion darf
+
+**Zielgruppe:** Inhaber · Mitinhaber
+
+Sie entscheiden, wer die echte Seite anfassen darf. Drei Berechtigungen in der Rollenmatrix steuern das.
+
+**Schritte**
+
+1. Öffnen Sie die [Rollen](https://fdittgen-png.github.io/deskilo/#/roles).
+2. Suchen Sie **Den Produktionsraum betreten**, **In die Entwicklung ausrollen** und **In die Produktion ausrollen**.
+3. Schalten Sie jede für die Rollen ein, die sie brauchen.
+
+**Gut zu wissen**
+
+- Inhaber und Mitinhaber haben alle drei. Administratoren haben **In die Entwicklung ausrollen** und **Den Produktionsraum betreten**. Mitglieder haben keine, bis Sie sie vergeben.
+- Wer in die Produktion ausrollen darf, darf immer auch in die Entwicklung ausrollen.
+- Eine Rolle betritt die Produktionsseite nur, solange sie **Den Produktionsraum betreten** hat: Eine Einladung oder ein Beitritt in die Produktion wird sonst abgelehnt, und die App sagt warum.
+
+**Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix) · [Zwischen den Seiten ausrollen](#zwischen-den-beiden-seiten-ausrollen)
+
+<!-- anchor: user.advanced.deploy -->
+### Zwischen den beiden Seiten ausrollen
+
+**Zielgruppe:** Inhaber · Mitinhaber · Administrator:in
+
+Sie haben die Konfiguration auf einer Seite festgelegt und möchten, dass die andere sie bekommt.
+
+**Schritte**
+
+1. Stellen Sie sich auf die Seite, in die geschrieben werden soll, und öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) → **Governance** → [Ausrollung](https://fdittgen-png.github.io/deskilo/#/deployment).
+2. Haken Sie an, was mitreisen soll. Die Objekte sind gruppiert als **Konfiguration**, **Stammdaten** und **Berichte**; was ein Objekt **braucht**, wird mit angehakt.
+3. Tippen Sie auf **Aus der PROD holen…** (von der Entwicklungsseite aus) oder **Aus der DEV holen…** (von der Produktionsseite aus).
+4. Lesen Sie die Vorschau: **Was sich auf der Produktionsseite ändert**, oder auf der Entwicklungsseite. Wenn beide Seiten übereinstimmen, steht dort **Keine Änderung**.
+5. Bestätigen Sie. Die Frage nennt die Seite, in die geschrieben wird: **In diese DEV ausrollen?** oder **In diese PROD ausrollen?**
+
+**Gut zu wissen**
+
+- Eine Ausrollung geht immer in die Seite, auf der Sie stehen. Nichts kann versehentlich auf die andere Seite geschoben werden.
+- Jede Ausrollung landet im **Journal**. **Zurückrollen** bei der letzten stellt wieder her, was die Seite vorher hatte.
+- Raumpläne werden zusammengeführt: Was nur diese Seite hat, bleibt erhalten, weil ein Platz eine Buchung tragen kann. Badge-Tags reisen nie mit.
+- Mitglieder, Buchungen, Rechnungen, Zahlungen, Ereignisse und Zugangsdaten reisen nie mit.
+- Der Eintrag erscheint nur, wenn die Funktion **Ausrollungen** eingeschaltet ist, der Space einen Zwilling hat und Sie eine Ausroll-Berechtigung haben.
+
+**Siehe auch:** [Wer ausrollen darf](#wer-ausrollen-und-in-die-produktion-darf)
+
+<!-- anchor: user.advanced.status-archive -->
+### Status des Workspace und das Jahresarchiv
+
+**Zielgruppe:** Inhaber · Administrator:in · Abrechnungsadministrator:in
+
+Sie möchten auf einen Blick sehen, was der Space in Rechnung gestellt und eingenommen hat, und eine vollständige Datei des Jahres für Ihre Unterlagen.
+
+**Schritte**
+
+1. Öffnen Sie die [Lage des Arbeitsbereichs](https://fdittgen-png.github.io/deskilo/#/money/status). Wählen Sie die Monate bei **Von** und **Bis**.
+2. Lesen Sie **Fakturiert**, **Gutschriften**, **Zugeordnete Zahlungen**, **Eingegangene Zahlungen**, **Erstattete Ausgaben**, **Umgelegte Ausgaben** und **Gewährte Gutschriften**; **Netto** fasst es zusammen. Tippen Sie auf den Drucker, um die **Lage drucken**.
+3. Wählen Sie für die Jahresdatei in den Rechnungsexporten **Jahresarchiv (zip)**.
+
+**Gut zu wissen**
+
+- **Netto** ist weder ein Gewinn noch ein Kontostand. Zugeordnete und eingegangene Zahlungen überschneiden sich, addieren Sie sie also nicht.
+- Die Lage erscheint, wenn die Funktion **Lage des Arbeitsbereichs** eingeschaltet ist.
+- Ein Entwicklungsspace erzeugt mit DEV gekennzeichnete Dateien: Sie sind nicht die echten Bücher.
+
+**Siehe auch:** [Workspace-Bericht](#arbeitsbereichsbericht)
+
+<!-- anchor: user.advanced.own-server -->
+### Einen eigenen Server betreiben
+
+**Zielgruppe:** Betreiber:in · Inhaber
+
+Sie möchten die Daten Ihrer Gemeinschaft auf einem Server, den Sie kontrollieren, oder Sie gehören einer Organisation an, die einen betreibt.
+
+**Schritte**
+
+1. Lesen Sie unter [So betreiben Sie Ihren eigenen](#so-betreiben-sie-einen-eigenen), wie ein Server eingerichtet wird.
+2. Richten Sie die App auf jedem Gerät darauf aus: [Ihr eigener Server](#ihr-eigener-server).
+3. Prüfen Sie [Ich](https://fdittgen-png.github.io/deskilo/#/me) → **Wo meine Spaces liegen**: Dort stehen die Server, die dieses Konto nutzt.
+
+**Gut zu wissen**
+
+- Die App zeigt für die Anmeldung auf einen Server; **Dieses Gerät nutzt** zeigt, auf welchen. Die weiteren Server, denen Sie angehören, erscheinen unter **Wo meine Spaces liegen**.
+- Eine Einladung wird nur auf ihrem eigenen Server geprüft, treten Sie einem Space also bei, während die App auf den Server zeigt, der sie ausgestellt hat.
+- Ein Betreiber kann Assistenten für die ganze Installation einschalten — siehe [Freigaben](#freigaben-und-bestätigungen-für-assistenten).
+
+**Siehe auch:** [Ihr eigener Server](#ihr-eigener-server)
+
+<!-- anchor: user.advanced.assistants -->
+### Assistenten: was sie sind
+
+**Zielgruppe:** Alle
+
+Ein KI-Assistent wie Claude oder ChatGPT kann in DesKilo Dinge für Sie nachsehen und buchen. Er handelt als Sie, nur in den Workspaces und für die Aktionen, die Sie freigeben.
+
+<p><img src="images/user-advanced-assistants-policy.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [Assistenten](https://fdittgen-png.github.io/deskilo/#/assistants). **Wo Sie hier stehen** listet, was für Sie noch fehlt: **Anmeldung mit Google**, **Identität für Assistenten**, **Freigabe der Datenbank**, **Angebot des Arbeitsbereichs**, **Ihre Rolle**, **Ihre Zustimmung**, **Server**.
+2. Arbeiten Sie die Liste ab; jede Zeile sagt, wer den nächsten Schritt tut.
+
+**Gut zu wissen**
+
+- Mehrere Personen wirken mit: Sie, die Inhaberin oder ein Administrator des Workspace, eine Datenbankadministratorin und der Betreiber der Installation. Keine einzelne Person kann alles öffnen.
+- Das Einschalten von Assistenten gibt für sich allein niemandem etwas.
+- Unter **Verbundene Assistenten** sehen Sie, was verbunden ist, und können es **Trennen**. **Ihre Nutzung durch Assistenten heute** zählt **Anfragen**, **Abgelehnt**, **Ausgeführt** und **Wartet auf Validierung**.
+
+**Siehe auch:** [Einen Assistenten verbinden](#einen-assistenten-verbinden)
+
+<!-- anchor: user.advanced.assistants-connect -->
+### Einen Assistenten verbinden
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie möchten, dass Ihr Assistent mit Ihren eigenen Buchungen und Ihrem Konto arbeitet.
+
+**Schritte**
+
+1. Öffnen Sie [Einen Assistenten verbinden](https://fdittgen-png.github.io/deskilo/#/assistants/connect). Unter **Bevor Sie verbinden** sollte jede Zeile **Erledigt** sagen.
+2. Wählen Sie unter **Welchen Assistenten verwenden Sie?** **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** oder **Andere**. Kopieren Sie **Ihre DesKilo-Adresse für Assistenten** dort hinein, wie die Schritte zeigen.
+3. Melden Sie sich an, wenn der Assistent fragt, und wählen Sie dann diesen Workspace und was der Assistent dort tun darf.
+4. Tippen Sie auf **Verbindung testen** und fragen Sie Ihren Assistenten: „Was sind mit DesKilo meine Buchungen diese Woche?“
+
+**Gut zu wissen**
+
+- Der Assistent selbst bittet Sie, den Workspace und jede Art von Vorgang freizugeben; nichts wird für Sie entschieden.
+- Zum Verbinden braucht der Workspace die Funktion **MCP-Schnittstelle**. Ist sie aus, schickt der Bildschirm Sie zu den Assistenten.
+- Es klappt nicht? **Verbindung testen** sagt, worauf noch gewartet wird.
+- **Trennen** entfernt den Assistenten aus jedem Workspace dieser Datenbank. Was er schon gelesen hat, wird nicht zurückgenommen.
+
+**Siehe auch:** [Freigaben](#freigaben-und-bestätigungen-für-assistenten)
+
+<!-- anchor: user.advanced.assistants-approve -->
+### Freigaben und Bestätigungen für Assistenten
+
+**Zielgruppe:** Inhaber · Betreiber:in
+
+Assistenten werden in Schichten freigegeben, damit eine Person nicht allein einen einschalten kann.
+
+**Schritte**
+
+1. Der Inhaber des Workspace (oder wer die Integrationen verwaltet) öffnet die [Assistenten-Einrichtung](https://fdittgen-png.github.io/deskilo/#/settings/assistant-setup) und arbeitet sie ab: **Assistenten für diesen Arbeitsbereich einschalten**, **Festlegen, was Assistenten dürfen**.
+2. Jedes Mitglied fragt einmal: **Freigabe anfragen**. Eine Datenbankadministratorin entscheidet in den [Assistenten-Freigaben](https://fdittgen-png.github.io/deskilo/#/database/assistant-approvals) mit **Freigeben** oder **Ablehnen**.
+3. Der Betreiber der Installation öffnet [Installation: Assistenten](https://fdittgen-png.github.io/deskilo/#/installation/assistants) und tippt auf **Für alle Arbeitsbereiche einschalten**. Die Seite listet außerdem **Datenbankadministratoren** und **Assistenten-Clients**, jeweils **Freigegeben**, **Gesperrt** oder **Wartet auf Freigabe**.
+4. Sendet ein Assistent eine Anfrage mit großer Tragweite, werden Sie gefragt: **Anfrage eines Assistenten bestätigen**. **Bestätigen** lässt ihn genau diese Anfrage einmal senden; **Ablehnen** tut nichts.
+
+**Gut zu wissen**
+
+- Freigaben und die Änderungen der Installation brauchen Ihren zweiten Faktor.
+- Die Freigabe läuft ab; der Bildschirm nennt die verbleibenden Tage, und Sie fragen erneut an.
+- Eine bestätigte Anfrage folgt weiterhin den Validierungsregeln des Workspace.
+- Gibt es keine andere Datenbankadministratorin, gibt der Betreiber den Zugang mit einer Begründung für bis zu 30 Tage frei.
+
+**Siehe auch:** [Was Assistenten dürfen](#was-assistenten-in-einem-workspace-dürfen)
+
+<!-- anchor: user.advanced.assistants-policy -->
+### Was Assistenten in einem Workspace dürfen
+
+**Zielgruppe:** Inhaber · Administrator:in
+
+Sie entscheiden, welche Dienste ein Workspace Assistenten anbietet.
+
+**Schritte**
+
+1. Öffnen Sie den [Assistentenzugriff](https://fdittgen-png.github.io/deskilo/#/settings/assistants).
+2. Schalten Sie **Assistentendienste anbieten** ein.
+3. Wählen Sie unter **Daten, auf die ein Assistent zugreifen darf** **Nur eigene Daten** oder **Ganzer Arbeitsbereich**.
+4. Haken Sie die Vorgänge an, in Gruppen: **Eigene Buchungen und Konto**, **Finanzanfragen**, **Mitgliedschaftsanfragen**, **Freigaben**.
+5. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Vorgänge lauten etwa „Freie Plätze ansehen“, „Einen Platz für Sie buchen“, „Sie einchecken“ oder „Ihre noch nicht begonnenen Buchungen stornieren“.
+- Assistenten erhalten reduzierte Antworten. Mit den **Optionalen Angaben** erlauben Sie mehr; jede Person entscheidet dennoch selbst.
+- Bereits verbundene Assistenten erhalten neue Dienste erst, wenn jede Person erneut freigibt.
+- Schalten Sie zuerst die Funktion **MCP-Schnittstelle** unter [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) ein. Sie ist standardmäßig aus.
+- Das ist für Personen mit der Integrations-Berechtigung; Inhaber haben sie immer.
+
+**Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.advanced.recorder -->
+### Der Aufgabenrekorder und geführte Touren
+
+**Zielgruppe:** Alle
+
+Sie möchten jemandem zeigen, wie eine Aufgabe geht, oder es selbst gezeigt bekommen. Zeichnen Sie die Aufgabe einmal auf, machen Sie daraus eine Anleitung und folgen Sie ihr Schritt für Schritt in der echten App.
+
+<p><img src="images/user-advanced-wizard.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie den [Aufgaben-Assistenten](https://fdittgen-png.github.io/deskilo/#/task-wizard): im Menü auf einem breiten Bildschirm oder unter **Erweitert** in [Ich](https://fdittgen-png.github.io/deskilo/#/me).
+2. **Anleitungen** enthält Ihre eigenen Anleitungen und die mitgelieferten, etwa **Einen Platz buchen**.
+3. **Aufzeichnungen** listet die Aufgaben, die Sie aufgezeichnet haben, und **Eine Aufgabe aufzeichnen** startet eine neue.
+4. **Werkzeuge** öffnet eine Aufgabendatei ohne Konto.
+
+**Gut zu wissen**
+
+- Alles bleibt auf Ihrem Gerät, bis Sie es exportieren.
+- Der Aufgabenrekorder ist eine Funktion (**Aufgabenrekorder**). Ist sie aus, erscheint der Aufgaben-Assistent nicht in den Menüs.
+- Zum Aufzeichnen oder zum Befolgen einer Anleitung müssen Sie angemeldet sein.
+
+**Siehe auch:** [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen) · [Einer Anleitung folgen](#einer-anleitung-folgen)
+
+<!-- anchor: user.advanced.recorder-record -->
+### Eine Aufgabe aufzeichnen
+
+**Zielgruppe:** Alle
+
+Sie möchten festhalten, was Sie tun, damit daraus ein Dokument oder eine Anleitung werden kann.
+
+<p><img src="images/user-advanced-record.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Lesen Sie im [Aufgabenrekorder](https://fdittgen-png.github.io/deskilo/#/task-recorder) **Bevor Sie aufzeichnen**.
+2. Tippen Sie auf **Aufzeichnung starten**.
+3. Erledigen Sie die Aufgabe wie gewohnt, auf einem beliebigen Bildschirm des Space oder von [Ich](https://fdittgen-png.github.io/deskilo/#/me).
+4. Nutzen Sie die Leiste mit der Anzeige **Aufzeichnung läuft**, um zu **Pausieren**, **Fortsetzen**, eine **Notiz hinzufügen** oder zu **Beenden**.
+
+**Gut zu wissen**
+
+- Eine Aufzeichnung dauert bis zu 500 Schritte oder 30 Minuten und wird nach 30 Tagen vom Gerät gelöscht. Eine exportierte Datei bleibt dort, wo Sie sie gespeichert haben.
+- Jeder Schritt nennt den Bildschirm, die Aktion und was die App geantwortet hat, etwa **Gebucht** oder **Abgelehnt**.
+- Anmeldung, Zahlung, Nachrichten und andere geschützte Bildschirme hinterlassen nur eine Markierung.
+- Wechseln Sie zu einem anderen Konto oder Workspace, endet die Aufzeichnung.
+
+**Siehe auch:** [Datenschutz der Aufzeichnungen](#was-eine-aufzeichnung-behält)
+
+<!-- anchor: user.advanced.recorder-review -->
+### Eine Aufzeichnung prüfen, bearbeiten und exportieren
+
+**Zielgruppe:** Alle
+
+Sie möchten prüfen, was erfasst wurde, bevor Sie es teilen.
+
+**Schritte**
+
+1. Tippen Sie im [Aufgaben-Assistenten](https://fdittgen-png.github.io/deskilo/#/task-wizard) unter **Aufzeichnungen** auf eine Aufzeichnung.
+2. Lesen Sie die Schritte. Tippen Sie bei jedem Schritt, den Sie nicht wollen, auf **Vom Export ausnehmen**; **Wieder aufnehmen** holt ihn zurück.
+3. Sehen Sie sich **Was die Datei enthalten wird** an.
+4. Wählen Sie **Datei exportieren**, **Aufgabenpaket exportieren** oder **Als Word-Dokument exportieren**.
+
+**Gut zu wissen**
+
+- Das Ausnehmen eines Schritts ändert nur den Export. Die Aufzeichnung auf dem Gerät bleibt unverändert.
+- Um eine Datei von jemand anderem zu lesen, nutzen Sie **Aufgabendatei öffnen** in der [Aufgaben-Werkbank](https://fdittgen-png.github.io/deskilo/#/task-workbench). Nichts wird hochgeladen, und es ist kein Konto nötig.
+- Eine beschädigte Datei oder eine Datei, die eine neuere Version erstellt hat, wird mit einer klaren Meldung abgelehnt.
+- **Von diesem Gerät löschen** entfernt die Aufzeichnung; exportierte Dateien bleiben unberührt.
+
+**Siehe auch:** [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen)
+
+<!-- anchor: user.advanced.guide-make -->
+### Aus einer Aufzeichnung eine Anleitung erstellen
+
+**Zielgruppe:** Alle
+
+Sie möchten, dass andere einer Aufgabe folgen können, die Sie aufgezeichnet haben.
+
+**Schritte**
+
+1. Tippen Sie im [Aufgaben-Assistenten](https://fdittgen-png.github.io/deskilo/#/task-wizard) neben einer Aufzeichnung auf **Anleitung erstellen**. Oder wählen Sie **Anleitung hinzufügen** → **Aus einer meiner Aufzeichnungen** oder **Aus einer Aufgabendatei oder einem Paket**.
+2. Prüfen Sie den Entwurf. Jeder Schritt ist so geschrieben, wie die lesende Person ihn sehen wird.
+3. Geben Sie ihr unter **Name der Anleitung** einen Namen.
+4. Tippen Sie auf **Zu meinen Anleitungen hinzufügen**.
+
+**Gut zu wissen**
+
+- Die Anleitung wird auf Ihrem Gerät unter **Anleitungen** aufbewahrt. Eine Anleitung lässt sich bearbeiten oder löschen: **Diese Anleitung löschen** lässt ihre Aufzeichnung unberührt.
+- Ein Schritt, der bucht, wartet auf die echte Antwort. Für die lesende Person wird nichts erledigt.
+- **Leitfaden speichern** schreibt sie in eine Datei, die Sie weitergeben können.
+
+**Siehe auch:** [Eine Anleitung bearbeiten](#eine-anleitung-bearbeiten-oder-reparieren)
+
+<!-- anchor: user.advanced.guide-play -->
+### Einer Anleitung folgen
+
+**Zielgruppe:** Alle
+
+Sie möchten auf den echten Bildschirmen durch eine Aufgabe geführt werden.
+
+**Schritte**
+
+1. Tippen Sie im [Aufgaben-Assistenten](https://fdittgen-png.github.io/deskilo/#/task-wizard) neben einer der Anleitungen auf **Anleitung starten**.
+2. Ein Fenster zeigt Schritt 1 von … und was zu tun ist, zum Beispiel „Tippen Sie auf ‚Reservieren‘.“ oder „Füllen Sie ‚…‘ aus und verlassen Sie dann das Feld.“
+3. Tippen Sie auf **Öffnen und hervorheben**, um zum richtigen Bildschirm zu gelangen und das markierte Bedienelement zu sehen.
+4. Führen Sie den Schritt selbst aus. Die Anleitung bemerkt es und geht weiter. Bei einem Leseschritt tippen Sie auf **Erledigt**.
+
+**Gut zu wissen**
+
+- Nutzen Sie **Zurück** und **Überspringen** und öffnen Sie **Alle Schritte**, um jeden als **Offen**, **Wartet**, **Erledigt**, **Bestätigt** oder **Übersprungen** zu sehen.
+- Ein Schritt, der bucht, wartet auf die Antwort: **Warte auf das Ergebnis …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
+- **Anleitung beenden** beendet sie. Nichts wird rückgängig gemacht.
+- Die Anleitung pausiert, wenn sich das Konto oder der Workspace ändert oder der Aufgabenrekorder ausgeschaltet wird.
+
+**Siehe auch:** [Das Kreismenü](#das-kreismenü)
+
+<!-- anchor: user.advanced.guide-circle -->
+### Das Kreismenü
+
+**Zielgruppe:** Alle
+
+Sie brauchen den ganzen Bildschirm zum Arbeiten, möchten die Anleitung aber in der Nähe haben. Verkleinern Sie sie.
+
+**Schritte**
+
+1. Tippen Sie im Anleitungsfenster auf **Anleitung verkleinern**. Sie schrumpft zu einem kleinen Kreis.
+2. Tippen Sie auf den Kreis für ein Menü: Anleitung anzeigen (Schritt … von …), **Öffnen und hervorheben**, eine Schaltfläche zur Seite des Schritts, **Erledigt**, **Überspringen**, **Zurück**, **Fortsetzen** und **Anleitung beenden**.
+3. Wählen Sie „Anleitung anzeigen“, um das Fenster wieder zu öffnen.
+
+**Gut zu wissen**
+
+- Das Menü bietet nur an, was jetzt sinnvoll ist: **Fortsetzen** nur, solange pausiert ist, **Erledigt** nur bei einem Leseschritt.
+- **Schließen** am Fenster blendet es aus; die Anleitung selbst bleibt, wo sie war.
+- „Öffnen und hervorheben“ führt Sie zur Seite des Schritts und zeigt auf das Bedienelement; die Seiten-Schaltfläche führt Sie nur zur Seite.
+
+**Siehe auch:** [Einer Anleitung folgen](#einer-anleitung-folgen)
+
+<!-- anchor: user.advanced.guide-edit -->
+### Eine Anleitung bearbeiten oder reparieren
+
+**Zielgruppe:** Alle
+
+Eine Anleitung liest sich schlecht, oder ein Schritt zeigt auf die falsche Seite. Beheben Sie es im Entwurf.
+
+**Schritte**
+
+1. Tippen Sie im [Aufgaben-Assistenten](https://fdittgen-png.github.io/deskilo/#/task-wizard) neben Ihrer Anleitung auf **Bearbeiten**.
+2. Tippen Sie bei einem Schritt auf **Text schreiben** und geben Sie Ihren eigenen Text ein.
+3. Wählen Sie unter **Ziel des Schritts** die Seite, auf die sich der Schritt bezieht. Tippen Sie zum Prüfen auf **Öffnen und hervorheben**.
+4. Schalten Sie **Darf übersprungen werden** bei einem Schritt ein, der optional ist.
+5. Tippen Sie auf **Änderungen speichern**.
+
+**Gut zu wissen**
+
+- Ein Schritt mit der Kennzeichnung **Eine noch zu schreibende Anweisung** braucht Ihre Worte. **Ein Schritt, den der Rekorder nicht beschreiben kann** und **Diesen Schritt selbst ausführen** erledigt die lesende Person.
+- Schritte auf geschützten Bildschirmen, etwa bei der Zahlung, bitten die lesende Person, sie allein auszuführen.
+- Sie können eine Anleitung nicht ein Ergebnis erwarten lassen, das ihre Aktion nicht hat; dieser Teil ist fest.
+- Eine Anleitung, die Schritte nennt, die diese Version nicht kennt, kann gelesen, aber nicht befolgt werden.
+
+**Siehe auch:** [Eine Anleitung erstellen](#aus-einer-aufzeichnung-eine-anleitung-erstellen)
+
+<!-- anchor: user.advanced.recorder-privacy -->
+### Was eine Aufzeichnung behält
+
+**Zielgruppe:** Alle
+
+Sie möchten genau wissen, was nichts zurücklässt.
+
+**Schritte**
+
+1. Öffnen Sie den [Aufgabenrekorder](https://fdittgen-png.github.io/deskilo/#/task-recorder).
+2. Lesen Sie **Bevor Sie aufzeichnen**.
+3. Lassen Sie **Werte erfassen (für Fehlerberichte)** aus, es sei denn, ein Entwickler hat darum gebeten.
+
+**Gut zu wissen**
+
+- Normalerweise behält eine Aufzeichnung nie, was Sie eintippen, Namen, Beträge, Nachrichten, Codes oder Passwörter.
+- Ist das Erfassen von Werten an, behält sie auch, was Sie eintippen und wählen, damit ein Entwickler ein Problem nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen und Telefonnummern werden trotzdem nie behalten. Beim Exportieren erscheint die Frage **Diese Aufnahme enthält Werte**.
+- Nichts wird hochgeladen: Sie entscheiden, was Sie exportieren.
+- Teilen Sie eine Datei nur mit Personen, die sehen dürfen, was Sie eingegeben haben.
+
+**Siehe auch:** [Eine Aufgabe aufzeichnen](#eine-aufgabe-aufzeichnen)
+
+<!-- anchor: user.advanced.demo -->
+### Der Demo-Workspace
+
+**Zielgruppe:** Alle
+
+Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo ist ein erfundener Space, offen für alle, ohne Konto.
+
+**Schritte**
+
+1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
+2. Lesen Sie den kurzen Hinweis und tippen Sie dann auf **Loslegen**.
+3. Nutzen Sie **Ansicht als**, um denselben Space als **Der Inhaber**, **Eine Verwaltung** oder **Ein Mitglied** zu sehen.
+4. Tippen Sie auf **Demo zurücksetzen**, um sie wie am Anfang wiederherzustellen, oder auf **Demo verlassen**.
+
+**Gut zu wissen**
+
+- Alles ist erfunden: Personen, Buchungen und Rechnungen. Nichts erreicht einen echten Workspace, und nichts verlässt Ihr Gerät.
+- Ein Banner mit **Demo** steht auf jedem Bildschirm.
+- Schließen Sie die App, wird die Sitzung vergessen.
+- Das Angebot erscheint nur, wenn die Funktion **Der Demobereich** eingeschaltet ist.
+
+**Siehe auch:** [Aufnahmemodus](#aufnahmemodus)
+
+<!-- anchor: user.advanced.filming -->
+### Aufnahmemodus
+
+**Zielgruppe:** Inhaber
+
+Sie müssen Ihren echten Space zeigen — in einem Video, auf einem Bild oder in einem Vortrag —, ohne seine Mitglieder zu zeigen.
+
+**Schritte**
+
+1. Öffnen Sie die [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) und suchen Sie **Aufnahmemodus**.
+2. Schalten Sie ihn ein. Ein Banner mit **Aufnahmemodus — erfundene Personen** steht auf jedem Bildschirm.
+3. Filmen Sie. Wenn Sie fertig sind, schalten Sie ihn wieder aus.
+
+**Gut zu wissen**
+
+- Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird zu einer erfundenen Person, überall derselben. Der Plan, die Buchungen und die Zahlen bleiben echt.
+- Solange er an ist, lassen sich Identitätsformulare nicht speichern, damit erfundene Angaben keine echten überschreiben.
+- Er kann nicht verbergen, was jemand getippt hat, etwa eine Nachricht oder eine Platzbezeichnung. Lesen Sie den Bildschirm, bevor Sie filmen.
+- Für ein Bild, das nicht von diesem Space sein muss, nutzen Sie [die Demo](#der-demo-workspace).
+
+**Siehe auch:** [Ein Funktionsschalter](#ein-funktionsschalter)
+
+<!-- anchor: user.advanced.platforms -->
+### DesKilo auf Ihren Geräten
+
+**Zielgruppe:** Alle
+
+Sie möchten DesKilo dort nutzen, wo Sie arbeiten. Dasselbe Konto und dieselben Daten folgen Ihnen.
+
+**Schritte**
+
+1. **Android:** Treten Sie dem geschlossenen Test bei Google Play bei.
+2. iPhone und iPad: Treten Sie der Beta über TestFlight bei.
+3. **Computer:** ein macOS-Disk-Image oder ein Windows-Installer von der Release-Seite; oder öffnen Sie einfach die Web-App.
+4. **Browser:** Öffnen Sie die Adresse, die Ihr Workspace veröffentlicht. Nichts zu installieren.
+
+**Gut zu wissen**
+
+- Ein am Handy gebuchter Tisch erscheint einen Moment später in einem Browser-Tab.
+- Das macOS-Disk-Image von der Release-Seite ist signiert und von Apple notarisiert; öffnen Sie es wie gewohnt.
+- Der Windows-Installer ist nicht signiert: Windows SmartScreen warnt vor einem unbekannten Herausgeber; wählen Sie „Weitere Informationen“ und dann „Trotzdem ausführen“.
+- Das Lesen eines Stuhl-Tags funktioniert in Chromium-Browsern auf Android (HTTPS und ein Tippen nötig); die Android- und iPhone-Apps lesen Tags direkt.
+- Ein Build ohne Google-Dienste und ohne Cloud-Push wird gebaut und wurde bei F-Droid eingereicht; er ist noch nicht im F-Droid-Store. Darin sind Benachrichtigungen lokal, und der Posteingang ist maßgeblich.
+- Aktualisierungen kommen über den Kanal, über den Sie installiert haben: Google Play, TestFlight, die Release-Seite oder das erneute Laden der Web-App.
+
+**Siehe auch:** [Ihr Badge](#ihr-badge)
+
+<!-- anchor: user.advanced.support -->
+### Supportdetails
+
+**Zielgruppe:** Alle
+
+Sie wenden sich an den Support und möchten senden, was ihm hilft, ohne etwas Privates preiszugeben.
+
+<p><img src="images/user-advanced-support.de.b8fa17aa9.jpg" width="280"></p>
+
+**Schritte**
+
+1. Öffnen Sie die [Hilfe](https://fdittgen-png.github.io/deskilo/#/help) und tippen Sie auf das Support-Symbol (**Supportdetails**).
+2. Wählen Sie **Letzte Stunde** oder **Letzte 24 Stunden**.
+3. Tippen Sie auf **Vorschau vorbereiten** und lesen Sie, was sie enthält: Vorschau: … Bytes.
+4. Tippen Sie auf **Speichern** und senden Sie dann die Datei.
+
+**Gut zu wissen**
+
+- Enthalten sind nur begrenzte Ereigniszahlen und bekannte Prüfungen. Identitäten, Serveradressen, Zugangsdaten, Geschäftsdaten und Rohprotokolle sind ausgeschlossen.
+- Eine geteilte Datei lässt sich nicht zurückrufen.
+- Hat sich der Kontext geändert, bittet der Bildschirm Sie, eine neue Vorschau vorzubereiten.
+- Ein Betreiber kann `doctor --support-json` für die Serverseite ausführen.
+
+**Siehe auch:** [Wenn etwas nicht funktioniert](#wenn-etwas-nicht-funktioniert)
+
+<!-- anchor: user.advanced.troubleshooting -->
+### Wenn etwas nicht funktioniert
+
+**Zielgruppe:** Alle
+
+Etwas sieht falsch aus. Versuchen Sie dies, der Reihe nach.
+
+**Schritte**
+
+1. Suchen Sie eine Meldung auf dem Bildschirm; die meisten sagen, was zu tun ist. „Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.“ ist einen neuen Versuch wert.
+2. Prüfen Sie, ob Sie auf der Seite sind, auf der Sie sich glauben: **Testbereich** oder **Arbeitsbereich öffnen** in [Ich](https://fdittgen-png.github.io/deskilo/#/me).
+3. Prüfen Sie die [Funktionen](https://fdittgen-png.github.io/deskilo/#/features): Eine im Menü fehlende Funktion ist meist eine ausgeschaltete. Nur ein Inhaber kann das ändern.
+4. Prüfen Sie den Server unter [Ihr eigener Server](#ihr-eigener-server): **Dieses Gerät nutzt** nennt ihn.
+5. Bereiten Sie die [Supportdetails](#supportdetails) vor und senden Sie sie.
+
+**Gut zu wissen**
+
+- Was Sie sehen, hängt von Ihrer Rolle ab: Ein fehlender Bildschirm kann eine Berechtigung sein. Fragen Sie Ihren Inhaber.
+- Administratoren können unter **Erweitert** in den [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) den **Entwicklermodus** einschalten. Er fügt einen Bildschirm [Entwickler](https://fdittgen-png.github.io/deskilo/#/developer) hinzu, auf dem **Protokoll exportieren** und **Protokoll leeren** dem Support helfen. Er gilt für jedes Mitglied des Workspace.
+- Einen Fehler können Sie auch im Bereich „Über“ der App melden: **Fehler melden / Funktion vorschlagen**.
+- Eine Anleitung, die bei **Warte auf das Ergebnis …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
+
+**Siehe auch:** [Supportdetails](#supportdetails)
+
+<!-- anchor: user.advanced.glossary -->
+### Die Wörter der App
+
+**Zielgruppe:** Alle
+
+Die Wörter, denen Sie am häufigsten begegnen, und was sie hier bedeuten.
+
+| Wort | Was es bedeutet |
+|---|---|
+| **Workspace** (auch Space genannt) | Ein Ort, den eine Gemeinschaft führt: ihr Plan, ihre Mitglieder, Regeln und ihr Geld. Sie können mehreren angehören. |
+| **Ich** | Ihr eigenes Konto: Profil, Nachrichten, Spaces und Einstellungen, über alle Ihre Spaces hinweg. |
+| **Plan** | Entweder der Raumplan, von dem aus Sie buchen, oder ein Mitgliedschaftstarif — siehe **Mitglieder & Tarife**. |
+| **Ebene** | Ein Stockwerk oder eine Zone des Plans. Eine Ebene kann als Ganzes reserviert werden, wenn die Funktion eingeschaltet ist. |
+| **Tisch** | Ein buchbarer Platz. Büros und Räume fassen Tische zusammen. |
+| Halbtag | Die Einheit, in der Buchungen und Abos gezählt werden. |
+| **Freigabe** | Eine Regel, die besagt, dass eine Aktion eine oder mehrere Bestätigungen braucht, bevor sie zählt. |
+| **Ereignisse** | Der Feed dessen, was passiert ist, mit den auf Sie wartenden Entscheidungen oben. |
+| **Kiosk** | Ein gemeinsames Tablet an der Tür, an dem Menschen mit einem Badge einchecken. |
+| Funktion | Eine Funktion, die der Inhaber für den ganzen Space ein- oder ausschaltet. |
+| **Rolle** | Was eine Person in einem Space tun darf. Berechtigungen werden pro Rolle festgelegt. |
+| **Umgebung** | Die Entwicklungsseite (Test) oder die Produktionsseite (echt) eines Space. |
+| Zwilling | Die andere Seite eines Paars. |
+| **Ausrollung** | Konfiguration von einer Seite eines Paars auf die andere übertragen. |
+| **Assistent** | Ein KI-Werkzeug, das mit Ihrem Konto verbunden ist und nur so handelt, wie Sie es erlauben. |
+| **Betreiber** | Die Person, die die Installation betreibt, mit der die App spricht. |
+
+**Gut zu wissen**
+
+- Inhaber können unter **Wortwahl** die Wörter ändern, die ein Space verwendet; die App zeigt dann die des Space.
+
+**Siehe auch:** [Wortwahl](#wortwahl)
+
+<!-- anchor: user.advanced.accessibility -->
+### Barrierefreiheit und Tastatur
+
+**Zielgruppe:** Alle
+
+Sie möchten, dass die App zu Ihrer Arbeitsweise passt.
+
+**Schritte**
+
+1. Wählen Sie ein Aussehen in den [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings): **Design**, **Sprache**, **Zahlen & Daten**.
+2. Für ruhigere Bildschirme schalten Sie die Einstellung „Bewegung reduzieren“ Ihres Geräts ein.
+3. Drücken Sie am Computer in einem Assistenten Esc, um einen Schritt zurückzugehen.
+
+**Gut zu wissen**
+
+- Die Einstellung „Bewegung reduzieren“ des Geräts hat immer Vorrang vor der Funktion **Oberflächen-Animationen**; ein Inhaber kann diese Funktion auch ausschalten.
+- Beim Verlassen eines Assistenten mit nicht gespeicherten Änderungen wird zuerst gefragt: **Weiter bearbeiten** oder **Verwerfen**.
+- Bedienelemente tragen Textbeschriftungen, sodass ein Screenreader sie vorliest.
+- Im Web und am Computer zeigt ein breites Fenster das Menü neben dem Inhalt.
+
+**Siehe auch:** [Design](#design) · [App-Sprache](#app-sprache)
+
+<!-- anchor: user.advanced.help -->
+### Wo es mehr Hilfe gibt
+
+**Zielgruppe:** Alle
+
+Sie hängen an einem Feld oder einem Bildschirm fest.
+
+**Schritte**
+
+1. Tippen Sie auf das **?** neben einem Feld: Die Anleitung öffnet sich an diesem Feld.
+2. Öffnen Sie die [Hilfe](https://fdittgen-png.github.io/deskilo/#/help) für die ganze Anleitung; **Inhalt** springt zu einem Kapitel.
+3. Tipps auf einem Bildschirm lassen sich mit **Hinweis ausblenden** schließen; **Nächster Tipp** und **Vorheriger Tipp** blättern durch sie, **Mehr erfahren** öffnet die Anleitung.
+4. Um ausgeblendete Hinweise wieder zu sehen, nutzen Sie **Hilfe-Hinweise wieder anzeigen** in Ihren Einstellungen.
+
+**Gut zu wissen**
+
+- Die Anleitung funktioniert offline, in Ihrer Sprache.
+- Ihre Administratorin kann Fragen zu Ihrem Space beantworten; die Supportdetails helfen, wenn es an der App liegt.
+
+**Siehe auch:** [Hinweise wiederherstellen](#hinweise-wiederherstellen) · [Supportdetails](#supportdetails)

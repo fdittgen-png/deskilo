@@ -6447,7 +6447,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.';
 
   @override
-  String get helpHintBadgesTopic => 'NFC-Badges';
+  String get helpHintBadgesTopic => 'NFC-Badge';
 
   @override
   String get helpHintCalendar =>
@@ -6528,7 +6528,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ihre Unterlagen: Ihre Konditionen, der Zahlungsbericht, die Monatsabrechnung als PDF, die Dokumentbibliothek.';
 
   @override
-  String get helpHintMoneyDocumentsTopic => 'Die Ansicht Dokumente';
+  String get helpHintMoneyDocumentsTopic => 'Dokumente';
 
   @override
   String get helpHintMoneyInvoices =>
@@ -6539,7 +6539,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Automatische Zahlungserinnerungen';
 
   @override
-  String get helpHintMoneyInvoicesTopic => 'Die Ansicht Rechnungen';
+  String get helpHintMoneyInvoicesTopic => 'Rechnungen';
 
   @override
   String get helpHintMoneyPayments =>
@@ -6552,14 +6552,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services und Zubehör';
 
   @override
-  String get helpHintMoneyPaymentsTopic => 'Die Ansicht Zahlungen';
+  String get helpHintMoneyPaymentsTopic => 'Zahlung';
 
   @override
   String get helpHintMoneyStatement =>
       'Der Monat, wie er steht: Ihr Konto, genutzte und verbleibende Tage, Abonnement, Leistungen, Pakete, offene Posten, Gutschriften und der Saldo. Monate mit den Pfeilen durchblättern.';
 
   @override
-  String get helpHintMoneyStatementTopic => 'Die Ansicht Abrechnung';
+  String get helpHintMoneyStatementTopic => 'Abrechnung';
 
   @override
   String get helpHintMoneyTopic => 'Geld';
@@ -6592,7 +6592,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpHintReserveTip4Topic => 'Wie sich Buchungen verhalten';
 
   @override
-  String get helpHintReserveTopic => 'Reservieren-Hub';
+  String get helpHintReserveTopic => 'Reservierungsübersicht';
 
   @override
   String get helpHintRestoreTitle => 'Hilfe-Hinweise wieder anzeigen';
@@ -6633,7 +6633,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicDeployment => 'Deployen';
 
   @override
-  String get helpTopicDocumentLibrary => 'Dokumentbibliothek';
+  String get helpTopicDocumentLibrary => 'Dokumentenbibliothek';
 
   @override
   String get helpTopicEinvoice => 'E-Rechnung';
@@ -6654,7 +6654,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicReadiness => 'Bereitschaftsprüfung';
 
   @override
-  String get helpTopicReportEditor => 'Report-Editor';
+  String get helpTopicReportEditor => 'Berichtseditor';
 
   @override
   String get helpTopicReportLayout => 'Positionierte Layouts';
@@ -6663,7 +6663,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpTopicScheduledExpenses => 'Geplante Ausgaben';
 
   @override
-  String get helpTopicServer => 'dein eigener Server';
+  String get helpTopicServer => 'eigener Server';
 
   @override
   String get helpTopicSettings => 'Einstellungen & Profil';

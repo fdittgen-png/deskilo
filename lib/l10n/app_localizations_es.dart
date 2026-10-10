@@ -6438,7 +6438,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Emite una credencial QR imprimible o registra una tarjeta NFC; revoca credenciales perdidas en cualquier momento.';
 
   @override
-  String get helpHintBadgesTopic => 'credenciales RFID';
+  String get helpHintBadgesTopic => 'credencial NFC';
 
   @override
   String get helpHintCalendar =>
@@ -6519,7 +6519,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tu papeleo: tus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.';
 
   @override
-  String get helpHintMoneyDocumentsTopic => 'La vista Documentos';
+  String get helpHintMoneyDocumentsTopic => 'Documentos';
 
   @override
   String get helpHintMoneyInvoices =>
@@ -6530,7 +6530,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Recordatorios de pago automáticos';
 
   @override
-  String get helpHintMoneyInvoicesTopic => 'La vista Facturas';
+  String get helpHintMoneyInvoicesTopic => 'Facturas';
 
   @override
   String get helpHintMoneyPayments =>
@@ -6543,14 +6543,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Servicios y Accesorios';
 
   @override
-  String get helpHintMoneyPaymentsTopic => 'La vista Pagos';
+  String get helpHintMoneyPaymentsTopic => 'Pago';
 
   @override
   String get helpHintMoneyStatement =>
       'El mes tal como está: tu cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorre los meses con las flechas.';
 
   @override
-  String get helpHintMoneyStatementTopic => 'La vista Extracto';
+  String get helpHintMoneyStatementTopic => 'Extracto';
 
   @override
   String get helpHintMoneyTopic => 'dinero';
@@ -6583,7 +6583,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpHintReserveTip4Topic => 'Cómo se comporta la reserva';
 
   @override
-  String get helpHintReserveTopic => 'hub Reservar';
+  String get helpHintReserveTopic => 'centro Reservar';
 
   @override
   String get helpHintRestoreTitle => 'Volver a mostrar los consejos de ayuda';
@@ -6654,7 +6654,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpTopicScheduledExpenses => 'Gastos programados';
 
   @override
-  String get helpTopicServer => 'tu propio servidor';
+  String get helpTopicServer => 'propio servidor';
 
   @override
   String get helpTopicSettings => 'Ajustes y perfil';

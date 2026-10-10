@@ -31,13 +31,15 @@ Every feature serves at least one of four goals (the *feature filter*):
 | [Entornos: dev y prod](Environments-Guide.es) | Propietarios | Por qué una pareja, cómo crearla, quién puede desplegar, qué viaja y qué nunca |
 | [Ambienti: dev e prod](Environments-Guide.it) | Proprietari | Perché una coppia, come crearla, chi può distribuire, che cosa viaggia e che cosa mai |
 | [Implementation](Implementation) | Developers / contributors | Repo layout, conventions, codegen, migrations, testing, CI, feature-gating checklist, how to build and run on every platform |
-| [User Guide](User-Guide) | Members, admins, owners | Complete illustrated walkthrough in English: onboarding, booking, roles & invites, money, online payments & NFC configuration, space QR codes, kiosk mode, settings |
+| [User Guide](User-Guide) | Members, admins, owners | The complete illustrated guide: what DesKilo is, how to start a space, then every screen by audience — getting started, reserving, collaborating, settings and privacy, money, owner set-up, billing, tax and invoicing, advanced topics |
+| [Setup Guide](Setup-Guide) | Future owners | How to build a coworking space: what is possible and what is necessary, the order, features and roles, notifications, reports (with help from an AI tool), keeping the configuration consistent, and a four-week learning path |
+| [Guide de démarrage](Guide-de-demarrage) · [Einrichtungsanleitung](Einrichtungsanleitung) · [Guía de puesta en marcha](Guia-de-puesta-en-marcha) · [Guida di avvio](Guida-di-avvio) | Propriétaires · Inhaber · Propietarios · Proprietari | The setup guide in French, German, Spanish and Italian |
 | [Guide utilisateur](Guide-utilisateur) | Membres, admins, propriétaires | Le guide complet en français |
 | [Benutzerhandbuch](Benutzerhandbuch) | Mitglieder, Admins, Inhaberinnen | Das vollständige Handbuch auf Deutsch |
 | [Guía de usuario](Guia-de-usuario) | Miembros, admins, propietarios | La guía completa en español |
 | [Guida utente](Guida-utente) | Membri, admin, proprietari | La guida completa in italiano |
 
-All five user guides are illustrated with real app screenshots (French UI — every screen exists identically in all five languages).
+The user guide and the setup guide exist in all five languages. Every screenshot is taken from the demo workspace (*Atelier du Marché*, all people and figures invented) in the language of the guide, by a script that re-shoots them from any build — so no real name or e-mail appears. The same guides are bundled in the app as its online help and published as a site (`/guide`).
 
 ## Key references in the repository
 

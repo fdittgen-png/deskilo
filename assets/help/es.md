@@ -1,2295 +1,8349 @@
 # Guía de usuario
 
-Todo lo que un miembro, admin o propietario necesita para usar DesKilo.
+**DesKilo — tu espacio, en común.**
 
-> Las capturas de pantalla de esta guía muestran la app en francés — cada pantalla existe idéntica en los cinco idiomas (English, Français, Deutsch, Español, Italiano); cambia el idioma en **Ajustes → Idioma**.
+## Un espacio de coworking llevado por quienes lo usan
 
-![](assets/help/images/settings-language.jpg)
+Imagine una sala donde autónomos, artesanos y pequeños equipos comparten mesas, un hervidor y la contraseña del wifi — y donde solo hay tres preguntas que hacerse: *¿dónde puedo sentarme hoy, qué debo y quién tiene que decir que sí?* DesKilo responde a esas tres preguntas para las comunidades que gestionan su propio espacio.
 
-**Mis espacios y el mapa (#2155).** En Yo → Inicio, cada espacio tiene una fila compacta. **Abrir espacio** y **Espacio de prueba** aparecen juntos; el símbolo de historial indica el último entorno usado. Cada entorno conserva su menú. En pantallas pequeñas, la identidad aparece encima de los botones. En Descubrir, **Localizar en el mapa** centra el espacio; el botón de centrado restaura esa vista. Las coordenadas publicadas tienen prioridad. Si faltan, abrir el mapa para un único resultado o localizar un resultado busca su dirección pública mediante Photon (OpenStreetMap). La ubicación se indica como aproximada, puede corresponder solo a la calle y nunca modifica la página publicada. Si falla, reintente o pida al propietario que publique las coordenadas. No se solicita la ubicación del dispositivo.
+- **Saber dónde sentarse.** Un plano vivo del espacio, reservas por medias jornadas o por horas, entrada y salida, un calendario compartido.
+- **Saber lo que se debe.** Una cuenta honesta por miembro: cuota, días extra, gastos comunes, pagos, extractos y facturas — las mismas cifras para el miembro y para quien dirige el espacio.
+- **Hacerlo a su manera.** Roles, aprobaciones, horarios, precios, vocabulario y colores los decide usted, en unas pocas pantallas, sin una plataforma de propietario de por medio.
+- **Formar parte de una red.** Una sola cuenta personal le acompaña a todos los espacios a los que se une; los espacios que quieren ser encontrados publican una página, y las personas pueden escribirse en privado.
 
-## 1. Primeros pasos
+DesKilo es software libre (AGPL-3.0). Funciona en teléfono, tableta, ordenador y navegador, habla español, inglés, francés, alemán e italiano, y mantiene portables los datos de su comunidad: use el servicio alojado o ponga en marcha usted mismo el servidor.
 
-### Crear una cuenta
+## Cree su propio espacio
 
-Abre la app y regístrate con tu correo, una contraseña (mínimo 8 caracteres) y un nombre visible — o **continúa con Google**. El botón del ojo muestra u oculta la contraseña mientras escribes. *¿Olvidaste la contraseña?* te envía por correo un **código numérico de un solo uso**, que tecleas de vuelta en la app junto con tu nueva contraseña — deliberadamente un código y no un enlace, para que el restablecimiento funcione también allí donde los enlaces profundos no llegan. Un acceso con Google puede vincularse más tarde a una cuenta de correo existente en **Ajustes → Cuentas vinculadas**.
+No necesita un edificio, un plan de negocio ni un equipo informático para empezar. Unas mesas en una trastienda, la sala de reuniones de una asociación, dos plantas sobre un café: donde la gente se reúne para trabajar, DesKilo le da un plano que reservar, reglas que acuerdan entre todos y una cuenta que nadie tiene que llevar en una hoja de cálculo.
 
-### Crear un espacio — o unirse a uno
+En unos veinte minutos puede tener un espacio al que la gente pueda unirse: un nombre, un plano, horarios y alguien que diga que sí. El dinero, las facturas, un quiosco en la puerta y un aspecto propio llegarán después — cuando los quiera, en el orden que le convenga. Pruebe primero todo en el espacio de demostración, que no es de nadie y no cuesta nada, y siga luego la [Guía de puesta en marcha](help:setup.guide.how-to-read) desde el primer paso hasta la primera reserva.
 
-Tras iniciar sesión llegas a la pantalla de bienvenida con dos caminos:
+> **Consejo** Abra la demo, cambie entre la propietaria, un administrador y un miembro, y reserve un puesto. Diez minutos ahí le dirán más que cualquier descripción.
 
-- **Crear un espacio** — te conviertes en su **propietario**. Elige nombre, país (determina la moneda por defecto) y zona horaria. Después dibujarás tu plano en el editor (§8).
-- **Unirse a un espacio** — escribe el **ID del espacio** que te compartieron, o toca **Escanear código QR** y apunta la cámara al QR de invitación colgado en la pared de tu espacio. Tu solicitud llega como **pendiente**: *Nuevo miembro* es uno de los dominios de validación (§7), así que un validador te da paso, y a partir de ahí tienes exactamente el rol que lleva la invitación (§2).
+## Únase al proyecto
 
-### El cuestionario de configuración — preparar un espacio antes de abrir la app
+DesKilo se construye a la vista de todos, por una pequeña comunidad, y hay sitio para usted:
 
-Crear un espacio significa docenas de decisiones repartidas por una docena de pantallas distintas: cómo puede ser una reserva, cuánto cuesta un mes, qué exige la ley en una factura, quién valida qué. La app te deja tomarlas de una en una, según te las vas encontrando. El **cuestionario de configuración** te deja tomarlas todas de golpe, *antes* de empezar — en una pantalla grande, con tu contable o tu junta directiva si eso ayuda, sin tocar nada en producción:
+- **Pruébelo y cuéntenos.** Instale la aplicación (la web no necesita nada; la prueba cerrada de Android y la beta de iPhone en TestFlight están abiertas a probadores) y díganos qué le sorprende.
+- **Comparta lo que sabe.** Llevar un espacio de coworking enseña cosas que ningún desarrollador sabe. Cuéntenos qué necesita su comunidad y qué se le puso por delante.
+- **Traduzca y mejore las guías.** Esta guía y la Guía de puesta en marcha son archivos de texto en cinco idiomas, con capturas que un solo comando vuelve a hacer; una corrección es un cambio pequeño.
+- **Construya.** El código, la hoja de ruta y las incidencias abiertas son públicos, con las convenciones que necesita quien se incorpora.
+- **Aloje.** Ponga en marcha su propio servidor para su comunidad, o pida usar el despliegue de referencia.
 
-<https://fdittgen-png.github.io/deskilo/setup.html>
+[El proyecto en GitHub](https://github.com/fdittgen-png/deskilo) · [Abrir la aplicación web](https://fdittgen-png.github.io/deskilo/) · [Prueba cerrada de Android](https://play.google.com/apps/testing/de.deskilo.app) · [Beta de iPhone](https://testflight.apple.com/join/RgFX9zBe)
 
-Es una única página web. Nada que instalar, sin cuenta, nada que se envíe a ninguna parte: tus respuestas se guardan en tu propio navegador, así que puedes cerrar la pestaña y volver a ellas.
+## Cómo usar esta guía
 
-![](assets/help/images/setup-wizard.jpg)
+**Público:** Todos
 
-*El asistente: doce pasos en orden de dependencia, cada pregunta diciendo dónde se ajusta en la app, con un **?** que abre esta guía en la sección correspondiente.*
+Cada sección responde a una pregunta — *«¿cómo hago…?»* — y empieza por las personas a las que va dirigida, para que pueda saltarse lo que no le concierne. Las capturas proceden del espacio de demostración, *Atelier du Marché*, cuyas personas y cifras son inventadas.
 
-**Cómo se usa**
+*Elija su camino*
 
-1. **Responde los pasos en orden** — identidad, funciones, disponibilidad, plano, suscripciones, identidad legal e IVA, servicios, instrucciones de pago, roles y validación, miembros. Cada paso pregunta solo lo que tus respuestas anteriores hacen posible: sin tipos de IVA si no estás sujeto al impuesto, sin plataforma de factura electrónica fuera de la UE, sin opción de bono de días para un miembro mientras no exista ningún bono, sin función hija mientras su padre esté desactivado.
-2. **Revisa el resumen de funciones.** Lista cada función que la app va a activar y *cómo la configuran tus propias respuestas*. Desmarca lo que no quieras: se exporta desactivada y su configuración se deja fuera — siempre puedes activarla más tarde en Ajustes → Funciones.
-3. **Lee el paso de revisión.** Separa lo que está completo, lo que es una decisión por confirmar y lo que realmente bloquea, cada cosa con un salto directo a la pregunta que lo corrige.
-4. **Exporta el XML** y luego abre la app: **Ajustes → Espacio de coworking → Importar el espacio (XML)** crea directamente los ajustes, los accesorios y el plano. La sección `<setup>` del mismo archivo lleva todo lo que el importador no cubre — facturación, identidad legal, roles, miembros — para que termines esas pantallas una a una; cada pregunta te dijo dónde vive su respuesta.
-5. **Guarda el archivo.** Volver a cargarlo en la página continúa donde lo dejaste — incluido un archivo exportado antes de que existiera un ajuste, que vuelve sencillamente con ese ajuste en su valor por defecto.
-
-![](assets/help/images/setup-feature-summary.jpg)
-
-*El resumen de funciones: lo que la app va a activar, configurado por tus propias respuestas — desmarca lo que no quieras.*
-
-**Una advertencia.** El archivo exportado es texto plano. Escribe un token de facturación electrónica o una clave de proveedor de pagos solo si respondes en privado; si no, deja esos campos vacíos y teclea los secretos en la app, donde van directos al servidor y nunca vuelven.
-
-**Saltárselo no cuesta nada.** Cada respuesta que recoge es un ajuste que también puedes hacer — y cambiar — más tarde en la app. El cuestionario es un atajo para la primera hora, no una barrera.
-
-### Perfiles — una cuenta, varios espacios
-
-Los nombres de los espacios destacan en la lista de perfiles. Abra un espacio emparejado para elegir Desarrollo para probar o Producción con facturas exigibles; se marca el entorno activo. Los roles son texto secundario y los demás espacios de la plataforma están en una sección desplegable separada (#2289).
-
-Una cuenta puede pertenecer a varios espacios. **Ajustes → Perfiles** los lista todos: cada fila muestra el nombre del espacio, **tu rol allí** (Miembro, Admin, Propietario) y su ID de espacio. La **marca de verificación** señala el perfil en el que estás ahora; la **estrella** marca tu perfil **predeterminado** — aquel con el que se abre la app, en cualquier dispositivo e incluso tras reinstalar (la elección se guarda con tu cuenta). Toca una fila para cambiar, **+ Añadir un perfil** para unirte a otro espacio más. Todo en la app se refiere al espacio activo. Desde #996, **el cambio se recuerda**: tocar otro perfil, o el otro lado de una pareja, lo convierte en el predeterminado al arrancar — la estrella lo sigue, y nunca vuelve, tras un reinicio, a un espacio o un entorno que había dejado.
-
-![](assets/help/images/profiles.jpg)
-
-*Perfiles: cada espacio al que pertenece tu cuenta, tu rol, la estrella para el predeterminado, la marca para el activo.*
-
-### Orientarse
-
-La app tiene hasta cinco destinos en la barra inferior: **Mensajes** (§16), **Calendario** (§5), el gran botón central **Reservar** (§4), **Miembros** (§6) y **Finanzas** (§9). Mensajes y Reservar están siempre; Calendario, Miembros y Finanzas van y vienen con su función (§8). **Mensajes es la bandeja de entrada**: sus conversaciones y el hilo de eventos y confirmaciones (§7) son sus dos caras, y la **campana** de la barra superior salta directamente a la segunda, con el recuento de lo que le espera. El **engranaje** que abre los **Ajustes** (§12) sí está en todas las cabeceras. Con el teléfono en horizontal y en tabletas, la mayoría de las pantallas pasan a un **diseño dividido** — controles en un panel lateral, contenido llenando el resto. **Sin la campana (#1306).** Un espacio puede desactivar el feed de eventos en Funciones. Las decisiones que te esperan pasan entonces al **Calendario**: su destino lleva el contador y el calendario se abre con ellas fijadas arriba, *Aceptar* a un toque — mientras el calendario muestre las decisiones en su línea de tiempo.
-
-**Todo se mantiene en vivo.** Lo que cualquiera cambie — una reserva, un miembro nuevo, un ajuste — se envía en segundos a cada dispositivo conectado, incluido el que hizo el cambio. Sin reiniciar, sin tirar para actualizar.
-
-**En la web: barra lateral o menú.** Las ventanas amplias muestran los destinos principales en una barra lateral. Las ventanas estrechas y el texto ampliado usan el **menú ☰**. Ambos presentan los destinos disponibles según su rol y las funciones activadas, con Administración separada y Volver a Mí visible. Los teléfonos y las aplicaciones de escritorio mantienen su preferencia de navegación.
-
-**Más sitio: desliza la barra (#1173).** Desliza la barra inferior **hacia abajo** — o tócala dos veces — y las pestañas se apartan, dejando el botón redondo **Reservar** donde está. La barra sigue tu dedo mientras tiras, así ves adónde va: suelta antes de la mitad y vuelve, pasada la mitad y se queda fuera. Un toque rápido decide por sí solo, por poco que haya recorrido (#1265). El contenido recupera toda la franja, que en el plano es la diferencia entre cuatro filas de asientos y cinco. Tres formas la devuelven: deslizar **hacia arriba** en la misma franja, **mantener pulsado** el botón Reservar, o usar su acción *Mostrar navegación* con un lector de pantalla. La elección se recuerda en este dispositivo, y la pista aparece una sola vez. **La barra de título se va con ella (#1322)**, así que la vista es de verdad a pantalla completa: las dos barras siguen juntas tu dedo y vuelven juntas. La barra de estado del teléfono y la franja de desarrollo se quedan. Escanear, el editor, Privacidad y Ajustes vuelven con las barras, y mientras una decisión te espere, el botón Reservar lleva el contador de la campana.
-
-**Destinos personales y mensajes legibles (#2274, #2269).** Inicio, Descubrir, Mensajes y perfil/ajustes tienen una URL personal estable. Recargar o abrir un enlace copiado recupera el destino tras el inicio; Atrás/Adelante sigue los cambios y las pestañas visitadas conservan su estado de sesión. Las vistas previas muestran las etiquetas de los recursos enlazados. Si una referencia está cortada, aparece la etiqueta disponible con puntos suspensivos, o Recurso enlazado si falta. El mensaje original no cambia y la vista previa no consulta detalles del recurso.
-
-**Entrada y orientación (#2273, #2275, #2277).** Abrir espacio entra en el espacio habitual; Espacio de prueba abre el entorno de ensayo explicado en la tarjeta. El contexto real/de prueba sigue visible. Perfil y cuenta aparece en la navegación. Los accesos fijos Perfil, Privacidad, Preferencias y Avanzado llevan a sus secciones. Preferencias comienza por idioma, tema y formatos disponibles. Las audiencias, el perfil público y la vista previa permanecen juntos en Privacidad. Las ventanas web amplias muestran los destinos en una barra lateral, con Volver a Mí y Administración. Las ventanas estrechas y el texto ampliado usan el menú compacto. Los controles del calendario y las indicaciones del plano se desplazan si el texto ampliado necesita más altura, manteniendo accesibles la actividad y las acciones.
-
-**Encontrar mis reservas (#2276).** Mis reservas está visible encima de las categorías y vuelve a las reservas propias. El resumen indica la persona y las categorías; Restablecer filtros vuelve a la actividad propia de todas las categorías disponibles y conserva las fechas. Las filas muestran planta, recurso y estado autorizados cuando están disponibles. Las fuentes ausentes conservan su etiqueta o indican Recurso no disponible. Cada fila sigue abriendo su fuente.
-
-**Navegación del espacio.** Los destinos cotidianos permanecen visibles. La administración se organiza en **Miembros y acceso**, **Facturación y pagos** y **Configuración del espacio**. Abre un grupo para ver las herramientas de tu rol; al volver de una herramienta, el grupo sigue abierto. Volver a Yo y los destinos personales siguen separados.
-
-## 2. Roles e invitaciones
-
-DesKilo tiene tres roles acumulativos y, encima de ellos, una variante de copropiedad, más una cuenta de dispositivo:
-
-| Rol | Puede |
+| Usted es… | Empiece aquí |
 |---|---|
-| **Miembro** | Registrar entrada/salida, reservar, presentar gastos, ver y gestionar sus propios eventos y su propia cuenta |
-| **Admin** | Todo lo de un miembro, más: actuar *por cualquiera* (reservas, pagos, gastos — sujeto a confirmación, §7), aprobar gastos, consultar y gestionar los acuerdos comerciales, emitir credenciales de quiosco |
-| **Propietario** | Todo lo de un admin, más: editar el espacio físico, definir planes y precios, gestionar roles, dispositivos quiosco y ajustes del espacio |
-| **Copropietario** | *Activo*: los permisos del propietario de inmediato, más la sucesión automática. *Pasivo*: un sucesor en espera, sin permisos adicionales hoy |
-| **Quiosco** | Una cuenta de tableta de pared (§10) — solo muestra el plano; los miembros reales actúan a través de ella con una credencial |
+| Nuevo en DesKilo | [Primeros pasos](help:user.start.overview) |
+| Un miembro que reserva puestos | [Reservar](help:user.reserve.overview) · [Dinero](help:user.money.overview) |
+| Un administrador | [Colaborar](help:user.collaborate.overview) · [Miembros y planes](help:user.people.overview) |
+| Un propietario que configura su espacio | [Su espacio](help:user.space.overview) · [Facturación](help:user.people.overview) · [Impuestos y facturas](help:user.invoicing.overview) |
+| Quien gestiona una instalación | [Avanzado](help:user.advanced.overview) |
 
-Parte de esto no está grabada en piedra: el propietario reajusta **once permisos de administración** en la matriz de **Gestión de roles** (§8) — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas, ver finanzas, documentos, servicios, aprobar gastos, consultar y gestionar los acuerdos comerciales. Lo que la matriz *no* gobierna es lo cotidiano — registrarse, reservar, actuar por otro miembro, editar el espacio —, que se queda donde lo pone la tabla de arriba, condicionado en cambio por las funciones y por los interruptores de cada miembro. Desde #982 la matriz lleva también lo que antes solo podía hacer un propietario o un admin: **sedes y plantas**, **tarifas y reglas de facturación**, **reservas de otros**, **quiosco y tarjetas**, **exportaciones**, **diseño de documentos**, **datos personales de los miembros**, **integraciones** y **configuración**. Una fila de admin nunca editada conserva exactamente lo que los admins podían hacer (sedes, reservas, quiosco, exportaciones, datos personales); quien edita una fila decide toda la fila.
+**Conviene saber**
 
-**Cada invitación está ligada a un rol.** En la pantalla *ID del espacio y QR* del propietario, dos pestañas guardan dos invitaciones, cada una con su propio código QR y su propio código:
+- En la aplicación, cada `?` junto a un campo abre esta guía en ese campo.
+- La línea «Público» indica el grupo más reducido al que va dirigida: *Miembro*, *Administrador/a*, *Propietario*, *Copropietario*, *Administrador/a de facturación* u *Operador/a*. Lo que ve en la aplicación depende de su rol y de las funciones que active su propietario.
+- El texto azul es un enlace: a otra sección o a la propia pantalla.
 
-- **Invitación de miembro** — el propio ID del espacio, mostrado bajo el nombre del espacio. Imprímelo, cuélgalo en la pared, compártelo libremente: quien lo escanee o escriba **pide** unirse como miembro normal, y un validador lo admite (§7). Botones: **Copiar ID**, **Compartir como PNG**, **Cambiar el ID del espacio** (sustituye el ID generado por uno memorable, 4–20 letras/dígitos) e **Invitar a alguien**.
-- **Invitación de admin** — un **código personal de un solo uso**, emitido por un propietario para una persona concreta. La pantalla lo dice claramente: *este código admite a UNA persona como admin y luego caduca* (un código sin usar expira a los 14 días). Entrégalo solo a la persona a la que está destinado; emite uno nuevo por admin con **Nuevo código de admin**.
-- **Las invitaciones hablan el idioma del invitado** — la hoja de invitación redacta el mensaje en el idioma que elijas (cinco disponibles), por defecto el **idioma del espacio** definido en los *Ajustes del espacio*. El propietario también puede personalizar allí el texto de la invitación **por idioma**, con marcadores como `{firstName}`, `{workspaceName}`, `{inviteLink}`, `{downloadUrl}`, `{role}`; un idioma dejado vacío usa el mensaje integrado traducido.
+## Primeros pasos
 
-**No existe invitación de propietario — a propósito** (el pie de la pantalla te lo recuerda). La propiedad solo puede otorgarla un propietario existente, en *Miembros y planes*. Un espacio conserva siempre al menos un propietario. Promover o degradar un **admin** pasa por el flujo de validación (§7) — se aplica cuando los validadores del espacio confirman.
+DesKilo es el lugar donde una comunidad que comparte un espacio de trabajo reserva sus puestos, gestiona sus membresías y salda lo que se debe. Este capítulo le lleva desde el primer arranque hasta un espacio en el que ya puede trabajar.
 
-**Los copropietarios mantienen vivo el espacio.** El propietario nombra copropietario a cualquier miembro o admin (*Miembros y planes → el miembro → Copropiedad*), en una de dos variantes: un copropietario **activo** trabaja con los permisos del propietario de inmediato; un copropietario **pasivo** no tiene permisos adicionales hasta el día en que hagan falta. En ambos casos, la sucesión es automática: si el último propietario se va — sale, es eliminado o su cuenta desaparece — el mejor copropietario (activo antes que pasivo) **se convierte en propietario al instante**, en el servidor, sin que haga falta ninguna acción. El propietario también puede ceder el mando deliberadamente en cualquier momento con *Promover a propietario ahora*. Un matiz: las reglas de validación que exigen la firma del *propietario* (§7) se refieren siempre a un propietario literal, no a un copropietario activo.
+En este capítulo:
+- [Qué es DesKilo y quién hace qué](help:user.start.what-is)
+- [Crear una cuenta o iniciar sesión](help:user.start.account)
+- [Restablecer una contraseña olvidada](help:user.start.forgot-password)
+- [Explorar el espacio de demostración](help:user.start.demo)
+- [Unirse a un espacio](help:user.start.join)
+- [Crear un espacio](help:user.start.create)
+- [Buscar un espacio](help:user.start.find)
+- [Yo: su inicio y sus espacios](help:user.me.home)
+- [Mantener sus espacios en orden](help:user.me.organise)
+- [Perfiles: una cuenta, varios espacios](help:user.profile.profiles)
+- [Orientarse en la app](help:user.start.navigation)
+- [La tarjeta Primeros pasos y los consejos](help:user.start.get-started)
+- [Preparar un espacio con el cuestionario de configuración](help:user.start.questionnaire)
 
-El QR codifica un enlace que nombra el rol otorgado (`deskilo://join?role=…`). Manipular el enlace no cambia nada — el servidor deriva el rol del propio código: el ID del espacio siempre une como miembro, y una invitación personal une exactamente en el rol con el que se emitió, una sola vez. Un código de admin reenviado ya usado — o caducado — no admite a nadie.
+### Qué es DesKilo y quién hace qué
 
-**Invitar por mensaje** (*Invitar a alguien*): cada envío por WhatsApp/SMS/compartir emite su propio código personal de un solo uso y compone un mensaje listo en el idioma del invitado. El destinatario puede simplemente copiar el mensaje completo y pegarlo en el campo de unión de la app — el código se detecta automáticamente.
+**Público:** Todos
 
-## 3. El plano (en el hub Reservar)
+Usted quiere saber para qué sirve la app y qué puede hacer en ella. DesKilo responde a tres preguntas cotidianas de un espacio compartido: dónde puedo trabajar, qué debo y quién tiene que aprobar esto. Alrededor de los espacios está **Yo**, su propia cuenta, que le acompaña a cada espacio al que pertenece.
 
-El plano muestra la planta activa de tu espacio: oficinas, mesas y puestos, con código de colores — **libre**, **reservado**, **ocupado**, **mío**, **bloqueado**. Se abre **al instante con los últimos datos conocidos** y se actualiza en segundo plano — con un Wi-Fi inestable sigues viendo el estado más reciente en lugar de una pantalla vacía. Si ese estado no pudo actualizarse, un aviso lo dice — *Sin conexión — disponibilidad de las 09:30* — con **Reintentar**, porque un puesto que aparece libre puede haberse ocupado desde entonces (#1305). Un puesto ocupado muestra a quien está con su **inicial** — o con su **foto**, cuando la ha puesto y el propietario activó *Fotos de los miembros en el plano* —, con una **insignia de registro** cuando ha hecho check-in y un **punto verde** cuando está en línea en la app en ese momento. Los nombres de pila aparecen donde hay sitio para ellos: en la ficha con candado de una reserva de espacio entero y en la vista de lista. Cuando una **mesa, sala o planta entera** está reservada, el propio espacio lo dice — un lavado de color, un borde marcado y una **ficha con candado y el nombre del ocupante** en el centro (un glifo de registro cuando ya está allí); la etiqueta de la sala se lee *Bureau 2 · Florian*. Lo ven todos los usuarios, en el plano, en el hub Reservar y en el quiosco.
+![](assets/help/images/user-start-what-is.es.b8fa17aa9.jpg)
 
-El plano puede parecerse a tu espacio real: el propietario puede poner una **foto de la sala como fondo de la planta** y colocar libremente **imágenes de ilustración redimensionables** (plantas, sofás…) sobre la cuadrícula. Un control de **transparencia de mesas** en los ajustes del espacio deja ver la foto a través de las mesas dibujadas.
+Dentro de un espacio, lo que puede hacer depende de su rol. Los roles se suman: todos son miembros y los demás roles se añaden encima.
 
-Moverse:
-
-- A lo largo del borde superior: el control **Vista**, que nombra lo que estás viendo (*Plano ▾*) y abre las demás vistas — **Día**, **Semana** y **Mes**, para explorar más que para reservar (#1301); un conmutador **mapa / lista** (la lista muestra los mismos puestos como filas), el **chip de fecha** (tócalo para navegar a otro día) y los controles de ventana, que siguen la granularidad de tu espacio (§8): tres **chips de franja** — mañana, tarde, día completo — donde el espacio reserva por medias jornadas; solo *Día completo* donde reserva por jornadas enteras; controles **de → a** sobre una rejilla de minutos o un rango horario libre; y ambos a la vez con *horas reales*.
-- El lienzo **se ajusta solo** a tu planta al abrir o al girar el dispositivo; **pellizca para hacer zoom** o usa los botones **+ / −**, arrastra las **barras de desplazamiento** en los bordes y toca el botón de **ajuste** para recentrar.
-- Elige la planta en la **barra de plantas** a la derecha (1, 2, …); su **icono de capas** actúa sobre la planta entera (abajo). En **horizontal**, los controles pasan a un panel lateral y el plano llena la pantalla — útil en tabletas.
-
-Reservar desde el plano:
-
-- **Registro espontáneo**: toca un puesto libre → la hoja propone *ahora* hasta un borde canónico → confirma. Con medias jornadas y jornadas completas, el servidor **retrasa después el inicio hasta el tramo al que pertenece**: llegas a las 10:00, confirmas *hasta las 12:00* y reservas — y consumes — toda la mañana de 8:00–12:00 (§4b). Si alguien reservó ese puesto más tarde, tu hora de fin se recorta y se te avisa.
-- **Registro sobre reserva**: registrarse significa *estás aquí*. Con medias jornadas, jornadas completas y horas reales, **cualquier llegada el propio día de la reserva** abre la ventana: a las 10:00 ya puedes registrarte en tu tarde de las 12:00. Con una rejilla de minutos, la ventana abre 15 minutos antes de tu inicio, o un paso de rejilla antes cuando ese paso es más largo (así las rejillas de 5 y 15 minutos conservan los 15 minutos, y una rejilla horaria abre una hora antes). Se cierra al final de la reserva; fuera de ella el botón está desactivado y dice cuándo abre. Los admins pueden registrar a un miembro presente en su puesto (mientras *reservar para otros* esté activo).
-- **Salida**: manual — y **recorta la reserva a ahora**, así que el puesto se libera de inmediato para los demás. Es **personal por defecto**: un admin (incluido el propietario) solo puede terminar el registro de otra persona si **Los administradores pueden hacer el check-out de los miembros** está activado (§8). Con la **entrada/salida automática** activada, las reservas olvidadas se cierran solas — el barrido corre en cada lectura, así que una reserva de mañana que quedó abierta se completa en su propio fin a partir de las 12:01, no a medianoche.
-- **Espacios enteros**: **doble toque** en una mesa, una sala o una zona libre del suelo — o toca el **icono de capas** de la barra de plantas — para actuar sobre la **mesa, oficina o planta entera**. **Una sola hoja** lo contiene todo: el nombre del espacio, el selector de periodo (p. ej. *jue 6 ago 10:13 → 12:00*) con las mismas opciones de repetición que un puesto, un selector opcional **Para el miembro** para los admins que reservan por cuenta de otro, y el botón de confirmación.
-- **La hoja de reserva** mantiene la reserva a la vista: el puesto, la fecha, la hora y **Reservar**. **Repetir** y, para los operadores, *Hacer no reservable* esperan bajo **Más opciones** (#1301). Una vez reservado, la confirmación ofrece **Detalles**, que abre la nueva reserva con lo que puedes hacer a continuación: registrar la llegada, mover, cancelar.
-- **Hacer no reservable**: bajo *Más opciones* en la hoja de reserva, propietarios y admins (con *Los admins pueden bloquear puestos*) retiran el puesto del servicio a partir de ahora — se lee **bloqueado** en el plano hasta liberarlo en la hoja del puesto del editor.
-- **Línea de tiempo**: elige una ventana de→a (o Mañana / Tarde / Día completo, según la granularidad del espacio) para ver la ocupación en cualquier momento futuro.
-- Los puestos pueden llevar **accesorios** (monitor, mesa elevable…), algunos con suplemento por media jornada que aparece en tu extracto.
-- Las reservas cuentan contra tus **días mensuales** (§9) — pasado tu plan, la app bloquea o cobra, según lo que el propietario configuró para ti. Una excepción: una reserva situada **enteramente fuera del horario laboral** puede ser gratuita o quedar exenta, según la política de fuera de horario del espacio (§4b).
-
-![](assets/help/images/reserve-plan-closed.jpg)
-
-*El plano en el hub Reservar en un día de cierre: el aviso de cierre, el selector de vista, la fecha y los chips de media jornada, el carril de niveles (1 · 2 · capas) y los controles de zoom.*
-
-**Una plaza reservada parte del día lo parece (#903).** El plano lee la plaza de izquierda a derecha como la jornada abierta: una reserva que acaba a mediodía llena la mitad izquierda, una que empieza por la tarde llena la derecha, y una plaza ocupada todo el día se llena entera como antes. Un filete separa dos reservas contiguas para que nunca se lean como una, y cada tramo lleva el color de quien lo ocupa — tuyo o de otra persona.
-
-**Quién está hoy en esta plaza.** Toca una plaza con **más de una reserva** y se abre la jornada en lugar de la ficha habitual: cada tramo con su horario, su ocupante y su estado (terminado, ahora, por venir), y cada tramo libre como algo que puedes tomar — tócalo y la ficha de reserva se abre exactamente en esa ventana. Una plaza con una sola reserva se comporta como siempre. Todo ello depende de la función *La jornada de una plaza*.
-
-## 4. Reservas (hub Reservar)
-
-Tras unirse o crear un espacio correctamente, el espacio devuelto queda activo durante la sesión actual sin cambiar la opción predeterminada guardada. Una tarea ya solicitada conserva su contexto; una respuesta tardía no sustituye una elección posterior de cuenta, instancia o espacio. (#1654)
-
-**Primeros pasos** (#1654) es una ayuda opcional en el hub Reservar. La tarjeta identifica el espacio activo y su entorno y propone una acción según la información disponible: elegir una hora, consultar la membresía o abrir la ayuda. Abrir una acción no realiza una reserva. **Ahora no** oculta la tarjeta para esta cuenta, servidor y espacio; el menú de vista permite volver a abrirla. Una reserva correcta actualiza la tarjeta a partir del resultado recibido; un error no marca la tarea como completada. Los textos largos se desplazan para mantener las acciones accesibles con texto grande. Desactivar esta ayuda no desactiva las reservas normales.
-
-El resumen indica el nombre del lugar reservado y su estado actual. Con la accesibilidad activada, volver a abrir la plaza después de registrar la entrada permite registrar la salida de inmediato, sin recargar la aplicación. (#2307)
-
-Con texto grande o una ventana baja, desplace los controles del hub para acceder a la fecha y las vistas; el plano conserva su propia zona visible (#1654).
-
-Abre el hub **Reservar** (botón central). A lo largo del borde superior: dos filas de controles. La primera dice **qué** está mirando: los cuatro **botones de vista** y, en el plano, el selector **plano / lista**. La segunda dice **cuándo**: el **chip de fecha**, un botón **Ahora** en cuanto se aleja de hoy, y los **chips de franja** (mañana / tarde / día completo). Los **chips de planta** (*Todas las plantas*, o uno por planta) están sobre el propio plano, y el **botón de escaneo QR** (§4a) está en la barra superior, junto al editor y la campana. Después, cuatro vistas:
-
-- **Plano** — el plano filtrado a tu ventana elegida; toca un puesto libre para reservarlo.
-- **Día** — cada puesto como fila de cronología del día elegido (08:00 → 17:00 o el horario de tu espacio, la línea roja marca *ahora*); toca un tramo libre para reservar, tu propio bloque para ver sus detalles.
-- **Semana** — una cuadrícula puesto × día de toda la semana ISO, con una banda de días (*lun 3 … dom 9*) encima; cada celda contiene las medias jornadas del día con la inicial del ocupante. Encuentra una media jornada libre de un vistazo y tócala para reservar.
-- **Mes** — un calendario de disponibilidad: cada día muestra su **recuento de mesas libres** (p. ej. *10/12*); toca un día para entrar en su vista Día.
-
-**Un sitio a la vez — por defecto**: el espacio fija cuántas reservas superpuestas puede mantener un miembro, y ese número es **1** mientras el propietario no lo suba (§8). Con 1, reservar o registrarte en otro sitio mientras corre otra se rechaza; en cualquier caso, registrarse cierra cualquier registro anterior cuya reserva ya terminó. Los admins y propietarios pueden **anular**: tocar un puesto ocupado o reservado ofrece *Quitar la reserva (anular)* — la reserva se elimina y el miembro y todos los admins reciben aviso por el hilo de eventos.
-
-Las reservas siguen la **regla de granularidad** del espacio (§8 Disponibilidad) — medias jornadas, días completos, horas reales (de–a exacto, con las ventanas de media jornada y jornada como atajos) u horas de inicio/fin libres sobre la rejilla de tramos del propietario. Las medias jornadas y jornadas completas cubren el **horario laboral** configurado del espacio (por defecto 8:00–17:00 con el límite de media jornada a las 12:00). Respetan los **días de apertura** y los **días de cierre**, y las reglas de reserva (horizonte de antelación, duración mínima y máxima). **Una reserva termina siempre el día en que empieza** — nada cruza la medianoche; una estancia que sigue mañana es la reserva de mañana, hecha mañana (§4b). ¿Necesidad recurrente? Reserva una **serie** (diaria, laborables, semanal) — los días cerrados y los conflictos se saltan y se informan.
-
-**Eliminar una reserva pasada o registrada es una solicitud, no una acción.** Una reserva cuyo inicio ya pasó — o donde ya te registraste — no se cancela directamente: la hoja ofrece en su lugar **Solicitar eliminación**. Un propietario o admin decide la única pregunta que importa para la facturación: ¿se olvidó simplemente el registro (la reserva se mantiene en el historial) o nunca se usó (se elimina)? La solicitud aparece en el hilo de Eventos con tu motivo opcional; las reservas futuras sin tocar conservan la cancelación normal de un toque. Todo este camino depende de la función **Solicitudes de eliminación de reservas**: desactivada, una reserva empezada o registrada no tiene ni botón de cancelar ni solicitud — simplemente se queda en el historial.
-
-![](assets/help/images/reserve-day.jpg)
-
-*La vista Día: cada puesto como fila de cronología, la línea roja marcando ahora — toca un tramo libre para reservarlo.*
-
-![](assets/help/images/reserve-week.jpg)
-
-*La vista Semana: una cuadrícula puesto × día con las medias jornadas de cada día, la inicial del ocupante en la celda.*
-
-![](assets/help/images/reserve-month.jpg)
-
-*La vista Mes cuenta los puestos libres por día (8/10); tocar un día entra en su vista Día.*
-
-![](assets/help/images/reserve-booking-sheet.jpg)
-
-*La hoja de reserva: Mañana / Tarde / Día completo, Reservar para (admins), Repetir — y Hacer no reservable, para propietarios y admins.*
-
-### 4a. Escanear un código de espacio
-
-Cada puesto, mesa, oficina y planta puede llevar una **tarjeta QR** impresa (§8). Toca el **botón de escaneo** en el hub Reservar, apunta la cámara a la tarjeta — o escribe su código — y la app identifica el espacio y muestra exactamente lo que *tú* puedes hacer allí:
-
-- **Tarjeta de puesto** — reserva o regístrate en ese puesto concreto, al momento (la ventana de hoy: mañana / tarde / día completo donde el espacio usa medias jornadas; si no, desde ahora para las próximas horas).
-- **Tarjeta de mesa** — los puestos de la mesa con su estado en vivo; elige uno libre. Una mesa que el propietario marcó como reservable ofrece además la **mesa entera**, con su precio por media jornada, exactamente igual que una tarjeta de oficina o de planta.
-- **Tarjeta de oficina o planta** — si el propietario la hizo reservable, la función *Reservas de mesa, oficina y planta* está activada **y** tienes el derecho personal (§8) — los propietarios y admins siempre lo tienen — puedes reservar o registrarte en la **oficina o planta entera** — con el mismo selector de periodo (mañana / tarde / día completo, u horas libres) y las mismas opciones de **serie** que un puesto; se muestra su precio por media jornada y entra en tu factura. Si no, la hoja te dice por qué, y una oficina recae en sus puestos.
-
-**Un escaneo abre la hoja del quiosco.** Leer el código de un **puesto** — su tarjeta QR impresa, o la etiqueta NFC pegada en la silla — ofrece exactamente lo que ofrece el quiosco al tocar ese puesto: las mismas tres acciones (**Registrarse**, **Reservar**, **Salir**) y el mismo periodo derivado de los ajustes del espacio. La única diferencia: ya has iniciado sesión, así que no hay paso de credencial (§4b). Las tarjetas de mesa, oficina y planta abren su propia hoja de espacio entero, como se describe arriba; y las **etiquetas NFC solo resuelven puestos**, así que la etiqueta de la silla es el único atajo de tocar y reservar.
-
-**Los conflictos protegen en ambos sentidos:** una oficina o planta no puede reservarse mientras algún puesto de su interior ya esté reservado en esa ventana — y ningún puesto puede reservarse mientras su oficina o planta esté reservada entera.
-
-### 4b. Cómo se comporta la reserva
-
-Cada regla de abajo se aplica **en el servidor**, en un único sitio compartido al que llama toda vía de reserva. Todas las horas son locales del espacio; los ejemplos asumen la jornada laboral por defecto (08:00 – 12:00 – 17:00).
-
-**Reservar con antelación.** La forma posible de una ventana depende de la granularidad del espacio (§8 Disponibilidad):
-
-| Pides | Medias jornadas | Jornadas completas | Rejilla de minutos (5/15/30/60 min) | Horas reales / rango horario libre |
-|---|---|---|---|---|
-| La mañana (8–12) | ✅ | ❌ — debe cubrir el día completo | ✅ si los bordes caen en la rejilla | ✅ |
-| La tarde (12–17) | ✅ | ❌ | ✅ | ✅ |
-| Toda la jornada laboral (8–17) | ✅ | ✅ | ✅ | ✅ |
-| Una ventana atípica (9–15) | ❌ | ❌ | ✅ si cae en la rejilla | ✅ |
-| Antes de abrir / fuera de horario (un inicio a las 6:00, 17–21) | solo como llegada espontánea | solo como llegada espontánea | ✅ — las rejillas son libres | ✅ |
-| Fuera de la rejilla (10:02) | — | — | ❌ — el rechazo nombra la rejilla | — |
-
-Esa última fila es la única que una granularidad puede descartar por su propia forma; todo lo demás sobre una ventana lo deciden reglas que valen **en todas las granularidades por igual**:
-
-- El futuro está abierto hasta el **horizonte de reserva** (90 días por defecto) y rechazado más allá.
-- La **duración mínima y máxima** rige en todas partes, no solo en las rejillas: con el mínimo por defecto de 30 minutos, una llegada espontánea de media jornada iniciada a las 11:45 para el límite de las 12:00 se rechaza por demasiado corta — llega antes, o toma la tarde.
-- **Una reserva termina el día en que empieza.** Ninguna ventana puede cruzar la medianoche, sea cual sea la granularidad: una tarde que se alarga se convierte en la reserva de mañana, creada mañana. El rechazo dice *«una reserva termina el día en que empieza»*. La llegada espontánea vespertina que corre hasta la **medianoche local** sigue siendo válida — la medianoche es el fin propio de ese día, no un cruce. Mantener cada reserva dentro de un solo día es lo que permite responder a la ocupación, la cuota y la factura de cada día con ese día solo.
-- Una reserva en un **día ya terminado** (ayer y antes) se rechaza — *«completamente en el pasado»* — salvo que el propietario haya activado **Permitir reservas pasadas**. Reservar la ventana de esta mañana más tarde el mismo día funciona siempre.
-- Un **check-in espontáneo debe empezar hoy**: crear una reserva ya registrada para mañana se rechaza.
-- Un **día de cierre** rechaza nombrándose; un puesto ocupado rechaza; y un miembro solo mantiene tantas reservas **superpuestas** como le permita su cupo (abajo).
-- La política **Fuera del horario de apertura** (§8) decide cuánto vale una ventana que se sale de la jornada laboral, o si puede existir siquiera (abajo).
-
-Todo ello se aplica en **un único sitio compartido del servidor**, y por eso el plano, el hub Reservar, un escaneo QR o NFC y el quiosco de pared ofrecen exactamente lo que será aceptado, y por eso el quiosco rechaza justo lo que rechaza el plano — no existe el camino del «pero el quiosco me dejó». Una petición que se cuele por una pantalla desfasada se rechaza con el motivo nombrado.
-
-**Antes de pedirlo, la app te lo dice (#814).** Cada una de esas reglas se refleja en el dispositivo mediante la **guarda de reserva** (Funciones → *Guarda de reserva*, bajo *Reglas de reserva*, activada por defecto): el toque en el plano, los toques en una franja libre de las vistas Día y Semana, la hoja de reserva, la hoja única del quiosco y la hoja de escaneo QR/NFC comprueban la franja contra los parámetros de disponibilidad **antes** de ofrecerla, y nombran el mismo motivo que el servidor — *cerrado ese día*, *enteramente en el pasado*, *demasiado lejos — las reservas se abren con N días de antelación*, *demasiado corta*, *demasiado larga*, *una reserva termina el día en que empieza*, *fuera del horario de apertura*. Una franja rechazada desactiva **Reservar** con el motivo bajo el periodo; en el quiosco la credencial simplemente no se acepta para ella, y la hoja de escaneo rechaza un día cerrado de entrada, exactamente como el quiosco. Las **vistas Día, Semana y Mes** dibujan los días cerrados como cerrados — columnas atenuadas, sin toque de franja libre, *Cerrado* en lugar del recuento de sitios libres — y una **leyenda** bajo los controles nombra los estados de los sitios (*Libre · Reservada · Con check-in · Mía · Bloqueada · Día cerrado*). Donde el propietario activó **Los admins pueden dar salida a los miembros**, la hoja de un admin sobre un sitio ocupado ofrece **Dar salida a {name}**. En el navegador, que no tiene escáner de cámara, las hojas de escaneo y de quiosco lo dicen y remiten al código escrito y a la etiqueta NFC.
-
-**Cuántos sitios a la vez.** El espacio fija un número de **reservas simultáneas** (§8); vale **1** por defecto — exactamente el histórico un sitio a la vez. Un propietario o un admin puede conceder a un miembro concreto un cupo mayor en *Miembros y planes*, y ese permiso personal prevalece sobre el número del espacio; nadie fija el suyo propio. El mismo cupo gobierna los **registros**: quien tiene 2 sitios permitidos puede estar registrado en 2 sitios a la vez. Alcanzar el cupo rechaza con el mensaje de siempre — *ya tienes una reserva en ese periodo*, o *ya estás registrado en otro sitio*.
-
-**Fuera del horario de apertura.** Una ventana que se sale de la jornada laboral — una mañana temprana de 6:00–8:00, una tarde de 17:00–21:00, la llegada espontánea que corre hasta la medianoche local — se rige por una única política del espacio con **cuatro** respuestas mutuamente excluyentes (§8), las mismas en todas las granularidades.
-
-| Posición | Una reserva (o un registro espontáneo) fuera de horario |
+| Rol | Para qué sirve |
 |---|---|
-| **Prohibido** | ❌ rechazada en todas las granularidades — incluida la prórroga vespertina que las granularidades por jornadas permiten siempre, e incluida una reserva que simplemente **se pasa** del fin de la jornada (16:00–20:00) o empieza antes de abrir |
-| **Solo espontáneo** | ✅ el registro espontáneo, en **cualquiera de los dos extremos del día** — la llegada temprana de las 6:00 tanto como la prórroga vespertina hasta medianoche — ❌ reservar esa ventana **por adelantado**, y ❌ una reserva que se pasa del fin de la jornada | Desde #1000 la línea nombra su mes — «Septiembre 100 %» — para que cada factura se lea como el mes al que corresponde.
-| **Gratis** | ✅ permitida, pero nunca contada ni facturada: la reserva es pura información — los demás ven que el espacio está ocupado, y un registro dice dónde encontrar a la persona |
-| **De pago** (el defecto) | ✅ permitida y contada como uso ordinario — **salvo** un día en el que ya mantienes una reserva normal dentro del horario: la parte de fuera viaja entonces gratis |
+| Miembro | Reservar puestos, entrar y salir, escribir mensajes y seguir su propio dinero. |
+| Administrador/a | Todo lo que hace un miembro, además de actuar por otros miembros y aprobar solicitudes, en la medida en que el propietario lo haya permitido. |
+| Propietario | Todo: el plano, los precios, los roles y los ajustes del espacio. Un espacio conserva siempre al menos un propietario. |
+| Copropietario | Un copropietario activo tiene ya los permisos del propietario. Un sucesor, el tipo pasivo, toma el relevo cuando el propietario se va o le promueve. |
+| Dispositivo quiosco | Una tableta en la pared que muestra el plano. Los miembros actúan en ella con su credencial. |
 
-Esa exención es la razón de ser del defecto: corta el «reservar solo fuera de horario para no pagar» sin cobrar dos veces a quien ya consumió su día. Dos precisiones. **Gratis y De pago solo miran las ventanas situadas *enteramente* fuera del horario**: una reserva que toca el horario laboral, aunque sea un minuto, es una reserva ordinaria y contada. **Prohibido y Solo espontáneo rechazan más ampliamente**: rechazan también la ventana que se pasa, porque un espacio que cierra a las 17:00 no tiene por qué estar reservado hasta las 18:00. En *Solo espontáneo* fue a parar el retirado interruptor **Reservas por minutos dentro del horario laboral** — la misma idea, ahora en todas las granularidades. Un espacio que aún arrastra el antiguo interruptor se lee como *Solo espontáneo*, con una mejora deliberada: el interruptor viejo solo dejaba pasar la llegada *vespertina*, mientras que un modo que se llama «espontáneo» no tiene por qué rechazar a quien llega a las 6:00. Lo que rechaza es reservar por adelantado; para lo que existe es para entrar sin más. Las reglas de forma de cada granularidad siguen aplicándose encima, así que esto no abre ninguna ventana arbitraria.
+**Pasos**
 
-**Las llegadas espontáneas encajan en el tramo.** Una llegada espontánea (tocar un puesto libre, escanear su QR/NFC, o el quiosco) reserva desde *ahora* hasta un borde canónico — el límite de media jornada, el fin del día o un borde de la rejilla. Con granularidad por jornadas, la reserva cubre el **tramo entero al que pertenece el fin**: llegar a las 10:00 y elegir *hasta las 12:00* reserva toda la mañana de 8:00–12:00; cuando la ventana retrasada resulta no estar disponible — la reserva de otra persona, una tuya que se solapa, un puesto bloqueado, una mesa, oficina o planta entera ya tomada — la reserva se ancla entonces en tu llegada y conserva el fin del tramo. Al final de la jornada laboral o después, una llegada espontánea puede correr hasta la **medianoche local** (horas extra vespertinas — en todas las granularidades, salvo que **Fuera del horario de apertura** esté en *Prohibido*, la única política que las rechaza); y ahí se detiene, porque una reserva termina el día en que empieza. Y un check-in espontáneo debe empezar **hoy**: crear una reserva «registrada» para mañana se rechaza.
+1. Abra [Ajustes](app:/settings), que se llama **Mi cuenta** cuando usted no administra nada.
+2. Elija **Lo que puedes hacer aquí**.
+3. Lea qué rol le da cada capacidad. Un miembro ve **Como todos los miembros**; un administrador ve además **Del rol Administrador/a**.
 
-**Un escaneo se comporta como el quiosco.** Escanear un **puesto** — su tarjeta QR impresa o la etiqueta NFC de la silla — abre la misma hoja que abre el quiosco al tocar ese puesto: **Registrarse**, **Reservar** o **Salir**, sobre los mismos periodos derivados de los ajustes del espacio, sin el paso de la credencial, porque ya has iniciado sesión. (Las tarjetas QR de mesa, oficina y planta abren en cambio la hoja de espacio entero, §4a; las etiquetas NFC solo resuelven puestos.) A partir de ahí decide el espacio:
+**Conviene saber**
 
-| Lo que escaneas | Lo que hace la hoja |
+- El propietario decide en la matriz de roles lo que pueden hacer los administradores y los demás roles, así que dos espacios pueden ser distintos.
+- Un espacio puede tener otros roles además de estos, por ejemplo uno para la facturación. Aparecen en la misma lista.
+- No existe ninguna invitación que convierta a alguien en propietario: solo un propietario existente concede la propiedad.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix) · [Unirse a un espacio](help:user.start.join)
+
+### Crear una cuenta o iniciar sesión
+
+**Público:** Todos
+
+Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirve en todos los espacios a los que se una.
+
+![](assets/help/images/user-start-account.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la app. La pantalla de inicio de sesión le pide su **Correo electrónico** y su **Contraseña**.
+2. Para iniciar sesión, toque **Iniciar sesión**.
+3. Para crear una cuenta nueva, toque **¿Nuevo aquí? Crea una cuenta**, añada un **Nombre visible** y toque **Crear cuenta**. La contraseña debe tener al menos 8 caracteres.
+4. Si el servidor lo ofrece, toque **Google**, debajo de **o continuar con**.
+5. Algunos servidores le piden confirmar antes su dirección. La pantalla **Revisa tu correo** indica que se ha enviado un enlace: ábralo en este dispositivo. Si no llega nada, mire en la carpeta de correo no deseado o toque **Volver a enviar el correo**.
+
+![](assets/help/images/user-start-account--create.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- El botón del ojo junto a la contraseña muestra u oculta lo que escribe.
+- La primera vez que inicie sesión, se le pedirá que lea y acepte las condiciones de privacidad antes de que se abra nada más.
+- Una cuenta nueva sin espacio llega a [Yo](app:/me), donde puede buscar, unirse a un espacio o crear uno.
+- **Unirse con invitación** en la pantalla de inicio de sesión recuerda el motivo de su visita: usted crea su cuenta y después pega su invitación.
+
+**Véase también:** [Restablecer una contraseña olvidada](help:user.start.forgot-password) · [Unirse a un espacio](help:user.start.join) · [Tus datos, tus derechos](help:user.privacy.consent)
+
+### Restablecer una contraseña olvidada
+
+**Público:** Todos
+
+Usted no recuerda su contraseña. Recibe por correo un código de un solo uso y lo utiliza para establecer una nueva. No hay ningún enlace que pulsar, de modo que funciona incluso donde los enlaces no abren la app.
+
+![](assets/help/images/user-start-forgot-password.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En la pantalla de inicio de sesión, toque **¿Olvidaste la contraseña?**.
+2. Escriba su **Correo electrónico** y toque **Enviar código**.
+3. Abra el correo y copie el código.
+4. Escríbalo en **Código del correo**, elija una **Nueva contraseña** y toque **Establecer nueva contraseña**.
+
+**Conviene saber**
+
+- El mensaje **Contraseña actualizada — has iniciado sesión.** confirma que todo ha ido bien; no tiene que volver a iniciar sesión.
+- Un código no válido o caducado se rechaza: pida uno nuevo.
+- Si el código se acepta pero la contraseña no se guarda, toque **Volver a guardar la nueva contraseña**.
+
+**Véase también:** [Crear una cuenta o iniciar sesión](help:user.start.account)
+
+### Explorar el espacio de demostración
+
+**Público:** Todos
+
+Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espacio inventado, Atelier du Marché: las personas, las reservas y las facturas son ficticias, nada de lo que haga llega a un espacio real y no hace falta ninguna cuenta.
+
+![](assets/help/images/user-start-demo.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En la pantalla de inicio de sesión, toque **Explorar el espacio de demostración**.
+2. Lea la nota y toque **Empezar**.
+3. Use la franja superior para elegir desde qué papel mira: **La propietaria**, **Un miembro** o **Una administradora**. Cada toque sobre el nombre pasa al siguiente.
+4. Toque **Reiniciar la demo** para dejarlo todo como estaba al principio.
+5. Toque **Salir de la demo** cuando termine.
+
+![](assets/help/images/user-start-demo--bar.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- La franja lleva la marca **Demo** y permanece encima de todas las pantallas, de modo que no se puede confundir con un espacio real.
+- Ver la misma pantalla como propietario, como administrador y como miembro es la forma más rápida de aprender lo que puede hacer cada rol.
+- La demo se queda en este dispositivo. Salir de ella no crea ninguna cuenta.
+
+**Véase también:** [Qué es DesKilo y quién hace qué](help:user.start.what-is) · [Crear una cuenta o iniciar sesión](help:user.start.account)
+
+### Unirse a un espacio
+
+**Público:** Todos
+
+Le han dado un identificador de espacio, un código QR o un mensaje de invitación, y quiere entrar. Usted solicita unirse como miembro y un administrador le da acceso.
+
+![](assets/help/images/user-start-join.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Inicie sesión y toque **Unirse con un código** en [Yo](app:/me). Desde la pantalla de inicio de sesión, **Unirse con invitación** le lleva allí en cuanto tenga una cuenta.
+2. En **Bienvenido a DesKilo**, deje seleccionado **Unirse a un espacio**.
+3. Escriba el identificador del espacio en **Código de invitación**, o pegue el mensaje de invitación completo: el identificador se encuentra solo. **Pegar** lo lee del portapapeles y **Escanear código QR** abre la cámara ante un código impreso.
+4. Toque **Revisar invitación**. La tarjeta **Revisa antes de unirte** indica el espacio, su servidor, el rol que se ofrece y si un administrador debe aprobar.
+5. Toque **Unirse al espacio**.
+
+**Conviene saber**
+
+- Hasta que un administrador lo apruebe, verá **Membresía del espacio pendiente de aprobación**. **Comprobar de nuevo** lo actualiza, y sus demás espacios y su cuenta siguen disponibles.
+- Usted se une exactamente con el rol que lleva la invitación. El identificador del espacio siempre une como miembro; un código personal de administrador une una sola vez, como administrador.
+- Un código caducado o sustituido se explica en pantalla: pida uno vigente a quien se lo envió.
+- En un navegador la cámara no puede escanear: escriba el identificador o pegue el mensaje.
+- Si la tarjeta indica otro servidor, **Usar este servidor** cambia este dispositivo a ese servidor.
+
+**Véase también:** [El ID del espacio](help:user.workspace.code) · [Yo: su inicio y sus espacios](help:user.me.home)
+
+### Crear un espacio
+
+**Público:** Todos
+
+Usted dirige una comunidad y quiere un espacio propio. Se convierte en su propietario de inmediato.
+
+![](assets/help/images/user-start-create.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Crear un espacio](app:/onboarding) desde **Crear un espacio** en [Yo](app:/me).
+2. Escriba un **Nombre del espacio** y toque **Siguiente**. **Usar los ajustes propuestos** salta directamente al último paso.
+3. En **Dónde**, elija el **País**; la **Moneda** y la **Zona horaria** lo siguen, y usted puede cambiarlas.
+4. En la misma pantalla, en **Qué crear**, elija **Un espacio de prueba**, **Un espacio real** o **Un par vinculado de prueba y real**.
+5. En **Partir de**, elija **Espacio vacío** para dibujar su propio plano, o una plantilla ya preparada.
+6. En **Confirmar**, lea lo que se va a crear y toque **Crear espacio**.
+
+![](assets/help/images/user-start-create--where.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- El selector empieza en **Un espacio de prueba**, que es seguro para probar: todas las pantallas y documentos lo indican y no hay facturación real. Uno real emite facturas que se deben.
+- El par le da dos espacios con el mismo nombre, uno para probar y otro real. Usted es propietario de ambos.
+- Si la respuesta se pierde por el camino, la app conserva sus datos y ofrece **Reintentar tal cual**, de modo que nunca crea el espacio dos veces.
+- El nuevo espacio se abre en cuanto existe. Su configuración se explica en los capítulos para propietarios.
+
+**Véase también:** [Preparar un espacio con el cuestionario de configuración](help:user.start.questionnaire) · [El ID del espacio](help:user.workspace.code)
+
+### Buscar un espacio
+
+**Público:** Todos
+
+Usted no tiene ningún código pero quisiera encontrar un espacio cercano. Los espacios que publican una página aparecen en un directorio público.
+
+![](assets/help/images/user-start-find.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque **Buscar un espacio de trabajo** en la pantalla de inicio de sesión, o abra **Descubrir** en [Yo](app:/me).
+2. Escriba un nombre o un lugar en **Buscar espacios**.
+3. Alterne entre el **Mapa** y la **Lista** con el botón de la parte superior.
+4. Abra un resultado para leer su página pública. Allí, **Solicitar un perfil en este espacio** pide unirse, y **Entrar** abre un espacio al que ya pertenece.
+
+**Conviene saber**
+
+- Solo se muestran los espacios que han decidido ser visibles. Esta demo no tiene ninguno, así que el mapa aparece vacío.
+- Puede mirar sin una cuenta; para unirse hace falta una.
+
+**Véase también:** [Unirse a un espacio](help:user.start.join)
+
+### Yo: su inicio y sus espacios
+
+**Público:** Todos
+
+Usted quiere un único lugar que muestre quién es y todos los espacios a los que pertenece. **Yo** es solo suyo y nunca adopta los colores de un espacio. Bajo su nombre, **Mis espacios** muestra cada espacio como una tarjeta.
+
+![](assets/help/images/user-me-home.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me). Si debe dinero en algún sitio, una tarjeta en la parte superior dice **Por pagar** y abre sus finanzas.
+2. Busque su espacio en **Mis espacios**. Un espacio real tiene un botón **Abrir espacio**; un espacio con gemelo de prueba tiene además **Espacio de prueba**.
+3. Toque el botón para entrar. La pantalla se llena con el color, el motivo y el logotipo del espacio, y después el espacio se abre.
+4. Toque **Unirse con un código** o **Crear un espacio**, debajo de la lista, para añadir otro.
+
+![](assets/help/images/user-me-home--card.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- El pequeño reloj de un botón marca el lado que usó por última vez.
+- El pequeño número de un botón cuenta lo que le espera allí, sumando el espacio real y su gemelo de prueba. Mantenga pulsado el botón para leer la frase completa.
+- El motivo del borde izquierdo de la tarjeta es la identidad propia del espacio. Si las animaciones están desactivadas, el espacio simplemente se abre.
+- Un espacio que sigue **Pendiente de aprobación** muestra eso en lugar de su rol.
+- Un espacio que vive en otro servidor muestra **Abrir en** ese servidor; al abrirlo se cambia de servidor y se le pide iniciar sesión allí.
+
+**Véase también:** [Mantener sus espacios en orden](help:user.me.organise) · [Perfiles: una cuenta, varios espacios](help:user.profile.profiles)
+
+### Mantener sus espacios en orden
+
+**Público:** Todos
+
+Usted pertenece a varios espacios y quiere su propio orden. Los corazones, los grupos, las estrellas y el orden son suyos y se quedan en este dispositivo.
+
+![](assets/help/images/user-me-organise.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Yo](app:/me), toque los tres puntos de la tarjeta de un espacio.
+2. Elija **Añadir a favoritos**: el espacio pasa a **Favoritos** y muestra un corazón.
+3. Elija **Mover a un grupo…** para archivarlo en otro grupo, o toque el botón de la carpeta sobre la lista para **Nuevo grupo**.
+4. Toque una de las cinco estrellas para valorar el espacio, o **Sin valoración** para borrarla.
+5. Escriba en **Buscar mis espacios** para filtrar y use el botón de orden para elegir **Mi orden**, **Usados recientemente**, **Mejor valorados** o **A–Z**.
+
+![](assets/help/images/user-me-organise--favourite.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- En **Mi orden**, mantenga pulsada una tarjeta durante un segundo para arrastrarla, o use **Subir** y **Bajar**.
+- Toque el nombre de un grupo para plegarlo. Los grupos que haya creado pueden renombrarse o eliminarse desde su menú; **Favoritos** y **Otros** siempre están ahí.
+- **Salir de este espacio** está en el mismo menú. Usted deja de ser miembro; las reservas, las facturas y los mensajes se quedan en el espacio. Los propietarios transmiten antes el espacio.
+- **Gestionar mis espacios**, al final, abre la lista de perfiles.
+
+**Véase también:** [Perfiles: una cuenta, varios espacios](help:user.profile.profiles) · [Borrar mis datos](help:user.privacy.erase)
+
+### Perfiles: una cuenta, varios espacios
+
+**Público:** Todos
+
+Una cuenta puede pertenecer a muchos espacios. Cada espacio le da allí un perfil: su rol y sus propios datos. La lista de perfiles los muestra todos y decide con cuál se abre la app.
+
+![](assets/help/images/user-profile-profiles--row.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Perfiles](app:/profiles), o toque **Gestionar mis espacios** en [Yo](app:/me).
+2. Lea cada fila: el nombre del espacio, su rol allí y el entorno en el que está.
+3. Toque una fila para cambiar a ese perfil. La marca de verificación indica el **Perfil activo**. La próxima vez la app se abrirá con él, en todos sus dispositivos.
+4. Para fijar un perfil como predeterminado sin cambiar a él, toque la estrella (**Usar como predeterminado al iniciar**); un segundo toque lo quita.
+5. Toque **Añadir un perfil** para unirse a un espacio más o crear uno.
+
+**Conviene saber**
+
+- Un espacio con gemelo de prueba muestra una sola fila que se despliega en dos opciones, **Desarrollo — para probar** y **Producción — las facturas se deben**. Toque la que quiera; la marca de verificación la sigue.
+- Todo lo que ve en la app pertenece al espacio activo.
+- Su cuenta, su foto y su idioma no forman parte de un perfil: están en Yo y son los mismos en todas partes.
+
+**Véase también:** [Yo: su inicio y sus espacios](help:user.me.home) · [Unirse a un espacio](help:user.start.join)
+
+### Orientarse en la app
+
+**Público:** Todos
+
+Usted está en un espacio y quiere llegar a una pantalla. Todo está en un único menú, y unos pocos botones se encuentran arriba.
+
+![](assets/help/images/user-start-navigation--menu.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque el botón ☰ de la parte superior izquierda. El menú se abre con el nombre de su espacio, **Volver a Yo** y los destinos diarios: **Reservar**, **Calendario**, **Miembros**, **Dinero**.
+2. Toque un destino para abrirlo. Un número azul a su lado cuenta lo que le espera allí.
+3. Abra **Informes**, **Miembros y acceso**, **Facturación y pagos** o **Configurar el espacio** para ver las herramientas de administración que su rol permite.
+4. Abajo, **Documentos**, **Privacidad y datos** y **Ajustes** siempre están a mano.
+5. Toque el avatar de la parte superior derecha, o **Volver a Yo**, para salir del espacio y volver a [Yo](app:/me).
+
+![](assets/help/images/user-start-navigation--groups.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- Los destinos aparecen y desaparecen según las funciones que el propietario haya activado y según su rol. Un miembro sin más no ve ninguno de los grupos de administración.
+- Si su espacio tiene activados los Eventos, **Eventos**, arriba a la derecha (el icono de bandeja con un contador), reúne lo ocurrido y lo que espera su decisión; cuando el Calendario contiene las alertas, use su vista **Alertas**. **Escanear un código de espacio** y **Editar espacio** aparecen en la pantalla Reservar cuando puede usarlos.
+- En una ventana ancha, el menú permanece abierto como barra lateral. Una ventana estrecha o un texto ampliado usan el menú ☰.
+- En las apps para teléfonos y ordenadores, [Estilo de navegación](help:user.profile.settings.navigation) en Ajustes le permite elegir la barra inferior clásica con el botón redondo **Reservar**. Deslice esa barra hacia abajo para una vista de pantalla completa; deslice hacia arriba, o mantenga pulsado el botón **Reservar**, para recuperarla. Un navegador usa siempre el menú.
+
+![](assets/help/images/user-start-navigation--header.es.b8fa17aa9.jpg)
+
+![](assets/help/images/user-start-navigation--sidebar.es.b8fa17aa9.jpg)
+
+**Véase también:** [Estilo de navegación](help:user.profile.settings.navigation) · [Yo: su inicio y sus espacios](help:user.me.home)
+
+### La tarjeta Primeros pasos y los consejos
+
+**Público:** Todos
+
+Usted abre un espacio y no sabe por dónde empezar. La tarjeta **Primeros pasos** le indica un siguiente paso, y unos consejos breves explican cada pantalla.
+
+![](assets/help/images/user-start-get-started--card.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Reservar](app:/reserve). La tarjeta **Primeros pasos en** su espacio aparece en la parte superior del plano.
+2. Siga la acción que le propone, por ejemplo **Elegir un horario para reservar**.
+3. Toque **Ahora no** para guardarla.
+4. Para recuperarla, abra el menú de vista de la parte superior del plano, el que dice **Plano**, y elija **Primeros pasos**.
+
+**Conviene saber**
+
+- Para un propietario o un administrador, la tarjeta indica lo que falta antes de que nadie pueda reservar, con **Terminar la configuración**.
+- Los consejos son pequeñas tarjetas en cada pantalla. **Ocultar consejo** oculta uno y **Consejo siguiente** muestra otro.
+- Puede volver a mostrar todos los consejos ocultados con [Restaurar los consejos](help:user.profile.settings.restore-hints).
+
+**Véase también:** [Restaurar los consejos](help:user.profile.settings.restore-hints) · [Orientarse en la app](help:user.start.navigation)
+
+### Preparar un espacio con el cuestionario de configuración
+
+**Público:** Propietario
+
+Usted está a punto de abrir un espacio y tiene que tomar muchas decisiones: cómo es una reserva, cuánto cuesta un mes, qué debe decir una factura. El cuestionario de configuración le permite tomarlas todas de una vez, antes de empezar, en una pantalla grande y, si lo desea, con su contable o su junta.
+
+**Pasos**
+
+1. Abra el cuestionario en un navegador: [setup.html](https://fdittgen-png.github.io/deskilo/setup.html). No hay nada que instalar y no hace falta cuenta.
+2. Responda a los pasos en orden: *Identidad*, *Funciones*, *Disponibilidad*, *Plano*, *Suscripciones*, *Identidad legal e IVA*, *Servicios y accesorios*, *Instrucciones de pago*, *Roles y validaciones*, *Miembros e invitaciones*. Cada paso solo pregunta lo que sus respuestas anteriores hacen posible.
+3. Lea el *Resumen de funciones* y desmarque lo que no quiera: esa función empieza desactivada en la app y no se exporta nada de ella.
+4. En *Revisar y exportar*, corrija los elementos bloqueantes y toque **Exportar XML**.
+5. En la app, abra los ajustes del espacio y elija **Importar el espacio (XML)** para crear los ajustes, los accesorios y el plano.
+6. Conserve el archivo. *Cargar archivo…* recupera sus respuestas más adelante, y **Restablecer** empieza de nuevo.
+
+**Conviene saber**
+
+- Sus respuestas se guardan en su propio navegador y no se envían a ninguna parte. Puede cerrar la pestaña y volver.
+- El archivo es texto sin formato: deje vacíos los tokens y las claves y escríbalos después en la app.
+- Cada pregunta indica dónde se encuentra el ajuste en la app, de modo que puede terminar el resto pantalla por pantalla.
+- Saltárselo no cuesta nada: cada respuesta es un ajuste que puede hacer o cambiar más adelante en la app.
+
+**Véase también:** [Crear un espacio](help:user.start.create) · [Importar el espacio (XML)](help:user.workspace.export.space-import)
+
+## Reservar
+
+Reservar una plaza es el corazón de DesKilo: usted mira el plano de su espacio, elige un día y una hora, toca una plaza libre y confirma. Este capítulo sigue ese camino y después explica lo que ocurre a su alrededor: las reglas con las que se encuentra, entrar y salir, cambiar una reserva y el Calendario, donde se guarda todo lo que tiene fecha.
+
+En este capítulo:
+- [El centro Reservar y el plano](help:user.reserve.hub)
+- [Orientarse en el plano](help:user.reserve.plan-levels)
+- [Ver las plazas como lista](help:user.reserve.list)
+- [Elegir el día y la hora](help:user.reserve.when)
+- [Vista Día](help:user.reserve.day-view)
+- [Vista Semana](help:user.reserve.week-view)
+- [Vista Mes](help:user.reserve.month-view)
+- [Reservar una plaza](help:user.reserve.book)
+- [La hoja de reserva](help:user.reservations.booking-sheet)
+- [Registrarse ahora cuando ya está allí](help:user.reserve.walk-up)
+- [Reservar una mesa, una sala o una planta entera](help:user.reserve.whole-space)
+- [Reservar para otra persona](help:user.reserve.for-someone)
+- [Repetir una reserva](help:user.reserve.series)
+- [Las reglas con las que se encuentra al reservar](help:user.reserve.policies)
+- [Días de cierre y festivos](help:user.reserve.closed-days)
+- [Registrar la llegada y la salida](help:user.reserve.check-in)
+- [Escanear un código de espacio](help:user.reserve.scan)
+- [Cambiar o cancelar una reserva](help:user.reserve.change)
+- [Cuando una reserva está pendiente de confirmación](help:user.reserve.awaiting)
+- [La pestaña Calendario](help:user.reserve.calendar)
+- [Agenda, Semana y Mes en el Calendario](help:user.reserve.calendar-views)
+- [Decisiones que le esperan en el Calendario](help:user.reserve.calendar-decisions)
+- [Filtrar el Calendario](help:user.reserve.calendar-filters)
+- [Guardar una reserva en su propio calendario](help:user.reserve.calendar-file)
+
+### El centro Reservar y el plano
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere ver qué plazas están libres. El centro Reservar se abre en el plano de una planta de su espacio, dibujado para el día y la hora que está mirando.
+
+![](assets/help/images/user-reserve-hub.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Reservar](app:/reserve).
+2. Lea el plano: cada plaza lleva su nombre, un pequeño símbolo y un color que indica de qué se trata.
+3. Toque una plaza para actuar sobre ella. Una plaza libre abre la hoja de reserva; su propia plaza ofrece registrar la llegada y cancelar; la plaza de otra persona le dice quién la tiene y hasta cuándo.
+4. La leyenda bajo la fecha explica los colores. Es la misma en el plano y en las vistas Día, Semana y Mes.
+
+| Estado | Qué significa |
 |---|---|
-| Un espacio en el que mantienes una reserva | continúa con el registro de **esa** reserva |
-| Un espacio libre | el registro lo reserva implícitamente, encajado en el tramo como toda llegada espontánea |
-| Un espacio bloqueado por la reserva de otra persona | nombra al titular y ofrece **Escribirle** — la conversación se abre con la reserva que bloquea referenciada |
+| **Libre** | Nadie tiene la plaza en la franja que ha elegido. |
+| **Reservada** | Alguien la ha reservado. |
+| **Con check-in** | La persona que la reservó ya ha llegado. |
+| **Mía** | Es su reserva. |
+| **Bloqueada** | La plaza está fuera de servicio, por ejemplo por mantenimiento. |
+| **Día cerrado** | El espacio está cerrado ese día (vistas Día, Semana y Mes). |
 
-La misma acción *escribir al titular* está en la pestaña **Plano** cuando tocas un puesto que ocupa otra persona. En el quiosco, en cambio, el recibo nombra al titular y te remite a la app: un dispositivo de pared nunca envía mensajes por ti.
+**Conviene saber**
 
-**Registrarse (check-in).** Con medias jornadas, jornadas completas y horas reales, la ventana abre para **todo el día reservado**: a las 10:00 ya puedes registrarte en tu tarde de las 12:00, porque el tramo *es* la jornada laboral. Con una rejilla de minutos abre **15 minutos antes** de tu inicio — o un **paso de rejilla** antes cuando ese paso es más largo, así que las rejillas de 5, 15 y 30 minutos conservan los 15 minutos y una rejilla horaria abre una hora entera antes. La hoja lee siempre el reloj real, de modo que navegar una fecha futura nunca esconde el registro de hoy en tu propia reserva. Registrarse otro día («la reserva de mañana hoy»), después de terminar la reserva, dos veces, o en un día de cierre se rechaza con el motivo. Si sigues registrado **en otro sitio**: una reserva aún en curso lo bloquea en cuanto has alcanzado tu cupo (1 por defecto, así que la primera reserva en curso ya bloquea — *haz allí primero el check-out*); una ya terminada se cierra en silencio — sellada en su propio fin — y el nuevo registro procede. Un admin puede registrar a un miembro mientras *Reservar para otros* esté activo (§8 Funcionalidades).
+- Una plaza ocupada muestra quién está allí: una inicial, o una foto cuando la persona ha puesto una y su espacio muestra fotos en el plano. Un pequeño punto verde significa que está usando la app en este momento.
+- Una mesa, una sala o una planta entera reservada lo indica en el plano, con el nombre de quien la tiene.
+- Algunos espacios muestran menos estados: una plaza reservada y una con llegada registrada se ven igual, y bloqueada aparece como **No disponible**.
+- Cuando no se ha podido cargar la última disponibilidad, un aviso dice **Sin conexión** con la hora de los últimos datos y un botón **Reintentar**, porque una plaza que aparece libre puede haberse ocupado desde entonces.
 
-**Salir (check-out).** Salir antes del fin reservado **recorta la reserva a ahora** — el puesto se libera inmediatamente para los demás. Tras un registro anticipado el mismo día, salir antes del inicio reservado conserva la **presencia real** (del instante del registro a ahora). ¿Lo olvidaste y volviste después? El check-out sigue funcionando: el fin reservado se queda, el sello es veraz. Salir sin haberse registrado — o dos veces — se rechaza. Por defecto el **check-out es personal**: un admin solo puede terminar el registro en curso de un miembro si el propietario activó **Los administradores pueden hacer el check-out de los miembros** (§8). Un registro nunca cerrado se completa solo en cuanto te registras en otro sitio después de su fin — o, con la **entrada/salida automática**, en el barrido de fin de día.
+**Véase también:** [Elegir el día y la hora](help:user.reserve.when) · [La hoja de reserva](help:user.reservations.booking-sheet)
 
-**Ausencias.** Una reserva nunca registrada simplemente queda *reservada* en el historial. Con la **entrada/salida automática**, el barrido de fin de día marca el día pasado como asistido — registrado al inicio, salido al final, completado.
+### Orientarse en el plano
 
-**Cancelar.**
+**Público:** Miembro · Administrador/a · Propietario
 
-| Caso | Qué pasa |
+Usted quiere llegar a la planta, la sala o la mesa que tiene en mente. El plano se puede mover, ampliar y cambiar de una planta a otra.
+
+![](assets/help/images/user-reserve-plan-levels.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque el nombre de la planta, arriba a la derecha del plano, por ejemplo **Primera planta**, y elija otra planta. Su elección se conserva para la próxima vez que abra el centro.
+2. Amplíe con dos dedos, o con **Acercar** y **Alejar**. Arrastre las barras de desplazamiento de los bordes para moverse.
+3. Toque **Ajustar el plano a la pantalla** para volver a ver la planta entera.
+4. Lea los nombres de las salas en la esquina de cada una. Toque una plaza dentro de ella para reservarla.
+
+**Conviene saber**
+
+- El selector de planta solo ofrece un menú cuando su espacio tiene más de una planta.
+- Una planta, una sala o una mesa que se puede reservar entera muestra su propio botón o un doble toque: véase [Reservar una mesa, una sala o una planta entera](help:user.reserve.whole-space).
+
+**Véase también:** [Ver las plazas como lista](help:user.reserve.list) · [Vista Día](help:user.reserve.day-view)
+
+### Ver las plazas como lista
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted prefiere filas a un dibujo, o el plano se lee mal en una pantalla pequeña. La lista muestra las mismas plazas, planta por planta y mesa por mesa.
+
+![](assets/help/images/user-reserve-list.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Reservar](app:/reserve), toque **Vista de lista**, el botón junto al menú de vista.
+2. Busque la plaza. Cada fila la nombra e indica si está libre, reservada o es suya.
+3. Toque **Reservar** en una fila libre para abrir la hoja de reserva.
+4. Para volver al dibujo, toque **Vista de plano**.
+
+**Conviene saber**
+
+- La lista sigue el día y la hora que ha elegido, igual que el plano.
+- Con los favoritos y las valoraciones activados, cada fila lleva además un corazón (**Añadir a favoritos**) y estrellas.
+
+**Véase también:** [Elegir el día y la hora](help:user.reserve.when) · [La hoja de reserva](help:user.reservations.booking-sheet)
+
+### Elegir el día y la hora
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere reservar para otro día, o para una hora que no es ahora. Las dos filas de controles de la parte superior del centro indican qué mira y cuándo.
+
+![](assets/help/images/user-reserve-when.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque la fecha, por ejemplo 14 de mayo, y elija un día en el calendario. Puede mirar hasta un año por adelantado.
+2. Elija la hora. Si su espacio reserva por medias jornadas, toque **Mañana**, **Tarde** o **Día completo**. Si reserva por horas o en un intervalo libre, toque la primera hora para fijar **Desde** y la segunda para fijar **Hasta**.
+3. Lea la línea bajo los controles: indica el día, el periodo y las horas en la zona horaria del espacio, y en la suya cuando es distinta.
+4. Para volver a hoy, toque **Ahora**.
+
+**Conviene saber**
+
+- Los controles que ve dependen de las reglas del espacio: algunos reservan por medias jornadas, otros solo por días enteros y otros a cualquier hora sobre una cuadrícula.
+- En un teléfono, los chips de parte del día son pequeños iconos de media jornada o de jornada completa. Mantenga pulsado uno para leer su nombre y sus horas.
+- El plano responde a la hora que ha elegido: una plaza que aparece libre lo está durante todo ese tiempo.
+- Donde las reservas son por media jornada, el periodo con el que empieza es el habitual, que se fija en [Período de reserva predeterminado](help:user.profile.settings.default-period).
+
+**Véase también:** [El centro Reservar y el plano](help:user.reserve.hub) · [Reservar una plaza](help:user.reserve.book)
+
+### Vista Día
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere ver quién está dónde durante el día, y no solo en un momento. La vista **Día** dispone cada plaza como una fila a lo largo de las horas.
+
+![](assets/help/images/user-reserve-day-view.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Reservar](app:/reserve), abra el menú de vista, que al principio dice **Plano**, y elija **Día**.
+2. Elija el día con el botón de fecha. Elija una planta con los chips sobre las filas: **Todas las plantas** o una sola.
+3. Lea las barras. Cada una es una reserva, con el nombre de quien la tiene; las suyas destacan con el color de **Mía**.
+4. Toque un tramo libre de una fila para reservar esa plaza en la hora elegida. Toque su propia reserva para abrir sus detalles; toque la de otra persona para ver quién la tiene y hasta cuándo.
+
+**Conviene saber**
+
+- Un día cerrado se dibuja como cerrado y no se puede reservar.
+- El menú del control **Vista** incluye también **Semana** y **Mes**.
+
+**Véase también:** [Vista Semana](help:user.reserve.week-view) · [Cambiar o cancelar una reserva](help:user.reserve.change)
+
+### Vista Semana
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere encontrar una mañana o una tarde libre en los próximos días. La vista **Semana** muestra las plazas en vertical y los días de la semana en horizontal.
+
+![](assets/help/images/user-reserve-week-view.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra el menú de vista y elija **Semana**.
+2. Busque su día. Cada día tiene dos celdas contiguas, la mañana y la tarde. Una celda llena muestra la inicial de quien la tiene.
+3. Toque una celda vacía para reservar esa mitad del día en esa plaza.
+4. Toque el nombre de un día en la parte superior para saltar a ese día en la vista **Día**.
+
+**Conviene saber**
+
+- Los días cerrados aparecen en gris y llevan una marca de cierre.
+- Elija **Todas las plantas** o una sola con los chips sobre la cuadrícula.
+
+**Véase también:** [Vista Día](help:user.reserve.day-view) · [Vista Mes](help:user.reserve.month-view)
+
+### Vista Mes
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere saber qué días tienen sitio. La vista **Mes** cuenta las plazas libres de cada día.
+
+![](assets/help/images/user-reserve-month-view.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra el menú de vista y elija **Mes**.
+2. Lea cada día: el número de plazas libres sobre el total, por ejemplo 6/6. Los días cerrados dicen **Cerrado**.
+3. Toque un día para abrirlo en la vista **Día**, donde ve quién ha reservado.
+
+**Conviene saber**
+
+- El recuento abarca todas las plantas del espacio.
+- El día de hoy aparece rodeado con un círculo.
+
+**Véase también:** [Días de cierre y festivos](help:user.reserve.closed-days) · [Vista Día](help:user.reserve.day-view)
+
+### Reservar una plaza
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere una plaza para un día y una hora concretos. Desde el plano bastan unos toques: el día, la hora, la plaza y una confirmación.
+
+**Pasos**
+
+1. Abra [Reservar](app:/reserve) y elija el día y la hora, como se describe en [Elegir el día y la hora](help:user.reserve.when).
+2. Elija la planta, si su espacio tiene varias.
+3. Toque una plaza libre. La hoja de reserva se abre sobre ella.
+4. Revise la línea que nombra la plaza y el periodo, cambie lo que necesite y toque **Reservar**.
+5. Un mensaje confirma la reserva. Toque **Detalles** en él para abrir la nueva reserva.
+
+**Conviene saber**
+
+- No se reserva nada hasta que toque **Reservar**.
+- Si la plaza se ocupó hace un segundo, la app se lo dice en lugar de reservarla dos veces.
+- Si la conexión se corta después de tocar, la pantalla **Su solicitud de reserva** le permite comprobar lo que ha pasado, retomar la misma solicitud o dejarla. Una solicitud nunca se reserva dos veces.
+- En un día cerrado, el plano dice **Cerrado este día** y ofrece el siguiente día abierto.
+
+**Véase también:** [La hoja de reserva](help:user.reservations.booking-sheet) · [Las reglas con las que se encuentra al reservar](help:user.reserve.policies)
+
+### La hoja de reserva
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted ha tocado una plaza libre y se abre la hoja. Muestra lo que va a reservar y le permite ajustarlo antes de confirmar. La hoja solo propone: las reglas del espacio se comprueban cuando usted confirma.
+
+![](assets/help/images/user-reservations-booking-sheet.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Lea el resumen: el espacio, la planta, la mesa y la plaza, para quién es la reserva, el día, las horas y la repetición.
+2. Ajuste el periodo. Con medias jornadas, toque **Mañana**, **Tarde** o **Día completo**. En una cuadrícula horaria, fije **Desde** y **Hasta**; en una cuadrícula por minutos, un control deslizante llamado **Duración** fija la duración.
+3. Abra **Más opciones** para repetir la reserva.
+4. Si lo desea, añada la plaza a sus favoritos con el corazón, o valórela con las estrellas.
+5. Toque **Reservar**.
+
+**Conviene saber**
+
+- Si el periodo elegido no está permitido, una línea roja bajo el periodo explica por qué y **Reservar** permanece en gris.
+- Si otra reserva sigue en la misma plaza, la hoja indica que el asiento está reservado a partir de esa hora y detiene su reserva allí.
+- Los administradores ven **Reservar para** y, para bloquear una plaza, **Gestionar recurso**.
+- Cuando el periodo elegido incluye este momento, aparece un interruptor **Registrarse ahora mismo**, desactivado por defecto.
+
+**Véase también:** [Registrarse ahora cuando ya está allí](help:user.reserve.walk-up) · [Repetir una reserva](help:user.reserve.series) · [Reservar para otra persona](help:user.reserve.for-someone)
+
+### Registrarse ahora cuando ya está allí
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted está de pie junto a una plaza libre y quiere ocuparla ahora mismo. En el plano de hoy, la hoja de reserva ofrece dos acciones una junto a otra.
+
+![](assets/help/images/user-reserve-walk-up.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Reservar](app:/reserve) en hoy, sin haber elegido otra hora, y toque una plaza libre.
+2. En la parte superior de la hoja, elija **Reservar** o **Registrarse ahora**.
+3. **Reservar** mantiene el periodo que ha elegido. **Registrarse ahora** cambia al periodo actual y le marca como presente.
+4. Toque **Registrarse** para confirmar.
+
+**Conviene saber**
+
+- El registro se detiene donde empieza la siguiente reserva de esa plaza, y la hoja se lo indica.
+- Un registro espontáneo debe empezar hoy.
+- Donde las reservas son por media jornada, el registro termina con la media jornada en curso, o con el día cuando su periodo habitual es el día completo.
+
+**Véase también:** [Registrar la llegada y la salida](help:user.reserve.check-in) · [Las reglas con las que se encuentra al reservar](help:user.reserve.policies)
+
+### Reservar una mesa, una sala o una planta entera
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted necesita la mesa entera, la sala entera o toda la planta, para una reunión o para un día. Los espacios configurados para ello pueden reservarse como un todo.
+
+![](assets/help/images/user-reserve-whole-space.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En el plano, toque dos veces la mesa, la sala o la planta vacía. Para una planta también puede tocar **Reservar la planta**, el botón bajo el selector de planta.
+2. La hoja nombra el espacio, el periodo y el **Precio por media jornada** cuando lo hay.
+3. Toque **Registrarse** para ocuparlo ahora, o **Reservar** para reservarlo en el periodo indicado.
+4. En la hoja de reserva que se abre, elija el periodo y toque **Reservar**.
+
+**Conviene saber**
+
+- Un miembro necesita el derecho a reservar espacios enteros; los propietarios y los administradores lo tienen. Sin él, la hoja dice **No tienes permiso para reservar una mesa, oficina o planta entera.**
+- Un espacio entero no se puede reservar mientras una de sus plazas esté ocupada en ese periodo, y ninguna plaza se puede reservar mientras su mesa, sala o planta esté reservada como un todo.
+- Cuando el propietario pide aprobación, la reserva de un espacio entero bloquea el espacio de inmediato y espera a los validadores; si la rechazan, se cancela.
+
+**Véase también:** [Cuando una reserva está pendiente de confirmación](help:user.reserve.awaiting) · [Escanear un código de espacio](help:user.reserve.scan)
+
+### Reservar para otra persona
+
+**Público:** Administrador/a · Propietario
+
+Usted quiere reservar una plaza en nombre de un miembro. Los administradores pueden elegir al miembro en la hoja de reserva.
+
+![](assets/help/images/user-reserve-for-someone.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una plaza libre en [Reservar](app:/reserve) para abrir la hoja de reserva.
+2. Abra **Reservar para** y elija al miembro.
+3. El resumen dice ahora **Reserva para** ese miembro, y el botón cambia a **Enviar para confirmación**.
+4. Toque **Enviar para confirmación**. Un mensaje indica **Enviado a** ese miembro **para confirmación**.
+
+**Conviene saber**
+
+- El miembro tiene que aceptar antes de que la reserva exista. Encuentra la solicitud en su Calendario y en sus notificaciones.
+- Una reserva hecha para otra persona nunca tiene el registro de llegada hecho y no se puede repetir.
+- El campo **Reservar para** solo aparece si el propietario permite que los administradores reserven para los miembros. Para una planta entera, el propietario decide quién puede asignarla.
+
+**Véase también:** [Cuando una reserva está pendiente de confirmación](help:user.reserve.awaiting) · [Decisiones que le esperan en el Calendario](help:user.reserve.calendar-decisions)
+
+### Repetir una reserva
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted se sienta en la misma plaza todos los martes, o todos los días laborables durante un mes. Una reserva repetida crea todas las fechas de una vez.
+
+![](assets/help/images/user-reserve-series.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la hoja de reserva sobre una plaza libre y el primer día que quiera.
+2. Abra **Más opciones**.
+3. En **Repetición**, elija **Cada día**, **Cada día laborable** o **Semanalmente**. Por defecto es **No se repite**.
+4. Fije **Repetir hasta**, la última fecha. La hoja propone cuatro semanas por delante.
+5. Toque **Reservar**. Un cuadro de diálogo le indica cuántas reservas se han creado.
+
+**Conviene saber**
+
+- Las fechas que no se han podido reservar se enumeran en el cuadro de diálogo y se omiten. Las demás se mantienen.
+- Para cancelar una reserva repetida, abra una de sus fechas y elija **Cancelar esta ocurrencia** o **Cancelar esta y las siguientes**.
+- También puede convertir una reserva única en repetida desde **Cambiar horario** en sus detalles.
+- La repetición no se ofrece cuando reserva para otra persona.
+
+**Véase también:** [Cambiar o cancelar una reserva](help:user.reserve.change) · [La hoja de reserva](help:user.reservations.booking-sheet)
+
+### Las reglas con las que se encuentra al reservar
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted ha intentado reservar y la app ha dicho que no, o se pregunta qué está permitido. Su propietario fija las reglas del espacio; esto es lo que usted ve de ellas.
+
+| Regla | Qué ve |
 |---|---|
-| Una reserva futura tuya | ✅ cancelada con un toque |
-| Tu reserva en curso, registrada | ❌ no hay cancelación directa — la hoja ofrece en su lugar **Solicitar eliminación** (§4) y **Terminar antes** (abajo), porque la presencia ya ocurrió |
-| Devolver el resto del día | ✅ **Terminar antes** sobre una reserva en curso: con medias jornadas y jornadas completas mueve el fin al límite de media jornada mientras este siga por delante; en las rejillas abre un selector encajado que rechaza cualquier hora que no quede por delante de ahora. El inicio es inamovible, y el tiempo liberado es inmediatamente reservable por otros |
-| Una reserva completada o ya cancelada | ❌ no queda nada que cancelar |
-| La reserva de otra persona | ❌ para un miembro; ✅ para un admin/propietario — la anulación (§4), atribuida al admin en el hilo de eventos |
-| Una serie, «esta y las siguientes» | ✅ cancela las ocurrencias *reservadas* restantes desde esa fecha; las registradas y completadas conservan su historial |
-| Una reserva **pasada o registrada** que quieres eliminar | una **solicitud de eliminación** (§4): un validador confirma (eliminada) o rechaza (se mantiene); una nueva solicitud sustituye a una pendiente, y las reservas futuras se cancelan directamente |
+| Horario de apertura y días abiertos | El plano y las vistas siguen la jornada de trabajo, de 08:00 a 17:00 por defecto, con la división de media jornada a las 12:00. Un día cerrado dice **Cerrado este día**. |
+| Fuera del horario de apertura | Depende del espacio. Desactivado: **Las reservas fuera del horario de apertura no están permitidas.** Solo espontáneas: puede registrarse en el momento pero no reservar con antelación. Libre: permitido, nunca se cuenta ni se cobra. De pago: permitido y contado como uso, salvo un día en el que ya tenga una reserva normal. |
+| Reservas pasadas | Una reserva en un día que ya ha terminado se rechaza, salvo que el propietario permita reservas pasadas: **Esta reserva está completamente en el pasado.** Antes en el mismo día se registra como una visita pasada. |
+| Límites | Una reserva tiene un horizonte máximo (**Demasiado lejos**, 90 días por defecto), una duración mínima y una máxima (**Demasiado corta**, **Demasiado larga**) y termina el día en que empieza. |
+| Un solo sitio a la vez | Por defecto puede tener una reserva en un periodo dado: **Ya tienes una reserva en ese periodo**. Un administrador puede permitirle más. |
+| Límite de reservas | **Límite de reservas alcanzado** cuando tiene el máximo de reservas abiertas que se le permite. |
+| Días de su plan | Cuando se agotan los días de su plan, se aplica el ajuste del propietario para usted: las reservas pueden detenerse, se le puede pedir que compre un paquete o se cobran los días adicionales. |
 
-**Aprobaciones.** Donde el propietario puso una regla de validación sobre las **reservas de espacios enteros** (§7), la reserva bloquea el espacio inmediatamente y espera el quórum — un rechazo la cancela; sin regla, sin paso de aprobación. Las solicitudes de eliminación siguen el mismo marco. **Nadie valida su propio evento** — con una excepción que el propietario activa deliberadamente: en las reglas de validación (§7), dos interruptores independientes permiten a los **admins** y/o a los **propietarios** resolver al instante *sus propias* solicitudes de **eliminación de reserva**, sin esperar a un validador. Ambos están **desactivados por defecto**, alcanzan únicamente a las eliminaciones de reservas, y una eliminación resuelta automáticamente queda marcada como tal en el hilo de eventos — siempre distinguible de una revisada por otra persona.
+**Pasos**
 
-#### La hoja de reserva
+1. Cuando se rechaza un periodo, lea la línea roja bajo él en la hoja de reserva.
+2. Cambie el día, la hora o la plaza, o consulte a un administrador.
+3. Si sus días están agotados, abra [Dinero](app:/money) para ver su plan y, donde se ofrezca, toque **Solicitar medias jornadas extra**.
 
-Lo que se abre al tocar una plaza libre: la ventana, si se registra
-ahora, y para un administrador, para quién es. La hoja solo propone —
-cada regla la comprueba el servidor al confirmar, de modo que una plaza
-ocupada un segundo antes se rechaza aquí en vez de reservarse dos
-veces.
+**Conviene saber**
 
-### 4c. Guardar una reserva en tu propio calendario (#1643)
+- Las mismas reglas se aplican en el plano, en el centro Reservar, en un código escaneado y en el quiosco de pared.
+- La app comprueba un periodo antes de ofrecerlo, así que la mayoría de los rechazos aparecen en la hoja y no después de tocar.
 
-Cada superficie que abre una de **tus propias** reservas — el plano, Día,
-Semana, la línea de tiempo del calendario — ofrece **Guardar archivo de
-calendario**. Escribe un archivo `.ics` estándar (RFC 5545) que cualquier
-calendario importa: Google, Outlook, Apple, Thunderbird o el de tu
-teléfono. Antes de guardar nada ves exactamente lo que dirá el archivo —
-el espacio reservado, la hora, el nombre del espacio de coworking como
-lugar, el estado — y, bajo *Contenido del archivo*, el archivo mismo.
+**Véase también:** [Políticas de reserva](help:user.workspace.availability.policies) · [Reservas simultáneas](help:user.members.simultaneous) · [Límite de reservas](help:user.members.reservation-limit)
 
-**Lo que lleva el archivo, y lo que nunca lleva.** La hora como instante
-(en UTC, así cae a la hora correcta en tu calendario estés donde estés y
-a través de un cambio de hora), el espacio reservado, el nombre del
-espacio de coworking y *Confirmada* o *Cancelada*. Nada más: sin importe,
-sin nombre, sin dirección de correo, sin nota, sin enlace, sin invitación
-a nadie — y una reserva cancelada se exporta como cancelada, nunca como
-un evento en curso.
+### Días de cierre y festivos
 
-**Una instantánea, no una suscripción.** El archivo describe la reserva
-tal como está en el momento en que la guardas. Si más tarde se mueve o
-se cancela, un archivo ya guardado o compartido no cambia, y un archivo
-compartido no se puede recuperar. Guardar de nuevo la misma reserva
-produce un archivo con el mismo identificador, así que la mayoría de los
-calendarios sustituyen el evento anterior en lugar de añadir un segundo —
-aunque eso lo decide el importador, no la aplicación. Si la reserva
-cambió entre la vista previa y tu toque en *Guardar*, no se escribe
-nada: la vista previa se actualiza y te pide que mires de nuevo.
+**Público:** Miembro · Administrador/a · Propietario
 
-El archivo llega a tus descargas (en un dispositivo: la carpeta
-Descargas; en un navegador: donde tu navegador guarde las descargas). Es
-una **funcionalidad** que un propietario puede desactivar en *Ajustes →
-Funcionalidades*; está activada por defecto. La aplicación no escribe en
-ningún calendario y nada se sincroniza.
+Usted quiere saber por qué no se puede reservar un día. Su espacio está cerrado algunos días de la semana y en los días de cierre que el propietario ha añadido, como los festivos.
 
-**Intervalo de reserva (#2270).** El resumen bajo los controles muestra el día, la fecha completa, Hoy o Mañana cuando corresponda, el período elegido, las horas exactas y la zona horaria del espacio. Si tu zona personal difiere, aparece también tu hora. Cambiar el período o una hora personalizada actualiza el resumen antes de elegir asiento. Las pantallas amplias nombran los períodos; en las estrechas el elegido sigue legible en el resumen.
+![](assets/help/images/user-reserve-closed-days.es.b8fa17aa9.jpg)
 
-**Leer el plano (#2271).** El nombre de la planta seleccionada se muestra incluso si solo hay una; el menú conserva los nombres completos. Cada asiento tiene una etiqueta opaca y un símbolo de la leyenda: círculo vacío para libre, candado para reservado, marca para presente, estrella para el suyo y bloqueo para no disponible. Amplíe los planos densos para leer los nombres. Los lectores de pantalla conservan el nombre completo y el estado con cualquier zoom. En la lista, el selector de planta queda encima de las filas sin tapar sus acciones.
+**Pasos**
 
-**Revisar antes de confirmar (#2272).** El formulario nombra espacio, planta/recurso, persona, fecha completa, horas exactas, zona horaria y repetición antes de decidir. Indica cuando no están disponibles el importe final y el cálculo del cupo. Reservar mantiene el intervalo; Registrarse ahora usa el actual y marca tu presencia. El interruptor separado añade presencia a una reserva actual. La confirmación sigue visible al desplazarse. Favoritos y valoraciones siguen a las opciones; el mantenimiento queda en Gestionar recurso para operadores autorizados. En la lista, Reservar abre el formulario y las valoraciones tienen su propia acción (#2268).
+1. Elija el día en [Reservar](app:/reserve). Un día cerrado muestra un aviso, **Cerrado este día**.
+2. Toque el atajo del aviso, que dice «Mostrar» y el siguiente día abierto, para ir allí.
+3. En **Mes**, los días cerrados dicen **Cerrado**; en **Semana** aparecen en gris con una marca; en **Día** se marcan como cerrados, bajo la entrada de la leyenda **Día cerrado**.
+4. En el Calendario, los días cerrados aparecen tachados, y la lista del día indica **Cerrado** con el motivo cuando el propietario lo ha dado.
 
-## 5. Calendario (pestaña Calendario)
+**Conviene saber**
 
-El mes de un vistazo, con dos alcances y dos formas:
+- En un día cerrado, las plazas llevan el símbolo de bloqueo y no se pueden reservar ni registrar en ellas la llegada.
+- Los festivos aparecen exactamente igual que cualquier otro día de cierre.
 
-**El calendario es un selector, no un escenario (#718).** Elija un **día** o un **periodo**; lo que ve es un único flujo de todo lo fechado que puede ver — reservas, registros y salidas, avisos, mensajes, facturas, pagos, consumos, recordatorios — agrupado por día, filtrado por tipo con los chips, y **cada fila abre su origen** (la reserva, la conversación, el aviso, la factura, el mes en Finanzas). Un miembro con el permiso de finanzas o de administración de miembros puede mirar a otro miembro; los tipos que el servidor no permite para ese miembro aparecen **bloqueados**, nunca como un día vacío. El escudo abre *Quién puede ver esto*, con el registro de accesos.
+**Véase también:** [Vista Mes](help:user.reserve.month-view) · [Días de cierre](help:user.workspace.availability.closure-days) · [Días de apertura](help:user.workspace.availability.open-weekdays)
 
-**Tres vistas (#818).** Con *Vistas del calendario* activada (por defecto), la pestaña abre en la **Agenda** — todo lo fechado de los **próximos 30 días**, agrupado bajo cabeceras *Hoy · Mañana · día de la semana*, las flechas avanzan 30 días y **Hoy** vuelve al presente. **Semana** muestra una franja de siete píldoras (día, número, marcadores de color, recuento) con el feed de toda la semana debajo; **Mes** una cuadrícula compacta donde cada día lleva hasta tres **marcadores** — *reservas y presencia*, *alertas y mensajes*, *finanzas* — hoy rodeado, el día elegido relleno, los **días cerrados** atenuados y tachados; toque un día para leerlo debajo (la leyenda bajo la cuadrícula nombra los colores). Un día cerrado lo dice en el feed, con el motivo del cierre. El feed lleva además dos hechos que antes faltaban: el **vencimiento de pago** de cada factura abierta (fecha de emisión + plazo de recordatorio) y cada **gasto programado** que vence. Las fichas de tipo y el selector de miembro acotan la consulta como antes; el escudo abre *Quién puede ver esto*. Desactivada, queda el simple selector de día o rango.
+### Registrar la llegada y la salida
 
-- **Mías / Todos** — tus propias reservas, o las de toda la comunidad; el conmutador lo tiene **cada miembro**, ya que el plano y la cuadrícula semanal del hub Reservar muestran de todos modos la ocupación de todo el mundo. Los puntos bajo un día lo dicen de un vistazo: **rojo** = tienes una reserva, **azul** = otros miembros la tienen, **ambos puntos** = ambas cosas. Hoy va rodeado.
-- El **conmutador de forma** a su lado cambia la mitad inferior entre una **lista de agenda** (cada reserva como tarjeta: ventana horaria, miembro, espacio) y una **cronología del día** (puestos × las horas del día elegido). La cuadrícula puestos × *días* de la semana vive en el hub Reservar (§4), no aquí.
-- Los **chips de planta** (*Todas las plantas* / por planta) filtran la **cronología**.
-- Toca un día en la cuadrícula mensual para cargarlo abajo. En horizontal, el calendario y el detalle usan el diseño dividido.
+**Público:** Miembro · Administrador/a · Propietario
 
-![](assets/help/images/calendar-agenda.jpg)
+Usted llega a su plaza y, más tarde, se va. Registrarse indica que está allí; salir libera lo que ya no necesita.
 
-*La pestaña Calendario: un día o un rango, los chips por tipo, un solo feed agrupado por día — cada fila abre su origen.*
+![](assets/help/images/user-reserve-check-in.es.b8fa17aa9.jpg)
 
-## 6. Directorio de miembros (pestaña Miembros)
+**Pasos**
 
-![](assets/help/images/member-profile-sheet.jpg)
+1. Abra [Reservar](app:/reserve), busque el día de su reserva y toque su propia plaza, la marcada como **Mía**.
+2. Toque **Registrarse**. Si está en gris, le indica cuándo se abre, por ejemplo «El check-in abre el 14 de mayo».
+3. Cuando se vaya, toque de nuevo su plaza y toque **Salir**. El resto de la reserva queda liberado de inmediato para los demás.
+4. La reserva dice entonces **Completada: salida registrada a las** y la hora.
 
-*El perfil de un miembro: la reserva de hoy, el contacto y — donde tienes derecho a verla — su posición financiera.*
+**Conviene saber**
 
-**Toque un miembro para su perfil (#704).** Su foto, su rol y su estado; qué ha reservado y si ha registrado su entrada ahora mismo; y **Contacto** — el número de WhatsApp compartido voluntariamente para todos, la **dirección de correo y el plan para los admins**. Donde tenga derecho a ver las cifras — **las suyas siempre, las de otro con el permiso *Ver finanzas*** — el perfil lleva además **Finanzas**: la posición neta (quién debe a quién), las facturas abiertas con lo que queda en cada una, los pagos ya recibidos y el mes que se está consumiendo. La misma tarjeta que muestra la pestaña Finanzas, para que las dos no puedan contradecirse.
+- El registro se abre 15 minutos antes del inicio, o un paso de cuadrícula antes cuando la cuadrícula es más gruesa. Donde las reservas son por media jornada, por día o por hora real, se abre durante todo el día de la reserva.
+- Se cierra cuando termina la reserva: **Esta reserva ha terminado — ya no es posible registrarse.**
+- Si todavía tiene un registro activo en otro sitio, salga primero de allí.
+- Con el registro y la salida automáticos activados, una reserva en la que nadie registró la llegada ni la salida se completa sola una vez pasada su hora. Sin ellos, una reserva sin registro de llegada dice **Este periodo terminó sin registro de llegada.**
+- En un quiosco de pared se registra con su credencial; véase [Su credencial](help:user.profile.settings.badge) y [Registro con credencial NFC](help:user.badges.nfc).
 
-**Una página por socio (#825).** Tocar a un socio abre ahora una **página completa**: su foto con el punto de presencia, sus chips de rol, su línea de estado, **cuándo se le vio por última vez** («Visto hace 20 h», no un número suelto) y desde cuándo es socio. Una tarjeta **Ahora mismo** dice en una frase si está registrado, si tiene una reserva en este minuto o cuándo es su **próxima** reserva; tóquela, o cualquier fila próxima, para abrir esa reserva. Debajo, las **acciones rápidas**: Mensajes, WhatsApp y (para admins) correo, más *Añadir un servicio* y *Enviar el acuerdo financiero* cuando procedan. Las tarjetas de contacto y finanzas siguen sin cambios. **Admins y propietarios** encuentran en la misma página la sección **Gestionar**: *Membresía* (aprobar o rechazar, pausar, rol, copropiedad, quiosco), *Reglas de reserva* (límite de reservas, reservas simultáneas, planta entera como interruptor), *Facturación* (suscripción, cuando se agotan los días, negociaciones) y *Tarjetas y acceso*; cada fila muestra su **valor actual**, nada hay que abrir para saberlo. Las filas de *Ajustes → Socios y planes* abren la misma página.
+**Véase también:** [Escanear un código de espacio](help:user.reserve.scan) · [Cambiar o cancelar una reserva](help:user.reserve.change)
 
-Mira quién forma tu comunidad:
+### Escanear un código de espacio
 
-- Cada tarjeta de miembro muestra su **foto** (o inicial), su **chip de rol** (Admin, Propietario), su **estado personalizado** («en Berlín hasta el viernes…»), un indicador **en línea / visto por última vez** (*En línea*, *10 min*, *2 d*) y un **chip de reserva**: puesto registrado, *Reservado ahora*, o la próxima reserva.
-- Toca un miembro para su **ficha de detalle** — rol, presencia, sus **próximas reservas** y **Mensajes**.
-- **Mensajes**: un **hilo de conversación** por miembro (hasta 500 caracteres por mensaje) — ábrelo desde la pestaña **Mensajes** (§16), la ficha del miembro o su perfil del directorio, lee todo el intercambio en burbujas y envía desde el mismo sitio. Cada mensaje llega al otro lado por dos vías: un **push** que no transporta contenido alguno (*«Tienes un mensaje nuevo»* — por diseño de privacidad) y, una vez la app está en marcha, una notificación local que sí muestra tu nombre y tu texto.). El texto completo queda siempre legible en la pestaña **Mensajes**, para el destinatario y el remitente (el push en sí no transporta contenido, por diseño de privacidad). Los admins tienen un megáfono **Notificar a todos los admins** — en *Miembros y planes* (Ajustes → Administración), no en la pestaña Miembros, que no tiene barra propia — que llega a todos los admins, incluido el propietario. Conmutable con la función *Notificaciones entre miembros*. Al redactar, dos chips permiten **enlazar una reserva o un registro en curso — tuyos o de otro miembro** — o **un espacio** (asiento, mesa, sala o planta) — la referencia aparece como un enlace tocable en ambos lados: un enlace de reserva abre esa reserva, un enlace de espacio abre la hoja de reserva del espacio, ideal para hablar de una reserva futura.
-- El **icono de mensaje** de una tarjeta escribe a ese miembro por **WhatsApp** (si compartió su número); el **botón de grupo** abre el grupo de WhatsApp de tu comunidad (definido por el propietario).
-- Define tu propia foto, tu estado y la visibilidad de tu teléfono en **Ajustes** (§12).
-- Los admins y propietarios ven además el **correo** de cada miembro bajo el nombre — los miembros normales no: el contacto entre miembros sigue siendo el número de WhatsApp compartido voluntariamente.
+**Público:** Miembro · Administrador/a · Propietario
 
-![](assets/help/images/members-directory.jpg)
+Usted está ante una mesa, una sala o un asiento que lleva una tarjeta QR, o una silla con una etiqueta NFC. Escanear muestra lo que puede hacer allí, sin buscar en el plano.
 
-*El directorio: foto o inicial, chip de rol, estado, en línea / visto por última vez, y la próxima reserva en cada tarjeta.*
+![](assets/help/images/user-reserve-scan.es.b8fa17aa9.jpg)
 
-## 7. Eventos y confirmaciones (Mensajes → Eventos)
+**Pasos**
 
-**Contadores azules.** Alertas cuenta novedades del espacio (incluidas facturas, recordatorios y cambios), anuncios no leídos y decisiones pendientes, una sola vez por elemento. Abrir Alertas marca las novedades como vistas; las decisiones permanecen hasta resolverse. Este dispositivo recuerda las novedades por persona, servidor y espacio. En Yo, Mensajes cuenta mensajes no leídos de los servidores conectados; las conversaciones silenciadas o archivadas no suman. El cero oculta el contador; más de 99 muestra **99+**.
+1. En [Reservar](app:/reserve), toque **Escanear un código de espacio**, el icono del escáner en la parte superior de la pantalla.
+2. Apunte la cámara a la tarjeta, o escriba el número impreso en **Código** y toque **Confirmar**. Acerque el teléfono a la etiqueta NFC de una silla cuando el dispositivo lo admita.
+3. Para un asiento, elija **Registrarse**, **Reservar** o **Salir**, las mismas acciones que en el quiosco, sin el paso de la credencial.
+4. Para una mesa, una oficina o una planta, la hoja muestra su estado, su periodo y su **Precio por media jornada**; toque **Registrarse**, **Reservar** o **Ver en el plano**.
 
-**Dónde vive.** El flujo es la segunda cara de la pestaña **Mensajes**, y la **campana** de cada barra superior lleva directamente a ella, con el recuento de lo que le espera. Un solo sitio guarda los avisos: leer uno allí es haberlo leído en todas partes. Con la mensajería renovada la pestaña se llama **Alertas** y solo se marca como leída mientras es la cara en pantalla: pasar a ella es leerla; tenerla detrás de los chats, no.
+**Conviene saber**
 
-El hilo de eventos es la pista de auditoría de tu espacio: reservas creadas/cambiadas/canceladas, pagos registrados, facturas pagadas, gastos presentados, solicitudes de días extra, cambios de rol, solicitudes de eliminación. Los miembros ven sus propios eventos; los admins y propietarios ven los de todos. Los **chips de filtro** (Todo · Reserva · Pago · Gasto · …) acotan la lista — tu elección se recuerda — y un menú **Agrupar por** pliega el hilo en grupos por tipo, día o miembro (tocar el símbolo del grupo vuelve a la lista plana); cada fila lleva su icono de estado — un **reloj de arena** mientras está pendiente, una **marca verde** una vez confirmado — y los eventos de dinero muestran *quién los validó y cuándo* directamente en la fila.
+- Si otra persona tiene el espacio, la hoja dice quién y ofrece escribirle un mensaje.
+- Un código que no es de este espacio de trabajo dice **No es un código de espacio de este espacio de trabajo.** Un espacio eliminado dice **Este código ya no corresponde a ningún espacio aquí.**
+- En un navegador la cámara no está disponible: escriba el código. Una etiqueta NFC solo identifica asientos.
+- El icono del escáner solo aparece cuando su espacio usa códigos QR.
 
-**A la espera de tu confirmación:** siempre que un admin hace algo *por otra persona* — te reserva un puesto, registra tu pago, degrada a un admin — queda **pendiente hasta que se confirme**. Lo pendiente se fija arriba con una ✕ roja y un botón verde **Aceptar**, y recibes una notificación. Lo que haces sobre ti mismo nunca requiere confirmación.
+**Véase también:** [Reservar una mesa, una sala o una planta entera](help:user.reserve.whole-space) · [Registrar la llegada y la salida](help:user.reserve.check-in)
 
-**Los mensajes se han mudado.** Los mensajes entre miembros viven ahora en su propia pestaña **Mensajes** (§16), no aquí — un mensaje en dos sitios es uno que puede marcar como leído en uno y seguir viendo sin leer en el otro. Este flujo conserva el único tipo que no tiene conversación donde vivir: una **difusión a todos los administradores**.
+### Cambiar o cancelar una reserva
 
-**Quórum de validación:** para asuntos de dinero y cambios de rol, el propietario define *quién* debe aprobar y *cuántas* aprobaciones hacen falta. **Nadie valida su propio evento** — solo otra persona puede (una excepción, que configura el propietario, para las eliminaciones de reserva, más abajo); donde no existe otro validador, la solicitud simplemente espera. Pasados 7 días sin respuesta, lo que ocurre depende de hacia dónde apunta la solicitud. Lo que **tú mismo pediste** para ti — una eliminación, medias jornadas extra, la anulación del saldo de una factura — **caduca**: nada costoso se concede jamás en silencio. En cambio, lo que un admin **hizo por ti** — crear o modificar una reserva, registrar un pago — **se confirma solo**, porque ya ocurrió y el hilo solo te pedía darte por enterado; una reserva que un admin te hizo queda entonces concedida y consume tu cuota. Un **pago de factura** caducado — conciliación, reembolso o reagrupación que nadie decidió a tiempo — libera lo que retenía: el pago, la nota de crédito y las facturas reagrupadas vuelven a donde estaban (#816).
+**Público:** Miembro · Administrador/a · Propietario
 
-El propietario afina esto por **dominio** en **Ajustes → Reglas de validación** — catorce tarjetas, una por tipo de evento, cada una heredando de la **regla predeterminada** hasta que se edita: *Regla predeterminada, Pago, Gasto, Servicio, Medias jornadas extra, Eliminación de reserva, Cambio de rol, Nuevo miembro, Reserva, Reservas de espacios enteros, Pago de factura*, *Anulación de saldo*, *Negociación de precios* y *Gasto programado*. Una regla fija el número de validaciones requeridas, *qué* admins pueden validar (todos, o algunos concretos) y si el propietario debe firmar siempre. La regla **Eliminación de reserva** lleva dos interruptores más — *los admins eliminan sin validación* y *los propietarios eliminan sin validación*, ambos **desactivados por defecto** — la única excepción, deliberada, a «nadie valida su propio evento»: la solicitud de eliminación del interesado se resuelve sola y queda marcada como **autovalidada** en el hilo. Se aplican a las eliminaciones de reserva y a nada más. Desde #982 seis actos más tienen su tarjeta: **Emisión de factura**, **Anulación de factura**, **Reembolso**, **Cambio de membresía**, **Cambio de suscripción** y **Cambio de la matriz de permisos**. Cada uno se aplica de inmediato sin regla y espera la decisión en cuanto existe una, exactamente como la eliminación de una reserva; una regla sobre un acto de dinero lleva además un **umbral de importe** (*Solo por encima de este importe*), para que «las facturas superiores a 500 € necesitan dos validadores» sea una sola regla.
+Sus planes han cambiado. Puede mover una reserva, acortarla, alargarla o cancelarla, siempre que no se haya utilizado.
 
-![](assets/help/images/validation-rules.jpg)
+![](assets/help/images/user-reserve-change.es.b8fa17aa9.jpg)
 
- 
+**Pasos**
 
-![](assets/help/images/validation-rule-edit.jpg)
+1. Abra la reserva: tóquela en la vista **Día** o **Semana**, en el Calendario, o toque **Detalles** en el mensaje que sigue a una reserva.
+2. Para una reserva que no ha empezado, toque **Cambiar horario** para elegir otro periodo, o **Cancelar reserva** para eliminarla.
+3. Para una reserva repetida, elija **Cancelar esta ocurrencia** o **Cancelar esta y las siguientes**.
+4. En una reserva con la que ha registrado su llegada, **Quedarse más tiempo** y **Terminar antes** aparecen cuando las reglas del espacio permiten un final posterior o anterior. El inicio no se mueve.
+5. Para una reserva ya empezada, con llegada registrada o completada, y si su espacio permite las solicitudes de eliminación, toque **Solicitar eliminación**, indique un motivo si lo desea y toque **Enviar solicitud**.
 
-*Izquierda: una regla por dominio, heredando de la predeterminada. Derecha: edición de una regla — validaciones requeridas, validadores autorizados, firma del propietario.*
+**Conviene saber**
 
-![](assets/help/images/messages-events.jpg)
+- **Solicitar eliminación** no elimina nada: un propietario o un administrador decide si solo se olvidó el registro de llegada, en cuyo caso la reserva se mantiene, o si la reserva no se utilizó nunca, en cuyo caso se elimina.
+- Un administrador puede quitar la reserva de otra persona con **Quitar la reserva (anular)**; se avisa al miembro y a los administradores.
+- **Ver en el plano** salta a la plaza en el plano.
 
-*La cara Eventos de Mensajes: chips por tipo, No leídos / Leídos, y Agrupar por Tipo · Fecha · Miembro.*
+**Véase también:** [Registrar la llegada y la salida](help:user.reserve.check-in) · [Guardar una reserva en su propio calendario](help:user.reserve.calendar-file) · [Repetir una reserva](help:user.reserve.series)
+
+### Cuando una reserva está pendiente de confirmación
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Una reserva o una solicitud dice **pendiente de confirmación**. No significa que algo haya salido mal: alguien tiene todavía que decir que sí.
+
+**Pasos**
+
+1. Mire qué está esperando: el Calendario lo enumera con las palabras **pendiente de confirmación**, y una decisión dirigida a usted aparece arriba del todo.
+2. Si le toca decidir a usted, toque **Aceptar** o la cruz en el Calendario.
+3. Si espera a otra persona, no tiene que hacer nada; la respuesta llega como notificación y en el Calendario.
+
+Lo que espera una confirmación:
+
+- Una reserva que un administrador ha hecho para usted: usted la confirma.
+- Una reserva de un espacio entero, cuando el propietario pide a los validadores que la aprueben. El espacio permanece bloqueado mientras espera, y un rechazo cancela la reserva.
+- Una solicitud para eliminar una reserva que ya ha empezado, tiene la llegada registrada o se ha completado.
+
+**Conviene saber**
+
+- Quién puede validar y cuántos deben estar de acuerdo es una regla del propietario; véase [Reglas de validación](help:user.validation.overview).
+- Una solicitud muestra su avance, por ejemplo 1/2 validaciones, y más tarde su resultado: validada, rechazada, denegada o caducada.
+
+**Véase también:** [Reservar para otra persona](help:user.reserve.for-someone) · [Decisiones que le esperan en el Calendario](help:user.reserve.calendar-decisions)
+
+### La pestaña Calendario
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere todo lo que tiene fecha en un solo lugar: sus reservas, registros de llegada, alertas, mensajes y pagos pendientes. La pestaña Calendario lo enumera por día y cada fila abre su origen.
+
+![](assets/help/images/user-reserve-calendar.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Calendario](app:/calendar). Se abre en la **Agenda**: los próximos 30 días, agrupados bajo **Hoy**, **Mañana** y los nombres de los días.
+2. Use las flechas para avanzar de 30 en 30 días, o toque la fecha para elegir un día. El botón de arriba a la derecha le devuelve a **Hoy**.
+3. Toque una fila para abrirla: una reserva abre sus detalles, un mensaje su conversación, una factura su hoja.
+4. Acote la lista con los chips de debajo, como se describe en [Filtrar el Calendario](help:user.reserve.calendar-filters).
+
+**Conviene saber**
+
+- Las reservas aparecen para todos en el espacio, porque el plano muestra la ocupación a todos. Los mensajes y el dinero permanecen privados para usted y para las personas que las reglas del espacio permitan.
+- Un miembro con el permiso de finanzas o de miembros puede cambiar la lista a otro miembro con el chip **Yo**. Lo que el servidor no permite aparece bloqueado, no como un día vacío.
+- Si su espacio mantiene el calendario más simple, usted elige un día o un intervalo de días en lugar de las tres vistas.
+
+**Véase también:** [Agenda, Semana y Mes en el Calendario](help:user.reserve.calendar-views) · [Guardar una reserva en su propio calendario](help:user.reserve.calendar-file)
+
+### Agenda, Semana y Mes en el Calendario
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere ver una semana o un mes de un vistazo. El Calendario ofrece tres maneras de mirar.
+
+![](assets/help/images/user-reserve-calendar-views.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Elija **Agenda**, **Semana** o **Mes** en la barra superior. El cuarto botón, **Alertas**, muestra sus alertas cuando su espacio las ofrece.
+2. En **Semana**, toque un día de los siete para leer su lista debajo.
+3. En **Mes**, toque un día de la cuadrícula. Bajo cada día, hasta tres puntos muestran lo que contiene: reservas y presencia, alertas y mensajes, dinero. El día de hoy aparece rodeado con un círculo.
+4. Los días cerrados aparecen en gris y tachados.
+
+**Conviene saber**
+
+- En **Mes**, la lista de debajo muestra solo el día seleccionado; en **Semana** enumera toda la semana.
+- Las flechas avanzan una semana o un mes, según la vista.
+- El Calendario muestra también la fecha de vencimiento de un pago y cada gasto programado que vence.
+
+**Véase también:** [La pestaña Calendario](help:user.reserve.calendar) · [Días de cierre y festivos](help:user.reserve.closed-days)
+
+### Decisiones que le esperan en el Calendario
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Se le ha pedido que confirme algo. Cuando algo necesita su respuesta, queda fijado arriba del todo en el Calendario, bajo **Esperando tu confirmación**.
+
+![](assets/help/images/user-reserve-calendar-decisions.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Calendario](app:/calendar). Cada decisión en espera es una tarjeta con un texto breve y la fecha en que se envió.
+2. Lea la tarjeta. Puede mostrar cuántas validaciones tiene, por ejemplo 1/2 validaciones.
+3. Toque **Aceptar** para dar su conformidad, o la cruz para rechazar.
+4. Abra la vista **Alertas** para ver toda la lista con su historial.
+
+**Conviene saber**
+
+- El botón **Alertas** de la barra muestra cuántas decisiones le esperan.
+- Una vez respondida, la decisión sale de la parte superior y aparece en la lista con su resultado.
+
+**Véase también:** [Cuando una reserva está pendiente de confirmación](help:user.reserve.awaiting) · [Reglas de validación](help:user.validation.overview)
+
+### Filtrar el Calendario
+
+**Público:** Miembro · Administrador/a · Propietario
+
+La lista es larga y usted solo busca reservas. Los chips bajo la barra la acotan.
+
+![](assets/help/images/user-reserve-calendar-filters.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque **Mis reservas** para conservar solo las reservas. Tóquelo de nuevo para verlo todo.
+2. O elija chips como **Reservas**, **Registros** y **Salidas**; **Todo** muestra todos los tipos.
+3. Para deshacer sus elecciones, toque **Restablecer filtros**, el botón del embudo.
+4. Una línea sobre los chips repite lo que ve, por ejemplo Yo · Reservas.
+
+**Conviene saber**
+
+- Pueden estar activados varios chips a la vez.
+- Los chips que se ofrecen dependen de lo que su espacio tenga activado, por ejemplo las validaciones.
+
+**Véase también:** [La pestaña Calendario](help:user.reserve.calendar) · [Agenda, Semana y Mes en el Calendario](help:user.reserve.calendar-views)
+
+### Guardar una reserva en su propio calendario
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere una reserva en el calendario de su teléfono o de su ordenador. La app escribe un archivo de calendario estándar que Google, Outlook, Apple y otros importan.
+
+![](assets/help/images/user-reserve-calendar-file.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra una de sus propias reservas, en la vista **Día**, en la vista **Semana** o en el Calendario.
+2. Toque **Guardar archivo de calendario**.
+3. Lea la vista previa: el **Evento**, **Cuándo**, **Lugar**, **Estado** y el nombre del **Archivo**. Abra **Contenido del archivo** para leer el propio archivo.
+4. Toque **Guardar**. La app guarda el archivo, normalmente en su carpeta de descargas, y le dice dónde; ábralo con su calendario.
+
+**Conviene saber**
+
+- El archivo contiene la hora, el lugar, el nombre del espacio y si la reserva está confirmada o cancelada. Ningún importe, ningún nombre, ninguna dirección de correo.
+- Es una instantánea: si la reserva cambia más tarde, un archivo ya guardado no cambia.
+- Si la reserva cambió entre la vista previa y **Guardar**, no se escribe nada y la vista previa se actualiza.
+- Su propietario puede desactivar esta función.
+
+**Véase también:** [Cambiar o cancelar una reserva](help:user.reserve.change) · [La pestaña Calendario](help:user.reserve.calendar)
+
+## Colaborar: miembros, solicitudes, mensajes y la red más amplia
+
+En este capítulo:
+- [El directorio de Miembros](help:user.collaborate.directory) y [la página de un miembro](help:user.collaborate.member-page)
+- [Escribir a un miembro](help:user.collaborate.contact)
+- [Eventos y confirmaciones](help:user.collaborate.events), [aceptar o rechazar](help:user.collaborate.accept) y [Lo que te espera](help:user.collaborate.attention)
+- [Reglas de validación, dominio por dominio](help:user.validation.overview) (administradores y propietarios)
+- [Mensajes](help:user.collaborate.messages), [nuevas conversaciones y grupos](help:user.collaborate.messages-new), [solicitudes de mensaje](help:user.collaborate.message-requests) y [bloqueo](help:user.collaborate.block)
+- [Notificaciones](help:user.collaborate.notifications)
+- [Descubrir](help:user.collaborate.discover), [su perfil público](help:user.collaborate.public-profile) y [sus visitas como invitado](help:user.collaborate.guest-visits)
+
+### El directorio de Miembros
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere ver quién está en su espacio, quién está hoy y quién está a punto de llegar.
+
+![](assets/help/images/user-collaborate-directory.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Miembros](app:/directory) desde el menú (o desde la barra inferior si eligió el estilo de navegación clásico).
+2. Lea cada tarjeta: foto o iniciales, nombre, insignia de rol (**Propietario** o **Administrador/a**; los miembros sin más no llevan ninguna), la línea de estado de la persona y dos pequeños chips.
+3. Lea los chips. El primero es la reserva: **Presente** con la plaza, **Reservado ahora**, o la siguiente reserva (día, hora, plaza). El segundo dice **En línea**, o cuándo se vio por última vez a la persona.
+4. Toque una tarjeta para abrir [la página del miembro](help:user.collaborate.member-page).
+5. Tire de la lista hacia abajo para actualizarla.
+
+**Conviene saber**
+
+- Solo se enumeran los miembros activos, por orden alfabético.
+- Los administradores y los propietarios ven además la dirección de correo de cada persona bajo su nombre. Los miembros no: entre miembros, el contacto sigue siendo voluntario.
+- Si su propietario ha creado un grupo de WhatsApp, una línea **Abrir el grupo de WhatsApp** aparece sobre la lista.
+
+**Véase también:** [La página de un miembro](help:user.collaborate.member-page) · [Escribir a un miembro](help:user.collaborate.contact)
+
+### La página de un miembro
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere saber si un compañero está, cuándo vendrá la próxima vez y cómo localizarle.
+
+![](assets/help/images/user-collaborate-member-page.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una tarjeta en [Miembros](app:/directory).
+2. Lea la tarjeta superior: foto, rol, presencia y la línea de estado de la propia persona. Más abajo puede ver desde cuándo es miembro.
+3. Lea **Ahora mismo**: si la persona ha registrado su llegada, si tiene una reserva en este minuto o cuándo es su próxima reserva. Toque una reserva para abrirla.
+4. Use los botones: **Mensajes**, **Chatear por WhatsApp** y, para los administradores, **Correo**.
+
+**Conviene saber**
+
+- **Contacto** muestra un número de WhatsApp solo cuando la persona ha elegido compartirlo.
+- Cuando puede verlas, las cifras de dinero (facturas abiertas, pagos, el mes en curso) figuran en la misma página. Siempre ve las suyas; las de otra persona, solo con el derecho a ver las finanzas.
+- Los administradores y los propietarios disponen además de una zona **Gestionar** con **Membresía**, **Reglas de reserva**, **Facturación** y **Tarjetas y acceso**, y cada fila muestra su valor actual.
+
+**Véase también:** [Escribir a un miembro](help:user.collaborate.contact) · [Las acciones del miembro](help:user.members.actions)
+
+### Escribir a un miembro
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere preguntarle algo a un compañero sin salir del espacio.
+
+![](assets/help/images/user-collaborate-contact.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Miembros](app:/directory), toque una tarjeta para abrir la página del miembro y toque **Mensajes**.
+2. Escriba en el campo **Tu mensaje**.
+3. Toque **Enviar**.
+
+**Conviene saber**
+
+- Los mensajes se leen del más antiguo al más reciente, bajo separadores de día. Una marca bajo su mensaje significa que se ha entregado; una doble marca azul significa que se ha leído.
+- Toque los **…** junto a una burbuja para ver las acciones del mensaje (reaccionar con un emoji, destacar, copiar, editar dentro de 15 minutos, reenviar, eliminar). El botón del clip adjunta una reserva o un espacio; la otra persona ve un enlace que lo abre.
+- Esto requiere la función **Notificaciones entre miembros** de su espacio.
+
+**Véase también:** [Mensajes](help:user.collaborate.messages)
+
+### Eventos y confirmaciones
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Usted quiere ver lo que ha ocurrido en el espacio y lo que espera una respuesta.
+
+![](assets/help/images/user-collaborate-events.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque **Eventos** en la barra superior (el icono de bandeja con un número), o abra [Eventos](app:/events) desde el menú. La página se abre en **Alertas**.
+2. Lea **Esperando tu confirmación** arriba del todo: las solicitudes que le necesitan.
+3. Lea el flujo de debajo. Cada fila dice lo que ha ocurrido; un reloj de arena significa pendiente, una marca verde significa confirmado. Las filas de dinero muestran quién las validó y cuándo.
+4. Acote el flujo con los chips: **Todos**, **Mensajes**, **Reserva**, **Registros**, **Dinero**, **Miembros**, y después **No leídos** o **Leído**.
+5. Toque **Tipo**, **Fecha** o **Miembro** junto a **Agrupar por** para plegar el flujo en grupos; toque el símbolo de grupo para volver a la lista plana.
+
+**Conviene saber**
+
+- Se crea un evento cada vez que algo se reserva, se cambia o se cancela, se registra un pago o un gasto, se solicitan medias jornadas extra o una eliminación, cambia un rol o alguien se une.
+- Los miembros ven sus propios eventos; los administradores y los propietarios ven los de todos.
+- Su filtro se recuerda. El número del botón Eventos cuenta las novedades y las decisiones que le esperan.
+- **Abrir mi mensajería**, arriba, le lleva a sus [conversaciones](help:user.collaborate.messages).
+
+**Véase también:** [Aceptar o rechazar una solicitud](help:user.collaborate.accept) · [Reglas de validación](help:user.validation.overview)
+
+### Aceptar o rechazar una solicitud
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Alguien le ha pedido que confirme algo, y usted quiere responder.
+
+![](assets/help/images/user-collaborate-accept.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Eventos](app:/events).
+2. Busque la solicitud bajo **Esperando tu confirmación**.
+3. Toque **Aceptar**, o la cruz roja para **Rechazar**.
+
+**Conviene saber**
+
+- Cuando un administrador hace algo por usted (reserva una plaza, registra su pago), queda pendiente hasta que usted lo confirme. Lo que hace usted por sí mismo nunca necesita su propia confirmación.
+- Nadie confirma su propia solicitud: espera a otra persona, o a la excepción de la regla ([reglas de validación](help:user.validation.overview)).
+- Tras siete días sin respuesta, un acto que crea o modifica algo (un administrador que reserva por usted, por ejemplo) se confirma automáticamente; una eliminación o un cargo caduca en su lugar.
+- Una fila puede mostrar un avance como «1/2 validaciones» cuando la regla pide varias.
+
+**Véase también:** [Eventos y confirmaciones](help:user.collaborate.events) · [Validaciones requeridas](help:user.validation.required-count)
+
+### Lo que te espera
+
+**Público:** Administrador/a · Propietario
+
+Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
+
+**Pasos**
+
+1. Abra [Lo que te espera](app:/attention).
+2. Lea las líneas en orden: cada una es una decisión (por ejemplo una solicitud por confirmar o una persona que espera ser admitida), con los retrasos más costosos primero.
+3. Toque una línea para ocuparse de ella.
+
+**Conviene saber**
+
+- Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
+- Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+
+**Véase también:** [Eventos y confirmaciones](help:user.collaborate.events)
 
 ### Reglas de validación, dominio por dominio
 
-Cada tipo de acto — una adhesión, una reserva eliminada, una factura
-dada de baja, medias jornadas extra concedidas — tiene su regla que dice
-si un humano debe decidir antes de que surta efecto, y quién. Una
-decisión es siempre un evento: quién decidió, cuándo y sobre qué. Nada
-se valida en silencio.
+**Público:** Propietario
+
+Usted decide, para cada tipo de acto, si una persona debe confirmarlo primero y quién.
+
+![](assets/help/images/user-validation-overview.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Reglas de validación](app:/validation) (también está en Ajustes).
+2. Lea los tres grupos: **Dinero**, **Reservas** y **Personas y roles**. Cada uno indica qué permanece sin cambios hasta que se acepta el acto.
+3. Lea una tarjeta de izquierda a derecha: alguien lo pide, las personas que pueden validar, entra en vigor. Una tarjeta dice **Hereda la predeterminada** o **Personalizada**.
+4. Toque una tarjeta para editar su regla. Toque **Regla predeterminada** para cambiar lo que heredan todas las demás tarjetas.
+
+**Conviene saber**
+
+- Una regla abarca actos como pagos, gastos, servicios, medias jornadas extra, eliminaciones de reservas, reservas, cambios de rol, nuevos miembros, facturas, reembolsos y cambios de suscripción.
+- Cada decisión es un evento: quién decidió, cuándo y sobre qué. Nada se valida en silencio.
+- El aviso de la parte superior se aplica a todas las reglas: **Nadie valida lo propio**.
+- Necesita el permiso para configurar las reglas de validación; los propietarios siempre lo tienen.
+
+**Véase también:** [Validaciones requeridas](help:user.validation.required-count) · [La matriz de roles](help:user.roles.matrix)
 
 ### Validaciones requeridas
 
-Cuántas personas deben confirmar antes de que el acto pase. Una es el
-caso corriente; dos, para el dinero. Ponerla por encima del número de
-personas que *pueden* validar se rechaza: una regla que nadie puede
-satisfacer bloquea el acto para siempre.
+**Público:** Propietario
+
+Usted elige cuántas personas deben confirmar antes de que el acto siga adelante.
+
+![](assets/help/images/user-validation-required-count.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una tarjeta en [Reglas de validación](app:/validation).
+2. Toque el más o el menos junto a **Validaciones requeridas**.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- Una es el caso habitual; dos es frecuente para el dinero.
+- Si pide más validaciones que personas que pueden darlas, la hoja avisa **No hay suficientes validadores elegibles.** y no guarda: una regla que nadie puede cumplir bloquearía el acto para siempre.
+
+**Véase también:** [Quién puede validar](help:user.validation.who-may)
 
 ### Quién puede validar
 
-O bien **cualquier administrador**, o bien una lista nombrada que usted
-elige. Una lista nombrada sobrevive a que alguien se vuelva
-administrador más tarde — ser administrador no le añade en silencio a
-una lista que alguien eligió a propósito.
+**Público:** Propietario
+
+Usted elige qué personas pueden dar la confirmación.
+
+![](assets/help/images/user-validation-who-may.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una tarjeta en [Reglas de validación](app:/validation).
+2. Bajo **Quién valida**, elija **Admins**, **Personas designadas** o **Todos los miembros**.
+3. Para **Admins**, deje activado **Los admins pueden validar** y elija **Todos los admins** o toque los nombres de administradores concretos. Desactívelo y solo validan los propietarios.
+4. Para **Personas designadas**, elija exactamente a las personas que quiera.
+5. Toque **Guardar**.
+
+**Conviene saber**
+
+- El propietario siempre puede validar.
+- Una lista nominal es una decisión deliberada: quien más tarde se convierta en administrador no se añade a ella.
+- La elección del alcance aparece cuando su espacio tiene activada la función de ámbitos de validación; si no, una regla funciona con los administradores.
+
+**Véase también:** [Se requiere un propietario](help:user.validation.owner-required)
 
 ### Se requiere un propietario
 
-Al menos una de las confirmaciones debe venir de un propietario, diga lo
-que diga el número. Para donde el visto bueno de un administrador solo
-no deba bastar.
+**Público:** Propietario
+
+Para algunos actos no basta la aprobación de un administrador.
+
+![](assets/help/images/user-validation-owner-required.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una tarjeta en [Reglas de validación](app:/validation).
+2. Active **El propietario siempre debe validar**.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- Entonces al menos una de las confirmaciones procede de un propietario, diga lo que diga el número requerido. La tarjeta muestra «y el propietario, siempre».
+
+**Véase también:** [Validaciones requeridas](help:user.validation.required-count) · [Un propietario puede confirmar su propia solicitud](help:user.validation.owner-self)
 
 ### Un propietario puede confirmar su propia solicitud
 
-Desactivado, la solicitud de un propietario espera igualmente a otra
-persona. Activado, es suya. Este interruptor decide si un espacio de una
-sola persona funciona.
+**Público:** Propietario
+
+Usted dirige un espacio por su cuenta y necesita poder resolver sus propias solicitudes.
+
+![](assets/help/images/user-validation-owner-self.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Toque una tarjeta en [Reglas de validación](app:/validation).
+2. Active **La propiedad puede validar lo propio**.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- Desactivado, la solicitud de un propietario espera a otra persona. Activado, el propietario la resuelve.
+- Es una excepción solo del propietario: un administrador nunca valida su propio acto.
+- El interruptor aparece cuando su espacio tiene activada la función de cadena de validación.
+
+**Véase también:** [Validar automáticamente la solicitud de un propietario](help:user.validation.auto-validate-owner)
 
 ### Una tras otra
 
-Las confirmaciones se recogen en el orden de la lista y no en cualquier
-orden. Más lento, y la forma correcta cuando el segundo lector debe ver
-la decisión del primero.
+**Público:** Propietario
 
-### Validar de oficio la solicitud de un propietario
+Usted quiere que las confirmaciones se recojan en orden, de modo que la segunda persona vea la decisión de la primera.
 
-La solicitud se registra **ya resuelta** en vez de levantarse y luego
-confirmarse — así nadie recibe aviso de una cuestión cerrada. El evento
-sigue existiendo, marcado como decidido por el sistema, de modo que el
-rastro de auditoría queda entero.
+![](assets/help/images/user-validation-sequential.es.b8fa17aa9.jpg)
 
-### Validar de oficio la solicitud de un administrador
+**Pasos**
 
-Lo mismo para los administradores, y deliberadamente **independiente**
-del interruptor de propietario: todo propietario lleva también el rol de
-administrador, así que un único interruptor no habría podido expresar
-«propietarios sí, administradores no».
+1. Toque una tarjeta en [Reglas de validación](app:/validation).
+2. Active **Una tras otra**.
+3. Toque **Guardar**.
 
-## 8. Para propietarios: editor y ajustes
+**Conviene saber**
 
-La administración vive en tres secciones de **Ajustes**, y cada entrada solo aparece para quien tiene el permiso que pide (#1307): **Este espacio** — *Espacio de coworking* (los ajustes del espacio), *Disponibilidad*, *Facturación*, *Servicios*, *Accesorios*, *Facturación e informes* (el centro de facturación con el editor de informes y las reglas de recordatorio en su cabecera), *Secuencias de numeración*, *Instrucciones de pago*, *Reglas de validación* y *Funciones*; **Administración** — *Miembros y planes*, *Pagos en línea*, *Credenciales RFID / NFC*, *Sedes* e *ID y QR del espacio*; **Gobernanza** — *Gestión de roles*, *Despliegue* y el entorno del espacio (algunas dependen de su función: *Accesorios*, *Pagos en línea*, *Credenciales RFID / NFC*…). Una regla que conviene conocer: **la entrada de ajustes de una función solo aparece mientras esa función está activada** — desactiva *Pagos en línea* en **Funciones** y su pantalla de configuración desaparece con ella (y vuelve al reactivarla). La entrada **Funciones** siempre está presente, así que siempre puedes volver a activar un módulo.
+- La siguiente validación se solicita cuando la anterior ha pasado, y el rastro de validación numera cada paso.
+- Es más lento; úselo cuando el orden importa.
+- En las reglas de dinero también puede fijar **Solo por encima de este importe**: los importes menores se aplican de inmediato.
 
-**Crear un espacio, paso a paso (#1303).** La bienvenida recorre **Nombre → Dónde → Partir de → Confirmar**. *Dónde* reúne el país (propuesto desde este dispositivo), la moneda, la zona horaria, si el espacio es para probar o real, y el par dev/prod; *Partir de* es la galería de plantillas. **Atrás** conserva todo lo escrito. *Usar los ajustes propuestos*, en el primer paso, lleva directamente a **Confirmar**, que enumera exactamente lo que se creará antes de **Crear espacio**. Si una plantilla no puede aplicarse, el paso de confirmación ofrece **Crear sin plantilla**, así nadie se queda bloqueado. Antes de crear nada, **Confirmar** también nombra lo que configura la plantilla elegida (*Configura: Espacio y plano, Vocabulario…*). Si este servidor no puede aplicar la plantilla, lo dice ahí: **Crear espacio** queda desactivado y se ofrece **Crear sin plantilla** en su lugar.
+**Véase también:** [Validaciones requeridas](help:user.validation.required-count)
 
-En pantallas pequeñas, con texto ampliado o el teclado abierto, el formulario de creación y sus acciones se desplazan juntos cuando es necesario. El paso actual sigue siendo legible y Atrás conserva los datos introducidos (#1653).
+### Validar automáticamente la solicitud de un propietario
 
-Atrás y Escape vuelven al paso anterior. Al salir de un borrador con datos, puede seguir editando o descartarlo; un formulario sin cambios se cierra directamente. Los filtros de plantillas se desplazan horizontalmente y dejan espacio para los resultados (#1653).
+**Público:** Propietario
 
-Crear espacio conserva su etiqueta durante el envío y acepta una solicitud a la vez. Si no se puede confirmar el resultado, un mensaje en el formulario conserva los datos para reintentar la misma solicitud; salir de la vista no cancela una escritura del servidor (#1653).
+Usted no quiere un aviso por una cuestión que ya está cerrada.
 
-Los pasos sugeridos se indican como omitidos, no completados. En pantallas pequeñas, abra el título del paso para consultar el progreso. Atrás conserva los datos; las transiciones respetan el movimiento reducido (#1653).
+![](assets/help/images/user-validation-auto-validate-owner.es.b8fa17aa9.jpg)
 
-**País, moneda, zona horaria (#711).** El selector de país cubre ahora los 32 países para los que la app sabe declarar impuestos (UE-27, Suiza, Noruega, Reino Unido, Estados Unidos y Canadá). La moneda es un **selector** de los códigos que la app sabe formatear — cada uno con su símbolo y su número correcto de decimales: el yen no tiene, el dinar tiene tres, y cada importe, factura y pago en línea lo respeta. La zona horaria es una **lista con búsqueda** de las zonas IANA que el reloj puede instalar; una errata ya no se puede guardar. **Un espacio nuevo parte del país de tu dispositivo (#1303):** su moneda y su zona horaria lo acompañan, los tres editables antes de crearlo — `fr_CH` propone Suiza, un teléfono en alemán propone Alemania y lo que el catálogo no conoce propone Francia.
+**Pasos**
 
-### El editor del espacio
+1. En [Reglas de validación](app:/validation), toque la tarjeta **Eliminación de reserva**.
+2. Active **Los propietarios eliminan sin validación**.
+3. Toque **Guardar**.
 
-Abre el **editor** desde la barra del hub Reservar (icono de herramientas cruzadas). La pantalla **Editor del espacio** lista tus plantas — arrastra para reordenar, el **icono de capas** marca una planta *Reservable en su totalidad*, el **menú ⋮** renombra o elimina, **+ Añadir planta** amplía el edificio. Abre una planta para dibujarla sobre la cuadrícula con la barra inferior — **Seleccionar · Oficina · Mesa · Puesto · Imagen · Borrar**:
+**Conviene saber**
 
-- Una **oficina** recibe un nombre, un interruptor opcional *Reservable en su totalidad* y un **precio por media jornada**.
-- Una **mesa** recibe un nombre, la misma opción de mesa entera y su propio **precio por media jornada**.
-- Un **puesto** recibe un nombre, una **orientación de asiento** (↑ → ↓ ←), un **tipo de silla** opcional, sus **accesorios** (cada uno puede llevar un suplemento por media jornada) y un interruptor **Bloqueado (mantenimiento)**. Su campo **Etiqueta NFC/RFID** recibe el UID de la etiqueta de la silla en hexadecimal — leído con el botón de etiqueta o escrito — para que un toque en la silla resuelva ese puesto (§4a).
-- **Imagen** coloca una ilustración redimensionable; el icono de foto de la barra define la **foto de fondo** de la planta.
-- Borrar un espacio con historial es cosa del **propietario**, y con *Eliminar espacios con historial* activada (lo está por defecto) funciona sin más: las reservas que referenciaban el espacio conservan una instantánea de texto de lo que era, y cualquier reserva aún vigente sobre él se cancela automáticamente. Desactiva la función y un espacio con reservas futuras hay que vaciarlo a mano antes.
+- La solicitud de eliminación de un propietario se resuelve entonces por sí sola y queda marcada como **Validado automáticamente** en el flujo, de modo que el rastro no se interrumpe.
+- Este interruptor existe solo en la regla **Eliminación de reserva**, y está desactivado por defecto.
 
-![](assets/help/images/space-editor-floors.jpg)
+**Véase también:** [Validar automáticamente la solicitud de un administrador](help:user.validation.auto-validate-admin)
 
-*La lista de plantas del editor de espacio: arrastra para reordenar, el icono de capas marca una planta reservable en su totalidad.*
+### Validar automáticamente la solicitud de un administrador
 
-![](assets/help/images/space-editor-canvas.jpg)
+**Público:** Propietario
 
-*Una planta en la cuadrícula con la barra inferior — Seleccionar · Oficina · Mesa · Puesto · Imagen · Borrar.*
+Usted quiere que los administradores eliminen sus propias reservas sin esperar.
 
-![](assets/help/images/space-editor-seat.jpg)
+![](assets/help/images/user-validation-auto-validate-admin.es.b8fa17aa9.jpg)
 
-*La hoja de un puesto: nombre, orientación de asiento, tipo de silla, accesorios, el campo de etiqueta NFC/RFID y el interruptor de bloqueo.*
+**Pasos**
 
-### ID del espacio y QR
+1. En [Reglas de validación](app:/validation), toque la tarjeta **Eliminación de reserva**.
+2. Active **Los admins eliminan sin validación**.
+3. Toque **Guardar**.
 
-Tus invitaciones ligadas a rol (§2): invitación de miembro = el propio ID del espacio (sustitúyelo por uno memorable, cópialo, comparte el QR como PNG), invitación de admin = códigos personales de un solo uso.
+**Conviene saber**
 
-![](assets/help/images/workspace-id-qr.jpg)
+- Es independiente del interruptor del propietario: todo propietario es también administrador, así que un solo interruptor no podría decir «propietarios sí, administradores no».
+- Desactivado por defecto, y solo para eliminaciones de reservas.
 
-*ID del espacio y QR: la invitación de miembro (QR + ID — copiar, cambiar, compartir como PNG, invitar a alguien) y la pestaña de invitación admin.*
+**Véase también:** [Validar automáticamente la solicitud de un propietario](help:user.validation.auto-validate-owner)
 
-#### El identificador del espacio
+### Mensajes
 
-De cuatro a veinte letras o dígitos, único en todo DesKilo. Es a la vez
-el nombre legible del espacio y la **invitación de entrada**: quien lo
-tenga puede pedir unirse, y cada adhesión sigue esperando la
-confirmación de un administrador. Cambiarlo detiene el anterior al
-instante — vuelva a imprimir el QR.
+**Público:** Todos
 
-### Disponibilidad
+Usted quiere todas sus conversaciones en una sola lista, sea cual sea el espacio o el servidor al que pertenezcan.
 
-#### Días de apertura y granularidad
+![](assets/help/images/user-collaborate-messages.es.b8fa17aa9.jpg)
 
-- **Días de apertura** — chips lun…dom.
-- **Granularidad de reserva** — una de: *rango horario libre*, *tramos de 5 / 15 / 30 / 60 minutos*, *medias jornadas (mañana y tarde)*, *solo días completos* u *horas reales* (de–a exacto, con los atajos de media jornada y jornada completa).
+**Pasos**
 
-![](assets/help/images/availability-basics.jpg)
+1. Abra [Mensajes](app:/me?tab=messages) en Yo.
+2. Lea cada fila: el título, el contexto (por ejemplo «En» un espacio, «De persona a persona», «Grupo»), el último mensaje y el contador de no leídos.
+3. Filtre con **Todos**, **No leídos** o **Archivados**, abra **Destacados** para los mensajes que ha destacado, o toque la lupa para buscar.
+4. Mantenga pulsada una fila para **Fijar arriba**, **Silenciar notificaciones**, **Marcar como no leído** o **Archivar**.
+5. Toque una fila para abrir la conversación.
 
-*Los días de apertura y la elección de granularidad — la forma posible de una reserva empieza aquí.*
+**Conviene saber**
 
-#### Horario de trabajo
+- Las conversaciones de sus otros servidores conectados aparecen en la misma lista, con el servidor indicado.
+- Un mensaje que ha escrito muestra una marca cuando se entrega y una doble marca azul cuando se lee.
+- Una conversación archivada conserva su historial. Una silenciada permanece callada, pero se sigue contando.
+- Desde el espacio, **Abrir mi mensajería** (en Alertas) conduce hasta aquí.
 
-- **Horario laboral** — inicio del día, límite de media jornada, fin del día (por defecto 08:00 / 12:00 / 17:00). Las medias jornadas y jornadas completas de toda la app — reservas, registro y facturación — siguen este horario; con *horas reales* defines además cuántas horas se facturan como media jornada y como jornada completa.
-- **Días de cierre** — excepciones con fecha, añadidas con **+**.
+**Véase también:** [Escribir a un miembro](help:user.collaborate.contact) · [Iniciar una conversación o un grupo](help:user.collaborate.messages-new)
 
-![](assets/help/images/availability-hours.jpg)
+### Iniciar una conversación o un grupo
 
-*El horario de trabajo: inicio del día, límite de media jornada, fin del día — todas las medias jornadas y jornadas completas lo siguen.*
+**Público:** Todos
 
-#### Políticas de reserva
+Usted quiere escribir a alguien nuevo, o a varias personas a la vez.
 
-- **Políticas de reserva** — cuatro entradas que relajan o endurecen las reglas del §4b (la sección sigue la función *Políticas de reserva*); los dos interruptores están **desactivados por defecto**:
-  - **Permitir reservas pasadas** — los miembros pueden registrar a posteriori una reserva ya finalizada (ayer y antes). Desactivado, tales reservas se rechazan; reservar una ventana anterior del *mismo día* está siempre permitido. Actívalo en espacios que apuntan la asistencia después.
-  - **Los administradores pueden hacer el check-out de los miembros** — un admin puede terminar el registro en curso de un miembro. Desactivado, el check-out es estrictamente personal. Útil donde el personal cierra la sala por la noche.
-  - **Fuera del horario de apertura** — una pregunta, cuatro respuestas mutuamente excluyentes, iguales en todas las granularidades: *¿qué puede ocurrir fuera de la jornada laboral?* **Prohibido** — nada: ni reservas por adelantado, ni registros espontáneos, y una reserva que se pasa del fin de la jornada (o empieza antes de abrir) también se rechaza. **Solo espontáneo** — el registro espontáneo sigue siendo posible en **cualquiera de los dos extremos del día**, la llegada temprana antes de abrir tanto como la prórroga vespertina hasta medianoche, mientras que reservar por adelantado fuera del horario se rechaza; aquí fue a parar el antiguo interruptor **Reservas por minutos dentro del horario laboral**, y los espacios que lo tenían activo se leen así (aquel interruptor solo permitía la llegada vespertina — el modo se llama por lo espontáneo, no por la tarde, así que la llegada matinal también entra). **Gratis** — permitido, nunca contado ni facturado (pura información de presencia). **De pago** (el **defecto**) — contado como uso ordinario, salvo un día en el que el miembro ya mantiene una reserva normal dentro del horario: la parte de fuera viaja entonces gratis.
-  - **Reservas simultáneas por miembro** — cuántas reservas superpuestas puede mantener un miembro, registros incluidos. **1** por defecto: un sitio a la vez. Un propietario o un admin puede conceder a un miembro concreto un cupo mayor en *Miembros y planes* (nunca a sí mismo), y ese permiso personal prevalece sobre este número.
+![](assets/help/images/user-collaborate-messages-new.es.b8fa17aa9.jpg)
 
-![](assets/help/images/availability-outside.jpg)
+**Pasos**
 
-*La política de fuera del horario de apertura: una pregunta, cuatro respuestas mutuamente excluyentes — las mismas en todas las granularidades.*
+1. En [Mensajes](app:/me?tab=messages), toque **Nueva conversación**.
+2. Escriba un nombre bajo **Buscar personas disponibles** y toque la lupa.
+3. Toque a la persona; se abre el chat.
+4. Para un grupo, toque en su lugar **Nuevo grupo**, póngale un **Nombre del grupo**, **Añadir personas** y toque **Crear grupo**.
 
-#### Límites de reserva
+![](assets/help/images/user-collaborate-messages-group.es.b8fa17aa9.jpg)
 
-  Justo debajo están los **Límites de reserva** — tres números que el servidor siempre ha aplicado y que la app ya sabe ajustar:
+**Conviene saber**
 
-  - **Horizonte de reserva** — cuántos días antes puede empezar una reserva (por defecto **90**); más allá se rechaza diciéndolo.
-  - **Duración mínima** — la reserva más corta aceptada (por defecto **30 minutos**), en todas las granularidades. Por eso exactamente una llegada a las 11:45 para el límite de las 12:00 se rechaza por corta.
-  - **Duración máxima** — la más larga aceptada (por defecto **24 horas**). Como una reserva termina el día en que empieza, la jornada entera es el techo y el selector no ofrece nada por encima.
+- Encuentra a las personas que han elegido ser localizables: cada persona decide en **Quién puede iniciar una conversación conmigo**.
+- En un grupo, toque su nombre para ver los miembros; un administrador puede añadir o quitar personas, cambiarle el nombre o permitir que solo escriban los administradores (**Solo los admins pueden escribir**). Cualquiera puede **Salir del grupo**.
+- Un mensaje largo está limitado a 4000 caracteres.
 
-  Si pones un mínimo por encima del máximo, la pantalla lo advierte: el servidor comprueba cada límite por separado y se limitaría a rechazar todas las reservas sin explicar nunca por qué.
+**Véase también:** [Solicitudes de mensaje](help:user.collaborate.message-requests)
 
-![](assets/help/images/availability-limits.jpg)
+### Solicitudes de mensaje
 
-*Los límites de reserva — horizonte de antelación, duración mínima y máxima — y los días de cierre debajo.*
+**Público:** Todos
 
-  Los dos interruptores de **autovalidación** — *los admins eliminan sin validación*, *los propietarios eliminan sin validación* — no están aquí: viven con las reglas de validación (§7), desactivados por defecto, y solo alcanzan a las eliminaciones de reserva.
+Alguien de quien usted no eligió recibir noticias le ha escrito, y usted decide qué ocurre.
 
-#### Días de apertura
+**Pasos**
 
-Qué días de la semana está abierto el espacio. Una reserva que toca un
-día cerrado se rechaza con ese motivo, y el plano dibuja la jornada como
-cerrada en vez de vacía.
+1. Abra [Mensajes](app:/me?tab=messages). Una tarjeta **Solicitudes de mensaje** aparece sobre sus conversaciones cuando hay alguna.
+2. Lea el primer mensaje.
+3. Toque **Aceptar** para convertirlo en una conversación, **Ignorar** para ocultarlo o **Bloquear** para cortar todo contacto.
 
-#### Granularidad
+**Conviene saber**
 
-Qué puede ser una reserva: **media jornada**, **jornada completa** o un
-**tramo** en una rejilla de N minutos. Una reserva que no cae en la
-rejilla se rechaza y se le indica el paso, para que nadie tenga que
-adivinarlo.
+- La tarjeta lo dice claramente: estas personas están fuera de aquellas por las que usted eligió ser localizable, y no se les informa de lo que usted decida.
+- Quién puede escribirle primero se fija en Yo, en **Quién puede iniciar una conversación conmigo**.
 
-#### Horario laboral
+**Véase también:** [Bloquear a alguien](help:user.collaborate.block) · [Quién puede ver mis datos](help:user.privacy.visibility)
 
-El principio y el final de la jornada. Junto con la granularidad deciden
-qué es media jornada — la unidad en la que cuentan toda asignación, toda
-cuota y toda línea de factura.
+### Bloquear a alguien
 
-**De dónde vienen los horarios (#1307).** Una etiqueta bajo el título indica si los horarios son el *Valor predeterminado del producto*, vienen *De la plantilla «…»* o son un *Ajuste del espacio*. **Volver a la plantilla** repone los horarios de la última plantilla aplicada; **Volver al valor predeterminado** quita los horarios propios del espacio. La edición sigue en los campos de abajo.
+**Público:** Todos
 
-#### Días de cierre
+Usted quiere que una persona deje de verle y de escribirle.
 
-Fechas en que el espacio está cerrado sea cual sea el día de la semana:
-festivos, una semana en agosto, un día para el fontanero. Una reserva
-que toca una se rechaza y lo dice.
+![](assets/help/images/user-collaborate-me-privacy--blocked.es.b8fa17aa9.jpg)
 
-#### Reglas de reserva
+**Pasos**
 
-Las reglas que el servidor aplica en todos los caminos de creación —
-la app, un QR escaneado, el quiosco de pared — para que una regla
-escrita una vez los ate a los tres.
+1. Toque **Bloquear** en una solicitud de mensaje, o **Bloquear a esta persona** en una conversación.
+2. Confirme.
+3. Para deshacerlo, abra Yo, después **Personas bloqueadas**, y toque **Desbloquear** junto al nombre.
 
-#### Permitir reservas pasadas
+**Conviene saber**
 
-Desactivado, una reserva enteramente en el pasado se rechaza. Activado,
-se permite. Una reserva retroactiva **del mismo día** es legal en ambos
-casos: quien se sentó a las nueve debe poder decirlo a las diez.
+- Un bloqueo funciona en los dos sentidos: ninguno de los dos ve ni alcanza al otro.
+- No se informa a la persona.
 
-#### Los administradores pueden cerrar la presencia
+**Véase también:** [Solicitudes de mensaje](help:user.collaborate.message-requests)
 
-Permite a un administrador terminar la presencia de otra persona. Útil
-cuando un miembro se va sin cerrar y la plaza quedaría ocupada hasta el
-final del día.
+### Notificaciones
 
-#### Fuera del horario de apertura
+**Público:** Todos
 
-Cuatro respuestas, cada una con su frase de rechazo: **no** (rechazado),
-**solo presencia espontánea** (registrarse en el sitio sí, reservar por
-adelantado no), **libre** o **cobrado** (permitido y contado). Una
-reserva que solo se desborda se trata como exterior en los modos
-estrictos; la facturación solo cuenta la que queda *enteramente* fuera.
+Usted quiere saber qué le avisa y, si lo prefiere, desactivar los avisos en este dispositivo.
 
-#### Límites de reserva
+![](assets/help/images/user-collaborate-notifications.es.b8fa17aa9.jpg)
 
-El horizonte de apertura (hasta dónde se puede reservar por
-adelantado), la duración mínima y máxima de una reserva, y cuántas
-reservas solapadas puede tener un miembro. Cada rechazo nombra el límite
-y su valor: el mensaje es la regla.
+**Pasos**
 
-### Funciones
+1. Abra [Privacidad y datos](app:/privacy).
+2. Use el interruptor **Notificaciones push en este dispositivo** para activar o desactivar las notificaciones push.
+3. Para silenciar una conversación, manténgala pulsada en [Mensajes](app:/me?tab=messages) y elija **Silenciar notificaciones**.
 
-**Primero los procesos** (#1327). La pantalla se abre con una tarjeta por proceso de negocio — *Espacio y acceso*, *Facturación y pagos* y los demás — en lugar de un centenar de interruptores. Cada tarjeta dice su estado con palabras junto a un icono: **Activo** (todas las funciones del proceso funcionan), **Parcial** (algunas), **Disponible** (ninguna está activada aún) o **Requiere atención** (una función está activada pero espera un requisito desactivado). Cuenta los subprocesos activos y las funciones activadas, y avisa cuando activar todo el proceso necesitaría también una función de otro proceso. Toque una tarjeta para ver sus subprocesos y qué hace cada función; toque una función para llegar a su interruptor. Un único campo de búsqueda alcanza procesos, subprocesos y funciones, y muestra cada resultado bajo su ruta (*Espacio y acceso › Acceso físico*); los chips **Todos**, **Activo**, **Disponible** y **Requiere atención** acotan las tarjetas — un proceso parcial cuenta como activo y como disponible. La vista **Interruptores**, encima de la lista, conserva cada interruptor, su búsqueda y el chip **Modificadas**. **Activar o desactivar un proceso (#1329).** Una tarjeta abierta ofrece **Activar** y **Desactivar** para todo el proceso y para cada subproceso. Ambos abren la misma vista previa antes de escribir nada: qué se cambia, qué es *también necesario* y viene de otro proceso, qué *vuelve a funcionar* porque su requisito regresa y qué está *ya activo*. Desactivar algo que otras funcionalidades aún necesitan se rechaza primero: usted elige dejarlo todo como está, desactivar lo pedido conservando los ajustes de las dependientes (dejan de funcionar hasta que vuelva el requisito) o desactivar también las dependientes. La escritura se hace contra exactamente lo que mostró la vista previa; si alguien cambió las funcionalidades mientras tanto, no se escribe nada, la vista previa se actualiza y se le vuelve a preguntar. La app solo anuncia el éxito tras releer el resultado. **Qué es una funcionalidad y por qué está activa (#1328).** Toque una funcionalidad en una tarjeta y se explica antes de cambiar nada: su lugar (*proceso › subproceso*), qué aporta, qué **requiere** (con *en ‹proceso›* cuando el requisito está en otro sitio), qué la **usa**, y por qué está activa o no ahora mismo: *activada*, *activada y necesaria para …*, o *retenida: necesita …, que está desactivada*. La clave técnica está bajo **Detalles técnicos**. **Cambiarla entre los interruptores** lleva a su interruptor.
+**Conviene saber**
 
-![](assets/help/images/features-tree.jpg)
+- Se le avisa de las solicitudes que esperan su confirmación y de los mensajes.
+- El contador de la campana y del icono de la app suma sus confirmaciones pendientes y sus mensajes sin leer.
+- Desactivado, la app sigue funcionando; no se envía nada a este dispositivo. No hay interruptores distintos por categoría.
+- Si su sistema bloquea las notificaciones de la app, permítalas en los ajustes del sistema.
 
-*La vista Interruptores de la pantalla Funciones: cada módulo con su descripción; una función indentada necesita a su padre.*
+**Véase también:** [Eventos y confirmaciones](help:user.collaborate.events) · [Tus datos, tus derechos](help:user.privacy.consent)
 
-Activa o desactiva módulos enteros por espacio — cada interruptor lleva su descripción en la propia pantalla: pestaña calendario, pestaña eventos, agrupación de notificaciones, pestaña Finanzas, servicios, suplementos de accesorios, pagos en línea, facturas, los admins emiten facturas, plantilla del PDF de factura, recordatorios de pago (Mahnwesen), gestión del IVA, declaraciones de IVA, envío de la factura electrónica al cliente, exportar PDF, reserva en serie, reservar para otros, notificaciones push, los administradores pueden bloquear sitios, reservas de mesa, oficina y planta, los admins pueden asignar plantas, modo quiosco, credenciales RFID/NFC, credenciales QR, fotos de los miembros en el quiosco, directorio de miembros, integración con WhatsApp, códigos QR de espacios, etiquetas NFC/RFID de las sillas, fotos de los miembros en el plano, copropietarios, entrada/salida automática, exportación de datos (Excel), horario laboral, políticas de reserva, notificaciones entre miembros, biblioteca de documentos, informes de miembros, solicitudes de eliminación de reservas, gestión de roles, eliminar espacios con historial, consejos de ayuda y animaciones de la interfaz. Desactivar un módulo elimina *todas* sus pantallas y botones para todos los miembros.
+### Descubrir
 
-La lista es **jerárquica**: una función que necesita otra aparece indentada bajo ella con una nota *Requiere…*, y queda atenuada mientras su padre está desactivado — *Finanzas* lleva los servicios, los suplementos de accesorios, los pagos en línea y la facturación; *Facturas* lleva la delegación a admins, la plantilla PDF, los recordatorios de pago, la gestión del IVA (con las declaraciones debajo) y el envío al cliente; *Modo quiosco* lleva tres hijas — credenciales RFID/NFC, credenciales QR y fotos de los miembros en el quiosco; *Reservas de mesa, oficina y planta* lleva *los admins pueden asignar plantas*; *Directorio de miembros* lleva la integración con WhatsApp; la *pestaña eventos* lleva la agrupación del hilo. Desactivar un padre saca todo su subárbol de la app; la elección guardada del hijo vuelve intacta cuando el padre regresa.
+**Público:** Todos
 
-#### Un interruptor de funcionalidad
+Usted quiere encontrar espacios que se publican a sí mismos y escribir a sus anfitriones.
 
-Cada funcionalidad es un interruptor. Actívelo y aparecen **todas** sus
-superficies — la casilla, la pestaña, el botón, el enlace profundo;
-desactívelo y no queda ninguna, ni siquiera una URL guardada. Lo que un
-interruptor nunca deshace es la aritmética ya aplicada: una factura
-emitida con la funcionalidad activa conserva lo que dice. Algunos
-interruptores necesitan otro antes, y el que espera a su padre lo dice
-en vez de fallar en silencio.
+![](assets/help/images/user-collaborate-discover.es.b8fa17aa9.jpg)
 
-### Miembros y planes
+**Pasos**
 
-Toca un miembro para abrir su **ficha de gestión** — cada acción por miembro en un solo lugar: **Enviar el acuerdo financiero** (§11d), **Mensajes**, **Añadir un servicio** (servicio, cantidad, mes de facturación → *enviar a confirmación*), **Suscripción** (su porcentaje), **Cuando se acaban los días** (la política de exceso, §9), **Límite de reservas** (cuántas reservas **abiertas** puede mantener el miembro en total, caigan cuando caigan), **Reservas simultáneas** (cuántas reservas pueden **solaparse en el tiempo** — el cupo personal que prevalece sobre el número del espacio, §4b; son dos topes distintos, así que lee las etiquetas), **Puede reservar una mesa, oficina o planta entera**, **Credenciales** (§10), **Nombrar admin** (validado, §7), **Copropiedad**, **Convertir en quiosco** — o **Revertir quiosco a miembro** en una cuenta de dispositivo —, **Aprobar membresía** o **Rechazar membresía** cuando está pendiente, y **Pausar la membresía**. Cada fila muestra el **correo** del miembro bajo el nombre.
+1. Abra [Descubrir](app:/me?tab=discover) en Yo. Se abre en el mapa.
+2. Escriba en **Buscar espacios** y toque la lupa.
+3. Deslice las tarjetas bajo el mapa, o toque el símbolo de la chincheta de una tarjeta para **Localizar en el mapa**.
+4. Toque el botón de lista para pasar a **Lista**, y el botón de mapa para volver a **Mapa**.
+5. Toque un espacio para leer su página pública: descripción, dirección, contactos, sitio web, plano público.
+6. Use **Escribir a los anfitriones**, el botón de chat junto a un anfitrión, **Entrar** o **Solicitar un perfil en este espacio**, según lo que ofrezca el espacio.
 
-![](assets/help/images/members-plans-list.jpg)
+**Conviene saber**
 
-*Miembros y planes: correo, porcentaje del plan y chips de rol por fila; megáfono, añadir y filtros en la barra.*
+- Solo aparecen los espacios cuyo propietario eligió **Visible en el directorio público**. Si ninguno coincide, la pantalla dice **No se encontraron espacios publicados.**
+- Escribir a alguien o pedir unirse le conecta primero con el servidor de ese espacio, y se lo consulta antes de enviar nada.
+- Sus mensajes con personas de otros servidores aparecen en [Mensajes](help:user.collaborate.messages); gestione esos servidores en **Servidores conectados**.
+- Los propietarios publican su página desde sus ajustes.
 
-![](assets/help/images/member-management-sheet.jpg)
+**Véase también:** [Iniciar una conversación o un grupo](help:user.collaborate.messages-new)
 
- 
+### Su perfil público
 
-![](assets/help/images/member-add-service.jpg)
+**Público:** Todos
 
-*La ficha de gestión de un miembro — cada acción por miembro en un solo lugar — y a su lado el cuadro Añadir un servicio: el servicio, la cantidad y el mes en que aterriza.*
+Usted quiere que las personas ajenas a sus espacios puedan leer unas palabras sobre usted.
 
-![](assets/help/images/member-management-sheet-self.jpg)
+![](assets/help/images/user-collaborate-me-privacy--public-profile.es.b8fa17aa9.jpg)
 
-*Tu propia ficha es más corta: nadie se concede derechos a sí mismo (sin filas de admin, espacios enteros ni simultaneidad sobre ti).*
+**Pasos**
 
-![](assets/help/images/member-subscription.jpg)
+1. Abra Yo y después la sección **Privacidad**.
+2. Active **Perfil público** y confirme **Publicar**.
+3. Toque **Copiar el enlace** y compártalo.
+4. Desactívelo en cualquier momento para retirarlo.
 
- 
+**Conviene saber**
 
-![](assets/help/images/member-reservation-limit.jpg)
+- Cualquiera que tenga el enlace, con sesión iniciada o no, lee su nombre, su profesión y su biografía. Los datos de contacto, la presencia y los espacios siguen siendo privados.
+- Un enlace a un perfil retirado o desconocido dice **Este perfil no es público.**
+- **Cómo me ven los demás** muestra una vista previa de lo que ve cada público.
 
-*El diálogo de suscripción (el porcentaje del miembro) y el diálogo de límite de reservas (el tope de reservas abiertas).*
+**Véase también:** [Quién puede ver mis datos](help:user.privacy.visibility)
 
-#### La biblioteca de espacios
+### Sus visitas como invitado
 
-*Ajustes → Biblioteca de espacios* (#1120), cuando la función está activa.
+**Público:** Todos
 
-**Partir de la biblioteca.** Busque por nombre, descripción o etiqueta y afine con los chips de etiquetas — ambos se combinan; una tarjeta dice lo que aporta la plantilla: su plano en cifras, *con sus ajustes* cuando también viajan horarios, precios o reglas (#1280). Todas las plantillas que puede ver: la
-integrada, las públicas y las que alguien compartió con su dirección de
-e-mail. *Ver los cambios* muestra, grupo por grupo, lo que la plantilla haría aquí: los grupos **Nuevo** van marcados, los que **cambian lo que tiene** se ofrecen sin marcar, los **ya iguales** no tienen nada que aplicar, y un grupo que **requiere atención** dice por qué y no se puede elegir. **Aplicar N cambios** aplica exactamente lo marcado — nunca la plantilla entera — y los precios o los roles piden una confirmación más. Al aplicar una versión más reciente de una plantilla ya aplicada, lo que cambió desde entonces aparece como **Personalizado aquí** y sin marcar: una actualización nunca deshace en silencio su propia decisión. Bajo un grupo que cambia funciones, la vista previa enumera cada interruptor por **proceso de negocio** — *Facturación y pagos: Facturación activada* — los mismos procesos que la pantalla Funciones; la plantilla sigue llevando claves de funciones, y la aplicación escribe exactamente el conjunto de cambios previsualizado (#1330). Niveles, salas, mesas y plazas se fusionan **por nombre**; nunca se elimina lo que ya tiene.
+Usted pidió visitar un espacio sin hacerse miembro y quiere seguir esa visita.
 
-**Sus plantillas.** *Guardar este espacio como plantilla* toma una
-instantánea de su plano. Los precios, las imágenes del plano y la
-dirección de su sede se eliminan antes de guardar. La hoja pregunta **qué viaja** — marque los grupos que publicar, una plantilla solo de horarios está bien — y dice lo que **nunca** sale del espacio (datos bancarios, sedes y sus direcciones, identificadores legales, textos de invitación, enlaces y diseño de documentos) y **qué nombres viajan con el plano**, porque salas y mesas se fusionan por nombre y no pueden ocultarse. Añada **etiquetas** para que otros la encuentren (#1280). Cada plantilla es
-*Solo yo* hasta que decida lo contrario: *Personas que invito* (por
-e-mail — la invitación funciona en cuanto esa dirección inicia sesión,
-sin revelar si ya tiene cuenta) o *Todos*, que la coloca en la biblioteca.
+**Pasos**
 
-**Más que un plano** (#1276). Una plantilla también lleva cómo funciona
-el espacio: horarios y reglas de reserva, tarifas, servicios, paquetes,
-accesorios, reglas de validación, la matriz de roles, recordatorios,
-días de cierre, formatos de numeración (nunca los contadores), el léxico
-y el perfil de funciones. Lo que solo pertenece a su espacio nunca viaja:
-las sedes y sus direcciones, sus identificadores legales y número de
-IVA, las menciones legales, los datos bancarios, los textos de
-invitación, los enlaces y el diseño de los documentos. El servidor los
-elimina antes de guardar la plantilla, envíe lo que envíe la app.
-Aplicar fusiona: los días de cierre, sus precios en el plano y todo lo
-que el espacio ya tiene se quedan donde están. Una excepción: una escala de comisiones de la plantilla sustituye la
-suya entera, porque sus tramos cubren juntos 0–100 % y dos escalas no se
-pueden entrelazar. Guardar de nuevo con el mismo
-nombre actualiza la plantilla y sube su versión, y cada aplicación queda
-registrada con lo que el espacio tenía antes. Una plantilla creada por
-un DesKilo más reciente que este servidor no entiende se rechaza, nunca
-se aplica a medias.
+1. Abra Yo y después Inicio.
+2. Busque **Mis visitas**: cada visita muestra el espacio, la hora y un estado (**Solicitada**, **Confirmada**, **Rechazada**, **Cancelada** o **Caducada**).
+3. Para retirar una que todavía está por llegar, toque **Cancelar esta visita**.
 
-Hay dos plantillas integradas: **A tiny space** (dos plantas, ocho puestos) y **Association de coworking (France)**. La segunda es lo que suele necesitar una asociación de coworking francesa desde el primer día: medias jornadas de 7 h a 13 h y de 13 h a 19 h, de lunes a viernes; los festivos del año y del siguiente para el país del espacio como días de cierre (nunca en un mes ya facturado); cuotas al 50 % y al 100 % de 50 € y 100 €; sin IVA; el francés como idioma del espacio, con las palabras de la asociación (*Place*, *Étage*, *Réservations*); las validaciones en el calendario, con la pestaña de eventos y el directorio de miembros desactivados; y dos plantas listas para reservar (#1282). El país, la moneda y la zona horaria vienen siempre de la bienvenida.
+**Conviene saber**
 
-Un espacio nuevo siempre empieza con una sala, diga lo que diga esta
-función: la bienvenida ofrece *Partir de* con la plantilla integrada
-seleccionada.
+- Una visita no es una membresía: no da ningún rol ni ninguna suscripción.
+- La lista aparece solo cuando tiene visitas, y solo donde el espacio tiene activada la función **Visitas de invitados**.
 
-#### Qué entornos da una invitación
+**Véase también:** [Descubrir](help:user.collaborate.discover)
 
-Cuando su espacio tiene un gemelo de producción, la hoja de invitación
-hace una pregunta: **¿Dar también acceso a producción?** (#1119)
+## Ajustes y perfil, y sus datos
 
-La persona se une al espacio de prueba en cualquier caso. Producción se
-añade encima, nunca en su lugar — el gemelo de prueba es donde se ensaya,
-y alguien que existiera solo en producción no podría ensayarse.
+Todo lo personal de DesKilo vive en dos lugares: **Yo**, que es suyo en todos los espacios, y **Ajustes**, donde cada espacio guarda lo que es específico de su membresía en él. Este capítulo recorre ambos y después explica sus derechos de privacidad y la opción de usar su propio servidor.
 
-El rol sigue decidiendo. Si el rol invitado no tiene *Acceso a
-producción*, la invitación se niega a crearse y lo dice, en lugar de
-fallar más tarde. Una invitación nunca concede lo que la matriz de roles
-retiene.
+En este capítulo:
+- [Cómo se organizan los Ajustes](help:user.settings.organisation) y [el interruptor solo para este espacio](help:user.settings.scope)
+- Su cuenta: [foto](help:user.profile.settings.photo), [datos personales](help:user.profile.settings.personal-info), [dirección](help:user.profile.settings.address), [NIF-IVA](help:user.profile.settings.vat-id), [condiciones de pago](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [estado](help:user.profile.settings.status), [período de reserva predeterminado](help:user.profile.settings.default-period)
+- Su credencial: [la credencial](help:user.profile.settings.badge) y [su PIN](help:user.profile.settings.badge-pin)
+- Cómo se ve y se lee la app: [idioma](help:user.profile.settings.language), [tema](help:user.profile.settings.theme), [navegación](help:user.profile.settings.navigation), [números y fechas](help:user.profile.settings.regional-formats), [reloj](help:user.profile.settings.clock), [zona horaria](help:user.profile.settings.device-zone), [consejos](help:user.profile.settings.restore-hints), [cámara frontal](help:user.profile.settings.front-camera), [cuentas vinculadas](help:user.profile.settings.linked-accounts)
+- Privacidad y sus datos: [quién puede ver mis datos](help:user.privacy.visibility), [quién me ve](help:user.privacy.audiences), [perfil público](help:user.privacy.public-profile), [exportar](help:user.privacy.export), [borrar](help:user.privacy.erase), [solicitudes de derechos](help:user.privacy.requests), [push](help:user.privacy.push), [sus derechos](help:user.privacy.consent)
+- [Su propio servidor](help:user.backend.server)
 
-Se activa en *Ajustes → Funcionalidades → Elegir los entornos en los que
-se activa a una persona*; viene desactivado.
+### Cómo se organizan los Ajustes
 
-#### Cómo empezó la afiliación
+**Público:** Todos
 
-Cada miembro lleva una línea discreta que indica cómo llegó (#1110):
-**Fundó este espacio**, **Se unió por invitación**, o **Perfil creado por
-un administrador**.
+Usted quiere saber dónde está un ajuste antes de ponerse a buscarlo.
 
-Es un hecho, no un estado, y no cambia nada de lo que alguien puede
-hacer. Un perfil que un administrador creó y entregó lo sigue diciendo
-después de la toma de posesión — la fecha de la entrega es otra cosa.
+![](assets/help/images/user-settings-overview.es.b8fa17aa9.jpg)
 
-Quién lo ve: el propio miembro y quien gestiona los miembros. Nadie más.
-Se activa en *Ajustes → Funcionalidades → Cómo llegó cada miembro*;
-viene desactivado.
+**Pasos**
 
-#### La suscripción de un miembro
+1. Abra [Ajustes](app:/settings). Si su espacio los llama **Mi cuenta**, es la misma pantalla.
+2. Quédese en **Mis ajustes** para todo lo que le concierne a usted. Los propietarios y los administradores ven además **Gestionar espacio**, que contiene la configuración del espacio; los miembros que no administran nada no ven una segunda pestaña.
+3. Use los tres atajos bajo las pestañas para saltar: **Mi cuenta**, **Mi membresía**, **Avanzado**.
+4. Abra **Volver a Yo** para regresar a su página Yo.
 
-El porcentaje de las medias jornadas laborables del mes al que el miembro
-tiene derecho. Elige el tramo de tarifa, y el tramo decide lo que cuesta
-el mes. Un valor negociado fuera de la lista solo es posible donde el
-espacio lo permite.
+**Conviene saber**
 
-#### Cuando se acaban los días
+- **Mi cuenta** es una tarjeta breve: remite a Yo, donde viven su foto, su idioma, su tema y sus inicios de sesión para todos los espacios.
+- **Mi membresía** es lo que concierne solo a este espacio: lo que puede hacer aquí, su credencial y su PIN, su estado, su período de reserva predeterminado, sus condiciones de pago y los documentos.
+- **Avanzado** empieza cerrado. Concierne a este dispositivo: el servidor, las notificaciones push, la cámara frontal.
+- Bajo las secciones también encontrará **Ayuda**, la versión de la app, la política de privacidad y **Cerrar sesión**.
 
-Qué pasa más allá de la asignación, para este miembro: rechazar más
-reservas, cobrarlas al precio de exceso, o dejarle comprar un paquete de
-días. Hasta que fije algo aquí, se aplica el valor por defecto del
-espacio.
+**Véase también:** [El interruptor solo para este espacio](help:user.settings.scope) · [Su propio servidor](help:user.backend.server)
 
-#### Límite de reservas
+### Elegir un ajuste solo para este espacio
 
-Cuántas reservas **abiertas** puede tener este miembro en total. Acota el
-tamaño del pendiente, y es cosa distinta del límite de simultaneidad de
-abajo.
+**Público:** Todos
 
-#### Reservas simultáneas
+Usted quiere el inglés en un espacio y el francés en los demás, o un tema oscuro solo en uno de ellos.
 
-Cuántas reservas puede tener este miembro que **se solapen en el
-tiempo**. Una por defecto, y es lo que impide que alguien tenga dos
-plazas para la misma tarde. La suya propia nunca puede fijarla.
+![](assets/help/images/user-settings-scope.es.b8fa17aa9.jpg)
 
-#### Tratamiento de IVA
+**Pasos**
 
-Qué hace la contraparte con el impuesto: nacional, empresa
-intracomunitaria que se autorrepercute, consumidor intracomunitario, o
-exportación. Se deduce del país y del número de IVA del miembro, y queda
-congelado en cada documento al emitirlo.
+1. Abra [Ajustes](app:/settings) y mire **Mi cuenta**.
+2. Active **Solo para este espacio**. Las filas de idioma, tema y formatos regionales aparecen allí mismo.
+3. Cambie lo que quiera. Se aplica solo a este espacio.
+4. Para deshacerlo, toque **Usar mis valores predeterminados**.
 
-#### Negociación de precio
+**Conviene saber**
 
-Un precio acordado con este miembro y distinto del catálogo. Se registra
-como negociación en vez de escribirse sobre la tarifa: el documento dice
-lo acordado y el catálogo sigue siendo cierto.
+- Con el interruptor desactivado, usted edita sus valores predeterminados, los que se aplican en todas partes.
+- Un ajuste que ha cambiado solo para este espacio aparece en la tarjeta bajo **En este espacio**.
+- El interruptor abarca el idioma, el aspecto y los formatos regionales, nada más.
 
-#### Copropiedad
+**Véase también:** [Idioma de la app](help:user.profile.settings.language) · [Tema](help:user.profile.settings.theme) · [Números y fechas](help:user.profile.settings.regional-formats)
 
-Eleva a un miembro a copropietario. Un copropietario tiene los permisos
-de un propietario y cuenta como tal allí donde una regla pide uno —
-incluida la regla de que el último propietario activo no puede
-retirarse.
+### Su cuenta y su foto
 
-#### Las acciones sobre un miembro
+**Público:** Todos
 
-Todo lo que un administrador puede hacer por un miembro — suscripción,
-exceso, acuerdo, pausa, límites, credenciales, rol — reunido en una sola
-hoja, para que nada haya que buscarlo en otra pantalla.
+Usted quiere que le reconozcan en el directorio, en el plano y en los mensajes.
 
-### Facturación
+![](assets/help/images/user-profile-settings-photo.es.b8fa17aa9.jpg)
 
-- **Tramos de tarifas** — la escalera de precios detrás de las suscripciones porcentuales: cada tramo dice *desde X %*, *hasta Y %*, la **cuota** mensual y la **tarifa de exceso** por media jornada extra. **+ Añadir tramo** amplía la escalera.
-- **Niveles de suscripción** — qué porcentajes pueden elegir los miembros (chips: 25 % · 50 % · 75 % · 100 %, más tus propios valores), y un interruptor opcional de **valor personalizado negociado**.
-- **Paquetes de días** — un número de días por un precio (nombre · días · precio), cada uno con su propio interruptor; los miembros con la política de *paquetes* los compran cuando se les acaban los días.
+![](assets/help/images/user-profile-settings-photo-sheet.es.b8fa17aa9.jpg)
 
-![](assets/help/images/billing-tiers.jpg)
+**Pasos**
 
-*Tramos de tarifa (desde % · hasta % · cuota · exceso) y los niveles de suscripción que los miembros pueden elegir.*
+1. Abra [Yo](app:/me?tab=me). Su cuenta son los bloques **Perfil**, **Preferencias**, **Avanzado** y **Privacidad** de esa página.
+2. Toque **Foto**.
+3. Elija **Elegir una foto** y seleccione una imagen, o elija **Quitar foto**.
 
-![](assets/help/images/billing-packages.jpg)
+**Conviene saber**
 
-*Paquetes de días: un número de días por un precio, cada uno con su propio interruptor.*
+- La fila dice **Toca para añadir una foto** hasta que tenga una y después **Toca para cambiar**.
+- Quién ve su foto es decisión suya: véase [Quién me ve](help:user.privacy.audiences).
+- Su cuenta es suya en todos los espacios; su situación en un espacio concreto está en los Ajustes de ese espacio.
 
-#### Tramos de tarifa
+**Véase también:** [Perfiles](help:user.profile.profiles) · [Quién me ve](help:user.privacy.audiences)
 
-La escalera de precios detrás de las suscripciones por porcentaje. Cada
-tramo cubre un trozo de la escala y dice lo que cuesta un mes dentro de
-él. La tarifa de un miembro elige un tramo; el tramo decide la cuota y
-el precio del exceso, nunca al revés.
+### Datos personales
 
-#### Hasta %
+**Público:** Todos
 
-El techo del tramo. El siguiente empieza donde termina este: la
-escalera no tiene huecos ni solapes, y un porcentaje cae siempre en
-exactamente un tramo.
+Usted quiere que sus facturas y cartas lleven correctamente su nombre y sus datos.
 
-#### Cuota mensual
+![](assets/help/images/user-profile-settings-personal-info.es.b8fa17aa9.jpg)
 
-Lo que cuesta un mes en este tramo, se use o no la asignación. Lleva su
-propio grupo de IVA: el tipo sigue al catálogo en vez de escribirse
-aquí.
+**Pasos**
 
-#### Exceso
+1. Abra [Yo](app:/me?tab=me) y toque **Datos personales**.
+2. Elija un **Tratamiento** si quiere que se imprima uno antes de su nombre y después rellene **Nombre**, **Apellidos**, **Empresa (opcional)**, la dirección, **Teléfono** y **E-mail para documentos**.
+3. Compruebe **En sus documentos**, que muestra cómo se imprimirá.
+4. Responda a las preguntas que su espacio añada bajo su propio título y después toque **Guardar**.
 
-El precio de media jornada por encima de la asignación. Déjelo vacío y
-las medias jornadas de más se rechazan en lugar de cobrarse; rellénelo
-y se facturan a este precio en la misma factura.
+**Conviene saber**
 
-#### Niveles de suscripción
+- Sus apellidos y su ciudad se escriben en mayúsculas, como en el correo oficial.
+- Un formulario vacío muestra **Aún sin rellenar**.
+- Las respuestas a las preguntas de su espacio son datos personales: forman parte de su exportación y se borran cuando usted deja el espacio.
 
-Qué porcentajes puede elegir un miembro — los chips que ve al tomar una
-tarifa. Añada sus propios valores junto a los habituales 25 · 50 · 75 ·
-100.
-
-#### Valor del nivel
-
-Un porcentaje, de 1 a 100. Es una parte de las medias jornadas
-laborables del mes, y por eso la asignación sigue al calendario en
-lugar de a un número fijo de días.
-
-#### Permitir un valor negociado
-
-Deja que un administrador fije, para un miembro, un porcentaje que no
-está en la lista. Desactivado por defecto: un valor que nadie más ve es
-un valor que nadie más puede comprobar.
-
-#### Paquetes de días
-
-Un número de días vendido a un precio, comprado cuando hacen falta en
-vez de suscrito al mes. Cada paquete tiene su propio interruptor: uno
-antiguo puede dejar de venderse sin desaparecer de las facturas que lo
-llevan.
-
-#### Nuevo paquete
-
-Nombre, días y precio, y añadir. Un paquete se puede comprar en cuanto
-está activo.
-
-#### Nombre del paquete
-
-Lo que un miembro ve en la venta y lo que dice la línea de factura.
-Cámbielo y solo cambian los documentos futuros: una factura emitida
-conserva el nombre con el que se vendió.
-
-#### Días del paquete
-
-Cuántos días concede el paquete. Se gastan según se usan y no caducan
-con el mes.
-
-#### Precio del paquete
-
-El precio del paquete entero, con su propio grupo de IVA. La línea de
-factura muestra el precio y el tipo que se aplicaba el día de la venta.
-
-#### Calendario de facturación
-
-Cuándo se factura el mes. La línea de suscripción se emite **antes** del
-mes que cubre y las líneas de consumo la siguen: por eso una factura
-puede nombrar un mes que aún no ha ocurrido.
-
-### Servicios y Accesorios
-
-Los catálogos detrás del §9 — extras definidos por el propietario (taquillas, impresión…, cada uno con un precio y un tipo de IVA opcional) y equipamiento por puesto con suplementos opcionales por media jornada. Ambos son listas simples con un botón **+**.
-
-![](assets/help/images/services-catalog.jpg)
-
- 
-
-![](assets/help/images/services-new-service.jpg)
-
-*El catálogo de servicios y un servicio nuevo — nombre, precio, su propio tipo de IVA donde el régimen lo cobra.*
-
-![](assets/help/images/accessories-catalog.jpg)
-
- 
-
-![](assets/help/images/accessory-edit-dialog.jpg)
-
-*El catálogo de accesorios y el editor de un accesorio — el suplemento se factura por media jornada reservada.*
-
-**Stock (#731).** Un servicio nacido de un suministro muestra *N en stock* / *Agotado*; un consumo mayor que el estante se rechaza.
-
-#### Un servicio
-
-Todo lo que se vende y no es una plaza: una hora de sala de reuniones,
-un paquete de impresión, una taquilla, una suscripción de café. Un
-servicio puede ponerlo en factura un administrador o adjuntarse a un
-paquete.
-
-#### Nombre del servicio
-
-Lo que dice la línea de factura. Cambiarlo solo afecta a los documentos
-futuros: una factura emitida conserva el nombre con el que se vendió.
-
-#### Precio del servicio
-
-El precio de una unidad, con su propio grupo de IVA — el tipo sigue al
-catálogo en vez de escribirse aquí, de modo que un cambio de tipo nunca
-vuelve sobre un documento ya emitido.
-
-#### Activo
-
-Si el servicio todavía puede venderse. Desactivarlo detiene las ventas
-nuevas y deja intactas todas las facturas que lo llevan: es lo que se
-quiere para algo descatalogado, no para algo equivocado.
-
-### Ajustes del espacio (Espacio de coworking)
-
-**Configurar por tarea.** Datos generales, pagos, comunidad e invitaciones, apariencia, valores para nuevos miembros, plantillas y datos y zona de riesgo tienen secciones separadas. Datos generales se abre primero; abre otras secciones cuando las necesites. La preparación permanece encima. Guardar sigue visible abajo al desplazarte. Las secciones cerradas conservan sus borradores; Guardar abre los campos no válidos y los muestra. Las páginas abiertas desde una sección mantienen sus propios controles para guardar. El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
-
-**Informes (#2301).** En **Facturación y pagos → Informes**, las secciones horizontales agrupan **Informes financieros** (registro de facturas con exportación contable y archivo anual, estado del espacio, IVA), **Análisis**, **Documentos del espacio** (configuración PDF, informe del espacio, tarjetas QR y Excel) y **Plantillas**. Solo aparecen acciones habilitadas y autorizadas. Los extractos personales siguen en **Yo → Finanzas** y las tarjetas de miembro en su ficha. Los ajustes conservan la copia/importación XML, la biblioteca y un enlace a Informes. El título y el acceso de la zona de peligro aparecen en rojo.
-
-La pantalla propia del espacio, de arriba abajo:
-
-- **Identidad** — nombre, país, moneda (propuesta según el país, editable), zona horaria, **idioma del espacio** (las invitaciones lo usan por defecto; *idioma de la app del remitente* es una opción) y la **dirección** postal impresa en las facturas.
-
-![](assets/help/images/workspace-identity.jpg)
-
-*Identidad: el país propone la moneda y la zona horaria; el idioma del espacio redacta las invitaciones.*
-- **Pagos y facturación** — las **instrucciones de pago** que los miembros ven en una factura impagada (IBAN, enlace PayPal.me, número de teléfono Wero, Lydia, Wisetag, pista de referencia de pago — deja un campo vacío para ocultarlo), y **Identidad legal y facturación electrónica** (§11a).
-
-![](assets/help/images/workspace-billing-links.jpg)
-
- 
-
-![](assets/help/images/payment-instructions.jpg)
-
-*Pagos y facturación: las dos entradas hacia las instrucciones de pago y la identidad legal — y el propio formulario de instrucciones, campo a campo.*
-- **Grupo de WhatsApp** — el enlace del grupo de la comunidad mostrado en el directorio.
-- **Mensaje de invitación** — las plantillas de invitación por idioma (§2).
-
-![](assets/help/images/workspace-invitation.jpg)
-
-*El mensaje de invitación por idioma, con sus marcadores, y el control de transparencia de mesas debajo.*
-- **Transparencia de mesas** — el control que deja ver una foto de fondo a través de las mesas dibujadas.
-- **Plantilla del PDF de factura** y **Reglas de recordatorio** — accesos directos al editor de informes y a la configuración de recordatorios (§11).
-- **Exportaciones** — *Exportar el espacio (XML)* (ajustes + plano, sin datos personales — respáldalo, úsalo de plantilla, migra una instancia), *Exportar configuración (PDF)* (una instantánea completa: ajustes, miembros, plano), *Informe del espacio* (todo sobre el espacio mediante la plantilla « espacio » del motor de informes), *Códigos QR de espacios (PDF)* (un QR tamaño tarjeta de crédito por puesto, mesa, oficina y planta, diez por A4), *Exportar datos (Excel)* (un libro: reservas, pagos, facturas, miembros, plano — una pestaña cada uno), *Importar el espacio (XML)* (restaura ajustes y plano; sustituye el plano actual). Cada exportación se guarda en la carpeta de **Descargas** de tu dispositivo.
-- **Toda la configuración viaja (#916)** — con *Configuración en el archivo del espacio* activado (lo está por defecto), *Exportar el espacio (XML)* lleva también una sección `<configuration>`: tarifas y bonos, tipos de IVA, identidad legal y todas las menciones de factura, reglas de reserva y validación, roles, reglas de recordatorio, diseños de documentos, sedes, días de cierre y enlaces documentales — más los precios del plano, las reservas en bloque, los nombres de sede y las etiquetas de los puestos. *Importar el espacio (XML)* aplica primero esa sección, incluso en un espacio que ya tiene reservas; solo el plano en sí sigue rechazado cuando existen reservas, y la importación lo dice. Nunca en el archivo: el código de invitación, las credenciales de factura electrónica y de pago, miembros, reservas, facturas y pagos. Exportar un espacio, importar el archivo en otro sitio y volver a exportar da el mismo archivo, byte a byte.
-
-![](assets/help/images/workspace-exports.jpg)
-
-*El bloque de exportaciones — XML, PDF de configuración, informe del espacio, códigos QR de espacios, Excel, importación XML — y la zona de peligro.*
-- **El cuestionario de configuración** — <https://fdittgen-png.github.io/deskilo/setup.html> (el §1 lo explica por completo): la página independiente que recoge una configuración entera *antes* de que exista la app. **Importar el espacio (XML)** de arriba es donde aterriza su archivo — ajustes, accesorios y plano directamente; la sección `<setup>` del archivo lleva facturación, identidad legal, roles y miembros para las pantallas que los gobiernan.
-- **Zona de peligro** — **Restablecer el espacio**: borra todas las reservas, la contabilidad y el plano; conserva ajustes y miembros. Protegido por una confirmación escrita.
-
-**Un solo guardado, todo o nada (#1451).** **Guardar** escribe todo el formulario de una vez: país, moneda y zona horaria, grupo de WhatsApp, dirección, idioma del espacio, plantillas de invitación, transparencia de los puestos y cómo empieza un miembro nuevo. Si se rechaza una parte, no se conserva nada. Si otra persona cambió estos ajustes mientras el formulario estaba abierto, no se guarda nada, la app lo indica y lo que escribió sigue en pantalla. Volver a pulsar Guardar tras perder la conexión no guarda nada dos veces.
-
-#### País
-
-Donde está establecida la organización. Decide la moneda por defecto, el
-catálogo de tipos de IVA que se le ofrece, y la fórmula legal que imprime
-un vendedor exento o no sujeto cuando usted no escribe ninguna.
-
-#### Moneda y zona horaria
-
-La moneda en que se expresan todos los precios y documentos, y la zona en
-que corre el reloj del espacio. **La zona no es cosmética**: una jornada
-laboral, un límite de media jornada y un día de cierre se cuentan en
-ella, de modo que un miembro en el extranjero ve el día del espacio y no
-el suyo.
-
-#### Idioma del espacio
-
-El idioma que habla el espacio por defecto. Las invitaciones se escriben
-en él, y un documento vuelve a él cuando quien lo lee no tiene idioma
-propio.
-
-**No es el idioma de tu aplicación.** Ese se cambia en *Ajustes →
-Idioma*, cambia lo que **tú** ves y no afecta a nadie más. Este pertenece
-al espacio y cambia lo que el espacio **escribe a los demás**.
-
-#### Dirección del membrete
-
-La dirección en texto libre que imprime un documento en papel. Es
-distinta de la **dirección estructurada** de la identidad legal, que es
-lo que lleva la factura electrónica — una máquina no sabe partir una
-línea de forma fiable, y quien lee una carta prefiere la línea.
-
-#### Grupo de WhatsApp
-
-El grupo donde puede publicarse un aviso. Opcional, y sin efecto en lo
-demás: sin él, un mensaje se queda en la bandeja de la app.
-
-#### Mensaje de invitación
-
-El texto que lleva una invitación, por idioma. Escríbalo una vez y todas
-las invitaciones en ese idioma lo usan; el código y el enlace los añade
-la app, así que nunca pegue uno en el texto.
-
-**Idioma del mensaje**, encima del campo, indica cuál de los cinco
-borradores está en pantalla. No es un ajuste: no se guarda nada de él, y
-se abre cada vez con el idioma del espacio.
-
-#### Vocabulario
-
-Las palabras que este espacio usa en lugar de las del producto.
-Renombre una plaza, las etiquetas de la leyenda, las pestañas o las
-palabras de la reserva — por idioma — y todo lo demás conserva la
-redacción del producto.
-
-La palabra del producto siempre aparece bajo la suya, para que vea qué
-está reemplazando. **Restablecer** elimina su palabra en vez de guardar
-la del producto en su lugar: un término restablecido sigue al producto
-cuando su redacción cambia más adelante.
-
-Los términos se agrupan por dónde aparecen, no se listan por nombre —
-dos de ellos se leen *Reserve* en inglés, y el grupo es lo que los
-distingue.
-
-#### Colores
-
-*Ajustes → Espacio → Colores*, con *Colores del espacio* activado
-(*Ajustes → Funciones*). Elija uno de los ocho colores o escriba
-cualquier `#RRGGBB`: la pantalla muestra lo que hace antes de guardar —
-el tema claro y el oscuro que la aplicación deriva de él, uno al lado
-del otro.
-
-La aplicación mantiene sus garantías de contraste sea cual sea el color
-recibido. Donde un tono resultaría demasiado claro para leerse sobre una
-superficie, la aplicación lo oscurece — el tono es suyo, la legibilidad
-es del producto — y un color que no pudiera hacer legible se rechaza,
-indicando el par, sin guardar nada. **Colores del producto** elimina el
-suyo en vez de guardar el del producto en su lugar: este espacio sigue
-al producto cuando su paleta cambia más adelante.
-
-El color también llega con el archivo del asistente de configuración, un
-XML de espacio importado (`brand-color` en `<settings>`) o una
-plantilla, y viaja a un gemelo como el grupo *Colores* — medido del
-mismo modo antes de guardarse.
-
-La marca DesKilo, los colores de los estados de plaza y el banner de
-producción nunca son de un espacio.
-
-**Emblema.** La pequeña marca propia del espacio, mostrada **bajo** el
-nombre de la aplicación en el menú — y en ningún otro sitio. Elija un
-PNG, JPEG o WebP: la aplicación lo redibuja a 512 píxeles como máximo y
-guarda ese resultado; los metadatos del archivo, que en una foto indican
-dónde se tomó, nunca salen de su dispositivo. **Quitar** lo elimina. Un
-espacio sin emblema, o una imagen lenta o que no se puede decodificar,
-se ve exactamente como siempre.
-
-El emblema nunca sustituye al logotipo de DesKilo y no aparece en el
-selector de perfiles, donde el círculo de color indica si un espacio es
-real o un lugar de pruebas — una señal de seguridad no es un espacio
-publicitario.
-
-**Colores de las salas.** Bajo el color de marca, *Colores de las salas*
-pinta el plano con sus propios tonos en vez de los ocho del producto.
-Añada hasta ocho — el plano lee el orden, así que una sala conserva su
-color cuando añade otro —, toque uno para quitarlo y **Colores del
-producto** devuelve la paleta. Si lo deja vacío, el plano se ve
-exactamente como siempre.
-
-#### Transparencia de las mesas
-
-Cuánto se transparenta la imagen de fondo bajo una mesa del plano. Súbala
-cuando el plano está trazado sobre una fotografía y el mobiliario
-importa; bájela cuando importan más las plazas que la sala.
-
-#### Exportar el espacio (XML)
-
-El espacio entero en un archivo: el plano y — con *Configuración en el
-archivo del espacio* activado — tarifas, tipos de IVA, la identidad legal
-y todas las menciones de factura, reglas de reserva y validación, roles,
-reglas de recordatorio, diseños de documentos, sedes, días de cierre y
-enlaces de documentos. **Nunca en el archivo:** el código de invitación,
-las credenciales de factura electrónica y de pago, los miembros, las
-reservas, las facturas y los pagos.
-
-#### Importar el espacio (XML)
-
-Aplica ese archivo aquí. La sección de configuración se aplica incluso a
-un espacio que ya tiene reservas; solo el plano en sí se rechaza cuando
-existen reservas, y la importación lo dice en vez de fallar en silencio.
-
-#### Exportar la configuración (PDF)
-
-Todos los parámetros del espacio como un documento legible, firmable, que
-entregar a un contable. Es una instantánea, no una copia de seguridad —
-el XML es el archivo que se vuelve a importar.
-
-#### Informe del espacio
-
-El espacio mismo como documento: sedes, plantas, plazas, tarifas y las
-reglas vigentes. Útil como anexo a un arrendamiento o a un expediente de
-seguro.
-
-#### Códigos QR de las plazas (PDF)
-
-Una hoja imprimible de códigos QR, uno por plaza. Péguelos en las mesas y
-un miembro puede reservar o registrarse escaneando la plaza ante la que
-está.
-
-#### Exportar los datos (Excel)
-
-Los datos de explotación — miembros, reservas, consumo, facturas, pagos —
-como hoja de cálculo, para el análisis que la app no hace. Es una
-exportación, no una transferencia: nada la vuelve a leer.
-
-Llega como **un único ZIP** (#1310): `workspace.xlsx`, un `manifest.json`
-que indica cuántas filas tiene cada pestaña, de qué versión del esquema
-vienen los datos y un SHA-256 por archivo, y `files/` con los archivos
-guardados del espacio — fondos e imágenes del plano, imágenes de los
-informes. Cada tabla se lee hasta el final; una exportación que no puede
-ser completa falla con un mensaje en lugar de guardar menos. Las cuentas no
-viajan: las personas vuelven a unirse y reclaman su perfil en otro
-servidor.
-
-### Códigos QR de espacios y reservas de espacios enteros
-
-Cuatro pasos convierten «escanear el código de la mesa» en el flujo de reserva diario (§4a):
-
-1. En el **editor**, marca una mesa, una oficina o una planta como **Reservable en su totalidad** y dale un **precio por media jornada** — la ficha de propiedades de la mesa o de la oficina, o para una planta el **icono de capas directamente en su fila**.
-2. Activa **Reservas de mesa, oficina y planta** en **Funciones** (desactivada por defecto).
-3. Concede a cada miembro autorizado **«Puede reservar una mesa, oficina o planta entera»** — propietarios y admins lo fijan en la ficha de gestión del miembro, nunca para sí mismos. Los propietarios y admins tienen ese derecho sin el interruptor, tanto en la app como en el **quiosco**.
-4. Imprime las tarjetas: **Informes → Documentos del espacio → Códigos QR de espacios (PDF)** — recórtalas y pega cada tarjeta en su espacio.
-
-Una reserva de oficina cubre **todas las mesas de su interior**; una reserva de planta cubre la planta entera. Ambas solo son posibles mientras nada de su interior esté reservado — y aparecen como líneas propias en la factura del miembro.
-
-### Copropietarios
-
-Asegúrate de que la comunidad nunca dependa de una sola cuenta:
-
-1. Abre *Miembros y planes → el miembro → **Copropiedad*** y elige **activo** (permisos de propietario ya) o **pasivo** (sucesor en espera).
-2. Cede el mando en cualquier momento con ***Promover a propietario ahora*** — el copropietario se convierte en propietario de pleno derecho junto a ti.
-3. Si el último propietario abandona alguna vez el espacio, el mejor copropietario es **promovido automáticamente** en el servidor — activo antes que pasivo. Esta red de seguridad funciona incluso con el interruptor de la función *Copropietarios* desactivado (el interruptor solo oculta los botones de nombramiento).
-
-### Gestión de roles
-
-Una matriz central decide **qué rol tiene qué permiso** — gestionar roles, gestionar miembros, políticas de validación, configuración del espacio, emitir facturas y conciliar pagos, ver finanzas, documentos, servicios, aprobar gastos, consultar y gestionar los acuerdos comerciales. Ábrela en *Ajustes → Gobernanza → Gestión de roles* (su interruptor de función debe estar activado):
-
-- El **propietario tiene siempre todos los permisos** — su fila está bloqueada.
-- Quien tenga *Gestionar roles y permisos* edita las demás filas. Un **copropietario** empieza con todo («un copropietario puede tener menos» — el propietario quita lo que quiera); un **admin** empieza con las capacidades de admin de hoy; un **miembro**, sin ninguna.
-- Todos los demás con algún permiso ven la matriz en **solo lectura**, con su propio rol resaltado.
-- Una matriz sin tocar significa los valores por defecto — nada cambia hasta que el propietario la edita. El antiguo interruptor de función *los admins emiten facturas* sigue concediendo la facturación a los admins por compatibilidad. El servidor aplica la misma matriz en cada RPC de facturación — emitir, reemplazar, anular, recordar, conciliar, reembolsar, cancelar un resto y reagrupar piden todos `has_permission` (#816) — de modo que la interfaz y la base de datos no pueden discrepar; un miembro al que se concede *emitir facturas* lo usa como un admin.
-
-**Quién valida (#732).** Una regla nombra su **alcance**: *Los admins* (el propietario y todos los admins, o los que listes), *Personas designadas* (el propietario y exactamente las personas elegidas — un miembro normal puede ser validador), o *Todos los miembros*. El número y la firma del propietario conservan su sentido, y nadie valida nunca su propio evento. Función *Validadores por rol o persona*.
-
-![](assets/help/images/roles-matrix.jpg)
-
-*Gestión de roles: la tarjeta del propietario bloqueada, la del copropietario con todo concedido por defecto — las tarjetas de admin y miembro siguen con los mismos once permisos.*
-
-#### La matriz de roles
-
-Los roles a un lado, los permisos al otro. Cada casilla es un
-interruptor, salvo las que un propietario tiene siempre. Un permiso se
-pide al servidor por una sola función: quitar una casilla lo quita en
-todas partes a la vez — la pantalla oculta el botón, y la llamada de
-detrás lo rechaza igualmente.
-
-### Configurar los pagos en línea
-
-Cada comunidad cobra en su **propia** cuenta de proveedor; la app nunca guarda las claves secretas en ningún dispositivo — viven en el servidor.
-
-1. Abre **Ajustes → Pagos en línea** (solo propietario).
-2. Elige un proveedor y pega sus claves desde el panel de ese proveedor:
-   - **PayPal** — Client ID, Secreto, Entorno (empieza por *sandbox*), ID de webhook, URL de retorno (PayPal Developer → tu app REST).
-   - **Tarjeta (Stripe)** — Clave secreta, Secreto de firma del webhook, URL de retorno (Stripe → claves API / Webhooks).
-   - **Mollie** — Clave API, URL de retorno (ofrece iDEAL, Bancontact, tarjetas…).
-   - **Wero (con Mollie)** — la misma clave API de Mollie, con Wero activado en tu cuenta Mollie.
-3. **Guarda** — aparece un chip verde *Configurado*. Activa la función **Pagos en línea** (Ajustes → Funciones) y los miembros verán **Pagar en línea** en una factura pendiente. (La propia entrada de ajustes *Pagos en línea* solo se muestra mientras la función está activada.)
-
-![](assets/help/images/online-payments-config.jpg)
-
-*Una tarjeta por proveedor — PayPal en la imagen; Stripe, Mollie y Wero tienen la misma forma: claves dentro, un chip Configurado de vuelta.*
-
-Un secreto guardado no se vuelve a mostrar — deja su campo en blanco para conservarlo, escribe para reemplazarlo, **Eliminar** para quitar el proveedor. Las comisiones son del proveedor (típicamente ~1,5–3 % por pago, sin cuota mensual); DesKilo no añade nada, y la vía manual por transferencia/IBAN sigue siendo gratis.
-
-Si un pago no arranca, activa **Ajustes → Avanzado → Modo desarrollador** y abre la pantalla **Desarrollador**: la traza de *pagos* muestra exactamente qué proveedores están configurados y qué campos faltan todavía.
-
-![](assets/help/images/developer-screen.jpg)
-
-#### Los paneles de los proveedores, paso a paso
-
-Mantén **los entornos de prueba y de producción estrictamente separados**: cada proveedor tiene claves distintas por modo, y todas las claves que pegues en DesKilo deben pertenecer al mismo modo. En las URL de abajo, `<project-ref>` es la referencia de tu proyecto de Supabase (las instancias autoalojadas usan la URL de su propia instancia).
-
-**PayPal**
-
-1. Inicia sesión en [developer.paypal.com](https://developer.paypal.com) y abre **Apps & Credentials**.
-2. Cambia el conmutador **Sandbox / Live** — empieza en *sandbox*; pasa a *live* solo para producción. El campo *Entorno* de DesKilo debe coincidir con las claves.
-3. **Crea una app REST-API** — esto genera el **Client ID** y el **Secret**.
-4. En la app, añade un **webhook**: URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, suscrito como mínimo a *Payment capture completed* (más *denied* / *order voided*). Copia el **Webhook ID**. En DesKilo el webhook no es opcional — es la vía por la que un pago queda liquidado en la factura.
-5. Pega el Client ID, el Secret, el Entorno, el Webhook ID y tu URL de retorno en **Ajustes → Pagos en línea → PayPal**. Nada se guarda en la app ni en ningún dispositivo — todo va al servidor.
-
-**Stripe (tarjetas y Cartes Bancaires)**
-
-1. Inicia sesión en [dashboard.stripe.com](https://dashboard.stripe.com) y abre **Developers**.
-2. El conmutador **Test mode / Live mode** decide qué claves ves. DesKilo solo necesita la **Secret key** — el checkout se crea en el servidor, así que la clave *publishable* no se usa.
-3. En **Settings → Payment methods**, activa las redes de tarjetas que quieras. **¿Tu público está en Francia? Activa explícitamente Cartes Bancaires** — los miembros franceses suelen preferir CB al enrutado internacional de Visa/Mastercard.
-4. En **Developers → Webhooks**, añade el endpoint `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` con el evento `checkout.session.completed`, y copia el **Webhook signing secret**.
-5. Pega la Secret key, el secreto de firma y tu URL de retorno en **Ajustes → Pagos en línea → Tarjeta (Stripe)**.
-
-**Mollie (iDEAL, Bancontact, Wero…)**
-
-1. Inicia sesión en [my.mollie.com](https://my.mollie.com) → **Developers → API keys** y copia la **API key** de **Test** o **Live** (el modo va codificado en la propia clave).
-2. En **Settings → Payment methods**, activa lo que deban ver tus miembros: **iDEAL** (Países Bajos), **Bancontact** (Bélgica), tarjetas — y **Wero**, el monedero de la European Payments Initiative para pagos instantáneos de cuenta a cuenta en Alemania, Francia y Bélgica (el sucesor de Paylib y giropay).
-3. En DesKilo, **Mollie** y **Wero** son dos tarjetas de proveedor que comparten la misma API key — un pago Wero se crea como un pago Mollie con el método Wero. Configura las que quieras que vean los miembros.
-4. Las URL de redirección y de webhook las establece **DesKilo automáticamente** en cada pago (redirección = tu URL de retorno, webhook = la función `mollie-webhook`) — no hay nada que configurar en el panel de Mollie.
-
-#### Más métodos de pago (perspectiva)
-
-| Proveedor / método | Enfoque | Cómo encaja en DesKilo |
-|---|---|---|
-| **Apple Pay / Google Pay** | Monederos móviles, pago con un toque | Actívalos en tu panel de Stripe (o Mollie) — aparecen automáticamente en la página de pago alojada, sin cambios en DesKilo y sin comisión base extra. |
-| **Klarna** | Compra ahora, paga después | Igual: actívalo en Stripe/Mollie y aparece en el checkout — relevante para importes grandes. |
-| **Adyen** | Empresas y omnicanal, una API para casi cualquier método | No integrado — sería un nuevo proveedor en DesKilo (las contribuciones son bienvenidas). |
-| **Braintree** | UI drop-in para móvil y web (propiedad de PayPal) | No integrado — la integración directa de DesKilo con PayPal ya cubre ese terreno. |
-
-#### El proveedor de pago
-
-Qué servicio cobra — PayPal, Stripe, Mollie o Wero a través de Mollie.
-Una sonda informa de qué proveedores están listos y qué campos faltan
-todavía: se entera aquí en lugar de por un pago fallido.
-
-#### Credenciales del proveedor
-
-Las claves que le entregó el proveedor. Son de **solo escritura**: puede
-sustituir un campo o borrar un proveedor, pero los valores no vuelven a
-mostrarse, ni a usted ni a ningún cliente — la pantalla solo relee los
-nombres de las claves. Deje un campo vacío para conservar lo guardado.
-Viven en el espacio y nunca entran en un archivo de espacio ni en un
-despliegue.
-
-#### Formas de pago
-
-Qué formas de pagar acepta el espacio y cómo se llama cada una en un
-documento — transferencia, tarjeta, efectivo, cheque. La etiqueta es lo
-que imprimen una factura y un recibo.
-
-### Configurar las credenciales RFID / NFC
-
-Las tarjetas físicas permiten registrarse con un toque — sin teléfono.
-
-1. Abre **Ajustes → Credenciales RFID / NFC** (solo propietario). Activa **Activar registro por credencial NFC** y lee la línea de **estado del dispositivo** — distingue entre *listo*, *NFC desactivado en los ajustes de Android* y *sin hardware NFC*. Los teléfonos y tabletas Android con NFC, y los **iPhone**, pueden leer una etiqueta; los iPad no llevan hardware NFC alguno.
-2. Da una tarjeta a cada miembro: **Miembros y planes → el miembro → Credenciales → Registrar una tarjeta**, y acerca su tarjeta al dispositivo. Vale cualquier tarjeta con chip legible (MIFARE, NTAG…). Los miembros también pueden hacerlo **ellos mismos**: **Ajustes → Mi credencial** emite su credencial QR imprimible y registra su propia tarjeta — sin necesidad de admin.
-3. Úsalas en un **quiosco** (§10): el miembro acerca la tarjeta para reservar o registrarse. Revoca una tarjeta perdida desde la misma ventana de Credenciales; **desliza una credencial revocada hacia la derecha para eliminarla** definitivamente (tras confirmación).
-
-Las credenciales pertenecen a **un solo espacio** — la ventana indica en cuál estás registrando, así que registra la tarjeta en el espacio cuyo quiosco la leerá. La misma tarjeta física puede servirte en varios espacios. Una credencial QR guardada **como PDF** imprime diez copias tamaño tarjeta de crédito en una página A4 — con repuestos incluidos.
-
-![](assets/help/images/nfc-config.jpg)
-
-*Paso 1 — el interruptor NFC y la línea de estado que dice si este dispositivo puede leer una tarjeta.*
-
-![](assets/help/images/member-badges-dialog.jpg)
-
-*Paso 2 — las credenciales de un miembro: credencial QR y tarjeta registrada, cada una con su revocación y su propio interruptor «me conecta».*
-
-![](assets/help/images/my-badge-code.jpg)
-
-*Autoservicio: Ajustes → Mi credencial emite la credencial QR imprimible; el código de credencial solo lo defines tú.*
-
-## 9. El dinero (pestaña Finanzas)
-
-**Avisos financieros.** El contador azul de Finanzas reúne novedades financieras y decisiones financieras pendientes. Abre Avisos financieros desde Finanzas para ver solo esa categoría. Las demás novedades siguen sin leerse; las decisiones pendientes se cuentan hasta resolverse. El cero se oculta y los valores superiores a 99 se muestran como 99+.
-
-Tu cuenta responde *qué debo, qué me deben* — y *cuánto puedo reservar aún*. En vertical, la factura del mes se desplaza sobre los botones de acción; en horizontal, las acciones pasan a un panel lateral y la factura llena el resto. La cabecera **‹ mes ›** navega cualquier mes; el **botón PDF** exporta la factura visible (§ más abajo).
-
-**La factura, tarjeta por tarjeta:**
-
-- **Este mes** — cuántos **días** incluye tu suscripción este mes, cuántos has **usado**, cuántos **quedan**, con una barra de progreso. Una mañana reservada cuenta 0,5 días — salvo que quede enteramente fuera del horario laboral y la política de fuera de horario del espacio la haga gratuita o exenta (§4b): la misma regla gobierna aquí la cuota y allí el importe de la factura. El derecho mensual sigue los días de apertura del espacio y tu porcentaje — la tarjeta de suscripción debajo lo detalla (*3 de 42 medias jornadas usadas, 21 días de apertura*).
-- **Exceso** — las medias jornadas que superan tu plan, a la tarifa de tu tramo.
-- **Servicios consumidos** — cada consumo de servicio con el total de servicios.
-- **Suplementos de accesorios** — los extras por media jornada de los puestos que reservaste.
-- **Reservas de planta, oficina y mesa** — las reservas de espacios enteros, cada una a su precio por media jornada.
-- **Paquetes de días** — los packs comprados este mes.
-- **Partidas pendientes** — todo lo que aún *espera validación* (gastos, consumos de servicio…), en su propia tarjeta con borde ámbar: estos importes aún no están en la factura.
-- **Pagos y créditos** — pagos registrados, reembolsos de gastos aprobados, notas de crédito, ajustes.
-- **Tarjeta de factura** — una vez facturado el mes: número, chip de estado, total, lo pagado, lo pendiente (§9a).
-- **Tu cuenta** — tu posición real entre meses, cuando existe (§9a).
-- **Saldo** — saldado / pendiente, y debajo las **instrucciones de pago** y **Pagar en línea** cuando se debe algo.
-
-**Cuando se acaban tus días**, lo que ocurre es elección del propietario, por miembro:
-
-- **Bloqueado** (por defecto) — no más reservas; pide a un admin, o solicita **medias jornadas extra** directamente desde la pestaña Finanzas (los validadores aprueban; los días aprobados se cobran igualmente a la tarifa de exceso).
-- **Pago por uso** — puedes seguir reservando; cada día extra se cobra a la tarifa de exceso de tu tramo (mostrada en la tarjeta).
-- **Paquetes** — toca **Comprar un paquete** y elige uno de los packs de días del propietario; tus días aumentan al momento y el precio entra en la factura de este mes.
-
-Un miembro también puede estar **sin suscripción** — un visitante ocasional (#1279): sin cuota mensual, sin línea de suscripción en la factura y sin medias jornadas incluidas, así que reserva con un paquete o con créditos. **Sin suscripción** y **Pago por uso** nunca se combinan, porque sería reservar gratis; la app y el servidor rechazan la combinación.
-
-Los **bonos** (Funciones → *Bonos*, bajo la facturación; desactivados por defecto) son medias jornadas prepagadas (#1279). El propietario los define en **Facturación** (nombre, medias jornadas, precio y una validez en meses — o ninguna: nunca caducan), y quien emite facturas vende uno desde la página de un miembro. La venta se cobra **una sola vez**, en la factura del mes. Después, cada media jornada reservada más allá de lo que incluye la suscripción se descuenta de los bonos, los que caducan antes primero, durante los meses que haga falta; cancelar una reserva devuelve su media jornada. Gastar no añade nada a la factura, y una media jornada cubierta por un bono nunca se cobra además como exceso. La página del miembro muestra cuántas medias jornadas quedan.
-
-**Las acciones, agrupadas por sentido:**
-
-- **Pagar** — **Registrar un pago** («he pagado») con su método, la **fecha en que se movió el dinero** (hoy por defecto) y el **mes que salda** (el mes en curso por defecto, un paso atrás para atrasos, uno adelante para un anticipo) — la otra parte confirma. Ese mes decide en qué factura y en qué documento entra el abono. **Pagar en línea** (cuando está activado) abona el importe adeudado al instante — con **PayPal, tarjeta (Stripe), Mollie o Wero**, según lo que el espacio haya activado (si hay varios, se muestra un selector).
-- **Solicitudes** — **Enviar un gasto** (¿compraste café para el espacio? otro admin lo aprueba — sin autoaprobación — y se abona en tu extracto), **Solicitar medias jornadas extra**, **Añadir un consumo** (servicios definidos por el propietario — taquillas, impresión… — tú confirmas lo que consumiste).
-- **Documentos** — **Facturas** (las tuyas siempre están legibles aquí: posiciones, saldo, estado — y para quien emite, el hub de facturación, §11), **Mis condiciones** (que produce el documento titulado *Acuerdo financiero*) y el **informe mensual de pagos**, en autoservicio (§11).
-
-Finanzas tiene **cinco destinos**: **Extracto · Pagos · Facturas · Uso · Documentos**. El selector de mes y el PDF del extracto pertenecen a las vistas mensuales; **Facturas abarca todos los períodos**, sin selector de mes. En pantallas pequeñas las etiquetas completas se pueden desplazar.
-
-#### Registro con credencial NFC
-
-Activa acercar una tarjeta en vez de escanear un QR. El UID de la
-tarjeta se guarda como **hash**, nunca tal cual: una credencial puede
-revocarse pero jamás volver a leerse desde DesKilo. Solo Android; en
-otros sistemas la credencial QR hace lo mismo.
-
-### 9a. Una vez facturado el mes, decide la factura
-
-- Tu factura mensual muestra una **tarjeta de factura** — número, estado, total, lo pagado, lo pendiente — y el mes pasa a **saldado** en cuanto la factura se paga, se anula su saldo o se reembolsa su nota de crédito, aunque el pago que la salda se registrara en un mes posterior. Una factura **parcialmente pagada** deja el mes pendiente exactamente por el importe **restante** (eso es también lo que cobra *Pagar en línea*). Un mes con **nota de crédito** muestra lo que el espacio te debe devolver — nada que pagar por tu parte.
-- **Tu cuenta** — cuando tienes crédito disponible (un avoir, o pagos sobrantes de un mes pasado), la pestaña Finanzas muestra tu posición real entre meses en la cuenta desplegable debajo del detalle mensual: **crédito a favor**, cada **factura abierta** con su importe restante, los reembolsos que el espacio te debe y la **posición neta** resultante. Tu crédito puede saldar facturas abiertas — el espacio lo aplica al conciliar los pagos (imputación). Los meses anteriores a tu adhesión no deben nada y nunca aparecen pendientes.
-
-### 9b. Vista rápida, guardar, compartir — todos los informes
-
-Cada informe de la app — la factura mensual, las facturas, los proformas, las notas de crédito, tus documentos de autoservicio — ofrece las mismas tres acciones: **Vista rápida** (ver el documento renderizado en pantalla antes de que exista PDF alguno), **Descargar PDF** (guardar localmente) y **Compartir PDF** (entregarlo a cualquier app — WhatsApp, correo, …).
-
-**Los informes hablan el idioma de quien los lee:** un documento se imprime en el idioma **del miembro** cuando existe una plantilla para él, si no en el **idioma del espacio**, y a falta de ambos en el **idioma del país del espacio** (§11, plantillas por idioma). Cuando ese país tiene varios idiomas, la app no adivina: se niega y te pide *definir primero el idioma del espacio*.
-
-**Cada documento como carta estándar (#874).** Con *Estándar de carta para cada documento* activo, un documento que el propietario nunca diseñó — factura, proforma, estado, acuerdo financiero, informe de pagos, informe de consumo, cada nivel de recordatorio — se imprime como carta posicionada: membrete a 20 mm, destinatario en la ventana del sobre DL (110 mm de ancho, 45 mm de alto), bloque de identificación desde 90 mm, un pie en cada página con los datos bancarios y la referencia, una tira corta en las páginas 2+. Doble por las marcas y la dirección aparece. Un diseño propio siempre gana; `dart run tool/report.dart default --kind usage` imprime un diseño de partida.
-
-### 9c. La vista Extracto
-
-El saldo mensual encabeza esta vista; le siguen el uso y los cargos. Los consejos aparecen después del contenido y las acciones.
-
-**Primero el mes seleccionado.** Días incluidos, usados y restantes, suscripción, servicios y suplementos, paquetes, posiciones pendientes, abonos, factura y saldo describen el período elegido. Debajo, despliega **Tu cuenta** para ver crédito, facturas abiertas y reembolsos de **todos los períodos**. Su posición neta es distinta del saldo mensual. Los precios negociados están en **Documentos**, junto a tu acuerdo vigente.
-
-![](assets/help/images/statement-account.jpg)
-
-*Ejemplos de cuenta y precios negociados. Despliega Tu cuenta debajo del detalle mensual; los precios negociados están en Documentos.*
-
-![](assets/help/images/statement-balance.jpg)
-
-*La parte baja del Extracto: los servicios, las partidas pendientes de validación, pagos y créditos, y el saldo.*
-
-### 9d. La vista Pagos
-
-**Pagar, luego solicitar.** Avisos de retraso, saldo mensual, instrucciones y acciones de pago forman el grupo de pagos. **Solicitudes** agrupa por separado gastos, gastos programados, medios días adicionales y consumos. El enlace a todos tus espacios aparece después de estas acciones.
-
-**Suministros (#731).** ¿Compraste cápsulas de café o bolsas de aspiradora para el espacio? En **Enviar un gasto**, activa *Es un suministro para el espacio*, nombra el artículo (o elige uno existente), la cantidad y lo que costará un consumo (prellenado con importe ÷ cantidad). Validado el gasto, te reembolsan como siempre **y** el artículo pasa al estante como servicio consumible con ese stock; quien lo usa añade un consumo y lo paga, el stock baja, y a cero el artículo no puede consumirse hasta el próximo suministro. Función *Suministros desde gastos* (necesita Servicios).
-
-![](assets/help/images/finances-payments.jpg)
-
-*La vista Pagos: el saldo y su estado, Registrar un pago, y después Enviar un gasto, Pedir medias jornadas, Añadir un consumo.*
-
-### 9e. La vista Facturas
-
-**Límites de emisión (#1917).** Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.
-
-Desactivar las facturas de suscripción o de consumo también impide emitirlas desde el asistente. Las facturas del mes completo siguen disponibles si la facturación está activada; los documentos existentes y los extractos siguen siendo consultables.
-
-**Tus facturas · Todos los períodos.** El resumen muestra una sola vez los importes abiertos y los retrasos, seguido de todas tus facturas, más recientes primero. El mes del extracto no filtra este archivo. Despliega **Herramientas financieras del espacio** encima del resumen para el registro, la situación del espacio y el reparto de costes disponibles según tu rol y las funciones activadas. Las filas conservan sus detalles, documentos y acceso al pago.
-
-**El recorrido (#812).** Cada fila lleva además la **barra de recorrido** de la factura — *Emitida · Pago · Confirmación · Cerrada*, el paso actual rodeado — y **le toca** en una frase: *pague X antes del fecha*, *declaró X — el espacio lo está confirmando*, *su pago está registrado — el espacio lo concilia*, *pagada el … — cerrada*. **Cómo funciona** en la tarjeta de cabecera abre los cuatro pasos con lo que hace el espacio y lo que hace usted. Función *El recorrido de una factura* (bajo Facturas).
-
-![](assets/help/images/finances-invoices.jpg)
-
- 
-
-![](assets/help/images/invoice-detail.jpg)
-
-*La vista Facturas — la tarjeta de resumen y cada factura emitida a tu nombre — y la hoja de detalle de una factura: partidas, saldo, firma, vista rápida / PDF / compartir.*
-
-### 9f. La vista Documentos
-
-**El resto del papeleo:** **Mis condiciones** (tu acuerdo financiero), el **informe mensual de pagos**, **el extracto del mes en PDF** y la **biblioteca de documentos** cuando el espacio usa una (§11d). Desactiva las vistas en Funciones → *Finanzas en tres vistas* para volver a la columna única.
-
-![](assets/help/images/finances-documents.jpg)
-
-*La vista Documentos: Mis condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.*
-
-### 9g. Negociaciones de precios
-
-**La tarifa es el valor por defecto; tus condiciones son tuyas.** Un propietario o un admin de finanzas puede proponer una **negociación de precios** para un miembro — cuota mensual, exceso por medio día, descuento en suplementos (accesorios, reservas de espacios enteros) — cada uno opcional, la tarifa si falta. La propuesta llega a Eventos para los validadores de la regla (dominio *Negociación de precios*, o la regla por defecto); confirmada, se aplica desde el mes elegido y sustituye las condiciones anteriores. En **Documentos**, la tarjeta *Mis precios negociados* muestra la tarifa tachada junto a tus precios, desde cuándo, y **Quién puede verlo**: tú, los propietarios y los admins de finanzas — cada lectura por otra persona queda registrada y listada ahí (§14). Función *Negociaciones de precios*.
-
-**Servicios, paquetes y ocupación (#744).** Las condiciones también pueden fijar la **ocupación** — la parte de días abiertos incluida cada mes, negociada con su precio (aplicada al miembro una vez validada, el valor anterior mostrado al lado) — y un **precio unitario por servicio y por paquete**: un consumo o la compra de un paquete se cobra al precio del miembro, el precio de catálogo tachado en las hojas y en la tarjeta.
-
-### 9h. Gastos programados
-
-**Las suscripciones se pagan solas — pero nunca sin ti.** Cualquier miembro, sea cual sea su rol, puede **programar un gasto recurrente** (internet, teléfono, electricidad…): un importe, un primer vencimiento, una regla — cada X días, semanas, meses o años — y una duración (*X veces*, *hasta una fecha*, o ambas; la primera que llegue termina). La **programación misma se valida primero** (su propio dominio *Gasto programado*), así que su importe es un importe aprobado por los validadores. Después, cada vencimiento **materializa una ocurrencia y te la presenta** en la cara Pagos — nada se contabiliza jamás en silencio:
-
-- Confirmada **al importe validado**, el gasto se añade de inmediato a tus gastos — ya resuelto, pues la programación estaba aprobada.
-- Confirmada **a un importe distinto**, una breve **explicación es obligatoria**; el gasto pasa entonces la validación normal de gastos. Confirmado → añadido; **rechazado → vuelve a ti**, y puedes cambiar el importe y/o la descripción y reenviarlo.
-
-La lista de tus programaciones (estado, regla, próximo vencimiento) y el formulario *Programar un gasto recurrente* viven tras **Finanzas → Pagos → Gastos programados**; terminar una es un toque. Función *Gastos programados* (bajo la pestaña Finanzas).
-
-#### Un gasto programado
-
-Un coste que vuelve — la conexión a internet, la limpieza, el alquiler.
-Lo describe una vez y la app levanta cada vencimiento en su día, sin que
-nadie tenga que recordarlo. Cada vencimiento sigue pasando por la
-validación que pide el dominio de gastos: programar crea la solicitud,
-no la aprueba.
-
-#### Qué
-
-El nombre que lleva cada vencimiento. Es lo que dicen la línea de cuenta
-y la solicitud de validación: escríbalo como querría leerlo seis meses
-después.
-
-#### Importe
-
-Lo que cuesta un vencimiento. Cambiarlo solo afecta a los vencimientos
-aún no levantados; los que ya están en la cuenta conservan el importe
-con el que se levantaron.
-
-#### Descripción
-
-El texto más largo, para quien valida. Opcional, y el lugar para un
-número de contrato o una referencia de proveedor.
-
-#### Primer vencimiento
-
-La fecha en que vence el primero. Todos los siguientes se cuentan desde
-ahí: moverlo mueve toda la serie.
-
-#### Cada
-
-El intervalo entre dos vencimientos — cada mes, cada trimestre, cada
-año. Con el primer vencimiento decide todas las fechas que la serie
-tendrá jamás.
-
-#### Número de veces
-
-Cuántos vencimientos levantar. Déjelo vacío para una serie que no se
-detiene, y use *Hasta* cuando el final sea una fecha y no un número.
-
-#### Hasta
-
-La fecha después de la cual no se levanta nada más. Opcional: sin ella
-la serie corre hasta que usted la pare, lo que va bien para un alquiler
-y mal para un pago en doce plazos.
-
-### 9i. El informe de consumo
-
-Como la participación se **factura antes de su mes** y se **consume** durante él, el mes merece una palabra de cierre. **Informe de consumo del mes** — en la cara Uso y entre los Documentos — es una carta al miembro: lo que pagó la participación (la cuota, las medias jornadas incluidas), lo consumido realmente (medias jornadas, suplementos), lo que queda o excede y, debajo, **cada registro de uso** del mes con su tiempo contado. Las cifras son las del estado de cuenta y de los registros — nada se recalcula. Como toda carta, se consulta, guarda o comparte, impresa con el membrete del espacio y, una vez diseñada, con su propio diseño (el diseñador la lista como *Informe de consumo*).
-
-## 10. Modo quiosco (tableta de pared)
-
-Monta una tableta Android o un iPad junto a la puerta y deja que la gente se registre al entrar:
-
-1. El propietario crea una cuenta normal para el dispositivo, la une al espacio y la marca como **quiosco** en *Miembros y planes*.
-2. **El modo quiosco nunca arranca solo.** En cada inicio de la app la tableta pregunta *¿Iniciar el modo quiosco?* — confirma y la tableta se bloquea: solo el plano a pantalla completa, botón de atrás desactivado y, en **Android**, la app se ancla para que no pueda abrirse nada más, lo que significa que allí salir del modo quiosco implica reiniciar la tableta. Un **iPad** no tiene ese anclaje, así que solo se aplica el bloqueo de ruta — usa el **Acceso guiado** de iOS (Ajustes → Accesibilidad) para conseguir el equivalente. Elige *Ahora no* y la app se abre normalmente — útil para la configuración. La propia designación de quiosco puede revertirse en cualquier momento: en el dispositivo, en **Ajustes → Dispositivo quiosco**, o por el propietario en *Miembros y planes*.
-3. Cada miembro lleva una **credencial** — emitida por un admin (*Miembros y planes → Credenciales*) o por el propio miembro (**Ajustes → Mi credencial**, §8): una **credencial QR** imprimible y/o su **tarjeta RFID/NFC**. Cada una depende de su propia función (**Credenciales QR**, **Credenciales RFID/NFC**), ambas bajo *Modo quiosco*, así que un espacio puede ofrecer una, la otra o las dos.
-4. En el quiosco, toca un puesto (o **Esta planta** — que necesita las reservas de espacios enteros activadas *y* esa planta marcada como reservable) — se abre **UNA sola hoja** con todo: **Registrarse** ya seleccionado (un toque cambia a **Reservar** o **Salir**), el **periodo ya derivado de los ajustes del espacio**, y el **lector de credenciales activo** abajo. Con medias jornadas, la parte del día en que estás viene preseleccionada (chips Mañana / Tarde / Día para cambiar — una ventana en curso empieza *ahora*, las franjas ya terminadas ni siquiera se ofrecen, y lo que sí queda atenuado es una franja aún futura mientras la acción elegida es **Registrarse**, porque no se puede estar presente por adelantado; tras el horario queda un único *Resto del día*, que corre hasta la medianoche y ni un minuto más, porque una reserva termina el día en que empieza). Con granularidad horaria: selectores De/A ajustados a la rejilla, el inicio de un registro fijado a *ahora*. La hoja **nombra la regla que sigue** — la granularidad y las ventanas horarias de hoy — así que lo que ofrece es exactamente lo que los ajustes permiten; un **día cerrado** se anuncia de entrada con un aviso en vez de fallar al final. Reservar una ventana ya empezada ofrece además **Registrarse ahora mismo** (activado por defecto): una sola presentación de la credencial registra la reserva *ya con entrada*. Después presenta la credencial:
-   - **Acerca la tarjeta RFID/NFC.** Mientras el lector de tarjetas está armado, la cámara permanece apagada; si el NFC está desactivado o no existe, la hoja lo dice explícitamente.
-   - O toca **Escanear la tarjeta QR** — la tableta lee la credencial impresa **con su propia cámara** (la frontal por defecto, ya que la lente trasera de una tableta de pared mira a la pared; cámbialo en *Ajustes → Escanear con la cámara frontal*). Un lector USB/Bluetooth o escribir el código también funcionan.
-5. **La credencial ES la confirmación:** ejecuta inmediatamente, y un **recibo que se cierra solo** muestra *a quién* se reconoció — con su **foto de perfil**, donde la función *Fotos de los miembros en el quiosco* está activada —, *qué* pasó, *dónde* y *hasta cuándo*; y la pared queda limpia para el siguiente miembro. El plano de la pared muestra las fotos de los ocupantes del mismo modo. El camino feliz son dos gestos: toca tu puesto, presenta tu credencial.
-
-**Lo que la pared deliberadamente no puede hacer.** Toca un puesto que ocupa otra persona y el quiosco **nombra al titular y te remite a tu teléfono**: un dispositivo de pared nunca envía un mensaje por cuenta de un miembro, porque cualquiera que esté delante podría hacerlo. La acción *Escribirle* para un espacio bloqueado vive en la app (§4b). Todo lo que el quiosco *sí* ofrece pasa por las mismas reglas de servidor que la app — incluidas la del día ya terminado, la de que un check-in espontáneo debe empezar hoy y la del mismo día —, así que la pared rechaza exactamente lo que rechaza el plano.
-
-Tu identidad solo existe durante la operación: la credencial se envía **únicamente para esa operación** — una vez para identificarte, otra para ejecutar la acción — y **no se guarda nada**, ni en la tableta ni en ningún otro sitio. La reserva se hace **a tu nombre**, y quedas «desconectado» en cuanto termina. (El acceso puntual con Google sigue en la hoja de ruta; **los iPad no tienen NFC**, así que allí la vía es el QR con la cámara.)
-
-## 11. Facturación (propietarios y admins de facturación)
-
-*Los propietarios emiten facturas; los admins también cuando tienen el permiso **emitir facturas** (Gestión de roles, §8 — o la antigua delegación de función **Los admins emiten facturas**). La función **Facturas** cuelga de Finanzas en la lista de funciones.*
-
-**Datos bancarios sin IBAN (#711).** En *Instrucciones de pago*, junto al IBAN: nombre del banco, número de cuenta, un código de enrutamiento con el nombre que le da su país — *sort code* en el Reino Unido, *routing number* en EE. UU., *tránsito · institución* en Canadá — y un BIC/SWIFT para transferencias internacionales. Solo los campos rellenados se imprimen en la tarjeta «cómo pagar».
-
-Una factura en DesKilo se genera, nunca se redacta: sus posiciones se **derivan exclusivamente de los datos registrados del mes** — suscripción, exceso, suplementos, servicios, paquetes — menos los pagos y créditos del mes, de modo que la línea final **es el saldo adeudado**. Cada documento captura las direcciones postales del espacio y del miembro (configura la tuya en **Ajustes → Datos personales**; la dirección del espacio está en los ajustes del espacio) y se **firma digitalmente** al emitirse — después ya no cambia nunca. Un **anexo detallado** (el libro mayor y la asistencia del mes) puede adjuntarse con un interruptor al emitir.
-
-**El recorrido de una factura (#812).** Con la función *El recorrido de una factura* (activada por defecto), el hub cuenta el proceso en vez de listar estados. Una **banda de etapas** sustituye las píldoras de resumen — *1 · Por emitir · 2 · Por cobrar · 3 · Por confirmar · 4 · Cerradas* — con contadores en vivo (Por cobrar al valor restante, con las atrasadas en rojo; Por confirmar reúne cada factura cuyo siguiente movimiento no es del miembro: un pago declarado que otro admin confirma, un pago registrado por conciliar, una conciliación o cancelación de resto ante los validadores, una nota de crédito por reembolsar); cada ficha lleva a su pestaña. Cada **tarjeta abierta** lleva la **barra de recorrido** (*Emitida · Pago · Confirmación · Cerrada*) y el **siguiente movimiento** en una frase — *esperando el pago de Flo: 250 € — vence 27 may*, *Flo debe 250 € — 6 días de retraso*, *Flo declaró un pago de 250 € — otro admin lo confirma en Eventos*, *hay un pago de 250 € registrado — concílielo con esta factura*, *pago conciliado — a la espera de la decisión de los validadores*, *nota de crédito — reembolse 8 € a Flo y regístrelo*. La acción que ese movimiento espera de usted es el **único botón con etiqueta** de la tarjeta (*Enviar recordatorio 2*, *Marcar pagada*, *Registrar el reembolso*, *Abrir Eventos*); el resto siguen siendo iconos con tooltip. La **hoja de detalle** se abre con la misma barra y la misma frase, sus hechos fechados bajo el título *Cronología*, y la acción esperada encabeza la lista. El **?** de la cabecera abre **Cómo funciona la facturación** — los cuatro pasos, cada uno con el lado del espacio y el del miembro — la misma hoja que los miembros abren desde su vista Facturas.
-
-Quien emite abre **Finanzas → Facturas** y llega a un hub de tres pestañas bajo una franja de resumen en vivo (*N por facturar · N abiertas · X pendiente · N por reembolsar · Y*):
-
-- **Por facturar** — cada miembro cuyo mes anterior tiene datos facturables y aún sin factura, con el total del mes: emite por miembro (con vista previa de las posiciones derivadas) o **Facturar todo** de una pasada — que pide confirmación antes, anunciando el número, el mes y el total. El botón **Nueva factura** abre la misma hoja para cualquier miembro y mes — selector de miembro, ‹ mes ›, las posiciones derivadas, el saldo, el interruptor del **anexo detallado** y **Emitir factura** (un aviso verde *Factura emitida.* confirma). **Una factura activa por miembro y mes** — un mes solo vuelve a ser facturable cuando su factura fue anulada. La hoja de emisión abre en el **mes cerrado** (el momento en que sus números dejan de moverse); si eliges el mes en curso, te avisa, porque ese mes solo puede facturarse una vez.
-- **Abiertas** — facturas emitidas a la espera de cobro, las más antiguas primero; lo que lleva más de 30 días esperando se pone en rojo, en la tarjeta y en la franja de resumen. Cada acción es un icono con descripción emergente (anular · proforma · recordatorio · marcar como pagada). **Toca una tarjeta para leer la factura.** **Enviar un recordatorio** registra el recordatorio y comparte el PDF con un mensaje — la tarjeta muestra *Recordado ×N*. **Marcar como errónea** anula la factura para corregirla (un diálogo explícito avisa de que la acción es irreversible): pasa al archivo tachada, y un **reemplazo** vuelve a derivar el mismo mes desde los datos corregidos, referenciando la original. **Marcar como pagada** empareja un pago real (abajo). **Un pago parcial no cierra una factura**: permanece en Abiertas, con la insignia *Parcialmente pagada* y el importe restante, hasta que el saldo pendiente se anule explícitamente **mediante el marco de validación** — un admin/propietario solicita la anulación (con un motivo), los validadores confirman y solo entonces la factura pasa al archivo como *Parcialmente pagada · saldo anulado*. **Una factura NEGATIVA es una nota de crédito (avoir)** — los créditos del mes superaron sus cargos, así que el ESPACIO debe dinero al miembro: su PDF se titula *Nota de crédito*, no recibe recordatorios ni conciliación de pagos del miembro; en su lugar la tarjeta muestra *A reembolsar* con **Registrar el reembolso** — el pago se imputa al saldo del miembro (validado como cualquier liquidación cuando aplica una regla; un rechazo la reabre) y el documento se cierra como *Reembolsada*. La franja de resumen separa las dos direcciones del proceso de pago: *N abiertas · X pendiente* cuenta las facturas positivas por su valor **restante** (una factura de 500 € con 280 € pagados cuenta 220 €), mientras que *N por reembolsar · Y* suma las notas de crédito abiertas que el espacio aún debe.
-- **Archivo** — facturas cerradas, filtrables por miembro y mes y ordenables; las facturas anuladas están **ocultas por defecto** — el chip *Mostrar canceladas* recupera la cadena de corrección; la barra bajo los filtros dice cuántas facturas coinciden y **Borrar filtros** devuelve el archivo completo. Cada fila lleva su chip de estado (*Pagada*, *Parcialmente pagada*, *Errónea* tachada, notas de crédito con su importe negativo), su mes y su importe, con **Descargar PDF** ahí mismo. **Toca una fila para abrir la factura** — posiciones, saldo, a quién se facturó, en qué estado está (*Pagada 300,00 € el 6 ago*, *Recordado ×1 · último recordatorio…*, *Anexo: 5 movimientos, 10 registros*), a qué factura sustituye o por cuál fue sustituida, su firma — y cada acción que aún permite, con su nombre: **Vista rápida**, **Descargar PDF**, **Compartir PDF**, exportar la **factura electrónica (XML)**, recordar, marcar como pagada, marcar como errónea, emitir un reemplazo.
-
-**Marcar como pagada significa emparejar un pago real — o aplicar un crédito.** El diálogo lista los pagos registrados del miembro — transferencias anotadas y pagos en línea confirmados — y tú emparejas la factura con uno de ellos; no hay ningún importe que teclear (¿aún no hay pago registrado? el diálogo lo dice: *regístralo o confírmalo primero*). También lista los **créditos en cuenta** del miembro (excedente de nota de crédito): emparejar uno imputa el avoir en la factura, meses pasados incluidos — la alternativa estándar al reembolso en efectivo, tanto para asociaciones como para empresas. Cada crédito se gasta exactamente una vez: uno ya deducido dentro de una factura emitida nunca puede saldar un segundo documento. ¿Pagó **de más**? Crea una **nota de crédito** por el exceso (un abono en la cuenta del miembro) o fuerza la aceptación con una nota obligatoria. ¿Pagó **de menos**? Acéptalo con una nota obligatoria. Todos los que tienen acceso a la facturación reciben aviso de las facturas pagadas, y el propietario puede poner una regla de validación de **Pago de factura** (§7): el emparejamiento espera entonces al quórum — un rechazo reabre la factura.
-
-**Una factura pagada es definitiva.** Una vez emparejada no puede anularse, sustituirse ni alterarse — las correcciones ocurren antes del pago, anulando la factura abierta y emitiendo su reemplazo. Un pago que **no** cubrió el importe completo, aceptado con una nota, aparece como **parcialmente pagada**, no como pagada.
-
-**Proforma.** Dos de las tres pestañas del hub llevan una acción de proforma: en **Por facturar** representa las posiciones derivadas del mes como presupuesto — sin número, sin firma, sellada PROFORMA, y **no se emite nada**; en **Abiertas** vuelve a renderizar la factura emitida como solicitud de pago que no puede pasar por el original. Ambas ofrecen la tríada vista rápida / descargar / compartir.
-
-**Sellos.** Una factura anulada lleva un gran **ERRÓNEA** en diagonal en cada página de su PDF, en gris claro sobre el contenido: no se confunde con un documento válido sobre un escritorio ni en una fotocopia. El mismo sello dice **PROFORMA** en un presupuesto, y **COPIA** en cualquier factura renderizada por alguien que no sea su emisor — el original queda en el espacio.
-
-![](assets/help/images/dunning-rules.jpg)
-
-*Las reglas de recordatorio: niveles, días hasta el primer recordatorio, días entre niveles — y el interruptor Recordatorios automáticos.*
-
-**Recordatorios (Mahnwesen).** El propietario define las **reglas de recordatorio** (icono de lista de comprobación en la cabecera de Facturas, o *Ajustes del espacio → Reglas de recordatorio*): cuántos niveles, días hasta el primer recordatorio, días entre niveles. Las facturas abiertas vencidas se marcan **«Recordatorio N pendiente»** y la campana de la tarjeta se pone roja — nada se envía por usted mientras **Recordatorios automáticos** no esté activado (§11e). Un recordatorio manual se registra en su nivel y llega al feed del miembro exactamente como uno automático (#816). El envío genera una **carta de recordatorio de pago** (nivel 1 amistoso, niveles superiores más firmes) a partir de la plantilla de ese nivel — incluida lista para usar en tu idioma, impresa en el idioma del *miembro* y editable por nivel en el editor de informes con los campos extra `{{ reminder_level }}`, `{{ reminder_date }}` y `{{ days_open }}`.
-
-![](assets/help/images/invoice-register.jpg)
-
-*El registro: una línea por factura, la suma al pie, el selector de año y el botón de exportación contable (SAF-T / FEC).*
-
-**El registro.** El icono de lista en la barra de Facturas abre un libro con una línea por factura: **fecha · nombre · importe · estado**, ordenado por fecha (toca la cabecera Fecha para invertir el orden), con la suma al pie y un selector de **año** cuando hay más de uno. Su botón de exportación abre la hoja de **Exportación contable**: **SAF-T (XML, internacional)** y — para un espacio francés — **FEC (Francia, exigido en una inspección fiscal)**.
-
-**Entregar el periodo a tu asesoría.** Desde el registro, quien emite exporta un **SAF-T** — el *Standard Audit File for Tax* de la OCDE, el XML que leen los programas de contabilidad y las administraciones tributarias. Cubre exactamente lo que muestra el registro, así que elegir 2026 da el archivo de 2026: la empresa tal como la declaran tus propias facturas, cada cliente, cada factura con sus líneas y totales, y los pagos que las liquidaron. Las facturas anuladas siguen en el archivo marcadas como *anuladas* — un archivo de auditoría nunca borra lo que ocurrió. Lo que deja fuera a propósito es el **plan contable**: DesKilo no inventa números de cuenta, porque un código equivocado hay que descontabilizarlo a mano. Tu asesoría asigna las facturas a sus propias cuentas — es su trabajo y le lleva un minuto.
-
-**Francia: el FEC.** Un espacio francés tiene una segunda opción, el **FEC** (*Fichier des Écritures Comptables*) — el archivo que una inspección exige legalmente (art. L47 A-I du LPF). No es XML: un archivo plano separado por tabuladores, hecho de **asientos** contables, nombrado `<SIREN>FEC<AAAAMMDD>.txt` como exige el arrêté, con las 18 columnas obligatorias en su orden obligatorio. Al estar hecho de asientos *no puede* evitar los números de cuenta, así que la exportación los pide primero — precargados con el *plan comptable général* (411 clients, 706 prestations, 512 banque) y corregibles. Cada factura carga su derecho de cobro contra el ingreso por el importe **bruto**; los créditos que descontó y el pago que la liquidó pasan por banco con su propia fecha, punteados con el número de factura. Las facturas anuladas no aparecen: una anulada antes del pago nunca se contabilizó, así que no hay nada que revertir. La columna del *nombre* sigue a quien lee — quien emite repasa nombres de miembros, un miembro repasa sus propios números de factura. Los miembros solo ven lo que les concierne: las emitidas, y nunca una anulada. Desde #927 el número de asiento se deriva del documento que contabiliza — `VE-` más el número de factura, `BQ-…-P` para el cobro — en lugar de contarse por archivo, de modo que dos exportaciones de periodos solapados llevan el mismo número para el mismo asiento, como exige el fichero.
-
-![](assets/help/images/invoices-admin.jpg)
-
-*El hub de emisores: Por facturar · Abiertas · Archivo bajo la franja de resumen en vivo; una factura abierta con sus cuatro acciones (anular · proforma · recordatorio · marcar como pagada).*
-
-![](assets/help/images/invoices-to-invoice.jpg)
-
- 
-
-![](assets/help/images/invoice-new-sheet.jpg)
-
-*Por facturar sin nada pendiente y el chip de resumen — y la hoja Nueva factura: miembro, mes, las partidas derivadas, el interruptor del anexo detallado.*
-
-### 11a. Identidad legal, IVA y menciones
-
-**Antes de la primera exportación, completa la identidad legal.** En *Ajustes del espacio → **Identidad legal y facturación electrónica*** el propietario declara:
-
-- El **régimen de IVA** — decide el número que exige la norma EN 16931: fuera del ámbito del IVA, un **número de registro mercantil** (SIREN, HRB, CIF…); con exención por régimen de pequeña empresa, un **número de IVA** más el **motivo por el que no se cobra IVA** (el campo sugiere la mención adecuada — *TVA non applicable, art. 293 B du CGI*, o para servicios a los miembros de una asociación *Exonération de TVA, art. 261, 7-1° du CGI*). El régimen se aplica de extremo a extremo: solo un espacio registrado a efectos de IVA estampa un tipo en una suscripción, un suplemento, un servicio o un paquete, y los selectores de IVA simplemente desaparecen bajo cualquier otro régimen.
-- La **dirección** estructurada (calle, código postal, ciudad) junto a la dirección libre del membrete.
-- La **plataforma de facturación electrónica** (§11b).
-- Las **menciones de facturación**, con un selector de **Tipo de organización** — *Empresa* frente a *Asociación (loi 1901)*: forma jurídica y capital (p. ej. *Association loi 1901*), registro mercantil (empresas: RCS; asociaciones: **RNA W… · SIRET si está asignado**), condiciones de pago, penalización por demora, la **indemnización de cobro de 40 €**, descuento por pronto pago (escompte), seguro profesional, menciones particulares. Cada cláusula vacía imprime el texto legal por defecto — y los documentos de una asociación omiten las cláusulas por defecto solo-B2B (penalización por demora, indemnización de cobro y escompte son obligatorias solo entre profesionales; lo que escribas se sigue imprimiendo).
-
-Los miembros añaden su **país** — y su número de IVA si facturan como empresa — junto a su dirección en *Ajustes → Datos personales*. DesKilo lo comprueba todo **antes** de producir una factura electrónica y se niega nombrando lo que falta, porque una factura que una plataforma rechaza es peor que ninguna factura.
-
-**Tus datos personales (#886).** *Ajustes → Datos personales* contiene lo que cada documento imprime sobre ti: nombre y **apellidos** (en mayúsculas en los documentos, como en el correo oficial), una **empresa** opcional, calle, código postal, ciudad, país, teléfono, el **e-mail al que van tus documentos** y — si facturas como empresa — tu NIF-IVA e identificador. El formulario previsualiza el bloque exactamente como lo mostrará la ventana del sobre: nombre, empresa, calle, `CÓDIGO POSTAL CIUDAD`, y el país solo si vives en el extranjero. Listas y documentos te llaman por este nombre; la dirección libre de versiones anteriores sigue siendo el respaldo hasta que rellenes el formulario.
-
-**Perfiles gestionados (#887).** ¿Alguien se une a la asociación antes de tener la aplicación? Un admin abre **Miembros → Añadir un perfil gestionado** y rellena el mismo formulario de identidad. El miembro existe de inmediato — reservas por él, emites sus facturas (impresas con la identidad introducida), fijas su suscripción — y su página lleva el distintivo **Gestionado**. Cuando la persona está lista, **Entregar a la persona** genera un código personal ligado a ese perfil (QR, enlace o mensaje, como cualquier invitación). Crea su cuenta, introduce el código y se hace con el perfil: reservas, facturas y suscripción siguen siendo suyas, la identidad introducida llega a sus propios ajustes (sus datos desde entonces — solo se rellenan los campos vacíos) y la membresía pasa por la aprobación habitual. **Revocar la entrega** retira un código no usado.
-
-**Quién administra un perfil gestionado (#914/#915).** Un perfil gestionado contiene la identidad de una persona real antes de que tenga cuenta: dirección, teléfono, correo, identificadores fiscales. Esos campos ya no son legibles por los demás miembros — solo el nombre y la empresa lo son, porque la lista de miembros los necesita. El resto vive tras una **regla**, y cada consulta queda **registrada**. Por defecto la regla es la de antes: todo propietario y todo admin. Active *Quién administra un perfil* para restringirla por rol, por personas nombradas o ambos. El propietario siempre puede **cambiar** la regla — si no, un perfil cuyo único admin nombrado se marcha quedaría inadministrable — pero solo accede a los datos si la regla lo nombra. La regla protege la identidad y la entrega; reservar y facturar siguen siendo gestión ordinaria. Cuando la persona recibe su perfil, *Ajustes → Privacidad → Quién ve qué* le muestra la regla que se aplicaba y quiénes consultaron o modificaron realmente sus datos.
-
-**Desarrollo o producción (#917).** Un espacio declara si es real. Un espacio de **desarrollo** lo anuncia en una franja presente en cada pantalla, y cada documento que imprime lleva «DESARROLLO» cruzando la página — por delante de cualquier otro sello, porque una factura de ensayo que además es un abono es ante todo una factura que no existe. La elección se hace **al crear** y por defecto es desarrollo: la respuesta prudente a «¿esto es real?» es no mientras nadie diga lo contrario. Todos los espacios creados antes de esta versión son, por tanto, de desarrollo. Solo el **propietario** puede declarar un espacio de producción — un admin no puede quitar discretamente la marca de los documentos que emite — y la app pide confirmación diciendo qué deja de ocurrir. Las facturas ya emitidas no cambian: la marca de agua se aplica al imprimir.
-
-**Un cliente puede ser una empresa (#910).** Un perfil gestionado no necesita un nombre de pila: basta con la **razón social**. Cuando no hay nombre de persona, la empresa pasa a ser el destinatario — en la factura, en las listas, en el hilo de pago — y desaparece entonces de la dirección de abajo, porque ya es la línea de arriba. Si se nombra a una persona, nada cambia: la empresa permanece en el bloque de dirección, entre el nombre y la calle. Los documentos ya emitidos también se benefician: la razón social estaba congelada en ellos desde el principio, simplemente no se leía.
-
-**Primero la empresa, después la persona (#912).** Cuando un cliente lleva razón social Y nombre de persona, el documento se dirige a la **empresa** — es ella quien debe la factura — y nombra a la persona en la línea de abajo, con el tratamiento que ha elegido:
-
-> SASU KaloA
-> Sr. Guilhem MARTIN
-> 209 rue Jean Bart, Immeuble AGORA 1B
-> 31670 LABÈGE
-
-El **tratamiento** es un campo de sus datos personales: *Sr.*, *Sra.* o *Ninguno*, que imprime solo el nombre. Nunca se deduce de un nombre de pila, y cada lector lo ve en su idioma — *Monsieur* en francés, *Herr* en alemán. Sin empresa, nada cambia: la persona sigue siendo el destinatario.
-
-**El vencimiento figura en el documento (#910).** Cada factura imprime ahora su **fecha de pago**, calculada a partir del plazo de sus reglas de aviso — el mismo plazo que la aplicación muestra en el hilo de pago, de modo que ambos ya no pueden anunciar dos fechas distintas. Un diseño puede colocarla donde quiera con `due_date`. Y un documento de una sola página ya no lleva número de página: «1/1» no informa a nadie.
-
-**En DesKilo los precios incluyen IVA.** Lo que escribes como precio de suscripción, de servicio o de paquete de días es lo que paga el miembro. Activar el IVA no cambia ni un solo importe adeudado — dice qué parte de ese importe es impuesto. Por eso una factura mensual, un extracto y una cuota no se mueven al añadir tipos, y por eso ningún total hay que cuadrarlo. Bajo un régimen sujeto a IVA el catálogo lo dice en voz alta: cada fila de servicio y de bono nombra su tipo incluido (*IVA 21 % incl.*), el editor de facturación permite al propietario elegir el tipo de IVA de las tarifas (por defecto: el tipo por defecto del espacio) y muestra la parte de IVA de cada importe al teclear, cada accesorio puede llevar su propio tipo (por defecto: el del espacio), y cada campo de precio recuerda que es bruto.
-
-#### Configurar los tipos
-
-*Identidad legal y facturación electrónica → **Tipos de IVA***. Una lista vacía significa que el IVA está desactivado, que es como empieza todo espacio. **Usar los tipos habituales** rellena la lista con el tipo general, el intermedio y el reducido de tu país como primer borrador — un punto de partida, no asesoramiento fiscal. Un tipo es el **predeterminado** (la estrella): las suscripciones, los excesos, los suplementos y los ajustes lo usan, igual que todo servicio sin tipo propio. Un servicio y un paquete de días llevan cada uno su propio tipo, elegido en su editor. Quitar un tipo nunca lo borra — el que una factura o un servicio siga usando se conserva, desactivado, para que nada se vuelva a gravar en silencio. Todo esto es la funcionalidad *Gestión del IVA*: desactivada, el editor de tipos y todos los selectores desaparecen mientras los tipos guardados siguen aplicándose — la aritmética fiscal nunca es desconectable — y el conmutador *Declaraciones de IVA* cuelga debajo.
-
-#### La declaración periódica de IVA
-
-(*Tipos de IVA → Declaración de IVA*, solo espacios sujetos a IVA). Elija el periodo — mes o trimestre, según su régimen — y **Generar**: la app agrega las facturas emitidas del periodo por tipo **con la aritmética exacta de las facturas**, así la declaración cuadra con cada documento al céntimo. El resultado muestra la base imponible y el IVA repercutido por tipo, mapeados a las **casillas del formulario oficial** (CA3 08/09/9B/11 en Francia, UStVA Kz 81/86 en Alemania, lista genérica en el resto). Cada declaración se exporta como **PDF** y **XML legible por máquina**; si hay una plataforma de envío configurada en la facturación electrónica, **Transmitir** la envía electrónicamente y registra el acuse — si no, lleve las cifras al portal de Hacienda o a su gestor y **Márquela como presentada**. En ambos casos la declaración se vuelve inmutable, con canal y recibo registrados. El catálogo de tipos sugeridos cubre todos los Estados miembros de la UE, Suiza (incluido el 3,8 % de alojamiento), Noruega y las provincias canadienses; EE. UU. no tiene IVA federal — la app lo dice en vez de adivinar. Una ayuda para declarar, no asesoría fiscal.
-
-**Qué cambia en un documento.** Una factura emitida después de existir los tipos lleva el desglose tal como se emitió: la tabla de posiciones gana una columna de tipo, y sobre el total el PDF muestra la **base** y una línea por tipo. La **factura electrónica (XML)** lleva lo que exige EN 16931, tanto en UBL como en CII; el **SAF-T** declara cada tipo en su tabla de impuestos; el **FEC** contabiliza el derecho de cobro bruto contra el ingreso neto más una cuenta de **IVA recaudado** (445710 por defecto, y modificable).
-
-**Una factura ya emitida no cambia nunca.** Lleva los tipos, la identidad y los importes con los que se firmó — eso es lo que la hace una factura. Si un documento debe llevar cifras nuevas, márcalo como **erróneo** y emite un **reemplazo**: la cadena de corrección se ve en ambos documentos, que es exactamente lo que quiere ver una inspección.
-
-**Cómo se numeran los documentos (#925).** Cada diario — facturas, abonos, declaraciones de IVA, números de socio, referencias de pago — tiene su **serie**, tomada en la base de datos en el momento de emitir el documento: sin huecos (un documento que falla no consume nada), exacta por muchos admins que emitan a la vez, y en el año de **su** zona horaria, no de UTC. El propietario fija el formato en una sola pantalla, *Ajustes → Series de numeración*: prefijo, año o mes, dígitos, reinicio, con vista previa del próximo número. El formato vale para lo que venga; un documento emitido nunca cambia, y el contador puede subirse pero nunca bajarse. **Una serie nunca repite un número (#1320):** se reinicia como mucho tan a menudo como imprime su fecha — sin fecha, nunca; con el año, como mucho cada año —, así que la pantalla solo ofrece esos reinicios. Cambiar el reinicio surte efecto en el período siguiente, nunca dentro del actual, y quitar la fecha de una serie que ya emitió números exige un prefijo o sufijo nuevo en el mismo paso.
-
-**Facturar a una empresa de otro país de la UE (#895).** Un espacio sujeto a IVA no se lo cobra a una **empresa de otro Estado miembro**: ese cliente autoliquida el impuesto (art. 196). Cuando el perfil del cliente lleva un NIF-IVA y un país distinto del tuyo, la factura se emite **sin impuesto**, indica la categoría que pide la norma (AE) e imprime la mención legal — *Inversión del sujeto pasivo*, o la que hable tu país. El precio sigue siendo la tarifa: no se añade ni se descuenta nada. La comprobación de factura electrónica se niega a enviar mientras falte el NIF-IVA del cliente, porque es lo que prueba que el impuesto es suyo. Un espacio que nunca factura a empresas en el extranjero lo desactiva en *Identidad legal → Inversión del sujeto pasivo para empresas de la UE*.
-
-**Facturar a un ayuntamiento, un hospital, el Estado (#922).** Un depósito en **Chorus Pro** exige, para la mayoría de entidades públicas, un **número de compromiso** (BT-13) o un **código de servicio** (BT-10). Ambos se introducen **al emitir** la factura, se congelan en el documento, se imprimen bajo el número de socio y viajan en el XML — UBL y Factur-X — donde la norma los sitúa. El control de factura electrónica **avisa** cuando una factura va a la plataforma pública sin ninguno; no bloquea, porque un socio no es un ayuntamiento.
-
-**Cuándo se devenga el IVA (#896).** Un espacio sujeto declara con **criterio general** — el impuesto se devenga con la factura — o con **criterio de caja** — se devenga el día en que el cliente paga. En Francia los servicios van al cobro salvo opción contraria; Alemania lo llama *Ist-Versteuerung* e Italia *IVA per cassa*. Elija en *Identidad legal → Devengo del IVA*. Con el cobro, un periodo declara **los pagos recibidos dentro de él** y no las facturas emitidas: un pago parcial lleva una parte de cada tipo del documento, en proporción, y el redondeo va al tipo más amplio para que el total coincida exactamente con lo cobrado. El informe de IVA del contable sigue la misma regla — allí una posición es un cobro, fechado el día en que llegó — de modo que informe y declaración no pueden divergir. Cada factura imprime la mención correspondiente y la pantalla de declaraciones nombra la base empleada.
-
-**Un abono devuelve también el impuesto (#894).** Un crédito que cancela un cargo con IVA nombra ahora el tipo que revierte: el desglose del documento muestra ese impuesto en negativo y la declaración lo compensa — un gasto repartido y devuelto (#828) se revierte al tipo con el que se facturó. El dinero que se mueve — un pago, un reembolso de gastos — no lleva tipo y nunca toca el impuesto, como antes. Un documento con total negativo se tipifica como **abono (381)** en la factura electrónica, no como factura.
-
-**Condiciones de pago por miembro (#881).** La redacción anterior es la del espacio por defecto, para todos. Un miembro puede tener **las suyas** — un plazo más largo para una gran cuenta, por ejemplo. Nunca se escriben directamente en el miembro: un admin con el permiso *Solicitar cambios de condiciones de pago* abre la página del miembro, **Condiciones de pago → Solicitar un cambio**, rellena solo los campos que difieren (un campo vacío conserva la redacción del espacio) y da un motivo; la solicitud se convierte en una tarjeta de validación **Condiciones de pago** decidida como cualquier otro dominio (el propietario, por defecto), y la excepción se aplica al confirmarse. El miembro ve las condiciones efectivas en solo lectura en su página y en **Ajustes → Condiciones de pago**, etiquetadas *Por defecto del espacio* o *Propias del miembro*; cada factura y recordatorio imprime las efectivas, y un diseño puede comprobar `payment_terms_source`. *Volver a las condiciones por defecto del espacio* pide retirar la excepción — por la misma validación.
-**IVA — la lista de conformidad (#878).** Revisado el 05/09/2026 frente a la Directiva 2006/112/CE y EN 16931 (ADR 0015). Lo que se cumple: el régimen del vendedor queda **fijado en cada documento** al emitirse (una asociación que pasa a exenta conserva sus facturas anteriores no sujetas tal cual); el desglose por tipo también queda fijado, redondeado por línea exactamente como el servidor; la numeración es continua y los documentos nunca cambian (se anulan y se reemiten). Lo que la app hace ahora por ti: los documentos de un vendedor **exento o no sujeto imprimen la mención legal de su país** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, si no la Directiva) cuando no escribiste nada en *Identidad legal*; la comprobación de factura electrónica **avisa cuando el NIF-IVA de un cliente no tiene la forma de su país**. Lo que sigue siendo del propietario: mantener el catálogo de tipos al día cuando cambia uno; un vendedor sujeto debe tener NIF-IVA. Los tres límites que anotó la revisión están cerrados: los abonos revierten el IVA (#894), la inversión del sujeto pasivo intracomunitaria se decide al emitir (#895) y el criterio de caja es un ajuste del espacio (#896).
-**El informe de IVA (#878).** En *Declaraciones de IVA*, para el mes o trimestre elegido: **Informe de IVA (PDF)** — cada posición gravable (documento, fecha, cliente, base, tipo, IVA, total, categoría, el original rectificado si lo hay), subtotales por tipo y categoría, totales del periodo — como carta para ver, guardar, compartir y diseñar como cualquier documento (*Informe de IVA* en el editor); **Informe de IVA (CSV)** — las mismas posiciones, separadas por punto y coma, para el contable.
-
-#### Tipo de organización
-
-*Empresa / negocio* o *Asociación (loi 1901)*. Decide qué cláusulas imprime un documento por defecto: el interés de demora, la indemnización de recobro y el descuento por pronto pago son obligaciones **entre profesionales**, así que las facturas de una asociación prescinden de ellas. Lo que escribas tú se imprime siempre, sea cual sea el tipo.
-
-#### Forma jurídica y capital
-
-Lo que la organización es en derecho, impreso bajo su nombre: *S.L. con capital de 3 000 €*, *Association loi 1901*. Vacío, una empresa no imprime nada y una asociación imprime su forma estatutaria.
-
-#### Registro mercantil
-
-La inscripción con la que se le puede verificar: **Registro Mercantil** y localidad para una sociedad, **RNA W…** y el **SIRET** si se le ha asignado para una asociación. Es lo que busca la contabilidad de su cliente, y sin ello la comprobación de factura electrónica se niega a enviar.
-
-#### Condiciones de pago
-
-Cuándo vence el dinero — *pago a la recepción de la factura, a 30 días* por defecto. Se imprime en cada factura y es el punto de partida de las reglas de recordatorio.
-
-#### Interés de demora
-
-El interés que soporta un pago tardío. Entre profesionales la mención es obligatoria; el valor por defecto enuncia el tipo legal vigente. Una asociación no imprime nada aquí mientras no escriba algo.
-
-#### Indemnización de recobro
-
-Los **40 €** fijos debidos por costes de recobro en un retraso entre profesionales. Misma regla: obligatoria entre profesionales, retirada para una asociación, siempre impresa si la escribe.
-
-#### Descuento por pronto pago
-
-Si pagar antes da derecho a un descuento. La mayoría de los espacios no conceden ninguno, y el valor por defecto lo dice con las palabras que la ley espera — decir *ningún descuento* es en sí una mención obligatoria entre profesionales.
-
-#### Seguro profesional
-
-La aseguradora, la póliza y su cobertura geográfica. Exigido a las profesiones reguladas; vacío no imprime nada.
-
-#### Menciones especiales
-
-Todo lo demás que su oficio o su país exija, impreso después de las otras. El lugar para un número de socio, un organismo de mediación o una cláusula que pida su contable.
-
-#### Régimen de IVA
-
-Si el espacio está **fuera del ámbito del IVA**, **exento** por un régimen de pequeña empresa, o **sujeto**. Decide qué número le exige la norma EN 16931 y qué frase legal imprime un documento. El régimen queda **congelado en cada documento en el momento de emitirlo**: cambiarlo nunca reescribe una factura ya enviada.
-
-#### Número de IVA
-
-El número intracomunitario, verificado en la forma que usa su país. Es lo que un documento necesita antes del envío cuando usted repercute IVA, y lo que prueba que el impuesto corresponde al cliente en una inversión del sujeto pasivo.
-
-#### Cuenta de IVA
-
-La cuenta del plan contable donde se imputa el IVA repercutido. Las exportaciones contables y los informes del contable la siguen.
-
-#### Motivo de la exención
-
-La frase que un vendedor exento o no sujeto debe imprimir. Vacía, DesKilo imprime la fórmula legal de su país — *art. 293 B du CGI* en Francia, *§ 19 UStG* en Alemania, la Directiva en los demás casos.
-
-#### Número de identificación
-
-SIREN, SIRET, HRB, CIF — el identificador que la norma exige a un vendedor que no repercute IVA. Sin él, una factura electrónica de un espacio no sujeto no puede emitirse.
-
-#### Dirección estructurada
-
-Calle, código postal y ciudad en tres campos distintos, junto a la dirección libre del membrete. El membrete es lo que imprime un documento en papel; **la dirección estructurada es lo que lleva la factura electrónica**, porque una máquina no sabe partir una línea de forma fiable.
-
-### 11b. Adónde debe ir la factura electrónica (UE)
-
-La acción **Factura electrónica (XML)** abre una hoja que responde a esto para el país del propio espacio antes de entregarte el archivo: por qué canal la esperan los clientes empresa, si se interpone una plataforma y qué canal usan los compradores públicos. En la Unión coexisten cuatro modelos:
-
-- **Peppol** — un punto de acceso entrega el archivo al cliente; sin plataforma pública de por medio. Así funciona exactamente la obligación B2B belga, y por Peppol se llega a los compradores públicos en toda la UE (la Directiva 2014/55/UE hace que cada administración pueda recibir una factura EN 16931).
-- **Plataformas autorizadas** — Francia: eliges una *plateforme agréée* (la PDP renombrada), que transporta la factura y comunica los datos a la administración tributaria. El portal público es un directorio, no un buzón. Las facturas al sector público siguen en **Chorus Pro**.
-- **Plataformas de clearance** — Italia (**SdI**, FatturaPA), Polonia (**KSeF**, FA(3)), Rumanía (**RO e-Factura** vía el SPV, CIUS-RO): la plataforma recibe la factura *primero* y luego la reenvía; enviar directamente al cliente no es una opción. Cada una impone su propia sintaxis, así que la hoja advierte de que el archivo EN 16931 que exporta DesKilo no es el que aceptan — úsalo para Peppol, compradores públicos y clientes extranjeros, y deja que tu plataforma o tu asesoría lo convierta.
-- **Sin canal impuesto** — Alemania hoy: recibir es obligatorio desde 2025 y emitir llega por fases, pero un adjunto de correo electrónico es una factura electrónica legal; XRechnung y ZUGFeRD son las sintaxis esperadas. Sector público: **OZG-RE / ZRE**, o Peppol.
-
-**Factur-X — un archivo, dos lectores.** La hoja de factura electrónica ofrece primero **Factur-X (PDF)**: un PDF de factura de aspecto normal con la factura legible por máquina *dentro* (los datos EN 16931 en CII, que es lo que impone el formato). Una persona lo abre y ve la factura; una plataforma lo abre y encuentra `factur-x.xml`. Es lo que realmente intercambian la mayoría de las pequeñas empresas francesas y alemanas, y no necesita un segundo archivo. El **XML** suelto sigue disponible debajo, para las plataformas que lo piden desnudo.
-
-**Enviarla sin salir de la app.** El propietario registra la plataforma del espacio en *Identidad legal → **Plataforma de facturación electrónica***: una **URL de subida**, un **token o credencial**, opcionalmente la forma de la **cabecera Authorization** y el **nombre del campo de archivo**. Sirve cualquier plataforma que acepte una subida con credencial — una *plateforme agréée*, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor, nunca vuelve a un teléfono, y la app solo puede decirte que hay uno guardado. Una vez configurada, la hoja de factura electrónica empieza por **Enviar a la plataforma**: el documento Factur-X sale directamente, y la ficha de detalle de la factura registra cuándo salió, qué respondió la plataforma y el identificador que devolvió. Cada intento queda registrado — aceptado, rechazado o no transmitido — porque un documento que *quizá* salió es peor que uno que falló.
-
-**Un segundo destino, directo al cliente.** Llegar a la plataforma pública no es lo mismo que llegar al comprador, y no pocos clientes tienen su propio servicio de recepción. Por eso la misma pantalla admite un **segundo destino** — el punto del cliente, con su propia URL, su token, su forma de cabecera Authorization y su nombre de campo de archivo —, y la hoja de envío ofrece entonces las dos vías, cada una con su propio historial de transmisiones. Depende de la función **Envío de la factura electrónica al cliente**, bajo *Facturas*; déjala desactivada y solo existe la vía de la plataforma, exactamente como antes.
-
-**Ensayar sin riesgo.** La misma pantalla admite **puntos de prueba** (el UAT de la plataforma o un destino dev: URL + token cada uno) junto al de producción. Con el **modo desarrollador** del espacio activado (un ajuste de todo el espacio que solo propietarios y admins pueden cambiar, en Ajustes → Avanzado), el envío ofrece elegir el entorno, un envío de prueba queda marcado como tal en el historial de transmisiones de la factura, y el punto de producción nunca se usa para un ensayo — un entorno de prueba sin configurar simplemente se niega en lugar de recurrir al de producción.
-
-DesKilo sigue sin transmitir nada por cuenta propia: produce el documento y lo entrega a la plataforma que elegiste. Los calendarios de obligatoriedad siguen moviéndose: consulta a tu propia administración tributaria antes del plazo que te afecte.
-
-#### La plataforma de factura electrónica
-
-Adónde se transmite una factura estructurada, y con qué credenciales. Un
-documento puede ir a **dos destinos a la vez**: la plataforma que exige
-su país y el servicio propio del cliente. Cualquiera puede quedar
-vacío. Las credenciales viven en el espacio y nunca entran en un archivo
-de espacio ni en un despliegue: una exportación que envíe a un colega
-lleva la configuración, no las claves.
-
-#### URL de envío
-
-La dirección a la que se envía la factura. Cópiela de la documentación
-de la plataforma — una barra final o un segmento de versión que falta es
-el motivo habitual de una transmisión que falla sin nada útil que leer.
-
-#### Token o credencial
-
-El secreto que le identifica ante la plataforma. Una vez guardado no se
-muestra nunca más, ni siquiera a usted: la pantalla dice *definido* y
-nada más. Vuelva a escribirlo para sustituirlo, déjelo vacío para
-conservarlo.
-
-#### Cabecera de autenticación
-
-La cabecera HTTP en la que viaja el token — `Authorization` en la
-mayoría de plataformas, un nombre propio del proveedor en algunas. Si la
-documentación muestra `Bearer <token>`, ponga aquí el nombre de la
-cabecera y el token desnudo arriba.
-
-#### Nombre del campo de archivo
-
-El nombre del campo de formulario multipart bajo el que se sube el
-documento. Las plataformas difieren (`file`, `invoice`, `document`), y
-equivocarse produce un rechazo que no nombra ningún campo.
-
-#### URL y token de UAT
-
-El entorno de aceptación de la plataforma, donde una transmisión real
-puede ensayarse contra una validación real sin emitir nada. Rellénelos
-antes del primer envío real, no después.
-
-#### URL y token de desarrollo
-
-El punto de acceso que usa un **espacio de desarrollo**. No puede
-alcanzar una plataforma gubernamental, y eso es lo que hace imposible
-confundir una factura de prueba con una real.
-
-### 11c. El editor de informes — cada documento, cuatro modelos, cinco idiomas
-
-La **Plantilla del PDF de factura** (icono de lápiz en la cabecera de Facturas, o *Informes → Plantillas*) es una herramienta de informes por bandas para cada documento que imprime la app. Tres **bandas** de informe se renderizan en el PDF — cabecera, cuerpo (las líneas de la factura), pie — mientras que el XML de la factura electrónica nunca se toca.
-
-- **Campos y marcado, como guía (#966)** — en modo marcado, la larga lista de todos los campos ha desaparecido. Un solo desplegable, *Campos y marcado*, cerrado hasta que lo abra, contiene: dos frases sobre cómo funciona una banda; **Insertar un campo…**, el selector con búsqueda agrupado por tema (documento, cliente, vendedor, importes, datos bancarios, menciones legales, consumo, IVA, sedes, situación, bucles, sus textos) con un significado de una línea bajo cada nombre, buscable también por ese significado; el **marcado de línea**, un signo por fila con su efecto; y tres **piezas listas** (una línea solo si el valor existe, una fila por línea de factura, el título que dice factura, nota de crédito o proforma). Todo lo que toque se coloca en el cursor de la banda editada por última vez.
-
-- **Un informe por documento**: los chips cambian entre **Factura · Proforma · Extracto · Acuerdo · Pagos · Espacio · Niveles de recordatorio**. El proforma recae en las bandas de la factura hasta que lo personalices; un extracto personalizado sustituye el PDF mensual integrado.
-- **Por idioma**: una segunda fila de chips — *Predeterminado (todos los idiomas)* · EN · FR · DE · ES · IT — guarda una capa de traducción por documento; el informe de un miembro se imprime en *su* idioma cuando existe una plantilla para él, y si no, en el predeterminado del espacio.
-- **Marcado o Visual**: el modo **Marcado** edita las bandas como texto — condiciones y bucles [Liquid](https://shopify.github.io/liquid/) (`{{ number }}`, `{% if proforma %}…{% endif %}`, `{% for line in lines %}…{% endfor %}`) más un marcado de líneas sencillo: `#` título, `##` sección, `>` letra pequeña, `---` separador, `a | b` fila de tabla, `=` fila en negrita, `::: … ||| … :::` columnas lado a lado (el bloque de direcciones vendedor-izquierda / cliente-derecha y los totales alineados a la derecha de una facture francesa — las plantillas incluidas siguen exactamente esa estructura), `![name]` una imagen de la **biblioteca de imágenes** del espacio (*Insertar una imagen*). El modo **Visual** es una superficie de diseño fiel a la página, en la tradición de las herramientas profesionales (Crystal Reports, Docentric): las tres bandas se editan **sobre una página A4 blanca** con los márgenes del documento, en su tipografía de impresión exacta — misma fuente, tamaños, colores y columnas de importes alineadas a la derecha que el PDF generado — con tiras de banda etiquetadas, guías punteadas de salto de página y zoom (ajustar, 75/100/150 %). Los `{{ tokens }}` siguen resaltados; toca una línea para editarla en el sitio, añade, mueve, inserta campos desde la paleta. Un conmutador **Diseño ↔ Vista previa** fusiona tus bandas sin guardar con tus datos reales (o de ejemplo) a través del motor real, en la misma página — fuera campos, dentro valores.
-- **Galería de plantillas** (*Plantillas*): cuatro modelos listos para cada documento — **Clásico · Sencillo · Detallado · Carta formal** — elige uno y extiéndelo. Cada modelo de factura ya lleva las menciones obligatorias (§11a).
-- **Diseñador a pantalla completa** (opción *Diseñador de informes*): el editor se abre como **página propia**, en modo Visual, con **Deshacer / Rehacer** y **Guardar** en la barra. Toque un elemento y se edita **con su propia tipografía**: el título en tamaño de título, la letra pequeña en pequeño. El **+** bajo el elemento activo inserta debajo un **elemento tipado** (título, sección, texto, letra pequeña, fila de tabla, separador, espacio, imagen, columnas, lógica); el botón **{ }** abre un **selector de campos con búsqueda**, agrupado por documento, socio, importes, menciones legales y bucles; **mantener pulsado y arrastrar** una línea la reordena, y su menú la envía a **otra banda**. Una imagen lleva su **tamaño** (pequeña, mediana, grande) y su **alineación** (izquierda, centro, derecha), escritos `![nombre|l|center]`. *Plantillas* y *Restablecer* piden confirmación antes de reemplazar un diseño existente; salir con trabajo sin guardar también pregunta. Cuando una plantilla no se genera, la vista previa **dice qué banda y por qué** en lugar de un error genérico. En pantalla ancha **diseño y vista previa van lado a lado**, y la página cuenta cuántas páginas imprimirá el documento. Los tres documentos estructurales — **Plan de cuentas · Tarjetas de socios · Tarjetas QR de espacios** — tienen sus propios chips.
-- La **Vista rápida** renderiza el resultado al instante en la app — tu factura más reciente, o datos de ejemplo simulados si no existe ninguna (con marca de agua *datos de ejemplo*) — sin pasar por un PDF; **Vista previa** produce el PDF; **Restablecer al modelo por defecto** devuelve el diseño integrado como ejemplo funcional. Una plantilla rota nunca bloquea un documento — el diseño integrado toma el relevo; la marca de agua de anulación, la firma digital, el anexo y los números de página quedan fijos.
-
-Variables de plantilla (familia de facturas): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ period_month }}`, `{{ period_year }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (cada una con `label`, `kind`, `pct`, `month`, `unit_price`, `qty`, `net`, `vat_rate`, `amount`), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — y el juego legal: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
-
-![](assets/help/images/report-designer-markup.jpg)
-
-*El modo Marcado: las tres bandas como texto, la leyenda de variables, los chips por documento y por idioma.*
-
-![](assets/help/images/report-designer-design.jpg)
-
- 
-
-![](assets/help/images/report-designer-preview.jpg)
-
-*El modo Visual — Diseño edita las bandas etiquetadas sobre la verdadera página A4; Vista previa fusiona tus bandas sin guardar con datos reales a través del motor real.*
-
-#### La plantilla PDF de factura
-
-Con qué diseño se imprime una factura, y los textos que ese diseño
-lleva. Un diseño existe por tipo de documento y por idioma; quien no
-tiene idioma propio recibe el del espacio.
-
-#### El editor de informes
-
-Donde se escribe el diseño de un documento. Dos entradas: las **bandas**
-— cabecera, cuerpo, continuación, pie, un signo por línea — y un
-**diseño posicionado** en XML para un documento que deba satisfacer un
-sobre con ventana o un formulario oficial. Un diseño gana a las bandas
-para el tipo en el que está puesto.
-
-### 11d. La suite de informes y la biblioteca de documentos
-
-- **Acuerdo financiero** — cada precio vigente que se aplica a un miembro: suscripción, media jornada extra, servicios, paquetes, suplementos de accesorios y los precios de los espacios enteros, **mesas incluidas**. Propietarios y admins lo envían desde la ficha de acciones de un miembro; cada miembro puede ver/descargar/compartir el suyo en *Finanzas → Documentos*.
-- **Informe de pagos** — todo lo que pagaste, declaraste o te validaron en un mes: tu pequeño balance, en autoservicio en la misma fila.
-- **Informe del espacio** — identidad, recuentos del plano, disponibilidad, funciones y precios: *Informes → Documentos del espacio → Informe del espacio*.
-- **Biblioteca de documentos** — *Ajustes → Documentos*: los estatutos, guías de usuario, estados financieros y actas del espacio, ENLAZADOS desde el sistema que ya uses — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o cualquier enlace https (el drive sigue gestionando sus propios accesos; la app nunca guarda credenciales ajenas). Cada entrada tiene un **rol de visibilidad**: todos los miembros, admins y propietarios, o solo propietarios — aplicado en el servidor, de modo que un miembro ni siquiera descarga una lista que contenga documentos de la junta. Los admins y propietarios la gestionan con el botón +; un interruptor de función *Biblioteca de documentos* activa todo el conjunto.
-
-![](assets/help/images/documents-library.jpg)
-
- 
-
-![](assets/help/images/documents-add-dialog.jpg)
-
-*La biblioteca de documentos, y añadir un documento: título, enlace, almacenamiento, categoría, visible por.*
-
-#### Título del documento
-
-Lo que muestra la biblioteca y por lo que busca un miembro. Es la única
-parte de una entrada que alguien lee: escríbala para él.
-
-#### Enlace
-
-La dirección `https://…` donde vive el documento. DesKilo guarda el
-enlace, no el archivo, por eso el documento conserva las reglas de acceso
-que impone su propio servicio.
-
-#### Almacenado en
-
-Qué servicio lo tiene — un disco, un wiki, un servidor de archivos. Es
-una etiqueta para quien lee, no una conexión: no se descarga nada en su
-nombre.
-
-#### Categoría
-
-Cómo agrupa la biblioteca la entrada. Las categorías son suyas de
-inventar; la lista ofrece las que el espacio ya usa.
-
-#### Visible para
-
-Qué roles pueden ver la entrada. Lo aplica el servidor, no solo se
-oculta en la lista: un miembro sin el rol no recibe la fila.
-
-### 11e. Recordatorios de pago automáticos
-
-Con **Recordatorios de pago automáticos** activado (Funciones, hijo de *Recordatorios de pago*) y el interruptor **Recordatorios automáticos** en las reglas de recordatorio (Facturas → Reglas de recordatorio), los niveles se aplican solos: cada mañana — y siempre que un propietario o admin abre Finanzas — una factura **abierta** cuyo plazo ha vencido (los *días hasta el primer recordatorio* desde su emisión, luego los *días entre recordatorios* tras el anterior) recibe su siguiente nivel. El miembro ve un aviso **Recordatorio de pago** en Eventos («Recordatorio 2: factura X — importe pendiente») y recibe una notificación; su vista Facturas lee *vencida hace N días*. Los niveles nunca superan el número configurado; una factura conciliada nunca se recuerda; con el interruptor apagado, recordar sigue siendo manual, una factura cada vez como antes.
-
-#### Reglas de recordatorio
-
-Cuántos recordatorios recibe una factura impagada, a qué plazo tras el
-vencimiento sale cada uno, y qué dice cada uno. Una vez al día las
-facturas abiertas vencidas pasan a su siguiente nivel; un nivel ya
-alcanzado no se reenvía nunca.
-
-#### Recordatorios automáticos
-
-Desactivado, los recordatorios se envían a mano. Activado, una vez al día
-cada factura abierta vencida pasa a su siguiente nivel y envía lo que ese
-nivel dice. Un nivel ya alcanzado no se envía dos veces, así que
-activarlo no inunda a nadie con el atraso.
-
-### 11f. Reagrupar facturas (liquidación)
-
-**Un documento en lugar de tres.** Un miembro con el ciclo de facturación dividido (§11) puede tener a la vez una factura de suscripción, una de fin de mes y el resto del mes anterior. **Reagrupar en una factura** (icono de fusión en la cabecera de Facturas, función *Reagrupar facturas*) pliega las facturas abiertas e impagadas de un miembro en una sola factura de **liquidación** con su suma. Las fuentes **no se anulan**: siguen en el archivo exactamente como se emitieron, cada una apuntando a la liquidación que ahora lleva su saldo, y la liquidación lista cada fuente con sus partidas. Desde entonces es la liquidación lo que se debe, se paga y se reclama; una fuente ya no puede anularse, reemplazarse ni conciliarse por sí sola. El IVA no se vuelve a declarar — cada fuente ya declaró su impuesto, así que las líneas de la liquidación llevan 0 % y nombran las facturas que lo llevan.
-
-**Validada como cualquier pago.** Una liquidación es un evento *pago de factura*: donde el propietario puso una regla en ese dominio (§7), espera a los validadores; un **rechazo** — o una caducidad — anula el documento de liquidación y libera sus fuentes, que vuelven a deberse por separado. **Anular** una liquidación (*Marcar errónea*) libera sus fuentes del mismo modo.
-
-**Las facturas reagrupadas se pliegan bajo la de reagrupación (#831).** La factura de reagrupación lleva ahora **todas las líneas de las facturas que sustituye**, agrupadas bajo sus números, con su IVA: se basta a sí misma y es la que se debe, se reclama, se concilia y se cierra. Las facturas reagrupadas salen de la lista de abiertas, del archivo y de la lista del socio como iguales y **se anidan bajo la factura de reagrupación** («Reagrupada en INV-…»), en el centro de facturación y del lado del socio. Al abrir una, un aviso lo dice; toda operación está desactivada; solo queda su **PDF, sellado con el número en que se reagrupó**. Para el contable, el documento de reagrupación es transparente: cada exportación y la declaración de IVA llevan las facturas originales, y el pago recibido sobre la reagrupación se les asigna, de la más antigua a la más reciente — cada original queda punteada exactamente como si se hubiera pagado sola. En la app, una original se lee «Pagada a través de INV-…» cuando su reagrupación está pagada. Al descargar, compartir o previsualizar una factura de reagrupación, se pregunta si adjuntar las facturas sustituidas: adjuntas, cada una sigue en sus propias páginas, después de la nueva y sin solaparse con ella, sellada como reagrupada.
-
-### 11g. El asistente de cierre mensual
-
-Los tres asistentes — **cierre mensual**, **reagrupar en una factura**, **repartir un gasto** — comparten una forma (#872): pasos numerados arriba, el contenido del paso, luego **Atrás · i / n · Siguiente** y una acción final en el último paso. Se aprende una vez; cada entrada de la barra se llama *Asistente · …*.
-
-El **asistente de cierre** (opción *Asistente de facturación*; la varita en la cabecera de Facturas o la tarjeta sobre *Por facturar*) encadena todo el trabajo de facturación en **un solo proceso guiado** con un carril de pasos: **Revisión** (qué pasada, qué periodo, qué está pendiente), **Emitir** (las facturas de la pasada en un lote: los socios ya cubiertos aparecen hechos, desmarque para excluir), **Enviar** (compartir o descargar cada PDF), **Recordar** (todo lo vencido según sus reglas, registrado y notificado con un toque, la carta por fila), **Pagos** (confirmar o rechazar lo que declararon los socios; **registrar** una transferencia o un pago en efectivo para un socio, que lo confirma por su parte), **Conciliar** (cada factura abierta frente al crédito del socio; las filas con crédito están listas), **Cerrar** (reagrupar varias facturas de un socio en una, anular un resto, reembolsar una nota de crédito, cada una con validación) y **Resumen** (lo que hizo la pasada y lo que sigue abierto con a quién le toca). Dos pasadas: **Inicio de mes** para las suscripciones pagadas por adelantado (sugerida desde su ventana de anticipación), **Fin de mes** para el uso, el consumo y los cargos adicionales del mes cerrado.
-
-### 11h. Gastos compartidos, repartidos
-
-**Repartir un gasto** (opción *Gastos compartidos*; el icono de reparto en la cabecera de Facturas) toma un coste común — limpieza, mejora de internet, una silla rota — y lo reparte entre los socios: partes **iguales**, **prorrata de la suscripción**, **prorrata del uso** (medias jornadas usadas en el periodo) o una **clave propia** por socio. Cada parte se previsualiza, los céntimos cuadran exactamente y nada se contabiliza hasta que confirme. Las partes se contabilizan como líneas de ajuste en el periodo elegido y aparecen así en la **próxima factura de uso** de cada socio (la pasada de fin de mes del asistente, §11g). Active **Reversión** para devolver dinero: el mismo reparto contabiliza **créditos**, que se compensan con los cargos del mes y, si los superan, generan una **nota de crédito** que el espacio reembolsa (§11). Un reparto es un evento propio: con una regla de validación sobre *Gasto compartido* espera el quórum y se contabiliza al confirmarse; sin regla, decide quien emite. El historial bajo el formulario muestra cada reparto y su estado.
-
-### 11i. Uso: lo que costó realmente cada reserva
-
-**Uso** (función *Registros de uso*; una cara de la pestaña Finanzas) muestra las reservas contadas del mes, una tarjeta cada una, con tres números deliberadamente separados: la ventana **reservada**, el tiempo que estuviste realmente **presente** y lo que de ello se **factura**. La reserva es el compromiso; la presencia es el hecho.
-
-De ahí salen dos reglas, y las tarjetas dicen ambas con claridad. Una reserva **a la que nadie llegó se factura entera** — no aparecer no es un descuento. Y una reserva que **dejaste antes** también se factura entera, hasta que otra persona acepte lo contrario: la tarjeta ofrece **Facturar el tiempo que estuve**, que pide que el tiempo no usado deje de contar. Nunca decides tú esa petición; va a quien nombre tu regla de validación *Salida anticipada*, y si no hay regla se aplica de inmediato. Aceptada, el final de la propia reserva se mueve al momento de tu salida, así que el extracto, el tope de medias jornadas y la factura siguen — y la tarjeta sigue diciendo lo que el tiempo facturado **era**.
-
-Ves tus propios registros; quien pueda ver el dinero del espacio los ve todos. Un admin o la propiedad puede **eliminar** un registro, y donde haya una regla *Eliminar registro de uso*, quien la valida es el miembro afectado.
-
-### 11j. Sacar un diseño de informe y devolverlo
-
-**Exportar este diseño** (función *Exportar e importar diseños de informe*, en el editor de informes) escribe la maquetación del informe abierto en un archivo JSON. **Importar un diseño** vuelve a leer uno.
-
-El archivo no es un volcado escueto. Junto a las tres bandas lleva un bloque `howToEdit` que nombra para qué sirve cada banda, la sintaxis Liquid, cada línea de marcado que el renderizador acepta, los tamaños y alineaciones de imagen y la lista completa de variables: lo suficiente para que una persona, o una herramienta como Claude, lo abra, cambie la maquetación y lo devuelva sin adivinar. Ese bloque se regenera en cada exportación, así que editarlo no hace nada; al importar solo se leen `kind`, `language` y `design`.
-
-Todos los informes lo tienen — factura, proforma, extracto, acuerdo financiero, informe de pagos, informe del espacio, plan contable, credenciales, tarjetas QR y cada nivel de aviso — y un informe añadido más adelante lo obtiene automáticamente.
-
-Una importación se **rechaza con el motivo** si el archivo no es JSON legible, no es un diseño de DesKilo, viene de una versión más nueva, es de un informe que este espacio no tiene, o pertenece a **otro** informe: un diseño nunca se redirige en silencio. Una importación aceptada llega al editor, no al espacio: nada cambia hasta que pulsas **Guardar**.
-
-### 11k. Sus propios textos, por idioma (#880)
-
-Algunas formulaciones son suyas, no del diseño: un saludo, una nota de temporada, un párrafo legal, el nombre del banco. El panel **Textos** al pie del diseñador de informes las guarda como `clave → valor`. **Añadir un texto** pide una clave (letras, dígitos, guiones bajos — `saludo`) y después escribe el valor; cualquier banda o diseño posicionado lo imprime con el campo `text.saludo` entre llaves dobles, ofrecido por el selector de campos bajo **Sus textos**. Cambie el valor y todos los documentos cambian — el diseño no se toca. Con un chip de idioma seleccionado el panel edita los valores de ese idioma; uno vacío recurre al idioma predeterminado, exactamente como los documentos. Una clave que nadie rellenó no imprime nada (y una condición sobre ella queda falsa). Un archivo de diseño exportado lleva los textos de su idioma en un elemento `<texts>`; la importación los devuelve.
-
-### Maquetas posicionadas (XML)
-
-Un informe puede describirse con una **maqueta** que indica dónde se sitúa cada elemento — en milímetros, centímetros, píxeles o como porcentaje de su contenedor — en lugar de bandas encadenadas. Cuando un documento tiene maqueta, es la que se imprime; si no, se imprimen sus bandas como antes. Ambas conviven: migra un documento cada vez.
-
-**El ciclo**: en el diseñador de informes, **Exportar XML**; edite el archivo (usted o Claude); compruébelo localmente; **Importar XML**; guarde. El archivo exportado incluye sus propias instrucciones: las zonas (cabecera de la página 1, franja en las siguientes, destinatario en la ventanilla del sobre, cuerpo, pie fijo en cada página), los elementos, las unidades y los campos disponibles.
-
-**Comprobar antes de importar** — sin arrancar la aplicación:
-
-```
-dart run tool/report.dart check mi-maqueta.xml
-```
-
-El comando imprime la posición de cada zona en milímetros y concluye **CONFORMS** o enumera las desviaciones (dirección fuera de la ventanilla, texto en la banda de 45–90 mm, página sin pie…). Abra el PDF, dóblelo, introdúzcalo en un sobre DL con ventanilla.
-
-**Imágenes**: `<image name="logo" h="12mm"/>` coloca una imagen de la biblioteca del informe; se ve en la vista previa y se imprime en el PDF.
-
-## 12. Ajustes y perfil
-
-El menú horizontal de secciones permanece visible: elige una sección para abrirla e ir directamente a ella. Desplázate por el formulario cuando lo necesites; los borradores se conservan.
-
-**Elegir el ámbito.** Mis ajustes reúne el enlace a tu cuenta, tu membresía, los diagnósticos del dispositivo, la ayuda y cerrar sesión. Gestionar espacio contiene solo las herramientas de configuración y administración permitidas para tu rol, con el nombre del espacio. Abre los grupos cuando los necesites; Avanzado empieza cerrado. Ambas vistas conservan su posición al cambiar. Los miembros sin herramientas de administración acceden directamente a sus ajustes personales.
-
-Tu pantalla personal, de arriba abajo:
-
-![](assets/help/images/settings-personal.jpg)
-
-*El bloque personal: perfiles, foto, región y formatos, WhatsApp, estado, período de reserva predeterminado, dirección, ayuda, credencial.*
-
-![](assets/help/images/settings-admin.jpg)
-
-*Para los propietarios sigue la sección Administración — cada pantalla de administración del §8 empieza aquí.*
-
-![](assets/help/images/settings-preferences.jpg)
-
-*Preferencias y Avanzado: idioma, tema, escaneo con la cámara frontal, estado del push, modo desarrollador.*
-
-![](assets/help/images/settings-about.jpg)
-
-*Acerca de: la versión, el autor, la licencia open source, la política de privacidad, informar de errores y cómo apoyar el proyecto.*
-
-![](assets/help/images/profiles.jpg)
-
- 
-
-![](assets/help/images/region-formats.jpg)
-
- 
-
-![](assets/help/images/linked-accounts.jpg)
-
- 
-
-![](assets/help/images/settings-language.jpg)
-
-*Cuatro de las pantallas personales: Perfiles, Región y formatos, Cuentas vinculadas y el selector de Idioma.*
-
-![](assets/help/images/settings-whatsapp-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-status-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-address-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-default-period-dialog.jpg)
-
-*Los cuatro diálogos personales: número de WhatsApp, línea de estado, dirección postal, período de reserva predeterminado.*
-
-![](assets/help/images/settings-theme-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-photo-sheet.jpg)
-
- 
-
-![](assets/help/images/developer-screen.jpg)
-
-*Tema, la hoja de foto y la pantalla de trazas Desarrollador.*
-
-**Privacidad y datos (#719)** — quién puede ver sus datos, quién lo hizo, exportación, borrado, la política. Véase §14.
-
-**Región y formatos (#711).** Cómo lee *usted* lo que muestra el espacio: **números y fechas** en la región que elija (`es_ES`, `en_GB`, `de_AT`… independiente del idioma de la app), el **reloj** (24 h, 12 h o lo que haga esa región) y si las horas se muestran en la **zona del espacio** — la de las reservas, por defecto — o en **la de su dispositivo**, señalada donde difieren. Una línea de vista previa muestra la suma de las tres elecciones. La moneda es siempre la del espacio; solo su escritura es suya. Guardado en su perfil: le sigue entre dispositivos.
-
-- **Perfiles** (§1) y tu **foto** (tócala para cambiarla — elegir o quitar). En un espacio con varias sedes, el perfil nombra también su **sede de referencia** — la dirección que llevan sus documentos y las plantas que son suyas por defecto — y un toque sobre ella le permite cambiar de sede usted mismo (#974).
-- **Mi cuenta** (#1307) — quién eres y cómo te habla la app, en todos tus espacios: tu **foto**; **Información personal** (o **Dirección**) — tu dirección postal (impresa en tus facturas), país y número de IVA opcional; **WhatsApp** — tu número, visible para los demás miembros solo si lo defines (§6); **Región y formatos**; **Cuentas vinculadas** — vincula un acceso con Google a tu cuenta de correo; **Mi credencial** (§8); **Idioma** (el del sistema o uno de cinco); **Tema** (sistema / claro / oscuro); **Navegación** (por defecto del dispositivo, la barra inferior clásica con el botón redondo, o el menú como en la web — en la web, la barra lateral o el menú compacto se adapta automáticamente, así que la elección no se ofrece allí); y **Volver a mostrar los consejos de ayuda**, que recupera todos los consejos contextuales que descartaste. Esos consejos son pequeños carruseles sobre los propios formularios: pasa adelante y atrás por varios consejos en cada pantalla, cada uno con un enlace *Saber más* que salta directamente a la sección correspondiente de esta guía.
-- **Mi membresía** — tu lugar en *este* espacio: **Estado** — una línea libre (40 caracteres) mostrada en el directorio; **Período de reserva predeterminado** (la ventana con la que abren las hojas de reserva, para que tu media jornada o tu de–a habitual venga ya puesto); tus **Condiciones de pago**; **Documentos** — la biblioteca de documentos del espacio (§11d). El directorio es el destino **Miembros** de la barra inferior, no una entrada aquí.
-- **Este espacio**, **Administración** y **Gobernanza** — solo para quien tiene el permiso que pide cada entrada (§8): cómo funciona el espacio, la gestión de sus miembros y dispositivos, y lo que el espacio es.
-- **Avanzado** — este dispositivo: el **servidor** con el que habla, su estado de notificaciones push, **Escanear con la cámara frontal** (para tabletas de pared), el interruptor del **Modo desarrollador** de todo el espacio, la pantalla de trazas **Desarrollador** (§8 pagos) y el **Modo demo** (en este dispositivo cada nombre, correo, teléfono y dirección postal en pantalla se difumina en su sitio — el texto real, suavizado hasta ser ilegible, el diseño intacto — para que capturas y grabaciones no lleven datos personales; nada se oculta y cada formulario sigue editable).
-- **Ayuda y acerca de** — **Ayuda**, la guía integrada en tu idioma; la versión de la app, el autor (Florian DITTGEN), la licencia de software libre (AGPL-3.0-or-later) con el código en GitHub, la política de privacidad, un enlace para informar de errores, y cómo **apoyar el proyecto** (PayPal, Revolut).
-- **Cerrar sesión**.
-
-### Tu propio servidor — apuntar la app al Supabase de tu comunidad
-
-Por defecto la app habla con su propio servidor, y aquí no hay nada que requiera tu atención. Pero el backend de DesKilo forma parte del código fuente — el esquema, las políticas de seguridad a nivel de fila y las funciones edge — así que una comunidad puede ejecutar **su propio proyecto de Supabase** y guardar en él hasta el último byte. **Ajustes → Avanzado → Servidor** cambia este dispositivo, sin recompilar nada:
-
-1. **Crea un proyecto** en supabase.com — el plan gratuito basta para empezar.
-2. **Instala el esquema**: ejecuta los archivos SQL de `supabase/migrations` del repositorio del código fuente, en orden.
-3. **Copia las credenciales**: en el panel de Supabase, *Project Settings → API keys* contiene la **URL del proyecto** y la **clave publicable** (la clave publicable está pensada para viajar dentro de un cliente; lo que protege los datos es la seguridad a nivel de fila del servidor).
-4. **Introdúcelas** en Ajustes → Servidor — pega cada campo, pulsa **Probar la conexión** y luego **Guardar**.
-
-**Crear una nueva instancia (#977).** La pantalla Servidor lleva también un asistente para quien gestiona un espacio de coworking, no una base de datos. Cree una cuenta gratuita en supabase.com, haga allí un token de acceso personal (Account → Access Tokens) y péguelo en el asistente: lista sus organizaciones, crea el proyecto en la región más cercana a su espacio (o toma uno vacío existente), instala cada migración de la app en orden con una barra de progreso, despliega cada función, activa la confirmación por correo con los enlaces de la app permitidos y, por último, apunta este dispositivo al nuevo servidor — el QR de la pantalla Servidor trae después a los miembros. Cada paso se puede reintentar por sí solo; el token nunca se guarda. Cada migración queda registrada al instalarse (#1314): una app cerrada o una conexión perdida retoma donde se detuvo sin ejecutar nunca una migración dos veces, y el diagnóstico (`dart run tool/instance.dart doctor`) ve el esquema sano. Una instancia construida antes no registraba nada: `dart run tool/instance.dart record --ref … --through <NNNN>` marca las migraciones que ya tiene sin ejecutarlas. Quien prefiera un terminal tiene el mismo constructor: `dart run tool/instance.dart create --token … --org … --name …`.
-
-**Usar un proyecto existente (#1308).** Al elegir uno de sus proyectos existentes, primero se lee lo que contiene, sin cambiar nada: un proyecto vacío se instala entero; un esquema de DesKilo con versión solo se **actualiza** con las migraciones que le faltan (o no necesita nada si está al día); una instalación interrumpida continúa. Un proyecto cuyo esquema public contiene tablas que DesKilo nunca crea, que usa otra versión mayor de Postgres, que no está operativo o cuyas migraciones registró otra herramienta **requiere atención**: se muestra el motivo, no se ejecuta nada y *Elegir otro proyecto* vuelve a la lista. La misma lectura encuentra las funciones que el proyecto ya tiene y si sus ajustes de inicio de sesión ya son correctos: al reabrir el asistente sobre un proyecto a medio construir solo se despliegan las funciones que faltan y se omite un paso de inicio de sesión que ya está bien. Antes de que el dispositivo use el nuevo servidor, el último paso ejecuta la **comprobación de seguridad** (la misma que `dart run tool/instance.dart doctor`): *Protegido* permite continuar, una alarma mantiene desactivado **Usar esta instancia en este dispositivo** y nombra lo que hay que corregir, y un aviso se muestra sin bloquear. Un token de acceso personal abre toda su cuenta de Supabase mientras exista: el asistente lo dice antes de pegarlo y recuerda al final que puede revocarlo; DesKilo no guardó ninguna copia.
-
-La prueba dice qué parte está mal en lugar de limitarse a fallar: *no se pudo alcanzar esa dirección*, *la clave fue rechazada* o *faltan las tablas* — esto último significa que el proyecto respondió pero que el paso 2 aún no se ha hecho.
-
-**Los miembros no escriben nada de esto.** En cuanto el dispositivo del propietario está en el servidor de la comunidad, el **botón QR** de esa pantalla muestra un código; cada miembro lo escanea en su propio Ajustes → Servidor y aterriza en la misma instancia.
-
-**De quién es el servidor y si está al día (#1309).** Para un proyecto propio, la pantalla lo nombra — *Su proyecto de Supabase ‹ref›* — y dice a quién pertenece: a su organización de Supabase. El proyecto se creó allí con su propio token, que el asistente solo guardó en memoria, así que DesKilo no conserva ningún acceso y no puede dejarlo huérfano. **Abrir en Supabase** lleva al panel de ese proyecto, donde Supabase le pide iniciar sesión. Una línea de versión compara el esquema del servidor con lo que esta app necesita: *Actualizado*, o *Necesita una actualización* con la forma de aplicar solo lo que falta. Tras una prueba correcta se muestra la hora de la última. **Usar el servidor de la app** cambia solo este dispositivo y nunca toca su proyecto de Supabase. **Ejecutar una comprobación completa**, en la misma pantalla, lanza bajo demanda la comprobación de seguridad del asistente: pegue un token de acceso personal solo para esa comprobación y la pantalla responde *Protegido* o *Requiere atención* con los hallazgos. El token solo se usa para ella y nunca se guarda.
-
-Cambiar de servidor cierra tu sesión y surte efecto la próxima vez que abras la app — la sesión pertenecía al otro servidor. **Usar el servidor de la app** vuelve al predeterminado en cualquier momento.
-
-### Su número de WhatsApp
-
-Visible para los miembros de sus espacios en el directorio, para que
-puedan localizarle sin salir de la app. Opcional, y borrarlo lo retira de
-todas partes a la vez.
-
-### Su línea de estado
-
-Una línea corta junto a su nombre en el directorio — *En una llamada ·
-vuelvo a las 14:00*. Usted la pone y usted la borra; nadie más puede
-cambiarla.
-
-### Periodo de reserva por defecto
-
-Qué mitad del día supone una reserva cuando usted no lo dice. Solo
-preselecciona: cada pantalla de reserva le deja elegir, y la granularidad
-del espacio decide qué son las mitades.
-
-### Información personal
-
-Nombre, apellidos, empresa, la dirección estructurada, teléfono y correo.
-Es lo que imprime un documento que le nombra como cliente: una factura
-con un simple nombre de pantalla significa que esta pantalla está vacía.
+**Véase también:** [Su dirección](help:user.profile.settings.address) · [Su NIF-IVA](help:user.profile.settings.vat-id)
 
 ### Su dirección
 
-La dirección en texto libre impresa en sus facturas. Donde existe
-*Información personal*, la sustituye; el campo permanece para los
-espacios que no han cambiado.
+**Público:** Todos
 
-### Su número de IVA
+Usted quiere que las facturas se envíen al lugar correcto.
 
-Rellénelo solo si se le factura como empresa. Es lo que decide si una
-factura transfronteriza se emite **sin impuesto** por inversión del
-sujeto pasivo — y la comprobación de factura electrónica se niega a
-enviar tal documento mientras falte.
+![](assets/help/images/user-profile-settings-address.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **Datos personales**.
+2. Rellene **Calle y número**, **Código postal** y **Ciudad**.
+3. Elija su **País** y después toque **Guardar**.
+
+**Conviene saber**
+
+- Donde su espacio no usa el formulario de datos personales, Yo muestra en su lugar una fila **Dirección** más sencilla con una opción de **País**.
+- La dirección se imprime en sus facturas.
+
+**Véase también:** [Datos personales](help:user.profile.settings.personal-info)
+
+### Su NIF-IVA
+
+**Público:** Todos
+
+Usted recibe facturas como empresa y quiere que la factura muestre su número de IVA.
+
+![](assets/help/images/user-profile-settings-vat-id.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **Datos personales**.
+2. Escriba su número en **NIF-IVA (opcional)**.
+3. Añada su **Identificador de empresa (opcional)** si tiene uno y después toque **Guardar**.
+
+**Conviene saber**
+
+- Déjelo vacío si es un particular.
+- Que una factura lleve IVA o no depende de este número y del país; el espacio aplica sus propias reglas.
+
+**Véase también:** [Datos personales](help:user.profile.settings.personal-info)
 
 ### Sus condiciones de pago
 
-Las condiciones propias suyas, cuando un administrador ha negociado
-alguna. Vacío, se aplican las del espacio.
+**Público:** Miembro
 
-### Restaurar los consejos
+Usted quiere saber en qué condiciones se le factura.
 
-Devuelve todos los consejos de ayuda que haya ocultado. No se
-restablece nada más.
+![](assets/help/images/user-profile-settings-payment-terms.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y, bajo **Mi membresía**, toque **Condiciones de pago**.
+2. Lea la insignia: **Por defecto del espacio**, o **Propias del miembro** si se acordaron condiciones con usted.
+3. Lea las condiciones: no puede cambiarlas usted mismo. Para que se cambien, pídaselo a un administrador.
+
+**Conviene saber**
+
+- Un administrador o propietario con el permiso propone un cambio desde su ficha de miembro: **Solicitar un cambio**, solo los campos que hay que cambiar (un campo vacío conserva la redacción del espacio), un **Motivo (opcional)** y después **Enviar solicitud**.
+- El espacio fija estas condiciones; un cambio pasa por su validación y se aplica una vez validado.
+
+**Véase también:** [Su NIF-IVA](help:user.profile.settings.vat-id)
+
+### Su número de WhatsApp
+
+**Público:** Todos
+
+Usted quiere que sus compañeros puedan localizarle por WhatsApp, o dejar de compartir el número.
+
+![](assets/help/images/user-profile-settings-whatsapp.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **WhatsApp**.
+2. Escriba su número en **Número de WhatsApp**, con el prefijo del país.
+3. Toque **Guardar**. Para dejar de compartirlo, vacíe el campo y guarde.
+
+**Conviene saber**
+
+- Dice **No compartido** hasta que lo fije.
+- Quién ve el número se decide en **WhatsApp y correo**, dentro de [Quién me ve](help:user.privacy.audiences).
+- La fila solo aparece cuando su espacio usa WhatsApp.
+
+**Véase también:** [Quién me ve](help:user.privacy.audiences)
+
+### Su línea de estado
+
+**Público:** Miembro
+
+Usted quiere una línea breve junto a su nombre, como «En una llamada · de vuelta a las 14:00».
+
+![](assets/help/images/user-profile-settings-status.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y, bajo **Mi membresía**, toque **Estado**.
+2. Escriba su línea en **Estado**.
+3. Toque **Guardar**. Para borrarla, vacíe el campo y guarde.
+
+**Conviene saber**
+
+- Es opcional y breve; el campo le detiene en su límite.
+- Los miembros de sus espacios la ven en el directorio de miembros.
+- Dice **Sin estado** hasta que escriba una.
+
+**Véase también:** [Quién me ve](help:user.privacy.audiences)
+
+### Período de reserva predeterminado
+
+**Público:** Miembro
+
+Usted suele reservar la misma media jornada y quiere tenerla ya elegida.
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y, bajo **Mi membresía**, toque **Período de reserva predeterminado**.
+2. Elija **Mañana**, **Tarde**, **Día completo** o **Sin preferencia (día completo)**.
+
+**Conviene saber**
+
+- Solo preselecciona: puede cambiar el período cada vez que reserve.
+- La fila solo aparece cuando la configuración de reservas de su espacio ofrece una opción.
+
+**Véase también:** [La hoja de reserva](help:user.reservations.booking-sheet)
 
 ### Su credencial
 
-La credencial QR o NFC que le identifica en la puerta y en el quiosco. La
-app guarda solo un hash: una credencial puede revocarse pero nunca
-leerse, por eso reemplazar una perdida significa emitir una nueva, no
-recuperar la antigua.
+**Público:** Miembro
+
+Usted quiere una credencial o una tarjeta que le identifique en la puerta o en el quiosco.
+
+![](assets/help/images/user-profile-settings-badge.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y, bajo **Mi membresía**, toque **Mi credencial**.
+2. Toque **Nueva credencial** para obtener su código QR y después **Guardar como PDF** para imprimirlo, o toque **Registrar tarjeta** y acerque su tarjeta RFID o NFC a la parte trasera del dispositivo.
+3. Para retirar una credencial, toque **Revocar**.
+
+**Conviene saber**
+
+- Un código QR nuevo se muestra una sola vez: guárdelo de inmediato.
+- Una credencial revocada deja de funcionar al instante. Emita una nueva en lugar de buscar la antigua.
+- **Inicia mi sesión** está desactivado por defecto: una credencial que registra su llegada no inicia su sesión hasta que lo active, y antes necesita un PIN.
+- **Nueva credencial** requiere la función **Credenciales QR** y **Registrar tarjeta** la función **Credenciales RFID / NFC**; su espacio puede ofrecer solo una de ellas.
+
+**Véase también:** [El PIN de su credencial](help:user.profile.settings.badge-pin)
 
 ### El PIN de su credencial
 
-Un código corto que se pide junto a la credencial donde un espacio quiere
-dos factores. Protege las acciones que permite la credencial, no la
-credencial en sí.
+**Público:** Miembro
+
+Usted quiere iniciar sesión escaneando su credencial en lugar de escribir su correo.
+
+![](assets/help/images/user-profile-settings-badge-pin.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y, bajo **Mi membresía**, toque **Mi PIN**.
+2. Elija **Definir un PIN**, introdúzcalo en **Nuevo PIN**, repítalo en **Repítalo** y guarde.
+3. Abra **Mi credencial** y active **Inicia mi sesión** en la credencial que quiera.
+
+**Conviene saber**
+
+- La fila dice **Sin PIN todavía** o **PIN definido**.
+- Solo usted puede definirlo, y nadie, ni siquiera un propietario, puede volver a leerlo.
+- **Cambiar el PIN** lo sustituye; **Eliminar el PIN** desactiva el inicio de sesión con credencial en todas sus credenciales.
+
+**Véase también:** [Su credencial](help:user.profile.settings.badge)
 
 ### Idioma de la app
 
-El idioma de la app en **este dispositivo**, independiente del idioma del
-espacio y del de sus documentos. Déjelo en el ajuste del sistema y sigue
-al teléfono.
+**Público:** Todos
+
+Usted quiere la app en su propio idioma.
+
+![](assets/help/images/user-profile-settings-language.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **Idioma**.
+2. Elija un idioma, o **Predeterminado del sistema** para seguir el de su teléfono.
+
+**Conviene saber**
+
+- Se aplica a todos los espacios, a menos que fije uno para un solo espacio con [Solo para este espacio](help:user.settings.scope).
+- Cada idioma está escrito con su propio nombre, de modo que siempre puede encontrar el suyo.
+
+**Véase también:** [Números y fechas](help:user.profile.settings.regional-formats)
 
 ### Tema
 
-Claro, oscuro o la mezcla de la marca — también por dispositivo. El
-ajuste del sistema sigue al interruptor claro/oscuro del teléfono.
+**Público:** Todos
+
+Usted quiere la app más clara o más oscura.
+
+![](assets/help/images/user-profile-settings-theme.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **Tema**.
+2. Elija **Predeterminado del sistema**, **Claro** u **Oscuro**.
+
+**Conviene saber**
+
+- **Predeterminado del sistema** sigue el propio interruptor de claro y oscuro de su teléfono.
+- Como el idioma, se puede fijar para un solo espacio.
+
+**Véase también:** [Idioma de la app](help:user.profile.settings.language)
 
 ### Estilo de navegación
 
-Si la app navega con una barra inferior o un raíl lateral. En pantalla
-ancha el raíl da más sitio al plano; en el teléfono la barra queda más a
-mano.
+**Público:** Todos
 
-### Mi cuenta en lugar de Ajustes (#1598)
+Usted prefiere la barra inferior, o el menú que conoce de la web.
 
-Un espacio puede decidir que un miembro que no administra nada encuentre
-**Mi cuenta** donde está la rueda dentada **Ajustes** — en la barra
-superior y en el menú de pantalla ancha. Detrás del mismo toque está la
-misma pantalla: su perfil y su foto, su membresía, su idioma y sus
-formatos regionales, sus derechos sobre sus datos, la ayuda, el cambio
-de perfil y el cierre de sesión siguen exactamente donde estaban. Solo
-cambian el nombre y el icono, para que nadie busque su propia cuenta
-detrás de una palabra que suena a ajustes de otra persona.
+**Pasos**
 
-Quien tenga algo confiado por un rol — propietaria, copropietario,
-administrador, o un miembro al que uno de los roles propios de este
-espacio delegue algo — conserva **Ajustes** y todo lo que abre. La
-entrada sigue a los permisos y no al título: una delegación hecha esta
-mañana aparece sin reiniciar la app.
+1. Abra [Yo](app:/me?tab=me) y toque **Navegación**.
+2. Elija **Por defecto para este dispositivo**, **Clásica: la barra inferior y el botón redondo** o **Menú: la hamburguesa, como en la web**.
 
-Es un nombre, no un candado. No se quita ni se concede nada: las
-pantallas de administración rechazan exactamente a las mismas personas
-que antes, se llegue desde un menú o se escriba la dirección.
+**Conviene saber**
 
-Los propietarios lo activan en *Ajustes → Funciones*. Un espacio que lo
-deja desactivado conserva la rueda dentada tal cual.
+- La fila está oculta en la versión web, que usa siempre el menú, y solo aparece cuando su espacio la ofrece.
 
-### Interfaz MCP (#1607)
-
-Un espacio puede poner a disposición la **interfaz MCP**, para que un
-asistente de IA pueda conectarse a DesKilo. El interruptor solo indica
-disponibilidad: activarlo no inscribe a nadie, no aprueba ninguna
-solicitud, no concede ningún rol y no registra ningún cliente. Quien
-quiera usarla sigue necesitando una autorización que el propietario
-configura **y** el administrador de la instancia aprueba — dos pasos
-distintos, incluso cuando una sola persona tiene ambos papeles — y cada
-operación del asistente sigue respondiendo a los permisos, funciones y
-reglas que la aplicación ya aplica. Desactivada, la interfaz oculta sus
-puntos de entrada y rechaza las llamadas; las autorizaciones existentes
-siguen visibles y revocables. El interruptor viaja con una plantilla
-como cualquier otra función; las autorizaciones, aprobaciones y
-consentimientos nunca viajan, así que activarlo en una copia de un
-espacio no abre nada. Los propietarios lo activan en *Ajustes →
-Funciones*; está desactivado por defecto.
-
-### El espacio de demostración
-
-Un espacio inventado que cualquiera puede abrir desde la pantalla de
-inicio de sesión, sin cuenta. Tiene sus propias personas, sus propias
-reservas y sus propias facturas, y un **Reinicio** que lo deja todo
-exactamente como estaba. **Ver como** mira el mismo espacio como
-miembro, como administradora o como propietaria, para ver lo que cada
-una ve.
-
-Nada de lo que se hace allí llega a un espacio real, y nada sale del
-dispositivo. Salir olvida la sesión, y cerrar la aplicación también: la
-siguiente visita parte del mismo espacio inventado.
-
-No es una forma de mostrar un espacio **real** sin mostrar a sus
-miembros. Todo lo que hay en él es inventado, así que no hay nada que
-ocultar; un espacio real en pantalla sigue mostrando a las personas
-reales que están en él, salvo que el **modo grabación** esté activo, que
-es la sección siguiente.
-
-### Modo grabación (#1514)
-
-Para las veces en que hay que mostrar el espacio **real**: un vídeo de
-ayuda, una captura en una guía, una imagen para la tienda, una
-diapositiva en una conferencia. Active el **modo grabación** y cada
-nombre, correo electrónico, número de teléfono, dirección postal y
-fotografía de perfil en pantalla pertenece a una persona inventada. El
-plano, las reservas, los puestos y los importes siguen siendo
-exactamente los de este espacio.
-
-La sustitución ocurre antes de dibujar nada, no por encima, así que no
-hay nada que se pueda olvidar: una pantalla no puede mostrar un nombre
-real porque ningún nombre real llega hasta ella. El mismo miembro es
-siempre la misma persona inventada — en el plano, en el directorio y en
-una factura —, de modo que una grabación se sigue entendiendo.
-
-Mientras está activo, un aviso encabeza todas las pantallas, para que
-nadie grabe diez minutos creyendo que lo estaba — ni trabaje un día con
-nombres inventados creyéndolos reales. Desactívelo en *Ajustes →
-Funcionalidades* en cuanto termine la grabación.
-
-Dos cosas. Mientras está activo, los formularios de identidad se niegan
-a guardar: lo que muestran es inventado, y guardarlo sobrescribiría los
-datos reales de alguien. Y nada puede ocultar lo que una persona ha
-escrito — un mensaje, una nota, el nombre de un puesto: lea la pantalla
-antes de filmarla.
-
-Si la imagen no tiene que ser de *este* espacio, use mejor el espacio de
-demostración: allí todo es inventado desde el principio.
-
-### Cámara frontal para escanear
-
-Usa el objetivo delantero en vez del trasero. Para una tableta de pared
-cuya cámara trasera mira al muro.
-
-### Perfiles
-
-Una cuenta, varios espacios. El selector muestra cada espacio al que
-pertenece, una pareja desarrollo/producción como una sola tarjeta con dos
-chips, y cambiar se convierte en su valor por defecto — un reinicio abre
-donde lo dejó.
+**Véase también:** [Cómo se organizan los Ajustes](help:user.settings.organisation)
 
 ### Números y fechas
 
-Con qué convenciones se escriben números y fechas en **este
-dispositivo**. Separado del idioma de la app a propósito: alguien puede
-querer una app en inglés que escriba fechas españolas.
+**Público:** Todos
+
+Usted quiere que los importes y las fechas se escriban como usted los lee, sea cual sea el idioma de la app.
+
+![](assets/help/images/user-profile-settings-regional-formats.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Región y formatos](app:/formats).
+2. Toque **Números y fechas** y elija una región, o **Automático** para seguir el idioma de la app.
+3. Compruebe la línea de vista previa de arriba: muestra un importe, una fecha y una hora tal como los verá.
+
+**Conviene saber**
+
+- Es independiente del idioma: una app en inglés puede escribir fechas a la francesa.
+- Se puede fijar para un solo espacio con [Solo para este espacio](help:user.settings.scope).
+- La fila solo aparece cuando su espacio usa **Región y formatos**.
+
+**Véase también:** [Reloj](help:user.profile.settings.clock)
 
 ### Reloj
 
-Doce o veinticuatro horas. Cambia cómo se escriben las horas, nunca lo
-que significan.
+**Público:** Todos
 
-### Mostrar las horas en mi zona
+Usted prefiere las horas en formato de 24 o de 12 horas.
 
-Desactivado, las horas son las del espacio — lo que una reserva es en
-realidad. Activado, se convierten a donde usted está. Útil de viaje, y
-conviene volver a desactivarlo antes de comparar una pantalla con la de
-un colega.
+![](assets/help/images/user-profile-settings-clock.es.b8fa17aa9.jpg)
 
-### Su propio servidor
+**Pasos**
 
-Con qué proyecto de Supabase habla esta app. Por defecto el de DesKilo;
-apúntela a un proyecto que aloje usted y la app es suya de principio a
-fin. Cambiarlo le desconecta, porque una cuenta existe en un servidor, no
-en la app.
+1. Abra [Región y formatos](app:/formats).
+2. Bajo **Reloj**, elija **Auto**, **24h** o **12h**.
 
-### Cómo alojar el suyo
+**Conviene saber**
 
-El paquete construye una segunda base a partir de cada migración en
-orden, las funciones edge, los buckets y la semilla. Es lo que hace que
-un DesKilo autoalojado sea idéntico al de referencia y no una
-bifurcación.
+- **Auto** hace lo que hace su región.
+- Cambia cómo se escriben las horas, nunca lo que significan.
+- La fila solo aparece cuando su espacio usa **Región y formatos**.
 
-### Quién puede ver mis datos
+**Véase también:** [Mostrar las horas en mi zona horaria](help:user.profile.settings.device-zone)
 
-Qué puede leer de usted cada rol en cada uno de sus espacios. Es el
-enunciado de lo que el servidor aplica, no un juego de interruptores — la
-respuesta es la misma esté o no abierta esta pantalla.
+### Mostrar las horas en mi zona horaria
 
-**Bloquear a una persona (#2211).** El bloqueo detiene los mensajes personales en ambos sentidos, incluidos los reenvíos y los avisos de captura de pantalla. Los mensajes anteriores permanecen en la conversación. Desbloquea a la persona para permitir nuevos envíos. Las conversaciones del espacio y de grupo siguen sus propias reglas.
+**Público:** Todos
+
+Usted está de viaje y quiere las horas tal como las marca su propio reloj.
+
+![](assets/help/images/user-profile-settings-device-zone.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Región y formatos](app:/formats).
+2. Active **Mostrar las horas en mi zona horaria**.
+
+**Conviene saber**
+
+- Desactivado, las horas están en la zona del espacio, aquella en la que se hacen las reservas. Es el valor por defecto.
+- Activado, las horas siguen a su dispositivo y se etiquetan allí donde difieren de las del espacio.
+- La fila solo aparece cuando su espacio usa **Región y formatos**.
+
+**Véase también:** [Reloj](help:user.profile.settings.clock)
+
+### Restaurar los consejos
+
+**Público:** Todos
+
+Usted ocultó los consejos de ayuda y ahora quiere recuperarlos.
+
+![](assets/help/images/user-profile-settings-restore-hints.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me).
+2. Toque **Volver a mostrar los consejos de ayuda**.
+
+**Conviene saber**
+
+- Un mensaje lo confirma: **Los consejos de ayuda volverán a mostrarse.**
+- No se restablece nada más.
+- La fila solo aparece cuando su espacio usa consejos de ayuda.
+
+**Véase también:** [Cómo se organizan los Ajustes](help:user.settings.organisation)
+
+### Cámara frontal para escanear
+
+**Público:** Todos
+
+Usted escanea credenciales con una tableta fijada a la pared cuya cámara trasera mira hacia la pared.
+
+![](assets/help/images/user-profile-settings-front-camera.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ajustes](app:/settings) y abra **Avanzado**.
+2. Active **Escanear con la cámara frontal** para usar la cámara del lado de la pantalla, o desactívelo para la cámara trasera.
+
+**Conviene saber**
+
+- Está activado por defecto y se aplica solo a este dispositivo.
+
+**Véase también:** [Su credencial](help:user.profile.settings.badge)
+
+### Cuentas vinculadas
+
+**Público:** Todos
+
+Usted quiere iniciar sesión con otra identidad, como una cuenta de Google, además de con su correo.
+
+![](assets/help/images/user-profile-settings-linked-accounts.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y toque **Cuentas vinculadas**.
+2. Toque **Vincular** junto a un proveedor y termine en el navegador.
+3. Para quitar una, toque **Desvincular**.
+
+**Conviene saber**
+
+- Una identidad vinculada muestra **Vinculada**.
+
+**Véase también:** [Perfiles](help:user.profile.profiles)
+
+### Privacidad: quién puede ver mis datos
+
+**Público:** Todos
+
+Usted quiere saber quién puede leer qué sobre usted, y quién ha mirado realmente.
+
+![](assets/help/images/user-privacy-overview.es.b8fa17aa9.jpg)
+
+![](assets/help/images/user-privacy-visibility.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Privacidad y datos](app:/privacy).
+2. Toque **Quién puede ver mis datos**.
+3. Lea la regla de cada categoría, las personas que nombra hoy y **Quién accedió a sus datos**.
+
+**Conviene saber**
+
+- Sus datos nunca se rastrean ni se venden. Los roles deciden quién los lee, y el servidor lo hace cumplir.
+- La hoja enuncia la regla; no hay nada que activar en ella. Para elegir lo que ven los demás miembros de su perfil, use [Quién me ve](help:user.privacy.audiences).
+
+**Véase también:** [Quién me ve](help:user.privacy.audiences) · [Tus datos, tus derechos](help:user.privacy.consent)
+
+### Elegir quién me ve
+
+**Público:** Todos
+
+Usted quiere decidir, elemento por elemento, quién ve su nombre, su biografía, sus datos de contacto y su presencia.
+
+![](assets/help/images/user-privacy-audiences--card.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y baje hasta **Privacidad**, a la tarjeta **Quién me ve**.
+2. Toque un elemento: **Sobre mí**, **Nombre y foto**, **Profesión y biografía**, **WhatsApp y correo**, **Hoy en el espacio** o **Quién puede iniciar una conversación conmigo**.
+3. Elija un público, por ejemplo **Nadie**, **Miembros de mis espacios** o **Miembros de espacios elegidos**, marque los espacios si eligió algunos y toque **Guardar**.
+4. Compruebe **Cómo me ven los demás** al pie de la tarjeta.
+
+**Conviene saber**
+
+- Nada es público a menos que usted lo elija.
+- Ampliar un público le pide confirmar antes.
+- **Personas bloqueadas**, bajo la tarjeta, enumera a quienes ha bloqueado; no pueden verle ni localizarle y usted no puede localizarlos a ellos. Toque **Desbloquear** para deshacerlo.
+- **Cualquiera con sesión iniciada** solo se ofrece para algunos elementos, como **Nombre y foto** y **Profesión y biografía**. **WhatsApp y correo** y **Hoy en el espacio** nunca van más allá de sus propios espacios.
+
+**Véase también:** [Perfil público](help:user.privacy.public-profile) · [Quién puede ver mis datos](help:user.privacy.visibility)
+
+### Publicar un perfil público
+
+**Público:** Todos
+
+Usted quiere una página con su nombre y unas pocas palabras que la gente pueda leer sin una cuenta.
+
+![](assets/help/images/user-privacy-public-profile.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y busque **Perfil público** en la tarjeta **Quién me ve**.
+2. Actívelo y confirme con **Publicar**.
+3. Toque **Copiar el enlace** para compartirlo.
+
+**Conviene saber**
+
+- Cualquiera que tenga el enlace lee su nombre, su profesión y su biografía. Los datos de contacto, la presencia y los espacios siguen siendo privados.
+- Desactivado, las personas que no han iniciado sesión no ven nada de usted.
+
+**Véase también:** [Elegir quién me ve](help:user.privacy.audiences)
 
 ### Exportar mis datos
 
-Todo lo que DesKilo guarda sobre usted, como archivo que se queda. Se
-produce a petición en vez de tenerse listo, así que dice lo que es cierto
-en el momento en que lo pide.
+**Público:** Todos
+
+Usted quiere una copia de todo lo que DesKilo guarda sobre usted.
+
+![](assets/help/images/user-privacy-export.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Privacidad y datos](app:/privacy).
+2. Toque **Exportar mis datos**.
+3. Guarde o comparta el archivo que se genera.
+
+**Conviene saber**
+
+- Es un único archivo JSON, creado en el momento en que lo pide.
+- La fila solo aparece cuando su espacio ofrece la exportación de datos.
+
+**Véase también:** [Solicitudes de derechos](help:user.privacy.requests)
 
 ### Borrar mis datos
 
-Le retira a usted y lo que es suyo. Lo que no puede borrarse es lo que la
-ley obliga al **espacio** a conservar: una factura emitida es un
-documento de la organización y permanece con la identidad de comprador
-con la que se emitió. La pantalla dice a qué espacios afecta antes de que
-ocurra nada.
+**Público:** Todos
 
-### Sus datos, sus derechos
+Usted quiere dejar un espacio y que se borren sus datos.
 
-Qué se recoge, por qué, con qué base legal y cuánto tiempo se conserva.
-Un consentimiento pedido se registra con su fecha, así puede ver a qué
-accedió y cuándo.
+![](assets/help/images/user-privacy-erase.es.b8fa17aa9.jpg)
 
-## 13. Notificaciones
+**Pasos**
 
-Recordatorios de registro, confirmaciones pendientes, decisiones de gastos — y cuando un admin **elimina una de tus reservas** (anulación), tú y los admins recibís aviso. La entrega es local primero; los push del servidor llegan de serie en Android, iPhone/iPad, el navegador y macOS (Firebase Cloud Messaging) — *Ajustes → Avanzado* muestra si el push está activo en este dispositivo. La insignia del icono de la app muestra tus confirmaciones pendientes **más tus mensajes sin leer** — en Android, iPhone/iPad, el Dock de macOS, la barra de tareas de Windows y las web apps instaladas. Los mensajes entre miembros se anuncian **una vez por dispositivo con el remitente y el texto completo** — incluido lo enviado con la app cerrada, anunciado en cuanto la vuelves a abrir. Ese aviso siempre lo genera **la propia app, en local**: el payload push no lleva nunca un nombre, una hora ni una palabra del mensaje (§6), así que lo que viaja por la red solo dice que ha llegado algo. Una conversación **silenciada** (§16) permanece en silencio: no se anuncia nada de ella, aunque sigue contando en su fila y en la insignia.
+1. Abra [Privacidad y datos](app:/privacy).
+2. Toque **Abandonar este espacio y borrar mis datos**.
+3. Lea lo que va a hacer, escriba la palabra de confirmación y toque **Borrar**.
 
-## 14. Privacidad
+**Conviene saber**
 
-**Consentimiento (#751).** La primera vez que una cuenta abre la app — y de nuevo cuando este texto cambia — una pantalla de consentimiento lo muestra entero: qué se procesa, qué no se hace nunca, quién puede ver qué, quién es responsable, cuánto tiempo, tus derechos y dónde releerlo. Nada más es accesible hasta marcar *He leído esto y acepto* — la aceptación (versión y fecha) queda registrada en tu cuenta y te sigue entre dispositivos. Vuelve a leerlo cuando quieras en **Ajustes → Privacidad y datos → Tus datos, tus derechos**, aquí en la ayuda o en el wiki del proyecto.
+- Cancela sus reservas abiertas y deja en blanco sus mensajes en este espacio. Su perfil se borra cuando es su último espacio; las reservas pasadas se conservan como registro de ocupación del espacio.
+- Los registros contables se conservan durante el plazo legal de conservación, por identificador y no por nombre.
+- La fila aparece junto con la exportación de datos. Está atenuada para un propietario, que debe transmitir antes el espacio, en Copropiedad.
 
-Datos mínimos: nombre, correo, plan, reservas, cuenta. Tú controlas tu foto, tu estado y si tu número de teléfono es visible en el directorio; en el plano, un puesto tuyo muestra una inicial, o tu foto donde el propietario activó las fotos de los miembros. Las credenciales de quiosco se guardan solo como hash — una credencial perdida se revoca, no se adivina. Sin rastreo, sin analítica de terceros. Tus apuntes de cuenta y tus facturas **se conservan tal cual** al eliminar la cuenta — son los documentos contables del espacio, no tuyos para retirarlos, y la ley obliga a la comunidad a guardarlos durante el periodo legal. Lo que se borra es tu perfil: nombre, foto, número de WhatsApp, estado, dirección y NIF. No se anonimizan; el nombre que figura en una factura ya emitida se queda en ella.
+**Véase también:** [Exportar mis datos](help:user.privacy.export)
 
-**RGPD (#719).** DesKilo está construida para el Reglamento General de Protección de Datos: datos alojados en la UE, sin rastreo ni analítica, acceso limitado por rol y aplicado en el servidor, y cuatro derechos que ejerce usted mismo en **el escudo de la barra superior (Privacidad y datos)**: **quién puede ver mis datos** (la regla por categoría y las personas que nombra), **quién accedió a mis datos** (un registro escrito por el servidor de cada lectura de sus finanzas o mensajes por otra persona — nunca omitible), **exportar mis datos** (un archivo JSON, art. 20) y **salir con borrado** (art. 17: reservas canceladas, mensajes vaciados, perfil borrado; los registros contables se conservan durante la retención legal indicada en la política, referenciados por un id, no un nombre). Los mensajes solo los leen las personas de la conversación, sea cual sea su rol; facturas y pagos solo usted y quienes tienen el permiso de finanzas.
+### Solicitudes de derechos
 
-## 15. Plataformas
+**Público:** Todos
 
-Android (Google Play), iPhone/iPad, escritorio — **macOS** (un DMG: arrastra DesKilo a Aplicaciones) y **Windows** (un instalador MSI) generados en cada versión — y el **navegador**: la misma app, sin instalar nada, en la dirección que publique tu espacio. Tus datos siguen a tu cuenta, así que un puesto reservado en el móvil aparece un segundo después en una pestaña del navegador.
+Usted quiere pedir al espacio una copia, una corrección, una limitación o la supresión, y conservar un registro.
 
-El navegador hace más de lo que cabría esperar: **la Web NFC funciona** en navegadores Chromium sobre Android y por HTTPS, que es una forma de configurar desde el navegador de un teléfono la etiqueta de una silla — las apps instaladas de **Android e iPhone leen las etiquetas directamente**, que suele ser más cómodo. Lo que no puede hacer es escanear un QR con la cámara como hace el quiosco. Todo lo demás — plano, reservas, miembros, dinero, facturas, descargas de PDF — es la misma app. Al abrir el DMG de macOS por primera vez, haz clic derecho sobre la app y elige *Abrir*: la compilación aún no está notarizada por Apple, así que un doble clic normal muestra un aviso de Gatekeeper.
+![](assets/help/images/user-privacy-requests.es.b8fa17aa9.jpg)
 
-## 16. Mensajes
-La pestaña **Mensajes** es el centro de mensajería de su espacio: todas las conversaciones en una lista, la más reciente arriba, personas y grupos juntos. Una fila muestra el último mensaje, la hora y cuántos no ha leído. Toque el **lápiz** para empezar una.
+**Pasos**
 
-**Una persona o un grupo, una sola hoja.** Elija una persona para un chat privado; elija dos o más y **aparece un campo de nombre** — eso es un grupo. El nombre es **único en su espacio**, así nadie tiene que adivinar a qué *Equipo* escribe; si está ocupado, la app lo dice y usted cambia una palabra.
+1. Abra [Privacidad y datos](app:/privacy) y toque **Mis solicitudes de derechos**.
+2. Toque **Hacer una solicitud** y elija lo que pide: ver una copia de sus datos, llevárselos a otra parte, corregirlos, limitar su uso, oponerse a un uso o borrarlos.
+3. Añada **Detalles (opcional)** y toque **Enviar la solicitud**.
 
-**Distinguirlos de un vistazo.** Una persona muestra su foto en un círculo. Un grupo muestra una **insignia cuadrada** con un símbolo de grupo y — mientras nadie haya escrito — cuántos miembros tiene.
+**Conviene saber**
 
-**Dentro de una conversación.** Los mensajes se leen de antiguo a reciente en burbujas, con emojis y **enlaces de referencia** activos: un enlace de reserva abre esa reserva, uno de espacio abre su hoja de reserva, cada uno con *Ver en el plano*. El campo de escritura está debajo. **Mantenga pulsada una burbuja para eliminarla**, con confirmación. Sus mensajes llevan una marca: **gris = entregado**, **azul = leído**.
+- El espacio responde en el plazo de un mes natural; la hoja muestra la fecha.
+- Cada solicitud indica si fue recibida, prorrogada (con la nueva fecha y el motivo), respondida o rechazada.
 
-**Mantener la lista en orden.** Unos chips sobre la lista la reducen a **Todos**, **No leídos** o **Archivados**. **Mantenga pulsada una fila** para **fijarla** arriba, **silenciarla**, **marcarla como no leída** para volver más tarde, o **archivarla** — una conversación archivada sale de la lista, conserva su historial y vuelve sola en cuanto alguien escribe en ella. Una chincheta y una campana tachada en la fila dicen cuál es cuál.
+**Véase también:** [Exportar mis datos](help:user.privacy.export) · [Borrar mis datos](help:user.privacy.erase)
 
-**Una conversación es una página.** Se abre a toda altura con una flecha de retorno, y su dirección se puede compartir o guardar en favoritos. Los mensajes se agrupan bajo **separadores de día**, así que una burbuja muestra solo la hora; **Cargar mensajes anteriores** arriba recupera el historial más antiguo. Lo que escribe sin enviar queda como **borrador** para esa conversación. **Deslice a la derecha** para citar un mensaje y toque el bloque citado en una respuesta para saltar al original; **deslice a la izquierda** para retirar un mensaje suyo que nadie ha leído aún. El **clip** adjunta una reserva o un espacio, y aparece un contador al acercarse al límite de longitud.
+### Notificaciones push en este dispositivo
 
-**Empezar una.** Toque el lápiz y luego a una persona: el chat se abre al instante. Active el interruptor **Grupo** para elegir a varias personas y dar nombre al grupo.
+**Público:** Todos
 
-**Toque el nombre de arriba.** En un chat privado abre el **perfil** de la persona — la reserva de hoy, si ha registrado su entrada, su estado y cómo contactarla. En un grupo abre la **lista de miembros**, donde un administrador del grupo añade o quita personas y cualquiera puede salir. Salir nunca deja un grupo sin administrador.
+Usted quiere dejar de recibir notificaciones en este dispositivo, o volver a activarlas.
 
-**La búsqueda** (la lupa) mira en tres sitios: **personas**, **grupos** y las **palabras dentro de los mensajes**. Un resultado le lleva directamente a la persona, al grupo o al mensaje.
+![](assets/help/images/user-privacy-push.es.b8fa17aa9.jpg)
 
-**Ni fotos ni archivos.** Los mensajes llevan texto, más enlaces a una reserva o un espacio. Es deliberado: una app de coworking no es un alojamiento de archivos.
+**Pasos**
 
-**Notificaciones.** Un mensaje *recibido* le avisa y cuenta en la pestaña **Mensajes**; abrir la conversación lo borra. Los mensajes ya no aparecen en la campana, reservada a confirmaciones y eventos. Única excepción: una **difusión a todos los administradores**, que no tiene conversación donde vivir y permanece allí.
+1. Abra [Privacidad y datos](app:/privacy).
+2. Desactive o active **Notificaciones push en este dispositivo**.
 
-![](assets/help/images/messages-discussions.jpg)
+**Conviene saber**
 
-*La lista de conversaciones: personas y grupos juntos, los recuentos de no leídos, el lápiz para empezar una nueva.*
+- Desactivado, la app sigue funcionando y no se envía nada a este dispositivo.
+- Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push.
 
-![](assets/help/images/messages-conversation.jpg)
+**Véase también:** [Tus datos, tus derechos](help:user.privacy.consent)
 
-*Un chat privado: burbujas de antiguo a reciente, las marcas de lectura gris/azul en tus propios mensajes.*
+### Tus datos, tus derechos
 
-![](assets/help/images/messages-conversation-links.jpg)
+**Público:** Todos
 
-*Un mensaje de grupo con un enlace de reserva y un enlace de espacio — ambos activos, ambos con su salto Ver en el plano.*
+Usted quiere volver a leer lo que aceptó sobre sus datos.
 
-### Operador de la plataforma
+![](assets/help/images/user-privacy-consent.es.b8fa17aa9.jpg)
 
-La cuenta que opera la instalación ve, en *Perfiles*, **todos los espacios** de la base de datos: los suyos como siempre, los demás **atenuados** con su entorno y su número de miembros. Al tocar un espacio atenuado se muestran sus **propietarios** con su correo — y esa consulta queda registrada, visible para los propietarios del espacio. Un propietario siempre tiene una dirección de correo: la app rehúsa crear un espacio o nombrar un copropietario sin ella.
-### Situación del espacio y reparto guiado (#934)
+**Pasos**
 
-*Dinero → Situación del espacio* muestra a propietarios y admins, en el periodo que elijan, lo que el espacio **facturó** (neto de abonos), **cobró**, **reembolsó** y **repartió**, y lo mismo socio por socio con su porcentaje de suscripción — y lo imprime como informe. *Repartir un gasto* propone la parte de cada uno **según la suscripción**, permite excluir a un socio o ajustar un peso, contabiliza las partes como hoy (líneas de la próxima factura de consumo) y **recuerda la regla** para el mes siguiente.
+1. Abra [Privacidad y datos](app:/privacy).
+2. Toque **Tus datos, tus derechos**.
+3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
-### Exportaciones contables completas (#936)
+**Conviene saber**
 
-El FEC y el archivo DATEV incluyen ahora, junto a ventas y banco, un **diario de compras**: gastos reembolsados a los socios y costes comunes repartidos. Un **abono** se contabiliza como venta revertida (faltaba). La cuenta de gastos se pide al exportar como las demás. Un espacio de desarrollo produce un archivo marcado **DEV**: no es la contabilidad real.
+- Muestra la fecha y la versión que aceptó; un cambio del texto le pide su aceptación de nuevo.
+- **Política de privacidad**, justo debajo, abre la política completa en línea.
 
-### Sedes (#945)
+**Véase también:** [Quién puede ver mis datos](help:user.privacy.visibility)
 
-Un espacio puede tener **varias direcciones**. *Ajustes → Sedes*: la sede por defecto lleva la dirección del espacio; añada una sede por cada dirección adicional (calle, código postal, ciudad, registro del establecimiento) y asígnele sus plantas. Cada socio tiene una **sede de referencia** (página del socio): es la dirección que llevarán sus documentos. Eliminar una sede devuelve sus plantas y socios a la sede por defecto.
+### Su propio servidor
 
-### Sedes en los documentos (#946)
+**Público:** Todos
 
-Con varias sedes, una factura lleva **la dirección y el registro de la sede de referencia** del socio como vendedor (la sede por defecto conserva la dirección del espacio), nombra la sede bajo el encabezado y — cuando se imprime el detalle de asistencia — indica las **otras sedes** donde el socio trabajó en el mes. La factura electrónica sigue la misma dirección.
-### Números por sede (#948)
+Por defecto la app usa el servicio de DesKilo. Su comunidad puede tener su propio servidor, y usted quiere conectarse a él.
 
-En Francia el número de IVA y la exención pertenecen a la entidad jurídica; cada establecimiento tiene su **SIRET**, que la sede lleva. Una sede que es una **entidad jurídica distinta** puede llevar además su propio número de IVA y su mención de exención — los documentos emitidos en esa sede los toman. Suele ser señal de un espacio aparte; la pantalla lo recuerda.
+![](assets/help/images/user-backend-server.es.b8fa17aa9.jpg)
 
-### Grupos de IVA (#947)
+**Pasos**
 
-Cada tipo lleva ahora el **grupo fiscal** de lo que grava: general, intermedio, reducido, superreducido, cero, exento, no sujeto, **envase retornable** (fuera del IVA) o **con impuestos especiales** (cerveza, licores, bebidas azucaradas: impuesto dentro del precio, IVA general). *Ajustes → IVA* muestra qué entra en cada grupo en su país y la mención de exención que implica. Una asociación no sujeta mantiene la categoría O. Un envase junto a líneas gravadas no puede salir como factura electrónica (EN 16931): la app lo avisa y se emite aparte.
-### Despliegue entre los dos lados (#988, #990)
+1. Abra [Ajustes](app:/settings), después **Avanzado** y después **Servidor**.
+2. Elija **Conectar con una organización existente**.
+3. Toque **Escanear un QR de servidor**, o pegue el código en **Código de servidor**.
+4. Guarde. La app cierra su sesión y usa el nuevo servidor la próxima vez que se abra.
 
-En **Ajustes → Gobernanza → Despliegue** — visible mientras la función *Despliegues* está activa, el espacio tiene su gemelo y usted tiene un permiso de despliegue — la configuración y los datos maestros viajan entre los dos lados **entidad por entidad**: *Identidad y datos legales, IVA, Tarifas, Servicios, Paquetes, Accesorios, Sedes, Reglas de reserva, Reglas de validación, Matriz de roles, Reglas de recordatorio, Diseños de documentos, Enlaces de documentos, Días de cierre, Plantillas de invitación, Funciones*. Marque una entidad y lo que necesita se marca con ella (los servicios necesitan los tipos de IVA). **La dirección es el lado en el que está**: desde el lado de desarrollo el botón dice *Desplegar en PROD*, desde el de producción *Desplegar en DEV*. Nada se mueve antes de que una **vista previa** diga, por entidad, qué se añadiría, cambiaría y quitaría al otro lado; una vista previa sin nada que hacer lo dice y no despliega nada. Cada despliegue entra en el **diario** — quién, cuándo, en qué sentido, qué entidades — con *Deshacer* en el último, que repone lo que el otro lado tenía antes. Miembros, reservas, cuentas, facturas, pagos y eventos nunca viajan; tampoco las credenciales ni los contadores de numeración. El plano sigue viajando por el archivo del espacio. Desde #1004 los **planos** también se despliegan — plantas con su sede, precios y reserva completa, oficinas, mesas y puestos con sillas, equipamiento y accesorios, fondos e imágenes del plano — como **fusión**: lo que tiene el otro lado se añade o actualiza, lo que solo tiene este lado se señala y se conserva, porque un puesto puede tener una reserva; las credenciales y los bloqueos nunca viajan, y las imágenes se copian con ellos. Desde #1010 las **instrucciones de pago** (el bloque bancario que imprime una factura) también son una entidad, y desplegar los **diseños de documentos** copia sus imágenes — el logotipo — con ellos, como el plano. Desde #1006 un despliegue va siempre **al lado en el que está**: en producción el botón dice *Traer desde DEV*, en desarrollo *Traer desde PROD* — nada puede empujarse al otro lado por error — y tras la vista previa una **confirmación** nombra el lado que se escribe y las entidades antes de que nada se mueva. Necesita el permiso del sentido de destino (*Desplegar en producción* en prod, *Desplegar en desarrollo* en dev) en el lado donde está. La lista se agrupa en *Configuración*, *Datos maestros* e *Informes* (los diseños de documentos: cada tipo de informe, ajuste y idioma).
+**Conviene saber**
 
-### Pares de entornos y permisos de despliegue (#987, #989)
+- Nunca necesita una clave de administrador.
+- **Usar el servidor de la app** le devuelve al valor por defecto en cualquier momento.
+- Su cuenta vive en un servidor, por eso cambiar de servidor cierra la sesión.
 
-Un espacio se crea ahora **junto con su gemelo**: el lado de desarrollo y el de producción comparten nombre, país, moneda y zona horaria, usted posee ambos, y **Perfiles** muestra la pareja como **una sola tarjeta con dos chips, DEV y PROD** — toque un chip para cambiar de lado. Un espacio creado antes de los pares, o creado solo (desmarque *Crear la pareja desarrollo y producción*), recibe su gemelo a demanda en **Ajustes → Avanzado → Crear su gemelo**: la configuración se copia una vez, y nada más. La pareja se desactiva con la función *Pares de entornos*, que deja dos entradas ordinarias. Desde #1550, un espacio creado **con** su gemelo se crea con la funcionalidad ya activada — pedir una pareja y luego ver dos espacios era la aplicación contradiciéndose —, mientras que un espacio creado solo la mantiene apagada. UN solo lado decide por la pareja, el de desarrollo: activar la funcionalidad desde el DEV muestra la tarjeta sin dejar una segunda fila PROD. Los espacios creados entre el 11/09/2026 y la corrección se reparan en la siguiente actualización.
+**Véase también:** [Cómo usar el suyo propio](help:user.backend.how)
 
-Tres permisos se suman a la matriz de roles: **Desplegar en producción**, **Desplegar en desarrollo** y **Entrar en el espacio de producción**. Quien puede desplegar en producción siempre puede desplegar en desarrollo. Propietarios y copropietarios tienen los tres; los admins tienen *Desplegar en desarrollo* y *Entrar en el espacio de producción*; los miembros ninguno hasta que usted lo conceda. De ahí dos reglas: **un miembro del lado de producción es siempre miembro del lado de desarrollo** (la membresía se refleja, rol y estado incluidos), y **un rol entra en producción solo mientras tiene ese permiso** — una invitación, una adhesión o una reclamación hacia la prod se rechaza si no, y la app dice por qué.
+### Cómo usar el suyo propio
 
-### El IVA como en un ERP — versiones fechadas de los tipos, un devengo, el cliente (#985)
+**Público:** Todos
 
-Dos funciones bajo *Gestión del IVA* convierten los tipos en lo que un ERP llama una **configuración de registro**.
+Usted dirige una comunidad y quiere alojar DesKilo por su cuenta.
 
-- **Versiones de los tipos de IVA.** Un tipo es una **familia de versiones fechadas**. Cuando la ley cambia un tipo, toque **Cambio por ley** en la fila, escriba el nuevo porcentaje y la fecha de efecto: el valor antiguo se cierra en esa fecha, el sucesor se abre el mismo día, y cada servicio, paquete, accesorio o suscripción que apuntaba a la fila antigua sigue apuntando a ella — la app recorre la familia y aplica **el valor vigente en la fecha del devengo**. Nada se edita en el sitio, nada se reasigna. El **devengo** de un mes facturado es su último día, o la fecha de la factura cuando el mes se factura por adelantado (la regla del anticipo); un cargo sellado al reservar (un servicio, un paquete) conserva su sello. Así, un mes terminado antes del cambio tributa al valor antiguo aunque su factura se emita — o se reemita — después, y solo las prestaciones posteriores al cambio llevan el nuevo valor. La exportación de la configuración lleva las versiones y la familia.
-- **IVA según el cliente.** En la página de un miembro, **Tratamiento del IVA** dice quién es este comprador a efectos fiscales: *Automático* (la regla actual: inversión del sujeto pasivo para una empresa de otro Estado de la UE), *IVA nacional* sea cual sea el país (un puesto es una prestación vinculada a un inmueble), *Inversión del sujeto pasivo* (categoría AE), *Fuera de la UE* (categoría G, con la mención legal) o *Comprador exento* con el motivo impreso en la factura (categoría E). La factura aplica la matriz cliente × producto: un grupo exento o no sujeto sigue siendo lo que es; un grupo gravado toma la categoría del cliente. La factura electrónica lleva la categoría y su código VATEX.
+![](assets/help/images/user-backend-how.es.b8fa17aa9.jpg)
 
-El catálogo de países nombra el **grupo** de cada tipo propuesto (general, intermedio, reducido, superreducido): sembrar un espacio produce una fila por grupo legal en cada país, y el cambio por ley es el mismo en todas partes.
+**Pasos**
 
-### Archivo del ejercicio (#957)
+1. Abra la pantalla **Servidor** y toque **Usar tu propio servidor**.
+2. Siga los cuatro pasos que se muestran: crear un proyecto en supabase.com, instalar el esquema, copiar la URL del proyecto y la clave publicable, y después pegarlas y **Probar la conexión**.
+3. O toque **Crear una nueva instancia** para la configuración guiada.
 
-*Exportaciones contables → Archivo del ejercicio* descarga un solo zip con el número de registro y el año: cada factura en PDF/A-3 con su factura electrónica incrustada, el **registro de facturas** (número, fecha, importe, estado y la palabra de integridad de cada documento), el FEC con las cuentas por defecto y la pista de auditoría. Un espacio de desarrollo produce un archivo marcado DEV.
+**Conviene saber**
 
-### Lo que le espera (#1247)
+- La prueba le dice qué falla: dirección inalcanzable, clave rechazada o tablas ausentes.
+- Los miembros se unen al mismo servidor escaneando el QR de esta pantalla.
+- La parte del operador, los entornos y el despliegue, está en el capítulo avanzado.
 
-*Lo que le espera* es una pantalla que responde a una sola pregunta: **¿algo me espera?** Active la funcionalidad **Superficie de decisión** y aparece en `/attention`. Cada línea es una decisión — los eventos que esperan su respuesta, las personas que esperan entrar, el mes cuyos miembros tienen algo que facturar y ninguna factura — con de qué se trata, cuál es la decisión y desde cuándo espera. Varios miembros que esperan la misma decisión son **una línea**, no una cada uno: *facturar para 7 miembros*.
+**Véase también:** [Su propio servidor](help:user.backend.server)
 
-El orden no es el de llegada: es **lo que cuesta el retraso**. Primero el dinero (un pago que nadie confirma es tesorería parada), luego una persona bloqueada por usted, luego un mes que debe cerrarse, luego la propia instancia, luego una configuración que no hace lo que dice.
+## Finanzas
 
-Lo que **no** está es igual de deliberado. La ocupación, los saldos y los mensajes sin leer son números, no decisiones: nadie puede actuar sobre un número, y cada uno pertenece a la pantalla que lo lleva. Una superficie que lo ordena todo no ordena nada. Cuando nada espera, la pantalla lo dice — *Nada le espera* — en vez de mostrar una lista vacía que interpretar.
+Todo lo que debe, lo que ha pagado y lo que se le ha facturado está en la pestaña **Finanzas**: un único lugar para leer el mes, saldarlo, encontrar una factura y pedir un cambio.
 
-La funcionalidad está apagada hasta que usted la pida, y se sitúa **junto** a la campana de alertas, sin reemplazarla.
+En este capítulo:
+- [Consulte su extracto](help:user.money.statement) y [qué cambia una factura](help:user.money.statement.invoiced)
+- [Pague lo que debe](help:user.money.payments) y [registre un pago](help:user.money.payments.record)
+- [Sus facturas](help:user.money.invoices) y [cuánto costó cada reserva](help:user.money.usage)
+- [Avisos financieros](help:user.money.alerts), [informes](help:user.money.reports) y [sus precios negociados](help:user.money.negotiation)
+- [Abra un documento](help:user.money.documents.library) de la biblioteca
+- [Envíe un gasto](help:user.money.expense) y [apruebe o rechace uno](help:user.money.expense.approve)
+- [Cómo se muestran los importes](help:user.money.amounts) y [sus finanzas en todos sus espacios](help:user.money.finances)
+- Para administradores de facturación: [La facturación de un vistazo](help:user.money.invoicing)
 
-**Leer los análisis (#1982).** La utilización es el tiempo de asiento reservado dividido por el ofrecido, no la asistencia medida. Los periodos pasados, actuales y futuros explican el significado de sus cifras; la hora de cálculo es la del espacio. Los periodos actuales incluyen fechas futuras. Las reservas futuras no son previsiones de demanda; volver al pasado recalcula los datos actuales, sin reconstruir lo conocido entonces. Los periodos parciales o desactualizados no producen una cifra de evolución. Actualizar datos conserva la selección. Las horas-asiento sin reservar y bloqueadas son distintas. Los datos ausentes o inválidos no están disponibles, nunca son cero.
+### Consulte su extracto
 
-El estado financiero explica su subtotal: importes facturados menos abonos, reembolsos y créditos. No es beneficio ni saldo bancario. Los pagos conciliados y recibidos se solapan; no deben sumarse.
+**Público:** Miembro
 
-En el BI web, **Análisis** permite seleccionar capacidad, importes facturados y cobrados según los permisos y las funciones activadas. Los importes facturados siguen los meses de facturación; los cobrados siguen el mes de asignación del pago a la factura, no la fecha del extracto bancario. Los abonos se muestran por separado. **Guardar vista** conserva la selección de forma privada o, con los permisos necesarios, para el equipo. Una vista predeterminada carga datos nuevos con los permisos actuales; no guarda una copia de las cifras.
+Quiere saber cómo va el mes: lo que ha usado, lo que cuesta y lo que queda por saldar.
+
+![](assets/help/images/user-money-statement--top.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y quédese en **Extracto**.
+2. Use las flechas junto al nombre del mes para ver otros meses.
+3. Lea primero **Saldo**: **Pendiente** en rojo significa que usted debe esa cantidad; **Al día** significa que no queda nada.
+4. Lea debajo **Este mes**: los días que ha usado de los días que incluye su plan, y los días que le quedan.
+5. Lea las tarjetas siguientes: su suscripción, las medias jornadas extra, los servicios, los paquetes, las posiciones abiertas y **Pagos y créditos**.
+
+**Conviene saber**
+
+- Una mañana o una tarde reservada cuenta como media jornada, por lo que puede ver valores como 0,5 días.
+- La tarjeta indica también la regla de su plan. Con pago por uso muestra siempre la tarifa de los días extra; con las otras dos reglas le indica que pida más a un administrador o compre un paquete cuando haya usado todos sus días.
+- Una línea marcada «pendiente de validación» espera a que alguien la confirme y todavía no se cuenta.
+- Pulse el icono PDF junto al mes para exportar la factura.
+
+**Véase también:** [Pague lo que debe](help:user.money.payments) · [Cuánto costó cada reserva](help:user.money.usage)
+
+### Cuando un mes ya está facturado
+
+**Público:** Miembro
+
+Quiere saber qué cifra debe tener en cuenta cuando el espacio le ha enviado la factura de un mes.
+
+![](assets/help/images/user-money-statement-invoiced--card.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y vuelva al mes facturado con la flecha izquierda.
+2. Busque la tarjeta llamada **Factura** (o **Nota de crédito** cuando el total es negativo) seguida de su número.
+3. Lea el estado en la tarjeta y después **Total de la factura**; una factura pagada en parte muestra además **Pagado hasta ahora** y **Pendiente de pago**.
+
+**Conviene saber**
+
+- Una vez facturado el mes, es la factura la que decide si está saldado. El pago que lo cierra suele llegar en un mes posterior, de modo que el saldo del propio mes ya no es la referencia.
+- Una factura rectificativa dice «El espacio le debe este importe»: usted no tiene nada que pagar.
+
+**Véase también:** [Sus facturas](help:user.money.invoices)
+
+### Pague lo que debe
+
+**Público:** Miembro
+
+Quiere saldar su saldo y saber cómo espera el espacio recibir el dinero.
+
+![](assets/help/images/user-money-payments.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y elija **Pagos**.
+2. Compruebe **Saldo** bajo **Pagar**; las facturas vencidas de todos los periodos aparecen destacadas encima.
+3. Lea **Instrucciones de pago**: los datos bancarios, la referencia de pago que debe indicar y las demás formas de pago que acepta el espacio. Pulse un IBAN o un valor para copiarlo.
+4. Si aparece el botón, pulse **Pagar en línea**.
+5. Cuando haya pagado de otra manera, [registre el pago](help:user.money.payments.record).
+
+**Conviene saber**
+
+- Las instrucciones solo aparecen mientras se debe algo y únicamente si el espacio las ha configurado. Si no hay nada, pregunte a su administrador cómo pagar.
+- Un pago en línea que el proveedor aún no ha confirmado se muestra como **Pago en línea pendiente**: el saldo sigue mostrando lo que se debe hasta que se confirme.
+- En **Solicitudes** también puede enviar un gasto, pedir **Solicitar medias jornadas extra** o, si su plan funciona con paquetes, **Comprar un paquete**.
+
+**Véase también:** [Registre un pago](help:user.money.payments.record) · [Envíe un gasto](help:user.money.expense)
+
+### Registre un pago
+
+**Público:** Miembro
+
+Ha pagado por transferencia, en efectivo o de otra manera y quiere que el espacio lo sepa.
+
+![](assets/help/images/user-money-payments-record.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money), elija **Pagos** y pulse **Registrar un pago**.
+2. Introduzca el **Importe**.
+3. Pulse cómo ha pagado: **Transferencia**, **Efectivo**, **PayPal**, **TWINT**, **Tarjeta**, **Wero**, **Lydia**, **Wise** u **Otro**. Púlselo de nuevo para quitarlo.
+4. Compruebe **Fecha del pago** y **Se aplica a**, el mes que salda este pago.
+5. Añada una **Nota (opcional)** y pulse **Enviar para confirmación**.
+
+**Conviene saber**
+
+- Su pago no es definitivo al enviarlo. Queda como «pendiente de validación» hasta que lo confirmen las personas que el espacio haya elegido, según lo definido en las [Reglas de validación](help:user.validation.overview). Solo entonces salda su saldo.
+- La fecha de su pago no puede estar en el futuro. **Se aplica a** puede llegar hasta un mes por adelantado, para pagar con antelación.
+
+**Véase también:** [Pague lo que debe](help:user.money.payments) · [Avisos financieros](help:user.money.alerts)
+
+### Sus facturas
+
+**Público:** Miembro
+
+Quiere encontrar una factura, ver si está pagada y obtener su PDF.
+
+![](assets/help/images/user-money-invoices.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y elija **Facturas**.
+2. Lea la lista, de la más reciente a la más antigua. Cada fila muestra el número, una etiqueta de estado, el mes, la fecha y el importe.
+3. Pulse una factura para abrirla.
+4. Pulse **Vista rápida** para leerla en pantalla, **Descargar PDF** para guardarla o **Compartir PDF** para enviarla.
+
+![](assets/help/images/user-money-invoices-detail.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- Los estados son **Abierta**, **Pendiente de validación**, **Pagada**, **Parcialmente pagada**, **Parcialmente pagada · saldo anulado** y **Reembolsada**. Una factura abierta indica cuándo vence o cuántos días lleva vencida, y cuántos recordatorios ha recibido.
+- Pulse el icono de pago en una factura abierta para ir a **Pagos**.
+- Si la lista está vacía, el espacio todavía no le ha facturado; factura un mes cuando lo cierra.
+- Las facturas no se pueden editar. Una factura equivocada se marca como **Errónea** y se sustituye por una nueva; la errónea desaparece de su lista. Cuando varias facturas se agrupan en una, la factura agrupada las sustituye en su lista.
+
+**Véase también:** [Pague lo que debe](help:user.money.payments) · [Sus finanzas en todos sus espacios](help:user.money.finances)
+
+### Cuánto costó cada reserva
+
+**Público:** Miembro · Administrador/a
+
+Quiere ver, reserva por reserva, lo que se ha facturado este mes.
+
+![](assets/help/images/user-money-usage.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y elija **Uso**.
+2. Elija el mes con las flechas.
+3. Lea cada tarjeta: el día, la hora, el lugar y después **Reservado**, **Presente** y **Facturado**.
+4. Si se marchó antes de tiempo de una reserva, pulse **Facturar el tiempo que estuve**, añada un motivo si lo desea y pulse **Pedir**.
+5. Para un resumen del mes, pulse **Informe de consumo del mes**.
+
+**Conviene saber**
+
+- Una reserva en la que nadie hizo el registro de entrada se factura completa, y la tarjeta lo indica.
+- Usted nunca decide su propia solicitud: la acepta o la rechaza otra persona. Una fila corregida sigue mostrando lo que era antes.
+- Los administradores pueden pedir **Eliminar este registro**.
+
+**Véase también:** [Informes](help:user.money.reports) · [La hoja de reserva](help:user.reservations.booking-sheet)
+
+### Avisos financieros
+
+**Público:** Miembro · Administrador/a
+
+Quiere ver lo que le espera en asuntos de dinero, sin leer todo el flujo de novedades.
+
+![](assets/help/images/user-money-alerts.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money).
+2. Pulse **Avisos financieros**, la fila de arriba. El número de la campana indica cuántos están pendientes.
+3. Lea la lista: primero las solicitudes que debe confirmar y después los eventos de dinero.
+
+**Conviene saber**
+
+- Es la vista habitual de avisos de [Eventos](app:/events), ya filtrada por dinero.
+- Los pagos, gastos y medias jornadas extra que usted envió aparecen aquí mientras esperan confirmación, e indican quién los validó o rechazó.
+- La fila aparece cuando la función **Pestaña Eventos** está activada.
+
+**Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)
+
+### Informes: vista rápida, descarga, compartir
+
+**Público:** Miembro
+
+Quiere un documento sobre su propio dinero, para leerlo, conservarlo o enviarlo a su gestor.
+
+![](assets/help/images/user-money-reports.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y elija **Documentos**.
+2. Elija el mes con las flechas, para los informes que dependen de un mes.
+3. Pulse un informe: **Mis condiciones**, **Informe de pagos**, **Informe de consumo** o **Extracto del mes (PDF)**.
+4. Elija **Vista rápida**, **Descargar PDF** o **Compartir PDF**.
+
+![](assets/help/images/user-money-reports-actions.es.b8fa17aa9.jpg)
+
+**Conviene saber**
+
+- Las mismas tres opciones aparecen en cada informe y en cada factura.
+- **Vista rápida** muestra el documento en pantalla sin guardar nada.
+- Un informe que no ve es porque no está activado en su espacio.
+
+**Véase también:** [Sus facturas](help:user.money.invoices) · [Sus precios negociados](help:user.money.negotiation)
+
+### Sus precios negociados
+
+**Público:** Miembro
+
+Quiere saber si paga la tarifa del espacio o un precio acordado solo para usted.
+
+![](assets/help/images/user-money-negotiation--card.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y elija **Documentos**.
+2. Lea **Mis precios negociados**: para **Cuota mensual**, **Exceso por medio día** y **Descuento en suplementos**, **Tarifa** muestra lo que paga todo el mundo y **Mía** lo que paga usted.
+3. Pulse **Quién puede ver esto** para saber quién puede leer sus precios.
+
+**Conviene saber**
+
+- «Está con la tarifa del espacio» significa que no se aplica ningún acuerdo; su columna muestra un guion.
+- Cuando se aplica un acuerdo, la tarjeta indica desde qué mes, y la cifra de la tarifa aparece tachada.
+- Un acuerdo propuesto para usted espera como «pendiente de validación» y solo se aplica una vez validado.
+- No puede cambiar un acuerdo aquí; lo propone un administrador. Véase [Negociación de precios](help:user.members.negotiation).
+
+**Véase también:** [Consulte su extracto](help:user.money.statement)
+
+### Abra un documento de la biblioteca
+
+**Público:** Miembro
+
+Quiere los estatutos, una guía o los estados que su espacio ha compartido.
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money), elija **Documentos** y pulse **Biblioteca de documentos**, o vaya directamente a [Documentos](app:/documents).
+2. Encuentre su documento en su categoría: **Estatutos y legal**, **Estados financieros**, **Actas de reuniones**, **Guías y manuales** u **Otros documentos**.
+3. Púlselo. Se abre en su navegador desde el lugar donde esté almacenado.
+
+**Conviene saber**
+
+- Solo ve los documentos que su rol puede leer; un candado marca los reservados a **Admins y propietarios** o **Solo propietarios**.
+- La biblioteca contiene enlaces. Quién puede abrir el archivo se decide donde está almacenado, no en DesKilo.
+- Los administradores con el permiso adecuado añaden y eliminan documentos; véase [Título del documento](help:user.documents.title).
+
+**Véase también:** [Informes](help:user.money.reports)
+
+### Envíe un gasto
+
+**Público:** Miembro
+
+Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
+
+![](assets/help/images/user-money-expense.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money), elija **Pagos** y pulse **Enviar un gasto**.
+2. Introduzca el **Importe**.
+3. Elija una **Categoría**: **Café y cocina**, **Equipamiento**, **Material** u **Otro**.
+4. Escriba una **Descripción**.
+5. Si ha comprado algo que usarán los miembros, active **Es un suministro para el espacio** (la opción aparece cuando su espacio tiene activado **Suministros desde gastos**) e indique el artículo, la cantidad y el precio unitario.
+6. Pulse **Enviar para confirmación**.
+
+**Conviene saber**
+
+- Verá «Gasto enviado — a la espera de aprobación». El gasto solo cuenta una vez confirmado.
+- Un suministro confirmado pasa al catálogo como servicio: los miembros que lo usan lo pagan.
+- Los costes recurrentes tienen su propia puerta, **Gastos programados**, junto a este botón.
+
+**Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)
+
+### Apruebe o rechace un gasto
+
+**Público:** Administrador/a · Propietario
+
+Hay un gasto en espera y usted decide si el espacio lo paga.
+
+![](assets/help/images/user-money-expense-approve.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Eventos](app:/events), o pulse **Avisos financieros** en [Finanzas](app:/money).
+2. Busque, bajo **Esperando tu confirmación**, la línea que indica el importe y el miembro.
+3. Pulse **Aceptar** para confirmarlo, o la cruz para **Rechazar** el gasto.
+
+**Conviene saber**
+
+- Algunos gastos necesitan más de una validación. La línea indica cuántas están hechas, por ejemplo «1/2 validaciones».
+- Quién puede validar, y cuántas validaciones se requieren, se define en las [Reglas de validación](help:user.validation.overview).
+- Cada decisión queda en la línea: quién confirmó o rechazó, y cuándo. El miembro ve el resultado.
+- **Avisos financieros** en Finanzas solo aparece cuando la función **Pestaña Eventos** está activada.
+
+**Véase también:** [Avisos financieros](help:user.money.alerts)
+
+### Cómo se muestran los importes
+
+**Público:** Todos
+
+Quiere leer una cifra sin dudar de lo que incluye.
+
+**Conviene saber**
+
+- Los importes usan la moneda de su espacio y su formato de números, por ejemplo 1234,50 €. Una factura conserva la moneda en la que se emitió.
+- En el extracto, los cargos llevan un signo menos y los pagos y créditos un signo más. Un saldo en rojo es dinero que usted debe.
+- Cuando un precio incluye IVA, lo indica, por ejemplo «IVA 20 % incl.». El PDF de la factura detalla el IVA que contiene.
+- Si su espacio no cobra IVA, no se muestra ningún IVA.
+- Los días se muestran en jornadas completas y medias jornadas.
+
+**Véase también:** [Consulte su extracto](help:user.money.statement) · [Sus facturas](help:user.money.invoices)
+
+### Sus finanzas en todos sus espacios
+
+**Público:** Miembro
+
+Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatorios en un solo lugar.
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Tus finanzas en todos tus espacios**.
+2. Elija una pestaña: **Pendiente**, **Pagadas**, **Pagos** o **Recordatorios**.
+3. Si pertenece a varios espacios, filtre por espacio en la parte superior.
+
+**Conviene saber**
+
+- **Pendiente** muestra «Nada que pagar — está al día» cuando no debe nada.
+- **Recordatorios** enumera los recordatorios que ha recibido, con su nivel.
+- Desde la misma pantalla se accede al historial completo, al uso y a otros servidores.
+
+**Véase también:** [Sus facturas](help:user.money.invoices)
+
+### La facturación de un vistazo
+
+**Público:** Administrador/a de facturación · Propietario
+
+Usted emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
+
+![](assets/help/images/user-money-invoicing.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Facturación](app:/invoices).
+2. Lea las pestañas: **Por facturar** enumera los miembros a los que aún falta facturar el mes, **Abiertas** las facturas emitidas y sin pagar, y **Archivo** las que están cerradas.
+3. Lea la línea de cuatro pasos bajo el banner: **Por emitir**, **Por cobrar**, **Por confirmar** y **Cerrada**, con un recuento para cada una.
+4. Pulse **Asistente de cierre mensual** para facturar un mes, o **Nueva factura** para una sola.
+5. Pulse el icono de herramientas para el registro de facturas, las reglas de recordatorio, la plantilla PDF de factura y **Mis finanzas**.
+
+**Conviene saber**
+
+- Las facturas nunca se editan ni se eliminan. Una factura equivocada se marca como errónea y se sustituye.
+- El flujo completo, del cierre mensual al cobro y los recordatorios, está en el capítulo 08: [Reglas de recordatorio](help:user.money.reminders.rules) y [La plantilla PDF de factura](help:user.money.reports.invoice-template) son buenos lugares para continuar.
+
+**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
+
+## Su espacio, configurado por usted (Ajustes del espacio)
+
+Este capítulo está dirigido a quienes dirigen un espacio: propietarios, copropietarios y los administradores en quienes confían para los ajustes. Aquí usted dibuja las plantas, decide quién puede entrar y cuándo, elige qué funciones existen, da al espacio su aspecto y sus palabras, y hace una copia de todo.
+
+En este capítulo:
+- [Dibuje sus plantas, salas y mesas](help:user.space.editor.levels)
+- [Invite a personas con el ID del espacio](help:user.workspace.code)
+- [Indique cuándo está abierto el espacio](help:user.workspace.availability.open-weekdays)
+- [Active y desactive funciones](help:user.features.processes)
+- [Rellene los ajustes del espacio](help:user.workspace.settings.country)
+- [Dé al espacio sus colores y sus palabras](help:user.workspace.settings.wording)
+- [Decida quién puede hacer qué](help:user.roles.matrix)
+- [Ponga en marcha una tableta de pared y credenciales](help:user.kiosk.mode)
+- [Mantenga una biblioteca de documentos](help:user.documents.add)
+- [Exporte e importe el espacio](help:user.workspace.export.space-xml)
+
+> **Consejo** La mayoría de las pantallas de este capítulo están en el menú, bajo **Espacio**, **Disponibilidad**, **Funciones** y **Roles**. Cada entrada solo aparece a quien tiene el permiso necesario, y algunas solo mientras su función está activada. Un administrador solo ve estas pantallas si el propietario le ha dado el permiso en la matriz de roles.
+
+### Editor del espacio: añadir, renombrar y eliminar plantas
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere dar al edificio sus plantas, en el orden que la gente espera. El **Editor del espacio** enumera todas las plantas del espacio.
+
+![](assets/help/images/user-space-editor-levels.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Editor del espacio](app:/editor), o toque **Editar espacio** en la pantalla Reservar.
+2. Toque **Añadir planta**, escriba el nombre y toque **Guardar**.
+3. Arrastre el tirador a la izquierda de una planta para cambiar el orden.
+4. Toque los tres puntos (**Acciones de la planta**) para **Cambiar nombre…** o **Eliminar** una planta.
+5. Toque una planta para dibujar en ella.
+
+**Conviene saber**
+
+- Eliminar una planta borra todas las oficinas, mesas y asientos que contiene. La confirmación indica qué ocurre con las reservas que apuntan a ellos.
+- La línea bajo cada planta le dice si es **Reservable por completo** o **No reservable por completo**.
+- Sin ninguna planta, el editor dice **Aún no hay plantas. Añade la primera planta de tu espacio.**
+
+**Véase también:** [Reservar una planta entera](help:user.space.editor.level-booking) · [Dibujar salas, mesas y asientos](help:user.space.editor.rooms)
+
+### Permitir reservar una planta entera
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que un equipo pueda ocupar una planta completa durante un día.
+
+![](assets/help/images/user-space-editor-level-booking.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En el [Editor del espacio](app:/editor), toque el botón de capas en la fila de la planta.
+2. Active **Reservable por completo**.
+3. Escriba el **Precio por media jornada**.
+4. Toque **Guardar**.
+
+**Conviene saber**
+
+- El botón de capas aparece relleno cuando la planta es reservable por completo.
+- Reservar una planta, oficina o mesa entera exige además la función **Reservas de mesa, oficina y planta**. Cada miembro necesita el derecho de reservar plantas; los administradores lo tienen automáticamente. Véase [Un interruptor de función](help:user.features.switch).
+
+**Véase también:** [Propiedades de oficinas y mesas](help:user.space.editor.office)
+
+### Dibujar salas, mesas y asientos
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que el plano en pantalla se parezca a la planta real. Todo está dentro de una sala: dibuja una sala, coloca mesas en ella y después asientos en las mesas.
+
+![](assets/help/images/user-space-editor-rooms.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra una planta desde el [Editor del espacio](app:/editor). Una planta vacía ofrece **Dibujar la primera sala**.
+2. Toque **Oficina** y arrastre sobre la cuadrícula para dibujar una sala.
+3. Toque **Mesa** y arrastre dentro de la sala para dibujar una mesa.
+4. Toque **Asiento** y después toque una mesa para añadirle un asiento.
+5. Toque **Imagen** y después toque el lugar donde debe ir una ilustración.
+6. Toque un elemento para seleccionarlo. La barra inferior ofrece **Duplicar**, **Propiedades** y **Eliminar**.
+
+**Conviene saber**
+
+- Si toca de nuevo la herramienta activada, la suelta, y el lienzo vuelve a seleccionar.
+- La app rechaza una forma que **Se superpone con un elemento existente.** o que **Debe estar completamente dentro de una oficina.** Los asientos solo pueden colocarse en una mesa, y una mesa llena dice **No queda sitio en esta mesa.**
+- El botón de imagen, arriba a la derecha, define, sustituye o quita la **Imagen de fondo** de la planta, por ejemplo un escaneo del plano real.
+- Eliminar una sala se lleva consigo sus mesas y asientos.
+
+**Véase también:** [Propiedades del asiento](help:user.space.editor.seat) · [Transparencia de mesas](help:user.workspace.settings.desk-transparency)
+
+### Dar nombre y precio a una oficina o una mesa
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que una sala o una mesa tenga su propio nombre y que se pueda reservar de una sola vez.
+
+![](assets/help/images/user-space-editor-office.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Seleccione la oficina o la mesa en la planta y toque **Propiedades**.
+2. Cambie **Nombre de la oficina** (o **Nombre de la mesa**).
+3. Active **Reservable en su totalidad** si alguien puede reservarla entera, con todo lo que contiene.
+4. Escriba el **Precio por media jornada** que aparece.
+5. Toque **Guardar**.
+
+**Conviene saber**
+
+- El campo del precio solo aparece mientras el interruptor está activado.
+- Una sala reservable en su totalidad solo puede reservarse mientras no haya nada reservado dentro de ella.
+
+**Véase también:** [Reservar una planta entera](help:user.space.editor.level-booking) · [Propiedades del asiento](help:user.space.editor.seat)
+
+### Configurar un asiento
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que un asiento indique hacia dónde mira la silla, qué incluye y cuándo está fuera de servicio.
+
+![](assets/help/images/user-space-editor-seat.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Seleccione el asiento en la planta y toque **Propiedades**.
+2. Cambie **Nombre del asiento**.
+3. Elija la **Dirección de asiento**: la flecha muestra hacia dónde mira la silla en el plano.
+4. Elija un **Tipo de silla**.
+5. Toque los **Accesorios** que pertenecen a este asiento. Un precio junto a uno es un suplemento por media jornada.
+6. Si el asiento lleva una etiqueta, escriba su número en **Etiqueta NFC/RFID**, o use **Leer una etiqueta ahora**. El campo de la etiqueta aparece cuando la función **Etiquetas NFC/RFID de las sillas** está activada, y la lectura requiere un dispositivo capaz de leer etiquetas.
+7. Active **Bloqueado (mantenimiento)** para dejar el asiento fuera de servicio y toque **Guardar**.
+
+**Conviene saber**
+
+- Un número de etiqueta solo puede pertenecer a una silla: **Esta etiqueta ya está vinculada a otra silla.**
+- Si aún no hay ningún accesorio, la hoja ofrece **Aún no hay equipamiento — configúralo**.
+
+**Véase también:** [Registro con credencial NFC](help:user.badges.nfc)
+
+### El ID del espacio
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que la gente encuentre su espacio y pida unirse. La pantalla **ID del espacio y QR** muestra la invitación de miembro: un código QR y el ID que hay detrás.
+
+![](assets/help/images/user-workspace-code.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [ID del espacio y QR](app:/workspace-code). Se muestra la pestaña **Invitación de miembro**.
+2. Toque **Copiar ID** para pegar el ID donde quiera, o **Compartir como PNG** para imprimir o publicar el código QR.
+3. Para elegir un ID fácil de recordar, toque **Cambiar el ID del espacio**, escriba de 4 a 20 letras o dígitos y toque **Guardar**.
+
+**Conviene saber**
+
+- El ID es único en todo DesKilo. Si ya está en uso, o no tiene de 4 a 20 letras o dígitos, la app dice **ID rechazado**.
+- Quien escanea el código o escribe el ID pide unirse como miembro. Nadie entra sin aprobación.
+- Cuando cambia el ID, el anterior deja de funcionar. Vuelva a imprimir el código QR.
+- La pestaña **Invitación de administrador/a** es para propietarios y copropietarios.
+
+**Véase también:** [Invitación de administrador/a](help:user.workspace.code.admin) · [Invitar a alguien](help:user.workspace.code.invite)
+
+### Invitar a un administrador
+
+**Público:** Propietario
+
+Usted quiere incorporar a una persona que le ayude a dirigir el espacio. La pestaña **Invitación de administrador/a** le da un código para una sola persona.
+
+![](assets/help/images/user-workspace-code-admin.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [ID del espacio y QR](app:/workspace-code) y toque **Invitación de administrador/a**.
+2. Entregue el código, o su QR, a la persona a quien va destinado.
+3. Para el siguiente administrador, toque **Nuevo código de administrador/a**.
+
+**Conviene saber**
+
+- El código admite a una persona como administrador y después caduca.
+- No existe una invitación de propietario. Solo un propietario puede conceder la propiedad, en **Miembros y planes**.
+
+**Véase también:** [El ID del espacio](help:user.workspace.code) · [La matriz de roles](help:user.roles.matrix)
+
+### Invitar a alguien con un mensaje
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere enviar una invitación amable y ya redactada en lugar de un código a secas.
+
+![](assets/help/images/user-workspace-code-invite.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [ID del espacio y QR](app:/workspace-code), toque **Invitar a alguien**.
+2. Rellene **Nombre (opcional)**, **Apellido (opcional)** y, si quiere, el número de teléfono.
+3. En **Roles al llegar**, toque cualquier rol que esta persona deba recibir al unirse.
+4. Elija el **Idioma del mensaje**.
+5. Envíelo con **WhatsApp**, **SMS** o **Compartir…**.
+
+**Conviene saber**
+
+- El mensaje explica los pasos: descargar, crear una cuenta, unirse. Está escrito en el idioma que elija y parte del definido como [Idioma del espacio](help:user.workspace.settings.language).
+- Cada mensaje lleva su propio código personal. Puede escribir su propio texto en [Mensaje de invitación](help:user.workspace.settings.invitation-message).
+
+**Véase también:** [El ID del espacio](help:user.workspace.code)
+
+### Días de apertura
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que el espacio esté abierto solo los días en que trabaja. La pantalla **Disponibilidad** empieza con los días de la semana.
+
+![](assets/help/images/user-workspace-availability--open-weekdays.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability).
+2. En **Días de apertura**, toque un día para abrirlo o cerrarlo.
+
+**Conviene saber**
+
+- Al menos un día de la semana debe quedar abierto.
+- Se rechaza una reserva que toque un día de la semana cerrado, y el plano dibuja ese día como cerrado.
+
+**Véase también:** [Días de cierre](help:user.workspace.availability.closure-days) · [Granularidad](help:user.workspace.availability.granularity)
+
+### Granularidad
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que las reservas sigan un ritmo adecuado a su espacio: medios días, días completos o la hora que se quiera.
+
+![](assets/help/images/user-workspace-availability--granularity.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability).
+2. En **Granularidad de las reservas**, elija la forma de una reserva.
+
+**Conviene saber**
+
+- Las opciones son **Franja horaria libre**, **Franjas de 5 minutos**, **Franjas de 15 minutos**, **Franjas de 30 minutos**, **Franjas de 1 hora**, **Medios días (mañana y tarde)**, **Solo días completos** y **Horas reales (de–a exacto, medias/jornadas como atajos)**. **Horas reales** aparece cuando la función **Horario laboral** está activada.
+- El plano, la hoja de reserva, un código escaneado y el quiosco ofrecen solo lo que permite la granularidad.
+
+**Véase también:** [Horario de trabajo](help:user.workspace.availability.working-hours)
+
+### Horario de trabajo
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que una mañana, una tarde y un día signifiquen lo mismo en todas partes.
+
+![](assets/help/images/user-workspace-availability--working-hours.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability).
+2. En **Horario de trabajo**, toque **Inicio de la jornada**, **Límite de media jornada** y **Fin de la jornada** y fije cada hora.
+3. Con la granularidad de horas reales, fije también **Horas facturadas como media jornada** y **Horas facturadas como jornada completa**.
+
+**Conviene saber**
+
+- Las ventanas de media jornada y de jornada completa en las reservas, el registro de llegada y la facturación siguen este horario.
+- La pequeña etiqueta bajo el título dice si el horario es el predeterminado del producto, viene de una plantilla o es suyo. **Volver a la plantilla** y **Volver al valor predeterminado** lo recuperan.
+- La jornada debe seguir un orden: inicio, después el límite de media jornada y después el fin.
+- Esta sección forma parte de la función **Horario de trabajo**.
+
+**Véase también:** [Fuera del horario de apertura](help:user.workspace.availability.outside-hours)
+
+### Días de cierre
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere cerrar el espacio por una fiesta, una semana de agosto o un día para el fontanero, sin que nadie pueda reservar.
+
+![](assets/help/images/user-workspace-availability--closure-days.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability) y vaya a **Días de cierre**.
+2. Toque **Añadir día de cierre**, elija la fecha y, si quiere, un **Motivo (opcional)**.
+3. Para quitar uno, toque la papelera que hay a su lado.
+
+**Conviene saber**
+
+- Se rechaza una reserva en un día de cierre y se muestra el motivo.
+- Los días que ya están facturados no pueden convertirse en días de cierre con el generador de días festivos.
+
+**Véase también:** [Días festivos](help:user.workspace.availability.public-holidays)
+
+### Días festivos
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere todos los días festivos de un año como días de cierre de una sola vez.
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), bajo **Días de cierre**, toque **Añadir días festivos**.
+2. Use las flechas para elegir el año. La hoja enumera las fechas que se convertirían en días de cierre.
+3. Toque el botón de abajo para crearlos.
+4. ¿Prefiere una lista de datos abiertos? Toque **Importar días festivos (datos abiertos)**, elija la región y confirme.
+
+**Conviene saber**
+
+- No se crea nada antes de que confirme, y los días que ya existen aparecen marcados.
+- Los meses que ya están facturados se omiten.
+- Estas entradas aparecen cuando la función **Días festivos** está activada. **Importar días festivos (datos abiertos)** requiere además la función **Importar días festivos**.
+
+**Véase también:** [Días de cierre](help:user.workspace.availability.closure-days)
+
+### Políticas de reserva
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere flexibilizar o endurecer las reglas de reserva. Lo que fije aquí vale para todas las formas de reservar: la app, un código escaneado y el quiosco.
+
+![](assets/help/images/user-workspace-availability--policies.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability) y vaya a **Políticas de reserva**.
+2. Active o desactive las políticas que quiera.
+3. En **Fuera del horario de apertura** y **Límites de reserva**, fije el resto.
+
+**Conviene saber**
+
+- Los dos interruptores están desactivados por defecto.
+- Esta sección forma parte de la función **Políticas de reserva**.
+- La línea **Lo que el plano distingue**, debajo, explica los estados que los miembros ven en el plano.
+
+**Véase también:** [Permitir reservas pasadas](help:user.workspace.availability.allow-past) · [Los administradores pueden hacer el check-out de los miembros](help:user.workspace.availability.admin-checkout) · [Límites de reserva](help:user.workspace.availability.limits)
+
+### Permitir reservas pasadas
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que los miembros puedan registrar una reserva a posteriori, en un espacio que anota la asistencia más tarde.
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), bajo **Políticas de reserva**, active **Permitir reservas pasadas**.
+
+**Conviene saber**
+
+- Desactivada, se rechaza una reserva que ya terminó en un día anterior.
+- Reservar una franja anterior el mismo día siempre está permitido.
+
+**Véase también:** [Políticas de reserva](help:user.workspace.availability.policies)
+
+### Los administradores pueden hacer el check-out
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que el personal cierre la sala por la tarde y ponga fin a los registros de llegada que la gente olvidó.
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), bajo **Políticas de reserva**, active **Los administradores pueden hacer el check-out de los miembros**.
+
+**Conviene saber**
+
+- Desactivada, el check-out es estrictamente personal.
+- Activada, un administrador puede poner fin al registro de llegada en curso de un miembro.
+
+**Véase también:** [Políticas de reserva](help:user.workspace.availability.policies)
+
+### Fuera del horario de apertura
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere decir qué ocurre cuando alguien llega temprano o se queda hasta tarde. Una sola respuesta vale para todas las granularidades.
+
+![](assets/help/images/user-workspace-availability--outside-hours.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), busque **Fuera del horario de apertura**.
+2. Elija **Desactivado**, **Solo espontáneo**, **Libre** o **De pago**.
+
+**Conviene saber**
+
+- **Desactivado**: nada fuera del horario, ni reserva anticipada ni llegada sin reserva.
+- **Solo espontáneo**: los registros de llegada sin reserva siguen siendo posibles, horas extra de la tarde incluidas, pero se rechaza reservar con antelación fuera del horario.
+- **Libre**: permitido, nunca se cuenta ni se cobra.
+- **De pago**: permitido y contado como un uso normal, salvo un día en que el miembro ya tenga una reserva ordinaria.
+- Una reserva que toque el horario de trabajo es una reserva ordinaria.
+
+**Véase también:** [Horario de trabajo](help:user.workspace.availability.working-hours)
+
+### Límites de reserva
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere decir con cuánta antelación se puede reservar, cuán corta o larga puede ser una reserva y cuántas puede tener cada persona a la vez.
+
+![](assets/help/images/user-workspace-availability--limits.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), busque **Reservas simultáneas por miembro** y use los botones de menos y más.
+2. En **Límites de reserva**, fije el **Horizonte de reserva**, la **Duración mínima** y la **Duración máxima**.
+
+**Conviene saber**
+
+- **Reservas simultáneas por miembro** es cuántas reservas superpuestas puede tener un miembro. Con 1 solo tiene un lugar a la vez.
+- Una reserva termina el día en que empieza, de modo que un día completo es lo más largo que puede ser.
+- El mínimo no puede superar el máximo; de lo contrario no se aceptaría ninguna reserva. La pantalla se lo advierte.
+- Cada rechazo nombra el límite y su valor.
+
+**Véase también:** [Políticas de reserva](help:user.workspace.availability.policies)
+
+### Activar o desactivar procesos enteros
+
+**Público:** Propietario · Copropietario
+
+Usted quiere una vista de conjunto de lo que puede hacer el espacio y activar un área entera de una vez. La pantalla **Funciones** se abre con una tarjeta por cada proceso de negocio.
+
+![](assets/help/images/user-features-processes.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Funciones](app:/features). Se muestra la vista **Procesos**.
+2. Lea cada tarjeta: su estado, cuántos subprocesos están activos y cuántas funciones están activadas.
+3. Abra una tarjeta y toque **Activar** o **Desactivar** para el proceso entero o un subproceso.
+4. Lea la vista previa y confirme.
+
+**Conviene saber**
+
+- Una tarjeta está **Activa** cuando todas sus funciones funcionan, **Parcial** cuando algunas lo hacen, **Disponible** cuando aún no hay ninguna activada y **Requiere atención** cuando una función está activada pero espera un requisito que está desactivado.
+- Los filtros **Todos**, **Activo**, **Disponible** y **Requiere atención** acotan las tarjetas, y **Buscar procesos y funciones** llega a todo.
+- La vista previa enumera lo que se activa, lo que es **También necesarias** de otro proceso y lo que ya está activado. Desactivar algo que otras funciones necesitan se rechaza hasta que usted elija qué ocurre con ellas.
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### Un interruptor de función
+
+**Público:** Propietario · Copropietario
+
+Usted quiere activar o desactivar una sola función.
+
+![](assets/help/images/user-features-switches.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Funciones](app:/features) y toque **Interruptores**.
+2. Encuentre la función con **Buscar funciones**, o acote la lista con **Modificadas** o **Madurez**.
+3. Accione su interruptor.
+
+**Conviene saber**
+
+- Active una función y aparece cada parte de ella: la pestaña, el botón, el enlace. Desactívela y no queda ninguna, ni siquiera un enlace guardado.
+- Una función que necesita otra queda bajo ella con **Requiere** y dice **Esperando a la función de arriba: actívala y esta vuelve a funcionar.** mientras la principal está desactivada. Su propia elección se conserva.
+- Activar una función también puede activar lo que necesita. La app se lo indica.
+- Una función que aún no se ha revisado como estable le pide confirmar primero: puede cambiar y tiene límites conocidos.
+- Lo que ya está hecho se queda hecho. Una factura emitida mientras una función estaba activada conserva lo que dice.
+
+**Véase también:** [Activar o desactivar procesos enteros](help:user.features.processes)
+
+### País
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que el espacio sepa dónde está establecido. **Espacio** se abre en **Datos generales**.
+
+![](assets/help/images/user-workspace-settings--country.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings).
+2. En **Datos generales**, elija el **País**.
+3. Toque **Guardar** al pie.
+
+**Conviene saber**
+
+- El país propone la moneda y la zona horaria, y decide qué tipos de IVA se ofrecen.
+- **Guardar** escribe todo el formulario junto. Si alguien cambió estos ajustes entretanto, no se guarda nada y lo que usted escribió se queda en pantalla.
+
+**Véase también:** [Moneda y zona horaria](help:user.workspace.settings.currency-timezone)
+
+### Moneda y zona horaria
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que los precios y los días se cuenten como los cuenta su espacio.
+
+![](assets/help/images/user-workspace-settings--currency-timezone.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), bajo **Datos generales**, elija la **Moneda**.
+2. Busque la **Zona horaria** y elíjala.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- La moneda se propone a partir del país. Puede cambiarla.
+- La zona horaria no es cosmética: una jornada, un límite de media jornada y un día de cierre se cuentan en ella, así que un miembro en el extranjero ve el día del espacio y no el suyo.
+
+**Véase también:** [País](help:user.workspace.settings.country)
+
+### Idioma del espacio
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que las invitaciones y los documentos hablen el idioma de su comunidad.
+
+![](assets/help/images/user-workspace-settings--language.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), bajo **Datos generales**, abra **Idioma del espacio**.
+2. Elija un idioma, o **Idioma de la app del remitente**.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- Las invitaciones se escriben por defecto en este idioma.
+- No es el idioma de su propia app. Ese solo cambia lo que usted ve y está en sus ajustes personales.
+
+**Véase también:** [Mensaje de invitación](help:user.workspace.settings.invitation-message)
+
+### Dirección del membrete
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere su dirección postal en el papel que envía el espacio.
+
+![](assets/help/images/user-workspace-settings--address.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), bajo **Datos generales**, rellene **Dirección del espacio**.
+2. Toque **Guardar**.
+
+**Conviene saber**
+
+- Es texto libre, impreso tal cual en cartas y facturas.
+- La dirección estructurada que necesita una factura electrónica es una entrada aparte, bajo la identidad legal.
+
+**Véase también:** [País](help:user.workspace.settings.country)
+
+### Grupo de WhatsApp
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que los miembros encuentren el grupo de WhatsApp de su comunidad.
+
+![](assets/help/images/user-workspace-settings-community--whatsapp-group.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Comunidad e invitaciones**.
+2. Pegue el enlace de invitación del grupo en **Enlace del grupo de WhatsApp**.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- El enlace debe ser un enlace de invitación de chat.whatsapp.com; de lo contrario, el campo lo indica.
+- Déjelo vacío para no mostrar nada.
+
+**Véase también:** [Mensaje de invitación](help:user.workspace.settings.invitation-message)
+
+### Mensaje de invitación
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que las invitaciones suenen como usted, en cada idioma que use.
+
+![](assets/help/images/user-workspace-settings-community--invitation-message.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Comunidad e invitaciones**.
+2. En **Idioma del mensaje**, elija el idioma del texto que está editando.
+3. Escriba el texto. Toque una etiqueta como {firstName} o {inviteLink} para insertarla donde está el cursor.
+4. Toque **Guardar**.
+
+**Conviene saber**
+
+- Deje el cuadro vacío para usar el mensaje integrado en ese idioma.
+- La fila **Idioma del mensaje** solo dice qué borrador está en pantalla. No se guarda, y cada vez se abre en el idioma del espacio.
+- Las etiquetas se rellenan al enviar una invitación. El código y el enlace los pone la app, así que no los pegue usted.
+
+**Véase también:** [Invitar a alguien con un mensaje](help:user.workspace.code.invite)
+
+### Empezar igual a los nuevos miembros
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que todos los que se unan empiecen con la misma suscripción y la misma regla para cuando se agoten sus días.
+
+![](assets/help/images/user-workspace-settings-members--defaults.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Nuevos miembros**.
+2. Fije el porcentaje de **Suscripción** con los botones de menos y más.
+3. Elija **Bloqueado al agotarse**, **Pago por uso** o **Debe comprar un paquete**.
+4. Toque **Guardar**.
+
+**Conviene saber**
+
+- Hasta que usted elija, los nuevos miembros empiezan al 100 % con las reservas bloqueadas una vez agotado el derecho.
+- La suscripción propia de cada miembro se fija después, en la página del miembro.
+
+**Véase también:** [La suscripción de un miembro](help:user.members.subscription)
+
+### Vocabulario
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que la app use sus palabras: otro nombre para un asiento, para un estado en el plano, para una pestaña.
+
+![](assets/help/images/user-workspace-settings-wording.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Apariencia y textos** y toque **Vocabulario**.
+2. Encuentre una palabra con **Buscar una palabra**, o toque **Solo modificados** para ver lo que ha renombrado.
+3. Toque el lápiz que hay a su lado y escriba su palabra, para cada idioma.
+
+**Conviene saber**
+
+- La palabra del producto sigue visible debajo de la suya, de modo que ve lo que sustituye.
+- **Restablecer** quita su palabra en lugar de copiar la del producto. El término sigue entonces al producto cuando este cambia su redacción.
+- Los términos están agrupados según dónde aparecen: **Leyenda**, **El espacio**, **Navegación**, **Reserva**.
+
+**Véase también:** [Colores](help:user.workspace.settings.colours)
+
+### Colores
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que la app vista su color. Elija uno y la app deriva de él sus temas claro y oscuro.
+
+![](assets/help/images/user-workspace-settings-colours--colours.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Apariencia y textos** y toque **Colores**. La fila está ahí mientras **Colores del espacio** esté activada en las funciones.
+2. Toque uno de los colores, o escriba un código como #0F766E en **Color**.
+3. Compruebe **Cómo se ve**, en **Claro** y **Oscuro**.
+4. Toque **Guardar**. **Colores del producto** quita los suyos.
+
+**Conviene saber**
+
+- La app mantiene su propio contraste. Si un color fuera ilegible en algún sitio, se rechaza y la pantalla nombra la pareja de colores.
+- En **Colores de las salas** puede añadir hasta ocho colores propios para las salas del plano.
+- La marca DesKilo, los colores de los estados de los asientos y el banner de producción nunca se modifican.
+
+**Véase también:** [Motivo](help:user.workspace.settings.pattern) · [Símbolo y emblema](help:user.workspace.settings.branding)
+
+### Motivo
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere que su espacio se distinga fácilmente de los demás a los que pertenece una persona.
+
+![](assets/help/images/user-workspace-settings-colours--pattern.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Colores](app:/settings/colours).
+2. En **Motivo**, toque **Liso**, **Rayas**, **Lunares**, **Cuadrícula** u **Ondas**.
+
+**Conviene saber**
+
+- El motivo dibuja su color en la tarjeta de este espacio en Yo, en su etiqueta y mientras el espacio se abre.
+- Se guarda en cuanto lo toca.
+
+**Véase también:** [Colores](help:user.workspace.settings.colours)
+
+### Símbolo y emblema
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere una pequeña marca que represente al espacio: letras sobre un color, o su propio logotipo.
+
+![](assets/help/images/user-workspace-settings-colours--branding.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Colores](app:/settings/colours) y vaya a **Símbolo**.
+2. Escriba una o dos **Letras**, elija un color y toque **Guardar**.
+3. En **Emblema**, toque **Elegir una imagen** para añadir su logotipo. **Quitar** lo retira.
+
+**Conviene saber**
+
+- Las letras sobre un color son únicas en un espacio. Si otro espacio ya tiene las mismas, la app le pide cambiar el color o las letras.
+- El emblema se muestra bajo el nombre de la app en el menú y mientras alguien abre este espacio. Se redibuja con un máximo de 512 píxeles de ancho, y los datos propios de la foto, como dónde se tomó, no se conservan.
+- El emblema nunca sustituye al logotipo de DesKilo.
+
+**Véase también:** [Colores](help:user.workspace.settings.colours)
+
+### Transparencia de mesas
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted dibujó el plano sobre una fotografía y quiere que la sala se transparente a través del mobiliario.
+
+![](assets/help/images/user-workspace-settings-appearance--desk-transparency.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), abra **Apariencia y textos**.
+2. Arrastre el control deslizante de **Transparencia de mesas**. El valor se muestra como *Opacidad*.
+3. Toque **Guardar**.
+
+**Conviene saber**
+
+- Baje la opacidad para que la foto de fondo de una planta se vea a través de las mesas.
+- Súbala al 100 % cuando los puestos importen más que la sala.
+
+**Véase también:** [Dibujar salas, mesas y asientos](help:user.space.editor.rooms)
+
+### Página pública del espacio
+
+**Público:** Propietario
+
+Usted quiere que las personas ajenas a su espacio lo encuentren y vean lo que ofrece.
+
+![](assets/help/images/user-workspace-settings-public-page.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Página pública del espacio](app:/settings/public-page), o tóquela en la parte superior de **Espacio**.
+2. Active **Visible en el directorio público**.
+3. Elija el tipo de anfitrión y complete **Descripción**, **Dirección pública**, **Correo público**, **Teléfono público** y **Sitio web**.
+4. Toque **Guardar y ver la vista externa**.
+
+**Conviene saber**
+
+- Los campos marcados **De la información del espacio** siguen los datos propios del espacio. **Usar la información del espacio** los restablece después de cambiarlos.
+- **Restablecer todos los datos públicos con la información del espacio** sustituye cada campo que tiene un equivalente en el espacio.
+- Los administradores pueden elegir por sí mismos si se muestran como administradores públicos.
+
+**Véase también:** [Descubrir y la red pública](help:user.collaborate.discover)
+
+### La matriz de roles
+
+**Público:** Propietario · Copropietario
+
+Usted quiere decidir qué permisos tiene cada rol. **Roles** muestra una tarjeta por rol con una marca por cada permiso que tiene.
+
+![](assets/help/images/user-roles-matrix.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Roles](app:/roles).
+2. En la tarjeta de un rol, marque o desmarque un permiso como **Gestionar roles y permisos**, **Gestionar miembros**, **Editar la configuración del espacio** o **Emitir facturas y conciliar pagos**.
+
+**Conviene saber**
+
+- Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman a él y nunca quitan nada.
+- El propietario siempre tiene todos los permisos, por eso esa tarjeta está bloqueada. Un copropietario puede tener menos.
+- Quien no puede gestionar roles ve la matriz en solo lectura, con **Su rol** resaltado.
+- El servidor comprueba un permiso en todos los lugares, de modo que al desmarcarlo se quita en todas partes a la vez.
+- La entrada **Roles** aparece cuando la función **Gestión de roles** está activada.
+
+**Véase también:** [Roles que define este espacio](help:user.roles.space) · [Copropietarios](help:user.roles.co-owners)
+
+### Roles que define este espacio
+
+**Público:** Propietario · Copropietario
+
+Usted quiere roles adaptados a su espacio, como anfitrión o contable, además de los básicos.
+
+![](assets/help/images/user-roles-space.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Roles](app:/roles), toque **Los roles de este espacio**, o abra [Roles que define este espacio](app:/settings/roles-of-this-space). Esta pantalla aparece cuando la función **Roles que define este espacio** está activada.
+2. Toque **Añadir un rol**.
+3. Dé un nombre al rol y elija **Lo que añade**.
+4. Toque **Guardar el rol**.
+5. Para dárselo a un miembro, abra la página del miembro, busque **Roles** y toque **Añadir un rol**.
+
+**Conviene saber**
+
+- Cada rol suma permisos a lo que sus titulares ya pueden hacer. Ninguno quita nada, y el propietario conserva siempre todos los permisos.
+- Un rol que ya no quiera puede apartarse desactivando **En uso**.
+- La clave del rol nunca cambia: las personas que lo tienen apuntan a ella.
+- Nadie puede darse un rol a sí mismo. Un rol que gestiona roles solo puede darlo el propietario.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix)
+
+### Copropietarios
+
+**Público:** Propietario
+
+Usted quiere que el espacio sobreviva si algún día se aparta.
+
+**Pasos**
+
+1. Abra [Miembros y planes](app:/members) y elija al miembro.
+2. En **Copropiedad**, elija un copropietario activo o un sucesor.
+3. Para traspasar ahora, elija **Promover a propietario ahora**.
+
+**Conviene saber**
+
+- Un copropietario activo tiene ya los permisos del propietario. Un sucesor, mostrado como **Sucesor**, espera y pasa a ser propietario cuando se activa o cuando el propietario se va.
+- Si se va el último propietario, el mejor copropietario pasa a ser propietario automáticamente, el activo antes que el sucesor.
+- Los copropietarios forman parte de la función **Copropietarios**.
+
+**Véase también:** [Copropiedad](help:user.members.co-ownership) · [La matriz de roles](help:user.roles.matrix)
+
+### Modo quiosco: una tableta de pared para registrar la llegada
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere una tableta junto a la puerta donde la gente registre su llegada con una credencial.
+
+**Pasos**
+
+1. Cree una cuenta para la tableta, únala al espacio con ella y, en [Miembros y planes](app:/members), use **Convertir en quiosco** en ese miembro.
+2. Asegúrese de que **Modo quiosco** está activado en [Funciones](app:/features).
+3. En la tableta, abra la app. Pregunta **¿Iniciar el modo quiosco?**. Toque **Iniciar el modo quiosco**.
+4. Un miembro toca un asiento, o **Esta planta**, y presenta una credencial: una tarjeta o un código QR impreso.
+
+**Conviene saber**
+
+- El modo quiosco nunca se inicia solo. **Ahora no — abrir la app normalmente** abre la app como de costumbre, lo que resulta práctico para la configuración.
+- En modo quiosco la tableta solo muestra el plano. Para salir hay que reiniciar la tableta. Para que la cuenta vuelva a ser un miembro normal, use **Dispositivo quiosco** en **Ajustes** del dispositivo o **Revertir quiosco a miembro** en **Miembros y planes**.
+- La hoja que se abre nombra la regla que sigue. En un día de cierre, el quiosco dice de entrada **El espacio está cerrado hoy**.
+- La credencial es la confirmación: identifica al miembro, ejecuta la acción y la pantalla se despeja para la siguiente persona. Un asiento ocupado por otra persona muestra quién lo ocupa y le remite a la app.
+- Las credenciales tienen sus propias funciones, **Credenciales RFID / NFC** y las credenciales QR, ambas bajo **Modo quiosco**.
+- Aquí no se puede mostrar una tableta de pared: el quiosco solo se inicia en un dispositivo marcado como tal.
+
+**Véase también:** [Registro con credencial NFC](help:user.badges.nfc) · [Códigos QR de espacios (PDF)](help:user.workspace.export.space-qr)
+
+### Registro con credencial NFC
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que los miembros registren su llegada acercando una tarjeta, sin teléfono.
+
+![](assets/help/images/user-badges-nfc.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Credenciales RFID / NFC](app:/nfc-config).
+2. Active **Activar registro por credencial NFC**.
+3. Lea la línea **Este dispositivo**: indica si este dispositivo puede leer tarjetas.
+4. Dé una tarjeta a cada miembro en [Miembros y planes](app:/members): abra las credenciales del miembro, toque **Registrar tarjeta** y acerque la tarjeta a la parte trasera del dispositivo.
+
+**Conviene saber**
+
+- Necesita un dispositivo Android con NFC. Los iPad no tienen NFC, y las credenciales QR siguen funcionando allí.
+- El gestor de credenciales también permite emitir una **Nueva credencial**, **Revocar** una y **Guardar como PDF** para imprimir. Una credencial revocada puede eliminarse definitivamente.
+- **Inicia mi sesión** está desactivado por defecto: una credencial que registra la llegada no inicia la sesión hasta que el miembro lo decida.
+- Cada miembro también puede crear su propia credencial en sus ajustes personales.
+
+**Véase también:** [Una tableta de pared para registrar la llegada](help:user.kiosk.mode)
+
+### Añadir un documento a la biblioteca
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere reunir en un solo lugar sus estatutos, guías, cuentas y actas para los miembros que los necesitan. La biblioteca contiene enlaces, no archivos.
+
+![](assets/help/images/user-documents-add.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Documentos](app:/documents) y toque el botón de más.
+2. Rellene **Concepto** y **Enlace (https://…)**.
+3. Elija **Almacenado en**, **Categoría** y **Visible para**.
+4. Toque **Guardar**.
+
+**Conviene saber**
+
+- La biblioteca necesita la función **Biblioteca de documentos** y el permiso para gestionarla.
+- Quite un documento con su papelera: antes pregunta **¿Quitar el documento?**
+- Los miembros que pueden abrir la biblioteca ven los documentos que les corresponden, agrupados por categoría.
+
+**Véase también:** [Título del documento](help:user.documents.title) · [Enlace](help:user.documents.url) · [Visible para](help:user.documents.role)
+
+### Título del documento
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que los miembros reconozcan un documento de un vistazo.
+
+**Pasos**
+
+1. En el formulario de añadir un documento, escriba el **Título**.
+
+**Conviene saber**
+
+- Un documento necesita un título y un enlace https://, o se rechaza **Guardar**.
+- Escríbalo pensando en quien lo lee, pues es la línea que ve en la biblioteca.
+
+**Véase también:** [Añadir un documento a la biblioteca](help:user.documents.add)
+
+### Enlace
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que el documento se abra donde ya está.
+
+**Pasos**
+
+1. Pegue el enlace para compartir de su unidad en **Enlace (https://…)**.
+
+**Conviene saber**
+
+- DesKilo guarda el enlace, no el archivo. Los derechos de acceso se gestionan donde está el documento.
+- El enlace debe empezar por https://.
+
+**Véase también:** [Almacenado en](help:user.documents.provider)
+
+### Almacenado en
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que los miembros vean dónde se guarda el documento.
+
+**Pasos**
+
+1. Elija **Almacenado en**: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud o un enlace.
+
+**Conviene saber**
+
+- Es una etiqueta con un icono. No se recupera nada por usted.
+
+**Véase también:** [Enlace](help:user.documents.url)
+
+### Categoría
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que la biblioteca se lea como una estantería ordenada.
+
+**Pasos**
+
+1. Elija una **Categoría**: **Estatutos y legal**, **Guías y manuales**, **Estados financieros**, **Actas de reuniones** u **Otros documentos**.
+
+**Conviene saber**
+
+- La biblioteca agrupa los documentos bajo estos encabezados y solo muestra un encabezado que tenga algún documento.
+
+**Véase también:** [Visible para](help:user.documents.role)
+
+### Visible para
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere algunos documentos para todos y otros solo para la junta.
+
+**Pasos**
+
+1. Elija **Visible para**: **Todos los miembros**, **Admins y propietarios** o **Solo propietarios**.
+
+**Conviene saber**
+
+- El servidor lo hace cumplir. Un miembro que no puede ver un documento no lo recibe en absoluto.
+
+**Véase también:** [Añadir un documento a la biblioteca](help:user.documents.add)
+
+### Exportar el espacio (XML)
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere un archivo con el plano y los ajustes, para guardarlo como copia de seguridad, reutilizarlo o llevarlo a otro espacio.
+
+![](assets/help/images/user-workspace-settings-tools--tools.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings) y vaya a **Plantillas y datos**.
+2. Toque **Exportar el espacio (XML)**.
+
+**Conviene saber**
+
+- Contiene los ajustes y el plano. Nunca incluye miembros, reservas ni datos de dinero, ni el código de invitación ni las credenciales de pago.
+- Con **Configuración en el archivo del espacio** activada, el archivo incluye también tarifas, tipos de IVA, reglas, roles y más.
+- El archivo se guarda en su dispositivo.
+
+**Véase también:** [Importar el espacio (XML)](help:user.workspace.export.space-import)
+
+### Importar el espacio (XML)
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere aplicar a un espacio un archivo exportado.
+
+**Pasos**
+
+1. En [Espacio](app:/workspace-settings), bajo **Plantillas y datos**, toque **Importar el espacio (XML)**.
+2. Elija el archivo y lea la vista previa: plantas, oficinas, mesas, asientos y configuración.
+3. Toque **Sustituir e importar**.
+
+**Conviene saber**
+
+- Sustituye el plano actual y sobrescribe los ajustes. No se puede deshacer.
+- Cuando un espacio ya tiene reservas, solo se aplica la configuración. El plano se conserva, y la app lo dice.
+- Un archivo ilegible, o que no es de DesKilo, se rechaza con un mensaje claro.
+
+**Véase también:** [Exportar el espacio (XML)](help:user.workspace.export.space-xml)
+
+### Exportar la configuración (PDF)
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere un documento con todos los parámetros, para leerlo, firmarlo o entregarlo a un contable.
+
+![](assets/help/images/user-workspace-export-reports.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Informes](app:/reports?section=documents) y elija **Documentos del espacio**.
+2. Toque **Exportar configuración (PDF)**.
+
+**Conviene saber**
+
+- Es una instantánea completa de los ajustes, los miembros y el plano. Es un registro, no una copia de seguridad: solo el XML se puede volver a importar.
+
+**Véase también:** [Exportar el espacio (XML)](help:user.workspace.export.space-xml)
+
+### Informe del espacio
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere el espacio como documento: sus lugares, precios y reglas.
+
+**Pasos**
+
+1. Abra [Informes](app:/reports?section=documents) y elija **Documentos del espacio**.
+2. Toque **Informe del espacio**.
+
+**Conviene saber**
+
+- Lo genera la plantilla de espacio del editor de informes, de modo que su aspecto sigue el diseño que haya elegido.
+
+**Véase también:** [Exportar la configuración (PDF)](help:user.workspace.export.config-pdf)
+
+### Códigos QR de espacios (PDF)
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere una tarjeta QR en cada asiento, mesa, oficina y planta, para que la gente reserve o registre su llegada escaneándola.
+
+**Pasos**
+
+1. Abra [Informes](app:/reports?section=documents) y elija **Documentos del espacio**.
+2. Toque **Códigos QR de espacios (PDF)**.
+3. Elija **Tamaño de la tarjeta**, **Tamaño del código QR** e **Información en la tarjeta**, y toque **Guardar**.
+4. Imprima, recorte y pegue cada tarjeta en su lugar.
+
+**Conviene saber**
+
+- Necesita la función **Códigos QR de espacios**.
+- Escanear una tarjeta abre la misma hoja que muestra el quiosco.
+
+**Véase también:** [Una tableta de pared para registrar la llegada](help:user.kiosk.mode)
+
+### Exportar los datos (Excel)
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Usted quiere sus cifras en una hoja de cálculo para su propio análisis.
+
+**Pasos**
+
+1. Abra [Informes](app:/reports?section=documents) y elija **Documentos del espacio**.
+2. Toque **Exportar datos (Excel)**.
+
+**Conviene saber**
+
+- Llega como un único ZIP: un libro con una pestaña para reservas, pagos, facturas, miembros y el plano, un manifiesto que cuenta las filas y los archivos guardados del espacio.
+- Necesita la función **Exportación de datos (Excel)** y el permiso de exportar datos. Es solo una exportación: nada la vuelve a leer.
+
+**Véase también:** [Exportar el espacio (XML)](help:user.workspace.export.space-xml)
+
+### Sedes
+
+**Público:** Propietario · Administrador/a
+
+Usted dirige más de una dirección y quiere que cada planta y cada miembro pertenezcan a la correcta.
+
+**Pasos**
+
+1. Active **Sedes** en [Funciones](app:/features).
+2. Abra [Sedes](app:/settings/sites) y toque **Añadir una sede**.
+3. Rellene **Nombre de la sede**, **Calle**, **Código postal**, **Ciudad** y las plantas que le pertenecen.
+
+**Conviene saber**
+
+- La sede predeterminada lleva la dirección del espacio. La sede de origen de un miembro es la dirección que figura en sus documentos.
+- **Eliminar esta sede** devuelve sus plantas y miembros a la sede predeterminada.
+- Una sede que es su propia entidad legal puede llevar su propio registro y número de IVA.
+
+## Miembros, planes y facturación
+
+Este capítulo está dirigido a propietarios y administradores de facturación. Sigue el dinero desde la persona hasta la lista de precios: quién está en su espacio y con qué plan, cómo se fija el precio de cada plan, qué más vende, cómo le pagan los miembros y los gastos que paga usted mismo.
+
+En este capítulo:
+- [Miembros y planes](help:user.members.list): la lista, la ficha del miembro y todo lo que puede configurar para una persona
+- [Facturación](help:user.money.billing.fee-bands): tramos de tarifas, niveles de suscripción, paquetes de días y calendario de facturación
+- [Servicios y accesorios](help:user.money.services.overview): los extras que vende
+- [Instrucciones de pago y pagos en línea](help:user.money.payments.methods): cómo le pagan los miembros
+- [Gastos programados](help:user.money.expenses.schedule): costes que se repiten solos
+
+### Miembros y planes
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver quién está en su espacio, con qué plan, y abrir a cualquier persona para cambiar su configuración.
+
+![](assets/help/images/user-members-list.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Miembros y planes](app:/members) desde el menú.
+2. Lea cada fila: el correo, la parte del plan (o **Sin suscripción**), el rol y un estado cuando no es el habitual: **Pendiente**, **En pausa** o **Salido**.
+3. Pulse una fila para abrir la [ficha del miembro](help:user.members.page) de esa persona.
+
+**Conviene saber**
+
+- Una fila muestra también las etiquetas **máx.** y **a la vez** cuando ha fijado un [límite de reservas](help:user.members.reservation-limit) o más de una [reserva simultánea](help:user.members.simultaneous).
+- Según las funciones activadas, la barra superior (botones de icono con descripción emergente) ofrece **Notificar a todos los admins**, **Añadir un perfil gestionado** y, para los propietarios, **Invitar a un miembro** y **Facturación**.
+- Los administradores también acceden a esta pantalla; los controles que cambian el dinero o los roles quedan en manos del propietario.
+
+**Véase también:** [Invite a un miembro](help:user.members.invite) · [Facturación](help:user.money.billing.fee-bands)
+
+### Invite a un miembro
+
+**Público:** Propietario
+
+Quiere que alguien se una a su espacio.
+
+**Pasos**
+
+1. En [Miembros y planes](app:/members), pulse **Invitar a un miembro**.
+2. Comparta el ID del espacio o su código QR, como se explica en [El ID del espacio](help:user.workspace.code).
+3. Cuando la persona solicite unirse, su fila aparece como **Pendiente**. Ábrala y elija **Aprobar membresía** o **Rechazar membresía**.
+
+**Conviene saber**
+
+- Al rechazar, puede añadir un breve comentario.
+- Hasta que usted decida, la persona no tiene acceso al espacio.
+
+**Véase también:** [Miembros pendientes y en pausa](help:user.members.pending) · [Añada un perfil gestionado](help:user.members.managed)
+
+### Añada un perfil gestionado
+
+**Público:** Administrador/a · Propietario
+
+Alguien todavía no tiene cuenta, pero usted quiere reservar, facturar y gestionar en su nombre. Crea un perfil, lo gestiona usted y se lo entrega a la persona cuando se una.
+
+![](assets/help/images/user-members-managed.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Miembros y planes](app:/members), pulse **Añadir un perfil gestionado**.
+2. Rellene la identidad de la persona y guarde. La ficha del miembro lleva entonces una etiqueta **Gestionado**.
+3. Para corregir los datos más tarde, abra la ficha del miembro y elija **Editar identidad**.
+4. Cuando la persona esté lista, elija **Entregar a la persona**. Se crea un código personal vinculado a este perfil.
+5. ¿Ha cambiado de opinión antes de que se use el código? Elija **Revocar la entrega**.
+
+**Conviene saber**
+
+- Quien use el código se hace cargo del perfil, con sus reservas, facturas y suscripción, una vez que usted apruebe la membresía.
+- Nadie puede enviar un mensaje a un miembro gestionado, porque nadie lo leería.
+- La función debe estar activada en [Funciones](help:user.features.switch).
+
+**Véase también:** [La ficha del miembro](help:user.members.page)
+
+### La ficha del miembro
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver todo sobre una persona en una sola página: quién es, qué ha reservado, cómo contactarla, qué debe y cada ajuste que puede cambiar.
+
+![](assets/help/images/user-members-page--top.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Pulse un miembro en [Miembros y planes](app:/members).
+2. Lea la parte superior de la página: **Ahora mismo** muestra las próximas reservas, y después vienen los datos de contacto y la situación económica.
+3. Use los botones bajo el nombre para una acción rápida. Según las funciones y sus permisos, verá algunos de estos: **Mensajes**, **Correo**, **Añadir un servicio** o **Enviar el acuerdo financiero**.
+4. Vaya a **Gestionar** para cambiar la configuración de la persona, agrupada en **Membresía**, **Reglas de reserva**, **Facturación** y **Tarjetas y acceso**.
+
+**Conviene saber**
+
+- Cada fila de ajuste muestra su valor actual, así que rara vez necesita abrirla para saber la respuesta.
+- Su propia ficha es más corta: nadie puede concederse derechos a sí mismo.
+- Si la ficha no está activada en su espacio, las mismas acciones aparecen en una lista al pulsar la fila.
+
+**Véase también:** [Las acciones del miembro](help:user.members.actions) · [Roles y copropietarios](help:user.roles.matrix)
+
+### Las acciones del miembro
+
+**Público:** Administrador/a · Propietario
+
+Quiere saber dónde está cada ajuste y quién puede cambiarlo.
+
+![](assets/help/images/user-members-actions--membership.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra una [ficha del miembro](help:user.members.page) y vaya a **Gestionar**.
+2. En **Membresía**, elija **Pausar la membresía** o **Reactivar la membresía**, defina la [Copropiedad](help:user.members.co-ownership) o **Convertir en quiosco**.
+3. En **Reglas de reserva**, defina el [Límite de reservas](help:user.members.reservation-limit), las [Reservas simultáneas](help:user.members.simultaneous) y el [Tratamiento del IVA](help:user.members.vat-treatment); el interruptor **Reservas de un espacio entero** aparece cuando la función está activada.
+4. En **Facturación**, defina la [Suscripción](help:user.members.subscription), [Cuando se acaban los días](help:user.members.overage-policy) y la [Negociación de precios](help:user.members.negotiation).
+5. En **Tarjetas y acceso**, abra **Credenciales** para emitir o revocar las credenciales de la persona.
+
+**Conviene saber**
+
+- Los cambios de facturación y de membresía corresponden al propietario. Los administradores fijan los límites de reserva.
+- Nunca puede cambiar sus propios límites ni su copropiedad.
+- La mayoría de estas filas solo se ofrecen para miembros activos.
+
+**Véase también:** [Reglas de reserva](help:user.members.reservation-limit) · [Grupo de facturación](help:user.members.subscription)
+
+### Miembros pendientes y en pausa
+
+**Público:** Administrador/a · Propietario
+
+Un recién llegado espera su decisión, o un miembro se toma un descanso, y quiere que el espacio los trate en consecuencia.
+
+![](assets/help/images/user-members-pending--membership.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra el miembro cuya fila dice **Pendiente**.
+2. Bajo **Membresía**, elija **Aprobar membresía** para dejar entrar a la persona, o **Rechazar membresía** para denegarlo.
+3. Para poner en espera a un miembro activo, abra su ficha y elija **Pausar la membresía**.
+4. Para reincorporarlo, elija **Reactivar la membresía**.
+
+**Conviene saber**
+
+- La decisión sobre un nuevo miembro también puede tomarse mediante las reglas de validación, como se explica en las [Reglas de validación](help:user.validation.overview).
+- La pausa es cosa de los propietarios y conserva todo el historial.
+- Un miembro que se fue aparece como **Salido** y no se puede pausar.
+
+**Véase también:** [Invite a un miembro](help:user.members.invite)
+
+### La suscripción de un miembro
+
+**Público:** Propietario
+
+Quiere definir a qué parte de los días del mes tiene derecho un miembro. Esa parte determina el tramo de tarifa, y el tramo fija el precio mensual.
+
+![](assets/help/images/user-members-subscription.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Facturación** y pulse **Suscripción**.
+2. Elija **Sin suscripción**, uno de los niveles que ofrece, o escriba un número en **Personalizado (1–100)**.
+3. Pulse un nivel para aplicarlo, o **Guardar** para un valor personalizado.
+
+**Conviene saber**
+
+- Los niveles ofrecidos son los que eligió en [Niveles de suscripción](help:user.money.billing.levels).
+- Como propietario, siempre puede escribir un valor personalizado.
+- **Sin suscripción** es para visitantes que compran bonos. No se puede combinar con el pago por uso: elija antes un bloque o un paquete.
+
+**Véase también:** [Tramos de tarifas](help:user.money.billing.fee-bands) · [Cuando se acaban los días](help:user.members.overage-policy)
+
+### Cuando se acaban los días
+
+**Público:** Propietario
+
+Quiere decidir qué ocurre cuando un miembro ha agotado todo su cupo mensual.
+
+![](assets/help/images/user-members-overage-policy.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Facturación** y pulse **Cuando se acaban los días**.
+2. Elija **Bloquear más reservas**, **Cobrar el exceso (pago por uso)** o **Exigir comprar un paquete**.
+
+**Conviene saber**
+
+- El pago por uso aparece atenuado para un miembro sin suscripción, porque le permitiría reservar gratis.
+- El precio del exceso procede del [tramo de tarifa](help:user.money.billing.band-overage); los paquetes proceden de los [Paquetes de días](help:user.money.billing.packages).
+
+**Véase también:** [La suscripción de un miembro](help:user.members.subscription)
+
+### Límite de reservas
+
+**Público:** Administrador/a · Propietario
+
+Quiere limitar cuántas reservas abiertas puede tener un miembro en total.
+
+![](assets/help/images/user-members-reservation-limit.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Reglas de reserva** y pulse **Límite de reservas**.
+2. Pulse **Sin límite**, un valor predefinido (1, 2, 3, 5 o 10), o escriba un número en **Personalizado (1–100)**.
+3. Pulse **Guardar** para un número personalizado.
+
+**Conviene saber**
+
+- Cuenta todas las reservas abiertas, sea cual sea su fecha. No es lo mismo que las [reservas simultáneas](help:user.members.simultaneous), que cuentan las coincidencias en el tiempo.
+- La lista muestra **máx.** y el número junto al miembro.
+- No puede fijar su propio límite.
+
+**Véase también:** [Límites de reserva](help:user.workspace.availability.limits)
+
+### Reservas simultáneas
+
+**Público:** Administrador/a · Propietario
+
+Quiere permitir que un miembro tenga reservas que coinciden en el tiempo, por ejemplo dos puestos a la vez.
+
+![](assets/help/images/user-members-simultaneous.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Reglas de reserva** y pulse **Reservas simultáneas**.
+2. Elija **Por defecto del espacio**, o un número: 1, 2, 3 o 5.
+
+**Conviene saber**
+
+- **Por defecto del espacio** sigue el número definido en [Disponibilidad](help:user.workspace.availability.policies); uno significa un puesto cada vez.
+- No es lo mismo que el [límite de reservas](help:user.members.reservation-limit), que cuenta todas las reservas abiertas.
+- No puede fijar el suyo propio.
+
+**Véase también:** [Políticas de reserva](help:user.workspace.availability.policies)
+
+### Tratamiento del IVA
+
+**Público:** Administrador/a · Propietario
+
+Quiere indicar a la aplicación qué es este miembro a efectos de IVA, para que sus facturas lleven el impuesto correcto.
+
+![](assets/help/images/user-members-vat-treatment.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Reglas de reserva** y pulse **Tratamiento del IVA**.
+2. Elija **Automático**, **IVA nacional**, **Inversión del sujeto pasivo**, **Fuera de la UE** o **Comprador exento**.
+3. Para **Comprador exento**, escriba el **Motivo de exención (impreso en la factura)**.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- **Automático** aplica la regla habitual: inversión del sujeto pasivo para una empresa de otro Estado de la UE.
+- El mismo grupo ofrece **Condición del cliente** (**Empresa**, **Consumidor** o **Sin indicar**), que decide qué cláusulas de pago imprime una factura. Requiere el permiso de emitir facturas.
+- **Inversión del sujeto pasivo**, **Fuera de la UE** y **Comprador exento** se registran, pero las facturas de esos miembros aún no se pueden emitir en la aplicación: se emiten fuera de la aplicación con su gestor.
+- La función **IVA según el cliente** debe estar activada para que aparezca la fila de tratamiento del IVA, que ven los administradores y los propietarios; los tipos se definen en [Tipos de IVA](help:user.money.vat.rates).
+
+**Véase también:** [Régimen de IVA](help:user.money.vat.regime)
+
+### Negociación de precios
+
+**Público:** Administrador/a de facturación · Propietario
+
+Ha acordado con un miembro un precio distinto de su tarifa y quiere registrarlo como un acuerdo, en lugar de sobrescribir la tarifa.
+
+![](assets/help/images/user-members-negotiation.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Facturación** y pulse **Negociación de precios**.
+2. Rellene solo lo que difiere: **Ocupación**, **Cuota mensual**, **Exceso por medio día**, **Descuento en suplementos**, o un precio unitario en **Servicios y paquetes**.
+3. Añada una **Nota** si es útil.
+4. Pulse **Proponer para validación**.
+
+**Conviene saber**
+
+- Un campo vacío mantiene la tarifa.
+- El acuerdo espera su validación antes de aplicarse, como se explica en las [Reglas de validación](help:user.validation.overview).
+- Una vez activo, el miembro lo ve en su página de finanzas, con **Quién puede ver esto**. Quienes solo pueden consultar las negociaciones lo ven como **Solo lectura**.
+
+**Véase también:** [Tramos de tarifas](help:user.money.billing.fee-bands)
+
+### Copropiedad
+
+**Público:** Propietario
+
+Quiere que alguien comparta la propiedad con usted, o que le sustituya si se va.
+
+![](assets/help/images/user-members-co-ownership.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra la ficha del miembro, vaya a **Membresía** y pulse **Copropiedad**.
+2. Elija **Sin copropiedad**, **Copropietario activo** o **Sucesor**.
+3. Para convertir de inmediato a un copropietario en propietario de pleno derecho, elija **Promover a propietario ahora**.
+
+**Conviene saber**
+
+- Un copropietario activo tiene ya permisos de propietario y, si usted se va, asume el cargo automáticamente.
+- Un sucesor pasa a ser propietario cuando se le promueve o cuando el propietario se va.
+- En la lista de miembros, la fila muestra **Copropietario** o **Sucesor**.
+- Requiere que la función **Copropietarios** esté activada, y no puede modificar su propia copropiedad.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix)
+
+### Tramos de tarifas
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere fijar el precio de sus planes: lo que cuesta un mes para cada parte de los días y lo que cuesta una media jornada extra.
+
+![](assets/help/images/user-money-billing-fee-bands--bands.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Facturación](app:/billing) desde el menú.
+2. Bajo **Tramos de tarifas**, defina **Hasta %**, **Cuota mensual** y **Exceso** en cada fila.
+3. Pulse **Añadir tramo** para dividir el último tramo, o el icono menos para quitar uno.
+4. Elija el **Tipo de IVA** con el que se grava la tarifa. Se guarda en cuanto lo elige.
+5. Pulse **Guardar** para guardar los tramos.
+
+**Conviene saber**
+
+- Cada fila empieza donde termina la anterior, y la última termina siempre en el 100 %. Si los tramos no encajan, la pantalla dice «Los tramos deben ser crecientes y terminar en 100 %.».
+- Los precios son brutos: el IVA está incluido, cuando su espacio lo cobra.
+- Al quitar un tramo, su rango se fusiona con el anterior.
+
+**Véase también:** [La suscripción de un miembro](help:user.members.subscription) · [Niveles de suscripción](help:user.money.billing.levels)
+
+#### Hasta %
+
+El límite superior del tramo, de 1 a 100. El siguiente tramo empieza donde termina este, de modo que un porcentaje siempre cae en un único tramo. El último tramo está fijado en 100.
+
+#### Cuota mensual
+
+Lo que cuesta un mes en este tramo. Cuando cobra IVA, la fila muestra la parte de IVA incluida.
+
+#### Exceso
+
+El precio de una media jornada por encima del cupo, para los miembros cuya política es el pago por uso.
+
+### Niveles de suscripción
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere elegir qué porcentajes ofrece cuando asigna un plan a alguien.
+
+![](assets/help/images/user-money-billing-fee-bands--levels.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/billing), busque **Niveles de suscripción**.
+2. Pulse un valor predefinido (25 %, 50 %, 75 %, 100 %) para activarlo o desactivarlo.
+3. Para añadir uno propio, escriba un número en **Nivel (1–100)** y pulse **Añadir nivel**.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Los niveles que elija son los que se ofrecen en la [Suscripción](help:user.members.subscription) de un miembro.
+- Quite un nivel que haya añadido con la cruz de su etiqueta.
+
+**Véase también:** [Tramos de tarifas](help:user.money.billing.fee-bands)
+
+#### Valor del nivel
+
+Un porcentaje de 1 a 100: la parte de los días del mes que incluye el plan.
+
+#### Permitir un valor negociado
+
+El interruptor **Permitir un valor personalizado negociado** se guarda junto con los niveles. Como propietario, siempre puede escribir un porcentaje personalizado en la **Suscripción** de un miembro, diga lo que diga este interruptor.
+
+### Paquetes de días
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere vender bloques de días a los miembros que agotan su cupo.
+
+![](assets/help/images/user-money-billing-fee-bands--packages.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/billing), busque **Paquetes de días**. Cada fila muestra los días, el precio y un interruptor.
+2. Desactive un paquete para dejar de venderlo, o actívelo para volver a venderlo.
+3. Para crear un paquete, siga [Nuevo bono](help:user.money.billing.package-new).
+
+**Conviene saber**
+
+- Los miembros cuya política es **Exigir comprar un paquete** compran estos cuando se les acaban los días.
+- Un paquete que ya se ha vendido conserva su precio, sus días y su tipo. Para cambiarlos, desactívelo y añada uno nuevo.
+
+**Véase también:** [Cuando se acaban los días](help:user.members.overage-policy)
+
+### Nuevo bono
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere añadir un bloque de días a su lista de precios.
+
+![](assets/help/images/user-money-billing-fee-bands--new.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/billing), bajo **Nuevo bono**, escriba el nombre, los días y el precio.
+2. Elija su **Tipo de IVA**.
+3. Pulse **Añadir paquete**.
+
+**Conviene saber**
+
+- El paquete está a la venta en cuanto aparece, activado.
+- Cuando la función de bonos está activada, debajo hay un editor de **Bonos**.
+
+**Véase también:** [Paquetes de días](help:user.money.billing.packages)
+
+#### Nombre del paquete
+
+Lo que ven los miembros al comprar y lo que dice la línea de la factura.
+
+#### Días del paquete
+
+Cuántos días concede el paquete, uno o más.
+
+#### Precio del paquete
+
+El precio del paquete completo, bruto. La fila muestra los días, el precio y, cuando se aplica IVA, el IVA incluido.
+
+### Calendario de facturación
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere elegir cuándo salen las dos facturas automáticas: la suscripción antes del mes y el consumo del mes después de este.
+
+**Pasos**
+
+1. Abra [Espacio de coworking](app:/workspace-settings) y el grupo **Pagos y facturación**.
+2. Pulse **Calendario de facturación**.
+3. Bajo **Suscripción, por adelantado**, active o desactive **Emitir automáticamente** y elija **Días antes de que empiece el mes**. La línea de debajo le indica la fecha resultante.
+4. Bajo **El mes recién terminado**, active o desactive **Emitir automáticamente**. Active **También cuando no hay nada que pagar** para enviar un documento a cero.
+5. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Cada mitad necesita tener su función activada en [Funciones](help:user.features.switch): «Facturas de suscripción» y «Facturas de fin de mes».
+- Por tanto, la factura de suscripción puede nombrar un mes que aún no ha empezado.
+
+**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules) · [Tramos de tarifas](help:user.money.billing.fee-bands)
+
+### Un servicio
+
+**Público:** Propietario · Administrador/a de facturación
+
+Vende algo que no es un puesto: una taquilla, impresión, café. Lo da de alta una vez y lo añade al mes de un miembro con un toque.
+
+![](assets/help/images/user-money-services-overview.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Servicios](app:/services) desde el menú.
+2. Pulse un servicio para editarlo, o el botón más para crear un **Nuevo servicio**.
+3. Rellene el [Nombre](help:user.money.services.name), el [Precio](help:user.money.services.price) y, cuando cobre IVA, el **Tipo de IVA**.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Un servicio nunca se elimina, solo se desactiva, porque hay facturas que lo mencionan.
+- Un servicio que procede de un stock muestra cuántas unidades quedan, o **Agotado**.
+- Para registrar uno a un miembro, use **Añadir un servicio** en su ficha.
+
+**Véase también:** [Accesorios](help:user.money.accessories) · [La ficha del miembro](help:user.members.page)
+
+#### Nombre del servicio
+
+Lo que dice la línea de la factura. Si lo renombra, solo cambian los documentos nuevos.
+
+#### Precio del servicio
+
+El precio de una unidad, bruto: el miembro paga exactamente esto, y el IVA forma parte de ello. El **Tipo de IVA** solo decide qué parte es impuesto.
+
+#### Activo
+
+Al editar un servicio, el interruptor **Activo** decide si todavía se puede vender. Desactívelo para algo que ya no se ofrece; la lista lo atenúa y escribe **Inactivo**.
+
+### Accesorios
+
+**Público:** Administrador/a · Propietario
+
+Alquila equipamiento junto con un puesto, como un monitor o una silla, y cobra un suplemento por cada media jornada.
+
+![](assets/help/images/user-money-accessories-edit.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Accesorios](app:/accessories) desde el menú.
+2. Pulse un accesorio, o el botón más para un **Nuevo accesorio**.
+3. Rellene **Nombre** y **Suplemento por media jornada**; elija el **Tipo de IVA** si su espacio cobra IVA.
+4. Desactive **Activo** para dejar de ofrecerlo y pulse **Guardar**.
+
+**Conviene saber**
+
+- La lista muestra cada suplemento como un importe «por media jornada», o **Sin suplemento**.
+- Igual que los servicios, los accesorios se desactivan, nunca se eliminan.
+- La función debe estar activada en [Funciones](help:user.features.switch).
+
+**Véase también:** [Un servicio](help:user.money.services.overview)
+
+### Medios de pago e instrucciones
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que los miembros sepan cómo pagarle por transferencia o con una cartera digital, sin tener que enviarles los datos cada vez.
+
+![](assets/help/images/user-money-payments-methods.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Instrucciones de pago](app:/payment-methods) desde el menú.
+2. Rellene lo que proceda: **IBAN**, **Nombre del banco**, **Número de cuenta**, el código del banco, **BIC / SWIFT**.
+3. Añada las carteras digitales que acepta: **Enlace o usuario de PayPal.me**, **Número de teléfono de Wero**, **Número de teléfono o usuario de Lydia**, **Wisetag o enlace de pago de Wise**.
+4. Añada una **Indicación de referencia del pago** si los miembros deben citar algo.
+5. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Los miembros ven estos datos en un extracto sin pagar. Deje todo vacío para no mostrar nada.
+- El campo del código bancario lleva el nombre propio de su país: sort code, routing number o código bancario.
+- Este es un pago manual. Para que los miembros paguen con tarjeta dentro de la aplicación, véase [El proveedor de pago](help:user.money.payments.provider).
+
+**Véase también:** [Credenciales del proveedor](help:user.money.payments.credentials)
+
+### El proveedor de pago
+
+**Público:** Propietario
+
+Quiere que los miembros paguen en línea una factura pendiente, en su propia cuenta de proveedor.
+
+![](assets/help/images/user-money-payments-provider.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Active la función de pagos en línea en [Funciones](help:user.features.switch).
+2. Abra [Pagos en línea](app:/payment-config) desde el menú.
+3. Busque el proveedor que utiliza: **PayPal**, **Tarjeta (Stripe)**, **Mollie — iDEAL, Bancontact…** o **Wero (con Mollie)**.
+4. Rellene sus claves, como se explica en [Credenciales del proveedor](help:user.money.payments.credentials), y pulse **Guardar**.
+5. Compruebe que la tarjeta dice **Configurado**.
+
+**Conviene saber**
+
+- Cada proveedor es una tarjeta distinta con una etiqueta de estado, **Configurado** o **Sin configurar**.
+- Wero se paga a través de Mollie: introduzca la misma clave de API de Mollie y la misma URL de retorno en la tarjeta de Wero que en la de Mollie.
+- Los proveedores cobran sus propias comisiones. La vía de transferencia manual sigue siendo gratuita.
+- **Eliminar** borra un proveedor.
+
+**Véase también:** [Medios de pago](help:user.money.payments.methods)
+
+#### Credenciales del proveedor
+
+Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, **Entorno**, **ID de webhook** y **URL de retorno** para PayPal; **Clave secreta**, **Secreto de firma del webhook** y **URL de retorno** para Stripe; **Clave API** y **URL de retorno** para Mollie y Wero. Mantenga separadas las claves de prueba y las reales: todas las claves que introduzca deben pertenecer al mismo modo.
+
+Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — deja en blanco para conservar**; escriba un valor nuevo para sustituirlo.
+
+### Gastos programados
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Paga algo que se repite, como internet o la electricidad. Lo describe una sola vez y la aplicación le presenta cada vencimiento.
+
+![](assets/help/images/user-money-expenses-schedule.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Finanzas](app:/money) y la cara **Pagos**.
+2. Pulse **Gastos programados**. Las programaciones existentes muestran su importe, su regla, su estado y la próxima fecha.
+3. Pulse **Programar un gasto recurrente** y rellene el formulario, como se explica en [Qué](help:user.money.expenses.what) y en los campos siguientes.
+4. Pulse **Programar**.
+
+**Conviene saber**
+
+- Una programación nueva está **Pendiente de validación** hasta que los validadores la confirman, y después **Activa**. También puede acabar **Rechazada** o **Terminada**.
+- Cada vencimiento se le presenta después, antes de que cuente: confírmelo con el importe validado, o con otro importe y una explicación, que se valida de nuevo.
+- Pulse **Terminar esta programación** para detener una. Las finalizadas figuran en **Finalizadas y rechazadas**.
+- La función debe estar activada en [Funciones](help:user.features.switch).
+
+**Véase también:** [Reglas de validación](help:user.validation.overview)
+
+#### Qué
+
+![](assets/help/images/user-money-expenses-what.es.b8fa17aa9.jpg)
+
+El nombre que lleva cada vencimiento, por ejemplo Internet. Escríbalo como quiera leerlo más adelante. **Importe** es lo que cuesta un vencimiento, y **Descripción** es un texto opcional para quien valida.
+
+#### Importe
+
+Lo que cuesta un vencimiento, en la moneda de su espacio. Un importe distinto en el momento de la confirmación necesita una explicación y se valida de nuevo.
+
+#### Descripción
+
+Texto opcional para los validadores, como un número de contrato o una referencia del proveedor.
+
+#### Primer vencimiento
+
+La fecha en que vence el primero. Todas las fechas posteriores se cuentan desde aquí.
+
+#### Cada
+
+El intervalo, un número y una unidad: días, semanas, meses o años. Cada 1 mes se lee «mensual».
+
+#### Número de veces
+
+El campo **Repeticiones (vacío = hasta la fecha de fin)**: cuántos vencimientos generar.
+
+#### Hasta
+
+**Hasta (opcional)** es la fecha después de la cual ya no se genera nada. Con un número y una fecha a la vez, la serie se detiene en lo que llegue primero. Sin ninguno de los dos, continúa hasta que usted la termine.
+
+## Impuestos, facturación y contabilidad
+
+Para propietarios y administradores de facturación: quién es usted como vendedor, cómo se trata el IVA, adónde van las facturas electrónicas, qué aspecto tienen sus documentos y el ritmo mensual de emitir, enviar y reclamar facturas.
+
+> **Atención** DesKilo imprime lo que usted declara y comprueba que estén presentes los datos obligatorios. No certifica sus facturas, su tratamiento del IVA ni su contabilidad. Cada vez que una sección siguiente diga «consúltelo con su gestor», hágalo.
+
+En este capítulo:
+- Su identidad legal y las menciones que se imprimen en cada factura
+- IVA: régimen, número, tipos, grupos y la declaración periódica
+- Facturación electrónica: adónde se envía la factura legible por máquina
+- La plantilla PDF de factura y el editor de informes
+- Emitir y cerrar un mes: la pantalla de Facturación, el asistente de cierre mensual, la reagrupación, los gastos compartidos
+- Recordatorios de pago
+- El registro de facturas, las exportaciones contables y el análisis de negocio
+
+### Su identidad legal
+
+**Público:** Propietario
+
+Quiere que sus facturas le nombren correctamente: quién es, cómo está registrado y cómo cobra el IVA.
+
+**Pasos**
+
+1. Abra [Espacio de coworking](app:/workspace-settings) y pulse **Identidad legal y facturación electrónica**, o vaya directamente a [Identidad legal y facturación electrónica](app:/legal-identity).
+2. Trabaje de arriba abajo: primero el régimen de IVA, después los identificadores, la dirección y las **Menciones de facturación**.
+3. Pulse **Guardar** en la parte inferior.
+
+**Conviene saber**
+
+- La pantalla solo muestra los campos que necesita su régimen de IVA. Si cambia el régimen, el formulario lo sigue.
+- Las facturas ya emitidas conservan la identidad con la que se firmaron. Un cambio se aplica a las siguientes.
+- Solo los propietarios pueden abrir esta pantalla.
+
+**Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Tipo de organización](help:user.money.legal.seller-kind) · [Facturación electrónica](help:user.money.einvoice.overview)
+
+### Tipo de organización
+
+**Público:** Propietario
+
+Usted dirige una empresa o una asociación sin ánimo de lucro, y sus facturas deben reflejarlo.
+
+![](assets/help/images/user-money-legal-seller-kind--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity) y baje hasta **Menciones de facturación**.
+2. Elija **Empresa** o **Asociación (sin ánimo de lucro)**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Para una asociación, los textos de ejemplo cambian (por ejemplo, un registro como el RNA en lugar de un registro mercantil). Qué cláusulas de pago se imprimen depende de su país y de la condición del cliente, no del tipo de organización.
+- Una asociación sin actividad comercial normalmente queda fuera del ámbito del IVA. La pantalla le avisa si elige «exento» para una asociación; confirme la opción correcta con su gestor.
+
+**Véase también:** [Condición del cliente](help:user.money.legal.customer-capacity) · [Régimen de IVA](help:user.money.vat.regime)
+
+### Condición del cliente por defecto
+
+**Público:** Propietario
+
+A las empresas clientes y a los particulares no se les deben las mismas cláusulas de pago. Usted define el valor por defecto del espacio.
+
+![](assets/help/images/user-money-legal-customer-capacity--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, busque **Condición del cliente por defecto**.
+2. Elija **Sin indicar**, **Empresa** o **Consumidor**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Los valores legales por defecto de penalización por demora, indemnización de cobro y descuento solo se aplican a clientes empresa de un espacio en Francia; para otros países no se imprime nada salvo lo que haya escrito usted. Un consumidor nunca recibe la indemnización de cobro.
+- La condición propia de un miembro prevalece sobre este valor por defecto.
+- Cada factura conserva las cláusulas con las que se emitió.
+
+**Véase también:** [Penalización por demora](help:user.money.legal.late-penalty) · [Indemnización de cobro](help:user.money.legal.recovery)
+
+### Forma jurídica y capital
+
+**Público:** Propietario
+
+Sus facturas indican la forma jurídica de su empresa y, si procede, su capital social.
+
+![](assets/help/images/user-money-legal-legal-form--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Forma jurídica y capital**.
+2. Escriba la línea tal como debe imprimirse, por ejemplo «SARL au capital de 7 500 €» (una asociación podría escribir «Association loi 1901»).
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- El texto se imprime tal como lo escribe, hasta 300 caracteres. Consulte con su gestor la redacción exacta que exige su forma jurídica.
+
+**Véase también:** [Registro mercantil](help:user.money.legal.registration)
+
+### Registro mercantil
+
+**Público:** Propietario
+
+Indica dónde está registrada su organización.
+
+![](assets/help/images/user-money-legal-registration--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Registro mercantil**.
+2. Escriba la línea de registro, por ejemplo «RCS Saint-Brieuc 680 357 910». Una asociación podría introducir un número RNA, y un SIRET si lo tiene.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Esta línea es una mención impresa en el documento. El identificador que necesita la propia factura electrónica es el [número de registro](help:user.money.legal.legal-id) o el [número de IVA](help:user.money.vat.number), según su régimen.
+
+**Véase también:** [Forma jurídica y capital](help:user.money.legal.legal-form)
+
+### Condiciones de pago
+
+**Público:** Propietario
+
+Indica cuándo vencen las facturas.
+
+![](assets/help/images/user-money-legal-payment-terms--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Condiciones de pago**.
+2. Escriba sus condiciones, por ejemplo «Pago en un plazo de 30 días desde la fecha de la factura».
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, las facturas imprimen «Pago a la recepción».
+- Un miembro puede tener sus propias condiciones de pago; estas se imprimen en los documentos de ese miembro en su lugar.
+- Los recordatorios no leen este texto: cuentan desde la fecha de la factura más **Días hasta el primer recordatorio** en las reglas de recordatorio. Las condiciones de pago son solo lo que imprime el documento.
+
+**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
+
+### Penalización por demora
+
+**Público:** Propietario
+
+Indica la penalización por pago tardío.
+
+![](assets/help/images/user-money-legal-late-penalty--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Penalización por demora**.
+2. Escriba su cláusula, o déjela vacía.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, no se inventa nada por usted, salvo en un espacio en Francia que factura a un cliente empresa: entonces se imprime la redacción legal (tres veces el tipo de interés legal).
+- Confirme con su gestor la cláusula que se aplica a su país.
+
+**Véase también:** [Condición del cliente por defecto](help:user.money.legal.customer-capacity)
+
+### Indemnización de cobro
+
+**Público:** Propietario
+
+Indica la indemnización fija por costes de cobro.
+
+![](assets/help/images/user-money-legal-recovery--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Indemnización de cobro**.
+2. Escriba su cláusula, o déjela vacía.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, la indemnización fija de 40 € solo se imprime en las facturas de un espacio en Francia a un cliente empresa.
+- Un consumidor nunca recibe esta mención.
+
+**Véase también:** [Condición del cliente por defecto](help:user.money.legal.customer-capacity)
+
+### Descuento por pronto pago
+
+**Público:** Propietario
+
+Indica si pagar antes da derecho a un descuento.
+
+![](assets/help/images/user-money-legal-escompte--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Descuento por pronto pago**.
+2. Escriba las condiciones de su descuento, o déjelo vacío.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, las facturas de un espacio en Francia a un cliente empresa imprimen «Sin descuento por pronto pago»; en otros casos la línea se omite salvo que escriba una.
+
+**Véase también:** [Condiciones de pago](help:user.money.legal.payment-terms)
+
+### Seguro profesional
+
+**Público:** Propietario
+
+Si su actividad le obliga a indicar su seguro profesional, se imprime en sus facturas.
+
+![](assets/help/images/user-money-legal-insurance--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Seguro profesional**.
+2. Escriba la aseguradora, la póliza y la cobertura geográfica tal como deben leerse.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- No hay valor por defecto: un campo vacío no imprime nada.
+- Si debe indicarlo o no depende de su actividad. Pregunte a su gestor.
+
+**Véase también:** [Menciones particulares](help:user.money.legal.special-mentions)
+
+### Menciones particulares
+
+**Público:** Propietario
+
+Una línea propia que debe aparecer en todas las facturas.
+
+![](assets/help/images/user-money-legal-special-mentions--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En **Menciones de facturación**, pulse **Menciones particulares**.
+2. Escriba el texto.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- No se imprime nada cuando el campo está vacío.
+- Bajo las menciones, cuando la función **Ventanilla de dirección** está activada, **Ventanilla de dirección** fija dónde se coloca la dirección del destinatario para que se vea a través de un sobre con ventanilla.
+
+**Véase también:** [La plantilla PDF de factura](help:user.money.reports.invoice-template)
+
+### Régimen de IVA
+
+**Público:** Propietario
+
+Declara cuál es la situación de su organización respecto al IVA. La elección decide qué número necesitan sus documentos.
+
+![](assets/help/images/user-money-vat-regime--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity).
+2. En **Régimen de IVA**, elija **Fuera del ámbito del IVA**, **Exento de IVA (régimen de franquicia)** o **Sujeto a IVA (cobra IVA)**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Fuera del ámbito del IVA: no se imprime ningún número de IVA; le identifica el número de registro.
+- Exento o sujeto: se le pide su número de IVA.
+- Elegir el régimen es una decisión fiscal, no un ajuste del programa. Confírmela con su gestor antes de emitir facturas.
+- En esta versión la aplicación emite facturas por sí misma para espacios en Francia o Alemania, a clientes nacionales, bajo el régimen de sujeto a IVA o fuera del ámbito del IVA. Las facturas bajo el régimen exento se emiten fuera de la aplicación con su gestor.
+
+**Véase también:** [Número de IVA](help:user.money.vat.number) · [Número de registro](help:user.money.legal.legal-id)
+
+### Inversión del sujeto pasivo para empresas de la UE
+
+**Público:** Propietario
+
+Cuando cobra IVA y factura a una empresa de otro país de la UE, el impuesto puede correr a cargo del cliente.
+
+![](assets/help/images/user-money-vat-reverse-charge--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Elija **Sujeto a IVA (cobra IVA)** como régimen.
+2. Active o desactive **Inversión del sujeto pasivo para empresas de la UE**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Activado: la aplicación reconoce a una empresa con número de IVA en otro Estado miembro. Hoy la aplicación no emite esas facturas por sí misma: usted las emite fuera de la aplicación con su gestor.
+- Desactivado: desactívelo si nunca factura a empresas del extranjero.
+- La opción solo aparece con el régimen de sujeto a IVA.
+
+**Véase también:** [Tratamiento del IVA de un miembro](help:user.members.vat-treatment)
+
+### Cuándo se devenga el IVA
+
+**Público:** Propietario
+
+Elige si el IVA se cuenta al emitir la factura o al cobrarla.
+
+![](assets/help/images/user-money-vat-due--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Elija **Sujeto a IVA (cobra IVA)** como régimen.
+2. En **Devengo del IVA**, elija **Con la factura (criterio general)** o **Con el cobro (criterio de caja)**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Con el cobro, un periodo declara lo que los clientes pagaron dentro de él; con la factura, lo que usted emitió.
+- La elección se imprime en cada factura y determina la [declaración de IVA](help:user.money.vat.declaration).
+- Qué criterio le corresponde es una cuestión fiscal para su gestor.
+
+**Véase también:** [La declaración periódica de IVA](help:user.money.vat.declaration)
+
+### Cuenta de IVA
+
+**Público:** Propietario
+
+Su gestor quiere que el IVA repercutido se contabilice en una cuenta concreta.
+
+![](assets/help/images/user-money-vat-account--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Elija **Sujeto a IVA (cobra IVA)** como régimen.
+2. Escriba su número de cuenta en **Cuenta de IVA**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- La exportación contable registra el IVA repercutido en esta cuenta. Si lo deja vacío, usa la 445710.
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export)
+
+### Número de IVA
+
+**Público:** Propietario
+
+Su número de identificación de IVA aparece en sus facturas y facturas electrónicas.
+
+![](assets/help/images/user-money-vat-number--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity).
+2. Escriba el número en **Número de IVA**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- El campo aparece para los regímenes exento y sujeto. Fuera del ámbito del IVA se sustituye por el número de registro.
+- Sus miembros tienen su propio número de IVA en sus ajustes, para sus documentos.
+
+**Véase también:** [Número de registro](help:user.money.legal.legal-id)
+
+### Motivo por el que no se cobra IVA
+
+**Público:** Propietario
+
+Cuando no se cobra IVA, la ley suele exigir que el motivo figure impreso en la factura.
+
+![](assets/help/images/user-money-vat-exemption-reason--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity).
+2. Escriba el fundamento legal en **Motivo por el que no se cobra IVA**, por ejemplo «TVA non applicable, art. 293 B du CGI».
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- La aplicación no puede saber qué fundamento le corresponde. Pida a su gestor la redacción exacta.
+- La redacción se imprime en la factura. Por ahora la aplicación no emite por sí misma facturas bajo el régimen exento: se emiten fuera de la aplicación con su gestor.
+
+**Véase también:** [Régimen de IVA](help:user.money.vat.regime)
+
+### Número de registro
+
+**Público:** Propietario
+
+Si está fuera del ámbito del IVA, su número de registro le identifica en las facturas electrónicas.
+
+![](assets/help/images/user-money-legal-legal-id--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Ponga el **Régimen de IVA** en **Fuera del ámbito del IVA**.
+2. Escriba el número en **Número de registro**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Con los demás regímenes, este campo se sustituye por el número de IVA.
+- Una asociación suele usar su registro (por ejemplo, el RNA, o el SIRET si se le ha asignado).
+
+**Véase también:** [Registro mercantil](help:user.money.legal.registration)
+
+### Dirección estructurada
+
+**Público:** Propietario
+
+Una factura electrónica necesita su dirección en partes separadas, no en un único bloque de texto.
+
+![](assets/help/images/user-money-legal-address--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity).
+2. Rellene **Calle**, **Código postal** y **Ciudad**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- La calle parte de la dirección que ya figura en los ajustes de su espacio, de modo que la completa en lugar de volver a escribirla.
+- No se pueden emitir facturas sin la dirección postal del espacio.
+
+**Véase también:** [Dirección del membrete](help:user.workspace.settings.address)
+
+### Fijar los tipos
+
+**Público:** Propietario · Administrador/a de facturación
+
+Enumera los tipos de IVA que pueden usar sus facturas. Lo que pagan los miembros no cambia: los precios incluyen el IVA y el impuesto se extrae de ellos.
+
+![](assets/help/images/user-money-vat-rates--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [IVA](app:/vat) (desde **Identidad legal y facturación electrónica**, pulse **Tipos de IVA**).
+2. Con la lista vacía, pulse **Usar los tipos habituales** (si su país tiene un catálogo) para partir de los tipos de su país, o **Añadir un tipo** y rellene el nombre y **Tipo %** (de 0 a 99,99).
+3. Pulse la estrella de exactamente un tipo para convertirlo en el tipo por defecto.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Los tipos habituales son un punto de partida. Qué operación va con qué tipo es una pregunta para su gestor.
+- El tipo por defecto lo usan las suscripciones y todo lo que no tiene tipo propio.
+- Un tipo que todavía usa una factura o un servicio se conserva, desactivado, en lugar de eliminarse.
+- Si no hay ningún tipo mientras está sujeto a IVA, las facturas no muestran impuesto y la exportación XML queda desactivada.
+- Esta pantalla requiere la función **Gestión del IVA**; la entrada de tipos de IVA de la pantalla de identidad legal solo aparece con el régimen de sujeto a IVA.
+
+**Véase también:** [Grupos de IVA](help:user.money.vat.groups) · [Cambio por ley](help:user.money.vat.change-by-law)
+
+### Grupos de IVA
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un grupo indica de qué clase es el tipo, para que la factura lo coloque en la categoría correcta.
+
+![](assets/help/images/user-money-vat-groups.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [IVA](app:/vat).
+2. En cada tipo, cuando la función **Grupos de IVA** está activada, elija un **Grupo**: **General**, **Intermedio**, **Reducido**, **Superreducido**, **Tipo cero**, **Exento**, **No sujeto**, **Envase retornable (fuera del IVA)** o **Con impuestos especiales**.
+3. Para un grupo exento o no sujeto, rellene la **Mención de exención** que aparece.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- **Qué entra en cada grupo** enumera ejemplos para su país, solo a modo orientativo.
+- Una línea fuera del IVA, como un envase retornable, no puede compartir documento con líneas gravadas; emítala por separado.
+
+**Véase también:** [Fijar los tipos](help:user.money.vat.rates)
+
+### Cambiar un tipo por ley
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un tipo cambia a partir de una fecha determinada. Las operaciones antiguas conservan el valor antiguo; el nuevo se aplica desde ese día.
+
+![](assets/help/images/user-money-vat-change-by-law.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [IVA](app:/vat) y asegúrese de que el tipo está guardado.
+2. Pulse el botón **Cambio por ley** del tipo.
+3. Escriba **Nuevo tipo %** y la **Fecha de efecto (AAAA-MM-DD)**.
+4. Pulse **Guardar** en el cuadro de diálogo y después **Guardar** en la pantalla.
+
+**Conviene saber**
+
+- El tipo antiguo se cierra en esa fecha y se abre uno nuevo, con la estrella trasladada si era el tipo por defecto.
+- Nada de lo ya emitido se reasigna.
+
+**Véase también:** [Fijar los tipos](help:user.money.vat.rates)
+
+### La declaración periódica de IVA
+
+**Público:** Propietario
+
+Quiere un resumen listo del IVA de un periodo para presentarlo a Hacienda o entregarlo a su gestor.
+
+![](assets/help/images/user-money-vat-declaration.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Declaración de IVA](app:/vat-declarations).
+2. Elija el **Periodo** y pulse **Generar**.
+3. Abra el resultado con **PDF** o **Exportar XML**, o consulte el **Informe de IVA (PDF)** y el **Informe de IVA (CSV)**.
+4. Cuando la haya presentado usted mismo, pulse **Marcar como presentada**.
+
+**Conviene saber**
+
+- Solo existe con el régimen de sujeto a IVA. La nota de arriba indica si el periodo cuenta facturas o cobros.
+- Es una ayuda para la presentación generada a partir de las facturas emitidas en el periodo, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
+- Una declaración presentada ya no se puede modificar.
+- Cuando hay una plataforma configurada en [Facturación electrónica](help:user.money.einvoice.overview), un botón **Transmitir** puede enviarla.
+
+**Véase también:** [Cuándo se devenga el IVA](help:user.money.vat.due) · [Exportaciones contables](help:user.invoicing.accounting-export)
+
+### La plataforma de facturación electrónica
+
+**Público:** Propietario · Administrador/a de facturación
+
+Indica a DesKilo dónde enviar sus facturas como archivos legibles por máquina.
+
+![](assets/help/images/user-money-einvoice-overview--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config) (también accesible desde **Identidad legal y facturación electrónica**).
+2. Rellene **URL de subida** y **Token o credencial**, y los dos campos opcionales si su plataforma los pide.
+3. Pulse **Guardar**. **Eliminar la plataforma** borra los ajustes.
+
+**Conviene saber**
+
+- Sirve cualquier plataforma que acepte una subida con un token: una plataforma homologada, un punto de acceso Peppol, una plataforma nacional.
+- El token se guarda en el servidor y no vuelve a mostrarse.
+- El archivo válido es una factura EN 16931. Si su país exige una plataforma, y cuál, es algo que debe confirmar con su gestor.
+
+**Véase también:** [Enviar una factura electrónica](help:user.money.einvoice.send) · [Identidad legal](help:user.money.legal.identity)
+
+### URL de subida
+
+**Público:** Propietario · Administrador/a de facturación
+
+La dirección en la que su plataforma recibe las facturas.
+
+![](assets/help/images/user-money-einvoice-endpoint--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Pegue la dirección en **URL de subida**, exactamente como la documenta su plataforma.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Procede de la documentación de su plataforma o de su proveedor.
+
+**Véase también:** [Token o credencial](help:user.money.einvoice.token)
+
+### Token o credencial
+
+**Público:** Propietario · Administrador/a de facturación
+
+El secreto que demuestra a la plataforma que la subida es suya.
+
+![](assets/help/images/user-money-einvoice-token--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Pegue la clave en **Token o credencial**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Una vez guardado, la pantalla dice «Hay un token guardado». Escriba uno nuevo solo para sustituirlo.
+- Se conserva en el servidor y nunca sale de él.
+
+**Véase también:** [Cabecera de autenticación](help:user.money.einvoice.auth-header)
+
+### Cabecera de autenticación
+
+**Público:** Propietario · Administrador/a de facturación
+
+El nombre de la cabecera que lleva el token.
+
+![](assets/help/images/user-money-einvoice-auth-header--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Si su plataforma espera otra cabecera distinta de la estándar, escriba su nombre en **Cabecera de autenticación (Authorization por defecto)**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, se usa **Authorization**.
+
+**Véase también:** [Nombre del campo de archivo](help:user.money.einvoice.file-field)
+
+### Nombre del campo de archivo
+
+**Público:** Propietario · Administrador/a de facturación
+
+El nombre del campo del formulario que lleva el archivo de la factura.
+
+![](assets/help/images/user-money-einvoice-file-field--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Si su plataforma espera otro nombre de campo, escríbalo en **Nombre del campo de archivo (file por defecto)**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Si lo deja vacío, se usa **file**.
+
+**Véase también:** [URL de subida](help:user.money.einvoice.endpoint)
+
+### Servicio de entrega al cliente
+
+**Público:** Propietario · Administrador/a de facturación
+
+Es posible que su cliente reciba sus facturas en otro lugar que no sea una plataforma gubernamental: su propio punto de acceso Peppol, un portal o un servicio de subida acordado.
+
+![](assets/help/images/user-money-einvoice-customer-delivery--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. En **Servicio de entrega al cliente**, rellene los mismos cuatro campos que arriba.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Es independiente de la plataforma gubernamental. Pueden configurarse ambas, y cada factura ofrece los dos envíos.
+
+**Véase también:** [Enviar una factura electrónica](help:user.money.einvoice.send)
+
+### Endpoint y token UAT
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere hacer un ensayo antes de enviar facturas reales.
+
+![](assets/help/images/user-money-einvoice-uat--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Bajo **Entornos de prueba (UAT / Dev)**, rellene **URL de subida UAT** y **Token o credencial UAT**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- La elección del entorno solo aparece al enviar mientras el modo desarrollador está activado.
+- Un envío de prueba se registra como envío de prueba.
+
+**Véase también:** [Endpoint y token Dev](help:user.money.einvoice.dev)
+
+### Endpoint y token Dev
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un segundo endpoint de prueba, para desarrollo.
+
+![](assets/help/images/user-money-einvoice-dev--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Plataforma de facturación electrónica](app:/einvoice-config).
+2. Bajo **Entornos de prueba (UAT / Dev)**, rellene **URL de subida Dev** y **Token o credencial Dev**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Las mismas reglas que para UAT. El envío real va siempre al endpoint de producción.
+
+**Véase también:** [Endpoint y token UAT](help:user.money.einvoice.uat)
+
+### Enviar una factura electrónica
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere entregar una factura emitida en su forma legible por máquina.
+
+**Pasos**
+
+1. Abra una factura en [Facturación](app:/invoices) y pulse **Factura electrónica (XML)**.
+2. Lea la comprobación de la parte superior de la hoja: indica si el archivo está listo o qué falta.
+3. Pulse **Enviar a la plataforma gubernamental**, **Enviar al servicio del cliente**, o descargue o comparta el archivo (**Descargar Factur-X (PDF)** lleva el XML dentro del PDF).
+
+**Conviene saber**
+
+- Si falta algo, la hoja lo enumera. **Completar la identidad legal** le lleva a la pantalla que lo corrige.
+- Una factura firmada antes de que completara su identidad conserva lo que tenía al emitirse. Márquela como errónea y emita una sustitutiva si es importante.
+- Qué canal debe usar un cliente depende de su país y del cliente. Confírmelo con su gestor.
+
+**Véase también:** [La plataforma de facturación electrónica](help:user.money.einvoice.overview) · [La pantalla de Facturación](help:user.invoicing.hub)
+
+### La plantilla PDF de factura
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que sus facturas se parezcan a usted: logotipo, maquetación, redacción.
+
+![](assets/help/images/user-money-reports-invoice-template.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Informes](app:/reports?section=templates) y la pestaña **Plantillas**.
+2. Pulse **Editor de informes**.
+
+**Conviene saber**
+
+- La plantilla cambia solo el PDF. El XML de la factura electrónica nunca se toca.
+- Puede hacerlo cualquier persona con permiso para diseñar documentos.
+- Una plantilla que no se genera nunca bloquea un documento: entra en juego la maquetación integrada.
+
+**Véase también:** [El editor de informes](help:user.money.reports.editor)
+
+### El editor de informes
+
+**Público:** Propietario · Administrador/a de facturación
+
+Diseña un documento sobre una página, en lugar de escribir código.
+
+![](assets/help/images/user-money-reports-editor.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Editor de informes](app:/report-editor).
+2. Elija el documento con las etiquetas (Factura, Proforma, Extracto, recordatorios y los demás informes).
+3. En **Diseño**, pulse una línea para editarla, añada líneas o arrastre para reordenar. Pulse **Vista previa** para verlo con sus datos.
+4. Pulse **Guardar**.
+
+**Conviene saber**
+
+- El modo **Marcado** edita las mismas bandas como texto.
+- **Insertar imagen** coloca un logotipo, un sello o una firma de la biblioteca de imágenes.
+- **Vista rápida** se genera al instante con su factura más reciente, o con datos de ejemplo si no hay ninguna. **Restablecer al modelo por defecto** recupera la maquetación integrada.
+- **Exportar este diseño** e **Importar un diseño** llevan un diseño de entrada y de salida como archivo. **Maqueta posicionada (XML)** es para documentos que deben ajustarse a un sobre con ventanilla o a un formulario nacional.
+- Si sale con trabajo sin guardar, se le pregunta antes.
+
+**Véase también:** [Plantillas y modelos](help:user.money.reports.presets) · [Idiomas](help:user.money.reports.languages)
+
+### Plantillas ya preparadas
+
+**Público:** Propietario · Administrador/a de facturación
+
+Parte de un diseño terminado y cambia lo que quiera.
+
+![](assets/help/images/user-money-reports-presets.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Editor de informes](app:/report-editor) y elija un documento.
+2. Pulse **Plantillas** y elija **Profesional**, **Clásico**, **Sencillo**, **Detallado** o **Carta formal**.
+3. Confirme la sustitución si la aplicación se lo pide, edite y **Guardar**.
+
+**Conviene saber**
+
+- Sustituir una maquetación se puede deshacer con **Deshacer**.
+- Los informes estructurales (plan contable, credenciales, tarjetas QR) tienen una única maquetación incluida.
+- Las plantillas de factura ya incluyen sus menciones legales. Aun así, imprimen únicamente lo que usted introdujo en [Menciones de facturación](help:user.money.legal.identity).
+
+**Véase también:** [El editor de informes](help:user.money.reports.editor)
+
+### Un diseño por idioma
+
+**Público:** Propietario · Administrador/a de facturación
+
+Sus miembros leen sus documentos en su propio idioma.
+
+![](assets/help/images/user-money-reports-languages--f.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Editor de informes](app:/report-editor).
+2. Bajo el documento, elija **Predeterminado (todos los idiomas)** o uno de **EN**, **FR**, **DE**, **ES**, **IT**.
+3. Edite las bandas para ese idioma y **Guardar**. **Usar la predeterminada para este idioma** elimina un diseño propio.
+
+**Conviene saber**
+
+- Un punto en un idioma significa que tiene su propio diseño; de lo contrario, hereda el predeterminado.
+- El documento de un miembro se imprime en su idioma cuando existe un diseño para él; si no, en el idioma por defecto del espacio.
+
+**Véase también:** [Idioma del espacio](help:user.workspace.settings.language)
+
+### La pantalla de Facturación
+
+**Público:** Propietario · Administrador/a de facturación
+
+Ve de un vistazo qué hay que emitir, qué hay que cobrar y qué está cerrado.
+
+![](assets/help/images/user-invoicing-hub.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Facturación](app:/invoices).
+2. Lea la franja: **Por emitir**, **Por cobrar**, **Por confirmar**, **Cerrada**.
+3. Trabaje en las tres pestañas: **Por facturar** (miembros con algo registrado, aún sin facturar), **Abiertas** (emitidas, sin pagar) y **Archivo** (pagadas o cerradas).
+4. Pulse el icono de herramientas para ver las demás herramientas.
+
+**Conviene saber**
+
+- Ve las facturas de todo el espacio. Las suyas están en sus finanzas, bajo **Mis finanzas**.
+- Las facturas nunca se editan ni se eliminan: una equivocada se marca como errónea y se sustituye.
+- La entrada **Cómo funciona la facturación** explica quién actúa en cada paso.
+
+**Véase también:** [Nueva factura](help:user.invoicing.new-invoice) · [Facturas abiertas](help:user.invoicing.open)
+
+### Emitir una factura
+
+**Público:** Propietario · Administrador/a de facturación
+
+Factura un mes a un miembro.
+
+![](assets/help/images/user-invoicing-new-invoice.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), pulse **Nueva factura**, o **Emitir** en una fila de **Por facturar**.
+2. Elija el **Miembro** y el mes. Las partidas proceden de lo registrado.
+3. Active **Incluir el anexo detallado (asistencias, servicios, pagos)** si lo desea.
+4. Pulse **Emitir factura**. En **Por facturar**, **Facturar todo** emite todas las filas.
+
+**Conviene saber**
+
+- Las facturas se derivan de datos registrados y no se pueden componer a mano. La línea final es el **Saldo**.
+- Un mes solo se puede facturar una vez por miembro, y un mes aún en curso le avisa de que las partidas pueden cambiar.
+- Si falta un dato obligatorio, **Complete estos datos antes de emitir** lo enumera (dirección, número de IVA, fundamento de la exención, tipo de IVA; también el país del espacio, que debe ser Francia o Alemania).
+- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, para clientes nacionales. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor.
+- Una factura emitida está firmada y es inmutable.
+
+**Véase también:** [Asistente de cierre mensual](help:user.invoicing.wizard)
+
+### Reclamar y saldar facturas abiertas
+
+**Público:** Propietario · Administrador/a de facturación
+
+Hace seguimiento de lo que está sin pagar y lo cierra como es debido.
+
+![](assets/help/images/user-invoicing-open.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), abra la pestaña **Abiertas** y pulse una factura.
+2. Use las acciones que ofrece: **Enviar un recordatorio**, **Marcar como pagada** (concilia un pago registrado), **Anular el saldo pendiente**, **Marcar como errónea**, o comparta el PDF.
+3. Las facturas pagadas pasan a **Archivo**.
+
+**Conviene saber**
+
+- Una factura está pagada cuando se le ha conciliado un pago real. Una diferencia necesita una nota, o una factura rectificativa por el exceso.
+- Anular un saldo pendiente pasa por validación.
+- **Marcar como errónea** no se puede deshacer. Hágalo antes del pago, nunca después.
+
+**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules) · [Agrupar facturas](help:user.invoicing.settlement)
+
+### El asistente de cierre mensual
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un único recorrido guiado para la rutina del dinero: emitir, enviar, recordar, registrar pagos, conciliar y cerrar.
+
+![](assets/help/images/user-invoicing-wizard.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), pulse **Asistente de cierre mensual** (o abra el [Asistente de facturación](app:/invoicing/wizard)).
+2. Elija la ejecución: **Inicio de mes** (suscripciones que los miembros pagan por adelantado, para el mes siguiente) o **Fin de mes** (uso, consumo y cargos extra del mes que acaba de terminar). La fecha propone una.
+3. Siga los pasos: **Revisión**, **Emitir**, **Enviar**, **Recordar**, **Pagos**, **Conciliar**, **Cerrar**, **Resumen**.
+4. Pulse **Siguiente** en cada paso y **Terminar** al final.
+
+**Conviene saber**
+
+- Puede desmarcar a un miembro para dejarlo fuera de un lote; los miembros ya cubiertos aparecen como hechos.
+- **Resumen** enumera lo que hizo la ejecución, y lo que sigue abierto y a quién le toca actuar.
+- Un paso sin nada que hacer lo indica.
+
+**Véase también:** [La pantalla de Facturación](help:user.invoicing.hub) · [Agrupar facturas](help:user.invoicing.settlement)
+
+### Agrupar facturas en una
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un miembro tiene varias facturas abiertas y debería pagar una sola.
+
+![](assets/help/images/user-invoicing-settlement.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), pulse el icono de herramientas y **Agrupar en una factura**.
+2. Elija al menos dos facturas abiertas del mismo miembro.
+3. Confirme. Se le pregunta si desea adjuntar las facturas agrupadas.
+
+**Conviene saber**
+
+- La nueva factura es la que se debe y se reclama. Las originales siguen siendo legibles detrás de ella.
+- Las líneas y el IVA se trasladan; la declaración de IVA cuenta las originales una sola vez.
+
+**Véase también:** [Facturas abiertas](help:user.invoicing.open)
+
+### Repartir un gasto compartido
+
+**Público:** Propietario · Administrador/a de facturación
+
+Un coste compartido por la comunidad se divide entre los miembros.
+
+![](assets/help/images/user-invoicing-shared-expense.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), pulse el icono de herramientas y **Repartir un gasto**.
+2. Describa **El gasto** y después elija **Repartir por**: **Partes iguales**, **Suscripción**, **Uso** o **Clave propia**.
+3. Compruebe las **Partes**, desmarque a quien quiera **Excluir** y pulse **Contabilizar las partes**.
+
+**Conviene saber**
+
+- Una vez contabilizadas (tras la validación, si una regla la exige), las partes se incorporan como líneas en la siguiente factura de uso de cada miembro.
+- **Reversión — devolver como notas de crédito** devuelve el dinero.
+- **Recordar esta regla** vuelve a proponer la regla ajustada el mes siguiente.
+
+**Véase también:** [El asistente de cierre mensual](help:user.invoicing.wizard)
+
+### Reglas de recordatorio
+
+**Público:** Propietario · Administrador/a de facturación
+
+Decide cuándo y con qué frecuencia se reclama una factura vencida.
+
+![](assets/help/images/user-money-reminders-rules.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Facturación](app:/invoices), pulse el icono de herramientas y **Reglas de recordatorio**.
+2. Defina **Número de niveles de recordatorio**, **Días hasta el primer recordatorio** y **Días entre recordatorios**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Los recordatorios imprimen las menciones de pago que usted ha configurado.
+- Un recordatorio queda registrado en la factura y aparece con la etiqueta **Recordado**.
+
+**Véase también:** [Recordatorios automáticos](help:user.money.reminders.automatic) · [Condiciones de pago](help:user.money.legal.payment-terms)
+
+### Recordatorios automáticos
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que los recordatorios salgan solos.
+
+![](assets/help/images/user-money-reminders-automatic.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra **Reglas de recordatorio** en las herramientas de Facturación.
+2. Active **Recordatorios automáticos**.
+3. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Una vez al día, las facturas que han superado su plazo de pago registrado reciben el nivel siguiente, por el importe aún pendiente.
+- Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
+- Desactivado: usted envía cada recordatorio.
+
+**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
+
+### El registro de facturas
+
+**Público:** Propietario · Administrador/a de facturación
+
+Todas las facturas en una sola lista ordenable.
+
+![](assets/help/images/user-invoicing-register.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Registro de facturas](app:/invoice-register).
+2. Elija el **Año** o **Todos los años**.
+3. Ordene por **Fecha**, **Nombre** o **Importe**; el total está al final.
+
+**Conviene saber**
+
+- Los miembros ven las suyas; quienes emiten facturas ven las del espacio.
+- La exportación contable empieza aquí.
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export)
+
+### Exportaciones contables
+
+**Público:** Propietario · Administrador/a de facturación
+
+Entrega a su gestor las facturas y los pagos del año.
+
+![](assets/help/images/user-invoicing-accounting-export.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Registro de facturas](app:/invoice-register) y pulse **Exportación contable**.
+2. En **Exportación contable**, elija un formato, como **FEC (Francia, exigido en una inspección)**, **SAF-T (XML, internacional)**, **CSV contable**, **Pista de auditoría** o **Archivo del ejercicio (zip)**. La lista depende de su país; algunos países añaden el suyo, como **DATEV (Buchungsstapel)**.
+3. En **Antes de guardar**, lea la comprobación y pulse **Guardar archivo e informe**.
+
+**Conviene saber**
+
+- Cada formato indica lo que pretende ser. «Para que su gestor lo importe y lo revise — no es una presentación» no es una declaración de impuestos.
+- DesKilo no lleva libro de contabilidad por partida doble: los archivos se reconstruyen a partir de las facturas y los pagos, y su gestor los completa.
+- Un archivo queda bloqueado hasta que se corrigen los problemas del origen.
+- Algunos formatos señalan que DesKilo no es un programa certificado en su país.
+
+**Véase también:** [Cuenta de IVA](help:user.money.vat.account) · [El registro de facturas](help:user.invoicing.register)
+
+### Análisis de negocio
+
+**Público:** Propietario · Administrador/a de facturación
+
+Observa cómo rinde el espacio.
+
+**Pasos**
+
+1. Abra [Análisis de negocio](app:/bi), o **Informes** en el menú.
+2. Elija la **Duración del periodo** (**Mes**, **Trimestre**, **Año**), una comparación y, cuando se ofrezca, una agrupación.
+3. Lea los análisis por área, como **Finanzas** (**Facturado**, **Cobrado**) y **Espacios y capacidad**.
+4. Guarde una vista en **Vistas**, o pulse **Exportar a PDF**.
+
+**Conviene saber**
+
+- Solo ve los análisis que tiene permiso para leer.
+- Cobrado son los pagos conciliados con facturas. No es un beneficio: en la cifra no entra ningún coste.
+- El periodo actual es parcial; sus cifras todavía cambian.
+
+**Véase también:** [La pantalla de Facturación](help:user.invoicing.hub)
+
+## Avanzado
+
+**Público:** Propietario · Operador/a
+
+Lo que rodea al trabajo diario: la cara de pruebas de un espacio y la real, los asistentes, el grabador de tareas y sus visitas guiadas, la demo, las aplicaciones de cada dispositivo y qué hacer cuando algo no funciona.
+
+En este capítulo:
+- [Un espacio tiene dos caras](help:user.advanced.environments) · [Entre en una cara](help:user.advanced.enter-environment) · [Un espacio de prueba](help:user.advanced.test-space) · [Quién puede desplegar](help:user.advanced.deploy-permissions) · [Despliegue entre las caras](help:user.advanced.deploy) · [Situación del espacio y archivo del ejercicio](help:user.advanced.status-archive)
+- [Su propio servidor](help:user.advanced.own-server)
+- [Asistentes](help:user.advanced.assistants) · [Conecte un asistente](help:user.advanced.assistants-connect) · [Aprobaciones](help:user.advanced.assistants-approve) · [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy)
+- [El grabador de tareas](help:user.advanced.recorder) · [Grabe una tarea](help:user.advanced.recorder-record) · [Revise una grabación](help:user.advanced.recorder-review) · [Cree una guía](help:user.advanced.guide-make) · [Siga una guía](help:user.advanced.guide-play) · [El menú circular](help:user.advanced.guide-circle) · [Edite una guía](help:user.advanced.guide-edit) · [Privacidad de las grabaciones](help:user.advanced.recorder-privacy)
+- [El espacio de demostración](help:user.advanced.demo) · [Modo grabación](help:user.advanced.filming)
+- [Plataformas](help:user.advanced.platforms) · [Detalles de soporte](help:user.advanced.support) · [Cuando algo no funciona](help:user.advanced.troubleshooting)
+- [Las palabras de la aplicación](help:user.advanced.glossary) · [Accesibilidad y teclado](help:user.advanced.accessibility) · [Más ayuda](help:user.advanced.help)
+
+### Un espacio tiene dos caras
+
+**Público:** Propietario
+
+Quiere un lugar donde probar cosas sin tocar las reservas y facturas reales. Un espacio puede venir en pareja: una cara de pruebas y una cara real, con el mismo nombre.
+
+![](assets/help/images/user-advanced-environments.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Al crear un espacio, deje marcada la opción **Crear la pareja desarrollo y producción**. Ambas caras son suyas desde el primer segundo.
+2. ¿Ya tiene un espacio suelto? Abra [Ajustes](app:/settings), vaya a **Gobernanza** y pulse **Crear su gemelo**. La configuración se copia una sola vez.
+3. A partir de ahí, las dos caras son independientes. Solo un despliegue traslada algo de una a otra.
+
+**Conviene saber**
+
+- La cara de desarrollo se llama **Desarrollo — para probar**. La cara de producción es **Producción — las facturas se deben**.
+- Todo documento impreso en la cara de desarrollo lleva una marca de agua, para que no pueda confundirse con uno real.
+- **Crear su gemelo** solo aparece cuando la función **Pares de entornos** está activada, y solo para el propietario. El despliegue entre los lados corresponde a quienes tienen los permisos de despliegue.
+- Los miembros, las reservas, las facturas y los pagos nunca se copian entre las caras.
+
+**Véase también:** [Entre en una cara](help:user.advanced.enter-environment) · [Un espacio de prueba](help:user.advanced.test-space)
+
+### Entre en la cara real o en la de pruebas
+
+**Público:** Todos
+
+Quiere abrir un espacio por la cara que necesita. Su cuenta ve las dos caras de una pareja, cada una con su propio botón.
+
+**Pasos**
+
+1. Abra [Yo](app:/me) y busque el espacio en **Mis espacios**.
+2. Pulse **Abrir espacio** para la cara real, o **Espacio de prueba** para la cara donde practicar.
+3. O abra [Perfiles](app:/profiles): la pareja es una sola tarjeta. Púlsela y después **Elegir un entorno** entre **DEV** y **PROD**.
+
+**Conviene saber**
+
+- Una cara a la que no puede entrar aparece atenuada y no hace nada.
+- Quien es miembro de la cara real lo es siempre también de la cara de pruebas.
+- El botón de pruebas lleva la indicación «Espacio de prueba: reservas y facturas de ensayo»; el real, «Reservas y facturas reales».
+
+**Véase también:** [Quién puede desplegar](help:user.advanced.deploy-permissions)
+
+### Para qué sirve un espacio de prueba
+
+**Público:** Propietario
+
+Está a punto de cambiar precios, reglas o el plano y quiere ver antes el efecto. Hágalo en el espacio de prueba.
+
+**Pasos**
+
+1. Entre en la cara de pruebas con **Espacio de prueba**.
+2. Configure, importe un archivo de espacio, invite a un colega, emita una factura de ensayo, mueva puestos, imprima.
+3. Cuando esté bien, [despliéguelo en la cara real](help:user.advanced.deploy).
+
+**Conviene saber**
+
+- El interruptor **Tipo de espacio** en [Ajustes](app:/settings) (bajo **Gobernanza**) indica de qué clase es un espacio. Solo lo ven los propietarios.
+- Declarar un espacio de producción plantea **¿Declarar este espacio de producción?**: el banner desaparece y los documentos pierden su marca de agua. Las facturas ya emitidas conservan la marca de agua que tenían.
+- Declare producción solo cuando las facturas que salen del espacio se deban realmente.
+- Al invitar a alguien, puede elegir si también accede al espacio de producción: **Espacio de prueba** o **Espacio de producción**. En ambos casos se une al espacio de prueba.
+
+**Véase también:** [Un espacio tiene dos caras](help:user.advanced.environments)
+
+### Quién puede desplegar y entrar en producción
+
+**Público:** Propietario · Copropietario
+
+Usted decide quién puede tocar la cara real. Tres permisos de la matriz de roles lo controlan.
+
+**Pasos**
+
+1. Abra [Roles](app:/roles).
+2. Busque **Entrar en el espacio de producción**, **Desplegar en desarrollo** y **Desplegar en producción**.
+3. Active cada uno para los roles que lo necesiten.
+
+**Conviene saber**
+
+- Los propietarios y copropietarios tienen los tres. Los administradores tienen **Desplegar en desarrollo** y **Entrar en el espacio de producción**. Los miembros no tienen ninguno hasta que usted se lo conceda.
+- Quien puede desplegar en producción puede desplegar siempre en desarrollo.
+- Un rol solo entra en la cara de producción mientras tenga **Entrar en el espacio de producción**: en caso contrario se rechaza una invitación o una incorporación a producción, y la aplicación dice por qué.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix) · [Despliegue entre las caras](help:user.advanced.deploy)
+
+### Despliegue entre las dos caras
+
+**Público:** Propietario · Copropietario · Administrador/a
+
+Ha dejado lista la configuración en una cara y quiere que la otra la tenga.
+
+**Pasos**
+
+1. Colóquese en la cara en la que quiere escribir y abra [Ajustes](app:/settings) → **Gobernanza** → [Despliegue](app:/deployment).
+2. Marque lo que debe viajar. Las entidades se agrupan en **Configuración**, **Datos maestros** e **Informes**; lo que una entidad **necesita** se marca con ella.
+3. Pulse **Traer desde PROD…** (desde la cara de desarrollo) o **Traer desde DEV…** (desde la cara de producción).
+4. Lea la vista previa: **Lo que cambia en el lado de producción**, o en el de desarrollo. Cuando ambas caras coinciden, dice **Sin cambios**.
+5. Confirme. La pregunta nombra la cara en la que se escribe: **¿Desplegar en este DEV?** o **¿Desplegar en este PROD?**
+
+**Conviene saber**
+
+- Un despliegue entra siempre en la cara en la que usted está. No se puede empujar nada a la otra cara por error.
+- Cada despliegue queda en el **Diario**. **Deshacer** en el último devuelve lo que la cara tenía antes.
+- Los planos se fusionan: lo que solo tiene esta cara se conserva, porque un puesto puede tener una reserva. Las etiquetas de credencial nunca viajan.
+- Los miembros, las reservas, las facturas, los pagos, los eventos y las credenciales nunca viajan.
+- La entrada solo se muestra cuando la función **Despliegues** está activada, el espacio tiene gemelo y usted tiene un permiso de despliegue.
+
+**Véase también:** [Quién puede desplegar](help:user.advanced.deploy-permissions)
+
+### Situación del espacio y archivo del ejercicio
+
+**Público:** Propietario · Administrador/a · Administrador/a de facturación
+
+Quiere ver de un vistazo lo que el espacio ha facturado y cobrado, y un archivo completo del año para sus registros.
+
+**Pasos**
+
+1. Abra [Situación del espacio](app:/money/status). Elija los meses en **Desde** y **Hasta**.
+2. Lea **Facturado**, **Abonos**, **Pagos conciliados**, **Pagos recibidos**, **Gastos reembolsados**, **Gastos repartidos** y **Créditos concedidos**; **Neto** lo resume. Pulse la impresora para **Imprimir la situación**.
+3. Para el archivo anual, elija **Archivo del ejercicio (zip)** en las exportaciones de facturas.
+
+**Conviene saber**
+
+- **Neto** no es un beneficio ni un saldo bancario. Los pagos conciliados y los recibidos se solapan, así que no los sume.
+- La situación aparece cuando la función **Situación del espacio** está activada.
+- Un espacio de desarrollo produce archivos marcados DEV: no son la contabilidad real.
+
+**Véase también:** [Informe del espacio](help:user.workspace.export.workspace-report)
+
+### Gestione su propio servidor
+
+**Público:** Operador/a · Propietario
+
+Quiere los datos de su comunidad en un servidor que usted controle, o pertenece a una organización que gestiona uno.
+
+**Pasos**
+
+1. Lea cómo se configura un servidor en [Cómo gestionar el suyo](help:user.backend.how).
+2. En cada dispositivo, apunte la aplicación hacia él: [Su propio servidor](help:user.backend.server).
+3. Compruebe en [Yo](app:/me) → **Dónde están mis espacios**: enumera los servidores que usa esta cuenta.
+
+**Conviene saber**
+
+- La aplicación apunta a un solo servidor para iniciar sesión; **Este dispositivo usa** indica cuál. Los demás servidores a los que pertenece aparecen en **Dónde están mis espacios**.
+- Una invitación solo se comprueba en su propio servidor, así que únase a un espacio mientras la aplicación apunte al servidor que la emitió.
+- Un operador puede activar los asistentes para toda la instalación; véase [Aprobaciones](help:user.advanced.assistants-approve).
+
+**Véase también:** [Su propio servidor](help:user.backend.server)
+
+### Asistentes: qué son
+
+**Público:** Todos
+
+Un asistente de IA como Claude o ChatGPT puede consultar y reservar cosas por usted en DesKilo. Actúa como usted, solo en los espacios y para las acciones que usted apruebe.
+
+![](assets/help/images/user-advanced-assistants-policy.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Asistentes](app:/assistants). **Su situación aquí** enumera lo que aún le falta: **Inicio de sesión con Google**, **Identidad para asistentes**, **Aprobación de la base de datos**, **Oferta del espacio de trabajo**, **Su rol**, **Su consentimiento**, **Servidor**.
+2. Recorra la lista de arriba abajo; cada línea indica quién da el siguiente paso.
+
+**Conviene saber**
+
+- Participan varias personas: usted, el propietario o un administrador del espacio, un administrador de la base de datos y el operador de la instalación. Ninguna persona sola puede abrirlo todo.
+- Activar los asistentes no concede nada a nadie por sí solo.
+- Bajo **Asistentes conectados** ve lo que está conectado y puede **Desconectar** cada uno. **Su uso de asistentes hoy** cuenta **Solicitudes**, **Rechazadas**, **Aplicadas** y **Pendiente de validación**.
+
+**Véase también:** [Conecte un asistente](help:user.advanced.assistants-connect)
+
+### Conecte un asistente
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Quiere que su asistente trabaje con sus propias reservas y su cuenta.
+
+**Pasos**
+
+1. Abra [Conectar un asistente](app:/assistants/connect). Bajo **Antes de conectar**, cada línea debería decir **Hecho**.
+2. Bajo **¿Qué asistente usa?**, elija **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** u **Otro**. Copie **Su dirección de DesKilo para asistentes** en él como indican los pasos.
+3. Inicie sesión cuando el asistente se lo pida y elija después este espacio y lo que el asistente puede hacer en él.
+4. Pulse **Probar la conexión** y pregunte a su asistente: «Con DesKilo, ¿cuáles son mis reservas de esta semana?»
+
+**Conviene saber**
+
+- El propio asistente le pide que apruebe el espacio y cada tipo de operación; nada se elige por usted.
+- Conectar requiere la función **Interfaz MCP** en el espacio. Si está desactivada, la pantalla le envía a Asistentes.
+- ¿No funciona? **Probar la conexión** indica qué está esperando aún.
+- **Desconectar** elimina el asistente de todos los espacios de esta base de datos. Lo que ya leyó no se recupera.
+
+**Véase también:** [Aprobaciones](help:user.advanced.assistants-approve)
+
+### Aprobaciones y confirmaciones de los asistentes
+
+**Público:** Propietario · Operador/a
+
+Los asistentes se aprueban por capas, para que una persona no pueda activar uno por sí sola.
+
+**Pasos**
+
+1. El propietario del espacio (o quien gestione las integraciones) abre [Configuración de asistentes](app:/settings/assistant-setup) y la recorre: **Activar asistentes en este espacio de trabajo**, **Elegir qué pueden hacer los asistentes**.
+2. Cada miembro lo pide una vez: **Solicitar aprobación**. Un administrador de la base de datos decide en [Aprobaciones de asistentes](app:/database/assistant-approvals) con **Aprobar** o **Rechazar**.
+3. El operador de la instalación abre [Instalación: asistentes](app:/installation/assistants) y pulsa **Activar para todos los espacios**. La página enumera también los **Administradores de la base** y los **Clientes de asistente**, cada uno **Aprobado**, **Bloqueado** o **Pendiente de aprobación**.
+4. Cuando un asistente envía una solicitud de gran impacto, se le pregunta: **Confirmar una solicitud del asistente**. **Confirmar** le permite enviar esa solicitud exacta una vez; **Rechazar** no hace nada.
+
+**Conviene saber**
+
+- Las aprobaciones y los cambios de la instalación requieren su segundo factor.
+- La aprobación caduca; la pantalla le indica los días que quedan y usted vuelve a pedirla.
+- Una solicitud confirmada sigue estando sujeta a las reglas de validación del espacio.
+- Si no hay otro administrador de la base de datos, el operador aprueba el acceso, con un motivo, durante un máximo de 30 días.
+
+**Véase también:** [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy)
+
+### Qué pueden hacer los asistentes en un espacio
+
+**Público:** Propietario · Administrador/a
+
+Usted decide qué servicios ofrece un espacio a los asistentes.
+
+**Pasos**
+
+1. Abra [Acceso de asistentes](app:/settings/assistants).
+2. Active **Ofrecer servicios de asistente**.
+3. Bajo **Registros sobre los que puede actuar un asistente**, elija **Solo registros propios** o **Todo el espacio**.
+4. Marque las operaciones, por grupos: **Reservas y cuenta propias**, **Solicitudes financieras**, **Solicitudes de membresía**, **Validaciones**.
+5. Pulse **Guardar**.
+
+**Conviene saber**
+
+- Las operaciones se leen como «Ver plazas libres», «Reservar una plaza por usted», «Registrar su entrada» o «Cancelar sus reservas que aún no han empezado».
+- Los asistentes reciben respuestas minimizadas. **Detalles opcionales** permite autorizar más; cada persona sigue eligiendo por sí misma.
+- Los asistentes ya conectados solo reciben servicios nuevos cuando cada persona vuelve a aprobar.
+- Active primero la función **Interfaz MCP** en [Funciones](app:/features). Viene desactivada por defecto.
+- Es para quienes tienen el permiso de integraciones; los propietarios siempre lo tienen.
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### El grabador de tareas y las visitas guiadas
+
+**Público:** Todos
+
+Quiere mostrar a alguien cómo se hace una tarea, o que se lo muestren. Grabe la tarea una vez, conviértala en una guía y sígala paso a paso en la aplicación real.
+
+![](assets/help/images/user-advanced-wizard.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra el [Asistente de tareas](app:/task-wizard): en el menú en una pantalla ancha, o bajo **Avanzado** en [Yo](app:/me).
+2. **Guías** contiene sus propias guías y las que vienen con la aplicación, como **Reservar un puesto**.
+3. **Grabaciones** enumera las tareas que ha grabado, y **Grabar una tarea** inicia una nueva.
+4. **Herramientas** abre un archivo de tarea sin necesidad de cuenta.
+
+**Conviene saber**
+
+- Todo permanece en su dispositivo hasta que lo exporte.
+- El grabador de tareas es una función (**Grabador de tareas**). Cuando está desactivada, el asistente de tareas no aparece en los menús.
+- Debe haber iniciado sesión para grabar o seguir una guía.
+
+**Véase también:** [Grabe una tarea](help:user.advanced.recorder-record) · [Siga una guía](help:user.advanced.guide-play)
+
+### Grabe una tarea
+
+**Público:** Todos
+
+Quiere capturar lo que hace, para que pueda convertirse en un documento o en una guía.
+
+![](assets/help/images/user-advanced-record.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En el [Grabador de tareas](app:/task-recorder), lea **Antes de grabar**.
+2. Pulse **Empezar a grabar**.
+3. Haga la tarea como de costumbre, en cualquier pantalla del espacio o de [Yo](app:/me).
+4. Use la barra que muestra **Grabando** para **Pausar**, **Reanudar**, **Añadir una nota** o **Detener**.
+
+**Conviene saber**
+
+- Una grabación dura hasta 500 pasos o 30 minutos, y se borra del dispositivo a los 30 días. Un archivo que haya exportado queda donde lo guardó.
+- Cada paso nombra la pantalla, la acción y lo que respondió la aplicación, como **Reservado** o **Rechazado**.
+- El inicio de sesión, el pago, los mensajes y otras pantallas protegidas dejan solo una marca.
+- Si cambia a otra cuenta o espacio, la grabación termina.
+
+**Véase también:** [Privacidad de las grabaciones](help:user.advanced.recorder-privacy)
+
+### Revise, edite y exporte una grabación
+
+**Público:** Todos
+
+Quiere comprobar lo que se capturó antes de compartirlo.
+
+**Pasos**
+
+1. En el [Asistente de tareas](app:/task-wizard), pulse una grabación en **Grabaciones**.
+2. Lea los pasos. Pulse **Dejar fuera de la exportación** en cualquier paso que no desee; **Volver a incluir** lo recupera.
+3. Mire **Lo que contendrá el archivo**.
+4. Elija **Exportar un archivo**, **Exportar un paquete de tarea** o **Exportar como documento de Word**.
+
+**Conviene saber**
+
+- Dejar un paso fuera cambia solo la exportación. La grabación del dispositivo no cambia.
+- Para leer un archivo de otra persona, use **Abrir un archivo de tarea** en el [Banco de trabajo de tareas](app:/task-workbench). No se sube nada y no hace falta cuenta.
+- Un archivo dañado o creado por una versión más reciente se rechaza con un mensaje claro.
+- **Borrar de este dispositivo** elimina la grabación; los archivos exportados no se tocan.
+
+**Véase también:** [Cree una guía](help:user.advanced.guide-make)
+
+### Cree una guía a partir de una grabación
+
+**Público:** Todos
+
+Quiere que otras personas sigan una tarea que usted grabó.
+
+**Pasos**
+
+1. En el [Asistente de tareas](app:/task-wizard), pulse **Crear una guía** junto a una grabación. O elija **Añadir una guía** → **Desde una de mis grabaciones** o **Desde un archivo o paquete de tarea**.
+2. Revise el borrador. Cada paso está escrito tal como lo verá el lector.
+3. Póngale un nombre en **Nombre de la guía**.
+4. Pulse **Añadir a mis guías**.
+
+**Conviene saber**
+
+- La guía se conserva en su dispositivo bajo **Guías**. Una guía se puede editar o eliminar: **Eliminar esta guía** no toca su grabación.
+- Un paso que reserva espera la respuesta real. No se hace nada por el lector.
+- **Guardar la guía** la escribe en un archivo que puede entregar.
+
+**Véase también:** [Edite una guía](help:user.advanced.guide-edit)
+
+### Siga una guía
+
+**Público:** Todos
+
+Quiere que le acompañen en una tarea sobre las pantallas reales.
+
+**Pasos**
+
+1. En el [Asistente de tareas](app:/task-wizard), pulse **Iniciar la guía** junto a una de las guías.
+2. Un panel muestra Paso 1 de … y lo que hay que hacer, por ejemplo «Toque “Reservar”.» o «Rellene “…” y salga del campo.»
+3. Pulse **Abrir y resaltar** para ir a la pantalla correcta y ver el control marcado.
+4. Haga usted mismo el paso. La guía lo detecta y avanza. En un paso de lectura, pulse **Hecho**.
+
+**Conviene saber**
+
+- Use **Atrás** y **Omitir**, y abra **Todos los pasos** para ver cada uno como **Pendiente**, **Esperando**, **Hecho**, **Confirmado** u **Omitido**.
+- Un paso que reserva espera la respuesta: **Esperando el resultado…**. Si se rechaza, la guía dice qué probar; si no llegó respuesta, le pide que lo compruebe antes de volver a intentarlo.
+- **Detener la guía** la termina. No se deshace nada.
+- La guía se pausa cuando cambia la cuenta o el espacio, o cuando se desactiva el grabador de tareas.
+
+**Véase también:** [El menú circular](help:user.advanced.guide-circle)
+
+### El menú circular
+
+**Público:** Todos
+
+Necesita toda la pantalla para trabajar, pero quiere tener la guía a mano. Minimícela.
+
+**Pasos**
+
+1. En el panel de la guía, pulse **Minimizar la guía**. Se reduce a un pequeño círculo.
+2. Pulse el círculo para ver un menú: Mostrar la guía (paso … de …), **Abrir y resaltar**, un botón a la página del paso, **Hecho**, **Omitir**, **Atrás**, **Reanudar** y **Detener la guía**.
+3. Elija Mostrar la guía para abrir de nuevo el panel.
+
+**Conviene saber**
+
+- El menú solo ofrece lo que tiene sentido ahora: **Reanudar** solo en pausa, **Hecho** solo en un paso de lectura.
+- **Cerrar** en el panel lo oculta; la guía en sí se queda donde estaba.
+- Abrir y resaltar le lleva a la página del paso y señala el control; el botón de página le lleva solo a la página.
+
+**Véase también:** [Siga una guía](help:user.advanced.guide-play)
+
+### Edite o repare una guía
+
+**Público:** Todos
+
+Una guía se lee mal, o un paso apunta a la página equivocada. Corríjalo en el borrador.
+
+**Pasos**
+
+1. En el [Asistente de tareas](app:/task-wizard), pulse **Editar** junto a su guía.
+2. En un paso, pulse **Escribir el texto** y escriba su propio texto.
+3. Bajo **Destino del paso**, elija la página a la que se refiere el paso. Pulse **Abrir y resaltar** para comprobarlo.
+4. Active **El lector puede omitirlo** en un paso opcional.
+5. Pulse **Guardar los cambios**.
+
+**Conviene saber**
+
+- Un paso marcado como **Una instrucción aún por escribir** necesita sus palabras. **Un paso que el grabador no puede describir** y **Haga este paso usted mismo** los hace el lector.
+- Los pasos en pantallas protegidas, como el pago, piden al lector que los haga a solas.
+- No puede hacer que una guía espere un resultado que su acción no tiene; esa parte es fija.
+- Una guía que nombra pasos que esta versión no conoce se puede leer, pero no seguir.
+
+**Véase también:** [Cree una guía](help:user.advanced.guide-make)
+
+### Qué conserva una grabación
+
+**Público:** Todos
+
+Quiere saber exactamente qué no deja rastro.
+
+**Pasos**
+
+1. Abra el [Grabador de tareas](app:/task-recorder).
+2. Lea **Antes de grabar**.
+3. Deje desactivado **Capturar valores (para informes de problemas)** salvo que se lo pida un desarrollador.
+
+**Conviene saber**
+
+- Normalmente una grabación nunca conserva lo que escribe, los nombres, los importes, los mensajes, los códigos ni las contraseñas.
+- Con **Capturar valores** activado, conserva también lo que escribe y elige, para que un desarrollador pueda reproducir un problema. Las contraseñas, los datos de pago, las direcciones de correo y los números de teléfono siguen sin conservarse nunca. Al exportarla se le pregunta **Esta grabación contiene valores**.
+- No se sube nada: usted decide qué exportar.
+- Comparta un archivo solo con las personas que deban ver lo que usted introdujo.
+
+**Véase también:** [Grabe una tarea](help:user.advanced.recorder-record)
+
+### El espacio de demostración
+
+**Público:** Todos
+
+Quiere echar un vistazo antes de comprometerse. La demo es un espacio inventado, abierto a cualquiera, sin cuenta.
+
+**Pasos**
+
+1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración**.
+2. Lea la breve nota y pulse **Empezar**.
+3. Use **Ver como** para ver el mismo espacio como **La propietaria**, **Una administradora** o **Un miembro**.
+4. Pulse **Reiniciar la demo** para devolverla a como empezó, o **Salir de la demo**.
+
+**Conviene saber**
+
+- Todo es inventado: las personas, las reservas y las facturas. Nada llega a un espacio real y nada sale de su dispositivo.
+- Un banner dice **Demo** en cada pantalla.
+- Al cerrar la aplicación se olvida la sesión.
+- La oferta solo se muestra cuando la función **El espacio de demostración** está activada.
+
+**Véase también:** [Modo grabación](help:user.advanced.filming)
+
+### Modo grabación
+
+**Público:** Propietario
+
+Debe mostrar su espacio real —en un vídeo, una imagen o una charla— sin mostrar a sus miembros.
+
+**Pasos**
+
+1. Abra [Funciones](app:/features) y busque **Modo grabación**.
+2. Actívelo. Un banner dice **Modo grabación — personas inventadas** en cada pantalla.
+3. Grabe. Cuando termine, desactívelo de nuevo.
+
+**Conviene saber**
+
+- Cada nombre, correo, teléfono, dirección y fotografía se convierte en una persona inventada, la misma en todas partes. El plano, las reservas y las cifras siguen siendo reales.
+- Mientras está activado, los formularios de identidad se niegan a guardar, para que los datos inventados no sobrescriban los reales.
+- No puede ocultar lo que alguien haya escrito, como un mensaje o la etiqueta de un puesto. Lea la pantalla antes de grabar.
+- Para una imagen que no necesita ser de este espacio, use [la demo](help:user.advanced.demo).
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### DesKilo en sus dispositivos
+
+**Público:** Todos
+
+Quiere usar DesKilo allí donde trabaja. La misma cuenta y los mismos datos le siguen.
+
+**Pasos**
+
+1. **Android:** únase a la prueba cerrada en Google Play.
+2. iPhone y iPad: únase a la beta mediante TestFlight.
+3. Ordenador: una imagen de disco para macOS o un instalador para Windows desde la página de versiones; o simplemente abra la aplicación web.
+4. **Navegador:** abra la dirección que publica su espacio. No hay nada que instalar.
+
+**Conviene saber**
+
+- Un puesto reservado en un teléfono aparece en una pestaña del navegador un momento después.
+- La imagen de disco para macOS de la página de versiones está firmada y notarizada por Apple; ábrala con normalidad.
+- El instalador de Windows no está firmado: Windows SmartScreen avisa de un editor desconocido; elija Más información y luego Ejecutar de todas formas.
+- La lectura de una etiqueta de silla funciona en navegadores Chromium en Android (hacen falta HTTPS y un toque); las aplicaciones de Android y de iPhone leen las etiquetas directamente.
+- Una compilación sin servicios de Google y sin notificaciones push en la nube está construida y se ha enviado a F-Droid; todavía no está en la tienda de F-Droid. En ella, las notificaciones son locales y la bandeja de entrada es la fuente de verdad.
+- Las actualizaciones llegan por el canal desde el que instaló: Google Play, TestFlight, la página de versiones o recargando la aplicación web.
+
+**Véase también:** [Su credencial](help:user.profile.settings.badge)
+
+### Detalles de soporte
+
+**Público:** Todos
+
+Se pone en contacto con soporte y quiere enviar lo que les ayuda, sin exponer nada privado.
+
+![](assets/help/images/user-advanced-support.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Ayuda](app:/help) y pulse el icono de soporte (**Detalles de soporte**).
+2. Elija **Última hora** o **Últimas 24 horas**.
+3. Pulse **Preparar vista previa** y lea lo que contiene: Vista previa: … bytes.
+4. Pulse **Guardar** y envíe el archivo.
+
+**Conviene saber**
+
+- Solo se incluyen recuentos de eventos acotados y comprobaciones conocidas. Se excluyen las identidades, las direcciones de servidor, las credenciales, los registros de negocio y los logs en bruto.
+- Un archivo compartido no se puede revocar.
+- Si el contexto ha cambiado, la pantalla le pide preparar una nueva vista previa.
+- Un operador puede ejecutar `doctor --support-json` para la parte del servidor.
+
+**Véase también:** [Cuando algo no funciona](help:user.advanced.troubleshooting)
+
+### Cuando algo no funciona
+
+**Público:** Todos
+
+Algo parece ir mal. Pruebe esto, por orden.
+
+**Pasos**
+
+1. Busque un mensaje en la pantalla; la mayoría dice qué hacer. «Algo salió mal. Inténtalo de nuevo.» merece un reintento.
+2. Compruebe que está en la cara que cree: **Espacio de prueba** o **Abrir espacio** en [Yo](app:/me).
+3. Compruebe [Funciones](app:/features): una función que falta en el menú suele ser una función desactivada. Solo un propietario puede cambiarla.
+4. Compruebe el servidor en [Su propio servidor](help:user.backend.server): **Este dispositivo usa** lo nombra.
+5. Prepare los [Detalles de soporte](help:user.advanced.support) y envíelos.
+
+**Conviene saber**
+
+- Lo que ve depende de su rol: una pantalla ausente puede ser un permiso. Pregunte a su propietario.
+- Los administradores pueden activar el **Modo desarrollador** bajo **Avanzado** en [Ajustes](app:/settings). Añade una pantalla de [Desarrollador](app:/developer) donde **Exportar registro** y **Vaciar registro** ayudan a soporte. Se aplica a todos los miembros del espacio.
+- También puede informar de un error desde la sección Acerca de de la aplicación: **Informar de un error / sugerir una función**.
+- Una guía atascada en **Esperando el resultado…** significa que no llegó respuesta: compruebe el resultado antes de volver a intentarlo.
+
+**Véase también:** [Detalles de soporte](help:user.advanced.support)
+
+### Las palabras de la aplicación
+
+**Público:** Todos
+
+Las palabras que más se encuentra y qué significan aquí.
+
+| Palabra | Qué significa |
+|---|---|
+| **Espacio de trabajo** (también llamado espacio) | Un lugar gestionado por una comunidad: su plano, sus miembros, sus reglas y su dinero. Puede pertenecer a varios. |
+| **Yo** | Su propia cuenta: perfil, mensajes, espacios y ajustes, en todos sus espacios. |
+| **Plano** | O bien el plano de planta desde el que reserva, o bien un plan de membresía; véase **Miembros y planes**. |
+| **Planta** | Un piso o zona del plano. Una planta se puede reservar entera cuando la función está activada. |
+| **Mesa** | Un puesto reservable. Las oficinas y las salas agrupan mesas. |
+| **Media jornada** | La unidad en la que se cuentan las reservas y las suscripciones. |
+| **Validación** | Una regla que dice que una acción necesita una o más confirmaciones antes de contar. |
+| **Eventos** | El flujo de lo ocurrido, con las decisiones que le esperan arriba. |
+| **Quiosco** | Una tableta compartida en la puerta donde las personas registran su entrada con una credencial. |
+| **Función** | Una funcionalidad que el propietario activa o desactiva para todo el espacio. |
+| **Rol** | Lo que una persona puede hacer en un espacio. Los permisos se definen por rol. |
+| **Entorno** | La cara de desarrollo (pruebas) o la de producción (real) de un espacio. |
+| **Gemelo** | La otra cara de una pareja. |
+| **Despliegue** | Trasladar la configuración de una cara de una pareja a la otra. |
+| **Asistente** | Una herramienta de IA conectada a su cuenta, que actúa solo como usted permita. |
+| **Operador** | La persona que gestiona la instalación con la que habla la aplicación. |
+
+**Conviene saber**
+
+- Los propietarios pueden cambiar las palabras que usa un espacio en **Vocabulario**; la aplicación muestra entonces las del propio espacio.
+
+**Véase también:** [Vocabulario](help:user.workspace.settings.wording)
+
+### Accesibilidad y teclado
+
+**Público:** Todos
+
+Quiere que la aplicación se adapte a su forma de trabajar.
+
+**Pasos**
+
+1. Elija un aspecto en [Ajustes](app:/settings): **Tema**, **Idioma**, **Números y fechas**.
+2. Para pantallas más tranquilas, active el ajuste de movimiento reducido de su dispositivo.
+3. En un ordenador, pulse Escape en un asistente para retroceder.
+
+**Conviene saber**
+
+- El ajuste de movimiento reducido del dispositivo siempre prevalece sobre la función **Animaciones de la interfaz**; un propietario también puede desactivar esa función.
+- Salir de un asistente con cambios sin guardar pregunta antes: **Seguir editando** o **Descartar**.
+- Los controles llevan etiquetas de texto, de modo que un lector de pantalla los anuncia.
+- En la web y en un ordenador, una ventana ancha muestra el menú junto al contenido.
+
+**Véase también:** [Tema](help:user.profile.settings.theme) · [Idioma de la aplicación](help:user.profile.settings.language)
+
+### Dónde obtener más ayuda
+
+**Público:** Todos
+
+Se ha atascado en un campo o en una pantalla.
+
+**Pasos**
+
+1. Pulse el **?** junto a un campo: la guía se abre en ese campo.
+2. Abra [Ayuda](app:/help) para toda la guía; **Índice** salta a un capítulo.
+3. Los consejos de una pantalla se pueden descartar con **Ocultar consejo**; **Consejo siguiente** y **Consejo anterior** los recorren, y **Más información** abre la guía.
+4. Para volver a ver los consejos descartados, use **Volver a mostrar los consejos de ayuda** en sus ajustes.
+
+**Conviene saber**
+
+- La guía funciona sin conexión, en su idioma.
+- Su administrador puede responder preguntas sobre su espacio; los Detalles de soporte ayudan cuando se trata de la aplicación.
+
+**Véase también:** [Restaurar los consejos](help:user.profile.settings.restore-hints) · [Detalles de soporte](help:user.advanced.support)
+
+# Guía de puesta en marcha
+
+**DesKilo — construya su espacio, paso a paso.** Para quien va a crear un espacio de coworking, la sala de una asociación o una oficina compartida, y quiere saber qué es posible, qué es necesario y en qué orden.
+
+## Cómo usar esta guía
+
+**Público:** Propietario · Copropietario · Administrador/a · Operador/a
+
+Esta guía explica el *porqué*, el *orden* y las *consecuencias* de configurar un espacio. Los clics están en la [Guía de usuario](help:user.guide.how-to-read); cada sección enlaza con el lugar exacto. El ejemplo que seguimos es el espacio de demostración, *Atelier du Marché*, en Pézenas: una asociación con una sala, unas cuantas mesas y una cuota mensual. Sus personas y sus cifras son inventadas.
+
+*Tres niveles, en este orden*
+
+| Nivel | Qué hace usted | Cuánto tiempo |
+|---|---|---|
+| *Abrir* | Un lugar, los horarios, las personas que aprueban, una invitación. Al final, los miembros pueden reservar. | unos 20 minutos |
+| *Operar* | Roles, tarifas, pagos, notificaciones. Al final, el espacio puede funcionar día a día. | una tarde, repartida en varios días |
+| *Crecer* | Facturación e impuestos, informes, un quiosco en la puerta, analítica, asistentes. Solo cuando los necesite. | cuando llegue el momento |
+
+Solo *Abrir* es obligatorio para empezar. Puede detenerse tras cualquier nivel: nada le obliga a seguir.
+
+*Elija su camino*
+
+| Usted quiere… | Empiece aquí |
+|---|---|
+| Saber qué puede hacer DesKilo y qué preparar | [Antes de empezar](help:setup.before.overview) |
+| Un lugar que los miembros puedan reservar, hoy mismo | [Construir el lugar](help:setup.place.overview) |
+| Decir quién puede hacer qué y quién aprueba | [La matriz de roles](help:user.roles.matrix) |
+| Cobrar la cuota de membresía | [Dinero](help:setup.money.overview) |
+| Informar a los miembros de lo que ocurre | [Notificaciones](help:setup.notify.overview) |
+| Emitir facturas y declarar el IVA | [Facturación](help:setup.money.invoicing) · [IVA](help:setup.money.vat) |
+| Una tableta de pared, informes o analítica | [Quiosco](help:user.kiosk.mode) · [El editor de informes](help:user.money.reports.editor) · [Analítica del negocio](help:user.invoicing.bi) |
+| Dejar que un asistente actúe en su nombre | [Asistentes](help:user.advanced.assistants) |
+
+*Dos compañeros de viaje*
+
+- La *página del asistente de configuración* (`setup.html`) le permite preparar todo en su navegador antes de tocar la aplicación: las respuestas se guardan en el navegador, no se envía nada a ninguna parte y puede exportar un archivo que la aplicación lee. Es el mejor lugar para pensar junto con su contable. Véase [Preparar un espacio con el cuestionario de configuración](help:user.start.questionnaire).
+
+![](assets/help/images/setup-guide-wizard.es.b8fa17aa9.jpg)
+
+- El *espacio de demostración* le permite practicar primero, sin nada real en juego. Véase [El espacio de demostración](help:user.advanced.demo).
+
+**Conviene saber**
+
+- Cada sección indica su público en la segunda línea, para que pueda saltarse lo que no le concierne.
+- Un bloque que empieza por **Atención** marca una decisión que luego es difícil de deshacer, y dice cuándo.
+- Esta guía nunca certifica nada legal ni fiscal: dice lo que hace la aplicación y lo que conviene confirmar con un contable.
+
+## Antes de empezar
+
+Un poco de preparación le ahorra lo que más cuesta después: volver a escribirlo todo y las decisiones que ya no se pueden deshacer. Este capítulo muestra qué hace DesKilo, qué necesita realmente para abrir y qué conviene tener a mano.
+
+En este capítulo:
+- [Qué puede hacer DesKilo](help:setup.before.what)
+- [Qué es necesario y qué es opcional](help:setup.before.necessary)
+- [Un espacio de prueba o uno real](help:setup.before.environment)
+- [Partir de una plantilla o de cero](help:setup.before.template)
+- [Qué preparar](help:setup.before.prepare)
+- [Decisiones difíciles de deshacer](help:setup.before.permanent)
+- [Quién hace qué](help:setup.before.who)
+
+### Qué puede hacer DesKilo
+
+**Público:** Propietario · Copropietario
+
+Usted quiere ver el conjunto antes de elegir nada. DesKilo agrupa sus funciones en nueve procesos; la pantalla **Funciones** muestra una tarjeta por proceso con su estado.
+
+![](assets/help/images/setup-before-processes.es.b8fa17aa9.jpg)
+
+*Los nueve procesos, en palabras sencillas*
+
+| Proceso | Qué ofrece a un miembro |
+|---|---|
+| **Espacio y acceso** | Una puerta de entrada: unirse con el ID del espacio, un rol, una credencial. |
+| **Gestión de espacios** | Un lugar que se parece al real: plantas, salas, mesas, horarios de apertura. |
+| **Reservas y uso** | Reservar una mesa o una sala, entrar y salir, ver qué está libre. |
+| **Calendario y coordinación** | Un calendario, mensajes y solicitudes que alguien confirma. |
+| **Ofertas para miembros** | Un plan, precios de servicios y acuerdos. |
+| **Facturación y pagos** | Un estado de cuenta, facturas, pago, recordatorios, IVA. |
+| **Documentos e información** | Documentos para leer, informes para imprimir, sus propios datos para exportar. |
+| **Operaciones y administración** | Un espacio con sus propios colores y sus propias palabras. |
+| **Integraciones y automatización** | Notificaciones y documentos entregados a través de servicios externos. |
+
+**Conviene saber**
+
+- Un espacio nuevo arranca con un conjunto sensato de funciones activadas; no tiene que decidir una por una. Desactivar una función solo detiene lo nuevo y no borra nada.
+- Una función que depende de otra la activa consigo, y la pantalla indica qué se ha activado. Véase [Un interruptor de función](help:user.features.switch).
+- Las funciones marcadas como alfa o beta piden su consentimiento al activarlas.
+
+**Véase también:** [Activar y desactivar funciones](help:user.features.processes)
+
+### Qué es necesario y qué es opcional
+
+**Público:** Propietario · Copropietario · Administrador/a
+
+Usted quiere conocer el camino más corto hacia un espacio que se pueda reservar. La aplicación mantiene una lista de preparación llamada **Configuración de este espacio** y, en la pantalla Reservar, dice a los propietarios **Antes de que alguien pueda reservar aquí** qué falta.
+
+*Lo que debe existir antes de la primera reserva*
+
+1. **Días de apertura, zona horaria y moneda**: una zona horaria, una moneda y al menos un día de apertura.
+2. **Puestos reservables en el plano**: al menos un asiento.
+3. **Roles y quién valida las solicitudes**: solo cuenta cuando una regla sobre reservas exige más validadores de los que tiene el espacio. Una regla que pida dos aprobaciones cuando usted está solo en el espacio dejaría las solicitudes esperando para siempre.
+
+Una cuarta fila, **Servidor y versión de la base de datos**, solo bloquea cuando el servidor va por detrás de esta aplicación; entonces espera al operador del servidor.
+
+*Lo que es opcional y puede dejarse para más tarde*
+
+- **Planes de membresía y tarifas**
+- **Invitar a los primeros miembros**
+- **Cómo pagan los miembros**
+- **Exportación y recuperación**
+- **Datos que necesitan sus funciones (identidad, banco, plataformas)**
+- **Una primera reserva**
+
+Cada uno de estos pasos puede aplazarse con **Más adelante** y recuperarse después; la lista indica si un paso está **Por configurar**, **Listo**, **No es necesario aquí** o **A la espera de otra persona**. Existen otros dos estados: **Aún no verificado** (**Exportación y recuperación** pasa a Listo solo tras una exportación real en los últimos 90 días) y una fila que no se pudo leer.
+
+**Conviene saber**
+
+- La lista nombra quién actúa: **Usted**, **El operador del servidor** o **Un administrador de la base de datos**.
+- Opcional no significa poco importante: en cuanto factura, su identidad legal es obligatoria para esa función. La lista la llama un dato que necesitan sus funciones.
+- Si activa la facturación sin identidad legal, la aplicación se lo permite; se niega en el momento de emitir una factura y dice qué falta.
+
+**Véase también:** [Revisar su espacio](help:setup.place.check) · [La tarjeta Primeros pasos y los consejos](help:user.start.get-started)
+
+### Un espacio de prueba o uno real
+
+**Público:** Propietario · Copropietario · Operador/a
+
+Usted quiere probar sin consecuencias y después llevar el espacio real. Un espacio puede ser de prueba, real, o un par vinculado con el mismo nombre.
+
+![](assets/help/images/setup-before-environment.es.b8fa17aa9.jpg)
+
+| Opción | Elíjala cuando | Qué ocurre |
+|---|---|---|
+| **Un espacio de prueba** | Está aprendiendo. | Cada pantalla y cada documento indica que es una prueba: los documentos llevan una marca de agua. Sin facturación real. |
+| **Un espacio real** | Ya conoce sus ajustes. | Las facturas que emite son exigibles. |
+| **Un par vinculado de prueba y real** | Quiere ensayar los cambios antes de que los vean los miembros reales. | Dos espacios, ambos suyos. Solo un despliegue traslada la configuración de uno a otro; los miembros, las reservas, las facturas y los pagos nunca viajan. |
+
+**Conviene saber**
+
+- El selector empieza en la opción de prueba.
+- El entorno es una declaración del propietario; quien tenga el permiso de configuración (el propietario siempre) puede cambiarlo más tarde, y las facturas ya emitidas conservan la marca de agua que llevaban, así que empiece con un espacio de prueba si tiene dudas.
+- Para practicar sin un espacio propio, utilice el espacio de demostración.
+
+**Véase también:** [Un espacio tiene dos caras](help:user.advanced.environments) · [Crear un espacio](help:user.start.create) · [Un espacio de prueba](help:user.advanced.test-space)
+
+### Partir de una plantilla o de cero
+
+**Público:** Propietario
+
+Usted quiere una ventaja inicial sin quedar atado a las decisiones de otros. Al crear un espacio, **Partir de** ofrece **Espacio vacío** o una plantilla lista para usar, y viene preseleccionada *A tiny space*; elija *Espacio vacío* si prefiere un lienzo en blanco.
+
+![](assets/help/images/setup-before-template.es.b8fa17aa9.jpg)
+
+*Las dos plantillas incluidas*
+
+| Plantilla | Qué configura |
+|---|---|
+| A tiny space | Dos plantas, cuatro mesas, ocho asientos y nada más: lo justo para reservar, escanear y explorar desde el primer minuto. |
+| Association de coworking (France) | Medias jornadas de 7:00 a 13:00 y de 13:00 a 19:00, de lunes a viernes, días festivos, membresías al 50 % y al 100 %, dos bonos prepago de medias jornadas (10 y 20), roles de junta (tesorero, secretario, responsable de sala), un calendario para las validaciones y dos plantas listas para reservar. También fija el idioma del espacio en francés y el régimen de IVA en *no sujeto al IVA*; solo se renombran tres palabras (Place, Étage, Réservations). El nombre de la plantilla es francés en todos los idiomas de la aplicación. |
+
+**Conviene saber**
+
+- Una plantilla nunca incluye su identidad legal, sus datos bancarios, sus sedes, sus invitaciones ni los enlaces a documentos: eso es cosa suya, y la lista de preparación lo nombra como datos que necesitan sus funciones.
+- Un espacio creado con una plantilla puede tener la facturación activada y nada con lo que emitir hasta que añada la identidad.
+- Aplicar una plantilla a un espacio que ya tiene tarifas sustituye sus tramos de cuota: úsela en un espacio nuevo.
+
+**Véase también:** [Crear un espacio](help:user.start.create)
+
+### Qué preparar
+
+**Público:** Propietario
+
+Usted quiere tener los datos a mano para que configurar lleve minutos y no días. Reúna primero lo siguiente.
+
+**Antes de empezar**
+
+- [ ] La **identidad legal**: asociación o empresa, razón social, dirección, números de registro y de IVA si los tiene.
+- [ ] Un contable (o alguien que confirme las decisiones fiscales): las facturas y el IVA son lo que conviene revisar con un profesional.
+- [ ] Una idea de tarifa: gratuita, una membresía fija, o un porcentaje de días con una cuota mensual.
+- [ ] Los **datos bancarios** a los que pagarán los miembros (IBAN y BIC, o el método habitual en su país).
+- [ ] Una lista de las primeras personas: nombres y direcciones de correo, y quién aprobará las solicitudes.
+- [ ] Un croquis del plano: plantas, salas, cuántas mesas y asientos, y si se puede reservar una sala entera.
+- [ ] Sus días y horas de apertura, y los días en que cierra.
+
+**Conviene saber**
+
+- Puede abrir sin la identidad legal ni los datos bancarios; los necesitará antes de la primera factura.
+- Haga primero el croquis en papel. La aplicación dibuja plantas, salas, mesas y asientos; es más rápido introducir un plano que ya ha pensado.
+
+**Véase también:** [Preparar un espacio con el cuestionario de configuración](help:user.start.questionnaire)
+
+### Decisiones difíciles de deshacer
+
+**Público:** Propietario · Copropietario
+
+Usted quiere saber en qué decisiones conviene ir despacio. La mayoría de los ajustes se pueden cambiar cualquier día. Estos no, o no limpiamente.
+
+> **Atención** Una factura emitida no cambia nunca, y su número no se reutiliza. Si se equivoca, corrige con una anulación, una nota de crédito o una solicitud de reembolso, no con una edición.
+
+| Decisión | Cuándo pasa a ser definitiva | Qué hacer en su lugar |
+|---|---|---|
+| Formato y secuencia del número de factura | El siguiente número puede subirse, nunca bajarse. Tras la primera factura ya no se puede imprimir menos de la fecha que muestra la serie. | Previsualice el formato, consulte a su contable y después emita. |
+| El mes de una factura emitida | Una vez facturado el mes de un miembro queda bloqueado; los días de cierre y las importaciones de días festivos lo omiten. | Fije los días de cierre antes de fin de mes. |
+| Régimen de IVA y tipos | Los tipos se versionan por fecha y nunca se editan; una declaración de IVA presentada no se vuelve a calcular. | Añada un tipo nuevo desde una fecha; decida el régimen con su contable. |
+| País, moneda, zona horaria | Los importes se guardan como números, sin conversión, así que cambiar la moneda cuando ya hay dinero es arriesgado. | Elíjalos bien desde el primer día; véase [Construir el lugar](help:setup.place.overview). |
+| Sustitución del plano | Se rechaza importar un plano cuando ya hay reservas. | Edite las plantas y las salas una por una en el editor. |
+| ID del espacio | Es lo que escriben los miembros y lo que señalan los códigos QR impresos. Puede cambiarlo (de 4 a 20 letras o cifras) con **Cambiar el ID del espacio**, pero el ID antiguo deja de funcionar de inmediato. | Elija un ID corto y fácil de recordar antes de imprimir nada; cámbielo pronto si debe hacerlo. |
+| Prueba o real | Un espacio real emite facturas exigibles; los documentos de desarrollo llevan marca de agua. | Empiece en un espacio de prueba y despliegue cuando esté listo. |
+| Una regla que exige más validadores de los que tiene | Las solicitudes esperan para siempre. | Cuente sus validadores antes de exigir dos. |
+
+**Conviene saber**
+
+- Desactivar una función nunca borra datos.
+- Eliminar una planta elimina todas las oficinas, mesas y asientos que contiene.
+
+**Véase también:** [Dinero](help:setup.money.permanent)
+
+### Quién hace qué
+
+**Público:** Propietario · Copropietario · Administrador/a · Operador/a
+
+Usted quiere saber a quién acudir para cada cosa. Pueden intervenir tres personas, y la lista de preparación las nombra.
+
+| Quién | Qué hace |
+|---|---|
+| **Propietario** (y *Copropietario*) | Todo lo del espacio: plantas, horarios, funciones, roles, tarifas, identidad legal, invitaciones, despliegues. Los copropietarios tienen todos los permisos por defecto; el propietario decide lo que pueden hacer los administradores. |
+| *Operador/a* | Gestiona la instalación: el servidor y sus secretos, y las actualizaciones de la base de datos. Es necesario para que funcionen las notificaciones push y para todo lo que la lista de preparación llama **A la espera de otra persona**. |
+| *Administrador/a de la base de datos* | Aprueba el acceso de un miembro para los asistentes. |
+
+**Conviene saber**
+
+- En una instalación compartida, el operador suele ser el de la plataforma, no usted.
+- Los administradores actúan dentro de los permisos que les dio el propietario en la [matriz de roles](help:user.roles.matrix).
+- Si una sección dice **El operador del servidor**, la aplicación no puede hacerlo desde su pantalla.
+
+**Véase también:** [Decida quién puede hacer qué](help:user.roles.matrix) · [Permisos de despliegue](help:user.advanced.deploy-permissions)
+
+## Construir el lugar
+
+Este capítulo levanta el primer nivel, *Abrir*: dónde está el espacio, cómo es, cuándo abre y cuáles son las reglas de reserva. En unos veinte minutos el espacio ya se puede reservar. El ejemplo es *Atelier du Marché*, una asociación de Pézenas con dos plantas y una sala.
+
+En este capítulo:
+- [País, moneda, zona horaria e idioma](help:setup.place.where)
+- [El plano](help:setup.place.plan)
+- [Horarios de apertura y reglas de reserva](help:setup.place.times)
+- [Días de cierre y días festivos](help:setup.place.closure)
+- [Revisar su espacio](help:setup.place.check)
+
+### País, moneda, zona horaria e idioma
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que el espacio sepa dónde vive. Estas cuatro elecciones determinan más cosas de las que parece.
+
+![](assets/help/images/setup-place-country.es.b8fa17aa9.jpg)
+
+*Qué determina cada elección*
+
+| Elección | Qué decide |
+|---|---|
+| **País** | La moneda y la zona horaria que propone, y los días festivos que se ofrecen como días de cierre (véase más abajo). |
+| **Moneda** | Cómo se muestra y se cuenta cada importe. |
+| **Zona horaria** | Qué significan una jornada laboral, el límite de media jornada y un día de cierre; un miembro que está en el extranjero ve el día del espacio. |
+| **Idioma del espacio** | El idioma en que se redactan por defecto las invitaciones y las referencias de mensajes compartidas. |
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings) y vaya a **Datos generales**.
+2. Elija el **País**; la **Moneda** y la **Zona horaria** se proponen solas y puede corregirlas. Para Atelier du Marché: Francia, EUR, Europe/Paris.
+3. Elija el **Idioma del espacio** y toque **Guardar**.
+
+> **Atención** Elija bien el país y la moneda desde el primer día. Los importes se guardan como simples números, así que cambiar la moneda cuando ya hay dinero etiquetaría mal todo lo ya contado.
+
+**Conviene saber**
+
+- La aplicación enumera muchos países, pero emitir facturas dentro de DesKilo solo funciona hoy para Francia y Alemania. En otros países conserva los estados de cuenta y emite las facturas fuera de la aplicación.
+- El idioma del espacio no es el idioma de su aplicación, que está en sus ajustes personales.
+
+**Véase también:** [País](help:user.workspace.settings.country) · [Moneda y zona horaria](help:user.workspace.settings.currency-timezone) · [Idioma del espacio](help:user.workspace.settings.language)
+
+### El plano
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que el plano en pantalla se parezca al lugar real. Se construye en cuatro capas: plantas, después oficinas (salas), después mesas y después asientos. Un miembro reserva un asiento; el asiento es lo que cuenta la lista de preparación.
+
+![](assets/help/images/setup-place-rooms.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Haga un croquis en papel: plantas, salas, mesas, asientos.
+2. Abra [Editor del espacio](app:/editor) y añada las plantas con **Añadir planta**.
+3. Abra una planta y dibuje cada sala con **Oficina**, y dentro de ella **Mesa** y **Asiento**.
+4. Si un equipo puede ocupar una sala o una planta durante un día, active la reserva completa en sus propiedades.
+
+**Conviene saber**
+
+- Empiece poco a poco: una primera planta, una sala, unos cuantos asientos. Todo se puede añadir después.
+- Una planta, una oficina o una mesa enteras solo se pueden reservar si **Reservas de mesa, oficina y planta** está activada y el miembro tiene el permiso.
+- La plantilla incluida A tiny space le da dos plantas, cuatro mesas y ocho asientos para ajustar.
+- Eliminar una planta elimina todo lo que contiene, y se rechaza importar un plano cuando ya hay reservas.
+
+**Véase también:** [Añadir, renombrar y eliminar plantas](help:user.space.editor.levels) · [Dibujar salas, mesas y asientos](help:user.space.editor.rooms) · [Permitir reservar una planta entera](help:user.space.editor.level-booking)
+
+### Horarios de apertura y reglas de reserva
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que las reservas sigan el ritmo de su lugar. Una sola pantalla, **Disponibilidad**, reúne los días, la forma de una reserva, el horario de trabajo y las reglas. El servidor las aplica en todas partes: plano, hoja de reserva, códigos escaneados y quiosco.
+
+![](assets/help/images/setup-place-availability--times.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Disponibilidad](app:/availability).
+2. Elija los **Días de apertura** (al menos uno) y la **Granularidad de las reservas**.
+3. Fije el **Horario de trabajo**: **Inicio de la jornada**, **Límite de media jornada**, **Fin de la jornada**.
+4. En **Políticas de reserva**, decida sobre **Permitir reservas pasadas**, **Fuera del horario de apertura** y los **Límites de reserva**.
+
+![](assets/help/images/setup-place-availability--rules.es.b8fa17aa9.jpg)
+
+*Puntos de partida recomendados (sugerencias, no reglas; el valor por defecto de **Fuera del horario de apertura** es **De pago**, y la plantilla de asociación no lo cambia)*
+
+| Escenario | Granularidad | Horario | Fuera de horario | Reservas pasadas | Límites |
+|---|---|---|---|---|---|
+| Unas pocas mesas compartidas | **Franja horaria libre** o **Franjas de 1 hora** | Jornada de 8:00 a 17:00 | **Gratis** | Desactivado | Una reserva a la vez; horizonte de 30 días |
+| Una sala de asociación (Atelier du Marché) | **Medios días (mañana y tarde)** | 7:00, límite a las 13:00, fin a las 19:00 | **Prohibido** | Desactivado | Una reserva a la vez; horizonte de 90 días |
+| Un coworking con medias jornadas | **Medios días (mañana y tarde)** | 8:00, límite a las 12:00, fin a las 18:00 | **De pago** | Desactivado | Una o dos a la vez; horizonte de 90 días |
+
+**Conviene saber**
+
+- Fuera del horario de apertura, **Prohibido** rechaza todo, **Solo espontáneo** admite a quien llega sin reserva, **Gratis** lo permite sin contarlo y **De pago** cuenta como un uso normal, salvo el día en que el miembro ya tiene una reserva normal.
+- La jornada debe seguir un orden: inicio, después límite, después fin; la duración mínima no puede superar la máxima.
+- Una reserva termina el mismo día en que empieza. Las reservas pasadas están desactivadas por defecto; reservar una franja anterior el mismo día siempre está permitido.
+- Las franjas de media jornada y de jornada completa también determinan la entrada y la facturación, así que fije los horarios antes de poner precios.
+
+**Véase también:** [Días de apertura](help:user.workspace.availability.open-weekdays) · [Granularidad](help:user.workspace.availability.granularity) · [Horario de trabajo](help:user.workspace.availability.working-hours) · [Fuera del horario de apertura](help:user.workspace.availability.outside-hours) · [Límites de reserva](help:user.workspace.availability.limits)
+
+### Días de cierre y días festivos
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que el espacio cierre los días festivos sin que nadie los reserve por error.
+
+![](assets/help/images/setup-place-availability--closure.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. En [Disponibilidad](app:/availability), vaya a **Días de cierre**.
+2. Toque **Añadir días festivos** (si no lo ve, active primero la función *Días festivos*; está desactivada por defecto) para crear todo un año de una vez, o **Añadir día de cierre** para una fecha concreta, como un día de inventario.
+3. Revise la lista y quite los días en que sí trabaja.
+
+**Conviene saber**
+
+- Hay listas de días festivos incluidas para Francia y Alemania. Para otros países, active *Días festivos* e *Importar días festivos* (datos abiertos, requiere conexión). No se crea nada antes de que usted lo confirme.
+- Se rechaza una reserva en un día de cierre, y el plano muestra el día como cerrado con su motivo.
+- Los meses ya facturados se omiten, así que añada los días de cierre antes de que el mes se cierre.
+
+**Véase también:** [Días de cierre](help:user.workspace.availability.closure-days) · [Días festivos](help:user.workspace.availability.public-holidays)
+
+### Revisar su espacio
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere una prueba de que el espacio está listo antes de invitar a nadie. Lo dicen dos tarjetas.
+
+![](assets/help/images/setup-place-get-started--card.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings): la tarjeta **Configuración de este espacio** enumera cada área con su estado, y el siguiente paso.
+2. Abra [Reservar](app:/reserve). Los propietarios y los administradores con el permiso de configuración ven la tarjeta **Primeros pasos en** su espacio. Si falta algo, dice **Antes de que alguien pueda reservar aquí**, con **Terminar la configuración**.
+3. Reserve usted mismo un asiento como prueba y cancélelo después.
+
+**Conviene saber**
+
+- Listo significa listo para una primera reserva: días de apertura, zona horaria, moneda, al menos un asiento y suficientes validadores.
+- Todo lo opcional, como las tarifas o los pagos, puede aplazarse con **Más adelante** y no impide abrir.
+- Ambas tarjetas dependen de la función *Tarjeta de primeros pasos*.
+- **Ahora no** oculta la tarjeta en este dispositivo; el menú de vista del plano la recupera con **Primeros pasos**.
+
+**Resultado** Un espacio que los miembros pueden reservar. A continuación: invitar a las primeras personas y pasar a los roles y las tarifas del segundo nivel.
+
+**Véase también:** [La tarjeta Primeros pasos y los consejos](help:user.start.get-started) · [Invite a personas con el ID del espacio](help:user.workspace.code) · [Roles](help:user.roles.matrix)
+
+## Elija lo que ofrece su espacio
+
+Un espacio no es un producto con cien ajustes. Es un puñado de cosas que usted decide ofrecer, una a una. Este capítulo explica cómo agrupa DesKilo lo que sabe hacer, qué tiene ya un espacio nuevo, cómo dependen unas piezas de otras y en qué orden activarlas para no ofrecer nunca algo que todavía no puede atender.
+
+En este capítulo:
+- [Funciones y procesos](help:setup.features.what)
+- [Esencial y Plataforma: lo que tiene un espacio nuevo](help:setup.features.tiers)
+- [Funciones que necesitan otras funciones](help:setup.features.dependencies)
+- [Desactivar no borra nada](help:setup.features.off)
+- [Beta, Sin evaluar y la pregunta antes de activar](help:setup.features.maturity)
+- [Tres puntos de partida](help:setup.features.profiles)
+- [El orden para activar las cosas](help:setup.features.order)
+- [Active una función con seguridad](help:setup.features.safely)
+- [Evite funciones que se contradicen](help:setup.features.consistency)
+- [El mapa de funciones](help:setup.features.map)
+
+### Funciones y procesos
+
+**Público:** Propietario · Copropietario
+
+Usted quiere saber qué está activando cuando abre **Funciones**. Todo lo que DesKilo sabe hacer más allá de lo básico es una función con su propio interruptor. Para que cien interruptores sigan siendo legibles, la pantalla los agrupa según su finalidad.
+
+![](assets/help/images/setup-features-what.es.b8fa17aa9.jpg)
+
+*Cómo está organizado*
+
+- Un *proceso* es un trabajo del negocio: por ejemplo **Facturación y pagos** o **Calendario y coordinación**. Hay nueve.
+- Un *subproceso* es un paso de ese trabajo: **Facturación**, **Cobro de pagos** y **Gestión del IVA** son tres de los cinco pasos de **Facturación y pagos**.
+- Una *función* es un interruptor dentro de un subproceso: **Facturas**, **Recordatorios de pago**, **Declaraciones de IVA**.
+
+*Los nueve procesos y sus subprocesos*
+
+| Proceso | Subprocesos |
+|---|---|
+| **Espacio y acceso** | **Personas y membresías** · **Acceso físico** |
+| **Gestión de espacios** | **Estructura del espacio** · **Días y horarios de apertura** · **Presentación del espacio** |
+| **Reservas y uso** | **Reservar puestos y espacios** · **Asistencia y uso** |
+| **Calendario y coordinación** | **Vistas del calendario** · **Decisiones y aprobaciones** · **Comunicación entre miembros** |
+| **Ofertas para miembros** | **Servicios y precios** |
+| **Facturación y pagos** | **Registros financieros** · **Facturación** · **Cobro de pagos** · **Gastos compartidos** · **Gestión del IVA** |
+| **Documentos e información** | **Publicación de documentos** · **Diseño de informes** · **Acceso a datos y exportaciones** |
+| **Operaciones y administración** | **Configuración y despliegue** · **Uso de la aplicación** |
+| **Integraciones y automatización** | **Envío externo** |
+
+**Conviene saber**
+
+- Una función pertenece a un solo proceso, aunque necesite una función de otro. La tarjeta lo dice: «Activarlo todo también necesita: Pestaña Finanzas (Facturación y pagos)».
+- Los planes de membresía y el editor del plano no son funciones: siempre están ahí. Sus ajustes están en Espacio y en Facturación, no en esta pantalla. Los bonos prepago sí son una función: véase **Bonos**.
+- Desactivar una función la oculta en todas las pantallas donde aparecía; no es un permiso. Quién puede hacer qué se decide en [Roles](help:user.roles.matrix).
+
+**Véase también:** [Qué puede hacer DesKilo](help:setup.before.what) · [Activar y desactivar procesos enteros](help:user.features.processes)
+
+### Esencial y Plataforma: lo que tiene un espacio nuevo
+
+**Público:** Propietario · Copropietario
+
+Usted quiere saber qué encuentran los miembros el primer día, antes de que haya activado nada.
+
+![](assets/help/images/setup-features-tiers.es.b8fa17aa9.jpg)
+
+Cada función pertenece a uno de dos niveles, y un espacio nuevo se crea a partir de ellos:
+
+| Nivel | Con las palabras de la aplicación | Qué recibe un espacio nuevo |
+|---|---|---|
+| **Esencial** | Lo que todo espacio necesita. Activo desde el primer día. | Activada, cuando la función está pensada para estarlo desde el principio. |
+| **Plataforma** | Pedido, nunca supuesto. Active lo que este espacio realmente hace. | Desactivada. En **Interruptores**, aparecen en el nivel **Plataforma**. |
+
+Un espacio nuevo arranca con 45 funciones activadas, todas Esenciales (46 si crea a la vez el gemelo de prueba: entonces también está activada **Pares de entornos**). En palabras sencillas:
+
+- Reserva: reservar un asiento en el plano, repetir una reserva (**Reserva en serie**), reservar para otra persona (**Reservar para otros**), ver como parcialmente ocupado un asiento reservado a medias (**La jornada de una plaza**), guardar una reserva en un calendario personal (**Archivo de calendario de una reserva**), reglas de reserva como las reservas pasadas y las de fuera de horario (**Políticas de reserva**, **Guarda de reserva**), solicitar la eliminación de una reserva pasada (**Solicitudes de eliminación de reservas**), imprimir tarjetas QR de los puestos (**Códigos QR de espacios**), horario de trabajo configurable (**Horario de trabajo**).
+- Personas: la pestaña de la comunidad (**Directorio de miembros**), una página por miembro (**Ficha de socio**), la matriz central de roles (**Gestión de roles** y **Asignación de roles**), datos personales para cartas y facturas (**Datos personales**), iniciales distintas en los avatares (**Iniciales de avatar distintas**).
+- Calendario y mensajes: el calendario en varias vistas (**Pestaña Calendario**, **Calendario central**, **Vistas del calendario**), el flujo de actividad y las confirmaciones (**Pestaña Eventos**), conversaciones privadas y de grupo (**Notificaciones entre miembros**, **Mensajes, renovados**) con referencias, reenvío, menciones, gestos de deslizamiento y protección contra capturas de pantalla, la agrupación del flujo de notificaciones (**Agrupación de notificaciones**) y el botón para escribir a los anfitriones de una página publicada (**Escribir a los anfitriones**).
+- Dinero: la pestaña Finanzas con sus cuatro vistas (**Pestaña Finanzas**, **Finanzas en cuatro vistas**), facturas (**Facturas**), un catálogo de servicios (**Servicios**), un PDF de la factura mensual (**Exportar PDF**).
+- Documentos y datos: la biblioteca de documentos (**Biblioteca de documentos**), la exportación de datos para el propietario (**Exportación de datos (Excel)**) y la exportación y el borrado de los datos de cada miembro (**Exportación y borrado**).
+- Comodidad: consejos de ayuda, la tarjeta de primeros pasos, favoritos y valoraciones de los puestos, animaciones, formatos regionales y la elección del estilo de navegación.
+- Entrega: **Notificaciones push**, que solo llegan a los teléfonos cuando quien gestiona la instalación ha configurado el servicio push (véase [Cómo se informa a los miembros](help:setup.notify.channels)).
+- Orden del plano: **Eliminar espacios con historial** y **Nombrar por la planta una planta de una sola sala**.
+
+Todo lo demás es Plataforma y está desactivado: quiosco y credenciales, varias sedes, suplementos de accesorios, pagos en línea, gestión del IVA, el recorrido de las facturas, diseño de informes, despliegues, WhatsApp, la interfaz para asistentes y el resto.
+
+**Conviene saber**
+
+- La función de facturas está activada desde el principio, pero no se puede emitir nada hasta que su identidad legal esté completa. Véase [Evite funciones que se contradicen](help:setup.features.consistency).
+- Un espacio que ya existe nunca cambia cuando DesKilo cambia lo que recibe un espacio nuevo.
+- Si parte de una plantilla, la plantilla puede activar o desactivar unas pocas funciones además de este conjunto. Véase [Tres puntos de partida](help:setup.features.profiles).
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### Funciones que necesitan otras funciones
+
+**Público:** Propietario · Copropietario
+
+Usted quiere activar algo con la seguridad de que funciona, o desactivar algo sin romper lo que depende de ello.
+
+Muchas funciones cuelgan de otra. **Pagos en línea** necesita **Pestaña Finanzas**; **Recordatorios de pago** necesita **Facturas**; **Recordatorios de pago automáticos** necesita **Recordatorios de pago**; **Declaraciones de IVA** necesita **Gestión del IVA**, que a su vez necesita **Facturas**. En la lista de **Interruptores**, una función que necesita otra muestra **Requiere** seguido del nombre de su función de origen.
+
+*Qué hace la aplicación*
+
+| Usted | La aplicación |
+|---|---|
+| Activa una función cuya función de origen está desactivada | Activa toda la cadena y dice qué se ha activado con ella: «También activado: …». |
+| Desactiva una función de origen | No borra las elecciones de sus dependientes. Se conservan tal como las fijó, pero no hacen nada; la fila dice «Esperando a la función de arriba: actívala y esta vuelve a funcionar». |
+| Vuelve a activar la función de origen | Las dependientes que estaban activadas vuelven a funcionar al instante. |
+| Desactiva un proceso o subproceso entero mientras algo aún lo necesita | Se niega y nombra quién lo necesita («… sigue siendo necesaria para: …»), salvo que elija **Desactivar igualmente, conservar sus ajustes** o desactivar también a los dependientes. |
+
+**Conviene saber**
+
+- Una función dependiente que está activada pero espera a su función de origen hace que su proceso muestre **Requiere atención**. Es el único estado en que un interruptor y la aplicación no coinciden, así que merece una mirada. Véase [Active una función con seguridad](help:setup.features.safely).
+- Una función de origen puede estar en un proceso distinto del de su dependiente: **Servicios** (Ofertas para miembros) necesita **Pestaña Finanzas** (Facturación y pagos). La tarjeta advierte entonces de que activarlo todo también necesita la otra.
+- La comprobación se hace sobre la función, no sobre un permiso: que un rol pueda hacer algo nunca basta si la función está desactivada.
+
+**Véase también:** [Un interruptor de función](help:user.features.switch) · [Activar y desactivar procesos enteros](help:user.features.processes)
+
+### Desactivar no borra nada
+
+**Público:** Propietario · Copropietario
+
+Usted quiere poder cambiar de idea más adelante, así que necesita saber qué no toca un interruptor.
+
+Desactivar una función detiene lo nuevo. No borra ni un solo registro: facturas, reservas, mensajes, roles y ajustes se quedan donde están, y volver a activar la función los recupera. Lo ya hecho, hecho está: una factura emitida mientras la función estaba activada conserva lo que dice.
+
+Detrás de esto, DesKilo clasifica las acciones de una función conmutable en tres tipos:
+
+| Tipo | Qué le hace el interruptor | Ejemplo |
+|---|---|---|
+| Trabajo nuevo (*acceptNew*) | Se detiene cuando la función está desactivada. | Iniciar una conversación nueva con los anfitriones; dar un rol propio a un miembro; bloquear un asiento; iniciar un pago en línea nuevo. |
+| Trabajo ya abierto (*serviceExisting*) | Continúa, para que nada quede colgado. | Responder a una conversación ya iniciada; retirar un rol propio; levantar el bloqueo de un asiento; liquidar un pago ya abierto. |
+| Vías inseguras (*suspended*) | Permanecen cerradas diga lo que diga el interruptor. | Reservado para una vía que el servidor juzgue insegura; hoy ninguna acción está clasificada así. |
+
+Tres funciones lo dicen en su fila, con estas palabras: «Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.» Son **Escribir a los anfitriones**, **Los roles de este espacio** y **Los administradores pueden bloquear sitios**. **Entrada/salida automática al final del día** también detiene su barrido de fin de jornada cuando está desactivada, pero su fila no lo dice. En un servidor que no puede confirmarlo, la fila dice «no cuente con ello».
+
+**Conviene saber**
+
+- El dinero ya comprometido siempre se liquida: ningún interruptor bloquea una devolución de pago ni un reembolso.
+- Con **Pagos en línea** desactivados, el servidor rechaza un pago en línea nuevo; uno que ya está abierto sigue liquidándose. Su fila no lleva ninguna nota al respecto.
+- Un interruptor no sirve para ocultar algo a una persona concreta. Para eso use los [Roles](help:user.roles.matrix).
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### Beta, Sin evaluar y la pregunta antes de activar
+
+**Público:** Propietario · Copropietario
+
+Usted ve una palabra pequeña bajo el nombre de una función y quiere saber qué hacer con ella.
+
+![](assets/help/images/setup-features-maturity.es.b8fa17aa9.jpg)
+
+Cada fila de **Interruptores** lleva una insignia de madurez, que indica hasta qué punto se ha revisado la función frente a pruebas:
+
+| Insignia | Significa |
+|---|---|
+| **Sin evaluar** | Nadie la ha evaluado todavía frente a pruebas. No dice nada malo de ella. |
+| **Alfa** | Evaluada, en una fase temprana. |
+| **Beta** | Evaluada, con límites conocidos; sus pruebas se ejecutan en cada cambio. |
+| **Estable** | Evaluada y además cualificada con proveedores, equipos u operadores reales. |
+
+En el momento de escribir esto, la mayoría de las funciones figuran como **Sin evaluar**, dieciocho como **Beta** y ninguna ha llegado aún a **Estable**.
+
+*Qué pregunta la aplicación*
+
+1. Accione el interruptor de una función **Alfa** o **Beta**.
+2. La aplicación pregunta **¿Activar una función experimental?** y dice: «Aún no evaluada como estable: … Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.»
+3. Nombra la fase de cada función y las funciones que se activarían con ella por ser necesarias.
+4. Toque **Activar** para aceptar, o **Cancelar**: no se escribe nada.
+
+**Conviene saber**
+
+- Las funciones **Sin evaluar** no preguntan. Solo preguntan **Alfa** y **Beta**.
+- La pregunta se hace con un solo interruptor. Un **Activar** de un proceso entero muestra lo que va a activar, pero no hace esta pregunta: active las funciones **Beta** una a una.
+- Entre las funciones Beta en el momento de escribir esto figuran **Facturas**, **Pagos en línea**, **Gestión del IVA**, **Bonos**, **Gastos compartidos**, **Registros de uso**, **Políticas de reserva**, **Reserva en serie**, **Guarda de reserva**, **Solicitudes de eliminación de reservas**, **Finanzas en cuatro vistas**, **Suministros desde gastos**, **Validadores por rol o persona**, **Validaciones encadenadas**, **Entrada/salida automática al final del día**, **Exportación de datos (Excel)**, **Entrega de facturas al cliente** y el espacio de demostración. Lea los límites de cada función con **Más** antes de apoyarse en ella para el dinero.
+- Varias de ellas son Esenciales y ya están activadas en un espacio nuevo. Arrancan activadas sin la pregunta; solo aparece cuando usted vuelve a activar una.
+- **Madurez** limita la lista a una fase, lo que permite ver rápidamente todo lo experimental que su espacio ya utiliza.
+
+**Véase también:** [Un interruptor de función](help:user.features.switch)
+
+### Tres puntos de partida
+
+**Público:** Propietario · Copropietario
+
+Usted no quiere decidir cien cosas. Aquí tiene tres puntos de partida realistas; cada uno enumera exactamente lo que está activado. Elija el más cercano y ajuste después.
+
+El primero no necesita plantilla. El segundo es la plantilla lista para usar de la aplicación. El tercero se construye con las propias funciones. Se nombran por lo que ofrecen, no por un tamaño.
+
+### Unos pocos lugares compartidos
+
+**Público:** Propietario
+
+Usted gestiona un puñado de mesas o salas que la gente reserva, y nada más por ahora. Cree el espacio con **Espacio vacío** o con la plantilla «A tiny space» en **Partir de**: dos plantas, cuatro mesas y ocho asientos, lo justo para reservar, escanear y explorar.
+
+La plantilla no fija ninguna función, de modo que el espacio tiene exactamente las 45 funciones Esenciales de [Esencial y Plataforma](help:setup.features.tiers). No se activa nada más. Para este perfil, deje el resto como está:
+
+- Reserva, calendario, mensajes, directorio, tarjetas QR de los puestos, biblioteca de documentos y consejos de ayuda: todo está ahí.
+- **Pestaña Finanzas** y **Facturas** están activadas, pero mientras no introduzca su identidad legal y sus tarifas solo muestran un estado de cuenta vacío.
+- Nada necesita configuración fuera del plano y de los horarios de apertura. Véase [Su lugar](help:setup.place.overview).
+
+> **Consejo** Si nunca cobra nada, puede dejar activadas las funciones de dinero sin problema: los miembros simplemente no verán nada que pagar.
+
+### Una asociación con una sala
+
+**Público:** Propietario
+
+Usted es una asociación francesa que comparte una sala, con una junta, miembros que pagan una cuota y reservas por medias jornadas. Elija la plantilla «Association de coworking (France)» en **Partir de**. Configura las reglas de apertura, tramos de cuota al 50 % y al 100 %, dos bonos prepago, los roles de la junta, el vocabulario en francés y dos plantas, y trae este perfil de funciones:
+
+- Las 45 funciones Esenciales, excepto cuatro que desactiva: **Pestaña Eventos**, **Directorio de miembros**, **Ficha de socio** y **Agrupación de notificaciones**. Una asociación pequeña no necesita un flujo de eventos ni un directorio junto a sus conversaciones.
+- Cuatro que activa, porque la junta las necesita: **Validaciones en el calendario** (decisiones mostradas en el calendario), **Bonos** (medias jornadas prepago para quienes no se suscriben, Beta), **Los roles de este espacio** (tesorero, secretario, responsable de sala) y **Vocabulario del espacio** (las palabras propias de la asociación).
+
+Son 45 − 4 + 4 = 45 funciones activadas. La plantilla no trae identidad alguna, así que la dirección, el número de registro y los datos bancarios siguen siendo suyos para introducir, y el régimen de IVA empieza como «no sujeto».
+
+**Conviene saber**
+
+- Bonos es Beta y la plantilla lo activa sin la pregunta; es una decisión de la plantilla, y usted puede desactivarlo.
+- La plantilla deja **Facturas** activada, del conjunto Esencial. Una asociación que no factura puede dejarla así.
+
+### Un coworking que factura
+
+**Público:** Propietario
+
+Usted alquila mesas a miembros y les envía facturas cada mes, en Francia o en Alemania. No hay plantilla lista para usar, así que este perfil es una lista de lo que hay que añadir al conjunto Esencial, en este orden. Todo cuelga de **Pestaña Finanzas** y **Facturas**, que ya están activadas.
+
+| # | Active | Por qué | Necesita |
+|---|---|---|---|
+| 1 | **Series de numeración** | Decidir cómo se numeran los documentos antes de que exista el primero. | **Facturas** |
+| 2 | **Facturas de suscripción** | La cuota de membresía se factura antes del mes al que corresponde. | **Facturas** |
+| 3 | **Registros de uso** | Un registro del tiempo realmente utilizado (Beta). | **Facturas** |
+| 4 | **Facturas de fin de mes** | Lo que el mes costó además de la suscripción se factura aparte. | **Facturas** |
+| 5 | **Asistente de facturación** | Un cierre de mes guiado para quien se ocupa de la facturación. | **Facturas** |
+| 6 | **El recorrido de una factura** | Cada factura muestra en qué punto está y a quién le toca mover. | **Facturas** |
+| 7 | **Plantilla del PDF de factura** | Su propio texto de introducción y de pie en el PDF. | **Facturas** |
+| 8 | **Informes de miembros** | El acuerdo financiero y el informe mensual de pagos para los miembros. | **Pestaña Finanzas** |
+| 9 | **Recordatorios de pago** | Niveles de recordatorio, una carta por nivel, «Recordatorio pendiente» en las facturas atrasadas. | **Facturas** |
+| 10 | **Informe de consumo** | Una carta a fin de mes con lo que se ha utilizado. | **Registros de uso** |
+
+Después añada solo lo que le corresponda:
+
+- **Gestión del IVA** (Beta) si su espacio está registrado a efectos del IVA. Después **Declaraciones de IVA**, y **Versiones de los tipos de IVA** y **Grupos de IVA** si su contable se los pide.
+- **Los admins emiten facturas** si quiere que un administrador de facturación las emita. El propietario siempre puede.
+- **Pagos en línea** (Beta) solo cuando tenga un proveedor de pago al que conectarse.
+- **Recordatorios de pago automáticos** solo después de leer [lo que hacen](help:setup.money.reminders).
+- **Suplementos de accesorios**, **Bonos** y **Gastos compartidos** cuando facture esas cosas.
+
+**Conviene saber**
+
+- Antes de la primera factura, complete su identidad legal y el IVA. Véase [Identidad legal y facturación](help:setup.money.identity).
+- Emitir aquí solo funciona para espacios en Francia y Alemania.
+- Active estas funciones de una en una y emita antes una factura de prueba en un espacio de prueba. Véase [El orden para activar las cosas](help:setup.features.order).
+
+**Véase también:** [Dinero y facturación](help:setup.money.overview) · [Partir de una plantilla o de cero](help:setup.before.template)
+
+### El orden para activar las cosas
+
+**Público:** Propietario · Copropietario
+
+Usted quiere evitar el día en que todo está activado y nada funciona. Vaya proceso a proceso y mire cada uno desde el lado de un miembro antes de pasar al siguiente.
+
+![](assets/help/images/setup-features-order.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Conserve el conjunto Esencial y haga funcionar lo básico: los puestos, los horarios de apertura, una tarifa. Véase [Su lugar](help:setup.place.overview).
+2. Abra [Funciones](app:/features) y abra la tarjeta de un proceso. Elija el que responda a su próxima necesidad, no el que parezca más completo.
+3. Toque **Activar** en un subproceso, o abra una función concreta entre los **Interruptores**.
+4. Lea la vista previa: qué es **También necesarias** y qué está ya activado.
+5. Mírelo como un miembro: inicie sesión como uno (una segunda cuenta, o el lado de prueba de su espacio) y haga lo que haría un miembro.
+6. Solo entonces pase al siguiente proceso.
+
+*Un orden razonable*
+
+| Paso | Proceso | Por qué en este lugar del orden |
+|---|---|---|
+| 1 | **Gestión de espacios** | Sin un lugar y unos horarios de apertura no se puede reservar nada. |
+| 2 | **Reservas y uso** | Las reglas de reserva condicionan todo lo que viene después. |
+| 3 | **Espacio y acceso** | Los roles y quién valida, antes de la primera invitación. |
+| 4 | **Calendario y coordinación** | Los mensajes y las validaciones necesitan que existan personas. |
+| 5 | **Ofertas para miembros**, después **Facturación y pagos** | Los precios antes que las facturas; la identidad legal antes de la primera factura. |
+| 6 | **Documentos e información**, **Integraciones y automatización** | Dan forma y entregan lo que producen los demás. |
+| 7 | **Operaciones y administración** | Pares, despliegues y transferencias cuando el espacio merece copiarse. |
+
+**Conviene saber**
+
+- Activar es barato y desactivar no borra nada, así que un paso equivocado cuesta tiempo, no datos. La excepción es todo lo que emite una factura: véase [Decisiones difíciles de deshacer](help:setup.before.permanent).
+- Un espacio de prueba es el lugar adecuado para probar un proceso. Véase [Un espacio de prueba o uno real](help:setup.before.environment) y [Un espacio de prueba](help:user.advanced.test-space).
+- Invite a los miembros en último lugar, después de los roles, las reglas de validación y las tarifas con las que se van a encontrar.
+
+**Véase también:** [Activar y desactivar procesos enteros](help:user.features.processes)
+
+### Active una función con seguridad
+
+**Público:** Propietario · Copropietario
+
+Usted está a punto de cambiar una función y quiere ver el efecto antes de que exista.
+
+![](assets/help/images/setup-features-safely.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Funciones](app:/features). Se muestra la vista **Procesos**.
+2. Toque **Requiere atención**. Solo quedan los procesos que contienen algo activado pero en espera.
+3. Abra una tarjeta. Una función **Activada, esperando** una función de origen con nombre es lo que hay que arreglar.
+4. Arréglelo activando la función de origen, o desactivando la función.
+5. Para cambiar una sola función, toque **Interruptores**, búsquela con **Buscar funciones** y accione su interruptor.
+6. Lea la pregunta o la línea «También activado» y confirme.
+
+*Qué significa «retenida»*
+
+Una función está retenida cuando usted la eligió pero algo que necesita está desactivado. Su propio interruptor sigue activado, y por eso es fácil pasarlo por alto: la pantalla dice que la función está activada, y la aplicación no la ofrece. La tarjeta indica cuántas funciones están retenidas («… están activadas pero esperan un requisito desactivado») y qué requisito esperan, y se arregla en [Funciones](app:/features) mismo.
+
+Otras cosas que una función puede esperar no están en esta pantalla. Una función puede estar activada y plenamente permitida mientras faltan sus datos: su identidad legal, una sede, un proveedor de pago. Esos aparecen en **Configuración de este espacio**, en **Datos que necesitan sus funciones (identidad, banco, plataformas)**, en lo alto de los ajustes del espacio.
+
+**Conviene saber**
+
+- Si otra persona cambió las funciones mientras usted miraba, la aplicación no escribe nada y lo dice: «Las funciones cambiaron mientras tanto, así que no se guardó nada.» Vuelva a mirar la lista y accione de nuevo.
+- **Modificadas** cuenta los interruptores que difieren del valor por defecto del registro. En un espacio nuevo ya muestra un número (las funciones de Plataforma que arrancan desactivadas), así que no es un recuento de sus propios cambios.
+- Solo un propietario o un copropietario puede escribir las funciones. El servidor lo vuelve a comprobar en el momento de escribir.
+
+**Véase también:** [Activar y desactivar procesos enteros](help:user.features.processes) · [Un interruptor de función](help:user.features.switch)
+
+### Evite funciones que se contradicen
+
+**Público:** Propietario · Copropietario · Administrador/a de facturación
+
+Usted quiere saber qué combinaciones dejan un espacio a medio funcionar, y cuáles de ellas detecta la aplicación por usted.
+
+La aplicación tiene salvaguardas para algunas contradicciones y ninguna para otras. En la tabla, una salvaguarda es lo que hace la aplicación; una laguna es lo que sigue siendo responsabilidad suya.
+
+| Si tiene… | Salvaguarda de la aplicación | Laguna que queda |
+|---|---|---|
+| **Facturas** activadas, sin identidad legal | Se rechaza la emisión, con **Complete estos datos antes de emitir** listando la dirección, el número de IVA, etc. que faltan. La necesidad también aparece en **Configuración de este espacio**. | La función está activada desde el primer día, así que nada impide invitar a los miembros y llevar un mes antes de que exista la identidad. |
+| Un país distinto de Francia o Alemania | Al emitir, dice que el país «debe ser Francia o Alemania para emitir aquí». | Nada avisa al elegir el país ni al activar la facturación. |
+| Registrado a efectos del IVA, sin ningún tipo en vigor | Se rechaza la emisión hasta que haya un tipo en vigor. | Con **Gestión del IVA** desactivada, la configuración queda oculta mientras los tipos guardados siguen aplicándose. Compruebe los tipos tras desactivarla. |
+| **Pagos en línea** activados, sin proveedor | Se rechaza un pago en línea nuevo cuando la función está desactivada; el proveedor que falta aparece en **Configuración de este espacio**. | Puede activarla sin proveedor. Conéctelo antes: [Proveedor de pago](help:user.money.payments.provider). |
+| **Modo quiosco** activado, sin credenciales ni miembro de quiosco | **Credenciales RFID / NFC**, **Credenciales QR**, **Fotos de los miembros en el quiosco** e **Iniciar sesión con credencial** no pueden estar activadas sin él. | Nada comprueba que exista un miembro de quiosco ni que se haya emitido una credencial. Véase [Ponga en marcha una tableta de pared](help:user.kiosk.mode). |
+| **Sedes** activadas, sin ninguna sede | **Al menos una sede** aparece entre los datos que necesitan sus funciones. | El interruptor puede estar activado sin ninguna sede. |
+| **Notificaciones push** activadas, sin servicio push | Los miembros siguen recibiendo todo en la aplicación. | Los teléfonos no reciben nada hasta que quien gestiona la instalación haya configurado el servicio push. Véase [Cómo se informa a los miembros](help:setup.notify.channels). |
+| **Recordatorios de pago** activados, **Recordatorios de pago automáticos** activados | Los segundos no pueden estar activados sin los primeros. | El programador del servidor los envía cada mañana; si la base de datos no tiene programador, se envían cuando un administrador abre Finanzas. |
+| Una regla de validación que pide más validadores de los que hay | **Configuración de este espacio** dice «Una regla pide más validadores de los que tiene este espacio» y retiene la primera reserva cuando la regla es para reservas. | Las demás solicitudes se crean, no se pueden completar y caducan a los siete días. Véase [Quién valida](help:user.validation.overview). |
+| **Solicitudes de eliminación de reservas** activadas, nadie que valide | La misma línea de preparación. | La misma laguna. |
+| **Reservas de mesa, oficina y planta** activadas | **Los admins pueden asignar plantas** la necesita. | Además, cada miembro necesita el derecho; nada comprueba que alguien lo tenga. |
+| Una función dependiente activada, su función de origen desactivada | **Requiere atención**, y «Esperando a la función de arriba». | Ninguna: este caso está totalmente cubierto. |
+| Un espacio creado a partir de una plantilla | La plantilla nombra lo que usted debe introducir (identidad, banco, sede). | No trae nada de eso, así que un espacio puede empezar con **Facturas** activadas y nada con lo que emitir. |
+
+**Conviene saber**
+
+- La regla práctica: si una función lleva a un documento su nombre, su dinero o sus obligaciones legales, termine sus datos antes de avisar a los miembros.
+- **Configuración de este espacio** es una lista, no un cerrojo. Nunca le impide activar algo.
+- La comprobación «Antes de que alguien pueda reservar aquí» solo habla de lo que una reserva necesita de verdad: la zona horaria, la moneda, un día de apertura y al menos un asiento.
+
+**Véase también:** [Identidad legal y facturación](help:setup.money.identity) · [Ensayo en seco](help:setup.money.dry-run)
+
+### El mapa de funciones
+
+**Público:** Propietario · Copropietario
+
+Usted quiere un lugar que diga, para las funciones principales, qué obtienen los miembros, qué necesita y quién debe configurarla. «Necesita» enumera primero la función de origen y luego los datos ajenos a la pantalla Funciones. «Quién» es la persona que debe hacer algo para que sea útil; «Nadie» significa que funciona en cuanto se activa.
+
+*Espacio y acceso*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Directorio de miembros** | La pestaña de la comunidad: quién está, estados, presencia. | | Nadie |
+| **Copropietarios** | Permisos de propietario para personas designadas, ahora o en una sucesión. | | Propietario |
+| **Gestión de roles** | La matriz de qué rol tiene qué permiso. | | Propietario |
+| **Asignación de roles** | Una sección Roles en cada ficha de miembro. | **Gestión de roles** | Propietario |
+| **Los roles de este espacio** | Roles propios, como tesorero o secretario. | | Propietario |
+| **Las preguntas de este espacio** | Sus propias preguntas en el formulario de identidad. | | Propietario |
+| **Datos personales** | Nombre, dirección, teléfono e identificadores que imprimen las cartas. | | Los miembros |
+| **Perfiles gestionados** | Miembros sin cuenta, a quienes se reserva y se factura. | **Directorio de miembros** | Administrador/a |
+| **Ficha de socio** | Una página por miembro. | **Directorio de miembros** | Nadie |
+| **Visitas de invitados** | Una persona que no es miembro puede pedir visitar. | | Quien admite las visitas |
+| **Modo quiosco** | Una tableta de pared fijada al plano en vivo. | Una tableta y un miembro de quiosco | Propietario |
+| **Credenciales RFID / NFC** | Entrar acercando una tarjeta. | **Modo quiosco**, Android con NFC, credenciales emitidas | Propietario |
+| **Credenciales QR** | Tarjetas de credencial QR imprimibles. | **Modo quiosco** | Propietario |
+| **Iniciar sesión con credencial** | Credencial y PIN en lugar de escribir un correo electrónico. | **Credenciales RFID / NFC** | Propietario, y después cada miembro |
+| **Etiquetas NFC/RFID de las sillas** | Un chip en una silla abre su asiento. | Etiquetas | Propietario |
+| **Códigos QR de espacios** | Tarjetas QR imprimibles por puesto. | | Nadie |
+
+*Gestión de espacios*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Sedes** | Varias direcciones, cada una con su propio registro. | Al menos una sede | Propietario |
+| **Eliminar espacios con historial** | Los propietarios pueden eliminar un puesto que tiene reservas pasadas. | | Nadie |
+| **Los administradores pueden bloquear sitios** | Asientos marcados como no reservables por mantenimiento. | | Propietario |
+| **Horario de trabajo** | La jornada laboral y la reserva por horas exactas. | | Propietario |
+| **Días festivos** | Días de cierre a partir de los festivos de un año. | | Propietario |
+| **Importar días festivos** | Festivos de un país o región importados. | **Días festivos** | Propietario |
+| **Ocupación de puestos** | Una cifra mensual de cuánto se reservó. | | Propietario |
+| **Fotos de los miembros en el plano** | Fotos de los ocupantes en los asientos. | | Nadie |
+| **Vocabulario del espacio** | Las palabras propias del espacio para unas cuantas etiquetas. | | Propietario |
+| **Colores del espacio** | El color de la marca y los colores de las salas. | | Propietario |
+| **Anuncio público del espacio** | Una página pública con lo que usted decida mostrar. | | Propietario |
+
+*Reservas y uso*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Reserva en serie** | Repetir una reserva. | | Nadie |
+| **Reservar para otros** | Los administradores reservan para los miembros. | | Nadie |
+| **Reservas de mesa, oficina y planta** | Reservar una mesa, una oficina o una planta enteras. | Un derecho concedido a cada miembro | Propietario |
+| **Los admins pueden asignar plantas** | Los administradores asignan esas reservas. | **Reservas de mesa, oficina y planta** | Propietario |
+| **Políticas de reserva** | Reservas pasadas, reservas fuera de horario, salida registrada por un administrador. | | Propietario |
+| **Guarda de reserva** | Cada pantalla comprueba las reglas y nombra el motivo. | **Políticas de reserva** | Nadie |
+| **Entrada/salida automática al final del día** | Las reservas sin registrar se completan solas. | | Propietario |
+| **Registros de uso** | El tiempo realmente utilizado, y una solicitud para dejar de facturar el tiempo no utilizado. | **Facturas** | Administrador/a de facturación |
+
+*Calendario y coordinación*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Pestaña Calendario**, **Calendario central**, **Vistas del calendario** | Mes, semana y agenda, con todo lo fechado. | | Nadie |
+| **Validaciones en el calendario** | Las decisiones se muestran en el momento en que se tomaron. | **Calendario central** | Nadie |
+| **Pestaña Eventos** | El flujo de actividad y las confirmaciones. | | Nadie |
+| **Agrupación de notificaciones** | Notificaciones agrupadas en el flujo. | | Nadie |
+| **Validadores por rol o persona** | Una regla puede nombrar quién valida y cuántas personas. | | Propietario |
+| **Validaciones encadenadas** | Validaciones pedidas una tras otra. | | Propietario |
+| **Solicitudes de eliminación de reservas** | Un miembro pide eliminar una reserva pasada. | Un validador | Propietario |
+| **Notificaciones entre miembros** | Conversaciones privadas y de grupo. | | Nadie |
+| **Mensajes, renovados** | Barra de bandeja, fijar, silenciar, archivar, borradores. | | Nadie |
+| **Escribir a los anfitriones** | Quien encuentra su página puede escribirle. | Una página publicada | Propietario |
+| **Menciones en grupos**, **Reenvío de mensajes**, **Protección contra capturas de pantalla** | Extras de mensajería. | **Notificaciones entre miembros** | Nadie |
+
+*Ofertas para miembros*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Servicios** | Un catálogo de cosas para consumir y pagar. | **Pestaña Finanzas** | Administrador/a de facturación |
+| **Suplementos de accesorios** | Accesorios de asiento con precio por media jornada. | **Pestaña Finanzas** | Administrador/a de facturación |
+| **Negociaciones de precios** | Condiciones propias para un miembro. | **Pestaña Finanzas** | Administrador/a de facturación |
+| **Condiciones de pago por miembro** | Plazos de pago propios. | **Facturas** | Administrador/a de facturación |
+| **Bonos** | Medias jornadas prepago (Beta). | **Facturas**, un paquete definido | Administrador/a de facturación |
+
+*Facturación y pagos*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Pestaña Finanzas** | La pestaña Finanzas: estado de cuenta, pagos, gastos. | | Nadie |
+| **Finanzas en cuatro vistas** | Estado de cuenta, Pagos, Facturas, Documentos. | **Pestaña Finanzas** | Nadie |
+| **Informes de miembros** | El acuerdo y el informe mensual de pagos. | **Pestaña Finanzas** | Administrador/a de facturación |
+| **Facturas** | Facturas firmadas e inmutables (Beta). | **Pestaña Finanzas**, identidad legal, IVA, FR o DE | Administrador/a de facturación |
+| **Los admins emiten facturas** | Los administradores también las emiten. | **Facturas** | Propietario |
+| **Facturas de suscripción** | La cuota facturada antes de su mes. | **Facturas**, una fecha | Administrador/a de facturación |
+| **Facturas de fin de mes** | El uso facturado después del mes. | **Facturas** | Administrador/a de facturación |
+| **Agrupar facturas** | Varias facturas abiertas como una sola. | **Facturas** | Administrador/a de facturación |
+| **El recorrido de una factura** | En qué punto está cada factura. | **Facturas** | Nadie |
+| **Asistente de facturación** | Un cierre de mes guiado. | **Facturas** | Administrador/a de facturación |
+| **Series de numeración** | Numeración por diario. | **Facturas** | Administrador/a de facturación |
+| **Pagos en línea** | Pagar en línea (Beta). | **Pestaña Finanzas**, un proveedor de pago | Propietario |
+| **Recordatorios de pago** | Niveles de recordatorio y cartas. | **Facturas**, reglas | Administrador/a de facturación |
+| **Recordatorios de pago automáticos** | Recordatorios enviados por sí solos. | **Recordatorios de pago** | Administrador/a de facturación |
+| **Suministros desde gastos** | Los suministros comprados pasan a ser servicios. | **Servicios** | Administrador/a de facturación |
+| **Gastos programados** | Costes recurrentes programados. | **Pestaña Finanzas** | Administrador/a de facturación |
+| **Gastos compartidos** | Costes repartidos entre miembros. | **Facturas** | Administrador/a de facturación |
+| **Asistente de reparto** | Un reparto guiado de un coste compartido. | **Gastos compartidos** | Administrador/a de facturación |
+| **Libro contable** | Quién lleva los libros oficiales. | **Facturas** | Administrador/a de facturación |
+| **Gestión del IVA** | Tipos de IVA y selectores (Beta). | **Facturas**, régimen de IVA | Administrador/a de facturación |
+| **Declaraciones de IVA** | La declaración periódica. | **Gestión del IVA** | Administrador/a de facturación |
+| **Grupos de IVA**, **Versiones de los tipos de IVA**, **IVA según el cliente** | Un tratamiento del IVA más fino. | **Gestión del IVA** | Administrador/a de facturación |
+
+*Documentos e información, Operaciones, Integraciones*
+
+| Función | Qué aporta a los miembros | Qué necesita | Quién la configura |
+|---|---|---|---|
+| **Biblioteca de documentos** | Estatutos, actas, guías, por rol. | | Propietario |
+| **Exportar PDF** | La factura mensual en PDF. | | Nadie |
+| **Plantilla del PDF de factura** | Sus textos en la factura. | **Facturas** | Propietario |
+| **Diseñador de informes**, **Maquetas de informe posicionadas**, **Textos de informes** | Informes diseñados. | **Plantilla del PDF de factura** | Propietario |
+| **Informe de consumo** | Una carta mensual sobre lo que se utilizó. | **Registros de uso** | Administrador/a de facturación |
+| **Informe de IVA** | Cada línea imponible, con un CSV. | **Declaraciones de IVA** | Administrador/a de facturación |
+| **Registro de accesos a datos** | Los miembros ven quién ha consultado sus finanzas. | **Pestaña Finanzas** | Nadie |
+| **Exportación de datos (Excel)** | El propietario exporta los datos como libro de cálculo (Beta). | El permiso **Exportar contabilidad y datos** | Propietario |
+| **Exportación y borrado** | Un miembro exporta y borra sus propios datos. | | Nadie |
+| **Modo grabación** | Sustituye en pantalla a las personas reales por otras inventadas. | | Propietario |
+| **Pares de entornos**, **Despliegues** | Un lado de prueba y un lado real, con despliegue. | | Propietario |
+| **Configuración en el archivo del espacio** | Toda la configuración viaja en el archivo del espacio. | **Exportación de datos (Excel)** | Propietario |
+| **Asistente de instancia** | Crear un servidor nuevo desde la aplicación. | | Operador/a |
+| **Lo que te espera** | Una lista ordenada de lo que le espera. | | Nadie |
+| **Grabador de tareas** | Grabar y reproducir los pasos de una tarea. | | Nadie |
+| **Notificaciones push** | Confirmaciones pendientes en el teléfono. | El servicio push de la instalación | Operador/a |
+| **Integración con WhatsApp** | Un chat con un miembro con un toque, el enlace del grupo. | **Directorio de miembros** | Propietario |
+| **Entrega de facturas al cliente** | Envío a la plataforma propia del cliente (Beta). | **Facturas**, una cuenta | Administrador/a de facturación |
+| **Interfaz MCP** | Se puede conectar un asistente. | Una autorización por persona, aprobada por la instalación | Propietario, y después operador/a |
+
+**Conviene saber**
+
+- Los nombres son los de la lista de **Interruptores**. Allí se muestra el nivel Esencial o Plataforma de cada una.
+- Algunas funciones no figuran aquí. Las funciones de comodidad (consejos de ayuda, animaciones, estilo de navegación, formatos regionales) no tienen fila en la tabla: funcionan en cuanto se activan.
+
+**Véase también:** [Quién hace qué](help:setup.before.who) · [Activar y desactivar funciones](help:user.features.processes)
+
+## Personas, roles y decisiones
+
+Un espacio son sus personas. Antes de invitar a la primera, decida tres cosas: quién puede hacer qué, cómo entra alguien y qué actos necesitan que una segunda persona diga que sí. Se fijan rápido, pero son incómodas de reparar cuando cuarenta personas ya cuentan con ellas.
+
+En este capítulo:
+- [Quién hace qué en una organización real](help:setup.people.organisation)
+- [La matriz de roles: el mínimo privilegio](help:setup.people.matrix)
+- [Copropietarios: más de una persona que pueda actuar](help:setup.people.coowner)
+- [Cómo se une la gente](help:setup.people.join)
+- [El mensaje de invitación, idioma por idioma](help:setup.people.invitation)
+- [Perfiles gestionados](help:setup.people.managed)
+- [Validación: de qué se compone una regla](help:setup.people.validation)
+- [Tres ajustes preestablecidos para copiar](help:setup.people.presets)
+- [Evite solicitudes que esperan para siempre](help:setup.people.stuck)
+- [La primera semana de sus miembros](help:setup.people.first-week)
+
+El ejemplo que seguimos es *Atelier du Marché*. Imagine que lo dirige una asociación: Ada es la presidenta, Chiara la secretaria y Bruno el tesorero. Cada paso de abajo se muestra en ese espacio.
+
+### Quién hace qué en una organización real
+
+**Público:** Propietario · Copropietario
+
+Usted quiere trasladar a las personas de su organización a los roles que tiene DesKilo, de modo que nadie tenga más de lo que su trabajo exige.
+
+![](assets/help/images/setup-people-members.es.b8fa17aa9.jpg)
+
+*Los cuatro roles de base*
+
+| Rol | Para qué sirve | En la asociación |
+|---|---|---|
+| **Propietario** | La persona que responde del espacio y tiene todos los permisos. Solo un propietario puede conceder la propiedad. | Ada, la presidenta. |
+| **Copropietario** | Una segunda llave. Tiene todos los permisos por defecto y puede tomar el relevo cuando el propietario se va. | La vicepresidenta, si la junta tiene una. |
+| **Administrador** | Lleva el día a día: miembros, reservas de otros, el quiosco, documentos, servicios. Tiene lo que da la matriz y nada más. | Chiara, la secretaria. |
+| **Usuario** | La persona que usa el espacio. Solo tiene los permisos cotidianos que usted le dé. | Bruno, un miembro como los demás. |
+
+Cada persona tiene exactamente un rol de base. Un rol que define el espacio, como *Anfitrión* o *Contable*, se añade encima y nunca quita nada.
+
+*Un tesorero sin ser administrador*
+
+Bruno lleva las cuentas, pero no debería editar el plano ni aprobar miembros nuevos. Dele el rol de base **Usuario** y añada un rol propio, por ejemplo *Contable*, con cuatro permisos: **Ver las finanzas del espacio**, **Emitir facturas y conciliar pagos**, **Exportar contabilidad y datos** y **Consultar las cifras del espacio**. Nada más. No existe ningún rol así de serie; lo crea con los pasos de abajo.
+
+![](assets/help/images/setup-people-roles-space.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Roles que define este espacio](app:/settings/roles-of-this-space) y toque **Añadir un rol**. Véase [Los roles de este espacio](help:user.roles.space).
+2. Ponga nombre al rol, elija **Lo que añade** y toque **Guardar el rol**.
+3. Abra a la persona en [Miembros y planes](app:/members), busque **Roles** y toque **Añadir un rol**.
+
+**Conviene saber**
+
+- **Los roles de este espacio** es una función aparte y está desactivada en un espacio nuevo. Actívela en [Funciones](app:/features).
+- Nadie puede darse un rol a sí mismo. Dar un rol requiere **Gestionar roles y permisos**, y solo un propietario puede dar un rol que lo incluya.
+- Un rol que define el espacio surte efecto al instante y queda registrado. Solo hacer administrador a alguien, o quitárselo, sigue la regla de validación **Cambio de rol**.
+
+**Resultado** Cada persona de la junta tiene los permisos de su trabajo, y el propietario sigue siendo el único que puede cambiarlos.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix)
+
+### La matriz de roles: el mínimo privilegio
+
+**Público:** Propietario · Copropietario
+
+Usted quiere que cada rol tenga lo que necesita y nada más. Es el principio del mínimo privilegio: empiece con poco y añada cuando alguien lo pida, porque un permiso concedido pocas veces se retira de buen grado.
+
+![](assets/help/images/setup-people-roles-matrix.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Roles](app:/roles). Hay una tarjeta por rol: **Propietario**, **Copropietario**, **Administrador** (el propietario puede renombrarlo) y **Usuario**.
+2. Lea primero la tarjeta del **Administrador**. Muestra lo que hoy tiene un administrador en su espacio.
+3. Desmarque lo que no quiera delegar. Marque los permisos cotidianos que necesita la tarjeta **Usuario** (véase más abajo).
+
+*Lo que tiene un administrador por defecto*
+
+| Grupo | Permisos |
+|---|---|
+| Personas | **Gestionar miembros**, **Consultar los datos personales de los miembros** |
+| Reservas y el lugar | **Gestionar reservas de otros**, **Operar el quiosco y las tarjetas**, **Gestionar sedes y editar el plano** |
+| Dinero: lectura y aprobación | **Ver las finanzas del espacio**, **Aprobar gastos**, **Gestionar servicios y paquetes**, **Consultar los acuerdos comerciales**, **Gestionar los acuerdos comerciales**, **Solicitar cambios de condiciones de pago**, **Exportar contabilidad y datos** |
+| Documentos y cifras | **Gestionar la biblioteca de documentos**, **Consultar las cifras del espacio** |
+| Las dos caras de un espacio | **Desplegar en desarrollo**, **Entrar en el espacio de producción** |
+
+Un administrador no tiene **Gestionar roles y permisos**, **Configurar reglas de validación**, **Editar la configuración del espacio**, **Gestionar tarifas y reglas de facturación**, **Diseñar los documentos**, **Gestionar integraciones**, **Gestionar la configuración** ni **Desplegar en producción**. Un copropietario los tiene todos hasta que usted desmarque alguno. El propietario siempre los tiene todos.
+
+> **Atención** En un espacio nuevo, la tarjeta **Usuario** está vacía. Los seis permisos cotidianos (**Usar la mensajería**, **Reservar y usar las reservas**, **Ver el calendario**, **Ver el directorio de miembros**, **Ver su propia cuenta y sus facturas**, **Ver los documentos compartidos**) solo se tienen a través de la matriz o de un rol. Mientras no los marque, un miembro que se une no puede abrir el plano. La demostración los muestra ya marcados, lo que lo oculta. Márquelos en la tarjeta **Usuario**, y en la tarjeta **Administrador** si los administradores también reservan, y pruebe después con una segunda cuenta.
+
+**Conviene saber**
+
+- Por defecto, un administrador puede leer todas las finanzas y los datos personales de todos los miembros. Si sus administradores son voluntarios, piense si deberían poder.
+- **Los admins emiten facturas** (una función, desactivada por defecto, bajo **Facturas**) da a los administradores **Emitir facturas y conciliar pagos** diga lo que diga la matriz. Es preferible la marca en la matriz, o un rol propio, que es más preciso.
+- Desmarcar un permiso lo retira en todas partes a la vez; lo comprueba el servidor, no solo el menú.
+- Cada cambio de la matriz queda registrado como un evento. La función **Gestión de roles** solo muestra la pantalla; desactivada, la matriz que guardó sigue aplicándose, solo que no se puede editar.
+
+**Resultado** Una matriz que puede explicar en una frase por rol.
+
+**Véase también:** [La matriz de roles](help:user.roles.matrix) · [Quién hace qué](help:setup.before.who)
+
+### Copropietarios: más de una persona que pueda actuar
+
+**Público:** Propietario · Copropietario
+
+Usted quiere que el espacio siga funcionando cuando esté enfermo, de viaje o ya no esté. Todo espacio necesita más de una persona que pueda actuar. Por defecto, solo los propietarios y los copropietarios tienen los permisos que cambian las funciones, los roles, las reglas de validación y el ID del espacio, y solo un propietario puede nombrar a otro propietario.
+
+![](assets/help/images/setup-people-coowner.es.b8fa17aa9.jpg)
+
+*Los dos tipos*
+
+| Tipo | Qué hace | Elíjalo cuando |
+|---|---|---|
+| *Copropietario activo* | Tiene ya los permisos del propietario y toma el relevo si el propietario se va. | Comparten el trabajo: la vicepresidenta, un socio. |
+| **Sucesor** | Espera. Pasa a ser propietario cuando usted lo promueve o cuando usted se va. | Solo quiere un heredero. |
+
+**Pasos**
+
+1. Active la función **Copropietarios** en [Funciones](app:/features). Está desactivada en un espacio nuevo.
+2. Abra a la persona en [Miembros y planes](app:/members), vaya a **Gestionar** y toque **Copropiedad**.
+3. Elija *Copropietario activo* o **Sucesor**. Para traspasar ya, elija **Promover a propietario ahora**.
+
+**Conviene saber**
+
+- Si se va el último propietario, el mejor copropietario pasa a ser propietario por sí solo, uno activo antes que un sucesor.
+- Dos administradores no son lo mismo: un administrador solo tiene lo que da la matriz y nunca puede transmitir la propiedad.
+- Una regla que dice **El propietario siempre debe validar** exige un propietario. Compruebe en su lado de prueba que su copropietario puede seguir decidiendo lo que usted espera.
+
+**Resultado** El espacio tiene una segunda persona que puede actuar.
+
+**Véase también:** [Copropietarios](help:user.roles.co-owners) · [Copropiedad](help:user.members.co-ownership)
+
+### Cómo se une la gente
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere elegir cómo llega la gente a su espacio y quién la deja entrar. Existen cuatro vías, y todas terminan en el mismo sitio: una persona que pide unirse y alguien que decide.
+
+![](assets/help/images/setup-people-workspace-code.es.b8fa17aa9.jpg)
+
+| Vía | Qué recibe la persona | En qué se convierte |
+|---|---|---|
+| El ID del espacio | Una palabra corta, que escribe en la aplicación. | Miembro, tras la aprobación. |
+| El código QR | El mismo ID como imagen para imprimir o colgar (**Compartir como PNG**). | Miembro, tras la aprobación. |
+| Un mensaje de invitación | Un texto con un código personal, válido para una sola persona, en el idioma que usted elija. | El rol que usted ofrezca, tras la aprobación. |
+| Un código de administrador | Un código para una persona, de la pestaña **Invitación de administrador/a**. | Administrador, una sola vez. |
+
+**Pasos**
+
+1. Abra [ID del espacio y QR](app:/workspace-code). Elija un ID que la gente pueda recordar con **Cambiar el ID del espacio**: de 4 a 20 letras o cifras, único en todo DesKilo.
+2. Para una persona con nombre, toque **Invitar a alguien**. Rellene el nombre, marque **Roles al llegar** si debe recibir un rol, elija el **Idioma del mensaje** y envíe.
+3. Cuando alguien pide unirse, su fila en [Miembros y planes](app:/members) dice **Pendiente**. Ábrala y elija **Aprobar membresía** o **Rechazar membresía**.
+
+**Conviene saber**
+
+- Nadie entra sin una decisión. Hasta que se toma, quien llega ve una pantalla de espera y nada más.
+- La decisión sigue la regla de **Nuevo miembro** en [Reglas de validación](app:/validation): por defecto basta con un propietario o un administrador; si exige dos, la primera aprobación deja a la persona pendiente.
+- Si cambia el ID del espacio, el antiguo deja de funcionar. Vuelva a imprimir el código QR.
+- No existe invitación de propietario. La propiedad se concede en **Miembros y planes**.
+
+**Resultado** La gente puede encontrarle y usted decide quién se queda.
+
+**Véase también:** [El ID del espacio](help:user.workspace.code) · [Unirse a un espacio](help:user.start.join) · [Miembros pendientes y en pausa](help:user.members.pending)
+
+### El mensaje de invitación, idioma por idioma
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere una invitación que suene a su espacio, en el idioma de quien la recibe. Cada idioma tiene su propio texto; el que usted no escriba recurre al mensaje incluido.
+
+![](assets/help/images/setup-people-invite.es.b8fa17aa9.jpg)
+
+![](assets/help/images/setup-people-invitation-message--message.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings) y vaya a **Comunidad e invitaciones**.
+2. En **Idioma del mensaje**, elija el idioma para el que escribe. La fila se abre en el idioma de su espacio.
+3. Escriba el texto. Toque una etiqueta para insertarla donde está el cursor. El límite es de 2000 caracteres.
+4. Repita para cada idioma que usen sus miembros y toque **Guardar**.
+
+*Las etiquetas*
+
+| Etiqueta | Se rellena con |
+|---|---|
+| `{firstName}` `{lastName}` `{phone}` | Lo que escribió en **Invitar a alguien**. Vacío si no escribió nada. |
+| `{workspaceName}` | El nombre de su espacio. |
+| `{workspaceId}` | El código de invitación personal de este mensaje (no el ID público del espacio). |
+| `{inviteLink}` | Un enlace que abre la aplicación en el servidor correcto con el código ya rellenado. |
+| `{downloadUrl}` | La página de la aplicación en la tienda. |
+| `{role}` | El rol que ofrece la invitación, en el idioma del mensaje. |
+
+**Conviene saber**
+
+- Si deja el cuadro vacío, la aplicación escribe su propio mensaje en ese idioma. Explica los pasos: descargar, crear una cuenta, unirse con el código.
+- No pegue usted mismo un código ni un enlace. Cada envío crea su propio código, válido para una sola persona.
+- Una etiqueta mal escrita queda visible en el texto enviado: lea la vista previa antes de enviar.
+- El mensaje incluido avisa a la persona de que el código es de un solo uso y válido durante 14 días.
+
+**Resultado** Una invitación que sus miembros pueden seguir sin tener que preguntarle.
+
+**Véase también:** [Mensaje de invitación](help:user.workspace.settings.invitation-message) · [Invitar a alguien por mensaje](help:user.workspace.code.invite)
+
+### Perfiles gestionados
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere reservar, facturar y gestionar para alguien que aún no tiene cuenta: un visitante, un miembro mayor, una persona que prefiere el papel.
+
+**Pasos**
+
+1. Active **Perfiles gestionados** en [Funciones](app:/features).
+2. En [Miembros y planes](app:/members), toque **Añadir un perfil gestionado** y rellene la identidad.
+3. Cuando la persona esté lista, abra su página y elija **Entregar a la persona**. Se crea un código personal vinculado al perfil.
+
+**Conviene saber**
+
+- Quien canjee el código asume el perfil con sus reservas, sus facturas y su suscripción, una vez que usted apruebe la membresía.
+- Retire la entrega con **Revocar la entrega** si el código aún no se ha usado.
+
+**Véase también:** [Añadir un perfil gestionado](help:user.members.managed)
+
+### Validación: de qué se compone una regla
+
+**Público:** Propietario
+
+Usted quiere decidir, acto por acto, si una segunda persona debe estar de acuerdo. Un dominio de validación es una clase de acto con su propia regla: *un pago*, *un gasto*, *un miembro nuevo*, *la eliminación de una reserva*. En **Reglas de validación**, los dominios están en tres grupos.
+
+![](assets/help/images/setup-people-validation-overview.es.b8fa17aa9.jpg)
+
+| Grupo | Dominios, en palabras sencillas | Mientras espera |
+|---|---|---|
+| **Finanzas** | Un pago, un gasto, un servicio, una factura conciliada con su pago, una factura emitida o anulada, un reembolso, una condonación, un acuerdo de precios, un gasto compartido, un gasto programado, un cambio de condiciones de pago, una salida anticipada, un registro de uso eliminado | El importe no cuenta en el estado de cuenta de nadie. |
+| **Reservas** | **Medias jornadas extra** que pide un miembro, **Reservas de espacios enteros**, una reserva hecha para un miembro por un administrador, una **Eliminación de reserva** | El puesto se queda como estaba. |
+| **Personas y roles** | **Nuevo miembro**, un cambio de rol, un cambio de estado, un cambio de suscripción, un cambio de la matriz de permisos | La persona conserva el acceso que tiene ahora. |
+
+Todo dominio empieza con **Hereda la predeterminada**: una validación de cualquier administrador o propietario. **Regla predeterminada** es la regla que heredan todas las demás. Un dominio que usted abre y guarda pasa a ser **Personalizada**.
+
+*Los mandos de una regla*
+
+| Ajuste | Qué significa | Necesita |
+|---|---|---|
+| **Validaciones requeridas** | Cuántas personas deben decir que sí. | |
+| **Quién valida** | **Admins**, **Personas designadas** o **Todos los miembros**. El propietario siempre puede. | **Validadores por rol o persona**: sin ella no se muestra la elección y validan los administradores. Tras desactivarla, revise de nuevo las reglas que nombraban a **Personas designadas** |
+| **Los admins pueden validar** | Desactivado, solo validan los propietarios. | |
+| **El propietario siempre debe validar** | Uno de los síes debe venir de un propietario. | |
+| **La propiedad puede validar lo propio** | La solicitud del propio propietario no se queda esperando a otra persona. Un administrador nunca recibe esto. | **Validaciones encadenadas** |
+| **Una tras otra** | La segunda se pide cuando la primera ha dicho que sí. | **Validaciones encadenadas** |
+| **Solo por encima de este importe** | Por debajo, el acto se aplica de inmediato. Solo en los dominios de dinero. | **Validaciones encadenadas** |
+| **Los admins eliminan sin validación** / **Los propietarios eliminan sin validación** | Su propia **Eliminación de reserva** se resuelve sola y queda marcada como autovalidada. Desactivado por defecto. | |
+
+![](assets/help/images/setup-people-validation-sheet.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Reglas de validación](app:/validation). Toque **Regla predeterminada** y decida qué hereda todo lo demás.
+2. Toque un dominio, fije los mandos y toque **Guardar**.
+3. Mantenga pocas excepciones. Cada excepción es una cosa más que debe recordar cuando alguien pregunte «¿por qué esto está esperando?».
+
+**Conviene saber**
+
+- Nadie valida su propio acto. Espera a otra persona, salvo que esté activada la excepción del propietario.
+- Cada decisión queda registrada: quién, cuándo, sobre qué.
+- Una solicitud a la que nadie responde caduca a los siete días, al barrerla la próxima vez que alguien abre Eventos. Un acto que un administrador hizo por un miembro se confirma automáticamente.
+
+**Véase también:** [Reglas de validación, dominio por dominio](help:user.validation.overview) · [Quién puede validar](help:user.validation.who-may) · [Validación automática](help:user.validation.auto-validate-admin)
+
+### Tres ajustes preestablecidos para copiar
+
+**Público:** Propietario
+
+Usted quiere un conjunto de reglas que pueda copiar hoy y afinar después. Elija uno; todos se apoyan en el alcance por defecto, el propietario y los administradores, así que no hace falta ninguna función adicional.
+
+| Ajuste | Elíjalo cuando | Qué fija | Validadores que necesita |
+|---|---|---|---|
+| *Unión abierta* | Conoce a las personas que escanearán su código. | Nada. Cada dominio hereda la predeterminada: una validación de cualquier propietario o administrador. Una unión sigue sin ser nunca automática. | 1 (usted) |
+| *Aprobar uniones* | Una junta decide quién entra. | **Nuevo miembro**: **Validaciones requeridas** 2, **El propietario siempre debe validar** activado. | 2: un propietario y un administrador |
+| *Aprobar uniones y reservas* | Los puestos o las salas enteras escasean, o las eliminaciones de reservas necesitan un testigo. | *Aprobar uniones*, más, en **Reservas de espacios enteros**, **Medias jornadas extra** y **Eliminación de reserva**: **Validaciones requeridas** 1. | 2 como mínimo, 3 para estar cómodo |
+
+En la asociación: Ada es la propietaria y Chiara administradora. Con *Aprobar uniones*, Ada y Chiara aprueban ambas a cada recién llegado. Con el tercer ajuste, una sala entera que reserva Bruno queda bloqueada para él de inmediato, pero Ada o Chiara aún pueden rechazarla, y una eliminación que pide Chiara la decide Ada, no Chiara.
+
+**Pasos**
+
+1. Abra [Reglas de validación](app:/validation).
+2. Toque **Nuevo miembro**, fije lo que dice la tabla y toque **Guardar**.
+3. Para el tercer ajuste, repita en los otros tres dominios.
+4. Abra **Miembros y planes** y cuente sus propietarios y administradores activos. Deben ser al menos el número de la última columna.
+
+**Conviene saber**
+
+- Estos ajustes nunca retienen para su aprobación una reserva ordinaria de un miembro. Lo que espera es una sala entera, unas medias jornadas extra, una eliminación y la unión.
+- Un ajuste preestablecido es un punto de partida. Suba un número solo cuando tenga suficientes personas para responder.
+
+**Véase también:** [Validaciones requeridas](help:user.validation.required-count) · [Se requiere un propietario](help:user.validation.owner-required)
+
+### Evite solicitudes que esperan para siempre
+
+**Público:** Propietario · Copropietario
+
+Usted quiere estar seguro de que toda solicitud para la que crea una regla puede recibir respuesta. Una regla que necesita más validadores de los que existen no se rechaza en todas partes: la solicitud se crea, nadie puede completarla y caduca a los siete días.
+
+> **Atención** El editor cuenta un validador adicional para la persona afectada, así que le deja guardar **Validaciones requeridas** con uno más que las personas que tiene. Ese sí adicional existe solo para una reserva que un administrador hizo para un miembro y para algunos pagos. Para una unión o una solicitud de dinero no existe. No confíe en que el editor cuente por usted.
+
+*Cuente antes de exigir*
+
+| Usted exige | Necesita, además de la persona que pide |
+|---|---|
+| 1 | Un propietario o administrador activo |
+| 2 | Dos propietarios o administradores activos |
+| 2 con **El propietario siempre debe validar** | Un propietario y otra persona más |
+| Una lista de **Personas designadas** | Cada persona de la lista debe estar activa; un administrador nuevo no se añade automáticamente |
+
+*Cómo comprobarlo*
+
+1. Abra [Reglas de validación](app:/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
+2. Abra [Miembros y planes](app:/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
+3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. Solo retiene la primera reserva cuando la regla es para reservas.
+4. Abra [Eventos](app:/events). **Esperando tu confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
+
+**Conviene saber**
+
+- El propio editor dice **No hay suficientes validadores elegibles.** cuando un recuento supera claramente a las personas disponibles. No detecta todos los casos.
+- Un propietario solo que pide algo para sí mismo está esperando a otra persona: añada un administrador, o active **La propiedad puede validar lo propio** en **Validaciones encadenadas**.
+- Poner en pausa o retirar a un administrador puede dejar corta una regla. Vuelva a contar tras cada cambio de equipo.
+
+**Resultado** Toda regla puede recibir respuesta de personas que existen.
+
+**Véase también:** [Validaciones requeridas](help:user.validation.required-count) · [Mantenga la coherencia](help:setup.consistent.overview)
+
+### La primera semana de sus miembros
+
+**Público:** Propietario · Administrador/a
+
+Usted quiere que sus primeros miembros lo logren sin preguntarle. Lo que les diga la primera semana decide cuánto tendrá que responder la segunda.
+
+*Antes de invitar a nadie*
+
+1. Inicie sesión como una segunda persona con una cuenta de prueba y únase a su espacio. Compruebe que puede abrir el plano y reservar un asiento.
+2. Apruebe esa cuenta como miembro y, si exige dos, haga que el segundo validador también apruebe.
+
+**Pasos**
+
+1. Envíe el mensaje de invitación. Explica cómo descargar la aplicación, crear una cuenta y unirse. Véase [Unirse a un espacio](help:user.start.join).
+2. Apruebe a cada recién llegado el mismo día. Quien espera un día empieza con una duda.
+3. Cuéntele las tres primeras cosas: el plano y la reserva ([Reservar un puesto](help:user.reserve.book)), el registro de entrada ([Entrar y salir](help:user.reserve.check-in)) y dónde esperan sus solicitudes ([Eventos](help:user.collaborate.events)).
+4. Dígale qué ve usted de esa persona y qué controla ella ([Quién puede ver mis datos](help:user.privacy.visibility)).
+5. Nombre a una persona a quien preguntar, y dónde: la mensajería o el mostrador.
+
+**Conviene saber**
+
+- Cuando un administrador hace algo por un miembro, queda pendiente hasta que el miembro lo confirma. Avíselos, o la primera reserva que haga por alguien parecerá un error.
+- Los miembros que no usan notificaciones push encuentran todo igualmente en **Eventos**.
+- En la primera visita a Reservar, la tarjeta **Primeros pasos** muestra a los propietarios lo que aún falta. Los miembros tienen sus propios consejos breves. Véase [La tarjeta Primeros pasos y los consejos](help:user.start.get-started).
+
+**Resultado** Personas que saben reservar, entrar y a quién preguntar.
+
+**Véase también:** [De la semana 0 a la semana 4](help:setup.training.overview) · [Cómo se informa a los miembros](help:setup.notify.members)
+
+## Dinero e impuestos
+
+Para propietarios y administradores de facturación que van a decidir cómo se paga un espacio. Este capítulo trata de las decisiones y de su orden; los clics están en la guía de usuario, y cada sección enlaza con ellos.
+
+> **Atención** DesKilo registra, calcula e imprime lo que usted declara, y comprueba que estén los datos obligatorios. No certifica sus facturas, su tratamiento del IVA ni su contabilidad. Cada vez que este capítulo diga «consúltelo con su gestor», hágalo.
+
+En este capítulo:
+- Si los miembros pagan o no, y quién emite las facturas
+- Cómo se construye una tarifa, con las cifras del espacio de demostración *Atelier du Marché*
+- Cómo le pagan los miembros
+- Su identidad legal y las preguntas que conviene llevar a su gestor
+- Facturación manual o automática, recordatorios y el IVA a grandes rasgos
+- Las decisiones de dinero que no tienen vuelta atrás, y cómo ensayarlas sin riesgo
+
+### Decida primero: si los miembros pagan y quién emite las facturas
+
+**Público:** Propietario
+
+Usted elige hasta dónde llega DesKilo en su dinero. Todo lo demás en este capítulo depende de esta elección, que es fácil de ampliar más adelante y difícil de reducir cuando ya existen facturas.
+
+![](assets/help/images/setup-money-paths.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+Responda a dos preguntas: ¿le pagan los miembros por el espacio?, ¿quiere que las facturas legales salgan de DesKilo?
+
+| Vía | Elíjala cuando | Qué ocurre |
+|---|---|---|
+| 1. Sin dinero | El espacio es gratuito, o los miembros son amigos que reparten el alquiler fuera de la aplicación | Deja las funciones de dinero desactivadas. Los miembros reservan; nadie recibe facturas. |
+| 2. Extractos y pagos, facturas fuera | Ya tiene un gestor o una herramienta de facturación, o trabaja en un país para el que DesKilo no puede emitir facturas | Los miembros tienen un extracto mensual, usted registra los pagos que recibe y exporta las cifras para su gestor. Las facturas legales se producen en otro sitio. |
+| 3. Facturas emitidas por DesKilo | Está en Francia o en Alemania, y está registrado en el IVA o fuera de su ámbito (una asociación, por ejemplo) | DesKilo produce facturas firmadas y numeradas a partir de lo reservado, con su identidad legal impresa. |
+
+**Pasos**
+
+1. Elija su vía en la tabla.
+2. Para la vía 2 o 3, active las funciones de dinero que necesite en [Funciones](help:user.features.switch): **Facturas** es la base de todo lo que se emite, y las funciones que dependen de ella (**Facturas de suscripción**, **Facturas de fin de mes**, **Recordatorios de pago**, **Gestión del IVA**) se activan una a una.
+3. Para la vía 3, continúe con [su identidad legal](help:setup.money.identity) antes de la primera reserva, no después.
+
+**Conviene saber**
+
+- Hoy la emisión de facturas dentro de la aplicación existe para un espacio en **Francia** o **Alemania**. En cualquier otro país, use la vía 2: los extractos siguen disponibles.
+- El servidor se niega a emitir, y la lista **Complete estos datos antes de emitir** explica por qué, cuando falta un dato o cuando el tratamiento es uno que DesKilo no gestiona: las ventas transfronterizas, la inversión del sujeto pasivo, las exportaciones y las facturas exentas de IVA deben revisarse y emitirse fuera de la aplicación con su gestor.
+- Un vendedor acogido al régimen de franquicia (franchise en base, Kleinunternehmer) no puede emitir facturas en la aplicación: el servidor rechaza la categoría de IVA exenta. Quédese en la vía 2 y emita esas facturas en otro sitio.
+- Desactivar una función detiene la actividad nueva de ese tipo; no borra nada.
+- Puede quedarse en la vía 2 para siempre. Muchas asociaciones lo hacen.
+
+**Resultado**
+
+Sabe cuál de las tres vías es la suya y qué funciones necesita.
+
+**Véase también:** [La facturación de un vistazo](help:user.money.invoicing) · [Activar o desactivar procesos enteros](help:user.features.processes)
+
+### Diseñar una tarifa
+
+**Público:** Propietario · Administrador/a de facturación
+
+Convierte la pregunta «¿cuánto vale un puesto?» en cifras que DesKilo aplica cada mes sin que usted intervenga.
+
+![](assets/help/images/setup-money-bands--bands.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+Tenga presente el modelo. Se lee de izquierda a derecha, y cada paso alimenta al siguiente:
+
+1. Porcentaje de suscripción: un miembro tiene un porcentaje del mes: 25, 50, 75 o 100 %, o un valor que usted permita.
+2. Derecho en medias jornadas: el porcentaje se convierte en un número de medias jornadas para el mes: los días abiertos, por dos, por el porcentaje, redondeado hacia arriba.
+3. Tramo de tarifa: el porcentaje cae en un tramo, que da la cuota mensual y el precio de una media jornada adicional. Un tramo abarca «por encima de su inicio, hasta su final inclusive», y juntos los tramos deben cubrir de 0 a 100 % sin huecos.
+4. Política de exceso: cuando se agota el derecho, cada miembro queda bloqueado, paga el precio del exceso o se le invita a comprar un bono.
+5. Bonos y servicios: un bono de días vende medias jornadas adicionales por adelantado a un precio que usted fija; los servicios (un café, una taquilla, impresión) se venden además.
+
+**Pasos**
+
+1. Decida los porcentajes que quiere ofrecer en **Niveles de suscripción**, y si un propietario puede escribir un valor negociado (véase [Niveles de suscripción](help:user.money.billing.levels)).
+2. Defina una fila por intervalo en **Tramos de tarifas**: su límite superior, la cuota mensual y el precio del exceso (véase [Tramos de tarifas](help:user.money.billing.fee-bands)).
+3. Decida el valor por defecto para los miembros que se quedan sin días: [Cuando se acaban los días](help:user.members.overage-policy).
+4. Añada los [bonos de días](help:user.money.billing.packages) y los [servicios](help:user.money.services.overview) que vende.
+
+**Conviene saber**
+
+- La aritmética queda congelada en cada documento emitido. Cambiar un precio cambia el mes siguiente, nunca un mes ya facturado.
+- El horario de apertura y los días de cierre determinan cuántos días abiertos tiene un mes, y por tanto el tamaño del derecho. Defínalos primero.
+- Un miembro sin suscripción es para visitantes que compran bonos; no puede estar en pago por uso.
+
+**Véase también:** [Facturación](help:user.money.billing.fee-bands) · [La suscripción de un miembro](help:user.members.subscription)
+
+### Un ejemplo completo
+
+**Público:** Propietario · Administrador/a de facturación
+
+Sigue a un miembro durante un mes con las cifras de *Atelier du Marché*, para que pueda comprobar las suyas de la misma manera.
+
+![](assets/help/images/setup-money-packages--packages.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+El espacio de demostración tiene tres tramos de tarifa, en euros y con el IVA incluido. Las cifras son las de la demo, no una recomendación.
+
+| Tramo | Cuota mensual | Media jornada adicional | Medias jornadas en un mes de 22 días abiertos |
+|---|---|---|---|
+| hasta 25 % | 0,00 | 15,00 | 11 |
+| por encima de 25 %, hasta 50 % | 150,00 | 8,00 | 22 |
+| por encima de 50 %, hasta 100 % | 250,00 | 0,00 | 44 (al 100 %) |
+
+**Pasos**
+
+1. Un miembro tiene el 50 %. En un mes con 22 días abiertos, el derecho es 22 × 2 × 50 / 100 = 22 medias jornadas.
+2. El 50 % cae en el segundo tramo (por encima de 25, hasta 50): la cuota es de 150,00, use lo que use el miembro.
+3. El miembro reserva 24 medias jornadas. Dos exceden el derecho, a 8,00 cada una: 16,00.
+4. El mes cuesta 150,00 + 16,00 = 166,00, antes de cualquier servicio. En la demo los precios son brutos: el IVA del 20 % está incluido y la pantalla lo muestra bajo cada precio.
+5. Compárelo con un bono: el bono de 5 días de la demo cuesta 40,00 y añade 10 medias jornadas (5 días, dos medias jornadas cada uno), es decir, 4,00 por media jornada. Frente a 8,00 de exceso, compensa a partir de la sexta media jornada adicional en un mes.
+
+**Conviene saber**
+
+- Un precio de exceso de 0,00 significa que las medias jornadas adicionales no cuestan nada en pago por uso.
+- El extracto que ve un miembro muestra las mismas líneas: cuota, incluido, usado, adicional, exceso.
+- Los precios se muestran con el IVA incluido cuando el IVA está activado; el impuesto se extrae de ellos.
+- Si usted y un miembro acuerdan otras condiciones, véase la [negociación de precios](help:setup.money.negotiation).
+
+**Resultado**
+
+Puede predecir la factura de un miembro con tres datos: su porcentaje, los días abiertos y las reservas.
+
+**Véase también:** [Lea su extracto](help:user.money.statement) · [Lo que costó cada reserva](help:user.money.usage)
+
+### Negociación de precios
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que un miembro pague condiciones distintas de la tarifa, de forma que quede constancia.
+
+**Pasos**
+
+1. Active la función de negociación de precios en [Funciones](help:user.features.switch).
+2. Proponga las condiciones en la ficha del miembro: otra cuota mensual, otra tasa de exceso, un descuento en los suplementos, otros precios unitarios u otro porcentaje de ocupación (véase [Negociación de precios](help:user.members.negotiation)).
+3. Deje que la regla de validación de las negociaciones de precios decida quién la confirma.
+
+**Conviene saber**
+
+- La tarifa sigue siendo la referencia; un precio negociado pertenece a un solo miembro.
+- Lo ven el miembro, los propietarios y las personas con derecho a consultar los acuerdos comerciales, y cada lectura queda registrada.
+- Defina su política antes de abrir: una excepción concedida en silencio acaba siendo el precio que todos piden.
+
+**Véase también:** [Sus precios negociados](help:user.money.negotiation)
+
+### Cómo le pagan los miembros
+
+**Público:** Propietario · Administrador/a de facturación
+
+Usted elige adónde va el dinero de un miembro y cuánto trabajo hace DesKilo por usted.
+
+![](assets/help/images/setup-money-payment-instructions.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Empiece por la vía gratuita: rellene las [instrucciones de pago](help:user.money.payments.methods): su IBAN y datos bancarios, y los medios que acepte entre PayPal.me, Wero, Lydia o Wise, más una indicación de referencia.
+2. Los miembros ven estos datos en un extracto sin pagar. Cuando un pago llega a su cuenta, usted o un administrador de facturación [lo registra](help:user.money.payments.record).
+3. Solo si quiere que los miembros paguen dentro de la aplicación, conecte un proveedor en [Pagos en línea](help:user.money.payments.provider): PayPal, Stripe o Mollie. Necesita la función **Pagos en línea** y su propia cuenta en el proveedor.
+
+**Conviene saber**
+
+- DesKilo registra los pagos; con la vía manual nunca mueve dinero.
+- Un proveedor cobra sus propias comisiones y recibe las claves de su cuenta (la hoja de credenciales explica cómo se introducen).
+- Con **Pagos en línea** desactivado, se rechaza un nuevo pago en línea; uno ya abierto todavía puede liquidarse.
+- Un espacio creado a partir de una plantilla no incluye los datos de pago: introdúzcalos en cada espacio. Una exportación de la configuración sí los incluye.
+
+**Véase también:** [Pague lo que debe](help:user.money.payments) · [Credenciales del proveedor](help:user.money.payments.credentials)
+
+### Su identidad legal y qué preguntar a su gestor
+
+**Público:** Propietario
+
+Usted indica a DesKilo quién vende, para que cada factura le nombre correctamente. Esta es la parte que conviene cerrar con un profesional.
+
+![](assets/help/images/setup-money-legal--top.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+La pantalla es [Identidad legal y facturación electrónica](app:/legal-identity). Tenga a mano:
+
+- el tipo de organización: una empresa o una asociación sin ánimo de lucro;
+- su régimen de IVA: fuera del ámbito del IVA, exento de IVA (régimen de franquicia) o registrado en el IVA. La aplicación solo puede emitir facturas para el primero y el último; con la franquicia, la pantalla registra su situación pero las facturas deben emitirse en otro sitio (vía 2);
+- su número de registro y, si lo tiene, su número de IVA;
+- su dirección postal, tal como figura en su registro;
+- el motivo por el que no se cobra IVA, si no cobra ninguno.
+
+> **Atención** Elegir el régimen es una decisión fiscal, no un ajuste del programa. Una asociación sin actividad comercial normalmente está fuera del IVA, y la pantalla le avisa si elige «exento» para una. Confirme la elección antes de emitir la primera factura.
+
+**Pasos**
+
+1. Abra [Identidad legal y facturación electrónica](app:/legal-identity) y trabaje de arriba abajo: primero el **Régimen de IVA**, después los identificadores, la dirección y las **Menciones de facturación**.
+2. Rellene las condiciones de pago, las menciones de demora y las demás menciones que exija su país (véase [Su identidad legal](help:user.money.legal.identity)).
+3. Pulse **Guardar** y lea la plantilla de factura una vez con su gestor (véase [La plantilla PDF de factura](help:user.money.reports.invoice-template)).
+
+> **Consejo** Preguntas para llevar a su gestor:
+
+> 1. ¿En qué tipo de organización y en qué régimen de IVA estoy?
+> 2. ¿Cuáles son mi número de registro y mi número de IVA, y cómo se escriben?
+> 3. Si no cobro IVA, ¿qué texto legal lo justifica?
+> 4. ¿Qué menciones deben figurar en mis facturas (plazo de pago, penalización por demora, indemnización por cobro, descuento por pronto pago, seguro)?
+> 5. ¿Cómo deben numerarse las facturas, y la numeración se reinicia cada año o cada mes?
+> 6. ¿El IVA se devenga cuando facturo o cuando me pagan?
+> 7. ¿Debo enviar facturas electrónicas a una plataforma pública, y a cuál?
+> 8. ¿Necesito declaraciones periódicas de IVA, y con qué frecuencia?
+
+**Conviene saber**
+
+- Las facturas ya emitidas conservan la identidad con la que se firmaron; un cambio se aplica a las siguientes.
+- Solo un propietario o un copropietario activo puede abrir esta pantalla, y la función **Facturas** debe estar activada.
+- Un espacio creado a partir de una plantilla no incluye su identidad: introdúzcala de nuevo. Un despliegue entre los dos lados de un par sí la incluye.
+
+**Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [La plataforma de facturación electrónica](help:user.money.einvoice.overview) · [Tipo de organización](help:user.money.legal.seller-kind)
+
+### Facturar a mano o automáticamente
+
+**Público:** Propietario · Administrador/a de facturación
+
+Usted decide si una persona pulsa los botones cada mes o si lo hace DesKilo.
+
+**Pasos**
+
+1. Para un primer mes, trabaje a mano: abra [Facturación](app:/invoices), lea **Por emitir** y emita la factura de un miembro (véase [Emitir una factura](help:user.invoicing.new-invoice)).
+2. Para una rutina, use el [asistente de cierre mensual](help:user.invoicing.wizard): recorre **Revisión**, **Emitir**, **Enviar**, **Recordar**, **Pagos**, **Conciliar**, **Cerrar** y **Resumen**.
+3. Para automatizar, active **Facturas de suscripción** y **Facturas de fin de mes** en [Funciones](help:user.features.switch) y fije los días en [Calendario de facturación](help:user.money.billing.schedule).
+
+**Conviene saber**
+
+- Existen dos documentos por mes: la cuota de suscripción, emitida antes del mes, y lo que el mes costó realmente, emitido después. Una factura puede llevar una fecha unos días adelantada (tres por defecto, según el calendario de facturación), de modo que una fechada el 29 de agosto puede nombrar septiembre.
+- En el servidor, una ejecución diaria emite ambos cuando la base de datos de la instalación tiene su programador activado; si no está seguro, pregúntelo al operador.
+- Cada tipo de factura (suscripción, fin de mes) puede emitirse una vez por miembro y mes. Las facturas no se pueden editar ni borrar; una errónea se marca como tal y se sustituye.
+- Por defecto emiten facturas el propietario y los copropietarios. **Los admins emiten facturas** lo extiende a los administradores.
+
+**Véase también:** [La pantalla de Facturación](help:user.invoicing.hub) · [Reclamar y liquidar las facturas abiertas](help:user.invoicing.open)
+
+### Recordatorios de pago
+
+**Público:** Propietario · Administrador/a de facturación
+
+Usted decide cuándo se considera tarde y quién se encarga de reclamar.
+
+![](assets/help/images/setup-money-reminders.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Active **Recordatorios de pago** en [Funciones](help:user.features.switch). Depende de **Facturas**.
+2. Fije el número de niveles y los plazos en [Reglas de recordatorio](help:user.money.reminders.rules): días hasta el primer recordatorio y días entre recordatorios.
+3. Decida si los recordatorios salen solos: active **Recordatorios automáticos** en el mismo cuadro de diálogo (véase [Recordatorios automáticos](help:user.money.reminders.automatic)); la función **Recordatorios de pago automáticos** también debe estar activada.
+
+**Conviene saber**
+
+- El plazo antes del primer recordatorio se lee también como su plazo de pago. Fíjelo en [Condiciones de pago](help:user.money.legal.payment-terms).
+- Los recordatorios automáticos se ejecutan una vez al día en el servidor cuando la base de datos tiene su programador activado. También se ejecutan cuando alguien autorizado a emitir facturas (un propietario, un copropietario o un administrador si **Los admins emiten facturas** está activado) abre Finanzas, de modo que un espacio sin programador igualmente los recibe, los días en que alguien mira.
+- La función **Recordatorios de pago** solo pone las reglas a su disposición. Un recordatorio sale solo únicamente cuando **Recordatorios automáticos** está activado en las reglas de recordatorio, lo cual no ocurre hasta que usted lo decide.
+- Se omiten las facturas con un pago pendiente o en espera, y las facturas sin plazo de pago registrado.
+- El miembro recibe una alerta en su flujo y, si las notificaciones push están configuradas, una notificación genérica; véase [Avisar a las personas](help:setup.notify.overview).
+
+**Véase también:** [Condiciones de pago](help:user.money.legal.payment-terms)
+
+### El IVA a grandes rasgos
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere saber qué le pedirá el IVA antes de activarlo.
+
+![](assets/help/images/setup-money-vat--rates.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Solo si está registrado en el IVA, active **Gestión del IVA** en [Funciones](help:user.features.switch).
+2. Fije los tipos en [IVA](app:/vat): **Usar los tipos habituales** de su país y marque exactamente uno como predeterminado (véase [Fijar los tipos](help:user.money.vat.rates)).
+3. Dé a cada tipo su grupo y, cuando proceda, un motivo de exención (véase [Grupos de IVA](help:user.money.vat.groups)).
+4. Cuando la ley cambie un tipo, use **Cambio por ley** para que las facturas antiguas conserven su tipo (véase [Cambiar un tipo por ley](help:user.money.vat.change-by-law)).
+5. Si debe presentar declaraciones, active **Declaraciones de IVA** y genere cada periodo en [Declaración de IVA](help:user.money.vat.declaration).
+
+**Conviene saber**
+
+- Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
+- Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir.
+- Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
+- El diario de declaraciones tiene su propia serie de numeración.
+
+**Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)
+
+### Lo que no tiene vuelta atrás
+
+**Público:** Propietario
+
+Quiere saber, antes de la primera factura, qué no podrá cambiar después.
+
+![](assets/help/images/setup-money-numbering.es.b8fa17aa9.jpg)
+
+> **Atención** Desde la primera factura emitida, lo que sigue es permanente. Decídalo antes con su gestor.
+
+| Decisión | Qué pasa a ser permanente | Cuándo |
+|---|---|---|
+| Una factura emitida | Está firmada y es inmutable: los importes, las partes, el desglose del IVA y la aritmética de la tarifa quedan como se imprimieron. Una corrección es una anulación, una factura rectificativa o un reembolso, cada uno un documento nuevo. | Al emitir |
+| Número de factura | Los números son correlativos, sin huecos, y se asignan en la base de datos en el momento de emitir. El número siguiente puede subirse, nunca bajarse. Un cambio de formato se aplica desde ese momento. Un reinicio no puede ser más frecuente que la fecha que imprime el número. | En la primera emisión |
+| Un mes facturado | Un mes con una factura para un miembro queda cerrado para ese miembro. Los días de cierre y las importaciones de festivos omiten esos meses y los nombran. | En la primera factura de ese mes |
+| Tipos de IVA | Los tipos se versionan por fecha, nunca se editan. Una declaración de IVA presentada no se recalcula nunca. | En el primer uso |
+| Moneda y país | Los importes se guardan como unidades menores enteras, sin conversión. No se encontró ninguna protección que impida cambiarlos más tarde: decídalos antes de la primera reserva. | Antes de la primera reserva |
+
+**Pasos**
+
+1. Abra [Series de numeración](app:/settings/number-sequences) y fije el prefijo, el sufijo, la parte de fecha, los dígitos y el reinicio de cada diario (facturas, facturas rectificativas, declaraciones de IVA, miembros, pagos). La pantalla necesita la función **Series de numeración**.
+2. Enseñe el resultado a su gestor antes de la primera factura.
+3. Elija el país, la moneda y la zona horaria en los [Ajustes del espacio](help:user.workspace.settings.country) antes de que nadie reserve.
+
+**Conviene saber**
+
+- Los números no se desperdician: un documento que no llega a emitirse no consume ninguno.
+- Los dos estados de un espacio, prueba y producción, existen para que nada de esto se ensaye de verdad; véase [un ensayo seguro](help:setup.money.dry-run).
+
+**Véase también:** [El registro de facturas](help:user.invoicing.register) · [Moneda y zona horaria](help:user.workspace.settings.currency-timezone)
+
+### Un ensayo seguro en un espacio de prueba
+
+**Público:** Propietario
+
+Ensaya una vez toda la rutina del dinero, sin nada real en juego.
+
+**Pasos**
+
+1. Cree o abra un espacio de prueba (**Un espacio de prueba**, o el lado DEV de un par vinculado); véase [Espacio de prueba](help:user.advanced.test-space) y [Entornos](help:user.advanced.environments).
+2. Introduzca la identidad legal, los tipos, la tarifa y las instrucciones de pago tal como piensa usarlos.
+3. Invite a dos o tres personas a reservar unos días; añada un servicio para una de ellas.
+4. Ejecute el [asistente de cierre mensual](help:user.invoicing.wizard) de principio a fin y lea el PDF de la factura.
+5. Registre un pago, deje que venza un recordatorio y lea el extracto como lo vería el miembro.
+6. Enseñe los PDF y la exportación contable a su gestor.
+
+**Conviene saber**
+
+- Un espacio de prueba pone una marca de agua en cada documento y dice que es una prueba; no se debe nada.
+- Declarar un espacio como producción quita la marca de agua; las facturas ya emitidas conservan la suya.
+- El par puede traer la configuración de un lado al otro, pero las credenciales no viajan.
+
+**Resultado**
+
+Un primer mes que ya ha visto y una lista de preguntas resueltas antes de que cuesten algo.
+
+**Véase también:** [Los dos entornos](help:user.advanced.environments) · [Exportaciones contables](help:user.invoicing.accounting-export)
+
+## Avisar a las personas
+
+Para propietarios que quieren que los miembros y los administradores se enteren de lo que importa, y solo de eso. Este capítulo describe lo que DesKilo envía realmente, quién lo recibe, qué configura usted y qué debe dejar al operador de la instalación.
+
+En este capítulo:
+- Los canales, en palabras sencillas
+- Una tabla: qué ocurre, a quién se avisa, por qué canal y qué puede cambiar un miembro
+- Lo que usted configura y lo que debe hacer el operador para las notificaciones push
+- Un plan de pruebas con dos cuentas
+- Cómo evitar tanto el exceso de avisos como el silencio
+
+### Los canales, en palabras sencillas
+
+**Público:** Propietario · Administrador/a
+
+Quiere tener una idea clara de las vías por las que DesKilo puede llegar a una persona, antes de prometer nada a sus miembros.
+
+![](assets/help/images/setup-notify-features.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+Hay seis vías, y no son iguales. La mayor parte del trabajo se hace dentro de la aplicación.
+
+| Canal | Qué es | Qué necesita |
+|---|---|---|
+| El flujo de eventos y la campana | Todo lo que ocurre en el espacio se anota en un flujo. La campana cuenta las novedades y las decisiones que esperan por usted. | **Pestaña Eventos**; **Agrupación de notificaciones** es una opción adicional |
+| Mensajes | Conversaciones privadas y de grupo entre miembros, con confirmaciones de lectura y enlaces a una reserva o a un espacio. | **Notificaciones entre miembros** |
+| Notificaciones push | Una notificación breve en un teléfono o un ordenador, incluso con la aplicación cerrada. El texto es genérico: sin nombres ni horas. | **Notificaciones push** activadas, **y** una configuración de push por parte del operador; véase [la parte del operador](help:setup.notify.operator) |
+| El recordatorio de registro de entrada | Una notificación en el propio dispositivo del miembro, 15 minutos antes de una reserva en la que aún no ha registrado su entrada. | El permiso del sistema por parte del miembro. No existe en la versión de navegador. |
+| Recordatorios de pago | Una alerta en el flujo y una notificación push al miembro cuya factura está vencida. | **Recordatorios de pago** y **Recordatorios de pago automáticos**; véase [Recordatorios de pago](help:setup.money.reminders) |
+| WhatsApp | Un enlace de grupo que usted publica y el número de WhatsApp que un miembro decide compartir. La aplicación abre WhatsApp; el servidor no envía nada. | **Integración con WhatsApp** |
+
+**Conviene saber**
+
+- DesKilo no envía correos electrónicos propios, aparte de los de la cuenta (confirmación de alta, restablecimiento de contraseña). Las invitaciones son textos que usted comparte desde su propio teléfono.
+- No existe una suscripción por evento: un miembro no puede elegir «avísame de los gastos pero no de las reservas».
+- Una notificación puede retrasarse o perderse como cualquier push; el flujo y la lista de mensajes son el registro fiable.
+
+**Véase también:** [Notificaciones](help:user.collaborate.notifications) · [Eventos y confirmaciones](help:user.collaborate.events)
+
+### A quién se avisa de qué
+
+**Público:** Propietario · Administrador/a
+
+Quiere saber, evento por evento, quién se entera y cómo.
+
+![](assets/help/images/setup-notify-events.es.b8fa17aa9.jpg)
+
+**Antes de empezar**
+
+Solo se envía push en las cinco líneas marcadas con «push» más abajo. Cualquier otro evento (una reserva hecha, un pago registrado, la llegada de un miembro) aparece en el flujo y en ningún otro sitio.
+
+| Origen | Evento | A quién se avisa | Canal | Qué puede cambiar el miembro |
+|---|---|---|---|---|
+| Reglas de validación | Una solicitud necesita una confirmación | A las personas que nombra la regla (flujo, **Esperando tu confirmación**); el push va solo al miembro al que se refiere la solicitud, nunca a quien la hizo, de modo que los validadores reciben el push solo cuando son ese miembro. Texto: «Alguien necesita tu confirmación.» | Flujo, campana; push | Desactivar el push en el dispositivo |
+| Reservas | Un administrador elimina o anula una reserva | Al miembro desplazado y a todos los administradores y propietarios activos excepto quien actuó. Texto: «Un administrador ha eliminado una reserva.» | Flujo; push | Desactivar el push en el dispositivo |
+| Recordatorios de pago | Una factura ha superado su plazo y vence un nivel de recordatorio | Al miembro destinatario de la factura. La factura de un propietario llega al propio propietario. Texto: «Tienes un recordatorio de pago.» | Alerta en el flujo; push | Desactivar el push en el dispositivo |
+| Notificaciones entre miembros | Un mensaje nuevo | Mensaje directo: el destinatario. Grupo: los participantes excepto el remitente. Una conversación silenciada por un miembro permanece en silencio para ese miembro. Texto: «Tienes un mensaje nuevo.» | Mensajes, campana; push | Silenciar, fijar o archivar una conversación; desactivar el push |
+| Menciones en mensajes | Un mensaje de grupo nombra a alguien | A las personas nombradas, incluso en una conversación silenciada. Texto: «Te han mencionado en una conversación.» | Mensajes; push | Desactivar el push |
+| Reservas | Se acerca una reserva | Al miembro que reservó, en su propio dispositivo, 15 minutos antes de que empiece, para las reservas de los próximos siete días | Notificación local | Rechazar el permiso del sistema |
+| Integración con WhatsApp | No se envía nada | El enlace del grupo se muestra en el directorio; un miembro puede compartir su número | Abre WhatsApp | Compartir u ocultar el número |
+
+**Conviene saber**
+
+- Con la aplicación abierta, el push de una reserva eliminada se sustituye por una notificación en el idioma del miembro. Para los mensajes, las menciones, las confirmaciones y los recordatorios de pago, la aplicación abierta muestra hoy su texto genérico («Alguien necesita tu confirmación.»). Los textos genéricos en inglés de la tabla aparecen cuando la aplicación está en segundo plano o cerrada.
+- A un administrador solo se le avisa de aquello sobre lo que actúa o de lo que una regla le asigna; no existe un resumen de «todo».
+- Los miembros ven sus propios eventos; los administradores y los propietarios ven los de todos.
+
+**Véase también:** [Reglas de validación](help:user.validation.overview) · [Mensajes](help:user.collaborate.messages)
+
+### Lo que usted configura
+
+**Público:** Propietario
+
+Usted decide qué canales existen en su espacio y a quién se le pide decidir qué.
+
+![](assets/help/images/setup-notify-validation.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Abra [Funciones](help:user.features.switch) y revise los interruptores de notificación: **Notificaciones push**, **Notificaciones entre miembros**, **Pestaña Eventos**, **Agrupación de notificaciones**, **Recordatorios de pago**, **Recordatorios de pago automáticos** e **Integración con WhatsApp**.
+2. Fije las [reglas de validación](help:user.validation.overview): para cada tipo de solicitud, cuántas validaciones se exigen y quién puede darlas. Esto decide a quién se le pregunta, y por tanto quién ve una decisión pendiente.
+3. Decida si la solicitud de un administrador o de un propietario se resuelve por sí sola; véase [Autovalidar la solicitud de un administrador](help:user.validation.auto-validate-admin) y [Autovalidar la solicitud de un propietario](help:user.validation.auto-validate-owner). Una solicitud ya resuelta nunca avisa a nadie.
+4. Escriba el mensaje de invitación que reciben los miembros y pegue el enlace del grupo de la comunidad; véase [Mensaje de invitación](help:user.workspace.settings.invitation-message) y [Grupo de WhatsApp](help:user.workspace.settings.whatsapp-group).
+5. Active **Solicitudes de eliminación de reservas** si los miembros pueden pedir que se borre una reserva pasada o con registro de entrada: alguien tendrá entonces que responder.
+
+**Conviene saber**
+
+- Valores por defecto de un espacio nuevo: la pestaña de eventos, las notificaciones entre miembros y la agrupación están activadas; **Recordatorios de pago** y **Recordatorios de pago automáticos** están activadas como funciones, pero no se envía ningún recordatorio hasta que usted activa **Recordatorios automáticos** en las reglas de recordatorio.
+- **Notificaciones push** está activada por defecto, pero no entrega nada hasta que el operador la haya configurado.
+- Desactivar una función detiene la actividad nueva de ese tipo. No borra lo que ya existe.
+- Los roles deciden quién puede ver y responder qué; véase [La matriz de roles](help:user.roles.matrix).
+
+**Véase también:** [Quién puede validar](help:user.validation.who-may) · [Validaciones requeridas](help:user.validation.required-count)
+
+### La parte del operador: hacer que funcione el push
+
+**Público:** Operador/a · Propietario
+
+Quiere notificaciones push en los teléfonos de los miembros y necesita saber quién hace qué.
+
+**Antes de empezar**
+
+El push no viene con la aplicación por sí solo. Si usted ejecuta su espacio en la instalación de referencia compartida, pregunte a su operador si el push está configurado. Si ejecuta su propia instalación, el operador es usted o su persona técnica.
+
+**Pasos**
+
+1. Cree un proyecto de Firebase y compile la aplicación con él. Sin esto, la aplicación se queda solo con las notificaciones locales, y un miembro ve **Esta versión no tiene notificaciones push**. La versión distribuida por la tienda F-Droid no tiene push en absoluto.
+2. Para iPhone y Mac, añada una clave push de Apple al proyecto de Firebase.
+3. Guarde la clave de cuenta de servicio de Firebase como secreto del servidor y despliegue la función de push.
+4. En su propia instalación, apunte la fila `push_config` de su base de datos a la URL y la clave de su propia función de push. Viene preparada con la dirección de la instalación de referencia.
+5. Pruébelo con dos cuentas, como se describe en [el plan de pruebas](help:setup.notify.test).
+
+**Conviene saber**
+
+- Sin los pasos 1 a 4, no se envía ningún push, digan lo que digan los interruptores. El flujo, la campana y los mensajes siguen funcionando.
+- La lista de comprobación detallada es para el operador: véase [Plataformas](help:user.advanced.platforms) y [Su propio servidor](help:user.advanced.own-server).
+- El texto del push nunca lleva un nombre ni una hora: es deliberado, por privacidad.
+
+**Véase también:** [Notificaciones push en este dispositivo](help:user.privacy.push)
+
+### Lo que controlan los miembros
+
+**Público:** Propietario · Administrador/a
+
+Quiere decir con honestidad a sus miembros qué pueden desactivar.
+
+![](assets/help/images/setup-notify-push.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Un miembro abre [Privacidad y datos](app:/privacy) y usa **Notificaciones push en este dispositivo** para detener o reanudar el push en ese dispositivo.
+2. En [Mensajes](app:/me?tab=messages), un miembro mantiene pulsada una conversación para **Fijar arriba**, **Silenciar notificaciones**, **Marcar como no leído** o **Archivar**.
+3. En los ajustes del sistema del teléfono, un miembro puede rechazar las notificaciones por completo, incluidos los recordatorios de registro de entrada.
+4. En su perfil, un miembro decide si comparte un número de WhatsApp.
+
+**Conviene saber**
+
+- Una conversación silenciada permanece en silencio, pero se sigue contando; una mención anula el silencio.
+- Un miembro que desactiva el push en un dispositivo no se ve afectado en otro.
+- No hay interruptores por categoría. Si un miembro necesita menos ruido, que silencie conversaciones; si no quiere ninguno, que desactive el push.
+
+**Véase también:** [Notificaciones](help:user.collaborate.notifications) · [Sus datos, sus derechos](help:user.privacy.consent)
+
+### Un plan de pruebas: envíese uno de cada
+
+**Público:** Propietario · Administrador/a · Operador/a
+
+Se asegura de que cada canal funciona antes de que sus miembros dependan de él.
+
+**Antes de empezar**
+
+Hágalo en un espacio de prueba (véase [un ensayo seguro](help:setup.money.dry-run)). Necesita dos cuentas: la suya como propietario y una segunda como miembro, en otro teléfono, en otro navegador o en el mismo teléfono tras cerrar la sesión. El espacio de demostración permite ver las pantallas con sus personajes, pero no envía ningún push real.
+
+**Pasos**
+
+1. Mensaje: desde la cuenta del miembro, escriba al propietario en [Mensajes](app:/me?tab=messages). En la cuenta del propietario, la campana lo cuenta y la conversación aparece como no leída. Ábrala: el mensaje del miembro muestra una confirmación de lectura.
+2. Mención: en una conversación de grupo, nombre al propietario (la función de menciones de la mensajería debe estar activada). Si el push está configurado, el teléfono del propietario muestra «Te han mencionado en una conversación.»
+3. Decisión: como miembro, pida eliminar una reserva pasada (la función **Solicitudes de eliminación de reservas** debe estar activada). El propietario la ve en **Esperando tu confirmación** en [Eventos](app:/events); respóndala y observe cómo cambia el flujo del miembro.
+4. Eliminación: como propietario, elimine una reserva futura del miembro. El flujo del miembro la muestra, y un teléfono con push muestra «Un administrador ha eliminado una reserva.»
+5. Recordatorio: como miembro, reserve un puesto que empiece dentro de unos 20 minutos (una reserva que empieza en menos de 15 minutos no recibe recordatorio). Unos 15 minutos antes del inicio, el teléfono del miembro muestra el recordatorio de registro de entrada.
+6. Recordatorio de pago: con **Recordatorios de pago** activado, active **Recordatorios automáticos** en las reglas de recordatorio con un plazo corto hasta el primer recordatorio, emita una factura de prueba que tenga un plazo de pago, espere a que pase el plazo y abra Finanzas como propietario o copropietario; el flujo del miembro muestra la alerta.
+7. Silencio: como miembro, silencie la conversación, envíe otro mensaje desde el propietario y compruebe que no suena nada pero el contador de no leídos sube.
+
+**Conviene saber**
+
+- Los pasos 2 y 4 muestran un push solo si la configuración del operador está completa. Si fallan mientras los demás funcionan, el fallo está en esa configuración, no en sus reglas.
+- En la versión de navegador de la aplicación no existe el recordatorio de registro de entrada.
+- Un teléfono que bloquea las notificaciones no muestra nada; revise primero los ajustes del sistema.
+
+**Resultado**
+
+Ha visto con sus propios ojos todos los canales en los que se apoyará un miembro.
+
+**Véase también:** [Los canales](help:setup.notify.channels) · [Iniciar una conversación o un grupo](help:user.collaborate.messages-new)
+
+### Evitar el exceso y evitar el silencio
+
+**Público:** Propietario · Administrador/a
+
+Quiere que las personas se enteren de lo que las necesita, sin ahogarlas.
+
+**Pasos**
+
+1. Mantenga activada la **Agrupación de notificaciones**: los miembros y los administradores pueden plegar el flujo por tipo, día o miembro.
+2. Pida validación solo donde la decisión sea real: cada regla que exige validación crea una solicitud que alguien debe responder. Véase [Reglas de validación](help:user.validation.overview).
+3. Use los interruptores de autovalidación para las solicitudes cuya respuesta es obvia.
+4. Eche un vistazo de vez en cuando a [Lo que le necesita](help:user.collaborate.attention): clasifica lo que está pendiente.
+
+**Conviene saber**
+
+- El exceso viene de reglas que preguntan con demasiada frecuencia o de demasiados administradores en una misma regla.
+- El silencio viene de una regla sin nadie que la responda: exigir dos validaciones cuando solo existe el propietario, o nombrar a administradores que ya se han marchado, deja las solicitudes esperando para siempre. La tarjeta de preparación puede señalar una regla de reserva con pocos validadores.
+- El silencio viene también de un push sin configurar, de miembros que desactivaron el push y de un sistema que bloquea las notificaciones.
+- Los recordatorios de pago automáticos no sustituyen el repaso ocasional de las facturas abiertas.
+
+**Véase también:** [Quién puede validar](help:user.validation.who-may) · [Validaciones requeridas](help:user.validation.required-count)
+
+## Documentos e informes
+
+**Público:** Propietario · Copropietario · Administrador/a de facturación
+
+Todo lo que DesKilo imprime o exporta sale de un único motor y de un único lugar de diseño. Este capítulo le dice qué documentos existen, en qué orden prepararlos, qué puede entregar a su gestor y dónde puede ayudarle un asistente de IA y dónde no debe hacerlo. Los clics están en la guía de usuario; aquí encontrará las razones y el orden.
+
+El ejemplo que seguimos es el espacio de demostración *Atelier du Marché*.
+
+### Los documentos que produce la aplicación
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere saber qué existe antes de diseñar nada y quién recibe cada documento.
+
+![](assets/help/images/setup-reports-hub.es.b8fa17aa9.jpg)
+
+Cada documento es de un *tipo*. Cada tipo tiene su propio diseño, de modo que cambiar la factura nunca cambia el extracto.
+
+| Documento | Quién lo recibe | Dónde se encuentra |
+|---|---|---|
+| Factura y factura rectificativa (un diseño compartido) | El miembro, o el cliente de un mes facturado | [Facturación](help:user.invoicing.hub) |
+| Proforma | Un miembro que necesita un presupuesto o una solicitud de pago anticipado | La misma pantalla |
+| Extracto | El miembro (su cuenta durante un periodo) | [El extracto](help:user.money.statement) |
+| Acuerdo | El miembro (las condiciones negociadas) | [Negociación de precios](help:user.money.negotiation) |
+| Pagos, uso | El miembro, el administrador de facturación | [Pagos](help:user.money.payments) · [Uso](help:user.money.usage) |
+| Cartas de recordatorio, nivel 1 a 9 | El miembro con una factura vencida | [Reglas de recordatorio](help:user.money.reminders.rules) |
+| Informe del espacio y estado del espacio | Usted, la junta, un auditor | **Informes** |
+| Declaración de IVA | Usted, y después la plataforma tributaria | [La declaración periódica de IVA](help:user.money.vat.declaration) |
+| Credenciales, códigos QR de espacios | Los miembros en la puerta, sus paredes | [Códigos QR de espacios](help:user.workspace.export.space-qr) · [Credenciales](help:user.badges.nfc) |
+
+**Conviene saber**
+
+- La pantalla **Informes** los agrupa en **Informes financieros**, **Documentos del espacio**, **Análisis de actividad** y **Plantillas**, según sus permisos.
+- Unos pocos informes (plan contable, credenciales, tarjetas QR) tienen un único diseño incluido. Los demás se pueden rediseñar.
+- Los documentos sacados de un espacio de prueba llevan una marca de agua que lo indica. Véase [Para qué sirve un espacio de prueba](help:user.advanced.test-space).
+
+**Véase también:** [Informes](help:user.money.reports) · [La plantilla PDF de factura](help:user.money.reports.invoice-template)
+
+### El diseñador, en lenguaje de propietario
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere una carta que se parezca a la suya sin aprender un lenguaje de marcado.
+
+![](assets/help/images/setup-reports-professional.es.b8fa17aa9.jpg)
+
+Un documento es una página hecha de **bandas**. La *cabecera* lleva su membrete y el destinatario. El *cuerpo* lleva las líneas. La franja de *continuación* empieza en la segunda página, y el *pie* se repite en cada página con sus condiciones de pago y sus menciones legales. Las edita en **Diseño** y las comprueba en **Vista previa**; **Marcado** muestra las mismas bandas como texto para el día en que lo necesite.
+
+| Pieza | Qué le da | Elíjala cuando |
+|---|---|---|
+| Ajustes preestablecidos (**Profesional**, **Clásico**, **Sencillo**, **Detallado**, **Carta formal**) | Un diseño terminado para empezar. Los ajustes difieren para facturas, proformas, extractos, acuerdos y recordatorios; los documentos estructurales tienen un único diseño incluido | Siempre: empiece por **Profesional** y cambie poco |
+| Un diseño por idioma | Un miembro lee el documento en su propio idioma | Sus miembros no leen todos el mismo idioma |
+| Membrete y sobre con ventana | Remitente, destinatario y cuerpo colocados donde los espera un sobre con ventana | Envía las facturas por correo postal |
+| Diseño posicionado (XML) | Cada elemento colocado en milímetros, para un formulario oficial | Un documento debe ajustarse a un formulario fijo |
+| Biblioteca de imágenes | Un logotipo, un sello o una firma que se reutiliza en varios diseños | Tiene un logotipo |
+| Intercambio de diseños | Un diseño escrito en un archivo y leído de nuevo | Una persona o una herramienta ajena a la aplicación lo edita |
+
+Dos datos le evitan sorpresas. La norma de la carta imprime el destinatario en la ventana de la derecha para un espacio francés y en la de la izquierda para uno alemán, salvo que usted lo modifique. Y un diseño que no se consigue generar nunca bloquea un documento: entra en su lugar el diseño incorporado.
+
+> **Atención** El texto de un diseño no es asesoramiento jurídico. El aspecto y la traducción por sí solos no establecen el cumplimiento legal ni satisfacen una obligación de facturación electrónica. Lo que debe decir una factura se decide en [Su identidad legal](help:user.money.legal.identity) y lo confirma su gestor.
+
+**Véase también:** [El editor de informes](help:user.money.reports.editor) · [Plantillas listas para usar](help:user.money.reports.presets) · [Un diseño por idioma](help:user.money.reports.languages)
+
+### La secuencia que debe seguir
+
+**Público:** Propietario · Administrador/a de facturación
+
+Va a diseñar documentos y quiere hacerlo una sola vez, en el orden correcto.
+
+![](assets/help/images/setup-reports-presets.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Fije primero su identidad legal: tipo de organización, dirección, registro, régimen de IVA y menciones especiales. Un diseño imprime solo lo que usted introdujo ahí. Véase [Su identidad legal](help:user.money.legal.identity).
+2. Abra el [Editor de informes](app:/report-editor), elija el documento y empiece por **Profesional** en **Plantillas**.
+3. Añada una versión de idioma para cada idioma que lean sus miembros. Elija **EN**, **FR**, **DE**, **ES** o **IT** bajo el documento. Véase [Un diseño por idioma](help:user.money.reports.languages).
+4. Compruebe cada uno con **Vista rápida**. Usa su factura más reciente o, si no hay ninguna, datos de ejemplo.
+5. Ensaye en un espacio de prueba: entre en él, emita una factura de prueba, imprímala y envíela a su gestor. Véase [Para qué sirve un espacio de prueba](help:user.advanced.test-space).
+6. Congele el diseño antes de la primera factura. Anote lo que decidió y cambie un diseño solo cuando cambie una norma.
+
+**Conviene saber**
+
+- Sustituir un diseño se puede deshacer con **Deshacer** hasta que salga del editor.
+- Una factura emitida es un documento congelado. Cambiar el diseño más adelante cambia los documentos nuevos, nunca los ya emitidos.
+- Con el mismo texto en dos idiomas, pida a alguien que lea el segundo idioma que revise la vista previa.
+
+> **Atención** El número de factura y las menciones legales impresas en una factura pasan a ser permanentes con la primera factura emitida. Defínalos antes, no después.
+
+**Resultado:** todos los documentos que envíe se parecen a los suyos, en cada idioma, y han sido leídos una vez por alguien que no es usted.
+
+**Véase también:** [Su identidad legal](help:user.money.legal.identity) · [La plantilla PDF de factura](help:user.money.reports.invoice-template)
+
+### Qué entregar a su gestor
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere que su gestor tenga lo que necesita y sepa lo que la aplicación no afirma.
+
+![](assets/help/images/setup-reports-export.es.b8fa17aa9.jpg)
+
+Empiece por el [Registro de facturas](app:/invoice-register), que enumera todas las facturas con su estado, y pulse **Exportación contable**. Cada formato indica en su hoja lo que afirma.
+
+| Archivo | Qué afirma | Qué no afirma |
+|---|---|---|
+| FEC | El formato francés que pide una inspección, reconstruido a partir de facturas y pagos | Una contabilidad completa. Su gestor la completa |
+| DATEV | Un archivo de intercambio para el programa de los contables alemanes, que lee y contabiliza una persona | Una presentación, ni una entrega para una inspección fiscal |
+| SAF-T | La estructura internacional, deliberadamente parcial: facturas y pagos, sin libro mayor | Un archivo contable completo. Lo dice en su cabecera |
+| SAF-T PT, Sage 50 | Un formato regulatorio portugués (no certificado) y un formato de intercambio británico/irlandés, según su país | Una presentación ni una certificación |
+| CSV contable, Pista de auditoría, Archivo del año (zip) | Una ayuda de lectura para su gestor | Una presentación |
+
+La lista de formatos depende de su país. FEC y DATEV piden sus números de cuenta, y FEC también su número de registro: téngalos a mano. Las cifras de IVA del periodo están en [La declaración periódica de IVA](help:user.money.vat.declaration).
+
+*Lo que la aplicación no hace*
+
+- Conserva facturas, pagos y una cuenta corriente por miembro. No lleva un libro mayor por partida doble sobre un plan contable, así que no puede sustituir a un programa de contabilidad.
+- Algunas obligaciones siguen siendo suyas y de su gestor: la contabilidad completa, un programa certificado cuando su país lo exige y la aceptación por parte de la autoridad de destino.
+- Un archivo queda bloqueado hasta que se corrigen los problemas de origen.
+
+**Conviene saber**
+
+- Exportar es una lectura. Puede repetirla para cualquier periodo.
+- Prepare un breve informe para su gestor antes de la primera factura: su régimen de IVA, cuándo se devenga el IVA, la numeración elegida y las exportaciones que querrá. Véase [Ayuda de IA](help:setup.reports.ai).
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export) · [El registro de facturas](help:user.invoicing.register) · [Cuenta de IVA](help:user.money.vat.account)
+
+### El análisis de actividad a grandes rasgos
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere ver cómo rinde el espacio cuando ya funciona, sin una hoja de cálculo.
+
+![](assets/help/images/setup-reports-documents.es.b8fa17aa9.jpg)
+
+**Análisis de actividad** muestra cifras por ámbito: facturado y cobrado, ocupación y capacidad. Usted elige un periodo (mes, trimestre o año), lo compara con otro, guarda una vista y la exporta como PDF. Solo ve los análisis que su rol puede leer.
+
+Lo cobrado son los pagos conciliados con facturas. No es un beneficio, porque la cifra no incluye costes, y el periodo en curso es parcial.
+
+Para un documento sobre todo el espacio, la pestaña **Documentos del espacio** contiene el **Informe del espacio**, **Códigos QR de espacios (PDF)**, **Exportar datos (Excel)** y **Exportar configuración (PDF)**. Use los dos últimos como copia de recuperación antes de un cambio importante.
+
+**Véase también:** [Análisis de actividad](help:user.invoicing.bi) · [Exportaciones](help:user.workspace.export.workspace-report)
+
+### Ayuda de un asistente de IA
+
+**Público:** Propietario · Copropietario
+
+Una herramienta de chat con IA puede ahorrarle horas con las palabras que rodean su configuración. No puede ser quien decida lo que es correcto en lo legal o lo fiscal. Esta sección trata de las herramientas que usa fuera de DesKilo; la conexión de asistentes dentro de la aplicación se describe al final.
+
+*Para qué sirve una herramienta externa*
+
+- Redactar el mensaje de invitación que envía a sus primeros miembros. Véase [El mensaje de invitación](help:user.workspace.settings.invitation-message). Los marcadores, como el nombre o el enlace de invitación, se dejan tal cual.
+- Formular las menciones especiales que presentará a su gestor, como borrador para revisar, nunca como texto definitivo.
+- Traducir el texto de un diseño a otro idioma, de modo que solo tenga que revisarlo.
+- Explicar un informe o un extracto a un miembro con palabras sencillas.
+- Preparar el resumen de sus decisiones para su gestor: país, tipo de organización, régimen de IVA, numeración, exportaciones.
+- Esbozar la imagen de fondo de su plano, a partir de fotografías, en una herramienta de imágenes.
+
+*Lo que no debe decidir*
+
+- Las menciones legales de una factura, el tratamiento del IVA de una actividad, el motivo por el que no se cobra IVA y los tipos de IVA.
+- Todo lo que pasa a ser permanente: un formato de numeración de facturas, un régimen de IVA, la moneda, una factura emitida.
+- Si algo cumple la normativa. Una respuesta segura de sí misma no es una respuesta verificada; quien verifica es su gestor.
+
+*El flujo de trabajo seguro*
+
+1. Pida a la herramienta un borrador. Dele un escenario, no los nombres de sus miembros ni ningún dato personal.
+2. Pegue el borrador en el campo, en el **Editor de informes** o en los ajustes.
+3. Revíselo en **Vista previa** con datos de ejemplo.
+4. Envíe a su gestor el texto con peso legal y espere su respuesta.
+5. Pruebe todo el flujo en un espacio de prueba antes de hacerlo en el real.
+
+> **Atención** No pegue un token, una contraseña, un número bancario ni datos personales de un miembro en una herramienta externa.
+
+*La conexión de asistentes propia de DesKilo*
+
+La aplicación permite que un asistente como Claude o ChatGPT actúe en nombre de un miembro mediante un protocolo llamado MCP. Viene desactivada y es una función que usted activa (**Interfaz MCP**, véase [Un interruptor de función](help:user.features.switch)). Está construida por capas, de modo que ninguna persona puede abrirlo todo.
+
+![](assets/help/images/setup-reports-assistants.es.b8fa17aa9.jpg)
+
+| Capa | Quién | Qué hace |
+|---|---|---|
+| La instalación | El operador | Activa los asistentes para la instalación. |
+| El espacio | Usted, el propietario | Activa la función y elige después en [Qué pueden hacer los asistentes](help:user.advanced.assistants-policy) qué servicios se ofrecen y si un asistente ve solo los registros propios o los de todo el espacio. |
+| La base de datos | Un administrador de la base de datos | Aprueba la solicitud de cada persona. |
+| El miembro | Cada miembro | Pide la aprobación una vez y elige este espacio. |
+| Una solicitud con efectos | El miembro, en su dispositivo | Confirma la solicitud exacta, que además sigue sus reglas de validación. |
+
+El asistente de un miembro trabaja sobre los registros de ese miembro: encontrar y describir puestos libres, favoritos y valoraciones, reservar, modificar o cancelar su propia reserva, pedir que se borre una reserva ya iniciada, registrar la entrada y la salida, leer su extracto y sus facturas, y enumerar y responder las validaciones que se le piden. Unas pocas solicitudes (emisión de factura, anulación de factura, reembolso, cambio de estado de un miembro, parte de la suscripción) son solo para el personal: exigen derechos de personal, la confirmación de la persona en la aplicación y, después, sus reglas de validación. No tiene ninguna operación que configure un espacio: no puede activar una función, fijar una tarifa, cambiar un rol ni construir un plano. No puede configurar su espacio por usted, y actúa únicamente dentro de lo que usted expone.
+
+**Conviene saber**
+
+- Activar los asistentes no concede nada a nadie por sí solo.
+- Cada aprobación caduca; la pantalla indica cuántos días quedan.
+- Lea los pasos en [Aprobaciones y confirmaciones para asistentes](help:user.advanced.assistants-approve).
+
+**Véase también:** [Asistentes: qué son](help:user.advanced.assistants) · [Conectar un asistente](help:user.advanced.assistants-connect)
+
+### Trabajar con un desarrollador: el archivo de diseño y la herramienta de informes
+
+**Público:** Propietario · Operador/a
+
+Una persona técnica le ayuda y hay que editar o comprobar un diseño fuera de la aplicación.
+
+**Pasos**
+
+1. En el [Editor de informes](app:/report-editor), use **Exportar este diseño** para escribir el diseño en un único archivo. El archivo explica qué significan sus campos y qué marcadores existen. **Importar un diseño** lo vuelve a leer; un archivo de otro informe, o de una versión más reciente, se rechaza indicando el motivo.
+2. Un desarrollador puede comprobar el diseño desde un terminal con la herramienta de informes, descrita en la guía del administrador técnico: `check` mide un diseño frente al contrato del sobre con ventana y termina con un código distinto de cero cuando hay tinta en la ventana; `render` genera el PDF; `sample` escribe un archivo de datos con todos los marcadores; `describe` enumera el vocabulario.
+3. De vuelta en la aplicación, importe el archivo, véalo con **Vista rápida** y pulse **Guardar**.
+
+**Conviene saber**
+
+- El intercambio de diseños es una función (**Exportar e importar diseños de informe**), entre las funciones de informes de [Funciones](app:/features). Actívela primero.
+- La herramienta necesita el código fuente de la aplicación; es para la persona que gestiona su instalación, no para el uso diario.
+
+**Véase también:** [El editor de informes](help:user.money.reports.editor) · [La plantilla PDF de factura](help:user.money.reports.invoice-template)
+
+## Mantenerlo coherente
+
+Un espacio puede estar mal de dos maneras: por un ajuste que falta y por dos ajustes que se contradicen. DesKilo detecta algunos de los dos casos y lo dice en pantalla. Este capítulo enumera lo que detecta y dónde lo ve, explica con claridad lo que no detecta y le da una auditoría para pasar antes de abrir las puertas y una rutina breve para cada mes.
+
+En este capítulo:
+- [Las protecciones que le da la aplicación](help:setup.consistent.guards)
+- [Los errores que las protecciones no detectan](help:setup.consistent.gaps)
+- [La auditoría previa al lanzamiento](help:setup.consistent.audit)
+- [La rutina mensual](help:setup.consistent.monthly)
+- [Cuando algo parece ir mal](help:setup.consistent.wrong)
+- [Lo que no tiene vuelta atrás](help:setup.consistent.irreversible)
+
+El ejemplo que seguimos es *Atelier du Marché*. Su propietaria, Ada, pasa la auditoría una vez en un espacio de prueba y otra en el espacio real.
+
+### Las protecciones que le da la aplicación
+
+**Público:** Propietario · Copropietario · Administrador/a · Administrador/a de facturación
+
+Quiere saber cuáles de sus errores señalará la aplicación y dónde lo hará, para mirar en el sitio adecuado.
+
+![](assets/help/images/setup-consistent-features-attention.es.b8fa17aa9.jpg)
+
+| Protección | Qué detecta | Dónde se ve |
+|---|---|---|
+| Una función que necesita otra | Una función no puede funcionar sin la que necesita. Activar una función activa la función de la que depende y nombra lo que se ha activado. Desactivar la función de la que otras dependen retiene las dependientes y conserva su propia elección. | **Funciones**: el flujo de activación con su vista previa, **Requiere…** y *Esperando la función de arriba* |
+| Un proceso retenido | Una función que está activada pero espera algo que está desactivado. | **Funciones**, vista **Procesos**: el estado **Requiere atención** y su filtro |
+| La lista de preparación | Una línea por ámbito del espacio, con su estado, quién actúa y dónde se configura. Ámbitos: **Días de apertura, zona horaria y moneda**, **Puestos reservables en el plano**, **Planes de membresía y tarifas**, **Invitar a los primeros miembros**, **Cómo pagan los miembros**, **Roles y quién valida las solicitudes**, **Exportación y recuperación**, **Datos que necesitan sus funciones (identidad, banco, plataformas)**, **Una primera reserva** y, cuando proceda, **Servidor y versión de la base de datos** y **Acceso de asistentes (opcional)** (este último solo con la interfaz MCP activada). | **Configuración de este espacio**, en la parte superior de [Espacio](app:/workspace-settings) |
+| La línea que impide una primera reserva | Solo lo que una reserva necesita de verdad: una zona horaria, una moneda, un día laborable abierto, un puesto y, cuando una regla de reserva pide más validadores de los que existen, esos validadores. Lo demás es opcional y se puede dejar a un lado con **Más adelante**. | *Antes de que nadie pueda reservar aquí*, en la tarjeta Primeros pasos de [Reservar](app:/reserve) |
+| Lo que sus funciones aún necesitan en local | Identidad legal (la necesita **Facturas**), datos bancarios, un proveedor de pagos en línea, una cuenta de facturación electrónica, un sitio. | La misma tarjeta, ámbito **Datos que necesitan sus funciones (identidad, banco, plataformas)**, con **Configurar** y **Recomendado** |
+| La protección de la factura | Una factura se rechaza hasta que está completa: la dirección del espacio, su número de IVA, un país que sea Francia o Alemania, un fundamento legal para una exención, el nombre, la dirección y el número de IVA del miembro cuando se aplica la inversión del sujeto pasivo, un tipo de IVA en vigor, una explicación para cada línea facturada al 0 %. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas se rechazan: emítalas fuera de la aplicación. | **Complete estos datos antes de emitir**, con los elementos que faltan |
+| La protección del pago en línea | Con **Pagos en línea** desactivado, el servidor rechaza un pago en línea nuevo. Uno ya abierto aún se liquida. | Las pantallas de pago (la fila de la función no lleva ninguna nota al respecto) |
+| La protección de la validación | **Validaciones requeridas** por encima de las personas disponibles. | **No hay suficientes validadores elegibles.** en el editor de reglas; «Una política pide más validadores de los que tiene este espacio» en la lista de preparación |
+| La protección de la serie de numeración | Se rechaza un reinicio más frecuente que la fecha impresa en el número. | [Series de numeración](app:/settings/number-sequences), al guardar |
+| El control de madurez | Una función evaluada como **Alfa** o **Beta**. | Una confirmación antes de activarla y una insignia en cada interruptor |
+| El control de sustitución del plano | Sustituir el plano o los ajustes desde un archivo. | Un aviso de que no se puede deshacer. El plano se rechaza cuando ya existen reservas |
+
+**Conviene saber**
+
+- **Configuración de este espacio** es una lista, no un candado. Nunca le impide activar algo.
+- La mayoría de las protecciones actúan cuando intenta emitir, pagar o reservar, no cuando elige un ajuste. Por eso existe la auditoría de más abajo.
+- La bandeja del propietario ([Lo que le necesita](help:user.collaborate.attention)) hoy no avisa de problemas de configuración. No espere a que se lo diga.
+
+**Véase también:** [Evite funciones que se contradicen](help:setup.features.consistency) · [Revise su espacio](help:setup.place.check)
+
+### Los errores que las protecciones no detectan
+
+**Público:** Propietario · Copropietario · Administrador/a de facturación
+
+Quiere la lista honesta de lo que sigue siendo responsabilidad suya. Son configuraciones que la aplicación le deja crear y sobre las que no avisa. Cada una tiene una forma de evitarla a mano.
+
+| Error | Por qué nada lo impide | Cómo evitarlo |
+|---|---|---|
+| Elegir un país distinto de Francia o Alemania y esperar facturas | La aplicación ofrece muchos países y tipos de IVA, pero solo emite facturas para Francia y Alemania. Nada lo dice al elegir el país. | Decidirlo antes de prometer una factura a los miembros. En otros países, mantenga los extractos en la aplicación y emita las facturas fuera de ella. |
+| Estar registrado en el IVA sin ningún tipo en vigor | Se rechaza la emisión, pero solo en la primera factura. Con **Gestión del IVA** desactivada, la configuración queda oculta pero los tipos guardados siguen aplicándose. | Añadir el tipo en [IVA](app:/vat) antes del primer cierre mensual y emitir una factura de prueba. |
+| **Pagos en línea** activados sin proveedor | Puede activarlos; la falta de proveedor solo aparece como un elemento de la lista de preparación. | Conectar primero el proveedor y activar después. |
+| **Facturas** activadas sin identidad legal | La función está activada desde el primer día; el rechazo llega en el momento de emitir. | Rellenar la identidad antes de decir a los miembros que se les facturará. |
+| Una regla que necesita más validadores de los que tiene, fuera de las reservas | La lista de preparación retiene la primera reserva solo por las reglas de reserva. El editor le deja guardar una por encima de las personas disponibles. Las demás solicitudes se crean, no pueden completarse y caducan a los siete días. | Contar los propietarios y administradores activos tras cada regla. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck). |
+| Miembros que no pueden abrir el plano | En un espacio nuevo, la tarjeta **Usuario** de [Roles](app:/roles) está vacía y nada le avisa. | Marcar los permisos de uso diario y unirse una vez con una segunda cuenta. |
+| Un espacio creado a partir de una plantilla | Una plantilla nunca incluye la identidad, los datos bancarios, los sitios ni las invitaciones. | Tratar el ámbito **Datos que necesitan sus funciones (identidad, banco, plataformas)** como una lista de tareas. |
+| Un archivo de ajustes que promete más de lo que entrega | Hoy el archivo incluye la matriz de roles, sus propios roles y todas las reglas de validación, pero no los miembros, los números de factura y de miembro, el periodo de IVA ni los precios de todo el espacio. Lo que incluye solo se aplica si **Configuración en el archivo del espacio** está activada en el destino. Un plano no se sustituye cuando ya existen reservas. | Volver a introducir a mano lo que no incluye y leer la vista previa antes de **Sustituir e importar**. |
+| Recordatorios que nunca se ejecutan | Se ejecutan cada mañana en el servidor cuando la base de datos tiene su programador (pg_cron); si no lo tiene, se ejecutan cuando un administrador abre Finanzas. También permanecen en silencio cuando **Recordatorios de pago automáticos** está desactivada. | Preguntar al operador si existe el programador y abrir usted mismo Finanzas si no existe. Véase [Recordatorios de pago](help:user.money.reminders.automatic). |
+| Cambiar el país, la moneda o la zona horaria cuando ya hay dinero | No encontré ninguna protección. Los importes se guardan como números y no se convierten: consúltelo con el propietario de la instalación antes de fiarse de uno. | Elegirlos el primer día. Véase [Decisiones difíciles de deshacer](help:setup.before.permanent). |
+| Una numeración o un periodo de IVA que no encaja con el formato de su gestor | La aplicación no los compara con la exportación contable del país. | Pedir a su gestor el formato de numeración y la exportación que usa antes de emitir. Véase [Exportaciones contables](help:user.invoicing.accounting-export). |
+| Tomar una prueba por el espacio real | Más allá de la marca de agua en los documentos impresos, la diferencia es fácil de pasar por alto. | Mirar el banner del espacio de prueba y el lado que se muestra en [Yo](app:/me) antes de actuar. |
+
+**Conviene saber**
+
+- Un quiosco sin miembro de quiosco, una función de sitios sin ningún sitio, un push sin servicio de push: [Evite funciones que se contradicen](help:setup.features.consistency).
+- La aplicación es más estricta de lo que parece con las facturas y más laxa de lo que parece con todo lo demás. En caso de duda, emita una factura de prueba en un espacio de prueba.
+
+**Véase también:** [Un ensayo seguro](help:setup.money.dry-run)
+
+### La auditoría previa al lanzamiento
+
+**Público:** Propietario · Copropietario
+
+Quiere pruebas, no una sensación, antes de abrir. Treinta y una comprobaciones, en tres niveles. Pase *Abrir* antes de invitar a nadie, *Funcionar* antes de prometer nada sobre dinero y *Crecer* antes de que salga la primera factura. Hágalo primero en un espacio de prueba, con una segunda persona.
+
+*Abrir: un lugar que la gente puede reservar*
+
+| N.º | Comprobación | Dónde | Qué aspecto tiene lo correcto |
+|---|---|---|---|
+| 1 | País, moneda, zona horaria | [Espacio](app:/workspace-settings), **Datos generales** | Atelier du Marché: Francia, EUR, Europe/Paris |
+| 2 | Idioma del espacio | La misma pantalla | El idioma en que están escritas sus invitaciones |
+| 3 | Días y horas de apertura | [Disponibilidad](app:/availability) | Los días en que abre están marcados; las horas encajan con el día |
+| 4 | Días de cierre | Disponibilidad, días de cierre | Los festivos y cierres de los próximos meses están introducidos, antes del primer fin de mes |
+| 5 | Al menos un puesto | [Editor del espacio](app:/editor) | Cada sala que alquila tiene puestos |
+| 6 | Preparación | **Configuración de este espacio** | Nada en **Días de apertura, zona horaria y moneda** ni en **Puestos reservables en el plano** necesita configuración |
+| 7 | Usted reservó un puesto | [Reservar](app:/reserve) | El puesto se reserva, se registra y se cancela sin sorpresas |
+| 8 | El ID del espacio | [ID del espacio y QR](app:/workspace-code) | El ID es uno que se puede decir en voz alta; el QR está impreso |
+| 9 | Permisos de uso diario | [Roles](app:/roles) | **Usuario** tiene los seis permisos de uso diario |
+| 10 | Se unió una segunda cuenta | Otro dispositivo | Fue aprobada y pudo abrir el plano y reservar |
+| 11 | Más de una persona puede actuar | [Miembros y planes](app:/members) | Un propietario más un copropietario o un administrador, todos **Activo** |
+| 12 | Recuento de validaciones | [Reglas de validación](app:/validation) | Ninguna regla pide más validadores que propietarios y administradores activos |
+| 13 | La invitación en cada idioma | **Comunidad e invitaciones** | Leyó cada versión una vez; no queda ninguna etiqueta sin rellenar |
+| 14 | El lado en que está | [Yo](app:/me) | El banner del espacio de prueba aparece, o no, como usted pretendía |
+
+*Funcionar: la gente paga y los roles se sostienen*
+
+| N.º | Comprobación | Dónde | Qué aspecto tiene lo correcto |
+|---|---|---|---|
+| 15 | Tramos de tarifas | [Facturación](app:/billing) | Cada porcentaje que un miembro puede elegir cae en un tramo; sin huecos entre 0 y 100 por ciento |
+| 16 | Planes ofrecidos | Facturación, niveles | Solo los planes que quiere vender |
+| 17 | Con qué empiezan los miembros nuevos | **Nuevos miembros**, en Espacio | La suscripción y la regla para cuando se acaban los días son las que eligió |
+| 18 | Bonos y servicios | Facturación, [Servicios](app:/services) | Los nombres y los precios se leen bien para un miembro |
+| 19 | Cómo pagan los miembros | **Cómo pagan los miembros** en la lista de preparación | El ámbito indica **Listo** y los datos bancarios esperados (IBAN, referencia) aparecen en Ajustes; un proveedor por sí solo también lo deja listo |
+| 20 | Pagos en línea | [Funciones](app:/features) | Desactivados, salvo que haya un proveedor conectado |
+| 21 | Administradores | Miembros y planes | Cada uno es una persona a quien confiaría los datos de todos los miembros |
+| 22 | Tarjeta del administrador de la matriz | Roles | Sabe leer cada marca y defenderla |
+| 23 | A quién se avisa de qué | [Cómo se avisa a los miembros](help:setup.notify.members) | Los miembros encuentran todo en **Eventos**; push solo si el operador lo configuró |
+| 24 | Quiosco y credenciales | [Funciones](app:/features) | Desactivados, o existe un miembro de quiosco y se han emitido credenciales |
+| 25 | Sitios | Funciones | Desactivados, o existe al menos un sitio |
+| 26 | Funciones retenidas | **Funciones**, **Requiere atención** | El filtro no muestra ningún proceso |
+
+*Crecer: facturas, impuestos y registros*
+
+| N.º | Comprobación | Dónde | Qué aspecto tiene lo correcto |
+|---|---|---|---|
+| 27 | Identidad legal | [Identidad legal y facturación electrónica](app:/legal-identity) | **Complete estos datos antes de emitir** no muestra nada al iniciar una factura de prueba |
+| 28 | Régimen de IVA y tipos | [IVA](app:/vat) | El régimen es el que le dio su gestor; hay un tipo en vigor para el predeterminado |
+| 29 | Formato de numeración | [Series de numeración](app:/settings/number-sequences) | Leyó la vista previa y su gestor está de acuerdo |
+| 30 | Una factura de prueba | Espacio de prueba, asistente de cierre mensual | Se emitió, en cada idioma que leen sus miembros, sin ningún elemento que falte |
+| 31 | Una exportación reciente | **Exportación y recuperación** | «Hay una exportación reciente registrada» |
+
+**Pasos**
+
+1. Imprima las tres tablas o cópielas en sus notas.
+2. Pase *Abrir* y marque cada línea cuando vea la columna de lo correcto, no cuando lo recuerde.
+3. Haga lo mismo con *Funcionar* y *Crecer* en el espacio de prueba, con su gestor para las líneas de *Crecer*.
+4. Repita las líneas que cambiaron cuando pase al espacio real. Una plantilla o un archivo de ajustes no incluye todas.
+
+**Resultado** Una lista que puede enseñar a alguien y un espacio que ha visto funcionar antes de que nadie dependa de él.
+
+**Véase también:** [De la semana 0 a la semana 4](help:setup.training.overview) · [Un ensayo seguro](help:setup.money.dry-run) · [La secuencia que debe seguir](help:setup.reports.sequence)
+
+### La rutina mensual
+
+**Público:** Propietario · Administrador/a · Administrador/a de facturación
+
+Quiere un hábito breve que mantenga el espacio coherente, en diez minutos a final de mes.
+
+**Pasos**
+
+1. Abra **Configuración de este espacio**. Cada ámbito sigue indicando **Listo**, o **No es necesario aquí**, o está dejado a un lado a propósito.
+2. Abra [Eventos](app:/events). **Esperando tu confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
+3. Vuelva a contar el equipo. Quien se haya marchado o esté en pausa puede dejar una regla corta. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck).
+4. Cierre el mes: los días de cierre están introducidos, se ha ejecutado el asistente de cierre mensual y los recordatorios de pago han salido (automáticamente cada mañana, o al abrir Finanzas cuando la base de datos no tiene programador). Véase [El asistente de cierre mensual](help:user.invoicing.wizard).
+5. Haga la exportación de datos y abra **Funciones** para comprobar que ningún proceso requiere atención tras los cambios del mes.
+
+**Conviene saber**
+
+- Escribir la fecha de la última pasada en la primera línea de sus notas indica a la persona siguiente cuándo fue cierto por última vez.
+- Todo lo que haya cambiado durante el mes en la matriz de roles o en una regla de validación merece una comprobación más de las líneas 9, 11 y 12 de la auditoría.
+
+**Resultado** Un espacio que sigue siendo lo que usted configuró.
+
+**Véase también:** [La auditoría previa al lanzamiento](help:setup.consistent.audit)
+
+### Cuando algo parece ir mal
+
+**Público:** Propietario · Copropietario · Administrador/a
+
+Quiere saber qué probar, en qué orden y a quién preguntar.
+
+![](assets/help/images/setup-consistent-recovery-export.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Lea el mensaje de la pantalla. La mayoría dicen qué hacer.
+2. Compruebe el lado. Mire el banner del espacio de prueba y el lado que se muestra en [Yo](app:/me). Los documentos impresos en el lado de prueba llevan una marca de agua y no se debe nada; el lado real emite facturas que sí se deben.
+3. Revise [Funciones](app:/features) y [Roles](app:/roles): una función que falta es una función desactivada o un permiso que nadie marcó.
+4. Abra **Configuración de este espacio** y lea el ámbito que corresponde al síntoma.
+5. Prepare **Detalles de soporte** en [Ayuda](app:/help): elija **Última hora** o **Últimas 24 horas**, **Preparar vista previa**, léala, pulse **Guardar** y envíe el archivo. Contiene solo recuentos y comprobaciones, no identidades, credenciales ni registros del negocio.
+6. Antes de cambiar algo importante, haga la exportación de datos (más abajo).
+
+*A quién preguntar*
+
+| Sobre | Pregunte a |
+|---|---|
+| Un ajuste de su espacio, una regla, un rol | A usted y después a su copropietario |
+| Una factura, el IVA, un número | A su gestor, con la factura de prueba |
+| Un ámbito que indica **A la espera de otra persona** o **El operador del servidor** | Al operador de su instalación |
+| Un asistente que no está aprobado | A un administrador de la base de datos |
+| Un error que no sabe explicar | Al soporte, con el archivo de soporte |
+
+*La exportación de recuperación*
+
+1. Abra [Informes](app:/reports?section=documents) y elija **Documentos del espacio**.
+2. Pulse **Exportar datos (Excel)**. Necesita la función **Exportación de datos (Excel)** y el permiso **Exportar contabilidad y datos**. Obtiene un único ZIP: un libro con una pestaña por conjunto de datos, un manifiesto que cuenta las filas y los archivos guardados.
+3. Pulse **Exportar configuración (PDF)** para tener un registro de los parámetros y, en **Espacio**, **Exportar el espacio (XML)** para el plano y los ajustes.
+
+**Conviene saber**
+
+- Una exportación de datos completada queda registrada; el ámbito de preparación **Exportación y recuperación** lo indica durante 90 días y después señala que la exportación es más antigua.
+- El PDF es un registro, no una copia de seguridad. Solo el XML puede importarse de nuevo, y nunca contiene miembros ni dinero.
+- Guarde el archivo en un sitio que solo usted pueda abrir: contiene a sus miembros.
+
+**Véase también:** [Detalles de soporte](help:user.advanced.support) · [Cuando algo no funciona](help:user.advanced.troubleshooting) · [Exportar los datos (Excel)](help:user.workspace.export.excel)
+
+### Lo que no tiene vuelta atrás
+
+**Público:** Propietario · Copropietario · Administrador/a de facturación
+
+Quiere una página que diga en qué hay que ir despacio. La lista completa, con lo que hacer en su lugar, está en [Decisiones difíciles de deshacer](help:setup.before.permanent). Esto es el resumen.
+
+> **Atención** Una factura emitida no cambia nunca y su número no se reutiliza. Un error se corrige con una anulación, una factura rectificativa o una solicitud de reembolso, no con una edición.
+
+| Decisión | Permanente desde | Se trata en |
+|---|---|---|
+| Formato y secuencia del número de factura | La primera factura emitida | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
+| El mes facturado de un miembro | El momento en que se emite la factura | [Dinero](help:setup.money.permanent) |
+| Menciones legales de la factura | La primera factura emitida | [La secuencia que debe seguir](help:setup.reports.sequence) |
+| Régimen de IVA y tipos | Los tipos se versionan por fecha y nunca se editan; una declaración presentada no se recalcula nunca | [Dinero](help:setup.money.permanent) |
+| País, moneda, zona horaria | Cuando existe dinero: los importes no se convierten | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
+| Sustitución del plano | Se rechaza cuando existe una reserva; borrar una planta elimina lo que contiene | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
+| El ID del espacio | Cuando lo cambia, el anterior deja de funcionar al instante; reimprima el QR | [Cómo se une la gente](help:setup.people.join) |
+| La propiedad | Un propietario puede cederla; no existe invitación de propietario | [Copropietarios](help:setup.people.coowner) |
+| Un cambio de matriz o de validación | Queda registrado como evento y se aplica a todos a la vez | [La matriz de roles](help:setup.people.matrix) |
+| Prueba o real | Un espacio real emite facturas que se deben | [Antes de empezar](help:setup.before.overview) |
+| Una exportación compartida | Un archivo compartido no se puede revocar | [Cuando algo parece ir mal](help:setup.consistent.wrong) |
+
+**Conviene saber**
+
+- Desactivar una función nunca borra datos.
+- Un archivo con credenciales no es una copia de seguridad. Mantenga los tokens fuera de cualquier archivo que envíe.
+
+**Resultado** Sabe qué líneas debe leer dos veces.
+
+**Véase también:** [Antes de empezar](help:setup.before.overview)
+
+## Apréndalo en cuatro semanas
+
+**Público:** Propietario · Copropietario
+
+No tiene que entender DesKilo antes de empezar. Tiene que entenderlo en el orden adecuado y practicar cada paso donde un error no cuesta nada. Este capítulo es un camino de cuatro semanas, de media hora al día, con una semana previa para echar un vistazo. Cada semana termina con una lista de comprobación: cuando todas las casillas estén marcadas, continúe.
+
+La regla de todo el camino: *aprenda en la demo, construya en un espacio de prueba y solo después toque el espacio real.*
+
+### Semana 0: eche un vistazo a la demo
+
+**Público:** Propietario
+
+Quiere ver el producto terminado antes de tomar decisiones. El espacio de demostración *Atelier du Marché* es inventado, está abierto a cualquiera y no cambia nada real.
+
+**Pasos**
+
+1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Véase [El espacio de demostración](help:user.advanced.demo).
+2. Use **Ver como** para pasar entre **La propietaria**, **Una administradora** y **Un miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
+3. Pulse **Reiniciar la demo** cuando quiera dejarla como al principio.
+
+*Como miembro*
+
+| Ejercicio | Resultado esperado |
+|---|---|
+| Reserve un puesto para mañana en el plano. Véase [Reservar un puesto](help:user.reserve.book). | El puesto pasa a *Reservado* en su plano y la reserva aparece en su calendario. |
+| Abra su extracto. Véase [El extracto](help:user.money.statement). | Ve lo que debe, lo pagado y lo pendiente del periodo. |
+| Envíe un mensaje a otro miembro. Véase [Mensajes](help:user.collaborate.messages). | El mensaje aparece en la conversación con una marca simple (enviado); aparece una doble marca cuando la otra persona lo abre. |
+
+*Como administrador*
+
+| Ejercicio | Resultado esperado |
+|---|---|
+| Abra la lista de miembros y lea la ficha de uno. | Ve su plan, su estado y su cuenta. |
+| Responda a una solicitud de gasto pendiente (por ejemplo, el papel de la impresora). Véase [Reglas de validación](help:user.validation.overview). | La solicitud sale de su lista y su estado cambia para quien la hizo. Otras solicitudes pueden necesitar también al propietario y siguen abiertas. |
+| Abra el [Registro de facturas](app:/invoice-register) y lea una factura. | Ve las líneas, el estado y una marca de integridad. |
+
+*Como propietario*
+
+| Ejercicio | Resultado esperado |
+|---|---|
+| Abra [Funciones](app:/features) y lea las tarjetas de dos procesos. Véase [Funciones y procesos](help:user.features.processes). | Ve qué capacidades están activadas, cuáles esperan un requisito previo y por qué. |
+| Abra [Roles](app:/roles) y compare **Administrador** con **Propietario**. | El propietario tiene todos los permisos; el administrador, una parte. |
+| Abra el editor de informes y mire la **Vista previa** de una factura. Véase [El editor de informes](help:user.money.reports.editor). | Ve una factura tal como la recibiría un miembro. |
+
+*Ha terminado cuando*
+
+- [ ] Sabe decir en una frase qué ve cada una de las tres personas que no ven las otras.
+- [ ] Encontró dónde se valida una solicitud, dónde se lee una factura y dónde se activa una función.
+- [ ] Anotó tres cosas que quiere en su propio espacio y tres que no.
+
+**Véase también:** [Primeros pasos](help:user.start.get-started) · [Las palabras de la aplicación](help:user.advanced.glossary)
+
+### Semana 1: Abrir
+
+**Público:** Propietario
+
+Construye el lugar y sus horarios en un espacio de prueba, para que un miembro pueda reservar. Todavía no se factura nada.
+
+**Pasos**
+
+1. Cree un espacio de prueba propio o entre en el lado de prueba de su espacio. Véase [Crear un espacio](help:user.start.create) y [Para qué sirve un espacio de prueba](help:user.advanced.test-space).
+2. Fije el país, la moneda, la zona horaria y el idioma. Véase [País](help:user.workspace.settings.country).
+3. Dibuje una planta con una sala y tres puestos en el [Editor del espacio](app:/editor). Véase [El editor del plano](help:user.space.overview).
+4. Elija los días laborables abiertos, la granularidad y el horario de trabajo. Véase [Días laborables abiertos](help:user.workspace.availability.open-weekdays).
+5. Añada un día de cierre. Véase [Días de cierre](help:user.workspace.availability.closure-days).
+6. Conserve las funciones por defecto. Abra [Funciones](app:/features) solo para leer lo que está activado.
+7. Haga una reserva usted mismo y registre después la entrada y la salida. Véase [Registrar entrada y salida](help:user.reserve.check-in).
+8. Comparta el ID del espacio con una persona y deje que se una. Véase [El ID del espacio](help:user.workspace.code).
+
+**Conviene saber**
+
+- Un espacio puede reservarse cuando tiene una zona horaria, una moneda, al menos un día laborable abierto y al menos un puesto. Todo lo demás puede esperar.
+- Un plano no se puede sustituir mediante una importación cuando ya existe una reserva.
+
+*Ha terminado cuando*
+
+- [ ] Una segunda persona encontró el espacio con su ID y reservó un puesto sin su ayuda.
+- [ ] Sabe explicar por qué el plano muestra un puesto como *Reservado*, *Libre* o *Bloqueado*.
+- [ ] Conoce sus reglas de apertura de memoria: días, horas, límite de la media jornada.
+
+**Véase también:** [Horario de trabajo](help:user.workspace.availability.working-hours) · [Políticas de reserva](help:user.workspace.availability.policies)
+
+### Semana 2: Funcionar
+
+**Público:** Propietario · Administrador/a
+
+Decide quién puede hacer qué, qué paga cada miembro y a quién se avisa de qué. Lo hace con una segunda persona, porque las reglas solo se muestran cuando alguien más se topa con ellas.
+
+![](assets/help/images/setup-training-roles.es.b8fa17aa9.jpg)
+
+**Pasos**
+
+1. Represente una validación con una segunda persona. Conviértala en administradora, fije una validación requerida para las reservas, reserve después como miembro y deje que la administradora confirme. Véase [Reglas de validación](help:user.validation.overview) y [Roles](help:user.roles.space).
+2. Suba el número requerido a dos y observe cómo la solicitud queda en espera. Después vuelva a bajarlo. Una regla que necesita más validadores de los que existen deja las solicitudes esperando para siempre.
+3. Escriba primero las tarifas en papel: niveles de suscripción en porcentaje, el tramo de tarifa de cada nivel, el precio por encima del derecho. Introdúzcalas después en Facturación y asigne el nivel al miembro en Miembros y planes. Véase [Miembros y planes](help:user.members.subscription).
+4. Dé un nivel a la segunda persona y deje que reserve por encima de su derecho. Lea el extracto.
+5. Pruebe las notificaciones: un mensaje, una solicitud pendiente, una reserva cancelada. Véase [Notificaciones](help:user.collaborate.notifications).
+6. Abra [Roles](app:/roles) y compruebe lo que puede hacer un administrador. Quite un permiso y vea qué desaparece para él.
+
+**Conviene saber**
+
+- Las notificaciones dentro de la aplicación funcionan de inmediato. Las notificaciones push necesitan además la configuración del operador, así que una prueba puede no mostrar nada en un teléfono. Pregunte a su operador.
+- Los recordatorios de pago automáticos se ejecutan una vez al día en el servidor cuando la instalación tiene su programador, y también cuando una persona autorizada abre Finanzas.
+
+*Ha terminado cuando*
+
+- [ ] Vio una solicitud atravesar la validación que configuró, y otra quedarse en espera.
+- [ ] Sus tarifas caben en una hoja y el extracto del miembro de prueba coincide con sus cuentas.
+- [ ] Sabe a quién se avisa de qué.
+
+**Véase también:** [Reglas de validación](help:user.validation.overview) · [Roles y permisos](help:user.roles.matrix)
+
+### Semana 3: Crecer
+
+**Público:** Propietario · Administrador/a de facturación
+
+Hace la primera factura, en dos idiomas, en el espacio de prueba, con su gestor mirando por encima del hombro.
+
+**Pasos**
+
+1. Rellene su identidad legal y su régimen de IVA junto con su gestor. Véase [Su identidad legal](help:user.money.legal.identity) y [Régimen de IVA](help:user.money.vat.regime).
+2. Cierre un mes y emita una factura de prueba en el espacio de prueba. Véase [El asistente de cierre mensual](help:user.invoicing.wizard).
+3. Abra la factura con el diseño **Profesional** y después en un segundo idioma. Véase [Un diseño por idioma](help:user.money.reports.languages).
+4. Exporte el registro del periodo en el formato que usa su gestor. Véase [Exportaciones contables](help:user.invoicing.accounting-export).
+5. Haga tres preguntas al gestor: ¿Son correctas las menciones? ¿Es correcto el tratamiento del IVA? ¿Puede leer el archivo?
+6. Anote las respuestas. Se convertirán en el resumen para el espacio real.
+
+**Conviene saber**
+
+- Hoy la aplicación emite facturas solo en Francia y Alemania. Se niega a emitir cuando falta un dato esencial y dice cuál falta.
+- Las facturas de un espacio de prueba llevan una marca de agua que lo indica.
+
+> **Atención** Tras la primera factura emitida en el espacio real, la factura queda congelada, su número no puede reutilizarse y ese mes queda bloqueado para el miembro. Las correcciones se hacen mediante una anulación, una factura rectificativa o un reembolso.
+
+*Ha terminado cuando*
+
+- [ ] Existe una factura de prueba, leída por su gestor, en dos idiomas.
+- [ ] Exportó un archivo para el gestor y lo pudo abrir.
+- [ ] Tiene las respuestas por escrito.
+
+**Véase también:** [Documentos e informes](help:setup.reports.overview) · [El registro de facturas](help:user.invoicing.register)
+
+### Semana 4: salir en vivo
+
+**Público:** Propietario · Copropietario
+
+Pasa del ensayo al espacio real, y no lo hace solo: invita a cinco personas a que lo vean.
+
+*La lista de comprobación de la salida en vivo*
+
+1. Decida si conserva su espacio de prueba como lado de ensayo o crea el espacio real. Si el espacio tiene dos lados, despliegue del lado de prueba al real. Véase [Desplegar entre los dos lados](help:user.advanced.deploy).
+2. Si en cambio crea el espacio real, repita lo que funcionó: el mismo país, moneda y zona horaria, el mismo plano, las mismas reglas, tarifas y roles. Una plantilla, una transferencia de configuración o un despliegue entre los dos lados incluye la mayor parte. Véase [Exportar, importar y configuración](help:user.workspace.export.space-xml).
+3. Introduzca de nuevo su identidad legal en el espacio real. Una plantilla nunca la incluye; un despliegue entre los dos lados sí, pero nunca las credenciales. Compruébela en cualquier caso.
+4. Declare el espacio como producción solo cuando las facturas que salgan de él se deban de verdad. Véase [Entrar en el lado real o en el de prueba](help:user.advanced.enter-environment).
+5. Invite a cinco personas, no a cincuenta. Véase [El mensaje de invitación](help:user.workspace.settings.invitation-message).
+6. Observe sus primeras reservas. Abra [Reservar](app:/reserve) y lea qué sigue pidiendo la tarjeta **Primeros pasos**.
+7. Pasada una semana, haga un balance: qué pregunta hicieron, qué regla les sorprendió, qué ajuste quiere cambiar ahora.
+
+**Conviene saber**
+
+- Las credenciales, como los tokens de facturación electrónica o las claves del proveedor de pagos, nunca viajan entre espacios. Introdúzcalas de nuevo.
+- Una copia de recuperación antes de la primera factura es barata. Véase [Documentos e informes](help:setup.reports.accountant).
+
+*Ha terminado cuando*
+
+- [ ] Cinco personas reales reservaron sin preguntarle cómo.
+- [ ] Sabe dónde mirar cuando algo no funciona.
+- [ ] Programó su primer cierre mensual.
+
+**Véase también:** [Un espacio tiene dos lados](help:user.advanced.environments)
+
+### Veinte palabras de la configuración
+
+**Público:** Propietario · Copropietario
+
+Las decisiones con las que se encontrará tienen nombre. Esto es lo que significa cada una en DesKilo.
+
+| Término | Significado |
+|---|---|
+| Granularidad | La unidad de una reserva: media jornada, día, hora o minutos. Decide cómo se divide el plano. |
+| Límite de la media jornada | La hora que separa la mañana de la tarde, fijada con el inicio y el final de la jornada de trabajo. |
+| Exceso | El uso por encima del derecho de un miembro. Usted elige bloquearlo, cobrarlo según se produce o vender bonos. |
+| Tramo de tarifa | El precio de una suscripción, según el porcentaje del derecho que toma el miembro. |
+| Dominio de validación | Un tipo de solicitud con su propia regla: una reserva, un gasto, un reembolso y otros. |
+| Quórum | El número de validadores que necesita una solicitud. Más que las personas que pueden validar la deja en espera. |
+| Exigibilidad | El momento en que se devenga el IVA: al facturar o al cobrar. |
+| Reinicio de numeración | Cada cuánto vuelve a empezar el número de factura. No puede ser más frecuente que la fecha impresa en la factura. |
+| Par de entornos | Un lado de prueba y un lado real de un mismo espacio. |
+| Plantilla | Una configuración guardada (plano, reglas, tarifas, roles) que puede aplicar a un espacio nuevo. Nunca incluye la identidad ni los datos de pago. |
+| Preparación | La lista de comprobación al principio de los ajustes del espacio que dice qué falta antes de que la gente pueda reservar. |
+| Retenida | Una función que está activada pero espera a otra que está desactivada. |
+| Quiosco | Una pantalla compartida en la puerta donde los miembros registran su entrada y su salida. |
+| Credencial | Una tarjeta o etiqueta que un miembro muestra para registrarse en un quiosco. |
+| Perfil gestionado | Un miembro que usted lleva por alguien que aún no tiene cuenta, y que se le entrega más tarde con un código. |
+| Día de cierre | Un día en que el espacio está cerrado, como un festivo. |
+| Vocabulario (léxico) | Las palabras que sustituye en la aplicación para ajustarlas a su lugar, como la forma de llamar a un miembro. |
+| Exportación de recuperación | Una copia de los ajustes y los datos que guarda antes de un cambio importante. Aparece en la lista de preparación. |
+| Nivel ofrecido | Un nivel de suscripción que usted ofrece a los miembros. Debe existir antes de que nadie lo elija. |
+| Tipo de vendedor | El tipo de organización que es cuando factura. Decide las menciones por defecto. |
+
+**Véase también:** [Las palabras de la aplicación](help:user.advanced.glossary)
+
+### Dónde pedir ayuda
+
+**Público:** Todos
+
+Se ha atascado en un campo o en una decisión.
+
+**Pasos**
+
+1. Pulse el **?** junto a un campo. La guía se abre en ese campo.
+2. Abra la [Ayuda](app:/help) y use el **Índice** para saltar. Los consejos de las pantallas se pueden pasar con **Consejo siguiente**.
+3. Cuando falla la aplicación, abra **Detalles de soporte** y envíe la vista previa. Véase [Detalles de soporte](help:user.advanced.support).
+4. Para una decisión legal o fiscal, pregunte a su gestor. Para su instalación, pregunte a su operador. Para saber cómo lo hicieron otros propietarios, pregunte a su comunidad.
+
+**Conviene saber**
+
+- La guía funciona sin conexión y en su idioma.
+- Contacte con el soporte con el archivo de **Detalles de soporte**. No contiene ninguna identidad ni ningún registro del negocio.
+
+**Véase también:** [Dónde obtener más ayuda](help:user.advanced.help)
+
+### La hoja de referencia
+
+**Público:** Propietario · Copropietario
+
+Toda la configuración en una página. *Reversible* indica si puede cambiar de opinión después de haberlo hecho.
+
+| Paso | Dónde en la aplicación | Cuánto dura | ¿Reversible? |
+|---|---|---|---|
+| 1. País, moneda, zona horaria, idioma | [Ajustes del espacio](app:/workspace-settings) | 5 minutos | Sí, pero no cambie la moneda cuando ya exista dinero |
+| 2. Plano | [Editor del espacio](app:/editor) | 30 minutos | Sí, hasta la primera reserva; después se edita un objeto cada vez |
+| 3. Reglas de apertura | Disponibilidad | 10 minutos | Sí |
+| 4. Funciones | [Funciones](app:/features) | 10 minutos | Sí. Desactivar detiene el uso nuevo y no borra nada |
+| 5. Roles y validación | [Roles](app:/roles) | 20 minutos | Sí, pero una regla que necesite demasiados validadores bloquea las solicitudes |
+| 6. Tarifas y niveles | [Facturación](app:/billing) (los niveles se asignan en Miembros y planes) | 1 hora | Sí para el futuro; los importes emitidos se quedan |
+| 7. Identidad legal y régimen de IVA | Identidad legal | 1 hora con su gestor | Atención tras la primera factura |
+| 8. Numeración de facturas y menciones | Identidad legal | 20 minutos | No, tras la primera factura |
+| 9. Diseños de informes | [Editor de informes](app:/report-editor) | 1 hora | Sí para los documentos nuevos; los emitidos se quedan |
+| 10. Mensaje de invitación | Ajustes del espacio | 10 minutos | Sí |
+| 11. Prueba de notificaciones | Mensajes, solicitudes | 20 minutos | Sí |
+| 12. Factura de prueba en el lado de prueba | Facturación | 1 hora | Solo el lado de prueba |
+| 13. Espacio real o despliegue | [Yo](app:/me) | 1 hora | Atención: producción significa que las facturas se deben |
+| 14. Invitar a los cinco primeros | Ajustes del espacio | 10 minutos | Sí |
+
+**Véase también:** [La secuencia que debe seguir](help:setup.reports.sequence)
 
 # Guía del administrador — configurar el espacio
 

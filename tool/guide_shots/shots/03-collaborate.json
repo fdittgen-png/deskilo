@@ -1,0 +1,456 @@
+{
+ "shots": [
+  {
+   "id": "user-collaborate-directory",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "the members directory seen by a member",
+   "steps": [
+    {
+     "click": "@demoPersonaOwner"
+    },
+    {
+     "hash": "#/directory",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-member-page",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "a member's page",
+   "steps": [
+    {
+     "click": "@demoPersonaOwner"
+    },
+    {
+     "hash": "#/directory",
+     "wait": 5000
+    },
+    {
+     "click": "Ada Lindqvist",
+     "wait": 4000
+    },
+    {
+     "click": "@uxProfileSection",
+     "wait": 1500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-contact",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "a conversation with a member, one message sent",
+   "steps": [
+    {
+     "click": "@demoPersonaOwner"
+    },
+    {
+     "hash": "#/directory",
+     "wait": 5000
+    },
+    {
+     "click": "Ada Lindqvist",
+     "wait": 4000
+    },
+    {
+     "click": "@memberMessagesAction",
+     "wait": 3500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-events",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "the alerts of a member: pending request with its validation trail and the event feed",
+   "steps": [
+    {
+     "click": "@demoPersonaOwner"
+    },
+    {
+     "hash": "#/events",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-accept",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "the owner's alerts: Waiting for your confirmation with Decline and Accept",
+   "steps": [
+    {
+     "hash": "#/events",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-validation-overview",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "the validation rules, grouped by workflow",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-messages",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "Me, Messages: filters and the way to start a conversation",
+   "steps": [
+    {
+     "hash": "#/me?tab=messages",
+     "wait": 5000
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-messages-new",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "New conversation: find people",
+   "steps": [
+    {
+     "hash": "#/me?tab=messages",
+     "wait": 5000
+    },
+    {
+     "click": "@newConversationTitle",
+     "wait": 3500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-messages-group",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "New group",
+   "steps": [
+    {
+     "hash": "#/me?tab=messages",
+     "wait": 5000
+    },
+    {
+     "click": "@groupNew",
+     "wait": 3500
+    }
+   ],
+   "full": false
+  },
+  {
+   "id": "user-collaborate-discover",
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "shows": "Discover: map",
+   "steps": [
+    {
+     "hash": "#/me?tab=discover",
+     "wait": 6000
+    }
+   ],
+   "full": false
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-validation-required-count",
+   "shows": "the rule sheet: required validations raised to 2",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    },
+    {
+     "click": "@a11yIncrease",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    0,
+    90,
+    390,
+    70
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-validation-who-may",
+   "shows": "the rule sheet: who validates",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    }
+   ],
+   "clip": [
+    0,
+    155,
+    390,
+    205
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-validation-owner-required",
+   "shows": "the owner must always validate, switched on",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    },
+    {
+     "click": "@validationOwnerRequired",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    0,
+    395,
+    390,
+    105
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-validation-owner-self",
+   "shows": "the owner may validate their own, switched on",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    },
+    {
+     "click": "@validationOwnerSelf",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    0,
+    505,
+    390,
+    100
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-validation-sequential",
+   "shows": "one after another, switched on",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    },
+    {
+     "click": "@validationSequential",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    0,
+    675,
+    390,
+    125
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": true,
+   "id": "user-collaborate-me-privacy",
+   "shows": "Me: who sees me, public profile and blocked people",
+   "steps": [
+    {
+     "hash": "#/me?tab=me",
+     "wait": 5000
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "public-profile",
+     "from": "@visibilityReachability",
+     "to": "@blockedPeopleTitle"
+    },
+    {
+     "id": "blocked",
+     "from": "@blockedPeopleTitle",
+     "to": "@privacyTitle",
+     "pad": 0
+    }
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "phone",
+   "full": false,
+   "id": "user-collaborate-notifications",
+   "shows": "Privacy and data: push on this device",
+   "steps": [
+    {
+     "hash": "#/privacy",
+     "wait": 5000
+    }
+   ],
+   "clip": [
+    0,
+    570,
+    390,
+    150
+   ]
+  },
+  {
+   "persona": "owner",
+   "fresh": true,
+   "view": "tablet",
+   "full": false,
+   "id": "user-validation-auto-validate-owner",
+   "shows": "booking deletion rule: owners delete without validation",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "scroll": 1000,
+     "wait": 1500
+    },
+    {
+     "scroll": 1000,
+     "wait": 1500
+    },
+    {
+     "scroll": 500,
+     "wait": 1500
+    },
+    {
+     "click": [
+      "Booking deletion",
+      "Suppression de réservation",
+      "Buchungslöschung",
+      "Eliminación de reserva",
+      "Eliminazione prenotazione"
+     ],
+     "wait": 4000
+    },
+    {
+     "click": "@validationAutoValidateOwner",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    100,
+    857,
+    620,
+    95
+   ]
+  },
+  {
+   "id": "user-validation-auto-validate-admin",
+   "persona": "owner",
+   "fresh": true,
+   "view": "tablet",
+   "full": false,
+   "shows": "booking deletion rule: admins delete without validation",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "scroll": 1000,
+     "wait": 1500
+    },
+    {
+     "scroll": 1000,
+     "wait": 1500
+    },
+    {
+     "scroll": 500,
+     "wait": 1500
+    },
+    {
+     "click": [
+      "Booking deletion",
+      "Suppression de réservation",
+      "Buchungslöschung",
+      "Eliminación de reserva",
+      "Eliminazione prenotazione"
+     ],
+     "wait": 4000
+    },
+    {
+     "click": "@validationAutoValidateAdmin",
+     "wait": 800
+    }
+   ],
+   "clip": [
+    100,
+    945,
+    620,
+    60
+   ]
+  }
+ ]
+}

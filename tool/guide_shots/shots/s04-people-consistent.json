@@ -1,0 +1,189 @@
+{
+ "shots": [
+  {
+   "id": "setup-people-roles-matrix",
+   "persona": "owner",
+   "full": false,
+   "shows": "the role matrix: one card per role with its permissions",
+   "steps": [
+    {
+     "hash": "#/roles",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "setup-people-roles-space",
+   "persona": "owner",
+   "full": false,
+   "shows": "the roles this space defines",
+   "steps": [
+    {
+     "hash": "#/settings/roles-of-this-space",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "setup-people-validation-overview",
+   "persona": "owner",
+   "fresh": true,
+   "full": false,
+   "shows": "the validation rules, grouped by workflow",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    }
+   ]
+  },
+  {
+   "id": "setup-people-validation-sheet",
+   "persona": "owner",
+   "fresh": true,
+   "full": true,
+   "shows": "the rule sheet of the Expense domain (required count, who validates, owner switches)",
+   "steps": [
+    {
+     "hash": "#/validation",
+     "wait": 5000
+    },
+    {
+     "click": "@eventTypeExpense",
+     "wait": 4000
+    }
+   ]
+  },
+  {
+   "id": "setup-people-coowner",
+   "persona": "owner",
+   "fresh": true,
+   "full": false,
+   "shows": "the Co-ownership dialog on a member page",
+   "steps": [
+    {
+     "press": "Escape"
+    },
+    {
+     "press": "Escape"
+    },
+    {
+     "hash": "#/members"
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@memberPageManageHeading"
+    },
+    {
+     "click": "@coOwnerAction"
+    }
+   ]
+  },
+  {
+   "id": "setup-people-members",
+   "persona": "owner",
+   "fresh": true,
+   "full": false,
+   "shows": "the members list with roles and statuses",
+   "steps": [
+    {
+     "hash": "#/members",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "setup-people-workspace-code",
+   "persona": "owner",
+   "shows": "the member invite: QR code and workspace ID",
+   "steps": [
+    {
+     "hash": "#/workspace-code",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "setup-people-invite",
+   "persona": "owner",
+   "full": false,
+   "shows": "the invite sheet",
+   "steps": [
+    {
+     "hash": "#/workspace-code"
+    },
+    {
+     "click": "@inviteSectionTitle"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "setup-people-invitation-message",
+   "persona": "owner",
+   "fresh": true,
+   "shows": "the invitation message editor with its tags",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "scroll": 700,
+     "wait": 1500
+    },
+    {
+     "click": "@uxWorkspaceCommunity"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "clip": false,
+   "parts": [
+    {
+     "id": "message",
+     "clip": [
+      0,
+      962,
+      390,
+      440
+     ]
+    }
+   ]
+  },
+  {
+   "id": "setup-consistent-features-attention",
+   "persona": "owner",
+   "fresh": true,
+   "full": false,
+   "shows": "the Features process cards with their states and the Needs attention filter",
+   "steps": [
+    {
+     "hash": "#/features",
+     "wait": 4500
+    }
+   ]
+  },
+  {
+   "id": "setup-consistent-recovery-export",
+   "persona": "owner",
+   "fresh": true,
+   "full": false,
+   "shows": "Workspace documents with the Excel export",
+   "steps": [
+    {
+     "hash": "#/reports?section=documents",
+     "wait": 4500
+    }
+   ]
+  }
+ ]
+}

@@ -112,6 +112,10 @@ dev_dependencies:
   # disposed" into a failing test. It ships with flutter_test as a
   # transitive dependency; naming it here is what lets a test import it.
   leak_tracker_flutter_testing: ^3.0.10
+  # The user guide's static site (tool/build_guide_site.dart) renders the
+  # wiki's Markdown. Already transitive (markdown_widget); naming it lets a
+  # tool import it.
+  markdown: ^7.3.1
   # #1050 — MockClient (package:http/testing.dart) is the seam the auth
   # repository test reads the outgoing gotrue request through.
   integration_test:
