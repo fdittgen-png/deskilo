@@ -1209,6 +1209,7 @@ Vous voulez un seul endroit qui répond : quelque chose a-t-il besoin de moi auj
 
 - Cet écran n'existe que lorsque votre espace a activé la fonctionnalité **Ce qui vous attend** ; sans elle, l'adresse ramène à la page d'accueil.
 - Plusieurs décisions identiques sont regroupées en une seule ligne. Quand rien n'attend, l'écran indique **Rien ne vous attend**.
+- Il liste aussi la configuration inachevée : « À configurer : … » pour chaque domaine obligatoire de la liste de mise en place qui n'est pas prêt (seulement pour qui configure l'espace), et « … fonctionnalités activées attendent « … » » quand une fonctionnalité désactivée en retient d'autres. Un appui ouvre l'écran où cela se règle, ou **Fonctionnalités**.
 
 **Voir aussi:** [Événements et confirmations](#événements-et-confirmations)
 
@@ -3156,6 +3157,7 @@ Vous voulez que l'espace sache où il est établi. **Espace** s'ouvre sur **Info
 **Bon à savoir**
 
 - Le pays propose la devise et le fuseau horaire, et détermine les taux de TVA proposés.
+- Dès que l'espace a émis un document ou enregistré de l'argent, le pays ne peut plus être changé : l'enregistrement indique « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »
 - **Enregistrer** écrit tout le formulaire d'un coup. Si quelqu'un a modifié ces réglages entre-temps, rien n'est enregistré et ce que vous avez saisi reste à l'écran.
 
 **Voir aussi:** [Devise et fuseau horaire](#devise-et-fuseau-horaire)
@@ -3177,7 +3179,7 @@ Vous voulez que les prix et les jours soient comptés comme votre espace les com
 
 **Bon à savoir**
 
-- La devise est proposée d'après le pays. Vous pouvez la changer.
+- La devise est proposée d'après le pays. Vous pouvez la changer tant que l'espace n'a émis aucun document ni enregistré d'argent ; ensuite, elle est figée.
 - Le fuseau horaire n'est pas décoratif : un jour ouvré, une limite de demi-journée et un jour de fermeture sont tous comptés dedans, si bien qu'un membre à l'étranger voit la journée de l'espace plutôt que la sienne.
 
 **Voir aussi:** [Pays](#pays)
@@ -4912,7 +4914,7 @@ Vous listez les taux de TVA que vos factures peuvent utiliser. Ce que paient les
 - Les taux usuels sont un point de départ. Savoir quelle prestation relève de quel taux est une question pour votre comptable.
 - Le taux par défaut est utilisé par les abonnements et par tout ce qui n'a pas de taux propre.
 - Un taux encore utilisé par une facture ou un service est conservé, désactivé, plutôt que supprimé.
-- Sans aucun taux alors que vous êtes assujetti à la TVA, les factures n'affichent aucune taxe et l'export XML reste désactivé.
+- Sans taux par défaut en vigueur alors que vous êtes assujetti à la TVA, aucune facture ne peut être émise ; l'écran d'identité légale vous en avertit.
 - Cet écran demande la fonctionnalité **Gestion de la TVA** ; l'entrée Taux de TVA de l'écran d'identité légale n'apparaît que pour le régime des assujettis à la TVA.
 
 **Voir aussi:** [Groupes de TVA](#groupes-de-tva) · [Changement par la loi](#changer-un-taux-par-la-loi)
@@ -5458,6 +5460,7 @@ Vous voulez que les relances partent toutes seules.
 - Une fois par jour, les factures qui ont dépassé leur échéance enregistrée passent au niveau suivant, pour le montant encore dû.
 - Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.
 - Désactivées : vous envoyez chaque relance vous-même.
+- Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.
 
 **Voir aussi:** [Règles de relance](#règles-de-relance)
 

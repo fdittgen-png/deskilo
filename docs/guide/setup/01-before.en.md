@@ -54,9 +54,10 @@ You want to know the shortest road to a space people can book. The app keeps a r
 
 1. **Opening days, time zone and currency**: a time zone, a currency and at least one open weekday.
 2. **Bookable places on the floor plan**: at least one seat.
-3. **Roles and who validates requests**: counted only when a policy on reservations asks for more validators than the space has. A rule asking for two approvals with only you in the space would leave requests waiting for ever.
+3. **Roles and who validates requests**: counted only when a validation rule, of any kind, asks for more validators than the space has. A rule asking for two approvals with only you in the space would leave requests waiting for ever.
+4. **What members may do**: members hold **Book and use reservations**. A new space grants them nothing, so a member who joins cannot book until you tick it in [Roles](app:/roles).
 
-A fourth row, **Server and database version**, blocks only when the server is behind this app; it then waits for the server operator.
+One more row, **Server and database version**, blocks only when the server is behind this app; it then waits for the server operator. And while **Invoices** is on, **The space's legal identity and address** is required too: the list marks it **Needed before invoicing**, because no invoice can be issued without it.
 
 *What is optional, and can be set aside for later*
 
@@ -72,8 +73,8 @@ Each of these can be set aside with **Later** and brought back; the list says wh
 **Good to know**
 
 - The list names who acts: **You**, **The server operator** or **A database administrator**.
-- Optional does not mean unimportant: once you invoice, your legal identity is required for that feature. The list calls it a detail your features need.
-- If you switch invoicing on without legal identity, the app lets you; it refuses at the moment of issuing an invoice, and says what is missing.
+- Optional does not mean unimportant: bank details, a payment provider or a site are details your features need, and the list names them.
+- If you switch invoicing on without legal identity, the app lets you; the list and [What needs you](help:user.collaborate.attention) name it, and issuing an invoice is refused, saying what is missing.
 
 **See also:** [Check your space](help:setup.place.check) · [The Get started card and the tips](help:user.start.get-started)
 
@@ -118,7 +119,7 @@ You want a head start without being locked into someone else's choices. When you
 
 **Good to know**
 
-- A template never carries your legal identity, bank details, sites, invitations or document links: those are yours, and the readiness list names them as details your features need.
+- A template never carries your legal identity, bank details, sites, invitations or document links: those are yours, and the readiness list names them (the legal identity, with **Invoices** on, as an area of its own).
 - A template-created space can have invoicing on and nothing to issue with until you add the identity.
 - Applying a template to a space that already has tariffs replaces its fee bands: use it on a new space.
 
@@ -162,7 +163,7 @@ You want to know which choices to slow down for. Most settings can be changed an
 | Invoice number format and sequence | The next number can be raised, never lowered. After the first invoice you can no longer print less of the date than the series shows. | Preview the format, ask your accountant, then issue. |
 | The month of an issued invoice | Once a member's month is invoiced it is locked; closure days and public-holiday imports skip it. | Set closure days before month-end. |
 | VAT regime and rates | Rates are versioned by date and never edited; a submitted VAT declaration is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
-| Country, currency, time zone | Amounts are stored as numbers with no conversion, so changing the currency once money exists is unsafe. | Choose them right on day one; see [Build the place](help:setup.place.overview). |
+| Country, currency, time zone | Amounts are stored as numbers with no conversion. Once the space has issued a document or recorded money, the server refuses any change of currency or country. The time zone is never locked, but every day is counted in it. | Choose them right on day one; see [Build the place](help:setup.place.overview). |
 | Floor plan replacement | Importing a plan is refused once reservations exist. | Edit floors and rooms one by one in the editor. |
 | Workspace ID | It is what members type and what the printed QR codes point to. You can change it (4 to 20 letters or digits) with **Change workspace ID**, but the old ID stops working at once. | Choose a short, memorable ID before you print anything; change it early if you must. |
 | Test or real | A real space issues invoices that are owed; dev documents are watermarked. | Start in a test space, deploy when ready. |

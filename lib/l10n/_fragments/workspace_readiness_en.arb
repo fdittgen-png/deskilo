@@ -53,6 +53,35 @@
   "@readinessNeededFirst": {
     "description": "#1636 workspace_readiness"
   },
+  "readinessAreaMemberPermissions": "What members may do",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
+  "readinessAreaLegalIdentity": "The space's legal identity and address",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
+  "readinessReasonMembersCannotBook": "Members cannot book yet: in Roles, grant them “Book and use reservations”",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
+  "readinessReasonInvoicingNeedsIdentity": "No invoice can be issued without it",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessNeededInvoicing": "Needed before invoicing",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
+  "readinessBlockedInvoicing": "Before invoicing: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
   "readinessLater": "Needed later",
   "@readinessLater": {
     "description": "#1636 workspace_readiness"

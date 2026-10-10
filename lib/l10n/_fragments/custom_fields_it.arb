@@ -32,6 +32,14 @@
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince"
   },
+  "attentionSetUp": "Da configurare: {area}",
+  "@attentionSetUp": {
+    "description": "#2332: attentionSetUp"
+  },
+  "attentionUnblock": "{count, plural, =1{1 funzione attivata attende «{feature}»} other{{count} funzioni attivate attendono «{feature}»}}",
+  "@attentionUnblock": {
+    "description": "#2332: attentionUnblock"
+  },
   "featureCustomFieldsTitle": "Le domande di questo spazio",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

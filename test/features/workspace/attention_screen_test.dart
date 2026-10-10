@@ -227,7 +227,47 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(opened, ['/members']);
-    expect(attentionRoute(AttentionAction.decide), '/events');
-    expect(attentionRoute(AttentionAction.issue), '/invoicing/wizard');
+    Attention line(AttentionAction a, {String? route}) => Attention(
+          kind: AttentionKind.person,
+          subject: '',
+          action: a,
+          waitingSince: _now,
+          route: route,
+        );
+    expect(attentionRoute(line(AttentionAction.decide)), '/events');
+    expect(attentionRoute(line(AttentionAction.issue)), '/invoicing/wizard');
+    expect(attentionRoute(line(AttentionAction.setUp, route: '/roles')),
+        '/roles',
+        reason: 'a setup step opens where the server says it is set up');
+  });
+
+  testWidgets('configuration lines name the step and the prerequisite',
+      (tester) async {
+    // #2332 — held-back capabilities and required setup steps.
+    await _pump(tester, [
+      Attention(
+        kind: AttentionKind.configuration,
+        subject: 'member_permissions',
+        action: AttentionAction.setUp,
+        waitingSince: _now,
+        route: '/roles',
+      ),
+      Attention(
+        kind: AttentionKind.configuration,
+        subject: 'invoicing',
+        action: AttentionAction.unblock,
+        waitingSince: _now,
+        count: 2,
+        route: '/features',
+      ),
+    ]);
+    final titles = tester
+        .widgetList<ListTile>(find.byType(ListTile))
+        .map((t) => (t.title! as Text).data)
+        .toList();
+    expect(titles, contains('Set up: What members may do'));
+    expect(titles.any((t) => t!.startsWith('2 switched-on features wait for')),
+        isTrue,
+        reason: '$titles');
   });
 }

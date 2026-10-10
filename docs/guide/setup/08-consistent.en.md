@@ -26,12 +26,15 @@ You want to know which of your mistakes the app will point out, and where it wil
 |---|---|---|
 | A feature that needs another | A feature cannot work without the one it needs. Switching a feature on switches its parent on and names what came on. Switching a parent off holds its children back and keeps their own choice. | **Features**: the switch flow with its preview, **Requires…** and **Waiting on the feature above** |
 | A process held back | A feature that is on but waits for something that is off. | **Features**, **Processes** view: the state **Needs attention** and its filter chip |
-| The readiness list | One line per area of the space, with its state, who acts and where to set it. Areas: **Opening days, time zone and currency**, **Bookable places on the floor plan**, **Membership plans and tariffs**, **Invite the first members**, **How members pay**, **Roles and who validates requests**, **Export and recovery**, **Details your features need (identity, bank, platforms)**, **A first booking** and, when relevant, **Server and database version** and **Assistant access (optional)** (the latter only with the MCP interface on). | **Setting up this space**, at the top of [Workspace](app:/workspace-settings) |
-| The line that stops a first booking | Only what a booking truly needs: a time zone, a currency, an open weekday, one seat, and, when a booking rule asks for more validators than exist, those validators. The rest is optional and can be set aside with **Later**. | **Before anyone can book here**, on the Get started card of [Reserve](app:/reserve) |
-| What your features still need locally | Legal identity (needed by **Invoices**), bank details, an online payment provider, an e-invoicing account, a site. | The same card, area **Details your features need (identity, bank, platforms)**, with **Set up** and **Recommended** |
+| The readiness list | One line per area of the space, with its state, who acts and where to set it. Areas: **Opening days, time zone and currency**, **Bookable places on the floor plan**, **Membership plans and tariffs**, **Invite the first members**, **How members pay**, **Roles and who validates requests**, **Export and recovery**, **What members may do**, **Details your features need (identity, bank, platforms)**, **A first booking** and, when relevant, **The space's legal identity and address** (only with **Invoices** on), **Server and database version** and **Assistant access (optional)** (the latter only with the MCP interface on). | **Setting up this space**, at the top of [Workspace](app:/workspace-settings) |
+| The line that stops a first booking | The areas the list marks **Needed for a first booking**: a time zone, a currency, an open weekday, one seat, members who hold **Book and use reservations** (a new space grants them nothing), and, when a validation rule of any kind asks for more validators than exist, those validators. The rest is optional and can be set aside with **Later**. | **Before anyone can book here**, on the Get started card of [Reserve](app:/reserve) |
+| The line that stops a first invoice | With **Invoices** on, the space's legal identity and address. No invoice can be issued without them, so the area cannot be set aside. | **Setting up this space**: the area **The space's legal identity and address**, marked **Needed before invoicing**; while it is the next step, the card's headline reads "Before invoicing: …" |
+| What your features still need locally | Bank details, an online payment provider, an e-invoicing account, a site. The legal identity is not listed here: with **Invoices** on it is an area of its own (above). | The same card, area **Details your features need (identity, bank, platforms)**, with **Set up** and **Recommended** |
 | The invoice guard | An invoice is refused until it is complete: the workspace address, its VAT number, a country France or Germany, a legal basis for an exemption, the member's name, address and VAT number when reverse charge applies, a VAT rate in force, an explanation for every line billed at 0 %. Cross-border, reverse-charge, export and exempt invoices are refused: issue them outside the app. | **Complete these details before issuing**, with the missing items listed |
 | The online payment guard | With **Online payments** off, the server refuses a new online payment. One already open still settles. | The payment screens (the feature row carries no note about it) |
-| The validation guard | **Required validations** above the people available. | **Not enough eligible validators.** in the rule editor; "A policy asks for more validators than this space has" in the readiness list |
+| The validation guard | **Required validations** above the people available, for any kind of request. | **Not enough eligible validators.** in the rule editor; "A policy asks for more validators than this space has" in the readiness list, where **Roles and who validates requests** then becomes required |
+| The currency and country lock | Once the space has issued a document or recorded money, the server refuses any change of **Currency** or **Country**, from the settings form, an import or anywhere else. The time zone is not locked. | "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved." when you save [Workspace](app:/workspace-settings) |
+| The owner inbox | What is still to configure: one line "Set up: …" for each required area of the readiness list that is not ready, and one line "… switched-on features wait for “…”" for each switched-off feature that holds others back. | [What needs you](help:user.collaborate.attention); a tap opens the screen where it is set up, or **Features** |
 | The number sequence guard | A reset more frequent than the date printed in the number is refused. | [Number sequences](app:/settings/number-sequences), when you save |
 | The maturity check | A feature reviewed as **Alpha** or **Beta**. | A confirmation before you switch it on, and a badge on every switch |
 | The plan replacement check | Replacing the floor plan or the settings from a file. | A warning that it cannot be undone. The plan is refused once reservations exist |
@@ -40,7 +43,7 @@ You want to know which of your mistakes the app will point out, and where it wil
 
 - **Setting up this space** is a list, not a lock. It never stops you from switching something on.
 - Most guards act when you try to issue, pay or book, not when you choose a setting. That is why the audit below exists.
-- The owner inbox ([What needs you](help:user.collaborate.attention)) does not raise configuration problems today. Do not wait for it to tell you.
+- The owner inbox ([What needs you](help:user.collaborate.attention)) raises only the required areas and the features held back. The optional areas stay in the readiness list: read it yourself.
 
 **See also:** [Avoid features that contradict each other](help:setup.features.consistency) · [Check your space](help:setup.place.check)
 
@@ -54,15 +57,15 @@ You want the honest list of what stays your responsibility. These are configurat
 | Mistake | Why nothing stops it | Avoid it by |
 |---|---|---|
 | Choosing a country other than France or Germany and expecting invoices | The app offers many countries and VAT rates, but issues invoices only for France and Germany. Nothing says so when you choose the country. | Deciding before you promise members an invoice. Elsewhere, keep statements in the app and issue invoices outside it. |
-| Being registered for VAT with no rate in force | Issuing is refused, but only at the first invoice. With **VAT management** off, the configuration is hidden but the stored rates keep applying. | Adding the rate under [VAT](app:/vat) before the first month-close, and running a trial invoice. |
+| Being registered for VAT with no rate in force | Issuing is refused, but only at the first invoice. The description of **VAT management** and the warning on the legal identity screen say so; nothing stops you earlier. With **VAT management** off, the configuration is hidden but the stored rates keep applying. | Adding the rate under [VAT](app:/vat) before the first month-close, and running a trial invoice. |
 | **Online payments** on with no provider | You can switch it on; the missing provider shows only as an item in the readiness list. | Connecting the provider first, then switching on. |
-| **Invoices** on with no legal identity | The feature is on from the first day; the refusal comes at issue time. | Filling in the identity before telling members they will be invoiced. |
-| A rule needing more validators than you have, outside bookings | The readiness list holds up the first booking only for reservation rules. The editor lets you save one above the people available. Other requests are created, cannot be completed, and expire after seven days. | Counting active owners and administrators after each rule. See [Avoid requests that wait for ever](help:setup.people.stuck). |
-| Members who cannot open the plan | In a new space the **User** card of [Roles](app:/roles) is empty and nothing warns you. | Ticking the everyday permissions and joining once with a second account. |
+| **Invoices** on with no legal identity | The feature is on from the first day. The readiness list marks the identity **Needed before invoicing** and What needs you raises it, but nothing stops you inviting members and running a month; the refusal comes at issue time. | Filling in the identity before telling members they will be invoiced. |
+| A rule needing more validators than you have | The editor lets you save one above the people available. The readiness list then marks **Roles and who validates requests** as required, whatever the kind of request, but requests created before you fix it cannot be completed, and expire after seven days. | Counting active owners and administrators after each rule. See [Avoid requests that wait for ever](help:setup.people.stuck). |
+| Members who cannot open the plan | In a new space the **User** card of [Roles](app:/roles) is empty. The readiness list marks **What members may do** until members hold **Book and use reservations**, but it checks only that one: the five other everyday permissions are yours to tick. | Ticking the everyday permissions and joining once with a second account. |
 | A space made from a template | A template never carries the identity, bank details, sites or invitations. | Treating the area **Details your features need (identity, bank, platforms)** as a to-do list. |
 | A settings file that promises more than it delivers | Today the file carries the role matrix, your own roles and every validation rule, but not the members, the invoice and member numbers, the VAT period or whole-space prices. What it carries is applied only if **Configuration in the space file** is on in the target. A plan is not replaced once reservations exist. | Re-entering what it does not carry by hand, and reading the preview before **Replace and import**. |
-| Reminders that never run | They run every morning on the server when the database has its scheduler (pg_cron); if it has none, they run when an administrator opens Finances. They also stay silent when **Automatic payment reminders** is off. | Asking the operator whether the scheduler exists, and opening Finances yourself if it does not. See [Payment reminders](help:user.money.reminders.automatic). |
-| Changing country, currency or time zone once money exists | I found no guard. Amounts are stored as numbers and are not converted: check with the owner of the installation before relying on one. | Choosing them on day one. See [Decisions that are hard to undo](help:setup.before.permanent). |
+| Reminders that never run | They run every morning on the server where the installation schedules jobs (pg_cron); otherwise when an administrator opens Finances. The switch and the feature description say so, but cannot tell which applies to your installation. They also stay silent when **Automatic payment reminders** is off. | Asking the operator whether the scheduler exists, and opening Finances yourself if it does not. See [Payment reminders](help:user.money.reminders.automatic). |
+| Changing the time zone once money exists | The server locks the currency and the country once the space has issued a document or recorded money, but not the time zone, in which every working day, half-day and closure day is counted. | Choosing it on day one. See [Decisions that are hard to undo](help:setup.before.permanent). |
 | Numbering or VAT period that does not suit your accountant's format | The app does not compare them with the country's accounting export. | Asking your accountant for the numbering format and the export they use before you issue. See [Accounting exports](help:user.invoicing.accounting-export). |
 | Taking a test for the real space | Beyond the watermark on printed documents, the difference is easy to miss. | Looking at the test-space banner and the side shown in [Me](app:/me) before you act. |
 
@@ -84,18 +87,18 @@ You want proof, not a feeling, before you open. Thirty-one checks, in three leve
 
 | # | Check | Where | Good looks like |
 |---|---|---|---|
-| 1 | Country, currency, time zone | [Workspace](app:/workspace-settings), **General details** | Atelier du Marché: France, EUR, Europe/Paris |
+| 1 | Country, currency, time zone | [Workspace](app:/workspace-settings), **General details** | Atelier du Marché: France, EUR, Europe/Paris, set before the first document or payment, after which the currency and the country are locked |
 | 2 | Workspace language | Same screen | The language your invitations are written in |
 | 3 | Open weekdays and hours | [Availability](app:/availability) | The days you open are ticked; the hours match the day |
 | 4 | Closure days | Availability, closure days | Holidays and closures for the next months are in, before the first month-end |
 | 5 | At least one seat | [Workspace editor](app:/editor) | Every room you rent has seats |
-| 6 | Readiness | **Setting up this space** | Nothing under **Opening days, time zone and currency** or **Bookable places on the floor plan** needs configuration |
+| 6 | Readiness | **Setting up this space** | Nothing under **Opening days, time zone and currency**, **Bookable places on the floor plan** or **What members may do** needs configuration |
 | 7 | You booked a seat | [Reserve](app:/reserve) | The seat is booked, checked in and cancelled without a surprise |
 | 8 | The workspace ID | [Workspace ID & QR](app:/workspace-code) | The ID is one you can say aloud; the QR is printed |
-| 9 | Everyday permissions | [Roles](app:/roles) | **User** holds the six everyday permissions |
+| 9 | Everyday permissions | [Roles](app:/roles) | **User** holds the six everyday permissions, **Book and use reservations** among them |
 | 10 | A second account joined | Another device | It was approved and could open the plan and book |
 | 11 | More than one person can act | [Members & plans](app:/members) | An owner plus a co-owner or an administrator, all **Active** |
-| 12 | Validation counts | [Validation rules](app:/validation) | No rule asks for more validators than active owners and administrators |
+| 12 | Validation counts | [Validation rules](app:/validation) | No rule asks for more validators than active owners and administrators; **Roles and who validates requests** does not need configuration |
 | 13 | The invitation in each language | **Community & invitations** | You read each version once; no tag is left unfilled |
 | 14 | The side you are on | [Me](app:/me) | The test-space banner is shown, or not, as you intended |
 
@@ -114,13 +117,13 @@ You want proof, not a feeling, before you open. Thirty-one checks, in three leve
 | 23 | Who is told what | [How members are told](help:setup.notify.members) | Members find everything under **Events**; push only if the operator set it up |
 | 24 | Kiosk and badges | [Features](app:/features) | Off, or a kiosk member exists and badges are issued |
 | 25 | Sites | Features | Off, or at least one site exists |
-| 26 | Features held back | **Features**, **Needs attention** | The filter shows no process |
+| 26 | Features held back | **Features**, **Needs attention** | The filter shows no process, and What needs you has no line about features that wait |
 
 *Grow: invoices, tax and records*
 
 | # | Check | Where | Good looks like |
 |---|---|---|---|
-| 27 | Legal identity | [Legal identity & e-invoicing](app:/legal-identity) | **Complete these details before issuing** shows nothing when you start a trial invoice |
+| 27 | Legal identity | [Legal identity & e-invoicing](app:/legal-identity) | **The space's legal identity and address** reads **Ready**, and **Complete these details before issuing** shows nothing when you start a trial invoice |
 | 28 | VAT regime and rates | [VAT](app:/vat) | The regime is the one your accountant gave; a rate is in force for your default |
 | 29 | Number format | [Number sequences](app:/settings/number-sequences) | You read the preview and your accountant agrees |
 | 30 | A trial invoice | Test space, month-close wizard | It issued, in each language your members read, without a missing item |
@@ -218,7 +221,8 @@ You want one page that says what to slow down for. The full list, with what to d
 | A member's invoiced month | The moment the invoice is issued | [Money](help:setup.money.permanent) |
 | Legal mentions on the invoice | The first issued invoice | [The sequence to follow](help:setup.reports.sequence) |
 | VAT regime and rates | Rates are versioned by date and never edited; a submitted declaration is never recomputed | [Money](help:setup.money.permanent) |
-| Country, currency, time zone | When money exists: amounts are not converted | [Decisions that are hard to undo](help:setup.before.permanent) |
+| Country and currency | Locked by the server once the space has issued a document or recorded money: amounts are not converted | [Decisions that are hard to undo](help:setup.before.permanent) |
+| Time zone | Never locked, but days are counted in it: choose it on day one | [Decisions that are hard to undo](help:setup.before.permanent) |
 | Floor plan replacement | Refused once a reservation exists; deleting a floor removes what is on it | [Decisions that are hard to undo](help:setup.before.permanent) |
 | The workspace ID | When you change it, the old one stops working at once; reprint the QR | [How people join](help:setup.people.join) |
 | Ownership | An owner can give it; there is no owner invite | [Co-owners](help:setup.people.coowner) |

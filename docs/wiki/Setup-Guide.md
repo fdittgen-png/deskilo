@@ -102,9 +102,10 @@ You want to know the shortest road to a space people can book. The app keeps a r
 
 1. **Opening days, time zone and currency**: a time zone, a currency and at least one open weekday.
 2. **Bookable places on the floor plan**: at least one seat.
-3. **Roles and who validates requests**: counted only when a policy on reservations asks for more validators than the space has. A rule asking for two approvals with only you in the space would leave requests waiting for ever.
+3. **Roles and who validates requests**: counted only when a validation rule, of any kind, asks for more validators than the space has. A rule asking for two approvals with only you in the space would leave requests waiting for ever.
+4. **What members may do**: members hold **Book and use reservations**. A new space grants them nothing, so a member who joins cannot book until you tick it in [Roles](https://fdittgen-png.github.io/deskilo/#/roles).
 
-A fourth row, **Server and database version**, blocks only when the server is behind this app; it then waits for the server operator.
+One more row, **Server and database version**, blocks only when the server is behind this app; it then waits for the server operator. And while **Invoices** is on, **The space's legal identity and address** is required too: the list marks it **Needed before invoicing**, because no invoice can be issued without it.
 
 *What is optional, and can be set aside for later*
 
@@ -120,8 +121,8 @@ Each of these can be set aside with **Later** and brought back; the list says wh
 **Good to know**
 
 - The list names who acts: **You**, **The server operator** or **A database administrator**.
-- Optional does not mean unimportant: once you invoice, your legal identity is required for that feature. The list calls it a detail your features need.
-- If you switch invoicing on without legal identity, the app lets you; it refuses at the moment of issuing an invoice, and says what is missing.
+- Optional does not mean unimportant: bank details, a payment provider or a site are details your features need, and the list names them.
+- If you switch invoicing on without legal identity, the app lets you; the list and [What needs you](User-Guide#what-needs-you) name it, and issuing an invoice is refused, saying what is missing.
 
 **See also:** [Check your space](#check-your-space) · [The Get started card and the tips](User-Guide#the-get-started-card-and-the-tips)
 
@@ -166,7 +167,7 @@ You want a head start without being locked into someone else's choices. When you
 
 **Good to know**
 
-- A template never carries your legal identity, bank details, sites, invitations or document links: those are yours, and the readiness list names them as details your features need.
+- A template never carries your legal identity, bank details, sites, invitations or document links: those are yours, and the readiness list names them (the legal identity, with **Invoices** on, as an area of its own).
 - A template-created space can have invoicing on and nothing to issue with until you add the identity.
 - Applying a template to a space that already has tariffs replaces its fee bands: use it on a new space.
 
@@ -210,7 +211,7 @@ You want to know which choices to slow down for. Most settings can be changed an
 | Invoice number format and sequence | The next number can be raised, never lowered. After the first invoice you can no longer print less of the date than the series shows. | Preview the format, ask your accountant, then issue. |
 | The month of an issued invoice | Once a member's month is invoiced it is locked; closure days and public-holiday imports skip it. | Set closure days before month-end. |
 | VAT regime and rates | Rates are versioned by date and never edited; a submitted VAT declaration is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
-| Country, currency, time zone | Amounts are stored as numbers with no conversion, so changing the currency once money exists is unsafe. | Choose them right on day one; see [Build the place](#build-the-place). |
+| Country, currency, time zone | Amounts are stored as numbers with no conversion. Once the space has issued a document or recorded money, the server refuses any change of currency or country. The time zone is never locked, but every day is counted in it. | Choose them right on day one; see [Build the place](#build-the-place). |
 | Floor plan replacement | Importing a plan is refused once reservations exist. | Edit floors and rooms one by one in the editor. |
 | Workspace ID | It is what members type and what the printed QR codes point to. You can change it (4 to 20 letters or digits) with **Change workspace ID**, but the old ID stops working at once. | Choose a short, memorable ID before you print anything; change it early if you must. |
 | Test or real | A real space issues invoices that are owed; dev documents are watermarked. | Start in a test space, deploy when ready. |
@@ -280,7 +281,7 @@ You want the space to know where it lives. These four choices drive more than th
 2. Pick the **Country**; the **Currency** and **Time zone** follow, and you can correct them. For Atelier du Marché: France, EUR, Europe/Paris.
 3. Pick the **Workspace language**, then tap **Save**.
 
-> **Careful** Choose country and currency right on day one. Amounts are stored as plain numbers, so changing the currency after money exists would mislabel everything already counted.
+> **Careful** Choose country and currency right on day one. Amounts are stored as plain numbers, so once the space has issued a document or recorded money, the server refuses to change either: "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved."
 
 **Good to know**
 
@@ -389,7 +390,7 @@ You want proof that the space is ready, before you invite anyone. Two cards say 
 
 **Good to know**
 
-- Ready means ready for a first booking: opening days, time zone, currency, at least one seat, and enough validators.
+- Ready means ready for a first booking: opening days, time zone, currency, at least one seat, members who may book, and enough validators.
 - Anything optional, such as tariffs or payments, can be set aside with **Later** and does not block opening.
 - Both cards depend on the feature *Get started card*.
 - **Not now** hides the card on this device; the view menu on the plan brings it back with **Get started**.
@@ -483,7 +484,7 @@ Everything else is Platform and off: kiosk and badges, several sites, accessory 
 
 **Good to know**
 
-- The invoices feature is on from the start, but nothing can be issued until your legal identity is complete. See [Avoid features that contradict each other](#avoid-features-that-contradict-each-other).
+- The invoices feature is on from the start, but nothing can be issued until your legal identity is complete; **Setting up this space** marks it **Needed before invoicing**. See [Avoid features that contradict each other](#avoid-features-that-contradict-each-other).
 - A space that already exists never changes when DesKilo changes what a new space gets.
 - If you start from a template, the template can switch a few features on or off on top of this set. See [Three starting points](#three-starting-points).
 
@@ -714,9 +715,9 @@ You are about to change a feature and you want to see the effect before it exist
 
 *What "held back" means*
 
-A feature is held back when you chose it but something it needs is off. Its own switch stays on, which is why it is easy to miss: the screen says the feature is on, and the app does not offer it. The card says how many features are held back ("… on but wait for a switched-off prerequisite") and which prerequisite they wait for, and you fix it in [Features](https://fdittgen-png.github.io/deskilo/#/features) itself.
+A feature is held back when you chose it but something it needs is off. Its own switch stays on, which is why it is easy to miss: the screen says the feature is on, and the app does not offer it. The card says how many features are held back ("… on but wait for a switched-off prerequisite") and which prerequisite they wait for, and you fix it in [Features](https://fdittgen-png.github.io/deskilo/#/features) itself. [What needs you](User-Guide#what-needs-you) shows the same thing as one line per switched-off prerequisite.
 
-Other things a feature can wait for are not on this screen. A feature can be on and fully allowed while its details are missing: your legal identity, a site, a payment provider. Those appear in **Setting up this space**, under **Details your features need (identity, bank, platforms)**, at the top of the workspace settings.
+Other things a feature can wait for are not on this screen. A feature can be on and fully allowed while its details are missing: your legal identity, a site, a payment provider. Those appear in **Setting up this space**, at the top of the workspace settings: the legal identity, with **Invoices** on, as **The space's legal identity and address**, the rest under **Details your features need (identity, bank, platforms)**.
 
 **Good to know**
 
@@ -737,15 +738,15 @@ The app has guards for some contradictions and none for others. In the table, a 
 
 | If you have… | Guard in the app | Gap that remains |
 |---|---|---|
-| **Invoices** on, no legal identity | Issuing is refused, with **Complete these details before issuing** listing the missing address, VAT number and so on. The need also shows in **Setting up this space**. | The feature is on from the first day, so nothing prevents inviting members and running a month before the identity exists. |
+| **Invoices** on, no legal identity | Issuing is refused, with **Complete these details before issuing** listing the missing address, VAT number and so on. The need also shows in **Setting up this space**, as **The space's legal identity and address**, **Needed before invoicing**, and in What needs you. | The feature is on from the first day, so nothing prevents inviting members and running a month before the identity exists. |
 | A country other than France or Germany | Issuing says the country "must be France or Germany for issuing here". | Nothing warns you when you choose the country or switch invoicing on. |
-| Registered for VAT, no rate in force | Issuing is refused until a rate is in force. | With **VAT management** off, the configuration is hidden while the stored rates keep applying. Check the rates after switching it off. |
+| Registered for VAT, no rate in force | Issuing is refused until a default rate is in force. The description of **VAT management** and the warning on the legal identity screen say so. | With **VAT management** off, the configuration is hidden while the stored rates keep applying. Check the rates after switching it off. |
 | **Online payments** on, no provider | A new online payment is refused when the feature is off; the missing provider shows in **Setting up this space**. | You can switch it on without a provider. Connect it first: [Payment provider](User-Guide#the-payment-provider). |
 | **Kiosk mode** on, no badges and no kiosk member | **RFID / NFC badges**, **QR badges**, **Member photos at the kiosk** and **Sign in with a badge** cannot be on without it. | Nothing checks that a kiosk member exists or that a badge has been issued. See [Run a wall tablet](User-Guide#kiosk-mode-a-wall-tablet-for-check-in). |
 | **Sites** on, no site | **At least one site** appears among the details your features need. | The switch can be on with no site. |
 | **Push notifications** on, no push service | Members still get everything in the app. | Phones receive nothing until whoever runs the installation has set up the push service. See [How members are told](#the-channels-in-plain-words). |
-| **Payment reminders** on, **Automatic payment reminders** on | The second cannot be on without the first. | The server's scheduler sends them each morning; if the database has no scheduler, they are sent when an administrator opens Finances. |
-| A validation rule asking more validators than exist | **Setting up this space** says "A policy asks for more validators than this space has", and it holds up the first booking when the rule is for reservations. | Other requests are created, cannot be completed and expire after seven days. See [Who validates](User-Guide#validation-rules-domain-by-domain). |
+| **Payment reminders** on, **Automatic payment reminders** on | The second cannot be on without the first. | The server sends them each morning where the installation schedules jobs; otherwise they are sent when an administrator opens Finances. The switch and the feature description say so; your server operator knows which applies. |
+| A validation rule asking more validators than exist | **Setting up this space** says "A policy asks for more validators than this space has", and **Roles and who validates requests** becomes required, whatever the kind of request. | Requests created before you fix it cannot be completed and expire after seven days. See [Who validates](User-Guide#validation-rules-domain-by-domain). |
 | **Booking deletion requests** on, nobody to validate | Same readiness line. | Same gap. |
 | **Desk, office & level reservations** on | **Admins can assign levels** needs it. | Each member also needs the right; nothing checks that anybody has it. |
 | A child feature on, its parent off | **Needs attention**, and "Waiting on the feature above". | None: this one is fully covered. |
@@ -755,7 +756,7 @@ The app has guards for some contradictions and none for others. In the table, a 
 
 - The rule of thumb: if a feature brings your name, your money or your legal duties onto a document, finish its details before you tell members.
 - **Setting up this space** is a list, not a lock. It never stops you from switching something on.
-- The check "Before anyone can book here" only speaks about what a booking truly needs: the time zone, the currency, an open weekday and at least one seat.
+- The check "Before anyone can book here" speaks only about the required areas: the time zone, the currency, an open weekday, at least one seat, members who hold **Book and use reservations** and enough validators. With **Invoices** on, the legal identity is required too, but before invoicing: the Workspace card says “Before invoicing”, and the Reserve card never names it.
 
 **See also:** [Legal identity and invoicing](#your-legal-identity-and-what-to-ask-your-accountant) · [Dry run](#a-safe-dry-run-in-a-test-space)
 
@@ -988,7 +989,7 @@ You want each role to hold what it needs and nothing else. That is the principle
 
 An administrator does not hold **Manage roles & permissions**, **Configure validation policies**, **Edit workspace settings**, **Manage tariffs and billing rules**, **Design the documents**, **Manage integrations**, **Manage the configuration** or **Deploy to production**. A co-owner holds all of them until you untick some. The owner always holds all of them.
 
-> **Careful** In a new space the **User** card is empty. The six everyday permissions (**Use the messenger**, **Book and use reservations**, **See the calendar**, **See the member directory**, **See their own account and invoices**, **See the shared documents**) are held only through the matrix or a role. Until you tick them, a member who joins cannot open the plan. The demo shows them already ticked, which hides this. Tick them for the **User** card, and for the **Administrator** card if administrators also book, then test with a second account.
+> **Careful** In a new space the **User** card is empty. The six everyday permissions (**Use the messenger**, **Book and use reservations**, **See the calendar**, **See the member directory**, **See their own account and invoices**, **See the shared documents**) are held only through the matrix or a role. Until you tick them, a member who joins cannot open the plan. The demo shows them already ticked, which hides this. **Setting up this space** shows **What members may do** as **Needed for a first booking** until the **User** card holds **Book and use reservations**; it does not check the five others. Tick them for the **User** card, and for the **Administrator** card if administrators also book, then test with a second account.
 
 **Good to know**
 
@@ -1223,7 +1224,7 @@ You want to be sure that every request you create a rule for can be answered. A 
 
 1. Open [Validation rules](https://fdittgen-png.github.io/deskilo/#/validation) and read each customised card: "All admins — any 2" means two people.
 2. Open [Members & plans](https://fdittgen-png.github.io/deskilo/#/members). Count the active owners and administrators. Paused and exited people do not count.
-3. Open **Setting up this space** in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings). The area **Roles and who validates requests** says "A policy asks for more validators than this space has" when it counts too few. It holds up the first booking only when the rule is for reservations.
+3. Open **Setting up this space** in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings). The area **Roles and who validates requests** says "A policy asks for more validators than this space has" when it counts too few. The area then becomes required, whatever the kind of request, and [What needs you](User-Guide#what-needs-you) raises it.
 4. Open [Events](https://fdittgen-png.github.io/deskilo/#/events). **Waiting for your confirmation** shows what is waiting, and a row shows "1/2 validations".
 
 **Good to know**
@@ -1526,7 +1527,7 @@ You decide how late is late, and who does the chasing.
 **Good to know**
 
 - The delay before the first reminder is also read as your payment term. Set it with [Payment terms](User-Guide#payment-terms).
-- Automatic reminders run once a day on the server when the database has its scheduler enabled. They also run when someone who may issue invoices (an owner, a co-owner, or an administrator if **Admins issue invoices** is on) opens Finances, so a space without the scheduler still gets them, on the days someone looks.
+- Automatic reminders run once a day on the server when the database has its scheduler enabled. They also run when someone who may issue invoices (an owner, a co-owner, or an administrator if **Admins issue invoices** is on) opens Finances, so a space without the scheduler still gets them, on the days someone looks. The switch and the feature description say this too; your server operator knows which applies.
 - The **Payment reminders** feature only makes the rules available. A reminder leaves on its own only when **Automatic reminders** is switched on in the reminder rules, which is off until you choose it.
 - They skip an invoice with a payment pending or on hold, and an invoice without a recorded payment term.
 - The member gets an alert in their feed and, if push is set up, a generic notification; see [Tell people](#tell-people).
@@ -1553,7 +1554,7 @@ You want to know what VAT will ask of you before you switch it on.
 **Good to know**
 
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
-- Registered without a default rate in force, the server refuses to issue.
+- Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
 - A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
 - The declaration journal has its own number series.
 
@@ -1576,7 +1577,7 @@ You want to know, before the first invoice, what you will not be able to change 
 | Invoice number | Numbers are gapless and drawn in the database at the moment of issue. The next number can be raised, never lowered. A change of format applies from then on. A restart cannot be more frequent than the date the number prints. | At the first issue |
 | An invoiced month | A month with an invoice for a member is closed for that member. Closure days and holiday imports skip such months and name them. | At the first invoice for it |
 | VAT rates | Rates are versioned by date, never edited. A submitted VAT declaration is never recomputed. | At the first use |
-| Currency and country | Amounts are stored as whole minor units without conversion. No guard was found that stops changing them later: decide before the first booking. | Before the first booking |
+| Currency and country | Amounts are stored as whole minor units without conversion. Once the space has issued a document or recorded money, the server refuses to change either. | At the first document or payment |
 
 **Steps**
 
@@ -1819,7 +1820,7 @@ You want people to be told what needs them, and not drowned.
 **Good to know**
 
 - Overload comes from rules that ask too often or from too many administrators on one rule.
-- Silence comes from a rule with nobody to answer it: requiring two validations when only the owner exists, or listing administrators who have left, leaves requests waiting for ever. The setup readiness card can flag a booking rule with too few validators.
+- Silence comes from a rule with nobody to answer it: requiring two validations when only the owner exists, or listing administrators who have left, leaves requests waiting for ever. The setup readiness card flags any rule with too few validators, and What needs you raises it.
 - Silence also comes from push without set-up, from members who turned push off, and from a system that blocks notifications.
 - Automatic payment reminders are not a substitute for looking at the open invoices from time to time.
 
@@ -2076,12 +2077,15 @@ You want to know which of your mistakes the app will point out, and where it wil
 |---|---|---|
 | A feature that needs another | A feature cannot work without the one it needs. Switching a feature on switches its parent on and names what came on. Switching a parent off holds its children back and keeps their own choice. | **Features**: the switch flow with its preview, **Requires…** and **Waiting on the feature above** |
 | A process held back | A feature that is on but waits for something that is off. | **Features**, **Processes** view: the state **Needs attention** and its filter chip |
-| The readiness list | One line per area of the space, with its state, who acts and where to set it. Areas: **Opening days, time zone and currency**, **Bookable places on the floor plan**, **Membership plans and tariffs**, **Invite the first members**, **How members pay**, **Roles and who validates requests**, **Export and recovery**, **Details your features need (identity, bank, platforms)**, **A first booking** and, when relevant, **Server and database version** and **Assistant access (optional)** (the latter only with the MCP interface on). | **Setting up this space**, at the top of [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) |
-| The line that stops a first booking | Only what a booking truly needs: a time zone, a currency, an open weekday, one seat, and, when a booking rule asks for more validators than exist, those validators. The rest is optional and can be set aside with **Later**. | **Before anyone can book here**, on the Get started card of [Reserve](https://fdittgen-png.github.io/deskilo/#/reserve) |
-| What your features still need locally | Legal identity (needed by **Invoices**), bank details, an online payment provider, an e-invoicing account, a site. | The same card, area **Details your features need (identity, bank, platforms)**, with **Set up** and **Recommended** |
+| The readiness list | One line per area of the space, with its state, who acts and where to set it. Areas: **Opening days, time zone and currency**, **Bookable places on the floor plan**, **Membership plans and tariffs**, **Invite the first members**, **How members pay**, **Roles and who validates requests**, **Export and recovery**, **What members may do**, **Details your features need (identity, bank, platforms)**, **A first booking** and, when relevant, **The space's legal identity and address** (only with **Invoices** on), **Server and database version** and **Assistant access (optional)** (the latter only with the MCP interface on). | **Setting up this space**, at the top of [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) |
+| The line that stops a first booking | The areas the list marks **Needed for a first booking**: a time zone, a currency, an open weekday, one seat, members who hold **Book and use reservations** (a new space grants them nothing), and, when a validation rule of any kind asks for more validators than exist, those validators. The rest is optional and can be set aside with **Later**. | **Before anyone can book here**, on the Get started card of [Reserve](https://fdittgen-png.github.io/deskilo/#/reserve) |
+| The line that stops a first invoice | With **Invoices** on, the space's legal identity and address. No invoice can be issued without them, so the area cannot be set aside. | **Setting up this space**: the area **The space's legal identity and address**, marked **Needed before invoicing**; while it is the next step, the card's headline reads "Before invoicing: …" |
+| What your features still need locally | Bank details, an online payment provider, an e-invoicing account, a site. The legal identity is not listed here: with **Invoices** on it is an area of its own (above). | The same card, area **Details your features need (identity, bank, platforms)**, with **Set up** and **Recommended** |
 | The invoice guard | An invoice is refused until it is complete: the workspace address, its VAT number, a country France or Germany, a legal basis for an exemption, the member's name, address and VAT number when reverse charge applies, a VAT rate in force, an explanation for every line billed at 0 %. Cross-border, reverse-charge, export and exempt invoices are refused: issue them outside the app. | **Complete these details before issuing**, with the missing items listed |
 | The online payment guard | With **Online payments** off, the server refuses a new online payment. One already open still settles. | The payment screens (the feature row carries no note about it) |
-| The validation guard | **Required validations** above the people available. | **Not enough eligible validators.** in the rule editor; "A policy asks for more validators than this space has" in the readiness list |
+| The validation guard | **Required validations** above the people available, for any kind of request. | **Not enough eligible validators.** in the rule editor; "A policy asks for more validators than this space has" in the readiness list, where **Roles and who validates requests** then becomes required |
+| The currency and country lock | Once the space has issued a document or recorded money, the server refuses any change of **Currency** or **Country**, from the settings form, an import or anywhere else. The time zone is not locked. | "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved." when you save [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) |
+| The owner inbox | What is still to configure: one line "Set up: …" for each required area of the readiness list that is not ready, and one line "… switched-on features wait for “…”" for each switched-off feature that holds others back. | [What needs you](User-Guide#what-needs-you); a tap opens the screen where it is set up, or **Features** |
 | The number sequence guard | A reset more frequent than the date printed in the number is refused. | [Number sequences](https://fdittgen-png.github.io/deskilo/#/settings/number-sequences), when you save |
 | The maturity check | A feature reviewed as **Alpha** or **Beta**. | A confirmation before you switch it on, and a badge on every switch |
 | The plan replacement check | Replacing the floor plan or the settings from a file. | A warning that it cannot be undone. The plan is refused once reservations exist |
@@ -2090,7 +2094,7 @@ You want to know which of your mistakes the app will point out, and where it wil
 
 - **Setting up this space** is a list, not a lock. It never stops you from switching something on.
 - Most guards act when you try to issue, pay or book, not when you choose a setting. That is why the audit below exists.
-- The owner inbox ([What needs you](User-Guide#what-needs-you)) does not raise configuration problems today. Do not wait for it to tell you.
+- The owner inbox ([What needs you](User-Guide#what-needs-you)) raises only the required areas and the features held back. The optional areas stay in the readiness list: read it yourself.
 
 **See also:** [Avoid features that contradict each other](#avoid-features-that-contradict-each-other) · [Check your space](#check-your-space)
 
@@ -2104,15 +2108,15 @@ You want the honest list of what stays your responsibility. These are configurat
 | Mistake | Why nothing stops it | Avoid it by |
 |---|---|---|
 | Choosing a country other than France or Germany and expecting invoices | The app offers many countries and VAT rates, but issues invoices only for France and Germany. Nothing says so when you choose the country. | Deciding before you promise members an invoice. Elsewhere, keep statements in the app and issue invoices outside it. |
-| Being registered for VAT with no rate in force | Issuing is refused, but only at the first invoice. With **VAT management** off, the configuration is hidden but the stored rates keep applying. | Adding the rate under [VAT](https://fdittgen-png.github.io/deskilo/#/vat) before the first month-close, and running a trial invoice. |
+| Being registered for VAT with no rate in force | Issuing is refused, but only at the first invoice. The description of **VAT management** and the warning on the legal identity screen say so; nothing stops you earlier. With **VAT management** off, the configuration is hidden but the stored rates keep applying. | Adding the rate under [VAT](https://fdittgen-png.github.io/deskilo/#/vat) before the first month-close, and running a trial invoice. |
 | **Online payments** on with no provider | You can switch it on; the missing provider shows only as an item in the readiness list. | Connecting the provider first, then switching on. |
-| **Invoices** on with no legal identity | The feature is on from the first day; the refusal comes at issue time. | Filling in the identity before telling members they will be invoiced. |
-| A rule needing more validators than you have, outside bookings | The readiness list holds up the first booking only for reservation rules. The editor lets you save one above the people available. Other requests are created, cannot be completed, and expire after seven days. | Counting active owners and administrators after each rule. See [Avoid requests that wait for ever](#avoid-requests-that-wait-for-ever). |
-| Members who cannot open the plan | In a new space the **User** card of [Roles](https://fdittgen-png.github.io/deskilo/#/roles) is empty and nothing warns you. | Ticking the everyday permissions and joining once with a second account. |
+| **Invoices** on with no legal identity | The feature is on from the first day. The readiness list marks the identity **Needed before invoicing** and What needs you raises it, but nothing stops you inviting members and running a month; the refusal comes at issue time. | Filling in the identity before telling members they will be invoiced. |
+| A rule needing more validators than you have | The editor lets you save one above the people available. The readiness list then marks **Roles and who validates requests** as required, whatever the kind of request, but requests created before you fix it cannot be completed, and expire after seven days. | Counting active owners and administrators after each rule. See [Avoid requests that wait for ever](#avoid-requests-that-wait-for-ever). |
+| Members who cannot open the plan | In a new space the **User** card of [Roles](https://fdittgen-png.github.io/deskilo/#/roles) is empty. The readiness list marks **What members may do** until members hold **Book and use reservations**, but it checks only that one: the five other everyday permissions are yours to tick. | Ticking the everyday permissions and joining once with a second account. |
 | A space made from a template | A template never carries the identity, bank details, sites or invitations. | Treating the area **Details your features need (identity, bank, platforms)** as a to-do list. |
 | A settings file that promises more than it delivers | Today the file carries the role matrix, your own roles and every validation rule, but not the members, the invoice and member numbers, the VAT period or whole-space prices. What it carries is applied only if **Configuration in the space file** is on in the target. A plan is not replaced once reservations exist. | Re-entering what it does not carry by hand, and reading the preview before **Replace and import**. |
-| Reminders that never run | They run every morning on the server when the database has its scheduler (pg_cron); if it has none, they run when an administrator opens Finances. They also stay silent when **Automatic payment reminders** is off. | Asking the operator whether the scheduler exists, and opening Finances yourself if it does not. See [Payment reminders](User-Guide#automatic-reminders). |
-| Changing country, currency or time zone once money exists | I found no guard. Amounts are stored as numbers and are not converted: check with the owner of the installation before relying on one. | Choosing them on day one. See [Decisions that are hard to undo](#decisions-that-are-hard-to-undo). |
+| Reminders that never run | They run every morning on the server where the installation schedules jobs (pg_cron); otherwise when an administrator opens Finances. The switch and the feature description say so, but cannot tell which applies to your installation. They also stay silent when **Automatic payment reminders** is off. | Asking the operator whether the scheduler exists, and opening Finances yourself if it does not. See [Payment reminders](User-Guide#automatic-reminders). |
+| Changing the time zone once money exists | The server locks the currency and the country once the space has issued a document or recorded money, but not the time zone, in which every working day, half-day and closure day is counted. | Choosing it on day one. See [Decisions that are hard to undo](#decisions-that-are-hard-to-undo). |
 | Numbering or VAT period that does not suit your accountant's format | The app does not compare them with the country's accounting export. | Asking your accountant for the numbering format and the export they use before you issue. See [Accounting exports](User-Guide#accounting-exports). |
 | Taking a test for the real space | Beyond the watermark on printed documents, the difference is easy to miss. | Looking at the test-space banner and the side shown in [Me](https://fdittgen-png.github.io/deskilo/#/me) before you act. |
 
@@ -2134,18 +2138,18 @@ You want proof, not a feeling, before you open. Thirty-one checks, in three leve
 
 | # | Check | Where | Good looks like |
 |---|---|---|---|
-| 1 | Country, currency, time zone | [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings), **General details** | Atelier du Marché: France, EUR, Europe/Paris |
+| 1 | Country, currency, time zone | [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings), **General details** | Atelier du Marché: France, EUR, Europe/Paris, set before the first document or payment, after which the currency and the country are locked |
 | 2 | Workspace language | Same screen | The language your invitations are written in |
 | 3 | Open weekdays and hours | [Availability](https://fdittgen-png.github.io/deskilo/#/availability) | The days you open are ticked; the hours match the day |
 | 4 | Closure days | Availability, closure days | Holidays and closures for the next months are in, before the first month-end |
 | 5 | At least one seat | [Workspace editor](https://fdittgen-png.github.io/deskilo/#/editor) | Every room you rent has seats |
-| 6 | Readiness | **Setting up this space** | Nothing under **Opening days, time zone and currency** or **Bookable places on the floor plan** needs configuration |
+| 6 | Readiness | **Setting up this space** | Nothing under **Opening days, time zone and currency**, **Bookable places on the floor plan** or **What members may do** needs configuration |
 | 7 | You booked a seat | [Reserve](https://fdittgen-png.github.io/deskilo/#/reserve) | The seat is booked, checked in and cancelled without a surprise |
 | 8 | The workspace ID | [Workspace ID & QR](https://fdittgen-png.github.io/deskilo/#/workspace-code) | The ID is one you can say aloud; the QR is printed |
-| 9 | Everyday permissions | [Roles](https://fdittgen-png.github.io/deskilo/#/roles) | **User** holds the six everyday permissions |
+| 9 | Everyday permissions | [Roles](https://fdittgen-png.github.io/deskilo/#/roles) | **User** holds the six everyday permissions, **Book and use reservations** among them |
 | 10 | A second account joined | Another device | It was approved and could open the plan and book |
 | 11 | More than one person can act | [Members & plans](https://fdittgen-png.github.io/deskilo/#/members) | An owner plus a co-owner or an administrator, all **Active** |
-| 12 | Validation counts | [Validation rules](https://fdittgen-png.github.io/deskilo/#/validation) | No rule asks for more validators than active owners and administrators |
+| 12 | Validation counts | [Validation rules](https://fdittgen-png.github.io/deskilo/#/validation) | No rule asks for more validators than active owners and administrators; **Roles and who validates requests** does not need configuration |
 | 13 | The invitation in each language | **Community & invitations** | You read each version once; no tag is left unfilled |
 | 14 | The side you are on | [Me](https://fdittgen-png.github.io/deskilo/#/me) | The test-space banner is shown, or not, as you intended |
 
@@ -2164,13 +2168,13 @@ You want proof, not a feeling, before you open. Thirty-one checks, in three leve
 | 23 | Who is told what | [How members are told](#what-members-control) | Members find everything under **Events**; push only if the operator set it up |
 | 24 | Kiosk and badges | [Features](https://fdittgen-png.github.io/deskilo/#/features) | Off, or a kiosk member exists and badges are issued |
 | 25 | Sites | Features | Off, or at least one site exists |
-| 26 | Features held back | **Features**, **Needs attention** | The filter shows no process |
+| 26 | Features held back | **Features**, **Needs attention** | The filter shows no process, and What needs you has no line about features that wait |
 
 *Grow: invoices, tax and records*
 
 | # | Check | Where | Good looks like |
 |---|---|---|---|
-| 27 | Legal identity | [Legal identity & e-invoicing](https://fdittgen-png.github.io/deskilo/#/legal-identity) | **Complete these details before issuing** shows nothing when you start a trial invoice |
+| 27 | Legal identity | [Legal identity & e-invoicing](https://fdittgen-png.github.io/deskilo/#/legal-identity) | **The space's legal identity and address** reads **Ready**, and **Complete these details before issuing** shows nothing when you start a trial invoice |
 | 28 | VAT regime and rates | [VAT](https://fdittgen-png.github.io/deskilo/#/vat) | The regime is the one your accountant gave; a rate is in force for your default |
 | 29 | Number format | [Number sequences](https://fdittgen-png.github.io/deskilo/#/settings/number-sequences) | You read the preview and your accountant agrees |
 | 30 | A trial invoice | Test space, month-close wizard | It issued, in each language your members read, without a missing item |
@@ -2268,7 +2272,8 @@ You want one page that says what to slow down for. The full list, with what to d
 | A member's invoiced month | The moment the invoice is issued | [Money](#what-cannot-be-undone) |
 | Legal mentions on the invoice | The first issued invoice | [The sequence to follow](#the-sequence-to-follow) |
 | VAT regime and rates | Rates are versioned by date and never edited; a submitted declaration is never recomputed | [Money](#what-cannot-be-undone) |
-| Country, currency, time zone | When money exists: amounts are not converted | [Decisions that are hard to undo](#decisions-that-are-hard-to-undo) |
+| Country and currency | Locked by the server once the space has issued a document or recorded money: amounts are not converted | [Decisions that are hard to undo](#decisions-that-are-hard-to-undo) |
+| Time zone | Never locked, but days are counted in it: choose it on day one | [Decisions that are hard to undo](#decisions-that-are-hard-to-undo) |
 | Floor plan replacement | Refused once a reservation exists; deleting a floor removes what is on it | [Decisions that are hard to undo](#decisions-that-are-hard-to-undo) |
 | The workspace ID | When you change it, the old one stops working at once; reprint the QR | [How people join](#how-people-join) |
 | Ownership | An owner can give it; there is no owner invite | [Co-owners](#co-owners-more-than-one-person-who-can-act) |
@@ -2355,11 +2360,11 @@ You build the place and its opening times in a test space, so that a member coul
 5. Add a closure day. See [Closure days](User-Guide#closure-days).
 6. Keep the default features. Open [Features](https://fdittgen-png.github.io/deskilo/#/features) only to read what is on.
 7. Make a booking as yourself, then check in and out. See [Check in and out](User-Guide#check-in-and-check-out).
-8. Share the workspace ID with one person and let them join. See [The workspace ID](User-Guide#the-workspace-id).
+8. In [Roles](https://fdittgen-png.github.io/deskilo/#/roles), tick the everyday permissions on the **User** card, then share the workspace ID with one person and let them join. See [The workspace ID](User-Guide#the-workspace-id).
 
 **Good to know**
 
-- A space can be booked once it has a time zone, a currency, at least one open weekday and at least one seat. Everything else can wait.
+- A space can be booked once it has a time zone, a currency, at least one open weekday, at least one seat, and members who hold **Book and use reservations**. Everything else can wait.
 - A floor plan cannot be replaced by an import once a reservation exists.
 
 *You are done when*
@@ -2481,7 +2486,7 @@ The decisions you will meet have names. This is what each one means in DesKilo.
 | Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
 | Environment pair | A test side and a real side of one space. |
 | Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |
-| Readiness | The checklist at the top of the workspace settings that says what is missing before people can book. |
+| Readiness | The checklist at the top of the workspace settings that says what is missing before people can book, and before the first invoice. |
 | Held back | A feature that is on but waits for another one that is off. |
 | Kiosk | A shared screen at the door where members check in and out. |
 | Badge | A card or tag a member shows to check in at a kiosk. |
@@ -2524,7 +2529,7 @@ The whole setup on one page. *Reversible* tells you whether you can change your 
 
 | Step | Where in the app | How long | Reversible? |
 |---|---|---|---|
-| 1. Country, currency, time zone, language | [Workspace settings](https://fdittgen-png.github.io/deskilo/#/workspace-settings) | 5 minutes | Yes, but do not change the currency once money exists |
+| 1. Country, currency, time zone, language | [Workspace settings](https://fdittgen-png.github.io/deskilo/#/workspace-settings) | 5 minutes | Yes, until the first document or payment; then the currency and the country are locked |
 | 2. Floor plan | [Space editor](https://fdittgen-png.github.io/deskilo/#/editor) | 30 minutes | Yes, until the first reservation; then edit one object at a time |
 | 3. Opening rules | Availability | 10 minutes | Yes |
 | 4. Features | [Features](https://fdittgen-png.github.io/deskilo/#/features) | 10 minutes | Yes. Switching off stops new use and deletes nothing |

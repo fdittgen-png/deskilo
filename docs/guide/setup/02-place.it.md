@@ -34,7 +34,7 @@ Vuole che lo spazio sappia dove si trova. Queste quattro scelte determinano più
 2. Scelga il **Paese**; la **Valuta** e il **Fuso orario** lo seguono e può correggerli. Per Atelier du Marché: Francia, EUR, Europe/Paris.
 3. Scelga la **Lingua dello spazio**, poi tocchi **Salva**.
 
-> **Attenzione** Scelga bene paese e valuta il primo giorno. Gli importi sono memorizzati come semplici numeri, quindi cambiare la valuta dopo che esiste del denaro etichetterebbe in modo errato tutto ciò che è già stato contato.
+> **Attenzione** Scelga bene paese e valuta il primo giorno. Gli importi sono memorizzati come semplici numeri, quindi quando lo spazio ha emesso un documento o registrato denaro, il server rifiuta di cambiare l’uno o l’altra: «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.»
 
 **Da sapere**
 
@@ -143,7 +143,7 @@ Vuole una prova che lo spazio sia pronto, prima di invitare qualcuno. Lo dicono 
 
 **Da sapere**
 
-- Pronto significa pronto per una prima prenotazione: giorni di apertura, fuso orario, valuta, almeno un posto e abbastanza validatori.
+- Pronto significa pronto per una prima prenotazione: giorni di apertura, fuso orario, valuta, almeno un posto, membri che possono prenotare e abbastanza validatori.
 - Tutto ciò che è facoltativo, come tariffe o pagamenti, può essere messo da parte con **Più tardi** e non impedisce l’apertura.
 - Entrambe le schede dipendono dalla funzionalità *Scheda Primi passi*.
 - **Non ora** nasconde la scheda su questo dispositivo; il menu di visualizzazione sulla planimetria la riporta con **Primi passi**.

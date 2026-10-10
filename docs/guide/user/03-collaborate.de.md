@@ -149,6 +149,7 @@ Sie möchten einen Ort, der antwortet: Braucht mich heute etwas?
 
 - Dieser Bildschirm existiert nur, wenn Ihr Workspace die Funktion **Was auf Sie wartet** eingeschaltet hat; ohne sie führt die Adresse zurück zur Startseite.
 - Mehrere gleiche Entscheidungen erscheinen als eine Zeile. Wartet nichts, sagt der Bildschirm **Nichts wartet auf Sie**.
+- Er listet auch Konfiguration, die noch fehlt: „Einzurichten: …“ für jeden erforderlichen Bereich der Einrichtungsliste, der nicht bereit ist (nur für jemanden, der den Space konfiguriert), und „… eingeschaltete Funktionen warten auf „…““, wenn eine ausgeschaltete Funktion andere zurückhält. Ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder **Funktionen**.
 
 **Siehe auch:** [Ereignisse und Bestätigungen](help:user.collaborate.events)
 

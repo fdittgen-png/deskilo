@@ -198,7 +198,7 @@ You want people to be told what needs them, and not drowned.
 **Good to know**
 
 - Overload comes from rules that ask too often or from too many administrators on one rule.
-- Silence comes from a rule with nobody to answer it: requiring two validations when only the owner exists, or listing administrators who have left, leaves requests waiting for ever. The setup readiness card can flag a booking rule with too few validators.
+- Silence comes from a rule with nobody to answer it: requiring two validations when only the owner exists, or listing administrators who have left, leaves requests waiting for ever. The setup readiness card flags any rule with too few validators, and What needs you raises it.
 - Silence also comes from push without set-up, from members who turned push off, and from a system that blocks notifications.
 - Automatic payment reminders are not a substitute for looking at the open invoices from time to time.
 

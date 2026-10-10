@@ -495,6 +495,7 @@ Usted quiere que el espacio sepa dónde está establecido. **Espacio** se abre e
 **Conviene saber**
 
 - El país propone la moneda y la zona horaria, y decide qué tipos de IVA se ofrecen.
+- En cuanto el espacio ha emitido un documento o registrado dinero, el país ya no se puede cambiar: al guardar se indica «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.»
 - **Guardar** escribe todo el formulario junto. Si alguien cambió estos ajustes entretanto, no se guarda nada y lo que usted escribió se queda en pantalla.
 
 **Véase también:** [Moneda y zona horaria](help:user.workspace.settings.currency-timezone)
@@ -516,7 +517,7 @@ Usted quiere que los precios y los días se cuenten como los cuenta su espacio.
 
 **Conviene saber**
 
-- La moneda se propone a partir del país. Puede cambiarla.
+- La moneda se propone a partir del país. Puede cambiarla hasta que el espacio haya emitido un documento o registrado dinero; después queda fijada.
 - La zona horaria no es cosmética: una jornada, un límite de media jornada y un día de cierre se cuentan en ella, así que un miembro en el extranjero ve el día del espacio y no el suyo.
 
 **Véase también:** [País](help:user.workspace.settings.country)

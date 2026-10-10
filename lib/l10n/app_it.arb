@@ -336,6 +336,14 @@
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
+  "attentionSetUp": "Da configurare: {area}",
+  "@attentionSetUp": {
+    "description": "#2332: attentionSetUp"
+  },
+  "attentionUnblock": "{count, plural, =1{1 funzione attivata attende «{feature}»} other{{count} funzioni attivate attendono «{feature}»}}",
+  "@attentionUnblock": {
+    "description": "#2332: attentionUnblock"
+  },
   "attentionWaitingSince": "In attesa dal {date}",
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince"
@@ -3785,7 +3793,7 @@
   "@featureVatGroupsDesc": {
     "description": "#947 VAT groups: featureVatGroupsDesc"
   },
-  "featureVatManagementDesc": "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi.",
+  "featureVatManagementDesc": "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi. Uno spazio soggetto a IVA ne ha bisogno, insieme a un'aliquota predefinita, per emettere una fattura: senza di essi l'emissione viene rifiutata.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -5961,7 +5969,7 @@
   "legalIdentitySubtitle": "Regime IVA, identificativi e le condizioni di pagamento predefinite dello spazio",
   "legalIdentityTitle": "Identità legale e fatturazione elettronica",
   "legalIdentityVatId": "Partita IVA",
-  "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l'export XML resta disattivato.",
+  "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è in vigore alcuna aliquota predefinita: nessuna fattura può essere emessa finché non ne aggiunge una. Le aliquote si modificano con «Gestione IVA» attivata.",
   "legendBlocked": "Bloccata",
   "legendClosed": "Giorno chiuso",
   "legendFree": "Libera",
@@ -7433,6 +7441,10 @@
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "paymentProviderStripe": "Carta di credito (Stripe)",
   "paymentProviderWero": "Wero (tramite Mollie)",
+  "paymentRemindersWhen": "Quando viene eseguito: ogni mattina sul server, se l'installazione pianifica attività (pg_cron); altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "paymentRoutingNumberLabel": "Routing number",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
@@ -8543,7 +8555,15 @@
   "readinessAreaBackend": "Server e versione del database",
   "readinessAreaFirstBooking": "Una prima prenotazione",
   "readinessAreaInvitations": "Invitare i primi membri",
+  "readinessAreaLegalIdentity": "L'identità legale e l'indirizzo dello spazio",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
   "readinessAreaLocalSetup": "Dati richiesti dalle funzioni (identità, banca, piattaforme)",
+  "readinessAreaMemberPermissions": "Cosa possono fare i membri",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
   "readinessAreaPayments": "Come pagano i membri",
   "readinessAreaPricing": "Piani di iscrizione e tariffe",
   "readinessAreaRecovery": "Esportazione e ripristino",
@@ -8551,14 +8571,30 @@
   "readinessAreaResources": "Posti prenotabili sulla planimetria",
   "readinessAreaRolesValidation": "Ruoli e chi convalida le richieste",
   "readinessBlocked": "Prima di una prima prenotazione: {step}",
+  "readinessBlockedInvoicing": "Prima di fatturare: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing"
+  },
   "readinessFirstBookingReady": "Pronto per una prima prenotazione",
   "readinessLater": "Necessario più avanti",
   "readinessNeededFirst": "Necessario per una prima prenotazione",
+  "readinessNeededInvoicing": "Necessario prima di fatturare",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
   "readinessNext": "Poi: {step}",
   "readinessReasonEligibilityExpired": "La sua abilitazione agli assistenti è scaduta",
   "readinessReasonEligibilityMissing": "Nessun amministratore del database l’ha abilitata agli assistenti",
   "readinessReasonEligibilityNoIdentity": "Acceda prima con la sua identità verificata",
   "readinessReasonEligibilityRequested": "La sua richiesta attende un amministratore del database",
+  "readinessReasonInvoicingNeedsIdentity": "Senza di essa non si può emettere alcuna fattura",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessReasonMembersCannotBook": "I membri non possono ancora prenotare: in Ruoli, conceda loro «Prenotare e usare le prenotazioni»",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
   "readinessReasonNoEvidence": "Nessuna esportazione o ripristino registrato",
   "readinessReasonNoPolicies": "Nessuna richiesta attende un validatore",
   "readinessReasonNotExposed": "Questo spazio non espone ancora nulla agli assistenti",
@@ -8629,6 +8665,10 @@
   "refTypeInvoice": "Fattura",
   "refusalAlreadyDecided": "Qualcuno ha già deciso. L'elenco mostra l'esito.",
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Riaprilo per vedere a che punto è.",
+  "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",
+  "@refusalMoneyLocaleLocked": {
+    "description": "#2332: refusalMoneyLocaleLocked"
+  },
   "refusalPermission": "Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
   "refusalSession": "La tua sessione è scaduta. Accedi di nuovo, poi riprova.",
   "regionalClock": "Orologio",

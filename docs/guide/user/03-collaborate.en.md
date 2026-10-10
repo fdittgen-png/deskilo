@@ -149,6 +149,7 @@ You want one place that answers: does anything need me today?
 
 - This screen exists only when your workspace has switched on the **What needs you** feature; without it the address leads back to the start page.
 - Several identical decisions are shown as one line. When nothing is waiting, the screen says **Nothing needs you**.
+- It also lists configuration that is not done: "Set up: …" for each required area of the setup list that is not ready (only for someone who configures the space), and "… switched-on features wait for “…”" when a switched-off feature holds others back. A tap opens the screen where it is set up, or **Features**.
 
 **See also:** [Events & confirmations](help:user.collaborate.events)
 

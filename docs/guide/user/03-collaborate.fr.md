@@ -149,6 +149,7 @@ Vous voulez un seul endroit qui répond : quelque chose a-t-il besoin de moi auj
 
 - Cet écran n'existe que lorsque votre espace a activé la fonctionnalité **Ce qui vous attend** ; sans elle, l'adresse ramène à la page d'accueil.
 - Plusieurs décisions identiques sont regroupées en une seule ligne. Quand rien n'attend, l'écran indique **Rien ne vous attend**.
+- Il liste aussi la configuration inachevée : « À configurer : … » pour chaque domaine obligatoire de la liste de mise en place qui n'est pas prêt (seulement pour qui configure l'espace), et « … fonctionnalités activées attendent « … » » quand une fonctionnalité désactivée en retient d'autres. Un appui ouvre l'écran où cela se règle, ou **Fonctionnalités**.
 
 **Voir aussi:** [Événements et confirmations](help:user.collaborate.events)
 

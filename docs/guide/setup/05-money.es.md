@@ -258,7 +258,7 @@ Usted decide cuándo se considera tarde y quién se encarga de reclamar.
 **Conviene saber**
 
 - El plazo antes del primer recordatorio se lee también como su plazo de pago. Fíjelo en [Condiciones de pago](help:user.money.legal.payment-terms).
-- Los recordatorios automáticos se ejecutan una vez al día en el servidor cuando la base de datos tiene su programador activado. También se ejecutan cuando alguien autorizado a emitir facturas (un propietario, un copropietario o un administrador si **Los admins emiten facturas** está activado) abre Finanzas, de modo que un espacio sin programador igualmente los recibe, los días en que alguien mira.
+- Los recordatorios automáticos se ejecutan una vez al día en el servidor cuando la base de datos tiene su programador activado. También se ejecutan cuando alguien autorizado a emitir facturas (un propietario, un copropietario o un administrador si **Los admins emiten facturas** está activado) abre Finanzas, de modo que un espacio sin programador igualmente los recibe, los días en que alguien mira. El interruptor y la descripción de la función también lo dicen; el operador de su servidor sabe cuál se aplica.
 - La función **Recordatorios de pago** solo pone las reglas a su disposición. Un recordatorio sale solo únicamente cuando **Recordatorios automáticos** está activado en las reglas de recordatorio, lo cual no ocurre hasta que usted lo decide.
 - Se omiten las facturas con un pago pendiente o en espera, y las facturas sin plazo de pago registrado.
 - El miembro recibe una alerta en su flujo y, si las notificaciones push están configuradas, una notificación genérica; véase [Avisar a las personas](help:setup.notify.overview).
@@ -285,7 +285,7 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 **Conviene saber**
 
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
-- Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir.
+- Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
 - Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
 - El diario de declaraciones tiene su propia serie de numeración.
 
@@ -308,7 +308,7 @@ Quiere saber, antes de la primera factura, qué no podrá cambiar después.
 | Número de factura | Los números son correlativos, sin huecos, y se asignan en la base de datos en el momento de emitir. El número siguiente puede subirse, nunca bajarse. Un cambio de formato se aplica desde ese momento. Un reinicio no puede ser más frecuente que la fecha que imprime el número. | En la primera emisión |
 | Un mes facturado | Un mes con una factura para un miembro queda cerrado para ese miembro. Los días de cierre y las importaciones de festivos omiten esos meses y los nombran. | En la primera factura de ese mes |
 | Tipos de IVA | Los tipos se versionan por fecha, nunca se editan. Una declaración de IVA presentada no se recalcula nunca. | En el primer uso |
-| Moneda y país | Los importes se guardan como unidades menores enteras, sin conversión. No se encontró ninguna protección que impida cambiarlos más tarde: decídalos antes de la primera reserva. | Antes de la primera reserva |
+| Moneda y país | Los importes se guardan como unidades menores enteras, sin conversión. En cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cambiar uno u otro. | En el primer documento o pago |
 
 **Pasos**
 

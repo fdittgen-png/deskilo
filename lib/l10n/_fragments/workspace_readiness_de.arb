@@ -8,6 +8,30 @@
   "readinessStateNeeds": "Einzurichten",
   "readinessStateUnverified": "Noch nicht geprüft",
   "readinessNeededFirst": "Nötig für eine erste Buchung",
+  "readinessAreaMemberPermissions": "Was Mitglieder dürfen",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
+  "readinessAreaLegalIdentity": "Rechtliche Identität und Adresse des Space",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
+  "readinessReasonMembersCannotBook": "Mitglieder können noch nicht buchen: Erteilen Sie ihnen unter Rollen „Buchen und Reservierungen nutzen“",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
+  "readinessReasonInvoicingNeedsIdentity": "Ohne sie kann keine Rechnung ausgestellt werden",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessNeededInvoicing": "Vor der Rechnungsstellung nötig",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
+  "readinessBlockedInvoicing": "Vor der Rechnungsstellung: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing"
+  },
   "readinessLater": "Später nötig",
   "readinessAreaRegionRules": "Öffnungstage, Zeitzone und Währung",
   "readinessAreaResources": "Buchbare Plätze im Grundriss",

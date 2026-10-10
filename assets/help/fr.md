@@ -1159,6 +1159,7 @@ Vous voulez un seul endroit qui répond : quelque chose a-t-il besoin de moi auj
 
 - Cet écran n'existe que lorsque votre espace a activé la fonctionnalité **Ce qui vous attend** ; sans elle, l'adresse ramène à la page d'accueil.
 - Plusieurs décisions identiques sont regroupées en une seule ligne. Quand rien n'attend, l'écran indique **Rien ne vous attend**.
+- Il liste aussi la configuration inachevée : « À configurer : … » pour chaque domaine obligatoire de la liste de mise en place qui n'est pas prêt (seulement pour qui configure l'espace), et « … fonctionnalités activées attendent « … » » quand une fonctionnalité désactivée en retient d'autres. Un appui ouvre l'écran où cela se règle, ou **Fonctionnalités**.
 
 **Voir aussi:** [Événements et confirmations](help:user.collaborate.events)
 
@@ -3022,6 +3023,7 @@ Vous voulez que l'espace sache où il est établi. **Espace** s'ouvre sur **Info
 **Bon à savoir**
 
 - Le pays propose la devise et le fuseau horaire, et détermine les taux de TVA proposés.
+- Dès que l'espace a émis un document ou enregistré de l'argent, le pays ne peut plus être changé : l'enregistrement indique « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »
 - **Enregistrer** écrit tout le formulaire d'un coup. Si quelqu'un a modifié ces réglages entre-temps, rien n'est enregistré et ce que vous avez saisi reste à l'écran.
 
 **Voir aussi:** [Devise et fuseau horaire](help:user.workspace.settings.currency-timezone)
@@ -3042,7 +3044,7 @@ Vous voulez que les prix et les jours soient comptés comme votre espace les com
 
 **Bon à savoir**
 
-- La devise est proposée d'après le pays. Vous pouvez la changer.
+- La devise est proposée d'après le pays. Vous pouvez la changer tant que l'espace n'a émis aucun document ni enregistré d'argent ; ensuite, elle est figée.
 - Le fuseau horaire n'est pas décoratif : un jour ouvré, une limite de demi-journée et un jour de fermeture sont tous comptés dedans, si bien qu'un membre à l'étranger voit la journée de l'espace plutôt que la sienne.
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)
@@ -4683,7 +4685,7 @@ Vous listez les taux de TVA que vos factures peuvent utiliser. Ce que paient les
 - Les taux usuels sont un point de départ. Savoir quelle prestation relève de quel taux est une question pour votre comptable.
 - Le taux par défaut est utilisé par les abonnements et par tout ce qui n'a pas de taux propre.
 - Un taux encore utilisé par une facture ou un service est conservé, désactivé, plutôt que supprimé.
-- Sans aucun taux alors que vous êtes assujetti à la TVA, les factures n'affichent aucune taxe et l'export XML reste désactivé.
+- Sans taux par défaut en vigueur alors que vous êtes assujetti à la TVA, aucune facture ne peut être émise ; l'écran d'identité légale vous en avertit.
 - Cet écran demande la fonctionnalité **Gestion de la TVA** ; l'entrée Taux de TVA de l'écran d'identité légale n'apparaît que pour le régime des assujettis à la TVA.
 
 **Voir aussi:** [Groupes de TVA](help:user.money.vat.groups) · [Changement par la loi](help:user.money.vat.change-by-law)
@@ -5205,6 +5207,7 @@ Vous voulez que les relances partent toutes seules.
 - Une fois par jour, les factures qui ont dépassé leur échéance enregistrée passent au niveau suivant, pour le montant encore dû.
 - Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.
 - Désactivées : vous envoyez chaque relance vous-même.
+- Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.
 
 **Voir aussi:** [Règles de relance](help:user.money.reminders.rules)
 
@@ -5987,9 +5990,10 @@ Vous voulez connaître le chemin le plus court vers un espace que l’on peut r�
 
 1. **Jours d’ouverture, fuseau horaire et devise** : un fuseau horaire, une devise et au moins un jour de la semaine ouvert.
 2. **Places réservables sur le plan** : au moins une place.
-3. **Rôles et validation des demandes** : compté seulement quand une règle de réservation demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.
+3. **Rôles et validation des demandes** : compté seulement quand une règle de validation, de quelque nature qu’elle soit, demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.
+4. **Ce que les membres peuvent faire** : les membres détiennent **Réserver et utiliser les réservations**. Un nouvel espace ne leur accorde rien : un membre qui rejoint l’espace ne peut pas réserver tant que vous ne l’avez pas coché dans [Rôles](app:/roles).
 
-Une quatrième ligne, **Serveur et version de la base**, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur.
+Une ligne de plus, **Serveur et version de la base**, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur. Et tant que **Factures** est activé, **L'identité légale et l'adresse de l'espace** est obligatoire aussi : la liste la marque **Nécessaire avant de facturer**, car aucune facture ne peut être émise sans elle.
 
 *Ce qui est facultatif et peut attendre*
 
@@ -6005,8 +6009,8 @@ Chacune de ces étapes peut être mise de côté avec **Plus tard** et reprise e
 **Bon à savoir**
 
 - La liste nomme qui agit : **Vous**, **L’opérateur du serveur** ou **Un administrateur de la base**.
-- Facultatif ne veut pas dire sans importance : dès que vous facturez, votre identité légale est requise pour cette fonctionnalité. La liste l’appelle une information requise par vos fonctionnalités.
-- Si vous activez la facturation sans identité légale, l’application vous laisse faire ; elle refuse au moment d’émettre une facture, et dit ce qui manque.
+- Facultatif ne veut pas dire sans importance : des coordonnées bancaires, un prestataire de paiement ou un site sont des informations requises par vos fonctionnalités, et la liste les nomme.
+- Si vous activez la facturation sans identité légale, l’application vous laisse faire ; la liste et [Ce qui vous attend](help:user.collaborate.attention) la signalent, et l’émission d’une facture est refusée, en disant ce qui manque.
 
 **Voir aussi :** [Vérifier votre espace](help:setup.place.check) · [La carte Premiers pas et les astuces](help:user.start.get-started)
 
@@ -6049,7 +6053,7 @@ Vous voulez prendre de l’avance sans être enfermé dans les choix de quelqu�
 
 **Bon à savoir**
 
-- Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme informations requises par vos fonctionnalités.
+- Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme (l’identité légale, quand **Factures** est activé, comme un domaine à part).
 - Un espace créé depuis un modèle peut avoir la facturation activée et rien pour émettre tant que vous n’avez pas ajouté l’identité.
 - Appliquer un modèle à un espace qui a déjà des tarifs remplace ses tranches de tarification : utilisez-le sur un nouvel espace.
 
@@ -6091,7 +6095,7 @@ Vous voulez savoir sur quels choix prendre votre temps. La plupart des réglages
 | Format et séquence des numéros de facture | Le numéro suivant peut être augmenté, jamais diminué. Après la première facture, vous ne pouvez plus imprimer moins de la date que ne le montre la série. | Voir l’aperçu du format, consulter votre comptable, puis émettre. |
 | Le mois d’une facture émise | Dès que le mois d’un membre est facturé, il est verrouillé ; les jours de fermeture et les imports de jours fériés l’ignorent. | Fixer les jours de fermeture avant la fin du mois. |
 | Régime de TVA et taux | Les taux sont versionnés par date et jamais modifiés ; une déclaration de TVA transmise n’est jamais recalculée. | Ajouter un nouveau taux à partir d’une date ; décider du régime avec votre comptable. |
-| Pays, devise, fuseau horaire | Les montants sont enregistrés comme des nombres, sans conversion : changer de devise une fois que de l’argent existe est risqué. | Les choisir correctement dès le premier jour ; voir [Construire le lieu](help:setup.place.overview). |
+| Pays, devise, fuseau horaire | Les montants sont enregistrés comme des nombres, sans conversion. Dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse tout changement de devise ou de pays. Le fuseau horaire n’est jamais verrouillé, mais chaque jour y est compté. | Les choisir correctement dès le premier jour ; voir [Construire le lieu](help:setup.place.overview). |
 | Remplacement du plan | L’import d’un plan est refusé dès que des réservations existent. | Modifier les étages et les salles un par un dans l’éditeur. |
 | ID de l’espace | C’est ce que les membres saisissent et ce vers quoi pointent les QR codes imprimés. Vous pouvez le changer (4 à 20 lettres ou chiffres) avec **Changer l'ID de l'espace**, mais l’ancien ID cesse de fonctionner aussitôt. | Choisir un ID court et facile à retenir avant d’imprimer quoi que ce soit ; le changer tôt si nécessaire. |
 | Test ou réel | Un espace réel émet des factures dues ; les documents de développement portent un filigrane. | Commencer dans un espace de test, déployer quand tout est prêt. |
@@ -6158,7 +6162,7 @@ Vous voulez que l’espace sache où il vit. Ces quatre choix pèsent plus qu’
 2. Choisissez le **Pays** ; la **Devise** et le **Fuseau horaire** suivent, et vous pouvez les corriger. Pour l’Atelier du Marché : France, EUR, Europe/Paris.
 3. Choisissez la **Langue de l'espace**, puis touchez **Enregistrer**.
 
-> **Attention** Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : changer de devise une fois que de l’argent existe fausserait l’intitulé de tout ce qui est déjà compté.
+> **Attention** Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse de changer l’un ou l’autre : « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »
 
 **Bon à savoir**
 
@@ -6263,7 +6267,7 @@ Vous voulez la preuve que l’espace est prêt, avant d’inviter qui que ce soi
 
 **Bon à savoir**
 
-- Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, et assez de validateurs.
+- Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, des membres qui peuvent réserver, et assez de validateurs.
 - Tout ce qui est facultatif, comme les tarifs ou les paiements, peut être mis de côté avec **Plus tard** et ne bloque pas l’ouverture.
 - Les deux cartes dépendent de la fonctionnalité *Carte Premiers pas*.
 - **Pas maintenant** masque la carte sur cet appareil ; le menu d’affichage du plan la ramène avec **Premiers pas**.
@@ -6354,7 +6358,7 @@ Tout le reste est de niveau Plateforme et désactivé : borne et badges, plusieu
 
 **Bon à savoir**
 
-- La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète. Voir [Éviter les fonctionnalités qui se contredisent](help:setup.features.consistency).
+- La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète ; **Mise en place de cet espace** la marque **Nécessaire avant de facturer**. Voir [Éviter les fonctionnalités qui se contredisent](help:setup.features.consistency).
 - Un espace qui existe déjà ne change jamais quand DesKilo modifie ce que reçoit un nouvel espace.
 - Si vous partez d’un modèle, celui-ci peut activer ou désactiver quelques fonctionnalités en plus de cet ensemble. Voir [Trois points de départ](help:setup.features.profiles).
 
@@ -6576,9 +6580,9 @@ Vous êtes sur le point de modifier une fonctionnalité et vous voulez voir l’
 
 *Ce que veut dire « retenue »*
 
-Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans [Fonctionnalités](app:/features) même.
+Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans [Fonctionnalités](app:/features) même. [Ce qui vous attend](help:user.collaborate.attention) montre la même chose, en une ligne par prérequis désactivé.
 
-D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans **Mise en place de cet espace**, sous **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, en haut des réglages de l’espace.
+D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans **Mise en place de cet espace**, en haut des réglages de l’espace : l’identité légale, quand **Factures** est activé, sous **L'identité légale et l'adresse de l'espace**, le reste sous **Informations requises par vos fonctionnalités (identité, banque, plateformes)**.
 
 **Bon à savoir**
 
@@ -6598,15 +6602,15 @@ L’application a des garde-fous pour certaines contradictions et aucun pour d�
 
 | Si vous avez… | Garde-fou dans l’application | Lacune qui subsiste |
 |---|---|---|
-| **Factures** activées, pas d’identité légale | L’émission est refusée, avec **Complétez ces informations avant d'émettre** qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans **Mise en place de cet espace**. | La fonctionnalité est activée dès le premier jour : rien n’empêche donc d’inviter des membres et de faire tourner un mois avant que l’identité existe. |
+| **Factures** activées, pas d’identité légale | L’émission est refusée, avec **Complétez ces informations avant d'émettre** qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans **Mise en place de cet espace**, sous **L'identité légale et l'adresse de l'espace**, **Nécessaire avant de facturer**, et dans Ce qui vous attend. | La fonctionnalité est activée dès le premier jour : rien n’empêche donc d’inviter des membres et de faire tourner un mois avant que l’identité existe. |
 | Un pays autre que la France ou l’Allemagne | L’émission dit que le pays « doit être la France ou l’Allemagne pour émettre ici ». | Rien ne vous avertit quand vous choisissez le pays ou activez la facturation. |
-| Assujetti à la TVA, aucun taux en vigueur | L’émission est refusée tant qu’aucun taux n’est en vigueur. | Avec **Gestion de la TVA** désactivée, la configuration est masquée alors que les taux enregistrés continuent de s’appliquer. Vérifiez les taux après l’avoir désactivée. |
+| Assujetti à la TVA, aucun taux en vigueur | L’émission est refusée tant qu’aucun taux par défaut n’est en vigueur. La description de **Gestion de la TVA** et l’avertissement de l’écran d’identité légale le disent. | Avec **Gestion de la TVA** désactivée, la configuration est masquée alors que les taux enregistrés continuent de s’appliquer. Vérifiez les taux après l’avoir désactivée. |
 | **Paiements en ligne** activés, pas de prestataire | Un nouveau paiement en ligne est refusé quand la fonctionnalité est désactivée ; l’absence de prestataire apparaît dans **Mise en place de cet espace**. | Vous pouvez l’activer sans prestataire. Connectez-le d’abord : [Prestataire de paiement](help:user.money.payments.provider). |
 | **Mode borne** activé, pas de badges ni de membre borne | **Badges RFID / NFC**, **Badges QR**, **Photos des membres à la borne** et **Connexion par badge** ne peuvent pas être activés sans lui. | Rien ne vérifie qu’un membre borne existe ni qu’un badge a été émis. Voir [Faire tourner une tablette murale](help:user.kiosk.mode). |
 | **Sites** activés, aucun site | **Au moins un site** apparaît parmi les informations requises par vos fonctionnalités. | L’interrupteur peut être activé sans aucun site. |
 | **Notifications push** activées, pas de service de notifications | Les membres reçoivent quand même tout dans l’application. | Les téléphones ne reçoivent rien tant que la personne qui fait tourner l’installation n’a pas configuré le service de notifications. Voir [Comment les membres sont informés](help:setup.notify.channels). |
-| **Relances de paiement** activées, **Relances de paiement automatiques** activées | La seconde ne peut pas être activée sans la première. | Le planificateur du serveur les envoie chaque matin ; si la base n’a pas de planificateur, elles partent quand un administrateur ouvre Finances. |
-| Une règle de validation qui demande plus de validateurs qu’il n’en existe | **Mise en place de cet espace** dit « Une règle demande plus de validateurs que cet espace n’en compte », et cela retient la première réservation quand la règle porte sur les réservations. | Les autres demandes sont créées, ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir [Qui valide](help:user.validation.overview). |
+| **Relances de paiement** activées, **Relances de paiement automatiques** activées | La seconde ne peut pas être activée sans la première. | Le serveur les envoie chaque matin si l’installation planifie des tâches ; sinon, elles partent quand un administrateur ouvre Finances. L’interrupteur et la description de la fonctionnalité le disent ; l’opérateur de votre serveur sait ce qui s’applique. |
+| Une règle de validation qui demande plus de validateurs qu’il n’en existe | **Mise en place de cet espace** dit « Une règle demande plus de validateurs que cet espace n’en compte », et **Rôles et validation des demandes** devient obligatoire, quel que soit le type de demande. | Les demandes créées avant que vous corrigiez ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir [Qui valide](help:user.validation.overview). |
 | **Demandes de suppression de réservation** activées, personne pour valider | La même ligne de préparation. | La même lacune. |
 | **Réservations de table, bureau et niveau** activées | **Les admins peuvent attribuer des niveaux** en a besoin. | Chaque membre doit aussi en avoir le droit ; rien ne vérifie que quelqu’un l’a. |
 | Une fonctionnalité enfant activée, son parent désactivé | **À examiner**, et « En attente de la fonction au-dessus ». | Aucune : ce cas est entièrement couvert. |
@@ -6616,7 +6620,7 @@ L’application a des garde-fous pour certaines contradictions et aucun pour d�
 
 - La règle d’or : si une fonctionnalité met votre nom, votre argent ou vos obligations légales sur un document, finissez ses informations avant d’en parler aux membres.
 - **Mise en place de cet espace** est une liste, pas un verrou. Elle ne vous empêche jamais d’activer quelque chose.
-- La vérification « Avant que quiconque puisse réserver ici » ne parle que de ce dont une réservation a vraiment besoin : le fuseau horaire, la devise, un jour de semaine ouvert et au moins une place.
+- La vérification « Avant que quiconque puisse réserver ici » ne parle que des domaines obligatoires : le fuseau horaire, la devise, un jour de semaine ouvert, au moins une place, des membres qui détiennent **Réserver et utiliser les réservations** et assez de validateurs. Quand **Factures** est activé, l’identité légale est aussi obligatoire, mais avant de facturer : la carte de l’espace dit « Avant de facturer », et celle de Réserver ne la mentionne jamais.
 
 **Voir aussi :** [Identité légale et facturation](help:setup.money.identity) · [Essai à blanc](help:setup.money.dry-run)
 
@@ -6845,7 +6849,7 @@ Vous voulez que chaque rôle détienne ce dont il a besoin, et rien d’autre. C
 
 Un administrateur ne détient pas **Gérer les rôles et permissions**, **Configurer les règles de validation**, **Modifier les réglages de l'espace**, **Gérer les tarifs et règles de facturation**, **Concevoir les documents**, **Gérer les intégrations**, **Gérer la configuration** ni **Déployer en production**. Un copropriétaire les détient toutes, jusqu’à ce que vous en décochiez. Le propriétaire les détient toujours toutes.
 
-> **Attention** Dans un nouvel espace, la carte **Utilisateur** est vide. Les six permissions de tous les jours (**Utiliser la messagerie**, **Réserver et utiliser les réservations**, **Voir le calendrier**, **Voir l'annuaire des membres**, **Voir son propre compte et ses factures**, **Voir les documents partagés**) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. Cochez-les pour la carte **Utilisateur**, et pour la carte **Administrateur·rice** si les administrateurs réservent aussi, puis testez avec un second compte.
+> **Attention** Dans un nouvel espace, la carte **Utilisateur** est vide. Les six permissions de tous les jours (**Utiliser la messagerie**, **Réserver et utiliser les réservations**, **Voir le calendrier**, **Voir l'annuaire des membres**, **Voir son propre compte et ses factures**, **Voir les documents partagés**) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. **Mise en place de cet espace** affiche **Ce que les membres peuvent faire** comme **Nécessaire pour une première réservation** tant que la carte **Utilisateur** ne détient pas **Réserver et utiliser les réservations** ; elle ne vérifie pas les cinq autres. Cochez-les pour la carte **Utilisateur**, et pour la carte **Administrateur·rice** si les administrateurs réservent aussi, puis testez avec un second compte.
 
 **Bon à savoir**
 
@@ -7073,7 +7077,7 @@ Vous voulez être sûr que chaque demande pour laquelle vous créez une règle p
 
 1. Ouvrez [Règles de validation](app:/validation) et lisez chaque carte personnalisée : « Tous les admins — n’importe lesquels 2 » veut dire deux personnes.
 2. Ouvrez [Membres et forfaits](app:/members). Comptez les propriétaires et administrateurs actifs. Les personnes en pause ou sorties ne comptent pas.
-3. Ouvrez **Mise en place de cet espace** dans [Espace](app:/workspace-settings). Le domaine **Rôles et validation des demandes** dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Cela retient la première réservation seulement quand la règle porte sur les réservations.
+3. Ouvrez **Mise en place de cet espace** dans [Espace](app:/workspace-settings). Le domaine **Rôles et validation des demandes** dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Le domaine devient alors obligatoire, quel que soit le type de demande, et [Ce qui vous attend](help:user.collaborate.attention) le signale.
 4. Ouvrez [Événements](app:/events). **En attente de votre confirmation** montre ce qui attend, et une ligne affiche « 1/2 validations ».
 
 **Bon à savoir**
@@ -7365,7 +7369,7 @@ Vous décidez à partir de quand un paiement est en retard, et qui relance.
 **Bon à savoir**
 
 - Le délai avant la première relance est aussi lu comme votre délai de paiement. Réglez-le avec les [Conditions de paiement](help:user.money.legal.payment-terms).
-- Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si **Les admins émettent des factures** est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde.
+- Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si **Les admins émettent des factures** est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde. L'interrupteur et la description de la fonctionnalité le disent aussi ; l'opérateur de votre serveur sait ce qui s'applique.
 - La fonction **Relances de paiement** ne fait que rendre les règles disponibles. Une relance ne part toute seule que si **Relances automatiques** est activé dans les règles de relance, ce qui n'est pas le cas tant que vous ne l'avez pas choisi.
 - Elles ignorent une facture dont un paiement est en attente ou suspendu, et une facture sans délai de paiement enregistré.
 - Le membre reçoit une alerte dans son fil et, si les notifications push sont configurées, une notification générique ; voir [Informer les gens](help:setup.notify.overview).
@@ -7391,7 +7395,7 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 **Bon à savoir**
 
 - Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.
-- Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre.
+- Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent.
 - Une déclaration est une aide au dépôt, établie à partir de vos factures émises. Vérifiez-la avant de la déposer, et ne la marquez comme déposée qu'une fois que c'est fait.
 - Le journal des déclarations a sa propre série de numéros.
 
@@ -7413,7 +7417,7 @@ Vous voulez savoir, avant la première facture, ce que vous ne pourrez plus chan
 | Numéro de facture | Les numéros se suivent sans trou et sont attribués dans la base de données au moment de l'émission. Le prochain numéro peut être relevé, jamais abaissé. Un changement de format s'applique à partir de là. Une remise à zéro ne peut pas être plus fréquente que la date que le numéro imprime. | À la première émission |
 | Un mois facturé | Un mois comportant une facture pour un membre est clos pour ce membre. Les jours de fermeture et les imports de jours fériés ignorent ces mois et les nomment. | À la première facture de ce mois |
 | Taux de TVA | Les taux sont versionnés par date, jamais modifiés. Une déclaration de TVA soumise n'est jamais recalculée. | À la première utilisation |
-| Devise et pays | Les montants sont stockés en unités mineures entières, sans conversion. Aucune protection n'empêche de les modifier plus tard : décidez avant la première réservation. | Avant la première réservation |
+| Devise et pays | Les montants sont stockés en unités mineures entières, sans conversion. Dès que l'espace a émis un document ou enregistré de l'argent, le serveur refuse de changer l'un ou l'autre. | Au premier document ou paiement |
 
 **Étapes**
 
@@ -7647,7 +7651,7 @@ Vous voulez que les gens soient prévenus de ce qui les concerne, sans être noy
 **Bon à savoir**
 
 - La surcharge vient de règles qui sollicitent trop souvent, ou de trop d'administrateurs sur une même règle.
-- Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation peut signaler une règle de réservation qui a trop peu de validateurs.
+- Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation signale toute règle qui a trop peu de validateurs, et Ce qui vous attend la fait remonter.
 - Le silence vient aussi d'un push non configuré, de membres qui ont désactivé le push, et d'un système qui bloque les notifications.
 - Les relances de paiement automatiques ne dispensent pas de regarder de temps en temps les factures ouvertes.
 
@@ -7894,12 +7898,15 @@ Vous voulez savoir lesquelles de vos erreurs l'app vous signalera, et où, pour 
 |---|---|---|
 | Une fonction qui en demande une autre | Une fonction ne peut pas marcher sans celle dont elle dépend. Activer une fonction active sa fonction parente et nomme ce qui s'est activé. Désactiver une fonction parente retient ses enfants et conserve leur propre choix. | **Fonctionnalités** : le parcours d'activation avec son aperçu, **Nécessite** et **En attente de la fonction au-dessus** |
 | Un processus retenu | Une fonction activée qui attend quelque chose de désactivé. | **Fonctionnalités**, vue **Processus** : l'état **À examiner** et sa pastille de filtre |
-| La liste de préparation | Une ligne par domaine de l'espace, avec son état, qui agit et où le régler. Domaines : **Jours d’ouverture, fuseau horaire et devise**, **Places réservables sur le plan**, **Formules d’adhésion et tarifs**, **Inviter les premiers membres**, **Comment les membres paient**, **Rôles et validation des demandes**, **Export et restauration**, **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, **Une première réservation** et, le cas échéant, **Serveur et version de la base** et **Accès des assistants (facultatif)** (ce dernier seulement quand l'interface MCP est activée). | **Mise en place de cet espace**, en haut d'[Espace](app:/workspace-settings) |
-| La ligne qui empêche une première réservation | Seulement ce qu'une réservation exige vraiment : un fuseau horaire, une devise, un jour d'ouverture, une place et, quand une règle de réservation demande plus de validateurs qu'il n'en existe, ces validateurs. Le reste est facultatif et peut être mis de côté avec **Plus tard**. | **Avant que quiconque puisse réserver ici**, sur la carte de démarrage de [Réserver](app:/reserve) |
-| Ce dont vos fonctions ont encore besoin en local | L'identité légale (requise par **Factures**), les coordonnées bancaires, un prestataire de paiement en ligne, un compte de facturation électronique, un site. | La même carte, domaine **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, avec **Configurer** et **Recommandé** |
+| La liste de préparation | Une ligne par domaine de l'espace, avec son état, qui agit et où le régler. Domaines : **Jours d’ouverture, fuseau horaire et devise**, **Places réservables sur le plan**, **Formules d’adhésion et tarifs**, **Inviter les premiers membres**, **Comment les membres paient**, **Rôles et validation des demandes**, **Export et restauration**, **Ce que les membres peuvent faire**, **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, **Une première réservation** et, le cas échéant, **L'identité légale et l'adresse de l'espace** (seulement quand **Factures** est activé), **Serveur et version de la base** et **Accès des assistants (facultatif)** (ce dernier seulement quand l'interface MCP est activée). | **Mise en place de cet espace**, en haut d'[Espace](app:/workspace-settings) |
+| La ligne qui empêche une première réservation | Les domaines que la liste marque **Nécessaire pour une première réservation** : un fuseau horaire, une devise, un jour d'ouverture, une place, des membres qui détiennent **Réserver et utiliser les réservations** (un nouvel espace ne leur accorde rien) et, quand une règle de validation, de quelque nature qu'elle soit, demande plus de validateurs qu'il n'en existe, ces validateurs. Le reste est facultatif et peut être mis de côté avec **Plus tard**. | **Avant que quiconque puisse réserver ici**, sur la carte de démarrage de [Réserver](app:/reserve) |
+| La ligne qui empêche une première facture | Quand **Factures** est activé, l'identité légale et l'adresse de l'espace. Aucune facture ne peut être émise sans elles, si bien que le domaine ne peut pas être mis de côté. | **Mise en place de cet espace** : le domaine **L'identité légale et l'adresse de l'espace**, marqué **Nécessaire avant de facturer** ; tant qu'il est la prochaine étape, le titre de la carte indique « Avant de facturer : … » |
+| Ce dont vos fonctions ont encore besoin en local | Les coordonnées bancaires, un prestataire de paiement en ligne, un compte de facturation électronique, un site. L'identité légale n'est pas listée ici : quand **Factures** est activé, elle forme un domaine à part (ci-dessus). | La même carte, domaine **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, avec **Configurer** et **Recommandé** |
 | Le garde-fou des factures | Une facture est refusée tant qu'elle n'est pas complète : l'adresse de l'espace, son numéro de TVA, un pays qui soit la France ou l'Allemagne, un fondement légal pour une exonération, le nom, l'adresse et le numéro de TVA du membre en cas d'autoliquidation, un taux de TVA en vigueur, une explication pour chaque ligne facturée à 0 %. Les factures transfrontalières, en autoliquidation, à l'export et exonérées sont refusées : émettez-les en dehors de l'app. | **Complétez ces informations avant d'émettre**, avec la liste des éléments manquants |
 | Le garde-fou du paiement en ligne | Quand **Paiements en ligne** est désactivé, le serveur refuse un nouveau paiement en ligne. Un paiement déjà ouvert se règle encore. | Les écrans de paiement (la ligne de la fonction n'en dit rien) |
-| Le garde-fou de validation | **Validations requises** au-delà du nombre de personnes disponibles. | **Pas assez de validateurs éligibles.** dans l'éditeur de règle ; « Une règle demande plus de validateurs que cet espace n'en compte » dans la liste de préparation |
+| Le garde-fou de validation | **Validations requises** au-delà du nombre de personnes disponibles, pour tout type de demande. | **Pas assez de validateurs éligibles.** dans l'éditeur de règle ; « Une règle demande plus de validateurs que cet espace n'en compte » dans la liste de préparation, où **Rôles et validation des demandes** devient alors obligatoire |
+| Le verrou de la devise et du pays | Dès que l'espace a émis un document ou enregistré de l'argent, le serveur refuse tout changement de **Devise** ou de **Pays**, depuis le formulaire des réglages, un import ou ailleurs. Le fuseau horaire n'est pas verrouillé. | « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. » quand vous enregistrez [Espace](app:/workspace-settings) |
+| La boîte du propriétaire | Ce qui reste à configurer : une ligne « À configurer : … » pour chaque domaine obligatoire de la liste de préparation qui n'est pas prêt, et une ligne « … fonctionnalités activées attendent « … » » pour chaque fonctionnalité désactivée qui en retient d'autres. | [Ce qui vous attend](help:user.collaborate.attention) ; un appui ouvre l'écran où cela se règle, ou **Fonctionnalités** |
 | Le garde-fou des séquences de numérotation | Une remise à zéro plus fréquente que la date imprimée dans le numéro est refusée. | [Séquences de numérotation](app:/settings/number-sequences), à l'enregistrement |
 | Le contrôle de maturité | Une fonction évaluée **Alpha** ou **Bêta**. | Une confirmation avant de l'activer, et un badge sur chaque interrupteur |
 | Le contrôle de remplacement du plan | Remplacer le plan ou les réglages à partir d'un fichier. | Un avertissement : c'est irréversible. Le plan est refusé dès que des réservations existent |
@@ -7908,7 +7915,7 @@ Vous voulez savoir lesquelles de vos erreurs l'app vous signalera, et où, pour 
 
 - **Mise en place de cet espace** est une liste, pas un verrou. Elle ne vous empêche jamais d'activer quelque chose.
 - La plupart des garde-fous agissent quand vous essayez d'émettre, de payer ou de réserver, pas quand vous choisissez un réglage. C'est pourquoi l'audit ci-dessous existe.
-- La boîte du propriétaire ([Ce qui vous attend](help:user.collaborate.attention)) ne signale pas aujourd'hui les problèmes de configuration. N'attendez pas qu'elle vous les dise.
+- La boîte du propriétaire ([Ce qui vous attend](help:user.collaborate.attention)) ne signale que les domaines obligatoires et les fonctions retenues. Les domaines facultatifs restent dans la liste de préparation : lisez-la vous-même.
 
 **Voir aussi:** [Éviter les fonctions qui se contredisent](help:setup.features.consistency) · [Vérifier votre espace](help:setup.place.check)
 
@@ -7921,15 +7928,15 @@ Vous voulez la liste honnête de ce qui reste de votre responsabilité. Ce sont 
 | Erreur | Pourquoi rien ne l'arrête | Comment l'éviter |
 |---|---|---|
 | Choisir un autre pays que la France ou l'Allemagne en attendant des factures | L'app propose de nombreux pays et taux de TVA, mais n'émet de factures que pour la France et l'Allemagne. Rien ne le dit quand vous choisissez le pays. | Décider avant de promettre une facture aux membres. Ailleurs, gardez les relevés dans l'app et émettez les factures en dehors. |
-| Être assujetti à la TVA sans taux en vigueur | L'émission est refusée, mais seulement à la première facture. Quand **Gestion de la TVA** est désactivée, la configuration est masquée mais les taux enregistrés continuent de s'appliquer. | Ajouter le taux sous [TVA](app:/vat) avant la première clôture de mois, et émettre une facture d'essai. |
+| Être assujetti à la TVA sans taux en vigueur | L'émission est refusée, mais seulement à la première facture. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent ; rien ne vous arrête plus tôt. Quand **Gestion de la TVA** est désactivée, la configuration est masquée mais les taux enregistrés continuent de s'appliquer. | Ajouter le taux sous [TVA](app:/vat) avant la première clôture de mois, et émettre une facture d'essai. |
 | **Paiements en ligne** activé sans prestataire | Vous pouvez l'activer ; le prestataire manquant n'apparaît que comme un élément de la liste de préparation. | Connecter d'abord le prestataire, puis activer. |
-| **Factures** activé sans identité légale | La fonction est active dès le premier jour ; le refus arrive au moment de l'émission. | Renseigner l'identité avant de dire aux membres qu'ils seront facturés. |
-| Une règle qui demande plus de validateurs que vous n'en avez, hors réservations | La liste de préparation ne retient la première réservation que pour les règles de réservation. L'éditeur vous laisse en enregistrer une qui dépasse le nombre de personnes disponibles. Les autres demandes sont créées, ne peuvent pas être menées à terme, et expirent après sept jours. | Compter les propriétaires et administrateurs actifs après chaque règle. Voir [Éviter les demandes qui attendent pour toujours](help:setup.people.stuck). |
-| Des membres qui ne peuvent pas ouvrir le plan | Dans un nouvel espace, la carte **Utilisateur** de [Rôles](app:/roles) est vide et rien ne vous avertit. | Cocher les droits du quotidien et rejoindre une fois avec un second compte. |
+| **Factures** activé sans identité légale | La fonction est active dès le premier jour. La liste de préparation marque l'identité **Nécessaire avant de facturer** et Ce qui vous attend la signale, mais rien ne vous empêche d'inviter des membres et de faire tourner un mois ; le refus arrive au moment de l'émission. | Renseigner l'identité avant de dire aux membres qu'ils seront facturés. |
+| Une règle qui demande plus de validateurs que vous n'en avez | L'éditeur vous laisse en enregistrer une qui dépasse le nombre de personnes disponibles. La liste de préparation marque alors **Rôles et validation des demandes** comme obligatoire, quel que soit le type de demande, mais les demandes créées avant que vous corrigiez ne peuvent pas être menées à terme, et expirent après sept jours. | Compter les propriétaires et administrateurs actifs après chaque règle. Voir [Éviter les demandes qui attendent pour toujours](help:setup.people.stuck). |
+| Des membres qui ne peuvent pas ouvrir le plan | Dans un nouvel espace, la carte **Utilisateur** de [Rôles](app:/roles) est vide. La liste de préparation marque **Ce que les membres peuvent faire** tant que les membres ne détiennent pas **Réserver et utiliser les réservations**, mais elle ne vérifie que ce droit-là : les cinq autres droits du quotidien sont à cocher par vous. | Cocher les droits du quotidien et rejoindre une fois avec un second compte. |
 | Un espace créé à partir d'un modèle | Un modèle ne reprend jamais l'identité, les coordonnées bancaires, les sites ni les invitations. | Traiter le domaine **Informations requises par vos fonctionnalités (identité, banque, plateformes)** comme une liste de choses à faire. |
 | Un fichier de réglages qui promet plus qu'il ne livre | Aujourd'hui, le fichier reprend la matrice des rôles, vos propres rôles et toutes les règles de validation, mais pas les membres, les numéros de factures et de membres, la période de TVA ni les prix valables pour tout l'espace. Ce qu'il reprend n'est appliqué que si **Configuration dans le fichier de l'espace** est activée dans la cible. Un plan n'est pas remplacé dès que des réservations existent. | Ressaisir à la main ce qu'il ne reprend pas, et lire l'aperçu avant **Remplacer et importer**. |
-| Des relances qui ne partent jamais | Elles partent chaque matin depuis le serveur quand la base de données a son planificateur (pg_cron) ; sinon, elles partent quand un administrateur ouvre les Finances. Elles restent aussi muettes quand **Relances de paiement automatiques** est désactivé. | Demander à l'opérateur si le planificateur existe, et ouvrir vous-même les Finances s'il n'existe pas. Voir [Relances de paiement](help:user.money.reminders.automatic). |
-| Changer de pays, de devise ou de fuseau horaire une fois que de l'argent existe | Je n'ai trouvé aucun garde-fou. Les montants sont stockés comme des nombres et ne sont pas convertis : vérifiez auprès du propriétaire de l'installation avant de vous y fier. | Les choisir dès le premier jour. Voir [Les décisions difficiles à défaire](help:setup.before.permanent). |
+| Des relances qui ne partent jamais | Elles partent chaque matin depuis le serveur si l'installation planifie des tâches (pg_cron) ; sinon, quand un administrateur ouvre les Finances. L'interrupteur et la description de la fonction le disent, mais ne peuvent pas dire ce qui s'applique à votre installation. Elles restent aussi muettes quand **Relances de paiement automatiques** est désactivé. | Demander à l'opérateur si le planificateur existe, et ouvrir vous-même les Finances s'il n'existe pas. Voir [Relances de paiement](help:user.money.reminders.automatic). |
+| Changer de fuseau horaire une fois que de l'argent existe | Le serveur verrouille la devise et le pays dès que l'espace a émis un document ou enregistré de l'argent, mais pas le fuseau horaire, dans lequel chaque jour ouvré, chaque demi-journée et chaque jour de fermeture est compté. | Le choisir dès le premier jour. Voir [Les décisions difficiles à défaire](help:setup.before.permanent). |
 | Une numérotation ou une période de TVA qui ne convient pas au format de votre expert-comptable | L'app ne les compare pas à l'export comptable du pays. | Demander à votre expert-comptable le format de numérotation et l'export qu'il utilise avant d'émettre. Voir [Exports comptables](help:user.invoicing.accounting-export). |
 | Prendre un test pour l'espace réel | Hormis le filigrane sur les documents imprimés, la différence est facile à manquer. | Regarder la bannière de l'espace de test et le côté affiché dans [Moi](app:/me) avant d'agir. |
 
@@ -7950,18 +7957,18 @@ Vous voulez une preuve, pas une impression, avant d'ouvrir. Trente et un contrô
 
 | N° | Contrôle | Où | À quoi ressemble un bon résultat |
 |---|---|---|---|
-| 1 | Pays, devise, fuseau horaire | [Espace](app:/workspace-settings), **Informations générales** | Atelier du Marché : France, EUR, Europe/Paris |
+| 1 | Pays, devise, fuseau horaire | [Espace](app:/workspace-settings), **Informations générales** | Atelier du Marché : France, EUR, Europe/Paris, réglés avant le premier document ou paiement, après quoi la devise et le pays sont verrouillés |
 | 2 | Langue de l'espace | Même écran | La langue dans laquelle vos invitations sont écrites |
 | 3 | Jours et horaires d'ouverture | [Disponibilité](app:/availability) | Les jours d'ouverture sont cochés ; les horaires correspondent au jour |
 | 4 | Jours de fermeture | Disponibilité, jours de fermeture | Les jours fériés et fermetures des mois à venir sont saisis, avant la première fin de mois |
 | 5 | Au moins une place | [Éditeur de l'espace](app:/editor) | Chaque salle que vous louez a des places |
-| 6 | Préparation | **Mise en place de cet espace** | Rien sous **Jours d’ouverture, fuseau horaire et devise** ni **Places réservables sur le plan** ne demande de configuration |
+| 6 | Préparation | **Mise en place de cet espace** | Rien sous **Jours d’ouverture, fuseau horaire et devise**, **Places réservables sur le plan** ni **Ce que les membres peuvent faire** ne demande de configuration |
 | 7 | Vous avez réservé une place | [Réserver](app:/reserve) | La place est réservée, enregistrée et annulée sans mauvaise surprise |
 | 8 | L'identifiant de l'espace | [Identifiant de l'espace et QR](app:/workspace-code) | L'identifiant est de ceux que l'on peut dire à voix haute ; le QR est imprimé |
-| 9 | Droits du quotidien | [Rôles](app:/roles) | **Utilisateur** détient les six droits du quotidien |
+| 9 | Droits du quotidien | [Rôles](app:/roles) | **Utilisateur** détient les six droits du quotidien, dont **Réserver et utiliser les réservations** |
 | 10 | Un second compte a rejoint l'espace | Un autre appareil | Il a été approuvé et a pu ouvrir le plan et réserver |
 | 11 | Plus d'une personne peut agir | [Membres et formules](app:/members) | Un propriétaire plus un copropriétaire ou un administrateur, tous **Actif** |
-| 12 | Nombre de validations | [Règles de validation](app:/validation) | Aucune règle ne demande plus de validateurs que de propriétaires et d'administrateurs actifs |
+| 12 | Nombre de validations | [Règles de validation](app:/validation) | Aucune règle ne demande plus de validateurs que de propriétaires et d'administrateurs actifs ; **Rôles et validation des demandes** ne demande pas de configuration |
 | 13 | L'invitation dans chaque langue | **Communauté et invitations** | Vous avez lu chaque version une fois ; aucune balise n'est restée vide |
 | 14 | Le côté où vous êtes | [Moi](app:/me) | La bannière de l'espace de test est affichée, ou non, comme prévu |
 
@@ -7980,13 +7987,13 @@ Vous voulez une preuve, pas une impression, avant d'ouvrir. Trente et un contrô
 | 23 | Qui est prévenu de quoi | [Comment les membres sont prévenus](help:setup.notify.members) | Les membres trouvent tout sous **Événements** ; le push seulement si l'opérateur l'a configuré |
 | 24 | Kiosque et badges | [Fonctionnalités](app:/features) | Désactivés, ou un membre kiosque existe et des badges sont émis |
 | 25 | Sites | Fonctionnalités | Désactivés, ou au moins un site existe |
-| 26 | Fonctions retenues | **Fonctionnalités**, **À examiner** | Le filtre n'affiche aucun processus |
+| 26 | Fonctions retenues | **Fonctionnalités**, **À examiner** | Le filtre n'affiche aucun processus, et Ce qui vous attend n'a aucune ligne sur des fonctions qui attendent |
 
 *Développer : factures, fiscalité et archives*
 
 | N° | Contrôle | Où | À quoi ressemble un bon résultat |
 |---|---|---|---|
-| 27 | Identité légale | [Identité légale et facturation électronique](app:/legal-identity) | **Complétez ces informations avant d'émettre** n'affiche rien quand vous démarrez une facture d'essai |
+| 27 | Identité légale | [Identité légale et facturation électronique](app:/legal-identity) | **L'identité légale et l'adresse de l'espace** indique **Prêt**, et **Complétez ces informations avant d'émettre** n'affiche rien quand vous démarrez une facture d'essai |
 | 28 | Régime de TVA et taux | [TVA](app:/vat) | Le régime est celui que votre expert-comptable vous a donné ; un taux est en vigueur pour votre taux par défaut |
 | 29 | Format de numérotation | [Séquences de numérotation](app:/settings/number-sequences) | Vous avez lu l'aperçu et votre expert-comptable est d'accord |
 | 30 | Une facture d'essai | Espace de test, assistant de clôture du mois | Elle a été émise, dans chaque langue que lisent vos membres, sans élément manquant |
@@ -8081,7 +8088,8 @@ Vous voulez une page qui dit sur quoi ralentir. La liste complète, avec ce qu'i
 | Le mois facturé d'un membre | Le moment où la facture est émise | [Argent](help:setup.money.permanent) |
 | Mentions légales de la facture | La première facture émise | [L'ordre à suivre](help:setup.reports.sequence) |
 | Régime de TVA et taux | Les taux sont versionnés par date et jamais modifiés ; une déclaration soumise n'est jamais recalculée | [Argent](help:setup.money.permanent) |
-| Pays, devise, fuseau horaire | Dès que de l'argent existe : les montants ne sont pas convertis | [Les décisions difficiles à défaire](help:setup.before.permanent) |
+| Pays et devise | Verrouillés par le serveur dès que l'espace a émis un document ou enregistré de l'argent : les montants ne sont pas convertis | [Les décisions difficiles à défaire](help:setup.before.permanent) |
+| Fuseau horaire | Jamais verrouillé, mais les jours y sont comptés : choisissez-le dès le premier jour | [Les décisions difficiles à défaire](help:setup.before.permanent) |
 | Remplacement du plan | Refusé dès qu'une réservation existe ; supprimer un étage supprime ce qu'il contient | [Les décisions difficiles à défaire](help:setup.before.permanent) |
 | L'identifiant de l'espace | Quand vous le changez, l'ancien cesse de fonctionner aussitôt ; réimprimez le QR | [Comment les gens rejoignent l'espace](help:setup.people.join) |
 | La propriété | Un propriétaire peut la céder ; il n'y a pas d'invitation de propriétaire | [Copropriétaires](help:setup.people.coowner) |
@@ -8165,11 +8173,11 @@ Vous construisez le lieu et ses horaires dans un espace de test, pour qu'un memb
 5. Ajoutez un jour de fermeture. Voir [Jours de fermeture](help:user.workspace.availability.closure-days).
 6. Gardez les fonctions par défaut. N'ouvrez [Fonctionnalités](app:/features) que pour lire ce qui est activé.
 7. Faites une réservation à votre nom, puis enregistrez votre arrivée et votre départ. Voir [Arriver et partir](help:user.reserve.check-in).
-8. Partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir [L'identifiant de l'espace](help:user.workspace.code).
+8. Dans [Rôles](app:/roles), cochez les permissions de tous les jours sur la carte **Utilisateur**, puis partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir [L'identifiant de l'espace](help:user.workspace.code).
 
 **Bon à savoir**
 
-- Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture et au moins une place. Tout le reste peut attendre.
+- Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture, au moins une place, et des membres qui détiennent **Réserver et utiliser les réservations**. Tout le reste peut attendre.
 - Un plan ne peut pas être remplacé par un import dès qu'une réservation existe.
 
 *C'est terminé quand*
@@ -8287,7 +8295,7 @@ Les décisions que vous allez rencontrer ont des noms. Voici ce que chacun signi
 | Remise à zéro de la numérotation | La fréquence à laquelle le numéro de facture repart de zéro. Elle ne peut pas être plus fréquente que la date imprimée sur la facture. |
 | Paire d'environnements | Un côté test et un côté réel d'un même espace. |
 | Modèle | Une configuration enregistrée (plan, règles, tarifs, rôles) que vous pouvez appliquer à un nouvel espace. Il ne reprend jamais l'identité ni les coordonnées de paiement. |
-| Préparation | La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver. |
+| Préparation | La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver, et avant la première facture. |
 | Retenue | Une fonction activée qui attend une autre fonction désactivée. |
 | Kiosque | Un écran partagé à la porte où les membres enregistrent leur arrivée et leur départ. |
 | Badge | Une carte ou une étiquette qu'un membre présente pour s'enregistrer à un kiosque. |
@@ -8328,7 +8336,7 @@ Toute la mise en place sur une page. *Réversible* vous dit si vous pouvez chang
 
 | Étape | Où dans l'app | Durée | Réversible ? |
 |---|---|---|---|
-| 1. Pays, devise, fuseau horaire, langue | [Réglages de l'espace](app:/workspace-settings) | 5 minutes | Oui, mais ne changez pas la devise une fois que de l'argent existe |
+| 1. Pays, devise, fuseau horaire, langue | [Réglages de l'espace](app:/workspace-settings) | 5 minutes | Oui, jusqu'au premier document ou paiement ; ensuite la devise et le pays sont verrouillés |
 | 2. Plan | [Éditeur de l'espace](app:/editor) | 30 minutes | Oui, jusqu'à la première réservation ; ensuite, modifiez un objet à la fois |
 | 3. Règles d'ouverture | Disponibilité | 10 minutes | Oui |
 | 4. Fonctionnalités | [Fonctionnalités](app:/features) | 10 minutes | Oui. Désactiver arrête les nouveaux usages et ne supprime rien |

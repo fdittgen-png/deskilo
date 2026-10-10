@@ -54,7 +54,7 @@ select pg_temp.read('mcp_exposed');
 select is(pg_temp.rv('none')->>'state', 'not_applicable', 'no policy: nothing waits for a validator');
 select is(pg_temp.rv('short_expense')->>'state', 'needs_configuration', 'three validators wanted, one owner there');
 select is(pg_temp.rv('short_expense')->>'reason', 'too_few_validators', 'and the reason says why');
-select is((pg_temp.rv('short_expense')->>'required')::boolean, false, 'a short expense policy does not stop a booking');
+select is((pg_temp.rv('short_expense')->>'required')::boolean, true, 'a short expense policy is required too: its requests would wait forever (#2332)');
 select is((pg_temp.rv('short_reservation')->>'required')::boolean, true, 'a short reservation policy does');
 select is(pg_temp.rv('satisfied')->>'state', 'ready', 'the owner alone satisfies one validator');
 select is((select count(*)::int from snap, jsonb_array_elements(v) e where label = 'none' and e->>'actor' is null),

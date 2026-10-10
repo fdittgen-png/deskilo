@@ -720,7 +720,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "VAT management",
-    "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying."
+    "The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused."
    ],
    "vatDeclarations": [
     "VAT declarations",
@@ -2022,7 +2022,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestion de la TVA",
-    "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer."
+    "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer. Un espace assujetti à la TVA en a besoin, avec un taux par défaut, pour émettre une facture : sans eux, l'émission est refusée."
    ],
    "vatDeclarations": [
     "Déclarations de TVA",
@@ -3324,7 +3324,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "USt-Verwaltung",
-    "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter."
+    "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter. Ein umsatzsteuerpflichtiger Space braucht sie, samt Standardsatz, um eine Rechnung auszustellen: Ohne sie wird die Ausstellung abgelehnt."
    ],
    "vatDeclarations": [
     "USt-Voranmeldungen",
@@ -4626,7 +4626,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestión del IVA",
-    "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose."
+    "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose. Un espacio sujeto a IVA la necesita, junto con un tipo por defecto, para emitir una factura: sin ellos la emisión se rechaza."
    ],
    "vatDeclarations": [
     "Declaraciones de IVA",
@@ -5928,7 +5928,7 @@ window.SETUP_L10N={
    ],
    "vatManagement": [
     "Gestione IVA",
-    "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi."
+    "L'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi. Uno spazio soggetto a IVA ne ha bisogno, insieme a un'aliquota predefinita, per emettere una fattura: senza di essi l'emissione viene rifiutata."
    ],
    "vatDeclarations": [
     "Dichiarazioni IVA",

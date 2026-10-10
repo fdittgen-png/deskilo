@@ -3,5 +3,9 @@
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalAlreadyDecided": "Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.",
-  "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen."
+  "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalMoneyLocaleLocked": "Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.",
+  "@refusalMoneyLocaleLocked": {
+    "description": "#2332: refusalMoneyLocaleLocked"
+  }
 }

@@ -83,7 +83,7 @@ Alles andere gehört zur Plattform und ist aus: Kiosk und Badges, mehrere Stando
 
 **Gut zu wissen**
 
-- Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist. Siehe [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency).
+- Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist; **Einrichtung dieses Workspace** markiert sie mit **Vor der Rechnungsstellung nötig**. Siehe [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency).
 - Ein bestehender Space ändert sich nie, wenn DesKilo ändert, was ein neuer Space bekommt.
 - Beginnen Sie mit einer Vorlage, kann die Vorlage zusätzlich zu diesem Satz einige Funktionen ein- oder ausschalten. Siehe [Drei Ausgangspunkte](help:setup.features.profiles).
 
@@ -314,9 +314,9 @@ Sie sind dabei, eine Funktion zu ändern, und möchten die Wirkung sehen, bevor 
 
 *Was „zurückgehalten“ bedeutet*
 
-Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in [Funktionen](app:/features).
+Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in [Funktionen](app:/features). [Was auf Sie wartet](help:user.collaborate.attention) zeigt dasselbe als eine Zeile pro ausgeschalteter Voraussetzung.
 
-Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in **Einrichtung dieses Workspace** unter **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, oben in den Workspace-Einstellungen.
+Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in **Einrichtung dieses Workspace**, oben in den Workspace-Einstellungen: die rechtliche Identität, bei eingeschalteten **Rechnungen**, als **Rechtliche Identität und Adresse des Space**, der Rest unter **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**.
 
 **Gut zu wissen**
 
@@ -337,15 +337,15 @@ Die App hat Schutzvorkehrungen für manche Widersprüche und für andere keine. 
 
 | Wenn Sie … haben | Schutz in der App | Verbleibende Lücke |
 |---|---|---|
-| **Rechnungen** an, keine rechtliche Identität | Das Ausstellen wird verweigert; **Vor der Ausstellung bitte ergänzen** listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in **Einrichtung dieses Workspace**. | Die Funktion ist ab dem ersten Tag an; nichts hindert Sie also daran, Mitglieder einzuladen und einen Monat laufen zu lassen, bevor die Identität existiert. |
+| **Rechnungen** an, keine rechtliche Identität | Das Ausstellen wird verweigert; **Vor der Ausstellung bitte ergänzen** listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in **Einrichtung dieses Workspace**, als **Rechtliche Identität und Adresse des Space**, **Vor der Rechnungsstellung nötig**, und in Was auf Sie wartet. | Die Funktion ist ab dem ersten Tag an; nichts hindert Sie also daran, Mitglieder einzuladen und einen Monat laufen zu lassen, bevor die Identität existiert. |
 | Ein anderes Land als Frankreich oder Deutschland | Das Ausstellen sagt, das Land „muss Frankreich oder Deutschland sein, um hier auszustellen“. | Nichts warnt Sie, wenn Sie das Land wählen oder die Rechnungsstellung einschalten. |
-| Für die Umsatzsteuer registriert, kein gültiger Satz | Das Ausstellen wird verweigert, bis ein Satz gilt. | Bei ausgeschalteter **USt-Verwaltung** ist die Konfiguration verborgen, während die gespeicherten Sätze weiter gelten. Prüfen Sie die Sätze nach dem Ausschalten. |
+| Für die Umsatzsteuer registriert, kein gültiger Satz | Das Ausstellen wird verweigert, bis ein Standardsatz gilt. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es. | Bei ausgeschalteter **USt-Verwaltung** ist die Konfiguration verborgen, während die gespeicherten Sätze weiter gelten. Prüfen Sie die Sätze nach dem Ausschalten. |
 | **Online-Zahlungen** an, kein Anbieter | Eine neue Online-Zahlung wird abgelehnt, wenn die Funktion aus ist; der fehlende Anbieter erscheint in **Einrichtung dieses Workspace**. | Sie können sie ohne Anbieter einschalten. Binden Sie ihn zuerst an: [Zahlungsanbieter](help:user.money.payments.provider). |
 | **Kiosk-Modus** an, keine Badges und kein Kiosk-Mitglied | **RFID-/NFC-Badges**, **QR-Badges**, **Mitgliederfotos am Kiosk** und **Mit Ausweis anmelden** können ohne ihn nicht an sein. | Nichts prüft, ob ein Kiosk-Mitglied existiert oder ein Badge ausgegeben wurde. Siehe [Ein Wand-Tablet betreiben](help:user.kiosk.mode). |
 | **Standorte** an, kein Standort | **Mindestens ein Standort** erscheint unter den Angaben, die Ihre Funktionen brauchen. | Der Schalter kann ohne Standort an sein. |
 | **Push-Benachrichtigungen** an, kein Push-Dienst | Mitglieder bekommen weiterhin alles in der App. | Telefone erhalten nichts, bis die Betreiberin oder der Betreiber der Installation den Push-Dienst eingerichtet hat. Siehe [Wie Mitglieder informiert werden](help:setup.notify.channels). |
-| **Mahnwesen** an, **Automatische Zahlungserinnerungen** an | Die zweite kann ohne die erste nicht an sein. | Der Planer des Servers versendet sie jeden Morgen; hat die Datenbank keinen Planer, werden sie versendet, wenn ein Administrator Finanzen öffnet. |
-| Eine Freigaberegel verlangt mehr Prüfer, als es gibt | **Einrichtung dieses Workspace** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ und hält die erste Buchung auf, wenn die Regel für Buchungen gilt. | Andere Anfragen werden angelegt, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe [Wer bestätigt](help:user.validation.overview). |
+| **Mahnwesen** an, **Automatische Zahlungserinnerungen** an | Die zweite kann ohne die erste nicht an sein. | Der Server versendet sie jeden Morgen, sofern die Installation Aufgaben plant; sonst werden sie versendet, wenn ein Administrator Finanzen öffnet. Der Schalter und die Funktionsbeschreibung sagen es; der Betreiber Ihres Servers weiß, was zutrifft. |
+| Eine Freigaberegel verlangt mehr Prüfer, als es gibt | **Einrichtung dieses Workspace** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, und **Rollen und wer Anfragen bestätigt** wird erforderlich, gleich welche Art von Anfrage. | Anfragen, die vor Ihrer Korrektur angelegt wurden, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe [Wer bestätigt](help:user.validation.overview). |
 | **Lösch-Anträge für Buchungen** an, niemand zum Bestätigen | Dieselbe Bereitschaftszeile. | Dieselbe Lücke. |
 | **Tisch-, Büro- & Etagen-Reservierungen** an | **Admins können Etagen zuweisen** braucht sie. | Jedes Mitglied braucht außerdem das Recht; nichts prüft, ob es jemand hat. |
 | Eine untergeordnete Funktion an, ihre übergeordnete aus | **Braucht Aufmerksamkeit** und „Wartet auf die Funktion darüber“. | Keine: Dieser Fall ist vollständig abgedeckt. |
@@ -355,7 +355,7 @@ Die App hat Schutzvorkehrungen für manche Widersprüche und für andere keine. 
 
 - Die Faustregel: Bringt eine Funktion Ihren Namen, Ihr Geld oder Ihre rechtlichen Pflichten auf ein Dokument, vervollständigen Sie ihre Angaben, bevor Sie es den Mitgliedern sagen.
 - **Einrichtung dieses Workspace** ist eine Liste, keine Sperre. Sie hindert Sie nie daran, etwas einzuschalten.
-- Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über das, was eine Buchung wirklich braucht: die Zeitzone, die Währung, einen geöffneten Wochentag und mindestens einen Platz.
+- Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über die erforderlichen Bereiche: die Zeitzone, die Währung, einen geöffneten Wochentag, mindestens einen Platz, Mitglieder mit **Buchen und Reservierungen nutzen** und genug Bestätigende. Bei eingeschalteten **Rechnungen** ist auch die rechtliche Identität erforderlich, aber vor der Rechnungsstellung: Die Karte des Space sagt „Vor der Rechnungsstellung“, die Karte unter Reservieren nennt sie nie.
 
 **Siehe auch:** [Rechtliche Identität und Rechnungen](help:setup.money.identity) · [Probelauf](help:setup.money.dry-run)
 

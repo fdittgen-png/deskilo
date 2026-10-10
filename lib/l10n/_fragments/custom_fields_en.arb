@@ -52,6 +52,27 @@
       }
     }
   },
+  "attentionSetUp": "Set up: {area}",
+  "@attentionSetUp": {
+    "description": "#2332: attentionSetUp",
+    "placeholders": {
+      "area": {
+        "type": "String"
+      }
+    }
+  },
+  "attentionUnblock": "{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
+  "@attentionUnblock": {
+    "description": "#2332: attentionUnblock",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
   "featureCustomFieldsTitle": "Questions this space asks",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

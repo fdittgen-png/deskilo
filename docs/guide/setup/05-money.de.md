@@ -258,7 +258,7 @@ Sie bestimmen, ab wann eine Zahlung überfällig ist und wer nachfasst.
 **Gut zu wissen**
 
 - Die Frist bis zur ersten Mahnung gilt zugleich als Ihr Zahlungsziel. Legen Sie es mit den [Zahlungsbedingungen](help:user.money.legal.payment-terms) fest.
-- Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn **Admins stellen Rechnungen aus** an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht.
+- Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn **Admins stellen Rechnungen aus** an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht. Der Schalter und die Funktionsbeschreibung sagen es ebenfalls; der Betreiber Ihres Servers weiß, was zutrifft.
 - Die Funktion **Mahnwesen** stellt nur die Regeln bereit. Eine Mahnung geht erst dann von selbst hinaus, wenn **Automatische Mahnungen** in den Mahnregeln eingeschaltet ist; das ist zunächst aus, bis Sie es wählen.
 - Übersprungen werden Rechnungen mit ausstehender oder angehaltener Zahlung und Rechnungen ohne erfasstes Zahlungsziel.
 - Das Mitglied erhält einen Hinweis in seinem Feed und, wenn Push eingerichtet ist, eine allgemein gehaltene Benachrichtigung; siehe [Menschen informieren](help:setup.notify.overview).
@@ -285,7 +285,7 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 **Gut zu wissen**
 
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
-- Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung.
+- Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
 - Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
@@ -308,7 +308,7 @@ Sie möchten vor der ersten Rechnung wissen, was Sie danach nicht mehr ändern k
 | Rechnungsnummer | Nummern sind lückenlos und werden im Moment der Ausstellung in der Datenbank vergeben. Die nächste Nummer lässt sich erhöhen, nie senken. Ein neues Format gilt ab dann. Ein Neubeginn der Zählung darf nicht häufiger sein als das Datum, das die Nummer druckt. | Bei der ersten Ausstellung |
 | Ein abgerechneter Monat | Ein Monat, für den ein Mitglied eine Rechnung hat, ist für dieses Mitglied abgeschlossen. Schließtage und Feiertagsimporte überspringen solche Monate und nennen sie. | Bei der ersten Rechnung dafür |
 | Umsatzsteuersätze | Sätze werden nach Datum versioniert und nie bearbeitet. Eine eingereichte Voranmeldung wird nie neu berechnet. | Bei der ersten Verwendung |
-| Währung und Land | Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Eine Sperre gegen spätere Änderungen wurde nicht gefunden: Entscheiden Sie vor der ersten Buchung. | Vor der ersten Buchung |
+| Währung und Land | Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von beiden ab. | Beim ersten Dokument oder der ersten Zahlung |
 
 **Schritte**
 

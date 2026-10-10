@@ -544,6 +544,22 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Einzurichten: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count eingeschaltete Funktionen warten auf „$feature“',
+      one: '1 eingeschaltete Funktion wartet auf „$feature“',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'Wartet seit $date';
   }
@@ -5714,7 +5730,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter.';
+      'Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter. Ein umsatzsteuerpflichtiger Space braucht sie, samt Standardsatz, um eine Rechnung auszustellen: Ohne sie wird die Ausstellung abgelehnt.';
 
   @override
   String get featureVatManagementTitle => 'USt-Verwaltung';
@@ -8996,7 +9012,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Dieser Space verlangt Mehrwertsteuer, es ist aber kein Satz angelegt: Rechnungen weisen keine Steuer aus und der XML-Export bleibt deaktiviert.';
+      'Dieser Space verlangt Mehrwertsteuer, es gilt aber kein Standardsatz: Es kann keine Rechnung ausgestellt werden, bis Sie einen anlegen. Sätze bearbeiten Sie bei eingeschalteter „USt-Verwaltung“.';
 
   @override
   String get legendBlocked => 'Gesperrt';
@@ -12156,6 +12172,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentProviderWero => 'Wero (über Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn eine Verwaltungsperson Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13777,8 +13797,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readinessAreaInvitations => 'Die ersten Mitglieder einladen';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'Rechtliche Identität und Adresse des Space';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)';
+
+  @override
+  String get readinessAreaMemberPermissions => 'Was Mitglieder dürfen';
 
   @override
   String get readinessAreaPayments => 'Wie Mitglieder bezahlen';
@@ -13805,6 +13832,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Vor der Rechnungsstellung: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Bereit für eine erste Buchung';
 
   @override
@@ -13812,6 +13844,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Nötig für eine erste Buchung';
+
+  @override
+  String get readinessNeededInvoicing => 'Vor der Rechnungsstellung nötig';
 
   @override
   String readinessNext(String step) {
@@ -13833,6 +13868,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'Ihre Anfrage wartet auf die Datenbankadministration';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Ohne sie kann keine Rechnung ausgestellt werden';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'Mitglieder können noch nicht buchen: Erteilen Sie ihnen unter Rollen „Buchen und Reservierungen nutzen“';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13988,6 +14031,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.';
 
   @override
   String get refusalPermission =>

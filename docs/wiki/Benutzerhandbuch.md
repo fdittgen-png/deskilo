@@ -1209,6 +1209,7 @@ Sie möchten einen Ort, der antwortet: Braucht mich heute etwas?
 
 - Dieser Bildschirm existiert nur, wenn Ihr Workspace die Funktion **Was auf Sie wartet** eingeschaltet hat; ohne sie führt die Adresse zurück zur Startseite.
 - Mehrere gleiche Entscheidungen erscheinen als eine Zeile. Wartet nichts, sagt der Bildschirm **Nichts wartet auf Sie**.
+- Er listet auch Konfiguration, die noch fehlt: „Einzurichten: …“ für jeden erforderlichen Bereich der Einrichtungsliste, der nicht bereit ist (nur für jemanden, der den Space konfiguriert), und „… eingeschaltete Funktionen warten auf „…““, wenn eine ausgeschaltete Funktion andere zurückhält. Ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder **Funktionen**.
 
 **Siehe auch:** [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen)
 
@@ -3156,6 +3157,7 @@ Sie möchten, dass der Space weiß, wo er seinen Sitz hat. **Workspace** öffnet
 **Gut zu wissen**
 
 - Das Land schlägt die Währung und die Zeitzone vor und bestimmt, welche Umsatzsteuersätze angeboten werden.
+- Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lässt sich das Land nicht mehr ändern: Beim Speichern erscheint „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“
 - **Speichern** schreibt das ganze Formular zusammen. Hat zwischenzeitlich jemand diese Einstellungen geändert, wird nichts gespeichert, und was Sie eingegeben haben, bleibt auf dem Bildschirm.
 
 **Siehe auch:** [Währung und Zeitzone](#währung-und-zeitzone)
@@ -3177,7 +3179,7 @@ Sie möchten, dass Preise und Tage so gezählt werden, wie Ihr Space zählt.
 
 **Gut zu wissen**
 
-- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben.
+- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben, bis der Space ein Dokument ausgestellt oder Geld erfasst hat; danach steht sie fest.
 - Die Zeitzone ist nicht nur Kosmetik: Ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag werden alle in ihr gezählt, sodass ein Mitglied im Ausland den Tag des Spaces sieht und nicht seinen eigenen.
 
 **Siehe auch:** [Land](#land)
@@ -4912,7 +4914,7 @@ Sie listen die Umsatzsteuersätze auf, die Ihre Rechnungen verwenden dürfen. Wa
 - Die üblichen Sätze sind ein Ausgangspunkt. Welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Buchhaltung.
 - Der Standardsatz wird von Abos und von allem verwendet, was keinen eigenen Satz hat.
 - Ein Satz, den noch eine Rechnung oder eine Leistung verwendet, wird deaktiviert beibehalten statt gelöscht.
-- Ohne Satz zeigen Rechnungen bei Umsatzsteuerpflicht keine Steuer, und der XML-Export bleibt deaktiviert.
+- Gilt bei Umsatzsteuerpflicht kein Standardsatz, kann keine Rechnung ausgestellt werden; der Bildschirm der rechtlichen Identität warnt davor.
 - Dieser Bildschirm setzt die Funktion **USt-Verwaltung** voraus; der Eintrag Steuersätze im Bildschirm der rechtlichen Identität erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
 **Siehe auch:** [Steuergruppen](#steuergruppen) · [Änderung per Gesetz](#einen-satz-per-gesetz-ändern)
@@ -5458,6 +5460,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Einmal am Tag erhalten Rechnungen, die ihre festgehaltene Zahlungsfrist überschritten haben, ihre nächste Stufe, über den noch offenen Betrag.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
+- Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
 
 **Siehe auch:** [Mahnregeln](#mahnregeln)
 

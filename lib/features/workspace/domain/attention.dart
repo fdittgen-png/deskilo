@@ -58,6 +58,15 @@ enum AttentionAction {
 
   /// Issue the month's invoices.
   issue,
+
+  /// #2332 — finish a required setup step; [Attention.subject] is the
+  /// readiness section's code and [Attention.route] where it is set up.
+  setUp,
+
+  /// #2332 — switch on a prerequisite that switched-on features wait for;
+  /// [Attention.subject] is that feature's name, [Attention.count] how
+  /// many wait.
+  unblock,
 }
 
 /// One line: who or what, the decision, and since when.
@@ -73,6 +82,7 @@ class Attention {
     required this.action,
     required this.waitingSince,
     this.count = 1,
+    this.route,
   });
 
   final AttentionKind kind;
@@ -83,6 +93,9 @@ class Attention {
   /// How many things this one line stands for — *issue for 7 members*.
   /// One line per decision, never one per row of data.
   final int count;
+
+  /// Where the line opens, when it is not the action's usual screen.
+  final String? route;
 }
 
 /// The lines in the order a person should meet them.

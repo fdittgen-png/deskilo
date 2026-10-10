@@ -198,7 +198,7 @@ Sie möchten, dass Menschen erfahren, was sie betrifft, und nicht überschüttet
 **Gut zu wissen**
 
 - Überflutung entsteht durch Regeln, die zu oft fragen, oder durch zu viele Administratoren für eine Regel.
-- Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft kann eine Buchungsregel mit zu wenigen Validierern anzeigen.
+- Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft zeigt jede Regel mit zu wenigen Validierern an, und Was auf Sie wartet meldet sie.
 - Stille entsteht auch durch Push ohne Einrichtung, durch Mitglieder, die Push ausgeschaltet haben, und durch ein System, das Benachrichtigungen blockiert.
 - Automatische Zahlungserinnerungen ersetzen nicht den gelegentlichen Blick auf die offenen Rechnungen.
 

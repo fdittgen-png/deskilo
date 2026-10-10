@@ -34,7 +34,7 @@ Vous voulez que l’espace sache où il vit. Ces quatre choix pèsent plus qu’
 2. Choisissez le **Pays** ; la **Devise** et le **Fuseau horaire** suivent, et vous pouvez les corriger. Pour l’Atelier du Marché : France, EUR, Europe/Paris.
 3. Choisissez la **Langue de l'espace**, puis touchez **Enregistrer**.
 
-> **Attention** Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : changer de devise une fois que de l’argent existe fausserait l’intitulé de tout ce qui est déjà compté.
+> **Attention** Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse de changer l’un ou l’autre : « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »
 
 **Bon à savoir**
 
@@ -143,7 +143,7 @@ Vous voulez la preuve que l’espace est prêt, avant d’inviter qui que ce soi
 
 **Bon à savoir**
 
-- Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, et assez de validateurs.
+- Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, des membres qui peuvent réserver, et assez de validateurs.
 - Tout ce qui est facultatif, comme les tarifs ou les paiements, peut être mis de côté avec **Plus tard** et ne bloque pas l’ouverture.
 - Les deux cartes dépendent de la fonctionnalité *Carte Premiers pas*.
 - **Pas maintenant** masque la carte sur cet appareil ; le menu d’affichage du plan la ramène avec **Premiers pas**.

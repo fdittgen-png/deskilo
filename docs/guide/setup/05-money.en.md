@@ -258,7 +258,7 @@ You decide how late is late, and who does the chasing.
 **Good to know**
 
 - The delay before the first reminder is also read as your payment term. Set it with [Payment terms](help:user.money.legal.payment-terms).
-- Automatic reminders run once a day on the server when the database has its scheduler enabled. They also run when someone who may issue invoices (an owner, a co-owner, or an administrator if **Admins issue invoices** is on) opens Finances, so a space without the scheduler still gets them, on the days someone looks.
+- Automatic reminders run once a day on the server when the database has its scheduler enabled. They also run when someone who may issue invoices (an owner, a co-owner, or an administrator if **Admins issue invoices** is on) opens Finances, so a space without the scheduler still gets them, on the days someone looks. The switch and the feature description say this too; your server operator knows which applies.
 - The **Payment reminders** feature only makes the rules available. A reminder leaves on its own only when **Automatic reminders** is switched on in the reminder rules, which is off until you choose it.
 - They skip an invoice with a payment pending or on hold, and an invoice without a recorded payment term.
 - The member gets an alert in their feed and, if push is set up, a generic notification; see [Tell people](help:setup.notify.overview).
@@ -285,7 +285,7 @@ You want to know what VAT will ask of you before you switch it on.
 **Good to know**
 
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
-- Registered without a default rate in force, the server refuses to issue.
+- Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
 - A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
 - The declaration journal has its own number series.
 
@@ -308,7 +308,7 @@ You want to know, before the first invoice, what you will not be able to change 
 | Invoice number | Numbers are gapless and drawn in the database at the moment of issue. The next number can be raised, never lowered. A change of format applies from then on. A restart cannot be more frequent than the date the number prints. | At the first issue |
 | An invoiced month | A month with an invoice for a member is closed for that member. Closure days and holiday imports skip such months and name them. | At the first invoice for it |
 | VAT rates | Rates are versioned by date, never edited. A submitted VAT declaration is never recomputed. | At the first use |
-| Currency and country | Amounts are stored as whole minor units without conversion. No guard was found that stops changing them later: decide before the first booking. | Before the first booking |
+| Currency and country | Amounts are stored as whole minor units without conversion. Once the space has issued a document or recorded money, the server refuses to change either. | At the first document or payment |
 
 **Steps**
 
