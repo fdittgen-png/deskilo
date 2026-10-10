@@ -19560,8 +19560,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceXmlImport => 'Import workspace (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “$feature” off, so the import would not apply them. Switch it on to apply them now.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “$feature” off, and only somebody who may change its configuration can switch it on. The import can continue without them.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'This file carries a configuration';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Import without the configuration';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn =>
+      'Switch it on and apply';
 
   @override
   String get workspaceXmlImportConfirm => 'Replace and import';
@@ -19583,6 +19605,10 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return 'Configuration: $settings settings, $rows rows in $tables tables';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Configuration: not applied.';
 
   @override
   String workspaceXmlImportPreviewCounts(

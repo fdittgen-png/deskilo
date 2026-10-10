@@ -19763,8 +19763,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceXmlImport => 'Workspace importieren (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „$feature“ deaktiviert, daher würde der Import sie nicht übernehmen. Aktivieren Sie die Funktion, um sie jetzt zu übernehmen.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „$feature“ deaktiviert, und nur wer seine Konfiguration ändern darf, kann die Funktion aktivieren. Der Import kann ohne sie fortfahren.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'Diese Datei enthält eine Konfiguration';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Ohne Konfiguration importieren';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn =>
+      'Aktivieren und übernehmen';
 
   @override
   String get workspaceXmlImportConfirm => 'Ersetzen und importieren';
@@ -19786,6 +19808,10 @@ class AppLocalizationsDe extends AppLocalizations {
   ) {
     return 'Konfiguration: $settings Einstellungen, $rows Zeilen in $tables Tabellen';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Konfiguration: nicht übernommen.';
 
   @override
   String workspaceXmlImportPreviewCounts(

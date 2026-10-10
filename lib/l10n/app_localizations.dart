@@ -33872,11 +33872,41 @@ abstract class AppLocalizations {
   /// **'Import workspace (XML)'**
   String get workspaceXmlImport;
 
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, so the import would not apply them. Switch it on to apply them now.'**
+  String workspaceXmlImportConfigurationOffBody(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, and only somebody who may change its configuration can switch it on. The import can continue without them.'**
+  String workspaceXmlImportConfigurationOffNoRight(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle
+  ///
+  /// In en, this message translates to:
+  /// **'This file carries a configuration'**
+  String get workspaceXmlImportConfigurationOffTitle;
+
   /// #916 configuration transfer: workspaceXmlImportConfigurationOnly
   ///
   /// In en, this message translates to:
   /// **'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.'**
   String get workspaceXmlImportConfigurationOnly;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip
+  ///
+  /// In en, this message translates to:
+  /// **'Import without the configuration'**
+  String get workspaceXmlImportConfigurationSkip;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn
+  ///
+  /// In en, this message translates to:
+  /// **'Switch it on and apply'**
+  String get workspaceXmlImportConfigurationSwitchOn;
 
   /// Destructive confirm button of the import preview dialog (#165)
   ///
@@ -33905,6 +33935,12 @@ abstract class AppLocalizations {
     int tables,
     int rows,
   );
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration: not applied.'**
+  String get workspaceXmlImportPreviewConfigurationSkipped;
 
   /// Summary line in the import preview dialog counting what the picked file contains (#165)
   ///

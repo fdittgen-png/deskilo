@@ -26,5 +26,39 @@
   "workspaceXmlImportConfigurationOnly": "Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationOffTitle": "Diese Datei enthält eine Konfiguration",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
+  "workspaceXmlImportConfigurationOffBody": "Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „{feature}“ deaktiviert, daher würde der Import sie nicht übernehmen. Aktivieren Sie die Funktion, um sie jetzt zu übernehmen.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „{feature}“ deaktiviert, und nur wer seine Konfiguration ändern darf, kann die Funktion aktivieren. Der Import kann ohne sie fortfahren.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationSkip": "Ohne Konfiguration importieren",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Aktivieren und übernehmen",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Konfiguration: nicht übernommen.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   }
 }
