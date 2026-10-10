@@ -446,10 +446,10 @@ Sie möchten wissen, was Sie alarmiert, und auf diesem Gerät Benachrichtigungen
 
 **Gut zu wissen**
 
-- Sie werden über Anfragen benachrichtigt, die auf Ihre Bestätigung warten, und über Nachrichten.
+- Sie werden über Anfragen benachrichtigt, die auf Ihre Bestätigung warten, und über Nachrichten: im Feed und an der Glocke, per Push, wenn Ihre Installation Push eingerichtet hat, und in der installierten App (nicht im Browser) mit einer Erinnerung auf Ihrem Gerät 15 Minuten vor einer Buchung, für die Sie noch nicht eingecheckt haben.
+- DesKilo versendet keine eigenen E-Mails: Die einzigen E-Mails sind die Ihres Kontos (Bestätigung der Anmeldung, Zurücksetzen des Passworts).
 - Die Zahl an der Glocke und am App-Symbol addiert Ihre ausstehenden Bestätigungen und ungelesenen Nachrichten.
-- Ist es aus, funktioniert die App weiter; an dieses Gerät wird nichts gesendet. Es gibt keine getrennten Schalter je Kategorie.
-- Blockiert Ihr System die Benachrichtigungen der App, erlauben Sie sie in den Systemeinstellungen.
+- Ist es aus, funktioniert die App weiter; an dieses Gerät wird nichts gesendet. Es gibt keine getrennten Schalter je Kategorie. Blockiert Ihr System die Benachrichtigungen der App, erlauben Sie sie in den Systemeinstellungen.
 
 **Siehe auch:** [Ereignisse und Bestätigungen](help:user.collaborate.events) · [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
 

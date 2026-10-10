@@ -511,7 +511,7 @@ Sie möchten DesKilo dort nutzen, wo Sie arbeiten. Dasselbe Konto und dieselben 
 - Das macOS-Disk-Image von der Release-Seite ist signiert und von Apple notarisiert; öffnen Sie es wie gewohnt.
 - Der Windows-Installer ist nicht signiert: Windows SmartScreen warnt vor einem unbekannten Herausgeber; wählen Sie „Weitere Informationen“ und dann „Trotzdem ausführen“.
 - Das Lesen eines Stuhl-Tags funktioniert in Chromium-Browsern auf Android (HTTPS und ein Tippen nötig); die Android- und iPhone-Apps lesen Tags direkt.
-- Ein Build ohne Google-Dienste und ohne Cloud-Push wird gebaut und wurde bei F-Droid eingereicht; er ist noch nicht im F-Droid-Store. Darin sind Benachrichtigungen lokal, und der Posteingang ist maßgeblich.
+- Ein Build ohne Google-Dienste und ohne Cloud-Push ist für F-Droid vorbereitet; ob er schon über F-Droid installiert werden kann, steht auf der [F-Droid-Statusseite](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). Darin sind Benachrichtigungen lokal, und der Posteingang ist maßgeblich.
 - Aktualisierungen kommen über den Kanal, über den Sie installiert haben: Google Play, TestFlight, die Release-Seite oder das erneute Laden der Web-App.
 
 **Siehe auch:** [Ihr Badge](help:user.profile.settings.badge)

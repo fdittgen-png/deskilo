@@ -1506,10 +1506,10 @@ Sie möchten wissen, was Sie alarmiert, und auf diesem Gerät Benachrichtigungen
 
 **Gut zu wissen**
 
-- Sie werden über Anfragen benachrichtigt, die auf Ihre Bestätigung warten, und über Nachrichten.
+- Sie werden über Anfragen benachrichtigt, die auf Ihre Bestätigung warten, und über Nachrichten: im Feed und an der Glocke, per Push, wenn Ihre Installation Push eingerichtet hat, und in der installierten App (nicht im Browser) mit einer Erinnerung auf Ihrem Gerät 15 Minuten vor einer Buchung, für die Sie noch nicht eingecheckt haben.
+- DesKilo versendet keine eigenen E-Mails: Die einzigen E-Mails sind die Ihres Kontos (Bestätigung der Anmeldung, Zurücksetzen des Passworts).
 - Die Zahl an der Glocke und am App-Symbol addiert Ihre ausstehenden Bestätigungen und ungelesenen Nachrichten.
-- Ist es aus, funktioniert die App weiter; an dieses Gerät wird nichts gesendet. Es gibt keine getrennten Schalter je Kategorie.
-- Blockiert Ihr System die Benachrichtigungen der App, erlauben Sie sie in den Systemeinstellungen.
+- Ist es aus, funktioniert die App weiter; an dieses Gerät wird nichts gesendet. Es gibt keine getrennten Schalter je Kategorie. Blockiert Ihr System die Benachrichtigungen der App, erlauben Sie sie in den Systemeinstellungen.
 
 **Siehe auch:** [Ereignisse und Bestätigungen](#ereignisse-und-bestätigungen) · [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
 
@@ -6042,7 +6042,7 @@ Sie möchten DesKilo dort nutzen, wo Sie arbeiten. Dasselbe Konto und dieselben 
 - Das macOS-Disk-Image von der Release-Seite ist signiert und von Apple notarisiert; öffnen Sie es wie gewohnt.
 - Der Windows-Installer ist nicht signiert: Windows SmartScreen warnt vor einem unbekannten Herausgeber; wählen Sie „Weitere Informationen“ und dann „Trotzdem ausführen“.
 - Das Lesen eines Stuhl-Tags funktioniert in Chromium-Browsern auf Android (HTTPS und ein Tippen nötig); die Android- und iPhone-Apps lesen Tags direkt.
-- Ein Build ohne Google-Dienste und ohne Cloud-Push wird gebaut und wurde bei F-Droid eingereicht; er ist noch nicht im F-Droid-Store. Darin sind Benachrichtigungen lokal, und der Posteingang ist maßgeblich.
+- Ein Build ohne Google-Dienste und ohne Cloud-Push ist für F-Droid vorbereitet; ob er schon über F-Droid installiert werden kann, steht auf der [F-Droid-Statusseite](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). Darin sind Benachrichtigungen lokal, und der Posteingang ist maßgeblich.
 - Aktualisierungen kommen über den Kanal, über den Sie installiert haben: Google Play, TestFlight, die Release-Seite oder das erneute Laden der Web-App.
 
 **Siehe auch:** [Ihr Badge](#ihr-badge)

@@ -2,6 +2,24 @@
 
 DesKilo can be built for F-Droid without Google services (ADR 0012).
 
+## Status
+
+This is the one place the F-Droid status is stated. The README, the
+project overview, the privacy page and the user and setup guides link
+here instead of repeating it. Last checked: 2026-10-10.
+
+- **A Google-free build exists.** It swaps the push package for
+  `packages/deskilo_push_foss`, which has no transport: notifications are
+  local and the inbox is the source of truth. The CI job `fdroid-foss`
+  builds it and fails if any Google Play Services or Firebase class
+  reaches the APK; `fdroid-release.yml` attaches the signed per-ABI APKs
+  that F-Droid reproduces against to the GitHub release the recipe names.
+- **It is submitted, not published.** The recipe is
+  [fdroiddata MR !47409](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/47409),
+  open and waiting for review. DesKilo cannot be installed from the
+  F-Droid client yet.
+- **When that changes**, this list is the only statement to update.
+
 > **The submission is FROZEN.** While
 > [MR !47409](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/47409) is
 > under review, `fdroid/de.deskilo.app.yml` and everything supporting the

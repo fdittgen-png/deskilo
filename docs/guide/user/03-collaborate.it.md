@@ -446,10 +446,10 @@ Vuole sapere che cosa la avvisa e, se preferisce, disattivare gli avvisi su ques
 
 **Da sapere**
 
-- Viene avvisato delle richieste in attesa della sua conferma e dei messaggi.
+- Viene avvisato delle richieste in attesa della sua conferma e dei messaggi: nel feed e sulla campanella, con una push quando la sua installazione ha configurato le push e, nell'app installata (non nel browser), con un promemoria sul suo dispositivo 15 minuti prima di una prenotazione per la quale non ha ancora fatto il check-in.
+- DesKilo non invia e-mail proprie: le sole e-mail sono quelle del suo account (conferma di iscrizione, reimpostazione della password).
 - Il conteggio sulla campanella e sull'icona dell'app somma le sue conferme in sospeso e i messaggi non letti.
-- Disattivate, l'app continua a funzionare; nulla viene inviato a questo dispositivo. Non ci sono interruttori separati per categoria.
-- Se il suo sistema blocca le notifiche dell'app, le consenta nelle impostazioni di sistema.
+- Disattivate, l'app continua a funzionare; nulla viene inviato a questo dispositivo. Non ci sono interruttori separati per categoria. Se il suo sistema blocca le notifiche dell'app, le consenta nelle impostazioni di sistema.
 
 **Vedi anche:** [Eventi e conferme](help:user.collaborate.events) · [I suoi dati, i suoi diritti](help:user.privacy.consent)
 

@@ -295,7 +295,7 @@ again after a correction.
 | Integration | What it does | Without it |
 |---|---|---|
 | **Payment provider** | takes a payment against an invoice | payments are recorded by hand; nothing else changes |
-| **WhatsApp channel** | sends a reminder or a notice on WhatsApp | the message stays in the app's own inbox |
+| **WhatsApp** | opens WhatsApp on the device: the space's group link and the number a member chooses to share; the server sends nothing to WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | no WhatsApp button is shown |
 | **Push** | delivers notifications to a device | notifications appear when the app is opened |
 | **E-invoicing platform** | transmits the structured invoice | the PDF is produced and sent by other means |
 
@@ -304,6 +304,8 @@ in a table the space file and every deployment skip, so no export ever
 carries a key. And **an unconfigured integration degrades, it does not
 break**: the feature that needs it is switched off, the screen says so,
 and nothing throws.
+
+**There is no e-mail integration.** DesKilo sends no e-mail of its own: the only e-mails are the account e-mails of the server's sign-in service (sign-up confirmation, password reset, a sign-in code). Everything else reaches a person in the app: the events feed and the bell, push when Firebase is configured, and, in the installed app (not in the browser), a local check-in reminder 15 minutes before a booking ([the reminder](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 <!-- anchor: admin.instances.overview -->
 ## Instances

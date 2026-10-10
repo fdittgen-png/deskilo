@@ -148,7 +148,7 @@ On either, a person's profile fields (identity, about, contact channels, presenc
 
 The code includes workspace-scoped server permissions, personal-data export and deletion flows, and access-log features. Hosting location, access management, retention and backups depend on the operator's setup. These controls support privacy-conscious operation; compliance depends on how the instance is configured and used.
 
-Store builds use Firebase Cloud Messaging for push notifications. A separate [FOSS build path](docs/guides/fdroid.md) excludes Google services. See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
+Store builds use Firebase Cloud Messaging for push notifications. A separate build without Google services is prepared for F-Droid; whether it is published there yet is stated in one place, the [F-Droid status](docs/guides/fdroid.md#status). See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
 There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 

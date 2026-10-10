@@ -304,7 +304,7 @@ ist ein Lesen und darf nach einer Korrektur erneut genommen werden.
 | Integration | Was sie tut | Ohne sie |
 |---|---|---|
 | **Zahlungsanbieter** | nimmt eine Zahlung gegen eine Rechnung an | Zahlungen werden von Hand erfasst; sonst ändert sich nichts |
-| **WhatsApp-Kanal** | sendet eine Mahnung oder einen Hinweis über WhatsApp | die Nachricht bleibt im Posteingang der App |
+| **WhatsApp** | öffnet WhatsApp auf dem Gerät: den Gruppenlink des Bereichs und die Nummer, die ein Mitglied teilen möchte; der Server sendet nichts an WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | es erscheint keine WhatsApp-Schaltfläche |
 | **Push** | liefert Benachrichtigungen an ein Gerät | Benachrichtigungen erscheinen beim Öffnen der App |
 | **E-Rechnungs-Plattform** | übermittelt die strukturierte Rechnung | das PDF wird erzeugt und anders versendet |
 
@@ -314,6 +314,8 @@ Export trägt also je einen Schlüssel. Und **eine nicht konfigurierte
 Integration degradiert, sie bricht nicht**: die Funktion, die sie
 braucht, ist ausgeschaltet, der Bildschirm sagt es, und nichts wirft
 eine Ausnahme.
+
+**Es gibt keine E-Mail-Integration.** DesKilo versendet keine eigenen E-Mails: Die einzigen E-Mails sind die Konto-E-Mails des Anmeldedienstes des Servers (Bestätigung der Anmeldung, Zurücksetzen des Passworts, ein Anmeldecode). Alles andere erreicht eine Person in der App: der Ereignis-Feed und die Glocke, Push, wenn Firebase eingerichtet ist, und in der installierten App (nicht im Browser) eine lokale Check-in-Erinnerung 15 Minuten vor einer Buchung ([die Erinnerung](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 <!-- anchor: admin.instances.overview -->
 ## Instanzen

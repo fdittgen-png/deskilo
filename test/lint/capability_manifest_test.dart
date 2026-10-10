@@ -50,12 +50,15 @@ void main() {
       'approvals', 'payments.stripe', 'payments.paypal', 'payments.mollie',
       'payments.wero', 'accounting.export', 'einvoice.generate',
       'einvoice.transmit', 'recovery.database_restore', 'demo', //
+      // #2333 — the MCP endpoint, its consent and its actions are on
+      // master with gated unit and pgTAP evidence; off until an operator
+      // switches it on for one installation.
+      'mcp.read', 'mcp.write', 'mcp.consent', //
     ]) {
       expect(byId[id], 'shipped', reason: id);
     }
     for (final id in [
-      'recovery.storage_auth', 'mcp.read', 'mcp.write', 'mcp.consent',
-      'calendar.interchange', //
+      'recovery.storage_auth', 'calendar.interchange', //
     ]) {
       expect(byId[id], 'roadmap', reason: '$id has no delivered evidence');
     }

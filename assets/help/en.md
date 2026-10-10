@@ -1443,10 +1443,10 @@ You want to know what alerts you, and to switch alerts off on this device if you
 
 **Good to know**
 
-- You are alerted to requests waiting for your confirmation and to messages.
+- You are alerted to requests waiting for your confirmation and to messages: in the feed and on the bell, by push when your installation has push set up, and, in the installed app (not in the browser), by a reminder on your device 15 minutes before a booking you have not checked in to yet.
+- DesKilo sends no e-mail of its own: the only e-mails are your account's (sign-up confirmation, password reset).
 - The count on the bell and the app icon adds your pending confirmations and unread messages.
-- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category.
-- If your system blocks the app's notifications, allow them in the system settings.
+- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category. If your system blocks the app's notifications, allow them in the system settings.
 
 **See also:** [Events & confirmations](help:user.collaborate.events) · [Your data, your rights](help:user.privacy.consent)
 
@@ -5763,7 +5763,7 @@ You want to use DesKilo where you work. The same account and the same data follo
 - The macOS disk image from the releases page is signed and notarised by Apple; open it as usual.
 - The Windows installer is not signed: Windows SmartScreen warns about an unknown publisher; choose More info, then Run anyway.
 - Reading a chair tag works in Chromium browsers on Android (HTTPS and a tap needed); the Android and iPhone apps read tags directly.
-- A Google-free build, without cloud push, is built and has been submitted to F-Droid; it is not in the F-Droid store yet. On it, notifications are local and the inbox is the source of truth.
+- A Google-free build, without cloud push, is prepared for F-Droid; whether it can be installed from F-Droid yet is stated on the [F-Droid status page](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). On it, notifications are local and the inbox is the source of truth.
 - Updates arrive through the channel you installed from: Google Play, TestFlight, the releases page, or reloading the web app.
 
 **See also:** [Your badge](help:user.profile.settings.badge)
@@ -7562,7 +7562,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 
 **Steps**
 
-1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build distributed through the F-Droid store has no push at all.
+1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build prepared for F-Droid has no push at all ([F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. For iPhone and Mac, add an Apple push key to the Firebase project.
 3. Store the Firebase service-account key as a secret of the server and deploy the push function.
 4. On your own installation, point the `push_config` row of your database at your own push function URL and key. It is seeded with the address of the reference installation.
@@ -8955,7 +8955,7 @@ again after a correction.
 | Integration | What it does | Without it |
 |---|---|---|
 | **Payment provider** | takes a payment against an invoice | payments are recorded by hand; nothing else changes |
-| **WhatsApp channel** | sends a reminder or a notice on WhatsApp | the message stays in the app's own inbox |
+| **WhatsApp** | opens WhatsApp on the device: the space's group link and the number a member chooses to share; the server sends nothing to WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | no WhatsApp button is shown |
 | **Push** | delivers notifications to a device | notifications appear when the app is opened |
 | **E-invoicing platform** | transmits the structured invoice | the PDF is produced and sent by other means |
 
@@ -8964,6 +8964,8 @@ in a table the space file and every deployment skip, so no export ever
 carries a key. And **an unconfigured integration degrades, it does not
 break**: the feature that needs it is switched off, the screen says so,
 and nothing throws.
+
+**There is no e-mail integration.** DesKilo sends no e-mail of its own: the only e-mails are the account e-mails of the server's sign-in service (sign-up confirmation, password reset, a sign-in code). Everything else reaches a person in the app: the events feed and the bell, push when Firebase is configured, and, in the installed app (not in the browser), a local check-in reminder 15 minutes before a booking ([the reminder](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 ## Instances
 

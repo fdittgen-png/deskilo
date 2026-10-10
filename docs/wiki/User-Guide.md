@@ -1506,10 +1506,10 @@ You want to know what alerts you, and to switch alerts off on this device if you
 
 **Good to know**
 
-- You are alerted to requests waiting for your confirmation and to messages.
+- You are alerted to requests waiting for your confirmation and to messages: in the feed and on the bell, by push when your installation has push set up, and, in the installed app (not in the browser), by a reminder on your device 15 minutes before a booking you have not checked in to yet.
+- DesKilo sends no e-mail of its own: the only e-mails are your account's (sign-up confirmation, password reset).
 - The count on the bell and the app icon adds your pending confirmations and unread messages.
-- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category.
-- If your system blocks the app's notifications, allow them in the system settings.
+- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category. If your system blocks the app's notifications, allow them in the system settings.
 
 **See also:** [Events & confirmations](#events--confirmations) · [Your data, your rights](#your-data-your-rights)
 
@@ -6042,7 +6042,7 @@ You want to use DesKilo where you work. The same account and the same data follo
 - The macOS disk image from the releases page is signed and notarised by Apple; open it as usual.
 - The Windows installer is not signed: Windows SmartScreen warns about an unknown publisher; choose More info, then Run anyway.
 - Reading a chair tag works in Chromium browsers on Android (HTTPS and a tap needed); the Android and iPhone apps read tags directly.
-- A Google-free build, without cloud push, is built and has been submitted to F-Droid; it is not in the F-Droid store yet. On it, notifications are local and the inbox is the source of truth.
+- A Google-free build, without cloud push, is prepared for F-Droid; whether it can be installed from F-Droid yet is stated on the [F-Droid status page](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). On it, notifications are local and the inbox is the source of truth.
 - Updates arrive through the channel you installed from: Google Play, TestFlight, the releases page, or reloading the web app.
 
 **See also:** [Your badge](#your-badge)
