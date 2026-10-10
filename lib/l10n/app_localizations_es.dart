@@ -18751,7 +18751,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay declaraciones — elija un periodo y genere la primera.';
 
   @override
-  String get vatDeclGenerate => 'Generar';
+  String get vatDeclFiled => 'Presentada';
+
+  @override
+  String get vatDeclGenerate => 'Preparar';
 
   @override
   String get vatDeclInvoices => 'Facturas';
@@ -18761,7 +18764,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Confirme que presentó esta declaración usted mismo (portal de Hacienda o su gestor). Se vuelve inmutable.';
+      'Confirme que presentó usted mismo esta declaración ante la administración tributaria (su portal o su gestor) e introduzca la referencia del justificante. Después será inmutable.';
 
   @override
   String get vatDeclNet => 'Base imponible';
@@ -18773,35 +18776,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclPeriod => 'Periodo';
 
   @override
+  String get vatDeclPrepared => 'Preparada';
+
+  @override
   String get vatDeclRate => 'Tipo';
+
+  @override
+  String get vatDeclReceipt =>
+      'Referencia del justificante de la administración tributaria';
 
   @override
   String get vatDeclRegimeGate =>
       'Las declaraciones solo existen bajo el régimen sujeto a IVA — configúrelo en los ajustes de IVA.';
 
   @override
-  String get vatDeclRejected => 'La plataforma rechazó la declaración.';
+  String get vatDeclScreenTitle => 'Preparación de la declaración del IVA';
 
   @override
   String get vatDeclSeller => 'Vendedor';
 
   @override
-  String get vatDeclSent => 'Declaración transmitida.';
-
-  @override
   String get vatDeclStatus => 'Estado';
-
-  @override
-  String get vatDeclSubmitted => 'Presentada';
 
   @override
   String get vatDeclTitle => 'Declaración de IVA';
 
   @override
   String get vatDeclTotals => 'Totales';
-
-  @override
-  String get vatDeclTransmit => 'Transmitir';
 
   @override
   String get vatDeclVat => 'IVA';

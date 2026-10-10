@@ -303,7 +303,7 @@
  "legalMemberNumbering": "Numerazione dei soci",
  "legalMemberNumberingHint": "Il numero di socio viene assegnato all'ingresso e non cambia mai; compare in fattura come «N. socio».",
  "legalVatPeriod": "Periodo di dichiarazione IVA",
- "legalVatPeriodHint": "La periodicità imposta dal suo regime. La dichiarazione aggrega ciò che diventa esigibile nel periodo al momento impositivo di ogni fattura — la sua emissione, il suo pagamento o il mese della prestazione, secondo il suo Paese e la sua scelta — per aliquota (CA3, UStVA…), e viene trasmessa o esportata in PDF/XML.",
+ "legalVatPeriodHint": "La periodicità imposta dal suo regime. La dichiarazione aggrega ciò che diventa esigibile nel periodo al momento impositivo di ogni fattura — la sua emissione, il suo pagamento o il mese della prestazione, secondo il suo Paese e la sua scelta — per aliquota (CA3, UStVA…), calcolata dal server, ed esportata in PDF/XML perché Lei la presenti all'amministrazione.",
  "legalBillingAddress": "Indirizzo di fatturazione",
  "legalMentions": "Menzioni di fatturazione (vuoto = dicitura legale predefinita)",
  "mentionLegalForm": "Forma giuridica e capitale",

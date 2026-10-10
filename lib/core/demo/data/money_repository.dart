@@ -8,6 +8,7 @@ import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
@@ -45,22 +46,35 @@ class FakeMoneyRepository implements MoneyRepository {
           String workspaceId) async =>
       List.of(vatDeclarations);
 
+  /// #2357 — the basis the fake prepares on (the server reads the space's).
+  VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
+
+  /// Prepares the period like `save_vat_declaration` (0402): the figures
+  /// are computed here from the fake's own invoices, matches and
+  /// instalments with the Dart engine the SQL is the twin of.
   @override
   Future<String> saveVatDeclaration({
     required String workspaceId,
     required DateTime periodStart,
     required DateTime periodEnd,
-    required List<VatDeclarationLine> lines,
-    required int totalNetCents,
-    required int totalVatCents,
-    required String currency,
-    required int invoiceCount,
   }) async {
     final existing = vatDeclarations.indexWhere((d) =>
         d.periodStart == periodStart && d.periodEnd == periodEnd);
-    if (existing != -1 && vatDeclarations[existing].isSubmitted) {
-      throw StateError('declaration already submitted for this period');
+    if (existing != -1 && vatDeclarations[existing].isFiled) {
+      throw StateError('declaration already filed for this period');
     }
+    final view = accountingView(invoices, invoiceMatchesStore);
+    final amounts = vatTaxPointLedger(
+      view.invoices,
+      matches: view.matches,
+      instalments: invoiceInstalmentsStore,
+      basis: vatReturnBasis,
+    );
+    final lines = vatDeclarationLinesOf(amounts, periodStart, periodEnd);
+    final documents = {
+      for (final a in amounts)
+        if (a.within(periodStart, periodEnd)) a.invoiceId,
+    };
     final declaration = VatDeclaration(
       id: existing != -1
           ? vatDeclarations[existing].id
@@ -68,12 +82,12 @@ class FakeMoneyRepository implements MoneyRepository {
       workspaceId: workspaceId,
       periodStart: periodStart,
       periodEnd: periodEnd,
-      status: 'draft',
+      status: 'prepared',
       lines: lines,
-      totalNetCents: totalNetCents,
-      totalVatCents: totalVatCents,
-      currency: currency,
-      invoiceCount: invoiceCount,
+      totalNetCents: lines.fold(0, (sum, l) => sum + l.netCents),
+      totalVatCents: lines.fold(0, (sum, l) => sum + l.vatCents),
+      currency: 'EUR',
+      invoiceCount: documents.length,
       createdAt: DateTime.utc(2026, 8, 11),
     );
     if (existing != -1) {
@@ -88,18 +102,26 @@ class FakeMoneyRepository implements MoneyRepository {
   Future<void> markVatDeclarationSubmitted({
     required String declarationId,
     required String channel,
-    String receipt = '',
+    required String receipt,
   }) async {
     final index =
         vatDeclarations.indexWhere((d) => d.id == declarationId);
     if (index == -1) throw StateError('unknown declaration');
     final d = vatDeclarations[index];
+    if (d.isFiled) throw StateError('declaration already filed');
+    if (channel != 'manual' && channel != 'export') {
+      throw StateError('unknown channel');
+    }
+    if (receipt.trim().isEmpty) {
+      throw StateError('the receipt reference is required');
+    }
+    if (!d.isPrepared) throw StateError('prepare the return before filing it');
     vatDeclarations[index] = VatDeclaration(
       id: d.id,
       workspaceId: d.workspaceId,
       periodStart: d.periodStart,
       periodEnd: d.periodEnd,
-      status: 'submitted',
+      status: 'filed',
       lines: d.lines,
       totalNetCents: d.totalNetCents,
       totalVatCents: d.totalVatCents,
@@ -108,30 +130,8 @@ class FakeMoneyRepository implements MoneyRepository {
       createdAt: d.createdAt,
       submittedAt: DateTime.utc(2026, 8, 11, 12),
       submittedChannel: channel,
-      submittedReceipt: receipt,
-    );
-  }
-
-  /// Platform sends recorded for assertions; each accepted send stamps
-  /// the declaration submitted like the edge function does.
-  final List<String> sentDeclarationIds = [];
-
-  @override
-  Future<EInvoiceSubmission> sendVatDeclaration({
-    required String workspaceId,
-    required String declarationId,
-    required String fileName,
-    required String mimeType,
-    required List<int> bytes,
-  }) async {
-    sentDeclarationIds.add(declarationId);
-    await markVatDeclarationSubmitted(
-        declarationId: declarationId,
-        channel: 'platform',
-        receipt: 'fake-receipt');
-    return const EInvoiceSubmission(
-      status: EInvoiceSubmissionStatus.accepted,
-      externalId: 'fake-receipt',
+      submittedReceipt: receipt.trim(),
+      number: 'DECL-2026-${(index + 1).toString().padLeft(4, '0')}',
     );
   }
 

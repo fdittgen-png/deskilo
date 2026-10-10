@@ -29,6 +29,13 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #2357/0402 restates mark_vat_declaration_submitted from the LIVE dev
+  // definition (pg_get_functiondef): 0165's anchored DECL- number draw
+  // (next_document_number when number = '') is carried verbatim; the
+  // change is the channel (manual | export), the required receipt, the
+  // prepared-only rule, the recompute check and the writer token.
+  // pgTAP 166 files a return and asserts its DECL- number.
+  'mark_vat_declaration_submitted@0402',
   // #2145/0358 restates mcp_read_v1 whole. The LIVE dev body is 0275's
   // with 0345's one anchored change (free = mcp_seat_bookable(...) is
   // null), comments and blank lines aside; the new body keeps that verdict

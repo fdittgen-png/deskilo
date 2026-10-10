@@ -231,7 +231,7 @@
   "user.money.vat.rates": "Définir les taux",
   "user.money.vat.groups": "Groupes de TVA",
   "user.money.vat.change-by-law": "Changer un taux par la loi",
-  "user.money.vat.declaration": "La déclaration périodique de TVA",
+  "user.money.vat.declaration": "Préparer la déclaration de TVA",
   "user.money.einvoice.overview": "La plateforme de facturation électronique",
   "user.money.einvoice.endpoint": "URL de dépôt",
   "user.money.einvoice.token": "Jeton ou identifiant",

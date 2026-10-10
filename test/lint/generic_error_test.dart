@@ -49,7 +49,7 @@ const Map<String, int> _baseline = {
   'lib/features/money/presentation/screens/repartition_wizard_screen.dart': 1,
   'lib/features/money/presentation/screens/report_editor_screen.dart': 1,
   'lib/features/money/presentation/screens/services_screen.dart': 2,
-  'lib/features/money/presentation/screens/vat_declarations_screen.dart': 5,
+  'lib/features/money/presentation/screens/vat_declarations_screen.dart': 4,
   'lib/features/money/presentation/screens/vat_screen.dart': 1,
   'lib/features/money/presentation/widgets/billing_rules_dialog.dart': 1,
   'lib/features/money/presentation/widgets/consumption_sheet.dart': 1,

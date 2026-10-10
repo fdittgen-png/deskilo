@@ -231,7 +231,7 @@
   "user.money.vat.rates": "Setting the rates",
   "user.money.vat.groups": "VAT groups",
   "user.money.vat.change-by-law": "Change a rate by law",
-  "user.money.vat.declaration": "The periodic VAT declaration",
+  "user.money.vat.declaration": "Preparing the VAT return",
   "user.money.einvoice.overview": "The e-invoicing platform",
   "user.money.einvoice.endpoint": "Upload URL",
   "user.money.einvoice.token": "Token or credential",

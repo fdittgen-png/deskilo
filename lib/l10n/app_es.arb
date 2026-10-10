@@ -11440,7 +11440,11 @@
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
   },
-  "vatDeclGenerate": "Generar",
+  "vatDeclFiled": "Presentada",
+  "@vatDeclFiled": {
+    "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclGenerate": "Preparar",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
@@ -11452,7 +11456,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Confirme que presentó esta declaración usted mismo (portal de Hacienda o su gestor). Se vuelve inmutable.",
+  "vatDeclMarkFiledConfirm": "Confirme que presentó usted mismo esta declaración ante la administración tributaria (su portal o su gestor) e introduzca la referencia del justificante. Después será inmutable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -11468,33 +11472,33 @@
   "@vatDeclPeriod": {
     "description": "Filing-period label"
   },
+  "vatDeclPrepared": "Preparada",
+  "@vatDeclPrepared": {
+    "description": "Status chip: the server computed the return, ready to file (#2357)"
+  },
   "vatDeclRate": "Tipo",
   "@vatDeclRate": {
     "description": "Rate column"
+  },
+  "vatDeclReceipt": "Referencia del justificante de la administración tributaria",
+  "@vatDeclReceipt": {
+    "description": "Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)"
   },
   "vatDeclRegimeGate": "Las declaraciones solo existen bajo el régimen sujeto a IVA — configúrelo en los ajustes de IVA.",
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
-  "vatDeclRejected": "La plataforma rechazó la declaración.",
-  "@vatDeclRejected": {
-    "description": "Error snack when the platform rejects"
+  "vatDeclScreenTitle": "Preparación de la declaración del IVA",
+  "@vatDeclScreenTitle": {
+    "description": "Title of the VAT return screen: the app prepares the return, the owner files it (#2357)"
   },
   "vatDeclSeller": "Vendedor",
   "@vatDeclSeller": {
     "description": "Seller identity line on the declaration PDF"
   },
-  "vatDeclSent": "Declaración transmitida.",
-  "@vatDeclSent": {
-    "description": "Success snack after platform transmission"
-  },
   "vatDeclStatus": "Estado",
   "@vatDeclStatus": {
     "description": "Status label on the PDF"
-  },
-  "vatDeclSubmitted": "Presentada",
-  "@vatDeclSubmitted": {
-    "description": "Submitted status chip"
   },
   "vatDeclTitle": "Declaración de IVA",
   "@vatDeclTitle": {
@@ -11503,10 +11507,6 @@
   "vatDeclTotals": "Totales",
   "@vatDeclTotals": {
     "description": "Totals row"
-  },
-  "vatDeclTransmit": "Transmitir",
-  "@vatDeclTransmit": {
-    "description": "Send through the configured platform channel"
   },
   "vatDeclVat": "IVA",
   "@vatDeclVat": {

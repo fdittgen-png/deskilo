@@ -69,6 +69,10 @@
   "@vatDeclTitle": {
     "description": "Title of the periodic VAT declaration screen/PDF (#534)"
   },
+  "vatDeclScreenTitle": "Préparation de la déclaration de TVA",
+  "@vatDeclScreenTitle": {
+    "description": "Title of the VAT return screen: the app prepares the return, the owner files it (#2357)"
+  },
   "vatDeclPeriod": "Période",
   "@vatDeclPeriod": {
     "description": "Filing-period label"
@@ -117,7 +121,7 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
-  "vatDeclGenerate": "Générer",
+  "vatDeclGenerate": "Préparer",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
@@ -129,19 +133,23 @@
   "@vatDeclDraft": {
     "description": "Draft status chip"
   },
-  "vatDeclSubmitted": "Déposée",
-  "@vatDeclSubmitted": {
-    "description": "Submitted status chip"
+  "vatDeclPrepared": "Préparée",
+  "@vatDeclPrepared": {
+    "description": "Status chip: the server computed the return, ready to file (#2357)"
   },
-  "vatDeclTransmit": "Télétransmettre",
-  "@vatDeclTransmit": {
-    "description": "Send through the configured platform channel"
+  "vatDeclFiled": "Déposée",
+  "@vatDeclFiled": {
+    "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclReceipt": "Référence de l’accusé de réception de l’administration fiscale",
+  "@vatDeclReceipt": {
+    "description": "Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)"
   },
   "vatDeclMarkFiled": "Marquer comme déposée",
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Confirmez avoir déposé cette déclaration vous-même (portail des impôts ou votre comptable). Elle devient immuable.",
+  "vatDeclMarkFiledConfirm": "Confirmez avoir déposé vous-même cette déclaration auprès de l’administration fiscale (son portail ou votre comptable) et saisissez la référence de l’accusé de réception. Elle devient ensuite immuable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -152,14 +160,6 @@
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {
     "description": "PDF button on a declaration card"
-  },
-  "vatDeclSent": "Déclaration télétransmise.",
-  "@vatDeclSent": {
-    "description": "Success snack after platform transmission"
-  },
-  "vatDeclRejected": "La plateforme a refusé la déclaration.",
-  "@vatDeclRejected": {
-    "description": "Error snack when the platform rejects"
   },
   "vatDeclRegimeGate": "Les déclarations n’existent que sous le régime assujetti à la TVA — configurez-le dans les réglages TVA.",
   "@vatDeclRegimeGate": {

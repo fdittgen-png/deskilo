@@ -28,8 +28,10 @@
 // tax point (its issue, or its refund under a receipts rule) and never
 // re-opens the period of the invoice it corrects.
 //
-// Pure Dart: the CLI and the tests read it, and #2357's SQL
-// `compute_vat_return` is meant to be its twin.
+// Pure Dart: the CLI and the tests read it. #2357's SQL
+// `compute_vat_return` (0402) is its twin on the server — the same rules,
+// apportionment and rounding — and the declaration stores the server's
+// figures; `vat_return_parity_test.dart` pins both to one fixture.
 import '../../../core/time/workspace_time.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
@@ -247,6 +249,7 @@ List<VatTaxPointAmount> taxPointsOf(
   if (invoice.isVoided || invoice.kind == InvoiceKind.settlement) {
     return const [];
   }
+  final declared = frozenTaxPointBasis(invoice, basis);
   final gross = <double, int>{};
   final net = <double, int>{};
   for (final line in invoice.lines) {
@@ -261,8 +264,36 @@ List<VatTaxPointAmount> taxPointsOf(
   final portions = total == 0
       // Settled by itself — its credits paid it before it was issued.
       ? [(on: issued, cents: 0)]
-      : _portions(invoice, payments, basis, issued, total.abs(), dayOf);
+      : _portions(invoice, payments, declared, issued, total.abs(), dayOf);
   return _slices(invoice.id, portions, gross, net, total);
+}
+
+/// #2357 — the basis [invoice] declares on: [basis], unless the invoice
+/// froze the other side of it when it was issued (`vat_exigibility` in
+/// its legal snapshot, 0349/0401). The printed mention is what the
+/// customer was told, so an invoice that said « on receipts » waits for
+/// the money although the workspace has since opted for the invoice
+/// date, and one that said « on the debits » is due when issued. The
+/// SQL twin (`vat_return_amounts`, 0402) applies the same rule.
+VatTaxPointBasis frozenTaxPointBasis(
+  Invoice invoice,
+  VatTaxPointBasis basis,
+) {
+  final snapshot = invoice.legalSnapshot;
+  final frozen = snapshot?['vat_exigibility'];
+  final seller = snapshot?['seller_country'];
+  final policy = vatTaxPointPolicy(seller is String ? seller : '');
+  if (frozen == 'payment' && basis.rule != VatTaxPointRule.receipt) {
+    return VatTaxPointBasis(VatTaxPointRule.receipt, policy.cashBackstop);
+  }
+  if (frozen == 'invoice' && basis.rule == VatTaxPointRule.receipt) {
+    return VatTaxPointBasis(
+      policy.standard == VatTaxPointRule.receipt
+          ? VatTaxPointRule.invoiceDate
+          : policy.standard,
+    );
+  }
+  return basis;
 }
 
 /// The document's magnitude, cut into dated portions under [basis].
