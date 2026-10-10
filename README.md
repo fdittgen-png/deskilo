@@ -1,73 +1,167 @@
-# DesKilo
+<div align="center">
 
-**Bookings, memberships and shared finances for community-run coworking spaces — and a private-by-default social network around them.**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-dark.svg">
+  <img src="docs/readme/hero-light.svg" alt="DesKilo — your space, working together. Bookings, memberships and shared finances for community-run coworking spaces." width="100%">
+</picture>
 
-DesKilo helps small coworking communities answer three everyday questions: **Where can I work? What do I owe? Who needs to approve this?** It connects a visual floor plan with membership allowances, member balances, shared expenses and approval workflows, so the people running the space can keep daily activity and its financial consequences together.
+<br>
 
-Around the spaces there is a **person-centred layer**: one personal account (*Me*) that follows you across every space you belong to, a **shared directory** where spaces choose to publish a public page and people find them, and a **messenger** for private conversations with the people you share a space with — or reach through a request. You decide what others see of you, and nothing is public by default.
+**[Try the demo](https://fdittgen-png.github.io/deskilo/)** &nbsp;·&nbsp; **[User guide](docs/wiki/User-Guide.md)** &nbsp;·&nbsp; **[Build your own space](docs/wiki/Setup-Guide.md)** &nbsp;·&nbsp; [Releases](https://github.com/fdittgen-png/deskilo/releases) &nbsp;·&nbsp; [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
 
-Built for independent spaces, associations and member-run collectives that want control over their rules and data. Free software under the **AGPL-3.0-or-later**, with a Flutter app and a backend you can **run yourself** on your own Supabase instance, or **use as hosted** on the reference deployment operated by Florian DITTGEN, which also hosts the shared directory. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a [commercial licence](COMMERCIAL-LICENCE.md). Currently in **beta and active dogfooding**.
+[![Quality checks](https://img.shields.io/github/actions/workflow/status/fdittgen-png/deskilo/quality.yml?branch=master&label=quality&style=flat-square)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--or--later-0f766e?style=flat-square)](LICENSE) [![Flutter](https://img.shields.io/badge/Flutter-3.47.5-2e3d5c?style=flat-square&logo=flutter&logoColor=white)](https://flutter.dev) [![Dart](https://img.shields.io/badge/Dart-3.12.2-2e3d5c?style=flat-square&logo=dart&logoColor=white)](https://dart.dev) ![Languages](https://img.shields.io/badge/EN_·_FR_·_DE_·_ES_·_IT-d32f2f?style=flat-square) ![Status](https://img.shields.io/badge/status-beta-e0902c?style=flat-square)
 
-## The leitmotiv
+<a href="https://fdittgen-png.github.io/deskilo/"><img alt="Open the web app" src="https://img.shields.io/badge/Web%20app-1b2236?style=for-the-badge&logo=googlechrome&logoColor=white"></a> <a href="https://play.google.com/apps/testing/de.deskilo.app"><img alt="Join the Android closed test" src="https://img.shields.io/badge/Android%20closed%20test-1b2236?style=for-the-badge&logo=googleplay&logoColor=white"></a> <a href="https://testflight.apple.com/join/RgFX9zBe"><img alt="Join the iPhone beta on TestFlight" src="https://img.shields.io/badge/TestFlight%20beta-1b2236?style=for-the-badge&logo=apple&logoColor=white"></a>
 
-Every feature serves at least one of four goals; a proposal that serves none is pushed back on before any code is written.
+</div>
 
-1. **Know where you can sit** — live floor plan, check-in/out, reservations.
-2. **Know what you owe / are owed** — subscription, extra usage, community expenses, one transparent ledger per member.
-3. **Run the space without a landlord platform** — self-organized roles, libre software, a backend you can host yourself or share on the reference deployment, and data that stays portable.
-4. **Belong to a network, not a silo** — one personal account across spaces, a shared directory to find them, private conversations between people, and visibility that each person chooses and can withdraw.
+<br>
 
-[![Quality checks](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml/badge.svg?branch=master)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
-[![Flutter](https://img.shields.io/badge/Flutter-3.47.5-blue.svg)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.12.2-blue.svg)](https://dart.dev)
+> **A coworking space belongs to the people who use it.** DesKilo gives a community a floor plan to book, a fair account for every member and the rules it chooses for itself — free software, on your phone or in a browser, on a server you can run yourself.
+
+<br>
+
+## Three questions, answered
+
+<table>
+<tr>
+<td width="33%" valign="top" align="center">
+<img src="docs/readme/icon-plan.svg" width="56" alt=""><br>
+<h3>Where can I work?</h3>
+A live floor plan shows every place and who holds it, for any day. Book a half-day, a desk or a whole room; check in and out.
+</td>
+<td width="33%" valign="top" align="center">
+<img src="docs/readme/icon-wallet.svg" width="56" alt=""><br>
+<h3>What do I owe?</h3>
+One transparent ledger per member: subscription, extra use, shared expenses and payments — the same figures for the member and for whoever runs the space.
+</td>
+<td width="33%" valign="top" align="center">
+<img src="docs/readme/icon-roles.svg" width="56" alt=""><br>
+<h3>Who needs to approve this?</h3>
+Roles, invitations and confirmations by the people the community named, with a history of every decision.
+</td>
+</tr>
+</table>
 
 <p align="center">
-  <a href="https://play.google.com/apps/testing/de.deskilo.app">
-    <img alt="Join the Android closed test" src="https://img.shields.io/badge/Android%20closed%20test-000000?style=for-the-badge&logo=googleplay&logoColor=white"/>
-  </a>
-  <a href="https://testflight.apple.com/join/RgFX9zBe">
-    <img alt="Join the iPhone beta on TestFlight" src="https://img.shields.io/badge/TestFlight%20beta-000000?style=for-the-badge&logo=apple&logoColor=white"/>
-  </a>
-  <a href="https://fdittgen-png.github.io/deskilo/">
-    <img alt="Open the web app" src="https://img.shields.io/badge/Web%20app-000000?style=for-the-badge&logo=googlechrome&logoColor=white"/>
-  </a>
+  <img src="docs/readme/screens.jpg" alt="The DesKilo demo workspace: a member's home, the day view of the floor plan, decisions waiting for confirmation and a monthly statement." width="100%">
+  <br>
+  <sub>The demo workspace <em>Atelier du Marché</em> — every person and every figure is invented.</sub>
 </p>
 
-[Explore the illustrated user guide](docs/wiki/User-Guide.md) · [Build your own space: the Setup Guide](docs/wiki/Setup-Guide.md) · [Configure a workspace](docs/wiki/Admin-Configuration-Guide.md) · [Releases](https://github.com/fdittgen-png/deskilo/releases) · [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
+## Everything a community needs
 
-## What your community can do
+<table>
+<tr>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-plan.svg" width="44" alt=""><br>
+<b>Find and book a place</b><br>
+Visual floor plans, live occupancy, recurring bookings, check-in and check-out, opening hours and closure rules.
+</td>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-wallet.svg" width="44" alt=""><br>
+<b>Membership, fairly</b><br>
+Plans, allowances, day packages, overage rules and per-member settings; statements, reminders and payments recorded or collected online.
+</td>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-documents.svg" width="44" alt=""><br>
+<b>Documents that look right</b><br>
+Invoices and corrections, VAT, PDF statements and reports, accounting exports and a designer for your own layouts.
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-tune.svg" width="44" alt=""><br>
+<b>Run it your way</b><br>
+A floor-plan editor, modules with declared dependencies, wording, colours and a pattern that tell your space apart, configuration import and export.
+</td>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-network.svg" width="44" alt=""><br>
+<b>Be found, find others</b><br>
+A shared directory and map where a space publishes a page on purpose; one personal account (<em>Me</em>) across all your spaces, on this server and on servers you connect.
+</td>
+<td width="33%" valign="top">
+<img src="docs/readme/icon-chat.svg" width="44" alt=""><br>
+<b>Talk, privately</b><br>
+A messenger in <em>Me</em>: conversations, groups, references to bookings and invoices, message requests, a block list and a visibility matrix you control.
+</td>
+</tr>
+</table>
 
-| Need | What DesKilo brings together |
+Also: a members directory, QR/NFC check-in and kiosk mode for a wall tablet, business analytics, reminders and push notifications. Availability depends on the workspace's configuration, device capabilities and connected services.
+
+## From idea to first booking
+
+<table>
+<tr>
+<td width="33%" valign="top">
+<h3>1 · Look around</h3>
+Open the <a href="https://fdittgen-png.github.io/deskilo/">web app</a> and choose <em>Explore the demo workspace</em>: a fictional community, as owner, administrator or member. Nothing you do there reaches a server.
+</td>
+<td width="33%" valign="top">
+<h3>2 · Build your space</h3>
+Follow the <a href="docs/wiki/Setup-Guide.md">Setup Guide</a>: a name, a plan, opening times and someone to say yes — about twenty minutes. Money, invoices and a look of your own come later.
+</td>
+<td width="33%" valign="top">
+<h3>3 · Invite people</h3>
+Share the workspace ID or a QR code. Members join, you approve, the first booking appears on the plan. The <a href="docs/wiki/User-Guide.md">User Guide</a> covers every screen, by audience.
+</td>
+</tr>
+</table>
+
+The [setup questionnaire](https://fdittgen-png.github.io/deskilo/setup.html) lets a community prepare its booking, membership and governance rules in a browser, with an accountant if it helps, before touching the app.
+
+## Where it runs
+
+| Platform | Status |
 |---|---|
-| **Find and book a place** | Visual floor plans, live occupancy, reservations, recurring bookings, check-in/out, opening hours and closure rules. |
-| **Manage membership fairly** | Membership plans, usage quotas, day packages, overage rules and per-member settings. |
-| **Understand the money** | A ledger per member connecting subscription charges, extra usage, approved community expenses, recorded payments and statements. |
-| **Share responsibility** | Roles, invitations, member confirmations and configurable approval quorums, with an event history of decisions. |
-| **Prepare documents** | Invoices and corrections, VAT configuration, PDF statements and reports, and customizable document layouts. |
-| **Run the space your way** | A floor-plan editor, workspace modules with declared dependencies, configuration import/export and multiple workspace profiles. |
-| **Be found, and find others** | A shared directory and map (Discover) where a space publishes a public page on purpose; one personal account (*Me*) across all your spaces, on this server and on servers you connect. |
-| **Talk to people, privately** | A messenger in *Me*: direct conversations, groups, references to bookings, spaces and invoices where both people belong, message requests from people outside your reach, a block list, and a visibility matrix that decides who sees your name, bio, contact details and presence. |
+| **Web** | Available in the browser. It is the live application: it needs a sign-in and workspace access. *Demo* is a separate, self-contained workspace with no backend behind it. |
+| **Android** | [Closed test](https://play.google.com/apps/testing/de.deskilo.app) on Google Play; access depends on tester enrollment. |
+| **iPhone / iPad** | [Public beta through TestFlight](https://testflight.apple.com/join/RgFX9zBe). |
+| **macOS · Windows** | Build and release workflows are included; installers are attached to [releases](https://github.com/fdittgen-png/deskilo/releases). |
 
-For example, a member can reserve a desk, consume their allowance and see the resulting charges in their statement. When that member buys supplies for the space, an approved expense can credit their account. Administrators and members follow the same records and confirmation workflow.
+## Your data, your instance — or the shared one
 
-Additional modules include a members directory, QR/NFC check-in and kiosk workflows, business analytics, local reminders and push notifications. Availability depends on the workspace's configuration, device capabilities and connected services.
+DesKilo's schema, access policies, server functions and client code are in this repository. There are two ways to run it, and they can be combined:
 
-**Languages:** English · Français · Deutsch · Español · Italiano. UI translations and bundled in-app help are maintained in these five languages.
+<table>
+<tr>
+<td width="50%" valign="top">
+<img src="docs/readme/icon-server.svg" width="44" alt=""><br>
+<b>Self-hosted</b><br>
+A community uses its own hosted Supabase project, or operates Supabase itself, and points the app at that backend through <b>Settings → Advanced → Server</b>. Its workspaces, members and conversations live on that instance only.
+</td>
+<td width="50%" valign="top">
+<img src="docs/readme/icon-globe.svg" width="44" alt=""><br>
+<b>The reference deployment</b><br>
+The app's default backend is operated by Florian DITTGEN. Spaces created there can optionally publish a page in the <b>shared directory</b> hosted on it, so people looking for a space can find yours; publishing is an explicit owner action and can be withdrawn. A person who belongs to spaces on several servers can connect them and see them in one <em>Me</em>.
+</td>
+</tr>
+</table>
 
-## Try it
+On either, a person's profile fields (identity, about, contact channels, presence, reachability) are private by default and are shown only to the audience the person picks. A conversation's content is visible to its participants only — never to a space operator.
 
-Android is distributed through a **closed test**, and iPhone through **TestFlight**. The buttons above lead to those testing channels; access depends on tester enrollment and availability. Windows and macOS build and release workflows are also included; see [Releases](https://github.com/fdittgen-png/deskilo/releases) for published packages.
+<details>
+<summary><b>Privacy, push notifications and costs</b></summary>
 
-The **web app is the live application** and requires sign-in and workspace access. *Demo* is a separate, self-contained workspace: invented people, invented bookings, invented money, and no backend behind it — nothing you do there can reach a real space, and nothing it shows belongs to anybody. Evaluate the product there, or with a development workspace of your own.
+<br>
 
-The [illustrated user guide](docs/wiki/User-Guide.md) lets you explore the workflows before setting up an account. The [setup questionnaire](https://fdittgen-png.github.io/deskilo/setup.html) helps a community prepare its booking, membership and governance rules.
+The code includes workspace-scoped server permissions, personal-data export and deletion flows, and access-log features. Hosting location, access management, retention and backups depend on the operator's setup. These controls support privacy-conscious operation; compliance depends on how the instance is configured and used.
 
-## Current maturity
+Store builds use Firebase Cloud Messaging for push notifications. A separate [FOSS build path](docs/guides/fdroid.md) excludes Google services. See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
-DesKilo has substantial implemented functionality and is being refined through dogfooding. It is best suited today to communities willing to run a pilot, verify their own workflows and contribute feedback. Public store releases, integration validation, usability and operational hardening remain active work.
+There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 
-Some capabilities need particular care when planning a pilot:
+</details>
+
+## Honest about maturity
+
+DesKilo has substantial implemented functionality and is being refined through dogfooding. It is best suited today to communities **willing to run a pilot**, verify their own workflows and contribute feedback. Public store releases, integration validation, usability and operational hardening remain active work.
+
+<details>
+<summary><b>What needs particular care when planning a pilot</b></summary>
+
+<br>
 
 | Area | Current scope |
 |---|---|
@@ -76,22 +170,56 @@ Some capabilities need particular care when planning a pilot:
 | **Electronic invoicing and accounting exports** | Structured invoice generation and export code is present. Real provider transmission and acceptance by accounting systems need validation for each intended setup; the project makes no certification claim. |
 | **Deployment and recovery** | Instance tooling, migration checks and backup/restore procedures are provided. Running a community instance still requires someone responsible for configuration, upgrades and recovery. |
 
-Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen) and [latest quality-check runs](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) for the current state of work and validation.
+</details>
 
-## Your data, your instance — or the shared one
+Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen) and the [latest quality-check runs](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) for the current state of work and validation.
 
-DesKilo's schema, access policies, server functions and client code are in this repository. There are two ways to run it, and they can be combined:
+## Documentation
 
-- **Self-hosted.** A community uses its own hosted Supabase project or operates Supabase itself, and points the app at that backend through **Settings → Advanced → Server**. Its workspaces, members and conversations live on that instance only.
-- **The reference deployment.** The app's default backend is operated by Florian DITTGEN. Spaces created there can optionally publish a page in the **shared directory** hosted on it, so that people looking for a space can find yours; publishing is an explicit owner action and can be withdrawn. A person who belongs to spaces on several servers can connect them and see them in one *Me*.
-
-On either, a person's profile fields (identity, about, contact channels, presence, reachability) are private by default and are shown only to the audience the person picks. A conversation's content is visible to its participants only — never to a space operator.
-
-The code includes workspace-scoped server permissions, personal-data export and deletion flows, and access-log features. Hosting location, access management, retention and backups depend on the operator's setup. These controls support privacy-conscious operation; compliance depends on how the instance is configured and used.
-
-Store builds use Firebase Cloud Messaging for push notifications. A separate [FOSS build path](docs/guides/fdroid.md) excludes Google services. See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
-
-There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
+<table>
+<tr>
+<td width="33%" valign="top">
+<b><a href="docs/wiki/User-Guide.md">User guide</a></b><br>
+Every screen by audience, illustrated, in five languages.
+</td>
+<td width="33%" valign="top">
+<b><a href="docs/wiki/Setup-Guide.md">Setup guide</a></b><br>
+What is possible, what is necessary, in which order — for a future owner.
+</td>
+<td width="33%" valign="top">
+<b><a href="docs/wiki/Admin-Configuration-Guide.md">Configuration guide</a></b><br>
+Booking rules, memberships, roles and workspace settings.
+</td>
+</tr>
+<tr>
+<td valign="top">
+<b><a href="docs/wiki/Admin-Technical-Guide.md">Technical admin guide</a></b><br>
+Reports, integrations and instances.
+</td>
+<td valign="top">
+<b><a href="docs/guides/OPERATIONS.md">Operations</a></b><br>
+Instance health, backup, restore and recovery.
+</td>
+<td valign="top">
+<b><a href="docs/product/CAPABILITIES.md">Capabilities and evidence</a></b><br>
+What ships, what is tested at which scope, what is roadmap.
+</td>
+</tr>
+<tr>
+<td valign="top">
+<b><a href="docs/wiki/Architecture.md">Architecture</a></b><br>
+Client structure, backend model and platform choices.
+</td>
+<td valign="top">
+<b><a href="docs/wiki/Implementation.md">Implementation</a></b><br>
+Development setup, builds, testing and contribution patterns.
+</td>
+<td valign="top">
+<b><a href="docs/SPECIFICATION.md">Product specification</a></b><br>
+Product intent and scope; issues and code tell the delivery status. See also the <a href="https://github.com/fdittgen-png/deskilo/wiki">project wiki</a>.
+</td>
+</tr>
+</table>
 
 ## Run or develop your own deployment
 
@@ -103,7 +231,10 @@ A working deployment needs the **full Supabase backend**: PostgreSQL and migrati
 
 For a local development backend, the repository supports the Supabase CLI workflow described in [Backend / migrations](docs/wiki/Implementation.md#backend--migrations). Review the [release guide](docs/guides/RELEASING.md) when distributing builds.
 
-## Engineering approach
+<details>
+<summary><b>Engineering approach</b></summary>
+
+<br>
 
 The client is organized by feature and uses **Flutter/Dart, Riverpod, Freezed, GoRouter and Material 3**. Supabase supplies Auth, PostgreSQL, Storage and Realtime; Edge Functions handle server-side integrations. A shared client keeps the mobile, browser and desktop experiences in one codebase, while platform capabilities and distribution still require their own validation.
 
@@ -119,28 +250,29 @@ The [quality workflow](.github/workflows/quality.yml) is configured to exercise:
 
 The test inventory (`dart run tool/test_inventory.dart`, published with every CI run), [domain invariants](docs/domain/INVARIANTS.md) and [architecture decisions](docs/decisions/) make that work inspectable. Check the latest CI run for actual results on the current commit.
 
-## Documentation
+</details>
 
-| Start here | Contents |
-|---|---|
-| [Project wiki](https://github.com/fdittgen-png/deskilo/wiki) | Product, user and administrator documentation. |
-| [User guide](docs/wiki/User-Guide.md) | Illustrated everyday workflows. |
-| [Configuration guide](docs/wiki/Admin-Configuration-Guide.md) | Booking rules, memberships, roles and workspace settings. |
-| [Technical admin guide](docs/wiki/Admin-Technical-Guide.md) | Reports, integrations and instances. |
-| [Architecture](docs/wiki/Architecture.md) | Client structure, backend model and platform choices. |
-| [Implementation](docs/wiki/Implementation.md) | Development setup, builds, testing and contribution patterns. |
-| [Product specification](docs/SPECIFICATION.md) | Product intent and scope; consult issues and implementation for delivery status. |
-| [Capabilities and evidence](docs/product/CAPABILITIES.md) | What ships, what is tested at which scope, what is roadmap — generated from a validated manifest. |
-| [Operations](docs/guides/OPERATIONS.md) | Instance health, backup, restore and recovery. |
+## Join the project
 
-## Contributing
+<table>
+<tr>
+<td width="72" valign="top"><img src="docs/readme/icon-heart.svg" width="56" alt=""></td>
+<td valign="top">
 
-Contributions are welcome in code, testing, translations, documentation and feedback from real coworking communities. Useful bug reports include the app version, platform, relevant workspace rules, reproduction steps and expected behavior, with personal information removed.
+DesKilo is built in the open and there is room for you. **Run a pilot** with your community and tell us what got in the way. **Translate** or improve the guides. **Test** a build on your device. **Write code**: it is issue-first, with focused pull requests, conventional commits and appropriate tests.
 
-Development is issue-first, with focused pull requests, conventional commits and appropriate tests. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [project rules](docs/AGENT_RULES.md) before starting work.
+Useful bug reports include the app version, platform, relevant workspace rules, reproduction steps and expected behavior, with personal information removed. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [project rules](docs/AGENT_RULES.md) before starting work.
+
+</td>
+</tr>
+</table>
+
+<p align="center">
+<a href="https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen"><img alt="Browse the open issues" src="https://img.shields.io/badge/Browse%20open%20issues-0f766e?style=for-the-badge&logo=github&logoColor=white"></a> <a href="CONTRIBUTING.md"><img alt="Read the contributing guide" src="https://img.shields.io/badge/Contributing%20guide-1b2236?style=for-the-badge"></a> <a href="docs/wiki/Setup-Guide.md"><img alt="Start your own space" src="https://img.shields.io/badge/Start%20your%20own%20space-d32f2f?style=for-the-badge"></a>
+</p>
 
 DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).
 
 ## License
 
-[AGPL-3.0-or-later](LICENSE) © 2026 Florian DITTGEN. **Anyone who uses, modifies or redistributes the code must credit the author** — keep the copyright notices and show *"Based on DesKilo by Florian DITTGEN"* in the app's legal notices ([additional term, AGPL §7(b)](LICENSE-EXCEPTIONS.md#5-credit-the-author-additional-term-agpl-7b)). It comes with an [app-store exception](LICENSE-EXCEPTIONS.md), a [commercial licence](COMMERCIAL-LICENCE.md) for companies that would rather not publish their changes, and a [trademark policy](TRADEMARK.md) for the name.
+[AGPL-3.0-or-later](LICENSE) © 2026 Florian DITTGEN. **Anyone who uses, modifies or redistributes the code must credit the author** — keep the copyright notices and show *"Based on DesKilo by Florian DITTGEN"* in the app's legal notices ([additional term, AGPL §7(b)](LICENSE-EXCEPTIONS.md#5-credit-the-author-additional-term-agpl-7b)). It comes with an [app-store exception](LICENSE-EXCEPTIONS.md), a [commercial licence](COMMERCIAL-LICENCE.md) for companies that would rather not publish their changes, and a [trademark policy](TRADEMARK.md) for the name. Free for associations, collectives and individuals; a for-profit company that modifies it either publishes its changes or buys a commercial licence.
