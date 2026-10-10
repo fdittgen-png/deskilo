@@ -49,7 +49,13 @@ class BackendCandidateForm extends ConsumerStatefulWidget {
     required this.initial,
     required this.onApply,
     required this.onVerified,
+    this.offerDefault = true,
   });
+
+  /// #2343 — false where the reference server is offered beside the form
+  /// (the first start of a build without a default), so it is not offered
+  /// twice.
+  final bool offerDefault;
 
   final String topic;
   final bool isDefault;
@@ -131,8 +137,9 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.xs,
           children: [
-            _chip(BackendConnectMode.defaultService, 'backend-mode-default',
-                l10n?.backendModeDefault ?? "Use DesKilo's service"),
+            if (widget.offerDefault)
+              _chip(BackendConnectMode.defaultService, 'backend-mode-default',
+                  l10n?.backendModeDefault ?? "Use DesKilo's service"),
             _chip(BackendConnectMode.connect, 'backend-mode-connect',
                 l10n?.backendModeConnect ?? 'Connect an existing organization'),
             _chip(BackendConnectMode.operator, 'backend-mode-operator',
