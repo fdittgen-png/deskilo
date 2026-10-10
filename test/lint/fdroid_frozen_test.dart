@@ -57,8 +57,13 @@ import 'package:flutter_test/flutter_test.dart';
 /// libre build ships no default server and asks at first start),
 /// `UpdateCheckMode: Tags ^v\d+\.\d+\.\d+$`, three 1.0.3 entries
 /// (41/42/43) replacing the 0BSD-era ones, CurrentVersion to match.
+///
+/// PIN MOVED AGAIN 2026-10-10: the 1.0.3 entries carried the 1.0.2 commit
+/// as a placeholder, because the release commit did not exist when they
+/// were written. `commit:` now names bb17b05a (the 1.0.3 merge), the ref
+/// fdroid-release.yml built, verified and published the APKs from.
 const _frozenBytes = 5303;
-const _frozenHash = '0xe7ffcef5770fc4b1';
+const _frozenHash = '0x980ad622c1076576';
 
 /// FNV-1a, 64-bit. Hand-rolled because `crypto` is not a direct
 /// dependency of this package and adding one to detect an edited YAML
