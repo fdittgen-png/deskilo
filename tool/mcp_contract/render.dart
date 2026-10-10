@@ -79,8 +79,8 @@ const Map<String, Object?> mcpSecuritySchemes = {
       'authorizationCode': {
         // Absolute: a relative URL resolves against the docs page's own
         // origin, not the backend, and the flow lands nowhere.
-        'authorizationUrl': '${BackendConfig.supabaseUrl}/auth/v1/oauth/authorize',
-        'tokenUrl': '${BackendConfig.supabaseUrl}/auth/v1/oauth/token',
+        'authorizationUrl': '${BackendConfig.referenceUrl}/auth/v1/oauth/authorize',
+        'tokenUrl': '${BackendConfig.referenceUrl}/auth/v1/oauth/token',
         'scopes': {
           'openid': 'Who is connecting',
           'email': 'The e-mail of that person',
@@ -642,7 +642,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
           // The app's own backend (BackendConfig): the page works against
           // the real project out of the box; a self-hoster's build-time
           // SUPABASE_URL lands here too when the contract is rebuilt.
-          'supabase_url': {'default': BackendConfig.supabaseUrl},
+          'supabase_url': {'default': BackendConfig.referenceUrl},
         },
       },
     ],
