@@ -112,7 +112,7 @@
   "consentVersion": "Version",
   "consentAcceptedOn": "Accepté le {date} ({version})",
   "consentReadInHelp": "Lire dans l'aide",
-  "consentReadOnWiki": "Lire sur le wiki",
+  "consentReadOnWiki": "Lire dans le guide en ligne",
   "consentReviewHint": "Le texte que vous avez accepté, avec la date — relisez-le quand vous voulez.",
   "backendServerTitle": "Serveur",
   "backendServerDefault": "Le serveur de l'app ({host})",

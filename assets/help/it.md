@@ -8405,7 +8405,7 @@ macchina non sa spezzare in modo affidabile un indirizzo su una sola
 riga; e le otto menzioni di fattura.
 
 Ognuno di quei campi è documentato, campo per campo, nella
-guida utente, § 11a — il simbolo di aiuto accanto apre
+[guida utente](help:user.money.legal.identity) — il simbolo di aiuto accanto apre
 esattamente il suo paragrafo.
 
 Le **istruzioni di pagamento** (il blocco bancario che un documento

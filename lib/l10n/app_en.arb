@@ -3669,7 +3669,7 @@
   "consentNotBody": "No tracking, no analytics, no advertising, no sale or sharing of data. Push notifications carry no content — only \"you have a new message\"; the app itself writes the text. The F-Droid build has no Google services at all.",
   "consentNotTitle": "What DesKilo never does",
   "consentReadInHelp": "Read in the help",
-  "consentReadOnWiki": "Read on the wiki",
+  "consentReadOnWiki": "Read in the online guide",
   "consentRetentionBody": "As long as you are a member. When you leave and erase, your profile and messages go; accounting records (invoices, payments) stay for the legal retention period, by identifier and not by name.",
   "consentRetentionTitle": "How long",
   "consentReviewBody": "This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the project wiki. A change of the text asks for your acceptance again.",

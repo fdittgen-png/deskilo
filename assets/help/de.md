@@ -8403,7 +8403,7 @@ Maschine eine einzeilige Adresse nicht zuverlässig zerlegen kann; und die
 acht Rechnungsangaben.
 
 Jedes dieser Felder ist Feld für Feld im
-Benutzerhandbuch unter § 11a dokumentiert — das
+[Benutzerhandbuch](help:user.money.legal.identity) dokumentiert — das
 Hilfesymbol daneben öffnet genau seinen Absatz.
 
 **Zahlungshinweise** (der Bankblock, den ein Dokument druckt) sind eine

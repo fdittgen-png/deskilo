@@ -3117,7 +3117,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get consentReadInHelp => 'Leggi nell\'aiuto';
 
   @override
-  String get consentReadOnWiki => 'Leggi sul wiki';
+  String get consentReadOnWiki => 'Leggi nella guida online';
 
   @override
   String get consentRetentionBody =>

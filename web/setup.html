@@ -172,14 +172,17 @@ const countryName=c=>cat('country',c)||c;
 const quoted=x=>T('quoted',{x});
 const quotedList=a=>a.map(quoted).join(T('listSep'));
 const opts=list=>list.map(([v,k,p])=>[v,T(k,p)]);
-const GUIDE_URL='https://github.com/fdittgen-png/deskilo/wiki/User-Guide#the-setup-questionnaire--prepare-a-new-space-before-you-open-the-app';
+// The published guide site: <lang>.html is the user guide, setup-<lang>.html
+// the setup guide; every section's id is its anchor (user.x.y / setup.x.y).
+const GUIDE_BASE='https://fdittgen-png.github.io/deskilo/guide/';
+const guideUrl=anchor=>GUIDE_BASE+(anchor.startsWith('setup.')?'setup-':'')+LANG+'.html#'+anchor;
 function setLang(l){if(!LOCALES.includes(l))return;LANG=l;try{localStorage.setItem(LANG_KEY,l)}catch(e){LANG=l}applyChrome();render()}
 // The static chrome: <html lang>, the title, and every element carrying a
 // data-t (text) or data-th (trusted markup from the resource) key.
 function applyChrome(){
  document.documentElement.lang=LANG;
  document.title=T('setupTitle');
- const link='<a href="'+GUIDE_URL+'" target="_blank" rel="noopener">'+T('setupGuideLink')+'</a>';
+ const link='<a href="'+guideUrl('user.start.questionnaire')+'" target="_blank" rel="noopener">'+T('setupGuideLink')+'</a>';
  document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=T(e.getAttribute('data-t'))});
  document.querySelectorAll('[data-th]').forEach(e=>{e.innerHTML=T(e.getAttribute('data-th'),{link})});
  const sel=document.getElementById('lang');sel.textContent='';
@@ -481,48 +484,48 @@ const scheme=()=>country()[3];
 const isEU=()=>EU.has(S.country);
 const registered=()=>S.vatRegime==='registered';
 
-// Where each answer lives in the app, and the guide section that explains it.
-const WIKI='https://github.com/fdittgen-png/deskilo/wiki/User-Guide#';
+// Where each answer lives in the app, and the guide section that explains it
+// (an anchor id of docs/guide, which is the section's id on the guide site).
 const HELP={
- identity:['helpAppIdentity','workspace-settings-coworking-space'],
- region:['helpAppRegion','12-settings--profile'],
- language:['helpAppLanguage','2-roles--invitations'],
- features:['helpAppFeatures','features'],
- availability:['helpAppAvailability','availability'],
- hours:['helpAppHours','working-hours'],
- booking:['helpAppBooking','booking-policies'],
- limits:['helpAppLimits','booking-limits'],
- plan:['helpAppPlan','the-space-editor'],
- whole:['helpAppWhole','space-qr-codes--whole-space-reservations'],
- tags:['helpAppTags','setting-up-rfid--nfc-badges'],
- billing:['helpAppBilling','billing'],
- packages:['helpAppPackages','9d-the-payments-face'],
- services:['helpAppServices','services-and-accessories'],
- supplyClass:['helpAppServices','place-of-supply-of-a-service'],
- pay:['helpAppPay','9d-the-payments-face'],
- online:['helpAppOnline','setting-up-online-payments'],
- legal:['helpAppLegal','11a-legal-identity-vat--mentions'],
- vat:['helpAppVat','11a-legal-identity-vat--mentions'],
- einvoice:['helpAppEinvoice','11b-where-the-e-invoice-has-to-go-eu'],
- dunning:['helpAppDunning','11-invoicing-owners--billing-admins'],
- roles:['helpAppRoles','role-management'],
- validation:['helpAppValidation','7-events--confirmations-messages--events'],
- members:['helpAppMembers','members--plans'],
- invites:['helpAppInvites','2-roles--invitations'],
- whatsapp:['helpAppWhatsapp','6-members-directory-members-tab'],
- kiosk:['helpAppKiosk','10-kiosk-mode-wall-tablet'],
- privacy:['helpAppPrivacy','14-privacy'],
- consent:['helpAppConsent','14-privacy'],
- negotiations:['helpAppNegotiations','9g-price-negotiations'],
- supplies:['helpAppSupplies','9d-the-payments-face'],
- scheduled:['helpAppScheduled','9h-scheduled-expenses'],
- faces:['helpAppFaces','9-money-finances-tab'],
- reminders_auto:['helpAppRemindersAuto','11e-automatic-payment-reminders'],
- documents:['helpAppDocuments','11d-the-report-suite--the-document-library'],
- messages:['helpAppMessages','16-messages'],
- calendar:['helpAppCalendar','5-calendar-calendar-tab'],
- scopes:['helpAppScopes','role-management'],
- template:['helpAppTemplate','11c-the-report-editor--every-document-four-presets-five-languages'],
+ identity:['helpAppIdentity','user.space.overview'],
+ region:['helpAppRegion','user.workspace.settings.currency-timezone'],
+ language:['helpAppLanguage','user.workspace.settings.language'],
+ features:['helpAppFeatures','user.features.processes'],
+ availability:['helpAppAvailability','user.workspace.availability.open-weekdays'],
+ hours:['helpAppHours','user.workspace.availability.working-hours'],
+ booking:['helpAppBooking','user.workspace.availability.policies'],
+ limits:['helpAppLimits','user.workspace.availability.limits'],
+ plan:['helpAppPlan','user.space.editor.rooms'],
+ whole:['helpAppWhole','user.reserve.whole-space'],
+ tags:['helpAppTags','user.badges.nfc'],
+ billing:['helpAppBilling','user.money.billing.fee-bands'],
+ packages:['helpAppPackages','user.money.billing.packages'],
+ services:['helpAppServices','user.money.services.overview'],
+ supplyClass:['helpAppServices','user.money.services.supply'],
+ pay:['helpAppPay','user.money.payments.methods'],
+ online:['helpAppOnline','user.money.payments.provider'],
+ legal:['helpAppLegal','user.money.legal.identity'],
+ vat:['helpAppVat','user.money.vat.regime'],
+ einvoice:['helpAppEinvoice','user.money.einvoice.overview'],
+ dunning:['helpAppDunning','user.money.reminders.rules'],
+ roles:['helpAppRoles','user.roles.matrix'],
+ validation:['helpAppValidation','user.validation.overview'],
+ members:['helpAppMembers','user.members.list'],
+ invites:['helpAppInvites','user.members.invite'],
+ whatsapp:['helpAppWhatsapp','user.workspace.settings.whatsapp-group'],
+ kiosk:['helpAppKiosk','user.kiosk.mode'],
+ privacy:['helpAppPrivacy','user.privacy.visibility'],
+ consent:['helpAppConsent','user.privacy.consent'],
+ negotiations:['helpAppNegotiations','user.members.negotiation'],
+ supplies:['helpAppSupplies','user.money.expense'],
+ scheduled:['helpAppScheduled','user.money.expenses.schedule'],
+ faces:['helpAppFaces','user.money.overview'],
+ reminders_auto:['helpAppRemindersAuto','user.money.reminders.automatic'],
+ documents:['helpAppDocuments','user.documents.add'],
+ messages:['helpAppMessages','user.collaborate.messages'],
+ calendar:['helpAppCalendar','user.reserve.calendar'],
+ scopes:['helpAppScopes','user.validation.who-may'],
+ template:['helpAppTemplate','user.money.reports.invoice-template'],
 };
 // A feature's own guide section, shown right on its row (features step + summary).
 const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'validation',moneyTab:'faces',financeFaces:'faces',
@@ -538,7 +541,7 @@ let BUILDING='';
 const STEP_HELP={identity:'identity',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
 // The little ? beside every field: straight to the guide section, the app
 // location in the tooltip. Falls back to the step's own section.
-function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:WIKI+anchor,target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
+function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:guideUrl(anchor),target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
 // #2331 — where each answer lands. 'import': the app applies it when the
 // file is imported. 'app': the import cannot carry it, so it is typed in the
 // app. 'file': written into the file for your records and for this page,
@@ -550,7 +553,7 @@ const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppH
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 function destBadge(path){if(path==null)return null;const d=destOf(path);return h('span',{class:'dest '+d,title:T(DEST_TEXT[d][1])},T(DEST_TEXT[d][0]))}
 const lbl=(t,hk,path)=>h('label',{},t,helpIcon(hk),destBadge(path));
-function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ '+T('helpLink',{app:T(app)}))}
+function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:guideUrl(anchor),target:'_blank',rel:'noopener'},'ⓘ '+T('helpLink',{app:T(app)}))}
 // "This question is hidden because…" — the guide's way of saying why,
 // with a jump to the step that would change the answer.
 function dep(text,stepId){const d=h('div',{class:'dep'},text+' ');if(stepId!=null){const a=h('a',{href:'#'},'→ '+T('depStepLink',{n:STEPS.findIndex(s=>s.id===stepId)+1}));a.onclick=e=>{e.preventDefault();go(stepId)};d.append(a)}return d}

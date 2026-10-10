@@ -184,7 +184,7 @@
   "consentVersion": "Version",
   "consentAcceptedOn": "Accepted on {date} ({version})",
   "consentReadInHelp": "Read in the help",
-  "consentReadOnWiki": "Read on the wiki",
+  "consentReadOnWiki": "Read in the online guide",
   "consentReviewHint": "The text you accepted, with the date — read it again anytime.",
   "@consentAcceptedOn": {
     "placeholders": {
