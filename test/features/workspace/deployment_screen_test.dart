@@ -21,6 +21,7 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   bool onDev = true,
   bool viewerOwner = true,
   Map<String, dynamic> flags = const {},
+  List<Deployment> journal = const [],
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
   final base = workspace.workspaces[0];
@@ -37,7 +38,8 @@ Future<(FakeWorkspaceRepository, FakeDeploymentRepository)> _pump(
   }
   final deployment = FakeDeploymentRepository()
     ..environments = {dev.id: 'dev', 'ws-prod': 'prod'}
-    ..diffs = {'services': (1, 0, 0), 'vat': (0, 0, 0), 'document_design': (0, 1, 0)};
+    ..diffs = {'services': (1, 0, 0), 'vat': (0, 0, 0), 'document_design': (0, 1, 0)}
+    ..journalRows.addAll(journal);
   await tester.binding.setSurfaceSize(const Size(900, 2200));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(ProviderScope(
@@ -191,5 +193,25 @@ void main() {
     await tester.pumpAndSettle();
     expect(deployment.deployed, hasLength(1));
     expect(deployment.deployed.single.entities.length, 8);
+  });
+
+  testWidgets('the journal reads in the space\'s clock, not in UTC (#2352)',
+      (tester) async {
+    // 16:00 UTC on a May day is 18:00 on the fixture space's clock
+    // (Central European summer time).
+    await _pump(tester, journal: [
+      Deployment(
+        id: 'dep-utc',
+        fromWorkspaceId: 'ws-prod',
+        toWorkspaceId: 'ws-1',
+        direction: DeploymentDirection.prodToDev,
+        entities: const ['services'],
+        actorName: 'Ada',
+        createdAt: DateTime.utc(2026, 5, 13, 16),
+      ),
+    ]);
+    expect(find.textContaining('18:00'), findsOneWidget);
+    expect(find.textContaining('2026-05-13 16:00'), findsNothing,
+        reason: 'the raw ISO instant was printed before');
   });
 }
