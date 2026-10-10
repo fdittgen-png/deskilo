@@ -59,6 +59,7 @@
     each('[data-i18n-aria]', function (el) { var k = el.getAttribute('data-i18n-aria'); el.setAttribute('aria-label', table[k] || english.aria[k]); });
     each('img[data-shot]', function (img) { img.src = 'img/' + img.getAttribute('data-shot') + '.' + lang + '.webp'; });
     each('a.guide-link', function (a) { a.href = GUIDE + lang + '.html'; });
+    each('a.setup-guide-link', function (a) { a.href = GUIDE + 'setup-' + lang + '.html'; });
     document.title = t('meta.title');
     var desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute('content', t('meta.desc'));

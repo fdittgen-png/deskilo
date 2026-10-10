@@ -72,10 +72,12 @@ void main() {
 
   test('the media tool rebuilds exactly the screenshots the page uses', () {
     final tool = File('tool/welcome_media.sh').readAsStringSync();
-    final listed = RegExp(
-      r'^\s+user-([\w-]+)$',
-      multiLine: true,
-    ).allMatches(tool).map((m) => m.group(1)!).toSet();
+    // A user-guide shot loses its "user-" prefix on the page; a setup-guide
+    // shot keeps "setup-".
+    final listed = RegExp(r'^\s+((?:user|setup)-[\w-]+)$', multiLine: true)
+        .allMatches(tool)
+        .map((m) => m.group(1)!.replaceFirst(RegExp('^user-'), ''))
+        .toSet();
     final used = RegExp(r'data-shot="([^"]+)"')
         .allMatches(html)
         .map((m) => m.group(1)!)

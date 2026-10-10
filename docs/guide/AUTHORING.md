@@ -67,6 +67,11 @@ Rules:
   role words of the language's table below, and the narrowest honest audience: a section about the plan editor is
   *Owner*, not *Everyone*. The label word per language: en **Audience** · fr **Public** · de **Zielgruppe** ·
   es **Público** · it **Destinatari**.
+  The words are a closed vocabulary: only the table below and *Administrator with the permission* (fr
+  *Administrateur·rice avec l'autorisation*, de *Administrator:in mit Berechtigung*, es *Administrador/a con el
+  permiso*, it *Amministratore con il permesso*). Any other word fails the site build (#2400): an unknown role must
+  never quietly become *Everyone* and pass the member filter. The site's "I am" filter has an **Operator** level of
+  its own; the owner level does not include operator-only sections.
 - **Lead** — plain words about the outcome, never about the mechanism; present tense, "you".
 - **Image** — one per section where a screen explains it; `<p><img src="images/<id>.<lang>.jpg" width="280"></p>`.
   Write the *logical* name (no build part): the capture tool adds the build and rewrites the reference. Name = the
