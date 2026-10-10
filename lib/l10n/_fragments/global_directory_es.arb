@@ -1,0 +1,14 @@
+{
+  "directoryLinkIntro": "El directorio global está en el servidor de referencia. Cuando un servidor está vinculado, cada espacio que publica aparece en Descubrir, para todos.",
+  "directoryLinkCheck": "Comprobar",
+  "directoryLinkAction": "Vincular",
+  "directoryLinkStateDirectory": "Es el servidor de referencia: los espacios que publica siempre aparecen.",
+  "directoryLinkStateLinked": "Vinculado: los espacios que publica aparecen en Descubrir.",
+  "directoryLinkStateLinkable": "Se puede vincular: responde y publica espacios que esta aplicación puede leer.",
+  "directoryLinkStateUnreachable": "Aún no se puede vincular: no responde, o su versión no puede publicar espacios.",
+  "directoryLinkDone": "Vinculado. Los espacios que publica ya aparecen en Descubrir.",
+  "directoryLinkNeedsAccount": "El vínculo se registra en el servidor de referencia: conecte primero su cuenta allí.",
+  "directoryLinkConnect": "Conectar el servidor de referencia",
+  "spaceHostedOn": "Servidor: {server}",
+  "serverReferenceLabel": "servidor de referencia ({host})"
+}

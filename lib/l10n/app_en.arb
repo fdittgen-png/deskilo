@@ -4386,6 +4386,16 @@
       }
     }
   },
+  "directoryLinkAction": "Link",
+  "directoryLinkCheck": "Check",
+  "directoryLinkConnect": "Connect the reference server",
+  "directoryLinkDone": "Linked. The spaces it publishes are now listed in Discover.",
+  "directoryLinkIntro": "The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.",
+  "directoryLinkNeedsAccount": "A link is recorded on the reference server: connect your account there first.",
+  "directoryLinkStateDirectory": "This is the reference server: the spaces it publishes are always listed.",
+  "directoryLinkStateLinkable": "Can be linked: it answers, and publishes spaces this app can read.",
+  "directoryLinkStateLinked": "Linked: the spaces it publishes are listed in Discover.",
+  "directoryLinkStateUnreachable": "Cannot be linked yet: it does not answer, or its version cannot publish spaces.",
   "directoryLocate": "Locate on map",
   "directoryLocating": "Locating the public address…",
   "directoryLocationMissing": "Location unavailable. The owner can publish precise map coordinates.",
@@ -14952,7 +14962,7 @@
   "portalPublicPlan": "Public floor plan",
   "portalPublication": "Public workspace page",
   "portalPublished": "Visible in the public directory",
-  "portalRegisterDirectory": "Publish a server in the directory",
+  "portalRegisterDirectory": "Link a server to the global directory",
   "portalRequestProfile": "Request a workspace profile",
   "portalRequestSent": "Request sent. The workspace will review your profile.",
   "portalResetAll": "Reset all public data to workspace information",
@@ -17892,6 +17902,14 @@
   "serverConnectPasteCode": "Paste a server code",
   "serverConnectReference": "Reference server",
   "serverConnectUseHere": "Use on this device",
+  "serverReferenceLabel": "reference server ({host})",
+  "@serverReferenceLabel": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "serviceOutOfStock": "Out of stock",
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
   "serviceStockCount": "{count} in stock",
@@ -18182,6 +18200,14 @@
   },
   "spaceFavoriteAdd": "Add to favorites",
   "spaceFavoriteRemove": "Remove from favorites",
+  "spaceHostedOn": "Server: {server}",
+  "@spaceHostedOn": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
   "spaceKindDesk": "Desk",
   "@spaceKindDesk": {
     "description": "Kind label on a desk's printed QR card"

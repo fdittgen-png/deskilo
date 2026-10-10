@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
@@ -27,14 +28,22 @@ AccountContactActions accountContactActions(Ref ref, {String source = ''}) =>
       ref.watch(accountContactRepositoryProvider(source: source)),
     );
 
-/// #1847 — anonymous discovery. Holds this installation's publishable key
-/// and no session: the provider does not even watch the auth state.
+/// #1847 — anonymous discovery. Holds publishable keys and no session:
+/// the provider does not even watch the auth state.
+///
+/// #2343 — the directory is the GLOBAL one, on the reference deployment,
+/// whatever server this device uses; this device's own server is listed
+/// beside it when it is another one.
 @riverpod
 PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) {
   final client = Supabase.instance.client;
+  final own = Uri.parse(client.rest.url).origin;
   return SupabasePublicDiscoveryRepository(
-    origin: Uri.parse(client.rest.url).origin,
-    publishableKey: client.auth.headers['apikey']!,
+    origin: globalDirectoryEndpoint.url,
+    publishableKey: globalDirectoryEndpoint.key,
+    local: own == globalDirectoryEndpoint.url
+        ? null
+        : BackendEndpoint(own, client.auth.headers['apikey']!),
   );
 }
 

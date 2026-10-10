@@ -10,7 +10,7 @@
   "portalSendCode": "Anmeldecode senden",
   "portalSourceUnavailable": "Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.",
   "portalDiscover": "Arbeitsplatz finden",
-  "portalRegisterDirectory": "Server im Verzeichnis veröffentlichen",
+  "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
   "portalPublication": "Öffentliche Workspace-Seite",
   "portalPublished": "Im öffentlichen Verzeichnis sichtbar",
   "portalPreview": "Externe Ansicht",

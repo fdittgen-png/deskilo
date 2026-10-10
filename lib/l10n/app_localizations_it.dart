@@ -3783,6 +3783,43 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get directoryLinkAction => 'Collega';
+
+  @override
+  String get directoryLinkCheck => 'Verifica';
+
+  @override
+  String get directoryLinkConnect => 'Collega il server di riferimento';
+
+  @override
+  String get directoryLinkDone =>
+      'Collegato. Gli spazi che pubblica sono ora elencati in Scopri.';
+
+  @override
+  String get directoryLinkIntro =>
+      'La directory globale si trova sul server di riferimento. Una volta collegato un server, ogni spazio che pubblica è elencato in Scopri, per tutti.';
+
+  @override
+  String get directoryLinkNeedsAccount =>
+      'Il collegamento è registrato sul server di riferimento: colleghi prima lì il suo account.';
+
+  @override
+  String get directoryLinkStateDirectory =>
+      'È il server di riferimento: gli spazi che pubblica sono sempre elencati.';
+
+  @override
+  String get directoryLinkStateLinkable =>
+      'Può essere collegato: risponde e pubblica spazi che questa app sa leggere.';
+
+  @override
+  String get directoryLinkStateLinked =>
+      'Collegato: gli spazi che pubblica sono elencati in Scopri.';
+
+  @override
+  String get directoryLinkStateUnreachable =>
+      'Non può ancora essere collegato: non risponde, o la sua versione non può pubblicare spazi.';
+
+  @override
   String get directoryLocate => 'Localizza sulla mappa';
 
   @override
@@ -12966,7 +13003,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalPublished => 'Visibile nella directory pubblica';
 
   @override
-  String get portalRegisterDirectory => 'Pubblica un server nella directory';
+  String get portalRegisterDirectory =>
+      'Collega un server alla directory globale';
 
   @override
   String get portalRequestProfile => 'Richiedi un profilo nello spazio';
@@ -15746,6 +15784,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get serverConnectUseHere => 'Usa su questo dispositivo';
 
   @override
+  String serverReferenceLabel(String host) {
+    return 'server di riferimento ($host)';
+  }
+
+  @override
   String get serviceOutOfStock => 'Esaurito';
 
   @override
@@ -16025,6 +16068,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceFavoriteRemove => 'Rimuovi dai preferiti';
+
+  @override
+  String spaceHostedOn(String server) {
+    return 'Server: $server';
+  }
 
   @override
   String get spaceKindDesk => 'Tavolo';

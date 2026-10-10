@@ -196,14 +196,22 @@ final class AccountContactActionsFamily extends $Family
   String toString() => r'accountContactActionsProvider';
 }
 
-/// #1847 — anonymous discovery. Holds this installation's publishable key
-/// and no session: the provider does not even watch the auth state.
+/// #1847 — anonymous discovery. Holds publishable keys and no session:
+/// the provider does not even watch the auth state.
+///
+/// #2343 — the directory is the GLOBAL one, on the reference deployment,
+/// whatever server this device uses; this device's own server is listed
+/// beside it when it is another one.
 
 @ProviderFor(publicDiscoveryRepository)
 final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
 
-/// #1847 — anonymous discovery. Holds this installation's publishable key
-/// and no session: the provider does not even watch the auth state.
+/// #1847 — anonymous discovery. Holds publishable keys and no session:
+/// the provider does not even watch the auth state.
+///
+/// #2343 — the directory is the GLOBAL one, on the reference deployment,
+/// whatever server this device uses; this device's own server is listed
+/// beside it when it is another one.
 
 final class PublicDiscoveryRepositoryProvider
     extends
@@ -213,8 +221,12 @@ final class PublicDiscoveryRepositoryProvider
           PublicDiscoveryRepository
         >
     with $Provider<PublicDiscoveryRepository> {
-  /// #1847 — anonymous discovery. Holds this installation's publishable key
-  /// and no session: the provider does not even watch the auth state.
+  /// #1847 — anonymous discovery. Holds publishable keys and no session:
+  /// the provider does not even watch the auth state.
+  ///
+  /// #2343 — the directory is the GLOBAL one, on the reference deployment,
+  /// whatever server this device uses; this device's own server is listed
+  /// beside it when it is another one.
   PublicDiscoveryRepositoryProvider._()
     : super(
         from: null,
@@ -250,7 +262,7 @@ final class PublicDiscoveryRepositoryProvider
 }
 
 String _$publicDiscoveryRepositoryHash() =>
-    r'993959af6b8807ac467d7ad6009b7c9303f3b337';
+    r'd5373afe3e360f5dd367b8d77a48c7ee1be698b4';
 
 @ProviderFor(publicationRepository)
 final publicationRepositoryProvider = PublicationRepositoryProvider._();
