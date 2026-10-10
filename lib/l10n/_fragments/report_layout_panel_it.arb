@@ -4,7 +4,7 @@
   "@reportLayoutTitle": {
     "description": "Designer card title for the positioned layout of one report kind (#875)"
   },
-  "reportLayoutSubtitle": "Un layout indica dove si trova ogni elemento, in mm, cm, px o %. Esportalo, modificalo, verificalo con `dart run tool/report.dart check`, reimportalo. Quando esiste un layout è quello che si stampa; rimuovilo e tornano a stamparsi le bande.",
+  "reportLayoutSubtitle": "Un layout indica dove si trova ogni elemento, in mm, cm, px o %. Lo esporti, lo modifichi, lo verifichi con `dart run tool/report.dart check`, lo reimporti. Quando esiste un layout è quello che si stampa; lo rimuova e tornano a stamparsi le bande.",
   "@reportLayoutSubtitle": {
     "description": "Explains export/edit/check/import and that a layout wins over the bands (#875)"
   },
@@ -32,7 +32,7 @@
   "@reportLayoutRemove": {
     "description": "Button: remove the layout so the bands print again (#875)"
   },
-  "reportLayoutImported": "Layout importato. Salva per conservarlo.",
+  "reportLayoutImported": "Layout importato. Salvi per conservarlo.",
   "@reportLayoutImported": {
     "description": "Snack after a successful import; save is still required (#875)"
   },

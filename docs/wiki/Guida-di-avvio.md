@@ -738,7 +738,7 @@ L’app ha dei controlli per alcune contraddizioni e nessuno per altre. Nella ta
 
 | Se ha… | Controllo nell’app | Lacuna che resta |
 |---|---|---|
-| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completa questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**, come **L'identità legale e l'indirizzo dello spazio**, **Necessario prima di fatturare**, e nella Sua posta. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
+| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completi questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**, come **L'identità legale e l'indirizzo dello spazio**, **Necessario prima di fatturare**, e nella Sua posta. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
 | Un paese diverso da Francia o Germania | L’emissione dice che il paese «deve essere Francia o Germania per emettere qui». | Nulla la avvisa quando sceglie il paese o attiva la fatturazione. |
 | Registrato ai fini IVA, nessuna aliquota in vigore | L’emissione viene rifiutata finché non è in vigore un’aliquota predefinita. La descrizione di **Gestione IVA** e l’avviso nella schermata dell’identità legale lo dicono. | Con **Gestione IVA** disattivata, la configurazione è nascosta mentre le aliquote memorizzate continuano ad applicarsi. Controlli le aliquote dopo averla disattivata. |
 | **Pagamenti online** attivi, nessun fornitore | Un nuovo pagamento online viene rifiutato quando la funzionalità è disattivata; il fornitore mancante compare in **Configurazione di questo spazio**. | Può attivarla senza un fornitore. Lo colleghi prima: [Fornitore di pagamenti](Guida-utente#il-fornitore-di-pagamento). |
@@ -887,7 +887,7 @@ Vuole un unico punto che dica, per le funzionalità principali, che cosa ricevon
 | **Coppie di ambienti**, **Distribuzioni** | Un lato di prova e uno reale, con distribuzione. | | Proprietario |
 | **Configurazione nel file dello spazio** | L’intera configurazione viaggia nel file dello spazio. | **Esportazione dati (Excel)** | Proprietario |
 | **Assistente istanza** | Creare un nuovo server dall’app. | | Operatore |
-| **Cosa ti aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
+| **Cosa la aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
 | **Registratore di attività** | Registrare e riprodurre i passaggi di un’attività. | | Nessuno |
 | **Notifiche push** | Conferme in sospeso sul telefono. | Il servizio push dell’installazione | Operatore |
 | **Integrazione WhatsApp** | Una chat con un membro con un tocco, il link del gruppo. | **Elenco dei membri** | Proprietario |
@@ -1225,7 +1225,7 @@ Vuole essere certo che ogni richiesta per cui crea una regola possa ricevere una
 1. Apra [Regole di convalida](https://fdittgen-png.github.io/deskilo/#/validation) e legga ogni scheda personalizzata: «Tutti gli admin — qualsiasi 2» significa due persone.
 2. Apra [Membri e piani](https://fdittgen-png.github.io/deskilo/#/members). Conti i proprietari e gli amministratori attivi. Le persone in pausa o uscite non contano.
 3. Apra **Configurazione di questo spazio** in [Spazio di lavoro](https://fdittgen-png.github.io/deskilo/#/workspace-settings). L’area **Ruoli e chi convalida le richieste** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» quando ne conta troppo pochi. L’area diventa allora obbligatoria, qualunque sia il tipo di richiesta, e [Che cosa richiede la Sua attenzione](Guida-utente#cosa-ti-aspetta) la segnala.
-4. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events). **In attesa della tua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
+4. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events). **In attesa della sua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
 
 **Da sapere**
 
@@ -1310,7 +1310,7 @@ Risponda a due domande: i membri Le pagano lo spazio e vuole che le fatture lega
 **Da sapere**
 
 - L'emissione di fatture nell'app esiste oggi per uno spazio in **Francia** o in **Germania**. In qualsiasi altro paese usi il percorso 2: gli estratti conto restano disponibili.
-- Il server rifiuta di emettere, e l'elenco **Completa questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
+- Il server rifiuta di emettere, e l'elenco **Completi questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
 - Un venditore in regime di franchigia per le piccole imprese (franchise en base, Kleinunternehmer) non può emettere fatture nell'app: il server rifiuta la categoria IVA esente. Resti sul percorso 2 ed emetta quelle fatture altrove.
 - Spegnere una funzione ferma le nuove operazioni di quel tipo; non cancella nulla.
 - Può restare sul percorso 2 per sempre. Molte associazioni lo fanno.
@@ -1677,7 +1677,7 @@ La notifica push viene inviata solo per le cinque righe contrassegnate «push» 
 
 | Fonte | Evento | Chi viene informato | Canale | Che cosa può cambiare il membro |
 |---|---|---|---|---|
-| Regole di convalida | Una richiesta ha bisogno di una conferma | Le persone indicate dalla regola (flusso, **In attesa della tua conferma**); la push va solo al membro a cui la richiesta si riferisce, mai a chi l'ha fatta, quindi i convalidatori ricevono la push solo se sono quel membro. Testo: «Someone needs your confirmation.» | Flusso, campanella; push | Spegnere la push sul dispositivo |
+| Regole di convalida | Una richiesta ha bisogno di una conferma | Le persone indicate dalla regola (flusso, **In attesa della sua conferma**); la push va solo al membro a cui la richiesta si riferisce, mai a chi l'ha fatta, quindi i convalidatori ricevono la push solo se sono quel membro. Testo: «Someone needs your confirmation.» | Flusso, campanella; push | Spegnere la push sul dispositivo |
 | Prenotazioni | Un amministratore rimuove o annulla una prenotazione | Il membro spostato e ogni amministratore e proprietario attivo, tranne chi ha agito. Testo: «A reservation was removed by an admin.» | Flusso; push | Spegnere la push sul dispositivo |
 | Solleciti di pagamento | Una fattura è scaduta e scatta un livello di sollecito | Il membro a cui è intestata la fattura. La fattura di un proprietario arriva al proprietario stesso. Testo: «A payment reminder is waiting for you.» | Avviso nel flusso; push | Spegnere la push sul dispositivo |
 | Notifiche tra membri | Un nuovo messaggio | Messaggio diretto: il destinatario. Gruppo: i partecipanti tranne il mittente. Una conversazione silenziata da un membro resta muta per quel membro. Testo: «You have a new message.» | Messaggi, campanella; push | Silenziare, fissare o archiviare una conversazione; spegnere la push |
@@ -1785,7 +1785,7 @@ Lo faccia in uno spazio di prova (vedi [una prova sicura](#una-prova-sicura-in-u
 
 1. Messaggio: dall'account del membro, scriva al proprietario in [Messaggi](https://fdittgen-png.github.io/deskilo/#/me?tab=messages). Sull'account del proprietario la campanella lo conta e la conversazione risulta non letta. La apra: il messaggio del membro mostra una conferma di lettura.
 2. Menzione: in una conversazione di gruppo, nomini il proprietario (la funzione di menzione della messaggistica deve essere attiva). Se la push è configurata, il telefono del proprietario mostra «You were mentioned in a conversation.»
-3. Decisione: come membro, chieda di eliminare una prenotazione passata (la funzione **Richieste di eliminazione prenotazioni** deve essere attiva). Il proprietario la vede sotto **In attesa della tua conferma** in [Eventi](https://fdittgen-png.github.io/deskilo/#/events); risponda e osservi come cambia il flusso del membro.
+3. Decisione: come membro, chieda di eliminare una prenotazione passata (la funzione **Richieste di eliminazione prenotazioni** deve essere attiva). Il proprietario la vede sotto **In attesa della sua conferma** in [Eventi](https://fdittgen-png.github.io/deskilo/#/events); risponda e osservi come cambia il flusso del membro.
 4. Rimozione: come proprietario, rimuova una prenotazione futura del membro. Il flusso del membro la mostra e un telefono con la push mostra «A reservation was removed by an admin.»
 5. Promemoria: come membro, prenoti un posto che inizia fra circa 20 minuti (una prenotazione che inizia fra meno di 15 minuti non riceve alcun promemoria). Circa 15 minuti prima dell'inizio, il telefono del membro mostra il promemoria di check-in.
 6. Sollecito di pagamento: con **Solleciti di pagamento** attivi, attivi **Solleciti automatici** nelle regole di sollecito con un breve ritardo per il primo sollecito, emetta una fattura di prova con un termine di pagamento, attenda che il ritardo passi, poi apra Finanze come proprietario o comproprietario; il flusso del membro mostra l'avviso.
@@ -2081,7 +2081,7 @@ Vuole sapere quali Suoi errori l'app Le segnalerà e dove lo farà, così da gua
 | La riga che blocca una prima prenotazione | Le aree che l'elenco segna **Necessario per una prima prenotazione**: un fuso orario, una valuta, un giorno della settimana aperto, un posto, membri che possiedono **Prenotare e usare le prenotazioni** (un nuovo spazio non concede loro nulla) e, quando una regola di convalida di qualsiasi tipo chiede più convalidatori di quanti ce ne siano, quei convalidatori. Il resto è facoltativo e si può mettere da parte con **Più avanti**. | **Prima che qualcuno possa prenotare qui**, nella scheda Primi passi di [Prenota](https://fdittgen-png.github.io/deskilo/#/reserve) |
 | La riga che blocca una prima fattura | Con **Fatture** attiva, l'identità legale e l'indirizzo dello spazio. Senza di essi non si può emettere alcuna fattura, quindi l'area non si può mettere da parte. | **Configurazione di questo spazio**: l'area **L'identità legale e l'indirizzo dello spazio**, segnata **Necessario prima di fatturare**; finché è il passo successivo, il titolo della scheda dice «Prima di fatturare: …» |
 | Ciò che le Sue funzioni richiedono ancora in locale | Dati bancari, un fornitore di pagamenti online, un account di fatturazione elettronica, una sede. L'identità legale non compare qui: con **Fatture** attiva è un'area a sé (sopra). | La stessa scheda, area **Dati richiesti dalle funzioni (identità, banca, piattaforme)**, con **Configura** e **Consigliato** |
-| La protezione delle fatture | Una fattura viene rifiutata finché non è completa: l'indirizzo dello spazio, la sua partita IVA, un paese tra Francia e Germania, una base giuridica per un'esenzione, nome, indirizzo e partita IVA del membro quando si applica l'inversione contabile, un'aliquota IVA in vigore, una spiegazione per ogni riga fatturata allo 0 %. Le fatture transfrontaliere, con inversione contabile, di esportazione ed esenti vengono rifiutate: le emetta fuori dall'app. | **Completa questi dati prima dell'emissione**, con l'elenco delle voci mancanti |
+| La protezione delle fatture | Una fattura viene rifiutata finché non è completa: l'indirizzo dello spazio, la sua partita IVA, un paese tra Francia e Germania, una base giuridica per un'esenzione, nome, indirizzo e partita IVA del membro quando si applica l'inversione contabile, un'aliquota IVA in vigore, una spiegazione per ogni riga fatturata allo 0 %. Le fatture transfrontaliere, con inversione contabile, di esportazione ed esenti vengono rifiutate: le emetta fuori dall'app. | **Completi questi dati prima dell'emissione**, con l'elenco delle voci mancanti |
 | La protezione dei pagamenti online | Con **Pagamenti online** spento, il server rifiuta un nuovo pagamento online. Uno già aperto si conclude comunque. | Le schermate dei pagamenti (la riga della funzione non riporta alcuna nota in proposito) |
 | La protezione delle convalide | **Validazioni richieste** in numero superiore alle persone disponibili, per qualsiasi tipo di richiesta. | **Validatori idonei insufficienti.** nell'editor della regola; «Una regola richiede più validatori di quanti ne abbia questo spazio» nell'elenco di prontezza, dove **Ruoli e chi convalida le richieste** diventa allora obbligatoria |
 | Il blocco di valuta e paese | Quando lo spazio ha emesso un documento o registrato denaro, il server rifiuta qualsiasi cambio di **Valuta** o **Paese**, dal modulo delle impostazioni, da un'importazione o da qualsiasi altro punto. Il fuso orario non è bloccato. | «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.» quando salva [Spazio](https://fdittgen-png.github.io/deskilo/#/workspace-settings) |
@@ -2174,7 +2174,7 @@ Vuole una prova, non una sensazione, prima di aprire. Trentuno controlli, in tre
 
 | # | Controllo | Dove | Com'è quando va bene |
 |---|---|---|---|
-| 27 | Identità legale | [Identità legale e fatturazione elettronica](https://fdittgen-png.github.io/deskilo/#/legal-identity) | **L'identità legale e l'indirizzo dello spazio** indica **Pronto**, e **Completa questi dati prima dell'emissione** non mostra nulla quando avvia una fattura di prova |
+| 27 | Identità legale | [Identità legale e fatturazione elettronica](https://fdittgen-png.github.io/deskilo/#/legal-identity) | **L'identità legale e l'indirizzo dello spazio** indica **Pronto**, e **Completi questi dati prima dell'emissione** non mostra nulla quando avvia una fattura di prova |
 | 28 | Regime e aliquote IVA | [IVA](https://fdittgen-png.github.io/deskilo/#/vat) | Il regime è quello indicato dal commercialista; per la Sua aliquota predefinita ce n'è una in vigore |
 | 29 | Formato dei numeri | [Serie di numerazione](https://fdittgen-png.github.io/deskilo/#/settings/number-sequences) | Ha letto l'anteprima e il commercialista è d'accordo |
 | 30 | Una fattura di prova | Spazio di prova, assistente di chiusura mensile | È stata emessa, in ogni lingua che leggono i Suoi membri, senza voci mancanti |
@@ -2201,7 +2201,7 @@ Vuole un'abitudine breve che mantenga coerente lo spazio, in dieci minuti a fine
 **Passaggi**
 
 1. Apra **Configurazione di questo spazio**. Ogni area indica ancora **Pronto**, oppure **Non necessario qui**, oppure è messa da parte di proposito.
-2. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events). **In attesa della tua conferma** è vuoto o piccolo, e nessun membro è **In attesa** da più di un giorno o due.
+2. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events). **In attesa della sua conferma** è vuoto o piccolo, e nessun membro è **In attesa** da più di un giorno o due.
 3. Riconti la squadra. Chi se n'è andato o è stato sospeso può lasciare una regola scoperta. Vedi [Evitare richieste che attendono per sempre](#evitare-richieste-che-attendono-per-sempre).
 4. Chiuda il mese: i giorni di chiusura sono inseriti, l'assistente di chiusura mensile è stato eseguito, i solleciti di pagamento sono partiti (in automatico ogni mattina, oppure all'apertura di Finanze dove il database non ha lo scheduler). Vedi [L'assistente di chiusura mensile](Guida-utente#lassistente-di-chiusura-mensile).
 5. Faccia l'esportazione dei dati e apra **Funzionalità** per verificare che, dopo le modifiche del mese, nessun processo richieda attenzione.
@@ -2309,7 +2309,7 @@ Vuole vedere il prodotto finito prima di prendere decisioni. Lo spazio dimostrat
 **Passaggi**
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**, poi **Inizia**. Vedi [Lo spazio dimostrativo](Guida-utente#lo-spazio-dimostrativo).
-2. Usi **Vedi come** per passare da **La proprietaria** a **Un'amministratrice** e a **Un membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
+2. Usi **Vedi come** per passare tra **Proprietario**, **Amministratore** e **Membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
 3. Tocchi **Reimposta la demo** quando la vuole come all'inizio.
 
 *Come membro*

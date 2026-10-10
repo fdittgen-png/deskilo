@@ -3465,6 +3465,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get demoPersonaAdmin => 'An administrator';
 
   @override
+  String get demoPersonaKiosk => 'The kiosk tablet';
+
+  @override
   String get demoPersonaMember => 'A member';
 
   @override
@@ -3767,6 +3770,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Seen $minutes min ago';
   }
+
+  @override
+  String get directoryLinkAction => 'Link';
+
+  @override
+  String get directoryLinkCheck => 'Check';
+
+  @override
+  String get directoryLinkConnect => 'Connect the reference server';
+
+  @override
+  String get directoryLinkDone =>
+      'Linked. The spaces it publishes are now listed in Discover.';
+
+  @override
+  String get directoryLinkIntro =>
+      'The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.';
+
+  @override
+  String get directoryLinkNeedsAccount =>
+      'A link is recorded on the reference server: connect your account there first.';
+
+  @override
+  String get directoryLinkStateDirectory =>
+      'This is the reference server: the spaces it publishes are always listed.';
+
+  @override
+  String get directoryLinkStateLinkable =>
+      'Can be linked: it answers, and publishes spaces this app can read.';
+
+  @override
+  String get directoryLinkStateLinked =>
+      'Linked: the spaces it publishes are listed in Discover.';
+
+  @override
+  String get directoryLinkStateUnreachable =>
+      'Cannot be linked yet: it does not answer, or its version cannot publish spaces.';
 
   @override
   String get directoryLocate => 'Locate on map';
@@ -12864,7 +12904,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalPublished => 'Visible in the public directory';
 
   @override
-  String get portalRegisterDirectory => 'Publish a server in the directory';
+  String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
   String get portalRequestProfile => 'Request a workspace profile';
@@ -15611,6 +15651,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get serverConnectUseHere => 'Use on this device';
 
   @override
+  String serverReferenceLabel(String host) {
+    return 'reference server ($host)';
+  }
+
+  @override
   String get serviceOutOfStock => 'Out of stock';
 
   @override
@@ -15890,6 +15935,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spaceFavoriteRemove => 'Remove from favorites';
+
+  @override
+  String spaceHostedOn(String server) {
+    return 'Server: $server';
+  }
 
   @override
   String get spaceKindDesk => 'Desk';

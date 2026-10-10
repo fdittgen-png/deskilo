@@ -10,7 +10,7 @@
   "guideHostSteps": "Alle Schritte",
   "guideHostResume": "Fortsetzen",
   "guideHostClose": "Schließen",
-  "guideHostWaiting": "Warte auf das Ergebnis …",
+  "guideHostWaiting": "Auf das Ergebnis wird gewartet …",
   "guideHostUncertain": "Die Antwort kam nicht an. Prüfen Sie, ob es geklappt hat, bevor Sie es erneut versuchen.",
   "guideHostRecovery": "Das wurde abgelehnt. Folgen Sie diesen Schritten und versuchen Sie es dann erneut.",
   "guideHostNotOnScreen": "Öffnen Sie die Seite des Schritts und folgen Sie den vorherigen Schritten, um dieses Bedienelement anzuzeigen.",

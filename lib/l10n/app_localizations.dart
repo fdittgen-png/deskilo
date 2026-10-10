@@ -6025,6 +6025,12 @@ abstract class AppLocalizations {
   /// **'An administrator'**
   String get demoPersonaAdmin;
 
+  /// #2327 demo personas: demoPersonaKiosk
+  ///
+  /// In en, this message translates to:
+  /// **'The kiosk tablet'**
+  String get demoPersonaKiosk;
+
   /// #1376 demo personas: demoPersonaMember
   ///
   /// In en, this message translates to:
@@ -6564,6 +6570,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seen {minutes} min ago'**
   String directoryLastSeenMinutes(int minutes);
+
+  /// No description provided for @directoryLinkAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get directoryLinkAction;
+
+  /// No description provided for @directoryLinkCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get directoryLinkCheck;
+
+  /// No description provided for @directoryLinkConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the reference server'**
+  String get directoryLinkConnect;
+
+  /// No description provided for @directoryLinkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked. The spaces it publishes are now listed in Discover.'**
+  String get directoryLinkDone;
+
+  /// No description provided for @directoryLinkIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.'**
+  String get directoryLinkIntro;
+
+  /// No description provided for @directoryLinkNeedsAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'A link is recorded on the reference server: connect your account there first.'**
+  String get directoryLinkNeedsAccount;
+
+  /// No description provided for @directoryLinkStateDirectory.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the reference server: the spaces it publishes are always listed.'**
+  String get directoryLinkStateDirectory;
+
+  /// No description provided for @directoryLinkStateLinkable.
+  ///
+  /// In en, this message translates to:
+  /// **'Can be linked: it answers, and publishes spaces this app can read.'**
+  String get directoryLinkStateLinkable;
+
+  /// No description provided for @directoryLinkStateLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked: the spaces it publishes are listed in Discover.'**
+  String get directoryLinkStateLinked;
+
+  /// No description provided for @directoryLinkStateUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot be linked yet: it does not answer, or its version cannot publish spaces.'**
+  String get directoryLinkStateUnreachable;
 
   /// No description provided for @directoryLocate.
   ///
@@ -22133,7 +22199,7 @@ abstract class AppLocalizations {
   /// No description provided for @portalRegisterDirectory.
   ///
   /// In en, this message translates to:
-  /// **'Publish a server in the directory'**
+  /// **'Link a server to the global directory'**
   String get portalRegisterDirectory;
 
   /// No description provided for @portalRequestProfile.
@@ -26990,6 +27056,12 @@ abstract class AppLocalizations {
   /// **'Use on this device'**
   String get serverConnectUseHere;
 
+  /// No description provided for @serverReferenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'reference server ({host})'**
+  String serverReferenceLabel(String host);
+
   /// No description provided for @serviceOutOfStock.
   ///
   /// In en, this message translates to:
@@ -27463,6 +27535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove from favorites'**
   String get spaceFavoriteRemove;
+
+  /// No description provided for @spaceHostedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Server: {server}'**
+  String spaceHostedOn(String server);
 
   /// Kind label on a desk's printed QR card
   ///

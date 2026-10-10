@@ -12,7 +12,7 @@
   "@demoSessionResetDone": {
     "description": "#1375 demo session: demoSessionResetDone"
   },
-  "demoSessionBadgeHint": "Estás explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
+  "demoSessionBadgeHint": "Está explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
   },
@@ -20,15 +20,19 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
-  "demoPersonaMember": "Un miembro",
+  "demoPersonaMember": "Miembro",
   "@demoPersonaMember": {
     "description": "#1376 demo personas: demoPersonaMember"
   },
-  "demoPersonaAdmin": "Una administradora",
+  "demoPersonaAdmin": "Administrador/a",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
-  "demoPersonaOwner": "La propietaria",
+  "demoPersonaKiosk": "La tableta del quiosco",
+  "@demoPersonaKiosk": {
+    "description": "#2327 demo personas: demoPersonaKiosk"
+  },
+  "demoPersonaOwner": "Propietario",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
@@ -44,7 +48,7 @@
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
   },
-  "demoEntryBody": "Todo en él es inventado: las personas, las reservas y las facturas se han creado para la demostración. Nada de lo que hagas aquí llega a un espacio real, nada sale de este dispositivo y no hace falta ninguna cuenta. Reiniciar lo deja como estaba cuando quieras.",
+  "demoEntryBody": "Todo en él es inventado: las personas, las reservas y las facturas se han creado para la demostración. Nada de lo que haga aquí llega a un espacio real, nada sale de este dispositivo y no hace falta ninguna cuenta. Reiniciar lo deja como estaba cuando quiera.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
   },

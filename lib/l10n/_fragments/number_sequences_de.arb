@@ -4,7 +4,7 @@
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"
   },
-  "featureNumberSequencesDesc": "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert die Inhaberin das Format für alles Kommende.",
+  "featureNumberSequencesDesc": "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert der Inhaber das Format für alles Kommende.",
   "@featureNumberSequencesDesc": {
     "description": "#925 number sequences: featureNumberSequencesDesc"
   },

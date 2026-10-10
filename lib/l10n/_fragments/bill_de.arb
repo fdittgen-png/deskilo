@@ -15,12 +15,12 @@
   "entitlementTitle": "Diesen Monat",
   "entitlementDaysUsed": "{used} von {total} Tagen genutzt",
   "entitlementDaysLeft": "Noch {left} Tage",
-  "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage zusätzliche Halbtage.",
-  "entitlementPaygRate": "Tage über deinen Tarif hinaus kosten je {rate}.",
-  "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.",
+  "entitlementBlockedFull": "Sie haben diesen Monat alle Tage aufgebraucht. Bitten Sie einen Admin um mehr oder beantragen Sie zusätzliche Halbtage.",
+  "entitlementPaygRate": "Tage über Ihren Tarif hinaus kosten je {rate}.",
+  "entitlementPackageFull": "Sie haben diesen Monat alle Tage aufgebraucht. Kaufen Sie ein Paket, um weiter zu buchen.",
   "billPackages": "Tagespakete",
   "payOnlineButton": "Online bezahlen",
-  "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin.",
+  "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Fragen Sie den Inhaber des Workspace.",
   "payOnlinePendingTitle": "Online-Zahlung ausstehend",
   "payOnlineFailedTitle": "Online-Zahlung fehlgeschlagen",
   "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
@@ -60,15 +60,15 @@
   "@billInvoiceRemaining": {
     "description": "Bill invoice card: what is still owed on a partially paid invoice"
   },
-  "billCreditNoteDue": "Der Space schuldet dir diesen Betrag — du musst nichts zahlen.",
+  "billCreditNoteDue": "Der Space schuldet Ihnen diesen Betrag — Sie müssen nichts zahlen.",
   "@billCreditNoteDue": {
     "description": "Bill credit-note card: refund still due from the workspace"
   },
-  "billCreditNoteRefunded": "Der Space hat dir diesen Betrag erstattet.",
+  "billCreditNoteRefunded": "Der Space hat Ihnen diesen Betrag erstattet.",
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "accountCardTitle": "Dein Konto",
+  "accountCardTitle": "Ihr Konto",
   "@accountCardTitle": {
     "description": "Money tab: title of the cross-month account position card (#512)"
   },
@@ -96,7 +96,7 @@
       }
     }
   },
-  "accountImputationHint": "Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
+  "accountImputationHint": "Ihr Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
   },

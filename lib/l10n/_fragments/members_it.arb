@@ -47,7 +47,7 @@
   "@memberMessagesAction": {
     "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
   },
-  "conversationEmpty": "Ancora nessun messaggio — saluta!",
+  "conversationEmpty": "Ancora nessun messaggio — saluti!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
   },
@@ -71,7 +71,7 @@
   "@conversationYesterday": {
     "description": "#687 - messaging centre"
   },
-  "conversationYou": "Tu",
+  "conversationYou": "Lei",
   "@conversationYou": {
     "description": "#687 - messaging centre"
   },
@@ -128,7 +128,7 @@
   "@conversationLeave": {
     "description": "#687 - messaging centre"
   },
-  "conversationLeaveConfirm": "Uscire da questo gruppo? Non riceverai più i suoi messaggi; quelli già inviati restano.",
+  "conversationLeaveConfirm": "Uscire da questo gruppo? Non riceverà più i suoi messaggi; quelli già inviati restano.",
   "@conversationLeaveConfirm": {
     "description": "#687 - messaging centre"
   },
@@ -172,7 +172,7 @@
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
   },
-  "newGroupNameTaken": "Esiste già un gruppo con questo nome. Scegline un altro.",
+  "newGroupNameTaken": "Esiste già un gruppo con questo nome. Ne scelga un altro.",
   "@newGroupNameTaken": {
     "description": "#694 - group names are unique per workspace"
   },
@@ -235,7 +235,7 @@
       }
     }
   },
-  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascina per aggiornare.",
+  "memberMoneyUnavailable": "Impossibile caricare le finanze. Trascini per aggiornare.",
   "@memberMoneyUnavailable": {
     "description": "#709 - the money section of a profile could not be read"
   },
@@ -243,7 +243,7 @@
   "inboxFilterAll": "Tutti",
   "inboxFilterUnread": "Non letti",
   "inboxFilterArchived": "Archiviati",
-  "inboxNoUnread": "Niente da leggere — sei aggiornato.",
+  "inboxNoUnread": "Niente da leggere — è aggiornato.",
   "inboxNoArchived": "Nessuna conversazione archiviata.",
   "conversationPin": "Fissa in alto",
   "conversationUnpin": "Sblocca",
@@ -266,7 +266,7 @@
     }
   },
   "composerDraftKept": "Bozza conservata",
-  "newConversationTapToOpen": "Tocca una persona per aprire la chat; attiva Gruppo per sceglierne più di una.",
+  "newConversationTapToOpen": "Tocchi una persona per aprire la chat; attivi Gruppo per sceglierne più di una.",
   "newConversationGroupSwitch": "Gruppo",
   "inboxRetry": "Riprova",
   "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
@@ -430,7 +430,7 @@
   "@groupPickPeople": {
     "description": "messenger: creating a group of people"
   },
-  "groupNeedsPeople": "Aggiungi almeno una persona.",
+  "groupNeedsPeople": "Aggiunga almeno una persona.",
   "@groupNeedsPeople": {
     "description": "messenger: creating a group of people"
   }

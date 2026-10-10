@@ -3327,7 +3327,7 @@ window.SETUP_L10N={
    ],
    "adminLevelAssign": [
     "Admins können Etagen zuweisen",
-    "Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer."
+    "Admins weisen Mitgliedern Etagen-Reservierungen zu. Der Inhaber kann es immer."
    ],
    "kioskMode": [
     "Kiosk-Modus",
@@ -3350,7 +3350,7 @@ window.SETUP_L10N={
     "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken."
    ],
    "coOwner": [
-    "Mit-Inhaberinnen",
+    "Mitinhaber",
     "Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv)."
    ],
    "invoicing": [
@@ -3359,7 +3359,7 @@ window.SETUP_L10N={
    ],
    "adminInvoicing": [
     "Admins stellen Rechnungen aus",
-    "Auch Admins stellen Rechnungen aus. Die Inhaberin kann es immer."
+    "Auch Admins stellen Rechnungen aus. Der Inhaber kann es immer."
    ],
    "autoCheckInOut": [
     "Auto-Check-in/-out am Tagesende",
@@ -3403,7 +3403,7 @@ window.SETUP_L10N={
    ],
    "roleManagement": [
     "Rollenverwaltung",
-    "Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte."
+    "Die zentrale Rolle→Berechtigung-Matrix: Der Inhaber entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte."
    ],
    "vatManagement": [
     "USt-Verwaltung",
@@ -3523,11 +3523,11 @@ window.SETUP_L10N={
    ],
    "managedProfileAccess": [
     "Wer ein Profil verwaltet",
-    "Jedes verwaltete Profil nennt, wer es verwalten darf — nach Rolle, nach benannten Personen oder beides. Aus: jede Inhaberin und jeder Admin darf, wie bisher. Die Identität selbst ist in beiden Fällen geschützt, und jeder Zugriff wird für die Person festgehalten, die das Profil übernimmt."
+    "Jedes verwaltete Profil nennt, wer es verwalten darf — nach Rolle, nach benannten Personen oder beides. Aus: jeder Inhaber und jeder Admin darf, wie bisher. Die Identität selbst ist in beiden Fällen geschützt, und jeder Zugriff wird für die Person festgehalten, die das Profil übernimmt."
    ],
    "numberSequences": [
     "Nummernkreise",
-    "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert die Inhaberin das Format für alles Kommende."
+    "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert der Inhaber das Format für alles Kommende."
    ],
    "workspaceStatus": [
     "Lage des Arbeitsbereichs",
@@ -3603,11 +3603,11 @@ window.SETUP_L10N={
    ],
    "messageGestures": [
     "Wischen zum Zitieren oder Zurücknehmen",
-    "Wische eine Nachricht nach rechts, um sie in deiner Antwort zu zitieren; nach links, um deine eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht."
+    "Wischen Sie eine Nachricht nach rechts, um sie in Ihrer Antwort zu zitieren; nach links, um Ihre eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht."
    ],
    "subscriptionInvoices": [
     "Abo-Rechnungen",
-    "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum deiner Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung."
+    "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung."
    ],
    "usageInvoices": [
     "Monatsabschluss-Rechnungen",
@@ -3671,7 +3671,7 @@ window.SETUP_L10N={
    ],
    "memberOrigin": [
     "Wie jedes Mitglied hierherkam",
-    "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einer Verwaltung angelegt. Es ist kein Status."
+    "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einem Admin angelegt. Es ist kein Status."
    ],
    "memberEnvironments": [
     "Die Umgebungen wählen, für die eine Person freigeschaltet wird",
@@ -3687,7 +3687,7 @@ window.SETUP_L10N={
    ],
    "publicHolidays": [
     "Feiertage",
-    "Die Inhaberin wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung."
+    "Der Inhaber wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung."
    ],
    "workspaceVocabulary": [
     "Wortwahl des Arbeitsbereichs",
@@ -4005,10 +4005,10 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Asistente de configuración",
    "setupLanguage": "Idioma",
-   "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que tus respuestas anteriores hacen posibles (las funciones que no activas, el régimen de IVA que no tienes, el país que no aplica — no se te pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Tus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
+   "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que sus respuestas anteriores hacen posibles (las funciones que no activa, el régimen de IVA que no tiene, el país que no aplica — no se le pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Sus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
    "setupGuideHtml": "La guía de usuario completa — con una captura de cada pantalla, los formularios largos fusionados en una imagen — está {link} (English · Français · Deutsch · Español · Italiano) y en la app (Ajustes → Ayuda).",
    "setupGuideLink": "en la wiki ↗",
-   "setupSecretsHtml": "<b>Pon aquí un token o una credencial solo si rellenas este documento en privado.</b> El archivo exportado es texto plano: para la facturación electrónica y los pagos en línea puedes dejar los campos vacíos e introducir los secretos directamente en la app, donde van al servidor y nunca vuelven.",
+   "setupSecretsHtml": "<b>Ponga aquí un token o una credencial solo si rellena este documento en privado.</b> El archivo exportado es texto plano: para la facturación electrónica y los pagos en línea puede dejar los campos vacíos e introducir los secretos directamente en la app, donde van al servidor y nunca vuelven.",
    "setupExpertMode": "Mostrar todo en una página (modo experto)",
    "setupExportXml": "Exportar XML",
    "setupExportBlocked": "Exportar — {n} punto(s) por corregir",
@@ -4075,7 +4075,7 @@ window.SETUP_L10N={
    "vatGroupNotSubject": "No sujeto",
    "vatGroupDeposit": "Envase retornable (fuera del IVA)",
    "vatGroupExcise": "Con impuestos especiales",
-   "vatNoteUS": "Estados Unidos no tiene IVA federal — el sales tax varía según el estado y la localidad: introduce a mano tu tipo local combinado.",
+   "vatNoteUS": "Estados Unidos no tiene IVA federal — el sales tax varía según el estado y la localidad: introduzca a mano su tipo local combinado.",
    "vatNoteCA": "Canadá grava por provincia: conserva la línea de la tuya (GST, HST o GST+PST/QST) y elimina las demás.",
    "vatNoteCH": "El tipo especial del 3,8 % solo se aplica al alojamiento.",
    "defaultFirstLevel": "Planta 1",
@@ -4111,7 +4111,7 @@ window.SETUP_L10N={
    "helpAppWhatsapp": "Ajustes → Espacio de coworking → Grupo de WhatsApp",
    "helpAppKiosk": "Miembros y planes → un miembro → Convertir en quiosco",
    "helpAppPrivacy": "El escudo en la parte superior de la pantalla (Privacidad y datos)",
-   "helpAppConsent": "La pantalla de consentimiento RGPD en el primer inicio · Ajustes → Privacidad y datos → Tus datos, tus derechos",
+   "helpAppConsent": "La pantalla de consentimiento RGPD en el primer inicio · Ajustes → Privacidad y datos → Sus datos, sus derechos",
    "helpAppNegotiations": "Miembros y planes → un miembro → Negociación de precios · Finanzas → Extracto → Mis precios negociados",
    "helpAppSupplies": "Finanzas → Pagos → Enviar un gasto → «suministro para el espacio»",
    "helpAppScheduled": "Finanzas → Pagos → Gastos programados",
@@ -4157,7 +4157,7 @@ window.SETUP_L10N={
    "identityOk": "Espacio «{name}» — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "La moneda {currency} no es la del país ({expected}): intencionado para un espacio transfronterizo; si no, es un error.",
    "featuresTitle": "Funciones",
-   "featuresWhy": "Marca lo que usa tu espacio: los pasos siguientes solo harán las preguntas de esas funciones. Todo se puede cambiar después en la app (Ajustes → Funciones), y desactivar una función no borra nada.",
+   "featuresWhy": "Marque lo que usa su espacio: los pasos siguientes solo harán las preguntas de esas funciones. Todo se puede cambiar después en la app (Ajustes → Funciones), y desactivar una función no borra nada.",
    "featuresIndentHint": "Una función con sangría depende de otra: solo se ofrece mientras esa esté activada, y su fila indica cuál.",
    "featuresAlsoEnables": "{desc} — activa también {list}.",
    "featuresWaitingFor": "{desc} — a la espera de {feature}.",
@@ -4272,7 +4272,7 @@ window.SETUP_L10N={
    "billingErrNoLevels": "Ningún nivel de suscripción ofrecido.",
    "billingErrPackage": "Paquete {name}: días y precio obligatorios.",
    "legalTitle": "Identidad legal e IVA",
-   "legalWhy": "Lo que figura en tus facturas y lo que espera la administración: forma jurídica, registro, régimen de IVA, tipos, declaraciones, plataforma de facturación electrónica.",
+   "legalWhy": "Lo que figura en sus facturas y lo que espera la administración: forma jurídica, registro, régimen de IVA, tipos, declaraciones, plataforma de facturación electrónica.",
    "legalOrg": "Tipo de organización",
    "legalOrgAssociation": "Asociación (sin ánimo de lucro)",
    "legalOrgCompany": "Empresa / sociedad",
@@ -4295,7 +4295,7 @@ window.SETUP_L10N={
    "colValidFrom": "Válido desde",
    "legalAddRate": "Añadir un tipo",
    "legalSuggestRates": "Proponer los tipos habituales: {country} ({rates} %)",
-   "legalNoVatManagementHint": "Sujeto a IVA sin «Gestión del IVA»: la app no tiene ningún tipo que aplicar y se niega a emitir las facturas. Activar la función para introducir los tipos.",
+   "legalNoVatManagementHint": "Sujeto a IVA sin «Gestión del IVA»: la app no tiene ningún tipo que aplicar y se niega a emitir las facturas. Active la función para introducir los tipos.",
    "legalVatExigibility": "Devengo del IVA",
    "legalVatExigibilityHint": "Cuándo se devenga el impuesto: al facturar o cuando paga el cliente. En Francia, las prestaciones de servicios tributan con el cobro salvo opción por la factura. Esta elección decide lo que declara un periodo y se imprime en cada factura.",
    "legalInvoiceNumbering": "Numeración de las facturas",
@@ -4306,7 +4306,7 @@ window.SETUP_L10N={
    "legalMemberNumbering": "Numeración de los socios",
    "legalMemberNumberingHint": "El número de socio se asigna al llegar y no cambia nunca; figura en la factura como «N.º de socio».",
    "legalVatPeriod": "Periodo de declaración del IVA",
-   "legalVatPeriodHint": "La periodicidad que impone tu régimen. La declaración suma lo que contiene el periodo según el devengo elegido — las facturas emitidas (factura) o los pagos recibidos (cobro) — por tipo (CA3, UStVA…), y se transmite o se exporta en PDF/XML.",
+   "legalVatPeriodHint": "La periodicidad que impone su régimen. La declaración suma lo que contiene el periodo según el devengo elegido — las facturas emitidas (factura) o los pagos recibidos (cobro) — por tipo (CA3, UStVA…), y se transmite o se exporta en PDF/XML.",
    "legalBillingAddress": "Dirección de facturación",
    "legalMentions": "Menciones de facturación (vacío = fórmula legal predeterminada)",
    "mentionLegalForm": "Forma jurídica y capital",
@@ -4326,7 +4326,7 @@ window.SETUP_L10N={
    "dunningAutomatic": "Recordatorios automáticos",
    "dunningAutomaticDesc": "Cada mañana — y en cuanto un propietario o admin abre Finanzas — las facturas que superan su plazo de pago registrado pasan al siguiente nivel de recordatorio, por el importe aún pendiente y nunca mientras un pago está pendiente o la factura está en suspenso. Sin marcar (por defecto): un recordatorio sigue siendo un gesto manual.",
    "einvoicePlatform": "Plataforma de facturación electrónica",
-   "einvoiceHint": "Donde DesKilo entrega tus facturas EN 16931: una plataforma acreditada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale de él — ponlo aquí solo si rellenas este documento en privado.",
+   "einvoiceHint": "Donde DesKilo entrega sus facturas EN 16931: una plataforma acreditada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale de él — póngalo aquí solo si rellena este documento en privado.",
    "einvoiceUrl": "URL de envío",
    "einvoiceToken": "Token o credencial",
    "einvoiceHeader": "Cabecera de autenticación",
@@ -4415,7 +4415,7 @@ window.SETUP_L10N={
    "rolesRequired": "Validaciones requeridas",
    "rolesOwnerAlways": "Firma del propietario siempre requerida",
    "rolesDomains": "Reglas por ámbito",
-   "rolesDomainsHint": "Marca un ámbito para darle su propia regla; desmarcado, hereda la regla predeterminada. Solo se ofrecen los ámbitos de tus funciones.",
+   "rolesDomainsHint": "Marque un ámbito para darle su propia regla; desmarcado, hereda la regla predeterminada. Solo se ofrecen los ámbitos de sus funciones.",
    "rolesOwnerSignOff": "Firma del propietario",
    "scopeAdmins": "Los admins (propietario incluido)",
    "scopeMembers": "Todos los miembros",
@@ -4453,7 +4453,7 @@ window.SETUP_L10N={
    "membersInvitesHint": "Déjalo vacío para usar el mensaje traducido integrado. Marcadores: {firstName}, {lastName}, {phone}, {workspaceName}, {workspaceId}, {inviteLink}, {downloadUrl}, {role}. La invitación sale en el idioma elegido al enviarla y, si no, en el idioma del espacio.",
    "membersWhatsapp": "Enlace del grupo de WhatsApp",
    "membersWhatsappHint": "Opcional — https://chat.whatsapp.com/…",
-   "membersConsent": "En el primer inicio, cada miembro (tú incluido) acepta la pantalla de consentimiento RGPD — la versión del texto y la fecha se registran en su cuenta; no hay nada que configurar aquí, pero tu invitación puede anunciarlo. El texto sigue siendo legible en todo momento en la app y en la guía.",
+   "membersConsent": "En el primer inicio, cada miembro (usted incluido) acepta la pantalla de consentimiento RGPD — la versión del texto y la fecha se registran en su cuenta; no hay nada que configurar aquí, pero su invitación puede anunciarlo. El texto sigue siendo legible en todo momento en la app y en la guía.",
    "membersErrEmail": "Correo electrónico no válido: {email}",
    "membersErrDuplicate": "Correo electrónico duplicado: {email}",
    "membersErrLevel": "{who}: suscripción del {pct} % fuera de los niveles ofrecidos.",
@@ -4462,7 +4462,7 @@ window.SETUP_L10N={
    "membersOk": "{n} miembro(s) que invitar, de ellos {admins} admin(s).",
    "membersWarnWhatsapp": "El enlace de WhatsApp no parece un enlace de grupo.",
    "summaryTitle": "Resumen de funciones",
-   "summaryWhy": "Lo que la app activará y cómo lo configuran tus respuestas. Desmarca lo que no quieras: la función empieza desactivada y su configuración ni se exporta ni se ofrece en la app — siempre podrás activarla más tarde en Ajustes → Funciones.",
+   "summaryWhy": "Lo que la app activará y cómo lo configuran sus respuestas. Desmarque lo que no quiera: la función empieza desactivada y su configuración ni se exporta ni se ofrece en la app — siempre podrá activarla más tarde en Ajustes → Funciones.",
    "cfgCalendarTab": "Vista mensual de las reservas.",
    "cfgEventsTab": "Feed de eventos y confirmaciones; regla predeterminada: {required} validación(es){owner}, {domains} regla(s) por ámbito.",
    "cfgMoneyTab": "{tiers}; niveles {levels} %{free}; {packages} paquete(s) de días.",
@@ -4568,7 +4568,7 @@ window.SETUP_L10N={
    "reviewFix": "Corregir",
    "reviewFixLink": "corregir",
    "reviewGateBlocked": "La exportación se abrirá cuando se resuelvan estos {n} punto(s):",
-   "reviewNothingLost": "No se pierde nada: tus respuestas siguen guardadas en este navegador mientras vuelves atrás.",
+   "reviewNothingLost": "No se pierde nada: sus respuestas siguen guardadas en este navegador mientras vuelve atrás.",
    "reviewComplete": "Configuración completa y coherente.",
    "reviewImportHint": "Exportar el XML y luego importarlo en la app: Espacio de coworking → Importar el espacio (XML).",
    "reviewProcesses": "Procesos",
@@ -4576,7 +4576,7 @@ window.SETUP_L10N={
    "reviewProcessOff": "sin usar",
    "reviewWaitingFor": "{feature} está marcada pero espera a {parent}",
    "renderStepFailed": "Este paso no se ha podido mostrar.",
-   "renderStepFailedHint": "Es un fallo del asistente, no de tus respuestas — están intactas. Los demás pasos funcionan; notifícalo con este detalle:",
+   "renderStepFailedHint": "Es un fallo del asistente, no de sus respuestas — están intactas. Los demás pasos funcionan; notifíquelo con este detalle:",
    "exportNeedsName": "Indica el nombre del espacio (sección 1).",
    "loadOk": "Archivo cargado.",
    "loadError": "Archivo ilegible: {error}",
@@ -4680,7 +4680,7 @@ window.SETUP_L10N={
    ],
    "spaceQrCodes": [
     "Códigos QR de espacios",
-    "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanea para reservar o fichar."
+    "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar."
    ],
    "coOwner": [
     "Copropietarios",
@@ -4828,7 +4828,7 @@ window.SETUP_L10N={
    ],
    "richMessageRefs": [
     "Referencias en los mensajes",
-    "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios."
+    "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribe. Desactivado: solo se pueden referenciar reservas y espacios."
    ],
    "calendarValidations": [
     "Validaciones en el calendario",
@@ -4936,11 +4936,11 @@ window.SETUP_L10N={
    ],
    "messageGestures": [
     "Deslizar para citar o retirar",
-    "Desliza un mensaje a la derecha para citarlo en tu respuesta; a la izquierda para retirar tu propio mensaje mientras nadie lo haya leído, tras una confirmación. Desactivado: los mensajes se borran manteniéndolos pulsados."
+    "Deslice un mensaje a la derecha para citarlo en su respuesta; a la izquierda para retirar su propio mensaje mientras nadie lo haya leído, tras una confirmación. Desactivado: los mensajes se borran manteniéndolos pulsados."
    ],
    "subscriptionInvoices": [
     "Facturas de suscripción",
-    "La cuota se factura antes del mes que paga, en la fecha que elijas. Desactivado: la cuota sigue en la factura del mes."
+    "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes."
    ],
    "usageInvoices": [
     "Facturas de fin de mes",
@@ -5043,7 +5043,7 @@ window.SETUP_L10N={
     "El espacio puede hacer sus propias preguntas dentro del formulario de identidad: un cargo en la junta, una fecha de alta, un contacto de emergencia. Las respuestas pertenecen a la membresía, así que una pregunta hecha aquí no sigue a nadie a otro sitio."
    ],
    "decisionSurface": [
-    "Lo que te espera",
+    "Lo que le espera",
     "Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene."
    ],
    "recordingPrivacy": [
@@ -5338,10 +5338,10 @@ window.SETUP_L10N={
   "s": {
    "setupTitle": "DesKilo — Assistente di configurazione",
    "setupLanguage": "Lingua",
-   "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le tue risposte precedenti rendono possibili (le funzionalità che non attivi, il regime IVA che non hai, il paese che non si applica — non ti viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le tue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
+   "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le Sue risposte precedenti rendono possibili (le funzionalità che non attiva, il regime IVA che non ha, il paese che non si applica — non Le viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le Sue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
    "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",
    "setupGuideLink": "sul wiki ↗",
-   "setupSecretsHtml": "<b>Inserisci un token o una credenziale qui solo se compili questo documento in privato.</b> Il file esportato è testo in chiaro: per la fatturazione elettronica e i pagamenti online puoi lasciare vuoti i campi e inserire i segreti direttamente nell'app, dove vanno al server senza mai tornare indietro.",
+   "setupSecretsHtml": "<b>Inserisca un token o una credenziale qui solo se compila questo documento in privato.</b> Il file esportato è testo in chiaro: per la fatturazione elettronica e i pagamenti online può lasciare vuoti i campi e inserire i segreti direttamente nell'app, dove vanno al server senza mai tornare indietro.",
    "setupExpertMode": "Mostra tutto su una pagina (modalità esperto)",
    "setupExportXml": "Esporta XML",
    "setupExportBlocked": "Esporta — {n} punto/i da correggere",
@@ -5408,8 +5408,8 @@ window.SETUP_L10N={
    "vatGroupNotSubject": "Non soggetta",
    "vatGroupDeposit": "Cauzione (fuori IVA)",
    "vatGroupExcise": "Con accise",
-   "vatNoteUS": "Gli Stati Uniti non hanno un'IVA federale — la sales tax varia per Stato e località: inserisci a mano la tua aliquota locale combinata.",
-   "vatNoteCA": "Il Canada tassa per provincia: mantieni la riga della tua (GST, HST o GST+PST/QST) ed elimina le altre.",
+   "vatNoteUS": "Gli Stati Uniti non hanno un'IVA federale — la sales tax varia per Stato e località: inserisca a mano la sua aliquota locale combinata.",
+   "vatNoteCA": "Il Canada tassa per provincia: mantenga la riga della sua (GST, HST o GST+PST/QST) ed elimini le altre.",
    "vatNoteCH": "L'aliquota speciale del 3,8 % si applica solo all'alloggio.",
    "defaultFirstLevel": "Piano 1",
    "defaultLevel": "Piano {n}",
@@ -5444,7 +5444,7 @@ window.SETUP_L10N={
    "helpAppWhatsapp": "Impostazioni → Spazio di coworking → Gruppo WhatsApp",
    "helpAppKiosk": "Membri e piani → un membro → Trasforma in chiosco",
    "helpAppPrivacy": "Lo scudo in cima allo schermo (Privacy e dati)",
-   "helpAppConsent": "La schermata di consenso GDPR alla prima apertura · Impostazioni → Privacy e dati → I tuoi dati, i tuoi diritti",
+   "helpAppConsent": "La schermata di consenso GDPR alla prima apertura · Impostazioni → Privacy e dati → I suoi dati, i suoi diritti",
    "helpAppNegotiations": "Membri e piani → un membro → Negoziazione di prezzo · Finanze → Estratto → I miei prezzi negoziati",
    "helpAppSupplies": "Finanze → Pagamenti → Invia una spesa → «fornitura per lo spazio»",
    "helpAppScheduled": "Finanze → Pagamenti → Spese programmate",
@@ -5490,7 +5490,7 @@ window.SETUP_L10N={
    "identityOk": "Spazio «{name}» — {country}, {currency}, {timezone}",
    "identityWarnCurrency": "La valuta {currency} non è quella del paese ({expected}): voluto per uno spazio transfrontaliero, altrimenti è un errore.",
    "featuresTitle": "Funzionalità",
-   "featuresWhy": "Seleziona ciò che il tuo spazio utilizza: i passaggi successivi porranno solo le domande relative a queste funzionalità. Tutto resta modificabile in seguito nell'app (Impostazioni → Funzionalità), e disattivare una funzionalità non cancella nulla.",
+   "featuresWhy": "Selezioni ciò che il suo spazio utilizza: i passaggi successivi porranno solo le domande relative a queste funzionalità. Tutto resta modificabile in seguito nell'app (Impostazioni → Funzionalità), e disattivare una funzionalità non cancella nulla.",
    "featuresIndentHint": "Una funzionalità rientrata dipende da un'altra: viene proposta solo finché quella è attiva, e la sua riga indica quale.",
    "featuresAlsoEnables": "{desc} — attiva anche {list}.",
    "featuresWaitingFor": "{desc} — in attesa di {feature}.",
@@ -5605,7 +5605,7 @@ window.SETUP_L10N={
    "billingErrNoLevels": "Nessun livello di abbonamento proposto.",
    "billingErrPackage": "Pacchetto {name}: giorni e prezzo obbligatori.",
    "legalTitle": "Identità legale e IVA",
-   "legalWhy": "Ciò che compare sulle tue fatture e ciò che l'amministrazione si aspetta: forma giuridica, iscrizione, regime IVA, aliquote, dichiarazioni, piattaforma di fatturazione elettronica.",
+   "legalWhy": "Ciò che compare sulle sue fatture e ciò che l'amministrazione si aspetta: forma giuridica, iscrizione, regime IVA, aliquote, dichiarazioni, piattaforma di fatturazione elettronica.",
    "legalOrg": "Tipo di organizzazione",
    "legalOrgAssociation": "Associazione (senza scopo di lucro)",
    "legalOrgCompany": "Impresa / società",
@@ -5628,7 +5628,7 @@ window.SETUP_L10N={
    "colValidFrom": "Valida dal",
    "legalAddRate": "Aggiungi un'aliquota",
    "legalSuggestRates": "Proponi le aliquote usuali: {country} ({rates} %)",
-   "legalNoVatManagementHint": "Soggetto IVA senza «Gestione IVA»: l'app non ha alcuna aliquota da applicare e rifiuta di emettere le fatture. Attivare la funzionalità per inserire le aliquote.",
+   "legalNoVatManagementHint": "Soggetto IVA senza «Gestione IVA»: l'app non ha alcuna aliquota da applicare e rifiuta di emettere le fatture. Attivi la funzionalità per inserire le aliquote.",
    "legalVatExigibility": "Esigibilità dell’IVA",
    "legalVatExigibilityHint": "Quando l'imposta diventa dovuta: all'emissione della fattura o al pagamento del cliente. In Francia le prestazioni di servizi sono all'incasso salvo opzione per la fattura. Questa scelta decide cosa dichiara un periodo ed è stampata su ogni fattura.",
    "legalInvoiceNumbering": "Numerazione delle fatture",
@@ -5639,7 +5639,7 @@ window.SETUP_L10N={
    "legalMemberNumbering": "Numerazione dei soci",
    "legalMemberNumberingHint": "Il numero di socio viene assegnato all'ingresso e non cambia mai; compare in fattura come «N. socio».",
    "legalVatPeriod": "Periodo di dichiarazione IVA",
-   "legalVatPeriodHint": "La periodicità imposta dal tuo regime. La dichiarazione aggrega ciò che il periodo contiene secondo l'esigibilità scelta — le fatture emesse (alla fattura) o i pagamenti ricevuti (all'incasso) — per aliquota (CA3, UStVA…), e viene trasmessa o esportata in PDF/XML.",
+   "legalVatPeriodHint": "La periodicità imposta dal suo regime. La dichiarazione aggrega ciò che il periodo contiene secondo l'esigibilità scelta — le fatture emesse (alla fattura) o i pagamenti ricevuti (all'incasso) — per aliquota (CA3, UStVA…), e viene trasmessa o esportata in PDF/XML.",
    "legalBillingAddress": "Indirizzo di fatturazione",
    "legalMentions": "Menzioni di fatturazione (vuoto = dicitura legale predefinita)",
    "mentionLegalForm": "Forma giuridica e capitale",
@@ -5659,7 +5659,7 @@ window.SETUP_L10N={
    "dunningAutomatic": "Solleciti automatici",
    "dunningAutomaticDesc": "Ogni mattina — e non appena un proprietario o un admin apre Finanze — le fatture oltre la scadenza registrata passano al livello di sollecito successivo, per l'importo ancora dovuto e mai mentre un pagamento è in attesa o la fattura è sospesa. Non spuntato (predefinito): un sollecito resta un gesto manuale.",
    "einvoicePlatform": "Piattaforma di fatturazione elettronica",
-   "einvoiceHint": "Dove DesKilo deposita le tue fatture EN 16931: una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token è conservato sul server e non ne esce mai — inseriscilo qui solo se compili questo documento in privato.",
+   "einvoiceHint": "Dove DesKilo deposita le sue fatture EN 16931: una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token è conservato sul server e non ne esce mai — lo inserisca qui solo se compila questo documento in privato.",
    "einvoiceUrl": "URL di deposito",
    "einvoiceToken": "Token o credenziale",
    "einvoiceHeader": "Intestazione di autenticazione",
@@ -5748,7 +5748,7 @@ window.SETUP_L10N={
    "rolesRequired": "Validazioni richieste",
    "rolesOwnerAlways": "Firma del proprietario sempre richiesta",
    "rolesDomains": "Regole per dominio",
-   "rolesDomainsHint": "Seleziona un dominio per dargli una regola propria; non selezionato, eredita la regola predefinita. Vengono proposti solo i domini delle tue funzionalità.",
+   "rolesDomainsHint": "Selezioni un dominio per dargli una regola propria; non selezionato, eredita la regola predefinita. Vengono proposti solo i domini delle sue funzionalità.",
    "rolesOwnerSignOff": "Firma del proprietario",
    "scopeAdmins": "Gli admin (proprietario compreso)",
    "scopeMembers": "Tutti i membri",
@@ -5786,7 +5786,7 @@ window.SETUP_L10N={
    "membersInvitesHint": "Lascia vuoto per usare il messaggio tradotto integrato. Segnaposto: {firstName}, {lastName}, {phone}, {workspaceName}, {workspaceId}, {inviteLink}, {downloadUrl}, {role}. L'invito parte nella lingua scelta all'invio, altrimenti nella lingua dello spazio.",
    "membersWhatsapp": "Link del gruppo WhatsApp",
    "membersWhatsappHint": "Facoltativo — https://chat.whatsapp.com/…",
-   "membersConsent": "Alla prima apertura, ogni membro (tu compreso) accetta la schermata di consenso GDPR — la versione del testo e la data vengono registrate sul suo account; niente da configurare qui, ma il tuo invito può annunciarlo. Il testo resta consultabile in qualsiasi momento nell'app e nella guida.",
+   "membersConsent": "Alla prima apertura, ogni membro (Lei compreso) accetta la schermata di consenso GDPR — la versione del testo e la data vengono registrate sul suo account; niente da configurare qui, ma il suo invito può annunciarlo. Il testo resta consultabile in qualsiasi momento nell'app e nella guida.",
    "membersErrEmail": "E-mail non valida: {email}",
    "membersErrDuplicate": "E-mail duplicata: {email}",
    "membersErrLevel": "{who}: abbonamento {pct} % fuori dai livelli proposti.",
@@ -5795,7 +5795,7 @@ window.SETUP_L10N={
    "membersOk": "{n} membro/i da invitare, di cui {admins} admin.",
    "membersWarnWhatsapp": "Il link WhatsApp non sembra un link di gruppo.",
    "summaryTitle": "Riepilogo delle funzionalità",
-   "summaryWhy": "Ciò che l'app attiverà e come le tue risposte lo configurano. Deseleziona ciò che non vuoi: la funzionalità parte disattivata e la sua configurazione non viene né esportata né proposta nell'app — potrai sempre attivarla in seguito in Impostazioni → Funzionalità.",
+   "summaryWhy": "Ciò che l'app attiverà e come le sue risposte lo configurano. Deselezioni ciò che non vuole: la funzionalità parte disattivata e la sua configurazione non viene né esportata né proposta nell'app — potrà sempre attivarla in seguito in Impostazioni → Funzionalità.",
    "cfgCalendarTab": "Vista mensile delle prenotazioni.",
    "cfgEventsTab": "Feed degli eventi e conferme; regola predefinita: {required} validazione/i{owner}, {domains} regola/e per dominio.",
    "cfgMoneyTab": "{tiers}; livelli {levels} %{free}; {packages} pacchetto/i di giorni.",
@@ -5901,7 +5901,7 @@ window.SETUP_L10N={
    "reviewFix": "Correggi",
    "reviewFixLink": "correggi",
    "reviewGateBlocked": "L'esportazione si aprirà quando questi {n} punto/i saranno risolti:",
-   "reviewNothingLost": "Non si perde nulla: le tue risposte restano salvate in questo browser mentre torni indietro.",
+   "reviewNothingLost": "Non si perde nulla: le sue risposte restano salvate in questo browser mentre torna indietro.",
    "reviewComplete": "Configurazione completa e coerente.",
    "reviewImportHint": "Esportare l'XML, poi importarlo nell'app: Spazio di coworking → Importa lo spazio (XML).",
    "reviewProcesses": "Processi",
@@ -5909,7 +5909,7 @@ window.SETUP_L10N={
    "reviewProcessOff": "non usato",
    "reviewWaitingFor": "{feature} è selezionata ma attende {parent}",
    "renderStepFailed": "Questo passaggio non è stato visualizzato.",
-   "renderStepFailedHint": "È un difetto dell'assistente, non delle tue risposte — sono intatte. Gli altri passaggi funzionano; segnalalo con questo dettaglio:",
+   "renderStepFailedHint": "È un difetto dell'assistente, non delle sue risposte — sono intatte. Gli altri passaggi funzionano; lo segnali con questo dettaglio:",
    "exportNeedsName": "Inserisci il nome dello spazio (sezione 1).",
    "loadOk": "File caricato.",
    "loadError": "File illeggibile: {error}",
@@ -5965,15 +5965,15 @@ window.SETUP_L10N={
    ],
    "onlinePayments": [
     "Pagamenti online",
-    "Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server."
+    "Consenta ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server."
    ],
    "pdfExport": [
     "Esportazione PDF",
-    "Esporta la fattura mensile come PDF."
+    "Esporti la fattura mensile come PDF."
    ],
    "seriesBooking": [
     "Prenotazione in serie",
-    "Ripeti una prenotazione ogni giorno, ogni settimana o nei giorni feriali."
+    "Ripeta una prenotazione ogni giorno, ogni settimana o nei giorni feriali."
    ],
    "bookForOthers": [
     "Prenota per altri",
@@ -5989,7 +5989,7 @@ window.SETUP_L10N={
    ],
    "levelBooking": [
     "Prenotazioni di tavolo, ufficio e piano",
-    "Prenota un intero tavolo, ufficio o piano come un'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro."
+    "Prenoti un intero tavolo, ufficio o piano come un'unica prenotazione, con prezzo per mezza giornata. Conceda il diritto per membro."
    ],
    "adminLevelAssign": [
     "Gli admin possono assegnare piani",
@@ -6013,7 +6013,7 @@ window.SETUP_L10N={
    ],
    "spaceQrCodes": [
     "Codici QR degli spazi",
-    "Schede QR stampabili per postazione, tavolo, ufficio e piano — scansiona per prenotare o fare check-in."
+    "Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in."
    ],
    "coOwner": [
     "Comproprietari",
@@ -6021,7 +6021,7 @@ window.SETUP_L10N={
    ],
    "invoicing": [
     "Fatture",
-    "Fatture immutabili e firmate in un archivio — scarica o condividi in PDF."
+    "Fatture immutabili e firmate in un archivio — da scaricare o condividere in PDF."
    ],
    "adminInvoicing": [
     "Gli admin emettono fatture",
@@ -6037,7 +6037,7 @@ window.SETUP_L10N={
    ],
    "workingHours": [
     "Orario di lavoro",
-    "Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00."
+    "Configuri la giornata lavorativa e offra prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00."
    ],
    "invoicePdfTemplate": [
     "Modello PDF della fattura",
@@ -6045,7 +6045,7 @@ window.SETUP_L10N={
    ],
    "invoiceAddressWindow": [
     "Finestra indirizzo",
-    "Colloca il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile."
+    "Collochi il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile."
    ],
    "memberNotifications": [
     "Notifiche tra membri",
@@ -6077,7 +6077,7 @@ window.SETUP_L10N={
    ],
    "vatDeclarations": [
     "Dichiarazioni IVA",
-    "Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala."
+    "Generi la dichiarazione IVA periodica dalle fatture emesse, la mappi sul modulo ufficiale e la trasmetta o la esporti."
    ],
    "einvoiceCustomerDelivery": [
     "Recapito delle fatture al cliente",
@@ -6161,7 +6161,7 @@ window.SETUP_L10N={
    ],
    "richMessageRefs": [
     "Riferimenti nei messaggi",
-    "Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi."
+    "Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre si scrive. Disattivato: si possono referenziare solo prenotazioni e spazi."
    ],
    "calendarValidations": [
     "Convalide nel calendario",
@@ -6177,7 +6177,7 @@ window.SETUP_L10N={
    ],
    "reportLayouts": [
     "Layout di report posizionati",
-    "Progetta un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande."
+    "Progetti un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande."
    ],
    "personalInfo": [
     "Dati personali",
@@ -6269,11 +6269,11 @@ window.SETUP_L10N={
    ],
    "messageGestures": [
     "Scorri per citare o ritirare",
-    "Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti."
+    "Scorra un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il suo messaggio finché nessuno l'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti."
    ],
    "subscriptionInvoices": [
     "Fatture di abbonamento",
-    "La quota è fatturata prima del mese che paga, in una data scelta da te. Disattivato: la quota resta sulla fattura del mese."
+    "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese."
    ],
    "usageInvoices": [
     "Fatture di fine mese",
@@ -6341,11 +6341,11 @@ window.SETUP_L10N={
    ],
    "memberEnvironments": [
     "Scegliere gli ambienti su cui una persona è attivata",
-    "Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l'accesso alla produzione."
+    "Quando invita qualcuno, scelga se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l'accesso alla produzione."
    ],
    "workspaceLibrary": [
     "Biblioteca degli spazi",
-    "Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono."
+    "Salvi la pianta di questo spazio e il suo funzionamento come modello, scelga chi può vederla, inviti persone via e-mail e parta da ciò che altri offrono."
    ],
    "singleRoomLevelNames": [
     "Chiamare con il piano un piano a stanza unica",
@@ -6376,7 +6376,7 @@ window.SETUP_L10N={
     "Lo spazio può porre le proprie domande dentro il modulo d'identità: un incarico nel direttivo, una data di adesione, un contatto d'emergenza. Le risposte appartengono all'iscrizione, quindi una domanda posta qui non segue nessuno altrove."
    ],
    "decisionSurface": [
-    "Cosa ti aspetta",
+    "Cosa la aspetta",
     "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede."
    ],
    "recordingPrivacy": [
@@ -6405,7 +6405,7 @@ window.SETUP_L10N={
    ],
    "publicListings": [
     "Scheda pubblica dello spazio",
-    "Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi."
+    "Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi."
    ],
    "spaceInquiries": [
     "Scrivi agli host",

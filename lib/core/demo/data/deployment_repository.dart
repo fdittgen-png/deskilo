@@ -4,8 +4,18 @@ import 'package:deskilo/features/workspace/domain/deployment.dart';
 /// #988 — the deployment engine in memory: the server's registry, a
 /// preview the test seeds, and a journal that records what was asked.
 class FakeDeploymentRepository implements DeploymentRepository {
-  FakeDeploymentRepository({List<DeployableEntity>? registry})
-      : registry = registry ?? defaultRegistry;
+  FakeDeploymentRepository({
+    List<DeployableEntity>? registry,
+    String Function()? actor,
+    DateTime Function()? clock,
+  })  : registry = registry ?? defaultRegistry,
+        actor = actor ?? (() => 'Flo'),
+        clock = clock ?? (() => DateTime.utc(2026, 9, 7, 10));
+
+  /// Who a deployment is stamped with, and when (#2327: the demo's own
+  /// cast and clock).
+  final String Function() actor;
+  final DateTime Function() clock;
 
   static const defaultRegistry = [
     DeployableEntity(key: 'identity', kind: 'configuration'),
@@ -83,8 +93,8 @@ class FakeDeploymentRepository implements DeploymentRepository {
         toWorkspaceId: toWorkspaceId,
         direction: _direction(toWorkspaceId),
         entities: entities,
-        actorName: 'Flo',
-        createdAt: DateTime.utc(2026, 9, 7, 10, deployed.length),
+        actorName: actor(),
+        createdAt: clock().add(Duration(minutes: deployed.length)),
       ),
     );
     return id;
@@ -104,7 +114,7 @@ class FakeDeploymentRepository implements DeploymentRepository {
         entities: d.entities,
         actorName: d.actorName,
         createdAt: d.createdAt,
-        rolledBackAt: DateTime.utc(2026, 9, 7, 11),
+        rolledBackAt: clock().add(const Duration(hours: 1)),
       );
     }
   }

@@ -6,7 +6,7 @@
   "memberBadgesTooltip": "Badges",
   "memberBadgesTitle": "Badges — {name}",
   "badgeIssue": "Neuer Badge",
-  "badgeTokenOnce": "Speichere diesen QR jetzt — er wird nur einmal angezeigt.",
+  "badgeTokenOnce": "Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.",
   "badgeNone": "Noch keine Badges.",
   "badgeDefaultLabel": "Badge",
   "badgeRevoke": "Widerrufen",
@@ -16,25 +16,25 @@
   "kioskReserve": "Reservieren",
   "kioskCheckOut": "Auschecken",
   "kioskPresentBadge": "Badge vorzeigen",
-  "kioskBadgeHint": "Scanne den QR deines Badges oder tippe seinen Code ein.",
+  "kioskBadgeHint": "Scannen Sie den QR Ihres Badges oder tippen Sie seinen Code ein.",
   "kioskBadgeFieldLabel": "Badge-Code",
   "kioskBadgeConfirm": "Bestätigen",
   "kioskBadgeRejected": "Badge nicht erkannt.",
   "kioskDone": "Fertig — alles erledigt.",
-  "kioskTapHint": "Tippe einen Platz zum Einchecken",
+  "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
   "badgeSavePdf": "Als PDF speichern",
   "badgeRegisterCard": "Karte registrieren",
   "badgeTapCardTitle": "Karte registrieren",
-  "badgeTapCardHint": "Halte die RFID/NFC-Karte an die Rückseite des Geräts.",
+  "badgeTapCardHint": "Halten Sie die RFID/NFC-Karte an die Rückseite des Geräts.",
   "badgeCardRegistered": "Karte registriert.",
   "badgeCardAlreadyRegistered": "Diese Karte ist bereits registriert.",
   "kioskBadgeHintNfc": "Karte auflegen, QR scannen oder Code eintippen.",
   "nfcConfigTitle": "RFID-/NFC-Badges",
-  "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registriere die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
+  "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registrieren Sie die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
   "nfcConfigEnable": "NFC-Badge-Check-in aktivieren",
   "nfcConfigEnableDesc": "Zeigt die Karten-Antipp-Option an Kiosken und im Badge-Manager.",
   "nfcConfigDeviceStatus": "Dieses Gerät",
-  "nfcConfigChecking": "Prüfe…",
+  "nfcConfigChecking": "Wird geprüft…",
   "nfcConfigDeviceReady": "NFC verfügbar und aktiviert",
   "nfcConfigDeviceUnavailable": "Hier kein NFC — ein Android-Gerät mit aktiviertem NFC ist nötig (iPads haben kein NFC). QR-Badges funktionieren weiter.",
   "kioskConfirmAction": "Bestätigen",
@@ -59,11 +59,11 @@
   "@kioskRestOfDay": {
     "description": "Kiosk period chip after the working day: now until midnight"
   },
-  "kioskPeriodCheckInHint": "Bis wann bleibst du? Das Einchecken beginnt jetzt.",
+  "kioskPeriodCheckInHint": "Bis wann bleiben Sie? Das Einchecken beginnt jetzt.",
   "@kioskPeriodCheckInHint": {
     "description": "Kiosk period step hint for a check-in (start pinned to now)"
   },
-  "kioskPeriodReserveHint": "Wähle den Zeitraum — nur heute.",
+  "kioskPeriodReserveHint": "Wählen Sie den Zeitraum — nur heute.",
   "@kioskPeriodReserveHint": {
     "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
   },
@@ -71,7 +71,7 @@
   "@kioskCheckInRightAway": {
     "description": "Kiosk period step switch: the reservation starts checked in"
   },
-  "kioskCheckInRightAwayHint": "Du bist da — die Reservierung startet eingecheckt.",
+  "kioskCheckInRightAwayHint": "Sie sind da — die Reservierung startet eingecheckt.",
   "@kioskCheckInRightAwayHint": {
     "description": "Subtitle of the check-in-right-away switch"
   },
@@ -103,5 +103,5 @@
       }
     }
   },
-  "kioskBlockedContactHint": "Belegt von {name} — du kannst ihm/ihr über die App auf deinem Handy schreiben."
+  "kioskBlockedContactHint": "Belegt von {name} — Sie können der Person über die App auf Ihrem Handy schreiben."
 }

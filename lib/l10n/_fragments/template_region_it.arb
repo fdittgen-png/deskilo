@@ -1,4 +1,4 @@
 {
-  "templateRegionSuggested": "Questo modello è stato creato per {values}. La tua scelta resta, a meno che tu non usi i suoi valori.",
+  "templateRegionSuggested": "Questo modello è stato creato per {values}. La sua scelta resta, a meno che non usi i valori del modello.",
   "templateRegionUse": "Usa la regione del modello"
 }

@@ -6,7 +6,7 @@
   "memberBadgesTooltip": "Credenciales",
   "memberBadgesTitle": "Credenciales — {name}",
   "badgeIssue": "Nueva credencial",
-  "badgeTokenOnce": "Guarda este QR ahora — solo se muestra una vez.",
+  "badgeTokenOnce": "Guarde este QR ahora — solo se muestra una vez.",
   "badgeNone": "Aún no hay credenciales.",
   "badgeDefaultLabel": "Credencial",
   "badgeRevoke": "Revocar",
@@ -15,22 +15,22 @@
   "kioskCheckIn": "Registrarse",
   "kioskReserve": "Reservar",
   "kioskCheckOut": "Salir",
-  "kioskPresentBadge": "Presenta tu credencial",
-  "kioskBadgeHint": "Escanea el QR de tu credencial o escribe su código.",
+  "kioskPresentBadge": "Presente su credencial",
+  "kioskBadgeHint": "Escanee el QR de su credencial o escriba su código.",
   "kioskBadgeFieldLabel": "Código de credencial",
   "kioskBadgeConfirm": "Confirmar",
   "kioskBadgeRejected": "Credencial no reconocida.",
   "kioskDone": "Listo — todo en orden.",
-  "kioskTapHint": "Toca un asiento para registrarte",
+  "kioskTapHint": "Toque un asiento para registrarse",
   "badgeSavePdf": "Guardar como PDF",
   "badgeRegisterCard": "Registrar tarjeta",
   "badgeTapCardTitle": "Registrar una tarjeta",
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeCardRegistered": "Tarjeta registrada.",
   "badgeCardAlreadyRegistered": "Esa tarjeta ya está registrada.",
-  "kioskBadgeHintNfc": "Acerca tu tarjeta, escanea tu QR o escribe el código.",
+  "kioskBadgeHintNfc": "Acerque su tarjeta, escanee su QR o escriba el código.",
   "nfcConfigTitle": "Credenciales RFID / NFC",
-  "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registra la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
+  "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registre la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
   "nfcConfigEnable": "Activar registro por credencial NFC",
   "nfcConfigEnableDesc": "Muestra la opción de acercar la tarjeta en los quioscos y en el gestor de credenciales.",
   "nfcConfigDeviceStatus": "Este dispositivo",
@@ -44,14 +44,14 @@
   "kioskGateStart": "Iniciar el modo quiosco",
   "kioskGateReject": "Ahora no — abrir la app normalmente",
   "settingsFrontCamera": "Escanear con la cámara frontal",
-  "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívalo para usar la cámara trasera.",
-  "kioskNfcOff": "El NFC está desactivado en los ajustes de Android de esta tableta — actívalo para leer tarjetas RFID.",
-  "kioskNfcUnsupported": "Esta tableta no tiene lector NFC — escanea la tarjeta QR en su lugar.",
-  "kioskNfcFailed": "El lector RFID no se inició — reinicia la aplicación e inténtalo de nuevo.",
-  "nfcConfigDeviceOff": "El NFC está desactivado en los ajustes de Android de este dispositivo — actívalo para leer tarjetas RFID.",
+  "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
+  "kioskNfcOff": "El NFC está desactivado en los ajustes de Android de esta tableta — actívelo para leer tarjetas RFID.",
+  "kioskNfcUnsupported": "Esta tableta no tiene lector NFC — escanee la tarjeta QR en su lugar.",
+  "kioskNfcFailed": "El lector RFID no se inició — reinicie la aplicación e inténtelo de nuevo.",
+  "nfcConfigDeviceOff": "El NFC está desactivado en los ajustes de Android de este dispositivo — actívelo para leer tarjetas RFID.",
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskRevertTitle": "Dispositivo quiosco",
-  "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
+  "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértalo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
   "memberNoActions": "Solo el propietario del espacio puede modificar este miembro.",
   "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar.",
@@ -59,11 +59,11 @@
   "@kioskRestOfDay": {
     "description": "Kiosk period chip after the working day: now until midnight"
   },
-  "kioskPeriodCheckInHint": "¿Hasta cuándo te quedas? El registro empieza ahora.",
+  "kioskPeriodCheckInHint": "¿Hasta cuándo se queda? El registro empieza ahora.",
   "@kioskPeriodCheckInHint": {
     "description": "Kiosk period step hint for a check-in (start pinned to now)"
   },
-  "kioskPeriodReserveHint": "Elige el periodo: solo hoy.",
+  "kioskPeriodReserveHint": "Elija el periodo: solo hoy.",
   "@kioskPeriodReserveHint": {
     "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
   },
@@ -71,7 +71,7 @@
   "@kioskCheckInRightAway": {
     "description": "Kiosk period step switch: the reservation starts checked in"
   },
-  "kioskCheckInRightAwayHint": "Estás aquí: la reserva empieza registrada.",
+  "kioskCheckInRightAwayHint": "Está aquí: la reserva empieza registrada.",
   "@kioskCheckInRightAwayHint": {
     "description": "Subtitle of the check-in-right-away switch"
   },
@@ -103,5 +103,5 @@
       }
     }
   },
-  "kioskBlockedContactHint": "Ocupado por {name} — puedes escribirle desde la aplicación en tu teléfono."
+  "kioskBlockedContactHint": "Ocupado por {name} — puede escribirle desde la aplicación en su teléfono."
 }

@@ -12,7 +12,7 @@
   "handoffOverpaid": "{number}: pagato più dell’importo fatturato",
   "handoffBlocked": "Questo file non può essere consegnato finché la fonte non è corretta.",
   "handoffSave": "Salva file e rapporto",
-  "handoffChanged": "Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.",
+  "handoffChanged": "Le fatture sono cambiate durante la revisione. Esporti di nuovo per vedere i conti attuali.",
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffAmountOutOfRange": "{number}: un totale troppo grande per essere trasmesso esattamente"
 }

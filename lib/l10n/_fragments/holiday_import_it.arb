@@ -19,7 +19,7 @@
   "@holidayImportNationwide": {
     "description": "#2051 open-data holiday import"
   },
-  "holidayImportUnavailable": "La fonte dei giorni festivi non è raggiungibile al momento. Riprova più tardi o usa «Aggiungi i giorni festivi».",
+  "holidayImportUnavailable": "La fonte dei giorni festivi non è raggiungibile al momento. Riprovi più tardi o usi «Aggiungi i giorni festivi».",
   "@holidayImportUnavailable": {
     "description": "#2051 open-data holiday import"
   },

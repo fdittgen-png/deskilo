@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
   "spaceScanTitle": "Scansiona un codice spazio",
-  "spaceScanHint": "Inquadra la scheda di una postazione, tavolo, ufficio o piano — oppure digita il codice.",
+  "spaceScanHint": "Inquadri la scheda di una postazione, tavolo, ufficio o piano — oppure digiti il codice.",
   "spaceScanField": "Codice",
   "spaceScanInvalid": "Non è un codice spazio di questo workspace.",
   "spaceScanUnknown": "Questo codice non corrisponde più a nessuno spazio qui.",
@@ -13,7 +13,7 @@
   "spaceKindOffice": "Ufficio",
   "spaceKindLevel": "Piano",
   "spaceKindSeat": "Postazione",
-  "spaceYoursNow": "Riservato da te per questa fascia.",
+  "spaceYoursNow": "Riservato da Lei per questa fascia.",
   "spaceCardSizeLabel": "Dimensione della scheda",
   "spaceQrSizeLabel": "Dimensione del codice QR",
   "spaceCardSizeSmall": "Piccola",
@@ -22,11 +22,11 @@
   "spaceCardInfoLabel": "Informazioni sulla scheda",
   "spaceCardInfoWorkspace": "Spazio di lavoro",
   "spaceMessageReserver": "Scrivi a {name}",
-  "spaceYoursCheckedIn": "Hai effettuato il check-in qui per questa fascia.",
+  "spaceYoursCheckedIn": "Ha effettuato il check-in qui per questa fascia.",
   "@spaceYoursCheckedIn": {
     "description": "#670 - whole-space sheet"
   },
-  "spaceBlockedByYou": "Hai già questo spazio per quel periodo.",
+  "spaceBlockedByYou": "Ha già questo spazio per quel periodo.",
   "@spaceBlockedByYou": {
     "description": "#670 - whole-space sheet"
   },
@@ -34,5 +34,5 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
-  "spaceAlreadyCheckedInHere": "Siete già registrati qui. Scegliete « Registra l'uscita » per liberare il posto."
+  "spaceAlreadyCheckedInHere": "È già registrato qui. Scelga « Registra l'uscita » per liberare il posto."
 }

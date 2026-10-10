@@ -112,7 +112,7 @@
   "@repartitionPeriodLabel": {
     "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
   },
-  "repartitionRuleHint": "Ogni quota è proposta in base alla percentuale di abbonamento. Deseleziona un socio per escluderlo; con il metodo «chiave», indica il suo peso. La regola modificata sarà proposta il mese prossimo.",
+  "repartitionRuleHint": "Ogni quota è proposta in base alla percentuale di abbonamento. Deselezioni un socio per escluderlo; con il metodo «chiave», ne indichi il peso. La regola modificata sarà proposta il mese prossimo.",
   "@repartitionRuleHint": {
     "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
   },
@@ -128,7 +128,7 @@
   "@repartitionSharesTotal": {
     "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
   },
-  "repartitionRuleNotSaved": "La regola non è stata salvata, quindi non è stato ripartito nulla. Riprova.",
+  "repartitionRuleNotSaved": "La regola non è stata salvata, quindi non è stato ripartito nulla. Riprovi.",
   "@repartitionRuleNotSaved": {
     "description": "#1532: repartitionRuleNotSaved"
   },

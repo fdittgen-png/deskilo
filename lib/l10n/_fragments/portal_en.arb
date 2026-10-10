@@ -10,7 +10,7 @@
   "portalSendCode": "Send sign-in code",
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
   "portalDiscover": "Find a workspace",
-  "portalRegisterDirectory": "Publish a server in the directory",
+  "portalRegisterDirectory": "Link a server to the global directory",
   "portalPublication": "Public workspace page",
   "portalPublished": "Visible in the public directory",
   "portalPreview": "External view",

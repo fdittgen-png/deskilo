@@ -6,8 +6,8 @@
   "supportPrepare": "Prepara anteprima",
   "supportSize": "Anteprima: {bytes} byte",
   "supportSaved": "Salvato localmente",
-  "supportChanged": "Il contesto è cambiato. Prepara una nuova anteprima.",
-  "supportFailed": "Impossibile preparare i dettagli. Riprova.",
+  "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
+  "supportFailed": "Impossibile preparare i dettagli. Riprovi.",
   "supportDemo": "Demo: contesto locale simulato",
   "@supportSize": {
     "placeholders": {

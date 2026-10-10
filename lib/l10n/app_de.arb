@@ -9,7 +9,7 @@
   "a11yRecentre": "Plan an den Bildschirm anpassen",
   "a11ySeatBlocked": "nicht verfügbar",
   "a11ySeatFree": "frei",
-  "a11ySeatMine": "dein Platz",
+  "a11ySeatMine": "Ihr Platz",
   "a11ySeatOccupied": "besetzt",
   "a11ySeatReserved": "reserviert",
   "a11yZoomIn": "Vergrößern",
@@ -32,7 +32,7 @@
   "@aboutReportBug": {
     "description": "About tile: GitHub issue link (#560)"
   },
-  "aboutSupportBody": "Diese App ist kostenlos, Open Source und werbefrei. Wenn sie dir nützt, unterstütze den Entwickler.",
+  "aboutSupportBody": "Diese App ist kostenlos, Open Source und werbefrei. Wenn sie Ihnen nützt, unterstützen Sie den Entwickler.",
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
@@ -54,7 +54,7 @@
   "@accessKindProfile": {
     "description": "#914 managed profile access: accessKindProfile"
   },
-  "accessLogEmpty": "Niemand hat deine Finanzen oder Nachrichten eingesehen.",
+  "accessLogEmpty": "Niemand hat Ihre Finanzen oder Nachrichten eingesehen.",
   "@accessLogEmpty": {
     "description": "#718/#719 - calendar hub"
   },
@@ -73,7 +73,7 @@
       }
     }
   },
-  "accessLogTitle": "Wer auf deine Daten zugegriffen hat",
+  "accessLogTitle": "Wer auf Ihre Daten zugegriffen hat",
   "@accessLogTitle": {
     "description": "#718/#719 - calendar hub"
   },
@@ -81,11 +81,11 @@
   "@accessNobodyElse": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleEvents": "Du, das handelnde Mitglied und die Admins.",
+  "accessRuleEvents": "Sie, das handelnde Mitglied und die Admins.",
   "@accessRuleEvents": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleFinances": "Du und die mit der Finanz-Berechtigung: {people}.",
+  "accessRuleFinances": "Sie und die mit der Finanz-Berechtigung: {people}.",
   "@accessRuleFinances": {
     "description": "#718/#719 - calendar hub",
     "placeholders": {
@@ -108,7 +108,7 @@
     "description": "#718/#719 - calendar hub"
   },
   "accessRuleNegotiations": "Sie, die Inhaber und die Finanz-Admins: {people}. Jeder Zugriff durch jemand anderen steht unten im Protokoll.",
-  "accessRuleReminders": "Nur du.",
+  "accessRuleReminders": "Nur Sie.",
   "@accessRuleReminders": {
     "description": "#718/#719 - calendar hub"
   },
@@ -130,7 +130,7 @@
   "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",
   "accountActivityScope": "Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.",
   "accountActivityTitle": "Mein Verbrauch und meine Zahlungen",
-  "accountCardTitle": "Dein Konto",
+  "accountCardTitle": "Ihr Konto",
   "@accountCardTitle": {
     "description": "Money tab: title of the cross-month account position card (#512)"
   },
@@ -138,7 +138,7 @@
   "@accountCredit": {
     "description": "Account card: unconsumed credit spendable on open invoices"
   },
-  "accountImputationHint": "Dein Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
+  "accountImputationHint": "Ihr Guthaben kann offene Rechnungen begleichen — der Space rechnet es beim Zuordnen der Zahlungen an.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
   },
@@ -186,7 +186,7 @@
   "addressNone": "Keine Adresse",
   "addressSaved": "Adresse gespeichert",
   "addressTitle": "Adresse",
-  "addressVatIdLabel": "Umsatzsteuer-ID (wenn du als Unternehmen abrechnest)",
+  "addressVatIdLabel": "Umsatzsteuer-ID (wenn Sie als Unternehmen abrechnen)",
   "addressWindowCountry": "Dem Land folgen",
   "@addressWindowCountry": {
     "description": "Address-window option: take the convention implied by the workspace country (#869)"
@@ -348,12 +348,12 @@
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince"
   },
-  "authAlreadyRegistered": "Mit dieser Adresse kann kein Konto erstellt werden. Melde dich an oder setze dein Passwort zurück.",
+  "authAlreadyRegistered": "Mit dieser Adresse kann kein Konto erstellt werden. Melden Sie sich an oder setzen Sie Ihr Passwort zurück.",
   "authConnectServer": "Mit dem Server einer Organisation verbinden",
   "authContinueWith": "oder weiter mit",
   "authDisplayNameLabel": "Anzeigename",
   "authEmailLabel": "E-Mail",
-  "authEmailNotConfirmed": "Bestätige zuerst deine E-Mail-Adresse: Öffne die Nachricht, die wir dir geschickt haben, und melde dich dann an.",
+  "authEmailNotConfirmed": "Bestätigen Sie zuerst Ihre E-Mail-Adresse: Öffnen Sie die Nachricht, die wir Ihnen geschickt haben, und melden Sie sich dann an.",
   "authFieldRequired": "Pflichtfeld",
   "authForgotPassword": "Passwort vergessen?",
   "authGenericError": "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.",
@@ -385,18 +385,18 @@
   "@authLinkManualDisabled": {
     "description": "Linked accounts: authLinkManualDisabled"
   },
-  "authNetworkError": "Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+  "authNetworkError": "Server nicht erreichbar. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
   "authPasswordLabel": "Passwort",
   "authPasswordTooShort": "Mindestens 8 Zeichen",
   "authProviderDisabled": "Diese Anmeldemethode ist auf diesem Server abgeschaltet.",
-  "authRateLimited": "Zu viele Versuche. Warte einen Moment und versuche es dann erneut.",
-  "authRecoveryNotSaved": "Dein Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuche das Speichern erneut.",
+  "authRateLimited": "Zu viele Versuche. Warten Sie einen Moment und versuchen Sie es dann erneut.",
+  "authRecoveryNotSaved": "Ihr Code wurde angenommen, aber das neue Passwort wurde nicht gespeichert. Versuchen Sie das Speichern erneut.",
   "authRecoveryRetryUpdate": "Neues Passwort erneut speichern",
-  "authRecoverySessionLost": "Dieser Code gilt hier nicht mehr. Fordere einen neuen an.",
+  "authRecoverySessionLost": "Dieser Code gilt hier nicht mehr. Fordern Sie einen neuen an.",
   "authResetCodeLabel": "Code aus der E-Mail",
-  "authResetCodeSent": "Code gesendet — prüfe deine E-Mails.",
-  "authResetDone": "Passwort aktualisiert — du bist angemeldet.",
-  "authResetExplainer": "Wir senden dir einen Einmal-Code per E-Mail. Setze damit hier ein neues Passwort.",
+  "authResetCodeSent": "Code gesendet — prüfen Sie Ihre E-Mails.",
+  "authResetDone": "Passwort aktualisiert — Sie sind angemeldet.",
+  "authResetExplainer": "Wir senden Ihnen einen Einmal-Code per E-Mail. Setzen Sie damit hier ein neues Passwort.",
   "authResetInvalidCode": "Dieser Code ist ungültig oder abgelaufen.",
   "authResetNewPasswordLabel": "Neues Passwort",
   "authResetSendCode": "Code senden",
@@ -412,7 +412,7 @@
   "authToggleToSignIn": "Schon ein Konto? Anmelden",
   "authToggleToSignUp": "Neu hier? Konto erstellen",
   "authVerifyBackToSignIn": "Zurück zur Anmeldung",
-  "authVerifyBody": "Wir haben einen Bestätigungslink an {email} geschickt. Öffne ihn auf diesem Gerät, um dein Konto fertig einzurichten.",
+  "authVerifyBody": "Wir haben einen Bestätigungslink an {email} geschickt. Öffnen Sie ihn auf diesem Gerät, um Ihr Konto fertig einzurichten.",
   "@authVerifyBody": {
     "placeholders": {
       "email": {
@@ -421,12 +421,12 @@
     }
   },
   "authVerifyChangeEmail": "Andere Adresse verwenden",
-  "authVerifyHint": "Noch nichts da? Sieh im Spam-Ordner nach oder schicke die E-Mail erneut.",
+  "authVerifyHint": "Noch nichts da? Sehen Sie im Spam-Ordner nach oder senden Sie die E-Mail erneut.",
   "authVerifyResend": "E-Mail erneut senden",
-  "authVerifyResendWait": "In einer Minute kannst du sie erneut senden.",
+  "authVerifyResendWait": "In einer Minute können Sie sie erneut senden.",
   "authVerifyResent": "Erneut gesendet.",
-  "authVerifyTitle": "Sieh in dein E-Mail-Postfach",
-  "authWeakPassword": "Wähle ein stärkeres Passwort.",
+  "authVerifyTitle": "Sehen Sie in Ihr E-Mail-Postfach",
+  "authWeakPassword": "Wählen Sie ein stärkeres Passwort.",
   "availabilityAddClosure": "Schließtag hinzufügen",
   "availabilityClosureDays": "Schließtage",
   "availabilityClosureReason": "Grund (optional)",
@@ -461,12 +461,12 @@
   "backendDescriptorNamed": "Von der teilenden Person „{label}“ genannt — nicht geprüft.",
   "backendDestination": "Ziel: {host}",
   "backendErrorKeyConnectionString": "Das ist eine Datenbank-Verbindungszeichenfolge. Sie verlässt den Server nie — fügen Sie hier den veröffentlichbaren Schlüssel des Projekts ein.",
-  "backendErrorKeyEmpty": "Trage den Publishable Key ein.",
+  "backendErrorKeyEmpty": "Tragen Sie den Publishable Key ein.",
   "backendErrorKeyNotSupabase": "Das ist kein Supabase Publishable Key (sb_publishable_…).",
   "backendErrorKeyPersonalToken": "Das ist ein persönliches Zugriffstoken. Es bleibt bei seinem Besitzer — fügen Sie hier den veröffentlichbaren Schlüssel des Projekts ein.",
   "backendErrorKeySecret": "Das ist ein geheimer Schlüssel, kein veröffentlichbarer. Teilen Sie ihn nie: rotieren Sie ihn unter Project Settings → API keys und fügen Sie dann hier den veröffentlichbaren Schlüssel ein.",
   "backendErrorKeyUserToken": "Das ist ein Sitzungs- oder Identitätstoken, kein Projektschlüssel. Fügen Sie hier den veröffentlichbaren Schlüssel des Projekts ein.",
-  "backendErrorUrlEmpty": "Trage die Projekt-URL ein.",
+  "backendErrorUrlEmpty": "Tragen Sie die Projekt-URL ein.",
   "backendErrorUrlNoHost": "Das ist keine vollständige Adresse.",
   "backendErrorUrlNotCanonical": "Geben Sie nur die Projektadresse an (https://host), ohne Pfad, Parameter oder Zugangsdaten.",
   "backendErrorUrlNotHttps": "Die URL muss mit https:// beginnen.",
@@ -499,28 +499,28 @@
   "backendSaveNeedsTest": "Testen Sie zuerst die Verbindung. Nur ein geprüfter Server kann gespeichert werden.",
   "backendScan": "Server-QR scannen",
   "backendScanNothing": "Dieser QR-Code ist kein DesKilo-Servercode.",
-  "backendServerCustom": "Dein eigener Server ({host})",
+  "backendServerCustom": "Ihr eigener Server ({host})",
   "backendServerDefault": "Der eigene Server der App ({host})",
-  "backendServerHint": "Standardmäßig nutzt die App ihren eigenen Server. Wenn deine Community ein eigenes Supabase-Projekt betreibt, trage es hier ein — die App speichert dann alles dort.",
+  "backendServerHint": "Standardmäßig nutzt die App ihren eigenen Server. Wenn Ihre Community ein eigenes Supabase-Projekt betreibt, tragen Sie es hier ein — die App speichert dann alles dort.",
   "backendServerInUse": "Auf diesem Gerät in Gebrauch",
   "backendServerReset": "Server der App verwenden",
-  "backendServerRestartHint": "Die App meldet dich ab und übernimmt die Änderung beim nächsten Start.",
-  "backendServerSaved": "Gespeichert. Schließe die App und öffne sie erneut, um den neuen Server zu nutzen.",
+  "backendServerRestartHint": "Die App meldet Sie ab und übernimmt die Änderung beim nächsten Start.",
+  "backendServerSaved": "Gespeichert. Schließen Sie die App und öffnen Sie sie erneut, um den neuen Server zu nutzen.",
   "backendServerTitle": "Server",
   "backendShare": "Diesen Server teilen",
   "backendShareHint": "Mitglieder scannen das in Einstellungen → Server, um ihre App auf dieselbe Instanz zu richten.",
-  "backendStep1": "Lege ein Projekt auf supabase.com an (die kostenlose Stufe reicht zum Start).",
-  "backendStep2": "Installiere das Schema der App: führe die SQL-Dateien aus supabase/migrations des Quell-Repositorys der Reihe nach aus.",
-  "backendStep3": "Öffne im Supabase-Dashboard Project Settings → API keys und kopiere die Project URL und den Publishable Key.",
-  "backendStep4": "Füge sie unten ein, teste die Verbindung und speichere. Mitglieder kommen über den QR-Code oben auf dieselbe Instanz.",
+  "backendStep1": "Legen Sie ein Projekt auf supabase.com an (die kostenlose Stufe reicht zum Start).",
+  "backendStep2": "Installieren Sie das Schema der App: Führen Sie die SQL-Dateien aus supabase/migrations des Quell-Repositorys der Reihe nach aus.",
+  "backendStep3": "Öffnen Sie im Supabase-Dashboard Project Settings → API keys und kopieren Sie die Project URL und den Publishable Key.",
+  "backendStep4": "Fügen Sie sie unten ein, testen Sie die Verbindung und speichern Sie. Mitglieder kommen über den QR-Code oben auf dieselbe Instanz.",
   "backendTest": "Verbindung testen",
   "backendTestAhead": "Erreicht. Sein Schema ist neuer als diese App – es funktioniert, und eine neuere App ist verfügbar.",
   "backendTestAttention": "Erreicht, aber die Antwort ließ sich nicht einordnen. Prüfen Sie den Server, bevor Sie ihn verwenden.",
-  "backendTestBadKey": "Erreicht, aber der Key wurde abgelehnt. Kopiere den Publishable Key erneut aus Project Settings → API keys.",
+  "backendTestBadKey": "Erreicht, aber der Key wurde abgelehnt. Kopieren Sie den Publishable Key erneut aus Project Settings → API keys.",
   "backendTestBehind": "Erreicht, aber sein DesKilo-Schema ist älter, als diese App benötigt. Aktualisieren Sie den Server, bevor Sie ihn verwenden.",
   "backendTestOk": "Erreicht — das Schema der App ist vorhanden.",
   "backendTestSchemaMissing": "Erreicht, aber die DesKilo-Tabellen fehlen — führe zuerst die Migrationen aus supabase/migrations auf diesem Projekt aus.",
-  "backendTestUnreachable": "Diese Adresse war nicht erreichbar. Prüfe die URL und dein Netz.",
+  "backendTestUnreachable": "Diese Adresse war nicht erreichbar. Prüfen Sie die URL und Ihr Netz.",
   "backendTesting": "Test läuft…",
   "backendUrlLabel": "Projekt-URL",
   "backendVersionAhead": "Der Server ist neuer als diese App — aktualisieren Sie die App, sobald Sie können",
@@ -671,9 +671,9 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
-  "badgeTapCardHint": "Halte die RFID/NFC-Karte an die Rückseite des Geräts.",
+  "badgeTapCardHint": "Halten Sie die RFID/NFC-Karte an die Rückseite des Geräts.",
   "badgeTapCardTitle": "Karte registrieren",
-  "badgeTokenOnce": "Speichere diesen QR jetzt — er wird nur einmal angezeigt.",
+  "badgeTokenOnce": "Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.",
   "baseRoleNote": "Jede Person hat genau eine Basisrolle: Benutzer, Administrator, Mit-Eigentümer oder Eigentümer. Weitere Rollen kommen hinzu; keine nimmt etwas weg.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -1040,11 +1040,11 @@
       }
     }
   },
-  "billCreditNoteDue": "Der Space schuldet dir diesen Betrag — du musst nichts zahlen.",
+  "billCreditNoteDue": "Der Space schuldet Ihnen diesen Betrag — Sie müssen nichts zahlen.",
   "@billCreditNoteDue": {
     "description": "Bill credit-note card: refund still due from the workspace"
   },
-  "billCreditNoteRefunded": "Der Space hat dir diesen Betrag erstattet.",
+  "billCreditNoteRefunded": "Der Space hat Ihnen diesen Betrag erstattet.",
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
@@ -1153,7 +1153,7 @@
   "billingRulesTitle": "Rechnungsplan",
   "billingSaved": "Gespeichert.",
   "billingSubscriptionAuto": "Automatisch erstellen",
-  "billingSubscriptionOff": "Schalte „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingSubscriptionOff": "Schalten Sie „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingSubscriptionSection": "Abo, im Voraus",
   "billingSubscriptionWhen": "Erstellt am {day} für {month}",
   "@billingSubscriptionWhen": {
@@ -1177,12 +1177,12 @@
   },
   "billingTitle": "Abrechnung",
   "billingUsageAuto": "Automatisch erstellen",
-  "billingUsageOff": "Schalte „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingUsageOff": "Schalten Sie „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingUsageSection": "Der gerade beendete Monat",
   "billingUsageWhenZero": "Auch wenn nichts zu zahlen ist",
   "billingUsageWhenZeroHint": "Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.",
   "blockPersonAction": "Person blockieren",
-  "blockPersonConfirm": "{name} blockieren? Ihr seht und erreicht euch gegenseitig nicht mehr. Du kannst das unter Ich rückgängig machen.",
+  "blockPersonConfirm": "{name} blockieren? Sie sehen und erreichen einander nicht mehr. Sie können das unter Ich rückgängig machen.",
   "@blockPersonConfirm": {
     "placeholders": {
       "name": {
@@ -1191,8 +1191,8 @@
     }
   },
   "blockPersonDone": "Blockiert.",
-  "blockedPeopleEmpty": "Du hast niemanden blockiert.",
-  "blockedPeopleHint": "Eine blockierte Person kann dich weder sehen noch dir schreiben, und du kannst sie weder sehen noch erreichen.",
+  "blockedPeopleEmpty": "Sie haben niemanden blockiert.",
+  "blockedPeopleHint": "Eine blockierte Person kann Sie weder sehen noch Ihnen schreiben, und Sie können sie weder sehen noch erreichen.",
   "blockedPeopleTitle": "Blockierte Personen",
   "bookAccountCode": "Kontonummer",
   "bookAccountName": "Kontobezeichnung",
@@ -1242,7 +1242,7 @@
       }
     }
   },
-  "bookingCheckedInElsewhere": "Du bist woanders eingecheckt — checke dort zuerst aus.",
+  "bookingCheckedInElsewhere": "Sie sind woanders eingecheckt — checken Sie dort zuerst aus.",
   "bookingCheckedInUntil": "Eingecheckt bis {until}.",
   "@bookingCheckedInUntil": {
     "description": "#663 - check-in confirmation without a space name",
@@ -1261,12 +1261,12 @@
       }
     }
   },
-  "bookingMembershipPaused": "Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.",
+  "bookingMembershipPaused": "Ihre Mitgliedschaft ist pausiert — ein Admin reaktiviert sie unter Mitglieder.",
   "bookingModeCheckInNow": "Jetzt einchecken",
   "bookingMoreOptions": "Weitere Optionen",
   "bookingNoLongerCheckedIn": "Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.",
-  "bookingNotAMember": "Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung.",
-  "bookingOnePlace": "Du hast in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
+  "bookingNotAMember": "Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung.",
+  "bookingOnePlace": "Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
   "bookingOpenDetails": "Details",
   "bookingOutsideHoursError": "Buchungen müssen innerhalb der Arbeitszeiten liegen.",
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
@@ -1768,10 +1768,10 @@
   "carnetsEmpty": "Noch keine Mehrfachkarte.",
   "carnetsTitle": "Mehrfachkarten",
   "coOwnerAction": "Mit-Inhaberschaft",
-  "coOwnerActivate": "Jetzt zur Inhaberin machen",
-  "coOwnerActive": "Aktive Mit-Inhaberin — Inhaber-Rechte sofort, automatische Nachfolge",
+  "coOwnerActivate": "Jetzt zum Inhaber machen",
+  "coOwnerActive": "Aktiver Mitinhaber — Inhaber-Rechte sofort, automatische Nachfolge",
   "coOwnerNone": "Keine Mit-Inhaberschaft",
-  "coOwnerPassive": "Nachfolgerin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht",
+  "coOwnerPassive": "Nachfolge — wird Inhaber bei Aktivierung oder wenn der Inhaber geht",
   "coloursApplied": "{hex} übernommen. Die App leitet daraus ihre Themen ab.",
   "@coloursApplied": {
     "description": "#1289 colours screen: the colour was stored",
@@ -2015,7 +2015,7 @@
   },
   "conversationArchive": "Archivieren",
   "conversationArchived": "Unterhaltung archiviert.",
-  "conversationEmpty": "Noch keine Nachrichten — sag hallo!",
+  "conversationEmpty": "Noch keine Nachrichten — sagen Sie hallo!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
   },
@@ -2268,15 +2268,19 @@
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
   },
-  "demoPersonaAdmin": "Eine Verwaltung",
+  "demoPersonaAdmin": "Administrator:in",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
-  "demoPersonaMember": "Ein Mitglied",
+  "demoPersonaKiosk": "Das Kiosk-Tablet",
+  "@demoPersonaKiosk": {
+    "description": "#2327 demo personas: demoPersonaKiosk"
+  },
+  "demoPersonaMember": "Mitglied",
   "@demoPersonaMember": {
     "description": "#1376 demo personas: demoPersonaMember"
   },
-  "demoPersonaOwner": "Die Inhaberin",
+  "demoPersonaOwner": "Inhaber",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
@@ -2575,6 +2579,16 @@
   "directoryLastSeenDays": "{days, plural, =1{Vor 1 Tag gesehen} other{Vor {days} Tagen gesehen}}",
   "directoryLastSeenHours": "{hours, plural, =1{Vor 1 Stunde gesehen} other{Vor {hours} Stunden gesehen}}",
   "directoryLastSeenMinutes": "Vor {minutes} Min. gesehen",
+  "directoryLinkAction": "Verbinden",
+  "directoryLinkCheck": "Prüfen",
+  "directoryLinkConnect": "Referenzserver verbinden",
+  "directoryLinkDone": "Verbunden. Die Spaces, die er veröffentlicht, sind jetzt unter Entdecken gelistet.",
+  "directoryLinkIntro": "Das globale Verzeichnis liegt auf dem Referenzserver. Ist ein Server verbunden, wird jeder Space, den er veröffentlicht, für alle unter Entdecken gelistet.",
+  "directoryLinkNeedsAccount": "Die Verbindung wird auf dem Referenzserver gespeichert: Verbinden Sie zuerst Ihr Konto dort.",
+  "directoryLinkStateDirectory": "Dies ist der Referenzserver: Die Spaces, die er veröffentlicht, sind immer gelistet.",
+  "directoryLinkStateLinkable": "Kann verbunden werden: Er antwortet und veröffentlicht Spaces, die diese App lesen kann.",
+  "directoryLinkStateLinked": "Verbunden: Die Spaces, die er veröffentlicht, sind unter Entdecken gelistet.",
+  "directoryLinkStateUnreachable": "Kann noch nicht verbunden werden: Er antwortet nicht, oder seine Version kann keine Spaces veröffentlichen.",
   "directoryLocate": "Auf der Karte anzeigen",
   "directoryLocating": "Öffentliche Adresse wird gesucht…",
   "directoryLocationMissing": "Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.",
@@ -2724,9 +2738,9 @@
   "editorMediaSaving": "Bild wird gespeichert…",
   "editorMediaWriteFailed": "Das Speichern des Bildes konnte nicht bestätigt werden. Erneutes Versuchen fügt es nie doppelt hinzu.",
   "editorNewOffice": "Neues Büro",
-  "editorNoAccessories": "Noch kein Zubehör — lege es unter Einstellungen → Zubehör an.",
+  "editorNoAccessories": "Noch kein Zubehör — legen Sie es unter Einstellungen → Zubehör an.",
   "editorNoAccessoriesAction": "Noch keine Ausstattung — jetzt einrichten",
-  "editorNoLevels": "Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.",
+  "editorNoLevels": "Noch keine Etagen. Fügen Sie die erste Etage Ihres Workspace hinzu.",
   "editorOfficeNameDefault": "Büro",
   "editorOfficeNameLabel": "Name des Büros",
   "editorOfficeProperties": "Büro",
@@ -2758,7 +2772,7 @@
   "einvoiceConfigEndpoint": "Upload-URL",
   "einvoiceConfigField": "Feldname der Datei (Standard file)",
   "einvoiceConfigHeader": "Auth-Header (Standard Authorization)",
-  "einvoiceConfigIntro": "Wohin DesKilo deine Rechnungen sendet. Jede Plattform, die einen Upload mit Token annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig und kommt nie zurück.",
+  "einvoiceConfigIntro": "Wohin DesKilo Ihre Rechnungen sendet. Jede Plattform, die einen Upload mit Token annimmt, funktioniert — eine zugelassene Plattform, ein Peppol Access Point, eine nationale Plattform. Das Token liegt serverseitig und kommt nie zurück.",
   "einvoiceConfigSaved": "Plattform gespeichert.",
   "einvoiceConfigTitle": "E-Rechnungs-Plattform",
   "einvoiceConfigToken": "Token oder Zugangsdaten",
@@ -2820,11 +2834,11 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
-  "entitlementBlockedFull": "Du hast diesen Monat alle Tage aufgebraucht. Bitte eine Administratorin um mehr oder beantrage zusätzliche Halbtage.",
+  "entitlementBlockedFull": "Sie haben diesen Monat alle Tage aufgebraucht. Bitten Sie einen Admin um mehr oder beantragen Sie zusätzliche Halbtage.",
   "entitlementDaysLeft": "Noch {left} Tage",
   "entitlementDaysUsed": "{used} von {total} Tagen genutzt",
-  "entitlementPackageFull": "Du hast diesen Monat alle Tage aufgebraucht. Kaufe ein Paket, um weiter zu buchen.",
-  "entitlementPaygRate": "Tage über deinen Tarif hinaus kosten je {rate}.",
+  "entitlementPackageFull": "Sie haben diesen Monat alle Tage aufgebraucht. Kaufen Sie ein Paket, um weiter zu buchen.",
+  "entitlementPaygRate": "Tage über Ihren Tarif hinaus kosten je {rate}.",
   "entitlementTitle": "Diesen Monat",
   "environmentDev": "Entwicklung — zum Ausprobieren",
   "@environmentDev": {
@@ -3134,7 +3148,7 @@
   "eventsEmpty": "Noch keine Ereignisse.",
   "eventsFilterAll": "Alle",
   "eventsMessagesHeader": "Nachrichten",
-  "eventsPendingHeader": "Wartet auf deine Bestätigung",
+  "eventsPendingHeader": "Wartet auf Ihre Bestätigung",
   "expenseCategoryCoffee": "Kaffee & Küche",
   "expenseCategoryEquipment": "Ausstattung",
   "expenseCategoryOther": "Sonstiges",
@@ -3175,9 +3189,9 @@
   "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
   "featureAccountingBookTitle": "Buchführung",
   "featureAdminInvoicing": "Admins stellen Rechnungen aus",
-  "featureAdminInvoicingDesc": "Auch Admins stellen Rechnungen aus. Die Inhaberin kann es immer.",
+  "featureAdminInvoicingDesc": "Auch Admins stellen Rechnungen aus. Der Inhaber kann es immer.",
   "featureAdminLevelAssign": "Admins können Etagen zuweisen",
-  "featureAdminLevelAssignDesc": "Admins weisen Mitgliedern Etagen-Reservierungen zu. Die Inhaberin kann es immer.",
+  "featureAdminLevelAssignDesc": "Admins weisen Mitgliedern Etagen-Reservierungen zu. Der Inhaber kann es immer.",
   "featureAdminSeatBlocking": "Admins können Plätze sperren",
   "featureAdminSeatBlockingDesc": "Admins markieren Plätze als nicht reservierbar für Wartung. Der Inhaber kann es immer.",
   "featureAlsoEnabled": "Ebenfalls eingeschaltet: {features}",
@@ -3240,7 +3254,7 @@
   "featureCarnetsTitle": "Mehrfachkarten",
   "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen.",
   "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
-  "featureCoOwner": "Mit-Inhaberinnen",
+  "featureCoOwner": "Mitinhaber",
   "featureCoOwnerDesc": "Mit-Inhaber ernennen: Inhaber-Rechte sofort (aktiv) oder wartende Nachfolge (passiv).",
   "featureConfigurationTransfer": "Konfiguration in der Raumdatei",
   "@featureConfigurationTransfer": {
@@ -3376,7 +3390,7 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
-  "featureHeldBack": "Wartet auf die Funktion darüber — schalte sie ein, dann wirkt auch diese wieder.",
+  "featureHeldBack": "Wartet auf die Funktion darüber — schalten Sie sie ein, dann wirkt auch diese wieder.",
   "featureHolidayImportDesc": "Ein Eigentümer importiert die Feiertage des Landes und einer Region aus einer Open-Data-Quelle, wählt die Tage ab, an denen der Raum geöffnet bleibt, und importiert die übrigen als Schließtage. Bereits abgerechnete Monate werden übersprungen und genannt.",
   "@featureHolidayImportDesc": {
     "description": "#2051 open-data holiday import"
@@ -3435,7 +3449,7 @@
   "@featureManagedProfileAccess": {
     "description": "#914 managed profile access: name"
   },
-  "featureManagedProfileAccessDesc": "Jedes verwaltete Profil nennt, wer es verwalten darf — nach Rolle, nach benannten Personen oder beides. Aus: jede Inhaberin und jeder Admin darf, wie bisher. Die Identität selbst ist in beiden Fällen geschützt, und jeder Zugriff wird für die Person festgehalten, die das Profil übernimmt.",
+  "featureManagedProfileAccessDesc": "Jedes verwaltete Profil nennt, wer es verwalten darf — nach Rolle, nach benannten Personen oder beides. Aus: jeder Inhaber und jeder Admin darf, wie bisher. Die Identität selbst ist in beiden Fällen geschützt, und jeder Zugriff wird für die Person festgehalten, die das Profil übernimmt.",
   "@featureManagedProfileAccessDesc": {
     "description": "#914 managed profile access: description"
   },
@@ -3490,7 +3504,7 @@
   },
   "featureMemberNotifications": "Mitglieder-Benachrichtigungen",
   "featureMemberNotificationsDesc": "Nachrichten zwischen Mitgliedern: private und Gruppenunterhaltungen, Lesebestätigungen, Links zu einer Reservierung oder einem Raum; Admins können alle Admins benachrichtigen, Inhaber eingeschlossen.",
-  "featureMemberOriginDesc": "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einer Verwaltung angelegt. Es ist kein Status.",
+  "featureMemberOriginDesc": "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einem Admin angelegt. Es ist kein Status.",
   "featureMemberOriginTitle": "Wie jedes Mitglied hierherkam",
   "featureMemberPageDesc": "Eine Seite pro Mitglied: Foto und Präsenz, zuletzt gesehen, aktuelle und kommende Buchungen, Schnellaktionen (Nachricht, WhatsApp, E-Mail), Kontakt- und Finanzkarten und für Admins jede Einstellung nach Thema gruppiert mit ihrem aktuellen Wert. Aus: das Profilblatt und das Aktionsblatt von Mitglieder & Tarife.",
   "featureMemberPageTitle": "Mitgliedsseite",
@@ -3520,7 +3534,7 @@
   "@featureMessageForwardingTitle": {
     "description": "#1824 messenger flags: featureMessageForwardingTitle"
   },
-  "featureMessageGesturesDesc": "Wische eine Nachricht nach rechts, um sie in deiner Antwort zu zitieren; nach links, um deine eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht.",
+  "featureMessageGesturesDesc": "Wischen Sie eine Nachricht nach rechts, um sie in Ihrer Antwort zu zitieren; nach links, um Ihre eigene Nachricht zurückzunehmen, solange sie niemand gelesen hat — nach einer Bestätigung. Aus: Nachrichten werden durch langes Drücken gelöscht.",
   "featureMessageGesturesTitle": "Wischen zum Zitieren oder Zurücknehmen",
   "featureMessageMentionsDesc": "In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden.",
   "@featureMessageMentionsDesc": {
@@ -3567,7 +3581,7 @@
   "@featureNumberSequences": {
     "description": "#925 number sequences: featureNumberSequences"
   },
-  "featureNumberSequencesDesc": "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert die Inhaberin das Format für alles Kommende.",
+  "featureNumberSequencesDesc": "Wie jedes Journal seine Belege nummeriert — Präfix, Jahr oder Monat, Stellen, Neustart des Zählers — ein Bildschirm für alle Kreise. Die Nummern werden in der Datenbank vergeben, lückenlos, ob ein- oder ausgeschaltet; eingeschaltet ändert der Inhaber das Format für alles Kommende.",
   "@featureNumberSequencesDesc": {
     "description": "#925 number sequences: featureNumberSequencesDesc"
   },
@@ -3610,7 +3624,7 @@
   },
   "featurePriceNegotiationsDesc": "Der Tarif ist der Standard; ein Mitglied kann eigene Konditionen haben — Monatsgebühr, Überschreitungssatz, Rabatt auf Zuschläge, Stückpreise je Leistung und Paket, Belegungsprozentsatz —, vorgeschlagen von wer „Geschäftsvereinbarungen verwalten“ hält, und nach den Regeln validiert. Sichtbar für das Mitglied, die Inhaber und die Träger von „Geschäftsvereinbarungen einsehen“; jeder Zugriff wird protokolliert.",
   "featurePriceNegotiationsTitle": "Preisverhandlungen",
-  "featurePublicHolidaysDesc": "Die Inhaberin wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung.",
+  "featurePublicHolidaysDesc": "Der Inhaber wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung.",
   "@featurePublicHolidaysDesc": {
     "description": "#1274 public holidays: the feature switch description"
   },
@@ -3675,7 +3689,7 @@
   "@featureRoleManagement": {
     "description": "Feature name (#513)"
   },
-  "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
+  "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Der Inhaber entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
@@ -3721,7 +3735,7 @@
   },
   "featureSpaceQrCodes": "Raum-QR-Codes",
   "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
-  "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum deiner Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
+  "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
   "featureSupplyExpensesDesc": "Eine Ausgabe kann ein Vorrat für den Raum sein (Kaffeekapseln, Staubsaugerbeutel…): genehmigt, füllt sie eine verbrauchbare Leistung mit Stückpreis auf oder legt sie an; Verbräuche zählen den Bestand herunter.",
   "featureSupplyExpensesTitle": "Vorräte aus Ausgaben",
@@ -3861,9 +3875,9 @@
   },
   "fecAccountRevenue": "Erlöse",
   "fecAccountVat": "Vereinnahmte Steuer",
-  "fecAccountsIntro": "Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetze sie durch die deiner Buchhaltung.",
+  "fecAccountsIntro": "Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetzen Sie sie durch die Ihrer Buchhaltung.",
   "fecAccountsTitle": "Zu buchende Konten",
-  "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — trage sie zuerst unter Rechtliche Identität ein.",
+  "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.",
   "federationActionExistingAccount": "Bei meinem bestehenden Konto anmelden",
   "federationActionReviewServer": "Server prüfen",
   "federationCancel": "Abbrechen",
@@ -4097,22 +4111,22 @@
   "gettingStartedActionFinishSetup": "Einrichtung abschließen",
   "gettingStartedActionHelp": "Hilfe zu diesem Workspace",
   "gettingStartedActionMembership": "Meine Mitgliedschaft ansehen",
-  "gettingStartedAllowance": "{count, plural, =1{Du kannst eine Buchung gleichzeitig halten.} other{Du kannst {count} Buchungen gleichzeitig halten.}}",
+  "gettingStartedAllowance": "{count, plural, =1{Sie können eine Buchung gleichzeitig halten.} other{Sie können {count} Buchungen gleichzeitig halten.}}",
   "gettingStartedAvailabilityUnknown": "Die Verfügbarkeit konnte nicht geladen werden. Die Hilfe erklärt, wie Buchen hier funktioniert.",
-  "gettingStartedBooked": "Deine Buchung ist {state}. Deine Mitgliedschaft zeigt, was sonst noch enthalten ist.",
-  "gettingStartedClosedToday": "Der Workspace ist am gewählten Tag geschlossen. Wähle einen anderen Tag, um zu sehen, was frei ist.",
+  "gettingStartedBooked": "Ihre Buchung ist {state}. Ihre Mitgliedschaft zeigt, was sonst noch enthalten ist.",
+  "gettingStartedClosedToday": "Der Workspace ist am gewählten Tag geschlossen. Wählen Sie einen anderen Tag, um zu sehen, was frei ist.",
   "gettingStartedEnvDev": "Entwicklungs-Workspace",
   "gettingStartedEnvProd": "Produktions-Workspace",
-  "gettingStartedMembershipUnknown": "Deine Mitgliedschaft konnte gerade nicht geladen werden. Die Hilfe erklärt, wie dieser Workspace funktioniert.",
-  "gettingStartedNoSpaces": "Hier kann noch nichts gebucht werden. Deine Mitgliedschaft zeigt, was dein Zugang umfasst.",
+  "gettingStartedMembershipUnknown": "Ihre Mitgliedschaft konnte gerade nicht geladen werden. Die Hilfe erklärt, wie dieser Workspace funktioniert.",
+  "gettingStartedNoSpaces": "Hier kann noch nichts gebucht werden. Ihre Mitgliedschaft zeigt, was Ihr Zugang umfasst.",
   "gettingStartedNotNow": "Jetzt nicht",
-  "gettingStartedReadyToBook": "Der Workspace ist an diesem Tag geöffnet. Wähle eine Zeit und einen Platz auf dem Plan — gebucht wird erst, wenn du bestätigst.",
+  "gettingStartedReadyToBook": "Der Workspace ist an diesem Tag geöffnet. Wählen Sie eine Zeit und einen Platz auf dem Plan — gebucht wird erst, wenn Sie bestätigen.",
   "gettingStartedReopen": "Erste Schritte",
   "gettingStartedSemantics": "Erste Schritte: ein vorgeschlagener nächster Schritt",
   "gettingStartedSetupIncomplete": "Bevor hier jemand buchen kann: {step}.",
-  "gettingStartedStandingAdmin": "Du bist hier Administrator.",
-  "gettingStartedStandingMember": "Du bist hier Mitglied.",
-  "gettingStartedStandingOwner": "Du bist Inhaber dieses Workspace.",
+  "gettingStartedStandingAdmin": "Sie sind hier Administrator:in.",
+  "gettingStartedStandingMember": "Sie sind hier Mitglied.",
+  "gettingStartedStandingOwner": "Sie sind Inhaber dieses Workspace.",
   "gettingStartedStateCancelled": "storniert",
   "gettingStartedStateCheckedIn": "eingecheckt",
   "gettingStartedStateCompleted": "abgeschlossen",
@@ -4257,7 +4271,7 @@
   "guideHostTapLabel": "Tippen Sie auf „{label}“.",
   "guideHostTitle": "Geführte Aufgabe",
   "guideHostUncertain": "Die Antwort kam nicht an. Prüfen Sie, ob es geklappt hat, bevor Sie es erneut versuchen.",
-  "guideHostWaiting": "Warte auf das Ergebnis …",
+  "guideHostWaiting": "Auf das Ergebnis wird gewartet …",
   "guideStart": "Anleitung starten",
   "guideStartNotRunnable": "Diese Anleitung enthält Schritte, die diese App-Version nicht kennt; sie kann gelesen, aber nicht befolgt werden.",
   "guideStartRefused": "Diese Anleitung kann hier nicht starten: Melden Sie sich an und schalten Sie den Aufgabenrekorder in diesem Workspace ein.",
@@ -4284,7 +4298,7 @@
   "helpHintAvailabilityTopic": "Verfügbarkeit",
   "helpHintBadges": "Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.",
   "helpHintBadgesTopic": "NFC-Badge",
-  "helpHintCalendar": "Wähle einen Tag oder Zeitraum: alles Datierte, das du sehen darfst, in einer Liste, jede Zeile öffnet ihre Quelle.",
+  "helpHintCalendar": "Einen Tag oder Zeitraum wählen: alles Datierte, das Sie sehen dürfen, in einer Liste, jede Zeile öffnet ihre Quelle.",
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
@@ -4342,7 +4356,7 @@
   "helpHintPlan": "Der Live-Grundriss: freien Platz antippen zum Buchen, die eigene Buchung antippen zum Einchecken.",
   "helpHintPlanTopic": "Grundriss",
   "helpHintPrevTip": "Vorheriger Tipp",
-  "helpHintPrivacy": "Sieh, wer deine Daten lesen kann und wer es tat, exportiere alles als eine Datei oder verlasse den Bereich mit gelöschten persönlichen Daten.",
+  "helpHintPrivacy": "Sehen, wer Ihre Daten lesen kann und wer es tat, alles als eine Datei exportieren oder den Bereich mit gelöschten persönlichen Daten verlassen.",
   "@helpHintPrivacy": {
     "description": "#718/#719 - help hints"
   },
@@ -4531,7 +4545,7 @@
     "description": "workspace inbox: door to the Me messenger"
   },
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
-  "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
+  "inboxNoUnread": "Nichts Ungelesenes — Sie sind auf dem Laufenden.",
   "inboxRetry": "Erneut versuchen",
   "instanceAccessTitle": "Assistenten-Zugang",
   "instanceAccessUntil": "Bis {date}",
@@ -4796,47 +4810,47 @@
   "instanceYou": "Sie",
   "instanceYouAreDelegate": "Sie sind Stellvertreter des Instanzeigentümers.",
   "instanceYouAreOwner": "Sie sind der Instanzeigentümer.",
-  "invitationAlreadyMember": "Du bist bereits Mitglied von {workspace}.",
+  "invitationAlreadyMember": "Sie sind bereits Mitglied von {workspace}.",
   "invitationApprovalRequired": "Ein Administrator gibt neue Mitglieder frei, bevor sich der Bereich öffnet.",
   "invitationApprovalUnknown": "Ob ein Administrator freigeben muss, ist nicht bekannt.",
-  "invitationBadServer": "Der Server in dieser Einladung ist ungültig. Bitte um eine neue Einladung.",
+  "invitationBadServer": "Der Server in dieser Einladung ist ungültig. Bitten Sie um eine neue Einladung.",
   "invitationChangeAccount": "Konto wechseln",
   "invitationCheckAnother": "Andere Einladung verwenden",
-  "invitationCheckFailed": "Die Einladung konnte nicht geprüft werden — Status nicht aktualisiert. Nichts wurde geändert; versuche es erneut.",
+  "invitationCheckFailed": "Die Einladung konnte nicht geprüft werden — Status nicht aktualisiert. Nichts wurde geändert; versuchen Sie es erneut.",
   "invitationContinue": "Weiter zu diesem Bereich",
-  "invitationDefaultTemplate": "Hallo{firstName}! Du bist eingeladen, unserem Coworking-Space „{workspaceName}“ auf DesKilo beizutreten.\n\n1. Lade die App herunter:\n{downloadUrl}\n\n2. Öffne sie, lege dein Konto an (E-Mail + Passwort) und melde dich an.\n\n3. Wähle „Workspace beitreten“ und gib deinen persönlichen Einladungscode ein:\n{workspaceId}\n(Einladungslink: {inviteLink})\n\nTipp: Kopiere einfach diese ganze Nachricht und füge sie in der App ein — der Code wird automatisch erkannt. Dein Code ist persönlich, einmalig nutzbar und 14 Tage gültig.\n\nBis bald bei {workspaceName}!",
+  "invitationDefaultTemplate": "Hallo{firstName}! Sie sind eingeladen, unserem Coworking-Space „{workspaceName}“ auf DesKilo beizutreten.\n\n1. Laden Sie die App herunter:\n{downloadUrl}\n\n2. Öffnen Sie sie, legen Sie Ihr Konto an (E-Mail + Passwort) und melden Sie sich an.\n\n3. Wählen Sie „Workspace beitreten“ und geben Sie Ihren persönlichen Einladungscode ein:\n{workspaceId}\n(Einladungslink: {inviteLink})\n\nTipp: Kopieren Sie einfach diese ganze Nachricht und fügen Sie sie in der App ein — der Code wird automatisch erkannt. Ihr Code ist persönlich, einmalig nutzbar und 14 Tage gültig.\n\nBis bald bei {workspaceName}!",
   "invitationEnvironmentProduction": "Produktivbereich",
   "invitationEnvironmentTest": "Testbereich",
-  "invitationExpired": "Diese Einladung ist abgelaufen. Bitte die Person, die sie geschickt hat, um eine neue.",
-  "invitationInvalid": "Kein Bereich auf {host} kennt diese Einladung. Prüfe sie oder bitte die Organisation um ihren Server-Link.",
+  "invitationExpired": "Diese Einladung ist abgelaufen. Bitten Sie die Person, die sie geschickt hat, um eine neue.",
+  "invitationInvalid": "Kein Bereich auf {host} kennt diese Einladung. Prüfen Sie sie oder bitten Sie die Organisation um ihren Server-Link.",
   "invitationJoinButton": "Bereich beitreten",
-  "invitationJoinUnconfirmed": "Das Ergebnis konnte nicht bestätigt werden. Tritt erneut bei, um es zu prüfen — die Einladung wird nicht doppelt verwendet.",
+  "invitationJoinUnconfirmed": "Das Ergebnis konnte nicht bestätigt werden. Treten Sie erneut bei, um es zu prüfen — die Einladung wird nicht doppelt verwendet.",
   "invitationJoiningAs": "Beitritt als {account}",
-  "invitationNewerVersion": "Diese Einladung stammt aus einer neueren DesKilo-Version. Aktualisiere die App und öffne sie dann erneut.",
+  "invitationNewerVersion": "Diese Einladung stammt aus einer neueren DesKilo-Version. Aktualisieren Sie die App und öffnen Sie sie dann erneut.",
   "invitationOtherServer": "Diese Einladung gehört zu einem anderen Server: {host}.",
   "invitationPasteButton": "Einfügen",
-  "invitationPaused": "Deine Mitgliedschaft in {workspace} ist pausiert. Nur ein Administrator dort kann sie fortsetzen.",
+  "invitationPaused": "Ihre Mitgliedschaft in {workspace} ist pausiert. Nur ein Administrator dort kann sie fortsetzen.",
   "invitationReviewButton": "Einladung prüfen",
   "invitationReviewTitle": "Vor dem Beitritt prüfen",
-  "invitationRevoked": "Dieser Bereichscode wurde ersetzt. Bitte die Person, die ihn geschickt hat, um den aktuellen.",
+  "invitationRevoked": "Dieser Bereichscode wurde ersetzt. Bitten Sie die Person, die ihn geschickt hat, um den aktuellen.",
   "invitationRoleAdmin": "Angebotene Rolle: Administrator",
   "invitationRoleMember": "Angebotene Rolle: Mitglied",
   "invitationRoleUnknown": "Angebotene Rolle: noch nicht bekannt",
   "invitationServerLabel": "Von der teilenden Person „{label}“ genannt",
   "invitationServerRow": "Server: {host}",
-  "invitationTemplateHelp": "Wird gesendet, wenn du jemanden per WhatsApp, SMS oder Teilen einlädst. Leer lassen für die eingebaute Nachricht in der gewählten Sprache. Verfügbare Tags:",
+  "invitationTemplateHelp": "Wird gesendet, wenn Sie jemanden per WhatsApp, SMS oder Teilen einladen. Leer lassen für die eingebaute Nachricht in der gewählten Sprache. Verfügbare Tags:",
   "invitationTemplateHint": "Eigene Einladungsnachricht mit den Tags oben…",
   "invitationTemplateLanguage": "Sprache der Nachricht",
   "invitationTemplateTitle": "Einladungsnachricht",
   "invitationThisDevice": "Dieses Gerät nutzt {host}. Eine Einladung wird nur auf ihrem eigenen Server geprüft.",
   "invitationUnknownAnswer": "Der Server hat eine Antwort gegeben, die diese App-Version nicht lesen kann. Nichts wurde geändert.",
   "invitationUseServer": "Diesen Server verwenden",
-  "invitationWrongAccount": "Diese Einladung wurde bereits von einem anderen Konto verwendet. Wenn sie für dich war, melde dich mit diesem Konto an.",
-  "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Gib ihn nur der Person, für die er bestimmt ist.",
+  "invitationWrongAccount": "Diese Einladung wurde bereits von einem anderen Konto verwendet. Wenn sie für Sie war, melden Sie sich mit diesem Konto an.",
+  "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Geben Sie ihn nur der Person, für die er bestimmt ist.",
   "inviteAdminNewCode": "Neuer Code für Administrator:innen",
   "inviteAlsoProdSubtitle": "Die Person tritt dem Testraum in jedem Fall bei. Die Rolle muss den Produktionszugang trotzdem erlauben.",
   "inviteAlsoProdTitle": "Auch Zugang zur Produktion geben",
-  "inviteCreateFailed": "Die Einladung konnte nicht erstellt werden. Prüfe deine Verbindung und versuche es erneut.",
+  "inviteCreateFailed": "Die Einladung konnte nicht erstellt werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
   "inviteFirstNameLabel": "Vorname (optional)",
   "inviteLanguageLabel": "Sprache der Nachricht",
   "inviteLastNameLabel": "Nachname (optional)",
@@ -4987,7 +5001,7 @@
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
   "invoiceGapMissingExemptionReason": "Der Grund für die Steuerbefreiung fehlt.",
-  "invoiceGapMissingLegalId": "Die Registernummer fehlt (SIREN, HRB, CIF…) — nichts identifiziert dich auf der Rechnung.",
+  "invoiceGapMissingLegalId": "Die Registernummer fehlt (SIREN, HRB, CIF…) — nichts identifiziert Sie auf der Rechnung.",
   "invoiceGapMissingSellerCity": "die Stadt der Workspace-Adresse",
   "invoiceGapMissingSellerCountry": "Das Land des Workspace fehlt.",
   "invoiceGapMissingSellerPostalCode": "die Postleitzahl der Workspace-Adresse",
@@ -5520,7 +5534,7 @@
   "invoiceTemplateHeaderLabel": "Kopfband",
   "invoiceTemplateHint": "Drei Berichtsbänder auf dem PDF — das E-Rechnungs-XML bleibt unangetastet. Liquid-Bedingungen und -Schleifen, dann Zeilen-Markup:",
   "invoiceTemplateIntroLabel": "Einleitung (über dem Empfängerblock)",
-  "invoiceTemplateNoPreview": "Stelle zuerst eine Rechnung aus — die Vorschau rendert die neueste.",
+  "invoiceTemplateNoPreview": "Stellen Sie zuerst eine Rechnung aus — die Vorschau rendert die neueste.",
   "invoiceTemplatePresets": "Vorlagen",
   "invoiceTemplatePreview": "Vorschau",
   "invoiceTemplateQuickPreview": "Schnellvorschau",
@@ -5805,7 +5819,7 @@
   "journeyValidatorsWriteoff": "Ausbuchung des Restbetrags beantragt — Prüfer entscheiden",
   "kioskBadgeConfirm": "Bestätigen",
   "kioskBadgeFieldLabel": "Badge-Code",
-  "kioskBadgeHint": "Scanne den QR deines Badges oder tippe seinen Code ein.",
+  "kioskBadgeHint": "Scannen Sie den QR Ihres Badges oder tippen Sie seinen Code ein.",
   "kioskBadgeHintNfc": "Karte auflegen, QR scannen oder Code eintippen.",
   "kioskBadgeRejected": "Badge nicht erkannt.",
   "kioskBasis": "Regel: {granularity} · heute {hours}",
@@ -5820,13 +5834,13 @@
       }
     }
   },
-  "kioskBlockedContactHint": "Belegt von {name} — du kannst ihm/ihr über die App auf deinem Handy schreiben.",
+  "kioskBlockedContactHint": "Belegt von {name} — Sie können der Person über die App auf Ihrem Handy schreiben.",
   "kioskCheckIn": "Einchecken",
   "kioskCheckInRightAway": "Sofort einchecken",
   "@kioskCheckInRightAway": {
     "description": "Kiosk period step switch: the reservation starts checked in"
   },
-  "kioskCheckInRightAwayHint": "Du bist da — die Reservierung startet eingecheckt.",
+  "kioskCheckInRightAwayHint": "Sie sind da — die Reservierung startet eingecheckt.",
   "@kioskCheckInRightAwayHint": {
     "description": "Subtitle of the check-in-right-away switch"
   },
@@ -5846,11 +5860,11 @@
   "kioskNfcOff": "NFC ist in den Android-Einstellungen dieses Tablets ausgeschaltet — zum Lesen von RFID-Karten einschalten.",
   "kioskNfcUnsupported": "Dieses Tablet hat keinen NFC-Leser — stattdessen den QR-Badge scannen.",
   "kioskNotCheckedIn": "Kein aktiver Check-in gefunden — der Plan hat sich womöglich gerade aktualisiert.",
-  "kioskPeriodCheckInHint": "Bis wann bleibst du? Das Einchecken beginnt jetzt.",
+  "kioskPeriodCheckInHint": "Bis wann bleiben Sie? Das Einchecken beginnt jetzt.",
   "@kioskPeriodCheckInHint": {
     "description": "Kiosk period step hint for a check-in (start pinned to now)"
   },
-  "kioskPeriodReserveHint": "Wähle den Zeitraum — nur heute.",
+  "kioskPeriodReserveHint": "Wählen Sie den Zeitraum — nur heute.",
   "@kioskPeriodReserveHint": {
     "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
   },
@@ -5873,7 +5887,7 @@
   "kioskRevertDone": "Dieses Profil ist wieder ein reguläres Mitglied.",
   "kioskRevertTitle": "Kiosk-Gerät",
   "kioskScanQr": "QR-Badge scannen",
-  "kioskTapHint": "Tippe einen Platz zum Einchecken",
+  "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -5956,7 +5970,7 @@
   },
   "legalIdentityCity": "Stadt",
   "legalIdentityExemptionReason": "Grund der Steuerbefreiung",
-  "legalIdentityIntro": "Was eine EN-16931-E-Rechnung über dich aussagen muss. Bereits ausgestellte Rechnungen behalten die Identität, mit der sie signiert wurden.",
+  "legalIdentityIntro": "Was eine EN-16931-E-Rechnung über Sie aussagen muss. Bereits ausgestellte Rechnungen behalten die Identität, mit der sie signiert wurden.",
   "legalIdentityLegalId": "Registernummer",
   "legalIdentityPostalCode": "Postleitzahl",
   "legalIdentityRegime": "Steuerregime",
@@ -6143,7 +6157,7 @@
   "libraryVisibilityPublic": "Alle (die Bibliothek)",
   "libraryVisibilityShared": "Von mir eingeladene Personen",
   "libraryYours": "Ihre Vorlagen",
-  "linkedAccountsIntro": "Melde dich mit einer verknüpften Identität bei diesem Konto an. Die verfügbaren Anbieter hängen von deinem Server ab.",
+  "linkedAccountsIntro": "Melden Sie sich mit einer verknüpften Identität bei diesem Konto an. Die verfügbaren Anbieter hängen von Ihrem Server ab.",
   "linkedAccountsLink": "Verknüpfen",
   "linkedAccountsLinkStarted": "Fahre im Browser fort, um die Verknüpfung abzuschließen.",
   "linkedAccountsLinked": "Verknüpft",
@@ -6166,11 +6180,11 @@
   "@managedAccessAdmins": {
     "description": "#914 managed profile access: managedAccessAdmins"
   },
-  "managedAccessDefault": "Jede Inhaberin und jeder Admin",
+  "managedAccessDefault": "Jeder Inhaber und jeder Admin",
   "@managedAccessDefault": {
     "description": "#914 managed profile access: managedAccessDefault"
   },
-  "managedAccessHint": "Standard: jede Inhaberin und jeder Admin. Grenzen Sie nach Rolle, nach Person oder beidem ein. Die Inhaberin darf diese Regel immer ändern — sonst könnte ein Profil unverwaltbar werden — erreicht die Daten aber nur, wenn die Regel sie nennt.",
+  "managedAccessHint": "Standard: jeder Inhaber und jeder Admin. Grenzen Sie nach Rolle, nach Person oder beidem ein. Der Inhaber darf diese Regel immer ändern — sonst könnte ein Profil unverwaltbar werden — erreicht die Daten aber nur, wenn die Regel ihn nennt.",
   "@managedAccessHint": {
     "description": "#914 managed profile access: managedAccessHint"
   },
@@ -6514,8 +6528,8 @@
   "mcpUsageUnavailable": "Die Nutzung konnte nicht geladen werden.",
   "mcpUsageWorkspaceTitle": "Nutzung durch Assistenten, letzte 30 Tage",
   "meAccountInMe": "Mein Konto ist unter Ich",
-  "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören dir – in jedem Space.",
-  "meAddressSaveFailed": "Deine Adresse konnte nicht gespeichert werden. Bitte versuche es erneut.",
+  "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
+  "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
   "meCreateSpace": "Space gründen",
   "meFinanceGlanceOwed": "Zu zahlen: {amount}",
   "@meFinanceGlanceOwed": {
@@ -6538,13 +6552,13 @@
   "meGroupProfile": "Mein Profil",
   "meGroupRename": "Umbenennen",
   "meGroupWorkspaces": "Meine Arbeitsbereiche",
-  "meHeaderOwned": "Dein Konto · es gehört nur dir",
+  "meHeaderOwned": "Ihr Konto · es gehört nur Ihnen",
   "meHomeTitle": "Start",
   "meJoinSpace": "Mit Code beitreten",
   "meLeaveAction": "Diesen Space verlassen",
-  "meLeaveBody": "Du bist dann kein Mitglied mehr. Deine Buchungen, Rechnungen und Nachrichten bleiben beim Space. Um auch deine Daten zu löschen, nutze Datenschutz.",
-  "meLeaveDone": "Du hast {name} verlassen.",
-  "meLeaveFailed": "Der Space konnte nicht verlassen werden. Bitte versuche es erneut.",
+  "meLeaveBody": "Sie sind dann kein Mitglied mehr. Ihre Buchungen, Rechnungen und Nachrichten bleiben beim Space. Um auch Ihre Daten zu löschen, nutzen Sie Datenschutz.",
+  "meLeaveDone": "Sie haben {name} verlassen.",
+  "meLeaveFailed": "Der Space konnte nicht verlassen werden. Bitte versuchen Sie es erneut.",
   "meLeaveOwner": "Eigentümer übergeben den Space, bevor sie ihn verlassen",
   "meLeaveSide": "{side} verlassen",
   "@meLeaveSide": {
@@ -6556,13 +6570,13 @@
   },
   "meLeaveTitle": "{name} verlassen?",
   "meLinkedOpen": "Auf {host} öffnen",
-  "meLinkedOpenBody": "Dieser Space liegt auf {host}. Die App arbeitet mit einem Server zur Zeit: Öffnen wechselt zu diesem Server und fragt dort nach deiner Anmeldung.",
+  "meLinkedOpenBody": "Dieser Space liegt auf {host}. Die App arbeitet mit einem Server zur Zeit: Öffnen wechselt zu diesem Server und fragt dort nach Ihrer Anmeldung.",
   "meLinkedPendingOn": "Wartet auf Freigabe · {host}",
   "meLinkedUnavailable": "{host} hat nicht geantwortet: Diese Liste ist womöglich unvollständig.",
   "meManageSpaces": "Meine Spaces verwalten",
   "meMySpaces": "Meine Spaces",
-  "meNoSpaceBody": "Finde einen in deiner Nähe, tritt mit einem Einladungscode bei oder gründe deinen eigenen.",
-  "meNoSpaceTitle": "Du bist noch in keinem Space",
+  "meNoSpaceBody": "Finden Sie einen in Ihrer Nähe, treten Sie mit einem Einladungscode bei oder gründen Sie Ihren eigenen.",
+  "meNoSpaceTitle": "Sie sind noch in keinem Space",
   "meSectionMine": "Mein Verlauf und meine Daten",
   "meSortAlphabet": "A–Z",
   "meSortHand": "Meine Reihenfolge",
@@ -6589,8 +6603,8 @@
   "memberApprove": "Mitgliedschaft bestätigen",
   "memberBadgesTitle": "Badges — {name}",
   "memberBadgesTooltip": "Badges",
-  "memberCoOwnerChip": "Mit-Inhaberin",
-  "memberCoOwnerPassiveChip": "Nachfolgerin",
+  "memberCoOwnerChip": "Mitinhaber",
+  "memberCoOwnerPassiveChip": "Nachfolge",
   "memberContactHeading": "Kontakt",
   "@memberContactHeading": {
     "description": "#704 - the contact section of a member profile"
@@ -6667,7 +6681,7 @@
   "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
   "memberNoteDeleted": "Nachricht gelöscht.",
-  "memberNoteHint": "Deine Nachricht",
+  "memberNoteHint": "Ihre Nachricht",
   "memberNoteReceived": "Nachricht von {name}",
   "memberNoteReply": "Antworten",
   "@memberNoteReply": {
@@ -6684,7 +6698,7 @@
   "@memberNumberLabel": {
     "description": "#928 number-sequence adopters: memberNumberLabel"
   },
-  "memberOriginDelegated": "Profil von einer Verwaltung angelegt",
+  "memberOriginDelegated": "Profil von einem Admin angelegt",
   "memberOriginFounder": "Hat diesen Raum gegründet",
   "memberOriginHeading": "Wie diese Mitgliedschaft begann",
   "memberOriginInvited": "Per Einladung beigetreten",
@@ -7097,7 +7111,7 @@
   "@newConversationStart": {
     "description": "#687 - messaging centre"
   },
-  "newConversationTapToOpen": "Tippe auf eine Person, um den Chat zu öffnen; schalte Gruppe ein, um mehrere zu wählen.",
+  "newConversationTapToOpen": "Tippen Sie auf eine Person, um den Chat zu öffnen; schalten Sie Gruppe ein, um mehrere zu wählen.",
   "newConversationTitle": "Neue Unterhaltung",
   "@newConversationTitle": {
     "description": "#687 - messaging centre"
@@ -7163,14 +7177,14 @@
       }
     }
   },
-  "nfcConfigChecking": "Prüfe…",
+  "nfcConfigChecking": "Wird geprüft…",
   "nfcConfigDeviceOff": "NFC ist in den Android-Einstellungen dieses Geräts ausgeschaltet — zum Lesen von RFID-Karten einschalten.",
   "nfcConfigDeviceReady": "NFC verfügbar und aktiviert",
   "nfcConfigDeviceStatus": "Dieses Gerät",
   "nfcConfigDeviceUnavailable": "Hier kein NFC — ein Android-Gerät mit aktiviertem NFC ist nötig (iPads haben kein NFC). QR-Badges funktionieren weiter.",
   "nfcConfigEnable": "NFC-Badge-Check-in aktivieren",
   "nfcConfigEnableDesc": "Zeigt die Karten-Antipp-Option an Kiosken und im Badge-Manager.",
-  "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registriere die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
+  "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registrieren Sie die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
   "nfcConfigTitle": "RFID-/NFC-Badges",
   "noteRefAlert": "Hinweis",
   "noteRefFilterCount": "{shown} von {total}",
@@ -7224,7 +7238,7 @@
   "notifSortByDate": "Nach Datum sortieren",
   "notifUngroup": "Gruppierung aufheben",
   "notificationsSystemOff": "Android blockiert DesKilo-Benachrichtigungen",
-  "notificationsSystemOffHint": "Erlaube sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.",
+  "notificationsSystemOffHint": "Erlauben Sie sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.",
   "numberSequenceDateNone": "Keins",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -7370,7 +7384,7 @@
   "overagePolicyPackage": "Paketkauf verlangen",
   "overagePolicyPayg": "Mehrverbrauch berechnen (nach Verbrauch)",
   "payConfigConfigured": "Eingerichtet",
-  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
+  "payConfigIntro": "Geben Sie jeden Zahlungsanbieter ein, den Sie anbieten wollen. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigNotConfigured": "Nicht eingerichtet",
   "payConfigOpen": "Einrichten",
   "payConfigRemove": "Entfernen",
@@ -7392,7 +7406,7 @@
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",
   "payOnlineFailedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.",
   "payOnlineFailedTitle": "Online-Zahlung fehlgeschlagen",
-  "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Frag die Workspace-Inhaberin.",
+  "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Fragen Sie den Inhaber des Workspace.",
   "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
   "payOnlinePendingTitle": "Online-Zahlung ausstehend",
   "paymentAccountNumberLabel": "Kontonummer",
@@ -7529,13 +7543,13 @@
   "@paymentsPendingTag": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
-  "pendingApprovalBody": "Du bist {workspace} beigetreten. Ein Admin muss deine Mitgliedschaft bestätigen, bevor du den Workspace nutzen kannst — du erhältst Zugriff, sobald sie bestätigt ist.",
+  "pendingApprovalBody": "Sie sind {workspace} beigetreten. Ein Admin muss Ihre Mitgliedschaft bestätigen, bevor Sie den Workspace nutzen können — Sie erhalten Zugriff, sobald sie bestätigt ist.",
   "pendingApprovalRefresh": "Erneut prüfen",
   "pendingApprovalTitle": "Mitgliedschaft im Bereich wartet auf Freigabe",
-  "pendingAvailable": "Während du wartest, bleiben deine anderen Bereiche, dein Konto und die Hilfe verfügbar.",
+  "pendingAvailable": "Während Sie warten, bleiben Ihre anderen Bereiche, Ihr Konto und die Hilfe verfügbar.",
   "pendingHelp": "Hilfe",
   "pendingLastChecked": "Zuletzt geprüft {time}",
-  "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Deine Anfrage bleibt unverändert.",
+  "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
   "pendingSwitchWorkspace": "Bereich wechseln",
   "percentValue": "{value} %",
@@ -7839,12 +7853,12 @@
   "planStartNow": "Beginnt jetzt",
   "planStartsAt": "Beginnt um {time}",
   "planStateFree": "Frei",
-  "planStateYours": "Deiner",
+  "planStateYours": "Ihrer",
   "planToLabel": "Bis",
   "planUntil": "bis {time}",
   "planUntilDateLabel": "Wiederholen bis",
   "planUntilLabel": "Bis",
-  "planYourSeat": "Dein Platz",
+  "planYourSeat": "Ihr Platz",
   "plansEditorEdit": "Tarif bearbeiten",
   "plansEditorInactive": "Inaktiv",
   "plansEditorNew": "Neuer Tarif",
@@ -7977,7 +7991,7 @@
   "portalPublicPlan": "Öffentlicher Grundriss",
   "portalPublication": "Öffentliche Workspace-Seite",
   "portalPublished": "Im öffentlichen Verzeichnis sichtbar",
-  "portalRegisterDirectory": "Server im Verzeichnis veröffentlichen",
+  "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
   "portalRequestProfile": "Workspace-Profil beantragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
   "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
@@ -7993,7 +8007,7 @@
   "portalVisibilityLink": "Wer mich finden und mir schreiben darf",
   "portalVisibilityLinkBody": "Festgelegt unter Ich › Wer mich sieht.",
   "portalWebsite": "Website",
-  "preferencesSaveFailed": "Deine Einstellungen konnten nicht gespeichert werden. Bitte versuche es erneut.",
+  "preferencesSaveFailed": "Ihre Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
   "preferencesScopeHint": "Sprache, Darstellung und regionale Formate. Aus: meine Standardwerte bearbeiten.",
   "preferencesUseDefaults": "Meine Standardwerte verwenden",
   "preferencesWorkspaceOnly": "Nur für diesen Arbeitsbereich",
@@ -8018,7 +8032,7 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Tippe {phrase} zur Bestätigung.",
+  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Geben Sie {phrase} zur Bestätigung ein.",
   "@privacyEraseConfirmHint": {
     "description": "#719 - privacy & data",
     "placeholders": {
@@ -8031,7 +8045,7 @@
   "@privacyEraseConfirmPhrase": {
     "description": "#719 - privacy & data"
   },
-  "privacyEraseHint": "Storniert deine Buchungen, leert deine Nachrichten, löscht dein Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
+  "privacyEraseHint": "Storniert Ihre Buchungen, leert Ihre Nachrichten, löscht Ihr Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
   "@privacyEraseHint": {
     "description": "#719 - privacy & data"
   },
@@ -8039,7 +8053,7 @@
   "@privacyEraseOwner": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Deine Daten wurden gelöscht.",
+  "privacyErased": "Ihre Daten wurden gelöscht.",
   "@privacyErased": {
     "description": "#719 - privacy & data"
   },
@@ -8047,7 +8061,7 @@
   "@privacyExport": {
     "description": "#719 - privacy & data"
   },
-  "privacyExportHint": "Alles, dessen Betroffener du bist, als eine JSON-Datei (Art. 20).",
+  "privacyExportHint": "Alles, dessen betroffene Person Sie sind, als eine JSON-Datei (Art. 20).",
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
   },
@@ -8232,7 +8246,7 @@
   "profilePhotoSet": "Zum Ändern tippen",
   "profilePhotoTitle": "Foto",
   "profileStatusFieldLabel": "Status",
-  "profileStatusHelper": "Optional. Für Mitglieder deiner Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.",
+  "profileStatusHelper": "Optional. Für Mitglieder Ihrer Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.",
   "profileStatusHint": "Im Call · zurück um 14:00",
   "profileStatusNone": "Kein Status",
   "profileStatusSaveFailed": "Status konnte nicht gespeichert werden",
@@ -8374,7 +8388,7 @@
   "publicProfileTitle": "Öffentliches Profil",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
-  "pushPendingBody": "Jemand wartet auf deine Bestätigung.",
+  "pushPendingBody": "Jemand wartet auf Ihre Bestätigung.",
   "pushPendingTitle": "DesKilo",
   "pushStatusNoTransport": "Diese Version hat keine Push-Benachrichtigungen",
   "@pushStatusNoTransport": {
@@ -8385,7 +8399,7 @@
     "description": "#716 - F-Droid build without a push transport"
   },
   "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
-  "pushStatusNotConfiguredHint": "Die Inhaberin schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
+  "pushStatusNotConfiguredHint": "Der Inhaber schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
   "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
   "questionEditorActive": "Wird gestellt",
   "@questionEditorActive": {
@@ -8540,10 +8554,10 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantrage zusätzliche halbe Tage im Finanzen-Tab.",
+  "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage im Finanzen-Tab.",
   "quotaRequestButton": "Zusätzliche halbe Tage beantragen",
   "quotaRequestCountLabel": "Anzahl halber Tage",
-  "quotaRequestExplainer": "Deine Reservierungen sind durch dein Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
+  "quotaRequestExplainer": "Ihre Reservierungen sind durch Ihr Abo begrenzt. Zusätzliche halbe Tage für {period} gelten nach der Freigabe.",
   "quotaRequestPending": "Antrag gesendet — wartet auf Freigabe.",
   "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",
   "readinessActor": "Wer: {who}",
@@ -8669,7 +8683,7 @@
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
   },
-  "refusalPermission": "Dafür haben Sie keine Berechtigung. Eine Inhaberin oder ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
+  "refusalPermission": "Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "regionalClock": "Uhr",
   "@regionalClock": {
@@ -8691,7 +8705,7 @@
   "@regionalDeviceZone": {
     "description": "#711 - globalization"
   },
-  "regionalDeviceZoneHint": "Aus: Zeiten in der Zone des Bereichs, in der gebucht wird. An: die deines Geräts, gekennzeichnet, wo sie abweicht.",
+  "regionalDeviceZoneHint": "Aus: Zeiten in der Zone des Bereichs, in der gebucht wird. An: die Ihres Geräts, gekennzeichnet, wo sie abweicht.",
   "@regionalDeviceZoneHint": {
     "description": "#711 - globalization"
   },
@@ -8917,11 +8931,11 @@
   "@reportCoaAccounts": {
     "description": "#671 - report document text (reportCoaAccounts)"
   },
-  "reportCoaDisclaimer": "Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht deine Buchhaltung nicht — der Kontenrahmen deiner Steuerberatung gilt.",
+  "reportCoaDisclaimer": "Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht Ihre Buchhaltung nicht — der Kontenrahmen Ihrer Steuerberatung gilt.",
   "@reportCoaDisclaimer": {
     "description": "#671 - report document text (reportCoaDisclaimer)"
   },
-  "reportCoaIntro": "Ein Vorschlag, nicht deine Buchhaltung. Das sind die Konten, die eine Buchhalterin in deinem Land für einen Space wie deinen üblicherweise nimmt.",
+  "reportCoaIntro": "Ein Vorschlag, nicht Ihre Buchhaltung. Das sind die Konten, die man in Ihrem Land für einen Space wie Ihren üblicherweise nimmt.",
   "@reportCoaIntro": {
     "description": "#671 - report document text (reportCoaIntro)"
   },
@@ -9634,7 +9648,7 @@
   },
   "reportPreviewFit": "An die Breite anpassen",
   "reportPreviewSimulated": "Schnellvorschau — Beispieldaten",
-  "reportPreviewTitle": "Schnellvorschau — deine neueste Rechnung",
+  "reportPreviewTitle": "Schnellvorschau — Ihre neueste Rechnung",
   "reportPreviewZoomIn": "Vergrößern",
   "reportPreviewZoomOut": "Verkleinern",
   "reportQuickView": "Schnellansicht",
@@ -9787,17 +9801,17 @@
     "description": "Reservation deletion requests (#492)"
   },
   "reservationEditTimes": "Zeit ändern",
-  "reservationEndEarlyAheadOnly": "Wähle eine Zeit, die noch bevorsteht und vor dem aktuellen Ende liegt.",
+  "reservationEndEarlyAheadOnly": "Wählen Sie eine Zeit, die noch bevorsteht und vor dem aktuellen Ende liegt.",
   "reservationEndEarlyButton": "Früher beenden",
   "reservationExtendButton": "Länger bleiben",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
   },
-  "reservationExtendLaterOnly": "Wähle eine Zeit nach dem aktuellen Ende.",
+  "reservationExtendLaterOnly": "Wählen Sie eine Zeit nach dem aktuellen Ende.",
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
-  "reservationLimitError": "Reservierungslimit erreicht — du hältst bereits die maximale Zahl offener Reservierungen.",
+  "reservationLimitError": "Reservierungslimit erreicht — Sie halten bereits die maximale Zahl offener Reservierungen.",
   "reservationNoteCheckedOutAt": "Abgeschlossen: ausgecheckt um {time}.",
   "@reservationNoteCheckedOutAt": {
     "placeholders": {
@@ -9813,7 +9827,7 @@
   "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen.",
   "reserveBackToNow": "Zurück zu jetzt",
   "reserveBookingFailed": "Reservieren nicht möglich — der Platz wurde eventuell gerade belegt.",
-  "reserveClosedShort": "Zu",
+  "reserveClosedShort": "Geschl.",
   "reserveDayView": "Tag",
   "reserveFullDayChip": "Ganzer Tag",
   "reserveMonthView": "Monat",
@@ -9822,7 +9836,7 @@
   "reserveStaleRetry": "Erneut versuchen",
   "reserveViewMenu": "Ansicht",
   "reserveWeekView": "Woche",
-  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn du nie Unternehmen im Ausland fakturierst.",
+  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn Sie nie Unternehmen im Ausland fakturieren.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"
   },
@@ -10027,7 +10041,7 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleRefusalExceedsYours": "Diese Rolle darf mehr als du, deshalb vergibt sie nur die Inhaberin.",
+  "roleRefusalExceedsYours": "Diese Rolle darf mehr als Sie, deshalb vergibt sie nur der Inhaber.",
   "@roleRefusalExceedsYours": {
     "description": "#2085 giving roles: roleRefusalExceedsYours"
   },
@@ -10039,7 +10053,7 @@
   "@roleRefusalNotPermitted": {
     "description": "#2085 giving roles: roleRefusalNotPermitted"
   },
-  "roleRefusalOwnerOnly": "Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.",
+  "roleRefusalOwnerOnly": "Nur der Inhaber vergibt eine Rolle, die Rollen verwaltet.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
   },
@@ -10059,7 +10073,7 @@
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
-  "rolesIntroReadOnly": "Nur lesen: Das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben.",
+  "rolesIntroReadOnly": "Nur lesen: Das sind die Berechtigungen jeder Rolle. Ihre Rolle ist hervorgehoben.",
   "@rolesIntroReadOnly": {
     "description": "Roles screen intro for non-editors (#513)"
   },
@@ -10075,7 +10089,7 @@
   "@rolesOfSpaceInactive": {
     "description": "#1528 the roles of a space: rolesOfSpaceInactive"
   },
-  "rolesOfSpaceSubtitle": "Jede ergänzt Rechte zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und die Inhaberin behält immer alle Rechte.",
+  "rolesOfSpaceSubtitle": "Jede ergänzt Rechte zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und der Inhaber des Space behält immer alle Rechte.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -10091,7 +10105,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesYourRole": "Deine Rolle",
+  "rolesYourRole": "Ihre Rolle",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
@@ -10124,11 +10138,11 @@
     "description": "#669 - accounting export formats"
   },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
-  "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — du siehst den Bereich, bevor du beitrittst.",
+  "scanJoinHelp": "Richten Sie die Kamera auf den Einladungs-QR — Sie sehen den Bereich, bevor Sie beitreten.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },
-  "scanJoinNotAnInvite": "Dieser QR ist keine DesKilo-Einladung — scanne den aus der Einladungsnachricht.",
+  "scanJoinNotAnInvite": "Dieser QR ist keine DesKilo-Einladung — scannen Sie den aus der Einladungsnachricht.",
   "scanJoinTitle": "Workspace-QR scannen",
   "scheduleCancel": "Diesen Plan beenden",
   "scheduleDaily": "täglich",
@@ -10180,7 +10194,7 @@
   "@seatDayFree": {
     "description": "#903 seat day timeline: seatDayFree"
   },
-  "seatDayMine": "Du",
+  "seatDayMine": "Sie",
   "@seatDayMine": {
     "description": "#903 seat day timeline: seatDayMine"
   },
@@ -10196,7 +10210,7 @@
   "@seatDaySomeone": {
     "description": "#903 seat day timeline: seatDaySomeone"
   },
-  "seatDaySubtitle": "Wer diesen Platz hat, und wann. Tippe auf eine Buchung, um sie zu öffnen, oder auf eine freie Spanne, um sie zu nehmen.",
+  "seatDaySubtitle": "Wer diesen Platz hat, und wann. Tippen Sie auf eine Buchung, um sie zu öffnen, oder auf eine freie Spanne, um sie zu nehmen.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },
@@ -10225,6 +10239,7 @@
   "serverConnectPasteCode": "Servercode einfügen",
   "serverConnectReference": "Referenzserver",
   "serverConnectUseHere": "Auf diesem Gerät verwenden",
+  "serverReferenceLabel": "Referenzserver ({host})",
   "serviceOutOfStock": "Ausverkauft",
   "serviceOutOfStockHint": "Nichts mehr im Regal — der nächste Vorrat füllt es auf.",
   "serviceStockCount": "{count} auf Lager",
@@ -10287,7 +10302,7 @@
       }
     }
   },
-  "settlementNeedsTwo": "Wähle mindestens zwei offene Rechnungen desselben Mitglieds.",
+  "settlementNeedsTwo": "Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.",
   "settlementPaidThrough": "Bezahlt über {number}",
   "@settlementPaidThrough": {
     "placeholders": {
@@ -10412,6 +10427,7 @@
   "spaceCodesTitle": "Raum-QR-Codes (PDF)",
   "spaceFavoriteAdd": "Zu den Favoriten hinzufügen",
   "spaceFavoriteRemove": "Aus den Favoriten entfernen",
+  "spaceHostedOn": "Server: {server}",
   "spaceKindDesk": "Tisch",
   "spaceKindLevel": "Etage",
   "spaceKindOffice": "Büro",
@@ -10424,7 +10440,7 @@
   "spaceMoveDown": "Nach unten",
   "spaceMoveUp": "Nach oben",
   "spaceNotBookable": "Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.",
-  "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.",
+  "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — der Inhaber aktiviert dafür „Als Ganzes buchbar“ im Editor.",
   "spaceOptions": "Optionen für {name}",
   "@spaceOptions": {
     "placeholders": {
@@ -10447,7 +10463,7 @@
   "@spaceYoursCheckedIn": {
     "description": "#670 - whole-space sheet"
   },
-  "spaceYoursNow": "Von dir für dieses Zeitfenster reserviert.",
+  "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
   "statusAwaiting": "Offen",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -10796,7 +10812,7 @@
   "taskRecorderActionOpenRoleMatrix": "Rollenmatrix geöffnet",
   "taskRecorderActionOpenSpaceRoles": "Die Rollen dieses Bereichs geöffnet",
   "taskRecorderActionOpenValidationRules": "Die Freigaberegeln geöffnet",
-  "taskRecorderActionOpenWhatYouCanDo": "„Was du tun kannst“ geöffnet",
+  "taskRecorderActionOpenWhatYouCanDo": "„Was Sie tun können“ geöffnet",
   "taskRecorderActionSaveRole": "Eine Rolle gespeichert",
   "taskRecorderActionSaveValidationRule": "Eine Freigaberegel gespeichert",
   "taskRecorderActionSelectDate": "Den Tag gewählt",
@@ -10815,7 +10831,7 @@
   "taskRecorderActionViewDetails": "Die Reservierung geöffnet",
   "taskRecorderAddNote": "Notiz hinzufügen",
   "taskRecorderCaptureValues": "Werte erfassen (für Fehlerberichte)",
-  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was du eingibst und auswählst — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Gib die Datei nur an Personen weiter, die sehen dürfen, was du eingegeben hast.",
+  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was Sie eingeben und auswählen — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Geben Sie die Datei nur an Personen weiter, die sehen dürfen, was Sie eingegeben haben.",
   "taskRecorderCompletenessComplete": "Vollständig",
   "taskRecorderCompletenessInterrupted": "Unterbrochen",
   "taskRecorderCompletenessPartial": "Unvollständig",
@@ -10834,7 +10850,7 @@
   "taskRecorderExport": "Datei exportieren",
   "taskRecorderExportPackage": "Aufgabenpaket exportieren",
   "taskRecorderExportPreview": "Was die Datei enthalten wird",
-  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfe sie vor dem Teilen und gib sie nur an Personen weiter, die das sehen dürfen.",
+  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfen Sie sie vor dem Teilen und geben Sie sie nur an Personen weiter, die das sehen dürfen.",
   "taskRecorderExportValuesConfirm": "Trotzdem speichern",
   "taskRecorderExportValuesTitle": "Diese Aufnahme enthält Werte",
   "taskRecorderFieldAccessories": "Zubehör",
@@ -11366,7 +11382,7 @@
   "validationSequentialDesc": "Die nächste Freigabe wird erst angefragt, wenn die vorige durch ist, und der Verlauf nummeriert jede Stufe.",
   "validationSpecificAdmins": "Bestimmte Admins",
   "validationStepApplies": "es wird wirksam",
-  "validationStepOwnerToo": "und die Inhaberin, immer",
+  "validationStepOwnerToo": "und der Inhaber, immer",
   "validationStepQuorum": "{who} — beliebige {count}",
   "validationStepRaised": "Jemand fragt",
   "validationStepSequential": "{who} — {count} nacheinander",
@@ -11432,7 +11448,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Bestätige, dass du diese Voranmeldung selbst abgegeben hast (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
+  "vatDeclMarkFiledConfirm": "Bestätigen Sie, dass Sie diese Voranmeldung selbst abgegeben haben (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -11662,15 +11678,15 @@
   "visibilityAbout": "Beruf und Kurzprofil",
   "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
   "visibilityAboutMe": "Über mich",
-  "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuche es erneut.",
-  "visibilityBio": "Ein paar Worte über dich",
+  "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "visibilityBio": "Ein paar Worte über Sie",
   "visibilityChosenCount": "{count, plural, =1{Mitglieder von 1 ausgewählten Space} other{Mitglieder von {count} ausgewählten Spaces}}",
   "visibilityChosenSpaces": "Mitglieder ausgewählter Spaces",
   "visibilityContact": "WhatsApp und E-Mail",
   "visibilityElsewhereIntro": "Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.",
   "visibilityElsewhereTitle": "Auf meinen anderen Servern",
   "visibilityIdentity": "Name und Foto",
-  "visibilityIntro": "Jeder Teil deines Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange du es nicht wählst.",
+  "visibilityIntro": "Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.",
   "visibilityMySpaces": "Mitglieder meiner Spaces",
   "visibilityNobody": "Niemand",
   "visibilityOnServer": "Wer mich auf {host} sieht",
@@ -11690,17 +11706,17 @@
     }
   },
   "visibilityPresence": "Heute im Space",
-  "visibilityPreviewCanWrite": "Kann ein Gespräch mit dir beginnen",
-  "visibilityPreviewCannotWrite": "Kann kein Gespräch mit dir beginnen",
+  "visibilityPreviewCanWrite": "Kann ein Gespräch mit Ihnen beginnen",
+  "visibilityPreviewCannotWrite": "Kann kein Gespräch mit Ihnen beginnen",
   "visibilityPreviewFailed": "Die Vorschau konnte nicht geladen werden.",
   "visibilityPreviewMySpaces": "Ein Mitglied meiner Spaces",
   "visibilityPreviewNobody": "Nur ich",
-  "visibilityPreviewNothing": "Sie sehen nichts von dir.",
+  "visibilityPreviewNothing": "Diese Personen sehen nichts von Ihnen.",
   "visibilityPreviewSignedIn": "Alle Angemeldeten",
   "visibilityPreviewTitle": "Wie andere mich sehen",
   "visibilityProfession": "Beruf",
   "visibilityReachability": "Wer ein Gespräch mit mir beginnen darf",
-  "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuche es erneut.",
+  "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuchen Sie es erneut.",
   "visibilitySignedIn": "Alle Angemeldeten",
   "visibilityTitle": "Wer mich sieht",
   "visibilityWidenAction": "Erweitern",
@@ -11760,7 +11776,7 @@
   "@whatYouCanDoFromAdministrator": {
     "description": "#2085 giving roles: whatYouCanDoFromAdministrator"
   },
-  "whatYouCanDoFromCoOwner": "Als Mit-Inhaberin",
+  "whatYouCanDoFromCoOwner": "Als Mitinhaber",
   "@whatYouCanDoFromCoOwner": {
     "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
   },
@@ -11768,7 +11784,7 @@
   "@whatYouCanDoFromEveryMember": {
     "description": "#2085 giving roles: whatYouCanDoFromEveryMember"
   },
-  "whatYouCanDoFromOwner": "Als Inhaberin: alles",
+  "whatYouCanDoFromOwner": "Als Inhaber: alles",
   "@whatYouCanDoFromOwner": {
     "description": "#2085 giving roles: whatYouCanDoFromOwner"
   },
@@ -11789,12 +11805,12 @@
   "@whatYouCanDoNothingMore": {
     "description": "#2085 giving roles: whatYouCanDoNothingMore"
   },
-  "whatYouCanDoTitle": "Was du hier tun kannst",
+  "whatYouCanDoTitle": "Was Sie hier tun können",
   "@whatYouCanDoTitle": {
     "description": "#2085 giving roles: whatYouCanDoTitle"
   },
   "whatsappFieldLabel": "WhatsApp-Nummer",
-  "whatsappHelper": "Optional. Für Mitglieder deiner Workspaces sichtbar, damit sie dich über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.",
+  "whatsappHelper": "Optional. Für Mitglieder Ihrer Workspaces sichtbar, damit sie Sie über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.",
   "whatsappHint": "+49 151 23456789",
   "whatsappNotShared": "Nicht geteilt",
   "whatsappSaveFailed": "WhatsApp-Nummer konnte nicht gespeichert werden",
@@ -12069,8 +12085,8 @@
   "workspaceGenericError": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
   "workspaceInviteCodeInvalid": "Keine Workspace-ID gefunden — Einladung einfügen oder ID eintippen.",
   "workspaceInviteCodeLabel": "Einladungscode",
-  "workspaceInvitePasteHint": "Füge die ganze Einladungsnachricht ein — die ID wird automatisch erkannt.",
-  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst. Deine eigene App-Sprache stellst du in den Einstellungen ein.",
+  "workspaceInvitePasteHint": "Fügen Sie die ganze Einladungsnachricht ein — die ID wird automatisch erkannt.",
+  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst. Ihre eigene App-Sprache stellen Sie in den Einstellungen ein.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
@@ -12088,7 +12104,7 @@
     "description": "Finance/settings UX + workspace language (#486)"
   },
   "workspaceResetConfirmButton": "Workspace zurücksetzen",
-  "workspaceResetConfirmLabel": "Tippe „{phrase}“ zum Bestätigen",
+  "workspaceResetConfirmLabel": "Geben Sie „{phrase}“ zum Bestätigen ein",
   "workspaceResetConfirmPhrase": "Ich stimme zu",
   "workspaceResetDialogTitle": "Diesen Workspace zurücksetzen?",
   "workspaceResetDone": "Workspace zurückgesetzt.",
@@ -12096,12 +12112,12 @@
   "workspaceResetTitle": "Workspace zurücksetzen",
   "workspaceResetWarning": "Dies löscht dauerhaft alle Reservierungen, sämtliche Finanz- und Buchungsdaten, den Aktivitätsverlauf und den gesamten Grundriss — Etagen, Räume, Tische, Plätze und Bilder. Workspace-Einstellungen, Gebührenstufen, Verfügbarkeit, Funktionen, Kataloge und Mitglieder bleiben erhalten. Nicht rückgängig zu machen.",
   "workspaceSettingsConflict": "Jemand hat diese Einstellungen geändert, während Sie sie bearbeitet haben. Nichts wurde gespeichert; Ihre Änderungen sind noch da.",
-  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.",
+  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls Ihre Community in einer anderen Währung abrechnet.",
   "workspaceSettingsSaved": "Workspace gespeichert.",
   "workspaceSettingsTitle": "Workspace",
   "workspaceTimezoneHint": "Europe/Berlin",
   "workspaceTimezoneLabel": "Zeitzone",
-  "workspaceTimezoneUnknown": "Wähle eine Zeitzone aus der Liste",
+  "workspaceTimezoneUnknown": "Wählen Sie eine Zeitzone aus der Liste",
   "@workspaceTimezoneUnknown": {
     "description": "#711 - globalization"
   },

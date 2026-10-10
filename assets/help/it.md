@@ -95,7 +95,7 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 **Passaggi**
 
 1. Apra [Impostazioni](app:/settings), che si chiama **Il mio account** quando non amministra nulla.
-2. Scelga **Cosa puoi fare qui**.
+2. Scelga **Cosa può fare qui**.
 3. Legga quale ruolo le dà ciascuna possibilità. Un membro vede **Come tutti i membri**; un amministratore vede anche **Dal ruolo Amministratore**.
 
 **Da sapere**
@@ -120,7 +120,7 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 2. Per accedere, tocchi **Accedi**.
 3. Per creare un nuovo account, tocchi **Nuovo qui? Crea un account**, inserisca un **Nome visualizzato** e tocchi **Crea account**. La password deve avere almeno 8 caratteri.
 4. Se il server la offre, tocchi **Google** sotto **oppure continua con**.
-5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlla la tua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
+5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlli la sua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
 
 ![](assets/help/images/user-start-account--create.it.b8fa17aa9.jpg)
 
@@ -150,7 +150,7 @@ Non ricorda più la password. Riceve un codice monouso per e-mail e lo usa per i
 
 **Da sapere**
 
-- Il messaggio **Password aggiornata — sei connesso.** conferma che ha funzionato; non deve accedere di nuovo.
+- Il messaggio **Password aggiornata — ha effettuato l'accesso.** conferma che ha funzionato; non deve accedere di nuovo.
 - Un codice non valido o scaduto viene rifiutato: ne richieda uno nuovo.
 - Se il codice è accettato ma la password non viene salvata, tocchi **Salva di nuovo la nuova password**.
 
@@ -168,7 +168,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la nota, poi tocchi **Inizia**.
-3. Usi la barra in alto per scegliere con quali occhi guardare: **La proprietaria**, **Un membro** o **Un'amministratrice**. Ogni tocco sul nome passa al successivo.
+3. Usi la barra in alto per scegliere con quali occhi guardare: **Proprietario**, **Membro** o **Amministratore**. Ogni tocco sul nome passa al successivo.
 4. Tocchi **Reimposta la demo** per rimettere tutto come all'inizio.
 5. Tocchi **Esci dalla demo** quando ha finito.
 
@@ -193,9 +193,9 @@ Ha ricevuto un ID dello spazio, un codice QR o un messaggio di invito e vuole en
 **Passaggi**
 
 1. Acceda, poi tocchi **Entra con un codice** su [Io](app:/me). Dalla schermata di accesso, **Entra con un invito** la porta lì non appena ha un account.
-2. Su **Benvenuto su DesKilo**, lasci selezionato **Unisciti a uno spazio**.
+2. Su **Benvenuto su DesKilo**, lasci selezionato **Unirsi a uno spazio**.
 3. Digiti l'ID dello spazio in **Codice di invito**, oppure incolli l'intero messaggio di invito: l'ID viene trovato automaticamente. **Incolla** lo legge dagli appunti e **Scansiona codice QR** apre la fotocamera su un codice stampato.
-4. Tocchi **Controlla l’invito**. La scheda **Controlla prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
+4. Tocchi **Controlla l’invito**. La scheda **Controlli prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
 5. Tocchi **Aderisci allo spazio**.
 
 **Da sapere**
@@ -628,7 +628,7 @@ Vuole un posto per un certo giorno e un certo orario. Dalla piantina bastano poc
 
 - Nulla viene prenotato finché non tocca **Prenota**.
 - Se il posto è stato preso un secondo prima, l'app Le dice così invece di prenotarlo due volte.
-- Se la connessione si interrompe dopo il suo tocco, la schermata **La tua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
+- Se la connessione si interrompe dopo il suo tocco, la schermata **La sua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
 - In un giorno di chiusura la piantina indica **Chiuso in questo giorno** e propone il successivo giorno di apertura.
 
 **Vedi anche:** [La scheda di prenotazione](help:user.reservations.booking-sheet) · [Le regole che incontra quando prenota](help:user.reserve.policies)
@@ -698,7 +698,7 @@ Ha bisogno dell'intero tavolo, dell'intera sala o dell'intero piano, per una riu
 
 **Da sapere**
 
-- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.**
+- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non è autorizzato a prenotare un tavolo, ufficio o piano intero.**
 - Uno spazio intero non può essere prenotato se uno dei suoi posti è occupato in quel periodo, e nessun posto può essere prenotato mentre il suo tavolo, la sua sala o il suo piano sono prenotati per intero.
 - Dove il proprietario richiede un'approvazione, la prenotazione di uno spazio intero blocca subito lo spazio e attende i convalidatori; se la rifiutano, viene annullata.
 
@@ -764,7 +764,7 @@ Ha provato a prenotare e l'app ha detto di no, oppure si chiede che cosa sia con
 | Fuori dagli orari di apertura | Dipende dallo spazio. Disattivato: **Le prenotazioni fuori dagli orari di apertura non sono consentite.** Solo spontanee: può fare il check-in sul posto ma non prenotare in anticipo. Libero: consentito, mai conteggiato né addebitato. A pagamento: consentito e conteggiato come utilizzo, tranne in un giorno in cui ha già una prenotazione ordinaria. |
 | Prenotazioni nel passato | Una prenotazione in un giorno già concluso viene rifiutata, a meno che il proprietario consenta le prenotazioni passate: **Questa prenotazione è interamente nel passato.** Prima, nello stesso giorno, viene registrata come visita passata. |
 | Limiti | Una prenotazione ha un orizzonte massimo (**Troppo lontano**, 90 giorni per impostazione predefinita), una durata minima e una massima (**Troppo breve**, **Troppo lunga**) e termina nel giorno in cui inizia. |
-| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Hai già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
+| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Ha già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
 | Limite di prenotazioni | **Limite di prenotazioni raggiunto** quando ha il numero massimo di prenotazioni aperte che le è consentito. |
 | Giorni del suo piano | Quando i giorni del suo piano finiscono, si applica l'impostazione del proprietario per Lei: le prenotazioni possono fermarsi, può esserLe chiesto di acquistare un pacchetto, oppure i giorni in più vengono addebitati. |
 
@@ -951,7 +951,7 @@ Vuole vedere una settimana o un mese a colpo d'occhio. Il Calendario offre tre m
 
 **Destinatari:** Membro · Amministratore · Proprietario
 
-Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della tua conferma**.
+Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della sua conferma**.
 
 ![](assets/help/images/user-reserve-calendar-decisions.it.b8fa17aa9.jpg)
 
@@ -1084,7 +1084,7 @@ Vuole chiedere qualcosa a un collega senza lasciare lo spazio di lavoro.
 **Passaggi**
 
 1. Apra [Membri](app:/directory), tocchi una scheda per aprire la pagina del membro e poi tocchi **Messaggi**.
-2. Scriva nel campo **Il tuo messaggio**.
+2. Scriva nel campo **Il suo messaggio**.
 3. Tocchi **Invia**.
 
 **Da sapere**
@@ -1106,7 +1106,7 @@ Vuole vedere che cosa è successo nello spazio di lavoro e che cosa attende una 
 **Passaggi**
 
 1. Tocchi **Eventi** nella barra in alto (l'icona del vassoio con un numero), oppure apra [Eventi](app:/events) dal menu. La pagina si apre su **Avvisi**.
-2. Legga **In attesa della tua conferma** in cima: le richieste che hanno bisogno di Lei.
+2. Legga **In attesa della sua conferma** in cima: le richieste che hanno bisogno di Lei.
 3. Legga il flusso sotto. Ogni riga dice che cosa è successo; una clessidra significa in sospeso, una spunta verde significa confermato. Le righe di denaro mostrano chi le ha convalidate e quando.
 4. Restringa il flusso con i chip: **Tutti**, **Messaggi**, **Prenotazione**, **Check-in**, **Denaro**, **Membri**, poi **Non letti** o **Letti**.
 5. Tocchi **Tipo**, **Data** o **Membro** accanto a **Raggruppa per** per raccogliere il flusso in gruppi; tocchi il simbolo dei gruppi per tornare all'elenco semplice.
@@ -1131,7 +1131,7 @@ Qualcuno Le ha chiesto di confermare qualcosa e Lei vuole rispondere.
 **Passaggi**
 
 1. Apra [Eventi](app:/events).
-2. Trovi la richiesta sotto **In attesa della tua conferma**.
+2. Trovi la richiesta sotto **In attesa della sua conferma**.
 3. Tocchi **Accetta**, oppure la croce rossa per **Rifiuta**.
 
 **Da sapere**
@@ -1157,8 +1157,8 @@ Vuole un unico posto che risponda: oggi c'è qualcosa che ha bisogno di me?
 
 **Da sapere**
 
-- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa ti aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
-- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente ti aspetta**.
+- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa la aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
+- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente la aspetta**.
 - Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure **Funzionalità**.
 
 **Vedi anche:** [Eventi e conferme](help:user.collaborate.events)
@@ -1596,7 +1596,7 @@ Vuole che le persone la riconoscano nell'elenco dei membri, sulla piantina e nei
 
 **Da sapere**
 
-- La riga indica **Tocca per aggiungere una foto** finché non ne ha una, poi **Tocca per cambiare**.
+- La riga indica **Tocchi per aggiungere una foto** finché non ne ha una, poi **Tocchi per cambiare**.
 - Chi vede la sua foto lo decide Lei: vedi [Chi mi vede](help:user.privacy.audiences).
 - Il suo account è suo in tutti gli spazi di lavoro; la sua posizione in uno spazio si trova nelle sue Impostazioni.
 
@@ -1614,7 +1614,7 @@ Vuole che le sue fatture e le sue lettere riportino correttamente il suo nome e 
 
 1. Apra [Io](app:/me?tab=me) e tocchi **Dati personali**.
 2. Scelga una **Formula di cortesia** se desidera che venga stampata prima del suo nome, poi compili **Nome**, **Cognome**, **Società (facoltativo)**, l'indirizzo, **Telefono** ed **E-mail per i documenti**.
-3. Controlli **Sui tuoi documenti**, che mostra come verrà stampato.
+3. Controlli **Sui suoi documenti**, che mostra come verrà stampato.
 4. Risponda alle eventuali domande che il suo spazio di lavoro aggiunge sotto il proprio titolo, poi tocchi **Salva**.
 
 **Da sapere**
@@ -1990,7 +1990,7 @@ Vuole sapere chi può leggere che cosa su di Lei, e chi ha effettivamente guarda
 
 1. Apra [Privacy e dati](app:/privacy).
 2. Tocchi **Chi può vedere i miei dati**.
-3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i tuoi dati**.
+3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i suoi dati**.
 
 **Da sapere**
 
@@ -2098,7 +2098,7 @@ Vuole chiedere allo spazio di lavoro una copia, una correzione, una limitazione 
 **Passaggi**
 
 1. Apra [Privacy e dati](app:/privacy) e tocchi **Le mie richieste di esercizio dei diritti**.
-2. Tocchi **Fai una richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
+2. Tocchi **Nuova richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
 3. Aggiunga i **Dettagli (facoltativo)** e tocchi **Invia la richiesta**.
 
 **Da sapere**
@@ -2139,7 +2139,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 **Passaggi**
 
 1. Apra [Privacy e dati](app:/privacy).
-2. Tocchi **I tuoi dati, i tuoi diritti**.
+2. Tocchi **I suoi dati, i suoi diritti**.
 3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
@@ -2182,7 +2182,7 @@ Dirige una comunità e vuole ospitare DesKilo da sé.
 
 **Passaggi**
 
-1. Apra la schermata **Server** e tocchi **Usare il tuo server**.
+1. Apra la schermata **Server** e tocchi **Usare il suo server**.
 2. Segua i quattro passaggi indicati: creare un progetto su supabase.com, installare lo schema, copiare l'URL del progetto e la chiave pubblicabile, poi incollarli e **Prova la connessione**.
 3. Oppure tocchi **Crea una nuova istanza** per la configurazione guidata.
 
@@ -2477,7 +2477,7 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 **Passaggi**
 
 1. Apra [Eventi](app:/events), oppure tocchi **Avvisi finanziari** in [Finanze](app:/money).
-2. Cerchi sotto **In attesa della tua conferma** la riga che indica l'importo e il membro.
+2. Cerchi sotto **In attesa della sua conferma** la riga che indica l'importo e il membro.
 3. Tocchi **Accetta** per confermarla, oppure la croce per **Rifiuta**.
 
 **Da sapere**
@@ -2513,7 +2513,7 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Passaggi**
 
-1. Apra [Finanze](app:/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le tue finanze in tutti gli spazi**.
+1. Apra [Finanze](app:/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le sue finanze in tutti gli spazi**.
 2. Scelga una scheda: **Da pagare**, **Pagate**, **Pagamenti** o **Solleciti**.
 3. Se appartiene a più spazi, filtri per spazio in alto.
 
@@ -2586,7 +2586,7 @@ Vuole dare all'edificio i suoi piani, nell'ordine che le persone si aspettano. L
 
 - Eliminare un piano rimuove tutti gli uffici, le scrivanie e i posti che contiene. La conferma indica che cosa succede alle prenotazioni che li riguardano.
 - La riga sotto ogni piano indica se è **Prenotabile per intero** o **Non prenotabile per intero**.
-- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiungi il primo piano del tuo spazio.**
+- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiunga il primo piano del suo spazio.**
 
 **Vedi anche:** [Prenotare un intero piano](help:user.space.editor.level-booking) · [Disegnare stanze, scrivanie e posti](help:user.space.editor.rooms)
 
@@ -3304,7 +3304,7 @@ Vuole decidere quali permessi ha ciascun ruolo. **Ruoli** mostra una scheda per 
 
 - Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Comproprietario o Proprietario. Gli altri ruoli si aggiungono ad esso e non tolgono mai nulla.
 - Il proprietario ha sempre ogni permesso, quindi la sua scheda è bloccata. Un comproprietario può averne meno.
-- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il tuo ruolo** evidenziato.
+- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il suo ruolo** evidenziato.
 - Un permesso viene verificato dal server in ogni punto, quindi togliere la spunta lo rimuove ovunque in una volta sola.
 - La voce **Ruoli** compare quando la funzionalità **Gestione dei ruoli** è attiva.
 
@@ -3370,7 +3370,7 @@ Vuole un tablet vicino alla porta dove le persone fanno il check-in con un badge
 
 **Da sapere**
 
-- La modalità chiosco non si avvia mai da sola. **Non ora — apri l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
+- La modalità chiosco non si avvia mai da sola. **Non ora — apra l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
 - In modalità chiosco il tablet mostra solo la piantina. Per uscirne si riavvia il tablet. Per far tornare l'account un normale membro, usi **Dispositivo chiosco** sotto **Impostazioni** sul dispositivo oppure **Riporta il chiosco a membro** in **Membri e piani**.
 - La scheda che si apre indica la regola che segue. In un giorno di chiusura il chiosco mostra subito *Lo spazio è chiuso oggi*.
 - Il badge è la conferma: identifica il membro, esegue l'azione e la schermata si svuota per la persona successiva. Un posto occupato da un'altra persona mostra chi lo occupa e rimanda all'app.
@@ -4195,7 +4195,7 @@ Vuole che i membri paghino online un conto aperto, sul Suo account presso il for
 
 Le chiavi provengono dalla dashboard del fornitore: **Client ID**, **Secret**, **Ambiente**, **ID webhook** e **URL di ritorno** per PayPal; **Chiave segreta**, **Segreto di firma webhook** e **URL di ritorno** per Stripe; **Chiave API** e **URL di ritorno** per Mollie e Wero. Tenga separate le chiavi di prova e quelle reali: tutte le chiavi che inserisce devono appartenere alla stessa modalità.
 
-I segreti sono conservati sul server e non vengono mai più mostrati. Un segreto salvato riporta **Impostato — lascia vuoto per mantenere**; digiti un nuovo valore per sostituirlo.
+I segreti sono conservati sul server e non vengono mai più mostrati. Un segreto salvato riporta **Impostato — lasci vuoto per mantenere**; digiti un nuovo valore per sostituirlo.
 
 ### Spese programmate
 
@@ -5074,7 +5074,7 @@ Fattura un mese a un membro.
 
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
-- Se manca un dato obbligatorio, **Completa questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
+- Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
 - In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.
 - Una fattura emessa è firmata e immutabile.
 
@@ -5450,14 +5450,14 @@ Un assistente di intelligenza artificiale come Claude o ChatGPT può controllare
 
 **Passaggi**
 
-1. Apra [Assistenti](app:/assistants). **A che punto sei qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il tuo ruolo**, **Il tuo consenso**, **Server**.
+1. Apra [Assistenti](app:/assistants). **A che punto è qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il suo ruolo**, **Il suo consenso**, **Server**.
 2. Scorra l'elenco; ogni riga dice chi compie il passo successivo.
 
 **Da sapere**
 
 - Partecipano più persone: Lei, il proprietario o un amministratore dello spazio, un amministratore del database e l'operatore dell'installazione. Nessuno da solo può aprire tutto.
 - Attivare gli assistenti non concede nulla a nessuno di per sé.
-- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il tuo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
+- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il suo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
 
 **Vedi anche:** [Collegare un assistente](help:user.advanced.assistants-connect)
 
@@ -5470,7 +5470,7 @@ Vuole che il Suo assistente lavori con le Sue prenotazioni e il Suo account.
 **Passaggi**
 
 1. Apra [Collegare un assistente](app:/assistants/connect). Sotto **Prima di collegare**, ogni riga dovrebbe riportare **Fatto**.
-2. Sotto **Quale assistente usi?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il tuo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
+2. Sotto **Quale assistente usa?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il suo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
 3. Acceda quando l'assistente lo chiede, poi scelga questo spazio e che cosa l'assistente può farvi.
 4. Tocchi **Prova la connessione** e chieda al Suo assistente: «Con DesKilo, quali sono le mie prenotazioni di questa settimana?»
 
@@ -5491,7 +5491,7 @@ Gli assistenti sono approvati a livelli, così una persona non può attivarne un
 
 **Passaggi**
 
-1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](app:/settings/assistant-setup) e la percorre: **Attiva gli assistenti per questo spazio di lavoro**, **Scegli cosa possono fare gli assistenti**.
+1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](app:/settings/assistant-setup) e la percorre: **Attivi gli assistenti per questo spazio di lavoro**, **Scelga cosa possono fare gli assistenti**.
 2. Ogni membro chiede una volta: **Chiedi l'approvazione**. Un amministratore del database decide in [Approvazioni degli assistenti](app:/database/assistant-approvals) con **Approva** o **Rifiuta**.
 3. L'operatore dell'installazione apre [Installazione: assistenti](app:/installation/assistants) e tocca **Attiva per tutti gli spazi**. La pagina elenca anche **Amministratori della base** e **Client degli assistenti**, ciascuno **Approvato**, **Bloccato** oppure **In attesa di approvazione**.
 4. Quando un assistente invia una richiesta ad alto impatto, Le viene chiesto: **Conferma una richiesta dell'assistente**. **Conferma** gli permette di inviare quella richiesta esatta una sola volta; **Rifiuta** non fa nulla.
@@ -5715,7 +5715,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, ape
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la breve nota, poi tocchi **Inizia**.
-3. Usi **Vedi come** per vedere lo stesso spazio come **La proprietaria**, **Un'amministratrice** o **Un membro**.
+3. Usi **Vedi come** per vedere lo stesso spazio come **Proprietario**, **Amministratore** o **Membro**.
 4. Tocchi **Reimposta la demo** per riportarla all'inizio, oppure **Esci dalla demo**.
 
 **Da sapere**
@@ -6603,7 +6603,7 @@ L’app ha dei controlli per alcune contraddizioni e nessuno per altre. Nella ta
 
 | Se ha… | Controllo nell’app | Lacuna che resta |
 |---|---|---|
-| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completa questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**, come **L'identità legale e l'indirizzo dello spazio**, **Necessario prima di fatturare**, e nella Sua posta. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
+| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completi questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**, come **L'identità legale e l'indirizzo dello spazio**, **Necessario prima di fatturare**, e nella Sua posta. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
 | Un paese diverso da Francia o Germania | L’emissione dice che il paese «deve essere Francia o Germania per emettere qui». | Nulla la avvisa quando sceglie il paese o attiva la fatturazione. |
 | Registrato ai fini IVA, nessuna aliquota in vigore | L’emissione viene rifiutata finché non è in vigore un’aliquota predefinita. La descrizione di **Gestione IVA** e l’avviso nella schermata dell’identità legale lo dicono. | Con **Gestione IVA** disattivata, la configurazione è nascosta mentre le aliquote memorizzate continuano ad applicarsi. Controlli le aliquote dopo averla disattivata. |
 | **Pagamenti online** attivi, nessun fornitore | Un nuovo pagamento online viene rifiutato quando la funzionalità è disattivata; il fornitore mancante compare in **Configurazione di questo spazio**. | Può attivarla senza un fornitore. Lo colleghi prima: [Fornitore di pagamenti](help:user.money.payments.provider). |
@@ -6751,7 +6751,7 @@ Vuole un unico punto che dica, per le funzionalità principali, che cosa ricevon
 | **Coppie di ambienti**, **Distribuzioni** | Un lato di prova e uno reale, con distribuzione. | | Proprietario |
 | **Configurazione nel file dello spazio** | L’intera configurazione viaggia nel file dello spazio. | **Esportazione dati (Excel)** | Proprietario |
 | **Assistente istanza** | Creare un nuovo server dall’app. | | Operatore |
-| **Cosa ti aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
+| **Cosa la aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
 | **Registratore di attività** | Registrare e riprodurre i passaggi di un’attività. | | Nessuno |
 | **Notifiche push** | Conferme in sospeso sul telefono. | Il servizio push dell’installazione | Operatore |
 | **Integrazione WhatsApp** | Una chat con un membro con un tocco, il link del gruppo. | **Elenco dei membri** | Proprietario |
@@ -7079,7 +7079,7 @@ Vuole essere certo che ogni richiesta per cui crea una regola possa ricevere una
 1. Apra [Regole di convalida](app:/validation) e legga ogni scheda personalizzata: «Tutti gli admin — qualsiasi 2» significa due persone.
 2. Apra [Membri e piani](app:/members). Conti i proprietari e gli amministratori attivi. Le persone in pausa o uscite non contano.
 3. Apra **Configurazione di questo spazio** in [Spazio di lavoro](app:/workspace-settings). L’area **Ruoli e chi convalida le richieste** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» quando ne conta troppo pochi. L’area diventa allora obbligatoria, qualunque sia il tipo di richiesta, e [Che cosa richiede la Sua attenzione](help:user.collaborate.attention) la segnala.
-4. Apra [Eventi](app:/events). **In attesa della tua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
+4. Apra [Eventi](app:/events). **In attesa della sua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
 
 **Da sapere**
 
@@ -7161,7 +7161,7 @@ Risponda a due domande: i membri Le pagano lo spazio e vuole che le fatture lega
 **Da sapere**
 
 - L'emissione di fatture nell'app esiste oggi per uno spazio in **Francia** o in **Germania**. In qualsiasi altro paese usi il percorso 2: gli estratti conto restano disponibili.
-- Il server rifiuta di emettere, e l'elenco **Completa questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
+- Il server rifiuta di emettere, e l'elenco **Completi questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
 - Un venditore in regime di franchigia per le piccole imprese (franchise en base, Kleinunternehmer) non può emettere fatture nell'app: il server rifiuta la categoria IVA esente. Resti sul percorso 2 ed emetta quelle fatture altrove.
 - Spegnere una funzione ferma le nuove operazioni di quel tipo; non cancella nulla.
 - Può restare sul percorso 2 per sempre. Molte associazioni lo fanno.
@@ -7514,7 +7514,7 @@ La notifica push viene inviata solo per le cinque righe contrassegnate «push» 
 
 | Fonte | Evento | Chi viene informato | Canale | Che cosa può cambiare il membro |
 |---|---|---|---|---|
-| Regole di convalida | Una richiesta ha bisogno di una conferma | Le persone indicate dalla regola (flusso, **In attesa della tua conferma**); la push va solo al membro a cui la richiesta si riferisce, mai a chi l'ha fatta, quindi i convalidatori ricevono la push solo se sono quel membro. Testo: «Someone needs your confirmation.» | Flusso, campanella; push | Spegnere la push sul dispositivo |
+| Regole di convalida | Una richiesta ha bisogno di una conferma | Le persone indicate dalla regola (flusso, **In attesa della sua conferma**); la push va solo al membro a cui la richiesta si riferisce, mai a chi l'ha fatta, quindi i convalidatori ricevono la push solo se sono quel membro. Testo: «Someone needs your confirmation.» | Flusso, campanella; push | Spegnere la push sul dispositivo |
 | Prenotazioni | Un amministratore rimuove o annulla una prenotazione | Il membro spostato e ogni amministratore e proprietario attivo, tranne chi ha agito. Testo: «A reservation was removed by an admin.» | Flusso; push | Spegnere la push sul dispositivo |
 | Solleciti di pagamento | Una fattura è scaduta e scatta un livello di sollecito | Il membro a cui è intestata la fattura. La fattura di un proprietario arriva al proprietario stesso. Testo: «A payment reminder is waiting for you.» | Avviso nel flusso; push | Spegnere la push sul dispositivo |
 | Notifiche tra membri | Un nuovo messaggio | Messaggio diretto: il destinatario. Gruppo: i partecipanti tranne il mittente. Una conversazione silenziata da un membro resta muta per quel membro. Testo: «You have a new message.» | Messaggi, campanella; push | Silenziare, fissare o archiviare una conversazione; spegnere la push |
@@ -7618,7 +7618,7 @@ Lo faccia in uno spazio di prova (vedi [una prova sicura](help:setup.money.dry-r
 
 1. Messaggio: dall'account del membro, scriva al proprietario in [Messaggi](app:/me?tab=messages). Sull'account del proprietario la campanella lo conta e la conversazione risulta non letta. La apra: il messaggio del membro mostra una conferma di lettura.
 2. Menzione: in una conversazione di gruppo, nomini il proprietario (la funzione di menzione della messaggistica deve essere attiva). Se la push è configurata, il telefono del proprietario mostra «You were mentioned in a conversation.»
-3. Decisione: come membro, chieda di eliminare una prenotazione passata (la funzione **Richieste di eliminazione prenotazioni** deve essere attiva). Il proprietario la vede sotto **In attesa della tua conferma** in [Eventi](app:/events); risponda e osservi come cambia il flusso del membro.
+3. Decisione: come membro, chieda di eliminare una prenotazione passata (la funzione **Richieste di eliminazione prenotazioni** deve essere attiva). Il proprietario la vede sotto **In attesa della sua conferma** in [Eventi](app:/events); risponda e osservi come cambia il flusso del membro.
 4. Rimozione: come proprietario, rimuova una prenotazione futura del membro. Il flusso del membro la mostra e un telefono con la push mostra «A reservation was removed by an admin.»
 5. Promemoria: come membro, prenoti un posto che inizia fra circa 20 minuti (una prenotazione che inizia fra meno di 15 minuti non riceve alcun promemoria). Circa 15 minuti prima dell'inizio, il telefono del membro mostra il promemoria di check-in.
 6. Sollecito di pagamento: con **Solleciti di pagamento** attivi, attivi **Solleciti automatici** nelle regole di sollecito con un breve ritardo per il primo sollecito, emetta una fattura di prova con un termine di pagamento, attenda che il ritardo passi, poi apra Finanze come proprietario o comproprietario; il flusso del membro mostra l'avviso.
@@ -7903,7 +7903,7 @@ Vuole sapere quali Suoi errori l'app Le segnalerà e dove lo farà, così da gua
 | La riga che blocca una prima prenotazione | Le aree che l'elenco segna **Necessario per una prima prenotazione**: un fuso orario, una valuta, un giorno della settimana aperto, un posto, membri che possiedono **Prenotare e usare le prenotazioni** (un nuovo spazio non concede loro nulla) e, quando una regola di convalida di qualsiasi tipo chiede più convalidatori di quanti ce ne siano, quei convalidatori. Il resto è facoltativo e si può mettere da parte con **Più avanti**. | **Prima che qualcuno possa prenotare qui**, nella scheda Primi passi di [Prenota](app:/reserve) |
 | La riga che blocca una prima fattura | Con **Fatture** attiva, l'identità legale e l'indirizzo dello spazio. Senza di essi non si può emettere alcuna fattura, quindi l'area non si può mettere da parte. | **Configurazione di questo spazio**: l'area **L'identità legale e l'indirizzo dello spazio**, segnata **Necessario prima di fatturare**; finché è il passo successivo, il titolo della scheda dice «Prima di fatturare: …» |
 | Ciò che le Sue funzioni richiedono ancora in locale | Dati bancari, un fornitore di pagamenti online, un account di fatturazione elettronica, una sede. L'identità legale non compare qui: con **Fatture** attiva è un'area a sé (sopra). | La stessa scheda, area **Dati richiesti dalle funzioni (identità, banca, piattaforme)**, con **Configura** e **Consigliato** |
-| La protezione delle fatture | Una fattura viene rifiutata finché non è completa: l'indirizzo dello spazio, la sua partita IVA, un paese tra Francia e Germania, una base giuridica per un'esenzione, nome, indirizzo e partita IVA del membro quando si applica l'inversione contabile, un'aliquota IVA in vigore, una spiegazione per ogni riga fatturata allo 0 %. Le fatture transfrontaliere, con inversione contabile, di esportazione ed esenti vengono rifiutate: le emetta fuori dall'app. | **Completa questi dati prima dell'emissione**, con l'elenco delle voci mancanti |
+| La protezione delle fatture | Una fattura viene rifiutata finché non è completa: l'indirizzo dello spazio, la sua partita IVA, un paese tra Francia e Germania, una base giuridica per un'esenzione, nome, indirizzo e partita IVA del membro quando si applica l'inversione contabile, un'aliquota IVA in vigore, una spiegazione per ogni riga fatturata allo 0 %. Le fatture transfrontaliere, con inversione contabile, di esportazione ed esenti vengono rifiutate: le emetta fuori dall'app. | **Completi questi dati prima dell'emissione**, con l'elenco delle voci mancanti |
 | La protezione dei pagamenti online | Con **Pagamenti online** spento, il server rifiuta un nuovo pagamento online. Uno già aperto si conclude comunque. | Le schermate dei pagamenti (la riga della funzione non riporta alcuna nota in proposito) |
 | La protezione delle convalide | **Validazioni richieste** in numero superiore alle persone disponibili, per qualsiasi tipo di richiesta. | **Validatori idonei insufficienti.** nell'editor della regola; «Una regola richiede più validatori di quanti ne abbia questo spazio» nell'elenco di prontezza, dove **Ruoli e chi convalida le richieste** diventa allora obbligatoria |
 | Il blocco di valuta e paese | Quando lo spazio ha emesso un documento o registrato denaro, il server rifiuta qualsiasi cambio di **Valuta** o **Paese**, dal modulo delle impostazioni, da un'importazione o da qualsiasi altro punto. Il fuso orario non è bloccato. | «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.» quando salva [Spazio](app:/workspace-settings) |
@@ -7994,7 +7994,7 @@ Vuole una prova, non una sensazione, prima di aprire. Trentuno controlli, in tre
 
 | # | Controllo | Dove | Com'è quando va bene |
 |---|---|---|---|
-| 27 | Identità legale | [Identità legale e fatturazione elettronica](app:/legal-identity) | **L'identità legale e l'indirizzo dello spazio** indica **Pronto**, e **Completa questi dati prima dell'emissione** non mostra nulla quando avvia una fattura di prova |
+| 27 | Identità legale | [Identità legale e fatturazione elettronica](app:/legal-identity) | **L'identità legale e l'indirizzo dello spazio** indica **Pronto**, e **Completi questi dati prima dell'emissione** non mostra nulla quando avvia una fattura di prova |
 | 28 | Regime e aliquote IVA | [IVA](app:/vat) | Il regime è quello indicato dal commercialista; per la Sua aliquota predefinita ce n'è una in vigore |
 | 29 | Formato dei numeri | [Serie di numerazione](app:/settings/number-sequences) | Ha letto l'anteprima e il commercialista è d'accordo |
 | 30 | Una fattura di prova | Spazio di prova, assistente di chiusura mensile | È stata emessa, in ogni lingua che leggono i Suoi membri, senza voci mancanti |
@@ -8020,7 +8020,7 @@ Vuole un'abitudine breve che mantenga coerente lo spazio, in dieci minuti a fine
 **Passaggi**
 
 1. Apra **Configurazione di questo spazio**. Ogni area indica ancora **Pronto**, oppure **Non necessario qui**, oppure è messa da parte di proposito.
-2. Apra [Eventi](app:/events). **In attesa della tua conferma** è vuoto o piccolo, e nessun membro è **In attesa** da più di un giorno o due.
+2. Apra [Eventi](app:/events). **In attesa della sua conferma** è vuoto o piccolo, e nessun membro è **In attesa** da più di un giorno o due.
 3. Riconti la squadra. Chi se n'è andato o è stato sospeso può lasciare una regola scoperta. Vedi [Evitare richieste che attendono per sempre](help:setup.people.stuck).
 4. Chiuda il mese: i giorni di chiusura sono inseriti, l'assistente di chiusura mensile è stato eseguito, i solleciti di pagamento sono partiti (in automatico ogni mattina, oppure all'apertura di Finanze dove il database non ha lo scheduler). Vedi [L'assistente di chiusura mensile](help:user.invoicing.wizard).
 5. Faccia l'esportazione dei dati e apra **Funzionalità** per verificare che, dopo le modifiche del mese, nessun processo richieda attenzione.
@@ -8124,7 +8124,7 @@ Vuole vedere il prodotto finito prima di prendere decisioni. Lo spazio dimostrat
 **Passaggi**
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**, poi **Inizia**. Vedi [Lo spazio dimostrativo](help:user.advanced.demo).
-2. Usi **Vedi come** per passare da **La proprietaria** a **Un'amministratrice** e a **Un membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
+2. Usi **Vedi come** per passare tra **Proprietario**, **Amministratore** e **Membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
 3. Tocchi **Reimposta la demo** quando la vuole come all'inizio.
 
 *Come membro*

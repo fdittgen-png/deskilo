@@ -71,7 +71,7 @@ Vuole chiedere qualcosa a un collega senza lasciare lo spazio di lavoro.
 **Passaggi**
 
 1. Apra [Membri](app:/directory), tocchi una scheda per aprire la pagina del membro e poi tocchi **Messaggi**.
-2. Scriva nel campo **Il tuo messaggio**.
+2. Scriva nel campo **Il suo messaggio**.
 3. Tocchi **Invia**.
 
 **Da sapere**
@@ -94,7 +94,7 @@ Vuole vedere che cosa è successo nello spazio di lavoro e che cosa attende una 
 **Passaggi**
 
 1. Tocchi **Eventi** nella barra in alto (l'icona del vassoio con un numero), oppure apra [Eventi](app:/events) dal menu. La pagina si apre su **Avvisi**.
-2. Legga **In attesa della tua conferma** in cima: le richieste che hanno bisogno di Lei.
+2. Legga **In attesa della sua conferma** in cima: le richieste che hanno bisogno di Lei.
 3. Legga il flusso sotto. Ogni riga dice che cosa è successo; una clessidra significa in sospeso, una spunta verde significa confermato. Le righe di denaro mostrano chi le ha convalidate e quando.
 4. Restringa il flusso con i chip: **Tutti**, **Messaggi**, **Prenotazione**, **Check-in**, **Denaro**, **Membri**, poi **Non letti** o **Letti**.
 5. Tocchi **Tipo**, **Data** o **Membro** accanto a **Raggruppa per** per raccogliere il flusso in gruppi; tocchi il simbolo dei gruppi per tornare all'elenco semplice.
@@ -120,7 +120,7 @@ Qualcuno Le ha chiesto di confermare qualcosa e Lei vuole rispondere.
 **Passaggi**
 
 1. Apra [Eventi](app:/events).
-2. Trovi la richiesta sotto **In attesa della tua conferma**.
+2. Trovi la richiesta sotto **In attesa della sua conferma**.
 3. Tocchi **Accetta**, oppure la croce rossa per **Rifiuta**.
 
 **Da sapere**
@@ -147,8 +147,8 @@ Vuole un unico posto che risponda: oggi c'è qualcosa che ha bisogno di me?
 
 **Da sapere**
 
-- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa ti aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
-- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente ti aspetta**.
+- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa la aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
+- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente la aspetta**.
 - Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure **Funzionalità**.
 
 **Vedi anche:** [Eventi e conferme](help:user.collaborate.events)

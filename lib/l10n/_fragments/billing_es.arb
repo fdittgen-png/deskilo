@@ -39,10 +39,10 @@
   "buyPackageDone": "Días añadidos — disfruta del tiempo extra.",
   "payConfigTitle": "Pagos en línea",
   "payConfigOpen": "Configurar",
-  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
+  "payConfigIntro": "Introduzca cada proveedor de pago que quiera ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigConfigured": "Configurado",
   "payConfigNotConfigured": "Sin configurar",
-  "payConfigSecretSet": "Definido — deja en blanco para conservar",
+  "payConfigSecretSet": "Definido — déjelo en blanco para conservarlo",
   "payConfigSaved": "Guardado.",
   "payConfigRemove": "Eliminar",
   "payConfigRemoved": "Eliminado.",
@@ -60,12 +60,12 @@
   "billingRulesSaved": "Calendario de facturación guardado.",
   "billingSubscriptionSection": "Suscripción, por adelantado",
   "billingSubscriptionAuto": "Emitir automáticamente",
-  "billingSubscriptionOff": "Activa «Facturas de suscripción» en Funciones para usarlo.",
+  "billingSubscriptionOff": "Active «Facturas de suscripción» en Funciones para usarlo.",
   "billingAdvanceDays": "Días antes de que empiece el mes",
   "billingSubscriptionWhen": "Emitida el {day} para {month}",
   "billingUsageSection": "El mes recién terminado",
   "billingUsageAuto": "Emitir automáticamente",
-  "billingUsageOff": "Activa «Facturas de fin de mes» en Funciones para usarlo.",
+  "billingUsageOff": "Active «Facturas de fin de mes» en Funciones para usarlo.",
   "billingUsageWhenZero": "También cuando no hay nada que pagar",
   "billingUsageWhenZeroHint": "Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.",
   "@billingSubscriptionWhen": {
@@ -88,7 +88,7 @@
   "settlementAction": "Agrupar en una factura",
   "settlementConfirm": "¿Agrupar {count} facturas en una de {amount}?",
   "settlementDone": "Agrupadas en {number}.",
-  "settlementNeedsTwo": "Elige al menos dos facturas abiertas del mismo miembro.",
+  "settlementNeedsTwo": "Elija al menos dos facturas abiertas del mismo miembro.",
   "@settlementConfirm": {
     "placeholders": {
       "count": {

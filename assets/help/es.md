@@ -95,7 +95,7 @@ Dentro de un espacio, lo que puede hacer depende de su rol. Los roles se suman: 
 **Pasos**
 
 1. Abra [Ajustes](app:/settings), que se llama **Mi cuenta** cuando usted no administra nada.
-2. Elija **Lo que puedes hacer aquí**.
+2. Elija **Lo que puede hacer aquí**.
 3. Lea qué rol le da cada capacidad. Un miembro ve **Como todos los miembros**; un administrador ve además **Del rol Administrador/a**.
 
 **Conviene saber**
@@ -118,9 +118,9 @@ Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirv
 
 1. Abra la app. La pantalla de inicio de sesión le pide su **Correo electrónico** y su **Contraseña**.
 2. Para iniciar sesión, toque **Iniciar sesión**.
-3. Para crear una cuenta nueva, toque **¿Nuevo aquí? Crea una cuenta**, añada un **Nombre visible** y toque **Crear cuenta**. La contraseña debe tener al menos 8 caracteres.
+3. Para crear una cuenta nueva, toque **¿Es nuevo aquí? Cree una cuenta**, añada un **Nombre visible** y toque **Crear cuenta**. La contraseña debe tener al menos 8 caracteres.
 4. Si el servidor lo ofrece, toque **Google**, debajo de **o continuar con**.
-5. Algunos servidores le piden confirmar antes su dirección. La pantalla **Revisa tu correo** indica que se ha enviado un enlace: ábralo en este dispositivo. Si no llega nada, mire en la carpeta de correo no deseado o toque **Volver a enviar el correo**.
+5. Algunos servidores le piden confirmar antes su dirección. La pantalla **Revise su correo** indica que se ha enviado un enlace: ábralo en este dispositivo. Si no llega nada, mire en la carpeta de correo no deseado o toque **Volver a enviar el correo**.
 
 ![](assets/help/images/user-start-account--create.es.b8fa17aa9.jpg)
 
@@ -143,14 +143,14 @@ Usted no recuerda su contraseña. Recibe por correo un código de un solo uso y 
 
 **Pasos**
 
-1. En la pantalla de inicio de sesión, toque **¿Olvidaste la contraseña?**.
+1. En la pantalla de inicio de sesión, toque **¿Ha olvidado la contraseña?**.
 2. Escriba su **Correo electrónico** y toque **Enviar código**.
 3. Abra el correo y copie el código.
 4. Escríbalo en **Código del correo**, elija una **Nueva contraseña** y toque **Establecer nueva contraseña**.
 
 **Conviene saber**
 
-- El mensaje **Contraseña actualizada — has iniciado sesión.** confirma que todo ha ido bien; no tiene que volver a iniciar sesión.
+- El mensaje **Contraseña actualizada — ha iniciado sesión.** confirma que todo ha ido bien; no tiene que volver a iniciar sesión.
 - Un código no válido o caducado se rechaza: pida uno nuevo.
 - Si el código se acepta pero la contraseña no se guarda, toque **Volver a guardar la nueva contraseña**.
 
@@ -168,7 +168,7 @@ Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espac
 
 1. En la pantalla de inicio de sesión, toque **Explorar el espacio de demostración**.
 2. Lea la nota y toque **Empezar**.
-3. Use la franja superior para elegir desde qué papel mira: **La propietaria**, **Un miembro** o **Una administradora**. Cada toque sobre el nombre pasa al siguiente.
+3. Use la franja superior para elegir desde qué papel mira: **Propietario**, **Miembro** o **Administrador/a**. Cada toque sobre el nombre pasa al siguiente.
 4. Toque **Reiniciar la demo** para dejarlo todo como estaba al principio.
 5. Toque **Salir de la demo** cuando termine.
 
@@ -195,7 +195,7 @@ Le han dado un identificador de espacio, un código QR o un mensaje de invitaci�
 1. Inicie sesión y toque **Unirse con un código** en [Yo](app:/me). Desde la pantalla de inicio de sesión, **Unirse con invitación** le lleva allí en cuanto tenga una cuenta.
 2. En **Bienvenido a DesKilo**, deje seleccionado **Unirse a un espacio**.
 3. Escriba el identificador del espacio en **Código de invitación**, o pegue el mensaje de invitación completo: el identificador se encuentra solo. **Pegar** lo lee del portapapeles y **Escanear código QR** abre la cámara ante un código impreso.
-4. Toque **Revisar invitación**. La tarjeta **Revisa antes de unirte** indica el espacio, su servidor, el rol que se ofrece y si un administrador debe aprobar.
+4. Toque **Revisar invitación**. La tarjeta **Revise antes de unirse** indica el espacio, su servidor, el rol que se ofrece y si un administrador debe aprobar.
 5. Toque **Unirse al espacio**.
 
 **Conviene saber**
@@ -698,7 +698,7 @@ Usted necesita la mesa entera, la sala entera o toda la planta, para una reunió
 
 **Conviene saber**
 
-- Un miembro necesita el derecho a reservar espacios enteros; los propietarios y los administradores lo tienen. Sin él, la hoja dice **No tienes permiso para reservar una mesa, oficina o planta entera.**
+- Un miembro necesita el derecho a reservar espacios enteros; los propietarios y los administradores lo tienen. Sin él, la hoja dice **No tiene permiso para reservar una mesa, oficina o planta entera.**
 - Un espacio entero no se puede reservar mientras una de sus plazas esté ocupada en ese periodo, y ninguna plaza se puede reservar mientras su mesa, sala o planta esté reservada como un todo.
 - Cuando el propietario pide aprobación, la reserva de un espacio entero bloquea el espacio de inmediato y espera a los validadores; si la rechazan, se cancela.
 
@@ -764,7 +764,7 @@ Usted ha intentado reservar y la app ha dicho que no, o se pregunta qué está p
 | Fuera del horario de apertura | Depende del espacio. Desactivado: **Las reservas fuera del horario de apertura no están permitidas.** Solo espontáneas: puede registrarse en el momento pero no reservar con antelación. Libre: permitido, nunca se cuenta ni se cobra. De pago: permitido y contado como uso, salvo un día en el que ya tenga una reserva normal. |
 | Reservas pasadas | Una reserva en un día que ya ha terminado se rechaza, salvo que el propietario permita reservas pasadas: **Esta reserva está completamente en el pasado.** Antes en el mismo día se registra como una visita pasada. |
 | Límites | Una reserva tiene un horizonte máximo (**Demasiado lejos**, 90 días por defecto), una duración mínima y una máxima (**Demasiado corta**, **Demasiado larga**) y termina el día en que empieza. |
-| Un solo sitio a la vez | Por defecto puede tener una reserva en un periodo dado: **Ya tienes una reserva en ese periodo**. Un administrador puede permitirle más. |
+| Un solo sitio a la vez | Por defecto puede tener una reserva en un periodo dado: **Ya tiene una reserva en ese periodo**. Un administrador puede permitirle más. |
 | Límite de reservas | **Límite de reservas alcanzado** cuando tiene el máximo de reservas abiertas que se le permite. |
 | Días de su plan | Cuando se agotan los días de su plan, se aplica el ajuste del propietario para usted: las reservas pueden detenerse, se le puede pedir que compre un paquete o se cobran los días adicionales. |
 
@@ -951,7 +951,7 @@ Usted quiere ver una semana o un mes de un vistazo. El Calendario ofrece tres ma
 
 **Público:** Miembro · Administrador/a · Propietario
 
-Se le ha pedido que confirme algo. Cuando algo necesita su respuesta, queda fijado arriba del todo en el Calendario, bajo **Esperando tu confirmación**.
+Se le ha pedido que confirme algo. Cuando algo necesita su respuesta, queda fijado arriba del todo en el Calendario, bajo **Esperando su confirmación**.
 
 ![](assets/help/images/user-reserve-calendar-decisions.es.b8fa17aa9.jpg)
 
@@ -1084,7 +1084,7 @@ Usted quiere preguntarle algo a un compañero sin salir del espacio.
 **Pasos**
 
 1. Abra [Miembros](app:/directory), toque una tarjeta para abrir la página del miembro y toque **Mensajes**.
-2. Escriba en el campo **Tu mensaje**.
+2. Escriba en el campo **Su mensaje**.
 3. Toque **Enviar**.
 
 **Conviene saber**
@@ -1106,7 +1106,7 @@ Usted quiere ver lo que ha ocurrido en el espacio y lo que espera una respuesta.
 **Pasos**
 
 1. Toque **Eventos** en la barra superior (el icono de bandeja con un número), o abra [Eventos](app:/events) desde el menú. La página se abre en **Alertas**.
-2. Lea **Esperando tu confirmación** arriba del todo: las solicitudes que le necesitan.
+2. Lea **Esperando su confirmación** arriba del todo: las solicitudes que le necesitan.
 3. Lea el flujo de debajo. Cada fila dice lo que ha ocurrido; un reloj de arena significa pendiente, una marca verde significa confirmado. Las filas de dinero muestran quién las validó y cuándo.
 4. Acote el flujo con los chips: **Todos**, **Mensajes**, **Reserva**, **Registros**, **Dinero**, **Miembros**, y después **No leídos** o **Leído**.
 5. Toque **Tipo**, **Fecha** o **Miembro** junto a **Agrupar por** para plegar el flujo en grupos; toque el símbolo de grupo para volver a la lista plana.
@@ -1131,7 +1131,7 @@ Alguien le ha pedido que confirme algo, y usted quiere responder.
 **Pasos**
 
 1. Abra [Eventos](app:/events).
-2. Busque la solicitud bajo **Esperando tu confirmación**.
+2. Busque la solicitud bajo **Esperando su confirmación**.
 3. Toque **Aceptar**, o la cruz roja para **Rechazar**.
 
 **Conviene saber**
@@ -1157,8 +1157,8 @@ Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
 
 **Conviene saber**
 
-- Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
-- Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+- Esta pantalla existe solo cuando su espacio ha activado la función **Lo que le espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
+- Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada le espera**.
 - También muestra la configuración pendiente: «Por configurar: …» por cada ámbito obligatorio de la lista de preparación que no está listo (solo para quien configura el espacio), y «… funciones activadas esperan «…»» cuando una función desactivada retiene otras. Un toque abre la pantalla donde se configura, o **Funciones**.
 
 **Véase también:** [Eventos y confirmaciones](help:user.collaborate.events)
@@ -1596,7 +1596,7 @@ Usted quiere que le reconozcan en el directorio, en el plano y en los mensajes.
 
 **Conviene saber**
 
-- La fila dice **Toca para añadir una foto** hasta que tenga una y después **Toca para cambiar**.
+- La fila dice **Toque para añadir una foto** hasta que tenga una y después **Toque para cambiar**.
 - Quién ve su foto es decisión suya: véase [Quién me ve](help:user.privacy.audiences).
 - Su cuenta es suya en todos los espacios; su situación en un espacio concreto está en los Ajustes de ese espacio.
 
@@ -2139,7 +2139,7 @@ Usted quiere volver a leer lo que aceptó sobre sus datos.
 **Pasos**
 
 1. Abra [Privacidad y datos](app:/privacy).
-2. Toque **Tus datos, tus derechos**.
+2. Toque **Sus datos, sus derechos**.
 3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
 **Conviene saber**
@@ -2182,7 +2182,7 @@ Usted dirige una comunidad y quiere alojar DesKilo por su cuenta.
 
 **Pasos**
 
-1. Abra la pantalla **Servidor** y toque **Usar tu propio servidor**.
+1. Abra la pantalla **Servidor** y toque **Usar su propio servidor**.
 2. Siga los cuatro pasos que se muestran: crear un proyecto en supabase.com, instalar el esquema, copiar la URL del proyecto y la clave publicable, y después pegarlas y **Probar la conexión**.
 3. O toque **Crear una nueva instancia** para la configuración guiada.
 
@@ -2477,7 +2477,7 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 **Pasos**
 
 1. Abra [Eventos](app:/events), o pulse **Avisos financieros** en [Finanzas](app:/money).
-2. Busque, bajo **Esperando tu confirmación**, la línea que indica el importe y el miembro.
+2. Busque, bajo **Esperando su confirmación**, la línea que indica el importe y el miembro.
 3. Pulse **Aceptar** para confirmarlo, o la cruz para **Rechazar** el gasto.
 
 **Conviene saber**
@@ -2513,7 +2513,7 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Tus finanzas en todos tus espacios**.
+1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Sus finanzas en todos sus espacios**.
 2. Elija una pestaña: **Pendiente**, **Pagadas**, **Pagos** o **Recordatorios**.
 3. Si pertenece a varios espacios, filtre por espacio en la parte superior.
 
@@ -2586,7 +2586,7 @@ Usted quiere dar al edificio sus plantas, en el orden que la gente espera. El **
 
 - Eliminar una planta borra todas las oficinas, mesas y asientos que contiene. La confirmación indica qué ocurre con las reservas que apuntan a ellos.
 - La línea bajo cada planta le dice si es **Reservable por completo** o **No reservable por completo**.
-- Sin ninguna planta, el editor dice **Aún no hay plantas. Añade la primera planta de tu espacio.**
+- Sin ninguna planta, el editor dice **Aún no hay plantas. Añada la primera planta de su espacio.**
 
 **Véase también:** [Reservar una planta entera](help:user.space.editor.level-booking) · [Dibujar salas, mesas y asientos](help:user.space.editor.rooms)
 
@@ -2682,7 +2682,7 @@ Usted quiere que un asiento indique hacia dónde mira la silla, qué incluye y c
 **Conviene saber**
 
 - Un número de etiqueta solo puede pertenecer a una silla: **Esta etiqueta ya está vinculada a otra silla.**
-- Si aún no hay ningún accesorio, la hoja ofrece **Aún no hay equipamiento — configúralo**.
+- Si aún no hay ningún accesorio, la hoja ofrece **Aún no hay equipamiento — configúrelo**.
 
 **Véase también:** [Registro con credencial NFC](help:user.badges.nfc)
 
@@ -2999,7 +2999,7 @@ Usted quiere activar o desactivar una sola función.
 **Conviene saber**
 
 - Active una función y aparece cada parte de ella: la pestaña, el botón, el enlace. Desactívela y no queda ninguna, ni siquiera un enlace guardado.
-- Una función que necesita otra queda bajo ella con **Requiere** y dice **Esperando a la función de arriba: actívala y esta vuelve a funcionar.** mientras la principal está desactivada. Su propia elección se conserva.
+- Una función que necesita otra queda bajo ella con **Requiere** y dice **Esperando a la función de arriba: actívela y esta vuelve a funcionar.** mientras la principal está desactivada. Su propia elección se conserva.
 - Activar una función también puede activar lo que necesita. La app se lo indica.
 - Una función que aún no se ha revisado como estable le pide confirmar primero: puede cambiar y tiene límites conocidos.
 - Lo que ya está hecho se queda hecho. Una factura emitida mientras una función estaba activada conserva lo que dice.
@@ -4195,7 +4195,7 @@ Quiere que los miembros paguen en línea una factura pendiente, en su propia cue
 
 Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, **Entorno**, **ID de webhook** y **URL de retorno** para PayPal; **Clave secreta**, **Secreto de firma del webhook** y **URL de retorno** para Stripe; **Clave API** y **URL de retorno** para Mollie y Wero. Mantenga separadas las claves de prueba y las reales: todas las claves que introduzca deben pertenecer al mismo modo.
 
-Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — deja en blanco para conservar**; escriba un valor nuevo para sustituirlo.
+Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — déjelo en blanco para conservarlo**; escriba un valor nuevo para sustituirlo.
 
 ### Gastos programados
 
@@ -5715,7 +5715,7 @@ Quiere echar un vistazo antes de comprometerse. La demo es un espacio inventado,
 
 1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración**.
 2. Lea la breve nota y pulse **Empezar**.
-3. Use **Ver como** para ver el mismo espacio como **La propietaria**, **Una administradora** o **Un miembro**.
+3. Use **Ver como** para ver el mismo espacio como **Propietario**, **Administrador/a** o **Miembro**.
 4. Pulse **Reiniciar la demo** para devolverla a como empezó, o **Salir de la demo**.
 
 **Conviene saber**
@@ -6751,7 +6751,7 @@ Usted quiere un lugar que diga, para las funciones principales, qué obtienen lo
 | **Pares de entornos**, **Despliegues** | Un lado de prueba y un lado real, con despliegue. | | Propietario |
 | **Configuración en el archivo del espacio** | Toda la configuración viaja en el archivo del espacio. | **Exportación de datos (Excel)** | Propietario |
 | **Asistente de instancia** | Crear un servidor nuevo desde la aplicación. | | Operador/a |
-| **Lo que te espera** | Una lista ordenada de lo que le espera. | | Nadie |
+| **Lo que le espera** | Una lista ordenada de lo que le espera. | | Nadie |
 | **Grabador de tareas** | Grabar y reproducir los pasos de una tarea. | | Nadie |
 | **Notificaciones push** | Confirmaciones pendientes en el teléfono. | El servicio push de la instalación | Operador/a |
 | **Integración con WhatsApp** | Un chat con un miembro con un toque, el enlace del grupo. | **Directorio de miembros** | Propietario |
@@ -7079,7 +7079,7 @@ Usted quiere estar seguro de que toda solicitud para la que crea una regla puede
 1. Abra [Reglas de validación](app:/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
 2. Abra [Miembros y planes](app:/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
 3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. El área pasa entonces a ser obligatoria, sea cual sea el tipo de solicitud, y [Lo que le necesita](help:user.collaborate.attention) la muestra.
-4. Abra [Eventos](app:/events). **Esperando tu confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
+4. Abra [Eventos](app:/events). **Esperando su confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
 
 **Conviene saber**
 
@@ -7514,7 +7514,7 @@ Solo se envía push en las cinco líneas marcadas con «push» más abajo. Cualq
 
 | Origen | Evento | A quién se avisa | Canal | Qué puede cambiar el miembro |
 |---|---|---|---|---|
-| Reglas de validación | Una solicitud necesita una confirmación | A las personas que nombra la regla (flujo, **Esperando tu confirmación**); el push va solo al miembro al que se refiere la solicitud, nunca a quien la hizo, de modo que los validadores reciben el push solo cuando son ese miembro. Texto: «Alguien necesita tu confirmación.» | Flujo, campana; push | Desactivar el push en el dispositivo |
+| Reglas de validación | Una solicitud necesita una confirmación | A las personas que nombra la regla (flujo, **Esperando su confirmación**); el push va solo al miembro al que se refiere la solicitud, nunca a quien la hizo, de modo que los validadores reciben el push solo cuando son ese miembro. Texto: «Alguien necesita tu confirmación.» | Flujo, campana; push | Desactivar el push en el dispositivo |
 | Reservas | Un administrador elimina o anula una reserva | Al miembro desplazado y a todos los administradores y propietarios activos excepto quien actuó. Texto: «Un administrador ha eliminado una reserva.» | Flujo; push | Desactivar el push en el dispositivo |
 | Recordatorios de pago | Una factura ha superado su plazo y vence un nivel de recordatorio | Al miembro destinatario de la factura. La factura de un propietario llega al propio propietario. Texto: «Tienes un recordatorio de pago.» | Alerta en el flujo; push | Desactivar el push en el dispositivo |
 | Notificaciones entre miembros | Un mensaje nuevo | Mensaje directo: el destinatario. Grupo: los participantes excepto el remitente. Una conversación silenciada por un miembro permanece en silencio para ese miembro. Texto: «Tienes un mensaje nuevo.» | Mensajes, campana; push | Silenciar, fijar o archivar una conversación; desactivar el push |
@@ -7618,7 +7618,7 @@ Hágalo en un espacio de prueba (véase [un ensayo seguro](help:setup.money.dry-
 
 1. Mensaje: desde la cuenta del miembro, escriba al propietario en [Mensajes](app:/me?tab=messages). En la cuenta del propietario, la campana lo cuenta y la conversación aparece como no leída. Ábrala: el mensaje del miembro muestra una confirmación de lectura.
 2. Mención: en una conversación de grupo, nombre al propietario (la función de menciones de la mensajería debe estar activada). Si el push está configurado, el teléfono del propietario muestra «Te han mencionado en una conversación.»
-3. Decisión: como miembro, pida eliminar una reserva pasada (la función **Solicitudes de eliminación de reservas** debe estar activada). El propietario la ve en **Esperando tu confirmación** en [Eventos](app:/events); respóndala y observe cómo cambia el flujo del miembro.
+3. Decisión: como miembro, pida eliminar una reserva pasada (la función **Solicitudes de eliminación de reservas** debe estar activada). El propietario la ve en **Esperando su confirmación** en [Eventos](app:/events); respóndala y observe cómo cambia el flujo del miembro.
 4. Eliminación: como propietario, elimine una reserva futura del miembro. El flujo del miembro la muestra, y un teléfono con push muestra «Un administrador ha eliminado una reserva.»
 5. Recordatorio: como miembro, reserve un puesto que empiece dentro de unos 20 minutos (una reserva que empieza en menos de 15 minutos no recibe recordatorio). Unos 15 minutos antes del inicio, el teléfono del miembro muestra el recordatorio de registro de entrada.
 6. Recordatorio de pago: con **Recordatorios de pago** activado, active **Recordatorios automáticos** en las reglas de recordatorio con un plazo corto hasta el primer recordatorio, emita una factura de prueba que tenga un plazo de pago, espere a que pase el plazo y abra Finanzas como propietario o copropietario; el flujo del miembro muestra la alerta.
@@ -8020,7 +8020,7 @@ Quiere un hábito breve que mantenga el espacio coherente, en diez minutos a fin
 **Pasos**
 
 1. Abra **Configuración de este espacio**. Cada ámbito sigue indicando **Listo**, o **No es necesario aquí**, o está dejado a un lado a propósito.
-2. Abra [Eventos](app:/events). **Esperando tu confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
+2. Abra [Eventos](app:/events). **Esperando su confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
 3. Vuelva a contar el equipo. Quien se haya marchado o esté en pausa puede dejar una regla corta. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck).
 4. Cierre el mes: los días de cierre están introducidos, se ha ejecutado el asistente de cierre mensual y los recordatorios de pago han salido (automáticamente cada mañana, o al abrir Finanzas cuando la base de datos no tiene programador). Véase [El asistente de cierre mensual](help:user.invoicing.wizard).
 5. Haga la exportación de datos y abra **Funciones** para comprobar que ningún proceso requiere atención tras los cambios del mes.
@@ -8124,7 +8124,7 @@ Quiere ver el producto terminado antes de tomar decisiones. El espacio de demost
 **Pasos**
 
 1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Véase [El espacio de demostración](help:user.advanced.demo).
-2. Use **Ver como** para pasar entre **La propietaria**, **Una administradora** y **Un miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
+2. Use **Ver como** para pasar entre **Propietario**, **Administrador/a** y **Miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
 3. Pulse **Reiniciar la demo** cuando quiera dejarla como al principio.
 
 *Como miembro*

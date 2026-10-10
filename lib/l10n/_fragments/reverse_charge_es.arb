@@ -4,7 +4,7 @@
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"
   },
-  "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívalo si nunca facturas a empresas en el extranjero.",
+  "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívelo si nunca factura a empresas en el extranjero.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"
   },

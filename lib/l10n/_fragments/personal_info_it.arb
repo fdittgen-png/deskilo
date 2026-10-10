@@ -68,7 +68,7 @@
   "@personalInfoNone": {
     "description": "#886 personal-information form / feature: personalInfoNone"
   },
-  "personalInfoPreview": "Sui tuoi documenti",
+  "personalInfoPreview": "Sui suoi documenti",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
   },

@@ -180,14 +180,14 @@ Un assistente di intelligenza artificiale come Claude o ChatGPT può controllare
 
 **Passaggi**
 
-1. Apra [Assistenti](app:/assistants). **A che punto sei qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il tuo ruolo**, **Il tuo consenso**, **Server**.
+1. Apra [Assistenti](app:/assistants). **A che punto è qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il suo ruolo**, **Il suo consenso**, **Server**.
 2. Scorra l'elenco; ogni riga dice chi compie il passo successivo.
 
 **Da sapere**
 
 - Partecipano più persone: Lei, il proprietario o un amministratore dello spazio, un amministratore del database e l'operatore dell'installazione. Nessuno da solo può aprire tutto.
 - Attivare gli assistenti non concede nulla a nessuno di per sé.
-- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il tuo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
+- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il suo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
 
 **Vedi anche:** [Collegare un assistente](help:user.advanced.assistants-connect)
 
@@ -201,7 +201,7 @@ Vuole che il Suo assistente lavori con le Sue prenotazioni e il Suo account.
 **Passaggi**
 
 1. Apra [Collegare un assistente](app:/assistants/connect). Sotto **Prima di collegare**, ogni riga dovrebbe riportare **Fatto**.
-2. Sotto **Quale assistente usi?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il tuo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
+2. Sotto **Quale assistente usa?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il suo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
 3. Acceda quando l'assistente lo chiede, poi scelga questo spazio e che cosa l'assistente può farvi.
 4. Tocchi **Prova la connessione** e chieda al Suo assistente: «Con DesKilo, quali sono le mie prenotazioni di questa settimana?»
 
@@ -223,7 +223,7 @@ Gli assistenti sono approvati a livelli, così una persona non può attivarne un
 
 **Passaggi**
 
-1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](app:/settings/assistant-setup) e la percorre: **Attiva gli assistenti per questo spazio di lavoro**, **Scegli cosa possono fare gli assistenti**.
+1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](app:/settings/assistant-setup) e la percorre: **Attivi gli assistenti per questo spazio di lavoro**, **Scelga cosa possono fare gli assistenti**.
 2. Ogni membro chiede una volta: **Chiedi l'approvazione**. Un amministratore del database decide in [Approvazioni degli assistenti](app:/database/assistant-approvals) con **Approva** o **Rifiuta**.
 3. L'operatore dell'installazione apre [Installazione: assistenti](app:/installation/assistants) e tocca **Attiva per tutti gli spazi**. La pagina elenca anche **Amministratori della base** e **Client degli assistenti**, ciascuno **Approvato**, **Bloccato** oppure **In attesa di approvazione**.
 4. Quando un assistente invia una richiesta ad alto impatto, Le viene chiesto: **Conferma una richiesta dell'assistente**. **Conferma** gli permette di inviare quella richiesta esatta una sola volta; **Rifiuta** non fa nulla.
@@ -457,7 +457,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, ape
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la breve nota, poi tocchi **Inizia**.
-3. Usi **Vedi come** per vedere lo stesso spazio come **La proprietaria**, **Un'amministratrice** o **Un membro**.
+3. Usi **Vedi come** per vedere lo stesso spazio come **Proprietario**, **Amministratore** o **Membro**.
 4. Tocchi **Reimposta la demo** per riportarla all'inizio, oppure **Esci dalla demo**.
 
 **Da sapere**

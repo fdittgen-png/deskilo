@@ -8,6 +8,8 @@ import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
+import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter/material.dart';
@@ -158,5 +160,108 @@ void main() {
     await tester.pumpWidget(const SizedBox());
     final second = await primaryOnMoney();
     expect(second, first);
+  });
+  // ── #2327 item 8: the processes that were not demonstrable ──────────
+
+  testWidgets('the public directory lists the space and its neighbours', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    await _go(tester, '/discover');
+
+    expect(journey.fixture.directory.cards, hasLength(3));
+    for (final card in journey.fixture.directory.cards) {
+      expect(_shows(card.name), isTrue, reason: card.name);
+    }
+    expect(journey.fixture.directory.pages['ws-1']?['published'], isTrue);
+  });
+
+  testWidgets('Me › Home shows the guest visits, in listed spaces', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    await _go(tester, '/me');
+
+    final listed = {for (final c in journey.fixture.directory.cards) c.id};
+    for (final visit in journey.fixture.guests.visits) {
+      expect(listed, contains(visit.workspaceId), reason: visit.id);
+      expect(
+        find.byKey(ValueKey('me-visit-${visit.id}'), skipOffstage: false),
+        findsOneWidget,
+      );
+    }
+    expect(_shows('Confirmed'), isTrue);
+    expect(_shows('Requested'), isTrue);
+  });
+
+  testWidgets('Business analytics offers the team\'s saved views', (
+    tester,
+  ) async {
+    await pumpDemo(tester, persona: DemoPersona.owner);
+    await _go(tester, '/bi');
+    expect(find.byType(LoadingView), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('bi-views')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    expect(_shows('Finance against last year'), isTrue);
+    expect(_shows('Quarter by quarter'), isTrue);
+  });
+
+  testWidgets('Me › Messages holds a message request from the applicant', (
+    tester,
+  ) async {
+    await pumpDemo(tester, persona: DemoPersona.owner);
+    await _go(tester, '/me?tab=messages');
+
+    expect(find.byKey(const ValueKey('message-requests')), findsOneWidget);
+    expect(_shows('Dov Meir'), isTrue);
+    expect(
+      find.byKey(const ValueKey('request-accept-demo-request-dov')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('the kiosk tablet asks, then shows the plan to check in at', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(
+      tester,
+      persona: DemoPersona.kiosk,
+      openHub: false,
+    );
+    expect(journey.fixture.workspaces.myMember.isKiosk, isTrue);
+    expect(find.byKey(const ValueKey('kiosk-gate-title')), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('kiosk-gate-start')));
+    for (var i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    expect(find.byType(KioskScreen), findsOneWidget);
+    expect(find.byType(LoadingView), findsNothing);
+  });
+
+  testWidgets('the development twin: deployable, with its journal', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    await _go(tester, '/deployment');
+
+    expect(find.byKey(const ValueKey('deploy-list')), findsOneWidget);
+    expect(find.byKey(const ValueKey('deploy-no-twin')), findsNothing);
+    expect(find.byKey(const ValueKey('deploy-not-allowed')), findsNothing);
+    final list = find.descendant(
+      of: find.byKey(const ValueKey('deploy-list')),
+      matching: find.byType(Scrollable),
+    );
+    for (final d in journey.fixture.deployments.journalRows) {
+      final row = find.byKey(ValueKey('deploy-journal-${d.id}'));
+      await tester.scrollUntilVisible(row, 200, scrollable: list.first);
+      await tester.pump();
+      expect(row, findsOneWidget);
+      expect(d.actorName, 'Ada Lindqvist');
+    }
+    expect(find.textContaining('Ada Lindqvist'), findsWidgets);
   });
 }

@@ -1,11 +1,11 @@
 {
   "@@locale": "it",
   "featureWorkspaceLibraryTitle": "Biblioteca degli spazi",
-  "featureWorkspaceLibraryDesc": "Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.",
+  "featureWorkspaceLibraryDesc": "Salvi la pianta di questo spazio e il suo funzionamento come modello, scelga chi può vederla, inviti persone via e-mail e parta da ciò che altri offrono.",
   "libraryTitle": "Biblioteca degli spazi",
   "libraryStartFrom": "Partire dalla biblioteca",
-  "libraryYours": "I vostri modelli",
-  "libraryEmpty": "Ancora niente qui. Salvate questo spazio come modello, o aspettate che qualcuno ne condivida uno con voi.",
+  "libraryYours": "I suoi modelli",
+  "libraryEmpty": "Ancora niente qui. Salvi questo spazio come modello, o aspetti che qualcuno ne condivida uno con Lei.",
   "libraryCounts": "{levels} livelli · {desks} scrivanie · {seats} posti",
   "@libraryCounts": {
     "placeholders": {
@@ -35,10 +35,10 @@
   "libraryGroupDocumentsOperations": "Documenti e funzionamento",
   "libraryGroupUnknown": "Altro — questa versione non può applicarlo",
   "libraryStateNew": "Nuovo",
-  "libraryStateChange": "Cambia ciò che avete",
+  "libraryStateChange": "Cambia ciò che ha",
   "libraryStateMatching": "Già uguale",
   "libraryStateAttention": "Richiede attenzione",
-  "libraryReasonFeeSchedule": "La vostra scala di commissioni verrebbe sostituita per intero.",
+  "libraryReasonFeeSchedule": "La sua scala di commissioni verrebbe sostituita per intero.",
   "libraryApplyChanges": "{count, plural, =0{Niente selezionato} =1{Applica 1 modifica} other{Applica {count} modifiche}}",
   "libraryConfirmSensitive": "Questo modifica: {groups}. Applicare?",
   "libraryAppliedChanges": "{count, plural, =1{1 modifica applicata.} other{{count} modifiche applicate.}}",
@@ -51,12 +51,12 @@
   "libraryNeverSites": "Le sedi e i loro indirizzi",
   "libraryNeverPayment": "Dati bancari",
   "libraryNeverDocumentDesign": "Impaginazione dei documenti",
-  "libraryNeverDocumentLinks": "Collegamenti ai vostri documenti",
+  "libraryNeverDocumentLinks": "Collegamenti ai suoi documenti",
   "libraryNeverInvitations": "Testi di invito",
-  "libraryNeverIdentity": "Il vostro indirizzo, identificativi legali, menzioni legali e gruppo WhatsApp",
+  "libraryNeverIdentity": "Il suo indirizzo, identificativi legali, menzioni legali e gruppo WhatsApp",
   "libraryPlanNames": "Questi nomi viaggiano con la pianta: {names}",
   "librarySaveTags": "Etichette, separate da virgole",
-  "libraryPublishNothing": "Scegliete almeno un gruppo.",
+  "libraryPublishNothing": "Scelga almeno un gruppo.",
   "libraryCustomizedHere": "Personalizzato qui",
   "libraryApply": "Applica a questo spazio",
   "libraryApplyConfirmTitle": "Applicare « {name} »?",
@@ -67,12 +67,12 @@
       }
     }
   },
-  "libraryApplyConfirmBody": "La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che avete già viene rimosso.",
+  "libraryApplyConfirmBody": "La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che ha già viene rimosso.",
   "libraryApplied": "Modello applicato.",
   "librarySave": "Salva questo spazio come modello",
   "librarySaveName": "Nome del modello",
   "librarySaveDescription": "Descrizione (facoltativa)",
-  "librarySaved": "Salvato nei vostri modelli.",
+  "librarySaved": "Salvato nei suoi modelli.",
   "libraryVisibility": "Chi può vederlo",
   "libraryVisibilityPrivate": "Solo io",
   "libraryVisibilityShared": "Le persone che invito",
@@ -87,12 +87,12 @@
       }
     }
   },
-  "libraryShareHint": "Invitate via e-mail. L'invito funziona non appena quell'indirizzo accede — non viene rivelato se esiste già un account.",
+  "libraryShareHint": "Inviti via e-mail. L'invito funziona non appena quell'indirizzo accede — non viene rivelato se esiste già un account.",
   "libraryShareEmail": "Indirizzo e-mail",
   "libraryShareAdd": "Invita",
   "libraryShareNobody": "Nessuno invitato per ora.",
   "libraryDelete": "Elimina modello",
-  "libraryDeleteConfirm": "Eliminare « {name} »? Le persone con cui lo avete condiviso perdono l'accesso.",
+  "libraryDeleteConfirm": "Eliminare « {name} »? Le persone con cui lo ha condiviso perdono l'accesso.",
   "@libraryDeleteConfirm": {
     "placeholders": {
       "name": {
@@ -109,7 +109,7 @@
   "onboardingTemplateSetsUp": "Configura: {groups}",
   "onboardingStartFrom": "Partire da",
   "onboardingStartEmpty": "Spazio vuoto",
-  "onboardingStartEmptyDesc": "Disegnate la vostra pianta su una tela vuota.",
+  "onboardingStartEmptyDesc": "Disegni la sua pianta su una tela vuota.",
   "libraryProcessOn": "{feature} attiva",
   "@libraryProcessOn": {
     "description": "Template apply preview (#1330): a feature the group switches on, under its process",

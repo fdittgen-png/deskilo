@@ -34,12 +34,12 @@
   "workspaceCodeCopied": "Kopiert",
   "inviteRoleMember": "Mitglieder-Einladung",
   "inviteRoleAdmin": "Einladung als Administrator:in",
-  "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Gib ihn nur der Person, für die er bestimmt ist.",
+  "inviteAdminExplainer": "Dieser Code ist einmalig nutzbar: Er lässt EINE Person als Admin beitreten und verfällt dann. Geben Sie ihn nur der Person, für die er bestimmt ist.",
   "inviteAdminNewCode": "Neuer Code für Administrator:innen",
   "inviteOwnerNote": "Es gibt keine Eigentümer-Einladung — nur ein Eigentümer kann Eigentum vergeben, unter Mitglieder & Tarife.",
   "scanJoinTitle": "Workspace-QR scannen",
-  "scanJoinHelp": "Richte die Kamera auf den Einladungs-QR — du siehst den Bereich, bevor du beitrittst.",
-  "scanJoinNotAnInvite": "Dieser QR ist keine DesKilo-Einladung — scanne den aus der Einladungsnachricht.",
+  "scanJoinHelp": "Richten Sie die Kamera auf den Einladungs-QR — Sie sehen den Bereich, bevor Sie beitreten.",
+  "scanJoinNotAnInvite": "Dieser QR ist keine DesKilo-Einladung — scannen Sie den aus der Einladungsnachricht.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },
@@ -53,7 +53,7 @@
   "provenanceWorkspaceSetting": "Einstellung des Raums",
   "provenanceResetToTemplate": "Auf Vorlage zurücksetzen",
   "provenanceResetToDefault": "Auf Produktstandard zurücksetzen",
-  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls eure Community in einer anderen Währung abrechnet.",
+  "workspaceSettingsCurrencyHelper": "Wird vom Land vorbelegt — überschreiben, falls Ihre Community in einer anderen Währung abrechnet.",
   "paymentInstructionsTitle": "Zahlungshinweise",
   "paymentInstructionsHelper": "Wird Mitgliedern auf einer offenen Abrechnung angezeigt. Leer lassen, um nichts anzuzeigen.",
   "paymentInstructionsPaypalLabel": "PayPal.me-Link oder -Name",
@@ -94,7 +94,7 @@
   "workspaceResetDialogTitle": "Diesen Workspace zurücksetzen?",
   "workspaceResetWarning": "Dies löscht dauerhaft alle Reservierungen, sämtliche Finanz- und Buchungsdaten, den Aktivitätsverlauf und den gesamten Grundriss — Etagen, Räume, Tische, Plätze und Bilder. Workspace-Einstellungen, Gebührenstufen, Verfügbarkeit, Funktionen, Kataloge und Mitglieder bleiben erhalten. Nicht rückgängig zu machen.",
   "workspaceResetConfirmPhrase": "Ich stimme zu",
-  "workspaceResetConfirmLabel": "Tippe „{phrase}“ zum Bestätigen",
+  "workspaceResetConfirmLabel": "Geben Sie „{phrase}“ zum Bestätigen ein",
   "workspaceResetConfirmButton": "Workspace zurücksetzen",
   "workspaceResetDone": "Workspace zurückgesetzt.",
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
@@ -106,7 +106,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst. Deine eigene App-Sprache stellst du in den Einstellungen ein.",
+  "workspaceLanguageHelper": "Einladungen werden standardmäßig in dieser Sprache verfasst. Ihre eigene App-Sprache stellen Sie in den Einstellungen ein.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
@@ -210,7 +210,7 @@
   "@featureRoleManagement": {
     "description": "Feature name (#513)"
   },
-  "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Die Inhaberin entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
+  "featureRoleManagementDesc": "Die zentrale Rolle→Berechtigung-Matrix: Der Inhaber entscheidet, welche Rolle welche Berechtigung hält; alle anderen lesen ihre eigenen. Aus: Es gelten einfach die Standardwerte.",
   "@featureRoleManagementDesc": {
     "description": "Feature description (#513)"
   },
@@ -222,11 +222,11 @@
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
-  "rolesIntroReadOnly": "Nur lesen: Das sind die Berechtigungen jeder Rolle. Deine Rolle ist hervorgehoben.",
+  "rolesIntroReadOnly": "Nur lesen: Das sind die Berechtigungen jeder Rolle. Ihre Rolle ist hervorgehoben.",
   "@rolesIntroReadOnly": {
     "description": "Roles screen intro for non-editors (#513)"
   },
-  "rolesYourRole": "Deine Rolle",
+  "rolesYourRole": "Ihre Rolle",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
@@ -311,11 +311,11 @@
   "@regionalDeviceZone": {
     "description": "#711 - globalization"
   },
-  "regionalDeviceZoneHint": "Aus: Zeiten in der Zone des Bereichs, in der gebucht wird. An: die deines Geräts, gekennzeichnet, wo sie abweicht.",
+  "regionalDeviceZoneHint": "Aus: Zeiten in der Zone des Bereichs, in der gebucht wird. An: die Ihres Geräts, gekennzeichnet, wo sie abweicht.",
   "@regionalDeviceZoneHint": {
     "description": "#711 - globalization"
   },
-  "workspaceTimezoneUnknown": "Wähle eine Zeitzone aus der Liste",
+  "workspaceTimezoneUnknown": "Wählen Sie eine Zeitzone aus der Liste",
   "@workspaceTimezoneUnknown": {
     "description": "#711 - globalization"
   },

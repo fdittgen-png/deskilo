@@ -587,7 +587,7 @@ Quiere que los miembros paguen en línea una factura pendiente, en su propia cue
 
 Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, **Entorno**, **ID de webhook** y **URL de retorno** para PayPal; **Clave secreta**, **Secreto de firma del webhook** y **URL de retorno** para Stripe; **Clave API** y **URL de retorno** para Mollie y Wero. Mantenga separadas las claves de prueba y las reales: todas las claves que introduzca deben pertenecer al mismo modo.
 
-Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — deja en blanco para conservar**; escriba un valor nuevo para sustituirlo.
+Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — déjelo en blanco para conservarlo**; escriba un valor nuevo para sustituirlo.
 
 <!-- anchor: user.money.expenses.schedule -->
 ### Gastos programados

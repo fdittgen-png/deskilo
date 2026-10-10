@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "spaceScanTitle": "Escanear un código de espacio",
-  "spaceScanHint": "Apunta la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escribe su código.",
+  "spaceScanHint": "Apunte la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escriba su código.",
   "spaceScanField": "Código",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",
   "spaceScanUnknown": "Este código ya no corresponde a ningún espacio aquí.",
@@ -13,7 +13,7 @@
   "spaceKindOffice": "Oficina",
   "spaceKindLevel": "Planta",
   "spaceKindSeat": "Puesto",
-  "spaceYoursNow": "Reservado por ti para esta franja.",
+  "spaceYoursNow": "Reservado por usted para esta franja.",
   "spaceCardSizeLabel": "Tamaño de la tarjeta",
   "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceCardSizeSmall": "Pequeña",

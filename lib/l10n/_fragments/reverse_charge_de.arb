@@ -4,7 +4,7 @@
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"
   },
-  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn du nie Unternehmen im Ausland fakturierst.",
+  "reverseChargeSubtitle": "Ein Kunde mit USt-IdNr. in einem anderen Mitgliedstaat wird ohne Steuer fakturiert und schuldet sie selbst (Art. 196). Ausschalten, wenn Sie nie Unternehmen im Ausland fakturieren.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"
   },

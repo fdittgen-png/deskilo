@@ -40,7 +40,7 @@ Dentro de un espacio, lo que puede hacer depende de su rol. Los roles se suman: 
 **Pasos**
 
 1. Abra [Ajustes](app:/settings), que se llama **Mi cuenta** cuando usted no administra nada.
-2. Elija **Lo que puedes hacer aquí**.
+2. Elija **Lo que puede hacer aquí**.
 3. Lea qué rol le da cada capacidad. Un miembro ve **Como todos los miembros**; un administrador ve además **Del rol Administrador/a**.
 
 **Conviene saber**
@@ -64,9 +64,9 @@ Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirv
 
 1. Abra la app. La pantalla de inicio de sesión le pide su **Correo electrónico** y su **Contraseña**.
 2. Para iniciar sesión, toque **Iniciar sesión**.
-3. Para crear una cuenta nueva, toque **¿Nuevo aquí? Crea una cuenta**, añada un **Nombre visible** y toque **Crear cuenta**. La contraseña debe tener al menos 8 caracteres.
+3. Para crear una cuenta nueva, toque **¿Es nuevo aquí? Cree una cuenta**, añada un **Nombre visible** y toque **Crear cuenta**. La contraseña debe tener al menos 8 caracteres.
 4. Si el servidor lo ofrece, toque **Google**, debajo de **o continuar con**.
-5. Algunos servidores le piden confirmar antes su dirección. La pantalla **Revisa tu correo** indica que se ha enviado un enlace: ábralo en este dispositivo. Si no llega nada, mire en la carpeta de correo no deseado o toque **Volver a enviar el correo**.
+5. Algunos servidores le piden confirmar antes su dirección. La pantalla **Revise su correo** indica que se ha enviado un enlace: ábralo en este dispositivo. Si no llega nada, mire en la carpeta de correo no deseado o toque **Volver a enviar el correo**.
 
 <p><img src="images/user-start-account--create.es.jpg" width="280"></p>
 
@@ -90,14 +90,14 @@ Usted no recuerda su contraseña. Recibe por correo un código de un solo uso y 
 
 **Pasos**
 
-1. En la pantalla de inicio de sesión, toque **¿Olvidaste la contraseña?**.
+1. En la pantalla de inicio de sesión, toque **¿Ha olvidado la contraseña?**.
 2. Escriba su **Correo electrónico** y toque **Enviar código**.
 3. Abra el correo y copie el código.
 4. Escríbalo en **Código del correo**, elija una **Nueva contraseña** y toque **Establecer nueva contraseña**.
 
 **Conviene saber**
 
-- El mensaje **Contraseña actualizada — has iniciado sesión.** confirma que todo ha ido bien; no tiene que volver a iniciar sesión.
+- El mensaje **Contraseña actualizada — ha iniciado sesión.** confirma que todo ha ido bien; no tiene que volver a iniciar sesión.
 - Un código no válido o caducado se rechaza: pida uno nuevo.
 - Si el código se acepta pero la contraseña no se guarda, toque **Volver a guardar la nueva contraseña**.
 
@@ -116,7 +116,7 @@ Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espac
 
 1. En la pantalla de inicio de sesión, toque **Explorar el espacio de demostración**.
 2. Lea la nota y toque **Empezar**.
-3. Use la franja superior para elegir desde qué papel mira: **La propietaria**, **Un miembro** o **Una administradora**. Cada toque sobre el nombre pasa al siguiente.
+3. Use la franja superior para elegir desde qué papel mira: **Propietario**, **Miembro** o **Administrador/a**. Cada toque sobre el nombre pasa al siguiente.
 4. Toque **Reiniciar la demo** para dejarlo todo como estaba al principio.
 5. Toque **Salir de la demo** cuando termine.
 
@@ -144,7 +144,7 @@ Le han dado un identificador de espacio, un código QR o un mensaje de invitaci�
 1. Inicie sesión y toque **Unirse con un código** en [Yo](app:/me). Desde la pantalla de inicio de sesión, **Unirse con invitación** le lleva allí en cuanto tenga una cuenta.
 2. En **Bienvenido a DesKilo**, deje seleccionado **Unirse a un espacio**.
 3. Escriba el identificador del espacio en **Código de invitación**, o pegue el mensaje de invitación completo: el identificador se encuentra solo. **Pegar** lo lee del portapapeles y **Escanear código QR** abre la cámara ante un código impreso.
-4. Toque **Revisar invitación**. La tarjeta **Revisa antes de unirte** indica el espacio, su servidor, el rol que se ofrece y si un administrador debe aprobar.
+4. Toque **Revisar invitación**. La tarjeta **Revise antes de unirse** indica el espacio, su servidor, el rol que se ofrece y si un administrador debe aprobar.
 5. Toque **Unirse al espacio**.
 
 **Conviene saber**

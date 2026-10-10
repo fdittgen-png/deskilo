@@ -772,7 +772,7 @@ Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder
 | Funktion | Was sie Mitgliedern bringt | Was sie braucht | Wer richtet sie ein |
 |---|---|---|---|
 | **Mitgliederverzeichnis** | Der Community-Tab: wer da ist, Status, Anwesenheit. | | Niemand |
-| **Mit-Inhaberinnen** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
+| **Mitinhaber** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
 | **Rollenverwaltung** | Die Matrix, welche Rolle welche Berechtigung hat. | | Inhaber |
 | **Rollen vergeben** | Ein Abschnitt Rollen auf jeder Mitgliedsseite. | **Rollenverwaltung** | Inhaber |
 | **Rollen dieses Bereichs** | Eigene Rollen, etwa Schatzmeister oder Schriftführer. | | Inhaber |
@@ -934,7 +934,7 @@ Sie möchten die Personen Ihrer Organisation den Rollen zuordnen, die DesKilo ke
 | Rolle | Wofür sie da ist | Im Verein |
 |---|---|---|
 | **Inhaber** | Die Person, die für den Space einsteht und jede Berechtigung hat. Nur ein Inhaber kann die Inhaberschaft erteilen. | Ada, die Präsidentin. |
-| **Mit-Inhaberin** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
+| **Mitinhaber** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
 | **Administrator** | Führt den Alltag: Mitglieder, Buchungen für andere, den Kiosk, Dokumente, Leistungen. Hat, was die Matrix gibt, und nicht mehr. | Chiara, die Schriftführerin. |
 | **Benutzer** | Die Person, die den Space nutzt. Hat nur die Alltagsberechtigungen, die Sie geben. | Bruno, ein Mitglied wie die anderen. |
 
@@ -973,7 +973,7 @@ Sie möchten, dass jede Rolle hat, was sie braucht, und sonst nichts. Das ist da
 
 **Schritte**
 
-1. Öffnen Sie [Rollen](https://fdittgen-png.github.io/deskilo/#/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mit-Inhaberin**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
+1. Öffnen Sie [Rollen](https://fdittgen-png.github.io/deskilo/#/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mitinhaber**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
 2. Lesen Sie zuerst die Karte **Administrator**. Sie zeigt, was ein Administrator heute in Ihrem Space hat.
 3. Entfernen Sie den Haken bei dem, was Sie nicht abgeben möchten. Setzen Sie die Alltagsberechtigungen, die die Karte **Benutzer** braucht (siehe unten).
 
@@ -1015,14 +1015,14 @@ Sie möchten, dass der Space weiterläuft, wenn Sie krank, verreist oder fort si
 
 | Art | Was sie bewirkt | Wählen Sie sie, wenn … |
 |---|---|---|
-| *Aktive Mit-Inhaberin* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
-| **Nachfolgerin** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
+| *Aktiver Mitinhaber* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
+| **Nachfolge** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
 
 **Schritte**
 
-1. Schalten Sie die Funktion **Mit-Inhaberinnen** unter [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) ein. In einem neuen Space ist sie aus.
+1. Schalten Sie die Funktion **Mitinhaber** unter [Funktionen](https://fdittgen-png.github.io/deskilo/#/features) ein. In einem neuen Space ist sie aus.
 2. Öffnen Sie die Person unter [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members), gehen Sie zu **Verwalten** und tippen Sie auf **Mit-Inhaberschaft**.
-3. Wählen Sie die aktive Mit-Inhaberin oder **Nachfolgerin**. Um sofort zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Wählen Sie den aktiven Mitinhaber oder **Nachfolge**. Um sofort zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
@@ -1225,7 +1225,7 @@ Sie möchten sicher sein, dass jede Anfrage, für die Sie eine Regel anlegen, be
 1. Öffnen Sie [Freigaberegeln](https://fdittgen-png.github.io/deskilo/#/validation) und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.
 2. Öffnen Sie [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members). Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.
 3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Der Bereich wird dann erforderlich, gleich welche Art von Anfrage, und [Was auf Sie wartet](Benutzerhandbuch#was-auf-sie-wartet) meldet ihn.
-4. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events). **Wartet auf deine Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
+4. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events). **Wartet auf Ihre Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
 
 **Gut zu wissen**
 
@@ -1677,7 +1677,7 @@ Push wird nur für die fünf unten mit „Push“ gekennzeichneten Zeilen gesend
 
 | Quelle | Ereignis | Wer wird informiert | Kanal | Was das Mitglied ändern kann |
 |---|---|---|---|---|
-| Validierungsregeln | Eine Anfrage braucht eine Bestätigung | Die Personen, die die Regel nennt (Feed, **Wartet auf deine Bestätigung**); der Push geht nur an das Mitglied, um das es in der Anfrage geht, nie an die Person, die sie gestellt hat; Validierer erhalten also nur dann einen Push, wenn sie dieses Mitglied sind. Text: „Jemand braucht Ihre Bestätigung.“ | Feed, Glocke; Push | Push auf dem Gerät ausschalten |
+| Validierungsregeln | Eine Anfrage braucht eine Bestätigung | Die Personen, die die Regel nennt (Feed, **Wartet auf Ihre Bestätigung**); der Push geht nur an das Mitglied, um das es in der Anfrage geht, nie an die Person, die sie gestellt hat; Validierer erhalten also nur dann einen Push, wenn sie dieses Mitglied sind. Text: „Jemand braucht Ihre Bestätigung.“ | Feed, Glocke; Push | Push auf dem Gerät ausschalten |
 | Reservierungen | Ein Administrator entfernt eine Buchung oder setzt sich darüber hinweg | Das verdrängte Mitglied sowie jeder aktive Administrator und Inhaber außer der handelnden Person. Text: „Eine Reservierung wurde von einem Administrator entfernt.“ | Feed; Push | Push auf dem Gerät ausschalten |
 | Zahlungserinnerungen | Eine Rechnung ist über das Zahlungsziel hinaus, und eine Mahnstufe wird fällig | Das Mitglied, für das die Rechnung ausgestellt ist. Die eigene Rechnung eines Inhabers erreicht den Inhaber. Text: „Eine Zahlungserinnerung wartet auf Sie.“ | Hinweis im Feed; Push | Push auf dem Gerät ausschalten |
 | Mitglieder-Benachrichtigungen | Eine neue Nachricht | Direktnachricht: der Empfänger. Gruppe: die Teilnehmenden außer dem Absender. Eine von einem Mitglied stummgeschaltete Unterhaltung bleibt für dieses Mitglied still. Text: „Sie haben eine neue Nachricht.“ | Nachrichten, Glocke; Push | Unterhaltung stummschalten, anheften oder archivieren; Push ausschalten |
@@ -1785,7 +1785,7 @@ Tun Sie das in einem Test-Space (siehe [einen gefahrlosen Probelauf](#ein-gefahr
 
 1. Nachricht: Schreiben Sie vom Mitgliedskonto aus in [Nachrichten](https://fdittgen-png.github.io/deskilo/#/me?tab=messages) an den Inhaber. Im Inhaberkonto zählt die Glocke sie, und die Unterhaltung erscheint ungelesen. Öffnen Sie sie: Die Nachricht des Mitglieds zeigt eine Lesebestätigung.
 2. Erwähnung: Nennen Sie in einer Gruppenunterhaltung den Inhaber (die Erwähnungsfunktion des Nachrichtendienstes muss an sein). Ist Push eingerichtet, zeigt das Handy des Inhabers „Sie wurden in einer Unterhaltung erwähnt.“
-3. Entscheidung: Beantragen Sie als Mitglied das Löschen einer vergangenen Buchung (die Funktion **Lösch-Anträge für Buchungen** muss an sein). Der Inhaber sieht den Antrag unter **Wartet auf deine Bestätigung** in [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events); beantworten Sie ihn und beobachten Sie, wie sich der Feed des Mitglieds ändert.
+3. Entscheidung: Beantragen Sie als Mitglied das Löschen einer vergangenen Buchung (die Funktion **Lösch-Anträge für Buchungen** muss an sein). Der Inhaber sieht den Antrag unter **Wartet auf Ihre Bestätigung** in [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events); beantworten Sie ihn und beobachten Sie, wie sich der Feed des Mitglieds ändert.
 4. Entfernung: Entfernen Sie als Inhaber eine künftige Buchung des Mitglieds. Der Feed des Mitglieds zeigt es, und ein Handy mit Push zeigt „Eine Reservierung wurde von einem Administrator entfernt.“
 5. Erinnerung: Buchen Sie als Mitglied einen Platz, der in etwa 20 Minuten beginnt (eine Buchung, die in weniger als 15 Minuten beginnt, erhält keine Erinnerung). Etwa 15 Minuten vor Beginn zeigt das Handy des Mitglieds die Check-in-Erinnerung.
 6. Zahlungserinnerung: Schalten Sie bei eingeschaltetem **Mahnwesen** in den Mahnregeln **Automatische Mahnungen** mit einer kurzen Frist bis zur ersten Mahnung ein, stellen Sie eine Probe-Rechnung mit Zahlungsziel aus, warten Sie die Frist ab und öffnen Sie dann als Inhaber oder Mitinhaber die Finanzen; der Feed des Mitglieds zeigt den Hinweis.
@@ -2201,7 +2201,7 @@ Sie möchten eine kurze Gewohnheit, die den Space stimmig hält, in zehn Minuten
 **Schritte**
 
 1. Öffnen Sie **Einrichtung dieses Workspace**. Jeder Bereich steht weiter auf **Bereit** oder **Hier nicht nötig** oder wurde bewusst beiseitegelegt.
-2. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events). **Wartet auf deine Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
+2. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events). **Wartet auf Ihre Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
 3. Zählen Sie das Team neu. Wer gegangen ist oder pausiert, kann eine Regel zu knapp machen. Siehe [Anfragen vermeiden, die ewig warten](#anfragen-vermeiden-die-ewig-warten).
 4. Schließen Sie den Monat: Schließtage sind eingetragen, der Monatsabschluss-Assistent ist durchgelaufen, Zahlungserinnerungen sind hinausgegangen (automatisch jeden Morgen oder beim Öffnen der Finanzen, wo die Datenbank keinen Scheduler hat). Siehe [Der Monatsabschluss-Assistent](Benutzerhandbuch#der-monatsabschluss-assistent).
 5. Ziehen Sie den Datenexport und öffnen Sie **Funktionen**, um zu prüfen, dass nach den Änderungen des Monats kein Prozess Aufmerksamkeit braucht.
@@ -2309,7 +2309,7 @@ Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der De
 **Schritte**
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Siehe [Der Demo-Workspace](Benutzerhandbuch#der-demo-workspace).
-2. Wechseln Sie mit **Ansicht als** zwischen **Die Inhaberin**, **Eine Verwaltung** und **Ein Mitglied**. Machen Sie unten die drei Übungen jeder Person.
+2. Wechseln Sie mit **Ansicht als** zwischen **Inhaber**, **Administrator:in** und **Mitglied**. Machen Sie unten die drei Übungen jeder Person.
 3. Tippen Sie auf **Demo zurücksetzen**, wenn Sie den Anfangszustand wiederhaben möchten.
 
 *Als Mitglied*

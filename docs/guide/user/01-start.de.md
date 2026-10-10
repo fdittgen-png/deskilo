@@ -40,7 +40,7 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 **Schritte**
 
 1. Öffnen Sie [Einstellungen](app:/settings), das **Mein Konto** heißt, wenn Sie nichts verwalten.
-2. Wählen Sie **Was du hier tun kannst**.
+2. Wählen Sie **Was Sie hier tun können**.
 3. Lesen Sie, welche Rolle Ihnen welche Möglichkeit gibt. Ein Mitglied sieht **Wie alle Mitglieder**; eine Administratorin oder ein Administrator sieht zusätzlich **Aus der Rolle Administrator:in**.
 
 **Gut zu wissen**
@@ -66,7 +66,7 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 2. Zum Anmelden tippen Sie auf **Anmelden**.
 3. Für ein neues Konto tippen Sie auf **Neu hier? Konto erstellen**, tragen einen **Anzeigename** ein und tippen auf **Konto erstellen**. Das Passwort braucht mindestens 8 Zeichen.
 4. Wenn der Server es anbietet, tippen Sie unter **oder weiter mit** auf **Google**.
-5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sieh in dein E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
+5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sehen Sie in Ihr E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
 
 <p><img src="images/user-start-account--create.de.jpg" width="280"></p>
 
@@ -97,7 +97,7 @@ Sie wissen Ihr Passwort nicht mehr. Sie erhalten per E-Mail einen Einmalcode und
 
 **Gut zu wissen**
 
-- Die Meldung **Passwort aktualisiert — du bist angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
+- Die Meldung **Passwort aktualisiert — Sie sind angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
 - Ein ungültiger oder abgelaufener Code wird abgelehnt: Fordern Sie einen neuen an.
 - Wird der Code akzeptiert, das Passwort aber nicht gespeichert, tippen Sie auf **Neues Passwort erneut speichern**.
 
@@ -116,7 +116,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den Hinweis und tippen Sie dann auf **Loslegen**.
-3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Die Inhaberin**, **Ein Mitglied** oder **Eine Verwaltung**. Jedes Antippen des Namens springt zum nächsten.
+3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Inhaber**, **Mitglied** oder **Administrator:in**. Jedes Antippen des Namens springt zum nächsten.
 4. Tippen Sie auf **Demo zurücksetzen**, um alles wieder auf den Anfang zu stellen.
 5. Tippen Sie auf **Demo verlassen**, wenn Sie fertig sind.
 

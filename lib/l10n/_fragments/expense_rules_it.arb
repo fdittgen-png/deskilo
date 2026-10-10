@@ -1,6 +1,6 @@
 {
-  "expenseInvalidAmount": "Inserisci un importo maggiore di zero.",
-  "expenseMissingSupplyName": "Dai un nome al nuovo articolo.",
-  "expenseInvalidSupplyQuantity": "Inserisci almeno un'unità.",
-  "expenseInvalidUnitPrice": "Inserisci un prezzo unitario valido o lascialo vuoto."
+  "expenseInvalidAmount": "Inserisca un importo maggiore di zero.",
+  "expenseMissingSupplyName": "Dia un nome al nuovo articolo.",
+  "expenseInvalidSupplyQuantity": "Inserisca almeno un'unità.",
+  "expenseInvalidUnitPrice": "Inserisca un prezzo unitario valido o lo lasci vuoto."
 }

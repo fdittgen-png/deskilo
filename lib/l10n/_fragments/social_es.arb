@@ -2,11 +2,11 @@
   "authContinueWith": "o continuar con",
   "authSocialUnavailable": "El inicio de sesión con {provider} aún no está disponible — el servidor no lo ha activado.",
   "linkedAccountsTitle": "Cuentas vinculadas",
-  "linkedAccountsIntro": "Inicia sesión en esta cuenta con una identidad vinculada. Los proveedores disponibles dependen de tu servidor.",
+  "linkedAccountsIntro": "Inicie sesión en esta cuenta con una identidad vinculada. Los proveedores disponibles dependen de su servidor.",
   "linkedAccountsLink": "Vincular",
   "linkedAccountsUnlink": "Desvincular",
   "linkedAccountsLinked": "Vinculada",
-  "linkedAccountsLinkStarted": "Continúa en el navegador para terminar la vinculación.",
+  "linkedAccountsLinkStarted": "Continúe en el navegador para terminar la vinculación.",
   "authLinkManualDisabled": "La vinculación de cuentas está desactivada en este servidor. Su administrador debe activar «Permitir vinculación manual» en los ajustes de autenticación.",
   "@authLinkManualDisabled": {
     "description": "Linked accounts: authLinkManualDisabled"

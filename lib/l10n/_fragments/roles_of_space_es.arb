@@ -4,7 +4,7 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y el propietario conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -61,7 +61,7 @@
   "@roleEditorNobody": {
     "description": "#1528 the roles of a space: roleEditorNobody"
   },
-  "roleEditorNotYourself": "No puedes darte un rol a ti misma.",
+  "roleEditorNotYourself": "No puede asignarse un rol a sí mismo.",
   "@roleEditorNotYourself": {
     "description": "#1528 the roles of a space: roleEditorNotYourself"
   }

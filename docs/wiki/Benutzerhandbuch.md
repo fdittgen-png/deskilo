@@ -101,7 +101,7 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 **Schritte**
 
 1. Öffnen Sie [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings), das **Mein Konto** heißt, wenn Sie nichts verwalten.
-2. Wählen Sie **Was du hier tun kannst**.
+2. Wählen Sie **Was Sie hier tun können**.
 3. Lesen Sie, welche Rolle Ihnen welche Möglichkeit gibt. Ein Mitglied sieht **Wie alle Mitglieder**; eine Administratorin oder ein Administrator sieht zusätzlich **Aus der Rolle Administrator:in**.
 
 **Gut zu wissen**
@@ -127,7 +127,7 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 2. Zum Anmelden tippen Sie auf **Anmelden**.
 3. Für ein neues Konto tippen Sie auf **Neu hier? Konto erstellen**, tragen einen **Anzeigename** ein und tippen auf **Konto erstellen**. Das Passwort braucht mindestens 8 Zeichen.
 4. Wenn der Server es anbietet, tippen Sie unter **oder weiter mit** auf **Google**.
-5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sieh in dein E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
+5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sehen Sie in Ihr E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
 
 <p><img src="images/user-start-account--create.de.b8fa17aa9.jpg" width="280"></p>
 
@@ -158,7 +158,7 @@ Sie wissen Ihr Passwort nicht mehr. Sie erhalten per E-Mail einen Einmalcode und
 
 **Gut zu wissen**
 
-- Die Meldung **Passwort aktualisiert — du bist angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
+- Die Meldung **Passwort aktualisiert — Sie sind angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
 - Ein ungültiger oder abgelaufener Code wird abgelehnt: Fordern Sie einen neuen an.
 - Wird der Code akzeptiert, das Passwort aber nicht gespeichert, tippen Sie auf **Neues Passwort erneut speichern**.
 
@@ -177,7 +177,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den Hinweis und tippen Sie dann auf **Loslegen**.
-3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Die Inhaberin**, **Ein Mitglied** oder **Eine Verwaltung**. Jedes Antippen des Namens springt zum nächsten.
+3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Inhaber**, **Mitglied** oder **Administrator:in**. Jedes Antippen des Namens springt zum nächsten.
 4. Tippen Sie auf **Demo zurücksetzen**, um alles wieder auf den Anfang zu stellen.
 5. Tippen Sie auf **Demo verlassen**, wenn Sie fertig sind.
 
@@ -797,7 +797,7 @@ Sie wollten buchen, und die App hat abgelehnt, oder Sie fragen sich, was erlaubt
 | Außerhalb der Öffnungszeiten | Hängt vom Space ab. Aus: **Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.** Nur spontan: Sie können vor Ort einchecken, aber nicht im Voraus buchen. Frei: erlaubt, nie gezählt oder berechnet. Berechnet: erlaubt und als Nutzung gezählt, außer an einem Tag, an dem Sie bereits eine reguläre Buchung haben. |
 | Vergangene Buchungen | Eine Buchung an einem Tag, der bereits zu Ende ist, wird abgelehnt, es sei denn, der Inhaber erlaubt vergangene Buchungen: **Diese Buchung liegt vollständig in der Vergangenheit.** Früher am selben Tag wird sie als vergangener Besuch erfasst. |
 | Grenzen | Eine Buchung hat einen weitesten Horizont (**Zu weit voraus**, standardmäßig 90 Tage), eine kürzeste und eine längste Dauer (**Zu kurz**, **Zu lang**) und endet an dem Tag, an dem sie beginnt. |
-| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Du hast in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
+| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Sie haben in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
 | Reservierungslimit | **Reservierungslimit erreicht**, wenn Sie die meisten offenen Buchungen halten, die Ihnen erlaubt sind. |
 | Tage in Ihrem Tarif | Sind die Tage Ihres Tarifs aufgebraucht, gilt die Einstellung des Inhabers für Sie: Buchungen können enden, Sie werden eventuell gebeten, ein Paket zu kaufen, oder die zusätzlichen Tage werden berechnet. |
 
@@ -992,7 +992,7 @@ Sie möchten eine Woche oder einen Monat auf einen Blick sehen. Der Kalender bie
 
 **Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf deine Bestätigung**.
+Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf Ihre Bestätigung**.
 
 <p><img src="images/user-reserve-calendar-decisions.de.b8fa17aa9.jpg" width="280"></p>
 
@@ -1131,7 +1131,7 @@ Sie möchten einen Kollegen oder eine Kollegin etwas fragen, ohne den Workspace 
 **Schritte**
 
 1. Öffnen Sie [Mitglieder](https://fdittgen-png.github.io/deskilo/#/directory), tippen Sie auf eine Karte, um die Seite des Mitglieds zu öffnen, und tippen Sie dann auf **Nachrichten**.
-2. Schreiben Sie in das Feld **Deine Nachricht**.
+2. Schreiben Sie in das Feld **Ihre Nachricht**.
 3. Tippen Sie auf **Senden**.
 
 **Gut zu wissen**
@@ -1154,7 +1154,7 @@ Sie möchten sehen, was im Workspace geschehen ist und was auf eine Antwort wart
 **Schritte**
 
 1. Tippen Sie in der oberen Leiste auf **Ereignisse** (das Ablagesymbol mit einer Zahl) oder öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events) im Menü. Die Seite öffnet sich auf **Hinweise**.
-2. Lesen Sie oben **Wartet auf deine Bestätigung**: Anfragen, die Sie brauchen.
+2. Lesen Sie oben **Wartet auf Ihre Bestätigung**: Anfragen, die Sie brauchen.
 3. Lesen Sie den Verlauf darunter. Jede Zeile sagt, was geschehen ist; eine Sanduhr bedeutet ausstehend, ein grüner Haken bedeutet bestätigt. Geldzeilen zeigen, wer sie validiert hat und wann.
 4. Grenzen Sie den Verlauf mit den Chips ein: **Alle**, **Nachrichten**, **Reservierung**, **Check-ins**, **Finanzen**, **Mitglieder**, dann **Ungelesen** oder **Gelesen**.
 5. Tippen Sie neben **Gruppieren nach** auf **Typ**, **Datum** oder **Mitglied**, um den Verlauf in Gruppen zu falten; tippen Sie auf das Gruppensymbol, um zur flachen Liste zurückzukehren.
@@ -1180,7 +1180,7 @@ Jemand hat Sie gebeten, etwas zu bestätigen, und Sie möchten antworten.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events).
-2. Suchen Sie die Anfrage unter **Wartet auf deine Bestätigung**.
+2. Suchen Sie die Anfrage unter **Wartet auf Ihre Bestätigung**.
 3. Tippen Sie auf **Annehmen** oder auf das rote Kreuz, um **Ablehnen** zu wählen.
 
 **Gut zu wissen**
@@ -2077,7 +2077,7 @@ Sie möchten wissen, wer was über Sie lesen kann und wer tatsächlich nachgeseh
 
 1. Öffnen Sie [Datenschutz & Daten](https://fdittgen-png.github.io/deskilo/#/privacy).
 2. Tippen Sie auf **Wer meine Daten sehen kann**.
-3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf deine Daten zugegriffen hat**.
+3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf Ihre Daten zugegriffen hat**.
 
 **Gut zu wissen**
 
@@ -2586,7 +2586,7 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](https://fdittgen-png.github.io/deskilo/#/events) oder tippen Sie in [Finanzen](https://fdittgen-png.github.io/deskilo/#/money) auf **Finanzmeldungen**.
-2. Suchen Sie unter **Wartet auf deine Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
+2. Suchen Sie unter **Wartet auf Ihre Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
 3. Tippen Sie auf **Annehmen**, um sie zu bestätigen, oder auf das Kreuz, um sie **Ablehnen**.
 
 **Gut zu wissen**
@@ -2700,7 +2700,7 @@ Sie möchten dem Gebäude seine Etagen geben, in der Reihenfolge, die man erwart
 
 - Das Löschen einer Etage entfernt jedes Büro, jeden Tisch und jeden Platz darauf. Die Bestätigung sagt, was mit Buchungen geschieht, die darauf verweisen.
 - Die Zeile unter jeder Etage zeigt, ob sie **Als Ganzes buchbar** oder **Nicht als Ganzes buchbar** ist.
-- Ohne Etage zeigt der Editor **Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.**
+- Ohne Etage zeigt der Editor **Noch keine Etagen. Fügen Sie die erste Etage Ihres Workspace hinzu.**
 
 **Siehe auch:** [Eine ganze Etage buchbar machen](#mitglieder-eine-ganze-etage-buchen-lassen) · [Räume, Tische und Plätze zeichnen](#räume-tische-und-plätze-zeichnen)
 
@@ -3494,13 +3494,13 @@ Sie möchten, dass der Space weiterbesteht, falls Sie einmal zurücktreten.
 
 1. Öffnen Sie [Mitglieder & Tarife](https://fdittgen-png.github.io/deskilo/#/members) und wählen Sie das Mitglied.
 2. Wählen Sie unter **Mit-Inhaberschaft** einen aktiven Mitinhaber oder einen Nachfolger.
-3. Um jetzt zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Um jetzt zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
-- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolgerin**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
+- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolge**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
 - Geht der letzte Inhaber, wird der am besten geeignete Mitinhaber automatisch Inhaber, aktive vor Nachfolgern.
-- Mitinhaber gehören zur Funktion **Mit-Inhaberinnen**.
+- Mitinhaber gehören zur Funktion **Mitinhaber**.
 
 **Siehe auch:** [Mit-Inhaberschaft](#mit-inhaberschaft) · [Die Rollenmatrix](#die-rollenmatrix)
 
@@ -4109,15 +4109,15 @@ Sie möchten, dass jemand die Inhaberschaft mit Ihnen teilt oder übernimmt, fal
 **Schritte**
 
 1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Mitgliedschaft** und tippen Sie auf **Mit-Inhaberschaft**.
-2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktive Mit-Inhaberin* oder **Nachfolgerin**.
-3. Um eine Mit-Inhaberin sofort zur vollen Inhaberin zu machen, wählen Sie **Jetzt zur Inhaberin machen**.
+2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktiver Mitinhaber* oder **Nachfolge**.
+3. Um einen Mitinhaber sofort zum vollen Inhaber zu machen, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
 - Eine aktive Mit-Inhaberin hat sofort Inhaber-Rechte und übernimmt automatisch, wenn Sie gehen.
 - Eine Nachfolgerin wird Inhaberin, wenn sie befördert wird oder der Inhaber geht.
-- Die Zeile zeigt in der Mitgliederliste **Mit-Inhaberin** oder **Nachfolgerin**.
-- Sie setzt voraus, dass die Funktion **Mit-Inhaberinnen** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
+- Die Zeile zeigt in der Mitgliederliste **Mitinhaber** oder **Nachfolge**.
+- Sie setzt voraus, dass die Funktion **Mitinhaber** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
 
 **Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix)
 
@@ -5908,7 +5908,7 @@ Sie möchten auf den echten Bildschirmen durch eine Aufgabe geführt werden.
 **Gut zu wissen**
 
 - Nutzen Sie **Zurück** und **Überspringen** und öffnen Sie **Alle Schritte**, um jeden als **Offen**, **Wartet**, **Erledigt**, **Bestätigt** oder **Übersprungen** zu sehen.
-- Ein Schritt, der bucht, wartet auf die Antwort: **Warte auf das Ergebnis …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
+- Ein Schritt, der bucht, wartet auf die Antwort: **Auf das Ergebnis wird gewartet …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
 - **Anleitung beenden** beendet sie. Nichts wird rückgängig gemacht.
 - Die Anleitung pausiert, wenn sich das Konto oder der Workspace ändert oder der Aufgabenrekorder ausgeschaltet wird.
 
@@ -5992,7 +5992,7 @@ Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo ist ein erfunden
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den kurzen Hinweis und tippen Sie dann auf **Loslegen**.
-3. Nutzen Sie **Ansicht als**, um denselben Space als **Der Inhaber**, **Eine Verwaltung** oder **Ein Mitglied** zu sehen.
+3. Nutzen Sie **Ansicht als**, um denselben Space als **Inhaber**, **Administrator:in** oder **Mitglied** zu sehen.
 4. Tippen Sie auf **Demo zurücksetzen**, um sie wie am Anfang wiederherzustellen, oder auf **Demo verlassen**.
 
 **Gut zu wissen**
@@ -6096,7 +6096,7 @@ Etwas sieht falsch aus. Versuchen Sie dies, der Reihe nach.
 - Was Sie sehen, hängt von Ihrer Rolle ab: Ein fehlender Bildschirm kann eine Berechtigung sein. Fragen Sie Ihren Inhaber.
 - Administratoren können unter **Erweitert** in den [Einstellungen](https://fdittgen-png.github.io/deskilo/#/settings) den **Entwicklermodus** einschalten. Er fügt einen Bildschirm [Entwickler](https://fdittgen-png.github.io/deskilo/#/developer) hinzu, auf dem **Protokoll exportieren** und **Protokoll leeren** dem Support helfen. Er gilt für jedes Mitglied des Workspace.
 - Einen Fehler können Sie auch im Bereich „Über“ der App melden: **Fehler melden / Funktion vorschlagen**.
-- Eine Anleitung, die bei **Warte auf das Ergebnis …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
+- Eine Anleitung, die bei **Auf das Ergebnis wird gewartet …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
 
 **Siehe auch:** [Supportdetails](#supportdetails)
 

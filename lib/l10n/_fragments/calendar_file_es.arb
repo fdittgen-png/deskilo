@@ -52,11 +52,11 @@
   "@reservationCalendarFileContents": {
     "description": "#1643 calendar file: reservationCalendarFileContents"
   },
-  "reservationCalendarFileStale": "La reserva cambió desde esta vista previa. Revísala de nuevo antes de guardar.",
+  "reservationCalendarFileStale": "La reserva cambió desde esta vista previa. Revísela de nuevo antes de guardar.",
   "@reservationCalendarFileStale": {
     "description": "#1643 calendar file: reservationCalendarFileStale"
   },
-  "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es tuya o ya no existe.",
+  "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es suya o ya no existe.",
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
   }

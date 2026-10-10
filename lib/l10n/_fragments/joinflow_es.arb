@@ -2,7 +2,7 @@
   "eventTypeMemberJoin": "Nuevo miembro",
   "memberStatusPending": "Pendiente",
   "pendingApprovalTitle": "Membresía del espacio pendiente de aprobación",
-  "pendingApprovalBody": "Te has unido a {workspace}. Un administrador debe aprobar tu membresía antes de que puedas usar el espacio — tendrás acceso en cuanto confirme.",
+  "pendingApprovalBody": "Se ha unido a {workspace}. Un administrador debe aprobar su membresía antes de que pueda usar el espacio — tendrá acceso en cuanto confirme.",
   "pendingApprovalRefresh": "Comprobar de nuevo",
   "memberApprove": "Aprobar membresía",
   "memberRejectJoin": "Rechazar membresía",

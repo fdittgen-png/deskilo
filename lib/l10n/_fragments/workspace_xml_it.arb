@@ -10,7 +10,7 @@
   "workspaceXmlImportPreviewAccessories": "Accessori: {count}",
   "workspaceXmlImportPreviewWarning": "La planimetria attuale verrà eliminata e sostituita e le impostazioni dello spazio verranno sovrascritte. L'operazione non può essere annullata.",
   "workspaceXmlImportConfirm": "Sostituisci e importa",
-  "workspaceXmlImportPartial": "Una parte dell’importazione è stata applicata prima di fermarsi: controlla le impostazioni e la pianta qui sotto.",
+  "workspaceXmlImportPartial": "Una parte dell’importazione è stata applicata prima di fermarsi: controlli le impostazioni e la pianta qui sotto.",
   "@workspaceXmlImportPartial": {
     "description": "#1532: workspaceXmlImportPartial"
   },

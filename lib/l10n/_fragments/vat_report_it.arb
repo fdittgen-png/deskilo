@@ -32,7 +32,7 @@
   "@vatReportCsv": {
     "description": "#878 VAT review / report: vatReportCsv"
   },
-  "invoiceGapBuyerVatIdFormat": "La partita IVA del cliente non ha la forma del suo paese — verificala.",
+  "invoiceGapBuyerVatIdFormat": "La partita IVA del cliente non ha la forma del suo paese — la verifichi.",
   "@invoiceGapBuyerVatIdFormat": {
     "description": "#878 VAT review / report: invoiceGapBuyerVatIdFormat"
   }

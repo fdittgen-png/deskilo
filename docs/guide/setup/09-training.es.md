@@ -17,7 +17,7 @@ Quiere ver el producto terminado antes de tomar decisiones. El espacio de demost
 **Pasos**
 
 1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Véase [El espacio de demostración](help:user.advanced.demo).
-2. Use **Ver como** para pasar entre **La propietaria**, **Una administradora** y **Un miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
+2. Use **Ver como** para pasar entre **Propietario**, **Administrador/a** y **Miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
 3. Pulse **Reiniciar la demo** cuando quiera dejarla como al principio.
 
 *Como miembro*

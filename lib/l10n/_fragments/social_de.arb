@@ -2,7 +2,7 @@
   "authContinueWith": "oder weiter mit",
   "authSocialUnavailable": "Die {provider}-Anmeldung ist noch nicht verfügbar — der Server hat sie nicht aktiviert.",
   "linkedAccountsTitle": "Verknüpfte Konten",
-  "linkedAccountsIntro": "Melde dich mit einer verknüpften Identität bei diesem Konto an. Die verfügbaren Anbieter hängen von deinem Server ab.",
+  "linkedAccountsIntro": "Melden Sie sich mit einer verknüpften Identität bei diesem Konto an. Die verfügbaren Anbieter hängen von Ihrem Server ab.",
   "linkedAccountsLink": "Verknüpfen",
   "linkedAccountsUnlink": "Trennen",
   "linkedAccountsLinked": "Verknüpft",

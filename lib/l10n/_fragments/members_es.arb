@@ -243,7 +243,7 @@
   "inboxFilterAll": "Todos",
   "inboxFilterUnread": "No leídos",
   "inboxFilterArchived": "Archivados",
-  "inboxNoUnread": "Nada sin leer — estás al día.",
+  "inboxNoUnread": "Nada sin leer — está al día.",
   "inboxNoArchived": "Ninguna conversación archivada.",
   "conversationPin": "Fijar arriba",
   "conversationUnpin": "Desfijar",
@@ -266,7 +266,7 @@
     }
   },
   "composerDraftKept": "Borrador guardado",
-  "newConversationTapToOpen": "Toca a una persona para abrir el chat; activa Grupo para elegir varias.",
+  "newConversationTapToOpen": "Toque a una persona para abrir el chat; active Grupo para elegir varias.",
   "newConversationGroupSwitch": "Grupo",
   "inboxRetry": "Reintentar",
   "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",

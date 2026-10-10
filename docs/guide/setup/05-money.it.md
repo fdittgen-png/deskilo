@@ -41,7 +41,7 @@ Risponda a due domande: i membri Le pagano lo spazio e vuole che le fatture lega
 **Da sapere**
 
 - L'emissione di fatture nell'app esiste oggi per uno spazio in **Francia** o in **Germania**. In qualsiasi altro paese usi il percorso 2: gli estratti conto restano disponibili.
-- Il server rifiuta di emettere, e l'elenco **Completa questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
+- Il server rifiuta di emettere, e l'elenco **Completi questi dati prima dell'emissione** ne spiega il motivo, quando manca un dato o quando il trattamento non è gestito da DesKilo: vendite transfrontaliere, inversione contabile, esportazioni e fatture esenti da IVA vanno verificate ed emesse fuori dall'app con il Suo commercialista.
 - Un venditore in regime di franchigia per le piccole imprese (franchise en base, Kleinunternehmer) non può emettere fatture nell'app: il server rifiuta la categoria IVA esente. Resti sul percorso 2 ed emetta quelle fatture altrove.
 - Spegnere una funzione ferma le nuove operazioni di quel tipo; non cancella nulla.
 - Può restare sul percorso 2 per sempre. Molte associazioni lo fanno.

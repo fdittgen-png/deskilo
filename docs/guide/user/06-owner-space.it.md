@@ -38,7 +38,7 @@ Vuole dare all'edificio i suoi piani, nell'ordine che le persone si aspettano. L
 
 - Eliminare un piano rimuove tutti gli uffici, le scrivanie e i posti che contiene. La conferma indica che cosa succede alle prenotazioni che li riguardano.
 - La riga sotto ogni piano indica se è **Prenotabile per intero** o **Non prenotabile per intero**.
-- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiungi il primo piano del tuo spazio.**
+- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiunga il primo piano del suo spazio.**
 
 **Vedi anche:** [Prenotare un intero piano](help:user.space.editor.level-booking) · [Disegnare stanze, scrivanie e posti](help:user.space.editor.rooms)
 
@@ -789,7 +789,7 @@ Vuole decidere quali permessi ha ciascun ruolo. **Ruoli** mostra una scheda per 
 
 - Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Comproprietario o Proprietario. Gli altri ruoli si aggiungono ad esso e non tolgono mai nulla.
 - Il proprietario ha sempre ogni permesso, quindi la sua scheda è bloccata. Un comproprietario può averne meno.
-- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il tuo ruolo** evidenziato.
+- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il suo ruolo** evidenziato.
 - Un permesso viene verificato dal server in ogni punto, quindi togliere la spunta lo rimuove ovunque in una volta sola.
 - La voce **Ruoli** compare quando la funzionalità **Gestione dei ruoli** è attiva.
 
@@ -858,7 +858,7 @@ Vuole un tablet vicino alla porta dove le persone fanno il check-in con un badge
 
 **Da sapere**
 
-- La modalità chiosco non si avvia mai da sola. **Non ora — apri l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
+- La modalità chiosco non si avvia mai da sola. **Non ora — apra l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
 - In modalità chiosco il tablet mostra solo la piantina. Per uscirne si riavvia il tablet. Per far tornare l'account un normale membro, usi **Dispositivo chiosco** sotto **Impostazioni** sul dispositivo oppure **Riporta il chiosco a membro** in **Membri e piani**.
 - La scheda che si apre indica la regola che segue. In un giorno di chiusura il chiosco mostra subito *Lo spazio è chiuso oggi*.
 - Il badge è la conferma: identifica il membro, esegue l'azione e la schermata si svuota per la persona successiva. Un posto occupato da un'altra persona mostra chi lo occupa e rimanda all'app.

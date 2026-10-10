@@ -9,7 +9,7 @@
   "a11yRecentre": "Ajustar el plano a la pantalla",
   "a11ySeatBlocked": "no disponible",
   "a11ySeatFree": "libre",
-  "a11ySeatMine": "tu sitio",
+  "a11ySeatMine": "su sitio",
   "a11ySeatOccupied": "ocupado",
   "a11ySeatReserved": "reservado",
   "a11yZoomIn": "Acercar",
@@ -32,7 +32,7 @@
   "@aboutReportBug": {
     "description": "About tile: GitHub issue link (#560)"
   },
-  "aboutSupportBody": "Esta aplicación es gratuita, de código abierto y sin publicidad. Si te resulta útil, apoya al desarrollador.",
+  "aboutSupportBody": "Esta aplicación es gratuita, de código abierto y sin publicidad. Si le resulta útil, apoye al desarrollador.",
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
@@ -107,7 +107,7 @@
   "@accessRuleMessages": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleNegotiations": "Tú, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo.",
+  "accessRuleNegotiations": "Usted, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo.",
   "accessRuleReminders": "Solo usted.",
   "@accessRuleReminders": {
     "description": "#718/#719 - calendar hub"
@@ -127,10 +127,10 @@
   "accessoriesSupplement": "Suplemento por media jornada",
   "accessoriesTitle": "Accesorios",
   "accountActivityEmpty": "No hay registros que mostrar.",
-  "accountActivityFailed": "No se pudo cargar tu historial financiero. Toca para reintentar.",
-  "accountActivityScope": "Todos tus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
+  "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",
+  "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityTitle": "Mi consumo y mis pagos",
-  "accountCardTitle": "Tu cuenta",
+  "accountCardTitle": "Su cuenta",
   "@accountCardTitle": {
     "description": "Money tab: title of the cross-month account position card (#512)"
   },
@@ -138,7 +138,7 @@
   "@accountCredit": {
     "description": "Account card: unconsumed credit spendable on open invoices"
   },
-  "accountImputationHint": "Tu crédito puede saldar facturas abiertas: el espacio lo imputa al conciliar los pagos.",
+  "accountImputationHint": "Su crédito puede saldar facturas abiertas: el espacio lo imputa al conciliar los pagos.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
   },
@@ -233,7 +233,7 @@
   "@applicationDecisionComment": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationDiscussionHint": "Tus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
+  "applicationDiscussionHint": "Sus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
   "@applicationDiscussionHint": {
     "description": "Workspace admission history and discussion (#1791)"
   },
@@ -253,7 +253,7 @@
   "@applicationRefusedVote": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationReplyFailed": "Tu mensaje no se ha enviado. Se conserva el borrador; inténtalo de nuevo.",
+  "applicationReplyFailed": "Su mensaje no se ha enviado. Se conserva el borrador; inténtelo de nuevo.",
   "@applicationReplyFailed": {
     "description": "Admission action failure (#1791)"
   },
@@ -261,7 +261,7 @@
   "@applicationsEmpty": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "No se pudieron cargar tus solicitudes de acceso. Inténtalo de nuevo.",
+  "applicationsLoadFailed": "No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.",
   "@applicationsLoadFailed": {
     "description": "Admission action failure (#1791)"
   },
@@ -348,18 +348,18 @@
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince"
   },
-  "authAlreadyRegistered": "Esta dirección no puede usarse para crear una cuenta. Inicia sesión o restablece tu contraseña.",
+  "authAlreadyRegistered": "Esta dirección no puede usarse para crear una cuenta. Inicie sesión o restablezca su contraseña.",
   "authConnectServer": "Conectar con el servidor de una organización",
   "authContinueWith": "o continuar con",
   "authDisplayNameLabel": "Nombre visible",
   "authEmailLabel": "Correo electrónico",
-  "authEmailNotConfirmed": "Confirma primero tu dirección de correo: abre el mensaje que te enviamos y luego inicia sesión.",
+  "authEmailNotConfirmed": "Confirme primero su dirección de correo: abra el mensaje que le enviamos y luego inicie sesión.",
   "authFieldRequired": "Obligatorio",
-  "authForgotPassword": "¿Olvidaste la contraseña?",
-  "authGenericError": "Error de autenticación. Comprueba tus credenciales e inténtalo de nuevo.",
+  "authForgotPassword": "¿Ha olvidado la contraseña?",
+  "authGenericError": "Error de autenticación. Compruebe sus credenciales e inténtelo de nuevo.",
   "authHidePassword": "Ocultar contraseña",
   "authJoinByInvitation": "Unirse con invitación",
-  "authJoinHint": "Crea tu cuenta o inicia sesión primero; pegarás tu invitación justo después.",
+  "authJoinHint": "Cree su cuenta o inicie sesión primero; pegará su invitación justo después.",
   "authLinkAlreadyUsed": "Esta identidad de {provider} ya está vinculada a otra cuenta.",
   "@authLinkAlreadyUsed": {
     "description": "Linked accounts: authLinkAlreadyUsed",
@@ -385,18 +385,18 @@
   "@authLinkManualDisabled": {
     "description": "Linked accounts: authLinkManualDisabled"
   },
-  "authNetworkError": "No se pudo contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo.",
+  "authNetworkError": "No se pudo contactar con el servidor. Compruebe su conexión e inténtelo de nuevo.",
   "authPasswordLabel": "Contraseña",
   "authPasswordTooShort": "Al menos 8 caracteres",
   "authProviderDisabled": "Este método de acceso está desactivado en este servidor.",
-  "authRateLimited": "Demasiados intentos. Espera un momento y vuelve a intentarlo.",
-  "authRecoveryNotSaved": "Tu código fue aceptado, pero la nueva contraseña no se guardó. Intenta guardarla de nuevo.",
+  "authRateLimited": "Demasiados intentos. Espere un momento y vuelva a intentarlo.",
+  "authRecoveryNotSaved": "Su código fue aceptado, pero la nueva contraseña no se guardó. Intente guardarla de nuevo.",
   "authRecoveryRetryUpdate": "Volver a guardar la nueva contraseña",
-  "authRecoverySessionLost": "Ese código ya no es válido aquí. Solicita uno nuevo.",
+  "authRecoverySessionLost": "Ese código ya no es válido aquí. Solicite uno nuevo.",
   "authResetCodeLabel": "Código del correo",
-  "authResetCodeSent": "Código enviado — revisa tu correo.",
-  "authResetDone": "Contraseña actualizada — has iniciado sesión.",
-  "authResetExplainer": "Te enviaremos un código de un solo uso por correo. Úsalo aquí para establecer una nueva contraseña.",
+  "authResetCodeSent": "Código enviado — revise su correo.",
+  "authResetDone": "Contraseña actualizada — ha iniciado sesión.",
+  "authResetExplainer": "Le enviaremos un código de un solo uso por correo. Úselo aquí para establecer una nueva contraseña.",
   "authResetInvalidCode": "Ese código no es válido o ha caducado.",
   "authResetNewPasswordLabel": "Nueva contraseña",
   "authResetSendCode": "Enviar código",
@@ -409,10 +409,10 @@
   "authSignUpButton": "Crear cuenta",
   "authSignUpTitle": "Crear cuenta",
   "authSocialUnavailable": "El inicio de sesión con {provider} aún no está disponible — el servidor no lo ha activado.",
-  "authToggleToSignIn": "¿Ya tienes cuenta? Inicia sesión",
-  "authToggleToSignUp": "¿Nuevo aquí? Crea una cuenta",
+  "authToggleToSignIn": "¿Ya tiene cuenta? Inicie sesión",
+  "authToggleToSignUp": "¿Es nuevo aquí? Cree una cuenta",
   "authVerifyBackToSignIn": "Volver al inicio de sesión",
-  "authVerifyBody": "Hemos enviado un enlace de confirmación a {email}. Ábrelo en este dispositivo para terminar de crear tu cuenta.",
+  "authVerifyBody": "Hemos enviado un enlace de confirmación a {email}. Ábralo en este dispositivo para terminar de crear su cuenta.",
   "@authVerifyBody": {
     "placeholders": {
       "email": {
@@ -421,12 +421,12 @@
     }
   },
   "authVerifyChangeEmail": "Usar otra dirección",
-  "authVerifyHint": "¿Nada todavía? Mira en la carpeta de spam o vuelve a enviarlo.",
+  "authVerifyHint": "¿Nada todavía? Mire en la carpeta de spam o vuelva a enviarlo.",
   "authVerifyResend": "Volver a enviar el correo",
-  "authVerifyResendWait": "Podrás volver a enviarlo dentro de un minuto.",
+  "authVerifyResendWait": "Podrá volver a enviarlo dentro de un minuto.",
   "authVerifyResent": "Enviado de nuevo.",
-  "authVerifyTitle": "Revisa tu correo",
-  "authWeakPassword": "Elige una contraseña más segura.",
+  "authVerifyTitle": "Revise su correo",
+  "authWeakPassword": "Elija una contraseña más segura.",
   "availabilityAddClosure": "Añadir día de cierre",
   "availabilityClosureDays": "Días de cierre",
   "availabilityClosureReason": "Motivo (opcional)",
@@ -461,12 +461,12 @@
   "backendDescriptorNamed": "Llamado «{label}» por quien lo compartió — sin verificar.",
   "backendDestination": "Destino: {host}",
   "backendErrorKeyConnectionString": "Eso es una cadena de conexión a la base de datos. Nunca sale del servidor — pegue aquí la clave publicable del proyecto.",
-  "backendErrorKeyEmpty": "Introduce la clave publicable.",
+  "backendErrorKeyEmpty": "Introduzca la clave publicable.",
   "backendErrorKeyNotSupabase": "Esa no es una clave publicable de Supabase (sb_publishable_…).",
   "backendErrorKeyPersonalToken": "Eso es un token de acceso personal. Se queda con su propietario — pegue aquí la clave publicable del proyecto.",
   "backendErrorKeySecret": "Eso es una clave secreta, no una publicable. No la comparta nunca: rótela en Project Settings → API keys y pegue aquí la clave publicable.",
   "backendErrorKeyUserToken": "Eso es un token de sesión o de identidad, no una clave de proyecto. Pegue aquí la clave publicable del proyecto.",
-  "backendErrorUrlEmpty": "Introduce la URL del proyecto.",
+  "backendErrorUrlEmpty": "Introduzca la URL del proyecto.",
   "backendErrorUrlNoHost": "Esa no es una dirección completa.",
   "backendErrorUrlNotCanonical": "Indique solo la dirección del proyecto (https://host), sin ruta, parámetros ni credenciales.",
   "backendErrorUrlNotHttps": "La URL debe empezar por https://.",
@@ -477,7 +477,7 @@
   "backendFullCheckHint": "Pegue un token de acceso personal para esta comprobación. Solo se usa para ella y nunca se guarda.",
   "backendFullCheckTitle": "Ejecutar una comprobación completa",
   "backendFullCheckUseToken": "Usar este token",
-  "backendHowTitle": "Usar tu propio servidor",
+  "backendHowTitle": "Usar su propio servidor",
   "backendKeyLabel": "Clave publicable",
   "backendLastOk": "Última prueba correcta: {time}",
   "backendModeConnect": "Conectar con una organización existente",
@@ -499,28 +499,28 @@
   "backendSaveNeedsTest": "Pruebe primero la conexión. Solo se puede guardar un servidor verificado.",
   "backendScan": "Escanear un QR de servidor",
   "backendScanNothing": "Ese QR no es un código de servidor de DesKilo.",
-  "backendServerCustom": "Tu propio servidor ({host})",
+  "backendServerCustom": "Su propio servidor ({host})",
   "backendServerDefault": "El servidor propio de la app ({host})",
-  "backendServerHint": "Por defecto la app usa su propio servidor. Si tu comunidad tiene su propio proyecto de Supabase, introdúcelo aquí — la app guardará todo allí.",
+  "backendServerHint": "Por defecto la app usa su propio servidor. Si su comunidad tiene su propio proyecto de Supabase, introdúzcalo aquí — la app guardará todo allí.",
   "backendServerInUse": "En uso en este dispositivo",
   "backendServerReset": "Usar el servidor de la app",
-  "backendServerRestartHint": "La app cierra tu sesión y aplica el cambio en el próximo inicio.",
-  "backendServerSaved": "Guardado. Cierra y vuelve a abrir la app para usar el nuevo servidor.",
+  "backendServerRestartHint": "La app cierra su sesión y aplica el cambio en el próximo inicio.",
+  "backendServerSaved": "Guardado. Cierre y vuelva a abrir la app para usar el nuevo servidor.",
   "backendServerTitle": "Servidor",
   "backendShare": "Compartir este servidor",
   "backendShareHint": "Los miembros lo escanean en Ajustes → Servidor para apuntar su app a la misma instancia.",
-  "backendStep1": "Crea un proyecto en supabase.com (el plan gratuito basta para empezar).",
-  "backendStep2": "Instala el esquema de la app: ejecuta los archivos SQL de supabase/migrations del repositorio fuente, en orden.",
-  "backendStep3": "En el panel de Supabase, abre Project Settings → API keys y copia la Project URL y la clave publicable.",
-  "backendStep4": "Pégalos abajo, prueba la conexión y guarda. Los miembros se unen a la misma instancia escaneando el QR de arriba.",
+  "backendStep1": "Cree un proyecto en supabase.com (el plan gratuito basta para empezar).",
+  "backendStep2": "Instale el esquema de la app: ejecute los archivos SQL de supabase/migrations del repositorio fuente, en orden.",
+  "backendStep3": "En el panel de Supabase, abra Project Settings → API keys y copie la Project URL y la clave publicable.",
+  "backendStep4": "Péguelos abajo, pruebe la conexión y guarde. Los miembros se unen a la misma instancia escaneando el QR de arriba.",
   "backendTest": "Probar la conexión",
   "backendTestAhead": "Conectado. Su esquema es más reciente que esta aplicación: funciona, y hay una aplicación más reciente disponible.",
   "backendTestAttention": "Se alcanzó, pero la respuesta no pudo clasificarse. Revise el servidor antes de usarlo.",
-  "backendTestBadKey": "Contactado, pero la clave fue rechazada. Copia de nuevo la clave publicable desde Project Settings → API keys.",
+  "backendTestBadKey": "Contactado, pero la clave fue rechazada. Copie de nuevo la clave publicable desde Project Settings → API keys.",
   "backendTestBehind": "Conectado, pero su esquema de DesKilo es más antiguo de lo que necesita esta aplicación. Actualice el servidor antes de usarlo.",
   "backendTestOk": "Contactado: el esquema de la app está ahí.",
   "backendTestSchemaMissing": "Contactado, pero faltan las tablas de DesKilo: ejecuta antes las migraciones de supabase/migrations en ese proyecto.",
-  "backendTestUnreachable": "No se pudo contactar esa dirección. Revisa la URL y tu red.",
+  "backendTestUnreachable": "No se pudo contactar esa dirección. Revise la URL y su red.",
   "backendTesting": "Probando…",
   "backendUrlLabel": "URL del proyecto",
   "backendVersionAhead": "El servidor es más reciente que esta app: actualice la app cuando pueda",
@@ -585,7 +585,7 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinSaveFailed": "No se pudo contactar con el servidor. Tu PIN no ha cambiado: inténtalo de nuevo.",
+  "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
   },
@@ -673,7 +673,7 @@
   },
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeTapCardTitle": "Registrar una tarjeta",
-  "badgeTokenOnce": "Guarda este QR ahora — solo se muestra una vez.",
+  "badgeTokenOnce": "Guarde este QR ahora — solo se muestra una vez.",
   "baseRoleNote": "Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman; ninguno quita nada.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -1040,11 +1040,11 @@
       }
     }
   },
-  "billCreditNoteDue": "El espacio te debe este importe: no tienes nada que pagar.",
+  "billCreditNoteDue": "El espacio le debe este importe: no tiene nada que pagar.",
   "@billCreditNoteDue": {
     "description": "Bill credit-note card: refund still due from the workspace"
   },
-  "billCreditNoteRefunded": "El espacio te ha reembolsado este importe.",
+  "billCreditNoteRefunded": "El espacio le ha reembolsado este importe.",
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
@@ -1153,7 +1153,7 @@
   "billingRulesTitle": "Calendario de facturación",
   "billingSaved": "Guardado.",
   "billingSubscriptionAuto": "Emitir automáticamente",
-  "billingSubscriptionOff": "Activa «Facturas de suscripción» en Funciones para usarlo.",
+  "billingSubscriptionOff": "Active «Facturas de suscripción» en Funciones para usarlo.",
   "billingSubscriptionSection": "Suscripción, por adelantado",
   "billingSubscriptionWhen": "Emitida el {day} para {month}",
   "@billingSubscriptionWhen": {
@@ -1177,12 +1177,12 @@
   },
   "billingTitle": "Facturación",
   "billingUsageAuto": "Emitir automáticamente",
-  "billingUsageOff": "Activa «Facturas de fin de mes» en Funciones para usarlo.",
+  "billingUsageOff": "Active «Facturas de fin de mes» en Funciones para usarlo.",
   "billingUsageSection": "El mes recién terminado",
   "billingUsageWhenZero": "También cuando no hay nada que pagar",
   "billingUsageWhenZeroHint": "Envía un documento a cero, como confirmación de que la suscripción cubrió todo el mes.",
   "blockPersonAction": "Bloquear a esta persona",
-  "blockPersonConfirm": "¿Bloquear a {name}? Ninguno de los dos verá ni podrá contactar al otro. Puedes deshacerlo en Yo.",
+  "blockPersonConfirm": "¿Bloquear a {name}? Ninguno de los dos verá ni podrá contactar al otro. Puede deshacerlo en Yo.",
   "@blockPersonConfirm": {
     "placeholders": {
       "name": {
@@ -1191,8 +1191,8 @@
     }
   },
   "blockPersonDone": "Bloqueada.",
-  "blockedPeopleEmpty": "No has bloqueado a nadie.",
-  "blockedPeopleHint": "Una persona bloqueada no puede verte ni escribirte, y tú no puedes verla ni contactarla.",
+  "blockedPeopleEmpty": "No ha bloqueado a nadie.",
+  "blockedPeopleHint": "Una persona bloqueada no puede verle ni escribirle, y usted no puede verla ni contactarla.",
   "blockedPeopleTitle": "Personas bloqueadas",
   "bookAccountCode": "Código de cuenta",
   "bookAccountName": "Nombre de la cuenta",
@@ -1242,7 +1242,7 @@
       }
     }
   },
-  "bookingCheckedInElsewhere": "Estás registrado en otro sitio — haz la salida allí primero.",
+  "bookingCheckedInElsewhere": "Está registrado en otro sitio — haga la salida allí primero.",
   "bookingCheckedInUntil": "Registrado hasta las {until}.",
   "@bookingCheckedInUntil": {
     "description": "#663 - check-in confirmation without a space name",
@@ -1266,7 +1266,7 @@
   "bookingMoreOptions": "Más opciones",
   "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador.",
-  "bookingOnePlace": "Ya tienes una reserva en ese periodo — un sitio a la vez.",
+  "bookingOnePlace": "Ya tiene una reserva en ese periodo — un sitio a la vez.",
   "bookingOpenDetails": "Detalles",
   "bookingOutsideHoursError": "Las reservas deben permanecer dentro del horario laboral.",
   "bookingOutsideOffError": "Las reservas fuera del horario de apertura no están permitidas.",
@@ -1392,7 +1392,7 @@
       }
     }
   },
-  "bookingSameDayError": "Una reserva termina el día en que empieza: reserva el día siguiente por separado.",
+  "bookingSameDayError": "Una reserva termina el día en que empieza: reserve el día siguiente por separado.",
   "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
   "bookingTooLongError": "Demasiado larga — una reserva dura como máximo {minutes} minutos.",
   "@bookingTooLongError": {
@@ -1754,8 +1754,8 @@
   "@capacityKpiUndefined": {
     "description": "#1918 capacity KPI"
   },
-  "captureRecordingHidden": "Oculto mientras tu pantalla se graba o se duplica.",
-  "captureWebNotice": "Tu navegador no puede impedir capturas de pantalla de esta conversación.",
+  "captureRecordingHidden": "Oculto mientras su pantalla se graba o se duplica.",
+  "captureWebNotice": "Su navegador no puede impedir capturas de pantalla de esta conversación.",
   "carnetAdd": "Añadir bono",
   "carnetBalance": "{count, plural, =0{No quedan medias jornadas} =1{Queda 1 media jornada} other{Quedan {count} medias jornadas}}",
   "carnetHalfDays": "Medias jornadas",
@@ -1801,7 +1801,7 @@
   "@coloursLight": {
     "description": "#1289 colours screen: the light scheme sample"
   },
-  "coloursLogoHint": "Tu logotipo también se muestra mientras alguien abre este espacio.",
+  "coloursLogoHint": "Su logotipo también se muestra mientras alguien abre este espacio.",
   "coloursMalformed": "{text} no es un color: escríbalo como #RRGGBB.",
   "@coloursMalformed": {
     "description": "#1289 colours screen: what was typed is not a colour",
@@ -1817,7 +1817,7 @@
   },
   "coloursPatternDots": "Lunares",
   "coloursPatternGrid": "Cuadrícula",
-  "coloursPatternHint": "Cómo se dibuja tu color en la tarjeta de este espacio en Yo, en su chip y al abrirse, para distinguirlo de los demás espacios.",
+  "coloursPatternHint": "Cómo se dibuja su color en la tarjeta de este espacio en Yo, en su chip y al abrirse, para distinguirlo de los demás espacios.",
   "coloursPatternSaved": "Motivo guardado.",
   "coloursPatternSolid": "Liso",
   "coloursPatternStripes": "Rayas",
@@ -1954,45 +1954,45 @@
     "description": "workspace groups: rename, description, admins, info"
   },
   "connectionCancelled": "La cuenta cambió entretanto, así que se descartó esta respuesta.",
-  "connectionChangedIdentity": "Este servidor ya no es el que conectaste. Sus acciones están en pausa hasta que lo verifiques de nuevo.",
+  "connectionChangedIdentity": "Este servidor ya no es el que conectó. Sus acciones están en pausa hasta que lo verifique de nuevo.",
   "connectionChecking": "Comprobando…",
   "connectionCurrentServer": "Este es el servidor que esta aplicación ya utiliza.",
-  "connectionDenied": "Este servidor ha rechazado la cuenta. Revisa los datos de acceso o desconéctalo.",
-  "connectionExpired": "Tu sesión en este servidor ha caducado. Vuelve a iniciar sesión en este servidor.",
+  "connectionDenied": "Este servidor ha rechazado la cuenta. Revise los datos de acceso o desconéctelo.",
+  "connectionExpired": "Su sesión en este servidor ha caducado. Vuelva a iniciar sesión en este servidor.",
   "connectionInvalidEndpoint": "Esta dirección o clave no corresponde a un servidor válido.",
   "connectionMalformed": "Este servidor ha respondido algo que esta aplicación no puede leer.",
   "connectionNotConnected": "Este servidor no está conectado en este dispositivo.",
   "connectionRetry": "Reintentar",
-  "connectionSessionNotSaved": "La acción se realizó, pero este dispositivo no pudo guardar la sesión del servidor. Puede que tengas que volver a iniciar sesión.",
+  "connectionSessionNotSaved": "La acción se realizó, pero este dispositivo no pudo guardar la sesión del servidor. Puede que tenga que volver a iniciar sesión.",
   "connectionSignInAgain": "Volver a iniciar sesión",
-  "connectionUnavailable": "Este servidor no responde en este momento. Tus otros servidores no se ven afectados.",
-  "connectionUnknownOutcome": "La conexión se cortó después de enviar la solicitud. Puede que se haya aplicado: compruébalo antes de volver a intentarlo.",
-  "connectionUnsupported": "Esta versión del servidor no se puede conectar desde esta aplicación. Actualiza la aplicación o pide al operador del servidor que lo actualice.",
+  "connectionUnavailable": "Este servidor no responde en este momento. Sus otros servidores no se ven afectados.",
+  "connectionUnknownOutcome": "La conexión se cortó después de enviar la solicitud. Puede que se haya aplicado: compruébelo antes de volver a intentarlo.",
+  "connectionUnsupported": "Esta versión del servidor no se puede conectar desde esta aplicación. Actualice la aplicación o pida al operador del servidor que lo actualice.",
   "connectionUsable": "Conectado",
   "connectionVerifyAgain": "Verificar de nuevo",
   "consentAccept": "Aceptar y continuar",
   "consentAcceptedOn": "Aceptado el {date} ({version})",
   "consentCheckbox": "He leído esto y acepto cómo DesKilo trata mis datos.",
-  "consentControllerBody": "Cada espacio lo opera su propietario — tu comunidad —, que decide miembros, precios y proveedores de pago. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.",
+  "consentControllerBody": "Cada espacio lo opera su propietario — su comunidad —, que decide miembros, precios y proveedores de pago. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.",
   "consentControllerTitle": "Quién es responsable",
-  "consentIntro": "Antes de usar DesKilo, esto es lo que la app hace con tus datos, quién puede verlos y qué puedes hacer al respecto. Dos minutos; no hay más.",
-  "consentNotBody": "Sin rastreo, sin analítica, sin publicidad, sin venta ni cesión de datos. Las notificaciones push no llevan contenido — solo «tienes un mensaje nuevo»; la propia app escribe el texto. La versión F-Droid no tiene ningún servicio de Google.",
+  "consentIntro": "Antes de usar DesKilo, esto es lo que la app hace con sus datos, quién puede verlos y qué puede hacer al respecto. Dos minutos; no hay más.",
+  "consentNotBody": "Sin rastreo, sin analítica, sin publicidad, sin venta ni cesión de datos. Las notificaciones push no llevan contenido — solo «tiene un mensaje nuevo»; la propia app escribe el texto. La versión F-Droid no tiene ningún servicio de Google.",
   "consentNotTitle": "Lo que DesKilo nunca hace",
   "consentReadInHelp": "Leer en la ayuda",
   "consentReadOnWiki": "Leer en el wiki",
-  "consentRetentionBody": "Mientras seas miembro. Cuando te vas y borras, tu perfil y tus mensajes desaparecen; los registros contables (facturas, pagos) se conservan el plazo legal, por identificador y no por nombre.",
+  "consentRetentionBody": "Mientras sea miembro. Cuando se va y borra, su perfil y sus mensajes desaparecen; los registros contables (facturas, pagos) se conservan el plazo legal, por identificador y no por nombre.",
   "consentRetentionTitle": "Cuánto tiempo",
-  "consentReviewBody": "Este texto sigue disponible en Ajustes → Privacidad y datos, en la ayuda de la app (Privacidad) y en el wiki del proyecto. Un cambio del texto vuelve a pedir tu aceptación.",
-  "consentReviewHint": "El texto que aceptaste, con la fecha — vuelve a leerlo cuando quieras.",
-  "consentReviewTitle": "Vuelve a leerlo cuando quieras",
-  "consentRightsBody": "Acceso, rectificación, exportación (art. 20), supresión (art. 17) y oposición — cada uno es un botón en Ajustes → Privacidad y datos. Para lo demás: fdittgen@gmail.com. Puedes retirar este consentimiento en cualquier momento saliendo del espacio y borrando tus datos.",
-  "consentRightsTitle": "Tus derechos",
-  "consentTitle": "Tus datos, tus derechos",
-  "consentUnavailable": "No se pudo cargar tu cuenta, así que todavía no hay nada que aceptar.",
+  "consentReviewBody": "Este texto sigue disponible en Ajustes → Privacidad y datos, en la ayuda de la app (Privacidad) y en el wiki del proyecto. Un cambio del texto vuelve a pedir su aceptación.",
+  "consentReviewHint": "El texto que aceptó, con la fecha — vuelva a leerlo cuando quiera.",
+  "consentReviewTitle": "Vuelva a leerlo cuando quiera",
+  "consentRightsBody": "Acceso, rectificación, exportación (art. 20), supresión (art. 17) y oposición — cada uno es un botón en Ajustes → Privacidad y datos. Para lo demás: fdittgen@gmail.com. Puede retirar este consentimiento en cualquier momento saliendo del espacio y borrando sus datos.",
+  "consentRightsTitle": "Sus derechos",
+  "consentTitle": "Sus datos, sus derechos",
+  "consentUnavailable": "No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.",
   "consentVersion": "Versión",
-  "consentWhatBody": "Tu cuenta (e-mail, nombre visible, contraseña cifrada), tu perfil tal como lo rellenas (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que haces en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, tu suscripción, facturas y pagos. Todo se guarda en la UE (Supabase, eu-central-1).",
+  "consentWhatBody": "Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en la UE (Supabase, eu-central-1).",
   "consentWhatTitle": "Qué procesa DesKilo",
-  "consentWhoBody": "El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); los mensajes solo las personas de la conversación, sea cual sea su rol; tus finanzas y tu acuerdo comercial solo tú, los propietarios y los admins con el permiso correspondiente. Ajustes → Privacidad y datos nombra a las personas y lista quién miró realmente.",
+  "consentWhoBody": "El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); los mensajes solo las personas de la conversación, sea cual sea su rol; sus finanzas y su acuerdo comercial solo usted, los propietarios y los admins con el permiso correspondiente. Ajustes → Privacidad y datos nombra a las personas y lista quién miró realmente.",
   "consentWhoTitle": "Quién puede ver qué",
   "consumptionAdd": "Añadir consumo",
   "consumptionAddForMember": "Añadir servicio para {name}",
@@ -2242,7 +2242,7 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
-  "decisionSurfaceEmpty": "Nada te espera",
+  "decisionSurfaceEmpty": "Nada le espera",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
   },
@@ -2256,7 +2256,7 @@
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
   },
-  "demoEntryBody": "Todo en él es inventado: las personas, las reservas y las facturas se han creado para la demostración. Nada de lo que hagas aquí llega a un espacio real, nada sale de este dispositivo y no hace falta ninguna cuenta. Reiniciar lo deja como estaba cuando quieras.",
+  "demoEntryBody": "Todo en él es inventado: las personas, las reservas y las facturas se han creado para la demostración. Nada de lo que haga aquí llega a un espacio real, nada sale de este dispositivo y no hace falta ninguna cuenta. Reiniciar lo deja como estaba cuando quiera.",
   "@demoEntryBody": {
     "description": "#1379 demo entry: demoEntryBody"
   },
@@ -2268,15 +2268,19 @@
   "@demoEntryTitle": {
     "description": "#1379 demo entry: demoEntryTitle"
   },
-  "demoPersonaAdmin": "Una administradora",
+  "demoPersonaAdmin": "Administrador/a",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
-  "demoPersonaMember": "Un miembro",
+  "demoPersonaKiosk": "La tableta del quiosco",
+  "@demoPersonaKiosk": {
+    "description": "#2327 demo personas: demoPersonaKiosk"
+  },
+  "demoPersonaMember": "Miembro",
   "@demoPersonaMember": {
     "description": "#1376 demo personas: demoPersonaMember"
   },
-  "demoPersonaOwner": "La propietaria",
+  "demoPersonaOwner": "Propietario",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
@@ -2284,7 +2288,7 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
-  "demoSessionBadgeHint": "Estás explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
+  "demoSessionBadgeHint": "Está explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
   },
@@ -2549,7 +2553,7 @@
   "@developerExportReservationsHint": {
     "description": "#677 - developer reservation export"
   },
-  "developerExportReservationsOwnHint": "Tus propias reservas y entradas, en cualquier estado, como CSV: exportar todo el espacio requiere el permiso de exportación de datos.",
+  "developerExportReservationsOwnHint": "Sus propias reservas y entradas, en cualquier estado, como CSV: exportar todo el espacio requiere el permiso de exportación de datos.",
   "@developerExportReservationsOwnHint": {
     "description": "#1310 - the developer reservation export without the exportData permission"
   },
@@ -2575,6 +2579,16 @@
   "directoryLastSeenDays": "{days, plural, =1{Visto hace 1 día} other{Visto hace {days} días}}",
   "directoryLastSeenHours": "{hours, plural, =1{Visto hace 1 hora} other{Visto hace {hours} horas}}",
   "directoryLastSeenMinutes": "Visto hace {minutes} min",
+  "directoryLinkAction": "Vincular",
+  "directoryLinkCheck": "Comprobar",
+  "directoryLinkConnect": "Conectar el servidor de referencia",
+  "directoryLinkDone": "Vinculado. Los espacios que publica ya aparecen en Descubrir.",
+  "directoryLinkIntro": "El directorio global está en el servidor de referencia. Cuando un servidor está vinculado, cada espacio que publica aparece en Descubrir, para todos.",
+  "directoryLinkNeedsAccount": "El vínculo se registra en el servidor de referencia: conecte primero su cuenta allí.",
+  "directoryLinkStateDirectory": "Es el servidor de referencia: los espacios que publica siempre aparecen.",
+  "directoryLinkStateLinkable": "Se puede vincular: responde y publica espacios que esta aplicación puede leer.",
+  "directoryLinkStateLinked": "Vinculado: los espacios que publica aparecen en Descubrir.",
+  "directoryLinkStateUnreachable": "Aún no se puede vincular: no responde, o su versión no puede publicar espacios.",
   "directoryLocate": "Localizar en el mapa",
   "directoryLocating": "Localizando la dirección pública…",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
@@ -2619,7 +2633,7 @@
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
   },
-  "documentsEmpty": "Aún no hay documentos. Enlaza tus estatutos, guías y estados desde cualquier drive.",
+  "documentsEmpty": "Aún no hay documentos. Enlace sus estatutos, guías y estados desde cualquier drive.",
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
@@ -2655,7 +2669,7 @@
   "@documentsTitleLabel": {
     "description": "Workspace document library (#500)"
   },
-  "documentsUrlHelper": "Pega el enlace de compartir de tu drive — los permisos se gestionan allí.",
+  "documentsUrlHelper": "Pegue el enlace de compartir de su drive — los permisos se gestionan allí.",
   "@documentsUrlHelper": {
     "description": "Workspace document library (#500)"
   },
@@ -2664,7 +2678,7 @@
     "description": "Workspace document library (#500)"
   },
   "dunningAutomatic": "Recordatorios automáticos",
-  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.",
+  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en sus manos. Desactivado: usted envía cada recordatorio.",
   "dunningBetweenDays": "Días entre recordatorios",
   "dunningDueChip": "Recordatorio {level} pendiente",
   "dunningFirstAfterDays": "Días hasta el primer recordatorio",
@@ -2711,12 +2725,12 @@
   "editorDeskProperties": "Mesa",
   "editorDuplicate": "Duplicar",
   "editorEmptyFloorAction": "Dibujar la primera sala",
-  "editorEmptyFloorBody": "Todo va dentro de una sala: dibuja una, pon mesas dentro y luego puestos en las mesas.",
+  "editorEmptyFloorBody": "Todo va dentro de una sala: dibuje una, ponga mesas dentro y luego puestos en las mesas.",
   "editorEmptyFloorTitle": "Esta planta está vacía",
-  "editorHintDesk": "Arrastra dentro de una sala para dibujar una mesa",
-  "editorHintImage": "Toca dónde debe ir la imagen",
-  "editorHintOffice": "Arrastra para dibujar una sala",
-  "editorHintSeat": "Toca una mesa para añadir un puesto",
+  "editorHintDesk": "Arrastre dentro de una sala para dibujar una mesa",
+  "editorHintImage": "Toque dónde debe ir la imagen",
+  "editorHintOffice": "Arrastre para dibujar una sala",
+  "editorHintSeat": "Toque una mesa para añadir un puesto",
   "editorLevelActions": "Acciones de la planta",
   "editorLevelBookableOff": "No reservable por completo",
   "editorLevelBookableOn": "Reservable por completo",
@@ -2724,9 +2738,9 @@
   "editorMediaSaving": "Guardando la imagen…",
   "editorMediaWriteFailed": "No se pudo confirmar que la imagen se guardó. Reintentar nunca la añade dos veces.",
   "editorNewOffice": "Nueva oficina",
-  "editorNoAccessories": "Todavía no hay accesorios — añádelos en Ajustes → Accesorios.",
-  "editorNoAccessoriesAction": "Aún no hay equipamiento — configúralo",
-  "editorNoLevels": "Aún no hay plantas. Añade la primera planta de tu espacio.",
+  "editorNoAccessories": "Todavía no hay accesorios — añádalos en Ajustes → Accesorios.",
+  "editorNoAccessoriesAction": "Aún no hay equipamiento — configúrelo",
+  "editorNoLevels": "Aún no hay plantas. Añada la primera planta de su espacio.",
   "editorOfficeNameDefault": "Oficina",
   "editorOfficeNameLabel": "Nombre de la oficina",
   "editorOfficeProperties": "Oficina",
@@ -2758,12 +2772,12 @@
   "einvoiceConfigEndpoint": "URL de subida",
   "einvoiceConfigField": "Nombre del campo de archivo (file por defecto)",
   "einvoiceConfigHeader": "Cabecera de autenticación (Authorization por defecto)",
-  "einvoiceConfigIntro": "Donde DesKilo deposita tus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.",
+  "einvoiceConfigIntro": "Donde DesKilo deposita sus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.",
   "einvoiceConfigSaved": "Plataforma guardada.",
   "einvoiceConfigTitle": "Plataforma de facturación electrónica",
   "einvoiceConfigToken": "Token o credencial",
-  "einvoiceConfigTokenSet": "Hay un token guardado (escribe uno nuevo para reemplazarlo).",
-  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Comprueba la conexión e inténtalo de nuevo.",
+  "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
+  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
   "einvoiceCustomerSectionHelp": "Adónde van las facturas para el cliente: su punto de acceso Peppol, portal o la API acordada — separado de la plataforma gubernamental.",
   "@einvoiceCustomerSectionHelp": {
     "description": "E-invoicing config: customer delivery section help (#568)"
@@ -2820,11 +2834,11 @@
   "@emblemTooHeavy": {
     "description": "#1289 emblem: still too heavy after re-encoding"
   },
-  "entitlementBlockedFull": "Has usado todos tus días este mes. Pide más a un administrador o solicita medias jornadas extra.",
+  "entitlementBlockedFull": "Ha usado todos sus días este mes. Pida más a un administrador o solicite medias jornadas extra.",
   "entitlementDaysLeft": "{left} días restantes",
   "entitlementDaysUsed": "{used} de {total} días usados",
-  "entitlementPackageFull": "Has usado todos tus días este mes. Compra un paquete para seguir reservando.",
-  "entitlementPaygRate": "Los días que superen tu plan se cobran a {rate} cada uno.",
+  "entitlementPackageFull": "Ha usado todos sus días este mes. Compre un paquete para seguir reservando.",
+  "entitlementPaygRate": "Los días que superen su plan se cobran a {rate} cada uno.",
   "entitlementTitle": "Este mes",
   "environmentDev": "Desarrollo — para probar",
   "@environmentDev": {
@@ -2898,7 +2912,7 @@
   "@erasureStoreAccounts": {
     "description": "#1915 rights requests: erasureStoreAccounts"
   },
-  "erasureStoreAnswers": "Tus respuestas a las preguntas del espacio",
+  "erasureStoreAnswers": "Sus respuestas a las preguntas del espacio",
   "@erasureStoreAnswers": {
     "description": "#1915 rights requests: erasureStoreAnswers"
   },
@@ -2906,7 +2920,7 @@
   "@erasureStoreBackups": {
     "description": "#1915 rights requests: erasureStoreBackups"
   },
-  "erasureStoreDeviceCaches": "Copias en tus dispositivos — se borran al cerrar sesión en cada uno",
+  "erasureStoreDeviceCaches": "Copias en sus dispositivos — se borran al cerrar sesión en cada uno",
   "@erasureStoreDeviceCaches": {
     "description": "#1915 rights requests: erasureStoreDeviceCaches"
   },
@@ -2918,7 +2932,7 @@
   "@erasureStoreMembership": {
     "description": "#1915 rights requests: erasureStoreMembership"
   },
-  "erasureStoreMessages": "Mensajes que enviaste",
+  "erasureStoreMessages": "Mensajes que envió",
   "@erasureStoreMessages": {
     "description": "#1915 rights requests: erasureStoreMessages"
   },
@@ -2926,7 +2940,7 @@
   "@erasureStoreOpenBookings": {
     "description": "#1915 rights requests: erasureStoreOpenBookings"
   },
-  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntale directamente",
+  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntele directamente",
   "@erasureStoreOtherInstallations": {
     "description": "#1915 rights requests: erasureStoreOtherInstallations"
   },
@@ -2934,11 +2948,11 @@
   "@erasureStorePastBookings": {
     "description": "#1915 rights requests: erasureStorePastBookings"
   },
-  "erasureStoreProfile": "Tu perfil (si es tu último espacio)",
+  "erasureStoreProfile": "Su perfil (si es su último espacio)",
   "@erasureStoreProfile": {
     "description": "#1915 rights requests: erasureStoreProfile"
   },
-  "errorOffline": "Sin conexión: no se ha enviado nada. Inténtalo de nuevo cuando vuelvas a estar en línea.",
+  "errorOffline": "Sin conexión: no se ha enviado nada. Inténtelo de nuevo cuando vuelva a estar en línea.",
   "eventAccept": "Aceptar",
   "eventAutoValidated": "Validado automáticamente",
   "@eventAutoValidated": {
@@ -3134,7 +3148,7 @@
   "eventsEmpty": "Aún no hay eventos.",
   "eventsFilterAll": "Todos",
   "eventsMessagesHeader": "Mensajes",
-  "eventsPendingHeader": "Esperando tu confirmación",
+  "eventsPendingHeader": "Esperando su confirmación",
   "expenseCategoryCoffee": "Café y cocina",
   "expenseCategoryEquipment": "Equipamiento",
   "expenseCategoryOther": "Otro",
@@ -3149,7 +3163,7 @@
   "expenseSupplyQuantity": "Cantidad",
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
-  "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondea si quieres.",
+  "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
   "exportClaimExchange": "Para que su asesor lo importe y lo revise — no es una declaración.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3280,7 +3294,7 @@
   "@featureDecisionSurfaceDesc": {
     "description": "#1247: featureDecisionSurfaceDesc"
   },
-  "featureDecisionSurfaceTitle": "Lo que te espera",
+  "featureDecisionSurfaceTitle": "Lo que le espera",
   "@featureDecisionSurfaceTitle": {
     "description": "#1247: featureDecisionSurfaceTitle"
   },
@@ -3376,7 +3390,7 @@
   "@featureGuestParticipationTitle": {
     "description": "#1835 guest participation: the feature's name"
   },
-  "featureHeldBack": "Esperando a la función de arriba: actívala y esta vuelve a funcionar.",
+  "featureHeldBack": "Esperando a la función de arriba: actívela y esta vuelve a funcionar.",
   "featureHolidayImportDesc": "Un propietario importa los días festivos del país, y de una región, desde una fuente de datos abiertos, desmarca los días en que el espacio sigue abierto e importa el resto como días de cierre. Los meses ya facturados se omiten y se nombran.",
   "@featureHolidayImportDesc": {
     "description": "#2051 open-data holiday import"
@@ -3520,7 +3534,7 @@
   "@featureMessageForwardingTitle": {
     "description": "#1824 messenger flags: featureMessageForwardingTitle"
   },
-  "featureMessageGesturesDesc": "Desliza un mensaje a la derecha para citarlo en tu respuesta; a la izquierda para retirar tu propio mensaje mientras nadie lo haya leído, tras una confirmación. Desactivado: los mensajes se borran manteniéndolos pulsados.",
+  "featureMessageGesturesDesc": "Deslice un mensaje a la derecha para citarlo en su respuesta; a la izquierda para retirar su propio mensaje mientras nadie lo haya leído, tras una confirmación. Desactivado: los mensajes se borran manteniéndolos pulsados.",
   "featureMessageGesturesTitle": "Deslizar para citar o retirar",
   "featureMessageMentionsDesc": "En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie.",
   "@featureMessageMentionsDesc": {
@@ -3661,7 +3675,7 @@
     "description": "#880 report texts: featureReportTextsDesc"
   },
   "featureRequires": "Requiere {feature}",
-  "featureRichMessageRefsDesc": "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribes. Desactivado: solo se pueden referenciar reservas y espacios.",
+  "featureRichMessageRefsDesc": "Un mensaje puede apuntar a un aviso, al historial de validación que hay detrás y a una factura, un pago o un reembolso: cada referencia es un enlace que abre lo que nombra. Cada selector filtra mientras escribe. Desactivado: solo se pueden referenciar reservas y espacios.",
   "featureRichMessageRefsTitle": "Referencias en los mensajes",
   "featureRoleAssignmentDesc": "Muestra una sección Roles en la página de cada miembro para dar o retirar un rol, los miembros de cada rol, y permite a cada miembro ver lo que puede hacer aquí.",
   "@featureRoleAssignmentDesc": {
@@ -3720,15 +3734,15 @@
     "description": "#1824 messenger flags: featureSpaceInquiriesTitle"
   },
   "featureSpaceQrCodes": "Códigos QR de espacios",
-  "featureSpaceQrCodesDesc": "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanea para reservar o fichar.",
-  "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elijas. Desactivado: la cuota sigue en la factura del mes.",
+  "featureSpaceQrCodesDesc": "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar.",
+  "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
   "featureSupplyExpensesDesc": "Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.",
   "featureSupplyExpensesTitle": "Suministros desde gastos",
   "featureSurfaceCalendarHint": "Qué ocurre, por día y por mes.",
   "featureSurfaceDocumentsHint": "Los archivos que el espacio guarda y comparte.",
   "featureSurfaceEverywhere": "Toda la aplicación",
-  "featureSurfaceEverywhereHint": "Cambia el comportamiento de la aplicación, estés donde estés.",
+  "featureSurfaceEverywhereHint": "Cambia el comportamiento de la aplicación, esté donde esté.",
   "featureSurfaceKioskHint": "La tableta de la entrada, las credenciales y los escaneos.",
   "featureSurfaceMembersHint": "Quién está en el espacio, sus perfiles y sus roles.",
   "featureSurfaceMessagesHint": "Conversaciones, avisos y lo que llega al teléfono.",
@@ -3861,9 +3875,9 @@
   },
   "fecAccountRevenue": "Ventas",
   "fecAccountVat": "IVA recaudado",
-  "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbialas por las de tu asesoría.",
+  "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.",
   "fecAccountsTitle": "Cuentas a utilizar",
-  "fecMissingSiren": "El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal.",
+  "fecMissingSiren": "El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.",
   "federationActionExistingAccount": "Iniciar sesión en mi cuenta existente",
   "federationActionReviewServer": "Revisar el servidor",
   "federationCancel": "Cancelar",
@@ -3872,20 +3886,20 @@
   "federationDetailAuthority": "Autoridad de identidad: {host}",
   "federationDetailServer": "Servidor: {host}",
   "federationDetails": "Detalles técnicos",
-  "federationFailureBrowser": "No se pudo abrir el navegador. Comprueba que hay un navegador disponible y vuelve a intentarlo.",
-  "federationFailureExpired": "Este inicio de sesión tardó demasiado y ha caducado. Vuelve a empezarlo.",
-  "federationFailureIncompatible": "Este servidor no acepta este inicio de sesión de Deskilo. Revisa la dirección del servidor o consulta a su administrador.",
-  "federationFailureNetwork": "No se pudo contactar con el servidor, así que el inicio de sesión no se completó. Revisa tu conexión y vuelve a intentarlo.",
-  "federationFailureProviderMissing": "El inicio de sesión con Deskilo no está configurado en este servidor. Pide a su administrador que lo active.",
-  "federationFailureRefused": "El inicio de sesión se canceló o se rechazó en el navegador. No ha cambiado nada; puedes volver a intentarlo.",
-  "federationFailureUnlinked": "Esta cuenta de Deskilo coincide con una cuenta de aquí que aún no está vinculada. Inicia sesión en esa cuenta y vincula Deskilo en Cuentas vinculadas. No se fusiona nada hasta que el servidor lo confirme.",
-  "federationFailureWrongAccount": "Tu navegador inició sesión con otra cuenta de Deskilo. Cambia de cuenta en el navegador y vuelve a intentarlo.",
-  "federationPurpose": "Tu navegador confirma tu cuenta de Deskilo y luego te devuelve a {server}. Tus membresías y tu historial aquí no cambian.",
+  "federationFailureBrowser": "No se pudo abrir el navegador. Compruebe que hay un navegador disponible y vuelva a intentarlo.",
+  "federationFailureExpired": "Este inicio de sesión tardó demasiado y ha caducado. Vuelva a empezarlo.",
+  "federationFailureIncompatible": "Este servidor no acepta este inicio de sesión de Deskilo. Revise la dirección del servidor o consulte a su administrador.",
+  "federationFailureNetwork": "No se pudo contactar con el servidor, así que el inicio de sesión no se completó. Revise su conexión y vuelva a intentarlo.",
+  "federationFailureProviderMissing": "El inicio de sesión con Deskilo no está configurado en este servidor. Pida a su administrador que lo active.",
+  "federationFailureRefused": "El inicio de sesión se canceló o se rechazó en el navegador. No ha cambiado nada; puede volver a intentarlo.",
+  "federationFailureUnlinked": "Esta cuenta de Deskilo coincide con una cuenta de aquí que aún no está vinculada. Inicie sesión en esa cuenta y vincule Deskilo en Cuentas vinculadas. No se fusiona nada hasta que el servidor lo confirme.",
+  "federationFailureWrongAccount": "Su navegador inició sesión con otra cuenta de Deskilo. Cambie de cuenta en el navegador y vuelva a intentarlo.",
+  "federationPurpose": "Su navegador confirma su cuenta de Deskilo y luego le devuelve a {server}. Sus membresías y su historial aquí no cambian.",
   "federationRetry": "Reintentar",
   "federationStageCompleting": "Completando el inicio de sesión…",
   "federationStageOpening": "Abriendo el inicio de sesión…",
-  "federationStageWaiting": "Esperando el inicio de sesión en tu navegador…",
-  "fieldProblemNotAChoice": "Elige de la lista.",
+  "federationStageWaiting": "Esperando el inicio de sesión en su navegador…",
+  "fieldProblemNotAChoice": "Elija de la lista.",
   "@fieldProblemNotAChoice": {
     "description": "#1288 custom fields: fieldProblemNotAChoice"
   },
@@ -3913,7 +3927,7 @@
   "@fieldProblemNotWhole": {
     "description": "#1288 custom fields: fieldProblemNotWhole"
   },
-  "fieldProblemRequired": "Responde, por favor.",
+  "fieldProblemRequired": "Responda, por favor.",
   "@fieldProblemRequired": {
     "description": "#1288 custom fields: fieldProblemRequired"
   },
@@ -4002,8 +4016,8 @@
       }
     }
   },
-  "financesLinkBody": "Tus facturas, recordatorios y pagos de todos tus espacios están juntos en Yo › Finanzas.",
-  "financesLinkTitle": "Tus finanzas en todos tus espacios",
+  "financesLinkBody": "Sus facturas, recordatorios y pagos de todos sus espacios están juntos en Yo › Finanzas.",
+  "financesLinkTitle": "Sus finanzas en todos sus espacios",
   "financesNoReminders": "Ningún recordatorio recibido.",
   "@financesNoReminders": {
     "description": "Me › Finances"
@@ -4097,22 +4111,22 @@
   "gettingStartedActionFinishSetup": "Terminar la configuración",
   "gettingStartedActionHelp": "Ayuda para este espacio",
   "gettingStartedActionMembership": "Ver mi membresía",
-  "gettingStartedAllowance": "{count, plural, =1{Puedes tener una reserva a la vez.} other{Puedes tener {count} reservas a la vez.}}",
+  "gettingStartedAllowance": "{count, plural, =1{Puede tener una reserva a la vez.} other{Puede tener {count} reservas a la vez.}}",
   "gettingStartedAvailabilityUnknown": "No se pudo cargar la disponibilidad. La ayuda explica cómo funcionan las reservas aquí.",
-  "gettingStartedBooked": "Tu reserva está {state}. Tu membresía muestra qué más está incluido.",
-  "gettingStartedClosedToday": "El espacio está cerrado el día seleccionado. Elige otro día para ver qué está libre.",
+  "gettingStartedBooked": "Su reserva está {state}. Su membresía muestra qué más está incluido.",
+  "gettingStartedClosedToday": "El espacio está cerrado el día seleccionado. Elija otro día para ver qué está libre.",
   "gettingStartedEnvDev": "Espacio de desarrollo",
   "gettingStartedEnvProd": "Espacio de producción",
-  "gettingStartedMembershipUnknown": "No se pudo cargar tu membresía ahora mismo. La ayuda explica cómo funciona este espacio.",
-  "gettingStartedNoSpaces": "Aquí todavía no se puede reservar nada. Tu membresía muestra lo que incluye tu acceso.",
+  "gettingStartedMembershipUnknown": "No se pudo cargar su membresía ahora mismo. La ayuda explica cómo funciona este espacio.",
+  "gettingStartedNoSpaces": "Aquí todavía no se puede reservar nada. Su membresía muestra lo que incluye su acceso.",
   "gettingStartedNotNow": "Ahora no",
-  "gettingStartedReadyToBook": "El espacio está abierto ese día. Elige un horario y un puesto en el plano — no se reserva nada hasta que confirmes.",
+  "gettingStartedReadyToBook": "El espacio está abierto ese día. Elija un horario y un puesto en el plano — no se reserva nada hasta que confirme.",
   "gettingStartedReopen": "Primeros pasos",
   "gettingStartedSemantics": "Primeros pasos: un siguiente paso sugerido",
   "gettingStartedSetupIncomplete": "Antes de que alguien pueda reservar aquí: {step}.",
-  "gettingStartedStandingAdmin": "Eres administrador aquí.",
-  "gettingStartedStandingMember": "Eres miembro aquí.",
-  "gettingStartedStandingOwner": "Eres propietario de este espacio.",
+  "gettingStartedStandingAdmin": "Es administrador aquí.",
+  "gettingStartedStandingMember": "Es miembro aquí.",
+  "gettingStartedStandingOwner": "Es propietario de este espacio.",
   "gettingStartedStateCancelled": "cancelada",
   "gettingStartedStateCheckedIn": "registrada",
   "gettingStartedStateCompleted": "completada",
@@ -4280,9 +4294,9 @@
   "helpContents": "Índice",
   "helpDotTooltip": "Abrir la guía",
   "helpGuidedTasks": "Tareas guiadas",
-  "helpHintAvailability": "Define los días de apertura y el horario, y añade días de cierre que nadie puede reservar.",
+  "helpHintAvailability": "Defina los días de apertura y el horario, y añada días de cierre que nadie puede reservar.",
   "helpHintAvailabilityTopic": "Disponibilidad",
-  "helpHintBadges": "Emite una credencial QR imprimible o registra una tarjeta NFC; revoca credenciales perdidas en cualquier momento.",
+  "helpHintBadges": "Emita una credencial QR imprimible o registre una tarjeta NFC; revoque credenciales perdidas en cualquier momento.",
   "helpHintBadgesTopic": "credencial NFC",
   "helpHintCalendar": "Elija un día o un periodo: todo lo fechado que puede ver, en una lista, cada fila abre su origen.",
   "@helpHintCalendar": {
@@ -4290,14 +4304,14 @@
   },
   "helpHintCalendarTopic": "Calendario",
   "helpHintDismiss": "Ocultar consejo",
-  "helpHintEditor": "Dibuja salas y escritorios, estampa los asientos y toca dos veces un asiento para editar sus propiedades.",
+  "helpHintEditor": "Dibuje salas y escritorios, estampe los asientos y toque dos veces un asiento para editar sus propiedades.",
   "helpHintEditorTopic": "editor del espacio",
-  "helpHintEvents": "Todo lo ocurrido, en un solo hilo. Las decisiones que te esperan van arriba; los filtros acotan el resto.",
+  "helpHintEvents": "Todo lo ocurrido, en un solo hilo. Las decisiones que le esperan van arriba; los filtros acotan el resto.",
   "helpHintEventsTopic": "Eventos",
-  "helpHintFeatures": "Activa o desactiva funciones del espacio: la app de cada miembro se actualiza al instante.",
+  "helpHintFeatures": "Active o desactive funciones del espacio: la app de cada miembro se actualiza al instante.",
   "helpHintFeaturesTopic": "Funciones",
   "helpHintLearnMore": "Más información",
-  "helpHintMembers": "Invita a miembros, ajusta su plan y su rol, y gestiona sus credenciales.",
+  "helpHintMembers": "Invite a miembros, ajuste su plan y su rol, y gestione sus credenciales.",
   "helpHintMembersTip4Topic": "Gestión de roles",
   "helpHintMembersTipNegotiationTopic": "Negociaciones de precios",
   "helpHintMembersTopic": "Miembros y planes",
@@ -4325,21 +4339,21 @@
   "@helpHintMessagesTopic": {
     "description": "#695 - messaging help hints"
   },
-  "helpHintMoney": "Tu factura mensual: recorre los meses con las flechas; paga, exporta o comparte desde aquí.",
-  "helpHintMoneyDocuments": "Tu papeleo: tus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.",
+  "helpHintMoney": "Su factura mensual: recorra los meses con las flechas; pague, exporte o comparta desde aquí.",
+  "helpHintMoneyDocuments": "Su papeleo: sus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.",
   "helpHintMoneyDocumentsTopic": "Documentos",
-  "helpHintMoneyInvoices": "Tus facturas: lo que está abierto y para cuándo, cada factura que te emitieron con su estado, un toque al detalle y al pago.",
+  "helpHintMoneyInvoices": "Sus facturas: lo que está abierto y para cuándo, cada factura que le emitieron con su estado, un toque al detalle y al pago.",
   "helpHintMoneyInvoicesTip2Topic": "Recordatorios de pago automáticos",
   "helpHintMoneyInvoicesTopic": "Facturas",
   "helpHintMoneyPayments": "Liquidar y pedir: el saldo, cómo pagarlo o pagar en línea, registrar un pago — y enviar un gasto, pedir medios días o añadir un consumo.",
   "helpHintMoneyPaymentsTip3Topic": "pagos en línea",
   "helpHintMoneyPaymentsTipSupplyTopic": "Servicios y Accesorios",
   "helpHintMoneyPaymentsTopic": "Pago",
-  "helpHintMoneyStatement": "El mes tal como está: tu cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorre los meses con las flechas.",
+  "helpHintMoneyStatement": "El mes tal como está: su cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorra los meses con las flechas.",
   "helpHintMoneyStatementTopic": "Extracto",
   "helpHintMoneyTopic": "dinero",
   "helpHintNextTip": "Consejo siguiente",
-  "helpHintPlan": "El plano en vivo: toca un asiento libre para reservar, toca tu reserva para registrar tu llegada.",
+  "helpHintPlan": "El plano en vivo: toque un asiento libre para reservar, toque su reserva para registrar su llegada.",
   "helpHintPlanTopic": "El plano",
   "helpHintPrevTip": "Consejo anterior",
   "helpHintPrivacy": "Vea quién puede leer sus datos y quién lo hizo, exporte todo en un archivo o salga con sus datos personales borrados.",
@@ -4350,12 +4364,12 @@
   "@helpHintPrivacyTopic": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintReserve": "Elige un día y una franja horaria y toca un asiento libre para reservarlo.",
+  "helpHintReserve": "Elija un día y una franja horaria y toque un asiento libre para reservarlo.",
   "helpHintReserveTip4Topic": "Cómo se comporta la reserva",
   "helpHintReserveTopic": "centro Reservar",
   "helpHintRestoreTitle": "Volver a mostrar los consejos de ayuda",
   "helpHintRestored": "Los consejos de ayuda volverán a mostrarse.",
-  "helpHintValidation": "Decide qué acciones necesitan confirmación, quién confirma y cuántas aprobaciones hacen falta.",
+  "helpHintValidation": "Decida qué acciones necesitan confirmación, quién confirma y cuántas aprobaciones hacen falta.",
   "helpHintValidationTopic": "confirmaciones",
   "helpHintWorkspace": "País, moneda, idioma y datos de facturación: documentos e impuestos siguen estos ajustes.",
   "helpHintWorkspaceTopic": "Ajustes del espacio",
@@ -4503,7 +4517,7 @@
   "identityConnectUnlinked": "Una cuenta de ese servidor ya usa esta identidad o este correo sin estar vinculada a ella. Use esa cuenta.",
   "identityConnectWaiting": "Termine de iniciar sesión en su navegador y vuelva aquí.",
   "identityConnectWrongAccount": "El navegador inició sesión con otra persona. No se ha conectado nada.",
-  "identityConsentAsks": "Usa tu identidad de Deskilo para iniciar sesión en {host}.",
+  "identityConsentAsks": "Use su identidad de Deskilo para iniciar sesión en {host}.",
   "@identityConsentAsks": {
     "description": "Identity-only consent names the exact destination host.",
     "placeholders": {
@@ -4512,12 +4526,12 @@
       }
     }
   },
-  "identityConsentCompleting": "Guardando tu elección…",
+  "identityConsentCompleting": "Guardando su elección…",
   "identityConsentPurpose": "El acceso a espacios y asistentes se aprueba por separado.",
   "identityConsentReturnFailed": "No se pudo abrir el destino.",
   "identityConsentReturning": "Volviendo al inicio de sesión…",
   "identityConsentTitle": "Continuar con Deskilo",
-  "identityConsentUnavailable": "Esta solicitud de inicio de sesión no está disponible. Vuelve al destino y empieza de nuevo.",
+  "identityConsentUnavailable": "Esta solicitud de inicio de sesión no está disponible. Vuelva al destino y empiece de nuevo.",
   "inboxAlertsTab": "Alertas",
   "inboxChatsTab": "Chats",
   "@inboxChatsTab": {
@@ -4531,7 +4545,7 @@
     "description": "workspace inbox: door to the Me messenger"
   },
   "inboxNoArchived": "Ninguna conversación archivada.",
-  "inboxNoUnread": "Nada sin leer — estás al día.",
+  "inboxNoUnread": "Nada sin leer — está al día.",
   "inboxRetry": "Reintentar",
   "instanceAccessTitle": "Acceso a los asistentes",
   "instanceAccessUntil": "Hasta el {date}",
@@ -4796,47 +4810,47 @@
   "instanceYou": "usted",
   "instanceYouAreDelegate": "Usted es delegado del propietario de la instancia.",
   "instanceYouAreOwner": "Usted es el propietario de la instancia.",
-  "invitationAlreadyMember": "Ya eres miembro de {workspace}.",
+  "invitationAlreadyMember": "Ya es miembro de {workspace}.",
   "invitationApprovalRequired": "Un administrador aprueba a los nuevos miembros antes de que se abra el espacio.",
   "invitationApprovalUnknown": "No se sabe si un administrador debe aprobar.",
-  "invitationBadServer": "El servidor de esta invitación no es válido. Pide una nueva invitación.",
+  "invitationBadServer": "El servidor de esta invitación no es válido. Pida una nueva invitación.",
   "invitationChangeAccount": "Cambiar de cuenta",
   "invitationCheckAnother": "Usar otra invitación",
-  "invitationCheckFailed": "No se pudo comprobar la invitación — estado no actualizado. No se cambió nada; inténtalo de nuevo.",
+  "invitationCheckFailed": "No se pudo comprobar la invitación — estado no actualizado. No se cambió nada; inténtelo de nuevo.",
   "invitationContinue": "Continuar a este espacio",
-  "invitationDefaultTemplate": "¡Hola{firstName}! Te invitamos a unirte a nuestro espacio de coworking «{workspaceName}» en DesKilo.\n\n1. Descarga la aplicación:\n{downloadUrl}\n\n2. Ábrela, crea tu cuenta (correo + contraseña) e inicia sesión.\n\n3. Elige «Unirse a un espacio» e introduce tu código de invitación personal:\n{workspaceId}\n(enlace de invitación: {inviteLink})\n\nConsejo: simplemente copia este mensaje completo y pégalo en la aplicación — el código se detecta automáticamente. Tu código es personal, de un solo uso y válido durante 14 días.\n\n¡Hasta pronto en {workspaceName}!",
+  "invitationDefaultTemplate": "¡Hola{firstName}! Le invitamos a unirse a nuestro espacio de coworking «{workspaceName}» en DesKilo.\n\n1. Descargue la aplicación:\n{downloadUrl}\n\n2. Ábrala, cree su cuenta (correo + contraseña) e inicie sesión.\n\n3. Elija «Unirse a un espacio» e introduzca su código de invitación personal:\n{workspaceId}\n(enlace de invitación: {inviteLink})\n\nConsejo: simplemente copie este mensaje completo y péguelo en la aplicación — el código se detecta automáticamente. Su código es personal, de un solo uso y válido durante 14 días.\n\n¡Hasta pronto en {workspaceName}!",
   "invitationEnvironmentProduction": "Espacio de producción",
   "invitationEnvironmentTest": "Espacio de prueba",
-  "invitationExpired": "Esta invitación ha caducado. Pide una nueva a quien te la envió.",
-  "invitationInvalid": "Ningún espacio en {host} conoce esta invitación. Revísala o pide al organizador el enlace de su servidor.",
+  "invitationExpired": "Esta invitación ha caducado. Pida una nueva a quien se la envió.",
+  "invitationInvalid": "Ningún espacio en {host} conoce esta invitación. Revísela o pida al organizador el enlace de su servidor.",
   "invitationJoinButton": "Unirse al espacio",
-  "invitationJoinUnconfirmed": "No se pudo confirmar el resultado. Únete de nuevo para comprobarlo — la invitación no se usa dos veces.",
-  "invitationJoiningAs": "Te unes como {account}",
-  "invitationNewerVersion": "Esta invitación se creó con una versión más reciente de DesKilo. Actualiza la app y vuelve a abrirla.",
+  "invitationJoinUnconfirmed": "No se pudo confirmar el resultado. Únase de nuevo para comprobarlo — la invitación no se usa dos veces.",
+  "invitationJoiningAs": "Se une como {account}",
+  "invitationNewerVersion": "Esta invitación se creó con una versión más reciente de DesKilo. Actualice la app y vuelva a abrirla.",
   "invitationOtherServer": "Esta invitación es para otro servidor: {host}.",
   "invitationPasteButton": "Pegar",
-  "invitationPaused": "Tu membresía en {workspace} está en pausa. Solo un administrador de allí puede reanudarla.",
+  "invitationPaused": "Su membresía en {workspace} está en pausa. Solo un administrador de allí puede reanudarla.",
   "invitationReviewButton": "Revisar invitación",
-  "invitationReviewTitle": "Revisa antes de unirte",
-  "invitationRevoked": "Este código de espacio fue sustituido. Pide el actual a quien te lo envió.",
+  "invitationReviewTitle": "Revise antes de unirse",
+  "invitationRevoked": "Este código de espacio fue sustituido. Pida el actual a quien se lo envió.",
   "invitationRoleAdmin": "Rol ofrecido: administrador",
   "invitationRoleMember": "Rol ofrecido: miembro",
   "invitationRoleUnknown": "Rol ofrecido: aún no se sabe",
   "invitationServerLabel": "Llamado «{label}» por quien lo compartió",
   "invitationServerRow": "Servidor: {host}",
-  "invitationTemplateHelp": "Se envía al invitar a alguien por WhatsApp, SMS o compartir. Déjalo vacío para usar el mensaje integrado en el idioma elegido. Etiquetas disponibles:",
+  "invitationTemplateHelp": "Se envía al invitar a alguien por WhatsApp, SMS o compartir. Déjelo vacío para usar el mensaje integrado en el idioma elegido. Etiquetas disponibles:",
   "invitationTemplateHint": "Mensaje de invitación personalizado usando las etiquetas de arriba…",
   "invitationTemplateLanguage": "Idioma del mensaje",
   "invitationTemplateTitle": "Mensaje de invitación",
   "invitationThisDevice": "Este dispositivo usa {host}. Una invitación solo se comprueba en su propio servidor.",
   "invitationUnknownAnswer": "El servidor dio una respuesta que esta versión de la app no sabe leer. No se cambió nada.",
   "invitationUseServer": "Usar este servidor",
-  "invitationWrongAccount": "Otra cuenta ya usó esta invitación. Si era para ti, inicia sesión con esa cuenta.",
-  "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
+  "invitationWrongAccount": "Otra cuenta ya usó esta invitación. Si era para usted, inicie sesión con esa cuenta.",
+  "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entréguelo solo a la persona a la que está destinado.",
   "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteAlsoProdSubtitle": "La persona se une al espacio de prueba en cualquier caso. El rol todavía tiene que permitir el acceso a producción.",
   "inviteAlsoProdTitle": "Dar también acceso a producción",
-  "inviteCreateFailed": "No se pudo crear la invitación. Comprueba tu conexión e inténtalo de nuevo.",
+  "inviteCreateFailed": "No se pudo crear la invitación. Compruebe su conexión e inténtelo de nuevo.",
   "inviteFirstNameLabel": "Nombre (opcional)",
   "inviteLanguageLabel": "Idioma del mensaje",
   "inviteLastNameLabel": "Apellido (opcional)",
@@ -4894,7 +4908,7 @@
   "invoiceDownload": "Descargar PDF",
   "invoiceEInvoiceAction": "Factura electrónica (XML)",
   "invoiceEInvoiceBlockedTitle": "Un validador rechazaría este archivo:",
-  "invoiceEInvoiceBusinessRoute": "Clientes empresa: envíala por {channel} en formato {format}.",
+  "invoiceEInvoiceBusinessRoute": "Clientes empresa: envíela por {channel} en formato {format}.",
   "@invoiceEInvoiceBusinessRoute": {
     "placeholders": {
       "channel": {
@@ -4908,7 +4922,7 @@
   "invoiceEInvoiceDownload": "Descargar factura electrónica (XML)",
   "invoiceEInvoiceExplain": "La factura EN 16931 legible por máquina — el archivo que piden las administraciones y los clientes empresa.",
   "invoiceEInvoiceFixIdentity": "Completar la identidad legal",
-  "invoiceEInvoiceFormatMismatch": "{channel} solo acepta {format}: este archivo EN 16931 sirve para Peppol, compradores públicos y clientes extranjeros — tu plataforma o tu asesoría convierte el resto.",
+  "invoiceEInvoiceFormatMismatch": "{channel} solo acepta {format}: este archivo EN 16931 sirve para Peppol, compradores públicos y clientes extranjeros — su plataforma o su asesoría convierte el resto.",
   "@invoiceEInvoiceFormatMismatch": {
     "placeholders": {
       "channel": {
@@ -4930,8 +4944,8 @@
   },
   "invoiceEInvoiceReady": "Listo — este archivo cumple EN 16931.",
   "invoiceEInvoiceShare": "Compartir factura electrónica (XML)",
-  "invoiceEInvoiceStaleIdentity": "Tu identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márcala como errónea y emite una sustitución para que lleve la nueva identidad.",
-  "invoiceEInvoiceTransportAccredited": "Una plataforma autorizada transporta la factura y comunica los datos a la administración tributaria por ti.",
+  "invoiceEInvoiceStaleIdentity": "Su identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márquela como errónea y emita una sustitución para que lleve la nueva identidad.",
+  "invoiceEInvoiceTransportAccredited": "Una plataforma autorizada transporta la factura y comunica los datos a la administración tributaria por usted.",
   "invoiceEInvoiceTransportBilateral": "Ningún canal es obligatorio: correo, un portal o Peppol — lo que acuerdes con el cliente.",
   "invoiceEInvoiceTransportClearance": "La plataforma nacional recibe la factura primero y la reenvía — enviarla directamente al cliente no es posible.",
   "invoiceEInvoiceTransportPeppol": "Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.",
@@ -4987,7 +5001,7 @@
     "description": "#895 reverse charge: invoiceGapMissingBuyerVatId"
   },
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
-  "invoiceGapMissingLegalId": "Falta el número de registro (SIREN, HRB, CIF…) — nada te identifica en la factura.",
+  "invoiceGapMissingLegalId": "Falta el número de registro (SIREN, HRB, CIF…) — nada le identifica en la factura.",
   "invoiceGapMissingSellerCity": "la ciudad de la dirección del espacio",
   "invoiceGapMissingSellerCountry": "Falta el país del espacio.",
   "invoiceGapMissingSellerPostalCode": "el código postal de la dirección del espacio",
@@ -4997,7 +5011,7 @@
   "@invoiceGapPublicSectorRefs": {
     "description": "#922 chorus pro: invoiceGapPublicSectorRefs"
   },
-  "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añade tus tipos de IVA y vuelve a emitirla.",
+  "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añada sus tipos de IVA y vuelva a emitirla.",
   "invoiceHeldNote": "Recordatorios suspendidos: {reason}",
   "@invoiceHeldNote": {
     "description": "#1913 dunning holds: invoiceHeldNote",
@@ -5019,7 +5033,7 @@
   "@invoiceHoldExplain": {
     "description": "#1913 dunning holds: invoiceHoldExplain"
   },
-  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtelo de nuevo.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
   },
@@ -5213,7 +5227,7 @@
   "invoiceMatchAction": "Marcar como pagada",
   "invoiceMatchCreditNote": "Crear una nota de crédito por el exceso",
   "invoiceMatchForce": "Aceptar de todos modos (justificar)",
-  "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístralo o confírmalo primero.",
+  "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístrelo o confírmelo primero.",
   "invoiceMatchNoteLabel": "Nota",
   "invoiceMatchNoteRequired": "Se requiere una nota.",
   "invoiceMatchOver": "El miembro pagó {excess} de más.",
@@ -5225,7 +5239,7 @@
     }
   },
   "invoiceMatchPendingBadge": "Pendiente de validación",
-  "invoiceMatchPickPayment": "Selecciona el pago registrado",
+  "invoiceMatchPickPayment": "Seleccione el pago registrado",
   "invoiceMatchSummary": "Pagada {amount} el {date}",
   "@invoiceMatchSummary": {
     "placeholders": {
@@ -5247,7 +5261,7 @@
   },
   "invoiceMatched": "Factura conciliada.",
   "invoiceMatchedBadge": "Pagada",
-  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.",
+  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revise.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
@@ -5336,7 +5350,7 @@
   "invoicePdfSignature": "Firma digital (SHA-256)",
   "invoicePdfTitle": "Factura",
   "invoicePdfVoided": "ERRÓNEA — anulada el",
-  "invoicePickMember": "Elige un miembro para ver lo que registró su mes.",
+  "invoicePickMember": "Elija un miembro para ver lo que registró su mes.",
   "invoiceProformaAction": "Factura proforma",
   "invoiceProformaNothing": "Nada registrado este mes — no hay proforma que enviar.",
   "invoiceProformaShared": "Proforma compartida.",
@@ -5356,7 +5370,7 @@
   "@invoiceRefundButton": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceRefundExplain": "Esta nota de crédito significa que el ESPACIO debe {amount} al miembro. Registra el reembolso pagado — el importe se imputa al saldo del miembro y el documento se cierra como Reembolsada.",
+  "invoiceRefundExplain": "Esta nota de crédito significa que el ESPACIO debe {amount} al miembro. Registre el reembolso pagado — el importe se imputa al saldo del miembro y el documento se cierra como Reembolsada.",
   "@invoiceRefundExplain": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)",
     "placeholders": {
@@ -5520,7 +5534,7 @@
   "invoiceTemplateHeaderLabel": "Banda de cabecera",
   "invoiceTemplateHint": "Tres bandas de informe renderizadas en el PDF — el XML de la factura electrónica nunca se toca. Condiciones y bucles Liquid, luego marcado de líneas:",
   "invoiceTemplateIntroLabel": "Introducción (sobre el bloque del destinatario)",
-  "invoiceTemplateNoPreview": "Emite primero una factura — la vista previa usa la más reciente.",
+  "invoiceTemplateNoPreview": "Emita primero una factura — la vista previa usa la más reciente.",
   "invoiceTemplatePresets": "Plantillas",
   "invoiceTemplatePreview": "Vista previa",
   "invoiceTemplateQuickPreview": "Vista rápida",
@@ -5805,8 +5819,8 @@
   "journeyValidatorsWriteoff": "Cancelación del resto solicitada — a la espera de los validadores",
   "kioskBadgeConfirm": "Confirmar",
   "kioskBadgeFieldLabel": "Código de credencial",
-  "kioskBadgeHint": "Escanea el QR de tu credencial o escribe su código.",
-  "kioskBadgeHintNfc": "Acerca tu tarjeta, escanea tu QR o escribe el código.",
+  "kioskBadgeHint": "Escanee el QR de su credencial o escriba su código.",
+  "kioskBadgeHintNfc": "Acerque su tarjeta, escanee su QR o escriba el código.",
   "kioskBadgeRejected": "Credencial no reconocida.",
   "kioskBasis": "Regla: {granularity} · hoy {hours}",
   "@kioskBasis": {
@@ -5820,13 +5834,13 @@
       }
     }
   },
-  "kioskBlockedContactHint": "Ocupado por {name} — puedes escribirle desde la aplicación en tu teléfono.",
+  "kioskBlockedContactHint": "Ocupado por {name} — puede escribirle desde la aplicación en su teléfono.",
   "kioskCheckIn": "Registrarse",
   "kioskCheckInRightAway": "Registrarse ahora mismo",
   "@kioskCheckInRightAway": {
     "description": "Kiosk period step switch: the reservation starts checked in"
   },
-  "kioskCheckInRightAwayHint": "Estás aquí: la reserva empieza registrada.",
+  "kioskCheckInRightAwayHint": "Está aquí: la reserva empieza registrada.",
   "@kioskCheckInRightAwayHint": {
     "description": "Subtitle of the check-in-right-away switch"
   },
@@ -5842,19 +5856,19 @@
   "kioskGateStart": "Iniciar el modo quiosco",
   "kioskGateTitle": "¿Iniciar el modo quiosco?",
   "kioskLevelButton": "Esta planta",
-  "kioskNfcFailed": "El lector RFID no se inició — reinicia la aplicación e inténtalo de nuevo.",
-  "kioskNfcOff": "El NFC está desactivado en los ajustes de Android de esta tableta — actívalo para leer tarjetas RFID.",
-  "kioskNfcUnsupported": "Esta tableta no tiene lector NFC — escanea la tarjeta QR en su lugar.",
+  "kioskNfcFailed": "El lector RFID no se inició — reinicie la aplicación e inténtelo de nuevo.",
+  "kioskNfcOff": "El NFC está desactivado en los ajustes de Android de esta tableta — actívelo para leer tarjetas RFID.",
+  "kioskNfcUnsupported": "Esta tableta no tiene lector NFC — escanee la tarjeta QR en su lugar.",
   "kioskNotCheckedIn": "No hay ningún registro activo — puede que el plano se acabe de actualizar.",
-  "kioskPeriodCheckInHint": "¿Hasta cuándo te quedas? El registro empieza ahora.",
+  "kioskPeriodCheckInHint": "¿Hasta cuándo se queda? El registro empieza ahora.",
   "@kioskPeriodCheckInHint": {
     "description": "Kiosk period step hint for a check-in (start pinned to now)"
   },
-  "kioskPeriodReserveHint": "Elige el periodo: solo hoy.",
+  "kioskPeriodReserveHint": "Elija el periodo: solo hoy.",
   "@kioskPeriodReserveHint": {
     "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
   },
-  "kioskPresentBadge": "Presenta tu credencial",
+  "kioskPresentBadge": "Presente su credencial",
   "kioskPresentBadgeNext": "Presentar la tarjeta",
   "@kioskPresentBadgeNext": {
     "description": "Kiosk period step continue button — leads to the badge prompt"
@@ -5869,11 +5883,11 @@
   "@kioskRestOfDay": {
     "description": "Kiosk period chip after the working day: now until midnight"
   },
-  "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértelo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
+  "kioskRevertDesc": "Este perfil está configurado como quiosco del espacio. Reviértalo a miembro normal para que la pregunta de quiosco no aparezca al iniciar.",
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskScanQr": "Escanear la tarjeta QR",
-  "kioskTapHint": "Toca un asiento para registrarte",
+  "kioskTapHint": "Toque un asiento para registrarse",
   "languageNameCS": "Checo",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -5956,7 +5970,7 @@
   },
   "legalIdentityCity": "Ciudad",
   "legalIdentityExemptionReason": "Motivo por el que no se cobra IVA",
-  "legalIdentityIntro": "Lo que una factura electrónica EN 16931 debe indicar sobre ti. Las facturas ya emitidas conservan la identidad con la que se firmaron.",
+  "legalIdentityIntro": "Lo que una factura electrónica EN 16931 debe indicar sobre usted. Las facturas ya emitidas conservan la identidad con la que se firmaron.",
   "legalIdentityLegalId": "Número de registro",
   "legalIdentityPostalCode": "Código postal",
   "legalIdentityRegime": "Régimen de IVA",
@@ -6007,7 +6021,7 @@
   "levelConflict": "La planta tiene reservas en ese periodo.",
   "levelDetail": "Planta entera",
   "levelFeatureOff": "Las reservas de oficina y planta están desactivadas en Funciones.",
-  "levelNotAllowed": "No tienes permiso para reservar una mesa, oficina o planta entera.",
+  "levelNotAllowed": "No tiene permiso para reservar una mesa, oficina o planta entera.",
   "levelPermissionAllowed": "Puede reservar una mesa, oficina o planta entera",
   "levelPermissionDenied": "No puede reservar una mesa, oficina o planta entera",
   "levelPermissionTile": "Reservas de planta",
@@ -6143,9 +6157,9 @@
   "libraryVisibilityPublic": "Todos (la biblioteca)",
   "libraryVisibilityShared": "Personas que invito",
   "libraryYours": "Sus plantillas",
-  "linkedAccountsIntro": "Inicia sesión en esta cuenta con una identidad vinculada. Los proveedores disponibles dependen de tu servidor.",
+  "linkedAccountsIntro": "Inicie sesión en esta cuenta con una identidad vinculada. Los proveedores disponibles dependen de su servidor.",
   "linkedAccountsLink": "Vincular",
-  "linkedAccountsLinkStarted": "Continúa en el navegador para terminar la vinculación.",
+  "linkedAccountsLinkStarted": "Continúe en el navegador para terminar la vinculación.",
   "linkedAccountsLinked": "Vinculada",
   "linkedAccountsTitle": "Cuentas vinculadas",
   "linkedAccountsUnlink": "Desvincular",
@@ -6210,7 +6224,7 @@
   "@managedProfileHandOver": {
     "description": "#887 managed profiles: managedProfileHandOver"
   },
-  "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto apruebes la membresía.",
+  "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto usted apruebe la membresía.",
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
@@ -6218,7 +6232,7 @@
   "@managedProfileIdentityUnavailable": {
     "description": "#1561 shown when the managed identity could not be read, so the form is not offered"
   },
-  "managedProfileIntro": "Esta persona aún no tiene cuenta. Reservas, facturas y gestionas por ella; entrégale el perfil cuando se una.",
+  "managedProfileIntro": "Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
   },
@@ -6514,8 +6528,8 @@
   "mcpUsageUnavailable": "No se pudo cargar el uso.",
   "mcpUsageWorkspaceTitle": "Uso de asistentes, últimos 30 días",
   "meAccountInMe": "Mi cuenta está en Yo",
-  "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son tuyos en todos los espacios.",
-  "meAddressSaveFailed": "No se pudo guardar tu dirección. Inténtalo de nuevo.",
+  "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
+  "meAddressSaveFailed": "No se pudo guardar su dirección. Inténtelo de nuevo.",
   "meCreateSpace": "Crear un espacio",
   "meFinanceGlanceOwed": "A pagar: {amount}",
   "@meFinanceGlanceOwed": {
@@ -6528,8 +6542,8 @@
   "meFindSpace": "Buscar un espacio",
   "meGroupAdd": "Nuevo grupo",
   "meGroupDelete": "Eliminar grupo",
-  "meGroupEmptyFavorites": "Dale un corazón a un espacio y te espera aquí.",
-  "meGroupEmptyOwn": "Mueve espacios aquí desde su menú.",
+  "meGroupEmptyFavorites": "Dele un corazón a un espacio y le esperará aquí.",
+  "meGroupEmptyOwn": "Mueva espacios aquí desde su menú.",
   "meGroupFavorites": "Favoritos",
   "meGroupInstallations": "Instalaciones conectadas",
   "meGroupMove": "Mover a un grupo…",
@@ -6538,13 +6552,13 @@
   "meGroupProfile": "Mi perfil",
   "meGroupRename": "Renombrar",
   "meGroupWorkspaces": "Mis espacios de trabajo",
-  "meHeaderOwned": "Tu cuenta · solo te pertenece a ti",
+  "meHeaderOwned": "Su cuenta · solo le pertenece a usted",
   "meHomeTitle": "Inicio",
   "meJoinSpace": "Unirse con un código",
   "meLeaveAction": "Salir de este espacio",
-  "meLeaveBody": "Dejas de ser miembro. Tus reservas, facturas y mensajes se quedan en el espacio. Para borrar también tus datos, usa Privacidad.",
-  "meLeaveDone": "Has salido de {name}.",
-  "meLeaveFailed": "No se pudo salir del espacio. Inténtalo de nuevo.",
+  "meLeaveBody": "Deja de ser miembro. Sus reservas, facturas y mensajes se quedan en el espacio. Para borrar también sus datos, use Privacidad.",
+  "meLeaveDone": "Ha salido de {name}.",
+  "meLeaveFailed": "No se pudo salir del espacio. Inténtelo de nuevo.",
   "meLeaveOwner": "Los propietarios traspasan el espacio antes de salir",
   "meLeaveSide": "Salir de {side}",
   "@meLeaveSide": {
@@ -6556,13 +6570,13 @@
   },
   "meLeaveTitle": "¿Salir de {name}?",
   "meLinkedOpen": "Abrir en {host}",
-  "meLinkedOpenBody": "Este espacio está en {host}. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y te pide iniciar sesión allí.",
+  "meLinkedOpenBody": "Este espacio está en {host}. La app trabaja con un servidor a la vez: abrirlo cambia a ese servidor y le pide iniciar sesión allí.",
   "meLinkedPendingOn": "Pendiente de aprobación · {host}",
   "meLinkedUnavailable": "{host} no respondió: esta lista puede estar incompleta.",
   "meManageSpaces": "Gestionar mis espacios",
   "meMySpaces": "Mis espacios",
-  "meNoSpaceBody": "Busca uno cerca de ti, únete con un código de invitación o crea el tuyo.",
-  "meNoSpaceTitle": "Aún no estás en ningún espacio",
+  "meNoSpaceBody": "Busque uno cerca de usted, únase con un código de invitación o cree el suyo.",
+  "meNoSpaceTitle": "Aún no está en ningún espacio",
   "meSectionMine": "Mi historial y mis datos",
   "meSortAlphabet": "A–Z",
   "meSortHand": "Mi orden",
@@ -6571,7 +6585,7 @@
   "meSortTooltip": "Ordenar",
   "meSpaceException": "En este espacio",
   "meSpaceLastUsed": "Último usado",
-  "meSpaceNotifications": "{count, plural, =1{1 notificación te espera aquí} other{{count} notificaciones te esperan aquí}}",
+  "meSpaceNotifications": "{count, plural, =1{1 notificación le espera aquí} other{{count} notificaciones le esperan aquí}}",
   "meSpaceOpen": "Abrir",
   "meSpacePending": "Pendiente de aprobación",
   "meSpacesNoMatch": "Ningún espacio coincide.",
@@ -6667,7 +6681,7 @@
   "memberNoteDeleteNotMine": "Solo quien lo envió puede retirar un mensaje.",
   "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",
   "memberNoteDeleted": "Mensaje eliminado.",
-  "memberNoteHint": "Tu mensaje",
+  "memberNoteHint": "Su mensaje",
   "memberNoteReceived": "Mensaje de {name}",
   "memberNoteReply": "Responder",
   "@memberNoteReply": {
@@ -6748,7 +6762,7 @@
       }
     }
   },
-  "memberPageYou": "{name} (tú)",
+  "memberPageYou": "{name} (usted)",
   "@memberPageYou": {
     "placeholders": {
       "name": {
@@ -6836,7 +6850,7 @@
   "@messageReadBy": {
     "description": "workspace groups: rename, description, admins, info"
   },
-  "messageRequestsHint": "Estas personas no están entre quienes elegiste para poder contactarte. No se les avisa de tu decisión.",
+  "messageRequestsHint": "Estas personas no están entre quienes eligió para poder contactarle. No se les avisa de su decisión.",
   "messageRequestsTitle": "Solicitudes de mensaje",
   "messageSearchGroups": "Grupos",
   "@messageSearchGroups": {
@@ -6880,7 +6894,7 @@
     "description": "messenger: a group of people"
   },
   "messengerContextInquiryIn": "Consulta a {space}",
-  "messengerContextInquiryOut": "Tu consulta a {space}",
+  "messengerContextInquiryOut": "Su consulta a {space}",
   "messengerContextSpace": "En {space}",
   "messengerCopied": "Copiado.",
   "@messengerCopied": {
@@ -6931,7 +6945,7 @@
   "messengerForwardedFrom": "Reenviado desde {context} · escrito por {author}",
   "messengerHistory": "Qué ha pasado",
   "messengerHistoryEmpty": "Aún no hay nada registrado para este mensaje.",
-  "messengerHostsIntro": "Tu mensaje lo leen estos anfitriones del espacio:",
+  "messengerHostsIntro": "Su mensaje lo leen estos anfitriones del espacio:",
   "messengerHostsNone": "En este espacio nadie responde mensajes ahora mismo.",
   "messengerInboxUnavailable": "No disponible ahora: {servers}. Sus conversaciones faltan en esta lista.",
   "messengerInquiriesEmpty": "Aún no hay consultas.",
@@ -6953,8 +6967,8 @@
   "messengerRead": "Leído",
   "messengerRefusedClosed": "Esta consulta está cerrada.",
   "messengerRefusedForwardingOff": "Este espacio no permite reenviar sus mensajes.",
-  "messengerRefusedLimit": "Demasiados a la vez. Espera un minuto.",
-  "messengerRefusedRequestPending": "Tu primer mensaje espera una respuesta.",
+  "messengerRefusedLimit": "Demasiados a la vez. Espere un minuto.",
+  "messengerRefusedRequestPending": "Su primer mensaje espera una respuesta.",
   "messengerRefusedTooLong": "Este mensaje es demasiado largo para esa conversación.",
   "messengerRefusedUnavailable": "Este espacio no acepta consultas ahora mismo.",
   "messengerStar": "Destacar",
@@ -6998,7 +7012,7 @@
   },
   "moneyNoInvoicesYet": "Aún no hay factura — el espacio factura el mes una vez cerrado.",
   "moneyNoteLabel": "Nota (opcional)",
-  "moneyNothingOpen": "Nada abierto — estás al día.",
+  "moneyNothingOpen": "Nada abierto — está al día.",
   "moneyOpenInvoicesSummary": "{count} abiertas · {amount} pendientes",
   "moneyOpenInvoicesTitle": "Facturas abiertas",
   "moneyOverage": "Exceso ({count} medias jornadas extra)",
@@ -7036,7 +7050,7 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
-  "myVisitsHelp": "Visitas que pediste o a las que fuiste admitido como invitado. Una visita no es una membresía.",
+  "myVisitsHelp": "Visitas que pidió o a las que fue admitido como invitado. Una visita no es una membresía.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
   },
@@ -7060,7 +7074,7 @@
   "@navigationTitle": {
     "description": "#969 navigation style: navigationTitle"
   },
-  "negotiationActiveSince": "Tus condiciones se aplican desde {month}.",
+  "negotiationActiveSince": "Sus condiciones se aplican desde {month}.",
   "negotiationCardTitle": "Mis precios negociados",
   "negotiationDefaultColumn": "Tarifa",
   "negotiationDiscount": "Descuento en suplementos",
@@ -7072,12 +7086,12 @@
   "negotiationNote": "Nota",
   "negotiationOccupation": "Ocupación",
   "negotiationOccupationHint": "La parte de días abiertos incluida cada mes; se aplica al miembro una vez validada.",
-  "negotiationOnTariff": "Estás en la tarifa del espacio.",
+  "negotiationOnTariff": "Está en la tarifa del espacio.",
   "negotiationOverage": "Exceso por medio día",
   "negotiationPending": "Unas condiciones esperan validación.",
   "negotiationPendingBadge": "pendiente de validación",
   "negotiationPercent": "{value} %",
-  "negotiationProposeHint": "Deja un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.",
+  "negotiationProposeHint": "Deje un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.",
   "negotiationProposeTitle": "Negociación de precios",
   "negotiationProposed": "Condiciones propuestas — pendientes de validación.",
   "negotiationReadOnly": "Solo lectura",
@@ -7097,7 +7111,7 @@
   "@newConversationStart": {
     "description": "#687 - messaging centre"
   },
-  "newConversationTapToOpen": "Toca a una persona para abrir el chat; activa Grupo para elegir varias.",
+  "newConversationTapToOpen": "Toque a una persona para abrir el chat; active Grupo para elegir varias.",
   "newConversationTitle": "Nueva conversación",
   "@newConversationTitle": {
     "description": "#687 - messaging centre"
@@ -7164,13 +7178,13 @@
     }
   },
   "nfcConfigChecking": "Comprobando…",
-  "nfcConfigDeviceOff": "El NFC está desactivado en los ajustes de Android de este dispositivo — actívalo para leer tarjetas RFID.",
+  "nfcConfigDeviceOff": "El NFC está desactivado en los ajustes de Android de este dispositivo — actívelo para leer tarjetas RFID.",
   "nfcConfigDeviceReady": "NFC disponible y activado",
   "nfcConfigDeviceStatus": "Este dispositivo",
   "nfcConfigDeviceUnavailable": "Sin NFC aquí — se necesita un dispositivo Android con NFC activado (los iPad no tienen NFC). Las credenciales QR siguen funcionando.",
   "nfcConfigEnable": "Activar registro por credencial NFC",
   "nfcConfigEnableDesc": "Muestra la opción de acercar la tarjeta en los quioscos y en el gestor de credenciales.",
-  "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registra la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
+  "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registre la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
   "nfcConfigTitle": "Credenciales RFID / NFC",
   "noteRefAlert": "Aviso",
   "noteRefFilterCount": "{shown} de {total}",
@@ -7224,7 +7238,7 @@
   "notifSortByDate": "Ordenar por fecha",
   "notifUngroup": "Desagrupar",
   "notificationsSystemOff": "Android está bloqueando las notificaciones de DesKilo",
-  "notificationsSystemOffHint": "Permítelas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.",
+  "notificationsSystemOffHint": "Permítalas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.",
   "numberSequenceDateNone": "Ninguna",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -7233,7 +7247,7 @@
   "@numberSequenceDatePart": {
     "description": "#925 number sequences: numberSequenceDatePart"
   },
-  "numberSequenceDateRemovalBlocked": "Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambia también el prefijo o el sufijo.",
+  "numberSequenceDateRemovalBlocked": "Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambie también el prefijo o el sufijo.",
   "numberSequenceDateYear": "Año",
   "@numberSequenceDateYear": {
     "description": "#925 number sequences: numberSequenceDateYear"
@@ -7291,7 +7305,7 @@
   "@numberSequenceResetNever": {
     "description": "#925 number sequences: numberSequenceResetNever"
   },
-  "numberSequenceResetWasInvalid": "Esta serie se reiniciaba más a menudo de lo que muestra su fecha. Guarda para mantener un reinicio que no repita ningún número.",
+  "numberSequenceResetWasInvalid": "Esta serie se reiniciaba más a menudo de lo que muestra su fecha. Guarde para mantener un reinicio que no repita ningún número.",
   "numberSequenceResetYearly": "Cada año",
   "@numberSequenceResetYearly": {
     "description": "#925 number sequences: numberSequenceResetYearly"
@@ -7316,11 +7330,11 @@
   "@numberSequencesTitle": {
     "description": "#925 number sequences: numberSequencesTitle"
   },
-  "occurrenceAdded": "Añadido a tus gastos.",
+  "occurrenceAdded": "Añadido a sus gastos.",
   "occurrenceConfirm": "Confirmar este gasto",
   "occurrenceReasonLabel": "Por qué difiere (obligatorio)",
   "occurrenceReasonMissing": "Un importe distinto necesita una explicación.",
-  "occurrenceRejected": "Los validadores la rechazaron — ajusta el importe o la descripción y reenvía.",
+  "occurrenceRejected": "Los validadores la rechazaron — ajuste el importe o la descripción y reenvíe.",
   "occurrenceResend": "Reenviar a validación",
   "occurrenceScheduledAmount": "Validado: {amount}",
   "occurrenceSentForValidation": "Enviado a los validadores — contará cuando confirmen.",
@@ -7370,13 +7384,13 @@
   "overagePolicyPackage": "Exigir comprar un paquete",
   "overagePolicyPayg": "Cobrar el exceso (pago por uso)",
   "payConfigConfigured": "Configurado",
-  "payConfigIntro": "Introduce cada proveedor de pago que quieras ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
+  "payConfigIntro": "Introduzca cada proveedor de pago que quiera ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigNotConfigured": "Sin configurar",
   "payConfigOpen": "Configurar",
   "payConfigRemove": "Eliminar",
   "payConfigRemoved": "Eliminado.",
   "payConfigSaved": "Guardado.",
-  "payConfigSecretSet": "Definido — deja en blanco para conservar",
+  "payConfigSecretSet": "Definido — déjelo en blanco para conservarlo",
   "payConfigTitle": "Pagos en línea",
   "payFieldApiKey": "Clave API",
   "payFieldClientId": "Client ID",
@@ -7392,7 +7406,7 @@
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",
   "payOnlineFailedDetail": "El pago {reference} ({amount} vía {provider}) no se completó — no se abonó nada; el saldo sigue pendiente.",
   "payOnlineFailedTitle": "Pago en línea fallido",
-  "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunta al propietario del espacio.",
+  "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunte al propietario del espacio.",
   "payOnlinePendingDetail": "El pago {reference} ({amount} vía {provider}) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.",
   "payOnlinePendingTitle": "Pago en línea pendiente",
   "paymentAccountNumberLabel": "Número de cuenta",
@@ -7415,7 +7429,7 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
-  "paymentInstructionsHelper": "Se muestran a los miembros en un extracto pendiente. Déjalo vacío para no mostrar nada.",
+  "paymentInstructionsHelper": "Se muestran a los miembros en un extracto pendiente. Déjelo vacío para no mostrar nada.",
   "paymentInstructionsIbanCopied": "IBAN copiado.",
   "paymentInstructionsIbanTitle": "IBAN",
   "paymentInstructionsLydiaLabel": "Número de teléfono o usuario de Lydia",
@@ -7529,13 +7543,13 @@
   "@paymentsPendingTag": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
-  "pendingApprovalBody": "Te has unido a {workspace}. Un administrador debe aprobar tu membresía antes de que puedas usar el espacio — tendrás acceso en cuanto confirme.",
+  "pendingApprovalBody": "Se ha unido a {workspace}. Un administrador debe aprobar su membresía antes de que pueda usar el espacio — tendrá acceso en cuanto confirme.",
   "pendingApprovalRefresh": "Comprobar de nuevo",
   "pendingApprovalTitle": "Membresía del espacio pendiente de aprobación",
-  "pendingAvailable": "Mientras esperas, tus otros espacios, tu cuenta y la ayuda siguen disponibles.",
+  "pendingAvailable": "Mientras espera, sus otros espacios, su cuenta y la ayuda siguen disponibles.",
   "pendingHelp": "Ayuda",
   "pendingLastChecked": "Última comprobación {time}",
-  "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Tu solicitud no ha cambiado.",
+  "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
   "pendingSwitchWorkspace": "Cambiar de espacio",
   "percentValue": "{value} %",
@@ -7839,12 +7853,12 @@
   "planStartNow": "Empieza ahora",
   "planStartsAt": "Empieza a las {time}",
   "planStateFree": "Libre",
-  "planStateYours": "Tuyo",
+  "planStateYours": "Suyo",
   "planToLabel": "Hasta",
   "planUntil": "hasta las {time}",
   "planUntilDateLabel": "Repetir hasta",
   "planUntilLabel": "Hasta",
-  "planYourSeat": "Tu asiento",
+  "planYourSeat": "Su asiento",
   "plansEditorEdit": "Editar plan",
   "plansEditorInactive": "Inactivo",
   "plansEditorNew": "Nuevo plan",
@@ -7931,7 +7945,7 @@
   "policyOutsideHoursWalkUpDesc": "Los check-ins espontáneos siguen siendo posibles, incluidas las horas extra vespertinas; reservar por adelantado fuera del horario se rechaza.",
   "policySimultaneousDesc": "Cuántas reservas superpuestas puede tener un miembro. 1 mantiene un solo sitio a la vez.",
   "policySimultaneousTitle": "Reservas simultáneas por miembro",
-  "portalActionFailed": "No se pudo guardar el cambio. Inténtalo de nuevo.",
+  "portalActionFailed": "No se pudo guardar el cambio. Inténtelo de nuevo.",
   "portalActionNotNegotiated": "Esta acción no está disponible entre esta aplicación y ese servidor. Actualizar la aplicación puede ayudar.",
   "portalAddress": "Dirección pública",
   "portalAdmin": "Administrador",
@@ -7941,7 +7955,7 @@
   "portalChat": "Conversar",
   "portalCompany": "Empresa",
   "portalConnect": "Conectar un servidor",
-  "portalConnectionFailed": "No se pudo conectar. Comprueba el servidor y tus credenciales.",
+  "portalConnectionFailed": "No se pudo conectar. Compruebe el servidor y sus credenciales.",
   "portalConnections": "Servidores conectados",
   "portalConnectionsHint": "Cada servidor usa su propia sesión. Desconectarlo elimina el acceso guardado de esta cuenta en este dispositivo.",
   "portalCopyEmail": "Copiar el correo",
@@ -7977,23 +7991,23 @@
   "portalPublicPlan": "Plano público",
   "portalPublication": "Página pública del espacio",
   "portalPublished": "Visible en el directorio público",
-  "portalRegisterDirectory": "Publicar un servidor en el directorio",
+  "portalRegisterDirectory": "Vincular un servidor al directorio global",
   "portalRequestProfile": "Solicitar un perfil en este espacio",
-  "portalRequestSent": "Solicitud enviada. El espacio revisará tu perfil.",
+  "portalRequestSent": "Solicitud enviada. El espacio revisará su perfil.",
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
   "portalResetAllBody": "Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.",
   "portalResetAllConfirm": "Restablecer",
   "portalSavePreview": "Guardar y ver la vista externa",
   "portalSearch": "Buscar espacios",
   "portalSendCode": "Enviar código de acceso",
-  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toca para reintentar.",
+  "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
   "portalThisServer": "Este servidor",
   "portalUseCode": "Usar un código por correo",
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalVisibilityLink": "Quién puede encontrarme y escribirme",
   "portalVisibilityLinkBody": "Se elige en Yo, en Quién me ve.",
   "portalWebsite": "Sitio web",
-  "preferencesSaveFailed": "No se han podido guardar tus preferencias. Inténtalo de nuevo.",
+  "preferencesSaveFailed": "No se han podido guardar sus preferencias. Inténtelo de nuevo.",
   "preferencesScopeHint": "Idioma, apariencia y formatos regionales. Desactivado: editar mis valores predeterminados.",
   "preferencesUseDefaults": "Usar mis valores predeterminados",
   "preferencesWorkspaceOnly": "Solo para este espacio",
@@ -8055,7 +8069,7 @@
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"
   },
-  "privacyIntro": "Tus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son tus derechos según el RGPD — cada uno es un botón.",
+  "privacyIntro": "Sus datos nunca se rastrean ni se venden, y solo los pueden leer los roles que nombran las reglas de abajo; dónde se alojan figura en el aviso de privacidad de esta instalación. Estos son sus derechos según el RGPD — cada uno es un botón.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
   },
@@ -8079,7 +8093,7 @@
   "@privacyNoticeNotRecorded": {
     "description": "#1914 privacy notice: privacyNoticeNotRecorded"
   },
-  "privacyNoticeOptional": "Opcional — puedes usar la aplicación sin ello",
+  "privacyNoticeOptional": "Opcional — puede usar la aplicación sin ello",
   "@privacyNoticeOptional": {
     "description": "#1914 privacy notice: privacyNoticeOptional"
   },
@@ -8092,7 +8106,7 @@
       }
     }
   },
-  "privacyNoticeRights": "Tus derechos: {contact}",
+  "privacyNoticeRights": "Sus derechos: {contact}",
   "@privacyNoticeRights": {
     "description": "#1914 privacy notice: privacyNoticeRights",
     "placeholders": {
@@ -8101,11 +8115,11 @@
       }
     }
   },
-  "privacyNoticeRightsRoute": "Tus derechos y el contacto",
+  "privacyNoticeRightsRoute": "Sus derechos y el contacto",
   "@privacyNoticeRightsRoute": {
     "description": "#1914 privacy notice: privacyNoticeRightsRoute"
   },
-  "privacyNoticeTitle": "Quién trata tus datos",
+  "privacyNoticeTitle": "Quién trata sus datos",
   "@privacyNoticeTitle": {
     "description": "#1914 privacy notice: privacyNoticeTitle"
   },
@@ -8126,7 +8140,7 @@
   "@privacyPushOnDevice": {
     "description": "#1914 privacy notice: privacyPushOnDevice"
   },
-  "privacyPushOnDeviceFailed": "No se pudo guardar la elección. Inténtalo de nuevo.",
+  "privacyPushOnDeviceFailed": "No se pudo guardar la elección. Inténtelo de nuevo.",
   "@privacyPushOnDeviceFailed": {
     "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
   },
@@ -8142,15 +8156,15 @@
   "@privacySpaceNoticeAcknowledge": {
     "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
   },
-  "privacySpaceNoticeFailed": "No se pudo registrar la toma de conocimiento. Inténtalo de nuevo.",
+  "privacySpaceNoticeFailed": "No se pudo registrar la toma de conocimiento. Inténtelo de nuevo.",
   "@privacySpaceNoticeFailed": {
     "description": "#1914 privacy notice: privacySpaceNoticeFailed"
   },
-  "privacySpaceNoticeRead": "Has tomado conocimiento de esta versión.",
+  "privacySpaceNoticeRead": "Ha tomado conocimiento de esta versión.",
   "@privacySpaceNoticeRead": {
     "description": "#1914 privacy notice: privacySpaceNoticeRead"
   },
-  "privacySpaceNoticeUnread": "Aún no leído — léelo aquí.",
+  "privacySpaceNoticeUnread": "Aún no leído — léalo aquí.",
   "@privacySpaceNoticeUnread": {
     "description": "#1914 privacy notice: privacySpaceNoticeUnread"
   },
@@ -8224,15 +8238,15 @@
   "processWorkspaceAccessDesc": "Gestionar membresías, roles y acceso al espacio.",
   "profilePhotoChoose": "Elegir una foto",
   "profilePhotoFileType": "Imagen",
-  "profilePhotoNone": "Toca para añadir una foto",
+  "profilePhotoNone": "Toque para añadir una foto",
   "profilePhotoRemove": "Quitar foto",
   "profilePhotoRemoved": "Foto eliminada",
   "profilePhotoSaveFailed": "No se pudo actualizar la foto",
   "profilePhotoSaved": "Foto actualizada",
-  "profilePhotoSet": "Toca para cambiar",
+  "profilePhotoSet": "Toque para cambiar",
   "profilePhotoTitle": "Foto",
   "profileStatusFieldLabel": "Estado",
-  "profileStatusHelper": "Opcional. Visible para los miembros de tus espacios en el directorio de miembros. Déjalo vacío para borrarlo.",
+  "profileStatusHelper": "Opcional. Visible para los miembros de sus espacios en el directorio de miembros. Déjelo vacío para borrarlo.",
   "profileStatusHint": "En una llamada · vuelvo a las 14:00",
   "profileStatusNone": "Sin estado",
   "profileStatusSaveFailed": "No se pudo guardar el estado",
@@ -8298,7 +8312,7 @@
     "description": "#974 profiles site: profilesSitePick"
   },
   "profilesTitle": "Perfiles",
-  "profilesUnavailable": "No se pudieron cargar tus espacios de trabajo.",
+  "profilesUnavailable": "No se pudieron cargar sus espacios de trabajo.",
   "provenanceFromTemplate": "De la plantilla «{name}»",
   "provenanceProductDefault": "Valor predeterminado del producto",
   "provenanceResetToDefault": "Volver al valor predeterminado",
@@ -8366,15 +8380,15 @@
   "publicPersonUnavailable": "Este perfil no es público.",
   "publicProfileCopied": "Enlace copiado.",
   "publicProfileCopy": "Copiar el enlace",
-  "publicProfileOff": "Desactivado: quienes no han iniciado sesión no ven nada de ti.",
-  "publicProfileOn": "Cualquiera con el enlace lee tu nombre, tu profesión y tu presentación.",
+  "publicProfileOff": "Desactivado: quienes no han iniciado sesión no ven nada de usted.",
+  "publicProfileOn": "Cualquiera con el enlace lee su nombre, su profesión y su presentación.",
   "publicProfilePublishAction": "Publicar",
-  "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer tu nombre, tu profesión y tu presentación en tu enlace. Tus datos de contacto, tu presencia y tus espacios siguen siendo privados.",
+  "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus espacios siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfileTitle": "Perfil público",
   "pushCancelledBody": "Un admin eliminó una reserva.",
   "pushCancelledTitle": "Reserva eliminada",
-  "pushPendingBody": "Alguien necesita tu confirmación.",
+  "pushPendingBody": "Alguien necesita su confirmación.",
   "pushPendingTitle": "DesKilo",
   "pushStatusNoTransport": "Esta versión no tiene notificaciones push",
   "@pushStatusNoTransport": {
@@ -8532,7 +8546,7 @@
   "@questionsInactive": {
     "description": "#1288 the question editor: questionsInactive"
   },
-  "questionsSubtitle": "Aparecen dentro de la información personal, bajo el nombre de tu espacio.",
+  "questionsSubtitle": "Aparecen dentro de la información personal, bajo el nombre de su espacio.",
   "@questionsSubtitle": {
     "description": "#1288 the question editor: questionsSubtitle"
   },
@@ -8540,10 +8554,10 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicita medias jornadas extra desde la pestaña Finanzas.",
+  "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde la pestaña Finanzas.",
   "quotaRequestButton": "Solicitar medias jornadas extra",
   "quotaRequestCountLabel": "Número de medias jornadas",
-  "quotaRequestExplainer": "Tus reservas están limitadas por tu suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",
+  "quotaRequestExplainer": "Sus reservas están limitadas por su suscripción. Las medias jornadas extra para {period} se aplican una vez validadas.",
   "quotaRequestPending": "Solicitud enviada — pendiente de validación.",
   "quotaRequestTitle": "Solicitar medias jornadas extra",
   "readinessActor": "Quién: {who}",
@@ -8761,7 +8775,7 @@
   "@reminderOriginManual": {
     "description": "#1922 reminder evidence: reminderOriginManual"
   },
-  "reminderPdfClosing": "Si ya has pagado, ignora esta carta.",
+  "reminderPdfClosing": "Si ya ha pagado, ignore esta carta.",
   "reminderPdfDays": "días",
   "reminderPdfDaysOpen": "Abierta desde hace",
   "reminderPdfLevelLabel": "Nivel de recordatorio",
@@ -8797,7 +8811,7 @@
   "@reminderStatusUnknown": {
     "description": "#1922 reminder evidence: reminderStatusUnknown"
   },
-  "reminderTitle": "Regístrate pronto",
+  "reminderTitle": "Regístrese pronto",
   "repartitionAction": "Repartir un gasto",
   "repartitionAmount": "Importe total",
   "repartitionAmountLabel": "Importe",
@@ -8838,7 +8852,7 @@
   "@repartitionRuleHint": {
     "description": "#934 workspace status / repartition wizard: repartitionRuleHint"
   },
-  "repartitionRuleNotSaved": "No se pudo guardar la regla, así que no se repartió nada. Inténtalo de nuevo.",
+  "repartitionRuleNotSaved": "No se pudo guardar la regla, así que no se repartió nada. Inténtelo de nuevo.",
   "@repartitionRuleNotSaved": {
     "description": "#1532: repartitionRuleNotSaved"
   },
@@ -8905,7 +8919,7 @@
   "@reportBadgesFooter": {
     "description": "#671 - report document text (reportBadgesFooter)"
   },
-  "reportBadgesIntro": "Corta por las líneas. Cada tarjeta lleva el código de un miembro — preséntala en el quiosco para registrarte.",
+  "reportBadgesIntro": "Corte por las líneas. Cada tarjeta lleva el código de un miembro — preséntela en el quiosco para registrarse.",
   "@reportBadgesIntro": {
     "description": "#671 - report document text (reportBadgesIntro)"
   },
@@ -8917,11 +8931,11 @@
   "@reportCoaAccounts": {
     "description": "#671 - report document text (reportCoaAccounts)"
   },
-  "reportCoaDisclaimer": "Solo una vista previa. DesKilo no lleva libro mayor ni hace tu contabilidad — el plan de tu contable siempre manda.",
+  "reportCoaDisclaimer": "Solo una vista previa. DesKilo no lleva libro mayor ni hace su contabilidad — el plan de su contable siempre manda.",
   "@reportCoaDisclaimer": {
     "description": "#671 - report document text (reportCoaDisclaimer)"
   },
-  "reportCoaIntro": "Una sugerencia, no tu contabilidad. Son las cuentas que un contable de tu país usaría normalmente para un espacio como el tuyo.",
+  "reportCoaIntro": "Una sugerencia, no su contabilidad. Son las cuentas que un contable de su país usaría normalmente para un espacio como el suyo.",
   "@reportCoaIntro": {
     "description": "#671 - report document text (reportCoaIntro)"
   },
@@ -8949,7 +8963,7 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
-  "reportDesignEmpty": "Banda vacía — añade un elemento abajo.",
+  "reportDesignEmpty": "Banda vacía — añada un elemento abajo.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
   },
@@ -8958,11 +8972,11 @@
   "reportDesignErrorNotADesign": "Ese archivo no es un diseño de informe de DesKilo.",
   "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
   "reportDesignErrorVersion": "Ese diseño se escribió con una versión más nueva de DesKilo.",
-  "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
+  "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábralo e impórtelo allí.",
   "reportDesignExport": "Exportar este diseño",
   "reportDesignFileTypeLabel": "JSON",
   "reportDesignImport": "Importar un diseño",
-  "reportDesignImported": "Diseño importado. Guarda para conservarlo.",
+  "reportDesignImported": "Diseño importado. Guarde para conservarlo.",
   "reportDesignerDesign": "Diseño",
   "@reportDesignerDesign": {
     "description": "Report page designer: the editable-fields mode (#548)"
@@ -9472,7 +9486,7 @@
   "@reportImageUpload": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesEmpty": "Aún no hay imágenes — sube tu logotipo, un sello o una firma y refénciala con ![nombre].",
+  "reportImagesEmpty": "Aún no hay imágenes — suba su logotipo, un sello o una firma y referénciela con ![nombre].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
@@ -9485,7 +9499,7 @@
   "@reportInsertImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLanguageAmbiguous": "Este país tiene varios idiomas — define primero el idioma del espacio en los Ajustes del espacio.",
+  "reportLanguageAmbiguous": "Este país tiene varios idiomas — defina primero el idioma del espacio en los Ajustes del espacio.",
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
   },
@@ -9634,7 +9648,7 @@
   },
   "reportPreviewFit": "Ajustar al ancho",
   "reportPreviewSimulated": "Vista rápida — datos de ejemplo",
-  "reportPreviewTitle": "Vista rápida — tu factura más reciente",
+  "reportPreviewTitle": "Vista rápida — su factura más reciente",
   "reportPreviewZoomIn": "Acercar",
   "reportPreviewZoomOut": "Alejar",
   "reportQuickView": "Vista rápida",
@@ -9654,7 +9668,7 @@
   "@reportSpaceCodesFooter": {
     "description": "#671 - report document text (reportSpaceCodesFooter)"
   },
-  "reportSpaceCodesIntro": "Una tarjeta por puesto, mesa, sala y planta. Pega cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.",
+  "reportSpaceCodesIntro": "Una tarjeta por puesto, mesa, sala y planta. Pegue cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.",
   "@reportSpaceCodesIntro": {
     "description": "#671 - report document text (reportSpaceCodesIntro)"
   },
@@ -9733,7 +9747,7 @@
   "@reservationCalendarFileName": {
     "description": "#1643 calendar file: reservationCalendarFileName"
   },
-  "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es tuya o ya no existe.",
+  "reservationCalendarFileRefused": "Esta reserva no se puede exportar: no es suya o ya no existe.",
   "@reservationCalendarFileRefused": {
     "description": "#1643 calendar file: reservationCalendarFileRefused"
   },
@@ -9741,7 +9755,7 @@
   "@reservationCalendarFileSnapshotNote": {
     "description": "#1643 calendar file: reservationCalendarFileSnapshotNote"
   },
-  "reservationCalendarFileStale": "La reserva cambió desde esta vista previa. Revísala de nuevo antes de guardar.",
+  "reservationCalendarFileStale": "La reserva cambió desde esta vista previa. Revísela de nuevo antes de guardar.",
   "@reservationCalendarFileStale": {
     "description": "#1643 calendar file: reservationCalendarFileStale"
   },
@@ -9787,17 +9801,17 @@
     "description": "Reservation deletion requests (#492)"
   },
   "reservationEditTimes": "Cambiar horario",
-  "reservationEndEarlyAheadOnly": "Elige una hora que aún esté por venir y anterior al final actual.",
+  "reservationEndEarlyAheadOnly": "Elija una hora que aún esté por venir y anterior al final actual.",
   "reservationEndEarlyButton": "Terminar antes",
   "reservationExtendButton": "Quedarse más tiempo",
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
   },
-  "reservationExtendLaterOnly": "Elige una hora posterior al final actual.",
+  "reservationExtendLaterOnly": "Elija una hora posterior al final actual.",
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
-  "reservationLimitError": "Límite de reservas alcanzado — ya tienes el máximo de reservas abiertas.",
+  "reservationLimitError": "Límite de reservas alcanzado — ya tiene el máximo de reservas abiertas.",
   "reservationNoteCheckedOutAt": "Completada: salida registrada a las {time}.",
   "@reservationNoteCheckedOutAt": {
     "placeholders": {
@@ -9822,7 +9836,7 @@
   "reserveStaleRetry": "Reintentar",
   "reserveViewMenu": "Vista",
   "reserveWeekView": "Semana",
-  "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívalo si nunca facturas a empresas en el extranjero.",
+  "reverseChargeSubtitle": "Un cliente con NIF-IVA en otro Estado miembro se factura sin impuesto y lo autoliquida (art. 196). Desactívelo si nunca factura a empresas en el extranjero.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"
   },
@@ -9854,7 +9868,7 @@
   "@rightsKindRestriction": {
     "description": "#1915 rights requests: rightsKindRestriction"
   },
-  "rightsRequestAsk": "¿Qué pides al espacio?",
+  "rightsRequestAsk": "¿Qué pide al espacio?",
   "@rightsRequestAsk": {
     "description": "#1915 rights requests: rightsRequestAsk"
   },
@@ -9862,7 +9876,7 @@
   "@rightsRequestDetails": {
     "description": "#1915 rights requests: rightsRequestDetails"
   },
-  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtelo de nuevo.",
   "@rightsRequestFailed": {
     "description": "#1915 rights requests: rightsRequestFailed"
   },
@@ -9887,7 +9901,7 @@
   "@rightsRequestsEmpty": {
     "description": "#1915 rights requests: rightsRequestsEmpty"
   },
-  "rightsRequestsHint": "Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
+  "rightsRequestsHint": "Pida al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
   "@rightsRequestsHint": {
     "description": "#1915 rights requests: rightsRequestsHint"
   },
@@ -9991,7 +10005,7 @@
   "@roleEditorNobody": {
     "description": "#1528 the roles of a space: roleEditorNobody"
   },
-  "roleEditorNotYourself": "No puedes darte un rol a ti misma.",
+  "roleEditorNotYourself": "No puede asignarse un rol a sí mismo.",
   "@roleEditorNotYourself": {
     "description": "#1528 the roles of a space: roleEditorNotYourself"
   },
@@ -10027,7 +10041,7 @@
   "@roleOwner": {
     "description": "Role label (#513)"
   },
-  "roleRefusalExceedsYours": "Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.",
+  "roleRefusalExceedsYours": "Este rol puede hacer cosas que usted no puede, así que solo el propietario lo da.",
   "@roleRefusalExceedsYours": {
     "description": "#2085 giving roles: roleRefusalExceedsYours"
   },
@@ -10059,7 +10073,7 @@
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
-  "rolesIntroReadOnly": "Solo lectura: estos son los permisos de cada rol. Tu rol está resaltado.",
+  "rolesIntroReadOnly": "Solo lectura: estos son los permisos de cada rol. Su rol está resaltado.",
   "@rolesIntroReadOnly": {
     "description": "Roles screen intro for non-editors (#513)"
   },
@@ -10075,7 +10089,7 @@
   "@rolesOfSpaceInactive": {
     "description": "#1528 the roles of a space: rolesOfSpaceInactive"
   },
-  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y la propietaria conserva siempre todos los permisos.",
+  "rolesOfSpaceSubtitle": "Cada uno añade permisos a lo que ya pueden hacer quienes lo tienen. Ninguno quita nada, y el propietario conserva siempre todos los permisos.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },
@@ -10091,7 +10105,7 @@
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
-  "rolesYourRole": "Tu rol",
+  "rolesYourRole": "Su rol",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
@@ -10124,11 +10138,11 @@
     "description": "#669 - accounting export formats"
   },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
-  "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
+  "scanJoinHelp": "Apunte la cámara al QR de invitación — verá el espacio antes de unirse.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },
-  "scanJoinNotAnInvite": "Ese QR no es una invitación de DesKilo: escanea el del mensaje de invitación.",
+  "scanJoinNotAnInvite": "Ese QR no es una invitación de DesKilo: escanee el del mensaje de invitación.",
   "scanJoinTitle": "Escanear QR del espacio",
   "scheduleCancel": "Terminar esta programación",
   "scheduleDaily": "diaria",
@@ -10158,13 +10172,13 @@
   "scheduleUnitWeeks": "semanas",
   "scheduleUnitYears": "años",
   "scheduleUntil": "hasta {date}",
-  "scheduleValidationHint": "La programación pasa primero por los validadores. Cada vencimiento se te presenta después: confirmado a este importe cuenta de inmediato; un importe distinto se explica y vuelve a validarse.",
+  "scheduleValidationHint": "La programación pasa primero por los validadores. Cada vencimiento se le presenta después: confirmado a este importe cuenta de inmediato; un importe distinto se explica y vuelve a validarse.",
   "scheduleWeekly": "semanal",
   "scheduleYearly": "anual",
   "scheduledAwaitingTitle": "Gastos programados por confirmar",
   "scheduledExpensesEmpty": "Aún no hay gastos programados.",
   "scheduledExpensesFinished": "Finalizadas y rechazadas ({count})",
-  "scheduledExpensesIntro": "Las suscripciones que paga el espacio — internet, teléfono, electricidad. La programación se valida una vez; cada vencimiento se te presenta antes de contar.",
+  "scheduledExpensesIntro": "Las suscripciones que paga el espacio — internet, teléfono, electricidad. La programación se valida una vez; cada vencimiento se le presenta antes de contar.",
   "scheduledExpensesTitle": "Gastos programados",
   "schemaUpdateBody": "Esta aplicación necesita la versión {version} del esquema de DesKilo, y el servidor al que se conecta ejecuta una más antigua. Hasta que el servidor se actualice, la aplicación fallaría de formas que no podría explicar, así que se detiene aquí.",
   "schemaUpdateMember": "Si no: avise a la persona que gestiona su espacio. No se pierde nada de lo que haya introducido.",
@@ -10180,7 +10194,7 @@
   "@seatDayFree": {
     "description": "#903 seat day timeline: seatDayFree"
   },
-  "seatDayMine": "Tú",
+  "seatDayMine": "Usted",
   "@seatDayMine": {
     "description": "#903 seat day timeline: seatDayMine"
   },
@@ -10196,7 +10210,7 @@
   "@seatDaySomeone": {
     "description": "#903 seat day timeline: seatDaySomeone"
   },
-  "seatDaySubtitle": "Quién ocupa esta plaza, y cuándo. Toca una reserva para abrirla, o un tramo libre para reservarlo.",
+  "seatDaySubtitle": "Quién ocupa esta plaza, y cuándo. Toque una reserva para abrirla, o un tramo libre para reservarlo.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },
@@ -10225,6 +10239,7 @@
   "serverConnectPasteCode": "Pegar un código de servidor",
   "serverConnectReference": "Servidor de referencia",
   "serverConnectUseHere": "Usar en este dispositivo",
+  "serverReferenceLabel": "servidor de referencia ({host})",
   "serviceOutOfStock": "Agotado",
   "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
   "serviceStockCount": "{count} en stock",
@@ -10238,7 +10253,7 @@
   "servicesTitle": "Servicios",
   "settingsBillingReports": "Facturación e informes",
   "settingsFrontCamera": "Escanear con la cámara frontal",
-  "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívalo para usar la cámara trasera.",
+  "settingsFrontCameraDesc": "Las tarjetas se leen con la cámara del lado de la pantalla — desactívelo para usar la cámara trasera.",
   "settingsSectionAccount": "Mi cuenta",
   "settingsSectionAdministration": "Administración",
   "settingsSectionAdvanced": "Avanzado",
@@ -10287,7 +10302,7 @@
       }
     }
   },
-  "settlementNeedsTwo": "Elige al menos dos facturas abiertas del mismo miembro.",
+  "settlementNeedsTwo": "Elija al menos dos facturas abiertas del mismo miembro.",
   "settlementPaidThrough": "Pagada a través de {number}",
   "@settlementPaidThrough": {
     "placeholders": {
@@ -10317,12 +10332,12 @@
   },
   "settlementVatNote": "Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.",
   "shellBarHiddenAnnounce": "Barra de navegación oculta",
-  "shellBarHideHint": "Mantén pulsado para la vista de pantalla completa",
-  "shellBarShowHint": "Mantén pulsado para mostrar la barra de navegación",
+  "shellBarHideHint": "Mantenga pulsado para la vista de pantalla completa",
+  "shellBarShowHint": "Mantenga pulsado para mostrar la barra de navegación",
   "shellBarShownAnnounce": "Barra de navegación visible",
-  "shellPendingDecisions": "{count, plural, =1{1 decisión te espera} other{{count} decisiones te esperan}}",
+  "shellPendingDecisions": "{count, plural, =1{1 decisión le espera} other{{count} decisiones le esperan}}",
   "shellReserveButton": "Reservar",
-  "shellSwipeCoachMark": "Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.",
+  "shellSwipeCoachMark": "Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.",
   "siteCity": "Ciudad",
   "@siteCity": {
     "description": "#945 sites: siteCity"
@@ -10412,6 +10427,7 @@
   "spaceCodesTitle": "Códigos QR de espacios (PDF)",
   "spaceFavoriteAdd": "Añadir a favoritos",
   "spaceFavoriteRemove": "Quitar de favoritos",
+  "spaceHostedOn": "Servidor: {server}",
   "spaceKindDesk": "Mesa",
   "spaceKindLevel": "Planta",
   "spaceKindOffice": "Oficina",
@@ -10436,7 +10452,7 @@
   "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceRatingClear": "Sin valoración",
   "spaceScanField": "Código",
-  "spaceScanHint": "Apunta la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escribe su código.",
+  "spaceScanHint": "Apunte la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escriba su código.",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",
   "spaceScanNfcHint": "…o acerca el teléfono a la etiqueta NFC de una silla.",
   "spaceScanTitle": "Escanear un código de espacio",
@@ -10447,7 +10463,7 @@
   "@spaceYoursCheckedIn": {
     "description": "#670 - whole-space sheet"
   },
-  "spaceYoursNow": "Reservado por ti para esta franja.",
+  "spaceYoursNow": "Reservado por usted para esta franja.",
   "statusAwaiting": "Pendiente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -10796,7 +10812,7 @@
   "taskRecorderActionOpenRoleMatrix": "Abrió la matriz de roles",
   "taskRecorderActionOpenSpaceRoles": "Abrió los roles de este espacio",
   "taskRecorderActionOpenValidationRules": "Abrió las reglas de validación",
-  "taskRecorderActionOpenWhatYouCanDo": "Abrió lo que puedes hacer",
+  "taskRecorderActionOpenWhatYouCanDo": "Abrió lo que puede hacer",
   "taskRecorderActionSaveRole": "Guardó un rol",
   "taskRecorderActionSaveValidationRule": "Guardó una regla de validación",
   "taskRecorderActionSelectDate": "Eligió el día",
@@ -10815,7 +10831,7 @@
   "taskRecorderActionViewDetails": "Abrió la reserva",
   "taskRecorderAddNote": "Añadir una nota",
   "taskRecorderCaptureValues": "Capturar valores (para informes de problemas)",
-  "taskRecorderCaptureValuesHint": "También guarda lo que escribes y eliges — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparte el archivo solo con quien deba ver lo que introdujiste.",
+  "taskRecorderCaptureValuesHint": "También guarda lo que escribe y elige — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparta el archivo solo con quien deba ver lo que introdujo.",
   "taskRecorderCompletenessComplete": "Completa",
   "taskRecorderCompletenessInterrupted": "Interrumpida",
   "taskRecorderCompletenessPartial": "Parcial",
@@ -10834,7 +10850,7 @@
   "taskRecorderExport": "Exportar un archivo",
   "taskRecorderExportPackage": "Exportar un paquete de tarea",
   "taskRecorderExportPreview": "Lo que contendrá el archivo",
-  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísala antes de compartirla y compártela solo con quien deba verlo.",
+  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísela antes de compartirla y compártala solo con quien deba verlo.",
   "taskRecorderExportValuesConfirm": "Guardar de todos modos",
   "taskRecorderExportValuesTitle": "Esta grabación contiene valores",
   "taskRecorderFieldAccessories": "accesorios",
@@ -11115,106 +11131,106 @@
   "@threadRefsIn": {
     "description": "Me thread: which workspace the references speak about"
   },
-  "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toca «Añadir día de cierre» e indica un motivo si quieres.",
+  "tipAvailabilityClosure": "Para cerrar un día que nadie podrá reservar: toque «Añadir día de cierre» e indique un motivo si quiere.",
   "tipAvailabilityDays": "Para fijar los días de apertura: marca los días bajo «Días de apertura».",
   "tipAvailabilityGrid": "Para elegir cómo se dividen las reservas: escoge una «Granularidad de las reservas»: periodos libres, franjas, medias jornadas o jornadas completas.",
-  "tipAvailabilityHolidays": "Para cerrar los festivos: toca «Añadir días festivos».",
-  "tipAvailabilityHours": "Para ajustar la jornada: cambia «Inicio de la jornada», «Límite de media jornada» y «Fin de la jornada».",
-  "tipAvailabilityPolicies": "Para endurecer o suavizar las reglas —reservas pasadas, fuera del horario, límites de reserva—: usa «Políticas de reserva».",
-  "tipBadgesLost": "Para bloquear una credencial perdida: toca «Revocar»; desliza una revocada a la derecha para borrarla.",
-  "tipBadgesNfc": "Para usar una tarjeta NFC: toca «Registrar tarjeta» y acerca la tarjeta al dispositivo.",
-  "tipBadgesQr": "Para dar una credencial QR: toca «Nueva credencial» y luego «Guardar como PDF» para imprimirla.",
-  "tipBadgesSignIn": "Para iniciar sesión con tu credencial: activa «Inicia mi sesión» en tu propia credencial.",
-  "tipCalendarAlerts": "Para atender las alertas y las decisiones que te esperan: abre «Avisos».",
-  "tipCalendarKinds": "Para ver un solo tipo de elemento: toca su chip —reservas, facturas, pagos…—; «Restablecer filtros» vuelve a mostrarlo todo.",
-  "tipCalendarMine": "Para ver solo tus reservas: toca «Mis reservas».",
-  "tipCalendarMoney": "Para ver el dinero detrás de un pago: toca su fila; tus finanzas se abren en ese pago.",
-  "tipCalendarViews": "Para ver una semana o un mes de una vez: toca «Semana» o «Mes»; «Hoy» te devuelve.",
-  "tipEditorAccessories": "Para ofrecer accesorios en los puestos: configúralos primero y elígelos después en «Propiedades» de cada puesto.",
-  "tipEditorBackground": "Para dibujar sobre un plano real: defínelo en «Imagen de fondo».",
-  "tipEditorDraw": "Para dibujar una sala o una mesa: elige «Oficina» o «Mesa» en la barra de herramientas y arrastra sobre el plano.",
-  "tipEditorLevel": "Para añadir una planta: toca «Añadir planta»; «Acciones de la planta» la renombra o la elimina.",
-  "tipEditorNfc": "Para permitir la entrada con una etiqueta: en «Propiedades» de un puesto, usa «Etiqueta NFC/RFID» › «Leer una etiqueta ahora».",
-  "tipEditorQr": "Para imprimir las tarjetas QR de los espacios: abre los documentos del espacio y elige «Códigos QR de espacios (PDF)».",
-  "tipEditorSeat": "Para nombrar un puesto o bloquearlo por mantenimiento: selecciónalo y toca «Propiedades».",
-  "tipEditorSeats": "Para añadir puestos: elige la herramienta «Asiento» y toca una mesa.",
-  "tipEventsDecide": "Para responder a una solicitud que te espera: toca «Aceptar» o «Rechazar»; está arriba del todo.",
-  "tipEventsGroup": "Para agrupar el historial: abre «Agrupar por» y elige tipo, fecha o miembro; «Desagrupar» lo deshace.",
-  "tipEventsMessages": "Para responder a tus conversaciones: abre tu mensajería.",
-  "tipEventsTopic": "Para ver un solo tema: toca su chip —mensajes, reservas, entradas, dinero o miembros.",
-  "tipEventsUnread": "Para ver lo que aún no has leído: toca «No leídos».",
-  "tipFeaturesChanged": "Para ver lo que has cambiado respecto a los valores por defecto: toca el filtro «Modificadas».",
-  "tipFeaturesProcess": "Para partir de lo que quieres hacer: elige «Procesos» y búscalo.",
+  "tipAvailabilityHolidays": "Para cerrar los festivos: toque «Añadir días festivos».",
+  "tipAvailabilityHours": "Para ajustar la jornada: cambie «Inicio de la jornada», «Límite de media jornada» y «Fin de la jornada».",
+  "tipAvailabilityPolicies": "Para endurecer o suavizar las reglas —reservas pasadas, fuera del horario, límites de reserva—: use «Políticas de reserva».",
+  "tipBadgesLost": "Para bloquear una credencial perdida: toque «Revocar»; deslice una revocada a la derecha para borrarla.",
+  "tipBadgesNfc": "Para usar una tarjeta NFC: toque «Registrar tarjeta» y acerque la tarjeta al dispositivo.",
+  "tipBadgesQr": "Para dar una credencial QR: toque «Nueva credencial» y luego «Guardar como PDF» para imprimirla.",
+  "tipBadgesSignIn": "Para iniciar sesión con su credencial: active «Inicia mi sesión» en su propia credencial.",
+  "tipCalendarAlerts": "Para atender las alertas y las decisiones que le esperan: abra «Avisos».",
+  "tipCalendarKinds": "Para ver un solo tipo de elemento: toque su chip —reservas, facturas, pagos…—; «Restablecer filtros» vuelve a mostrarlo todo.",
+  "tipCalendarMine": "Para ver solo sus reservas: toque «Mis reservas».",
+  "tipCalendarMoney": "Para ver el dinero detrás de un pago: toque su fila; sus finanzas se abren en ese pago.",
+  "tipCalendarViews": "Para ver una semana o un mes de una vez: toque «Semana» o «Mes»; «Hoy» le devuelve.",
+  "tipEditorAccessories": "Para ofrecer accesorios en los puestos: configúrelos primero y elíjalos después en «Propiedades» de cada puesto.",
+  "tipEditorBackground": "Para dibujar sobre un plano real: defínalo en «Imagen de fondo».",
+  "tipEditorDraw": "Para dibujar una sala o una mesa: elija «Oficina» o «Mesa» en la barra de herramientas y arrastre sobre el plano.",
+  "tipEditorLevel": "Para añadir una planta: toque «Añadir planta»; «Acciones de la planta» la renombra o la elimina.",
+  "tipEditorNfc": "Para permitir la entrada con una etiqueta: en «Propiedades» de un puesto, use «Etiqueta NFC/RFID» › «Leer una etiqueta ahora».",
+  "tipEditorQr": "Para imprimir las tarjetas QR de los espacios: abra los documentos del espacio y elija «Códigos QR de espacios (PDF)».",
+  "tipEditorSeat": "Para nombrar un puesto o bloquearlo por mantenimiento: selecciónelo y toque «Propiedades».",
+  "tipEditorSeats": "Para añadir puestos: elija la herramienta «Asiento» y toque una mesa.",
+  "tipEventsDecide": "Para responder a una solicitud que le espera: toque «Aceptar» o «Rechazar»; está arriba del todo.",
+  "tipEventsGroup": "Para agrupar el historial: abra «Agrupar por» y elija tipo, fecha o miembro; «Desagrupar» lo deshace.",
+  "tipEventsMessages": "Para responder a sus conversaciones: abra su mensajería.",
+  "tipEventsTopic": "Para ver un solo tema: toque su chip —mensajes, reservas, entradas, dinero o miembros.",
+  "tipEventsUnread": "Para ver lo que aún no ha leído: toque «No leídos».",
+  "tipFeaturesChanged": "Para ver lo que ha cambiado respecto a los valores por defecto: toque el filtro «Modificadas».",
+  "tipFeaturesProcess": "Para partir de lo que quiere hacer: elija «Procesos» y búsquelo.",
   "tipFeaturesRequires": "Para activar una función en gris: activa primero la que nombra su línea «Requiere».",
-  "tipFeaturesSwitch": "Para activar o desactivar una función: elige «Interruptores», búscala y cambia su interruptor; la app de cada miembro lo sigue al instante.",
-  "tipMembersApprove": "Para admitir a quien pidió unirse: ábrelo y toca «Aprobar membresía».",
-  "tipMembersBadge": "Para emitir una credencial: abre el miembro y elige «Tarjetas y acceso» › «Credenciales».",
-  "tipMembersInvite": "Para invitar a alguien: comparte el ID del espacio o su código QR; «Invitar a un miembro» los abre.",
+  "tipFeaturesSwitch": "Para activar o desactivar una función: elija «Interruptores», búsquela y cambie su interruptor; la app de cada miembro lo sigue al instante.",
+  "tipMembersApprove": "Para admitir a quien pidió unirse: ábralo y toque «Aprobar membresía».",
+  "tipMembersBadge": "Para emitir una credencial: abra el miembro y elija «Tarjetas y acceso» › «Credenciales».",
+  "tipMembersInvite": "Para invitar a alguien: comparta el ID del espacio o su código QR; «Invitar a un miembro» los abre.",
   "tipMembersManaged": "Para añadir a una persona sin cuenta: «Añadir un perfil gestionado».",
-  "tipMembersNotify": "Para escribir a todos los administradores a la vez: toca «Notificar a todos los admins».",
-  "tipMembersPlan": "Para cambiar el plan de un miembro: abre el miembro y ajusta «Suscripción» en «Facturación».",
-  "tipMembersPrices": "Para fijar los precios y planes del espacio: abre los ajustes de facturación.",
-  "tipMembersRole": "Para decidir qué puede hacer cada rol: edita los roles; un miembro recibe uno con «Añadir un rol» en su página.",
-  "tipMessagesAlerts": "Para atender alertas y decisiones que te esperan: abre «Avisos» en el calendario.",
-  "tipMessagesUnread": "Para ver lo que aún no has leído: toca «No leídos» en tu mensajería.",
-  "tipMessagesWrite": "Para escribir a alguien o crear un grupo: abre tu mensajería y toca el lápiz.",
-  "tipMoneyDays": "Para conseguir más días este mes: toca «Solicitar medias jornadas extra».",
-  "tipMoneyDocumentsConditions": "Para leer las condiciones que aceptaste: abre «Mis condiciones».",
-  "tipMoneyDocumentsLibrary": "Para encontrar los documentos compartidos del espacio: abre «Biblioteca de documentos».",
-  "tipMoneyDocumentsPayments": "Para listar lo que has pagado: abre «Informe de pagos».",
-  "tipMoneyDocumentsStatement": "Para guardar el mes en papel: abre «Extracto del mes (PDF)».",
-  "tipMoneyDocumentsUsage": "Para ver lo que has consumido: abre «Informe de consumo».",
-  "tipMoneyExpense": "Para que te reembolsen un gasto: toca «Enviar un gasto».",
-  "tipMoneyInvoicesAcross": "Para ver juntas las facturas de todos tus espacios: abre «Tus finanzas en todos tus espacios».",
-  "tipMoneyInvoicesPay": "Para pagar una factura pendiente: toca «Pagar ahora» en ella.",
-  "tipMoneyInvoicesRead": "Para leer una factura: tócala; se abre su detalle, con lo que queda pendiente.",
-  "tipMoneyMonth": "Para ver otro mes: usa las flechas junto al mes.",
-  "tipMoneyPaymentsAcross": "Para ver tu dinero en todos tus espacios: abre «Tus finanzas en todos tus espacios».",
-  "tipMoneyPaymentsConsumption": "Para anotar algo que has consumido —un café, una impresión—: toca «Añadir consumo».",
-  "tipMoneyPaymentsDays": "Para conseguir más días este mes: toca «Solicitar medias jornadas extra».",
-  "tipMoneyPaymentsExpense": "Para que te reembolsen un gasto: toca «Enviar un gasto».",
-  "tipMoneyPaymentsOnline": "Para pagar al momento: toca «Pagar en línea».",
-  "tipMoneyPaymentsRecord": "Para avisar al espacio de que has pagado: toca «Registrar un pago».",
-  "tipMoneyPaymentsScheduled": "Para planificar un gasto que se repite: abre «Gastos programados».",
-  "tipMoneyPaymentsTransfer": "Para pagar por transferencia: abre «Instrucciones de pago» y copia el IBAN.",
-  "tipMoneyPdf": "Para guardar tu factura del mes: toca «Exportar la factura como PDF».",
-  "tipMoneyRecord": "Para avisar al espacio de que has pagado: toca «Registrar un pago».",
-  "tipMoneyStatementAcross": "Para ver tu dinero en todos tus espacios: abre «Tus finanzas en todos tus espacios».",
-  "tipMoneyStatementMonth": "Para ver otro mes: usa las flechas; «Saldo» indica lo que queda por pagar.",
-  "tipMoneyStatementOut": "Para seguir reservando cuando se agotan tus días: en la cara de pagos, toca «Solicitar medias jornadas extra» o «Comprar un paquete».",
-  "tipPrivacyConsent": "Para releer lo que aceptaste: abre tus derechos y tu consentimiento.",
-  "tipPrivacyErase": "Para irte con tus datos personales borrados: toca «Abandonar este espacio y borrar mis datos».",
-  "tipPrivacyExport": "Para descargar todo lo que el espacio guarda sobre ti: toca «Exportar mis datos».",
-  "tipPrivacyWho": "Para ver quién puede leer tus datos: toca «Quién puede ver mis datos».",
-  "tipReserveAhead": "Para encontrar un día libre con antelación: abre «Vista» y elige «Semana» o «Mes»; luego toca una casilla o un día libre.",
-  "tipReserveBook": "Para reservar un puesto: elige el día, luego «Mañana», «Tarde» o «Día completo», toca un puesto libre y después «Reservar».",
-  "tipReserveChange": "Para cambiar o cancelar una reserva: tócala y elige «Cambiar horario», «Quedarse más tiempo», «Terminar antes» o «Cancelar reserva».",
-  "tipReserveCheckIn": "Para registrar tu entrada o salida: toca tu puesto y elige «Registrarse» o «Salir», o activa «Registrarse ahora mismo» al reservar.",
-  "tipReserveDefault": "Para que tu periodo habitual quede preseleccionado: ajusta «Período de reserva predeterminado» en tus ajustes.",
-  "tipReserveFavourite": "Para volver a encontrar tus puestos favoritos: toca «Añadir a favoritos» y valora el puesto con las estrellas en la ficha de reserva.",
-  "tipReserveLevel": "Para reservar una planta entera: toca «Reservar la planta» en la fila de la planta.",
-  "tipReserveList": "Para reservar desde una lista en lugar del plano: toca «Vista de lista»; «Vista de plano» vuelve al plano.",
-  "tipReserveRepeat": "Para reservar el mismo puesto con regularidad: en la ficha de reserva abre «Más opciones» y ajusta «Repetir» y «Repetir hasta».",
-  "tipReserveScan": "Para actuar sobre un espacio desde su tarjeta QR: toca «Escanear un código de espacio», apunta la cámara a la tarjeta y elige qué hacer.",
+  "tipMembersNotify": "Para escribir a todos los administradores a la vez: toque «Notificar a todos los admins».",
+  "tipMembersPlan": "Para cambiar el plan de un miembro: abra el miembro y ajuste «Suscripción» en «Facturación».",
+  "tipMembersPrices": "Para fijar los precios y planes del espacio: abra los ajustes de facturación.",
+  "tipMembersRole": "Para decidir qué puede hacer cada rol: edite los roles; un miembro recibe uno con «Añadir un rol» en su página.",
+  "tipMessagesAlerts": "Para atender alertas y decisiones que le esperan: abra «Avisos» en el calendario.",
+  "tipMessagesUnread": "Para ver lo que aún no ha leído: toque «No leídos» en su mensajería.",
+  "tipMessagesWrite": "Para escribir a alguien o crear un grupo: abra su mensajería y toque el lápiz.",
+  "tipMoneyDays": "Para conseguir más días este mes: toque «Solicitar medias jornadas extra».",
+  "tipMoneyDocumentsConditions": "Para leer las condiciones que aceptó: abra «Mis condiciones».",
+  "tipMoneyDocumentsLibrary": "Para encontrar los documentos compartidos del espacio: abra «Biblioteca de documentos».",
+  "tipMoneyDocumentsPayments": "Para listar lo que ha pagado: abra «Informe de pagos».",
+  "tipMoneyDocumentsStatement": "Para guardar el mes en papel: abra «Extracto del mes (PDF)».",
+  "tipMoneyDocumentsUsage": "Para ver lo que ha consumido: abra «Informe de consumo».",
+  "tipMoneyExpense": "Para que le reembolsen un gasto: toque «Enviar un gasto».",
+  "tipMoneyInvoicesAcross": "Para ver juntas las facturas de todos sus espacios: abra «Sus finanzas en todos sus espacios».",
+  "tipMoneyInvoicesPay": "Para pagar una factura pendiente: toque «Pagar ahora» en ella.",
+  "tipMoneyInvoicesRead": "Para leer una factura: tóquela; se abre su detalle, con lo que queda pendiente.",
+  "tipMoneyMonth": "Para ver otro mes: use las flechas junto al mes.",
+  "tipMoneyPaymentsAcross": "Para ver su dinero en todos sus espacios: abra «Sus finanzas en todos sus espacios».",
+  "tipMoneyPaymentsConsumption": "Para anotar algo que ha consumido —un café, una impresión—: toque «Añadir consumo».",
+  "tipMoneyPaymentsDays": "Para conseguir más días este mes: toque «Solicitar medias jornadas extra».",
+  "tipMoneyPaymentsExpense": "Para que le reembolsen un gasto: toque «Enviar un gasto».",
+  "tipMoneyPaymentsOnline": "Para pagar al momento: toque «Pagar en línea».",
+  "tipMoneyPaymentsRecord": "Para avisar al espacio de que ha pagado: toque «Registrar un pago».",
+  "tipMoneyPaymentsScheduled": "Para planificar un gasto que se repite: abra «Gastos programados».",
+  "tipMoneyPaymentsTransfer": "Para pagar por transferencia: abra «Instrucciones de pago» y copie el IBAN.",
+  "tipMoneyPdf": "Para guardar su factura del mes: toque «Exportar la factura como PDF».",
+  "tipMoneyRecord": "Para avisar al espacio de que ha pagado: toque «Registrar un pago».",
+  "tipMoneyStatementAcross": "Para ver su dinero en todos sus espacios: abra «Sus finanzas en todos sus espacios».",
+  "tipMoneyStatementMonth": "Para ver otro mes: use las flechas; «Saldo» indica lo que queda por pagar.",
+  "tipMoneyStatementOut": "Para seguir reservando cuando se agotan sus días: en la cara de pagos, toque «Solicitar medias jornadas extra» o «Comprar un paquete».",
+  "tipPrivacyConsent": "Para releer lo que aceptó: abra sus derechos y su consentimiento.",
+  "tipPrivacyErase": "Para irse con sus datos personales borrados: toque «Abandonar este espacio y borrar mis datos».",
+  "tipPrivacyExport": "Para descargar todo lo que el espacio guarda sobre usted: toque «Exportar mis datos».",
+  "tipPrivacyWho": "Para ver quién puede leer sus datos: toque «Quién puede ver mis datos».",
+  "tipReserveAhead": "Para encontrar un día libre con antelación: abra «Vista» y elija «Semana» o «Mes»; luego toque una casilla o un día libre.",
+  "tipReserveBook": "Para reservar un puesto: elija el día, luego «Mañana», «Tarde» o «Día completo», toque un puesto libre y después «Reservar».",
+  "tipReserveChange": "Para cambiar o cancelar una reserva: tóquela y elija «Cambiar horario», «Quedarse más tiempo», «Terminar antes» o «Cancelar reserva».",
+  "tipReserveCheckIn": "Para registrar su entrada o salida: toque su puesto y elija «Registrarse» o «Salir», o active «Registrarse ahora mismo» al reservar.",
+  "tipReserveDefault": "Para que su periodo habitual quede preseleccionado: ajuste «Período de reserva predeterminado» en sus ajustes.",
+  "tipReserveFavourite": "Para volver a encontrar sus puestos favoritos: toque «Añadir a favoritos» y valore el puesto con las estrellas en la ficha de reserva.",
+  "tipReserveLevel": "Para reservar una planta entera: toque «Reservar la planta» en la fila de la planta.",
+  "tipReserveList": "Para reservar desde una lista en lugar del plano: toque «Vista de lista»; «Vista de plano» vuelve al plano.",
+  "tipReserveRepeat": "Para reservar el mismo puesto con regularidad: en la ficha de reserva abra «Más opciones» y ajuste «Repetir» y «Repetir hasta».",
+  "tipReserveScan": "Para actuar sobre un espacio desde su tarjeta QR: toque «Escanear un código de espacio», apunte la cámara a la tarjeta y elija qué hacer.",
   "tipValidationChain": "Para que las aprobaciones se den por turnos: activa «Una tras otra».",
-  "tipValidationCount": "Para pedir más aprobaciones: aumenta «Validaciones requeridas», o exígelas solo a partir de un importe con «Solo por encima de este importe».",
-  "tipValidationDefault": "Para cambiar la regla que heredan todas las acciones: toca «Regla predeterminada».",
-  "tipValidationOverride": "Para tratar una acción de otra forma: toca su tarjeta y cámbiala; entonces indica «Personalizada».",
-  "tipValidationRoles": "Para decidir quién tiene cada rol: edita los roles.",
-  "tipValidationWho": "Para elegir quién aprueba —administradores, personas indicadas o todos los miembros—: ajusta «Quién valida».",
-  "tipWorkspaceSettingsBackup": "Para hacer una copia de seguridad o duplicar el espacio: usa «Exportar el espacio (XML)».",
-  "tipWorkspaceSettingsColours": "Para dar tus colores a la app: elígelos.",
-  "tipWorkspaceSettingsDocuments": "Para imprimir los documentos del espacio —tarjetas QR, tarifas, normas—: abre los documentos del espacio.",
-  "tipWorkspaceSettingsGeneral": "Para ajustar el país, la moneda, la zona horaria y el idioma: abre «Datos generales»; documentos e impuestos dependen de ellos.",
-  "tipWorkspaceSettingsLegal": "Para emitir facturas y facturas electrónicas conformes: completa tu identidad legal.",
-  "tipWorkspaceSettingsNewMembers": "Para definir con qué empiezan los nuevos miembros: elige su suscripción y qué pasa al agotar los días en «Nuevos miembros».",
-  "tipWorkspaceSettingsPay": "Para indicar a los miembros cómo pagarte: rellena las instrucciones de pago.",
-  "tipWorkspaceSettingsSave": "Para conservar tus cambios: toca «Guardar» abajo antes de salir.",
-  "tipWorkspaceSettingsWording": "Para llamar las cosas a tu manera —puestos, plantas, reservas—: cambia los términos.",
+  "tipValidationCount": "Para pedir más aprobaciones: aumente «Validaciones requeridas», o exíjalas solo a partir de un importe con «Solo por encima de este importe».",
+  "tipValidationDefault": "Para cambiar la regla que heredan todas las acciones: toque «Regla predeterminada».",
+  "tipValidationOverride": "Para tratar una acción de otra forma: toque su tarjeta y cámbiela; entonces indica «Personalizada».",
+  "tipValidationRoles": "Para decidir quién tiene cada rol: edite los roles.",
+  "tipValidationWho": "Para elegir quién aprueba —administradores, personas indicadas o todos los miembros—: ajuste «Quién valida».",
+  "tipWorkspaceSettingsBackup": "Para hacer una copia de seguridad o duplicar el espacio: use «Exportar el espacio (XML)».",
+  "tipWorkspaceSettingsColours": "Para dar sus colores a la app: elíjalos.",
+  "tipWorkspaceSettingsDocuments": "Para imprimir los documentos del espacio —tarjetas QR, tarifas, normas—: abra los documentos del espacio.",
+  "tipWorkspaceSettingsGeneral": "Para ajustar el país, la moneda, la zona horaria y el idioma: abra «Datos generales»; documentos e impuestos dependen de ellos.",
+  "tipWorkspaceSettingsLegal": "Para emitir facturas y facturas electrónicas conformes: complete su identidad legal.",
+  "tipWorkspaceSettingsNewMembers": "Para definir con qué empiezan los nuevos miembros: elija su suscripción y qué pasa al agotar los días en «Nuevos miembros».",
+  "tipWorkspaceSettingsPay": "Para indicar a los miembros cómo pagarle: rellene las instrucciones de pago.",
+  "tipWorkspaceSettingsSave": "Para conservar sus cambios: toque «Guardar» abajo antes de salir.",
+  "tipWorkspaceSettingsWording": "Para llamar las cosas a su manera —puestos, plantas, reservas—: cambie los términos.",
   "unblockAction": "Desbloquear",
   "unblockDone": "Desbloqueada.",
   "usageAsk": "Facturar el tiempo que estuve",
-  "usageAskExplain": "Reservaste {booked} y estuviste {present}. Pide que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca tú.",
+  "usageAskExplain": "Reservó {booked} y estuvo {present}. Pida que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca usted.",
   "usageAskSubmit": "Pedir",
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",
   "usageBilled": "Facturado",
@@ -11283,16 +11299,16 @@
   "uxBookingChargePending": "El cargo y el uso del cupo se calcularán según el plan del miembro. El importe final no está disponible aquí.",
   "uxBookingCheckInHelp": "Marcar también mi presencia al confirmar esta reserva.",
   "uxBookingFor": "Reserva para",
-  "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca tu presencia.",
+  "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca su presencia.",
   "uxBookingResourceUnavailable": "Recurso no disponible",
-  "uxDeviceTime": "Tu hora",
+  "uxDeviceTime": "Su hora",
   "uxFinanceAlerts": "Avisos financieros",
-  "uxFinanceAlertsFailed": "No se pudieron abrir los avisos financieros. Inténtalo de nuevo.",
+  "uxFinanceAlertsFailed": "No se pudieron abrir los avisos financieros. Inténtelo de nuevo.",
   "uxLinkedReference": "Recurso enlazado",
   "uxManageResource": "Gestionar recurso",
   "uxMoneyAllPeriods": "Todos los períodos · Crédito, facturas abiertas y reembolsos.",
-  "uxMoneyDocumentsScope": "Informes mensuales y tu acuerdo vigente.",
-  "uxMoneyInvoicesScope": "Tus facturas en este espacio · Todos los períodos.",
+  "uxMoneyDocumentsScope": "Informes mensuales y su acuerdo vigente.",
+  "uxMoneyInvoicesScope": "Sus facturas en este espacio · Todos los períodos.",
   "uxMoneyPaymentsScope": "Saldo mensual · Facturas vencidas de todos los períodos.",
   "uxMoneyStatementScope": "Detalle mensual del período seleccionado.",
   "uxMoneyUsageScope": "Reservas y consumos del mes seleccionado.",
@@ -11350,7 +11366,7 @@
   "validationOwnerSelf": "La propiedad puede validar lo propio",
   "validationOwnerSelfDesc": "La única excepción, y es solo de la propiedad: un admin nunca valida su propio acto.",
   "validationOwnerSelfShort": "La propiedad puede validar lo propio",
-  "validationPickPersons": "Elige las personas",
+  "validationPickPersons": "Elija las personas",
   "validationRequiredCount": "Validaciones requeridas",
   "validationSaved": "Regla de validación guardada.",
   "validationScopeAdmins": "Los admins",
@@ -11577,9 +11593,9 @@
   "@vatGroupZero": {
     "description": "#947 VAT groups: vatGroupZero"
   },
-  "vatIntro": "En DesKilo los precios incluyen IVA. Añadir tipos no cambia nada de lo que pagan los miembros: el impuesto se extrae del precio que ya cobras y se muestra en la factura.",
+  "vatIntro": "En DesKilo los precios incluyen IVA. Añadir tipos no cambia nada de lo que pagan los miembros: el impuesto se extrae del precio que ya cobra y se muestra en la factura.",
   "vatKeptRate": "Un tipo que todavía usa una factura o un servicio se conserva, desactivado.",
-  "vatNeedsDefault": "Marca exactamente un tipo como predeterminado.",
+  "vatNeedsDefault": "Marque exactamente un tipo como predeterminado.",
   "vatNewPercent": "Nuevo tipo %",
   "@vatNewPercent": {
     "description": "#985 VAT versions and counterparty: vatNewPercent"
@@ -11660,17 +11676,17 @@
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
   "visibilityAbout": "Profesión y biografía",
-  "visibilityAboutEmpty": "Añade tu profesión y unas palabras",
+  "visibilityAboutEmpty": "Añada su profesión y unas palabras",
   "visibilityAboutMe": "Sobre mí",
-  "visibilityAboutSaveFailed": "No se pudieron guardar tu profesión y biografía. Inténtalo de nuevo.",
-  "visibilityBio": "Unas palabras sobre ti",
+  "visibilityAboutSaveFailed": "No se pudieron guardar su profesión y biografía. Inténtelo de nuevo.",
+  "visibilityBio": "Unas palabras sobre usted",
   "visibilityChosenCount": "{count, plural, =1{Miembros de 1 espacio elegido} other{Miembros de {count} espacios elegidos}}",
   "visibilityChosenSpaces": "Miembros de espacios elegidos",
   "visibilityContact": "WhatsApp y correo",
   "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
   "visibilityElsewhereTitle": "En mis otros servidores",
   "visibilityIdentity": "Nombre y foto",
-  "visibilityIntro": "Cada parte de tu cuenta elige su propio público. Nada es público si no lo eliges.",
+  "visibilityIntro": "Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.",
   "visibilityMySpaces": "Miembros de mis espacios",
   "visibilityNobody": "Nadie",
   "visibilityOnServer": "Quién me ve en {host}",
@@ -11690,21 +11706,21 @@
     }
   },
   "visibilityPresence": "Hoy en el espacio",
-  "visibilityPreviewCanWrite": "Puede iniciar una conversación contigo",
-  "visibilityPreviewCannotWrite": "No puede iniciar una conversación contigo",
+  "visibilityPreviewCanWrite": "Puede iniciar una conversación con usted",
+  "visibilityPreviewCannotWrite": "No puede iniciar una conversación con usted",
   "visibilityPreviewFailed": "No se pudo cargar la vista previa.",
   "visibilityPreviewMySpaces": "Un miembro de mis espacios",
   "visibilityPreviewNobody": "Solo yo",
-  "visibilityPreviewNothing": "No ven nada de ti.",
+  "visibilityPreviewNothing": "No ven nada de usted.",
   "visibilityPreviewSignedIn": "Cualquiera con sesión iniciada",
   "visibilityPreviewTitle": "Cómo me ven los demás",
   "visibilityProfession": "Profesión",
   "visibilityReachability": "Quién puede iniciar una conversación conmigo",
-  "visibilitySaveFailed": "No se pudo guardar quién lo ve. Inténtalo de nuevo.",
+  "visibilitySaveFailed": "No se pudo guardar quién lo ve. Inténtelo de nuevo.",
   "visibilitySignedIn": "Cualquiera con sesión iniciada",
   "visibilityTitle": "Quién me ve",
   "visibilityWidenAction": "Ampliar",
-  "visibilityWidenConfirm": "¿Mostrar tu {field} a: {audience}? Podrán verlo.",
+  "visibilityWidenConfirm": "¿Mostrar su {field} a: {audience}? Podrán verlo.",
   "@visibilityWidenConfirm": {
     "placeholders": {
       "field": {
@@ -11719,7 +11735,7 @@
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"
   },
-  "visitCancelFailed": "No se pudo cancelar la visita. Nada ha cambiado; inténtalo de nuevo.",
+  "visitCancelFailed": "No se pudo cancelar la visita. Nada ha cambiado; inténtelo de nuevo.",
   "@visitCancelFailed": {
     "description": "#1835 a visit row: the cancel failed"
   },
@@ -11789,12 +11805,12 @@
   "@whatYouCanDoNothingMore": {
     "description": "#2085 giving roles: whatYouCanDoNothingMore"
   },
-  "whatYouCanDoTitle": "Lo que puedes hacer aquí",
+  "whatYouCanDoTitle": "Lo que puede hacer aquí",
   "@whatYouCanDoTitle": {
     "description": "#2085 giving roles: whatYouCanDoTitle"
   },
   "whatsappFieldLabel": "Número de WhatsApp",
-  "whatsappHelper": "Opcional. Visible para los miembros de tus espacios para que puedan contactarte por WhatsApp. Déjalo vacío para dejar de compartirlo.",
+  "whatsappHelper": "Opcional. Visible para los miembros de sus espacios para que puedan contactarle por WhatsApp. Déjelo vacío para dejar de compartirlo.",
   "whatsappHint": "+34 612 34 56 78",
   "whatsappNotShared": "No compartido",
   "whatsappSaveFailed": "No se pudo guardar el número de WhatsApp",
@@ -12049,11 +12065,11 @@
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"
   },
-  "workspaceFieldsPersonalNote": "Tus respuestas son datos personales: forman parte de tu exportación de datos y se borran cuando dejas este espacio, salvo que el espacio documente una obligación legal de conservar alguna.",
+  "workspaceFieldsPersonalNote": "Sus respuestas son datos personales: forman parte de su exportación de datos y se borran cuando deja este espacio, salvo que el espacio documente una obligación legal de conservar alguna.",
   "@workspaceFieldsPersonalNote": {
     "description": "#1912 custom fields: every answer is personal data"
   },
-  "workspaceFieldsSaveFailed": "Tus respuestas a las preguntas de este espacio no se han guardado. El resto de tus datos sí.",
+  "workspaceFieldsSaveFailed": "Sus respuestas a las preguntas de este espacio no se han guardado. El resto de sus datos sí.",
   "@workspaceFieldsSaveFailed": {
     "description": "#1288 custom fields: workspaceFieldsSaveFailed"
   },
@@ -12066,11 +12082,11 @@
       }
     }
   },
-  "workspaceGenericError": "Algo salió mal. Inténtalo de nuevo.",
-  "workspaceInviteCodeInvalid": "No se encontró ningún ID — pega la invitación o escribe el ID.",
+  "workspaceGenericError": "Algo salió mal. Inténtelo de nuevo.",
+  "workspaceInviteCodeInvalid": "No se encontró ningún ID — pegue la invitación o escriba el ID.",
   "workspaceInviteCodeLabel": "Código de invitación",
-  "workspaceInvitePasteHint": "Pega el mensaje de invitación completo — el ID se detecta automáticamente.",
-  "workspaceLanguageHelper": "Las invitaciones se redactan por defecto en este idioma. El idioma de tu app se cambia en Ajustes.",
+  "workspaceInvitePasteHint": "Pegue el mensaje de invitación completo — el ID se detecta automáticamente.",
+  "workspaceLanguageHelper": "Las invitaciones se redactan por defecto en este idioma. El idioma de su app se cambia en Ajustes.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
@@ -12088,7 +12104,7 @@
     "description": "Finance/settings UX + workspace language (#486)"
   },
   "workspaceResetConfirmButton": "Restablecer el espacio",
-  "workspaceResetConfirmLabel": "Escribe «{phrase}» para confirmar",
+  "workspaceResetConfirmLabel": "Escriba «{phrase}» para confirmar",
   "workspaceResetConfirmPhrase": "Acepto",
   "workspaceResetDialogTitle": "¿Restablecer este espacio?",
   "workspaceResetDone": "Espacio restablecido.",
@@ -12096,7 +12112,7 @@
   "workspaceResetTitle": "Restablecer el espacio",
   "workspaceResetWarning": "Esto elimina permanentemente todas las reservas, todos los datos financieros y del libro mayor, el registro de actividad y todo el plano — plantas, salas, mesas, plazas e imágenes. Se conservan los ajustes del espacio, los tramos de tarifa, la disponibilidad, las funciones, los catálogos y los miembros. No se puede deshacer.",
   "workspaceSettingsConflict": "Alguien cambió estos ajustes mientras los editaba. No se guardó nada; sus cambios siguen aquí.",
-  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiala si tu comunidad factura en otra moneda.",
+  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiela si su comunidad factura en otra moneda.",
   "workspaceSettingsSaved": "Espacio guardado.",
   "workspaceSettingsTitle": "Espacio de coworking",
   "workspaceTimezoneHint": "Europe/Madrid",
@@ -12105,7 +12121,7 @@
   "@workspaceTimezoneUnknown": {
     "description": "#711 - globalization"
   },
-  "workspaceWhatsappGroupHelper": "Se muestra a los miembros para que puedan unirse al grupo de WhatsApp de la comunidad. Pega el enlace de invitación del grupo (https://chat.whatsapp.com/…). Déjalo vacío para no mostrar nada.",
+  "workspaceWhatsappGroupHelper": "Se muestra a los miembros para que puedan unirse al grupo de WhatsApp de la comunidad. Pegue el enlace de invitación del grupo (https://chat.whatsapp.com/…). Déjelo vacío para no mostrar nada.",
   "workspaceWhatsappGroupInvalid": "Debe ser un enlace de invitación de chat.whatsapp.com",
   "workspaceWhatsappGroupLabel": "Enlace del grupo de WhatsApp",
   "workspaceWhatsappGroupTitle": "Grupo de WhatsApp",
@@ -12155,7 +12171,7 @@
     "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
   },
   "workspaceXmlImportConfirm": "Sustituir e importar",
-  "workspaceXmlImportPartial": "Parte de la importación se aplicó antes de detenerse: revisa los ajustes y el plano abajo.",
+  "workspaceXmlImportPartial": "Parte de la importación se aplicó antes de detenerse: revise los ajustes y el plano abajo.",
   "@workspaceXmlImportPartial": {
     "description": "#1532: workspaceXmlImportPartial"
   },

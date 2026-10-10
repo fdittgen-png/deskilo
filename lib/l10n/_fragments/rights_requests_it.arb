@@ -4,7 +4,7 @@
   "@rightsRequestsTitle": {
     "description": "#1915 rights requests: rightsRequestsTitle"
   },
-  "rightsRequestsHint": "Chiedi allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.",
+  "rightsRequestsHint": "Chieda allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.",
   "@rightsRequestsHint": {
     "description": "#1915 rights requests: rightsRequestsHint"
   },
@@ -12,11 +12,11 @@
   "@rightsRequestsEmpty": {
     "description": "#1915 rights requests: rightsRequestsEmpty"
   },
-  "rightsRequestNew": "Fai una richiesta",
+  "rightsRequestNew": "Nuova richiesta",
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "Cosa chiedi allo spazio?",
+  "rightsRequestAsk": "Cosa chiede allo spazio?",
   "@rightsRequestAsk": {
     "description": "#1915 rights requests: rightsRequestAsk"
   },
@@ -37,7 +37,7 @@
       }
     }
   },
-  "rightsRequestFailed": "Non è stato possibile inviare la richiesta. Riprova.",
+  "rightsRequestFailed": "Non è stato possibile inviare la richiesta. Riprovi.",
   "@rightsRequestFailed": {
     "description": "#1915 rights requests: rightsRequestFailed"
   },
@@ -115,15 +115,15 @@
   "@erasurePreviewOutside": {
     "description": "#1915 rights requests: erasurePreviewOutside"
   },
-  "erasureStoreMessages": "Messaggi che hai inviato",
+  "erasureStoreMessages": "Messaggi che ha inviato",
   "@erasureStoreMessages": {
     "description": "#1915 rights requests: erasureStoreMessages"
   },
-  "erasureStoreAnswers": "Le tue risposte alle domande dello spazio",
+  "erasureStoreAnswers": "Le sue risposte alle domande dello spazio",
   "@erasureStoreAnswers": {
     "description": "#1915 rights requests: erasureStoreAnswers"
   },
-  "erasureStoreProfile": "Il tuo profilo (se è il tuo ultimo spazio)",
+  "erasureStoreProfile": "Il suo profilo (se è il suo ultimo spazio)",
   "@erasureStoreProfile": {
     "description": "#1915 rights requests: erasureStoreProfile"
   },
@@ -147,11 +147,11 @@
   "@erasureStoreHeldAnswers": {
     "description": "#1915 rights requests: erasureStoreHeldAnswers"
   },
-  "erasureStoreOtherInstallations": "Un'altra installazione DesKilo è un titolare distinto — rivolgiti direttamente a lei",
+  "erasureStoreOtherInstallations": "Un'altra installazione DesKilo è un titolare distinto — si rivolga direttamente a essa",
   "@erasureStoreOtherInstallations": {
     "description": "#1915 rights requests: erasureStoreOtherInstallations"
   },
-  "erasureStoreDeviceCaches": "Copie sui tuoi dispositivi — cancellate quando esci da ciascuno",
+  "erasureStoreDeviceCaches": "Copie sui suoi dispositivi — cancellate quando esce da ciascuno",
   "@erasureStoreDeviceCaches": {
     "description": "#1915 rights requests: erasureStoreDeviceCaches"
   },

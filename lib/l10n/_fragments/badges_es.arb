@@ -122,7 +122,7 @@
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinSaveFailed": "No se pudo contactar con el servidor. Tu PIN no ha cambiado: inténtalo de nuevo.",
+  "badgePinSaveFailed": "No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
   },

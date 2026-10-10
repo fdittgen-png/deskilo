@@ -10,7 +10,7 @@
   "helpHintReserveTip4Topic": "Wie sich Buchungen verhalten",
   "helpHintPlan": "Der Live-Grundriss: freien Platz antippen zum Buchen, die eigene Buchung antippen zum Einchecken.",
   "helpHintPlanTopic": "Grundriss",
-  "helpHintCalendar": "Wähle einen Tag oder Zeitraum: alles Datierte, das du sehen darfst, in einer Liste, jede Zeile öffnet ihre Quelle.",
+  "helpHintCalendar": "Einen Tag oder Zeitraum wählen: alles Datierte, das Sie sehen dürfen, in einer Liste, jede Zeile öffnet ihre Quelle.",
   "helpHintCalendarTopic": "Kalender",
   "helpHintEvents": "Alles, was passiert ist, in einem Feed. Ausstehende Entscheidungen stehen oben; die Chips filtern den Rest.",
   "helpHintEventsTopic": "Ereignisse",
@@ -34,7 +34,7 @@
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
-  "helpHintPrivacy": "Sieh, wer deine Daten lesen kann und wer es tat, exportiere alles als eine Datei oder verlasse den Bereich mit gelöschten persönlichen Daten.",
+  "helpHintPrivacy": "Sehen, wer Ihre Daten lesen kann und wer es tat, alles als eine Datei exportieren oder den Bereich mit gelöschten persönlichen Daten verlassen.",
   "@helpHintPrivacy": {
     "description": "#718/#719 - help hints"
   },

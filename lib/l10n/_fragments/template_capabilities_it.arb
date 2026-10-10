@@ -7,6 +7,6 @@
   "capabilityOpeningHours": "Orari di apertura",
   "capabilityCustomMemberForm": "Modulo socio personalizzato",
   "librarySearchCapabilities": "Modelli configurati per: {capabilities}",
-  "librarySearchUnavailable": "Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprova.",
+  "librarySearchUnavailable": "Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprovi.",
   "librarySearchSuggestion": "Intendevi «{word}»?"
 }

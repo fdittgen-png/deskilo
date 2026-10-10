@@ -14,12 +14,12 @@
   "bookBasisCash": "Cassa",
   "bookEffectiveFrom": "In vigore dal {date}",
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
-  "bookProblemExternal": "Indica il sistema esterno che tiene i libri ufficiali.",
+  "bookProblemExternal": "Indichi il sistema esterno che tiene i libri ufficiali.",
   "bookProblemCurrency": "Questa valuta non ha un numero di decimali verificato.",
   "bookProblemFiscal": "Un esercizio inizia in un giorno che ogni anno ha (mai il 29 febbraio).",
   "bookSaved": "Libro salvato",
-  "bookStale": "Qualcuno ha salvato questo libro da quando l’hai aperto. Chiudi e riapri per vedere la sua versione.",
-  "bookSaveFailed": "Il libro non è stato salvato. Controlla la connessione e riprova.",
+  "bookStale": "Qualcuno ha salvato questo libro da quando l’ha aperto. Chiuda e riapra per vedere la versione salvata.",
+  "bookSaveFailed": "Il libro non è stato salvato. Controlli la connessione e riprovi.",
   "bookRoleCustomers": "Clienti (crediti)",
   "bookRoleRevenue": "Ricavi",
   "bookRoleBank": "Banca",
@@ -36,5 +36,5 @@
   "bookAccountName": "Nome del conto",
   "bookAccountPosting": "Riceve registrazioni",
   "bookMappingsTitle": "Il conto di ogni registrazione",
-  "bookProblemUnmapped": "Associa questi conti prima di avviare un libro locale: {roles}."
+  "bookProblemUnmapped": "Associ questi conti prima di avviare un libro locale: {roles}."
 }

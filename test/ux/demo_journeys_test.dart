@@ -241,8 +241,9 @@ void main() {
   testWidgets('journey: configure the workspace — an owner turns a feature '
       'off and the space stops offering it', (tester) async {
     final journey = await pumpDemo(tester, openHub: false);
+    // #2327 — the production side; its development twin is listed too.
     final workspace = (await journey.fixture.workspaces.fetchMyWorkspaces())
-        .single;
+        .singleWhere((w) => w.id == 'ws-1');
 
     expect(
       effectiveFeatures(resolveEnabledFeatures(workspace.featureFlags)),
@@ -254,7 +255,8 @@ void main() {
       const {'membersDirectory': false},
     );
 
-    final after = (await journey.fixture.workspaces.fetchMyWorkspaces()).single;
+    final after = (await journey.fixture.workspaces.fetchMyWorkspaces())
+        .singleWhere((w) => w.id == 'ws-1');
     expect(
       effectiveFeatures(resolveEnabledFeatures(after.featureFlags)),
       isNot(contains(WorkspaceFeature.membersDirectory)),

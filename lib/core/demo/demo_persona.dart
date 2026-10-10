@@ -9,10 +9,10 @@
 // that hides a button from a member hides it here for the same reason it
 // hides it there, and no Demo-specific branch decides anything.
 //
-// The three are people who already exist in the dataset (#1374), so
+// The three people already exist in the dataset (#1374), so
 // switching shows the product through somebody with real bookings, real
 // bills and a real place on the plan — not an empty shell with a
-// different badge.
+// different badge. The fourth is the space's wall tablet (#2327).
 import 'demo_dataset.dart';
 
 /// The perspectives a visitor can look from.
@@ -23,6 +23,11 @@ enum DemoPersona {
   /// Runs the day: members, reservations, expenses.
   admin,
 
+  /// #2327 — the wall tablet: the kiosk screen a member checks in at.
+  /// Between the administrator and the owner, so the ring a visitor
+  /// starts on (owner, member, administrator) reaches it last.
+  kiosk,
+
   /// Configures the space: roles, features, templates, governance.
   owner,
 }
@@ -32,6 +37,7 @@ extension DemoPersonaCast on DemoPersona {
   DemoPerson get person => switch (this) {
         DemoPersona.member => demoCast[1], // Bruno: half-time, owes a bill
         DemoPersona.admin => demoCast[2], // Chiara: checked in, runs the day
+        DemoPersona.kiosk => demoKioskDevice, // the front desk tablet
         DemoPersona.owner => demoCast[0], // Ada: the owner
       };
 

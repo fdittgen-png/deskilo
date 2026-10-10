@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "invoiceMissingTitle": "Completa questi dati prima dell'emissione",
+  "invoiceMissingTitle": "Completi questi dati prima dell'emissione",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },

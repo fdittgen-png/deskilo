@@ -11,7 +11,7 @@
   "@wordingRowHint": {
     "description": "#1277 the wording editor: the settings row subtitle"
   },
-  "wordingIntro": "Rinomina un piccolo insieme approvato di parole del prodotto. Tutto il resto mantiene la formulazione del prodotto, e un termine non rinominato appare esattamente come prima.",
+  "wordingIntro": "Rinomini un piccolo insieme approvato di parole del prodotto. Tutto il resto mantiene la formulazione del prodotto, e un termine non rinominato appare esattamente come prima.",
   "@wordingIntro": {
     "description": "#1277 the wording editor: what it does"
   },
@@ -27,7 +27,7 @@
   "@wordingReset": {
     "description": "#1277 the wording editor: reset one term"
   },
-  "wordingResetHint": "Reimposta rimuove la tua parola e ripristina quella del prodotto.",
+  "wordingResetHint": "Reimposta rimuove la sua parola e ripristina quella del prodotto.",
   "@wordingResetHint": {
     "description": "#1277 the wording editor: what reset does"
   },

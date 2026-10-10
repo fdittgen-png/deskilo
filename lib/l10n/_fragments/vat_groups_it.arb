@@ -56,7 +56,7 @@
   "@vatExemptionReasonField": {
     "description": "#947 VAT groups: vatExemptionReasonField"
   },
-  "eInvoiceGapMixedNotSubjectLines": "Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetti la cauzione su un documento separato.",
+  "eInvoiceGapMixedNotSubjectLines": "Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.",
   "@eInvoiceGapMixedNotSubjectLines": {
     "description": "#947 VAT groups: eInvoiceGapMixedNotSubjectLines"
   }

@@ -53,7 +53,7 @@
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
   },
-  "roleRefusalExceedsYours": "Este rol puede hacer cosas que tú no puedes, así que solo el propietario lo da.",
+  "roleRefusalExceedsYours": "Este rol puede hacer cosas que usted no puede, así que solo el propietario lo da.",
   "@roleRefusalExceedsYours": {
     "description": "#2085 giving roles: roleRefusalExceedsYours"
   },
@@ -77,7 +77,7 @@
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
-  "whatYouCanDoTitle": "Lo que puedes hacer aquí",
+  "whatYouCanDoTitle": "Lo que puede hacer aquí",
   "@whatYouCanDoTitle": {
     "description": "#2085 giving roles: whatYouCanDoTitle"
   },

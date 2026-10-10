@@ -28,7 +28,7 @@
   "@managedProfileHandOver": {
     "description": "#887 managed profiles: managedProfileHandOver"
   },
-  "managedProfileHandOverHint": "Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena approvi l'adesione.",
+  "managedProfileHandOverHint": "Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena Lei approva l'adesione.",
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
@@ -48,7 +48,7 @@
   "@managedProfileSaved": {
     "description": "#887 managed profiles: managedProfileSaved"
   },
-  "managedProfileIntro": "Questa persona non ha ancora un account. Prenoti, fatturi e gestisci per lei; consegnale il profilo quando entra.",
+  "managedProfileIntro": "Questa persona non ha ancora un account. Lei prenota, fattura e gestisce per conto suo; le consegni il profilo quando entra.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
   },

@@ -31,7 +31,7 @@
   "@applicationNoMessages": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationDiscussionHint": "Tus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
+  "applicationDiscussionHint": "Sus solicitudes y conversaciones con quienes las revisan siguen disponibles, incluso si se rechaza una solicitud.",
   "@applicationDiscussionHint": {
     "description": "Workspace admission history and discussion (#1791)"
   },
@@ -39,11 +39,11 @@
   "@applicationDecisionComment": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "No se pudieron cargar tus solicitudes de acceso. Inténtalo de nuevo.",
+  "applicationsLoadFailed": "No se pudieron cargar sus solicitudes de acceso. Inténtelo de nuevo.",
   "@applicationsLoadFailed": {
     "description": "Admission action failure (#1791)"
   },
-  "applicationReplyFailed": "Tu mensaje no se ha enviado. Se conserva el borrador; inténtalo de nuevo.",
+  "applicationReplyFailed": "Su mensaje no se ha enviado. Se conserva el borrador; inténtelo de nuevo.",
   "@applicationReplyFailed": {
     "description": "Admission action failure (#1791)"
   }

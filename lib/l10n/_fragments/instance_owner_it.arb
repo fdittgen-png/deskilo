@@ -1,11 +1,11 @@
 {
   "instanceOwnerTitle": "Proprietario dell'istanza",
-  "instanceOwnerHelp": "Questa installazione è condivisa da tutti i suoi spazi. Il proprietario dell'istanza ne risponde: contattalo per tutto ciò che riguarda l'intera installazione, come gli assistenti.",
+  "instanceOwnerHelp": "Questa installazione è condivisa da tutti i suoi spazi. Il proprietario dell'istanza ne risponde: lo contatti per tutto ciò che riguarda l'intera installazione, come gli assistenti.",
   "instanceOwnerNone": "Non è ancora stato definito un proprietario dell'istanza.",
   "instanceOwnerCopyEmail": "Copia l'indirizzo e-mail",
   "instanceOwnerCopied": "Indirizzo e-mail copiato.",
-  "instanceYouAreOwner": "Sei il proprietario dell'istanza.",
-  "instanceYouAreDelegate": "Sei un delegato del proprietario dell'istanza.",
+  "instanceYouAreOwner": "È il proprietario dell'istanza.",
+  "instanceYouAreDelegate": "È un delegato del proprietario dell'istanza.",
   "instanceDelegatesTitle": "Delegati",
   "instanceDelegatesNone": "Nessun delegato.",
   "instanceDelegatesHelp": "Un delegato può eseguire la configurazione degli assistenti per l'intera installazione. Non può delegare a sua volta e non vede altri spazi.",
@@ -23,8 +23,8 @@
   "instanceDelegateUnavailable": "Questo server non permette ancora di delegare.",
   "instanceDelegationWithdrawn": "Delega revocata.",
   "instanceClaimTitle": "Assumi la proprietà",
-  "instanceClaimBody": "Hai creato questa istanza e non è definito alcun proprietario. Assumendo la proprietà ne diventi il responsabile.",
+  "instanceClaimBody": "Ha creato questa istanza e non è definito alcun proprietario. Assumendo la proprietà ne diventa il responsabile.",
   "instanceClaimButton": "Assumi la proprietà",
-  "instanceClaimDone": "Ora sei il proprietario dell'istanza.",
+  "instanceClaimDone": "Ora è il proprietario dell'istanza.",
   "instanceClaimFailed": "Non è stato possibile assumere la proprietà."
 }

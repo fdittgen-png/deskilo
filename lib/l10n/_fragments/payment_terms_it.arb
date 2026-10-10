@@ -52,7 +52,7 @@
   "@paymentTermsRequestTitle": {
     "description": "#881 member payment conditions: paymentTermsRequestTitle"
   },
-  "paymentTermsRequestHint": "Lascia un campo vuoto per mantenere la formulazione dello spazio. La modifica si applica dopo la convalida.",
+  "paymentTermsRequestHint": "Lasci un campo vuoto per mantenere la formulazione dello spazio. La modifica si applica dopo la convalida.",
   "@paymentTermsRequestHint": {
     "description": "#881 member payment conditions: paymentTermsRequestHint"
   },

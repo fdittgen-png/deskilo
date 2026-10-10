@@ -2,7 +2,7 @@
   "compareExport": "Esporta in Excel",
   "compareExported": "Cartella di lavoro salvata.",
   "templateExportResults": "Esporta questi risultati ({count})",
-  "templateExportTooMany": "Al massimo {max} modelli per cartella. Restringi prima la ricerca.",
+  "templateExportTooMany": "Al massimo {max} modelli per cartella. Restringa prima la ricerca.",
   "workbookNote": "Un’istantanea di definizioni di modelli. Modificare questo file non cambia nulla in DesKilo, e non è il backup di alcuno spazio: non contiene membri, prenotazioni, fatture né credenziali.",
   "workbookStatePresent": "il modello imposta questo valore",
   "workbookStateInherit": "il modello non lo dice; la destinazione mantiene il proprio",
