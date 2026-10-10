@@ -199,7 +199,8 @@ window.SETUP_PROCESSES=[
      "vatRateHistory",
      "vatCounterparty",
      "supplyClassification",
-     "viesVerification"
+     "viesVerification",
+     "recapitulativeStatement"
     ]
    }
   ]

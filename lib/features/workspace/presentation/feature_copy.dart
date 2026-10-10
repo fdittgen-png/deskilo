@@ -317,6 +317,7 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'value per rate.',
         WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ?? AppLocalizationsEn().featureSupplyClassificationDesc,
         WorkspaceFeature.viesVerification => l10n?.featureViesVerificationDesc ?? AppLocalizationsEn().featureViesVerificationDesc,
+        WorkspaceFeature.recapitulativeStatement => l10n?.featureRecapitulativeStatementDesc ?? AppLocalizationsEn().featureRecapitulativeStatementDesc,
         WorkspaceFeature.vatCounterparty =>
           l10n?.featureVatCounterpartyDesc ??
               'Who the buyer is for VAT, set on each member: domestic VAT, '
@@ -469,9 +470,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the hosts: the owners, and the administrators who chose '
                   'to be public contacts. Only that person and the hosts '
                   'read the conversation.',
-        WorkspaceFeature.messageMentions =>
-          l10n?.featureMessageMentionsDesc ??
-              AppLocalizationsEn().featureMessageMentionsDesc,
+        WorkspaceFeature.messageMentions => l10n?.featureMessageMentionsDesc ??
+            AppLocalizationsEn().featureMessageMentionsDesc,
         WorkspaceFeature.messageForwarding =>
           l10n?.featureMessageForwardingDesc ??
               'A message can be forwarded into another conversation the '

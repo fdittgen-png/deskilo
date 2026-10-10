@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Livrer les confirmations en attente sur les appareils des membres.",
   "featureQrBadgesDesc": "Cartes badge QR imprimables pour le kiosque, à côté des cartes NFC/RFID.",
   "featureQrBadgesTitle": "Badges QR",
+  "featureRecapitulativeStatementDesc": "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis.",
+  "featureRecapitulativeStatementTitle": "Déclaration européenne de services",
   "featureRecordingPrivacyDesc": "Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d'arriver à l'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l'indique sur chaque écran, et les formulaires d'identité refusent d'enregistrer tant qu'il est actif.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -8640,6 +8642,19 @@
   "readinessStateUnavailable": "Lecture impossible",
   "readinessStateUnverified": "Pas encore vérifié",
   "readinessTitle": "Mise en place de cet espace",
+  "recapCsv": "Déclaration européenne de services (CSV)",
+  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, =1{1 facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "Rien n'a été autoliquidé sur cette période.",
   "recordingPrivacyBadge": "Mode tournage — personnes inventées",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

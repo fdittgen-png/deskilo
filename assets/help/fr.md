@@ -4635,6 +4635,27 @@ Avant d'autoliquider une prestation générale vendue à une entreprise d'un aut
 
 **Voir aussi:** [Autoliquidation pour les entreprises de l'UE](help:user.money.vat.reverse-charge) · [Lieu de prestation d'un service](help:user.money.services.supply)
 
+### Déclaration européenne de services
+
+**Public:** Propriétaire
+
+Chaque mois où vous autoliquidez des services vendus à des entreprises d'autres pays de l'UE, l'administration attend leur liste : la DES en France, la Zusammenfassende Meldung en Allemagne, le modelo 349 en Espagne.
+
+**Étapes**
+
+1. Ouvrez [Déclarations de TVA](app:/vat-declarations) et choisissez la période.
+2. Touchez **Déclaration européenne de services (CSV)**.
+3. Déposez-la sur le portail de l'administration, ou confiez-la à votre comptable.
+
+**Bon à savoir**
+
+- La liste totalise, par mois et par numéro de TVA du client, ce que vos factures émises ont autoliquidé ; un poste facturé avec votre TVA n'y figure jamais.
+- Tant qu'une déclaration est due, la **Facturation** affiche un avis : **Une déclaration européenne de services est due pour** le mois.
+- Le fichier a des colonnes fixes : période, pays, numéro de TVA, client, montant, documents.
+- Il faut la fonctionnalité **Déclaration européenne de services**.
+
+**Voir aussi:** [Vérification du numéro de TVA (VIES)](help:user.money.vat.vies) · [Autoliquidation pour les entreprises de l'UE](help:user.money.vat.reverse-charge)
+
 ### Exigibilité de la TVA
 
 **Public:** Propriétaire

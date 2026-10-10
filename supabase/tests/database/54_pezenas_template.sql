@@ -224,6 +224,7 @@ begin
       "publicListings": false,
       "pushNotifications": true,
       "qrBadges": false,
+      "recapitulativeStatement": false,
       "recordingPrivacy": false,
       "regionalFormats": true,
       "reportDesignExchange": false,

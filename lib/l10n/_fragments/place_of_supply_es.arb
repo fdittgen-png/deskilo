@@ -59,5 +59,20 @@
   "viesCheckNow": "Comprobar ahora",
   "viesCheckExplainer": "VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.",
   "invoiceMissingVies": "Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)",
-  "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde."
+  "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde.",
+  "featureRecapitulativeStatementTitle": "Declaración recapitulativa (modelo 349)",
+  "featureRecapitulativeStatementDesc": "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso.",
+  "recapCsv": "Declaración recapitulativa (CSV)",
+  "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
+  "recapDue": "Hay una declaración recapitulativa pendiente para {month}: {count, plural, =1{1 factura con inversión del sujeto pasivo} other{{count} facturas con inversión del sujeto pasivo}}. Expórtela desde las declaraciones de IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

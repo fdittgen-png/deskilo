@@ -115,5 +115,33 @@
   "viesCheckFailed": "VIES could not be asked. Try again later.",
   "@viesCheckFailed": {
     "description": "#2354 VIES evidence: viesCheckFailed"
+  },
+  "featureRecapitulativeStatementTitle": "EU sales list",
+  "@featureRecapitulativeStatementTitle": {
+    "description": "#2354 recapitulative statement: featureRecapitulativeStatementTitle"
+  },
+  "featureRecapitulativeStatementDesc": "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.",
+  "@featureRecapitulativeStatementDesc": {
+    "description": "#2354 recapitulative statement: featureRecapitulativeStatementDesc"
+  },
+  "recapCsv": "EU sales list (CSV)",
+  "@recapCsv": {
+    "description": "#2354 recapitulative statement: recapCsv"
+  },
+  "recapEmpty": "Nothing was reverse-charged in this period.",
+  "@recapEmpty": {
+    "description": "#2354 recapitulative statement: recapEmpty"
+  },
+  "recapDue": "An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
+  "@recapDue": {
+    "description": "#2354 recapitulative statement: recapDue",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

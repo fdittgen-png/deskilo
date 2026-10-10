@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
   "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
   "featureQrBadgesTitle": "Badge QR",
+  "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
+  "featureRecapitulativeStatementTitle": "Elenchi riepilogativi (Intrastat servizi)",
   "featureRecordingPrivacyDesc": "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -8640,6 +8642,19 @@
   "readinessStateUnavailable": "Impossibile leggere",
   "readinessStateUnverified": "Non ancora verificato",
   "readinessTitle": "Configurazione di questo spazio",
+  "recapCsv": "Elenco riepilogativo (CSV)",
+  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, =1{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "Nessuna inversione contabile in questo periodo.",
   "recordingPrivacyBadge": "Modalità ripresa — persone inventate",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

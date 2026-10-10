@@ -5504,6 +5504,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureQrBadgesTitle => 'Badges QR';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'Les services autoliquidés par des entreprises d\'autres pays de l\'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l\'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu\'une déclaration est due. Désactivé : ni export ni avis.';
+
+  @override
+  String get featureRecapitulativeStatementTitle =>
+      'Déclaration européenne de services';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'Pour filmer ou photographier cet espace. Chaque nom, adresse électronique, numéro de téléphone, adresse postale et photo est remplacé par une personne inventée avant d\'arriver à l\'écran, tandis que le plan, les réservations et les montants restent les vrais. Un bandeau l\'indique sur chaque écran, et les formulaires d\'identité refusent d\'enregistrer tant qu\'il est actif.';
 
@@ -14019,6 +14027,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get readinessTitle => 'Mise en place de cet espace';
+
+  @override
+  String get recapCsv => 'Déclaration européenne de services (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count factures autoliquidées',
+      one: '1 facture autoliquidée',
+    );
+    return 'Une déclaration européenne de services est due pour $month : $_temp0. Exportez-la depuis les déclarations de TVA.';
+  }
+
+  @override
+  String get recapEmpty => 'Rien n\'a été autoliquidé sur cette période.';
 
   @override
   String get recordingPrivacyBadge => 'Mode tournage — personnes inventées';

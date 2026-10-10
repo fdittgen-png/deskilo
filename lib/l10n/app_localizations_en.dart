@@ -5456,6 +5456,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR badges';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.';
+
+  @override
+  String get featureRecapitulativeStatementTitle => 'EU sales list';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.';
 
@@ -13875,6 +13882,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readinessTitle => 'Setting up this space';
+
+  @override
+  String get recapCsv => 'EU sales list (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reverse-charged invoices',
+      one: '1 reverse-charged invoice',
+    );
+    return 'An EU sales list is due for $month: $_temp0. Export it from VAT declarations.';
+  }
+
+  @override
+  String get recapEmpty => 'Nothing was reverse-charged in this period.';
 
   @override
   String get recordingPrivacyBadge => 'Filming mode — invented people';

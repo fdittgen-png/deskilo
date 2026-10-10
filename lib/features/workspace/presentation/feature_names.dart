@@ -158,6 +158,9 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.viesVerification =>
         l10n?.featureViesVerificationTitle ??
             AppLocalizationsEn().featureViesVerificationTitle,
+      WorkspaceFeature.recapitulativeStatement =>
+        l10n?.featureRecapitulativeStatementTitle ??
+            AppLocalizationsEn().featureRecapitulativeStatementTitle,
       WorkspaceFeature.environmentPairs =>
         l10n?.featureEnvironmentPairs ?? 'Environment pairs',
       WorkspaceFeature.deployments =>

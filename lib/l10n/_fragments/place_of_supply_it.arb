@@ -59,5 +59,20 @@
   "viesCheckNow": "Verifica ora",
   "viesCheckExplainer": "VIES è il registro europeo delle partite IVA. Una risposta valida, con il suo numero di consultazione, prova che questo cliente è un'impresa; una fattura in inversione contabile viene emessa solo dopo.",
   "invoiceMissingVies": "Una verifica VIES valida della partita IVA del membro (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
-  "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi."
+  "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi.",
+  "featureRecapitulativeStatementTitle": "Elenchi riepilogativi (Intrastat servizi)",
+  "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
+  "recapCsv": "Elenco riepilogativo (CSV)",
+  "recapEmpty": "Nessuna inversione contabile in questo periodo.",
+  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, =1{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

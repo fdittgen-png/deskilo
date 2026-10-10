@@ -5491,6 +5491,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureQrBadgesTitle => 'Badge QR';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l\'elenco che l\'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.';
+
+  @override
+  String get featureRecapitulativeStatementTitle =>
+      'Elenchi riepilogativi (Intrastat servizi)';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.';
 
@@ -13994,6 +14002,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get readinessTitle => 'Configurazione di questo spazio';
+
+  @override
+  String get recapCsv => 'Elenco riepilogativo (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fatture in inversione contabile',
+      one: '1 fattura in inversione contabile',
+    );
+    return 'È dovuto un elenco riepilogativo per $month: $_temp0. Lo esporti dalle dichiarazioni IVA.';
+  }
+
+  @override
+  String get recapEmpty => 'Nessuna inversione contabile in questo periodo.';
 
   @override
   String get recordingPrivacyBadge => 'Modalità ripresa — persone inventate';

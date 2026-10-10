@@ -351,6 +351,28 @@ Antes de aplicar la inversión del sujeto pasivo a un servicio general para una 
 
 **Véase también:** [Inversión del sujeto pasivo para empresas de la UE](#inversión-del-sujeto-pasivo-para-empresas-de-la-ue) · [Lugar de prestación de un servicio](#lugar-de-prestación-de-un-servicio)
 
+<!-- anchor: user.money.vat.recap -->
+### Declaración recapitulativa (modelo 349)
+
+**Público:** Propietario
+
+Cada mes en que aplica la inversión del sujeto pasivo a servicios para empresas de otros países de la UE, la administración espera su lista: el modelo 349 en España, la DES en Francia, la Zusammenfassende Meldung en Alemania.
+
+**Pasos**
+
+1. Abra [Declaraciones de IVA](https://fdittgen-png.github.io/deskilo/#/vat-declarations) y elija el periodo.
+2. Pulse **Declaración recapitulativa (CSV)**.
+3. Preséntela en el portal de la administración o entréguela a su gestor.
+
+**Conviene saber**
+
+- La lista suma, por mes y por número de IVA del cliente, lo que sus facturas emitidas pusieron en inversión del sujeto pasivo; un puesto con su IVA nunca aparece.
+- Mientras haya una pendiente, la **Facturación** muestra un aviso: **Hay una declaración recapitulativa pendiente para** el mes.
+- El archivo tiene columnas fijas: periodo, país, número de IVA, cliente, importe, documentos.
+- Requiere la función **Declaración recapitulativa (modelo 349)**.
+
+**Véase también:** [Comprobación del número de IVA (VIES)](#comprobación-del-número-de-iva-vies) · [Inversión del sujeto pasivo para empresas de la UE](#inversión-del-sujeto-pasivo-para-empresas-de-la-ue)
+
 <!-- anchor: user.money.vat.due -->
 ### Cuándo se devenga el IVA
 

@@ -227,6 +227,7 @@
   "user.money.vat.regime": "VAT regime",
   "user.money.vat.reverse-charge": "Reverse charge for EU businesses",
   "user.money.vat.vies": "VAT number check (VIES)",
+  "user.money.vat.recap": "EU sales list",
   "user.money.vat.due": "When VAT falls due",
   "user.money.vat.account": "VAT account",
   "user.money.vat.number": "VAT number",
