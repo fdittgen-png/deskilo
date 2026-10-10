@@ -20,7 +20,7 @@ FinanceKpiRepository financeKpiRepository(Ref ref) =>
     SupabaseFinanceKpiRepository(Supabase.instance.client);
 
 /// One read per workspace and months, shared by every finance card.
-@Riverpod(retry: kpiRetry)
+@riverpod
 Future<FinanceSummaryKpi> financeSummary(
   Ref ref,
   String workspaceId,
@@ -32,7 +32,7 @@ Future<FinanceSummaryKpi> financeSummary(
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
-@Riverpod(retry: kpiRetry)
+@riverpod
 Future<SeatCapacityKpi> seatCapacityMonth(
   Ref ref,
   String workspaceId,

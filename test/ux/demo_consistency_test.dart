@@ -8,7 +8,6 @@ import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
-import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter/material.dart';
@@ -69,26 +68,6 @@ void main() {
     expect(
       _shows('Nothing to pay — you are up to date.'),
       overview.outstanding.isEmpty,
-    );
-  });
-
-  testWidgets('Business analytics settles on figures', (tester) async {
-    await pumpDemo(tester, persona: DemoPersona.owner);
-    await _go(tester, '/bi');
-
-    final card = find.byKey(const ValueKey('bi-module-finance.invoiced'));
-    expect(card, findsOneWidget);
-    expect(
-      find.descendant(of: card, matching: find.byType(LoadingView)),
-      findsNothing,
-      reason: 'the finance card used to load for a minute (retries)',
-    );
-    expect(
-      find.descendant(
-        of: card,
-        matching: find.byKey(const ValueKey('bi-unavailable')),
-      ),
-      findsNothing,
     );
   });
 

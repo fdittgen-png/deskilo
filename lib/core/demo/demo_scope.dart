@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
-import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
@@ -203,10 +202,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
-      // #2327 — the demo's own invoices, summed as a server sums them
-      // (#1924 showed "unavailable" here, and the retry kept it loading).
+      // #1924 — no server to sum invoices on: the cards say so.
       financeKpiRepositoryProvider.overrideWithValue(
-        DemoFinanceKpiRepository(fixture.money, now: fixture.seededAt),
+        const UnavailableFinanceKpiRepository(),
       ),
 
       // #1377 — the ways an effect could leave the app, each pointed at

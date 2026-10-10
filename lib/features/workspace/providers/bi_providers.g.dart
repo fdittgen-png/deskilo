@@ -20,7 +20,7 @@ final class BiModuleResultProvider
     required BiModuleResultFamily super.from,
     required (String, String, BiQueryContext) super.argument,
   }) : super(
-         retry: _biRetry,
+         retry: null,
          name: r'biModuleResultProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -59,7 +59,7 @@ final class BiModuleResultProvider
   }
 }
 
-String _$biModuleResultHash() => r'fff3c2e27787cb5f0d666e5da8b0b30f6b0e3064';
+String _$biModuleResultHash() => r'900ab2ac90d01eeb9fe3c93638665d880e82cdf0';
 
 final class BiModuleResultFamily extends $Family
     with
@@ -69,7 +69,7 @@ final class BiModuleResultFamily extends $Family
         > {
   BiModuleResultFamily._()
     : super(
-        retry: _biRetry,
+        retry: null,
         name: r'biModuleResultProvider',
         dependencies: null,
         $allTransitiveDependencies: null,

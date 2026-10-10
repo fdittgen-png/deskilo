@@ -37,11 +37,7 @@ DateTime biToday(Ref ref) =>
   to: WorkspaceTime.at(p.year, p.startMonth + p.grain.months, 1),
 );
 
-/// #2327 — a refused context is final, and so is what the KPIs refuse.
-Duration? _biRetry(int count, Object error) =>
-    error is BiRefused ? null : kpiRetry(count, error);
-
-@Riverpod(retry: _biRetry)
+@riverpod
 Future<BiResult> biModuleResult(
   Ref ref,
   String workspaceId,
