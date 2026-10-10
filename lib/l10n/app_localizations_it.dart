@@ -37,7 +37,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get a11ySeatFree => 'libero';
 
   @override
-  String get a11ySeatMine => 'il tuo posto';
+  String get a11ySeatMine => 'il suo posto';
 
   @override
   String get a11ySeatOccupied => 'occupato';
@@ -73,7 +73,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get aboutSupportBody =>
-      'Questa app è gratuita, open source e senza pubblicità. Se la trovi utile, sostieni lo sviluppatore.';
+      'Questa app è gratuita, open source e senza pubblicità. Se la trova utile, sostenga lo sviluppatore.';
 
   @override
   String get aboutSupportTitle => 'Sostieni questo progetto';
@@ -87,11 +87,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accessKindNegotiations => 'Negoziazioni di prezzo';
 
   @override
-  String get accessKindProfile => 'il vostro profilo';
+  String get accessKindProfile => 'il suo profilo';
 
   @override
   String get accessLogEmpty =>
-      'Nessuno ha consultato le tue finanze o i tuoi messaggi.';
+      'Nessuno ha consultato le sue finanze o i suoi messaggi.';
 
   @override
   String accessLogRow(String actor, String category, String subject) {
@@ -99,22 +99,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get accessLogTitle => 'Chi ha consultato i tuoi dati';
+  String get accessLogTitle => 'Chi ha consultato i suoi dati';
 
   @override
   String get accessNobodyElse => 'nessun altro';
 
   @override
-  String get accessRuleEvents => 'Tu, il membro che ha agito e gli admin.';
+  String get accessRuleEvents => 'Lei, il membro che ha agito e gli admin.';
 
   @override
   String accessRuleFinances(String people) {
-    return 'Tu e chi ha il permesso finanze: $people.';
+    return 'Lei e chi ha il permesso finanze: $people.';
   }
 
   @override
   String accessRuleManagedProfile(String people) {
-    return 'Finché questo profilo è stato gestito per voi: $people. Ogni consultazione o modifica da parte loro è registrata sotto.';
+    return 'Finché questo profilo è stato gestito per Lei: $people. Ogni consultazione o modifica da parte loro è registrata sotto.';
   }
 
   @override
@@ -123,11 +123,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String accessRuleNegotiations(String people) {
-    return 'Tu, i proprietari e gli admin finanze: $people. Ogni lettura da parte di altri è registrata qui sotto.';
+    return 'Lei, i proprietari e gli admin finanze: $people. Ogni lettura da parte di altri è registrata qui sotto.';
   }
 
   @override
-  String get accessRuleReminders => 'Solo tu.';
+  String get accessRuleReminders => 'Solo Lei.';
 
   @override
   String get accessRuleReservations =>
@@ -170,24 +170,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get accountActivityFailed =>
-      'Impossibile caricare la cronologia finanziaria. Tocca per riprovare.';
+      'Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.';
 
   @override
   String get accountActivityScope =>
-      'Tutti i tuoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.';
+      'Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.';
 
   @override
   String get accountActivityTitle => 'I miei consumi e pagamenti';
 
   @override
-  String get accountCardTitle => 'Il tuo conto';
+  String get accountCardTitle => 'Il suo conto';
 
   @override
   String get accountCredit => 'Credito disponibile';
 
   @override
   String get accountImputationHint =>
-      'Il tuo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.';
+      'Il suo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.';
 
   @override
   String get accountInvoiceIssued => 'Fattura emessa';
@@ -246,7 +246,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addressTitle => 'Indirizzo';
 
   @override
-  String get addressVatIdLabel => 'Partita IVA (se fatturi come impresa)';
+  String get addressVatIdLabel => 'Partita IVA (se fattura come impresa)';
 
   @override
   String get addressWindowCountry => 'Segui il paese';
@@ -316,14 +316,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get applicationReplyFailed =>
-      'Il messaggio non è stato inviato. La bozza è stata conservata; riprova.';
+      'Il messaggio non è stato inviato. La bozza è stata conservata; riprovi.';
 
   @override
   String get applicationsEmpty => 'Nessuna richiesta di accesso.';
 
   @override
   String get applicationsLoadFailed =>
-      'Impossibile caricare le richieste di accesso. Riprova.';
+      'Impossibile caricare le richieste di accesso. Riprovi.';
 
   @override
   String get applicationsTitle => 'Richieste di accesso';
@@ -348,7 +348,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Chi: chi gestisce le integrazioni di questo spazio di lavoro';
 
   @override
-  String get assistantSetupActorYou => 'Chi: tu';
+  String get assistantSetupActorYou => 'Chi: Lei';
 
   @override
   String get assistantSetupAllDone =>
@@ -359,7 +359,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupConnectHowTo =>
-      '1. Nel tuo assistente, aggiungi un connettore personalizzato con questo URL.\n2. Accedi con il tuo account DesKilo quando richiesto.\n3. Approva questo spazio di lavoro e le operazioni che consenti.';
+      '1. Nel suo assistente, aggiunga un connettore personalizzato con questo URL.\n2. Acceda con il suo account DesKilo quando richiesto.\n3. Approvi questo spazio di lavoro e le operazioni che consente.';
 
   @override
   String get assistantSetupCopied => 'URL del connettore copiato.';
@@ -372,7 +372,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupFailed =>
-      'Impossibile salvare. Non è cambiato nulla; riprova.';
+      'Impossibile salvare. Non è cambiato nulla; riprovi.';
 
   @override
   String assistantSetupInstanceNames(String names) {
@@ -385,7 +385,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupInstanceYou =>
-      'Rispondi tu di questo database: attiva gli assistenti dagli strumenti dell\'istanza.';
+      'Risponde Lei di questo database: attivi gli assistenti dagli strumenti dell\'istanza.';
 
   @override
   String get assistantSetupIntro =>
@@ -409,7 +409,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa app funziona senza server, quindi non c\'è un URL del connettore.';
 
   @override
-  String get assistantSetupNoWorkspace => 'Scegli prima uno spazio di lavoro.';
+  String get assistantSetupNoWorkspace => 'Scelga prima uno spazio di lavoro.';
 
   @override
   String get assistantSetupPreviewAdds => 'Aggiunte';
@@ -434,7 +434,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupReasonConnect =>
-      'Aggiungi il connettore nel tuo assistente, accedi e approva questo spazio di lavoro.';
+      'Aggiunga il connettore nel suo assistente, acceda e approvi questo spazio di lavoro.';
 
   @override
   String get assistantSetupReasonEligibility =>
@@ -442,7 +442,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupReasonIdentity =>
-      'Un assistente agisce a tuo nome, quindi questo database deve sapere che sei tu.';
+      'Un assistente agisce a suo nome, quindi questo database deve sapere che è Lei.';
 
   @override
   String get assistantSetupReasonInstallation =>
@@ -470,7 +470,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupStale =>
-      'Qualcuno ha modificato l\'offerta nel frattempo. Controllala e riprova.';
+      'Qualcuno ha modificato l\'offerta nel frattempo. La controlli e riprovi.';
 
   @override
   String get assistantSetupStateBlocked => 'Dopo i passi precedenti';
@@ -488,14 +488,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get assistantSetupStateWaiting => 'In attesa';
 
   @override
-  String get assistantSetupStepConnect => 'Collega il tuo assistente';
+  String get assistantSetupStepConnect => 'Colleghi il suo assistente';
 
   @override
   String get assistantSetupStepEligibility =>
-      'Chiedi il tuo accesso agli assistenti';
+      'Chieda il suo accesso agli assistenti';
 
   @override
-  String get assistantSetupStepIdentity => 'Collega la tua identità';
+  String get assistantSetupStepIdentity => 'Colleghi la sua identità';
 
   @override
   String get assistantSetupStepInstallation =>
@@ -503,11 +503,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get assistantSetupStepPolicy =>
-      'Scegli cosa possono fare gli assistenti';
+      'Scelga cosa possono fare gli assistenti';
 
   @override
   String get assistantSetupStepWorkspace =>
-      'Attiva gli assistenti per questo spazio di lavoro';
+      'Attivi gli assistenti per questo spazio di lavoro';
 
   @override
   String get assistantSetupTitle => 'Configurazione degli assistenti';
@@ -565,7 +565,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authAlreadyRegistered =>
-      'Questo indirizzo non può essere usato per creare un account. Accedi o reimposta la password.';
+      'Questo indirizzo non può essere usato per creare un account. Acceda o reimposti la password.';
 
   @override
   String get authConnectServer => 'Collegarsi al server di un\'organizzazione';
@@ -581,7 +581,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authEmailNotConfirmed =>
-      'Conferma prima il tuo indirizzo e-mail: apri il messaggio che ti abbiamo inviato, poi accedi.';
+      'Confermi prima il suo indirizzo e-mail: apra il messaggio che le abbiamo inviato, poi acceda.';
 
   @override
   String get authFieldRequired => 'Obbligatorio';
@@ -591,7 +591,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authGenericError =>
-      'Autenticazione non riuscita. Controlla le credenziali e riprova.';
+      'Autenticazione non riuscita. Controlli le credenziali e riprovi.';
 
   @override
   String get authHidePassword => 'Nascondi password';
@@ -601,7 +601,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authJoinHint =>
-      'Crea prima il tuo account o accedi: incollerai l\'invito subito dopo.';
+      'Crei prima il suo account o acceda: incollerà l\'invito subito dopo.';
 
   @override
   String authLinkAlreadyUsed(String provider) {
@@ -610,7 +610,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String authLinkFailed(String provider, String code) {
-    return 'Il collegamento di $provider non è riuscito ($code). Riprova; se continua a fallire, comunica questo codice all\'amministratore del server.';
+    return 'Il collegamento di $provider non è riuscito ($code). Riprovi; se continua a fallire, comunichi questo codice all\'amministratore del server.';
   }
 
   @override
@@ -619,7 +619,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authNetworkError =>
-      'Impossibile raggiungere il server. Controlla la connessione e riprova.';
+      'Impossibile raggiungere il server. Controlli la connessione e riprovi.';
 
   @override
   String get authPasswordLabel => 'Password';
@@ -633,31 +633,31 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authRateLimited =>
-      'Troppi tentativi. Attendi un momento, poi riprova.';
+      'Troppi tentativi. Attenda un momento, poi riprovi.';
 
   @override
   String get authRecoveryNotSaved =>
-      'Il codice è stato accettato, ma la nuova password non è stata salvata. Riprova a salvarla.';
+      'Il codice è stato accettato, ma la nuova password non è stata salvata. Riprovi a salvarla.';
 
   @override
   String get authRecoveryRetryUpdate => 'Salva di nuovo la nuova password';
 
   @override
   String get authRecoverySessionLost =>
-      'Quel codice non è più valido qui. Richiedine uno nuovo.';
+      'Quel codice non è più valido qui. Ne richieda uno nuovo.';
 
   @override
   String get authResetCodeLabel => 'Codice ricevuto via e-mail';
 
   @override
-  String get authResetCodeSent => 'Codice inviato — controlla la tua e-mail.';
+  String get authResetCodeSent => 'Codice inviato — controlli la sua e-mail.';
 
   @override
-  String get authResetDone => 'Password aggiornata — sei connesso.';
+  String get authResetDone => 'Password aggiornata — ha effettuato l\'accesso.';
 
   @override
   String get authResetExplainer =>
-      'Ti invieremo un codice monouso via e-mail. Usalo qui per impostare una nuova password.';
+      'Le invieremo un codice monouso via e-mail. Lo usi qui per impostare una nuova password.';
 
   @override
   String get authResetInvalidCode => 'Questo codice non è valido o è scaduto.';
@@ -698,7 +698,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get authToggleToSignIn => 'Hai già un account? Accedi';
+  String get authToggleToSignIn => 'Ha già un account? Accedi';
 
   @override
   String get authToggleToSignUp => 'Nuovo qui? Crea un account';
@@ -708,7 +708,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String authVerifyBody(String email) {
-    return 'Abbiamo inviato un link di conferma a $email. Aprilo su questo dispositivo per completare la creazione dell\'account.';
+    return 'Abbiamo inviato un link di conferma a $email. Lo apra su questo dispositivo per completare la creazione dell\'account.';
   }
 
   @override
@@ -716,22 +716,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authVerifyHint =>
-      'Ancora nulla? Controlla la cartella spam o invialo di nuovo.';
+      'Ancora nulla? Controlli la cartella spam o lo invii di nuovo.';
 
   @override
   String get authVerifyResend => 'Invia di nuovo l\'e-mail';
 
   @override
-  String get authVerifyResendWait => 'Potrai inviarla di nuovo tra un minuto.';
+  String get authVerifyResendWait => 'Potrà inviarla di nuovo tra un minuto.';
 
   @override
   String get authVerifyResent => 'Inviata di nuovo.';
 
   @override
-  String get authVerifyTitle => 'Controlla la tua e-mail';
+  String get authVerifyTitle => 'Controlli la sua e-mail';
 
   @override
-  String get authWeakPassword => 'Scegli una password più robusta.';
+  String get authWeakPassword => 'Scelga una password più robusta.';
 
   @override
   String get availabilityAddClosure => 'Aggiungi giorno di chiusura';
@@ -847,10 +847,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendErrorKeyConnectionString =>
-      'Questa è una stringa di connessione al database. Non lascia mai il server — incolla qui la chiave pubblicabile del progetto.';
+      'Questa è una stringa di connessione al database. Non lascia mai il server — incolli qui la chiave pubblicabile del progetto.';
 
   @override
-  String get backendErrorKeyEmpty => 'Inserisci la chiave pubblicabile.';
+  String get backendErrorKeyEmpty => 'Inserisca la chiave pubblicabile.';
 
   @override
   String get backendErrorKeyNotSupabase =>
@@ -858,25 +858,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendErrorKeyPersonalToken =>
-      'Questo è un token di accesso personale. Resta al suo proprietario — incolla qui la chiave pubblicabile del progetto.';
+      'Questo è un token di accesso personale. Resta al suo proprietario — incolli qui la chiave pubblicabile del progetto.';
 
   @override
   String get backendErrorKeySecret =>
-      'Questa è una chiave segreta, non pubblicabile. Non condividerla mai: ruotala in Project Settings → API keys, poi incolla qui la chiave pubblicabile.';
+      'Questa è una chiave segreta, non pubblicabile. Non la condivida mai: la ruoti in Project Settings → API keys, poi incolli qui la chiave pubblicabile.';
 
   @override
   String get backendErrorKeyUserToken =>
-      'Questo è un token di sessione o di identità, non una chiave di progetto. Incolla qui la chiave pubblicabile del progetto.';
+      'Questo è un token di sessione o di identità, non una chiave di progetto. Incolli qui la chiave pubblicabile del progetto.';
 
   @override
-  String get backendErrorUrlEmpty => 'Inserisci l\'URL del progetto.';
+  String get backendErrorUrlEmpty => 'Inserisca l\'URL del progetto.';
 
   @override
   String get backendErrorUrlNoHost => 'Questo non è un indirizzo completo.';
 
   @override
   String get backendErrorUrlNotCanonical =>
-      'Indica solo l\'indirizzo del progetto (https://host), senza percorso, parametri o credenziali.';
+      'Indichi solo l\'indirizzo del progetto (https://host), senza percorso, parametri o credenziali.';
 
   @override
   String get backendErrorUrlNotHttps => 'L\'URL deve iniziare con https://.';
@@ -902,7 +902,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendFullCheckHint =>
-      'Incollate un token di accesso personale per questo controllo. Serve solo a questo controllo e non viene mai salvato.';
+      'Incolli un token di accesso personale per questo controllo. Serve solo a questo controllo e non viene mai salvato.';
 
   @override
   String get backendFullCheckTitle => 'Esegui un controllo completo';
@@ -911,7 +911,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backendFullCheckUseToken => 'Usa questo token';
 
   @override
-  String get backendHowTitle => 'Usare il tuo server';
+  String get backendHowTitle => 'Usare il suo server';
 
   @override
   String get backendKeyLabel => 'Chiave pubblicabile';
@@ -926,7 +926,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendModeConnectHint =>
-      'Scansiona o incolla il codice server fornito dalla tua organizzazione. Non serve mai una chiave di amministratore.';
+      'Scansioni o incolli il codice server fornito dalla sua organizzazione. Non serve mai una chiave di amministratore.';
 
   @override
   String get backendModeDefault => 'Usa il servizio DesKilo';
@@ -942,11 +942,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get backendOpenDashboard => 'Apri in Supabase';
 
   @override
-  String get backendOwnServer => 'Il vostro server';
+  String get backendOwnServer => 'Il suo server';
 
   @override
   String get backendOwnership =>
-      'Appartiene alla vostra organizzazione Supabase. DesKilo non conserva alcun accesso.';
+      'Appartiene alla sua organizzazione Supabase. DesKilo non conserva alcun accesso.';
 
   @override
   String get backendOwnershipOther =>
@@ -957,7 +957,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String backendPendingBody(String active, String saved) {
-    return 'Questa sessione gira ancora su $active. $saved subentrerà quando chiudi e riapri l\'app.';
+    return 'Questa sessione gira ancora su $active. $saved subentrerà quando chiude e riapre l\'app.';
   }
 
   @override
@@ -972,16 +972,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String backendProjectRef(String ref) {
-    return 'Il vostro progetto Supabase $ref';
+    return 'Il suo progetto Supabase $ref';
   }
 
   @override
   String get backendResetDeviceOnly =>
-      'Questo cambia solo questo dispositivo e non tocca mai il vostro progetto Supabase.';
+      'Questo cambia solo questo dispositivo e non tocca mai il suo progetto Supabase.';
 
   @override
   String get backendSaveNeedsTest =>
-      'Prova prima la connessione. Solo un server verificato può essere salvato.';
+      'Provi prima la connessione. Solo un server verificato può essere salvato.';
 
   @override
   String get backendScan => 'Scansiona un QR del server';
@@ -991,7 +991,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String backendServerCustom(Object host) {
-    return 'Il tuo server ($host)';
+    return 'Il suo server ($host)';
   }
 
   @override
@@ -1001,7 +1001,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendServerHint =>
-      'Per impostazione predefinita l\'app usa il proprio server. Se la tua comunità gestisce un proprio progetto Supabase, inseriscilo qui — l\'app salverà tutto lì.';
+      'Per impostazione predefinita l\'app usa il proprio server. Se la sua comunità gestisce un proprio progetto Supabase, lo inserisca qui — l\'app salverà tutto lì.';
 
   @override
   String get backendServerInUse => 'In uso su questo dispositivo';
@@ -1011,11 +1011,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendServerRestartHint =>
-      'L\'app ti disconnette e applica la modifica al prossimo avvio.';
+      'L\'app la disconnette e applica la modifica al prossimo avvio.';
 
   @override
   String get backendServerSaved =>
-      'Salvato. Chiudi e riapri l\'app per usare il nuovo server.';
+      'Salvato. Chiuda e riapra l\'app per usare il nuovo server.';
 
   @override
   String get backendServerTitle => 'Server';
@@ -1029,19 +1029,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendStep1 =>
-      'Crea un progetto su supabase.com (il piano gratuito basta per iniziare).';
+      'Crei un progetto su supabase.com (il piano gratuito basta per iniziare).';
 
   @override
   String get backendStep2 =>
-      'Installa lo schema dell\'app: esegui i file SQL in supabase/migrations del repository sorgente, in ordine.';
+      'Installi lo schema dell\'app: esegua i file SQL in supabase/migrations del repository sorgente, in ordine.';
 
   @override
   String get backendStep3 =>
-      'Nel pannello Supabase apri Project Settings → API keys e copia la Project URL e la chiave pubblicabile.';
+      'Nel pannello Supabase apra Project Settings → API keys e copi la Project URL e la chiave pubblicabile.';
 
   @override
   String get backendStep4 =>
-      'Incollali qui sotto, prova la connessione e salva. I membri raggiungono la stessa istanza scansionando il QR qui sopra.';
+      'Li incolli qui sotto, provi la connessione e salvi. I membri raggiungono la stessa istanza scansionando il QR qui sopra.';
 
   @override
   String get backendTest => 'Prova la connessione';
@@ -1052,26 +1052,26 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendTestAttention =>
-      'Raggiunto, ma la risposta non è stata classificata. Controlla il server prima di usarlo.';
+      'Raggiunto, ma la risposta non è stata classificata. Controlli il server prima di usarlo.';
 
   @override
   String get backendTestBadKey =>
-      'Raggiunto, ma la chiave è stata rifiutata. Ricopia la chiave pubblicabile da Project Settings → API keys.';
+      'Raggiunto, ma la chiave è stata rifiutata. Ricopi la chiave pubblicabile da Project Settings → API keys.';
 
   @override
   String get backendTestBehind =>
-      'Raggiunto, ma il suo schema DesKilo è più vecchio di quanto richiede questa app. Aggiorna il server prima di usarlo.';
+      'Raggiunto, ma il suo schema DesKilo è più vecchio di quanto richiede questa app. Aggiorni il server prima di usarlo.';
 
   @override
   String get backendTestOk => 'Raggiunto — lo schema dell\'app è presente.';
 
   @override
   String get backendTestSchemaMissing =>
-      'Raggiunto, ma mancano le tabelle DesKilo — esegui prima le migrazioni di supabase/migrations su quel progetto.';
+      'Raggiunto, ma mancano le tabelle DesKilo — esegua prima le migrazioni di supabase/migrations su quel progetto.';
 
   @override
   String get backendTestUnreachable =>
-      'Impossibile raggiungere quell\'indirizzo. Controlla l\'URL e la rete.';
+      'Impossibile raggiungere quell\'indirizzo. Controlli l\'URL e la rete.';
 
   @override
   String get backendTesting => 'Prova in corso…';
@@ -1081,7 +1081,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get backendVersionAhead =>
-      'Il server è più recente di questa app: aggiornate l\'app appena possibile';
+      'Il server è più recente di questa app: aggiorni l\'app appena possibile';
 
   @override
   String backendVersionBehind(int version) {
@@ -1112,14 +1112,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get badgeAuthEnabledHint =>
-      'Disattivo per impostazione predefinita: un badge che registra la tua entrata non ti fa accedere finché non lo decidi tu.';
+      'Disattivo per impostazione predefinita: un badge che registra la sua entrata non la fa accedere finché non lo decide Lei.';
 
   @override
   String get badgeAuthEnabledLabel => 'Mi fa accedere';
 
   @override
   String get badgeAuthNeedsPin =>
-      'Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.';
+      'Imposti prima un PIN di accesso — il badge da solo non deve mai bastare.';
 
   @override
   String get badgeCardAlreadyRegistered => 'Questa tessera è già registrata.';
@@ -1153,14 +1153,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get badgePinCleared =>
-      'PIN rimosso. I tuoi badge non ti fanno più accedere.';
+      'PIN rimosso. I suoi badge non la fanno più accedere.';
 
   @override
   String get badgePinConfirmLabel => 'Ripetilo';
 
   @override
   String get badgePinExplain =>
-      'Il PIN ti permette di accedere scansionando il badge invece di digitare la tua e-mail. Solo tu puoi impostarlo e nessuno — nemmeno un proprietario — può rileggerlo.';
+      'Il PIN le permette di accedere scansionando il badge invece di digitare la sua e-mail. Solo Lei può impostarlo e nessuno — nemmeno un proprietario — può rileggerlo.';
 
   @override
   String get badgePinMismatch => 'Le due voci non coincidono.';
@@ -1173,7 +1173,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get badgePinSaveFailed =>
-      'Server irraggiungibile. Il tuo PIN non è stato modificato — riprova.';
+      'Server irraggiungibile. Il suo PIN non è stato modificato — riprovi.';
 
   @override
   String get badgePinSaved => 'PIN salvato.';
@@ -1189,7 +1189,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String badgePinTooShort(int min) {
-    return 'Usa almeno $min cifre.';
+    return 'Usi almeno $min cifre.';
   }
 
   @override
@@ -1217,45 +1217,45 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get badgeSignInLocked =>
-      'Troppi tentativi. Attendi qualche minuto, oppure accedi con la tua e-mail.';
+      'Troppi tentativi. Attenda qualche minuto, oppure acceda con la sua e-mail.';
 
   @override
   String get badgeSignInNoReader =>
       'Nessun lettore di badge disponibile su questo dispositivo.';
 
   @override
-  String get badgeSignInPinLabel => 'Il tuo PIN';
+  String get badgeSignInPinLabel => 'Il suo PIN';
 
   @override
   String get badgeSignInRefused =>
-      'Non ha funzionato. Controlla il badge e il PIN, oppure accedi con la tua e-mail.';
+      'Non ha funzionato. Controlli il badge e il PIN, oppure acceda con la sua e-mail.';
 
   @override
   String get badgeSignInRetry => 'Riprova';
 
   @override
-  String get badgeSignInTapPrompt => 'Avvicina il badge al telefono.';
+  String get badgeSignInTapPrompt => 'Avvicini il badge al telefono.';
 
   @override
   String get badgeSignInTitle => 'Accedi con il badge';
 
   @override
   String get badgeSignInUnavailable =>
-      'L’accesso con badge non è raggiungibile ora. Accedi con la tua e-mail.';
+      'L’accesso con badge non è raggiungibile ora. Acceda con la sua e-mail.';
 
   @override
   String get badgeSignInUseEmail => 'Usa la mia e-mail';
 
   @override
   String get badgeTapCardHint =>
-      'Avvicina la tessera RFID/NFC al retro del dispositivo.';
+      'Avvicini la tessera RFID/NFC al retro del dispositivo.';
 
   @override
   String get badgeTapCardTitle => 'Registra una tessera';
 
   @override
   String get badgeTokenOnce =>
-      'Salva questo QR adesso — viene mostrato una sola volta.';
+      'Salvi questo QR adesso — viene mostrato una sola volta.';
 
   @override
   String get baseRoleNote =>
@@ -1303,7 +1303,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String biCardsUnavailable(String count) {
-    return '$count analisi di questa vista non sono disponibili per te e vengono omesse.';
+    return '$count analisi di questa vista non sono disponibili per Lei e vengono omesse.';
   }
 
   @override
@@ -1471,7 +1471,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le stesse regole del rapporto di stato dello spazio, calcolate una volta sul server.';
 
   @override
-  String get biForbidden => 'Non puoi leggere questa analisi in questo spazio.';
+  String get biForbidden => 'Non può leggere questa analisi in questo spazio.';
 
   @override
   String get biFutureBasis =>
@@ -1593,7 +1593,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String biRefusedBudget(String count) {
-    return 'Ci sono più di $count gruppi; scegli «Nessun raggruppamento».';
+    return 'Ci sono più di $count gruppi; scelga «Nessun raggruppamento».';
   }
 
   @override
@@ -1704,7 +1704,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biViewDuplicate => 'Duplica come mia vista';
 
   @override
-  String get biViewForbidden => 'Non puoi modificare questa vista.';
+  String get biViewForbidden => 'Non può modificare questa vista.';
 
   @override
   String get biViewInvalid => 'Questo nome o vista non può essere salvato.';
@@ -1714,7 +1714,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Apri questa vista per impostazione predefinita';
 
   @override
-  String get biViewMakeTeamDefault => 'Rendila la vista predefinita del team';
+  String get biViewMakeTeamDefault => 'Imposta come vista predefinita del team';
 
   @override
   String get biViewModified => 'modificata dall’apertura';
@@ -1750,7 +1750,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biViewStale =>
-      'Qualcuno ha salvato questa vista da quando l’hai aperta. L’elenco è stato riletto; riprova.';
+      'Qualcuno ha salvato questa vista da quando l’ha aperta. L’elenco è stato riletto; riprovi.';
 
   @override
   String get biViewStandard => 'Vista standard';
@@ -1760,7 +1760,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biViewUnreadable =>
-      'Questa vista non può essere aperta qui: è stata salvata in una forma che questa versione non legge, oppure nessuna delle sue analisi è disponibile per te.';
+      'Questa vista non può essere aperta qui: è stata salvata in una forma che questa versione non legge, oppure nessuna delle sue analisi è disponibile per Lei.';
 
   @override
   String get biViews => 'Viste';
@@ -1790,11 +1790,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get billCreditNoteDue =>
-      'Lo spazio ti deve questo importo: non hai nulla da pagare.';
+      'Lo spazio le deve questo importo: non ha nulla da pagare.';
 
   @override
   String get billCreditNoteRefunded =>
-      'Lo spazio ti ha rimborsato questo importo.';
+      'Lo spazio le ha rimborsato questo importo.';
 
   @override
   String billEntitlement(int used, int included, int openDays) {
@@ -1963,7 +1963,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get billingSubscriptionOff =>
-      'Attiva «Fatture di abbonamento» in Funzionalità per usarlo.';
+      'Attivi «Fatture di abbonamento» in Funzionalità per usarlo.';
 
   @override
   String get billingSubscriptionSection => 'Abbonamento, in anticipo';
@@ -1986,7 +1986,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get billingUsageOff =>
-      'Attiva «Fatture di fine mese» in Funzionalità per usarlo.';
+      'Attivi «Fatture di fine mese» in Funzionalità per usarlo.';
 
   @override
   String get billingUsageSection => 'Il mese appena concluso';
@@ -2003,18 +2003,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String blockPersonConfirm(String name) {
-    return 'Bloccare $name? Nessuno dei due vedrà o raggiungerà l\'altro. Puoi annullare in Io.';
+    return 'Bloccare $name? Nessuno dei due vedrà o raggiungerà l\'altro. Può annullare in Io.';
   }
 
   @override
   String get blockPersonDone => 'Bloccata.';
 
   @override
-  String get blockedPeopleEmpty => 'Non hai bloccato nessuno.';
+  String get blockedPeopleEmpty => 'Non ha bloccato nessuno.';
 
   @override
   String get blockedPeopleHint =>
-      'Una persona bloccata non può vederti né scriverti, e tu non puoi vederla né raggiungerla.';
+      'Una persona bloccata non può vederla né scriverle, e Lei non può vedere né raggiungere quella persona.';
 
   @override
   String get blockedPeopleTitle => 'Persone bloccate';
@@ -2082,7 +2082,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookProblemExternal =>
-      'Indica il sistema esterno che tiene i libri ufficiali.';
+      'Indichi il sistema esterno che tiene i libri ufficiali.';
 
   @override
   String get bookProblemFiscal =>
@@ -2090,7 +2090,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String bookProblemUnmapped(String roles) {
-    return 'Associa questi conti prima di avviare un libro locale: $roles.';
+    return 'Associ questi conti prima di avviare un libro locale: $roles.';
   }
 
   @override
@@ -2110,7 +2110,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookSaveFailed =>
-      'Il libro non è stato salvato. Controlla la connessione e riprova.';
+      'Il libro non è stato salvato. Controlli la connessione e riprovi.';
 
   @override
   String get bookSaved => 'Libro salvato';
@@ -2120,7 +2120,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookStale =>
-      'Qualcuno ha salvato questo libro da quando l’hai aperto. Chiudi e riapri per vedere la sua versione.';
+      'Qualcuno ha salvato questo libro da quando l’ha aperto. Chiuda e riapra per vedere la versione salvata.';
 
   @override
   String get bookTileEmpty =>
@@ -2148,7 +2148,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingCheckedInElsewhere =>
-      'Hai fatto check-in altrove — fai prima il check-out lì.';
+      'Ha fatto check-in altrove — faccia prima il check-out lì.';
 
   @override
   String bookingCheckedInUntil(String until) {
@@ -2165,7 +2165,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingMembershipPaused =>
-      'La tua iscrizione è sospesa — un amministratore la riattiva in Membri.';
+      'La sua iscrizione è sospesa — un amministratore la riattiva in Membri.';
 
   @override
   String get bookingModeCheckInNow => 'Check-in adesso';
@@ -2179,11 +2179,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingNotAMember =>
-      'Non sei più membro di questo spazio — chiedi un invito a un amministratore.';
+      'Non è più membro di questo spazio — chieda un invito a un amministratore.';
 
   @override
   String get bookingOnePlace =>
-      'Hai già una prenotazione in quel periodo — un posto alla volta.';
+      'Ha già una prenotazione in quel periodo — un posto alla volta.';
 
   @override
   String get bookingOpenDetails => 'Dettagli';
@@ -2220,7 +2220,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingRecoveryBanner =>
-      'Una tua richiesta di prenotazione è ancora senza risposta.';
+      'Una sua richiesta di prenotazione è ancora senza risposta.';
 
   @override
   String get bookingRecoveryBannerAction => 'Verifica';
@@ -2230,47 +2230,47 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingRecoveryCommitted =>
-      'La prenotazione esiste: esattamente una, dalla tua richiesta originale.';
+      'La prenotazione esiste: esattamente una, dalla sua richiesta originale.';
 
   @override
   String get bookingRecoveryDiscard => 'Lascia andare';
 
   @override
   String get bookingRecoveryInProgress =>
-      'Il server sta ancora elaborando questa richiesta. Verifica di nuovo tra un istante.';
+      'Il server sta ancora elaborando questa richiesta. Verifichi di nuovo tra un istante.';
 
   @override
   String get bookingRecoveryNotCommitted =>
-      'Nulla è stato prenotato per questa richiesta. Puoi riprenderla com\'era o lasciarla andare.';
+      'Nulla è stato prenotato per questa richiesta. Può riprenderla com\'era o lasciarla andare.';
 
   @override
   String get bookingRecoveryNotSaved =>
-      'Questo dispositivo non ha potuto salvare la richiesta di prenotazione, quindi nulla è stato inviato. Libera spazio o riprova.';
+      'Questo dispositivo non ha potuto salvare la richiesta di prenotazione, quindi nulla è stato inviato. Liberi spazio o riprovi.';
 
   @override
   String get bookingRecoveryResume => 'Riprendi la stessa richiesta';
 
   @override
   String get bookingRecoveryResumed =>
-      'Ripresa: la tua richiesta originale è stata prenotata una sola volta.';
+      'Ripresa: la sua richiesta originale è stata prenotata una sola volta.';
 
   @override
   String get bookingRecoverySpaceFallback => 'Lo spazio scelto';
 
   @override
-  String get bookingRecoveryTitle => 'La tua richiesta di prenotazione';
+  String get bookingRecoveryTitle => 'La sua richiesta di prenotazione';
 
   @override
   String get bookingRecoveryUnavailable =>
-      'Impossibile interrogare il server. Nulla è cambiato; riprova.';
+      'Impossibile interrogare il server. Nulla è cambiato; riprovi.';
 
   @override
   String get bookingRecoveryUnknown =>
-      'La connessione si è interrotta dopo l\'invio della richiesta. La prenotazione potrebbe esistere o no: verifica prima di prenotare di nuovo.';
+      'La connessione si è interrotta dopo l\'invio della richiesta. La prenotazione potrebbe esistere o no: verifichi prima di prenotare di nuovo.';
 
   @override
   String get bookingRecoveryUnresolved =>
-      'Il server non conserva più traccia di questa richiesta e non può dirlo. Controlla le tue prenotazioni prima di prenotare di nuovo.';
+      'Il server non conserva più traccia di questa richiesta e non può dirlo. Controlli le sue prenotazioni prima di prenotare di nuovo.';
 
   @override
   String get bookingRecoveryView => 'Vedi la prenotazione';
@@ -2292,7 +2292,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bookingSameDayError =>
-      'Una prenotazione termina il giorno in cui inizia — prenota il giorno dopo separatamente.';
+      'Una prenotazione termina il giorno in cui inizia — prenoti il giorno dopo separatamente.';
 
   @override
   String get bookingSpaceChainTaken =>
@@ -2314,14 +2314,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get bootFailedBody =>
-      'Il server o l\'archivio sicuro di questo dispositivo non ha risposto. Non è stato modificato nulla. Chiudi l\'app e riaprila; se continua a succedere, controlla la rete.';
+      'Il server o l\'archivio sicuro di questo dispositivo non ha risposto. Non è stato modificato nulla. Chiuda l\'app e la riapra; se continua a succedere, controlli la rete.';
 
   @override
   String get bootFailedTitle => 'DesKilo non è riuscito ad avviarsi';
 
   @override
   String get bootSlowBody =>
-      'Continua a provare. Se non succede nulla, chiudi l\'app e riaprila.';
+      'Continua a provare. Se non succede nulla, chiuda l\'app e la riapra.';
 
   @override
   String get bootSlowTitle => 'L\'avvio richiede più tempo del solito';
@@ -2340,7 +2340,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get buyPackageDone => 'Giorni aggiunti — goditi il tempo extra.';
+  String get buyPackageDone => 'Giorni aggiunti — si goda il tempo extra.';
 
   @override
   String get buyPackageNone => 'Nessun pacchetto disponibile al momento.';
@@ -2647,7 +2647,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get capacityKpiForbidden =>
-      'Non puoi consultare i dati di capacità di questo spazio.';
+      'Non può consultare i dati di capacità di questo spazio.';
 
   @override
   String capacityKpiHistory(String date) {
@@ -2720,7 +2720,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get captureWebNotice =>
-      'Il tuo browser non può impedire gli screenshot di questa conversazione.';
+      'Il suo browser non può impedire gli screenshot di questa conversazione.';
 
   @override
   String get carnetAdd => 'Aggiungi carnet';
@@ -2808,11 +2808,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get coloursLogoHint =>
-      'Il tuo logo appare anche mentre qualcuno apre questo spazio.';
+      'Il suo logo appare anche mentre qualcuno apre questo spazio.';
 
   @override
   String coloursMalformed(String text) {
-    return '$text non è un colore: scrivetelo come #RRGGBB.';
+    return '$text non è un colore: lo scriva come #RRGGBB.';
   }
 
   @override
@@ -2827,7 +2827,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get coloursPatternHint =>
-      'Come il tuo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.';
+      'Come il suo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.';
 
   @override
   String get coloursPatternSaved => 'Motivo salvato.';
@@ -2866,12 +2866,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String coloursRoomsOwn(int n) {
-    return '$n colori vostri, in questo ordine.';
+    return '$n colori suoi, in questo ordine.';
   }
 
   @override
   String get coloursRoomsProduct =>
-      'La palette del prodotto. Aggiungete un colore per usare la vostra.';
+      'La palette del prodotto. Aggiunga un colore per usare la sua.';
 
   @override
   String coloursRoomsSaved(int n) {
@@ -2965,7 +2965,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String compareLimit(String count) {
-    return 'Si possono confrontare fino a $count modelli. Rimuovine prima uno.';
+    return 'Si possono confrontare fino a $count modelli. Ne rimuova prima uno.';
   }
 
   @override
@@ -3027,7 +3027,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get connectionChangedIdentity =>
-      'Questo server non è più quello che hai connesso. Le sue azioni sono sospese finché non lo verifichi di nuovo.';
+      'Questo server non è più quello che ha connesso. Le sue azioni sono sospese finché non lo verifica di nuovo.';
 
   @override
   String get connectionChecking => 'Verifica in corso…';
@@ -3037,11 +3037,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get connectionDenied =>
-      'Questo server ha rifiutato l’account. Controlla le credenziali o scollegalo.';
+      'Questo server ha rifiutato l’account. Controlli le credenziali o lo scolleghi.';
 
   @override
   String get connectionExpired =>
-      'L’accesso a questo server è scaduto. Accedi di nuovo a questo server.';
+      'L’accesso a questo server è scaduto. Acceda di nuovo a questo server.';
 
   @override
   String get connectionInvalidEndpoint =>
@@ -3060,7 +3060,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get connectionSessionNotSaved =>
-      'L’azione è stata eseguita, ma questo dispositivo non ha potuto salvare l’accesso al server. Potrebbe esserti chiesto di accedere di nuovo.';
+      'L’azione è stata eseguita, ma questo dispositivo non ha potuto salvare l’accesso al server. Potrebbe esserle chiesto di accedere di nuovo.';
 
   @override
   String get connectionSignInAgain => 'Accedi di nuovo';
@@ -3071,11 +3071,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get connectionUnknownOutcome =>
-      'La connessione si è interrotta dopo l’invio della richiesta. Potrebbe essere stata applicata: verifica prima di riprovare.';
+      'La connessione si è interrotta dopo l’invio della richiesta. Potrebbe essere stata applicata: verifichi prima di riprovare.';
 
   @override
   String get connectionUnsupported =>
-      'Questa versione del server non può essere connessa da questa app. Aggiorna l’app o chiedi al gestore del server di aggiornarlo.';
+      'Questa versione del server non può essere connessa da questa app. Aggiorni l’app o chieda al gestore del server di aggiornarlo.';
 
   @override
   String get connectionUsable => 'Connesso';
@@ -3097,18 +3097,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Ogni spazio è gestito dal suo proprietario — la tua comunità — che decide membri, prezzi e fornitori di pagamento. L\'app è software libero (AGPL-3.0-or-later) ed è pubblicata da Florian Dittgen (Germania); il backend è Supabase nell\'UE. I pagamenti online passano dal fornitore attivato dal proprietario (PayPal, Stripe, Mollie, Wero) alle sue condizioni.';
+      'Ogni spazio è gestito dal suo proprietario — la sua comunità — che decide membri, prezzi e fornitori di pagamento. L\'app è software libero (AGPL-3.0-or-later) ed è pubblicata da Florian Dittgen (Germania); il backend è Supabase nell\'UE. I pagamenti online passano dal fornitore attivato dal proprietario (PayPal, Stripe, Mollie, Wero) alle sue condizioni.';
 
   @override
   String get consentControllerTitle => 'Chi è responsabile';
 
   @override
   String get consentIntro =>
-      'Prima di usare DesKilo, ecco cosa fa l\'app con i tuoi dati, chi può vederli e cosa puoi farci. Due minuti; non c\'è altro.';
+      'Prima di usare DesKilo, ecco cosa fa l\'app con i suoi dati, chi può vederli e cosa può farci. Due minuti; non c\'è altro.';
 
   @override
   String get consentNotBody =>
-      'Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessuna vendita o condivisione di dati. Le notifiche push non portano contenuto — solo «hai un nuovo messaggio»; l\'app stessa scrive il testo. La versione F-Droid non ha alcun servizio Google.';
+      'Nessun tracciamento, nessuna analisi, nessuna pubblicità, nessuna vendita o condivisione di dati. Le notifiche push non portano contenuto — solo «ha un nuovo messaggio»; l\'app stessa scrive il testo. La versione F-Droid non ha alcun servizio Google.';
 
   @override
   String get consentNotTitle => 'Cosa DesKilo non fa mai';
@@ -3121,49 +3121,49 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get consentRetentionBody =>
-      'Finché sei membro. Quando esci e cancelli, profilo e messaggi spariscono; i documenti contabili (fatture, pagamenti) restano per il periodo legale di conservazione, per identificativo e non per nome.';
+      'Finché è membro. Quando esce e cancella, profilo e messaggi spariscono; i documenti contabili (fatture, pagamenti) restano per il periodo legale di conservazione, per identificativo e non per nome.';
 
   @override
   String get consentRetentionTitle => 'Per quanto tempo';
 
   @override
   String get consentReviewBody =>
-      'Questo testo resta disponibile in Impostazioni → Privacy e dati, nell\'aiuto dell\'app (Privacy) e nel wiki del progetto. Una modifica del testo richiede di nuovo la tua accettazione.';
+      'Questo testo resta disponibile in Impostazioni → Privacy e dati, nell\'aiuto dell\'app (Privacy) e nel wiki del progetto. Una modifica del testo richiede di nuovo la sua accettazione.';
 
   @override
   String get consentReviewHint =>
-      'Il testo che hai accettato, con la data — rileggilo quando vuoi.';
+      'Il testo che ha accettato, con la data — lo rilegga quando vuole.';
 
   @override
-  String get consentReviewTitle => 'Rileggilo quando vuoi';
+  String get consentReviewTitle => 'Lo rilegga quando vuole';
 
   @override
   String get consentRightsBody =>
-      'Accesso, rettifica, esportazione (art. 20), cancellazione (art. 17) e opposizione — ciascuno è un pulsante in Impostazioni → Privacy e dati. Per il resto: fdittgen@gmail.com. Puoi revocare questo consenso in qualsiasi momento lasciando lo spazio e cancellando i tuoi dati.';
+      'Accesso, rettifica, esportazione (art. 20), cancellazione (art. 17) e opposizione — ciascuno è un pulsante in Impostazioni → Privacy e dati. Per il resto: fdittgen@gmail.com. Può revocare questo consenso in qualsiasi momento lasciando lo spazio e cancellando i suoi dati.';
 
   @override
-  String get consentRightsTitle => 'I tuoi diritti';
+  String get consentRightsTitle => 'I suoi diritti';
 
   @override
-  String get consentTitle => 'I tuoi dati, i tuoi diritti';
+  String get consentTitle => 'I suoi dati, i suoi diritti';
 
   @override
   String get consentUnavailable =>
-      'Impossibile caricare il tuo account, quindi non c’è ancora nulla da accettare.';
+      'Impossibile caricare il suo account, quindi non c’è ancora nulla da accettare.';
 
   @override
   String get consentVersion => 'Versione';
 
   @override
   String get consentWhatBody =>
-      'Il tuo account (e-mail, nome visualizzato, password cifrata), il tuo profilo come lo compili (foto, stato, indirizzo, numero WhatsApp — ciascuno facoltativo), e ciò che fai in uno spazio: prenotazioni e check-in, messaggi, spese e consumi, il tuo abbonamento, fatture e pagamenti. Tutto è conservato nell\'UE (Supabase, eu-central-1).';
+      'Il suo account (e-mail, nome visualizzato, password cifrata), il suo profilo come lo compila (foto, stato, indirizzo, numero WhatsApp — ciascuno facoltativo), e ciò che fa in uno spazio: prenotazioni e check-in, messaggi, spese e consumi, il suo abbonamento, fatture e pagamenti. Tutto è conservato nell\'UE (Supabase, eu-central-1).';
 
   @override
   String get consentWhatTitle => 'Cosa tratta DesKilo';
 
   @override
   String get consentWhoBody =>
-      'L\'accesso segue i ruoli ed è applicato sul server: le prenotazioni le vede lo spazio (la pianta mostra l\'occupazione); i messaggi solo le persone della conversazione, qualunque sia il ruolo; le tue finanze e il tuo accordo commerciale solo tu, i proprietari e gli admin con il permesso corrispondente. Impostazioni → Privacy e dati nomina le persone ed elenca chi ha davvero guardato.';
+      'L\'accesso segue i ruoli ed è applicato sul server: le prenotazioni le vede lo spazio (la pianta mostra l\'occupazione); i messaggi solo le persone della conversazione, qualunque sia il ruolo; le sue finanze e il suo accordo commerciale solo Lei, i proprietari e gli admin con il permesso corrispondente. Impostazioni → Privacy e dati nomina le persone ed elenca chi ha davvero guardato.';
 
   @override
   String get consentWhoTitle => 'Chi può vedere cosa';
@@ -3221,7 +3221,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get conversationArchived => 'Conversazione archiviata.';
 
   @override
-  String get conversationEmpty => 'Ancora nessun messaggio — saluta!';
+  String get conversationEmpty => 'Ancora nessun messaggio — saluti!';
 
   @override
   String get conversationGroup => 'Gruppo';
@@ -3234,7 +3234,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get conversationLeaveConfirm =>
-      'Uscire da questo gruppo? Non riceverai più i suoi messaggi; quelli già inviati restano.';
+      'Uscire da questo gruppo? Non riceverà più i suoi messaggi; quelli già inviati restano.';
 
   @override
   String get conversationLeft => 'Uscito';
@@ -3290,7 +3290,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get conversationYesterday => 'Ieri';
 
   @override
-  String get conversationYou => 'Tu';
+  String get conversationYou => 'Lei';
 
   @override
   String get countryNameAT => 'Austria';
@@ -3439,7 +3439,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get datevAccountsIntro =>
-      'I numeri di consulente e di cliente te li dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.';
+      'I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.';
 
   @override
   String get datevAccountsTitle => 'Esportazione DATEV';
@@ -3451,7 +3451,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get datevConsultantNumber => 'Beraternummer (n. consulente)';
 
   @override
-  String get decisionSurfaceEmpty => 'Niente ti aspetta';
+  String get decisionSurfaceEmpty => 'Niente la aspetta';
 
   @override
   String get decisionSurfaceEmptyDetail => 'È tutto sistemato.';
@@ -3467,7 +3467,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get demoEntryBody =>
-      'Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fai raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com\'era quando vuoi.';
+      'Tutto qui dentro è inventato: le persone, le prenotazioni e le fatture sono create per la dimostrazione. Nulla di ciò che fa raggiunge uno spazio reale, nulla lascia questo dispositivo e non serve alcun account. Il ripristino rimette tutto com\'era quando vuole.';
 
   @override
   String get demoEntryStart => 'Inizia';
@@ -3476,23 +3476,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoEntryTitle => 'Uno spazio da guardare';
 
   @override
-  String get demoPersonaAdmin => 'Un\'amministratrice';
+  String get demoPersonaAdmin => 'Amministratore';
 
   @override
   String get demoPersonaKiosk => 'Il tablet del chiosco';
 
   @override
-  String get demoPersonaMember => 'Un membro';
+  String get demoPersonaMember => 'Membro';
 
   @override
-  String get demoPersonaOwner => 'La proprietaria';
+  String get demoPersonaOwner => 'Proprietario';
 
   @override
   String get demoSessionBadge => 'Demo';
 
   @override
   String get demoSessionBadgeHint =>
-      'Stai esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.';
+      'Sta esplorando uno spazio dimostrativo. Nulla di tutto questo lascia questo dispositivo.';
 
   @override
   String get demoSessionLeave => 'Esci dalla demo';
@@ -3609,19 +3609,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get deploymentIntroFromDev =>
-      'Sei sul lato produzione. Ciò che spunti qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un\'anteprima.';
+      'È sul lato produzione. Ciò che spunta qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un\'anteprima.';
 
   @override
   String get deploymentIntroFromProd =>
-      'Sei sul lato sviluppo. Ciò che spunti qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un\'anteprima.';
+      'È sul lato sviluppo. Ciò che spunta qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un\'anteprima.';
 
   @override
   String get deploymentIntroToDev =>
-      'Sei sul lato produzione. Ciò che spunti qui sotto viene distribuito al gemello di sviluppo, dopo un\'anteprima di ciò che cambia.';
+      'È sul lato produzione. Ciò che spunta qui sotto viene distribuito al gemello di sviluppo, dopo un\'anteprima di ciò che cambia.';
 
   @override
   String get deploymentIntroToProd =>
-      'Sei sul lato sviluppo. Ciò che spunti qui sotto viene distribuito al gemello di produzione, dopo un\'anteprima di ciò che cambia.';
+      'È sul lato sviluppo. Ciò che spunta qui sotto viene distribuito al gemello di produzione, dopo un\'anteprima di ciò che cambia.';
 
   @override
   String get deploymentJournal => 'Giornale';
@@ -3651,7 +3651,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get deploymentNoTwin =>
-      'Questo spazio non ha un gemello di cui tu sia membro.';
+      'Questo spazio non ha un gemello di cui Lei sia membro.';
 
   @override
   String get deploymentNothingToDo =>
@@ -3714,7 +3714,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get developerExportReservationsOwnHint =>
-      'Le tue prenotazioni e i tuoi check-in, in ogni stato, in CSV — esportare tutto lo spazio richiede il permesso di esportazione dati.';
+      'Le sue prenotazioni e i suoi check-in, in ogni stato, in CSV — esportare tutto lo spazio richiede il permesso di esportazione dati.';
 
   @override
   String get developerFilterAll => 'Tutto';
@@ -3887,7 +3887,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get documentsEmpty =>
-      'Nessun documento. Collega statuto, guide e bilanci da qualsiasi drive.';
+      'Nessun documento. Colleghi statuto, guide e bilanci da qualsiasi drive.';
 
   @override
   String get documentsInvalid =>
@@ -3916,7 +3916,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get documentsUrlHelper =>
-      'Incolla il link di condivisione del tuo drive — i permessi restano gestiti lì.';
+      'Incolli il link di condivisione del suo drive — i permessi restano gestiti lì.';
 
   @override
   String get documentsUrlLabel => 'Link (https://…)';
@@ -3926,7 +3926,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get dunningAutomaticHint =>
-      'Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l\'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.';
+      'Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l\'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a Lei. Disattivato: invia Lei ogni sollecito.';
 
   @override
   String get dunningBetweenDays => 'Giorni tra i solleciti';
@@ -3950,15 +3950,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eInvoiceGapBuyerLegalIdAdvisable =>
-      'Manca il SIREN dell\'acquirente. Una piattaforma francese instrada in base ad esso: inseritelo nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.';
+      'Manca il SIREN dell\'acquirente. Una piattaforma francese instrada in base ad esso: lo inserisca nel profilo del membro prima di trasmettere. Non è un rifiuto — il file è valido senza.';
 
   @override
   String get eInvoiceGapMissingBuyerLegalId =>
-      'L\'acquirente è un\'impresa francese senza SIREN — inserisci il suo identificativo legale nel profilo del socio.';
+      'L\'acquirente è un\'impresa francese senza SIREN — inserisca il suo identificativo legale nel profilo del socio.';
 
   @override
   String get eInvoiceGapMixedNotSubjectLines =>
-      'Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetti la cauzione su un documento separato.';
+      'Una riga non soggetta (cauzione) compare accanto a righe tassate — la norma EN 16931 rifiuta la combinazione; emetta la cauzione su un documento separato.';
 
   @override
   String get editorAccessoriesLabel => 'Accessori';
@@ -4033,23 +4033,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorEmptyFloorBody =>
-      'Tutto sta dentro una stanza: disegnane una, mettici dei tavoli e poi i posti sui tavoli.';
+      'Tutto sta dentro una stanza: ne disegni una, vi metta dei tavoli e poi i posti sui tavoli.';
 
   @override
   String get editorEmptyFloorTitle => 'Questo piano è vuoto';
 
   @override
   String get editorHintDesk =>
-      'Trascina dentro una stanza per disegnare un tavolo';
+      'Trascini dentro una stanza per disegnare un tavolo';
 
   @override
-  String get editorHintImage => 'Tocca dove va l\'immagine';
+  String get editorHintImage => 'Tocchi dove va l\'immagine';
 
   @override
-  String get editorHintOffice => 'Trascina per disegnare una stanza';
+  String get editorHintOffice => 'Trascini per disegnare una stanza';
 
   @override
-  String get editorHintSeat => 'Tocca un tavolo per aggiungere un posto';
+  String get editorHintSeat => 'Tocchi un tavolo per aggiungere un posto';
 
   @override
   String get editorLevelActions => 'Azioni del piano';
@@ -4075,14 +4075,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorNoAccessories =>
-      'Ancora nessun accessorio — aggiungili in Impostazioni → Accessori.';
+      'Ancora nessun accessorio — li aggiunga in Impostazioni → Accessori.';
 
   @override
   String get editorNoAccessoriesAction => 'Nessun accessorio — configurali';
 
   @override
   String get editorNoLevels =>
-      'Ancora nessun piano. Aggiungi il primo piano del tuo spazio.';
+      'Ancora nessun piano. Aggiunga il primo piano del suo spazio.';
 
   @override
   String get editorOfficeNameDefault => 'Ufficio';
@@ -4187,7 +4187,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get einvoiceConfigIntro =>
-      'Dove DesKilo deposita le tue fatture. Va bene qualsiasi piattaforma che accetti un upload con un token — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server e non torna mai indietro.';
+      'Dove DesKilo deposita le sue fatture. Va bene qualsiasi piattaforma che accetti un upload con un token — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server e non torna mai indietro.';
 
   @override
   String get einvoiceConfigSaved => 'Piattaforma salvata.';
@@ -4204,7 +4204,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get einvoiceConfigUnavailable =>
-      'Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova.';
+      'Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.';
 
   @override
   String get einvoiceCustomerSectionHelp =>
@@ -4283,7 +4283,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get entitlementBlockedFull =>
-      'Hai usato tutti i tuoi giorni questo mese. Chiedine altri a un amministratore o richiedi mezze giornate extra.';
+      'Ha usato tutti i suoi giorni questo mese. Ne chieda altri a un amministratore o richieda mezze giornate extra.';
 
   @override
   String entitlementDaysLeft(String left) {
@@ -4297,11 +4297,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get entitlementPackageFull =>
-      'Hai usato tutti i tuoi giorni questo mese. Acquista un pacchetto per continuare a prenotare.';
+      'Ha usato tutti i suoi giorni questo mese. Acquisti un pacchetto per continuare a prenotare.';
 
   @override
   String entitlementPaygRate(String rate) {
-    return 'I giorni oltre il tuo piano costano $rate ciascuno.';
+    return 'I giorni oltre il suo piano costano $rate ciascuno.';
   }
 
   @override
@@ -4312,7 +4312,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get environmentHint =>
-      'Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Dichiaratelo di produzione solo quando le fatture che ne escono sono davvero dovute.';
+      'Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Lo dichiari di produzione solo quando le fatture che ne escono sono davvero dovute.';
 
   @override
   String get environmentLabel => 'Tipo di spazio';
@@ -4369,7 +4369,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Fatture e registro — prova contabile, conservata per il periodo di legge; i documenti emessi non vengono riscritti';
 
   @override
-  String get erasureStoreAnswers => 'Le tue risposte alle domande dello spazio';
+  String get erasureStoreAnswers => 'Le sue risposte alle domande dello spazio';
 
   @override
   String get erasureStoreBackups =>
@@ -4377,7 +4377,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get erasureStoreDeviceCaches =>
-      'Copie sui tuoi dispositivi — cancellate quando esci da ciascuno';
+      'Copie sui suoi dispositivi — cancellate quando esce da ciascuno';
 
   @override
   String get erasureStoreHeldAnswers =>
@@ -4388,14 +4388,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'La riga di iscrizione — collega i dati conservati; pseudonima, non anonima';
 
   @override
-  String get erasureStoreMessages => 'Messaggi che hai inviato';
+  String get erasureStoreMessages => 'Messaggi che ha inviato';
 
   @override
   String get erasureStoreOpenBookings => 'Prenotazioni aperte — annullate';
 
   @override
   String get erasureStoreOtherInstallations =>
-      'Un\'altra installazione DesKilo è un titolare distinto — rivolgiti direttamente a lei';
+      'Un\'altra installazione DesKilo è un titolare distinto — si rivolga direttamente a essa';
 
   @override
   String get erasureStorePastBookings =>
@@ -4403,11 +4403,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get erasureStoreProfile =>
-      'Il tuo profilo (se è il tuo ultimo spazio)';
+      'Il suo profilo (se è il suo ultimo spazio)';
 
   @override
   String get errorOffline =>
-      'Nessuna connessione: non è stato inviato nulla. Riprova quando sei di nuovo online.';
+      'Nessuna connessione: non è stato inviato nulla. Riprovi quando è di nuovo online.';
 
   @override
   String get eventAccept => 'Accetta';
@@ -4660,7 +4660,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventsMessagesHeader => 'Messaggi';
 
   @override
-  String get eventsPendingHeader => 'In attesa della tua conferma';
+  String get eventsPendingHeader => 'In attesa della sua conferma';
 
   @override
   String get expenseCategoryCoffee => 'Caffè e cucina';
@@ -4675,17 +4675,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseCategorySupplies => 'Materiale';
 
   @override
-  String get expenseInvalidAmount => 'Inserisci un importo maggiore di zero.';
+  String get expenseInvalidAmount => 'Inserisca un importo maggiore di zero.';
 
   @override
-  String get expenseInvalidSupplyQuantity => 'Inserisci almeno un\'unità.';
+  String get expenseInvalidSupplyQuantity => 'Inserisca almeno un\'unità.';
 
   @override
   String get expenseInvalidUnitPrice =>
-      'Inserisci un prezzo unitario valido o lascialo vuoto.';
+      'Inserisca un prezzo unitario valido o lo lasci vuoto.';
 
   @override
-  String get expenseMissingSupplyName => 'Dai un nome al nuovo articolo.';
+  String get expenseMissingSupplyName => 'Dia un nome al nuovo articolo.';
 
   @override
   String get expenseSupplyHint =>
@@ -4709,15 +4709,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get expenseSupplyUnitPriceHint =>
-      'Precompilato con importo ÷ quantità; arrotonda se vuoi.';
+      'Precompilato con importo ÷ quantità; arrotondi se vuole.';
 
   @override
   String get exportClaimExchange =>
-      'Perché il tuo commercialista lo importi e lo verifichi — non è una dichiarazione.';
+      'Perché il suo commercialista lo importi e lo verifichi — non è una dichiarazione.';
 
   @override
   String get exportClaimRegulatory =>
-      'Il formato richiesto dalla tua amministrazione fiscale.';
+      'Il formato richiesto dalla sua amministrazione fiscale.';
 
   @override
   String get exportClaimSubset =>
@@ -4725,11 +4725,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get exportNoCompleteBooks =>
-      'Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i tuoi libri completi. Il tuo commercialista li completa.';
+      'Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i suoi libri completi. Il suo commercialista li completa.';
 
   @override
   String get exportUncertifiedSoftware =>
-      'Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifica con il tuo commercialista se ti è richiesto.';
+      'Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifichi con il suo commercialista se le è richiesto.';
 
   @override
   String get featureAccessorySupplements => 'Supplementi accessori';
@@ -4871,11 +4871,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureChangeUnconfirmed =>
-      'La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapri la schermata per vedere lo stato.';
+      'La modifica è stata inviata, ma non è stato possibile ricaricare le funzionalità per confermarla. Riapra la schermata per vedere lo stato.';
 
   @override
   String get featureChangedMeanwhile =>
-      'Le funzionalità sono cambiate nel frattempo, quindi non è stato salvato nulla. Controlla l\'elenco e riprova.';
+      'Le funzionalità sono cambiate nel frattempo, quindi non è stato salvato nulla. Controlli l\'elenco e riprovi.';
 
   @override
   String get featureCoOwner => 'Comproprietari';
@@ -4925,7 +4925,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede.';
 
   @override
-  String get featureDecisionSurfaceTitle => 'Cosa ti aspetta';
+  String get featureDecisionSurfaceTitle => 'Cosa la aspetta';
 
   @override
   String get featureDeletionRequests =>
@@ -5064,7 +5064,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureHeldBack =>
-      'In attesa della funzione qui sopra: attivala e anche questa torna a funzionare.';
+      'In attesa della funzione qui sopra: la attivi e anche questa torna a funzionare.';
 
   @override
   String get featureHolidayImportDesc =>
@@ -5086,14 +5086,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureIntakeUnconfirmedNote =>
-      'Disattivato: non inizia nulla di nuovo. Questo server non ha potuto confermare che ciò che è già aperto resti gestibile; non contarci.';
+      'Disattivato: non inizia nulla di nuovo. Questo server non ha potuto confermare che ciò che è già aperto resti gestibile; non ci conti.';
 
   @override
   String get featureInvoiceAddressWindow => 'Finestra indirizzo';
 
   @override
   String get featureInvoiceAddressWindowDesc =>
-      'Colloca il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.';
+      'Collochi il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.';
 
   @override
   String get featureInvoiceJourneyDesc =>
@@ -5121,7 +5121,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureInvoicingDesc =>
-      'Fatture immutabili e firmate in un archivio — scarica o condividi in PDF.';
+      'Fatture immutabili e firmate in un archivio — da scaricare o condividere in PDF.';
 
   @override
   String get featureInvoicingWizardDesc =>
@@ -5159,7 +5159,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureLevelBookingDesc =>
-      'Prenota un intero tavolo, ufficio o piano come un\'unica prenotazione, con prezzo per mezza giornata. Concedi il diritto per membro.';
+      'Prenoti un intero tavolo, ufficio o piano come un\'unica prenotazione, con prezzo per mezza giornata. Conceda il diritto per membro.';
 
   @override
   String get featureLifecycleActive => 'Attiva';
@@ -5230,7 +5230,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureMemberEnvironmentsDesc =>
-      'Quando invitate qualcuno, scegliete se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l\'accesso alla produzione.';
+      'Quando invita qualcuno, scelga se raggiunge anche lo spazio di produzione. Entra comunque nello spazio di prova, e il ruolo deve comunque permettere l\'accesso alla produzione.';
 
   @override
   String get featureMemberEnvironmentsTitle =>
@@ -5294,7 +5294,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureMessageGesturesDesc =>
-      'Scorri un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il tuo messaggio finché nessuno l\'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.';
+      'Scorra un messaggio verso destra per citarlo nella risposta; verso sinistra per ritirare il suo messaggio finché nessuno l\'ha letto, previa conferma. Disattivato: i messaggi si eliminano tenendoli premuti.';
 
   @override
   String get featureMessageGesturesTitle => 'Scorri per citare o ritirare';
@@ -5370,7 +5370,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureOnlinePaymentsDesc =>
-      'Consenti ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.';
+      'Consenta ai membri di pagare la fattura online (PayPal). Richiede la configurazione del fornitore di pagamento sul server.';
 
   @override
   String featureOptInAlsoOn(int count, String features) {
@@ -5385,7 +5385,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String featureOptInBody(String features) {
-    return 'Non ancora valutata come stabile: $features. Può cambiare e ha limiti noti. Attivala solo se questo spazio lo accetta.';
+    return 'Non ancora valutata come stabile: $features. Può cambiare e ha limiti noti. La attivi solo se questo spazio lo accetta.';
   }
 
   @override
@@ -5411,7 +5411,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featurePdfExport => 'Esportazione PDF';
 
   @override
-  String get featurePdfExportDesc => 'Esporta la fattura mensile come PDF.';
+  String get featurePdfExportDesc => 'Esporti la fattura mensile come PDF.';
 
   @override
   String get featurePersonalInfo => 'Dati personali';
@@ -5460,7 +5460,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featurePublicListingsDesc =>
-      'Pubblica solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.';
+      'Pubblichi solo informazioni e planimetrie scelte, con proprietari visibili e contatti degli amministratori facoltativi.';
 
   @override
   String get featurePushNotifications => 'Notifiche push';
@@ -5510,7 +5510,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureReportLayoutsDesc =>
-      'Progetta un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande.';
+      'Progetti un report indicando dove si trova ogni elemento, in mm, cm, px o %; il PDF stampa esattamente questo. Un documento con layout lo usa, gli altri mantengono le loro bande.';
 
   @override
   String get featureReportTexts => 'Testi dei report';
@@ -5526,7 +5526,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureRichMessageRefsDesc =>
-      'Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre scrivi. Disattivato: si possono referenziare solo prenotazioni e spazi.';
+      'Un messaggio può puntare a un avviso, alla cronologia delle convalide dietro di esso e a una fattura, un pagamento o un rimborso: ogni riferimento è un link che apre ciò che nomina. Ogni selettore filtra mentre si scrive. Disattivato: si possono referenziare solo prenotazioni e spazi.';
 
   @override
   String get featureRichMessageRefsTitle => 'Riferimenti nei messaggi';
@@ -5564,7 +5564,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureSeriesBookingDesc =>
-      'Ripeti una prenotazione ogni giorno, ogni settimana o nei giorni feriali.';
+      'Ripeta una prenotazione ogni giorno, ogni settimana o nei giorni feriali.';
 
   @override
   String get featureServices => 'Servizi';
@@ -5607,11 +5607,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureSpaceQrCodesDesc =>
-      'Schede QR stampabili per postazione, tavolo, ufficio e piano — scansiona per prenotare o fare check-in.';
+      'Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.';
 
   @override
   String get featureSubscriptionInvoicesDesc =>
-      'La quota è fatturata prima del mese che paga, in una data scelta da te. Disattivato: la quota resta sulla fattura del mese.';
+      'La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.';
 
   @override
   String get featureSubscriptionInvoicesTitle => 'Fatture di abbonamento';
@@ -5636,7 +5636,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureSurfaceEverywhereHint =>
-      'Cambia il comportamento dell\'app, ovunque tu sia.';
+      'Cambia il comportamento dell\'app, ovunque Lei sia.';
 
   @override
   String get featureSurfaceKioskHint =>
@@ -5688,7 +5688,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureTierPlatformDesc =>
-      'Richiesto, mai presunto. Attivate ciò che questo spazio fa davvero.';
+      'Richiesto, mai presunto. Attivi ciò che questo spazio fa davvero.';
 
   @override
   String get featureUiAnimationsDesc =>
@@ -5749,7 +5749,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureVatDeclarationsDesc =>
-      'Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala.';
+      'Generi la dichiarazione IVA periodica dalle fatture emesse, la mappi sul modulo ufficiale e la trasmetta o la esporti.';
 
   @override
   String get featureVatDeclarationsTitle => 'Dichiarazioni IVA';
@@ -5794,7 +5794,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureWorkingHoursDesc =>
-      'Configura la giornata lavorativa e offri prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00.';
+      'Configuri la giornata lavorativa e offra prenotazioni a orari esatti; disattivato valgono i valori 8:00–17:00.';
 
   @override
   String get featureWorkspaceBrandingDesc =>
@@ -5805,7 +5805,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureWorkspaceLibraryDesc =>
-      'Salvate la pianta di questo spazio e il suo funzionamento come modello, scegliete chi può vederla, invitate persone via e-mail e partite da ciò che altri offrono.';
+      'Salvi la pianta di questo spazio e il suo funzionamento come modello, scelga chi può vederla, inviti persone via e-mail e parta da ciò che altri offrono.';
 
   @override
   String get featureWorkspaceLibraryTitle => 'Biblioteca degli spazi';
@@ -5859,7 +5859,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fecAccountsIntro =>
-      'Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — sostituiscili con quelli del tuo commercialista.';
+      'Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — li sostituisca con quelli del suo commercialista.';
 
   @override
   String get fecAccountsTitle => 'Conti da utilizzare';
@@ -5899,39 +5899,39 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get federationFailureBrowser =>
-      'Impossibile aprire il browser. Verifica che sia disponibile un browser, poi riprova.';
+      'Impossibile aprire il browser. Verifichi che sia disponibile un browser, poi riprovi.';
 
   @override
   String get federationFailureExpired =>
-      'Questo accesso ha richiesto troppo tempo ed è scaduto. Ricomincialo.';
+      'Questo accesso ha richiesto troppo tempo ed è scaduto. Lo ricominci.';
 
   @override
   String get federationFailureIncompatible =>
-      'Questo server non accetta questo accesso Deskilo. Controlla l\'indirizzo del server o chiedi al suo amministratore.';
+      'Questo server non accetta questo accesso Deskilo. Controlli l\'indirizzo del server o chieda al suo amministratore.';
 
   @override
   String get federationFailureNetwork =>
-      'Il server non è raggiungibile, quindi l\'accesso non è stato completato. Controlla la connessione, poi riprova.';
+      'Il server non è raggiungibile, quindi l\'accesso non è stato completato. Controlli la connessione, poi riprovi.';
 
   @override
   String get federationFailureProviderMissing =>
-      'L\'accesso con Deskilo non è configurato su questo server. Chiedi al suo amministratore di attivarlo.';
+      'L\'accesso con Deskilo non è configurato su questo server. Chieda al suo amministratore di attivarlo.';
 
   @override
   String get federationFailureRefused =>
-      'L\'accesso è stato annullato o rifiutato nel browser. Non è cambiato nulla; puoi riprovare.';
+      'L\'accesso è stato annullato o rifiutato nel browser. Non è cambiato nulla; può riprovare.';
 
   @override
   String get federationFailureUnlinked =>
-      'Questo account Deskilo corrisponde a un account qui non ancora collegato. Accedi a quell\'account, poi collega Deskilo in Account collegati. Nulla viene unito finché il server non lo conferma.';
+      'Questo account Deskilo corrisponde a un account qui non ancora collegato. Acceda a quell\'account, poi colleghi Deskilo in Account collegati. Nulla viene unito finché il server non lo conferma.';
 
   @override
   String get federationFailureWrongAccount =>
-      'Il browser ha effettuato l\'accesso con un altro account Deskilo. Cambia account nel browser, poi riprova.';
+      'Il browser ha effettuato l\'accesso con un altro account Deskilo. Cambi account nel browser, poi riprovi.';
 
   @override
   String federationPurpose(String server) {
-    return 'Il browser conferma il tuo account Deskilo e poi ti riporta a $server. Le tue adesioni e la tua cronologia qui restano invariate.';
+    return 'Il browser conferma il suo account Deskilo e poi la riporta a $server. Le sue adesioni e la sua cronologia qui restano invariate.';
   }
 
   @override
@@ -5947,7 +5947,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get federationStageWaiting => 'In attesa dell\'accesso nel browser…';
 
   @override
-  String get fieldProblemNotAChoice => 'Scegli dalla lista.';
+  String get fieldProblemNotAChoice => 'Scelga dalla lista.';
 
   @override
   String get fieldProblemNotADate => 'Una data, per favore.';
@@ -5968,7 +5968,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get fieldProblemNotWhole => 'Un numero intero, per favore.';
 
   @override
-  String get fieldProblemRequired => 'Rispondi, per favore.';
+  String get fieldProblemRequired => 'Risponda, per favore.';
 
   @override
   String fieldProblemTooEarly(String date) {
@@ -6028,16 +6028,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesLinkBody =>
-      'Fatture, solleciti e pagamenti di tutti i tuoi spazi sono insieme in Io › Finanze.';
+      'Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Finanze.';
 
   @override
-  String get financesLinkTitle => 'Le tue finanze in tutti gli spazi';
+  String get financesLinkTitle => 'Le sue finanze in tutti gli spazi';
 
   @override
   String get financesNoReminders => 'Nessun sollecito ricevuto.';
 
   @override
-  String get financesNothingOwed => 'Niente da pagare — sei in regola.';
+  String get financesNothingOwed => 'Niente da pagare — è in regola.';
 
   @override
   String get financesNothingPaid => 'Nessuna fattura ancora saldata.';
@@ -6112,8 +6112,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Puoi tenere $count prenotazioni alla volta.',
-      one: 'Puoi tenere una prenotazione alla volta.',
+      other: 'Può tenere $count prenotazioni alla volta.',
+      one: 'Può tenere una prenotazione alla volta.',
     );
     return '$_temp0';
   }
@@ -6124,12 +6124,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String gettingStartedBooked(String state) {
-    return 'La tua prenotazione è $state. La tua iscrizione mostra cos’altro è incluso.';
+    return 'La sua prenotazione è $state. La sua iscrizione mostra cos’altro è incluso.';
   }
 
   @override
   String get gettingStartedClosedToday =>
-      'Lo spazio è chiuso nel giorno selezionato. Scegli un altro giorno per vedere cosa è libero.';
+      'Lo spazio è chiuso nel giorno selezionato. Scelga un altro giorno per vedere cosa è libero.';
 
   @override
   String get gettingStartedEnvDev => 'Spazio di sviluppo';
@@ -6139,18 +6139,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get gettingStartedMembershipUnknown =>
-      'Impossibile caricare la tua iscrizione al momento. L’aiuto spiega come funziona questo spazio.';
+      'Impossibile caricare la sua iscrizione al momento. L’aiuto spiega come funziona questo spazio.';
 
   @override
   String get gettingStartedNoSpaces =>
-      'Qui non si può ancora prenotare nulla. La tua iscrizione mostra cosa comprende il tuo accesso.';
+      'Qui non si può ancora prenotare nulla. La sua iscrizione mostra cosa comprende il suo accesso.';
 
   @override
   String get gettingStartedNotNow => 'Non ora';
 
   @override
   String get gettingStartedReadyToBook =>
-      'Lo spazio è aperto in questo giorno. Scegli un orario e un posto sulla pianta — nulla viene prenotato finché non confermi.';
+      'Lo spazio è aperto in questo giorno. Scelga un orario e un posto sulla pianta — nulla viene prenotato finché non conferma.';
 
   @override
   String get gettingStartedReopen => 'Primi passi';
@@ -6165,14 +6165,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get gettingStartedStandingAdmin => 'Sei amministratore qui.';
+  String get gettingStartedStandingAdmin => 'È amministratore qui.';
 
   @override
-  String get gettingStartedStandingMember => 'Sei membro qui.';
+  String get gettingStartedStandingMember => 'È membro qui.';
 
   @override
-  String get gettingStartedStandingOwner =>
-      'Sei proprietario di questo spazio.';
+  String get gettingStartedStandingOwner => 'È proprietario di questo spazio.';
 
   @override
   String get gettingStartedStateCancelled => 'annullata';
@@ -6219,7 +6218,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get groupName => 'Nome del gruppo';
 
   @override
-  String get groupNeedsPeople => 'Aggiungi almeno una persona.';
+  String get groupNeedsPeople => 'Aggiunga almeno una persona.';
 
   @override
   String get groupNew => 'Nuovo gruppo';
@@ -6248,44 +6247,44 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideActionConfirmBooking =>
-      'conferma la prenotazione e attendi la risposta';
+      'confermi la prenotazione e attenda la risposta';
 
   @override
-  String get guideActionOpenReserve => 'apri Prenota';
+  String get guideActionOpenReserve => 'apra Prenota';
 
   @override
-  String get guideActionSelectDate => 'scegli il giorno';
+  String get guideActionSelectDate => 'scelga il giorno';
 
   @override
-  String get guideActionSelectPeriod => 'scegli la fascia';
+  String get guideActionSelectPeriod => 'scelga la fascia';
 
   @override
   String get guideActionSelectResource =>
-      'scegli un posto sulla piantina o nell\'elenco';
+      'scelga un posto sulla piantina o nell\'elenco';
 
   @override
   String get guideBookingRefusedRecovery =>
-      'La prenotazione è stata rifiutata (posto occupato o una regola lo vieta). Scegli un altro posto o fascia, poi conferma di nuovo.';
+      'La prenotazione è stata rifiutata (posto occupato o una regola lo vieta). Scelga un altro posto o fascia, poi confermi di nuovo.';
 
   @override
   String get guideBuiltinBooking => 'Prenotare un posto';
 
   @override
   String get guideBuiltinBookingIntro =>
-      'Questa guida mostra come prenotare un posto: scegli il giorno e la fascia, un posto, poi conferma. Nulla viene prenotato finché non confermi.';
+      'Questa guida mostra come prenotare un posto: scelga il giorno e la fascia, un posto, poi confermi. Nulla viene prenotato finché non conferma.';
 
   @override
   String get guideHostBack => 'Indietro';
 
   @override
   String get guideHostBlocked =>
-      'Risolvi prima il messaggio sullo schermo; la guida attende.';
+      'Risolva prima il messaggio sullo schermo; la guida attende.';
 
   @override
   String get guideHostClose => 'Chiudi';
 
   @override
-  String get guideHostCommand => 'Conferma, poi attendi il risultato.';
+  String get guideHostCommand => 'Confermi, poi attenda il risultato.';
 
   @override
   String get guideHostCompleted => 'Guida completata.';
@@ -6295,7 +6294,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideHostDestinationMissing =>
-      'Scegli la pagina di questo passaggio nell’editor della guida.';
+      'Scelga la pagina di questo passaggio nell’editor della guida.';
 
   @override
   String guideHostDoAction(String action) {
@@ -6306,31 +6305,31 @@ class AppLocalizationsIt extends AppLocalizations {
   String get guideHostDone => 'Fatto';
 
   @override
-  String get guideHostFillField => 'Compila il campo evidenziato, poi esci.';
+  String get guideHostFillField => 'Compili il campo evidenziato, poi esca.';
 
   @override
   String guideHostFillLabel(String label) {
-    return 'Compila «$label», poi esci dal campo.';
+    return 'Compili «$label», poi esca dal campo.';
   }
 
   @override
-  String get guideHostGoToPage => 'Vai alla pagina';
+  String get guideHostGoToPage => 'Apri la pagina';
 
   @override
-  String get guideHostInstruction => 'Leggi questo, poi segnalo come fatto.';
+  String get guideHostInstruction => 'Legga questo, poi lo segni come fatto.';
 
   @override
   String get guideHostManual =>
-      'Esegui tu questo passo, poi segnalo come fatto.';
+      'Esegua Lei questo passo, poi lo segni come fatto.';
 
   @override
   String guideHostManualAt(String form) {
-    return 'Completa questo passaggio su «$form», poi contrassegnalo come fatto.';
+    return 'Completi questo passaggio su «$form», poi lo contrassegni come fatto.';
   }
 
   @override
   String guideHostManualProtected(String category) {
-    return 'Questa parte avviene in una schermata protetta ($category). Eseguila tu, poi segnala come fatta.';
+    return 'Questa parte avviene in una schermata protetta ($category). La esegua Lei, poi la segni come fatta.';
   }
 
   @override
@@ -6338,15 +6337,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideHostNotOnScreen =>
-      'Apri la pagina del passaggio e segui i passaggi precedenti per mostrare questo controllo.';
+      'Apra la pagina del passaggio e segua i passaggi precedenti per mostrare questo controllo.';
 
   @override
   String guideHostOpenLabel(String label) {
-    return 'Apri «$label».';
+    return 'Apra «$label».';
   }
 
   @override
-  String get guideHostOpenScreen => 'Apri la schermata successiva.';
+  String get guideHostOpenScreen => 'Apra la schermata successiva.';
 
   @override
   String get guideHostPausedFeature =>
@@ -6358,7 +6357,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideHostRecovery =>
-      'È stato rifiutato. Segui questi passi, poi riprova.';
+      'È stato rifiutato. Segua questi passi, poi riprovi.';
 
   @override
   String guideHostRestore(int current, int total) {
@@ -6405,11 +6404,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Guida interrotta. Non è stato annullato nulla.';
 
   @override
-  String get guideHostTapControl => 'Tocca il controllo evidenziato.';
+  String get guideHostTapControl => 'Tocchi il controllo evidenziato.';
 
   @override
   String guideHostTapLabel(String label) {
-    return 'Tocca «$label».';
+    return 'Tocchi «$label».';
   }
 
   @override
@@ -6417,7 +6416,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideHostUncertain =>
-      'La risposta non è arrivata. Verifica se è avvenuto prima di riprovare.';
+      'La risposta non è arrivata. Verifichi se è avvenuto prima di riprovare.';
 
   @override
   String get guideHostWaiting => 'In attesa del risultato…';
@@ -6431,7 +6430,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guideStartRefused =>
-      'Questa guida non può partire qui: accedi e attiva il registratore di attività in questo spazio.';
+      'Questa guida non può partire qui: acceda e attivi il registratore di attività in questo spazio.';
 
   @override
   String handoffAmountOutOfRange(String number) {
@@ -6444,7 +6443,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get handoffChanged =>
-      'Le fatture sono cambiate durante la revisione. Esporta di nuovo per vedere i conti attuali.';
+      'Le fatture sono cambiate durante la revisione. Esporti di nuovo per vedere i conti attuali.';
 
   @override
   String handoffDuplicate(String number) {
@@ -6514,21 +6513,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintAvailability =>
-      'Imposta i giorni di apertura e gli orari, e aggiungi giorni di chiusura che nessuno può prenotare.';
+      'Imposti i giorni di apertura e gli orari, e aggiunga giorni di chiusura che nessuno può prenotare.';
 
   @override
   String get helpHintAvailabilityTopic => 'Disponibilità';
 
   @override
   String get helpHintBadges =>
-      'Emetti un badge QR stampabile o registra una tessera NFC; revoca i badge persi in qualsiasi momento.';
+      'Emetta un badge QR stampabile o registri una tessera NFC; revochi i badge persi in qualsiasi momento.';
 
   @override
   String get helpHintBadgesTopic => 'badge NFC';
 
   @override
   String get helpHintCalendar =>
-      'Scegli un giorno o un periodo: tutto ciò che ha una data e che puoi vedere, in un elenco, ogni riga apre la sua origine.';
+      'Scelga un giorno o un periodo: tutto ciò che ha una data e che può vedere, in un elenco, ogni riga apre la sua origine.';
 
   @override
   String get helpHintCalendarTopic => 'Calendario';
@@ -6538,7 +6537,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintEditor =>
-      'Disegna stanze e scrivanie, timbra i posti — tocca due volte un posto per modificarne le proprietà.';
+      'Disegni stanze e scrivanie, timbri i posti — tocchi due volte un posto per modificarne le proprietà.';
 
   @override
   String get helpHintEditorTopic => 'editor dello spazio';
@@ -6552,7 +6551,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintFeatures =>
-      'Attiva o disattiva le funzionalità dello spazio: l\'app di ogni membro si aggiorna subito.';
+      'Attivi o disattivi le funzionalità dello spazio: l\'app di ogni membro si aggiorna subito.';
 
   @override
   String get helpHintFeaturesTopic => 'Funzionalità';
@@ -6562,7 +6561,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintMembers =>
-      'Invita membri, imposta piano e ruolo, e gestisci i loro badge.';
+      'Inviti membri, imposti piano e ruolo, e gestisca i loro badge.';
 
   @override
   String get helpHintMembersTip4Topic => 'Gestione dei ruoli';
@@ -6575,41 +6574,41 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintMessages =>
-      'Tutte le conversazioni in un elenco, la più recente in alto. Tocca la matita per scrivere a qualcuno o creare un gruppo.';
+      'Tutte le conversazioni in un elenco, la più recente in alto. Tocchi la matita per scrivere a qualcuno o creare un gruppo.';
 
   @override
   String get helpHintMessagesTip2 =>
-      'Scegli una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.';
+      'Scelga una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.';
 
   @override
   String get helpHintMessagesTip3 =>
-      'Tocca un nome in cima a una chat per vedere il profilo: la prenotazione di oggi, se ha fatto il check-in e come raggiungerlo.';
+      'Tocchi un nome in cima a una chat per vedere il profilo: la prenotazione di oggi, se ha fatto il check-in e come raggiungerlo.';
 
   @override
   String get helpHintMessagesTip4 =>
-      'La ricerca trova membri, gruppi e le parole nei messaggi — un risultato ti porta direttamente lì.';
+      'La ricerca trova membri, gruppi e le parole nei messaggi — un risultato la porta direttamente lì.';
 
   @override
   String get helpHintMessagesTip5 =>
-      'Inserisci una prenotazione o uno spazio nel messaggio invece di descriverlo; chi legge lo tocca e arriva a quello giusto.';
+      'Inserisca una prenotazione o uno spazio nel messaggio invece di descriverlo; chi legge lo tocca e arriva a quello giusto.';
 
   @override
   String get helpHintMessagesTopic => 'Messaggi';
 
   @override
   String get helpHintMoney =>
-      'Il conto mensile: sfoglia i mesi con le frecce; paga, esporta o condividi da qui.';
+      'Il conto mensile: sfogli i mesi con le frecce; paghi, esporti o condivida da qui.';
 
   @override
   String get helpHintMoneyDocuments =>
-      'Le tue carte: le tue condizioni, il report dei pagamenti, l\'estratto del mese in PDF, la libreria dei documenti.';
+      'Le sue carte: le sue condizioni, il report dei pagamenti, l\'estratto del mese in PDF, la libreria dei documenti.';
 
   @override
   String get helpHintMoneyDocumentsTopic => 'Documenti';
 
   @override
   String get helpHintMoneyInvoices =>
-      'Le tue fatture: cosa è aperto e per quando, ogni fattura emessa a tuo nome con il suo stato, un tocco al dettaglio e al pagamento.';
+      'Le sue fatture: cosa è aperto e per quando, ogni fattura emessa a suo nome con il suo stato, un tocco al dettaglio e al pagamento.';
 
   @override
   String get helpHintMoneyInvoicesTip2Topic =>
@@ -6633,7 +6632,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintMoneyStatement =>
-      'Il mese così com\'è: il tuo conto, giorni usati e rimasti, abbonamento, servizi, pacchetti, posizioni aperte, crediti e il saldo. Scorri i mesi con le frecce.';
+      'Il mese così com\'è: il suo conto, giorni usati e rimasti, abbonamento, servizi, pacchetti, posizioni aperte, crediti e il saldo. Scorra i mesi con le frecce.';
 
   @override
   String get helpHintMoneyStatementTopic => 'Estratto';
@@ -6646,7 +6645,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintPlan =>
-      'La piantina dal vivo: tocca un posto libero per prenotare, tocca la tua prenotazione per fare il check-in.';
+      'La piantina dal vivo: tocchi un posto libero per prenotare, tocchi la sua prenotazione per fare il check-in.';
 
   @override
   String get helpHintPlanTopic => 'Piantina';
@@ -6656,14 +6655,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintPrivacy =>
-      'Vedi chi può leggere i tuoi dati e chi l\'ha fatto, esporta tutto in un file o esci con i dati personali cancellati.';
+      'Veda chi può leggere i suoi dati e chi l\'ha fatto, esporti tutto in un file o esca con i dati personali cancellati.';
 
   @override
   String get helpHintPrivacyTopic => 'Privacy';
 
   @override
   String get helpHintReserve =>
-      'Scegli un giorno e una fascia oraria, poi tocca un posto libero per prenotarlo.';
+      'Scelga un giorno e una fascia oraria, poi tocchi un posto libero per prenotarlo.';
 
   @override
   String get helpHintReserveTip4Topic => 'Come si comporta la prenotazione';
@@ -6680,7 +6679,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helpHintValidation =>
-      'Decidi quali azioni richiedono conferma, chi conferma e quante approvazioni servono.';
+      'Decida quali azioni richiedono conferma, chi conferma e quante approvazioni servono.';
 
   @override
   String get helpHintValidationTopic => 'conferme';
@@ -6816,7 +6815,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get holidayImportUnavailable =>
-      'La fonte dei giorni festivi non è raggiungibile al momento. Riprova più tardi o usa «Aggiungi i giorni festivi».';
+      'La fonte dei giorni festivi non è raggiungibile al momento. Riprovi più tardi o usi «Aggiungi i giorni festivi».';
 
   @override
   String get holidayLabourDay => 'Festa del Lavoro';
@@ -6838,19 +6837,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String identityConnectConfirmApply(String name) {
-    return 'Inviare la tua richiesta di adesione a $name?';
+    return 'Inviare la sua richiesta di adesione a $name?';
   }
 
   @override
   String get identityConnectConfirmApplyBody =>
-      'Ora sei connesso. Lo spazio esamina la tua richiesta; non viene condiviso nient\'altro.';
+      'Ora è connesso. Lo spazio esamina la sua richiesta; non viene condiviso nient\'altro.';
 
   @override
   String get identityConnectContinue => 'Continua con Deskilo';
 
   @override
   String get identityConnectCurrentServer =>
-      'È il server a cui sei già connesso.';
+      'È il server a cui è già connesso.';
 
   @override
   String get identityConnectDifferentAuthority =>
@@ -6867,15 +6866,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get identityConnectExpired =>
-      'L\'accesso ha richiesto troppo tempo. Ricomincia.';
+      'L\'accesso ha richiesto troppo tempo. Ricominci.';
 
   @override
   String identityConnectExplain(String host) {
-    return '$host saprà che sei tu, grazie alla tua identità Deskilo. Connettersi non ti rende membro, non ti dà alcun ruolo e non collega alcun assistente: lo spazio decide sempre su ogni richiesta.';
+    return '$host saprà che è Lei, grazie alla sua identità Deskilo. Connettersi non la rende membro, non le dà alcun ruolo e non collega alcun assistente: lo spazio decide sempre su ogni richiesta.';
   }
 
   @override
-  String get identityConnectNetwork => 'Il server non ha risposto. Riprova.';
+  String get identityConnectNetwork => 'Il server non ha risposto. Riprovi.';
 
   @override
   String get identityConnectNoDeskiloSignIn =>
@@ -6883,11 +6882,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get identityConnectNoSharedIdentity =>
-      'Il tuo account qui non ha un\'identità Deskilo che un altro server possa accettare.';
+      'Il suo account qui non ha un\'identità Deskilo che un altro server possa accettare.';
 
   @override
   String identityConnectNotSaved(String host) {
-    return '$host ti ha accettato, ma questo dispositivo non ha potuto conservare la connessione. Non è stato inviato nulla. Riprova.';
+    return '$host ha accettato la sua connessione, ma questo dispositivo non ha potuto conservarla. Non è stato inviato nulla. Riprovi.';
   }
 
   @override
@@ -6906,7 +6905,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String identityConnectTitle(String host) {
-    return 'Connettiti a $host';
+    return 'Connessione a $host';
   }
 
   @override
@@ -6914,11 +6913,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get identityConnectUnlinked =>
-      'Un account su quel server usa già questa identità o questa e-mail senza esservi collegato. Usa quell\'account.';
+      'Un account su quel server usa già questa identità o questa e-mail senza esservi collegato. Usi quell\'account.';
 
   @override
   String get identityConnectWaiting =>
-      'Completa l\'accesso nel browser, poi torna qui.';
+      'Completi l\'accesso nel browser, poi torni qui.';
 
   @override
   String get identityConnectWrongAccount =>
@@ -6926,7 +6925,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String identityConsentAsks(String host) {
-    return 'Usa la tua identità Deskilo per accedere a $host.';
+    return 'Usi la sua identità Deskilo per accedere a $host.';
   }
 
   @override
@@ -6948,7 +6947,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get identityConsentUnavailable =>
-      'Questa richiesta di accesso non è disponibile. Torna alla destinazione e ricomincia.';
+      'Questa richiesta di accesso non è disponibile. Torni alla destinazione e ricominci.';
 
   @override
   String get inboxAlertsTab => 'Avvisi';
@@ -6972,7 +6971,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inboxNoArchived => 'Nessuna conversazione archiviata.';
 
   @override
-  String get inboxNoUnread => 'Niente da leggere — sei aggiornato.';
+  String get inboxNoUnread => 'Niente da leggere — è aggiornato.';
 
   @override
   String get inboxRetry => 'Riprova';
@@ -6987,7 +6986,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceAccountIntro =>
-      'Create un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e incollatelo qui. L\'assistente lo usa per creare e configurare il progetto; non viene mai salvato.';
+      'Crei un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e lo incolli qui. L\'assistente lo usa per creare e configurare il progetto; non viene mai salvato.';
 
   @override
   String get instanceAdminsHelp =>
@@ -7004,16 +7003,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String instanceAttentionForeign(String tables) {
-    return 'Il suo schema public contiene tabelle che DesKilo non crea ($tables). L\'installazione lì è rifiutata; usate un progetto vuoto.';
+    return 'Il suo schema public contiene tabelle che DesKilo non crea ($tables). L\'installazione lì è rifiutata; usi un progetto vuoto.';
   }
 
   @override
   String get instanceAttentionNotHealthy =>
-      'Supabase non segnala il progetto come operativo. Attendete che lo sia, oppure ripristinatelo nella dashboard.';
+      'Supabase non segnala il progetto come operativo. Attenda che lo sia, oppure lo ripristini nella dashboard.';
 
   @override
   String get instanceAttentionOtherTooling =>
-      'Le sue migrazioni sono state registrate da un altro strumento, quindi non si può sapere da dove DesKilo riprenderebbe. Usate un progetto vuoto.';
+      'Le sue migrazioni sono state registrate da un altro strumento, quindi non si può sapere da dove DesKilo riprenderebbe. Usi un progetto vuoto.';
 
   @override
   String instanceAttentionPostgres(int found, int supported) {
@@ -7022,7 +7021,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceAttentionUnrecorded =>
-      'Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registrate prima ciò che contiene con `dart run tool/instance.dart record`.';
+      'Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registri prima ciò che contiene con `dart run tool/instance.dart record`.';
 
   @override
   String get instanceBlock => 'Blocca';
@@ -7041,13 +7040,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceClaimBody =>
-      'Hai creato questa istanza e non è definito alcun proprietario. Assumendo la proprietà ne diventi il responsabile.';
+      'Ha creato questa istanza e non è definito alcun proprietario. Assumendo la proprietà ne diventa il responsabile.';
 
   @override
   String get instanceClaimButton => 'Assumi la proprietà';
 
   @override
-  String get instanceClaimDone => 'Ora sei il proprietario dell\'istanza.';
+  String get instanceClaimDone => 'Ora è il proprietario dell\'istanza.';
 
   @override
   String get instanceClaimFailed =>
@@ -7083,7 +7082,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceDatabasePassword =>
-      'Password del database, scelta per voi — copiatela in un posto sicuro; l\'app non ne ha più bisogno.';
+      'Password del database, scelta per Lei — la copi in un posto sicuro; l\'app non ne ha più bisogno.';
 
   @override
   String get instanceDelegateAdd => 'Delega il ruolo';
@@ -7167,7 +7166,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceDoneIntro =>
-      'L\'istanza è pronta. Usatela su questo dispositivo, poi condividete il QR del server dalla schermata Server perché i membri si uniscano alla stessa.';
+      'L\'istanza è pronta. La usi su questo dispositivo, poi condivida il QR del server dalla schermata Server perché i membri si uniscano alla stessa.';
 
   @override
   String get instanceEndpointTitle => 'Endpoint degli assistenti';
@@ -7186,7 +7185,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceGrant => 'Approva l\'accesso';
 
   @override
-  String get instanceGrantDays => 'Scegli tra 1 e 30 giorni.';
+  String get instanceGrantDays => 'Scelga tra 1 e 30 giorni.';
 
   @override
   String instanceGrantDaysLabel(int days) {
@@ -7201,7 +7200,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceGrantHelp =>
-      'Finché non esiste un altro amministratore del database, approvi tu gli accessi — compreso il tuo — per al massimo 30 giorni, con un motivo. Ogni approvazione viene registrata.';
+      'Finché non esiste un altro amministratore del database, approva Lei gli accessi — compreso il suo — per al massimo 30 giorni, con un motivo. Ogni approvazione viene registrata.';
 
   @override
   String get instanceGrantNeedsGoogle =>
@@ -7213,14 +7212,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceGrantOtherAdmin =>
-      'Qui decide l\'accesso un amministratore del database; chiediglielo.';
+      'Qui decide l\'accesso un amministratore del database; glielo chieda.';
 
   @override
   String get instanceGrantReason => 'Motivo';
 
   @override
   String get instanceGrantReasonNeeded =>
-      'Scrivi perché questo accesso viene approvato (fino a 500 caratteri).';
+      'Scriva perché questo accesso viene approvato (fino a 500 caratteri).';
 
   @override
   String instanceGrantTitle(String name) {
@@ -7257,7 +7256,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String instanceNoticeClientWaiting(String name) {
-    return '$name attende la tua approvazione.';
+    return '$name attende la sua approvazione.';
   }
 
   @override
@@ -7281,7 +7280,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceOwnerClaimIntro =>
-      'Di chi è questa istanza? Inserisci l\'e-mail con cui ti registrerai. Dopo aver confermato l\'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell\'istanza.';
+      'Di chi è questa istanza? Inserisca l\'e-mail con cui si registrerà. Dopo aver confermato l\'indirizzo, rivendichi la titolarità da Impostazioni → Proprietario dell\'istanza.';
 
   @override
   String get instanceOwnerClaimLabel => 'E-mail del titolare';
@@ -7294,7 +7293,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceOwnerHelp =>
-      'Questa installazione è condivisa da tutti i suoi spazi. Il proprietario dell\'istanza ne risponde: contattalo per tutto ciò che riguarda l\'intera installazione, come gli assistenti.';
+      'Questa installazione è condivisa da tutti i suoi spazi. Il proprietario dell\'istanza ne risponde: lo contatti per tutto ciò che riguarda l\'intera installazione, come gli assistenti.';
 
   @override
   String get instanceOwnerNone =>
@@ -7326,11 +7325,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceProbeStale =>
-      'L\'ultima verifica risale a più di 15 minuti fa. Verifica di nuovo prima di attivare gli assistenti.';
+      'L\'ultima verifica risale a più di 15 minuti fa. Verifichi di nuovo prima di attivare gli assistenti.';
 
   @override
   String get instanceProbeUnavailable =>
-      'Il server non è raggiungibile. Riprova tra un momento.';
+      'Il server non è raggiungibile. Riprovi tra un momento.';
 
   @override
   String instanceProgress(int done, int total, String current) {
@@ -7384,7 +7383,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceRevokeToken =>
-      'Ora potete revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.';
+      'Ora può revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.';
 
   @override
   String get instanceRuntimeOff => 'Disattivati';
@@ -7437,11 +7436,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceTokenReach =>
-      'Un token di accesso personale apre tutto il vostro account Supabase finché esiste. La procedura guidata lo tiene solo in memoria e vi dice quando potete revocarlo.';
+      'Un token di accesso personale apre tutto il suo account Supabase finché esiste. La procedura guidata lo tiene solo in memoria e le dice quando può revocarlo.';
 
   @override
   String get instanceTokenRefused =>
-      'Supabase ha rifiutato il token. Createne uno in Account → Access Tokens e incollatelo per intero.';
+      'Supabase ha rifiutato il token. Ne crei uno in Account → Access Tokens e lo incolli per intero.';
 
   @override
   String get instanceTurnOff => 'Disattiva';
@@ -7451,14 +7450,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceTurnOnConfirm =>
-      'Gli assistenti diventano utilizzabili in ogni spazio che li offre. Puoi disattivarli in qualsiasi momento.';
+      'Gli assistenti diventano utilizzabili in ogni spazio che li offre. Può disattivarli in qualsiasi momento.';
 
   @override
   String get instanceTurnOnNeedsProbe =>
-      'L\'endpoint degli assistenti non è confermato. Verifica prima il server.';
+      'L\'endpoint degli assistenti non è confermato. Verifichi prima il server.';
 
   @override
-  String get instanceUseExisting => 'Oppure usa un progetto esistente:';
+  String get instanceUseExisting => 'Oppure usi un progetto esistente:';
 
   @override
   String get instanceUseHere => 'Usa questa istanza su questo dispositivo';
@@ -7467,18 +7466,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceWizardTitle => 'Crea una nuova istanza';
 
   @override
-  String get instanceYou => 'tu';
+  String get instanceYou => 'Lei';
 
   @override
   String get instanceYouAreDelegate =>
-      'Sei un delegato del proprietario dell\'istanza.';
+      'È un delegato del proprietario dell\'istanza.';
 
   @override
-  String get instanceYouAreOwner => 'Sei il proprietario dell\'istanza.';
+  String get instanceYouAreOwner => 'È il proprietario dell\'istanza.';
 
   @override
   String invitationAlreadyMember(String workspace) {
-    return 'Sei già membro di $workspace.';
+    return 'È già membro di $workspace.';
   }
 
   @override
@@ -7491,7 +7490,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationBadServer =>
-      'Il server di questo invito non è valido. Chiedi un nuovo invito.';
+      'Il server di questo invito non è valido. Chieda un nuovo invito.';
 
   @override
   String get invitationChangeAccount => 'Cambia account';
@@ -7501,7 +7500,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationCheckFailed =>
-      'Impossibile controllare l’invito — stato non aggiornato. Non è cambiato nulla; riprova.';
+      'Impossibile controllare l’invito — stato non aggiornato. Non è cambiato nulla; riprovi.';
 
   @override
   String get invitationContinue => 'Continua verso questo spazio';
@@ -7514,7 +7513,7 @@ class AppLocalizationsIt extends AppLocalizations {
     String downloadUrl,
     String inviteLink,
   ) {
-    return 'Ciao$firstName! Sei invitato a unirti al nostro spazio di coworking «$workspaceName» su DesKilo.\n\n1. Scarica l\'app:\n$downloadUrl\n\n2. Aprila, crea il tuo account (e-mail + password) e accedi.\n\n3. Scegli «Unisciti a uno spazio» e inserisci il tuo codice d\'invito personale:\n$workspaceId\n(link d\'invito: $inviteLink)\n\nSuggerimento: copia semplicemente questo intero messaggio e incollalo nell\'app — il codice viene rilevato automaticamente. Il tuo codice è personale, monouso e valido per 14 giorni.\n\nA presto da $workspaceName!';
+    return 'Salve$firstName! È invitato a unirsi al nostro spazio di coworking «$workspaceName» su DesKilo.\n\n1. Scarichi l\'app:\n$downloadUrl\n\n2. La apra, crei il suo account (e-mail + password) e acceda.\n\n3. Scelga «Unirsi a uno spazio» e inserisca il suo codice d\'invito personale:\n$workspaceId\n(link d\'invito: $inviteLink)\n\nSuggerimento: copi semplicemente questo intero messaggio e lo incolli nell\'app — il codice viene rilevato automaticamente. Il suo codice è personale, monouso e valido per 14 giorni.\n\nA presto da $workspaceName!';
   }
 
   @override
@@ -7525,11 +7524,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationExpired =>
-      'Questo invito è scaduto. Chiedine uno nuovo a chi te l’ha inviato.';
+      'Questo invito è scaduto. Ne chieda uno nuovo a chi gliel’ha inviato.';
 
   @override
   String invitationInvalid(String host) {
-    return 'Nessuno spazio su $host conosce questo invito. Controllalo o chiedi all’organizzatore il link del suo server.';
+    return 'Nessuno spazio su $host conosce questo invito. Lo controlli o chieda all’organizzatore il link del suo server.';
   }
 
   @override
@@ -7537,7 +7536,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationJoinUnconfirmed =>
-      'Impossibile confermare il risultato. Aderisci di nuovo per controllare — l’invito non viene usato due volte.';
+      'Impossibile confermare il risultato. Aderisca di nuovo per controllare — l’invito non viene usato due volte.';
 
   @override
   String invitationJoiningAs(String account) {
@@ -7546,7 +7545,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationNewerVersion =>
-      'Questo invito è stato creato da una versione più recente di DesKilo. Aggiorna l’app e riaprila.';
+      'Questo invito è stato creato da una versione più recente di DesKilo. Aggiorni l’app e la riapra.';
 
   @override
   String invitationOtherServer(String host) {
@@ -7558,18 +7557,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String invitationPaused(String workspace) {
-    return 'La tua adesione a $workspace è sospesa. Solo un amministratore dello spazio può riprenderla.';
+    return 'La sua adesione a $workspace è sospesa. Solo un amministratore dello spazio può riprenderla.';
   }
 
   @override
   String get invitationReviewButton => 'Controlla l’invito';
 
   @override
-  String get invitationReviewTitle => 'Controlla prima di aderire';
+  String get invitationReviewTitle => 'Controlli prima di aderire';
 
   @override
   String get invitationRevoked =>
-      'Questo codice dello spazio è stato sostituito. Chiedi quello attuale a chi te l’ha inviato.';
+      'Questo codice dello spazio è stato sostituito. Chieda quello attuale a chi gliel’ha inviato.';
 
   @override
   String get invitationRoleAdmin => 'Ruolo offerto: amministratore';
@@ -7592,7 +7591,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationTemplateHelp =>
-      'Inviato quando inviti qualcuno via WhatsApp, SMS o condivisione. Lascia vuoto per usare il messaggio integrato nella lingua scelta. Tag disponibili:';
+      'Inviato quando invita qualcuno via WhatsApp, SMS o condivisione. Lasci vuoto per usare il messaggio integrato nella lingua scelta. Tag disponibili:';
 
   @override
   String get invitationTemplateHint =>
@@ -7618,11 +7617,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invitationWrongAccount =>
-      'Questo invito è già stato usato da un altro account. Se era per te, accedi con quell’account.';
+      'Questo invito è già stato usato da un altro account. Se era per Lei, acceda con quell’account.';
 
   @override
   String get inviteAdminExplainer =>
-      'Questo codice è monouso: ammette UNA persona come admin, poi scade. Consegnalo solo alla persona a cui è destinato.';
+      'Questo codice è monouso: ammette UNA persona come admin, poi scade. Lo consegni solo alla persona a cui è destinato.';
 
   @override
   String get inviteAdminNewCode => 'Nuovo codice amministratore';
@@ -7636,7 +7635,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get inviteCreateFailed =>
-      'Impossibile creare l\'invito. Controlla la connessione e riprova.';
+      'Impossibile creare l\'invito. Controlli la connessione e riprovi.';
 
   @override
   String get inviteFirstNameLabel => 'Nome (facoltativo)';
@@ -7736,7 +7735,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String invoiceEInvoiceBusinessRoute(String channel, String format) {
-    return 'Clienti business: inviala tramite $channel nel formato $format.';
+    return 'Clienti business: la invii tramite $channel nel formato $format.';
   }
 
   @override
@@ -7751,7 +7750,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String invoiceEInvoiceFormatMismatch(String channel, String format) {
-    return '$channel accetta solo $format: questo file EN 16931 serve per Peppol, la pubblica amministrazione e i clienti esteri — il resto lo converte la tua piattaforma.';
+    return '$channel accetta solo $format: questo file EN 16931 serve per Peppol, la pubblica amministrazione e i clienti esteri — il resto lo converte la sua piattaforma.';
   }
 
   @override
@@ -7772,11 +7771,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceEInvoiceStaleIdentity =>
-      'La tua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. Segnala come errata ed emetti una sostitutiva perché porti la nuova identità.';
+      'La sua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. La segnali come errata ed emetta una sostitutiva perché porti la nuova identità.';
 
   @override
   String get invoiceEInvoiceTransportAccredited =>
-      'Una piattaforma accreditata trasporta la fattura e comunica i dati all\'amministrazione fiscale per te.';
+      'Una piattaforma accreditata trasporta la fattura e comunica i dati all\'amministrazione fiscale per Lei.';
 
   @override
   String get invoiceEInvoiceTransportBilateral =>
@@ -7857,11 +7856,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceGapBuyerVatIdFormat =>
-      'La partita IVA del cliente non ha la forma del suo paese — verificala.';
+      'La partita IVA del cliente non ha la forma del suo paese — la verifichi.';
 
   @override
   String get invoiceGapCreditNoteWithPayments =>
-      'Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetti l\'accredito su un documento a parte.';
+      'Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetta l\'accredito su un documento a parte.';
 
   @override
   String get invoiceGapMissingBuyerCountry => 'Manca il paese del cliente.';
@@ -7876,7 +7875,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceGapMissingLegalId =>
-      'Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla ti identifica sulla fattura.';
+      'Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla la identifica sulla fattura.';
 
   @override
   String get invoiceGapMissingSellerCity =>
@@ -7903,7 +7902,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceGapVatNotSupported =>
-      'Lo spazio applica l\'IVA ma questa fattura non porta alcuna aliquota — aggiungi le aliquote ed emettila di nuovo.';
+      'Lo spazio applica l\'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.';
 
   @override
   String invoiceHeldNote(String reason) {
@@ -7922,7 +7921,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceHoldFailed =>
-      'Non è stato possibile modificare la sospensione dei solleciti. Riprova.';
+      'Non è stato possibile modificare la sospensione dei solleciti. Riprovi.';
 
   @override
   String get invoiceHoldNote => 'Nota (facoltativa)';
@@ -8102,7 +8101,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceMatchNoPayments =>
-      'Nessun pagamento registrato da riconciliare — registralo o confermalo prima.';
+      'Nessun pagamento registrato da riconciliare — lo registri o lo confermi prima.';
 
   @override
   String get invoiceMatchNoteLabel => 'Nota';
@@ -8139,7 +8138,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceMaturityReview =>
-      'Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.';
+      'Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifica.';
 
   @override
   String get invoiceMemberLabel => 'Membro';
@@ -8174,7 +8173,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceMissingTitle =>
-      'Completa questi dati prima dell\'emissione';
+      'Completi questi dati prima dell\'emissione';
 
   @override
   String get invoiceMissingVatNotRegistered =>
@@ -8274,7 +8273,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicePickMember =>
-      'Scegli un membro per vedere cosa ha registrato il suo mese.';
+      'Scelga un membro per vedere cosa ha registrato il suo mese.';
 
   @override
   String get invoiceProformaAction => 'Fattura proforma';
@@ -8301,7 +8300,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String invoiceRefundExplain(String amount) {
-    return 'Questa nota di credito significa che lo SPAZIO deve $amount al membro. Registra il rimborso versato — l\'importo viene imputato al saldo del membro e il documento si chiude come Rimborsata.';
+    return 'Questa nota di credito significa che lo SPAZIO deve $amount al membro. Registri il rimborso versato — l\'importo viene imputato al saldo del membro e il documento si chiude come Rimborsata.';
   }
 
   @override
@@ -8499,7 +8498,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceTemplateNoPreview =>
-      'Emetti prima una fattura — l\'anteprima usa la più recente.';
+      'Emetta prima una fattura — l\'anteprima usa la più recente.';
 
   @override
   String get invoiceTemplatePresets => 'Modelli';
@@ -8561,7 +8560,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicingBanner =>
-      'Stai emettendo e sollecitando le fatture di tutto lo spazio. Le tue fatture e i tuoi pagamenti sono in Io › Finanze.';
+      'Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Finanze.';
 
   @override
   String get invoicingHubTitle => 'Fatturazione';
@@ -8651,7 +8650,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String journeyIssuerMatches(String amount) {
-    return 'Un pagamento di $amount è registrato — abbinalo a questa fattura';
+    return 'Un pagamento di $amount è registrato — lo abbini a questa fattura';
   }
 
   @override
@@ -8676,46 +8675,46 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String journeyIssuerRefunds(String name, String amount) {
-    return 'Nota di credito — rimborsa $amount a $name e registralo';
+    return 'Nota di credito — rimborsi $amount a $name e lo registri';
   }
 
   @override
   String get journeyIssuerReplaces =>
-      'Annullata — emetti la fattura sostitutiva';
+      'Annullata — emetta la fattura sostitutiva';
 
   @override
   String journeyMemberConfirms(String amount) {
-    return 'Tocca a te: conferma in Eventi il pagamento di $amount registrato per te';
+    return 'Tocca a Lei: confermi in Eventi il pagamento di $amount registrato per Lei';
   }
 
   @override
   String journeyMemberDeclared(String amount) {
-    return 'Hai dichiarato $amount — lo spazio lo sta confermando';
+    return 'Ha dichiarato $amount — lo spazio lo sta confermando';
   }
 
   @override
   String journeyMemberPays(String amount, String date) {
-    return 'Tocca a te: paga $amount entro il $date';
+    return 'Tocca a Lei: paghi $amount entro il $date';
   }
 
   @override
   String journeyMemberPaysOverdue(String amount, int days) {
-    return 'Tocca a te: paga $amount — in ritardo di $days giorni';
+    return 'Tocca a Lei: paghi $amount — in ritardo di $days giorni';
   }
 
   @override
   String journeyMemberPaysRemainder(String amount) {
-    return 'Tocca a te: paga il residuo di $amount';
+    return 'Tocca a Lei: paghi il residuo di $amount';
   }
 
   @override
   String journeyMemberRefund(String amount) {
-    return 'Lo spazio ti deve $amount — niente da pagare';
+    return 'Lo spazio le deve $amount — niente da pagare';
   }
 
   @override
   String journeyMemberRegistered(String amount) {
-    return 'Il tuo pagamento di $amount è registrato — lo spazio lo abbina a questa fattura';
+    return 'Il suo pagamento di $amount è registrato — lo spazio lo abbina a questa fattura';
   }
 
   @override
@@ -8795,11 +8794,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskBadgeHint =>
-      'Scansiona il QR del badge o digita il suo codice.';
+      'Scansioni il QR del badge o digiti il suo codice.';
 
   @override
   String get kioskBadgeHintNfc =>
-      'Avvicina la tessera, scansiona il QR o digita il codice.';
+      'Avvicini la tessera, scansioni il QR o digiti il codice.';
 
   @override
   String get kioskBadgeRejected => 'Badge non riconosciuto.';
@@ -8811,7 +8810,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String kioskBlockedContactHint(String name) {
-    return 'Occupato da $name — puoi scrivergli dall\'app sul tuo telefono.';
+    return 'Occupato da $name — può scrivergli dall\'app sul suo telefono.';
   }
 
   @override
@@ -8822,7 +8821,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskCheckInRightAwayHint =>
-      'Sei qui: la prenotazione parte già registrata.';
+      'È qui: la prenotazione parte già registrata.';
 
   @override
   String get kioskCheckOut => 'Check-out';
@@ -8839,10 +8838,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskGateBody =>
-      'Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvia il tablet.';
+      'Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvii il tablet.';
 
   @override
-  String get kioskGateReject => 'Non ora — apri l\'app normalmente';
+  String get kioskGateReject => 'Non ora — apra l\'app normalmente';
 
   @override
   String get kioskGateStart => 'Avvia la modalità chiosco';
@@ -8855,15 +8854,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskNfcFailed =>
-      'Il lettore RFID non si è avviato — riavvia l\'app e riprova.';
+      'Il lettore RFID non si è avviato — riavvii l\'app e riprovi.';
 
   @override
   String get kioskNfcOff =>
-      'L\'NFC è disattivato nelle impostazioni Android di questo tablet — attivalo per leggere le carte RFID.';
+      'L\'NFC è disattivato nelle impostazioni Android di questo tablet — lo attivi per leggere le carte RFID.';
 
   @override
   String get kioskNfcUnsupported =>
-      'Questo tablet non ha un lettore NFC — scansiona il badge QR.';
+      'Questo tablet non ha un lettore NFC — scansioni il badge QR.';
 
   @override
   String get kioskNotCheckedIn =>
@@ -8871,13 +8870,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskPeriodCheckInHint =>
-      'Fino a quando resti? Il check-in inizia adesso.';
+      'Fino a quando resta? Il check-in inizia adesso.';
 
   @override
-  String get kioskPeriodReserveHint => 'Scegli il periodo: solo oggi.';
+  String get kioskPeriodReserveHint => 'Scelga il periodo: solo oggi.';
 
   @override
-  String get kioskPresentBadge => 'Presenta il tuo badge';
+  String get kioskPresentBadge => 'Presenti il suo badge';
 
   @override
   String get kioskPresentBadgeNext => 'Presenta il badge';
@@ -8889,14 +8888,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskReserve => 'Prenota';
 
   @override
-  String get kioskReserveAndCheckIn => 'Prenota e fai check-in';
+  String get kioskReserveAndCheckIn => 'Prenotazione e check-in';
 
   @override
   String get kioskRestOfDay => 'Resto della giornata';
 
   @override
   String get kioskRevertDesc =>
-      'Questo profilo è configurato come chiosco dello spazio. Ripristinalo come membro normale per non vedere più la domanda chiosco all\'avvio.';
+      'Questo profilo è configurato come chiosco dello spazio. Lo ripristini come membro normale per non vedere più la domanda chiosco all\'avvio.';
 
   @override
   String get kioskRevertDone => 'Questo profilo è di nuovo un membro normale.';
@@ -8908,7 +8907,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskScanQr => 'Scansiona il badge QR';
 
   @override
-  String get kioskTapHint => 'Tocca un posto per fare check-in';
+  String get kioskTapHint => 'Tocchi un posto per fare check-in';
 
   @override
   String get languageNameCS => 'Ceco';
@@ -8987,7 +8986,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentityAssociationRegime =>
-      'Un\'associazione senza attività commerciale non è soggetta a IVA: scegliete «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non avete, e la fattura elettronica verrebbe respinta. Fuori campo, è il vostro numero di registro a identificare l\'associazione.';
+      'Un\'associazione senza attività commerciale non è soggetta a IVA: scelga «Fuori campo IVA», non «Esente». Il regime di esenzione richiede una partita IVA che non ha, e la fattura elettronica verrebbe respinta. Fuori campo, è il suo numero di registro a identificare l\'associazione.';
 
   @override
   String get legalIdentityCity => 'Città';
@@ -8998,7 +8997,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentityIntro =>
-      'Ciò che una fattura elettronica EN 16931 deve dichiarare su di te. Le fatture già emesse conservano l’identità con cui sono state firmate.';
+      'Ciò che una fattura elettronica EN 16931 deve dichiarare su di Lei. Le fatture già emesse conservano l’identità con cui sono state firmate.';
 
   @override
   String get legalIdentityLegalId => 'Numero di registrazione';
@@ -9106,7 +9105,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get levelNotAllowed =>
-      'Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.';
+      'Non è autorizzato a prenotare un tavolo, ufficio o piano intero.';
 
   @override
   String get levelPermissionAllowed =>
@@ -9166,7 +9165,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get libraryApplyConfirmBody =>
-      'La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che avete già viene rimosso.';
+      'La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che ha già viene rimosso.';
 
   @override
   String libraryApplyConfirmTitle(String name) {
@@ -9194,12 +9193,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String libraryDeleteConfirm(String name) {
-    return 'Eliminare « $name »? Le persone con cui lo avete condiviso perdono l\'accesso.';
+    return 'Eliminare « $name »? Le persone con cui lo ha condiviso perdono l\'accesso.';
   }
 
   @override
   String get libraryEmpty =>
-      'Ancora niente qui. Salvate questo spazio come modello, o aspettate che qualcuno ne condivida uno con voi.';
+      'Ancora niente qui. Salvi questo spazio come modello, o aspetti che qualcuno ne condivida uno con Lei.';
 
   @override
   String libraryFeatureNeeds(String feature, String prerequisite) {
@@ -9242,22 +9241,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String libraryInvitationTextsHint(String tag) {
-    return 'Solo testi scritti con segnaposto come $tag; un testo che nomina il tuo spazio o le sue persone viene rifiutato.';
+    return 'Solo testi scritti con segnaposto come $tag; un testo che nomina il suo spazio o le sue persone viene rifiutato.';
   }
 
   @override
   String get libraryInvitationTextsRefused =>
-      'Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito.';
+      'Un testo di invito nomina ancora il suo spazio o le sue persone. Li sostituisca con segnaposto nelle impostazioni di invito, oppure deselezioni i testi di invito.';
 
   @override
   String get libraryNeverDocumentDesign => 'Impaginazione dei documenti';
 
   @override
-  String get libraryNeverDocumentLinks => 'Collegamenti ai vostri documenti';
+  String get libraryNeverDocumentLinks => 'Collegamenti ai suoi documenti';
 
   @override
   String get libraryNeverIdentity =>
-      'Il vostro indirizzo, identificativi legali, menzioni legali e gruppo WhatsApp';
+      'Il suo indirizzo, identificativi legali, menzioni legali e gruppo WhatsApp';
 
   @override
   String get libraryNeverInvitations => 'Testi di invito';
@@ -9317,11 +9316,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryPublishGroups => 'Cosa viaggia';
 
   @override
-  String get libraryPublishNothing => 'Scegliete almeno un gruppo.';
+  String get libraryPublishNothing => 'Scelga almeno un gruppo.';
 
   @override
   String get libraryReasonFeeSchedule =>
-      'La vostra scala di commissioni verrebbe sostituita per intero.';
+      'La sua scala di commissioni verrebbe sostituita per intero.';
 
   @override
   String get librarySave => 'Salva questo spazio come modello';
@@ -9336,7 +9335,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get librarySaveTags => 'Etichette, separate da virgole';
 
   @override
-  String get librarySaved => 'Salvato nei vostri modelli.';
+  String get librarySaved => 'Salvato nei suoi modelli.';
 
   @override
   String librarySearchCapabilities(String capabilities) {
@@ -9353,7 +9352,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get librarySearchUnavailable =>
-      'Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprova.';
+      'Non è stato possibile verificare le impostazioni dei modelli, quindi nessuno è mostrato come corrispondente. Riprovi.';
 
   @override
   String get libraryShare => 'Condividi…';
@@ -9366,7 +9365,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get libraryShareHint =>
-      'Invitate via e-mail. L\'invito funziona non appena quell\'indirizzo accede — non viene rivelato se esiste già un account.';
+      'Inviti via e-mail. L\'invito funziona non appena quell\'indirizzo accede — non viene rivelato se esiste già un account.';
 
   @override
   String get libraryShareNobody => 'Nessuno invitato per ora.';
@@ -9383,7 +9382,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryStateAttention => 'Richiede attenzione';
 
   @override
-  String get libraryStateChange => 'Cambia ciò che avete';
+  String get libraryStateChange => 'Cambia ciò che ha';
 
   @override
   String get libraryStateMatching => 'Già uguale';
@@ -9410,18 +9409,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get libraryVisibilityShared => 'Le persone che invito';
 
   @override
-  String get libraryYours => 'I vostri modelli';
+  String get libraryYours => 'I suoi modelli';
 
   @override
   String get linkedAccountsIntro =>
-      'Accedi a questo account con un’identità collegata. I provider disponibili dipendono dal tuo server.';
+      'Acceda a questo account con un’identità collegata. I provider disponibili dipendono dal suo server.';
 
   @override
   String get linkedAccountsLink => 'Collega';
 
   @override
   String get linkedAccountsLinkStarted =>
-      'Continua nel browser per completare il collegamento.';
+      'Continui nel browser per completare il collegamento.';
 
   @override
   String get linkedAccountsLinked => 'Collegato';
@@ -9463,15 +9462,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get localNeedsTitle =>
-      'Li aggiungerai tu; un modello non li trasporta mai:';
+      'Li aggiungerà Lei; un modello non li trasporta mai:';
 
   @override
   String get localSlotEinvoicePlatform =>
-      'Il tuo account sulla piattaforma di fatturazione elettronica';
+      'Il suo account sulla piattaforma di fatturazione elettronica';
 
   @override
   String get localSlotLegalIdentity =>
-      'La tua identità legale e il tuo indirizzo (per le fatture)';
+      'La sua identità legale e il suo indirizzo (per le fatture)';
 
   @override
   String localSlotNamedValidators(String type) {
@@ -9483,7 +9482,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get localSlotPaymentDetails =>
-      'Come ti pagano i membri (coordinate bancarie)';
+      'Come la pagano i membri (coordinate bancarie)';
 
   @override
   String get localSlotPaymentProvider => 'Un fornitore di pagamenti online';
@@ -9502,7 +9501,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get managedAccessHint =>
-      'Predefinito: ogni proprietario e ogni admin. Restringete per ruolo, per persona o entrambi. Il proprietario può sempre cambiare questa regola — altrimenti un profilo diventerebbe inamministrabile — ma accede ai dati solo se la regola lo nomina.';
+      'Predefinito: ogni proprietario e ogni admin. Restringa per ruolo, per persona o entrambi. Il proprietario può sempre cambiare questa regola — altrimenti un profilo diventerebbe inamministrabile — ma accede ai dati solo se la regola lo nomina.';
 
   @override
   String get managedAccessOwners => 'Proprietari';
@@ -9533,7 +9532,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get managedProfileHandOverHint =>
-      'Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena approvi l\'adesione.';
+      'Genera un codice personale legato a questo profilo. Chi lo riscatta prende il profilo — prenotazioni, fatture, abbonamento — appena Lei approva l\'adesione.';
 
   @override
   String get managedProfileIdentityUnavailable =>
@@ -9541,7 +9540,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get managedProfileIntro =>
-      'Questa persona non ha ancora un account. Prenoti, fatturi e gestisci per lei; consegnale il profilo quando entra.';
+      'Questa persona non ha ancora un account. Lei prenota, fattura e gestisce per conto suo; le consegni il profilo quando entra.';
 
   @override
   String get managedProfileRevoke => 'Revoca la consegna';
@@ -9567,7 +9566,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpAssistantsUnavailable =>
-      'Impossibile caricare il tuo accesso agli assistenti. Riprova più tardi.';
+      'Impossibile caricare il suo accesso agli assistenti. Riprovi più tardi.';
 
   @override
   String get mcpCancel => 'Annulla';
@@ -9576,7 +9575,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpConfirmAccept => 'Conferma';
 
   @override
-  String get mcpConfirmApprove => 'La tua risposta: approva';
+  String get mcpConfirmApprove => 'La sua risposta: approva';
 
   @override
   String mcpConfirmClient(String client) {
@@ -9599,7 +9598,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConfirmExpired =>
-      'Questa richiesta è scaduta. Chiedi all\'assistente di inviarla di nuovo.';
+      'Questa richiesta è scaduta. Chieda all\'assistente di inviarla di nuovo.';
 
   @override
   String mcpConfirmNewShare(String pct) {
@@ -9613,7 +9612,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConfirmNotFound =>
-      'Non c\'è nessuna richiesta di questo tipo per te.';
+      'Non c\'è nessuna richiesta di questo tipo per Lei.';
 
   @override
   String mcpConfirmPeriod(String period) {
@@ -9621,18 +9620,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get mcpConfirmRefuse => 'La tua risposta: rifiuta';
+  String get mcpConfirmRefuse => 'La sua risposta: rifiuta';
 
   @override
   String get mcpConfirmStale =>
-      'Questa richiesta non corrisponde più ai dati attuali o al tuo accesso. Non è stato fatto nulla.';
+      'Questa richiesta non corrisponde più ai dati attuali o al suo accesso. Non è stato fatto nulla.';
 
   @override
   String get mcpConfirmTitle => 'Conferma una richiesta dell\'assistente';
 
   @override
   String get mcpConfirmUnavailable =>
-      'Impossibile caricare questa richiesta. Riprova dal link.';
+      'Impossibile caricare questa richiesta. Riprovi dal link.';
 
   @override
   String mcpConfirmWorkspace(String workspace) {
@@ -9658,19 +9657,19 @@ class AppLocalizationsIt extends AppLocalizations {
       other: '$days giorni',
       one: '1 giorno',
     );
-    return 'Approvato — scade tra $_temp0. Richiedi di nuovo l’approvazione quando scade.';
+    return 'Approvato — scade tra $_temp0. Richieda di nuovo l’approvazione quando scade.';
   }
 
   @override
-  String get mcpConnectAddTitle => 'Aggiungi DesKilo al tuo assistente';
+  String get mcpConnectAddTitle => 'Aggiunga DesKilo al suo assistente';
 
   @override
   String get mcpConnectAddressLabel =>
-      'Il tuo indirizzo DesKilo per gli assistenti';
+      'Il suo indirizzo DesKilo per gli assistenti';
 
   @override
   String get mcpConnectAllDone =>
-      'Tutto è pronto. Prova la connessione qui sotto.';
+      'Tutto è pronto. Provi la connessione qui sotto.';
 
   @override
   String get mcpConnectBeforeTitle => 'Prima di collegare';
@@ -9681,15 +9680,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectChatgptStep1 =>
-      'In ChatGPT, attiva la modalità sviluppatore: Impostazioni → App → Impostazioni avanzate.';
+      'In ChatGPT, attivi la modalità sviluppatore: Impostazioni → App → Impostazioni avanzate.';
 
   @override
   String get mcpConnectChatgptStep2 =>
-      'Crea un’app chiamata DesKilo, incolla l’indirizzo qui sopra e scegli OAuth come autenticazione.';
+      'Crei un’app chiamata DesKilo, incolli l’indirizzo qui sopra e scelga OAuth come autenticazione.';
 
   @override
   String get mcpConnectChatgptStep3 =>
-      'Accedi con Google e scegli questo spazio di lavoro e cosa può farvi ChatGPT.';
+      'Acceda con Google e scelga questo spazio di lavoro e cosa può farvi ChatGPT.';
 
   @override
   String get mcpConnectClaudeNote =>
@@ -9700,22 +9699,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectClaudeStep1 =>
-      'In Claude, apri Impostazioni → Connettori.';
+      'In Claude, apra Impostazioni → Connettori.';
 
   @override
   String get mcpConnectClaudeStep2 =>
-      'Scegli «Aggiungi connettore personalizzato», chiamalo DesKilo e incolla l’indirizzo qui sopra.';
+      'Scelga «Aggiungi connettore personalizzato», lo chiami DesKilo e incolli l’indirizzo qui sopra.';
 
   @override
   String get mcpConnectClaudeStep3 =>
-      'Scegli Connetti, accedi con Google e scegli questo spazio di lavoro e cosa può farvi Claude.';
+      'Scelga Connetti, acceda con Google e scelga questo spazio di lavoro e cosa può farvi Claude.';
 
   @override
-  String get mcpConnectCodeStep1 => 'Esegui questo in un terminale:';
+  String get mcpConnectCodeStep1 => 'Esegua questo in un terminale:';
 
   @override
   String get mcpConnectCodeStep2 =>
-      'In Claude Code, digita /mcp, scegli deskilo e poi Authenticate. Si apre un browser per accedere e scegliere questo spazio di lavoro.';
+      'In Claude Code, digiti /mcp, scelga deskilo e poi Authenticate. Si apre un browser per accedere e scegliere questo spazio di lavoro.';
 
   @override
   String get mcpConnectCopied => 'Copiato.';
@@ -9728,14 +9727,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectCursorStep =>
-      'Cursor propone di installare DesKilo, poi apre un browser per accedere e scegliere questo spazio di lavoro. Senza il pulsante, aggiungi questo a ~/.cursor/mcp.json:';
+      'Cursor propone di installare DesKilo, poi apre un browser per accedere e scegliere questo spazio di lavoro. Senza il pulsante, aggiunga questo a ~/.cursor/mcp.json:';
 
   @override
   String get mcpConnectDone => 'Fatto';
 
   @override
   String get mcpConnectIntro =>
-      'Lascia che Claude, ChatGPT o un altro assistente consulti e prenoti per te in DesKilo. Agisce a tuo nome, solo negli spazi di lavoro e per le azioni che approvi.';
+      'Lasci che Claude, ChatGPT o un altro assistente consulti e prenoti per Lei in DesKilo. Agisce a suo nome, solo negli spazi di lavoro e per le azioni che approva.';
 
   @override
   String mcpConnectLastCall(String client, String when) {
@@ -9744,11 +9743,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectManageHint =>
-      'Per vedere cosa ha fatto un assistente o per scollegarlo, apri Assistenti.';
+      'Per vedere cosa ha fatto un assistente o per scollegarlo, apra Assistenti.';
 
   @override
   String get mcpConnectOpenFailed =>
-      'Non è stato possibile aprire l’app da qui. Segui invece i passaggi qui sotto.';
+      'Non è stato possibile aprire l’app da qui. Segua invece i passaggi qui sotto.';
 
   @override
   String get mcpConnectOpenGuide => 'Apri la guida al collegamento';
@@ -9762,11 +9761,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectOperatorRequest =>
-      'Ciao, potresti attivare gli assistenti sul nostro server DesKilo? Si trova in Impostazioni → Installazione: assistenti. Grazie.';
+      'Buongiorno, potrebbe attivare gli assistenti sul nostro server DesKilo? Si trova in Impostazioni → Installazione: assistenti. Grazie.';
 
   @override
   String get mcpConnectOtherStep1 =>
-      'La maggior parte dei client legge un file JSON di server. Aggiungi questa voce; il client apre un browser per accedere la prima volta.';
+      'La maggior parte dei client legge un file JSON di server. Aggiunga questa voce; il client apre un browser per accedere la prima volta.';
 
   @override
   String get mcpConnectOtherStep2 =>
@@ -9774,19 +9773,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectRoleDenied =>
-      'Qui non viene offerto nulla al tuo ruolo. Un amministratore dello spazio di lavoro decide cosa può fare ogni ruolo.';
+      'Qui non viene offerto nulla al suo ruolo. Un amministratore dello spazio di lavoro decide cosa può fare ogni ruolo.';
 
   @override
-  String get mcpConnectStepAccess => 'Il tuo accesso agli assistenti';
+  String get mcpConnectStepAccess => 'Il suo accesso agli assistenti';
 
   @override
-  String get mcpConnectStepConnect => 'DesKilo aggiunto al tuo assistente';
+  String get mcpConnectStepConnect => 'DesKilo aggiunto al suo assistente';
 
   @override
   String get mcpConnectStepGoogle => 'Accesso con Google';
 
   @override
-  String get mcpConnectStepIdentity => 'La tua identità su questo server';
+  String get mcpConnectStepIdentity => 'La sua identità su questo server';
 
   @override
   String get mcpConnectStepServer => 'Assistenti attivati su questo server';
@@ -9833,24 +9832,24 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectTestTimeout =>
-      'Nessuna chiamata ancora. Verifica che il connettore sia aggiunto, che tu abbia approvato questo spazio di lavoro e che i passaggi sopra siano completati; poi riprova.';
+      'Nessuna chiamata ancora. Verifichi che il connettore sia aggiunto, che Lei abbia approvato questo spazio di lavoro e che i passaggi sopra siano completati; poi riprovi.';
 
   @override
   String get mcpConnectTestTitle => 'Verifica che funzioni';
 
   @override
   String get mcpConnectTestWaiting =>
-      'In attesa che il tuo assistente chiami DesKilo. Chiedigli:';
+      'In attesa che il suo assistente chiami DesKilo. Gli chieda:';
 
   @override
   String get mcpConnectTitle => 'Collega un assistente';
 
   @override
   String get mcpConnectTodoConnect =>
-      'Da fare — tu: segui i passaggi per il tuo assistente qui sotto.';
+      'Da fare — Lei: segua i passaggi per il suo assistente qui sotto.';
 
   @override
-  String get mcpConnectTodoYou => 'Da fare — tu.';
+  String get mcpConnectTodoYou => 'Da fare — Lei.';
 
   @override
   String get mcpConnectUnavailable => 'Impossibile verificarlo ora.';
@@ -9860,11 +9859,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectVscodeStep =>
-      'VS Code propone di installare DesKilo. Avvialo dall’elenco dei server MCP; si apre un browser per accedere e scegliere questo spazio di lavoro.';
+      'VS Code propone di installare DesKilo. Lo avvii dall’elenco dei server MCP; si apre un browser per accedere e scegliere questo spazio di lavoro.';
 
   @override
   String get mcpConnectWaitingDatabaseAdmin =>
-      'In attesa che un amministratore del database approvi la tua richiesta.';
+      'In attesa che un amministratore del database approvi la sua richiesta.';
 
   @override
   String mcpConnectWaitingOperator(String names) {
@@ -9880,25 +9879,25 @@ class AppLocalizationsIt extends AppLocalizations {
       'In attesa che un amministratore dello spazio di lavoro offra gli assistenti qui.';
 
   @override
-  String get mcpConnectWhich => 'Quale assistente usi?';
+  String get mcpConnectWhich => 'Quale assistente usa?';
 
   @override
   String get mcpConnectWorkspaceSelected => 'Spazio di lavoro selezionato';
 
   @override
   String get mcpConnectWorkspacesHint =>
-      'Ogni spazio di lavoro decide per sé. Quando il tuo assistente lo chiede, scegli tra quelli pronti.';
+      'Ogni spazio di lavoro decide per sé. Quando il suo assistente lo chiede, scelga tra quelli pronti.';
 
   @override
-  String get mcpConnectWorkspacesTitle => 'I tuoi spazi di lavoro';
+  String get mcpConnectWorkspacesTitle => 'I suoi spazi di lavoro';
 
   @override
   String get mcpConnectWsConnected =>
-      'Collegato — un assistente può agire per te qui.';
+      'Collegato — un assistente può agire per Lei qui.';
 
   @override
   String get mcpConnectWsNotOffered =>
-      'Gli assistenti sono attivi, ma al tuo ruolo non è ancora offerto nulla. Decide un amministratore dello spazio di lavoro.';
+      'Gli assistenti sono attivi, ma al suo ruolo non è ancora offerto nulla. Decide un amministratore dello spazio di lavoro.';
 
   @override
   String get mcpConnectWsOff =>
@@ -9906,11 +9905,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectWsReady =>
-      'Pronto — sceglilo quando il tuo assistente lo chiede.';
+      'Pronto — lo scelga quando il suo assistente lo chiede.';
 
   @override
   String get mcpConnectWsUnknown =>
-      'Mostrato quando il tuo accesso agli assistenti sarà approvato.';
+      'Mostrato quando il suo accesso agli assistenti sarà approvato.';
 
   @override
   String get mcpConnectedNoWorkspace =>
@@ -9918,7 +9917,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConnectedNone =>
-      'Nessun assistente collegato. Collegane uno dall\'assistente stesso.';
+      'Nessun assistente collegato. Ne colleghi uno dall\'assistente stesso.';
 
   @override
   String get mcpConnectedTitle => 'Assistenti collegati';
@@ -9932,12 +9931,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String mcpConsentAsks(String client) {
-    return '$client chiede di agire per te in Deskilo.';
+    return '$client chiede di agire per Lei in Deskilo.';
   }
 
   @override
   String get mcpConsentChoose =>
-      'Scegli ogni spazio e cosa l\'assistente può fare lì. Nulla è scelto al posto tuo.';
+      'Scelga ogni spazio e cosa l\'assistente può fare lì. Nulla è scelto al posto suo.';
 
   @override
   String mcpConsentClientBlocked(String name) {
@@ -9946,7 +9945,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String mcpConsentClientWaiting(String name) {
-    return '$name non è ancora approvato su questo server. L\'operatore approva ogni assistente una volta; poi collegati di nuovo dall\'assistente.';
+    return '$name non è ancora approvato su questo server. L\'operatore approva ogni assistente una volta; poi si colleghi di nuovo dall\'assistente.';
   }
 
   @override
@@ -9954,12 +9953,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String mcpConsentDeciderAsk(String name) {
-    return 'Chiedi a $name di decidere.';
+    return 'Chieda a $name di decidere.';
   }
 
   @override
   String get mcpConsentDeciderMe =>
-      'Lo decidi tu, nella console dell\'installazione.';
+      'Lo decide Lei, nella console dell\'installazione.';
 
   @override
   String get mcpConsentDeciderNobody =>
@@ -9985,19 +9984,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConsentFieldsExplain =>
-      'Dettagli che può vedere anche qui. Lasciali deselezionati per mantenere le sue risposte minimizzate.';
+      'Dettagli che può vedere anche qui. Li lasci deselezionati per mantenere minimizzate le risposte dell\'assistente.';
 
   @override
   String get mcpConsentNoWorkspace =>
-      'Nessuno dei tuoi spazi ammette assistenti. Non si può collegare nulla.';
+      'Nessuno dei suoi spazi ammette assistenti. Non si può collegare nulla.';
 
   @override
   String get mcpConsentNotEligible =>
-      'Questo database non ha ancora approvato gli assistenti per te. Chiedi l\'approvazione, poi collega di nuovo.';
+      'Questo database non ha ancora approvato gli assistenti per Lei. Chieda l\'approvazione, poi si colleghi di nuovo.';
 
   @override
   String get mcpConsentPartial =>
-      'L\'assistente è stato approvato ma il collegamento non è ancora utilizzabile. Collega di nuovo dall\'assistente.';
+      'L\'assistente è stato approvato ma il collegamento non è ancora utilizzabile. Si colleghi di nuovo dall\'assistente.';
 
   @override
   String mcpConsentRedirectHost(String host) {
@@ -10016,7 +10015,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpConsentUnavailable =>
-      'Impossibile caricare questa richiesta di collegamento. Ricomincia dall\'assistente.';
+      'Impossibile caricare questa richiesta di collegamento. Ricominci dall\'assistente.';
 
   @override
   String get mcpDisclosureMaximumExplain =>
@@ -10024,11 +10023,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpDisclosureMaximumLocked =>
-      'Conferma con il tuo secondo fattore per vedere e modificare il massimo.';
+      'Confermi con il suo secondo fattore per vedere e modificare il massimo.';
 
   @override
   String get mcpDisclosureMaximumRefused =>
-      'Il massimo non è stato salvato. Serve il tuo secondo fattore.';
+      'Il massimo non è stato salvato. Serve il suo secondo fattore.';
 
   @override
   String get mcpDisclosureMaximumSave => 'Salva il massimo';
@@ -10042,7 +10041,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpDisclosurePolicyExplain =>
-      'Gli assistenti ricevono risposte minimizzate. Scegli i dettagli che possono vedere anche qui; ogni persona sceglie comunque per sé.';
+      'Gli assistenti ricevono risposte minimizzate. Scelga i dettagli che possono vedere anche qui; ogni persona sceglie comunque per sé.';
 
   @override
   String get mcpDisclosurePreviewDetailed => 'Risposta dettagliata';
@@ -10074,19 +10073,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpEligibleExpired =>
-      'La tua approvazione è scaduta. Richiedila di nuovo per continuare a usare gli assistenti.';
+      'La sua approvazione è scaduta. La richieda di nuovo per continuare a usare gli assistenti.';
 
   @override
   String get mcpEligibleNoIdentity =>
-      'La tua identità non è ancora confermata per gli assistenti su questa base.';
+      'La sua identità non è ancora confermata per gli assistenti su questa base.';
 
   @override
   String get mcpEligibleNot =>
-      'Questo database non ha approvato gli assistenti per te.';
+      'Questo database non ha approvato gli assistenti per Lei.';
 
   @override
   String get mcpEligibleRequested =>
-      'Hai chiesto l\'approvazione. Un amministratore del database la esaminerà.';
+      'Ha chiesto l\'approvazione. Un amministratore del database la esaminerà.';
 
   @override
   String get mcpEligibleWithdraw =>
@@ -10094,7 +10093,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpEligibleYes =>
-      'Questo database ti consente di usare gli assistenti.';
+      'Questo database le consente di usare gli assistenti.';
 
   @override
   String get mcpFieldName => 'Nomi degli spazi e dei posti';
@@ -10120,23 +10119,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpIdentityIneligible =>
-      'Questo account non può ancora essere confermato: conferma prima il tuo indirizzo e-mail o accedi con un provider.';
+      'Questo account non può ancora essere confermato: confermi prima il suo indirizzo e-mail o acceda con un provider.';
 
   @override
   String get mcpNextAwaitEligibility =>
-      'Prossimo passo: un amministratore del database decide la tua richiesta.';
+      'Prossimo passo: un amministratore del database decide la sua richiesta.';
 
   @override
   String get mcpNextConsent =>
-      'Prossimo passo: collega un assistente dall\'assistente stesso e approva questo spazio di lavoro.';
+      'Prossimo passo: colleghi un assistente dall\'assistente stesso e approvi questo spazio di lavoro.';
 
   @override
   String get mcpNextLinkGoogle =>
-      'Gli assistenti usano il tuo accesso Google. Collega prima Google a questo account; senza, l\'account non può usare assistenti.';
+      'Gli assistenti usano il suo accesso Google. Colleghi prima Google a questo account; senza, l\'account non può usare assistenti.';
 
   @override
   String get mcpNextLinkIdentity =>
-      'Prossimo passo: conferma la tua identità per gli assistenti su questa base, con un tocco qui sotto.';
+      'Prossimo passo: confermi la sua identità per gli assistenti su questa base, con un tocco qui sotto.';
 
   @override
   String get mcpNextOwnerExposes =>
@@ -10144,42 +10143,42 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpNextReady =>
-      'Pronto: un assistente collegato può agire per te in questo spazio di lavoro, entro quanto hai approvato.';
+      'Pronto: un assistente collegato può agire per Lei in questo spazio di lavoro, entro quanto ha approvato.';
 
   @override
   String get mcpNextRequestEligibility =>
-      'Prossimo passo: chiedi l\'approvazione agli amministratori di questo database.';
+      'Prossimo passo: chieda l\'approvazione agli amministratori di questo database.';
 
   @override
   String get mcpNextRoleDenied =>
-      'Il tuo ruolo qui non lascia alcuna operazione. Il titolare dello spazio di lavoro decide cosa può fare ogni ruolo.';
+      'Il suo ruolo qui non lascia alcuna operazione. Il titolare dello spazio di lavoro decide cosa può fare ogni ruolo.';
 
   @override
   String get mcpNextSignInGoogle =>
-      'Gli assistenti usano il tuo accesso Google. Accedi con Google per continuare.';
+      'Gli assistenti usano il suo accesso Google. Acceda con Google per continuare.';
 
   @override
   String get mcpNextUnavailable =>
-      'Il server non ha potuto rispondere. Non si presume nulla; riprova più tardi.';
+      'Il server non ha potuto rispondere. Non si presume nulla; riprovi più tardi.';
 
   @override
   String get mcpOpAvailability => 'Vedere i posti liberi';
 
   @override
   String get mcpOpCancelReservation =>
-      'Annullare le tue prenotazioni non ancora iniziate';
+      'Annullare le sue prenotazioni non ancora iniziate';
 
   @override
   String get mcpOpCapabilities => 'Vedere cosa può fare lì';
 
   @override
-  String get mcpOpCheckIn => 'Registrare il tuo arrivo';
+  String get mcpOpCheckIn => 'Registrare il suo arrivo';
 
   @override
-  String get mcpOpCheckOut => 'Registrare la tua uscita';
+  String get mcpOpCheckOut => 'Registrare la sua uscita';
 
   @override
-  String get mcpOpCreateReservation => 'Prenotare un posto per te';
+  String get mcpOpCreateReservation => 'Prenotare un posto per Lei';
 
   @override
   String get mcpOpGetPlace => 'Descrivere un luogo e mostrarlo su richiesta';
@@ -10194,7 +10193,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpInvoiceVoid => 'Annullare una fattura';
 
   @override
-  String get mcpOpListMyFavorites => 'I tuoi posti preferiti';
+  String get mcpOpListMyFavorites => 'I suoi posti preferiti';
 
   @override
   String get mcpOpListWorkspaces => 'Vedere quali spazi può usare';
@@ -10203,13 +10202,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpMemberStatus => 'Modificare lo stato di un membro';
 
   @override
-  String get mcpOpMyInvoices => 'Vedere le tue fatture';
+  String get mcpOpMyInvoices => 'Vedere le sue fatture';
 
   @override
-  String get mcpOpMyReservations => 'Vedere le tue prenotazioni';
+  String get mcpOpMyReservations => 'Vedere le sue prenotazioni';
 
   @override
-  String get mcpOpMyStatement => 'Vedere il tuo estratto conto';
+  String get mcpOpMyStatement => 'Vedere il suo estratto conto';
 
   @override
   String get mcpOpPendingValidations =>
@@ -10236,7 +10235,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Modificare la quota di abbonamento di un membro';
 
   @override
-  String get mcpOpUpdateReservation => 'Modificare le tue prenotazioni';
+  String get mcpOpUpdateReservation => 'Modificare le sue prenotazioni';
 
   @override
   String get mcpOverviewTitle => 'Altri database collegati';
@@ -10260,18 +10259,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpPolicyConflict =>
-      'Il salvataggio è stato rifiutato. Controlla le impostazioni attuali e salva di nuovo.';
+      'Il salvataggio è stato rifiutato. Controlli le impostazioni attuali e salvi di nuovo.';
 
   @override
   String get mcpPolicyEnabled => 'Offri i servizi per assistenti';
 
   @override
   String get mcpPolicyExplain =>
-      'Scegli cosa possono fare gli assistenti in questo spazio. Un membro ha comunque bisogno dell\'approvazione di questo database, del ruolo adatto, e deve scegliere questo spazio quando collega il suo assistente.';
+      'Scelga cosa possono fare gli assistenti in questo spazio. Un membro ha comunque bisogno dell\'approvazione di questo database, del ruolo adatto, e deve scegliere questo spazio quando collega il suo assistente.';
 
   @override
   String get mcpPolicyFeatureOff =>
-      'Gli assistenti sono disattivati nelle funzioni di questo spazio. Puoi comunque restringere o disattivare i servizi qui sotto.';
+      'Gli assistenti sono disattivati nelle funzioni di questo spazio. Può comunque restringere o disattivare i servizi qui sotto.';
 
   @override
   String get mcpPolicySave => 'Salva';
@@ -10281,38 +10280,38 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpPolicyStale =>
-      'Qualcuno ha modificato queste impostazioni nel frattempo. Controlla quelle attuali e salva di nuovo.';
+      'Qualcuno ha modificato queste impostazioni nel frattempo. Controlli quelle attuali e salvi di nuovo.';
 
   @override
   String get mcpPolicySwitched =>
-      'Hai cambiato spazio. Riapri questa pagina per modificare l\'altro spazio.';
+      'Ha cambiato spazio. Riapra questa pagina per modificare l\'altro spazio.';
 
   @override
   String get mcpPolicyTitle => 'Accesso degli assistenti';
 
   @override
   String get mcpPolicyUnavailable =>
-      'Impossibile caricare le impostazioni degli assistenti. Riprova più tardi.';
+      'Impossibile caricare le impostazioni degli assistenti. Riprovi più tardi.';
 
   @override
   String get mcpRefusalClientNotApproved =>
-      'Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; chiediglielo, poi collegati di nuovo dall’assistente.';
+      'Questo assistente non è ancora approvato su questo server. L’operatore approva ogni assistente una volta; glielo chieda, poi si colleghi di nuovo dall’assistente.';
 
   @override
   String get mcpRefusalNoIdentity =>
-      'Conferma prima la tua identità in DesKilo in Assistenti, poi collegati di nuovo dall’assistente.';
+      'Confermi prima la sua identità in DesKilo in Assistenti, poi si colleghi di nuovo dall’assistente.';
 
   @override
   String get mcpRefusalNotEligible =>
-      'Il tuo accesso agli assistenti non è ancora approvato. Richiedilo in DesKilo in Assistenti, poi collegati di nuovo dall’assistente.';
+      'Il suo accesso agli assistenti non è ancora approvato. Lo richieda in DesKilo in Assistenti, poi si colleghi di nuovo dall’assistente.';
 
   @override
   String get mcpRefusalOfferChanged =>
-      'L’offerta di questo spazio di lavoro è cambiata mentre sceglievi. Collegati di nuovo dall’assistente per vedere l’offerta attuale.';
+      'L’offerta di questo spazio di lavoro è cambiata mentre sceglieva. Si colleghi di nuovo dall’assistente per vedere l’offerta attuale.';
 
   @override
   String get mcpRefusalRequestExpired =>
-      'Questa richiesta di collegamento è scaduta o è già stata usata. Ricomincia dall’assistente.';
+      'Questa richiesta di collegamento è scaduta o è già stata usata. Ricominci dall’assistente.';
 
   @override
   String get mcpRemoveWorkspace => 'Rimuovi questo spazio';
@@ -10346,14 +10345,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpReviewSecondFactor =>
-      'Quel database richiede il tuo secondo fattore nella propria sessione. Non è stato deciso nulla.';
+      'Quel database richiede il suo secondo fattore nella propria sessione. Non è stato deciso nulla.';
 
   @override
   String get mcpReviewTitle => 'Approvazioni degli assistenti';
 
   @override
   String get mcpReviewUnavailable =>
-      'Impossibile caricare le richieste. Un esame richiede il tuo secondo fattore; riprova.';
+      'Impossibile caricare le richieste. Un esame richiede il suo secondo fattore; riprovi.';
 
   @override
   String get mcpStateAfterPrevious => 'Dopo il passaggio precedente';
@@ -10371,7 +10370,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStateCurrent => 'Dato';
 
   @override
-  String get mcpStateDenied => 'Nulla per il tuo ruolo';
+  String get mcpStateDenied => 'Nulla per il suo ruolo';
 
   @override
   String get mcpStateDisabled => 'Nulla offerto';
@@ -10419,7 +10418,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStatusConfirmIdentity => 'Conferma la mia identità';
 
   @override
-  String get mcpStatusConsent => 'Il tuo consenso';
+  String get mcpStatusConsent => 'Il suo consenso';
 
   @override
   String get mcpStatusEligibility => 'Approvazione del database';
@@ -10440,13 +10439,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpStatusOpenLinkedAccounts => 'Apri gli account collegati';
 
   @override
-  String get mcpStatusRole => 'Il tuo ruolo';
+  String get mcpStatusRole => 'Il suo ruolo';
 
   @override
   String get mcpStatusSignInGoogle => 'Accedi con Google';
 
   @override
-  String get mcpStatusTitle => 'A che punto sei qui';
+  String get mcpStatusTitle => 'A che punto è qui';
 
   @override
   String get mcpUsageApplied => 'Applicate';
@@ -10457,11 +10456,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get mcpUsageMineTitle => 'Il tuo uso degli assistenti oggi';
+  String get mcpUsageMineTitle => 'Il suo uso degli assistenti oggi';
 
   @override
   String get mcpUsageNone =>
-      'Nessun assistente ha ancora usato il tuo accesso.';
+      'Nessun assistente ha ancora usato il suo accesso.';
 
   @override
   String get mcpUsagePending => 'In attesa di convalida';
@@ -10484,11 +10483,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meAccountInMeBody =>
-      'Foto, lingua, tema e accessi sono tuoi in ogni spazio.';
+      'Foto, lingua, tema e accessi sono suoi in ogni spazio.';
 
   @override
   String get meAddressSaveFailed =>
-      'Impossibile salvare il tuo indirizzo. Riprova.';
+      'Impossibile salvare il suo indirizzo. Riprovi.';
 
   @override
   String get meCreateSpace => 'Crea uno spazio';
@@ -10509,10 +10508,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meGroupEmptyFavorites =>
-      'Dai un cuore a uno spazio e ti aspetta qui.';
+      'Dia un cuore a uno spazio e la aspetta qui.';
 
   @override
-  String get meGroupEmptyOwn => 'Sposta qui gli spazi dal loro menu.';
+  String get meGroupEmptyOwn => 'Sposti qui gli spazi dal loro menu.';
 
   @override
   String get meGroupFavorites => 'Preferiti';
@@ -10539,7 +10538,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meGroupWorkspaces => 'I miei spazi di lavoro';
 
   @override
-  String get meHeaderOwned => 'Il tuo account · appartiene solo a te';
+  String get meHeaderOwned => 'Il suo account · appartiene solo a Lei';
 
   @override
   String get meHomeTitle => 'Home';
@@ -10552,15 +10551,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meLeaveBody =>
-      'Smetti di essere membro. Prenotazioni, fatture e messaggi restano nello spazio. Per cancellare anche i tuoi dati, usa Privacy.';
+      'Smette di essere membro. Prenotazioni, fatture e messaggi restano nello spazio. Per cancellare anche i suoi dati, usi Privacy.';
 
   @override
   String meLeaveDone(String name) {
-    return 'Hai lasciato $name.';
+    return 'Ha lasciato $name.';
   }
 
   @override
-  String get meLeaveFailed => 'Impossibile lasciare lo spazio. Riprova.';
+  String get meLeaveFailed => 'Impossibile lasciare lo spazio. Riprovi.';
 
   @override
   String get meLeaveOwner =>
@@ -10583,7 +10582,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'Questo spazio si trova su $host. L\'app lavora con un server alla volta: aprirlo passa a quel server e ti chiede di accedere lì.';
+    return 'Questo spazio si trova su $host. L\'app lavora con un server alla volta: aprirlo passa a quel server e le chiede di accedere lì.';
   }
 
   @override
@@ -10604,10 +10603,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meNoSpaceBody =>
-      'Trovane uno vicino a te, entra con un codice di invito o creane uno tuo.';
+      'Ne trovi uno vicino a Lei, entri con un codice di invito o ne crei uno suo.';
 
   @override
-  String get meNoSpaceTitle => 'Non sei ancora in nessuno spazio';
+  String get meNoSpaceTitle => 'Non è ancora in nessuno spazio';
 
   @override
   String get meSectionMine => 'Cronologia e dati personali';
@@ -10638,8 +10637,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count notifiche ti aspettano qui',
-      one: '1 notifica ti aspetta qui',
+      other: '$count notifiche la aspettano qui',
+      one: '1 notifica la aspetta qui',
     );
     return '$_temp0';
   }
@@ -10716,7 +10715,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberInvoicesBanner =>
-      'Tutte le tue fatture e i tuoi pagamenti, di tutti gli spazi, sono in Io › Finanze.';
+      'Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Finanze.';
 
   @override
   String get memberKioskLabel => 'Chiosco';
@@ -10738,7 +10737,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberMoneyUnavailable =>
-      'Impossibile caricare le finanze. Trascina per aggiornare.';
+      'Impossibile caricare le finanze. Trascini per aggiornare.';
 
   @override
   String get memberMonthInProgress => 'Questo mese';
@@ -10757,7 +10756,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberNoSubscriptionPaygHint =>
-      'Senza abbonamento non è possibile con il pagamento a consumo: scegliete prima blocca o un pacchetto.';
+      'Senza abbonamento non è possibile con il pagamento a consumo: scelga prima blocca o un pacchetto.';
 
   @override
   String get memberNoteDelete => 'Elimina';
@@ -10778,7 +10777,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get memberNoteDeleted => 'Messaggio eliminato.';
 
   @override
-  String get memberNoteHint => 'Il tuo messaggio';
+  String get memberNoteHint => 'Il suo messaggio';
 
   @override
   String memberNoteReceived(String name) {
@@ -10897,7 +10896,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String memberPageYou(String name) {
-    return '$name (tu)';
+    return '$name (Lei)';
   }
 
   @override
@@ -11030,7 +11029,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messageRequestsHint =>
-      'Queste persone non rientrano tra quelle da cui hai scelto di essere raggiungibile. Non vengono informate della tua decisione.';
+      'Queste persone non rientrano tra quelle da cui ha scelto di essere raggiungibile. Non vengono informate della sua decisione.';
 
   @override
   String get messageRequestsTitle => 'Richieste di messaggio';
@@ -11076,7 +11075,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String messengerContextInquiryOut(String space) {
-    return 'La tua richiesta a $space';
+    return 'La sua richiesta a $space';
   }
 
   @override
@@ -11197,7 +11196,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get messengerHostsIntro =>
-      'Il tuo messaggio viene letto da questi gestori dello spazio:';
+      'Il suo messaggio viene letto da questi gestori dello spazio:';
 
   @override
   String get messengerHostsNone =>
@@ -11268,11 +11267,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo spazio non consente di inoltrare i suoi messaggi.';
 
   @override
-  String get messengerRefusedLimit => 'Troppi in una volta. Attendi un minuto.';
+  String get messengerRefusedLimit => 'Troppi in una volta. Attenda un minuto.';
 
   @override
   String get messengerRefusedRequestPending =>
-      'Il tuo primo messaggio attende una risposta.';
+      'Il suo primo messaggio attende una risposta.';
 
   @override
   String get messengerRefusedTooLong =>
@@ -11302,17 +11301,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mfaEnroll =>
-      'Scansiona questo codice con un\'app di autenticazione, o inserisci la chiave, poi digita le sei cifre mostrate.';
+      'Scansioni questo codice con un\'app di autenticazione, o inserisca la chiave, poi digiti le sei cifre mostrate.';
 
   @override
-  String get mfaTitle => 'Conferma con la tua app di autenticazione';
+  String get mfaTitle => 'Confermi con la sua app di autenticazione';
 
   @override
   String get mfaVerify => 'Verifica';
 
   @override
   String get mfaWrong =>
-      'Quel codice non è stato accettato. Prova quello attuale.';
+      'Quel codice non è stato accettato. Provi quello attuale.';
 
   @override
   String get moneyAmountLabel => 'Importo';
@@ -11376,7 +11375,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyNoteLabel => 'Nota (facoltativa)';
 
   @override
-  String get moneyNothingOpen => 'Niente di aperto — sei in regola.';
+  String get moneyNothingOpen => 'Niente di aperto — è in regola.';
 
   @override
   String moneyOpenInvoicesSummary(int count, String amount) {
@@ -11474,7 +11473,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myVisitsHelp =>
-      'Le visite che hai chiesto o a cui sei stato ammesso come ospite. Una visita non è un\'iscrizione.';
+      'Le visite che ha chiesto o a cui è stato ammesso come ospite. Una visita non è un\'iscrizione.';
 
   @override
   String get myVisitsTitle => 'Le mie visite';
@@ -11494,7 +11493,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String negotiationActiveSince(String month) {
-    return 'Le tue condizioni si applicano da $month.';
+    return 'Le sue condizioni si applicano da $month.';
   }
 
   @override
@@ -11533,7 +11532,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'La quota di giorni di apertura inclusa ogni mese; applicata al membro una volta convalidata.';
 
   @override
-  String get negotiationOnTariff => 'Sei alla tariffa dello spazio.';
+  String get negotiationOnTariff => 'È alla tariffa dello spazio.';
 
   @override
   String get negotiationOverage => 'Eccedenza per mezza giornata';
@@ -11551,7 +11550,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get negotiationProposeHint =>
-      'Lascia un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.';
+      'Lasci un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.';
 
   @override
   String get negotiationProposeTitle => 'Negoziazione di prezzo';
@@ -11586,7 +11585,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get newConversationTapToOpen =>
-      'Tocca una persona per aprire la chat; attiva Gruppo per sceglierne più di una.';
+      'Tocchi una persona per aprire la chat; attivi Gruppo per sceglierne più di una.';
 
   @override
   String get newConversationTitle => 'Nuova conversazione';
@@ -11599,7 +11598,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get newGroupNameTaken =>
-      'Esiste già un gruppo con questo nome. Scegline un altro.';
+      'Esiste già un gruppo con questo nome. Ne scelga un altro.';
 
   @override
   String get newMemberDefaultsConfigured => 'Con cosa inizia chi si unisce.';
@@ -11643,7 +11642,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get nfcConfigDeviceOff =>
-      'L\'NFC è disattivato nelle impostazioni Android di questo dispositivo — attivalo per leggere le carte RFID.';
+      'L\'NFC è disattivato nelle impostazioni Android di questo dispositivo — lo attivi per leggere le carte RFID.';
 
   @override
   String get nfcConfigDeviceReady => 'NFC disponibile e attivo';
@@ -11664,7 +11663,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get nfcConfigIntro =>
-      'I membri fanno check-in a un chiosco a parete avvicinando una tessera RFID/NFC. Registra la tessera di ogni membro in Membri e piani; al chiosco la avvicinano per prenotare o fare check-in.';
+      'I membri fanno check-in a un chiosco a parete avvicinando una tessera RFID/NFC. Registri la tessera di ogni membro in Membri e piani; al chiosco la avvicinano per prenotare o fare check-in.';
 
   @override
   String get nfcConfigTitle => 'Badge RFID / NFC';
@@ -11768,7 +11767,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get notificationsSystemOffHint =>
-      'Consentile in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
+      'Le consenta in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
 
   @override
   String get numberSequenceDateNone => 'Nessuna';
@@ -11778,7 +11777,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get numberSequenceDateRemovalBlocked =>
-      'Sono già stati emessi numeri con la data. Toglierla potrebbe ripeterne uno: cambia anche il prefisso o il suffisso.';
+      'Sono già stati emessi numeri con la data. Toglierla potrebbe ripeterne uno: cambi anche il prefisso o il suffisso.';
 
   @override
   String get numberSequenceDateYear => 'Anno';
@@ -11828,7 +11827,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get numberSequenceResetWasInvalid =>
-      'Questa serie ricominciava più spesso di quanto mostri la data. Salva per mantenere un azzeramento che non ripete alcun numero.';
+      'Questa serie ricominciava più spesso di quanto mostri la data. Salvi per mantenere un azzeramento che non ripete alcun numero.';
 
   @override
   String get numberSequenceResetYearly => 'Ogni anno';
@@ -11851,7 +11850,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get numberSequencesTitle => 'Serie di numerazione';
 
   @override
-  String get occurrenceAdded => 'Aggiunto alle tue spese.';
+  String get occurrenceAdded => 'Aggiunto alle sue spese.';
 
   @override
   String get occurrenceConfirm => 'Conferma questa spesa';
@@ -11865,7 +11864,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get occurrenceRejected =>
-      'I validatori l’hanno rifiutata — correggi l’importo o la descrizione e reinvia.';
+      'I validatori l’hanno rifiutata — corregga l’importo o la descrizione e reinvii.';
 
   @override
   String get occurrenceResend => 'Reinvia in validazione';
@@ -11896,7 +11895,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardingCurrencyUnknown =>
-      'Inserisci un codice valuta supportato, ad esempio EUR';
+      'Inserisca un codice valuta supportato, ad esempio EUR';
 
   @override
   String get onboardingDiscardDraft =>
@@ -11904,17 +11903,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardingIntentChanged =>
-      'La richiesta precedente potrebbe essere già stata creata. Riprovala esattamente come inviata prima di cambiare qualcosa.';
+      'La richiesta precedente potrebbe essere già stata creata. La riprovi esattamente come inviata prima di cambiare qualcosa.';
 
   @override
   String get onboardingIntentResumed =>
-      'Una creazione precedente potrebbe essere andata a buon fine. Riprova per verificare la stessa richiesta.';
+      'Una creazione precedente potrebbe essere andata a buon fine. Riprovi per verificare la stessa richiesta.';
 
   @override
-  String get onboardingJoinButton => 'Unisciti';
+  String get onboardingJoinButton => 'Unirsi';
 
   @override
-  String get onboardingJoinTab => 'Unisciti a uno spazio';
+  String get onboardingJoinTab => 'Unirsi a uno spazio';
 
   @override
   String get onboardingRetryAsSent => 'Riprova com\'era';
@@ -11947,7 +11946,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardingStartEmptyDesc =>
-      'Disegnate la vostra pianta su una tela vuota.';
+      'Disegni la sua pianta su una tela vuota.';
 
   @override
   String get onboardingStartFrom => 'Partire da';
@@ -11999,7 +11998,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardingUnconfirmed =>
-      'Impossibile confermare il risultato. I dati inseriti sono conservati. Riprova per verificare la stessa richiesta.';
+      'Impossibile confermare il risultato. I dati inseriti sono conservati. Riprovi per verificare la stessa richiesta.';
 
   @override
   String get onboardingUseSuggested => 'Usa le impostazioni proposte';
@@ -12009,7 +12008,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardingWithTwinHint =>
-      'Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi sono tuoi.';
+      'Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi appartengono a Lei.';
 
   @override
   String get overagePolicyBlocked => 'Blocca ulteriori prenotazioni';
@@ -12025,7 +12024,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get payConfigIntro =>
-      'Inserisci ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate.';
+      'Inserisca ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate.';
 
   @override
   String get payConfigNotConfigured => 'Non configurato';
@@ -12043,7 +12042,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigSaved => 'Salvato.';
 
   @override
-  String get payConfigSecretSet => 'Impostato — lascia vuoto per mantenere';
+  String get payConfigSecretSet => 'Impostato — lasci vuoto per mantenere';
 
   @override
   String get payConfigTitle => 'Pagamenti online';
@@ -12098,7 +12097,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get payOnlineNotConfigured =>
-      'I pagamenti online non sono ancora configurati. Chiedi al proprietario dello spazio.';
+      'I pagamenti online non sono ancora configurati. Chieda al proprietario dello spazio.';
 
   @override
   String payOnlinePendingDetail(
@@ -12106,7 +12105,7 @@ class AppLocalizationsIt extends AppLocalizations {
     String amount,
     String provider,
   ) {
-    return 'Il pagamento $reference ($amount tramite $provider) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Cita questo riferimento se non va a buon fine.';
+    return 'Il pagamento $reference ($amount tramite $provider) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Citi questo riferimento se non va a buon fine.';
   }
 
   @override
@@ -12129,7 +12128,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentInstructionsHelper =>
-      'Mostrate ai membri su un estratto non saldato. Lascia vuoto per non mostrare nulla.';
+      'Mostrate ai membri su un estratto non saldato. Lasci vuoto per non mostrare nulla.';
 
   @override
   String get paymentInstructionsIbanCopied => 'IBAN copiato.';
@@ -12245,7 +12244,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentTermsRequestHint =>
-      'Lascia un campo vuoto per mantenere la formulazione dello spazio. La modifica si applica dopo la convalida.';
+      'Lasci un campo vuoto per mantenere la formulazione dello spazio. La modifica si applica dopo la convalida.';
 
   @override
   String get paymentTermsRequestTitle =>
@@ -12273,7 +12272,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String pendingApprovalBody(String workspace) {
-    return 'Ti sei unito a $workspace. Un amministratore deve approvare la tua adesione prima che tu possa usare lo spazio — avrai accesso appena confermata.';
+    return 'Si è unito a $workspace. Un amministratore deve approvare la sua adesione prima che Lei possa usare lo spazio — avrà accesso appena confermata.';
   }
 
   @override
@@ -12285,7 +12284,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pendingAvailable =>
-      'Mentre aspetti, gli altri spazi, il tuo account e l’aiuto restano disponibili.';
+      'Mentre aspetta, gli altri spazi, il suo account e l’aiuto restano disponibili.';
 
   @override
   String get pendingHelp => 'Aiuto';
@@ -12297,7 +12296,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pendingNotUpdated =>
-      'Stato non aggiornato — server non raggiungibile. La tua richiesta resta invariata.';
+      'Stato non aggiornato — server non raggiungibile. La sua richiesta resta invariata.';
 
   @override
   String get pendingStillWaiting => 'Ancora in attesa di approvazione.';
@@ -12435,7 +12434,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get personalInfoPostalCode => 'CAP';
 
   @override
-  String get personalInfoPreview => 'Sui tuoi documenti';
+  String get personalInfoPreview => 'Sui suoi documenti';
 
   @override
   String get personalInfoSave => 'Salva';
@@ -12468,7 +12467,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get placeFeedbackFailed => 'Salvataggio non riuscito. Riprova.';
+  String get placeFeedbackFailed => 'Salvataggio non riuscito. Riprovi.';
 
   @override
   String get placeFeedbackFavorite => 'Aggiungi ai preferiti';
@@ -12534,7 +12533,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String planCheckInFor(String name) {
-    return 'Fai il check-in di $name';
+    return 'Esegui il check-in di $name';
   }
 
   @override
@@ -12598,7 +12597,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planHalfDayError => 'Qui le prenotazioni sono per mezza giornata.';
 
   @override
-  String get planIncludedHelper => 'Lascia vuoto per illimitato';
+  String get planIncludedHelper => 'Lasci vuoto per illimitato';
 
   @override
   String get planIncludedLabel => 'Mezze giornate incluse';
@@ -12694,7 +12693,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planStateFree => 'Libero';
 
   @override
-  String get planStateYours => 'Tuo';
+  String get planStateYours => 'Suo';
 
   @override
   String get planToLabel => 'Alle';
@@ -12711,7 +12710,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get planUntilLabel => 'Fino alle';
 
   @override
-  String get planYourSeat => 'Il tuo posto';
+  String get planYourSeat => 'Il suo posto';
 
   @override
   String get plansEditorEdit => 'Modifica piano';
@@ -12861,7 +12860,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get policySimultaneousTitle => 'Prenotazioni simultanee per membro';
 
   @override
-  String get portalActionFailed => 'Impossibile salvare la modifica. Riprova.';
+  String get portalActionFailed => 'Impossibile salvare la modifica. Riprovi.';
 
   @override
   String get portalActionNotNegotiated =>
@@ -12894,7 +12893,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalConnectionFailed =>
-      'Connessione non riuscita. Controlla il server e le credenziali.';
+      'Connessione non riuscita. Controlli il server e le credenziali.';
 
   @override
   String get portalConnections => 'Server collegati';
@@ -13014,7 +13013,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalRequestSent =>
-      'Richiesta inviata. Lo spazio esaminerà il tuo profilo.';
+      'Richiesta inviata. Lo spazio esaminerà il suo profilo.';
 
   @override
   String get portalResetAll =>
@@ -13022,7 +13021,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalResetAllBody =>
-      'I valori pubblici di ogni campo che ha un’informazione nello spazio vengono sostituiti da essa. I campi senza corrispondenza nello spazio mantengono ciò che hai scritto.';
+      'I valori pubblici di ogni campo che ha un’informazione nello spazio vengono sostituiti da essa. I campi senza corrispondenza nello spazio mantengono ciò che ha scritto.';
 
   @override
   String get portalResetAllConfirm => 'Ripristina';
@@ -13038,7 +13037,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalSourceUnavailable =>
-      'Un server non è disponibile. La panoramica è incompleta. Tocca per riprovare.';
+      'Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.';
 
   @override
   String get portalThisServer => 'Questo server';
@@ -13060,7 +13059,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get preferencesSaveFailed =>
-      'Impossibile salvare le preferenze. Riprova.';
+      'Impossibile salvare le preferenze. Riprovi.';
 
   @override
   String get preferencesScopeHint =>
@@ -13089,7 +13088,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String privacyEraseConfirmHint(String phrase) {
-    return 'Non si può annullare. Digita $phrase per confermare.';
+    return 'Non si può annullare. Digiti $phrase per confermare.';
   }
 
   @override
@@ -13097,28 +13096,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get privacyEraseHint =>
-      'Annulla le tue prenotazioni, svuota i tuoi messaggi, cancella il tuo profilo. I documenti contabili restano per la conservazione legale, per id, non per nome (art. 17).';
+      'Annulla le sue prenotazioni, svuota i suoi messaggi, cancella il suo profilo. I documenti contabili restano per la conservazione legale, per id, non per nome (art. 17).';
 
   @override
   String get privacyEraseOwner =>
       'Un proprietario prima cede lo spazio (Membri e piani → Comproprietà).';
 
   @override
-  String get privacyErased => 'I tuoi dati sono stati cancellati.';
+  String get privacyErased => 'I suoi dati sono stati cancellati.';
 
   @override
   String get privacyExport => 'Esporta i miei dati';
 
   @override
   String get privacyExportHint =>
-      'Tutto ciò di cui sei l\'interessato, in un file JSON (art. 20).';
+      'Tutto ciò di cui è l\'interessato, in un file JSON (art. 20).';
 
   @override
   String get privacyExportShareText => 'La mia esportazione dati DesKilo';
 
   @override
   String get privacyIntro =>
-      'I tuoi dati non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto; dove sono ospitati è indicato nell\'informativa privacy di questa installazione. Questi sono i tuoi diritti secondo il GDPR — ognuno è un pulsante.';
+      'I suoi dati non vengono mai tracciati né venduti e sono leggibili solo dai ruoli indicati dalle regole qui sotto; dove sono ospitati è indicato nell\'informativa privacy di questa installazione. Questi sono i suoi diritti secondo il GDPR — ognuno è un pulsante.';
 
   @override
   String privacyNoticeController(String name, String contact) {
@@ -13132,7 +13131,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get privacyNoticeNotRecorded => 'non indicato dal gestore';
 
   @override
-  String get privacyNoticeOptional => 'Facoltativo — puoi usare l\'app senza';
+  String get privacyNoticeOptional => 'Facoltativo — può usare l\'app senza';
 
   @override
   String privacyNoticeRegion(String region) {
@@ -13141,14 +13140,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String privacyNoticeRights(String contact) {
-    return 'I tuoi diritti: $contact';
+    return 'I suoi diritti: $contact';
   }
 
   @override
-  String get privacyNoticeRightsRoute => 'I tuoi diritti e il contatto';
+  String get privacyNoticeRightsRoute => 'I suoi diritti e il contatto';
 
   @override
-  String get privacyNoticeTitle => 'Chi tratta i tuoi dati';
+  String get privacyNoticeTitle => 'Chi tratta i suoi dati';
 
   @override
   String privacyNoticeTransfer(String mechanism) {
@@ -13163,7 +13162,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get privacyPushOnDeviceFailed =>
-      'Non è stato possibile salvare la scelta. Riprova.';
+      'Non è stato possibile salvare la scelta. Riprovi.';
 
   @override
   String get privacyPushOnDeviceHint =>
@@ -13177,13 +13176,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get privacySpaceNoticeFailed =>
-      'Non è stato possibile registrare la presa visione. Riprova.';
+      'Non è stato possibile registrare la presa visione. Riprovi.';
 
   @override
-  String get privacySpaceNoticeRead => 'Hai preso visione di questa versione.';
+  String get privacySpaceNoticeRead => 'Ha preso visione di questa versione.';
 
   @override
-  String get privacySpaceNoticeUnread => 'Non ancora letta — leggila qui.';
+  String get privacySpaceNoticeUnread => 'Non ancora letta — la legga qui.';
 
   @override
   String get privacyTitle => 'Privacy e dati';
@@ -13219,7 +13218,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get processChangeFailed =>
-      'Non è stato possibile modificare le funzionalità. Non è stato scritto nulla; riprovate.';
+      'Non è stato possibile modificare le funzionalità. Non è stato scritto nulla; riprovi.';
 
   @override
   String processConfirmOff(int count) {
@@ -13233,7 +13232,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get processConflict =>
-      'Qualcuno ha modificato le funzionalità nel frattempo. Questa è l\'anteprima aggiornata: controllatela di nuovo.';
+      'Qualcuno ha modificato le funzionalità nel frattempo. Questa è l\'anteprima aggiornata: la controlli di nuovo.';
 
   @override
   String get processCoordination => 'Calendario e coordinamento';
@@ -13395,7 +13394,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get processSwitchHint =>
-      'Tocca una funzionalità per cambiarla tra gli interruttori.';
+      'Tocchi una funzionalità per cambiarla tra gli interruttori.';
 
   @override
   String get processSwitchOff => 'Disattiva';
@@ -13405,7 +13404,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get processUnconfirmed =>
-      'La modifica è stata scritta, ma l\'app non ha potuto confermarla. Chiudete e riaprite le funzionalità per vedere lo stato attuale.';
+      'La modifica è stata scritta, ma l\'app non ha potuto confermarla. Chiuda e riapra le funzionalità per vedere lo stato attuale.';
 
   @override
   String get processWorkspaceAccess => 'Spazio e accesso';
@@ -13421,7 +13420,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilePhotoFileType => 'Immagine';
 
   @override
-  String get profilePhotoNone => 'Tocca per aggiungere una foto';
+  String get profilePhotoNone => 'Tocchi per aggiungere una foto';
 
   @override
   String get profilePhotoRemove => 'Rimuovi foto';
@@ -13436,7 +13435,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get profilePhotoSaved => 'Foto aggiornata';
 
   @override
-  String get profilePhotoSet => 'Tocca per cambiare';
+  String get profilePhotoSet => 'Tocchi per cambiare';
 
   @override
   String get profilePhotoTitle => 'Foto';
@@ -13446,7 +13445,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profileStatusHelper =>
-      'Facoltativo. Visibile ai membri dei tuoi spazi nell\'elenco dei membri. Lascia vuoto per cancellarlo.';
+      'Facoltativo. Visibile ai membri dei suoi spazi nell\'elenco dei membri. Lasci vuoto per cancellarlo.';
 
   @override
   String get profileStatusHint => 'In chiamata · torno alle 14:00';
@@ -13523,7 +13522,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profilesUnavailable =>
-      'Impossibile caricare i tuoi spazi di lavoro.';
+      'Impossibile caricare i suoi spazi di lavoro.';
 
   @override
   String provenanceFromTemplate(String name) {
@@ -13594,18 +13593,18 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicProfileOff =>
-      'Disattivato: chi non ha effettuato l\'accesso non vede nulla di te.';
+      'Disattivato: chi non ha effettuato l\'accesso non vede nulla di Lei.';
 
   @override
   String get publicProfileOn =>
-      'Chiunque abbia il link legge il tuo nome, la tua professione e la tua presentazione.';
+      'Chiunque abbia il link legge il suo nome, la sua professione e la sua presentazione.';
 
   @override
   String get publicProfilePublishAction => 'Pubblica';
 
   @override
   String get publicProfilePublishBody =>
-      'Chiunque su Internet, con o senza accesso, potrà leggere il tuo nome, la tua professione e la tua presentazione tramite il tuo link. Contatti, presenza e spazi restano privati.';
+      'Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e spazi restano privati.';
 
   @override
   String get publicProfilePublishTitle => 'Pubblicare un profilo pubblico?';
@@ -13621,7 +13620,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pushCancelledTitle => 'Prenotazione rimossa';
 
   @override
-  String get pushPendingBody => 'Qualcuno attende la tua conferma.';
+  String get pushPendingBody => 'Qualcuno attende la sua conferma.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
@@ -13758,14 +13757,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get questionsSubtitle =>
-      'Compaiono dentro le informazioni personali, sotto il nome del tuo spazio.';
+      'Compaiono dentro le informazioni personali, sotto il nome del suo spazio.';
 
   @override
   String get questionsTitle => 'Le domande di questo spazio';
 
   @override
   String get quotaExceededError =>
-      'Quota mensile di mezze giornate raggiunta — richiedi mezze giornate extra dalla scheda Finanze.';
+      'Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra dalla scheda Finanze.';
 
   @override
   String get quotaRequestButton => 'Richiedi mezze giornate extra';
@@ -13775,7 +13774,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String quotaRequestExplainer(String period) {
-    return 'Le tue prenotazioni sono limitate dal tuo abbonamento. Le mezze giornate extra per $period si applicano dopo la convalida.';
+    return 'Le sue prenotazioni sono limitate dal suo abbonamento. Le mezze giornate extra per $period si applicano dopo la convalida.';
   }
 
   @override
@@ -13929,7 +13928,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessSetAsideAction => 'Più tardi';
 
   @override
-  String get readinessSetAsideFailed => 'Impossibile salvare. Riprova.';
+  String get readinessSetAsideFailed => 'Impossibile salvare. Riprovi.';
 
   @override
   String get readinessSetAsideUndo => 'Annulla';
@@ -13960,11 +13959,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get recordingPrivacyBadgeHint =>
-      'La modalità ripresa è attiva: ogni nome, indirizzo e-mail, numero di telefono, indirizzo e fotografia sullo schermo appartiene a una persona inventata. La piantina, le prenotazioni e gli importi sono davvero quelli di questo spazio. Disattivala nelle Impostazioni quando hai finito di riprendere.';
+      'La modalità ripresa è attiva: ogni nome, indirizzo e-mail, numero di telefono, indirizzo e fotografia sullo schermo appartiene a una persona inventata. La piantina, le prenotazioni e gli importi sono davvero quelli di questo spazio. La disattivi nelle Impostazioni quando ha finito di riprendere.';
 
   @override
   String get recordingPrivacyWriteRefused =>
-      'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattiva prima la modalità ripresa.';
+      'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattivi prima la modalità ripresa.';
 
   @override
   String get refFacetMonth => 'Mese';
@@ -14051,7 +14050,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get refusalChangedMeanwhile =>
-      'Nel frattempo è cambiato. Riaprilo per vedere a che punto è.';
+      'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
   @override
   String get refusalMoneyLocaleLocked =>
@@ -14059,11 +14058,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get refusalPermission =>
-      'Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.';
+      'Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.';
 
   @override
   String get refusalSession =>
-      'La tua sessione è scaduta. Accedi di nuovo, poi riprova.';
+      'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
 
   @override
   String get regionalClock => 'Orologio';
@@ -14082,7 +14081,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get regionalDeviceZoneHint =>
-      'Disattivato: gli orari nel fuso dello spazio, quello delle prenotazioni. Attivato: quello del tuo dispositivo, segnalato dove differisce.';
+      'Disattivato: gli orari nel fuso dello spazio, quello delle prenotazioni. Attivato: quello del suo dispositivo, segnalato dove differisce.';
 
   @override
   String get regionalFollowLanguage => 'Automatico';
@@ -14153,7 +14152,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderOriginManual => 'a mano';
 
   @override
-  String get reminderPdfClosing => 'Se hai già pagato, ignora questa lettera.';
+  String get reminderPdfClosing => 'Se ha già pagato, ignori questa lettera.';
 
   @override
   String get reminderPdfDays => 'giorni';
@@ -14166,7 +14165,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderPdfOpeningFirm =>
-      'nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. Ti preghiamo di saldare l\'importo senza indugio.';
+      'nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. La preghiamo di saldare l\'importo senza indugio.';
 
   @override
   String get reminderPdfOpeningFriendly =>
@@ -14231,7 +14230,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get repartitionHint =>
-      'Ripartisci un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.';
+      'Ripartisca un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.';
 
   @override
   String get repartitionHistory => 'Ripartizioni';
@@ -14256,7 +14255,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get repartitionNoShares =>
-      'Nessuno porta una quota: controlla la chiave.';
+      'Nessuno porta una quota: controlli la chiave.';
 
   @override
   String get repartitionPeriod => 'Imputato a';
@@ -14275,11 +14274,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get repartitionRuleHint =>
-      'Ogni quota è proposta in base alla percentuale di abbonamento. Deseleziona un socio per escluderlo; con il metodo «chiave», indica il suo peso. La regola modificata sarà proposta il mese prossimo.';
+      'Ogni quota è proposta in base alla percentuale di abbonamento. Deselezioni un socio per escluderlo; con il metodo «chiave», ne indichi il peso. La regola modificata sarà proposta il mese prossimo.';
 
   @override
   String get repartitionRuleNotSaved =>
-      'La regola non è stata salvata, quindi non è stato ripartito nulla. Riprova.';
+      'La regola non è stata salvata, quindi non è stato ripartito nulla. Riprovi.';
 
   @override
   String get repartitionSharesTotal => 'Totale delle quote';
@@ -14362,7 +14361,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportBadgesIntro =>
-      'Taglia lungo le linee. Ogni tessera porta il codice badge di un membro — mostrala al chiosco per il check-in.';
+      'Tagli lungo le linee. Ogni tessera porta il codice badge di un membro — la mostri al chiosco per il check-in.';
 
   @override
   String get reportBadgesTitle => 'Badge dei membri';
@@ -14372,11 +14371,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportCoaDisclaimer =>
-      'Solo un\'anteprima. DesKilo non tiene un libro mastro e non fa la tua contabilità — il piano del tuo commercialista prevale sempre.';
+      'Solo un\'anteprima. DesKilo non tiene un libro mastro e non fa la sua contabilità — il piano del suo commercialista prevale sempre.';
 
   @override
   String get reportCoaIntro =>
-      'Un suggerimento, non la tua contabilità. Sono i conti che un contabile del tuo paese userebbe di solito per uno spazio come il tuo.';
+      'Un suggerimento, non la sua contabilità. Sono i conti che un contabile del suo paese userebbe di solito per uno spazio come il suo.';
 
   @override
   String get reportCoaLabel => 'Denominazione';
@@ -14397,7 +14396,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportColUnitPrice => 'Prezzo unit.';
 
   @override
-  String get reportDesignEmpty => 'Banda vuota — aggiungi un elemento sotto.';
+  String get reportDesignEmpty => 'Banda vuota — aggiunga un elemento sotto.';
 
   @override
   String get reportDesignErrorInvalidDesign =>
@@ -14420,7 +14419,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportDesignErrorWrongKind =>
-      'Questo modello appartiene a un altro report. Aprilo e importalo lì.';
+      'Questo modello appartiene a un altro report. Lo apra e lo importi lì.';
 
   @override
   String get reportDesignExport => 'Esporta questo modello';
@@ -14433,7 +14432,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportDesignImported =>
-      'Modello importato. Salva per conservarlo.';
+      'Modello importato. Salvi per conservarlo.';
 
   @override
   String get reportDesignerDesign => 'Progetto';
@@ -14578,7 +14577,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportFieldGroupStatus => 'Situazione dello spazio';
 
   @override
-  String get reportFieldGroupTexts => 'I tuoi testi';
+  String get reportFieldGroupTexts => 'I suoi testi';
 
   @override
   String get reportFieldGroupUsage => 'Rapporto di consumo';
@@ -14883,7 +14882,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportGuideIntro =>
-      'Tre bande compongono il PDF: intestazione, corpo, piè di pagina. Scrivete testo, mettete un campo dove va un valore e un segno di marcatura a inizio riga per lo stile. L\'XML della fattura elettronica non viene mai toccato.';
+      'Tre bande compongono il PDF: intestazione, corpo, piè di pagina. Scriva testo, metta un campo dove va un valore e un segno di marcatura a inizio riga per lo stile. L\'XML della fattura elettronica non viene mai toccato.';
 
   @override
   String get reportGuideMarkupTitle => 'Marcatura di riga';
@@ -14933,11 +14932,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportImagesEmpty =>
-      'Nessuna immagine — carica il tuo logo, un timbro o una firma e riferiscila con ![nome].';
+      'Nessuna immagine — carichi il suo logo, un timbro o una firma e vi faccia riferimento con ![nome].';
 
   @override
   String get reportImagesLoadFailed =>
-      'Impossibile caricare le immagini dei report. Riprova.';
+      'Impossibile caricare le immagini dei report. Riprovi.';
 
   @override
   String get reportImagesTitle => 'Immagini dei report';
@@ -14947,7 +14946,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportLanguageAmbiguous =>
-      'Questo paese ha più lingue — imposta prima la lingua dello spazio nelle Impostazioni dello spazio.';
+      'Questo paese ha più lingue — imposti prima la lingua dello spazio nelle Impostazioni dello spazio.';
 
   @override
   String get reportLayoutActive => 'Layout attivo';
@@ -14965,7 +14964,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportLayoutImport => 'Importa XML';
 
   @override
-  String get reportLayoutImported => 'Layout importato. Salva per conservarlo.';
+  String get reportLayoutImported => 'Layout importato. Salvi per conservarlo.';
 
   @override
   String get reportLayoutPreview => 'Anteprima pagina';
@@ -14975,7 +14974,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportLayoutSubtitle =>
-      'Un layout indica dove si trova ogni elemento, in mm, cm, px o %. Esportalo, modificalo, verificalo con `dart run tool/report.dart check`, reimportalo. Quando esiste un layout è quello che si stampa; rimuovilo e tornano a stamparsi le bande.';
+      'Un layout indica dove si trova ogni elemento, in mm, cm, px o %. Lo esporti, lo modifichi, lo verifichi con `dart run tool/report.dart check`, lo reimporti. Quando esiste un layout è quello che si stampa; lo rimuova e tornano a stamparsi le bande.';
 
   @override
   String get reportLayoutTitle => 'Layout posizionato (XML)';
@@ -15073,7 +15072,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportPreviewTitle =>
-      'Anteprima rapida — la tua fattura più recente';
+      'Anteprima rapida — la sua fattura più recente';
 
   @override
   String get reportPreviewZoomIn => 'Ingrandisci';
@@ -15095,11 +15094,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportSpaceCodesFooter =>
-      'Una scheda che non corrisponde più al suo spazio inganna chi la scansiona: ristampa il foglio dopo aver spostato o rinominato uno spazio.';
+      'Una scheda che non corrisponde più al suo spazio inganna chi la scansiona: ristampi il foglio dopo aver spostato o rinominato uno spazio.';
 
   @override
   String get reportSpaceCodesIntro =>
-      'Una tessera per postazione, tavolo, sala e piano. Attaccala sul suo spazio: scansionarla apre la stessa scheda del chiosco.';
+      'Una tessera per postazione, tavolo, sala e piano. La attacchi sullo spazio corrispondente: scansionarla apre la stessa scheda del chiosco.';
 
   @override
   String get reportSpaceCodesTitle => 'Codici degli spazi';
@@ -15125,7 +15124,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportTextsHint =>
-      'Le tue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.';
+      'Le sue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.';
 
   @override
   String get reportTextsInherited => 'Lingua predefinita';
@@ -15179,7 +15178,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationCalendarFileRefused =>
-      'Questa prenotazione non può essere esportata: non è tua, oppure non esiste più.';
+      'Questa prenotazione non può essere esportata: non è sua, oppure non esiste più.';
 
   @override
   String get reservationCalendarFileSnapshotNote =>
@@ -15187,7 +15186,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationCalendarFileStale =>
-      'La prenotazione è cambiata da questa anteprima. Controllala di nuovo prima di salvare.';
+      'La prenotazione è cambiata da questa anteprima. La controlli di nuovo prima di salvare.';
 
   @override
   String get reservationCalendarFileStatus => 'Stato';
@@ -15229,7 +15228,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationEndEarlyAheadOnly =>
-      'Scegli un orario ancora futuro e precedente alla fine attuale.';
+      'Scelga un orario ancora futuro e precedente alla fine attuale.';
 
   @override
   String get reservationEndEarlyButton => 'Terminare prima';
@@ -15239,11 +15238,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationExtendLaterOnly =>
-      'Scegli un orario dopo la fine attuale.';
+      'Scelga un orario dopo la fine attuale.';
 
   @override
   String get reservationLimitError =>
-      'Limite di prenotazioni raggiunto — hai già il numero massimo di prenotazioni aperte.';
+      'Limite di prenotazioni raggiunto — ha già il numero massimo di prenotazioni aperte.';
 
   @override
   String reservationNoteCheckedOutAt(String time) {
@@ -15266,7 +15265,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reserveAvailabilityUnavailable =>
-      'Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.';
+      'Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprovi.';
 
   @override
   String get reserveBackToNow => 'Torna ad adesso';
@@ -15306,7 +15305,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reverseChargeSubtitle =>
-      'Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattiva se non fatturi mai imprese all\'estero.';
+      'Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattivi se non fattura mai imprese all\'estero.';
 
   @override
   String get reverseChargeTitle => 'Inversione contabile per imprese UE';
@@ -15331,17 +15330,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rightsKindRestriction => 'Limitare l\'uso dei miei dati';
 
   @override
-  String get rightsRequestAsk => 'Cosa chiedi allo spazio?';
+  String get rightsRequestAsk => 'Cosa chiede allo spazio?';
 
   @override
   String get rightsRequestDetails => 'Dettagli (facoltativo)';
 
   @override
   String get rightsRequestFailed =>
-      'Non è stato possibile inviare la richiesta. Riprova.';
+      'Non è stato possibile inviare la richiesta. Riprovi.';
 
   @override
-  String get rightsRequestNew => 'Fai una richiesta';
+  String get rightsRequestNew => 'Nuova richiesta';
 
   @override
   String get rightsRequestSend => 'Invia la richiesta';
@@ -15356,7 +15355,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get rightsRequestsHint =>
-      'Chiedi allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.';
+      'Chieda allo spazio una copia, una rettifica, una limitazione o la cancellazione — risposta entro un mese di calendario.';
 
   @override
   String get rightsRequestsTitle => 'Le mie richieste di esercizio dei diritti';
@@ -15427,7 +15426,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get roleEditorNobody => 'Ancora nessuno.';
 
   @override
-  String get roleEditorNotYourself => 'Non puoi darti un ruolo da sola.';
+  String get roleEditorNotYourself => 'Non può assegnarsi un ruolo.';
 
   @override
   String get roleEditorPermissions => 'Cosa aggiunge';
@@ -15455,7 +15454,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get roleRefusalExceedsYours =>
-      'Questo ruolo può fare cose che tu non puoi, quindi solo il proprietario lo dà.';
+      'Questo ruolo può fare cose che Lei non può, quindi solo il proprietario lo dà.';
 
   @override
   String get roleRefusalNotAssignable =>
@@ -15484,7 +15483,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get rolesIntroReadOnly =>
-      'Sola lettura: questi sono i permessi di ogni ruolo. Il tuo ruolo è evidenziato.';
+      'Sola lettura: questi sono i permessi di ogni ruolo. Il suo ruolo è evidenziato.';
 
   @override
   String get rolesOfSpaceAdd => 'Aggiungi un ruolo';
@@ -15497,7 +15496,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get rolesOfSpaceSubtitle =>
-      'Ognuno aggiunge permessi a ciò che i suoi titolari possono già fare. Nessuno toglie nulla, e la proprietaria mantiene sempre tutti i permessi.';
+      'Ognuno aggiunge permessi a ciò che i suoi titolari possono già fare. Nessuno toglie nulla, e il proprietario mantiene sempre tutti i permessi.';
 
   @override
   String get rolesOfSpaceTitle => 'I ruoli di questo spazio';
@@ -15509,14 +15508,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rolesTitle => 'Ruoli';
 
   @override
-  String get rolesYourRole => 'Il tuo ruolo';
+  String get rolesYourRole => 'Il suo ruolo';
 
   @override
   String get saftDocumentsOnly => 'Solo documenti';
 
   @override
   String get saftLedgerIntro =>
-      'Con i numeri di conto il file porta scritture in partita doppia che il tuo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
+      'Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.';
 
   @override
   String get saftLedgerTitle => 'Includere le scritture?';
@@ -15526,7 +15525,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sageAccountsIntro =>
-      'I valori predefiniti sono i conti che Sage fornisce di serie. Il codice IVA decide su quale dichiarazione finiscono queste scritture: verificalo con il commercialista se non sei all’aliquota ordinaria.';
+      'I valori predefiniti sono i conti che Sage fornisce di serie. Il codice IVA decide su quale dichiarazione finiscono queste scritture: lo verifichi con il commercialista se non è all’aliquota ordinaria.';
 
   @override
   String get sageAccountsTitle => 'Esportazione Sage';
@@ -15536,15 +15535,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scanCameraWebUnavailable =>
-      'La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).';
+      'La scansione con fotocamera non è disponibile nel browser — digiti il codice o avvicini un tag NFC al dispositivo (Chrome su Android).';
 
   @override
   String get scanJoinHelp =>
-      'Inquadra il QR d’invito con la fotocamera — vedrai lo spazio prima di aderire.';
+      'Inquadri il QR d’invito con la fotocamera — vedrà lo spazio prima di aderire.';
 
   @override
   String get scanJoinNotAnInvite =>
-      'Questo QR non è un invito DesKilo — scansiona quello del messaggio d’invito.';
+      'Questo QR non è un invito DesKilo — scansioni quello del messaggio d’invito.';
 
   @override
   String get scanJoinTitle => 'Scansiona il QR dello spazio';
@@ -15649,7 +15648,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scheduleValidationHint =>
-      'La programmazione passa prima dai validatori. Ogni scadenza ti viene poi presentata: confermata a questo importo conta subito; un importo diverso si spiega e torna in validazione.';
+      'La programmazione passa prima dai validatori. Ogni scadenza le viene poi presentata: confermata a questo importo conta subito; un importo diverso si spiega e torna in validazione.';
 
   @override
   String get scheduleWeekly => 'settimanale';
@@ -15670,7 +15669,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get scheduledExpensesIntro =>
-      'Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza ti viene presentata prima di contare.';
+      'Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza le viene presentata prima di contare.';
 
   @override
   String get scheduledExpensesTitle => 'Spese programmate';
@@ -15682,11 +15681,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get schemaUpdateMember =>
-      'Altrimenti: avvisa la persona che gestisce il tuo spazio. Nulla di ciò che hai inserito va perso.';
+      'Altrimenti: avvisi la persona che gestisce il suo spazio. Nulla di ciò che ha inserito va perso.';
 
   @override
   String get schemaUpdateOperator =>
-      'Se gestisci questo server: applica le migrazioni mancanti con `dart run tool/instance.dart install --ref <progetto>`. Viene eseguito solo ciò che manca.';
+      'Se gestisce questo server: applichi le migrazioni mancanti con `dart run tool/instance.dart install --ref <progetto>`. Viene eseguito solo ciò che manca.';
 
   @override
   String get schemaUpdateRetry => 'Controlla di nuovo';
@@ -15704,7 +15703,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get seatDayFree => 'Libera — prenota';
 
   @override
-  String get seatDayMine => 'Tu';
+  String get seatDayMine => 'Lei';
 
   @override
   String get seatDayNow => 'Ora';
@@ -15717,7 +15716,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get seatDaySubtitle =>
-      'Chi occupa questa postazione, e quando. Tocca una prenotazione per aprirla, o una fascia libera per prenderla.';
+      'Chi occupa questa postazione, e quando. Tocchi una prenotazione per aprirla, o una fascia libera per prenderla.';
 
   @override
   String seatDayTitle(String seat) {
@@ -15835,7 +15834,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingsFrontCameraDesc =>
-      'I badge vengono letti con la fotocamera lato schermo — disattiva per usare la fotocamera posteriore.';
+      'I badge vengono letti con la fotocamera lato schermo — la disattivi per usare la fotocamera posteriore.';
 
   @override
   String get settingsSectionAccount => 'Il mio account';
@@ -15906,7 +15905,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settlementNeedsTwo =>
-      'Scegli almeno due fatture aperte dello stesso membro.';
+      'Scelga almeno due fatture aperte dello stesso membro.';
 
   @override
   String settlementPaidThrough(String number) {
@@ -15943,11 +15942,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shellBarHiddenAnnounce => 'Barra di navigazione nascosta';
 
   @override
-  String get shellBarHideHint => 'Tieni premuto per la vista a schermo intero';
+  String get shellBarHideHint => 'Tenga premuto per la vista a schermo intero';
 
   @override
   String get shellBarShowHint =>
-      'Tieni premuto per mostrare la barra di navigazione';
+      'Tenga premuto per mostrare la barra di navigazione';
 
   @override
   String get shellBarShownAnnounce => 'Barra di navigazione visibile';
@@ -15957,8 +15956,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count decisioni ti aspettano',
-      one: '1 decisione ti aspetta',
+      other: '$count decisioni la aspettano',
+      one: '1 decisione la aspetta',
     );
     return '$_temp0';
   }
@@ -15968,7 +15967,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get shellSwipeCoachMark =>
-      'Scorri la barra verso il basso per la vista a schermo intero. Scorri verso l’alto, o tieni premuto il pulsante Prenota, per riportarla.';
+      'Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.';
 
   @override
   String get siteCity => 'Città';
@@ -16030,13 +16029,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceAlreadyCheckedInHere =>
-      'Siete già registrati qui. Scegliete « Registra l\'uscita » per liberare il posto.';
+      'È già registrato qui. Scelga « Registra l\'uscita » per liberare il posto.';
 
   @override
   String get spaceBackToMe => 'Torna a Io';
 
   @override
-  String get spaceBlockedByYou => 'Hai già questo spazio per quel periodo.';
+  String get spaceBlockedByYou => 'Ha già questo spazio per quel periodo.';
 
   @override
   String get spaceCardInfoLabel => 'Informazioni sulla scheda';
@@ -16127,14 +16126,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceScanHint =>
-      'Inquadra la scheda di una postazione, tavolo, ufficio o piano — oppure digita il codice.';
+      'Inquadri la scheda di una postazione, tavolo, ufficio o piano — oppure digiti il codice.';
 
   @override
   String get spaceScanInvalid => 'Non è un codice spazio di questo workspace.';
 
   @override
   String get spaceScanNfcHint =>
-      '…oppure avvicina il telefono al tag NFC di una sedia.';
+      '…oppure avvicini il telefono al tag NFC di una sedia.';
 
   @override
   String get spaceScanTitle => 'Scansiona un codice spazio';
@@ -16152,10 +16151,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spaceYoursCheckedIn =>
-      'Hai effettuato il check-in qui per questa fascia.';
+      'Ha effettuato il check-in qui per questa fascia.';
 
   @override
-  String get spaceYoursNow => 'Riservato da te per questa fascia.';
+  String get spaceYoursNow => 'Riservato da Lei per questa fascia.';
 
   @override
   String get statusAwaiting => 'In attesa';
@@ -16362,7 +16361,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supportChanged =>
-      'Il contesto è cambiato. Prepara una nuova anteprima.';
+      'Il contesto è cambiato. Prepari una nuova anteprima.';
 
   @override
   String get supportDay => 'Ultime 24 ore';
@@ -16371,7 +16370,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get supportDemo => 'Demo: contesto locale simulato';
 
   @override
-  String get supportFailed => 'Impossibile preparare i dettagli. Riprova.';
+  String get supportFailed => 'Impossibile preparare i dettagli. Riprovi.';
 
   @override
   String get supportHour => 'Ultima ora';
@@ -16400,14 +16399,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get symbolHint =>
-      'Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usa una foto qui sotto.';
+      'Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usi una foto qui sotto.';
 
   @override
   String get symbolLetters => 'Lettere';
 
   @override
   String get symbolLettersRule =>
-      'Usa una o due lettere o cifre per il simbolo.';
+      'Usi una o due lettere o cifre per il simbolo.';
 
   @override
   String get symbolSaveFailed =>
@@ -16418,7 +16417,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get symbolTaken =>
-      'Un altro spazio usa già queste lettere con questo colore. Scegli un altro colore o altre lettere — oppure usa una foto.';
+      'Un altro spazio usa già queste lettere con questo colore. Scelga un altro colore o altre lettere — oppure usi una foto.';
 
   @override
   String get symbolTitle => 'Simbolo';
@@ -16436,34 +16435,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tabPlan => 'Piantina';
 
   @override
-  String get taskExportActionBack => 'Torna indietro.';
+  String get taskExportActionBack => 'Torni indietro.';
 
   @override
   String get taskExportActionCancelReview =>
-      'Annulla il riepilogo senza prenotare.';
+      'Annulli il riepilogo senza prenotare.';
 
   @override
   String taskExportActionChangeField(String field) {
-    return 'Modifica il campo: $field.';
+    return 'Modifichi il campo: $field.';
   }
 
   @override
-  String get taskExportActionConfirmBooking => 'Conferma la prenotazione.';
+  String get taskExportActionConfirmBooking => 'Confermi la prenotazione.';
 
   @override
-  String get taskExportActionOpenReserve => 'Apri la schermata Prenota.';
+  String get taskExportActionOpenReserve => 'Apra la schermata Prenota.';
 
   @override
-  String get taskExportActionSelectDate => 'Scegli la data.';
+  String get taskExportActionSelectDate => 'Scelga la data.';
 
   @override
-  String get taskExportActionSelectPeriod => 'Scegli il periodo.';
+  String get taskExportActionSelectPeriod => 'Scelga il periodo.';
 
   @override
-  String get taskExportActionSelectResource => 'Scegli un posto.';
+  String get taskExportActionSelectResource => 'Scelga un posto.';
 
   @override
-  String get taskExportActionSwitchView => 'Cambia la vista.';
+  String get taskExportActionSwitchView => 'Cambi la vista.';
 
   @override
   String get taskExportActionUnknown =>
@@ -16471,7 +16470,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskExportActionViewDetails =>
-      'Apri il dettaglio della prenotazione.';
+      'Apra il dettaglio della prenotazione.';
 
   @override
   String get taskExportAuthored =>
@@ -16672,11 +16671,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskExportPrereqBookablePlace => 'Almeno un posto è prenotabile.';
 
   @override
-  String get taskExportPrereqSignedIn => 'Hai effettuato l\'accesso.';
+  String get taskExportPrereqSignedIn => 'Ha effettuato l\'accesso.';
 
   @override
   String taskExportPrereqStartsOn(String screen) {
-    return 'Inizia da $screen.';
+    return 'Inizi da $screen.';
   }
 
   @override
@@ -16684,7 +16683,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una condizione che questa versione non sa descrivere.';
 
   @override
-  String get taskExportPrereqWorkspaceMember => 'Sei membro dello spazio.';
+  String get taskExportPrereqWorkspaceMember => 'È membro dello spazio.';
 
   @override
   String get taskExportProtectedAuthentication => 'accesso';
@@ -16768,7 +16767,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskExportStale =>
-      'Lo storyboard appartiene a un\'altra versione di questa registrazione. Rivedilo prima di esportare.';
+      'Lo storyboard appartiene a un\'altra versione di questa registrazione. Lo riveda prima di esportare.';
 
   @override
   String get taskExportStoryboardApprove => 'Approva l\'illustrazione';
@@ -17103,7 +17102,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ha aperto le regole di convalida';
 
   @override
-  String get taskRecorderActionOpenWhatYouCanDo => 'Ha aperto cosa puoi fare';
+  String get taskRecorderActionOpenWhatYouCanDo => 'Ha aperto cosa può fare';
 
   @override
   String get taskRecorderActionSaveRole => 'Ha salvato un ruolo';
@@ -17163,7 +17162,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderCaptureValuesHint =>
-      'Conserva anche ciò che scrivi e scegli — testo, numeri, date, interruttori — così uno sviluppatore può riprodurre il problema dal file. Password, dati di pagamento, indirizzi e-mail, numeri di telefono e altri dati di contatto personali non vengono mai conservati. Condividi il file solo con chi può vedere ciò che hai inserito.';
+      'Conserva anche ciò che scrive e sceglie — testo, numeri, date, interruttori — così uno sviluppatore può riprodurre il problema dal file. Password, dati di pagamento, indirizzi e-mail, numeri di telefono e altri dati di contatto personali non vengono mai conservati. Condivida il file solo con chi può vedere ciò che ha inserito.';
 
   @override
   String get taskRecorderCompletenessComplete => 'Completa';
@@ -17186,7 +17185,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderDisclosureBody =>
-      'Il registratore annota i passaggi che compie sulle schermate di questo spazio — quale schermata, quale azione, cosa ha risposto l\'app — solo su questo dispositivo. Non conserva mai ciò che digita, né nomi, importi, messaggi, codici o password. Accesso, pagamento, messaggi e altre schermate protette lasciano solo un segno. Nulla viene inviato: decide lei cosa esportare.';
+      'Il registratore annota i passaggi che compie sulle schermate di questo spazio — quale schermata, quale azione, cosa ha risposto l\'app — solo su questo dispositivo. Non conserva mai ciò che digita, né nomi, importi, messaggi, codici o password. Accesso, pagamento, messaggi e altre schermate protette lasciano solo un segno. Nulla viene inviato: decide Lei cosa esportare.';
 
   @override
   String get taskRecorderDisclosureTitle => 'Prima di registrare';
@@ -17206,7 +17205,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderEndReferenceMissing =>
-      'Interrotto: impossibile identificare il modulo attuale. Apri una pagina supportata e ricomincia.';
+      'Interrotto: impossibile identificare il modulo attuale. Apra una pagina supportata e ricominci.';
 
   @override
   String get taskRecorderEndScopeChanged =>
@@ -17230,7 +17229,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskRecorderExportValuesBody =>
-      'Contiene ciò che è stato scritto e scelto durante la registrazione. Controllala prima di condividerla e condividila solo con chi può vederlo.';
+      'Contiene ciò che è stato scritto e scelto durante la registrazione. La controlli prima di condividerla e la condivida solo con chi può vederlo.';
 
   @override
   String get taskRecorderExportValuesConfirm => 'Salva comunque';
@@ -17393,7 +17392,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taskRecorderSegmentGap => 'In pausa qui';
 
   @override
-  String get taskRecorderSignedOut => 'Accedi per registrare un\'attività.';
+  String get taskRecorderSignedOut => 'Acceda per registrare un\'attività.';
 
   @override
   String get taskRecorderStart => 'Avvia registrazione';
@@ -17649,7 +17648,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskWizardFromRecordingHint =>
-      'Scegli una registrazione: diventa subito una guida.';
+      'Scelga una registrazione: diventa subito una guida.';
 
   @override
   String get taskWizardGuideAdded => 'Aggiunta a Le mie guide.';
@@ -17666,14 +17665,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taskWizardIntro =>
-      'Registra ciò che fai, trasformalo in una guida e segui le guide passo dopo passo nell\'app vera.';
+      'Registri ciò che fa, lo trasformi in una guida e segua le guide passo dopo passo nell\'app vera.';
 
   @override
   String get taskWizardMakeGuide => 'Crea una guida';
 
   @override
   String get taskWizardNoGuides =>
-      'Ancora nessuna guida tua. Aggiungine una da una registrazione o da un file di attività.';
+      'Ancora nessuna guida sua. Ne aggiunga una da una registrazione o da un file di attività.';
 
   @override
   String get taskWizardOpenFileHint =>
@@ -17795,7 +17794,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get templateChangedSinceReview =>
-      'Questo modello è cambiato da quando l\'hai esaminato. Non è stato applicato nulla; riaprilo per esaminare la nuova versione.';
+      'Questo modello è cambiato da quando l\'ha esaminato. Non è stato applicato nulla; lo riapra per esaminare la nuova versione.';
 
   @override
   String get templateClearFilters => 'Cancella la ricerca';
@@ -17816,12 +17815,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String templateExportTooMany(String max) {
-    return 'Al massimo $max modelli per cartella. Restringi prima la ricerca.';
+    return 'Al massimo $max modelli per cartella. Restringa prima la ricerca.';
   }
 
   @override
   String get templateNoMatch =>
-      'Nessun modello corrisponde. Cambia le parole, un’etichetta o un requisito.';
+      'Nessun modello corrisponde. Cambi le parole, un’etichetta o un requisito.';
 
   @override
   String templatePrefer(String capability) {
@@ -17851,7 +17850,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String templateRegionSuggested(String values) {
-    return 'Questo modello è stato creato per $values. La tua scelta resta, a meno che tu non usi i suoi valori.';
+    return 'Questo modello è stato creato per $values. La sua scelta resta, a meno che non usi i valori del modello.';
   }
 
   @override
@@ -17882,7 +17881,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String templateValidatorsToChoose(String types) {
-    return 'Scegli chi convalida $types nelle impostazioni di convalida; quelle regole sono rimaste com\'erano.';
+    return 'Scelga chi convalida $types nelle impostazioni di convalida; quelle regole sono rimaste com\'erano.';
   }
 
   @override
@@ -17933,19 +17932,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tipAvailabilityClosure =>
-      'Per chiudere un giorno che nessuno potrà prenotare: tocca «Aggiungi giorno di chiusura» e indica un motivo, se vuoi.';
+      'Per chiudere un giorno che nessuno potrà prenotare: tocchi «Aggiungi giorno di chiusura» e indichi un motivo, se vuole.';
 
   @override
   String get tipAvailabilityDays =>
-      'Per impostare i giorni di apertura: seleziona i giorni sotto «Giorni di apertura».';
+      'Per impostare i giorni di apertura: selezioni i giorni sotto «Giorni di apertura».';
 
   @override
   String get tipAvailabilityGrid =>
-      'Per scegliere come si dividono le prenotazioni: scegli una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.';
+      'Per scegliere come si dividono le prenotazioni: scelga una «Granularità delle prenotazioni» — periodi liberi, fasce, mezze giornate o giornate intere.';
 
   @override
   String get tipAvailabilityHolidays =>
-      'Per chiudere nei giorni festivi: tocca «Aggiungi i giorni festivi».';
+      'Per chiudere nei giorni festivi: tocchi «Aggiungi i giorni festivi».';
 
   @override
   String get tipAvailabilityHours =>
@@ -17953,123 +17952,123 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tipAvailabilityPolicies =>
-      'Per rendere le regole più rigide o più flessibili — prenotazioni passate, fuori orario, limiti di prenotazione: usa «Regole di prenotazione».';
+      'Per rendere le regole più rigide o più flessibili — prenotazioni passate, fuori orario, limiti di prenotazione: usi «Regole di prenotazione».';
 
   @override
   String get tipBadgesLost =>
-      'Per bloccare un badge perso: tocca «Revoca»; scorri a destra un badge revocato per eliminarlo.';
+      'Per bloccare un badge perso: tocchi «Revoca»; scorra a destra un badge revocato per eliminarlo.';
 
   @override
   String get tipBadgesNfc =>
-      'Per usare una carta NFC: tocca «Registra tessera» e avvicina la carta al dispositivo.';
+      'Per usare una carta NFC: tocchi «Registra tessera» e avvicini la carta al dispositivo.';
 
   @override
   String get tipBadgesQr =>
-      'Per dare un badge QR: tocca «Nuovo badge», poi «Salva come PDF» per stamparlo.';
+      'Per dare un badge QR: tocchi «Nuovo badge», poi «Salva come PDF» per stamparlo.';
 
   @override
   String get tipBadgesSignIn =>
-      'Per accedere con il tuo badge: attiva «Mi fa accedere» sul tuo badge.';
+      'Per accedere con il suo badge: attivi «Mi fa accedere» sul suo badge.';
 
   @override
   String get tipCalendarAlerts =>
-      'Per gestire gli avvisi e le decisioni che ti aspettano: apri «Avvisi».';
+      'Per gestire gli avvisi e le decisioni che la aspettano: apra «Avvisi».';
 
   @override
   String get tipCalendarKinds =>
-      'Per vedere un solo tipo di elemento: tocca il suo chip — prenotazioni, fatture, pagamenti…; «Reimposta filtri» mostra di nuovo tutto.';
+      'Per vedere un solo tipo di elemento: tocchi il suo chip — prenotazioni, fatture, pagamenti…; «Reimposta filtri» mostra di nuovo tutto.';
 
   @override
   String get tipCalendarMine =>
-      'Per vedere solo le tue prenotazioni: tocca «Le mie prenotazioni».';
+      'Per vedere solo le sue prenotazioni: tocchi «Le mie prenotazioni».';
 
   @override
   String get tipCalendarMoney =>
-      'Per vedere il denaro dietro un pagamento: tocca la sua riga; le tue finanze si aprono su quel pagamento.';
+      'Per vedere il denaro dietro un pagamento: tocchi la sua riga; le sue finanze si aprono su quel pagamento.';
 
   @override
   String get tipCalendarViews =>
-      'Per vedere una settimana o un mese in un colpo: tocca «Settimana» o «Mese»; «Oggi» ti riporta indietro.';
+      'Per vedere una settimana o un mese in un colpo: tocchi «Settimana» o «Mese»; «Oggi» la riporta indietro.';
 
   @override
   String get tipEditorAccessories =>
-      'Per offrire accessori sui posti: configurali prima, poi sceglili nelle «Proprietà» di ogni posto.';
+      'Per offrire accessori sui posti: li configuri prima, poi li scelga nelle «Proprietà» di ogni posto.';
 
   @override
   String get tipEditorBackground =>
-      'Per disegnare su una pianta reale: impostala in «Immagine di sfondo».';
+      'Per disegnare su una pianta reale: la imposti in «Immagine di sfondo».';
 
   @override
   String get tipEditorDraw =>
-      'Per disegnare una stanza o una scrivania: scegli «Ufficio» o «Scrivania» nella barra degli strumenti e trascina sulla pianta.';
+      'Per disegnare una stanza o una scrivania: scelga «Ufficio» o «Scrivania» nella barra degli strumenti e trascini sulla pianta.';
 
   @override
   String get tipEditorLevel =>
-      'Per aggiungere un piano: tocca «Aggiungi piano»; «Azioni del piano» lo rinomina o lo elimina.';
+      'Per aggiungere un piano: tocchi «Aggiungi piano»; «Azioni del piano» lo rinomina o lo elimina.';
 
   @override
   String get tipEditorNfc =>
-      'Per consentire l’ingresso con un tag: nelle «Proprietà» di un posto usa «Tag NFC/RFID» › «Leggi un tag ora».';
+      'Per consentire l’ingresso con un tag: nelle «Proprietà» di un posto usi «Tag NFC/RFID» › «Leggi un tag ora».';
 
   @override
   String get tipEditorQr =>
-      'Per stampare le schede QR degli spazi: apri i documenti dello spazio e scegli «Codici QR degli spazi (PDF)».';
+      'Per stampare le schede QR degli spazi: apra i documenti dello spazio e scelga «Codici QR degli spazi (PDF)».';
 
   @override
   String get tipEditorSeat =>
-      'Per dare un nome a un posto o bloccarlo per manutenzione: selezionalo e tocca «Proprietà».';
+      'Per dare un nome a un posto o bloccarlo per manutenzione: lo selezioni e tocchi «Proprietà».';
 
   @override
   String get tipEditorSeats =>
-      'Per aggiungere posti: scegli lo strumento «Posto» e tocca una scrivania.';
+      'Per aggiungere posti: scelga lo strumento «Posto» e tocchi una scrivania.';
 
   @override
   String get tipEventsDecide =>
-      'Per rispondere a una richiesta che ti aspetta: tocca «Accetta» o «Rifiuta»; è in cima al flusso.';
+      'Per rispondere a una richiesta che la aspetta: tocchi «Accetta» o «Rifiuta»; è in cima al flusso.';
 
   @override
   String get tipEventsGroup =>
-      'Per raggruppare il flusso: apri «Raggruppa per» e scegli tipo, data o membro; «Rimuovi raggruppamento» lo annulla.';
+      'Per raggruppare il flusso: apra «Raggruppa per» e scelga tipo, data o membro; «Rimuovi raggruppamento» lo annulla.';
 
   @override
   String get tipEventsMessages =>
-      'Per rispondere alle tue conversazioni: apri la messaggistica.';
+      'Per rispondere alle sue conversazioni: apra la messaggistica.';
 
   @override
   String get tipEventsTopic =>
-      'Per vedere un solo argomento: tocca il suo chip — messaggi, prenotazioni, ingressi, denaro o membri.';
+      'Per vedere un solo argomento: tocchi il suo chip — messaggi, prenotazioni, ingressi, denaro o membri.';
 
   @override
   String get tipEventsUnread =>
-      'Per vedere ciò che non hai ancora letto: tocca «Non letti».';
+      'Per vedere ciò che non ha ancora letto: tocchi «Non letti».';
 
   @override
   String get tipFeaturesChanged =>
-      'Per vedere cosa hai cambiato rispetto ai valori predefiniti: tocca il filtro «Modificate».';
+      'Per vedere cosa ha cambiato rispetto ai valori predefiniti: tocchi il filtro «Modificate».';
 
   @override
   String get tipFeaturesProcess =>
-      'Per partire da ciò che vuoi fare: scegli «Processi» e cercalo.';
+      'Per partire da ciò che vuole fare: scelga «Processi» e lo cerchi.';
 
   @override
   String get tipFeaturesRequires =>
-      'Per attivare una funzione in grigio: attiva prima quella indicata nella riga «Richiede».';
+      'Per attivare una funzione in grigio: attivi prima quella indicata nella riga «Richiede».';
 
   @override
   String get tipFeaturesSwitch =>
-      'Per attivare o disattivare una funzione: scegli «Interruttori», cercala e sposta l’interruttore; l’app di ogni membro si adegua subito.';
+      'Per attivare o disattivare una funzione: scelga «Interruttori», la cerchi e sposti l’interruttore; l’app di ogni membro si adegua subito.';
 
   @override
   String get tipMembersApprove =>
-      'Per ammettere chi ha chiesto di entrare: aprilo e tocca «Approva l\'adesione».';
+      'Per ammettere chi ha chiesto di entrare: lo apra e tocchi «Approva l\'adesione».';
 
   @override
   String get tipMembersBadge =>
-      'Per rilasciare un badge: apri il membro e scegli «Badge e accesso» › «Badge».';
+      'Per rilasciare un badge: apra il membro e scelga «Badge e accesso» › «Badge».';
 
   @override
   String get tipMembersInvite =>
-      'Per invitare qualcuno: condividi l’ID dello spazio o il suo codice QR; «Invita un membro» li apre.';
+      'Per invitare qualcuno: condivida l’ID dello spazio o il suo codice QR; «Invita un membro» li apre.';
 
   @override
   String get tipMembersManaged =>
@@ -18077,243 +18076,243 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tipMembersNotify =>
-      'Per scrivere a tutti gli amministratori in una volta: tocca «Notifica tutti gli admin».';
+      'Per scrivere a tutti gli amministratori in una volta: tocchi «Notifica tutti gli admin».';
 
   @override
   String get tipMembersPlan =>
-      'Per cambiare il piano di un membro: apri il membro e imposta «Abbonamento» in «Fatturazione».';
+      'Per cambiare il piano di un membro: apra il membro e imposti «Abbonamento» in «Fatturazione».';
 
   @override
   String get tipMembersPrices =>
-      'Per fissare prezzi e piani dello spazio: apri le impostazioni di fatturazione.';
+      'Per fissare prezzi e piani dello spazio: apra le impostazioni di fatturazione.';
 
   @override
   String get tipMembersRole =>
-      'Per decidere cosa può fare ogni ruolo: modifica i ruoli; un membro ne riceve uno con «Aggiungi un ruolo» nella sua pagina.';
+      'Per decidere cosa può fare ogni ruolo: modifichi i ruoli; un membro ne riceve uno con «Aggiungi un ruolo» nella sua pagina.';
 
   @override
   String get tipMessagesAlerts =>
-      'Per gestire avvisi e decisioni che ti aspettano: apri «Avvisi» nel calendario.';
+      'Per gestire avvisi e decisioni che la aspettano: apra «Avvisi» nel calendario.';
 
   @override
   String get tipMessagesUnread =>
-      'Per vedere ciò che non hai ancora letto: tocca «Non letti» nella messaggistica.';
+      'Per vedere ciò che non ha ancora letto: tocchi «Non letti» nella messaggistica.';
 
   @override
   String get tipMessagesWrite =>
-      'Per scrivere a qualcuno o creare un gruppo: apri la messaggistica e tocca la matita.';
+      'Per scrivere a qualcuno o creare un gruppo: apra la messaggistica e tocchi la matita.';
 
   @override
   String get tipMoneyDays =>
-      'Per avere più giorni questo mese: tocca «Richiedi mezze giornate extra».';
+      'Per avere più giorni questo mese: tocchi «Richiedi mezze giornate extra».';
 
   @override
   String get tipMoneyDocumentsConditions =>
-      'Per leggere le condizioni che hai accettato: apri «Le mie condizioni».';
+      'Per leggere le condizioni che ha accettato: apra «Le mie condizioni».';
 
   @override
   String get tipMoneyDocumentsLibrary =>
-      'Per trovare i documenti condivisi dello spazio: apri «Libreria dei documenti».';
+      'Per trovare i documenti condivisi dello spazio: apra «Libreria dei documenti».';
 
   @override
   String get tipMoneyDocumentsPayments =>
-      'Per elencare ciò che hai pagato: apri «Report dei pagamenti».';
+      'Per elencare ciò che ha pagato: apra «Report dei pagamenti».';
 
   @override
   String get tipMoneyDocumentsStatement =>
-      'Per conservare il mese su carta: apri «Estratto del mese (PDF)».';
+      'Per conservare il mese su carta: apra «Estratto del mese (PDF)».';
 
   @override
   String get tipMoneyDocumentsUsage =>
-      'Per vedere ciò che hai consumato: apri «Report dei consumi».';
+      'Per vedere ciò che ha consumato: apra «Report dei consumi».';
 
   @override
   String get tipMoneyExpense =>
-      'Per farti rimborsare una spesa: tocca «Invia una spesa».';
+      'Per farsi rimborsare una spesa: tocchi «Invia una spesa».';
 
   @override
   String get tipMoneyInvoicesAcross =>
-      'Per vedere insieme le fatture di tutti i tuoi spazi: apri «Le tue finanze in tutti gli spazi».';
+      'Per vedere insieme le fatture di tutti i suoi spazi: apra «Le sue finanze in tutti gli spazi».';
 
   @override
   String get tipMoneyInvoicesPay =>
-      'Per pagare una fattura aperta: tocca «Paga ora» su di essa.';
+      'Per pagare una fattura aperta: tocchi «Paga ora» su di essa.';
 
   @override
   String get tipMoneyInvoicesRead =>
-      'Per leggere una fattura: toccala; si apre il dettaglio, con quanto resta da pagare.';
+      'Per leggere una fattura: la tocchi; si apre il dettaglio, con quanto resta da pagare.';
 
   @override
   String get tipMoneyMonth =>
-      'Per vedere un altro mese: usa le frecce accanto al mese.';
+      'Per vedere un altro mese: usi le frecce accanto al mese.';
 
   @override
   String get tipMoneyPaymentsAcross =>
-      'Per vedere il tuo denaro in tutti i tuoi spazi: apri «Le tue finanze in tutti gli spazi».';
+      'Per vedere il suo denaro in tutti i suoi spazi: apra «Le sue finanze in tutti gli spazi».';
 
   @override
   String get tipMoneyPaymentsConsumption =>
-      'Per annotare qualcosa che hai consumato — un caffè, una stampa: tocca «Aggiungi consumo».';
+      'Per annotare qualcosa che ha consumato — un caffè, una stampa: tocchi «Aggiungi consumo».';
 
   @override
   String get tipMoneyPaymentsDays =>
-      'Per avere più giorni questo mese: tocca «Richiedi mezze giornate extra».';
+      'Per avere più giorni questo mese: tocchi «Richiedi mezze giornate extra».';
 
   @override
   String get tipMoneyPaymentsExpense =>
-      'Per farti rimborsare una spesa: tocca «Invia una spesa».';
+      'Per farsi rimborsare una spesa: tocchi «Invia una spesa».';
 
   @override
   String get tipMoneyPaymentsOnline =>
-      'Per pagare subito: tocca «Paga online».';
+      'Per pagare subito: tocchi «Paga online».';
 
   @override
   String get tipMoneyPaymentsRecord =>
-      'Per comunicare allo spazio che hai pagato: tocca «Registra un pagamento».';
+      'Per comunicare allo spazio che ha pagato: tocchi «Registra un pagamento».';
 
   @override
   String get tipMoneyPaymentsScheduled =>
-      'Per pianificare una spesa ricorrente: apri «Spese programmate».';
+      'Per pianificare una spesa ricorrente: apra «Spese programmate».';
 
   @override
   String get tipMoneyPaymentsTransfer =>
-      'Per pagare con bonifico: apri «Istruzioni di pagamento» e copia l’IBAN.';
+      'Per pagare con bonifico: apra «Istruzioni di pagamento» e copi l’IBAN.';
 
   @override
   String get tipMoneyPdf =>
-      'Per conservare il tuo conto: tocca «Esporta la fattura come PDF».';
+      'Per conservare il suo conto: tocchi «Esporta la fattura come PDF».';
 
   @override
   String get tipMoneyRecord =>
-      'Per comunicare allo spazio che hai pagato: tocca «Registra un pagamento».';
+      'Per comunicare allo spazio che ha pagato: tocchi «Registra un pagamento».';
 
   @override
   String get tipMoneyStatementAcross =>
-      'Per vedere il tuo denaro in tutti i tuoi spazi: apri «Le tue finanze in tutti gli spazi».';
+      'Per vedere il suo denaro in tutti i suoi spazi: apra «Le sue finanze in tutti gli spazi».';
 
   @override
   String get tipMoneyStatementMonth =>
-      'Per vedere un altro mese: usa le frecce; «Saldo» indica cosa resta da saldare.';
+      'Per vedere un altro mese: usi le frecce; «Saldo» indica cosa resta da saldare.';
 
   @override
   String get tipMoneyStatementOut =>
-      'Per continuare a prenotare quando i giorni finiscono: nella faccia pagamenti tocca «Richiedi mezze giornate extra» o «Acquista un pacchetto».';
+      'Per continuare a prenotare quando i giorni finiscono: nella faccia pagamenti tocchi «Richiedi mezze giornate extra» o «Acquista un pacchetto».';
 
   @override
   String get tipPrivacyConsent =>
-      'Per rileggere ciò che hai accettato: apri i tuoi diritti e il consenso.';
+      'Per rileggere ciò che ha accettato: apra i suoi diritti e il consenso.';
 
   @override
   String get tipPrivacyErase =>
-      'Per andartene con i tuoi dati personali cancellati: tocca «Lasciare questo spazio e cancellare i miei dati».';
+      'Per andarsene con i suoi dati personali cancellati: tocchi «Lasciare questo spazio e cancellare i miei dati».';
 
   @override
   String get tipPrivacyExport =>
-      'Per scaricare tutto ciò che lo spazio conserva su di te: tocca «Esporta i miei dati».';
+      'Per scaricare tutto ciò che lo spazio conserva su di Lei: tocchi «Esporta i miei dati».';
 
   @override
   String get tipPrivacyWho =>
-      'Per vedere chi può leggere i tuoi dati: tocca «Chi può vedere i miei dati».';
+      'Per vedere chi può leggere i suoi dati: tocchi «Chi può vedere i miei dati».';
 
   @override
   String get tipReserveAhead =>
-      'Per trovare un giorno libero in anticipo: apri «Vista» e scegli «Settimana» o «Mese», poi tocca una casella o un giorno libero.';
+      'Per trovare un giorno libero in anticipo: apra «Vista» e scelga «Settimana» o «Mese», poi tocchi una casella o un giorno libero.';
 
   @override
   String get tipReserveBook =>
-      'Per prenotare un posto: scegli il giorno, poi «Mattina», «Pomeriggio» o «Giornata intera», tocca un posto libero e infine «Prenota».';
+      'Per prenotare un posto: scelga il giorno, poi «Mattina», «Pomeriggio» o «Giornata intera», tocchi un posto libero e infine «Prenota».';
 
   @override
   String get tipReserveChange =>
-      'Per modificare o annullare una prenotazione: toccala e scegli «Modifica orario», «Restare più a lungo», «Terminare prima» o «Annulla prenotazione».';
+      'Per modificare o annullare una prenotazione: la tocchi e scelga «Modifica orario», «Restare più a lungo», «Terminare prima» o «Annulla prenotazione».';
 
   @override
   String get tipReserveCheckIn =>
-      'Per registrare entrata o uscita: tocca il tuo posto e scegli «Check-in» o «Check-out», oppure attiva «Check-in immediato» mentre prenoti.';
+      'Per registrare entrata o uscita: tocchi il suo posto e scelga «Check-in» o «Check-out», oppure attivi «Check-in immediato» mentre prenota.';
 
   @override
   String get tipReserveDefault =>
-      'Per avere il tuo periodo abituale già selezionato: imposta «Periodo di prenotazione predefinito» nelle impostazioni.';
+      'Per avere il suo periodo abituale già selezionato: imposti «Periodo di prenotazione predefinito» nelle impostazioni.';
 
   @override
   String get tipReserveFavourite =>
-      'Per ritrovare i tuoi posti preferiti: tocca «Aggiungi ai preferiti» e valuta il posto con le stelle nella scheda di prenotazione.';
+      'Per ritrovare i suoi posti preferiti: tocchi «Aggiungi ai preferiti» e valuti il posto con le stelle nella scheda di prenotazione.';
 
   @override
   String get tipReserveLevel =>
-      'Per prenotare un intero piano: tocca «Prenota il piano» nella riga del piano.';
+      'Per prenotare un intero piano: tocchi «Prenota il piano» nella riga del piano.';
 
   @override
   String get tipReserveList =>
-      'Per prenotare da un elenco invece che dalla pianta: tocca «Vista elenco»; «Vista piantina» riporta la pianta.';
+      'Per prenotare da un elenco invece che dalla pianta: tocchi «Vista elenco»; «Vista piantina» riporta la pianta.';
 
   @override
   String get tipReserveRepeat =>
-      'Per prenotare lo stesso posto con regolarità: nella scheda di prenotazione apri «Altre opzioni», poi imposta «Ripeti» e «Ripeti fino al».';
+      'Per prenotare lo stesso posto con regolarità: nella scheda di prenotazione apra «Altre opzioni», poi imposti «Ripeti» e «Ripeti fino al».';
 
   @override
   String get tipReserveScan =>
-      'Per agire su uno spazio dalla sua scheda QR: tocca «Scansiona un codice spazio», inquadra la scheda con la fotocamera e scegli cosa fare.';
+      'Per agire su uno spazio dalla sua scheda QR: tocchi «Scansiona un codice spazio», inquadri la scheda con la fotocamera e scelga cosa fare.';
 
   @override
   String get tipValidationChain =>
-      'Per far dare le approvazioni a turno: attiva «Una dopo l’altra».';
+      'Per far dare le approvazioni a turno: attivi «Una dopo l’altra».';
 
   @override
   String get tipValidationCount =>
-      'Per chiedere più approvazioni: aumenta «Validazioni richieste», oppure richiedile solo oltre un importo con «Solo oltre questo importo».';
+      'Per chiedere più approvazioni: aumenti «Validazioni richieste», oppure le richieda solo oltre un importo con «Solo oltre questo importo».';
 
   @override
   String get tipValidationDefault =>
-      'Per cambiare la regola che ogni azione eredita: tocca «Regola predefinita».';
+      'Per cambiare la regola che ogni azione eredita: tocchi «Regola predefinita».';
 
   @override
   String get tipValidationOverride =>
-      'Per trattare un’azione in modo diverso: tocca la sua scheda e modificala; poi riporta «Personalizzata».';
+      'Per trattare un’azione in modo diverso: tocchi la sua scheda e la modifichi; poi riporta «Personalizzata».';
 
   @override
   String get tipValidationRoles =>
-      'Per decidere chi ha quale ruolo: modifica i ruoli.';
+      'Per decidere chi ha quale ruolo: modifichi i ruoli.';
 
   @override
   String get tipValidationWho =>
-      'Per scegliere chi approva — amministratori, persone elencate o tutti i membri: imposta «Chi convalida».';
+      'Per scegliere chi approva — amministratori, persone elencate o tutti i membri: imposti «Chi convalida».';
 
   @override
   String get tipWorkspaceSettingsBackup =>
-      'Per salvare o copiare lo spazio: usa «Esporta lo spazio (XML)».';
+      'Per salvare o copiare lo spazio: usi «Esporta lo spazio (XML)».';
 
   @override
   String get tipWorkspaceSettingsColours =>
-      'Per dare i tuoi colori all’app: sceglili.';
+      'Per dare i suoi colori all’app: li scelga.';
 
   @override
   String get tipWorkspaceSettingsDocuments =>
-      'Per stampare i documenti dello spazio — schede QR, listini, regolamento: apri i documenti dello spazio.';
+      'Per stampare i documenti dello spazio — schede QR, listini, regolamento: apra i documenti dello spazio.';
 
   @override
   String get tipWorkspaceSettingsGeneral =>
-      'Per impostare paese, valuta, fuso orario e lingua: apri «Informazioni generali»; documenti e imposte ne dipendono.';
+      'Per impostare paese, valuta, fuso orario e lingua: apra «Informazioni generali»; documenti e imposte ne dipendono.';
 
   @override
   String get tipWorkspaceSettingsLegal =>
-      'Per emettere fatture ed e-fatture conformi: completa la tua identità legale.';
+      'Per emettere fatture ed e-fatture conformi: completi la sua identità legale.';
 
   @override
   String get tipWorkspaceSettingsNewMembers =>
-      'Per definire con cosa partono i nuovi membri: scegli l’abbonamento e cosa succede quando i giorni finiscono in «Nuovi membri».';
+      'Per definire con cosa partono i nuovi membri: scelga l’abbonamento e cosa succede quando i giorni finiscono in «Nuovi membri».';
 
   @override
   String get tipWorkspaceSettingsPay =>
-      'Per indicare ai membri come pagarti: compila le istruzioni di pagamento.';
+      'Per indicare ai membri come pagarla: compili le istruzioni di pagamento.';
 
   @override
   String get tipWorkspaceSettingsSave =>
-      'Per conservare le modifiche: tocca «Salva» in basso prima di uscire.';
+      'Per conservare le modifiche: tocchi «Salva» in basso prima di uscire.';
 
   @override
   String get tipWorkspaceSettingsWording =>
-      'Per chiamare le cose a modo tuo — posti, piani, prenotazioni: cambia i termini.';
+      'Per chiamare le cose a modo suo — posti, piani, prenotazioni: cambi i termini.';
 
   @override
   String get unblockAction => 'Sblocca';
@@ -18326,7 +18325,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String usageAskExplain(String booked, String present, String saved) {
-    return 'Hai prenotato $booked e sei stato $present. Chiedi che le $saved non usate non siano fatturate. Decide qualcun altro, mai tu.';
+    return 'Ha prenotato $booked ed è stato presente $present. Chieda che le $saved non usate non siano fatturate. Decide qualcun altro, mai Lei.';
   }
 
   @override
@@ -18433,20 +18432,20 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get uxBookingModesHelp =>
-      'Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la tua presenza.';
+      'Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la sua presenza.';
 
   @override
   String get uxBookingResourceUnavailable => 'Risorsa non disponibile';
 
   @override
-  String get uxDeviceTime => 'La tua ora';
+  String get uxDeviceTime => 'La sua ora';
 
   @override
   String get uxFinanceAlerts => 'Avvisi finanziari';
 
   @override
   String get uxFinanceAlertsFailed =>
-      'Impossibile aprire gli avvisi finanziari. Riprova.';
+      'Impossibile aprire gli avvisi finanziari. Riprovi.';
 
   @override
   String get uxLinkedReference => 'Risorsa collegata';
@@ -18460,11 +18459,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get uxMoneyDocumentsScope =>
-      'Rapporti mensili e il tuo accordo attuale.';
+      'Rapporti mensili e il suo accordo attuale.';
 
   @override
   String get uxMoneyInvoicesScope =>
-      'Le tue fatture in questo spazio · Tutti i periodi.';
+      'Le sue fatture in questo spazio · Tutti i periodi.';
 
   @override
   String get uxMoneyPaymentsScope =>
@@ -18674,7 +18673,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get validationStepApplies => 'diventa effettivo';
 
   @override
-  String get validationStepOwnerToo => 'e la proprietaria, sempre';
+  String get validationStepOwnerToo => 'e il proprietario, sempre';
 
   @override
   String validationStepQuorum(int count, String who) {
@@ -18759,7 +18758,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatChangeNeedsSave =>
-      'Salva prima l\'aliquota; poi modificala per legge.';
+      'Salvi prima l\'aliquota; poi la modifichi per legge.';
 
   @override
   String get vatDeclBox => 'Rigo';
@@ -18776,7 +18775,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclEmpty =>
-      'Nessuna dichiarazione — scegli un periodo e genera la prima.';
+      'Nessuna dichiarazione — scelga un periodo e generi la prima.';
 
   @override
   String get vatDeclGenerate => 'Genera';
@@ -18789,7 +18788,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Conferma di aver inviato questa dichiarazione tu stesso (portale dell’agenzia o il tuo commercialista). Diventa immutabile.';
+      'Confermi di aver inviato personalmente questa dichiarazione (portale dell’agenzia o il suo commercialista). Diventa immutabile.';
 
   @override
   String get vatDeclNet => 'Imponibile';
@@ -18805,7 +18804,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclRegimeGate =>
-      'Le dichiarazioni esistono solo sotto il regime soggetto a IVA — configuralo nelle impostazioni IVA.';
+      'Le dichiarazioni esistono solo sotto il regime soggetto a IVA — lo configuri nelle impostazioni IVA.';
 
   @override
   String get vatDeclRejected => 'La piattaforma ha rifiutato la dichiarazione.';
@@ -18865,7 +18864,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'All\'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che avete emesso. La scelta è stampata su ogni fattura.';
+      'All\'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che ha emesso. La scelta è stampata su ogni fattura.';
 
   @override
   String get vatExigibilityTitle => 'Esigibilità dell’IVA';
@@ -18913,7 +18912,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatNeedsDefault =>
-      'Segna esattamente un\'aliquota come predefinita.';
+      'Segni esattamente un\'aliquota come predefinita.';
 
   @override
   String get vatNewPercent => 'Nuova aliquota %';
@@ -19013,17 +19012,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityAboutEmpty =>
-      'Aggiungi la tua professione e qualche parola';
+      'Aggiunga la sua professione e qualche parola';
 
   @override
   String get visibilityAboutMe => 'Su di me';
 
   @override
   String get visibilityAboutSaveFailed =>
-      'Impossibile salvare professione e biografia. Riprova.';
+      'Impossibile salvare professione e biografia. Riprovi.';
 
   @override
-  String get visibilityBio => 'Qualche parola su di te';
+  String get visibilityBio => 'Qualche parola su di Lei';
 
   @override
   String visibilityChosenCount(int count) {
@@ -19044,7 +19043,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityElsewhereIntro =>
-      'Su un server collegato hai l\'account di quel server. Chi lì non condivide alcuno spazio con te vede ciò che consenti a chiunque abbia effettuato l\'accesso; contatti e presenza non escono mai dai tuoi spazi.';
+      'Su un server collegato ha l\'account di quel server. Chi lì non condivide alcuno spazio con Lei vede ciò che consente a chiunque abbia effettuato l\'accesso; contatti e presenza non escono mai dai suoi spazi.';
 
   @override
   String get visibilityElsewhereTitle => 'Sui miei altri server';
@@ -19054,7 +19053,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityIntro =>
-      'Ogni parte del tuo account sceglie il proprio pubblico. Niente è pubblico se non lo scegli.';
+      'Ogni parte del suo account sceglie il proprio pubblico. Niente è pubblico se non lo sceglie.';
 
   @override
   String get visibilityMySpaces => 'Membri dei miei spazi';
@@ -19069,7 +19068,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String visibilityOnServerUnavailable(String host) {
-    return '$host non ha risposto. Riprova più tardi.';
+    return '$host non ha risposto. Riprovi più tardi.';
   }
 
   @override
@@ -19077,11 +19076,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityPreviewCanWrite =>
-      'Può iniziare una conversazione con te';
+      'Può iniziare una conversazione con Lei';
 
   @override
   String get visibilityPreviewCannotWrite =>
-      'Non può iniziare una conversazione con te';
+      'Non può iniziare una conversazione con Lei';
 
   @override
   String get visibilityPreviewFailed => 'Impossibile caricare l\'anteprima.';
@@ -19093,7 +19092,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilityPreviewNobody => 'Solo io';
 
   @override
-  String get visibilityPreviewNothing => 'Non vedono nulla di te.';
+  String get visibilityPreviewNothing => 'Non vedono nulla di Lei.';
 
   @override
   String get visibilityPreviewSignedIn =>
@@ -19111,7 +19110,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilitySaveFailed =>
-      'Impossibile salvare chi lo vede. Riprova.';
+      'Impossibile salvare chi lo vede. Riprovi.';
 
   @override
   String get visibilitySignedIn => 'Chiunque abbia effettuato l\'accesso';
@@ -19132,7 +19131,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visitCancelFailed =>
-      'Impossibile annullare la visita. Nulla è cambiato; riprova.';
+      'Impossibile annullare la visita. Nulla è cambiato; riprovi.';
 
   @override
   String get visitGuestNote => 'Visita da ospite — non un\'iscrizione';
@@ -19176,20 +19175,20 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatYouCanDoIntro =>
-      'Qui tutti sono membri; ciò che puoi fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che hai.';
+      'Qui tutti sono membri; ciò che può fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che ha.';
 
   @override
   String get whatYouCanDoNothingMore => 'Niente più di un membro.';
 
   @override
-  String get whatYouCanDoTitle => 'Cosa puoi fare qui';
+  String get whatYouCanDoTitle => 'Cosa può fare qui';
 
   @override
   String get whatsappFieldLabel => 'Numero WhatsApp';
 
   @override
   String get whatsappHelper =>
-      'Facoltativo. Visibile ai membri dei tuoi spazi per contattarti su WhatsApp. Lascia vuoto per smettere di condividerlo.';
+      'Facoltativo. Visibile ai membri dei suoi spazi per contattarla su WhatsApp. Lasci vuoto per smettere di condividerlo.';
 
   @override
   String get whatsappHint => '+39 333 123 4567';
@@ -19242,7 +19241,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wizardIssueHint =>
-      'Deseleziona un membro per escluderlo da questo blocco. I membri già coperti compaiono come fatti.';
+      'Deselezioni un membro per escluderlo da questo blocco. I membri già coperti compaiono come fatti.';
 
   @override
   String get wizardIssueNothing => 'Niente da emettere per questo periodo.';
@@ -19284,11 +19283,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wizardPaymentsHint =>
-      'Ciò che i membri hanno dichiarato attende la tua conferma qui sotto. Un pagamento arrivato sul conto senza dichiarazione si registra qui; il membro lo conferma poi.';
+      'Ciò che i membri hanno dichiarato attende la sua conferma qui sotto. Un pagamento arrivato sul conto senza dichiarazione si registra qui; il membro lo conferma poi.';
 
   @override
   String get wizardPaymentsNone =>
-      'Nessun pagamento dichiarato attende la tua decisione.';
+      'Nessun pagamento dichiarato attende la sua decisione.';
 
   @override
   String wizardPeriodLabel(String period) {
@@ -19311,7 +19310,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wizardRemindHint =>
-      'In ritardo secondo le tue regole di sollecito. Un tocco registra ogni sollecito e avvisa i membri; la lettera si apre per riga.';
+      'In ritardo secondo le sue regole di sollecito. Un tocco registra ogni sollecito e avvisa i membri; la lettera si apre per riga.';
 
   @override
   String wizardRemindLevel(int level) {
@@ -19320,7 +19319,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wizardRemindNone =>
-      'Nessun sollecito dovuto secondo le tue regole.';
+      'Nessun sollecito dovuto secondo le sue regole.';
 
   @override
   String get wizardRemindOne => 'Lettera di sollecito';
@@ -19359,7 +19358,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wizardSendHint =>
-      'Consegna ogni fattura al suo membro: condividi il PDF o scaricalo per inviarlo a modo tuo.';
+      'Consegni ogni fattura al suo membro: condivida il PDF o lo scarichi per inviarlo a modo suo.';
 
   @override
   String get wizardSendNone =>
@@ -19455,7 +19454,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get wizardWhoValidators => 'Convalidatori';
 
   @override
-  String get wizardWhoYou => 'Tu';
+  String get wizardWhoYou => 'Lei';
 
   @override
   String get wizardWriteoff => 'Stralcia';
@@ -19468,7 +19467,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wordingIntro =>
-      'Rinomina un piccolo insieme approvato di parole del prodotto. Tutto il resto mantiene la formulazione del prodotto, e un termine non rinominato appare esattamente come prima.';
+      'Rinomini un piccolo insieme approvato di parole del prodotto. Tutto il resto mantiene la formulazione del prodotto, e un termine non rinominato appare esattamente come prima.';
 
   @override
   String get wordingLocale => 'Lingua';
@@ -19481,7 +19480,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get wordingResetHint =>
-      'Reimposta rimuove la tua parola e ripristina quella del prodotto.';
+      'Reimposta rimuove la sua parola e ripristina quella del prodotto.';
 
   @override
   String get wordingRow => 'Lessico';
@@ -19680,7 +19679,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceDeskTransparencyHelper =>
-      'Riduci l\'opacità dei tavoli per far trasparire la foto di sfondo del piano.';
+      'Riduca l\'opacità dei tavoli per far trasparire la foto di sfondo del piano.';
 
   @override
   String get workspaceDeskTransparencyTitle => 'Trasparenza dei tavoli';
@@ -19697,11 +19696,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceFieldsPersonalNote =>
-      'Le tue risposte sono dati personali: fanno parte della tua esportazione dei dati e vengono cancellate quando lasci questo spazio, salvo un obbligo legale di conservazione documentato dallo spazio.';
+      'Le sue risposte sono dati personali: fanno parte della sua esportazione dei dati e vengono cancellate quando lascia questo spazio, salvo un obbligo legale di conservazione documentato dallo spazio.';
 
   @override
   String get workspaceFieldsSaveFailed =>
-      'Le tue risposte alle domande di questo spazio non sono state salvate. Il resto dei tuoi dati sì.';
+      'Le sue risposte alle domande di questo spazio non sono state salvate. Il resto dei suoi dati sì.';
 
   @override
   String workspaceFieldsTitle(String workspace) {
@@ -19709,22 +19708,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get workspaceGenericError => 'Qualcosa è andato storto. Riprova.';
+  String get workspaceGenericError => 'Qualcosa è andato storto. Riprovi.';
 
   @override
   String get workspaceInviteCodeInvalid =>
-      'Nessun ID trovato — incolla l\'invito o digita l\'ID.';
+      'Nessun ID trovato — incolli l\'invito o digiti l\'ID.';
 
   @override
   String get workspaceInviteCodeLabel => 'Codice di invito';
 
   @override
   String get workspaceInvitePasteHint =>
-      'Incolla l\'intero messaggio d\'invito — l\'ID viene trovato automaticamente.';
+      'Incolli l\'intero messaggio d\'invito — l\'ID viene trovato automaticamente.';
 
   @override
   String get workspaceLanguageHelper =>
-      'Gli inviti sono scritti per impostazione predefinita in questa lingua. La lingua della tua app si imposta nelle Impostazioni.';
+      'Gli inviti sono scritti per impostazione predefinita in questa lingua. La lingua della sua app si imposta nelle Impostazioni.';
 
   @override
   String get workspaceLanguageLabel => 'Lingua dello spazio';
@@ -19743,7 +19742,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String workspaceResetConfirmLabel(String phrase) {
-    return 'Digita «$phrase» per confermare';
+    return 'Digiti «$phrase» per confermare';
   }
 
   @override
@@ -19768,11 +19767,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceSettingsConflict =>
-      'Qualcuno ha modificato queste impostazioni mentre le stavate modificando. Non è stato salvato nulla; le vostre modifiche sono ancora qui.';
+      'Qualcuno ha modificato queste impostazioni mentre le stava modificando. Non è stato salvato nulla; le sue modifiche sono ancora qui.';
 
   @override
   String get workspaceSettingsCurrencyHelper =>
-      'Proposta in base al paese — modificala se la tua community fattura in un’altra valuta.';
+      'Proposta in base al paese — la modifichi se la sua community fattura in un’altra valuta.';
 
   @override
   String get workspaceSettingsSaved => 'Spazio salvato.';
@@ -19787,11 +19786,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceTimezoneLabel => 'Fuso orario';
 
   @override
-  String get workspaceTimezoneUnknown => 'Scegli un fuso orario dall\'elenco';
+  String get workspaceTimezoneUnknown => 'Scelga un fuso orario dall\'elenco';
 
   @override
   String get workspaceWhatsappGroupHelper =>
-      'Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolla il link di invito del gruppo (https://chat.whatsapp.com/…). Lascia vuoto per non mostrare nulla.';
+      'Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolli il link di invito del gruppo (https://chat.whatsapp.com/…). Lasci vuoto per non mostrare nulla.';
 
   @override
   String get workspaceWhatsappGroupInvalid =>
@@ -19873,7 +19872,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceXmlImportPartial =>
-      'Una parte dell’importazione è stata applicata prima di fermarsi: controlla le impostazioni e la pianta qui sotto.';
+      'Una parte dell’importazione è stata applicata prima di fermarsi: controlli le impostazioni e la pianta qui sotto.';
 
   @override
   String workspaceXmlImportPreviewAccessories(int count) {

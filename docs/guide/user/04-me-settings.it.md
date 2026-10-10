@@ -78,7 +78,7 @@ Vuole che le persone la riconoscano nell'elenco dei membri, sulla piantina e nei
 
 **Da sapere**
 
-- La riga indica **Tocca per aggiungere una foto** finché non ne ha una, poi **Tocca per cambiare**.
+- La riga indica **Tocchi per aggiungere una foto** finché non ne ha una, poi **Tocchi per cambiare**.
 - Chi vede la sua foto lo decide Lei: vedi [Chi mi vede](help:user.privacy.audiences).
 - Il suo account è suo in tutti gli spazi di lavoro; la sua posizione in uno spazio si trova nelle sue Impostazioni.
 
@@ -97,7 +97,7 @@ Vuole che le sue fatture e le sue lettere riportino correttamente il suo nome e 
 
 1. Apra [Io](app:/me?tab=me) e tocchi **Dati personali**.
 2. Scelga una **Formula di cortesia** se desidera che venga stampata prima del suo nome, poi compili **Nome**, **Cognome**, **Società (facoltativo)**, l'indirizzo, **Telefono** ed **E-mail per i documenti**.
-3. Controlli **Sui tuoi documenti**, che mostra come verrà stampato.
+3. Controlli **Sui suoi documenti**, che mostra come verrà stampato.
 4. Risponda alle eventuali domande che il suo spazio di lavoro aggiunge sotto il proprio titolo, poi tocchi **Salva**.
 
 **Da sapere**
@@ -490,7 +490,7 @@ Vuole sapere chi può leggere che cosa su di Lei, e chi ha effettivamente guarda
 
 1. Apra [Privacy e dati](app:/privacy).
 2. Tocchi **Chi può vedere i miei dati**.
-3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i tuoi dati**.
+3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i suoi dati**.
 
 **Da sapere**
 
@@ -603,7 +603,7 @@ Vuole chiedere allo spazio di lavoro una copia, una correzione, una limitazione 
 **Passaggi**
 
 1. Apra [Privacy e dati](app:/privacy) e tocchi **Le mie richieste di esercizio dei diritti**.
-2. Tocchi **Fai una richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
+2. Tocchi **Nuova richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
 3. Aggiunga i **Dettagli (facoltativo)** e tocchi **Invia la richiesta**.
 
 **Da sapere**
@@ -646,7 +646,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 **Passaggi**
 
 1. Apra [Privacy e dati](app:/privacy).
-2. Tocchi **I tuoi dati, i tuoi diritti**.
+2. Tocchi **I suoi dati, i suoi diritti**.
 3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
@@ -691,7 +691,7 @@ Dirige una comunità e vuole ospitare DesKilo da sé.
 
 **Passaggi**
 
-1. Apra la schermata **Server** e tocchi **Usare il tuo server**.
+1. Apra la schermata **Server** e tocchi **Usare il suo server**.
 2. Segua i quattro passaggi indicati: creare un progetto su supabase.com, installare lo schema, copiare l'URL del progetto e la chiave pubblicabile, poi incollarli e **Prova la connessione**.
 3. Oppure tocchi **Crea una nuova istanza** per la configurazione guidata.
 

@@ -11,7 +11,7 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingBanner": "Stai emettendo e sollecitando le fatture di tutto lo spazio. Le tue fatture e i tuoi pagamenti sono in Io › Finanze.",
+  "invoicingBanner": "Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Finanze.",
   "@invoicingBanner": {
     "description": "invoicing hub vs my finances"
   },
@@ -19,7 +19,7 @@
   "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
-  "memberInvoicesBanner": "Tutte le tue fatture e i tuoi pagamenti, di tutti gli spazi, sono in Io › Finanze.",
+  "memberInvoicesBanner": "Tutte le sue fatture e i suoi pagamenti, di tutti gli spazi, sono in Io › Finanze.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"
   }

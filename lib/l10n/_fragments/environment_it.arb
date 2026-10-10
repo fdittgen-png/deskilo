@@ -12,7 +12,7 @@
   "@environmentLabel": {
     "description": "#917 workspace environment: environmentLabel"
   },
-  "environmentHint": "Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Dichiaratelo di produzione solo quando le fatture che ne escono sono davvero dovute.",
+  "environmentHint": "Uno spazio di sviluppo lo dichiara su ogni schermata e filigrana ogni documento. Lo dichiari di produzione solo quando le fatture che ne escono sono davvero dovute.",
   "@environmentHint": {
     "description": "#917 workspace environment: environmentHint"
   },

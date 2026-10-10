@@ -53,7 +53,7 @@
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
   },
-  "roleRefusalExceedsYours": "Questo ruolo può fare cose che tu non puoi, quindi solo il proprietario lo dà.",
+  "roleRefusalExceedsYours": "Questo ruolo può fare cose che Lei non può, quindi solo il proprietario lo dà.",
   "@roleRefusalExceedsYours": {
     "description": "#2085 giving roles: roleRefusalExceedsYours"
   },
@@ -77,7 +77,7 @@
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
-  "whatYouCanDoTitle": "Cosa puoi fare qui",
+  "whatYouCanDoTitle": "Cosa può fare qui",
   "@whatYouCanDoTitle": {
     "description": "#2085 giving roles: whatYouCanDoTitle"
   },
@@ -90,7 +90,7 @@
       }
     }
   },
-  "whatYouCanDoIntro": "Qui tutti sono membri; ciò che puoi fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che hai.",
+  "whatYouCanDoIntro": "Qui tutti sono membri; ciò che può fare — messaggi, prenotazioni e il resto — deriva solo dai ruoli che ha.",
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },

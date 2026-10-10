@@ -128,7 +128,7 @@
   "@repartitionSharesTotal": {
     "description": "#934 workspace status / repartition wizard: repartitionSharesTotal"
   },
-  "repartitionRuleNotSaved": "No se pudo guardar la regla, así que no se repartió nada. Inténtalo de nuevo.",
+  "repartitionRuleNotSaved": "No se pudo guardar la regla, así que no se repartió nada. Inténtelo de nuevo.",
   "@repartitionRuleNotSaved": {
     "description": "#1532: repartitionRuleNotSaved"
   },

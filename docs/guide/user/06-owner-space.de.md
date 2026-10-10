@@ -38,7 +38,7 @@ Sie möchten dem Gebäude seine Etagen geben, in der Reihenfolge, die man erwart
 
 - Das Löschen einer Etage entfernt jedes Büro, jeden Tisch und jeden Platz darauf. Die Bestätigung sagt, was mit Buchungen geschieht, die darauf verweisen.
 - Die Zeile unter jeder Etage zeigt, ob sie **Als Ganzes buchbar** oder **Nicht als Ganzes buchbar** ist.
-- Ohne Etage zeigt der Editor **Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.**
+- Ohne Etage zeigt der Editor **Noch keine Etagen. Fügen Sie die erste Etage Ihres Workspace hinzu.**
 
 **Siehe auch:** [Eine ganze Etage buchbar machen](help:user.space.editor.level-booking) · [Räume, Tische und Plätze zeichnen](help:user.space.editor.rooms)
 
@@ -832,13 +832,13 @@ Sie möchten, dass der Space weiterbesteht, falls Sie einmal zurücktreten.
 
 1. Öffnen Sie [Mitglieder & Tarife](app:/members) und wählen Sie das Mitglied.
 2. Wählen Sie unter **Mit-Inhaberschaft** einen aktiven Mitinhaber oder einen Nachfolger.
-3. Um jetzt zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Um jetzt zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
-- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolgerin**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
+- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolge**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
 - Geht der letzte Inhaber, wird der am besten geeignete Mitinhaber automatisch Inhaber, aktive vor Nachfolgern.
-- Mitinhaber gehören zur Funktion **Mit-Inhaberinnen**.
+- Mitinhaber gehören zur Funktion **Mitinhaber**.
 
 **Siehe auch:** [Mit-Inhaberschaft](help:user.members.co-ownership) · [Die Rollenmatrix](help:user.roles.matrix)
 

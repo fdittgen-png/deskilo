@@ -3,12 +3,12 @@
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
   },
-  "reservationExtendLaterOnly": "Elige una hora posterior al final actual.",
+  "reservationExtendLaterOnly": "Elija una hora posterior al final actual.",
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
   "reservationEndEarlyButton": "Terminar antes",
-  "reservationEndEarlyAheadOnly": "Elige una hora que aún esté por venir y anterior al final actual.",
+  "reservationEndEarlyAheadOnly": "Elija una hora que aún esté por venir y anterior al final actual.",
   "@@locale": "es",
   "calendarMineTab": "Mías",
   "calendarEveryoneTab": "Todos",
@@ -170,7 +170,7 @@
   "calendarEventStatusRejected": "rechazado",
   "calendarEventStatusExpired": "caducado",
   "accessKindNegotiations": "Negociaciones de precios",
-  "accessRuleNegotiations": "Tú, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo.",
+  "accessRuleNegotiations": "Usted, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo.",
   "calendarViewAgenda": "Agenda",
   "calendarViewWeek": "Semana",
   "calendarViewMonth": "Mes",

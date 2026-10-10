@@ -12,9 +12,9 @@
   "levelSupplementLabel": "Etagen-Reservierungen",
   "levelNotAllowed": "Sie dürfen keinen ganzen Tisch, kein Büro und keine ganze Etage reservieren.",
   "levelConflict": "Die Etage hat Reservierungen in diesem Zeitraum.",
-  "bookingOnePlace": "Du hast in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
-  "bookingCheckedInElsewhere": "Du bist woanders eingecheckt — checke dort zuerst aus.",
-  "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — die Inhaberin aktiviert dafür „Als Ganzes buchbar“ im Editor.",
+  "bookingOnePlace": "Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
+  "bookingCheckedInElsewhere": "Sie sind woanders eingecheckt — checken Sie dort zuerst aus.",
+  "spaceNotWholeBookable": "Dieser Bereich ist nicht für Ganzbuchung eingerichtet — der Inhaber aktiviert dafür „Als Ganzes buchbar“ im Editor.",
   "levelFeatureOff": "Büro- & Etagen-Reservierungen sind in den Funktionen ausgeschaltet.",
   "levelDetail": "Ganze Etage",
   "kioskLevelButton": "Diese Etage",
@@ -30,6 +30,6 @@
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
-  "bookingMembershipPaused": "Deine Mitgliedschaft ist pausiert — eine Administratorin reaktiviert sie unter Mitglieder.",
-  "bookingNotAMember": "Du bist kein Mitglied dieses Raums mehr — bitte eine Administratorin um eine Einladung."
+  "bookingMembershipPaused": "Ihre Mitgliedschaft ist pausiert — ein Admin reaktiviert sie unter Mitglieder.",
+  "bookingNotAMember": "Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung."
 }

@@ -294,7 +294,7 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 **Passaggi**
 
 1. Apra [Eventi](app:/events), oppure tocchi **Avvisi finanziari** in [Finanze](app:/money).
-2. Cerchi sotto **In attesa della tua conferma** la riga che indica l'importo e il membro.
+2. Cerchi sotto **In attesa della sua conferma** la riga che indica l'importo e il membro.
 3. Tocchi **Accetta** per confermarla, oppure la croce per **Rifiuta**.
 
 **Da sapere**
@@ -332,7 +332,7 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Passaggi**
 
-1. Apra [Finanze](app:/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le tue finanze in tutti gli spazi**.
+1. Apra [Finanze](app:/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le sue finanze in tutti gli spazi**.
 2. Scelga una scheda: **Da pagare**, **Pagate**, **Pagamenti** o **Solleciti**.
 3. Se appartiene a più spazi, filtri per spazio in alto.
 

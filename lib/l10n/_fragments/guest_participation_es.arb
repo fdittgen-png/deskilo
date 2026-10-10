@@ -12,7 +12,7 @@
   "@myVisitsTitle": {
     "description": "#1835 Me › Home: the section listing the account's guest visits"
   },
-  "myVisitsHelp": "Visitas que pediste o a las que fuiste admitido como invitado. Una visita no es una membresía.",
+  "myVisitsHelp": "Visitas que pidió o a las que fue admitido como invitado. Una visita no es una membresía.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
   },
@@ -44,7 +44,7 @@
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"
   },
-  "visitCancelFailed": "No se pudo cancelar la visita. Nada ha cambiado; inténtalo de nuevo.",
+  "visitCancelFailed": "No se pudo cancelar la visita. Nada ha cambiado; inténtelo de nuevo.",
   "@visitCancelFailed": {
     "description": "#1835 a visit row: the cancel failed"
   }

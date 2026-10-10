@@ -119,7 +119,7 @@
   },
   "legendBlocked": "Gesperrt",
   "legendClosed": "Geschlossen",
-  "reserveClosedShort": "Zu",
+  "reserveClosedShort": "Geschl.",
   "planCheckOutFor": "{name} auschecken",
   "@planCheckOutFor": {
     "placeholders": {

@@ -47,7 +47,7 @@
   "@memberMessagesAction": {
     "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
   },
-  "conversationEmpty": "Noch keine Nachrichten — sag hallo!",
+  "conversationEmpty": "Noch keine Nachrichten — sagen Sie hallo!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
   },
@@ -243,7 +243,7 @@
   "inboxFilterAll": "Alle",
   "inboxFilterUnread": "Ungelesen",
   "inboxFilterArchived": "Archiviert",
-  "inboxNoUnread": "Nichts Ungelesenes — du bist auf dem Laufenden.",
+  "inboxNoUnread": "Nichts Ungelesenes — Sie sind auf dem Laufenden.",
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "conversationPin": "Oben anheften",
   "conversationUnpin": "Loslösen",
@@ -266,7 +266,7 @@
     }
   },
   "composerDraftKept": "Entwurf behalten",
-  "newConversationTapToOpen": "Tippe auf eine Person, um den Chat zu öffnen; schalte Gruppe ein, um mehrere zu wählen.",
+  "newConversationTapToOpen": "Tippen Sie auf eine Person, um den Chat zu öffnen; schalten Sie Gruppe ein, um mehrere zu wählen.",
   "newConversationGroupSwitch": "Gruppe",
   "inboxRetry": "Erneut versuchen",
   "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
@@ -285,10 +285,10 @@
   "noteRefPickPayment": "Welche Zahlung?",
   "noteRefNone": "Noch nichts zum Verweisen.",
   "featureMemberOriginTitle": "Wie jedes Mitglied hierherkam",
-  "featureMemberOriginDesc": "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einer Verwaltung angelegt. Es ist kein Status.",
+  "featureMemberOriginDesc": "Eine dezente Zeile an einem Mitglied, die sagt, wie die Mitgliedschaft begann: hat den Raum gegründet, per Einladung beigetreten, oder das Profil wurde von einem Admin angelegt. Es ist kein Status.",
   "memberOriginFounder": "Hat diesen Raum gegründet",
   "memberOriginInvited": "Per Einladung beigetreten",
-  "memberOriginDelegated": "Profil von einer Verwaltung angelegt",
+  "memberOriginDelegated": "Profil von einem Admin angelegt",
   "memberOriginHeading": "Wie diese Mitgliedschaft begann",
   "inboxMessengerDoor": "Meine Nachrichten öffnen",
   "@inboxMessengerDoor": {

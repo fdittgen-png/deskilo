@@ -5,7 +5,7 @@
   "tabCalendar": "Calendario",
   "tabEvents": "Eventos",
   "tabMoney": "Finanzas",
-  "errorOffline": "Sin conexión: no se ha enviado nada. Inténtalo de nuevo cuando vuelvas a estar en línea.",
+  "errorOffline": "Sin conexión: no se ha enviado nada. Inténtelo de nuevo cuando vuelva a estar en línea.",
   "settingsTitle": "Ajustes",
   "settingsSectionAdministration": "Administración",
   "settingsSectionAdvanced": "Avanzado",
@@ -43,14 +43,14 @@
   "@aboutSupportTitle": {
     "description": "Support block title (#560)"
   },
-  "aboutSupportBody": "Esta aplicación es gratuita, de código abierto y sin publicidad. Si te resulta útil, apoya al desarrollador.",
+  "aboutSupportBody": "Esta aplicación es gratuita, de código abierto y sin publicidad. Si le resulta útil, apoye al desarrollador.",
   "@aboutSupportBody": {
     "description": "Support block body (#560)"
   },
-  "shellSwipeCoachMark": "Desliza la barra hacia abajo para la vista de pantalla completa. Desliza hacia arriba, o mantén pulsado el botón Reservar, para recuperarla.",
-  "shellPendingDecisions": "{count, plural, =1{1 decisión te espera} other{{count} decisiones te esperan}}",
-  "shellBarHideHint": "Mantén pulsado para la vista de pantalla completa",
-  "shellBarShowHint": "Mantén pulsado para mostrar la barra de navegación",
+  "shellSwipeCoachMark": "Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.",
+  "shellPendingDecisions": "{count, plural, =1{1 decisión le espera} other{{count} decisiones le esperan}}",
+  "shellBarHideHint": "Mantenga pulsado para la vista de pantalla completa",
+  "shellBarShowHint": "Mantenga pulsado para mostrar la barra de navegación",
   "shellBarHiddenAnnounce": "Barra de navegación oculta",
   "shellBarShownAnnounce": "Barra de navegación visible"
 }

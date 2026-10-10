@@ -4,14 +4,14 @@
   "whatsappNotShared": "Nicht geteilt",
   "whatsappFieldLabel": "WhatsApp-Nummer",
   "whatsappHint": "+49 151 23456789",
-  "whatsappHelper": "Optional. Für Mitglieder deiner Workspaces sichtbar, damit sie dich über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.",
+  "whatsappHelper": "Optional. Für Mitglieder Ihrer Workspaces sichtbar, damit sie Sie über WhatsApp erreichen. Leer lassen, um die Nummer nicht mehr zu teilen.",
   "whatsappSaved": "WhatsApp-Nummer gespeichert",
   "whatsappSaveFailed": "WhatsApp-Nummer konnte nicht gespeichert werden",
   "profileStatusTitle": "Status",
   "profileStatusNone": "Kein Status",
   "profileStatusFieldLabel": "Status",
   "profileStatusHint": "Im Call · zurück um 14:00",
-  "profileStatusHelper": "Optional. Für Mitglieder deiner Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.",
+  "profileStatusHelper": "Optional. Für Mitglieder Ihrer Workspaces im Mitgliederverzeichnis sichtbar. Leer lassen, um den Status zu löschen.",
   "profileStatusSaved": "Status gespeichert",
   "profileStatusSaveFailed": "Status konnte nicht gespeichert werden",
   "profilePhotoTitle": "Foto",
@@ -46,7 +46,7 @@
   "@privacyExport": {
     "description": "#719 - privacy & data"
   },
-  "privacyExportHint": "Alles, dessen Betroffener du bist, als eine JSON-Datei (Art. 20).",
+  "privacyExportHint": "Alles, dessen betroffene Person Sie sind, als eine JSON-Datei (Art. 20).",
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
   },
@@ -58,7 +58,7 @@
   "@privacyErase": {
     "description": "#719 - privacy & data"
   },
-  "privacyEraseHint": "Storniert deine Buchungen, leert deine Nachrichten, löscht dein Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
+  "privacyEraseHint": "Storniert Ihre Buchungen, leert Ihre Nachrichten, löscht Ihr Profil. Buchhaltungsbelege bleiben für die gesetzliche Frist, per ID, nicht per Name (Art. 17).",
   "@privacyEraseHint": {
     "description": "#719 - privacy & data"
   },
@@ -70,7 +70,7 @@
   "@privacyEraseConfirmPhrase": {
     "description": "#719 - privacy & data"
   },
-  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Tippe {phrase} zur Bestätigung.",
+  "privacyEraseConfirmHint": "Nicht rückgängig zu machen. Geben Sie {phrase} zur Bestätigung ein.",
   "@privacyEraseConfirmHint": {
     "description": "#719 - privacy & data",
     "placeholders": {
@@ -83,7 +83,7 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Deine Daten wurden gelöscht.",
+  "privacyErased": "Ihre Daten wurden gelöscht.",
   "@privacyErased": {
     "description": "#719 - privacy & data"
   },
@@ -116,11 +116,11 @@
   "consentReviewHint": "Der Text, den Sie akzeptiert haben, mit Datum — jederzeit nachlesbar.",
   "backendServerTitle": "Server",
   "backendServerDefault": "Der eigene Server der App ({host})",
-  "backendServerCustom": "Dein eigener Server ({host})",
-  "backendServerHint": "Standardmäßig nutzt die App ihren eigenen Server. Wenn deine Community ein eigenes Supabase-Projekt betreibt, trage es hier ein — die App speichert dann alles dort.",
+  "backendServerCustom": "Ihr eigener Server ({host})",
+  "backendServerHint": "Standardmäßig nutzt die App ihren eigenen Server. Wenn Ihre Community ein eigenes Supabase-Projekt betreibt, tragen Sie es hier ein — die App speichert dann alles dort.",
   "backendUrlLabel": "Projekt-URL",
   "backendKeyLabel": "Publishable Key",
-  "backendServerRestartHint": "Die App meldet dich ab und übernimmt die Änderung beim nächsten Start.",
+  "backendServerRestartHint": "Die App meldet Sie ab und übernimmt die Änderung beim nächsten Start.",
   "backendServerReset": "Server der App verwenden",
   "backendOwnServer": "Ihr eigener Server",
   "backendProjectRef": "Ihr Supabase-Projekt {ref}",
@@ -137,18 +137,18 @@
   "backendFullCheckTitle": "Vollständige Prüfung starten",
   "backendFullCheckHint": "Fügen Sie für diese Prüfung ein persönliches Zugriffstoken ein. Es dient nur dieser Prüfung und wird nie gespeichert.",
   "backendFullCheckUseToken": "Dieses Token verwenden",
-  "backendServerSaved": "Gespeichert. Schließe die App und öffne sie erneut, um den neuen Server zu nutzen.",
-  "backendErrorUrlEmpty": "Trage die Projekt-URL ein.",
+  "backendServerSaved": "Gespeichert. Schließen Sie die App und öffnen Sie sie erneut, um den neuen Server zu nutzen.",
+  "backendErrorUrlEmpty": "Tragen Sie die Projekt-URL ein.",
   "backendErrorUrlNotHttps": "Die URL muss mit https:// beginnen.",
   "backendErrorUrlNoHost": "Das ist keine vollständige Adresse.",
-  "backendErrorKeyEmpty": "Trage den Publishable Key ein.",
+  "backendErrorKeyEmpty": "Tragen Sie den Publishable Key ein.",
   "backendErrorKeyNotSupabase": "Das ist kein Supabase Publishable Key (sb_publishable_…).",
   "backendCurrentTitle": "Dieses Gerät nutzt",
   "backendHowTitle": "Eigenen Server verwenden",
-  "backendStep1": "Lege ein Projekt auf supabase.com an (die kostenlose Stufe reicht zum Start).",
-  "backendStep2": "Installiere das Schema der App: führe die SQL-Dateien aus supabase/migrations des Quell-Repositorys der Reihe nach aus.",
-  "backendStep3": "Öffne im Supabase-Dashboard Project Settings → API keys und kopiere die Project URL und den Publishable Key.",
-  "backendStep4": "Füge sie unten ein, teste die Verbindung und speichere. Mitglieder kommen über den QR-Code oben auf dieselbe Instanz.",
+  "backendStep1": "Legen Sie ein Projekt auf supabase.com an (die kostenlose Stufe reicht zum Start).",
+  "backendStep2": "Installieren Sie das Schema der App: Führen Sie die SQL-Dateien aus supabase/migrations des Quell-Repositorys der Reihe nach aus.",
+  "backendStep3": "Öffnen Sie im Supabase-Dashboard Project Settings → API keys und kopieren Sie die Project URL und den Publishable Key.",
+  "backendStep4": "Fügen Sie sie unten ein, testen Sie die Verbindung und speichern Sie. Mitglieder kommen über den QR-Code oben auf dieselbe Instanz.",
   "backendScan": "Server-QR scannen",
   "backendScanNothing": "Dieser QR-Code ist kein DesKilo-Servercode.",
   "backendShare": "Diesen Server teilen",
@@ -157,8 +157,8 @@
   "backendTest": "Verbindung testen",
   "backendTesting": "Test läuft…",
   "backendTestOk": "Erreicht — das Schema der App ist vorhanden.",
-  "backendTestUnreachable": "Diese Adresse war nicht erreichbar. Prüfe die URL und dein Netz.",
-  "backendTestBadKey": "Erreicht, aber der Key wurde abgelehnt. Kopiere den Publishable Key erneut aus Project Settings → API keys.",
+  "backendTestUnreachable": "Diese Adresse war nicht erreichbar. Prüfen Sie die URL und Ihr Netz.",
+  "backendTestBadKey": "Erreicht, aber der Key wurde abgelehnt. Kopieren Sie den Publishable Key erneut aus Project Settings → API keys.",
   "backendTestSchemaMissing": "Erreicht, aber die DesKilo-Tabellen fehlen — führe zuerst die Migrationen aus supabase/migrations auf diesem Projekt aus.",
   "backendCopyLink": "Kopieren",
   "profilesUnavailable": "Ihre Arbeitsbereiche konnten nicht geladen werden.",

@@ -1,5 +1,5 @@
 {
-  "visibilityWidenConfirm": "¿Mostrar tu {field} a: {audience}? Podrán verlo.",
+  "visibilityWidenConfirm": "¿Mostrar su {field} a: {audience}? Podrán verlo.",
   "@visibilityWidenConfirm": {
     "placeholders": {
       "field": {

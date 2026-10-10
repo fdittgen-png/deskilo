@@ -2,7 +2,7 @@
   "@@locale": "es",
   "messengerContextSpace": "En {space}",
   "messengerContextAccount": "De persona a persona",
-  "messengerContextInquiryOut": "Tu consulta a {space}",
+  "messengerContextInquiryOut": "Su consulta a {space}",
   "messengerContextInquiryIn": "Consulta a {space}",
   "messengerOnServer": "en {server}",
   "messengerInboxUnavailable": "No disponible ahora: {servers}. Sus conversaciones faltan en esta lista.",
@@ -32,7 +32,7 @@
   "messengerEventCaptured": "Captura de pantalla de {actor}",
   "messengerEventOther": "{event} · {actor}",
   "messengerWriteToHosts": "Escribir a los anfitriones",
-  "messengerHostsIntro": "Tu mensaje lo leen estos anfitriones del espacio:",
+  "messengerHostsIntro": "Su mensaje lo leen estos anfitriones del espacio:",
   "messengerHostsNone": "En este espacio nadie responde mensajes ahora mismo.",
   "messengerInquirySend": "Enviar consulta",
   "messengerInquiriesTitle": "Consultas",
@@ -47,7 +47,7 @@
   "messengerRefusedTooLong": "Este mensaje es demasiado largo para esa conversación.",
   "messengerRefusedClosed": "Esta consulta está cerrada.",
   "messengerRefusedUnavailable": "Este espacio no acepta consultas ahora mismo.",
-  "messengerRefusedLimit": "Demasiados a la vez. Espera un minuto.",
-  "captureWebNotice": "Tu navegador no puede impedir capturas de pantalla de esta conversación.",
-  "captureRecordingHidden": "Oculto mientras tu pantalla se graba o se duplica."
+  "messengerRefusedLimit": "Demasiados a la vez. Espere un minuto.",
+  "captureWebNotice": "Su navegador no puede impedir capturas de pantalla de esta conversación.",
+  "captureRecordingHidden": "Oculto mientras su pantalla se graba o se duplica."
 }

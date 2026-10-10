@@ -4,7 +4,7 @@
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
   },
-  "reportGuideIntro": "Tre bande compongono il PDF: intestazione, corpo, piè di pagina. Scrivete testo, mettete un campo dove va un valore e un segno di marcatura a inizio riga per lo stile. L'XML della fattura elettronica non viene mai toccato.",
+  "reportGuideIntro": "Tre bande compongono il PDF: intestazione, corpo, piè di pagina. Scriva testo, metta un campo dove va un valore e un segno di marcatura a inizio riga per lo stile. L'XML della fattura elettronica non viene mai toccato.",
   "@reportGuideIntro": {
     "description": "#966 report guide: reportGuideIntro"
   },

@@ -23,7 +23,7 @@
   "@financesToPay": {
     "description": "Me › Finances"
   },
-  "financesNothingOwed": "Niente da pagare — sei in regola.",
+  "financesNothingOwed": "Niente da pagare — è in regola.",
   "@financesNothingOwed": {
     "description": "Me › Finances"
   },

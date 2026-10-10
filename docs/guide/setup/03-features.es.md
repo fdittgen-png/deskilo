@@ -486,7 +486,7 @@ Usted quiere un lugar que diga, para las funciones principales, qué obtienen lo
 | **Pares de entornos**, **Despliegues** | Un lado de prueba y un lado real, con despliegue. | | Propietario |
 | **Configuración en el archivo del espacio** | Toda la configuración viaja en el archivo del espacio. | **Exportación de datos (Excel)** | Propietario |
 | **Asistente de instancia** | Crear un servidor nuevo desde la aplicación. | | Operador/a |
-| **Lo que te espera** | Una lista ordenada de lo que le espera. | | Nadie |
+| **Lo que le espera** | Una lista ordenada de lo que le espera. | | Nadie |
 | **Grabador de tareas** | Grabar y reproducir los pasos de una tarea. | | Nadie |
 | **Notificaciones push** | Confirmaciones pendientes en el teléfono. | El servicio push de la instalación | Operador/a |
 | **Integración con WhatsApp** | Un chat con un miembro con un toque, el enlace del grupo. | **Directorio de miembros** | Propietario |

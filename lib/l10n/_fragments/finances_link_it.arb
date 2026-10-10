@@ -1,7 +1,7 @@
 {
   "financesAllSpaces": "Tutti gli spazi",
-  "financesLinkTitle": "Le tue finanze in tutti gli spazi",
-  "financesLinkBody": "Fatture, solleciti e pagamenti di tutti i tuoi spazi sono insieme in Io › Finanze.",
+  "financesLinkTitle": "Le sue finanze in tutti gli spazi",
+  "financesLinkBody": "Fatture, solleciti e pagamenti di tutti i suoi spazi sono insieme in Io › Finanze.",
   "financesLinkAction": "Apri per {space}",
   "@financesLinkAction": {
     "placeholders": {

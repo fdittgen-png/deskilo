@@ -24,7 +24,7 @@
   "@onboardingWithTwin": {
     "description": "#987/#989 environment pairs: onboardingWithTwin"
   },
-  "onboardingWithTwinHint": "Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi sono tuoi.",
+  "onboardingWithTwinHint": "Due spazi con lo stesso nome: uno per provare, uno reale. Entrambi appartengono a Lei.",
   "@onboardingWithTwinHint": {
     "description": "#987/#989 environment pairs: onboardingWithTwinHint"
   },

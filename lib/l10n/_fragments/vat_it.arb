@@ -11,7 +11,7 @@
   "vatRateDefaultTooltip": "Aliquota predefinita — usata dagli abbonamenti e da tutto ciò che non ne ha una propria",
   "vatRateRemoveTooltip": "Rimuovi",
   "vatSaved": "Aliquote IVA salvate.",
-  "vatNeedsDefault": "Segna esattamente un'aliquota come predefinita.",
+  "vatNeedsDefault": "Segni esattamente un'aliquota come predefinita.",
   "vatRateIncomplete": "Ogni aliquota richiede un nome e una percentuale tra 0 e 99,99.",
   "vatRatesTile": "Aliquote IVA",
   "vatAccountField": "Conto IVA",

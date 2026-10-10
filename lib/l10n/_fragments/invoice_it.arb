@@ -18,7 +18,7 @@
   "addressSaved": "Indirizzo salvato",
   "workspaceAddressLabel": "Indirizzo dello spazio",
   "featureInvoicing": "Fatture",
-  "featureInvoicingDesc": "Fatture immutabili e firmate in un archivio — scarica o condividi in PDF.",
+  "featureInvoicingDesc": "Fatture immutabili e firmate in un archivio — da scaricare o condividere in PDF.",
   "featureAdminInvoicing": "Gli admin emettono fatture",
   "featureAdminInvoicingDesc": "Anche gli admin emettono fatture. Il proprietario può sempre.",
   "invoiceVoidedChip": "Errata",
@@ -161,7 +161,7 @@
   "invoiceMatchedBadge": "Pagata",
   "invoiceAlreadyInvoiced": "Questo mese è già fatturato per questo membro.",
   "invoiceMatchPickPayment": "Seleziona il pagamento registrato",
-  "invoiceMatchNoPayments": "Nessun pagamento registrato da riconciliare — registralo o confermalo prima.",
+  "invoiceMatchNoPayments": "Nessun pagamento registrato da riconciliare — lo registri o lo confermi prima.",
   "invoiceStatusOpen": "Aperta",
   "invoiceCountShown": "{count} fatture",
   "@invoiceCountShown": {
@@ -212,7 +212,7 @@
       }
     }
   },
-  "invoicePickMember": "Scegli un membro per vedere cosa ha registrato il suo mese.",
+  "invoicePickMember": "Scelga un membro per vedere cosa ha registrato il suo mese.",
   "invoiceRunningMonth": "Questo mese è ancora in corso — le sue voci possono cambiare, e un mese si fattura una sola volta.",
   "invoiceIssueAllConfirm": "Emettere {count} fatture per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.",
   "@invoiceIssueAllConfirm": {
@@ -241,7 +241,7 @@
   },
   "invoiceEInvoiceAction": "Fattura elettronica (XML)",
   "invoiceEInvoiceExplain": "La fattura EN 16931 leggibile dalle macchine — il file richiesto dalle amministrazioni e dai clienti business.",
-  "invoiceEInvoiceBusinessRoute": "Clienti business: inviala tramite {channel} nel formato {format}.",
+  "invoiceEInvoiceBusinessRoute": "Clienti business: la invii tramite {channel} nel formato {format}.",
   "@invoiceEInvoiceBusinessRoute": {
     "placeholders": {
       "channel": {
@@ -262,9 +262,9 @@
   },
   "invoiceEInvoiceTransportPeppol": "Un access point la consegna al cliente — nessuna piattaforma pubblica nel percorso.",
   "invoiceEInvoiceTransportClearance": "La piattaforma nazionale riceve prima la fattura e la inoltra — inviarla direttamente al cliente non è possibile.",
-  "invoiceEInvoiceTransportAccredited": "Una piattaforma accreditata trasporta la fattura e comunica i dati all'amministrazione fiscale per te.",
+  "invoiceEInvoiceTransportAccredited": "Una piattaforma accreditata trasporta la fattura e comunica i dati all'amministrazione fiscale per Lei.",
   "invoiceEInvoiceTransportBilateral": "Nessun canale è imposto: e-mail, un portale o Peppol — come concordato con il cliente.",
-  "invoiceEInvoiceFormatMismatch": "{channel} accetta solo {format}: questo file EN 16931 serve per Peppol, la pubblica amministrazione e i clienti esteri — il resto lo converte la tua piattaforma.",
+  "invoiceEInvoiceFormatMismatch": "{channel} accetta solo {format}: questo file EN 16931 serve per Peppol, la pubblica amministrazione e i clienti esteri — il resto lo converte la sua piattaforma.",
   "@invoiceEInvoiceFormatMismatch": {
     "placeholders": {
       "channel": {
@@ -278,20 +278,20 @@
   "invoiceEInvoiceReady": "Pronto — questo file soddisfa la EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validatore rifiuterebbe questo file:",
   "invoiceEInvoiceIncompleteTitle": "Valido, ma i profili nazionali più severi chiedono anche:",
-  "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiungi le aliquote ed emettila di nuovo.",
+  "invoiceGapVatNotSupported": "Lo spazio applica l'IVA ma questa fattura non porta alcuna aliquota — aggiunga le aliquote e la emetta di nuovo.",
   "invoiceGapMissingVatId": "Manca la partita IVA — un venditore esente deve indicarla.",
-  "invoiceGapMissingLegalId": "Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla ti identifica sulla fattura.",
+  "invoiceGapMissingLegalId": "Manca il numero di registrazione (SIREN, HRB, CIF…) — nulla la identifica sulla fattura.",
   "invoiceGapMissingExemptionReason": "Manca il motivo per cui non si applica l'IVA.",
   "invoiceGapMissingSellerCountry": "Manca il paese dello spazio.",
   "invoiceGapMissingBuyerCountry": "Manca il paese del cliente.",
-  "invoiceGapCreditNoteWithPayments": "Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetti l'accredito su un documento a parte.",
+  "invoiceGapCreditNoteWithPayments": "Questa nota di credito compensa anche dei pagamenti, cosa che una nota di credito EN 16931 non può esprimere. Emetta l'accredito su un documento a parte.",
   "invoiceGapNoChargeLines": "Questa fattura non ha righe di addebito — il mese era interamente coperto dai pagamenti, quindi non c’è nulla da trasmettere.",
   "invoiceGapMissingSellerCity": "la città dell'indirizzo dello spazio",
   "invoiceGapMissingSellerPostalCode": "il codice postale dell'indirizzo dello spazio",
   "invoiceEInvoiceFixIdentity": "Completare l'identità legale",
   "legalIdentityTitle": "Identità legale e fatturazione elettronica",
   "legalIdentitySubtitle": "Regime IVA, identificativi e le condizioni di pagamento predefinite dello spazio",
-  "legalIdentityIntro": "Ciò che una fattura elettronica EN 16931 deve dichiarare su di te. Le fatture già emesse conservano l’identità con cui sono state firmate.",
+  "legalIdentityIntro": "Ciò che una fattura elettronica EN 16931 deve dichiarare su di Lei. Le fatture già emesse conservano l’identità con cui sono state firmate.",
   "legalIdentityRegime": "Regime IVA",
   "legalIdentityRegimeNotSubject": "Fuori dal campo di applicazione dell'IVA",
   "legalIdentityRegimeExempt": "Esente IVA (regime forfettario)",
@@ -306,7 +306,7 @@
   "legalIdentitySaved": "Identità legale salvata.",
   "legalIdentityVatWarning": "Questo spazio applica l'IVA ma non è in vigore alcuna aliquota predefinita: nessuna fattura può essere emessa finché non ne aggiunge una. Le aliquote si modificano con «Gestione IVA» attivata.",
   "addressCountryLabel": "Paese",
-  "addressVatIdLabel": "Partita IVA (se fatturi come impresa)",
+  "addressVatIdLabel": "Partita IVA (se fattura come impresa)",
   "invoiceProformaAction": "Fattura proforma",
   "invoicePdfProforma": "Proforma",
   "invoiceProformaShared": "Proforma condivisa.",
@@ -355,7 +355,7 @@
   "invoiceSendStatusRejected": "rifiutata",
   "invoiceSendStatusFailed": "non trasmessa",
   "einvoiceConfigTitle": "Piattaforma di fatturazione elettronica",
-  "einvoiceConfigIntro": "Dove DesKilo deposita le tue fatture. Va bene qualsiasi piattaforma che accetti un upload con un token — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server e non torna mai indietro.",
+  "einvoiceConfigIntro": "Dove DesKilo deposita le sue fatture. Va bene qualsiasi piattaforma che accetti un upload con un token — una piattaforma accreditata, un access point Peppol, una piattaforma nazionale. Il token resta sul server e non torna mai indietro.",
   "einvoiceConfigEndpoint": "URL di caricamento",
   "einvoiceConfigToken": "Token o credenziale",
   "einvoiceConfigHeader": "Header di autenticazione (Authorization per impostazione predefinita)",
@@ -372,13 +372,13 @@
   "invoiceExportFec": "FEC (Francia, richiesto in caso di verifica)",
   "invoiceExportChoose": "Esportazione contabile",
   "fecAccountsTitle": "Conti da utilizzare",
-  "fecAccountsIntro": "Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — sostituiscili con quelli del tuo commercialista.",
+  "fecAccountsIntro": "Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — li sostituisca con quelli del suo commercialista.",
   "fecAccountCustomers": "Clienti",
   "fecAccountRevenue": "Ricavi",
   "fecAccountBank": "Banca",
   "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.",
-  "invoiceEInvoiceStaleIdentity": "La tua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. Segnala come errata ed emetti una sostitutiva perché porti la nuova identità.",
-  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlla la connessione e riprova.",
+  "invoiceEInvoiceStaleIdentity": "La sua identità legale ora è completa, ma questa fattura è stata firmata prima e conserva ciò con cui è stata emessa. La segnali come errata ed emetta una sostitutiva perché porti la nuova identità.",
+  "einvoiceConfigUnavailable": "Impossibile caricare la configurazione della piattaforma. Controlli la connessione e riprovi.",
   "einvoiceEnvTitle": "Inviare a quale piattaforma?",
   "einvoiceEnvProd": "Produzione",
   "einvoiceEnvUat": "UAT (piattaforma di prova)",
@@ -409,15 +409,15 @@
   "invoiceTemplateBodyLabel": "Banda del corpo (le righe della fattura)",
   "invoiceTemplateReset": "Ripristina il modello predefinito",
   "invoiceTemplatePreview": "Anteprima",
-  "invoiceTemplateNoPreview": "Emetti prima una fattura — l'anteprima usa la più recente.",
+  "invoiceTemplateNoPreview": "Emetta prima una fattura — l'anteprima usa la più recente.",
   "reminderPdfTitleFriendly": "Promemoria di pagamento",
   "reminderPdfTitleFirm": "Sollecito",
   "reminderPdfOpeningFriendly": "questo è un promemoria amichevole: la fattura qui sotto è ancora aperta. Probabilmente una semplice svista — nessun problema.",
-  "reminderPdfOpeningFirm": "nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. Ti preghiamo di saldare l'importo senza indugio.",
+  "reminderPdfOpeningFirm": "nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. La preghiamo di saldare l'importo senza indugio.",
   "reminderPdfDaysOpen": "Aperta da",
   "reminderPdfDays": "giorni",
   "reminderPdfLevelLabel": "Livello di sollecito",
-  "reminderPdfClosing": "Se hai già pagato, ignora questa lettera.",
+  "reminderPdfClosing": "Se ha già pagato, ignori questa lettera.",
   "dunningSettingsTitle": "Regole di sollecito",
   "dunningLevels": "Numero di livelli di sollecito",
   "dunningFirstAfterDays": "Giorni fino al primo promemoria",
@@ -429,7 +429,7 @@
   "reportPreviewZoomIn": "Ingrandisci",
   "reportPreviewZoomOut": "Riduci",
   "reportPreviewFit": "Adatta alla larghezza",
-  "reportPreviewTitle": "Anteprima rapida — la tua fattura più recente",
+  "reportPreviewTitle": "Anteprima rapida — la sua fattura più recente",
   "reportPreviewSimulated": "Anteprima rapida — dati di esempio",
   "reportPresetClassic": "Classico",
   "reportPresetFormalLetter": "Lettera formale",
@@ -564,7 +564,7 @@
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesEmpty": "Nessuna immagine — carica il tuo logo, un timbro o una firma e riferiscila con ![nome].",
+  "reportImagesEmpty": "Nessuna immagine — carichi il suo logo, un timbro o una firma e vi faccia riferimento con ![nome].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
@@ -672,11 +672,11 @@
   "@reportTemplateLangDefault": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportLanguageAmbiguous": "Questo paese ha più lingue — imposta prima la lingua dello spazio nelle Impostazioni dello spazio.",
+  "reportLanguageAmbiguous": "Questo paese ha più lingue — imposti prima la lingua dello spazio nelle Impostazioni dello spazio.",
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportDesignEmpty": "Banda vuota — aggiungi un elemento sotto.",
+  "reportDesignEmpty": "Banda vuota — aggiunga un elemento sotto.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
   },
@@ -735,7 +735,7 @@
   "@invoiceRefundButton": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceRefundExplain": "Questa nota di credito significa che lo SPAZIO deve {amount} al membro. Registra il rimborso versato — l'importo viene imputato al saldo del membro e il documento si chiude come Rimborsata.",
+  "invoiceRefundExplain": "Questa nota di credito significa che lo SPAZIO deve {amount} al membro. Registri il rimborso versato — l'importo viene imputato al saldo del membro e il documento si chiude come Rimborsata.",
   "@invoiceRefundExplain": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)",
     "placeholders": {
@@ -763,7 +763,7 @@
   "eventTypeInvoiceReminder": "Promemoria di pagamento",
   "eventInvoiceReminderLine": "Sollecito {level}: fattura {number} — {amount} ancora dovuti",
   "dunningAutomatic": "Solleciti automatici",
-  "dunningAutomaticHint": "Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a te. Disattivato: invii tu ogni sollecito.",
+  "dunningAutomaticHint": "Una volta al giorno, le fatture oltre la scadenza registrata passano da sole al livello di sollecito successivo — per l'importo ancora dovuto, mai mentre un pagamento è in attesa o la fattura è sospesa. Le fatture senza scadenza registrata restano a Lei. Disattivato: invia Lei ogni sollecito.",
   "paymentRemindersWhen": "Quando viene eseguito: ogni mattina sul server, se l'installazione pianifica attività (pg_cron); altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.",
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
@@ -836,7 +836,7 @@
       }
     }
   },
-  "journeyIssuerMatches": "Un pagamento di {amount} è registrato — abbinalo a questa fattura",
+  "journeyIssuerMatches": "Un pagamento di {amount} è registrato — lo abbini a questa fattura",
   "@journeyIssuerMatches": {
     "placeholders": {
       "amount": {
@@ -846,7 +846,7 @@
   },
   "journeyValidatorsMatch": "Pagamento abbinato — in attesa della decisione dei validatori",
   "journeyValidatorsWriteoff": "Richiesta cancellazione del residuo — in attesa dei validatori",
-  "journeyIssuerRefunds": "Nota di credito — rimborsa {amount} a {name} e registralo",
+  "journeyIssuerRefunds": "Nota di credito — rimborsi {amount} a {name} e lo registri",
   "@journeyIssuerRefunds": {
     "placeholders": {
       "name": {
@@ -857,8 +857,8 @@
       }
     }
   },
-  "journeyIssuerReplaces": "Annullata — emetti la fattura sostitutiva",
-  "journeyMemberPays": "Tocca a te: paga {amount} entro il {date}",
+  "journeyIssuerReplaces": "Annullata — emetta la fattura sostitutiva",
+  "journeyMemberPays": "Tocca a Lei: paghi {amount} entro il {date}",
   "@journeyMemberPays": {
     "placeholders": {
       "amount": {
@@ -869,7 +869,7 @@
       }
     }
   },
-  "journeyMemberPaysOverdue": "Tocca a te: paga {amount} — in ritardo di {days} giorni",
+  "journeyMemberPaysOverdue": "Tocca a Lei: paghi {amount} — in ritardo di {days} giorni",
   "@journeyMemberPaysOverdue": {
     "placeholders": {
       "amount": {
@@ -880,7 +880,7 @@
       }
     }
   },
-  "journeyMemberPaysRemainder": "Tocca a te: paga il residuo di {amount}",
+  "journeyMemberPaysRemainder": "Tocca a Lei: paghi il residuo di {amount}",
   "@journeyMemberPaysRemainder": {
     "placeholders": {
       "amount": {
@@ -888,7 +888,7 @@
       }
     }
   },
-  "journeyMemberDeclared": "Hai dichiarato {amount} — lo spazio lo sta confermando",
+  "journeyMemberDeclared": "Ha dichiarato {amount} — lo spazio lo sta confermando",
   "@journeyMemberDeclared": {
     "placeholders": {
       "amount": {
@@ -896,7 +896,7 @@
       }
     }
   },
-  "journeyMemberConfirms": "Tocca a te: conferma in Eventi il pagamento di {amount} registrato per te",
+  "journeyMemberConfirms": "Tocca a Lei: confermi in Eventi il pagamento di {amount} registrato per Lei",
   "@journeyMemberConfirms": {
     "placeholders": {
       "amount": {
@@ -904,7 +904,7 @@
       }
     }
   },
-  "journeyMemberRegistered": "Il tuo pagamento di {amount} è registrato — lo spazio lo abbina a questa fattura",
+  "journeyMemberRegistered": "Il suo pagamento di {amount} è registrato — lo spazio lo abbina a questa fattura",
   "@journeyMemberRegistered": {
     "placeholders": {
       "amount": {
@@ -914,7 +914,7 @@
   },
   "journeyMemberValidators": "Pagamento abbinato — in attesa di validazione",
   "journeyMemberWriteoff": "Lo spazio ha chiesto di cancellare il residuo — in attesa di validazione",
-  "journeyMemberRefund": "Lo spazio ti deve {amount} — niente da pagare",
+  "journeyMemberRefund": "Lo spazio le deve {amount} — niente da pagare",
   "@journeyMemberRefund": {
     "placeholders": {
       "amount": {
@@ -1082,7 +1082,7 @@
       }
     }
   },
-  "wizardIssueHint": "Deseleziona un membro per escluderlo da questo blocco. I membri già coperti compaiono come fatti.",
+  "wizardIssueHint": "Deselezioni un membro per escluderlo da questo blocco. I membri già coperti compaiono come fatti.",
   "wizardIssueNothing": "Niente da emettere per questo periodo.",
   "wizardIssuedChip": "Emessa {number}",
   "@wizardIssuedChip": {
@@ -1108,12 +1108,12 @@
       }
     }
   },
-  "wizardSendHint": "Consegna ogni fattura al suo membro: condividi il PDF o scaricalo per inviarlo a modo tuo.",
+  "wizardSendHint": "Consegni ogni fattura al suo membro: condivida il PDF o lo scarichi per inviarlo a modo suo.",
   "wizardSendNone": "Ancora nessuna fattura di questo giro da inviare.",
   "wizardSendShare": "Condividi il PDF",
   "wizardSendDownload": "Scarica il PDF",
-  "wizardRemindHint": "In ritardo secondo le tue regole di sollecito. Un tocco registra ogni sollecito e avvisa i membri; la lettera si apre per riga.",
-  "wizardRemindNone": "Nessun sollecito dovuto secondo le tue regole.",
+  "wizardRemindHint": "In ritardo secondo le sue regole di sollecito. Un tocco registra ogni sollecito e avvisa i membri; la lettera si apre per riga.",
+  "wizardRemindNone": "Nessun sollecito dovuto secondo le sue regole.",
   "wizardRemindLevel": "sollecito {level}",
   "@wizardRemindLevel": {
     "placeholders": {
@@ -1131,8 +1131,8 @@
     }
   },
   "wizardRemindOne": "Lettera di sollecito",
-  "wizardPaymentsHint": "Ciò che i membri hanno dichiarato attende la tua conferma qui sotto. Un pagamento arrivato sul conto senza dichiarazione si registra qui; il membro lo conferma poi.",
-  "wizardPaymentsNone": "Nessun pagamento dichiarato attende la tua decisione.",
+  "wizardPaymentsHint": "Ciò che i membri hanno dichiarato attende la sua conferma qui sotto. Un pagamento arrivato sul conto senza dichiarazione si registra qui; il membro lo conferma poi.",
+  "wizardPaymentsNone": "Nessun pagamento dichiarato attende la sua decisione.",
   "wizardPaymentAccept": "Conferma",
   "wizardPaymentReject": "Rifiuta",
   "wizardMatchHint": "Una fattura è pagata quando le viene abbinato un pagamento reale. Le righe con credito sul conto del membro sono pronte.",
@@ -1173,7 +1173,7 @@
   "wizardTallyNothing": "Non è stato cambiato nulla.",
   "wizardTodoHeading": "Ancora aperto: a chi tocca",
   "wizardTodoNone": "Non resta nulla di aperto.",
-  "wizardWhoYou": "Tu",
+  "wizardWhoYou": "Lei",
   "wizardWhoValidators": "Convalidatori",
   "registerPaymentTitle": "Registra un pagamento",
   "registerPaymentHint": "Un pagamento arrivato allo spazio: il membro lo conferma, poi può essere abbinato a una fattura.",
@@ -1186,7 +1186,7 @@
   "registerPaymentDone": "Pagamento registrato: il membro lo conferma dalla sua parte.",
   "repartitionAction": "Ripartisci una spesa",
   "repartitionTitle": "Ripartisci una spesa",
-  "repartitionHint": "Ripartisci un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.",
+  "repartitionHint": "Ripartisca un costo comune tra i membri. Le quote diventano righe della prossima fattura di utilizzo di ciascuno; uno storno restituisce il denaro come note di credito.",
   "repartitionTitleField": "Causale",
   "repartitionAmount": "Importo totale",
   "repartitionReverse": "Storno — restituire come note di credito",
@@ -1198,7 +1198,7 @@
   "repartitionPeriod": "Imputato a",
   "repartitionWeight": "Chiave",
   "repartitionPreview": "Quote",
-  "repartitionNoShares": "Nessuno porta una quota: controlla la chiave.",
+  "repartitionNoShares": "Nessuno porta una quota: controlli la chiave.",
   "repartitionSum": "{count, plural, =1{1 membro · {amount}} other{{count} membri · {amount}}}",
   "@repartitionSum": {
     "placeholders": {
@@ -1222,12 +1222,12 @@
   "reportDesignFileTypeLabel": "JSON",
   "reportDesignExport": "Esporta questo modello",
   "reportDesignImport": "Importa un modello",
-  "reportDesignImported": "Modello importato. Salva per conservarlo.",
+  "reportDesignImported": "Modello importato. Salvi per conservarlo.",
   "reportDesignErrorMalformed": "Questo file non è JSON leggibile.",
   "reportDesignErrorNotADesign": "Questo file non è un modello di report DesKilo.",
   "reportDesignErrorVersion": "Questo modello viene da una versione più recente di DesKilo.",
   "reportDesignErrorUnknownKind": "Questo modello riguarda un report che questo spazio non ha.",
-  "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Aprilo e importalo lì.",
+  "reportDesignErrorWrongKind": "Questo modello appartiene a un altro report. Lo apra e lo importi lì.",
   "reportDesignErrorInvalidDesign": "Questo file non contiene alcun modello leggibile.",
   "invoiceHoldAction": "Sospendi i solleciti",
   "@invoiceHoldAction": {
@@ -1286,11 +1286,11 @@
       }
     }
   },
-  "invoiceMaturityReview": "Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifichi.",
+  "invoiceMaturityReview": "Per questa fattura non è stata registrata una scadenza concordata: nessun sollecito automatico finché non la verifica.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
-  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprova.",
+  "invoiceHoldFailed": "Non è stato possibile modificare la sospensione dei solleciti. Riprovi.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
   }

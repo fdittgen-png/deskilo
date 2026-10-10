@@ -301,15 +301,15 @@ Sie möchten, dass jemand die Inhaberschaft mit Ihnen teilt oder übernimmt, fal
 **Schritte**
 
 1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Mitgliedschaft** und tippen Sie auf **Mit-Inhaberschaft**.
-2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktive Mit-Inhaberin* oder **Nachfolgerin**.
-3. Um eine Mit-Inhaberin sofort zur vollen Inhaberin zu machen, wählen Sie **Jetzt zur Inhaberin machen**.
+2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktiver Mitinhaber* oder **Nachfolge**.
+3. Um einen Mitinhaber sofort zum vollen Inhaber zu machen, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
 - Eine aktive Mit-Inhaberin hat sofort Inhaber-Rechte und übernimmt automatisch, wenn Sie gehen.
 - Eine Nachfolgerin wird Inhaberin, wenn sie befördert wird oder der Inhaber geht.
-- Die Zeile zeigt in der Mitgliederliste **Mit-Inhaberin** oder **Nachfolgerin**.
-- Sie setzt voraus, dass die Funktion **Mit-Inhaberinnen** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
+- Die Zeile zeigt in der Mitgliederliste **Mitinhaber** oder **Nachfolge**.
+- Sie setzt voraus, dass die Funktion **Mitinhaber** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
 
 **Siehe auch:** [Die Rollenmatrix](help:user.roles.matrix)
 

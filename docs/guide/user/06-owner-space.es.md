@@ -38,7 +38,7 @@ Usted quiere dar al edificio sus plantas, en el orden que la gente espera. El **
 
 - Eliminar una planta borra todas las oficinas, mesas y asientos que contiene. La confirmación indica qué ocurre con las reservas que apuntan a ellos.
 - La línea bajo cada planta le dice si es **Reservable por completo** o **No reservable por completo**.
-- Sin ninguna planta, el editor dice **Aún no hay plantas. Añade la primera planta de tu espacio.**
+- Sin ninguna planta, el editor dice **Aún no hay plantas. Añada la primera planta de su espacio.**
 
 **Véase también:** [Reservar una planta entera](help:user.space.editor.level-booking) · [Dibujar salas, mesas y asientos](help:user.space.editor.rooms)
 
@@ -138,7 +138,7 @@ Usted quiere que un asiento indique hacia dónde mira la silla, qué incluye y c
 **Conviene saber**
 
 - Un número de etiqueta solo puede pertenecer a una silla: **Esta etiqueta ya está vinculada a otra silla.**
-- Si aún no hay ningún accesorio, la hoja ofrece **Aún no hay equipamiento — configúralo**.
+- Si aún no hay ningún accesorio, la hoja ofrece **Aún no hay equipamiento — configúrelo**.
 
 **Véase también:** [Registro con credencial NFC](help:user.badges.nfc)
 
@@ -470,7 +470,7 @@ Usted quiere activar o desactivar una sola función.
 **Conviene saber**
 
 - Active una función y aparece cada parte de ella: la pestaña, el botón, el enlace. Desactívela y no queda ninguna, ni siquiera un enlace guardado.
-- Una función que necesita otra queda bajo ella con **Requiere** y dice **Esperando a la función de arriba: actívala y esta vuelve a funcionar.** mientras la principal está desactivada. Su propia elección se conserva.
+- Una función que necesita otra queda bajo ella con **Requiere** y dice **Esperando a la función de arriba: actívela y esta vuelve a funcionar.** mientras la principal está desactivada. Su propia elección se conserva.
 - Activar una función también puede activar lo que necesita. La app se lo indica.
 - Una función que aún no se ha revisado como estable le pide confirmar primero: puede cambiar y tiene límites conocidos.
 - Lo que ya está hecho se queda hecho. Una factura emitida mientras una función estaba activada conserva lo que dice.

@@ -1,9 +1,9 @@
 {
   "publicProfileTitle": "Perfil público",
-  "publicProfileOn": "Cualquiera con el enlace lee tu nombre, tu profesión y tu presentación.",
-  "publicProfileOff": "Desactivado: quienes no han iniciado sesión no ven nada de ti.",
+  "publicProfileOn": "Cualquiera con el enlace lee su nombre, su profesión y su presentación.",
+  "publicProfileOff": "Desactivado: quienes no han iniciado sesión no ven nada de usted.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
-  "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer tu nombre, tu profesión y tu presentación en tu enlace. Tus datos de contacto, tu presencia y tus espacios siguen siendo privados.",
+  "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus espacios siguen siendo privados.",
   "publicProfilePublishAction": "Publicar",
   "publicProfileCopy": "Copiar el enlace",
   "publicProfileCopied": "Enlace copiado.",

@@ -39,11 +39,11 @@
   "@applicationDecisionComment": {
     "description": "Workspace admission history and discussion (#1791)"
   },
-  "applicationsLoadFailed": "Impossibile caricare le richieste di accesso. Riprova.",
+  "applicationsLoadFailed": "Impossibile caricare le richieste di accesso. Riprovi.",
   "@applicationsLoadFailed": {
     "description": "Admission action failure (#1791)"
   },
-  "applicationReplyFailed": "Il messaggio non è stato inviato. La bozza è stata conservata; riprova.",
+  "applicationReplyFailed": "Il messaggio non è stato inviato. La bozza è stata conservata; riprovi.",
   "@applicationReplyFailed": {
     "description": "Admission action failure (#1791)"
   }

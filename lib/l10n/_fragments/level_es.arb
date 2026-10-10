@@ -10,10 +10,10 @@
   "levelAssignMember": "Para el miembro",
   "levelAssignMyself": "Yo mismo",
   "levelSupplementLabel": "Reservas de planta",
-  "levelNotAllowed": "No tienes permiso para reservar una mesa, oficina o planta entera.",
+  "levelNotAllowed": "No tiene permiso para reservar una mesa, oficina o planta entera.",
   "levelConflict": "La planta tiene reservas en ese periodo.",
-  "bookingOnePlace": "Ya tienes una reserva en ese periodo — un sitio a la vez.",
-  "bookingCheckedInElsewhere": "Estás registrado en otro sitio — haz la salida allí primero.",
+  "bookingOnePlace": "Ya tiene una reserva en ese periodo — un sitio a la vez.",
+  "bookingCheckedInElsewhere": "Está registrado en otro sitio — haga la salida allí primero.",
   "spaceNotWholeBookable": "Este espacio no está configurado para reserva completa — el propietario activa \"Reservable como un todo\" en el editor.",
   "levelFeatureOff": "Las reservas de oficina y planta están desactivadas en Funciones.",
   "levelDetail": "Planta entera",
@@ -29,7 +29,7 @@
   "bookingOutsideHoursError": "Las reservas deben permanecer dentro del horario laboral.",
   "bookingOutsideOffError": "Las reservas fuera del horario de apertura no están permitidas.",
   "bookingOutsideWalkUpError": "Fuera del horario de apertura solo es posible un check-in espontáneo, no una reserva por adelantado.",
-  "bookingSameDayError": "Una reserva termina el día en que empieza: reserva el día siguiente por separado.",
+  "bookingSameDayError": "Una reserva termina el día en que empieza: reserve el día siguiente por separado.",
   "bookingMembershipPaused": "Su afiliación está en pausa — un administrador la reactiva en Miembros.",
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador."
 }

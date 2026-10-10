@@ -28,7 +28,7 @@
   "@managedProfileHandOver": {
     "description": "#887 managed profiles: managedProfileHandOver"
   },
-  "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto apruebes la membresía.",
+  "managedProfileHandOverHint": "Genera un código personal ligado a este perfil. Quien lo canjee se hace con el perfil — reservas, facturas, suscripción — en cuanto usted apruebe la membresía.",
   "@managedProfileHandOverHint": {
     "description": "#887 managed profiles: managedProfileHandOverHint"
   },
@@ -48,7 +48,7 @@
   "@managedProfileSaved": {
     "description": "#887 managed profiles: managedProfileSaved"
   },
-  "managedProfileIntro": "Esta persona aún no tiene cuenta. Reservas, facturas y gestionas por ella; entrégale el perfil cuando se una.",
+  "managedProfileIntro": "Esta persona aún no tiene cuenta. Usted reserva, factura y gestiona por ella; entréguele el perfil cuando se una.",
   "@managedProfileIntro": {
     "description": "#887 managed profiles: managedProfileIntro"
   },

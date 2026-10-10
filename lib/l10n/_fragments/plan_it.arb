@@ -21,7 +21,7 @@
       }
     }
   },
-  "planCheckInFor": "Fai il check-in di {name}",
+  "planCheckInFor": "Esegui il check-in di {name}",
   "planOverruleRemove": "Rimuovi la prenotazione (scavalca)",
   "planOverruleHint": "{name} e tutti gli admin saranno avvisati.",
   "planOverruleDone": "Prenotazione rimossa — {name} è stato avvisato.",
@@ -33,7 +33,7 @@
   "planUntil": "fino alle {time}",
   "planCappedByNext": "Il posto è prenotato dalle {time}.",
   "planCheckInFailed": "Check-in non riuscito — il posto potrebbe essere appena stato occupato.",
-  "planYourSeat": "Il tuo posto",
+  "planYourSeat": "Il suo posto",
   "planListViewTooltip": "Vista elenco",
   "planMapViewTooltip": "Vista piantina",
   "planNowButton": "Adesso",
@@ -53,7 +53,7 @@
   "reminderBody": "{target} inizia alle {time}",
   "planNoSeats": "Questo piano non ha ancora posti.",
   "planStateFree": "Libero",
-  "planStateYours": "Tuo",
+  "planStateYours": "Suo",
   "planBookForLabel": "Prenota per",
   "planSendForConfirmation": "Invia per conferma",
   "planBookedForPending": "Inviato a {name} per conferma.",
@@ -75,6 +75,6 @@
   "a11ySeatFree": "libero",
   "a11ySeatReserved": "prenotato",
   "a11ySeatOccupied": "occupato",
-  "a11ySeatMine": "il tuo posto",
+  "a11ySeatMine": "il suo posto",
   "a11ySeatBlocked": "non disponibile"
 }

@@ -2,7 +2,7 @@
   "@@locale": "it",
   "onboardingTitle": "Benvenuto su DesKilo",
   "onboardingCreateTab": "Crea uno spazio",
-  "onboardingJoinTab": "Unisciti a uno spazio",
+  "onboardingJoinTab": "Unirsi a uno spazio",
   "workspaceNameLabel": "Nome dello spazio",
   "workspaceCountryLabel": "Paese",
   "workspaceCurrencyLabel": "Valuta",
@@ -10,8 +10,8 @@
   "workspaceTimezoneLabel": "Fuso orario",
   "onboardingCreateButton": "Crea spazio",
   "workspaceInviteCodeLabel": "Codice di invito",
-  "onboardingJoinButton": "Unisciti",
-  "workspaceGenericError": "Qualcosa è andato storto. Riprova.",
+  "onboardingJoinButton": "Unirsi",
+  "workspaceGenericError": "Qualcosa è andato storto. Riprovi.",
   "countryNameDE": "Germania",
   "countryNameAT": "Austria",
   "countryNameCH": "Svizzera",
@@ -34,12 +34,12 @@
   "workspaceCodeCopied": "Copiato",
   "inviteRoleMember": "Invito membro",
   "inviteRoleAdmin": "Invito amministratore",
-  "inviteAdminExplainer": "Questo codice è monouso: ammette UNA persona come admin, poi scade. Consegnalo solo alla persona a cui è destinato.",
+  "inviteAdminExplainer": "Questo codice è monouso: ammette UNA persona come admin, poi scade. Lo consegni solo alla persona a cui è destinato.",
   "inviteAdminNewCode": "Nuovo codice amministratore",
   "inviteOwnerNote": "Non esiste un invito proprietario — solo un proprietario può concedere la proprietà, in Membri e piani.",
   "scanJoinTitle": "Scansiona il QR dello spazio",
-  "scanJoinHelp": "Inquadra il QR d’invito con la fotocamera — vedrai lo spazio prima di aderire.",
-  "scanJoinNotAnInvite": "Questo QR non è un invito DesKilo — scansiona quello del messaggio d’invito.",
+  "scanJoinHelp": "Inquadri il QR d’invito con la fotocamera — vedrà lo spazio prima di aderire.",
+  "scanJoinNotAnInvite": "Questo QR non è un invito DesKilo — scansioni quello del messaggio d’invito.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },
@@ -47,15 +47,15 @@
   "workspaceCodeSharePng": "Condividi come PNG",
   "workspaceSettingsTitle": "Spazio di coworking",
   "workspaceSettingsSaved": "Spazio salvato.",
-  "workspaceSettingsConflict": "Qualcuno ha modificato queste impostazioni mentre le stavate modificando. Non è stato salvato nulla; le vostre modifiche sono ancora qui.",
+  "workspaceSettingsConflict": "Qualcuno ha modificato queste impostazioni mentre le stava modificando. Non è stato salvato nulla; le sue modifiche sono ancora qui.",
   "provenanceProductDefault": "Valore predefinito del prodotto",
   "provenanceFromTemplate": "Dal modello «{name}»",
   "provenanceWorkspaceSetting": "Impostazione dello spazio",
   "provenanceResetToTemplate": "Ripristina il modello",
   "provenanceResetToDefault": "Ripristina il valore predefinito",
-  "workspaceSettingsCurrencyHelper": "Proposta in base al paese — modificala se la tua community fattura in un’altra valuta.",
+  "workspaceSettingsCurrencyHelper": "Proposta in base al paese — la modifichi se la sua community fattura in un’altra valuta.",
   "paymentInstructionsTitle": "Istruzioni di pagamento",
-  "paymentInstructionsHelper": "Mostrate ai membri su un estratto non saldato. Lascia vuoto per non mostrare nulla.",
+  "paymentInstructionsHelper": "Mostrate ai membri su un estratto non saldato. Lasci vuoto per non mostrare nulla.",
   "paymentInstructionsPaypalLabel": "Link o nome PayPal.me",
   "paymentInstructionsReferenceLabel": "Indicazione della causale",
   "paymentInstructionsIbanTitle": "IBAN",
@@ -65,7 +65,7 @@
   "paymentInstructionsWiseLabel": "Wisetag o link di pagamento Wise",
   "paymentInstructionsValueCopied": "Copiato negli appunti.",
   "workspaceWhatsappGroupTitle": "Gruppo WhatsApp",
-  "workspaceWhatsappGroupHelper": "Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolla il link di invito del gruppo (https://chat.whatsapp.com/…). Lascia vuoto per non mostrare nulla.",
+  "workspaceWhatsappGroupHelper": "Mostrato ai membri perché possano unirsi al gruppo WhatsApp della community. Incolli il link di invito del gruppo (https://chat.whatsapp.com/…). Lasci vuoto per non mostrare nulla.",
   "workspaceWhatsappGroupLabel": "Link del gruppo WhatsApp",
   "workspaceWhatsappGroupInvalid": "Deve essere un link di invito chat.whatsapp.com",
   "memberStatusActive": "Attivo",
@@ -94,11 +94,11 @@
   "workspaceResetDialogTitle": "Reimpostare questo spazio?",
   "workspaceResetWarning": "Questo elimina definitivamente tutte le prenotazioni, tutti i dati contabili e di registro, il flusso attività e l'intera pianta — piani, stanze, tavoli, posti e immagini. Le impostazioni dello spazio, le fasce tariffarie, la disponibilità, le funzioni, i cataloghi e i membri vengono mantenuti. Operazione irreversibile.",
   "workspaceResetConfirmPhrase": "Accetto",
-  "workspaceResetConfirmLabel": "Digita «{phrase}» per confermare",
+  "workspaceResetConfirmLabel": "Digiti «{phrase}» per confermare",
   "workspaceResetConfirmButton": "Reimposta lo spazio",
   "workspaceResetDone": "Spazio reimpostato.",
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
-  "workspaceDeskTransparencyHelper": "Riduci l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
+  "workspaceDeskTransparencyHelper": "Riduca l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
   "workspaceDeskOpacityValue": "Opacità: {percent}%",
   "workspaceExcelExport": "Esporta i dati (Excel)",
   "workspaceExcelExportSubtitle": "Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.",
@@ -106,7 +106,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua. La lingua della tua app si imposta nelle Impostazioni.",
+  "workspaceLanguageHelper": "Gli inviti sono scritti per impostazione predefinita in questa lingua. La lingua della sua app si imposta nelle Impostazioni.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
@@ -146,7 +146,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
-  "documentsUrlHelper": "Incolla il link di condivisione del tuo drive — i permessi restano gestiti lì.",
+  "documentsUrlHelper": "Incolli il link di condivisione del suo drive — i permessi restano gestiti lì.",
   "@documentsUrlHelper": {
     "description": "Workspace document library (#500)"
   },
@@ -194,7 +194,7 @@
   "@documentsCategoryOther": {
     "description": "Workspace document library (#500)"
   },
-  "documentsEmpty": "Nessun documento. Collega statuto, guide e bilanci da qualsiasi drive.",
+  "documentsEmpty": "Nessun documento. Colleghi statuto, guide e bilanci da qualsiasi drive.",
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
@@ -222,11 +222,11 @@
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
-  "rolesIntroReadOnly": "Sola lettura: questi sono i permessi di ogni ruolo. Il tuo ruolo è evidenziato.",
+  "rolesIntroReadOnly": "Sola lettura: questi sono i permessi di ogni ruolo. Il suo ruolo è evidenziato.",
   "@rolesIntroReadOnly": {
     "description": "Roles screen intro for non-editors (#513)"
   },
-  "rolesYourRole": "Il tuo ruolo",
+  "rolesYourRole": "Il suo ruolo",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },
@@ -311,11 +311,11 @@
   "@regionalDeviceZone": {
     "description": "#711 - globalization"
   },
-  "regionalDeviceZoneHint": "Disattivato: gli orari nel fuso dello spazio, quello delle prenotazioni. Attivato: quello del tuo dispositivo, segnalato dove differisce.",
+  "regionalDeviceZoneHint": "Disattivato: gli orari nel fuso dello spazio, quello delle prenotazioni. Attivato: quello del suo dispositivo, segnalato dove differisce.",
   "@regionalDeviceZoneHint": {
     "description": "#711 - globalization"
   },
-  "workspaceTimezoneUnknown": "Scegli un fuso orario dall'elenco",
+  "workspaceTimezoneUnknown": "Scelga un fuso orario dall'elenco",
   "@workspaceTimezoneUnknown": {
     "description": "#711 - globalization"
   },

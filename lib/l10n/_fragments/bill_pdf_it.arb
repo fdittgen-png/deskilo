@@ -6,7 +6,7 @@
   "@reportCoaTitle": {
     "description": "#671 - report document text (reportCoaTitle)"
   },
-  "reportCoaIntro": "Un suggerimento, non la tua contabilità. Sono i conti che un contabile del tuo paese userebbe di solito per uno spazio come il tuo.",
+  "reportCoaIntro": "Un suggerimento, non la sua contabilità. Sono i conti che un contabile del suo paese userebbe di solito per uno spazio come il suo.",
   "@reportCoaIntro": {
     "description": "#671 - report document text (reportCoaIntro)"
   },
@@ -22,7 +22,7 @@
   "@reportCoaLabel": {
     "description": "#671 - report document text (reportCoaLabel)"
   },
-  "reportCoaDisclaimer": "Solo un'anteprima. DesKilo non tiene un libro mastro e non fa la tua contabilità — il piano del tuo commercialista prevale sempre.",
+  "reportCoaDisclaimer": "Solo un'anteprima. DesKilo non tiene un libro mastro e non fa la sua contabilità — il piano del suo commercialista prevale sempre.",
   "@reportCoaDisclaimer": {
     "description": "#671 - report document text (reportCoaDisclaimer)"
   },
@@ -30,7 +30,7 @@
   "@reportBadgesTitle": {
     "description": "#671 - report document text (reportBadgesTitle)"
   },
-  "reportBadgesIntro": "Taglia lungo le linee. Ogni tessera porta il codice badge di un membro — mostrala al chiosco per il check-in.",
+  "reportBadgesIntro": "Tagli lungo le linee. Ogni tessera porta il codice badge di un membro — la mostri al chiosco per il check-in.",
   "@reportBadgesIntro": {
     "description": "#671 - report document text (reportBadgesIntro)"
   },
@@ -42,11 +42,11 @@
   "@reportSpaceCodesTitle": {
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
-  "reportSpaceCodesIntro": "Una tessera per postazione, tavolo, sala e piano. Attaccala sul suo spazio: scansionarla apre la stessa scheda del chiosco.",
+  "reportSpaceCodesIntro": "Una tessera per postazione, tavolo, sala e piano. La attacchi sullo spazio corrispondente: scansionarla apre la stessa scheda del chiosco.",
   "@reportSpaceCodesIntro": {
     "description": "#671 - report document text (reportSpaceCodesIntro)"
   },
-  "reportSpaceCodesFooter": "Una scheda che non corrisponde più al suo spazio inganna chi la scansiona: ristampa il foglio dopo aver spostato o rinominato uno spazio.",
+  "reportSpaceCodesFooter": "Una scheda che non corrisponde più al suo spazio inganna chi la scansiona: ristampi il foglio dopo aver spostato o rinominato uno spazio.",
   "@reportSpaceCodesFooter": {
     "description": "#671 - report document text (reportSpaceCodesFooter)"
   }

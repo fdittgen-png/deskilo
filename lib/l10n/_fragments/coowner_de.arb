@@ -2,9 +2,9 @@
   "@@locale": "de",
   "coOwnerAction": "Mit-Inhaberschaft",
   "coOwnerNone": "Keine Mit-Inhaberschaft",
-  "coOwnerActive": "Aktive Mit-Inhaberin — Inhaber-Rechte sofort, automatische Nachfolge",
-  "coOwnerPassive": "Nachfolgerin — wird Inhaberin bei Aktivierung oder wenn der Inhaber geht",
-  "coOwnerActivate": "Jetzt zur Inhaberin machen",
-  "memberCoOwnerChip": "Mit-Inhaberin",
-  "memberCoOwnerPassiveChip": "Nachfolgerin"
+  "coOwnerActive": "Aktiver Mitinhaber — Inhaber-Rechte sofort, automatische Nachfolge",
+  "coOwnerPassive": "Nachfolge — wird Inhaber bei Aktivierung oder wenn der Inhaber geht",
+  "coOwnerActivate": "Jetzt zum Inhaber machen",
+  "memberCoOwnerChip": "Mitinhaber",
+  "memberCoOwnerPassiveChip": "Nachfolge"
 }

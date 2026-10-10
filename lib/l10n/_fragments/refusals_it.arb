@@ -1,9 +1,9 @@
 {
   "@@locale": "it",
-  "refusalPermission": "Non hai il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
-  "refusalSession": "La tua sessione è scaduta. Accedi di nuovo, poi riprova.",
+  "refusalPermission": "Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
+  "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
   "refusalAlreadyDecided": "Qualcuno ha già deciso. L'elenco mostra l'esito.",
-  "refusalChangedMeanwhile": "Nel frattempo è cambiato. Riaprilo per vedere a che punto è.",
+  "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
   "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"

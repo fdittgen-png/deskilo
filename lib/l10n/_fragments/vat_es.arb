@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "vatTitle": "IVA",
-  "vatIntro": "En DesKilo los precios incluyen IVA. Añadir tipos no cambia nada de lo que pagan los miembros: el impuesto se extrae del precio que ya cobras y se muestra en la factura.",
+  "vatIntro": "En DesKilo los precios incluyen IVA. Añadir tipos no cambia nada de lo que pagan los miembros: el impuesto se extrae del precio que ya cobra y se muestra en la factura.",
   "vatRegimeHint": "Este espacio no está declarado como sujeto a IVA, así que las facturas no lo muestran. Eso se cambia en Identidad legal.",
   "vatEmpty": "Aún no hay ningún tipo: las facturas no muestran IVA.",
   "vatSeed": "Usar los tipos habituales",
@@ -11,7 +11,7 @@
   "vatRateDefaultTooltip": "Tipo por defecto: lo usan las cuotas y todo lo que no tenga tipo propio",
   "vatRateRemoveTooltip": "Quitar",
   "vatSaved": "Tipos de IVA guardados.",
-  "vatNeedsDefault": "Marca exactamente un tipo como predeterminado.",
+  "vatNeedsDefault": "Marque exactamente un tipo como predeterminado.",
   "vatRateIncomplete": "Cada tipo necesita un nombre y un porcentaje entre 0 y 99,99.",
   "vatRatesTile": "Tipos de IVA",
   "vatAccountField": "Cuenta de IVA",

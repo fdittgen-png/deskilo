@@ -1,5 +1,5 @@
 {
   "libraryInvitationTexts": "Testi di invito",
-  "libraryInvitationTextsHint": "Solo testi scritti con segnaposto come {tag}; un testo che nomina il tuo spazio o le sue persone viene rifiutato.",
-  "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il tuo spazio o le sue persone. Sostituiscili con segnaposto nelle impostazioni di invito, oppure deseleziona i testi di invito."
+  "libraryInvitationTextsHint": "Solo testi scritti con segnaposto come {tag}; un testo che nomina il suo spazio o le sue persone viene rifiutato.",
+  "libraryInvitationTextsRefused": "Un testo di invito nomina ancora il suo spazio o le sue persone. Li sostituisca con segnaposto nelle impostazioni di invito, oppure deselezioni i testi di invito."
 }

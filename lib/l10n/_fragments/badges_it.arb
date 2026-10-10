@@ -4,7 +4,7 @@
   "@badgeSignInTitle": {
     "description": "#662 - badge sign-in"
   },
-  "badgeSignInTapPrompt": "Avvicina il badge al telefono.",
+  "badgeSignInTapPrompt": "Avvicini il badge al telefono.",
   "@badgeSignInTapPrompt": {
     "description": "#662 - badge sign-in"
   },
@@ -25,7 +25,7 @@
       }
     }
   },
-  "badgeSignInPinLabel": "Il tuo PIN",
+  "badgeSignInPinLabel": "Il suo PIN",
   "@badgeSignInPinLabel": {
     "description": "#662 - badge sign-in"
   },
@@ -37,15 +37,15 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
-  "badgeSignInRefused": "Non ha funzionato. Controlla il badge e il PIN, oppure accedi con la tua e-mail.",
+  "badgeSignInRefused": "Non ha funzionato. Controlli il badge e il PIN, oppure acceda con la sua e-mail.",
   "@badgeSignInRefused": {
     "description": "#662 - badge sign-in"
   },
-  "badgeSignInLocked": "Troppi tentativi. Attendi qualche minuto, oppure accedi con la tua e-mail.",
+  "badgeSignInLocked": "Troppi tentativi. Attenda qualche minuto, oppure acceda con la sua e-mail.",
   "@badgeSignInLocked": {
     "description": "#662 - badge sign-in"
   },
-  "badgeSignInUnavailable": "L’accesso con badge non è raggiungibile ora. Accedi con la tua e-mail.",
+  "badgeSignInUnavailable": "L’accesso con badge non è raggiungibile ora. Acceda con la sua e-mail.",
   "@badgeSignInUnavailable": {
     "description": "#662 - badge sign-in"
   },
@@ -65,7 +65,7 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinExplain": "Il PIN ti permette di accedere scansionando il badge invece di digitare la tua e-mail. Solo tu puoi impostarlo e nessuno — nemmeno un proprietario — può rileggerlo.",
+  "badgePinExplain": "Il PIN le permette di accedere scansionando il badge invece di digitare la sua e-mail. Solo Lei può impostarlo e nessuno — nemmeno un proprietario — può rileggerlo.",
   "@badgePinExplain": {
     "description": "#662 - badge sign-in"
   },
@@ -93,7 +93,7 @@
   "@badgePinMismatch": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinTooShort": "Usa almeno {min} cifre.",
+  "badgePinTooShort": "Usi almeno {min} cifre.",
   "@badgePinTooShort": {
     "description": "#662 - badge sign-in",
     "placeholders": {
@@ -106,7 +106,7 @@
   "@badgePinSaved": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinCleared": "PIN rimosso. I tuoi badge non ti fanno più accedere.",
+  "badgePinCleared": "PIN rimosso. I suoi badge non la fanno più accedere.",
   "@badgePinCleared": {
     "description": "#662 - badge sign-in"
   },
@@ -114,15 +114,15 @@
   "@badgeAuthEnabledLabel": {
     "description": "#662 - badge sign-in"
   },
-  "badgeAuthEnabledHint": "Disattivo per impostazione predefinita: un badge che registra la tua entrata non ti fa accedere finché non lo decidi tu.",
+  "badgeAuthEnabledHint": "Disattivo per impostazione predefinita: un badge che registra la sua entrata non la fa accedere finché non lo decide Lei.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
   },
-  "badgeAuthNeedsPin": "Imposta prima un PIN di accesso — il badge da solo non deve mai bastare.",
+  "badgeAuthNeedsPin": "Imposti prima un PIN di accesso — il badge da solo non deve mai bastare.",
   "@badgeAuthNeedsPin": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinSaveFailed": "Server irraggiungibile. Il tuo PIN non è stato modificato — riprova.",
+  "badgePinSaveFailed": "Server irraggiungibile. Il suo PIN non è stato modificato — riprovi.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
   },

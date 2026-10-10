@@ -141,7 +141,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Bestätige, dass du diese Voranmeldung selbst abgegeben hast (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
+  "vatDeclMarkFiledConfirm": "Bestätigen Sie, dass Sie diese Voranmeldung selbst abgegeben haben (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },

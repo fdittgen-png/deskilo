@@ -3,12 +3,12 @@
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
   },
-  "reservationExtendLaterOnly": "Wähle eine Zeit nach dem aktuellen Ende.",
+  "reservationExtendLaterOnly": "Wählen Sie eine Zeit nach dem aktuellen Ende.",
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
   "reservationEndEarlyButton": "Früher beenden",
-  "reservationEndEarlyAheadOnly": "Wähle eine Zeit, die noch bevorsteht und vor dem aktuellen Ende liegt.",
+  "reservationEndEarlyAheadOnly": "Wählen Sie eine Zeit, die noch bevorsteht und vor dem aktuellen Ende liegt.",
   "@@locale": "de",
   "calendarMineTab": "Meine",
   "calendarEveryoneTab": "Alle",
@@ -116,7 +116,7 @@
   "@accessRuleReservations": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleEvents": "Du, das handelnde Mitglied und die Admins.",
+  "accessRuleEvents": "Sie, das handelnde Mitglied und die Admins.",
   "@accessRuleEvents": {
     "description": "#718/#719 - calendar hub"
   },
@@ -124,7 +124,7 @@
   "@accessRuleMessages": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleFinances": "Du und die mit der Finanz-Berechtigung: {people}.",
+  "accessRuleFinances": "Sie und die mit der Finanz-Berechtigung: {people}.",
   "@accessRuleFinances": {
     "description": "#718/#719 - calendar hub",
     "placeholders": {
@@ -133,15 +133,15 @@
       }
     }
   },
-  "accessRuleReminders": "Nur du.",
+  "accessRuleReminders": "Nur Sie.",
   "@accessRuleReminders": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessLogTitle": "Wer auf deine Daten zugegriffen hat",
+  "accessLogTitle": "Wer auf Ihre Daten zugegriffen hat",
   "@accessLogTitle": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessLogEmpty": "Niemand hat deine Finanzen oder Nachrichten eingesehen.",
+  "accessLogEmpty": "Niemand hat Ihre Finanzen oder Nachrichten eingesehen.",
   "@accessLogEmpty": {
     "description": "#718/#719 - calendar hub"
   },

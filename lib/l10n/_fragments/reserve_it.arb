@@ -21,7 +21,7 @@
   "reserveFullDayChip": "Giornata intera",
   "reservePickDateTooltip": "Scegli una data",
   "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato.",
-  "spaceScanNfcHint": "…oppure avvicina il telefono al tag NFC di una sedia.",
+  "spaceScanNfcHint": "…oppure avvicini il telefono al tag NFC di una sedia.",
   "spaceScanUnknownTag": "Questo tag non è collegato a nessuna sedia.",
   "bookingCheckedInUntil": "Check-in fatto fino alle {until}.",
   "@bookingCheckedInUntil": {
@@ -128,9 +128,9 @@
       }
     }
   },
-  "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digita il codice o avvicina un tag NFC al dispositivo (Chrome su Android).",
+  "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digiti il codice o avvicini un tag NFC al dispositivo (Chrome su Android).",
   "bookingGateBlocked": "Non prenotabile così",
-  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprova.",
+  "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprovi.",
   "bookingRecordedPastSpaceWhen": "{space} registrato: {when}. Quel periodo è già finito, quindi resta come visita passata.",
   "@bookingRecordedPastSpaceWhen": {
     "placeholders": {

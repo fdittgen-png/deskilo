@@ -2,11 +2,11 @@
   "authContinueWith": "oppure continua con",
   "authSocialUnavailable": "L'accesso con {provider} non è ancora disponibile — il server non lo ha abilitato.",
   "linkedAccountsTitle": "Account collegati",
-  "linkedAccountsIntro": "Accedi a questo account con un’identità collegata. I provider disponibili dipendono dal tuo server.",
+  "linkedAccountsIntro": "Acceda a questo account con un’identità collegata. I provider disponibili dipendono dal suo server.",
   "linkedAccountsLink": "Collega",
   "linkedAccountsUnlink": "Scollega",
   "linkedAccountsLinked": "Collegato",
-  "linkedAccountsLinkStarted": "Continua nel browser per completare il collegamento.",
+  "linkedAccountsLinkStarted": "Continui nel browser per completare il collegamento.",
   "authLinkManualDisabled": "Il collegamento degli account è disattivato su questo server. Il suo amministratore deve attivare «Consenti collegamento manuale» nelle impostazioni di autenticazione.",
   "@authLinkManualDisabled": {
     "description": "Linked accounts: authLinkManualDisabled"
@@ -20,7 +20,7 @@
       }
     }
   },
-  "authLinkFailed": "Il collegamento di {provider} non è riuscito ({code}). Riprova; se continua a fallire, comunica questo codice all'amministratore del server.",
+  "authLinkFailed": "Il collegamento di {provider} non è riuscito ({code}). Riprovi; se continua a fallire, comunichi questo codice all'amministratore del server.",
   "@authLinkFailed": {
     "description": "Linked accounts: authLinkFailed",
     "placeholders": {

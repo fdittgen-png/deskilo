@@ -6,7 +6,7 @@
   "validationWorkflowBookingsStake": "Finché non è accettato, il posto resta com’era.",
   "validationWorkflowPeopleStake": "Finché non è accettato, la persona mantiene gli accessi che ha.",
   "validationStepRaised": "Qualcuno chiede",
-  "validationStepOwnerToo": "e la proprietaria, sempre",
+  "validationStepOwnerToo": "e il proprietario, sempre",
   "validationStepApplies": "diventa effettivo",
   "validationThresholdNote": "Gli importi minori si applicano subito.",
   "validationStepQuorum": "{who} — {count} qualsiasi",

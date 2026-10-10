@@ -101,7 +101,7 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 **Passaggi**
 
 1. Apra [Impostazioni](https://fdittgen-png.github.io/deskilo/#/settings), che si chiama **Il mio account** quando non amministra nulla.
-2. Scelga **Cosa puoi fare qui**.
+2. Scelga **Cosa può fare qui**.
 3. Legga quale ruolo le dà ciascuna possibilità. Un membro vede **Come tutti i membri**; un amministratore vede anche **Dal ruolo Amministratore**.
 
 **Da sapere**
@@ -127,7 +127,7 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 2. Per accedere, tocchi **Accedi**.
 3. Per creare un nuovo account, tocchi **Nuovo qui? Crea un account**, inserisca un **Nome visualizzato** e tocchi **Crea account**. La password deve avere almeno 8 caratteri.
 4. Se il server la offre, tocchi **Google** sotto **oppure continua con**.
-5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlla la tua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
+5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlli la sua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
 
 <p><img src="images/user-start-account--create.it.b8fa17aa9.jpg" width="280"></p>
 
@@ -158,7 +158,7 @@ Non ricorda più la password. Riceve un codice monouso per e-mail e lo usa per i
 
 **Da sapere**
 
-- Il messaggio **Password aggiornata — sei connesso.** conferma che ha funzionato; non deve accedere di nuovo.
+- Il messaggio **Password aggiornata — ha effettuato l'accesso.** conferma che ha funzionato; non deve accedere di nuovo.
 - Un codice non valido o scaduto viene rifiutato: ne richieda uno nuovo.
 - Se il codice è accettato ma la password non viene salvata, tocchi **Salva di nuovo la nuova password**.
 
@@ -177,7 +177,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la nota, poi tocchi **Inizia**.
-3. Usi la barra in alto per scegliere con quali occhi guardare: **La proprietaria**, **Un membro** o **Un'amministratrice**. Ogni tocco sul nome passa al successivo.
+3. Usi la barra in alto per scegliere con quali occhi guardare: **Proprietario**, **Membro** o **Amministratore**. Ogni tocco sul nome passa al successivo.
 4. Tocchi **Reimposta la demo** per rimettere tutto come all'inizio.
 5. Tocchi **Esci dalla demo** quando ha finito.
 
@@ -203,9 +203,9 @@ Ha ricevuto un ID dello spazio, un codice QR o un messaggio di invito e vuole en
 **Passaggi**
 
 1. Acceda, poi tocchi **Entra con un codice** su [Io](https://fdittgen-png.github.io/deskilo/#/me). Dalla schermata di accesso, **Entra con un invito** la porta lì non appena ha un account.
-2. Su **Benvenuto su DesKilo**, lasci selezionato **Unisciti a uno spazio**.
+2. Su **Benvenuto su DesKilo**, lasci selezionato **Unirsi a uno spazio**.
 3. Digiti l'ID dello spazio in **Codice di invito**, oppure incolli l'intero messaggio di invito: l'ID viene trovato automaticamente. **Incolla** lo legge dagli appunti e **Scansiona codice QR** apre la fotocamera su un codice stampato.
-4. Tocchi **Controlla l’invito**. La scheda **Controlla prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
+4. Tocchi **Controlla l’invito**. La scheda **Controlli prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
 5. Tocchi **Aderisci allo spazio**.
 
 **Da sapere**
@@ -655,7 +655,7 @@ Vuole un posto per un certo giorno e un certo orario. Dalla piantina bastano poc
 
 - Nulla viene prenotato finché non tocca **Prenota**.
 - Se il posto è stato preso un secondo prima, l'app Le dice così invece di prenotarlo due volte.
-- Se la connessione si interrompe dopo il suo tocco, la schermata **La tua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
+- Se la connessione si interrompe dopo il suo tocco, la schermata **La sua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
 - In un giorno di chiusura la piantina indica **Chiuso in questo giorno** e propone il successivo giorno di apertura.
 
 **Vedi anche:** [La scheda di prenotazione](#la-scheda-di-prenotazione) · [Le regole che incontra quando prenota](#le-regole-che-incontra-quando-prenota)
@@ -728,7 +728,7 @@ Ha bisogno dell'intero tavolo, dell'intera sala o dell'intero piano, per una riu
 
 **Da sapere**
 
-- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.**
+- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non è autorizzato a prenotare un tavolo, ufficio o piano intero.**
 - Uno spazio intero non può essere prenotato se uno dei suoi posti è occupato in quel periodo, e nessun posto può essere prenotato mentre il suo tavolo, la sua sala o il suo piano sono prenotati per intero.
 - Dove il proprietario richiede un'approvazione, la prenotazione di uno spazio intero blocca subito lo spazio e attende i convalidatori; se la rifiutano, viene annullata.
 
@@ -797,7 +797,7 @@ Ha provato a prenotare e l'app ha detto di no, oppure si chiede che cosa sia con
 | Fuori dagli orari di apertura | Dipende dallo spazio. Disattivato: **Le prenotazioni fuori dagli orari di apertura non sono consentite.** Solo spontanee: può fare il check-in sul posto ma non prenotare in anticipo. Libero: consentito, mai conteggiato né addebitato. A pagamento: consentito e conteggiato come utilizzo, tranne in un giorno in cui ha già una prenotazione ordinaria. |
 | Prenotazioni nel passato | Una prenotazione in un giorno già concluso viene rifiutata, a meno che il proprietario consenta le prenotazioni passate: **Questa prenotazione è interamente nel passato.** Prima, nello stesso giorno, viene registrata come visita passata. |
 | Limiti | Una prenotazione ha un orizzonte massimo (**Troppo lontano**, 90 giorni per impostazione predefinita), una durata minima e una massima (**Troppo breve**, **Troppo lunga**) e termina nel giorno in cui inizia. |
-| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Hai già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
+| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Ha già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
 | Limite di prenotazioni | **Limite di prenotazioni raggiunto** quando ha il numero massimo di prenotazioni aperte che le è consentito. |
 | Giorni del suo piano | Quando i giorni del suo piano finiscono, si applica l'impostazione del proprietario per Lei: le prenotazioni possono fermarsi, può esserLe chiesto di acquistare un pacchetto, oppure i giorni in più vengono addebitati. |
 
@@ -992,7 +992,7 @@ Vuole vedere una settimana o un mese a colpo d'occhio. Il Calendario offre tre m
 
 **Destinatari:** Membro · Amministratore · Proprietario
 
-Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della tua conferma**.
+Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della sua conferma**.
 
 <p><img src="images/user-reserve-calendar-decisions.it.b8fa17aa9.jpg" width="280"></p>
 
@@ -1131,7 +1131,7 @@ Vuole chiedere qualcosa a un collega senza lasciare lo spazio di lavoro.
 **Passaggi**
 
 1. Apra [Membri](https://fdittgen-png.github.io/deskilo/#/directory), tocchi una scheda per aprire la pagina del membro e poi tocchi **Messaggi**.
-2. Scriva nel campo **Il tuo messaggio**.
+2. Scriva nel campo **Il suo messaggio**.
 3. Tocchi **Invia**.
 
 **Da sapere**
@@ -1154,7 +1154,7 @@ Vuole vedere che cosa è successo nello spazio di lavoro e che cosa attende una 
 **Passaggi**
 
 1. Tocchi **Eventi** nella barra in alto (l'icona del vassoio con un numero), oppure apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events) dal menu. La pagina si apre su **Avvisi**.
-2. Legga **In attesa della tua conferma** in cima: le richieste che hanno bisogno di Lei.
+2. Legga **In attesa della sua conferma** in cima: le richieste che hanno bisogno di Lei.
 3. Legga il flusso sotto. Ogni riga dice che cosa è successo; una clessidra significa in sospeso, una spunta verde significa confermato. Le righe di denaro mostrano chi le ha convalidate e quando.
 4. Restringa il flusso con i chip: **Tutti**, **Messaggi**, **Prenotazione**, **Check-in**, **Denaro**, **Membri**, poi **Non letti** o **Letti**.
 5. Tocchi **Tipo**, **Data** o **Membro** accanto a **Raggruppa per** per raccogliere il flusso in gruppi; tocchi il simbolo dei gruppi per tornare all'elenco semplice.
@@ -1180,7 +1180,7 @@ Qualcuno Le ha chiesto di confermare qualcosa e Lei vuole rispondere.
 **Passaggi**
 
 1. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events).
-2. Trovi la richiesta sotto **In attesa della tua conferma**.
+2. Trovi la richiesta sotto **In attesa della sua conferma**.
 3. Tocchi **Accetta**, oppure la croce rossa per **Rifiuta**.
 
 **Da sapere**
@@ -1207,8 +1207,8 @@ Vuole un unico posto che risponda: oggi c'è qualcosa che ha bisogno di me?
 
 **Da sapere**
 
-- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa ti aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
-- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente ti aspetta**.
+- Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa la aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
+- Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente la aspetta**.
 - Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure **Funzionalità**.
 
 **Vedi anche:** [Eventi e conferme](#eventi-e-conferme)
@@ -1665,7 +1665,7 @@ Vuole che le persone la riconoscano nell'elenco dei membri, sulla piantina e nei
 
 **Da sapere**
 
-- La riga indica **Tocca per aggiungere una foto** finché non ne ha una, poi **Tocca per cambiare**.
+- La riga indica **Tocchi per aggiungere una foto** finché non ne ha una, poi **Tocchi per cambiare**.
 - Chi vede la sua foto lo decide Lei: vedi [Chi mi vede](#scegliere-chi-mi-vede).
 - Il suo account è suo in tutti gli spazi di lavoro; la sua posizione in uno spazio si trova nelle sue Impostazioni.
 
@@ -1684,7 +1684,7 @@ Vuole che le sue fatture e le sue lettere riportino correttamente il suo nome e 
 
 1. Apra [Io](https://fdittgen-png.github.io/deskilo/#/me?tab=me) e tocchi **Dati personali**.
 2. Scelga una **Formula di cortesia** se desidera che venga stampata prima del suo nome, poi compili **Nome**, **Cognome**, **Società (facoltativo)**, l'indirizzo, **Telefono** ed **E-mail per i documenti**.
-3. Controlli **Sui tuoi documenti**, che mostra come verrà stampato.
+3. Controlli **Sui suoi documenti**, che mostra come verrà stampato.
 4. Risponda alle eventuali domande che il suo spazio di lavoro aggiunge sotto il proprio titolo, poi tocchi **Salva**.
 
 **Da sapere**
@@ -2077,7 +2077,7 @@ Vuole sapere chi può leggere che cosa su di Lei, e chi ha effettivamente guarda
 
 1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy).
 2. Tocchi **Chi può vedere i miei dati**.
-3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i tuoi dati**.
+3. Legga la regola per ogni categoria, le persone che indica oggi, e **Chi ha consultato i suoi dati**.
 
 **Da sapere**
 
@@ -2190,7 +2190,7 @@ Vuole chiedere allo spazio di lavoro una copia, una correzione, una limitazione 
 **Passaggi**
 
 1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy) e tocchi **Le mie richieste di esercizio dei diritti**.
-2. Tocchi **Fai una richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
+2. Tocchi **Nuova richiesta** e scelga che cosa chiede: vedere una copia dei suoi dati, portarli altrove, correggerli, limitarne l'uso, opporsi a un uso, o cancellarli.
 3. Aggiunga i **Dettagli (facoltativo)** e tocchi **Invia la richiesta**.
 
 **Da sapere**
@@ -2233,7 +2233,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 **Passaggi**
 
 1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy).
-2. Tocchi **I tuoi dati, i tuoi diritti**.
+2. Tocchi **I suoi dati, i suoi diritti**.
 3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
@@ -2278,7 +2278,7 @@ Dirige una comunità e vuole ospitare DesKilo da sé.
 
 **Passaggi**
 
-1. Apra la schermata **Server** e tocchi **Usare il tuo server**.
+1. Apra la schermata **Server** e tocchi **Usare il suo server**.
 2. Segua i quattro passaggi indicati: creare un progetto su supabase.com, installare lo schema, copiare l'URL del progetto e la chiave pubblicabile, poi incollarli e **Prova la connessione**.
 3. Oppure tocchi **Crea una nuova istanza** per la configurazione guidata.
 
@@ -2586,7 +2586,7 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 **Passaggi**
 
 1. Apra [Eventi](https://fdittgen-png.github.io/deskilo/#/events), oppure tocchi **Avvisi finanziari** in [Finanze](https://fdittgen-png.github.io/deskilo/#/money).
-2. Cerchi sotto **In attesa della tua conferma** la riga che indica l'importo e il membro.
+2. Cerchi sotto **In attesa della sua conferma** la riga che indica l'importo e il membro.
 3. Tocchi **Accetta** per confermarla, oppure la croce per **Rifiuta**.
 
 **Da sapere**
@@ -2624,7 +2624,7 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Passaggi**
 
-1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le tue finanze in tutti gli spazi**.
+1. Apra [Finanze](https://fdittgen-png.github.io/deskilo/#/money), scelga **Pagamenti** o **Fatture** e tocchi **Apri per** il Suo spazio sulla scheda **Le sue finanze in tutti gli spazi**.
 2. Scelga una scheda: **Da pagare**, **Pagate**, **Pagamenti** o **Solleciti**.
 3. Se appartiene a più spazi, filtri per spazio in alto.
 
@@ -2700,7 +2700,7 @@ Vuole dare all'edificio i suoi piani, nell'ordine che le persone si aspettano. L
 
 - Eliminare un piano rimuove tutti gli uffici, le scrivanie e i posti che contiene. La conferma indica che cosa succede alle prenotazioni che li riguardano.
 - La riga sotto ogni piano indica se è **Prenotabile per intero** o **Non prenotabile per intero**.
-- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiungi il primo piano del tuo spazio.**
+- Senza alcun piano l'editor mostra **Ancora nessun piano. Aggiunga il primo piano del suo spazio.**
 
 **Vedi anche:** [Prenotare un intero piano](#permettere-ai-membri-di-prenotare-un-intero-piano) · [Disegnare stanze, scrivanie e posti](#disegnare-stanze-scrivanie-e-posti)
 
@@ -3451,7 +3451,7 @@ Vuole decidere quali permessi ha ciascun ruolo. **Ruoli** mostra una scheda per 
 
 - Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Comproprietario o Proprietario. Gli altri ruoli si aggiungono ad esso e non tolgono mai nulla.
 - Il proprietario ha sempre ogni permesso, quindi la sua scheda è bloccata. Un comproprietario può averne meno.
-- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il tuo ruolo** evidenziato.
+- Chi non può gestire i ruoli vede la matrice in sola lettura, con **Il suo ruolo** evidenziato.
 - Un permesso viene verificato dal server in ogni punto, quindi togliere la spunta lo rimuove ovunque in una volta sola.
 - La voce **Ruoli** compare quando la funzionalità **Gestione dei ruoli** è attiva.
 
@@ -3520,7 +3520,7 @@ Vuole un tablet vicino alla porta dove le persone fanno il check-in con un badge
 
 **Da sapere**
 
-- La modalità chiosco non si avvia mai da sola. **Non ora — apri l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
+- La modalità chiosco non si avvia mai da sola. **Non ora — apra l'app normalmente** apre l'app come di consueto, comodo per la configurazione.
 - In modalità chiosco il tablet mostra solo la piantina. Per uscirne si riavvia il tablet. Per far tornare l'account un normale membro, usi **Dispositivo chiosco** sotto **Impostazioni** sul dispositivo oppure **Riporta il chiosco a membro** in **Membri e piani**.
 - La scheda che si apre indica la regola che segue. In un giorno di chiusura il chiosco mostra subito *Lo spazio è chiuso oggi*.
 - Il badge è la conferma: identifica il membro, esegue l'azione e la schermata si svuota per la persona successiva. Un posto occupato da un'altra persona mostra chi lo occupa e rimanda all'app.
@@ -4394,7 +4394,7 @@ Vuole che i membri paghino online un conto aperto, sul Suo account presso il for
 
 Le chiavi provengono dalla dashboard del fornitore: **Client ID**, **Secret**, **Ambiente**, **ID webhook** e **URL di ritorno** per PayPal; **Chiave segreta**, **Segreto di firma webhook** e **URL di ritorno** per Stripe; **Chiave API** e **URL di ritorno** per Mollie e Wero. Tenga separate le chiavi di prova e quelle reali: tutte le chiavi che inserisce devono appartenere alla stessa modalità.
 
-I segreti sono conservati sul server e non vengono mai più mostrati. Un segreto salvato riporta **Impostato — lascia vuoto per mantenere**; digiti un nuovo valore per sostituirlo.
+I segreti sono conservati sul server e non vengono mai più mostrati. Un segreto salvato riporta **Impostato — lasci vuoto per mantenere**; digiti un nuovo valore per sostituirlo.
 
 <!-- anchor: user.money.expenses.schedule -->
 ### Spese programmate
@@ -5320,7 +5320,7 @@ Fattura un mese a un membro.
 
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
-- Se manca un dato obbligatorio, **Completa questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
+- Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
 - In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.
 - Una fattura emessa è firmata e immutabile.
 
@@ -5714,14 +5714,14 @@ Un assistente di intelligenza artificiale come Claude o ChatGPT può controllare
 
 **Passaggi**
 
-1. Apra [Assistenti](https://fdittgen-png.github.io/deskilo/#/assistants). **A che punto sei qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il tuo ruolo**, **Il tuo consenso**, **Server**.
+1. Apra [Assistenti](https://fdittgen-png.github.io/deskilo/#/assistants). **A che punto è qui** elenca ciò che ancora manca: **Accesso con Google**, **Identità per gli assistenti**, **Approvazione del database**, **Offerta dello spazio di lavoro**, **Il suo ruolo**, **Il suo consenso**, **Server**.
 2. Scorra l'elenco; ogni riga dice chi compie il passo successivo.
 
 **Da sapere**
 
 - Partecipano più persone: Lei, il proprietario o un amministratore dello spazio, un amministratore del database e l'operatore dell'installazione. Nessuno da solo può aprire tutto.
 - Attivare gli assistenti non concede nulla a nessuno di per sé.
-- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il tuo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
+- Sotto **Assistenti collegati** vede che cosa è collegato e può **Disconnetti**. **Il suo uso degli assistenti oggi** conta **Richieste**, **Rifiutate**, **Applicate** e **In attesa di convalida**.
 
 **Vedi anche:** [Collegare un assistente](#collegare-un-assistente)
 
@@ -5735,7 +5735,7 @@ Vuole che il Suo assistente lavori con le Sue prenotazioni e il Suo account.
 **Passaggi**
 
 1. Apra [Collegare un assistente](https://fdittgen-png.github.io/deskilo/#/assistants/connect). Sotto **Prima di collegare**, ogni riga dovrebbe riportare **Fatto**.
-2. Sotto **Quale assistente usi?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il tuo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
+2. Sotto **Quale assistente usa?**, scelga **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** o **Altro**. Copi **Il suo indirizzo DesKilo per gli assistenti** al suo interno come indicano i passaggi.
 3. Acceda quando l'assistente lo chiede, poi scelga questo spazio e che cosa l'assistente può farvi.
 4. Tocchi **Prova la connessione** e chieda al Suo assistente: «Con DesKilo, quali sono le mie prenotazioni di questa settimana?»
 
@@ -5757,7 +5757,7 @@ Gli assistenti sono approvati a livelli, così una persona non può attivarne un
 
 **Passaggi**
 
-1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](https://fdittgen-png.github.io/deskilo/#/settings/assistant-setup) e la percorre: **Attiva gli assistenti per questo spazio di lavoro**, **Scegli cosa possono fare gli assistenti**.
+1. Il proprietario dello spazio (o chi gestisce le integrazioni) apre [Configurazione degli assistenti](https://fdittgen-png.github.io/deskilo/#/settings/assistant-setup) e la percorre: **Attivi gli assistenti per questo spazio di lavoro**, **Scelga cosa possono fare gli assistenti**.
 2. Ogni membro chiede una volta: **Chiedi l'approvazione**. Un amministratore del database decide in [Approvazioni degli assistenti](https://fdittgen-png.github.io/deskilo/#/database/assistant-approvals) con **Approva** o **Rifiuta**.
 3. L'operatore dell'installazione apre [Installazione: assistenti](https://fdittgen-png.github.io/deskilo/#/installation/assistants) e tocca **Attiva per tutti gli spazi**. La pagina elenca anche **Amministratori della base** e **Client degli assistenti**, ciascuno **Approvato**, **Bloccato** oppure **In attesa di approvazione**.
 4. Quando un assistente invia una richiesta ad alto impatto, Le viene chiesto: **Conferma una richiesta dell'assistente**. **Conferma** gli permette di inviare quella richiesta esatta una sola volta; **Rifiuta** non fa nulla.
@@ -5991,7 +5991,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, ape
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la breve nota, poi tocchi **Inizia**.
-3. Usi **Vedi come** per vedere lo stesso spazio come **La proprietaria**, **Un'amministratrice** o **Un membro**.
+3. Usi **Vedi come** per vedere lo stesso spazio come **Proprietario**, **Amministratore** o **Membro**.
 4. Tocchi **Reimposta la demo** per riportarla all'inizio, oppure **Esci dalla demo**.
 
 **Da sapere**

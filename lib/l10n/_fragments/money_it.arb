@@ -39,7 +39,7 @@
   "planNameLabel": "Nome",
   "planBaseFeeLabel": "Canone mensile base",
   "planIncludedLabel": "Mezze giornate incluse",
-  "planIncludedHelper": "Lascia vuoto per illimitato",
+  "planIncludedHelper": "Lasci vuoto per illimitato",
   "planOverageLabel": "Prezzo per mezza giornata extra",
   "planActiveLabel": "Attivo",
   "paymentMethodBankTransfer": "Bonifico",
@@ -121,7 +121,7 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
-  "vatDeclEmpty": "Nessuna dichiarazione — scegli un periodo e genera la prima.",
+  "vatDeclEmpty": "Nessuna dichiarazione — scelga un periodo e generi la prima.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
   },
@@ -141,7 +141,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Conferma di aver inviato questa dichiarazione tu stesso (portale dell’agenzia o il tuo commercialista). Diventa immutabile.",
+  "vatDeclMarkFiledConfirm": "Confermi di aver inviato personalmente questa dichiarazione (portale dell’agenzia o il suo commercialista). Diventa immutabile.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -161,7 +161,7 @@
   "@vatDeclRejected": {
     "description": "Error snack when the platform rejects"
   },
-  "vatDeclRegimeGate": "Le dichiarazioni esistono solo sotto il regime soggetto a IVA — configuralo nelle impostazioni IVA.",
+  "vatDeclRegimeGate": "Le dichiarazioni esistono solo sotto il regime soggetto a IVA — lo configuri nelle impostazioni IVA.",
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
@@ -177,7 +177,7 @@
   "@featureVatDeclarationsTitle": {
     "description": "Feature toggle title (#534)"
   },
-  "featureVatDeclarationsDesc": "Genera la dichiarazione IVA periodica dalle fatture emesse, mappala sul modulo ufficiale e trasmettila o esportala.",
+  "featureVatDeclarationsDesc": "Generi la dichiarazione IVA periodica dalle fatture emesse, la mappi sul modulo ufficiale e la trasmetta o la esporti.",
   "@featureVatDeclarationsDesc": {
     "description": "Feature toggle description (#534)"
   },
@@ -292,7 +292,7 @@
   "moneyOpenInvoicesSummary": "{count} aperte · {amount} dovuti",
   "moneyDueIn": "Scade tra {days} giorni",
   "moneyOverdueBy": "Scaduta da {days} giorni",
-  "moneyNothingOpen": "Niente di aperto — sei in regola.",
+  "moneyNothingOpen": "Niente di aperto — è in regola.",
   "moneyDocumentLibrary": "Libreria dei documenti",
   "moneyStatementPdf": "Estratto del mese (PDF)",
   "moneyRemindedTimes": "Sollecitata ×{count}",
@@ -302,14 +302,14 @@
   "expenseSupplyNewItem": "Nuovo articolo",
   "expenseSupplyQuantity": "Quantità",
   "expenseSupplyUnitPrice": "Prezzo unitario (quanto costa un consumo)",
-  "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotonda se vuoi.",
+  "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotondi se vuole.",
   "serviceStockCount": "{count} in scorta",
   "serviceOutOfStock": "Esaurito",
   "serviceOutOfStockHint": "Niente più sullo scaffale — la prossima scorta lo rifornisce.",
   "negotiationCardTitle": "I miei prezzi negoziati",
-  "negotiationOnTariff": "Sei alla tariffa dello spazio.",
+  "negotiationOnTariff": "È alla tariffa dello spazio.",
   "negotiationPending": "Delle condizioni attendono convalida.",
-  "negotiationActiveSince": "Le tue condizioni si applicano da {month}.",
+  "negotiationActiveSince": "Le sue condizioni si applicano da {month}.",
   "negotiationFee": "Quota mensile",
   "negotiationOverage": "Eccedenza per mezza giornata",
   "negotiationDiscount": "Sconto sui supplementi",
@@ -317,7 +317,7 @@
   "negotiationMineColumn": "Le mie",
   "negotiationWhoCanSee": "Chi può vederlo",
   "negotiationProposeTitle": "Negoziazione di prezzo",
-  "negotiationProposeHint": "Lascia un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
+  "negotiationProposeHint": "Lasci un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
   "negotiationNote": "Nota",
   "negotiationValidFrom": "Si applica da",
   "negotiationSubmit": "Proponi per la convalida",
@@ -331,7 +331,7 @@
   "negotiationPercent": "{value} %",
   "negotiationReadOnly": "Sola lettura",
   "scheduledExpensesTitle": "Spese programmate",
-  "scheduledExpensesIntro": "Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza ti viene presentata prima di contare.",
+  "scheduledExpensesIntro": "Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza le viene presentata prima di contare.",
   "scheduledExpensesEmpty": "Nessuna spesa programmata per ora.",
   "scheduledExpensesFinished": "Terminate e rifiutate ({count})",
   "scheduleNew": "Programma una spesa ricorrente",
@@ -343,7 +343,7 @@
   "scheduleTimesLabel": "Ripetizioni (vuoto = fino alla data di fine)",
   "scheduleEndsOn": "Fino al (facoltativo)",
   "scheduleNoEnd": "Nessuna data di fine",
-  "scheduleValidationHint": "La programmazione passa prima dai validatori. Ogni scadenza ti viene poi presentata: confermata a questo importo conta subito; un importo diverso si spiega e torna in validazione.",
+  "scheduleValidationHint": "La programmazione passa prima dai validatori. Ogni scadenza le viene poi presentata: confermata a questo importo conta subito; un importo diverso si spiega e torna in validazione.",
   "scheduleSubmit": "Programma",
   "scheduleMissingFields": "Servono il nome e l’importo.",
   "schedulePending": "Programmato — in attesa della conferma dei validatori.",
@@ -361,14 +361,14 @@
   "scheduleTimes": "{count} volte",
   "scheduleUntil": "fino al {date}",
   "scheduleNextDue": "prossima: {date}",
-  "occurrenceRejected": "I validatori l’hanno rifiutata — correggi l’importo o la descrizione e reinvia.",
+  "occurrenceRejected": "I validatori l’hanno rifiutata — corregga l’importo o la descrizione e reinvii.",
   "occurrenceScheduledAmount": "Validato: {amount}",
   "occurrenceReasonLabel": "Perché differisce (obbligatorio)",
   "occurrenceConfirm": "Conferma questa spesa",
   "occurrenceResend": "Reinvia in validazione",
   "occurrenceReasonMissing": "Un importo diverso richiede una spiegazione.",
   "occurrenceSentForValidation": "Inviato ai validatori — conterà una volta confermato.",
-  "occurrenceAdded": "Aggiunto alle tue spese.",
+  "occurrenceAdded": "Aggiunto alle sue spese.",
   "scheduledAwaitingTitle": "Spese programmate da confermare",
   "scheduleUnitDays": "giorni",
   "scheduleUnitWeeks": "settimane",

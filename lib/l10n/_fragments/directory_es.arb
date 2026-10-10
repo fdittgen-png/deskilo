@@ -35,7 +35,7 @@
   "memberPageManageHeading": "Gestionar",
   "memberPageStatusActive": "Activo",
   "memberPageNeverSeen": "Nunca visto",
-  "memberPageYou": "{name} (tú)",
+  "memberPageYou": "{name} (usted)",
   "@memberPageYou": {
     "placeholders": {
       "name": {

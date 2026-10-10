@@ -1,6 +1,6 @@
 {
   "visibilityElsewhereTitle": "Sui miei altri server",
-  "visibilityElsewhereIntro": "Su un server collegato hai l'account di quel server. Chi lì non condivide alcuno spazio con te vede ciò che consenti a chiunque abbia effettuato l'accesso; contatti e presenza non escono mai dai tuoi spazi.",
+  "visibilityElsewhereIntro": "Su un server collegato ha l'account di quel server. Chi lì non condivide alcuno spazio con Lei vede ciò che consente a chiunque abbia effettuato l'accesso; contatti e presenza non escono mai dai suoi spazi.",
   "visibilityOnServer": "Chi mi vede su {host}",
   "@visibilityOnServer": {
     "placeholders": {
@@ -9,7 +9,7 @@
       }
     }
   },
-  "visibilityOnServerUnavailable": "{host} non ha risposto. Riprova più tardi.",
+  "visibilityOnServerUnavailable": "{host} non ha risposto. Riprovi più tardi.",
   "@visibilityOnServerUnavailable": {
     "placeholders": {
       "host": {

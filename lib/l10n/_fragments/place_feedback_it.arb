@@ -44,7 +44,7 @@
   "@placeFeedbackNoRating": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackFailed": "Salvataggio non riuscito. Riprova.",
+  "placeFeedbackFailed": "Salvataggio non riuscito. Riprovi.",
   "@placeFeedbackFailed": {
     "description": "#2185 place feedback"
   }

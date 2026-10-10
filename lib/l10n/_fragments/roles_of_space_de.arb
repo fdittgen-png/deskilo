@@ -4,7 +4,7 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
-  "rolesOfSpaceSubtitle": "Jede ergänzt Rechte zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und die Inhaberin behält immer alle Rechte.",
+  "rolesOfSpaceSubtitle": "Jede ergänzt Rechte zu dem, was ihre Inhaber schon dürfen. Keine nimmt etwas weg, und der Inhaber des Space behält immer alle Rechte.",
   "@rolesOfSpaceSubtitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceSubtitle"
   },

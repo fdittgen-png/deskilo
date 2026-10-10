@@ -294,7 +294,7 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](app:/events) oder tippen Sie in [Finanzen](app:/money) auf **Finanzmeldungen**.
-2. Suchen Sie unter **Wartet auf deine Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
+2. Suchen Sie unter **Wartet auf Ihre Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
 3. Tippen Sie auf **Annehmen**, um sie zu bestätigen, oder auf das Kreuz, um sie **Ablehnen**.
 
 **Gut zu wissen**

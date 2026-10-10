@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "featureDecisionSurfaceTitle": "Lo que te espera",
+  "featureDecisionSurfaceTitle": "Lo que le espera",
   "@featureDecisionSurfaceTitle": {
     "description": "#1247: featureDecisionSurfaceTitle"
   },
@@ -8,7 +8,7 @@
   "@featureDecisionSurfaceDesc": {
     "description": "#1247: featureDecisionSurfaceDesc"
   },
-  "decisionSurfaceEmpty": "Nada te espera",
+  "decisionSurfaceEmpty": "Nada le espera",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
   },

@@ -6,7 +6,7 @@
   "memberBadgesTooltip": "Badge",
   "memberBadgesTitle": "Badge — {name}",
   "badgeIssue": "Nuovo badge",
-  "badgeTokenOnce": "Salva questo QR adesso — viene mostrato una sola volta.",
+  "badgeTokenOnce": "Salvi questo QR adesso — viene mostrato una sola volta.",
   "badgeNone": "Ancora nessun badge.",
   "badgeDefaultLabel": "Badge",
   "badgeRevoke": "Revoca",
@@ -15,22 +15,22 @@
   "kioskCheckIn": "Check-in",
   "kioskReserve": "Prenota",
   "kioskCheckOut": "Check-out",
-  "kioskPresentBadge": "Presenta il tuo badge",
-  "kioskBadgeHint": "Scansiona il QR del badge o digita il suo codice.",
+  "kioskPresentBadge": "Presenti il suo badge",
+  "kioskBadgeHint": "Scansioni il QR del badge o digiti il suo codice.",
   "kioskBadgeFieldLabel": "Codice badge",
   "kioskBadgeConfirm": "Conferma",
   "kioskBadgeRejected": "Badge non riconosciuto.",
   "kioskDone": "Fatto — è tutto a posto.",
-  "kioskTapHint": "Tocca un posto per fare check-in",
+  "kioskTapHint": "Tocchi un posto per fare check-in",
   "badgeSavePdf": "Salva come PDF",
   "badgeRegisterCard": "Registra tessera",
   "badgeTapCardTitle": "Registra una tessera",
-  "badgeTapCardHint": "Avvicina la tessera RFID/NFC al retro del dispositivo.",
+  "badgeTapCardHint": "Avvicini la tessera RFID/NFC al retro del dispositivo.",
   "badgeCardRegistered": "Tessera registrata.",
   "badgeCardAlreadyRegistered": "Questa tessera è già registrata.",
-  "kioskBadgeHintNfc": "Avvicina la tessera, scansiona il QR o digita il codice.",
+  "kioskBadgeHintNfc": "Avvicini la tessera, scansioni il QR o digiti il codice.",
   "nfcConfigTitle": "Badge RFID / NFC",
-  "nfcConfigIntro": "I membri fanno check-in a un chiosco a parete avvicinando una tessera RFID/NFC. Registra la tessera di ogni membro in Membri e piani; al chiosco la avvicinano per prenotare o fare check-in.",
+  "nfcConfigIntro": "I membri fanno check-in a un chiosco a parete avvicinando una tessera RFID/NFC. Registri la tessera di ogni membro in Membri e piani; al chiosco la avvicinano per prenotare o fare check-in.",
   "nfcConfigEnable": "Abilita il check-in con badge NFC",
   "nfcConfigEnableDesc": "Mostra l'opzione di avvicinare la tessera su chioschi e nel gestore badge.",
   "nfcConfigDeviceStatus": "Questo dispositivo",
@@ -40,18 +40,18 @@
   "kioskConfirmAction": "Conferma",
   "kioskRejectAction": "Rifiuta",
   "kioskGateTitle": "Avviare la modalità chiosco?",
-  "kioskGateBody": "Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvia il tablet.",
+  "kioskGateBody": "Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvii il tablet.",
   "kioskGateStart": "Avvia la modalità chiosco",
-  "kioskGateReject": "Non ora — apri l'app normalmente",
+  "kioskGateReject": "Non ora — apra l'app normalmente",
   "settingsFrontCamera": "Scansiona con la fotocamera frontale",
-  "settingsFrontCameraDesc": "I badge vengono letti con la fotocamera lato schermo — disattiva per usare la fotocamera posteriore.",
-  "kioskNfcOff": "L'NFC è disattivato nelle impostazioni Android di questo tablet — attivalo per leggere le carte RFID.",
-  "kioskNfcUnsupported": "Questo tablet non ha un lettore NFC — scansiona il badge QR.",
-  "kioskNfcFailed": "Il lettore RFID non si è avviato — riavvia l'app e riprova.",
-  "nfcConfigDeviceOff": "L'NFC è disattivato nelle impostazioni Android di questo dispositivo — attivalo per leggere le carte RFID.",
+  "settingsFrontCameraDesc": "I badge vengono letti con la fotocamera lato schermo — la disattivi per usare la fotocamera posteriore.",
+  "kioskNfcOff": "L'NFC è disattivato nelle impostazioni Android di questo tablet — lo attivi per leggere le carte RFID.",
+  "kioskNfcUnsupported": "Questo tablet non ha un lettore NFC — scansioni il badge QR.",
+  "kioskNfcFailed": "Il lettore RFID non si è avviato — riavvii l'app e riprovi.",
+  "nfcConfigDeviceOff": "L'NFC è disattivato nelle impostazioni Android di questo dispositivo — lo attivi per leggere le carte RFID.",
   "kioskScanQr": "Scansiona il badge QR",
   "kioskRevertTitle": "Dispositivo chiosco",
-  "kioskRevertDesc": "Questo profilo è configurato come chiosco dello spazio. Ripristinalo come membro normale per non vedere più la domanda chiosco all'avvio.",
+  "kioskRevertDesc": "Questo profilo è configurato come chiosco dello spazio. Lo ripristini come membro normale per non vedere più la domanda chiosco all'avvio.",
   "kioskRevertDone": "Questo profilo è di nuovo un membro normale.",
   "memberNoActions": "Solo il proprietario dello spazio può modificare questo membro.",
   "kioskNotCheckedIn": "Nessun check-in attivo trovato — la planimetria potrebbe essersi appena aggiornata.",
@@ -59,11 +59,11 @@
   "@kioskRestOfDay": {
     "description": "Kiosk period chip after the working day: now until midnight"
   },
-  "kioskPeriodCheckInHint": "Fino a quando resti? Il check-in inizia adesso.",
+  "kioskPeriodCheckInHint": "Fino a quando resta? Il check-in inizia adesso.",
   "@kioskPeriodCheckInHint": {
     "description": "Kiosk period step hint for a check-in (start pinned to now)"
   },
-  "kioskPeriodReserveHint": "Scegli il periodo: solo oggi.",
+  "kioskPeriodReserveHint": "Scelga il periodo: solo oggi.",
   "@kioskPeriodReserveHint": {
     "description": "Kiosk period step hint for a reservation (kiosk never books the future)"
   },
@@ -71,7 +71,7 @@
   "@kioskCheckInRightAway": {
     "description": "Kiosk period step switch: the reservation starts checked in"
   },
-  "kioskCheckInRightAwayHint": "Sei qui: la prenotazione parte già registrata.",
+  "kioskCheckInRightAwayHint": "È qui: la prenotazione parte già registrata.",
   "@kioskCheckInRightAwayHint": {
     "description": "Subtitle of the check-in-right-away switch"
   },
@@ -79,7 +79,7 @@
   "@kioskPresentBadgeNext": {
     "description": "Kiosk period step continue button — leads to the badge prompt"
   },
-  "kioskReserveAndCheckIn": "Prenota e fai check-in",
+  "kioskReserveAndCheckIn": "Prenotazione e check-in",
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
   },
@@ -103,5 +103,5 @@
       }
     }
   },
-  "kioskBlockedContactHint": "Occupato da {name} — puoi scrivergli dall'app sul tuo telefono."
+  "kioskBlockedContactHint": "Occupato da {name} — può scrivergli dall'app sul suo telefono."
 }

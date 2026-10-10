@@ -150,7 +150,7 @@ Quiere un hábito breve que mantenga el espacio coherente, en diez minutos a fin
 **Pasos**
 
 1. Abra **Configuración de este espacio**. Cada ámbito sigue indicando **Listo**, o **No es necesario aquí**, o está dejado a un lado a propósito.
-2. Abra [Eventos](app:/events). **Esperando tu confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
+2. Abra [Eventos](app:/events). **Esperando su confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
 3. Vuelva a contar el equipo. Quien se haya marchado o esté en pausa puede dejar una regla corta. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck).
 4. Cierre el mes: los días de cierre están introducidos, se ha ejecutado el asistente de cierre mensual y los recordatorios de pago han salido (automáticamente cada mañana, o al abrir Finanzas cuando la base de datos no tiene programador). Véase [El asistente de cierre mensual](help:user.invoicing.wizard).
 5. Haga la exportación de datos y abra **Funciones** para comprobar que ningún proceso requiere atención tras los cambios del mes.

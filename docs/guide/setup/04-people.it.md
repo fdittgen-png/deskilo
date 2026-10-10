@@ -322,7 +322,7 @@ Vuole essere certo che ogni richiesta per cui crea una regola possa ricevere una
 1. Apra [Regole di convalida](app:/validation) e legga ogni scheda personalizzata: «Tutti gli admin — qualsiasi 2» significa due persone.
 2. Apra [Membri e piani](app:/members). Conti i proprietari e gli amministratori attivi. Le persone in pausa o uscite non contano.
 3. Apra **Configurazione di questo spazio** in [Spazio di lavoro](app:/workspace-settings). L’area **Ruoli e chi convalida le richieste** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» quando ne conta troppo pochi. L’area diventa allora obbligatoria, qualunque sia il tipo di richiesta, e [Che cosa richiede la Sua attenzione](help:user.collaborate.attention) la segnala.
-4. Apra [Eventi](app:/events). **In attesa della tua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
+4. Apra [Eventi](app:/events). **In attesa della sua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
 
 **Da sapere**
 

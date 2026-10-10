@@ -10,7 +10,7 @@
   "usageCorrected": "Corregido",
   "usageWas": "era {before}",
   "usageAsk": "Facturar el tiempo que estuve",
-  "usageAskExplain": "Reservaste {booked} y estuviste {present}. Pide que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca tú.",
+  "usageAskExplain": "Reservó {booked} y estuvo {present}. Pida que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca usted.",
   "usageReasonLabel": "Por qué (opcional)",
   "usageAskSubmit": "Pedir",
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",

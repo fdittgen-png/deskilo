@@ -94,7 +94,7 @@
       }
     }
   },
-  "capacityKpiForbidden": "Non puoi consultare i dati di capacità di questo spazio.",
+  "capacityKpiForbidden": "Non può consultare i dati di capacità di questo spazio.",
   "@capacityKpiForbidden": {
     "description": "#1918 capacity KPI"
   },
