@@ -5818,6 +5818,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque position taxable d\'un mois ou d\'une période — document, client, HT, taux, TVA, TTC, catégorie — avec sous-totaux par taux, en lettre et en CSV pour le comptable.';
 
   @override
+  String get featureViesVerificationDesc =>
+      'Le numéro de TVA d\'un client professionnel est vérifié auprès du service VIES de l\'UE, et le numéro de consultation est conservé sur le membre et sur chaque facture. Une prestation générale autoliquidée par une entreprise d\'un autre pays de l\'UE n\'est émise qu\'après une vérification valide ; quand VIES ne répond pas, l\'émission attend. Désactivé : ces factures sont émises hors de l\'app.';
+
+  @override
+  String get featureViesVerificationTitle =>
+      'Vérification du numéro de TVA (VIES)';
+
+  @override
   String get featureWhatsappIntegration => 'Intégration WhatsApp';
 
   @override
@@ -8236,6 +8244,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingVatZeroLine =>
       'Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l\'explique';
+
+  @override
+  String get invoiceMissingVies =>
+      'Une vérification VIES valide du numéro de TVA du membre (requise pour l\'autoliquidation ; si VIES n\'a pas répondu, réessayez plus tard)';
 
   @override
   String get invoiceNoOpen => 'Aucune facture en cours.';
@@ -19123,6 +19135,38 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatUntil => 'jusqu\'au';
+
+  @override
+  String get viesCheckExplainer =>
+      'VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n\'est émise qu\'après une telle réponse.';
+
+  @override
+  String get viesCheckFailed =>
+      'VIES n\'a pas pu être interrogé. Réessayez plus tard.';
+
+  @override
+  String get viesCheckNow => 'Vérifier maintenant';
+
+  @override
+  String viesStatusInvalid(String date) {
+    return 'Non valide dans VIES · $date';
+  }
+
+  @override
+  String get viesStatusNone => 'Non vérifié';
+
+  @override
+  String viesStatusUnavailable(String date) {
+    return 'VIES n\'a pas répondu · $date';
+  }
+
+  @override
+  String viesStatusValid(String consultation, String date) {
+    return 'Valide · consultation $consultation · $date';
+  }
+
+  @override
+  String get viesTileTitle => 'Vérification du numéro de TVA (VIES)';
 
   @override
   String get visibilityAbout => 'Métier et présentation';

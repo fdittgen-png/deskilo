@@ -8,6 +8,8 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
+import 'package:deskilo/core/demo/data/vies_repository.dart';
+import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
@@ -341,6 +343,7 @@ List<Override> standardTestOverrides({
     // #2185 — favourites and ratings in memory.
     placeFeedbackRepositoryProvider
         .overrideWithValue(placeFeedback ?? FakePlaceFeedbackRepository()),
+    viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
     // #1855 — the booking-intent ledger and its scope: one fixed account
     // on one fixed server, so a test's intents never meet the device's.
     bookingIntentStoreProvider

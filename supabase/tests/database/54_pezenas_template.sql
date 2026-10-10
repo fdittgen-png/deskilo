@@ -259,6 +259,7 @@ begin
       "vatManagement": false,
       "vatRateHistory": false,
       "vatReport": false,
+      "viesVerification": false,
       "whatsappIntegration": false,
       "workingHours": true,
       "workspaceBranding": false,

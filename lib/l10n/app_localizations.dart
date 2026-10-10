@@ -9984,6 +9984,18 @@ abstract class AppLocalizations {
   /// **'Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.'**
   String get featureVatReportDesc;
 
+  /// #2354 VIES evidence: featureViesVerificationDesc
+  ///
+  /// In en, this message translates to:
+  /// **'A business customer\'s VAT number is checked against the EU\'s VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app.'**
+  String get featureViesVerificationDesc;
+
+  /// #2354 VIES evidence: featureViesVerificationTitle
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number check (VIES)'**
+  String get featureViesVerificationTitle;
+
   /// Feature toggle: WhatsApp affordances riding the directory
   ///
   /// In en, this message translates to:
@@ -14033,6 +14045,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it'**
   String get invoiceMissingVatZeroLine;
+
+  /// #2354 VIES evidence: invoiceMissingVies
+  ///
+  /// In en, this message translates to:
+  /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
+  String get invoiceMissingVies;
 
   /// Open tab empty state
   ///
@@ -32701,6 +32719,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'until'**
   String get vatUntil;
+
+  /// #2354 VIES evidence: viesCheckExplainer
+  ///
+  /// In en, this message translates to:
+  /// **'VIES is the EU\'s register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.'**
+  String get viesCheckExplainer;
+
+  /// #2354 VIES evidence: viesCheckFailed
+  ///
+  /// In en, this message translates to:
+  /// **'VIES could not be asked. Try again later.'**
+  String get viesCheckFailed;
+
+  /// #2354 VIES evidence: viesCheckNow
+  ///
+  /// In en, this message translates to:
+  /// **'Check now'**
+  String get viesCheckNow;
+
+  /// #2354 VIES evidence: viesStatusInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Not valid in VIES · {date}'**
+  String viesStatusInvalid(String date);
+
+  /// #2354 VIES evidence: viesStatusNone
+  ///
+  /// In en, this message translates to:
+  /// **'Not checked'**
+  String get viesStatusNone;
+
+  /// #2354 VIES evidence: viesStatusUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'VIES did not answer · {date}'**
+  String viesStatusUnavailable(String date);
+
+  /// #2354 VIES evidence: viesStatusValid
+  ///
+  /// In en, this message translates to:
+  /// **'Valid · consultation {consultation} · {date}'**
+  String viesStatusValid(String consultation, String date);
+
+  /// #2354 VIES evidence: viesTileTitle
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number check (VIES)'**
+  String get viesTileTitle;
 
   /// Visibility field: profession and bio.
   ///

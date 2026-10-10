@@ -82,7 +82,10 @@ consumer) and country decide which applies, never the mere presence of a
 VAT number; a consumer, at home or abroad, pays your VAT, so there is no
 separate intra-EU consumer treatment. The e-invoice check refuses to send
 a reverse-charge document until the customer's VAT number is present,
-because it is what proves the tax is theirs.
+because it is what proves the tax is theirs. Issuing one also needs
+evidence that the customer is a business: its VAT number found valid in
+VIES (the **VAT number check (VIES)** feature), whose consultation number
+the invoice keeps; when VIES does not answer, issuing waits.
 
 **When VAT falls due** is a workspace setting: *on invoices* (due when
 you issue) or *on receipts* (due the day the customer pays). France

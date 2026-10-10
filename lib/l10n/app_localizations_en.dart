@@ -5766,6 +5766,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.';
 
   @override
+  String get featureViesVerificationDesc =>
+      'A business customer\'s VAT number is checked against the EU\'s VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app.';
+
+  @override
+  String get featureViesVerificationTitle => 'VAT number check (VIES)';
+
+  @override
   String get featureWhatsappIntegration => 'WhatsApp integration';
 
   @override
@@ -8161,6 +8168,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceMissingVatZeroLine =>
       'A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it';
+
+  @override
+  String get invoiceMissingVies =>
+      'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';
@@ -18914,6 +18925,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatUntil => 'until';
+
+  @override
+  String get viesCheckExplainer =>
+      'VIES is the EU\'s register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.';
+
+  @override
+  String get viesCheckFailed => 'VIES could not be asked. Try again later.';
+
+  @override
+  String get viesCheckNow => 'Check now';
+
+  @override
+  String viesStatusInvalid(String date) {
+    return 'Not valid in VIES · $date';
+  }
+
+  @override
+  String get viesStatusNone => 'Not checked';
+
+  @override
+  String viesStatusUnavailable(String date) {
+    return 'VIES did not answer · $date';
+  }
+
+  @override
+  String viesStatusValid(String consultation, String date) {
+    return 'Valid · consultation $consultation · $date';
+  }
+
+  @override
+  String get viesTileTitle => 'VAT number check (VIES)';
 
   @override
   String get visibilityAbout => 'Profession and bio';

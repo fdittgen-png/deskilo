@@ -3837,6 +3837,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app.",
+  "featureViesVerificationTitle": "Verifica della partita IVA (VIES)",
   "featureWhatsappIntegration": "Integrazione WhatsApp",
   "featureWhatsappIntegrationDesc": "I membri condividono il loro numero WhatsApp nel profilo; un tocco su un membro apre la chat; il link del gruppo nella rubrica. Nessuna integrazione WhatsApp lato server.",
   "featureWorkingHours": "Orario di lavoro",
@@ -5310,6 +5312,7 @@
   "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
   "invoiceMissingVatTreatment": "Le fatture con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.",
   "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
+  "invoiceMissingVies": "Una verifica VIES valida della partita IVA del membro (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
   "invoiceNoOpen": "Nessuna fattura aperta.",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
   "invoiceOpenAge": "{days} giorni",
@@ -11737,6 +11740,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES è il registro europeo delle partite IVA. Una risposta valida, con il suo numero di consultazione, prova che questo cliente è un'impresa; una fattura in inversione contabile viene emessa solo dopo.",
+  "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi.",
+  "viesCheckNow": "Verifica ora",
+  "viesStatusInvalid": "Non valida in VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Non verificata",
+  "viesStatusUnavailable": "VIES non ha risposto · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Valida · consultazione {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "Verifica della partita IVA (VIES)",
   "visibilityAbout": "Professione e biografia",
   "visibilityAboutEmpty": "Aggiunga la sua professione e qualche parola",
   "visibilityAboutMe": "Su di me",

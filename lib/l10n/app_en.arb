@@ -6644,6 +6644,14 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "A business customer's VAT number is checked against the EU's VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app.",
+  "@featureViesVerificationDesc": {
+    "description": "#2354 VIES evidence: featureViesVerificationDesc"
+  },
+  "featureViesVerificationTitle": "VAT number check (VIES)",
+  "@featureViesVerificationTitle": {
+    "description": "#2354 VIES evidence: featureViesVerificationTitle"
+  },
   "featureWhatsappIntegration": "WhatsApp integration",
   "@featureWhatsappIntegration": {
     "description": "Feature toggle: WhatsApp affordances riding the directory"
@@ -9396,6 +9404,10 @@
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "@invoiceMissingVatZeroLine": {
     "description": "#1917 essentials key vat_line_zero_unexplained (0393)"
+  },
+  "invoiceMissingVies": "A valid VIES check of the member's VAT number (needed for reverse charge; if VIES did not answer, try again later)",
+  "@invoiceMissingVies": {
+    "description": "#2354 VIES evidence: invoiceMissingVies"
   },
   "invoiceNoOpen": "No open invoices.",
   "@invoiceNoOpen": {
@@ -21569,6 +21581,56 @@
   "vatUntil": "until",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "viesCheckExplainer": "VIES is the EU's register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.",
+  "@viesCheckExplainer": {
+    "description": "#2354 VIES evidence: viesCheckExplainer"
+  },
+  "viesCheckFailed": "VIES could not be asked. Try again later.",
+  "@viesCheckFailed": {
+    "description": "#2354 VIES evidence: viesCheckFailed"
+  },
+  "viesCheckNow": "Check now",
+  "@viesCheckNow": {
+    "description": "#2354 VIES evidence: viesCheckNow"
+  },
+  "viesStatusInvalid": "Not valid in VIES · {date}",
+  "@viesStatusInvalid": {
+    "description": "#2354 VIES evidence: viesStatusInvalid",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Not checked",
+  "@viesStatusNone": {
+    "description": "#2354 VIES evidence: viesStatusNone"
+  },
+  "viesStatusUnavailable": "VIES did not answer · {date}",
+  "@viesStatusUnavailable": {
+    "description": "#2354 VIES evidence: viesStatusUnavailable",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Valid · consultation {consultation} · {date}",
+  "@viesStatusValid": {
+    "description": "#2354 VIES evidence: viesStatusValid",
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "VAT number check (VIES)",
+  "@viesTileTitle": {
+    "description": "#2354 VIES evidence: viesTileTitle"
   },
   "visibilityAbout": "Profession and bio",
   "@visibilityAbout": {

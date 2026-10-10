@@ -1486,6 +1486,12 @@
       "capabilities": []
     },
     {
+      "key": "viesVerification",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "whatsappIntegration",
       "maturity": "unreviewed",
       "lifecycle": "active",

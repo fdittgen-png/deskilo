@@ -1123,6 +1123,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Place of supply per service",
     "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises."
+   ],
+   "viesVerification": [
+    "VAT number check (VIES)",
+    "A business customer's VAT number is checked against the EU's VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app."
    ]
   },
   "process": {
@@ -2465,6 +2469,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Lieu de prestation par service",
     "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux."
+   ],
+   "viesVerification": [
+    "Vérification du numéro de TVA (VIES)",
+    "Le numéro de TVA d'un client professionnel est vérifié auprès du service VIES de l'UE, et le numéro de consultation est conservé sur le membre et sur chaque facture. Une prestation générale autoliquidée par une entreprise d'un autre pays de l'UE n'est émise qu'après une vérification valide ; quand VIES ne répond pas, l'émission attend. Désactivé : ces factures sont émises hors de l'app."
    ]
   },
   "process": {
@@ -3807,6 +3815,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Leistungsort je Leistung",
     "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden."
+   ],
+   "viesVerification": [
+    "USt-IdNr.-Prüfung (VIES)",
+    "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt."
    ]
   },
   "process": {
@@ -5149,6 +5161,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Lugar de prestación por servicio",
     "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales."
+   ],
+   "viesVerification": [
+    "Comprobación del número de IVA (VIES)",
+    "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación."
    ]
   },
   "process": {
@@ -6491,6 +6507,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Luogo della prestazione per servizio",
     "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali."
+   ],
+   "viesVerification": [
+    "Verifica della partita IVA (VIES)",
+    "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app."
    ]
   },
   "process": {

@@ -91,7 +91,11 @@ Umsatzsteuer, eine eigene Behandlung für innergemeinschaftliche
 Verbraucher gibt es daher nicht. Die E-Rechnungsprüfung verweigert den
 Versand eines Dokuments mit Steuerschuldnerschaft des Empfängers, solange
 die Umsatzsteuer-ID der Kundin fehlt — sie ist der Nachweis, dass die
-Steuer die ihre ist.
+Steuer die ihre ist. Ausgestellt wird es zudem nur mit dem Nachweis, dass
+die Kundin ein Unternehmen ist: ihre Umsatzsteuer-ID, in VIES als gültig
+bestätigt (die Funktion **USt-IdNr.-Prüfung (VIES)**), deren
+Abfragenummer die Rechnung festhält; antwortet VIES nicht, wartet die
+Ausstellung.
 
 **Wann die MwSt. fällig wird**, ist eine Einstellung des Bereichs:
 *nach vereinbarten Entgelten* (fällig bei Ausstellung) oder *nach

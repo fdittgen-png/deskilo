@@ -315,8 +315,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the new value from its date, the old value stays on every '
                   'supply before it, and nothing is re-pointed. Off: one '
                   'value per rate.',
-        WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ??
-            AppLocalizationsEn().featureSupplyClassificationDesc,
+        WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ?? AppLocalizationsEn().featureSupplyClassificationDesc,
+        WorkspaceFeature.viesVerification => l10n?.featureViesVerificationDesc ?? AppLocalizationsEn().featureViesVerificationDesc,
         WorkspaceFeature.vatCounterparty =>
           l10n?.featureVatCounterpartyDesc ??
               'Who the buyer is for VAT, set on each member: domestic VAT, '

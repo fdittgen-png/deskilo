@@ -3837,6 +3837,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.",
+  "featureViesVerificationTitle": "Comprobación del número de IVA (VIES)",
   "featureWhatsappIntegration": "Integración con WhatsApp",
   "featureWhatsappIntegrationDesc": "Los miembros comparten su número de WhatsApp en su perfil; un toque en un miembro abre el chat; el enlace del grupo en el directorio. Sin integración de WhatsApp en el servidor.",
   "featureWorkingHours": "Horario laboral",
@@ -5310,6 +5312,7 @@
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
   "invoiceMissingVatTreatment": "Las facturas con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.",
   "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
+  "invoiceMissingVies": "Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)",
   "invoiceNoOpen": "No hay facturas abiertas.",
   "invoiceNothingToInvoice": "Nada registrado este mes — nada que facturar.",
   "invoiceOpenAge": "{days} días",
@@ -11737,6 +11740,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.",
+  "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde.",
+  "viesCheckNow": "Comprobar ahora",
+  "viesStatusInvalid": "No válido en VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Sin comprobar",
+  "viesStatusUnavailable": "VIES no respondió · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Válido · consulta {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "Comprobación del número de IVA (VIES)",
   "visibilityAbout": "Profesión y biografía",
   "visibilityAboutEmpty": "Añada su profesión y unas palabras",
   "visibilityAboutMe": "Sobre mí",
