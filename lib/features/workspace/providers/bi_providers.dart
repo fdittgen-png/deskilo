@@ -16,6 +16,7 @@ import '../domain/bi_analysis.dart';
 import '../domain/bi_modules.dart';
 import '../domain/bi_query.dart';
 import '../data/supabase_bi_view_repository.dart';
+import '../data/supabase_kpi_repository.dart';
 import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
@@ -25,6 +26,10 @@ part 'bi_providers.g.dart';
 
 /// The most groups one module asks the server for at once.
 const biGroupBudget = 12;
+
+/// A refused context is final; the rest retries as the KPI reads do.
+Duration? biRetry(int retryCount, Object error) =>
+    error is BiRefused ? null : kpiRetry(retryCount, error);
 
 /// The workspace date the relative periods resolve against.
 DateTime biToday(Ref ref) =>
@@ -37,7 +42,7 @@ DateTime biToday(Ref ref) =>
   to: WorkspaceTime.at(p.year, p.startMonth + p.grain.months, 1),
 );
 
-@riverpod
+@Riverpod(retry: biRetry)
 Future<BiResult> biModuleResult(
   Ref ref,
   String workspaceId,
@@ -82,7 +87,7 @@ int biSeriesLength(BiGrain grain) => switch (grain) {
 /// period; a period the data does not know (before the history, or a read
 /// that failed) is a gap in the series, never a zero, and never fails the
 /// others.
-@riverpod
+@Riverpod(retry: biRetry)
 Future<BiSeries> biModuleSeries(
   Ref ref,
   String workspaceId,

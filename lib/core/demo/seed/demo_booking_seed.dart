@@ -8,6 +8,7 @@
 import '../../../features/reservations/domain/reservation.dart';
 import '../data/floor_plan_repository.dart';
 import '../data/reservation_repository.dart';
+import '../demo_clock.dart';
 import 'demo_space_seed.dart';
 
 /// Adds the extra bookings to [reservations] around [now].
@@ -18,9 +19,10 @@ void seedDemoBookings(
 ) {
   // The window seat: the plan's first, whatever id the plan gave it.
   final window = plan.seats.first.id;
-  final day = DateTime(now.year, now.month, now.day);
+  // #2327 — hours on the space's clock, never the device's.
+  final day = demoDateOf(now);
   DateTime at(int dayOffset, int hour) =>
-      day.add(Duration(days: dayOffset, hours: hour));
+      demoAt(day.year, day.month, day.day + dayOffset, hour);
   Reservation booking(
     String id,
     String member,

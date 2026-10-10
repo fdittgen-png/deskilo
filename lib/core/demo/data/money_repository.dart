@@ -30,6 +30,7 @@ import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'event_repository.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import 'workspace_status_computation.dart';
 import '../../../features/money/domain/reminder_evidence.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
@@ -395,14 +396,14 @@ class FakeMoneyRepository implements MoneyRepository {
     billingRules = rules;
   }
 
-  /// #934 — the status the fake answers with, and the remembered rule.
+  /// #934 — the status the fake answers with (#2327: else computed).
   WorkspaceStatus? status;
   RepartitionRule repartitionRule = const RepartitionRule();
 
   @override
   Future<WorkspaceStatus> fetchWorkspaceStatus(
           String workspaceId, String from, String to) async =>
-      status ?? WorkspaceStatus(from: from, to: to, currency: 'EUR');
+      status ?? demoWorkspaceStatus(this, from, to);
 
   @override
   Future<RepartitionRule> fetchRepartitionRule(String workspaceId) async =>
