@@ -15671,6 +15671,54 @@ class AppLocalizationsDe extends AppLocalizations {
   String get seriesSkippedTitle => 'Übersprungen (bereits belegt):';
 
   @override
+  String get serverChoiceExistingTitle => 'Ein bestehender Server';
+
+  @override
+  String get serverChoiceIntro =>
+      'Diese Version von DesKilo kommt ohne Server. Wählen Sie, wo Ihre Spaces liegen. Sie können das später unter Einstellungen → Erweitert → Server ändern.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Legen Sie ein kostenloses Supabase-Projekt an und lassen Sie die App alles installieren, was DesKilo braucht: das Schema, die Funktionen und die Anmelderegeln.';
+
+  @override
+  String get serverChoiceNewTitle => 'Ein eigener neuer Server';
+
+  @override
+  String get serverChoiceReferenceAction => 'Referenzserver verwenden';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Betrieben vom Autor von DesKilo mit derselben freien Software wie jeder andere Server. Er trägt auch das globale Verzeichnis der Spaces.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'Der Referenzserver';
+
+  @override
+  String get serverChoiceTitle => 'Server wählen';
+
+  @override
+  String get serverConnectIntro =>
+      'Treten Sie einem Server bei, auf dem Sie bereits ein Konto haben, oder legen Sie einen neuen an.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'Noch kein Konto dort? Verwenden Sie diesen Server auf diesem Gerät und registrieren Sie sich dort.';
+
+  @override
+  String get serverConnectNoCode =>
+      'Die Zwischenablage enthält keinen Servercode.';
+
+  @override
+  String get serverConnectPasteCode => 'Servercode einfügen';
+
+  @override
+  String get serverConnectReference => 'Referenzserver';
+
+  @override
+  String get serverConnectUseHere => 'Auf diesem Gerät verwenden';
+
+  @override
   String get serviceOutOfStock => 'Ausverkauft';
 
   @override

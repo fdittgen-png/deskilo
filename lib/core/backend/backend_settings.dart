@@ -12,7 +12,10 @@ import '../instance/schema_compatibility.dart';
 import '../trace/trace_logger.dart';
 import 'backend_config.dart';
 import 'backend_key.dart';
+import 'reference_backend.dart';
 import 'schema_version.dart';
+
+export 'reference_backend.dart';
 
 part 'backend_settings.g.dart';
 
@@ -228,14 +231,17 @@ class ActiveBackend extends _$ActiveBackend {
   @override
   Future<BackendEndpoint> build() async =>
       await ref.watch(backendSettingsStoreProvider).read() ??
-      const BackendEndpoint(
-        BackendConfig.supabaseUrl,
-        BackendConfig.supabaseKey,
-      );
+      compiledDefaultEndpoint ??
+      // #2343 — a build without a default is only ever running here
+      // once a server was chosen; the reference is the honest fallback
+      // for a store emptied behind the process's back.
+      referenceEndpoint;
 
-  /// True while this device uses the app's own default instance.
-  static bool isDefault(BackendEndpoint endpoint) =>
-      endpoint.url == BackendConfig.supabaseUrl;
+  /// True while this device uses the app's own default instance — in a
+  /// build that ships none (#2343), the reference deployment it offers.
+  static bool isDefault(BackendEndpoint endpoint) => BackendConfig.hasDefault
+      ? endpoint.url == BackendConfig.supabaseUrl
+      : isReferenceBackend(endpoint.url);
 
   /// Stores a custom endpoint; null resets to the default. Takes effect
   /// on the next start — `Supabase.initialize` runs once per process, so
@@ -251,7 +257,12 @@ class ActiveBackend extends _$ActiveBackend {
     await store.writeSwitch(
       pending ?? BackendSwitchRecord(previous: previous),
     );
-    await store.write(endpoint);
+    // #2343 — "the app's server" in a build that ships none is the
+    // reference deployment, stored by name: an empty store there means
+    // "ask at the next start", which nobody asked for here.
+    await store.write(
+      endpoint ?? (BackendConfig.hasDefault ? null : referenceEndpoint),
+    );
     ref.invalidateSelf();
   }
 

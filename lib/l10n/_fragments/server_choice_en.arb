@@ -1,0 +1,16 @@
+{
+  "serverChoiceTitle": "Choose your server",
+  "serverChoiceIntro": "This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.",
+  "serverChoiceReferenceTitle": "The reference server",
+  "serverChoiceReferenceBody": "Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.",
+  "serverChoiceReferenceAction": "Use the reference server",
+  "serverChoiceExistingTitle": "A server that already exists",
+  "serverChoiceNewTitle": "A new server of your own",
+  "serverChoiceNewBody": "Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.",
+  "serverConnectIntro": "Join a server where you already have an account, or create a new one.",
+  "serverConnectReference": "Reference server",
+  "serverConnectPasteCode": "Paste a server code",
+  "serverConnectNoCode": "The clipboard holds no server code.",
+  "serverConnectNoAccount": "No account there yet? Use this server on this device and sign up there.",
+  "serverConnectUseHere": "Use on this device"
+}
