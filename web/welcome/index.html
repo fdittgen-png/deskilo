@@ -51,6 +51,9 @@
   <symbol id="i-fdroid" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="3"/><path d="M7 9L5 5.5M17 9l2-3.5"/><circle cx="12" cy="14.5" r="2.5"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5 2 2 0 0 0 2 2.5h14v-5"/><path d="M8 7.5h8M8 11h5"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5"/></symbol>
+  <symbol id="i-rec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
 </svg>
@@ -66,9 +69,11 @@
     <nav class="nav-links" id="nav-links" aria-label="Sections">
       <a href="#tour" data-i18n="nav.tour">Tour</a>
       <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#yours" data-i18n="nav.yours">Made to measure</a>
       <a href="#why" data-i18n="nav.why">Why DesKilo</a>
       <a href="#hosting" data-i18n="nav.hosting">Hosting</a>
       <a href="#start" data-i18n="nav.start">Get started</a>
+      <a href="#guide" data-i18n="nav.guide">Guide</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
     <div class="nav-tools">
@@ -359,6 +364,114 @@
         <h3 data-i18n="f14.t">Your look, your words</h3>
         <p data-i18n="f14.p">Colours, a pattern, your own wording and guided tours recorded in the app.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- MAKE IT YOURS -->
+<section class="section" id="yours">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker" data-i18n="yrs.kicker">Made to measure</p>
+      <h2 data-i18n="yrs.title">Each space, set up the way it works.</h2>
+      <p class="sub" data-i18n="yrs.sub">Switch features on one by one, start from another space's template, print in your own layout and show newcomers how things are done — all from inside the app.</p>
+    </header>
+    <div class="show">
+      <article class="show-row">
+        <div class="show-copy reveal">
+          <span class="vic teal"><svg class="ic"><use href="#i-tune"/></svg></span>
+          <h3 data-i18n="y1.t">Configured feature by feature</h3>
+          <p data-i18n="y1.p">Every workspace switches its features on or off for itself, on the Features screen: Series booking, Kiosk mode, Online payments, Public holidays, Task recorder and many more. Each switch says what it does, what it needs first and how mature it is.</p>
+          <ul class="ticks">
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y1.b1">Search by name, or browse the features by process</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y1.b2">Switched off, a feature's screens disappear; the data already stored stays untouched</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y1.b3">The setup questionnaire prepares the same choices in advance</span></li>
+          </ul>
+        </div>
+        <div class="show-shot reveal"><div class="phone"><div class="screen"><img data-shot="features-switches" src="img/features-switches.en.webp" alt="The Features screen: one switch per feature" data-i18n-alt="alt.features" width="468" height="922" loading="lazy"></div></div></div>
+      </article>
+      <article class="show-row flip">
+        <div class="show-copy reveal">
+          <span class="vic amber"><svg class="ic"><use href="#i-layers"/></svg></span>
+          <h3 data-i18n="y2.t">Start from a template</h3>
+          <p data-i18n="y2.p">A workspace can save itself as a template: its floor plan and how it works — the feature collection together with its settings, such as opening hours, prices, roles and wording. Another workspace then starts ready-made from it, or applies it later after previewing every change.</p>
+          <ul class="ticks">
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y2.b1">You choose who may see it: only you, people you invite by e-mail, or everyone in the library</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y2.b2">Bank details, legal identity, addresses and document links never travel with it</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y2.b3">The space file (XML) can carry a whole configuration from one space to another, too</span></li>
+          </ul>
+        </div>
+        <div class="show-shot reveal"><div class="phone"><div class="screen"><img data-shot="setup-before-template" src="img/setup-before-template.en.webp" alt="A new space starting from a template" data-i18n-alt="alt.template" width="468" height="922" loading="lazy"></div></div></div>
+      </article>
+      <article class="show-row">
+        <div class="show-copy reveal">
+          <span class="vic red"><svg class="ic"><use href="#i-doc"/></svg></span>
+          <h3 data-i18n="y3.t">Reports in your own layout</h3>
+          <p data-i18n="y3.p">The report editor lays out invoices, proformas, statements, reminders and the other documents on a real A4 page. Edit a line where it sits, drag to reorder, insert your logo or a signature, then preview with your own data before you save.</p>
+          <ul class="ticks">
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y3.b1">Start from a ready-made design: Professional, Classic, Simple, Detailed or Formal letter</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y3.b2">One design for all languages, or a design of its own per language</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y3.b3">Export a design as a file and import it into another space</span></li>
+          </ul>
+        </div>
+        <div class="show-shot reveal"><div class="phone"><div class="screen"><img data-shot="money-reports-editor" src="img/money-reports-editor.en.webp" alt="The report editor" data-i18n-alt="alt.report" width="468" height="922" loading="lazy"></div></div></div>
+      </article>
+      <article class="show-row flip">
+        <div class="show-copy reveal">
+          <span class="vic teal"><svg class="ic"><use href="#i-rec"/></svg></span>
+          <h3 data-i18n="y4.t">Task recorder and guided wizards</h3>
+          <p data-i18n="y4.p">Record a task once: each step notes the screen, the action and what the app answered, such as Booked or Refused. The recording documents a procedure or a test case and exports as a Word document; with values captured on purpose, it becomes an issue report a developer can reproduce. Turn it into a guide, and the task wizard walks the next person through the task step by step, on the real app.</p>
+          <ul class="ticks">
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y4.b1">Stays on the device: nothing is uploaded until you export it</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y4.b2">Passwords, payment details and protected screens are never recorded</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="y4.b3">Guides that come with the app, such as “Book a place”</span></li>
+          </ul>
+        </div>
+        <div class="show-shot pair reveal">
+          <div class="phone"><div class="screen"><img data-shot="advanced-record" src="img/advanced-record.en.webp" alt="The task recorder" data-i18n-alt="alt.recorder" width="468" height="922" loading="lazy"></div></div>
+          <div class="phone"><div class="screen"><img data-shot="advanced-wizard" src="img/advanced-wizard.en.webp" alt="The task wizard and its guides" data-i18n-alt="alt.wizard" width="468" height="922" loading="lazy"></div></div>
+        </div>
+      </article>
+    </div>
+    <aside class="extend reveal">
+      <span class="vic"><svg class="ic"><use href="#i-spark"/></svg></span>
+      <div class="extend-copy">
+        <h3 data-i18n="ext.t">Extensions and exclusive features, on request</h3>
+        <p data-i18n="ext.p">Need something DesKilo does not do yet? Customisations and extensions can be commissioned from the author — including exclusive features built for your space only.</p>
+      </div>
+      <a class="btn btn-light" href="https://github.com/fdittgen-png"><svg class="ic"><use href="#i-github"/></svg><span data-i18n="ext.a">Contact the author on GitHub</span></a>
+    </aside>
+  </div>
+</section>
+
+<!-- USER GUIDE -->
+<section class="section band" id="guide">
+  <div class="wrap guide-in">
+    <div class="guide-copy">
+      <header class="sec-head left reveal">
+        <p class="kicker" data-i18n="gd.kicker">Learn as you go</p>
+        <h2 data-i18n="gd.title">A user guide in your language.</h2>
+        <p class="sub" data-i18n="gd.sub">Every screen explained step by step, with screenshots of the app in English, French, German, Spanish and Italian. Each section names who it is for — member, administrator or owner — and the same guide is built into the app as its help.</p>
+      </header>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary guide-link" href="https://fdittgen-png.github.io/deskilo/guide/en.html"><svg class="ic"><use href="#i-book"/></svg><span data-i18n="gd.a">Read the user guide</span></a>
+        <a class="btn btn-ghost setup-guide-link" href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html"><span data-i18n="gd.b">Read the setup guide</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      </div>
+      <p class="hint reveal" data-i18n="gd.hint">The setup guide explains the why, the order and the consequences of setting a space up — open, run, grow.</p>
+    </div>
+    <div class="toc reveal">
+      <div class="toc-head"><svg class="ic"><use href="#i-book"/></svg><b data-i18n="gd.toc">User guide</b></div>
+      <ol>
+        <li data-i18n="gd.c1">Getting started</li>
+        <li data-i18n="gd.c2">Reserve</li>
+        <li data-i18n="gd.c3">Collaborate</li>
+        <li data-i18n="gd.c4">Settings &amp; profile</li>
+        <li data-i18n="gd.c5">Money</li>
+        <li data-i18n="gd.c6">Your space, set up by you</li>
+        <li data-i18n="gd.c7">Members, plans and billing</li>
+        <li data-i18n="gd.c8">Tax, invoicing and accounting</li>
+        <li data-i18n="gd.c9">Advanced</li>
+      </ol>
     </div>
   </div>
 </section>
