@@ -276,7 +276,7 @@ GoRouter router(Ref ref) {
       return decision.redirect;
     },
     routes: [
-      GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      GoRoute(path: '/auth', builder: (_, s) => AuthScreen(offerDemo: s.uri.queryParameters['demo'] == '1')),
       GoRoute(path: '/me', builder: (context, state) => // #1823 the Me layer
           MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab']))),
       GoRoute(

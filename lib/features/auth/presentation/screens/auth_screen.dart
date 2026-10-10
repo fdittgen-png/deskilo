@@ -27,7 +27,13 @@ import '../widgets/verification_pending_view.dart';
 /// Email + password sign-in / sign-up. Navigation after success is handled
 /// by the router's auth redirect, not by this screen.
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, this.offerDemo = false});
+
+  /// #2400 — `/auth?demo=1`, the welcome page's "Try the demo": the
+  /// demonstration's explanation opens by itself, so a visitor does not
+  /// have to find the button first. It is the same sheet, and it still
+  /// asks before anything starts.
+  final bool offerDemo;
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
@@ -59,6 +65,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   /// The address a confirmation e-mail went to, while the form gives way
   /// to the check-e-mail state. Null on the form.
   String? _pendingEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.offerDemo) _offerDemo();
+  }
+
+  @override
+  void didUpdateWidget(AuthScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.offerDemo && !oldWidget.offerDemo) _offerDemo();
+  }
+
+  void _offerDemo() => WidgetsBinding.instance.addPostFrameCallback(
+      (_) => mounted ? offerDemoEntry(context, ref) : null);
 
   @override
   void dispose() {

@@ -10,6 +10,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/entry_intent.dart';
 import 'package:deskilo/app/entry_intents.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
+import 'package:deskilo/core/demo/demo_entry.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -103,6 +104,19 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('auth-server')));
     await tester.pumpAndSettle();
     expect(router.state.uri.toString(), '/server');
+  });
+
+  // #2400 — the welcome page's "Try the demo" lands on /auth?demo=1.
+  testWidgets('a demo link opens the explanation, which still asks first',
+      (tester) async {
+    final router = await pump(tester);
+    expect(find.byKey(const Key('demo-entry-start')), findsNothing,
+        reason: 'the plain sign-in screen offers, it does not open');
+    router.go('/auth?demo=1');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('demo-entry-start')), findsOneWidget);
+    expect(container.read(demoEntryProvider), isFalse,
+        reason: 'reading the explanation is not consenting to it');
   });
 
   testWidgets('the join errand survives to the join form after sign-in',
