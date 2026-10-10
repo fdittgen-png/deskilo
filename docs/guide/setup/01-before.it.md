@@ -54,9 +54,10 @@ Vuole conoscere la strada più breve verso uno spazio prenotabile. L’app tiene
 
 1. **Giorni di apertura, fuso orario e valuta**: un fuso orario, una valuta e almeno un giorno della settimana aperto.
 2. **Posti prenotabili sulla planimetria**: almeno un posto.
-3. **Ruoli e chi convalida le richieste**: conta solo quando una regola sulle prenotazioni chiede più validatori di quanti ne abbia lo spazio. Una regola che chiede due approvazioni, con lei sola nello spazio, lascerebbe le richieste in attesa per sempre.
+3. **Ruoli e chi convalida le richieste**: conta solo quando una regola di convalida, di qualsiasi tipo, chiede più validatori di quanti ne abbia lo spazio. Una regola che chiede due approvazioni, con lei sola nello spazio, lascerebbe le richieste in attesa per sempre.
+4. **Cosa possono fare i membri**: i membri possiedono **Prenotare e usare le prenotazioni**. Un nuovo spazio non concede loro nulla, quindi un membro che entra non può prenotare finché lei non lo spunta in [Ruoli](app:/roles).
 
-Una quarta riga, **Server e versione del database**, blocca soltanto quando il server è indietro rispetto a questa app; in quel caso si attende l’operatore del server.
+Un’altra riga, **Server e versione del database**, blocca soltanto quando il server è indietro rispetto a questa app; in quel caso si attende l’operatore del server. E finché **Fatture** è attiva, è richiesta anche **L'identità legale e l'indirizzo dello spazio**: l’elenco la segna **Necessario prima di fatturare**, perché senza di essa non si può emettere alcuna fattura.
 
 *Che cosa è facoltativo e può essere rimandato*
 
@@ -72,8 +73,8 @@ Ognuno di questi passaggi può essere messo da parte con **Più tardi** e ripres
 **Da sapere**
 
 - L’elenco indica chi deve agire: **Lei**, **L’operatore del server** o **Un amministratore del database**.
-- Facoltativo non significa poco importante: quando emette fatture, la sua identità legale è richiesta per quella funzionalità. L’elenco la chiama un dato richiesto dalle funzioni.
-- Se attiva la fatturazione senza identità legale, l’app lo consente; rifiuta al momento di emettere una fattura e dice che cosa manca.
+- Facoltativo non significa poco importante: coordinate bancarie, un fornitore di pagamento o una sede sono dati richiesti dalle funzioni, e l’elenco li indica.
+- Se attiva la fatturazione senza identità legale, l’app lo consente; l’elenco e [Che cosa richiede la Sua attenzione](help:user.collaborate.attention) la segnalano, e l’emissione di una fattura viene rifiutata, dicendo che cosa manca.
 
 **Vedi anche:** [Verificare il suo spazio](help:setup.place.check) · [La scheda Primi passi e i suggerimenti](help:user.start.get-started)
 
@@ -118,7 +119,7 @@ Vuole un vantaggio iniziale senza essere vincolato alle scelte di altri. Quando 
 
 **Da sapere**
 
-- Un modello non contiene mai la sua identità legale, le coordinate bancarie, le sedi, gli inviti o i link ai documenti: sono suoi, e l’elenco di preparazione li indica come dati richiesti dalle funzioni.
+- Un modello non contiene mai la sua identità legale, le coordinate bancarie, le sedi, gli inviti o i link ai documenti: sono suoi, e l’elenco di preparazione li indica (l’identità legale, con **Fatture** attiva, come un’area a sé).
 - Uno spazio creato da un modello può avere la fatturazione attiva e nulla con cui emettere finché non aggiunge l’identità.
 - Applicare un modello a uno spazio che ha già delle tariffe sostituisce le sue fasce di tariffa: lo usi su uno spazio nuovo.
 
@@ -162,7 +163,7 @@ Vuole sapere su quali scelte rallentare. La maggior parte delle impostazioni si 
 | Formato e sequenza del numero di fattura | Il numero successivo può essere aumentato, mai diminuito. Dopo la prima fattura non può più stampare una parte della data inferiore a quella che la serie mostra. | Veda l’anteprima del formato, chieda al commercialista, poi emetta. |
 | Il mese di una fattura emessa | Quando il mese di un membro è fatturato, è bloccato; i giorni di chiusura e le importazioni dei giorni festivi lo saltano. | Imposti i giorni di chiusura prima della fine del mese. |
 | Regime IVA e aliquote | Le aliquote hanno una versione per data e non si modificano mai; una dichiarazione IVA trasmessa non viene mai ricalcolata. | Aggiunga una nuova aliquota da una data; decida il regime con il commercialista. |
-| Paese, valuta, fuso orario | Gli importi sono memorizzati come numeri, senza conversione: cambiare la valuta quando esiste già del denaro non è sicuro. | Li scelga bene il primo giorno; veda [Costruire il luogo](help:setup.place.overview). |
+| Paese, valuta, fuso orario | Gli importi sono memorizzati come numeri, senza conversione. Quando lo spazio ha emesso un documento o registrato denaro, il server rifiuta qualsiasi cambio di valuta o paese. Il fuso orario non è mai bloccato, ma ogni giorno si conta in esso. | Li scelga bene il primo giorno; veda [Costruire il luogo](help:setup.place.overview). |
 | Sostituzione della planimetria | L’importazione di una pianta viene rifiutata quando esistono prenotazioni. | Modifichi piani e sale uno per uno nell’editor. |
 | ID dello spazio | È ciò che i membri digitano e ciò a cui puntano i codici QR stampati. Può cambiarlo (da 4 a 20 lettere o cifre) con **Cambia l'ID dello spazio**, ma il vecchio ID smette subito di funzionare. | Scelga un ID breve e facile da ricordare prima di stampare qualsiasi cosa; se deve, lo cambi presto. |
 | Prova o reale | Uno spazio reale emette fatture dovute; i documenti di sviluppo portano una filigrana. | Cominci in uno spazio di prova, poi rilasci quando è pronto. |

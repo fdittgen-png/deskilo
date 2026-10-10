@@ -86,7 +86,7 @@ Vuole che ogni ruolo detenga ciò che gli serve e nient’altro. È il principio
 
 Un amministratore non detiene **Gestire ruoli e permessi**, **Configurare le regole di convalida**, **Modificare le impostazioni dello spazio**, **Gestire tariffe e regole di fatturazione**, **Progettare i documenti**, **Gestire le integrazioni**, **Gestire la configurazione** né **Distribuire in produzione**. Un comproprietario li detiene tutti finché Lei non ne toglie qualcuno. Il proprietario li detiene sempre tutti.
 
-> **Attenzione** In un nuovo spazio la scheda **Utente** è vuota. I sei permessi quotidiani (**Usare la messaggistica**, **Prenotare e usare le prenotazioni**, **Vedere il calendario**, **Vedere l'elenco dei membri**, **Vedere il proprio conto e le proprie fatture**, **Vedere i documenti condivisi**) si detengono solo tramite la matrice o un ruolo. Finché non li spunta, un membro che entra non può aprire la planimetria. La demo li mostra già spuntati, e questo lo nasconde. Li spunti per la scheda **Utente** e, se anche gli amministratori prenotano, per la scheda **Amministratore**, poi provi con un secondo account.
+> **Attenzione** In un nuovo spazio la scheda **Utente** è vuota. I sei permessi quotidiani (**Usare la messaggistica**, **Prenotare e usare le prenotazioni**, **Vedere il calendario**, **Vedere l'elenco dei membri**, **Vedere il proprio conto e le proprie fatture**, **Vedere i documenti condivisi**) si detengono solo tramite la matrice o un ruolo. Finché non li spunta, un membro che entra non può aprire la planimetria. La demo li mostra già spuntati, e questo lo nasconde. **Configurazione di questo spazio** mostra **Cosa possono fare i membri** come **Necessario per una prima prenotazione** finché la scheda **Utente** non possiede **Prenotare e usare le prenotazioni**; gli altri cinque non li controlla. Li spunti per la scheda **Utente** e, se anche gli amministratori prenotano, per la scheda **Amministratore**, poi provi con un secondo account.
 
 **Da sapere**
 
@@ -321,7 +321,7 @@ Vuole essere certo che ogni richiesta per cui crea una regola possa ricevere una
 
 1. Apra [Regole di convalida](app:/validation) e legga ogni scheda personalizzata: «Tutti gli admin — qualsiasi 2» significa due persone.
 2. Apra [Membri e piani](app:/members). Conti i proprietari e gli amministratori attivi. Le persone in pausa o uscite non contano.
-3. Apra **Configurazione di questo spazio** in [Spazio di lavoro](app:/workspace-settings). L’area **Ruoli e chi convalida le richieste** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» quando ne conta troppo pochi. Blocca la prima prenotazione solo quando la regola riguarda le prenotazioni.
+3. Apra **Configurazione di questo spazio** in [Spazio di lavoro](app:/workspace-settings). L’area **Ruoli e chi convalida le richieste** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» quando ne conta troppo pochi. L’area diventa allora obbligatoria, qualunque sia il tipo di richiesta, e [Che cosa richiede la Sua attenzione](help:user.collaborate.attention) la segnala.
 4. Apra [Eventi](app:/events). **In attesa della tua conferma** mostra ciò che attende, e una riga mostra «1/2 validazioni».
 
 **Da sapere**

@@ -7,6 +7,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
@@ -141,11 +142,15 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
                   'Automatic payment reminders',
               anchor: HelpAnchor.remindersAutomatic,
             ),
-            subtitle: Text(l10n?.dunningAutomaticHint ??
-                'Once a day, open invoices past the term get their next '
-                    'reminder level by themselves — an alert in the '
-                    'member\'s feed and a push. Off: you send each '
-                    'reminder yourself.'),
+            // #2332 — and when "once a day" actually happens.
+            subtitle: Text([
+              l10n?.dunningAutomaticHint ??
+                  'Once a day, open invoices past the term get their next '
+                      'reminder level by themselves — an alert in the '
+                      'member\'s feed and a push. Off: you send each '
+                      'reminder yourself.',
+              (l10n ?? AppLocalizationsEn()).paymentRemindersWhen,
+            ].join(' ')),
             value: _rules.automatic,
             onChanged: (v) =>
                 setState(() => _rules = _rules.copyWith(automatic: v)),

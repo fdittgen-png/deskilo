@@ -54,9 +54,10 @@ Usted quiere conocer el camino más corto hacia un espacio que se pueda reservar
 
 1. **Días de apertura, zona horaria y moneda**: una zona horaria, una moneda y al menos un día de apertura.
 2. **Puestos reservables en el plano**: al menos un asiento.
-3. **Roles y quién valida las solicitudes**: solo cuenta cuando una regla sobre reservas exige más validadores de los que tiene el espacio. Una regla que pida dos aprobaciones cuando usted está solo en el espacio dejaría las solicitudes esperando para siempre.
+3. **Roles y quién valida las solicitudes**: solo cuenta cuando una regla de validación, de cualquier tipo, exige más validadores de los que tiene el espacio. Una regla que pida dos aprobaciones cuando usted está solo en el espacio dejaría las solicitudes esperando para siempre.
+4. **Lo que pueden hacer los miembros**: los miembros tienen **Reservar y usar las reservas**. Un espacio nuevo no les concede nada, así que un miembro que se une no puede reservar hasta que usted lo marque en [Roles](app:/roles).
 
-Una cuarta fila, **Servidor y versión de la base de datos**, solo bloquea cuando el servidor va por detrás de esta aplicación; entonces espera al operador del servidor.
+Una fila más, **Servidor y versión de la base de datos**, solo bloquea cuando el servidor va por detrás de esta aplicación; entonces espera al operador del servidor. Y mientras **Facturas** está activada, **La identidad legal y la dirección del espacio** también es obligatoria: la lista la marca como **Necesario antes de facturar**, porque sin ella no se puede emitir ninguna factura.
 
 *Lo que es opcional y puede dejarse para más tarde*
 
@@ -72,8 +73,8 @@ Cada uno de estos pasos puede aplazarse con **Más adelante** y recuperarse desp
 **Conviene saber**
 
 - La lista nombra quién actúa: **Usted**, **El operador del servidor** o **Un administrador de la base de datos**.
-- Opcional no significa poco importante: en cuanto factura, su identidad legal es obligatoria para esa función. La lista la llama un dato que necesitan sus funciones.
-- Si activa la facturación sin identidad legal, la aplicación se lo permite; se niega en el momento de emitir una factura y dice qué falta.
+- Opcional no significa poco importante: los datos bancarios, un proveedor de pagos o una sede son datos que necesitan sus funciones, y la lista los nombra.
+- Si activa la facturación sin identidad legal, la aplicación se lo permite; la lista y [Lo que le necesita](help:user.collaborate.attention) la nombran, y la emisión de una factura se rechaza indicando qué falta.
 
 **Véase también:** [Revisar su espacio](help:setup.place.check) · [La tarjeta Primeros pasos y los consejos](help:user.start.get-started)
 
@@ -118,7 +119,7 @@ Usted quiere una ventaja inicial sin quedar atado a las decisiones de otros. Al 
 
 **Conviene saber**
 
-- Una plantilla nunca incluye su identidad legal, sus datos bancarios, sus sedes, sus invitaciones ni los enlaces a documentos: eso es cosa suya, y la lista de preparación lo nombra como datos que necesitan sus funciones.
+- Una plantilla nunca incluye su identidad legal, sus datos bancarios, sus sedes, sus invitaciones ni los enlaces a documentos: eso es cosa suya, y la lista de preparación lo nombra (la identidad legal, con **Facturas** activada, como un ámbito propio).
 - Un espacio creado con una plantilla puede tener la facturación activada y nada con lo que emitir hasta que añada la identidad.
 - Aplicar una plantilla a un espacio que ya tiene tarifas sustituye sus tramos de cuota: úsela en un espacio nuevo.
 
@@ -162,7 +163,7 @@ Usted quiere saber en qué decisiones conviene ir despacio. La mayoría de los a
 | Formato y secuencia del número de factura | El siguiente número puede subirse, nunca bajarse. Tras la primera factura ya no se puede imprimir menos de la fecha que muestra la serie. | Previsualice el formato, consulte a su contable y después emita. |
 | El mes de una factura emitida | Una vez facturado el mes de un miembro queda bloqueado; los días de cierre y las importaciones de días festivos lo omiten. | Fije los días de cierre antes de fin de mes. |
 | Régimen de IVA y tipos | Los tipos se versionan por fecha y nunca se editan; una declaración de IVA presentada no se vuelve a calcular. | Añada un tipo nuevo desde una fecha; decida el régimen con su contable. |
-| País, moneda, zona horaria | Los importes se guardan como números, sin conversión, así que cambiar la moneda cuando ya hay dinero es arriesgado. | Elíjalos bien desde el primer día; véase [Construir el lugar](help:setup.place.overview). |
+| País, moneda, zona horaria | Los importes se guardan como números, sin conversión. En cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cualquier cambio de moneda o de país. La zona horaria nunca se bloquea, pero cada día se cuenta en ella. | Elíjalos bien desde el primer día; véase [Construir el lugar](help:setup.place.overview). |
 | Sustitución del plano | Se rechaza importar un plano cuando ya hay reservas. | Edite las plantas y las salas una por una en el editor. |
 | ID del espacio | Es lo que escriben los miembros y lo que señalan los códigos QR impresos. Puede cambiarlo (de 4 a 20 letras o cifras) con **Cambiar el ID del espacio**, pero el ID antiguo deja de funcionar de inmediato. | Elija un ID corto y fácil de recordar antes de imprimir nada; cámbielo pronto si debe hacerlo. |
 | Prueba o real | Un espacio real emite facturas exigibles; los documentos de desarrollo llevan marca de agua. | Empiece en un espacio de prueba y despliegue cuando esté listo. |

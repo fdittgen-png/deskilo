@@ -169,7 +169,7 @@
   "@featureVatManagementTitle": {
     "description": "Feature toggle title: VAT management (#544)"
   },
-  "featureVatManagementDesc": "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter.",
+  "featureVatManagementDesc": "Der USt-Satz-Editor und die Satz-Auswahl bei Services, Paketen, Ausstattungen und Tarif. Aus blendet die Konfiguration aus; gespeicherte Sätze gelten weiter. Ein umsatzsteuerpflichtiger Space braucht sie, samt Standardsatz, um eine Rechnung auszustellen: Ohne sie wird die Ausstellung abgelehnt.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -333,7 +333,6 @@
   "scheduledExpensesTitle": "Geplante Ausgaben",
   "scheduledExpensesIntro": "Abos, die der Space bezahlt — Internet, Telefon, Strom. Der Plan wird einmal validiert; jede Fälligkeit wird Ihnen vorgelegt, bevor sie zählt.",
   "scheduledExpensesEmpty": "Noch keine geplante Ausgabe.",
-
   "scheduledExpensesFinished": "Beendet und abgelehnt ({count})",
   "scheduleNew": "Wiederkehrende Ausgabe planen",
   "scheduleCancel": "Diesen Plan beenden",

@@ -68,11 +68,11 @@ You build the place and its opening times in a test space, so that a member coul
 5. Add a closure day. See [Closure days](help:user.workspace.availability.closure-days).
 6. Keep the default features. Open [Features](app:/features) only to read what is on.
 7. Make a booking as yourself, then check in and out. See [Check in and out](help:user.reserve.check-in).
-8. Share the workspace ID with one person and let them join. See [The workspace ID](help:user.workspace.code).
+8. In [Roles](app:/roles), tick the everyday permissions on the **User** card, then share the workspace ID with one person and let them join. See [The workspace ID](help:user.workspace.code).
 
 **Good to know**
 
-- A space can be booked once it has a time zone, a currency, at least one open weekday and at least one seat. Everything else can wait.
+- A space can be booked once it has a time zone, a currency, at least one open weekday, at least one seat, and members who hold **Book and use reservations**. Everything else can wait.
 - A floor plan cannot be replaced by an import once a reservation exists.
 
 *You are done when*
@@ -194,7 +194,7 @@ The decisions you will meet have names. This is what each one means in DesKilo.
 | Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
 | Environment pair | A test side and a real side of one space. |
 | Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |
-| Readiness | The checklist at the top of the workspace settings that says what is missing before people can book. |
+| Readiness | The checklist at the top of the workspace settings that says what is missing before people can book, and before the first invoice. |
 | Held back | A feature that is on but waits for another one that is off. |
 | Kiosk | A shared screen at the door where members check in and out. |
 | Badge | A card or tag a member shows to check in at a kiosk. |
@@ -237,7 +237,7 @@ The whole setup on one page. *Reversible* tells you whether you can change your 
 
 | Step | Where in the app | How long | Reversible? |
 |---|---|---|---|
-| 1. Country, currency, time zone, language | [Workspace settings](app:/workspace-settings) | 5 minutes | Yes, but do not change the currency once money exists |
+| 1. Country, currency, time zone, language | [Workspace settings](app:/workspace-settings) | 5 minutes | Yes, until the first document or payment; then the currency and the country are locked |
 | 2. Floor plan | [Space editor](app:/editor) | 30 minutes | Yes, until the first reservation; then edit one object at a time |
 | 3. Opening rules | Availability | 10 minutes | Yes |
 | 4. Features | [Features](app:/features) | 10 minutes | Yes. Switching off stops new use and deletes nothing |

@@ -83,7 +83,7 @@ Todo lo demás es Plataforma y está desactivado: quiosco y credenciales, varias
 
 **Conviene saber**
 
-- La función de facturas está activada desde el principio, pero no se puede emitir nada hasta que su identidad legal esté completa. Véase [Evite funciones que se contradicen](help:setup.features.consistency).
+- La función de facturas está activada desde el principio, pero no se puede emitir nada hasta que su identidad legal esté completa; **Configuración de este espacio** la marca como **Necesario antes de facturar**. Véase [Evite funciones que se contradicen](help:setup.features.consistency).
 - Un espacio que ya existe nunca cambia cuando DesKilo cambia lo que recibe un espacio nuevo.
 - Si parte de una plantilla, la plantilla puede activar o desactivar unas pocas funciones además de este conjunto. Véase [Tres puntos de partida](help:setup.features.profiles).
 
@@ -314,9 +314,9 @@ Usted está a punto de cambiar una función y quiere ver el efecto antes de que 
 
 *Qué significa «retenida»*
 
-Una función está retenida cuando usted la eligió pero algo que necesita está desactivado. Su propio interruptor sigue activado, y por eso es fácil pasarlo por alto: la pantalla dice que la función está activada, y la aplicación no la ofrece. La tarjeta indica cuántas funciones están retenidas («… están activadas pero esperan un requisito desactivado») y qué requisito esperan, y se arregla en [Funciones](app:/features) mismo.
+Una función está retenida cuando usted la eligió pero algo que necesita está desactivado. Su propio interruptor sigue activado, y por eso es fácil pasarlo por alto: la pantalla dice que la función está activada, y la aplicación no la ofrece. La tarjeta indica cuántas funciones están retenidas («… están activadas pero esperan un requisito desactivado») y qué requisito esperan, y se arregla en [Funciones](app:/features) mismo. [Lo que le necesita](help:user.collaborate.attention) muestra lo mismo en una línea por cada requisito desactivado.
 
-Otras cosas que una función puede esperar no están en esta pantalla. Una función puede estar activada y plenamente permitida mientras faltan sus datos: su identidad legal, una sede, un proveedor de pago. Esos aparecen en **Configuración de este espacio**, en **Datos que necesitan sus funciones (identidad, banco, plataformas)**, en lo alto de los ajustes del espacio.
+Otras cosas que una función puede esperar no están en esta pantalla. Una función puede estar activada y plenamente permitida mientras faltan sus datos: su identidad legal, una sede, un proveedor de pago. Esos aparecen en **Configuración de este espacio**, en lo alto de los ajustes del espacio: la identidad legal, con **Facturas** activada, como **La identidad legal y la dirección del espacio**, y lo demás en **Datos que necesitan sus funciones (identidad, banco, plataformas)**.
 
 **Conviene saber**
 
@@ -337,15 +337,15 @@ La aplicación tiene salvaguardas para algunas contradicciones y ninguna para ot
 
 | Si tiene… | Salvaguarda de la aplicación | Laguna que queda |
 |---|---|---|
-| **Facturas** activadas, sin identidad legal | Se rechaza la emisión, con **Complete estos datos antes de emitir** listando la dirección, el número de IVA, etc. que faltan. La necesidad también aparece en **Configuración de este espacio**. | La función está activada desde el primer día, así que nada impide invitar a los miembros y llevar un mes antes de que exista la identidad. |
+| **Facturas** activadas, sin identidad legal | Se rechaza la emisión, con **Complete estos datos antes de emitir** listando la dirección, el número de IVA, etc. que faltan. La necesidad también aparece en **Configuración de este espacio**, como **La identidad legal y la dirección del espacio**, **Necesario antes de facturar**, y en Lo que le necesita. | La función está activada desde el primer día, así que nada impide invitar a los miembros y llevar un mes antes de que exista la identidad. |
 | Un país distinto de Francia o Alemania | Al emitir, dice que el país «debe ser Francia o Alemania para emitir aquí». | Nada avisa al elegir el país ni al activar la facturación. |
-| Registrado a efectos del IVA, sin ningún tipo en vigor | Se rechaza la emisión hasta que haya un tipo en vigor. | Con **Gestión del IVA** desactivada, la configuración queda oculta mientras los tipos guardados siguen aplicándose. Compruebe los tipos tras desactivarla. |
+| Registrado a efectos del IVA, sin ningún tipo en vigor | Se rechaza la emisión hasta que haya un tipo por defecto en vigor. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen. | Con **Gestión del IVA** desactivada, la configuración queda oculta mientras los tipos guardados siguen aplicándose. Compruebe los tipos tras desactivarla. |
 | **Pagos en línea** activados, sin proveedor | Se rechaza un pago en línea nuevo cuando la función está desactivada; el proveedor que falta aparece en **Configuración de este espacio**. | Puede activarla sin proveedor. Conéctelo antes: [Proveedor de pago](help:user.money.payments.provider). |
 | **Modo quiosco** activado, sin credenciales ni miembro de quiosco | **Credenciales RFID / NFC**, **Credenciales QR**, **Fotos de los miembros en el quiosco** e **Iniciar sesión con credencial** no pueden estar activadas sin él. | Nada comprueba que exista un miembro de quiosco ni que se haya emitido una credencial. Véase [Ponga en marcha una tableta de pared](help:user.kiosk.mode). |
 | **Sedes** activadas, sin ninguna sede | **Al menos una sede** aparece entre los datos que necesitan sus funciones. | El interruptor puede estar activado sin ninguna sede. |
 | **Notificaciones push** activadas, sin servicio push | Los miembros siguen recibiendo todo en la aplicación. | Los teléfonos no reciben nada hasta que quien gestiona la instalación haya configurado el servicio push. Véase [Cómo se informa a los miembros](help:setup.notify.channels). |
-| **Recordatorios de pago** activados, **Recordatorios de pago automáticos** activados | Los segundos no pueden estar activados sin los primeros. | El programador del servidor los envía cada mañana; si la base de datos no tiene programador, se envían cuando un administrador abre Finanzas. |
-| Una regla de validación que pide más validadores de los que hay | **Configuración de este espacio** dice «Una regla pide más validadores de los que tiene este espacio» y retiene la primera reserva cuando la regla es para reservas. | Las demás solicitudes se crean, no se pueden completar y caducan a los siete días. Véase [Quién valida](help:user.validation.overview). |
+| **Recordatorios de pago** activados, **Recordatorios de pago automáticos** activados | Los segundos no pueden estar activados sin los primeros. | El servidor los envía cada mañana si la instalación programa tareas; si no, se envían cuando un administrador abre Finanzas. El interruptor y la descripción de la función lo dicen; el operador de su servidor sabe cuál se aplica. |
+| Una regla de validación que pide más validadores de los que hay | **Configuración de este espacio** dice «Una regla pide más validadores de los que tiene este espacio», y **Roles y quién valida las solicitudes** pasa a ser obligatorio, sea cual sea el tipo de solicitud. | Las solicitudes creadas antes de corregirlo no se pueden completar y caducan a los siete días. Véase [Quién valida](help:user.validation.overview). |
 | **Solicitudes de eliminación de reservas** activadas, nadie que valide | La misma línea de preparación. | La misma laguna. |
 | **Reservas de mesa, oficina y planta** activadas | **Los admins pueden asignar plantas** la necesita. | Además, cada miembro necesita el derecho; nada comprueba que alguien lo tenga. |
 | Una función dependiente activada, su función de origen desactivada | **Requiere atención**, y «Esperando a la función de arriba». | Ninguna: este caso está totalmente cubierto. |
@@ -355,7 +355,7 @@ La aplicación tiene salvaguardas para algunas contradicciones y ninguna para ot
 
 - La regla práctica: si una función lleva a un documento su nombre, su dinero o sus obligaciones legales, termine sus datos antes de avisar a los miembros.
 - **Configuración de este espacio** es una lista, no un cerrojo. Nunca le impide activar algo.
-- La comprobación «Antes de que alguien pueda reservar aquí» solo habla de lo que una reserva necesita de verdad: la zona horaria, la moneda, un día de apertura y al menos un asiento.
+- La comprobación «Antes de que alguien pueda reservar aquí» solo habla de los ámbitos obligatorios: la zona horaria, la moneda, un día de apertura, al menos un asiento, miembros que tengan **Reservar y usar las reservas** y suficientes validadores. Con **Facturas** activada, la identidad legal también es obligatoria, pero antes de facturar: la tarjeta del espacio dice «Antes de facturar» y la de Reservar nunca la nombra.
 
 **Véase también:** [Identidad legal y facturación](help:setup.money.identity) · [Ensayo en seco](help:setup.money.dry-run)
 

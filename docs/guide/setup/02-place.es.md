@@ -34,7 +34,7 @@ Usted quiere que el espacio sepa dónde vive. Estas cuatro elecciones determinan
 2. Elija el **País**; la **Moneda** y la **Zona horaria** se proponen solas y puede corregirlas. Para Atelier du Marché: Francia, EUR, Europe/Paris.
 3. Elija el **Idioma del espacio** y toque **Guardar**.
 
-> **Atención** Elija bien el país y la moneda desde el primer día. Los importes se guardan como simples números, así que cambiar la moneda cuando ya hay dinero etiquetaría mal todo lo ya contado.
+> **Atención** Elija bien el país y la moneda desde el primer día. Los importes se guardan como simples números, así que en cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cambiar uno u otro: «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.»
 
 **Conviene saber**
 
@@ -143,7 +143,7 @@ Usted quiere una prueba de que el espacio está listo antes de invitar a nadie. 
 
 **Conviene saber**
 
-- Listo significa listo para una primera reserva: días de apertura, zona horaria, moneda, al menos un asiento y suficientes validadores.
+- Listo significa listo para una primera reserva: días de apertura, zona horaria, moneda, al menos un asiento, miembros que pueden reservar y suficientes validadores.
 - Todo lo opcional, como las tarifas o los pagos, puede aplazarse con **Más adelante** y no impide abrir.
 - Ambas tarjetas dependen de la función *Tarjeta de primeros pasos*.
 - **Ahora no** oculta la tarjeta en este dispositivo; el menú de vista del plano la recupera con **Primeros pasos**.

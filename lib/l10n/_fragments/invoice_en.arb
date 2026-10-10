@@ -654,7 +654,7 @@
   "@legalIdentitySaved": {
     "description": "Snackbar after saving the legal identity"
   },
-  "legalIdentityVatWarning": "This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.",
+  "legalIdentityVatWarning": "This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.",
   "@legalIdentityVatWarning": {
     "description": "Warning shown for the VAT-registered regime"
   },
@@ -1429,6 +1429,10 @@
   "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
   "dunningAutomatic": "Automatic reminders",
   "dunningAutomaticHint": "Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.",
+  "paymentRemindersWhen": "When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "@eventInvoiceReminderLine": {
     "placeholders": {
       "number": {

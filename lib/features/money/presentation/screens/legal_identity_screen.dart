@@ -359,9 +359,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               key: const ValueKey('legal-identity-vat-warning'),
               icon: Icons.warning_amber_outlined,
               text: l10n?.legalIdentityVatWarning ??
-                  'This workspace charges VAT but no rate is set up: '
-                      'invoices show no tax and the XML export stays '
-                      'disabled until you add one.',
+                  'This space charges VAT but has no default rate in force: '
+                      'no invoice can be issued until you add one. Rates are '
+                      'edited with “VAT management” switched on.',
             ),
           if (_regime == VatRegime.vatRegistered &&
               ref

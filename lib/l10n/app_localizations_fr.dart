@@ -546,6 +546,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'À configurer : $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fonctionnalités activées attendent « $feature »',
+      one: '1 fonctionnalité activée attend « $feature »',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'En attente depuis le $date';
   }
@@ -5720,7 +5736,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'L\'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s\'appliquer.';
+      'L\'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s\'appliquer. Un espace assujetti à la TVA en a besoin, avec un taux par défaut, pour émettre une facture : sans eux, l\'émission est refusée.';
 
   @override
   String get featureVatManagementTitle => 'Gestion de la TVA';
@@ -9003,7 +9019,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Cet espace facture la TVA mais aucun taux n\'est configuré : les factures n\'affichent pas de taxe et l\'export XML reste désactivé tant qu\'il n\'y en a pas.';
+      'Cet espace facture la TVA mais aucun taux par défaut n\'est en vigueur : aucune facture ne peut être émise tant que vous n\'en ajoutez pas. Les taux se modifient avec « Gestion de la TVA » activée.';
 
   @override
   String get legendBlocked => 'Bloquée';
@@ -12164,6 +12180,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentProviderWero => 'Wero (via Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Quand cela s\'exécute : chaque matin sur le serveur, si l\'installation planifie des tâches (pg_cron) ; sinon quand un administrateur ouvre Finances. L\'opérateur de votre serveur sait ce qui s\'applique.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13782,8 +13802,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get readinessAreaInvitations => 'Inviter les premiers membres';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'L\'identité légale et l\'adresse de l\'espace';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Informations requises par vos fonctionnalités (identité, banque, plateformes)';
+
+  @override
+  String get readinessAreaMemberPermissions =>
+      'Ce que les membres peuvent faire';
 
   @override
   String get readinessAreaPayments => 'Comment les membres paient';
@@ -13810,6 +13838,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Avant de facturer : $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Prêt pour une première réservation';
 
   @override
@@ -13817,6 +13850,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Nécessaire pour une première réservation';
+
+  @override
+  String get readinessNeededInvoicing => 'Nécessaire avant de facturer';
 
   @override
   String readinessNext(String step) {
@@ -13838,6 +13874,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'Votre demande attend un administrateur de la base';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Aucune facture ne peut être émise sans elle';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'Les membres ne peuvent pas encore réserver : dans Rôles, accordez-leur « Réserver et utiliser les réservations »';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13992,6 +14036,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'La devise et le pays sont figés dès que l\'espace a émis un document ou enregistré de l\'argent. Rien n\'a été enregistré.';
 
   @override
   String get refusalPermission =>

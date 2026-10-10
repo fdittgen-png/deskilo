@@ -454,7 +454,7 @@ Vous listez les taux de TVA que vos factures peuvent utiliser. Ce que paient les
 - Les taux usuels sont un point de départ. Savoir quelle prestation relève de quel taux est une question pour votre comptable.
 - Le taux par défaut est utilisé par les abonnements et par tout ce qui n'a pas de taux propre.
 - Un taux encore utilisé par une facture ou un service est conservé, désactivé, plutôt que supprimé.
-- Sans aucun taux alors que vous êtes assujetti à la TVA, les factures n'affichent aucune taxe et l'export XML reste désactivé.
+- Sans taux par défaut en vigueur alors que vous êtes assujetti à la TVA, aucune facture ne peut être émise ; l'écran d'identité légale vous en avertit.
 - Cet écran demande la fonctionnalité **Gestion de la TVA** ; l'entrée Taux de TVA de l'écran d'identité légale n'apparaît que pour le régime des assujettis à la TVA.
 
 **Voir aussi:** [Groupes de TVA](help:user.money.vat.groups) · [Changement par la loi](help:user.money.vat.change-by-law)
@@ -1000,6 +1000,7 @@ Vous voulez que les relances partent toutes seules.
 - Une fois par jour, les factures qui ont dépassé leur échéance enregistrée passent au niveau suivant, pour le montant encore dû.
 - Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.
 - Désactivées : vous envoyez chaque relance vous-même.
+- Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.
 
 **Voir aussi:** [Règles de relance](help:user.money.reminders.rules)
 

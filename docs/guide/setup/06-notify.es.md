@@ -198,7 +198,7 @@ Quiere que las personas se enteren de lo que las necesita, sin ahogarlas.
 **Conviene saber**
 
 - El exceso viene de reglas que preguntan con demasiada frecuencia o de demasiados administradores en una misma regla.
-- El silencio viene de una regla sin nadie que la responda: exigir dos validaciones cuando solo existe el propietario, o nombrar a administradores que ya se han marchado, deja las solicitudes esperando para siempre. La tarjeta de preparación puede señalar una regla de reserva con pocos validadores.
+- El silencio viene de una regla sin nadie que la responda: exigir dos validaciones cuando solo existe el propietario, o nombrar a administradores que ya se han marchado, deja las solicitudes esperando para siempre. La tarjeta de preparación señala cualquier regla con pocos validadores, y Lo que le necesita la muestra.
 - El silencio viene también de un push sin configurar, de miembros que desactivaron el push y de un sistema que bloquea las notificaciones.
 - Los recordatorios de pago automáticos no sustituyen el repaso ocasional de las facturas abiertas.
 

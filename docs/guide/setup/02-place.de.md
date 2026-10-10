@@ -34,7 +34,7 @@ Sie möchten, dass der Space weiß, wo er zu Hause ist. Diese vier Angaben besti
 2. Wählen Sie das **Land**; **Währung** und **Zeitzone** folgen, und Sie können sie korrigieren. Für das Atelier du Marché: Frankreich, EUR, Europe/Paris.
 3. Wählen Sie die **Sprache des Arbeitsbereichs** und tippen Sie auf **Speichern**.
 
-> **Achtung** Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; die Währung zu ändern, wenn schon Geld gezählt wurde, würde alles Bisherige falsch beschriften.
+> **Achtung** Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server deshalb jede Änderung von beiden ab: „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“
 
 **Gut zu wissen**
 
@@ -143,7 +143,7 @@ Sie möchten den Beweis, dass der Space bereit ist, bevor Sie jemanden einladen.
 
 **Gut zu wissen**
 
-- Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz und genug Bestätigende.
+- Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz, Mitglieder, die buchen dürfen, und genug Bestätigende.
 - Alles Optionale, etwa Tarife oder Zahlungen, können Sie mit **Später** zurückstellen; es verhindert das Öffnen nicht.
 - Beide Karten hängen von der Funktion *Karte „Erste Schritte“* ab.
 - **Jetzt nicht** blendet die Karte auf diesem Gerät aus; das Ansichtsmenü auf dem Plan holt sie mit **Erste Schritte** zurück.

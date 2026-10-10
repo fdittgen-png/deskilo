@@ -22,8 +22,14 @@ import '../../../core/time/clock.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../events/providers/event_providers.dart';
 import '../../money/providers/money_providers.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../application/process_status.dart';
 import '../domain/attention.dart';
 import '../domain/member.dart';
+import '../domain/workspace_feature.dart';
+import '../domain/workspace_permission.dart';
+import '../domain/workspace_readiness.dart';
+import 'local_setup_providers.dart';
 import 'workspace_providers.dart';
 
 part 'attention_providers.g.dart';
@@ -107,6 +113,64 @@ Future<List<Attention>> attention(Ref ref) async {
         count: overview.toInvoice.length,
       ),
     );
+  }
+
+  // #2332 — configuration that is not doing what it says: switched-on
+  // capabilities a switched-off prerequisite holds back (one line per
+  // prerequisite), and the setup steps the space still REQUIRES.
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace != null) {
+    final waiting = <WorkspaceFeature, Set<WorkspaceFeature>>{};
+    for (final process
+        in processStatuses(resolveEnabledFeatures(workspace.featureFlags))) {
+      for (final sub in process.subprocesses) {
+        for (final held in sub.heldBack) {
+          (waiting[held.waitingFor] ??= {}).add(held.feature);
+        }
+      }
+    }
+    for (final e in waiting.entries) {
+      items.add(
+        Attention(
+          kind: AttentionKind.configuration,
+          subject: e.key.name,
+          action: AttentionAction.unblock,
+          waitingSince: now,
+          count: e.value.length,
+          route: '/features',
+        ),
+      );
+    }
+    if (ref
+        .watch(myPermissionsProvider)
+        .contains(WorkspacePermission.manageConfiguration)) {
+      try {
+        final sections =
+            await ref.watch(workspaceReadinessProvider(workspace.id).future);
+        for (final s in sections) {
+          if (!s.required ||
+              s.area == ReadinessArea.unknown ||
+              s.state == ReadinessState.ready ||
+              s.state == ReadinessState.notApplicable) {
+            continue;
+          }
+          items.add(
+            Attention(
+              kind: AttentionKind.configuration,
+              subject: readinessSectionCode(s.area) ?? '',
+              action: AttentionAction.setUp,
+              waitingSince: now,
+              route: s.route,
+            ),
+          );
+        }
+      } catch (e, st) {
+        // The readiness card says the same thing on its own screen; a
+        // refusal here must not cost the person the rest of the list.
+        TraceLogger.instance.warn('workspace', 'attention: readiness unread',
+            error: e, stackTrace: st);
+      }
+    }
   }
 
   return rankAttention(items);

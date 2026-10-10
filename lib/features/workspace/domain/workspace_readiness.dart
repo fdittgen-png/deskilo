@@ -33,6 +33,14 @@ enum ReadinessArea {
 
   /// 0296 — the space has been used: one booking that stands.
   firstBooking,
+
+  /// 0399 (#2332) — what plain members may do: required until they hold
+  /// makeReservations (a new space grants them nothing).
+  memberPermissions,
+
+  /// 0399 (#2332) — the seller's legal identity and address, required
+  /// while invoicing is effective: no invoice is issued without it.
+  legalIdentity,
   unknown,
 }
 
@@ -116,19 +124,7 @@ class ReadinessSection {
     for (final s in json is List ? json : const [])
       if (s is Map)
         ReadinessSection(
-          area: switch (s['section']) {
-            'region_rules' => ReadinessArea.regionRules,
-            'resources' => ReadinessArea.resources,
-            'pricing' => ReadinessArea.pricing,
-            'invitations' => ReadinessArea.invitations,
-            'payments' => ReadinessArea.payments,
-            'roles_validation' => ReadinessArea.rolesValidation,
-            'recovery' => ReadinessArea.recovery,
-            'local_setup' => ReadinessArea.localSetup,
-            'assistant' => ReadinessArea.assistant,
-            'first_booking' => ReadinessArea.firstBooking,
-            _ => ReadinessArea.unknown,
-          },
+          area: readinessAreaOf(s['section']),
           state: switch (s['state']) {
             'ready' => ReadinessState.ready,
             'needs_configuration' => ReadinessState.needsConfiguration,
@@ -155,6 +151,24 @@ class ReadinessSection {
   ];
 }
 
+/// The area the server's section code names; unknown for a code this
+/// build does not know (#2332 reads it back from an attention line).
+ReadinessArea readinessAreaOf(Object? code) => switch (code) {
+  'region_rules' => ReadinessArea.regionRules,
+  'resources' => ReadinessArea.resources,
+  'pricing' => ReadinessArea.pricing,
+  'invitations' => ReadinessArea.invitations,
+  'payments' => ReadinessArea.payments,
+  'roles_validation' => ReadinessArea.rolesValidation,
+  'recovery' => ReadinessArea.recovery,
+  'local_setup' => ReadinessArea.localSetup,
+  'assistant' => ReadinessArea.assistant,
+  'first_booking' => ReadinessArea.firstBooking,
+  'member_permissions' => ReadinessArea.memberPermissions,
+  'legal_identity' => ReadinessArea.legalIdentity,
+  _ => ReadinessArea.unknown,
+};
+
 /// 0307 — the server's name for [area]; null for the app's own backend
 /// check and for a section this build does not know.
 String? readinessSectionCode(ReadinessArea area) => switch (area) {
@@ -168,6 +182,8 @@ String? readinessSectionCode(ReadinessArea area) => switch (area) {
   ReadinessArea.localSetup => 'local_setup',
   ReadinessArea.assistant => 'assistant',
   ReadinessArea.firstBooking => 'first_booking',
+  ReadinessArea.memberPermissions => 'member_permissions',
+  ReadinessArea.legalIdentity => 'legal_identity',
   ReadinessArea.backend || ReadinessArea.unknown => null,
 };
 

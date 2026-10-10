@@ -304,7 +304,7 @@
   "legalIdentityCity": "Stadt",
   "legalIdentityPostalCode": "Postleitzahl",
   "legalIdentitySaved": "Rechtliche Identität gespeichert.",
-  "legalIdentityVatWarning": "Dieser Space verlangt Mehrwertsteuer, es ist aber kein Satz angelegt: Rechnungen weisen keine Steuer aus und der XML-Export bleibt deaktiviert.",
+  "legalIdentityVatWarning": "Dieser Space verlangt Mehrwertsteuer, es gilt aber kein Standardsatz: Es kann keine Rechnung ausgestellt werden, bis Sie einen anlegen. Sätze bearbeiten Sie bei eingeschalteter „USt-Verwaltung“.",
   "addressCountryLabel": "Land",
   "addressVatIdLabel": "Umsatzsteuer-ID (wenn du als Unternehmen abrechnest)",
   "invoiceProformaAction": "Proforma-Rechnung",
@@ -764,6 +764,10 @@
   "eventInvoiceReminderLine": "Mahnstufe {level}: Rechnung {number} — {amount} noch offen",
   "dunningAutomatic": "Automatische Mahnungen",
   "dunningAutomaticHint": "Einmal täglich erhalten Rechnungen, deren erfasste Zahlungsfrist abgelaufen ist, von selbst die nächste Mahnstufe — für den noch offenen Betrag, nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Rechnungen ohne erfasste Frist bleiben Ihnen überlassen. Aus: Sie versenden jede Mahnung selbst.",
+  "paymentRemindersWhen": "Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn eine Verwaltungsperson Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
   "eventPriceNegotiationItems": "{count} Artikel",

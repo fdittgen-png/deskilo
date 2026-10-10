@@ -454,7 +454,7 @@ Elenca le aliquote IVA che le Sue fatture possono usare. Ciò che pagano i membr
 - Le aliquote consuete sono un punto di partenza. Quale operazione rientri in quale aliquota è una questione per il Suo commercialista.
 - L'aliquota predefinita è usata dagli abbonamenti e da tutto ciò che non ha un'aliquota propria.
 - Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata, invece di essere eliminata.
-- Senza alcuna aliquota, mentre è soggetto IVA, le fatture non mostrano imposta e l'esportazione XML resta disattivata.
+- Senza alcuna aliquota predefinita in vigore, mentre è soggetto IVA, non si può emettere alcuna fattura; la schermata dell'identità legale lo segnala.
 - Questa schermata richiede la funzione **Gestione IVA**; la voce delle aliquote IVA nella schermata dell'identità legale compare solo con il regime di soggetto IVA.
 
 **Vedi anche:** [Gruppi IVA](help:user.money.vat.groups) · [Modifica per legge](help:user.money.vat.change-by-law)
@@ -1000,6 +1000,7 @@ Vuole che i solleciti partano da soli.
 - Una volta al giorno, le fatture oltre il termine di pagamento registrato ricevono il livello successivo, per l'importo ancora da pagare.
 - Mai mentre un pagamento è in sospeso o la fattura è sospesa. Le fatture senza termine registrato restano a Lei.
 - Disattivati: invia Lei stesso ogni sollecito.
+- Quando viene eseguito: ogni mattina sul server se l'installazione pianifica attività, altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.
 
 **Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules)
 

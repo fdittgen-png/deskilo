@@ -83,7 +83,7 @@ Everything else is Platform and off: kiosk and badges, several sites, accessory 
 
 **Good to know**
 
-- The invoices feature is on from the start, but nothing can be issued until your legal identity is complete. See [Avoid features that contradict each other](help:setup.features.consistency).
+- The invoices feature is on from the start, but nothing can be issued until your legal identity is complete; **Setting up this space** marks it **Needed before invoicing**. See [Avoid features that contradict each other](help:setup.features.consistency).
 - A space that already exists never changes when DesKilo changes what a new space gets.
 - If you start from a template, the template can switch a few features on or off on top of this set. See [Three starting points](help:setup.features.profiles).
 
@@ -314,9 +314,9 @@ You are about to change a feature and you want to see the effect before it exist
 
 *What "held back" means*
 
-A feature is held back when you chose it but something it needs is off. Its own switch stays on, which is why it is easy to miss: the screen says the feature is on, and the app does not offer it. The card says how many features are held back ("… on but wait for a switched-off prerequisite") and which prerequisite they wait for, and you fix it in [Features](app:/features) itself.
+A feature is held back when you chose it but something it needs is off. Its own switch stays on, which is why it is easy to miss: the screen says the feature is on, and the app does not offer it. The card says how many features are held back ("… on but wait for a switched-off prerequisite") and which prerequisite they wait for, and you fix it in [Features](app:/features) itself. [What needs you](help:user.collaborate.attention) shows the same thing as one line per switched-off prerequisite.
 
-Other things a feature can wait for are not on this screen. A feature can be on and fully allowed while its details are missing: your legal identity, a site, a payment provider. Those appear in **Setting up this space**, under **Details your features need (identity, bank, platforms)**, at the top of the workspace settings.
+Other things a feature can wait for are not on this screen. A feature can be on and fully allowed while its details are missing: your legal identity, a site, a payment provider. Those appear in **Setting up this space**, at the top of the workspace settings: the legal identity, with **Invoices** on, as **The space's legal identity and address**, the rest under **Details your features need (identity, bank, platforms)**.
 
 **Good to know**
 
@@ -337,15 +337,15 @@ The app has guards for some contradictions and none for others. In the table, a 
 
 | If you have… | Guard in the app | Gap that remains |
 |---|---|---|
-| **Invoices** on, no legal identity | Issuing is refused, with **Complete these details before issuing** listing the missing address, VAT number and so on. The need also shows in **Setting up this space**. | The feature is on from the first day, so nothing prevents inviting members and running a month before the identity exists. |
+| **Invoices** on, no legal identity | Issuing is refused, with **Complete these details before issuing** listing the missing address, VAT number and so on. The need also shows in **Setting up this space**, as **The space's legal identity and address**, **Needed before invoicing**, and in What needs you. | The feature is on from the first day, so nothing prevents inviting members and running a month before the identity exists. |
 | A country other than France or Germany | Issuing says the country "must be France or Germany for issuing here". | Nothing warns you when you choose the country or switch invoicing on. |
-| Registered for VAT, no rate in force | Issuing is refused until a rate is in force. | With **VAT management** off, the configuration is hidden while the stored rates keep applying. Check the rates after switching it off. |
+| Registered for VAT, no rate in force | Issuing is refused until a default rate is in force. The description of **VAT management** and the warning on the legal identity screen say so. | With **VAT management** off, the configuration is hidden while the stored rates keep applying. Check the rates after switching it off. |
 | **Online payments** on, no provider | A new online payment is refused when the feature is off; the missing provider shows in **Setting up this space**. | You can switch it on without a provider. Connect it first: [Payment provider](help:user.money.payments.provider). |
 | **Kiosk mode** on, no badges and no kiosk member | **RFID / NFC badges**, **QR badges**, **Member photos at the kiosk** and **Sign in with a badge** cannot be on without it. | Nothing checks that a kiosk member exists or that a badge has been issued. See [Run a wall tablet](help:user.kiosk.mode). |
 | **Sites** on, no site | **At least one site** appears among the details your features need. | The switch can be on with no site. |
 | **Push notifications** on, no push service | Members still get everything in the app. | Phones receive nothing until whoever runs the installation has set up the push service. See [How members are told](help:setup.notify.channels). |
-| **Payment reminders** on, **Automatic payment reminders** on | The second cannot be on without the first. | The server's scheduler sends them each morning; if the database has no scheduler, they are sent when an administrator opens Finances. |
-| A validation rule asking more validators than exist | **Setting up this space** says "A policy asks for more validators than this space has", and it holds up the first booking when the rule is for reservations. | Other requests are created, cannot be completed and expire after seven days. See [Who validates](help:user.validation.overview). |
+| **Payment reminders** on, **Automatic payment reminders** on | The second cannot be on without the first. | The server sends them each morning where the installation schedules jobs; otherwise they are sent when an administrator opens Finances. The switch and the feature description say so; your server operator knows which applies. |
+| A validation rule asking more validators than exist | **Setting up this space** says "A policy asks for more validators than this space has", and **Roles and who validates requests** becomes required, whatever the kind of request. | Requests created before you fix it cannot be completed and expire after seven days. See [Who validates](help:user.validation.overview). |
 | **Booking deletion requests** on, nobody to validate | Same readiness line. | Same gap. |
 | **Desk, office & level reservations** on | **Admins can assign levels** needs it. | Each member also needs the right; nothing checks that anybody has it. |
 | A child feature on, its parent off | **Needs attention**, and "Waiting on the feature above". | None: this one is fully covered. |
@@ -355,7 +355,7 @@ The app has guards for some contradictions and none for others. In the table, a 
 
 - The rule of thumb: if a feature brings your name, your money or your legal duties onto a document, finish its details before you tell members.
 - **Setting up this space** is a list, not a lock. It never stops you from switching something on.
-- The check "Before anyone can book here" only speaks about what a booking truly needs: the time zone, the currency, an open weekday and at least one seat.
+- The check "Before anyone can book here" speaks only about the required areas: the time zone, the currency, an open weekday, at least one seat, members who hold **Book and use reservations** and enough validators. With **Invoices** on, the legal identity is required too, but before invoicing: the Workspace card says “Before invoicing”, and the Reserve card never names it.
 
 **See also:** [Legal identity and invoicing](help:setup.money.identity) · [Dry run](help:setup.money.dry-run)
 

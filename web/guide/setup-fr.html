@@ -189,9 +189,10 @@
 <ol>
 <li><strong>Jours d’ouverture, fuseau horaire et devise</strong> : un fuseau horaire, une devise et au moins un jour de la semaine ouvert.</li>
 <li><strong>Places réservables sur le plan</strong> : au moins une place.</li>
-<li><strong>Rôles et validation des demandes</strong> : compté seulement quand une règle de réservation demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.</li>
+<li><strong>Rôles et validation des demandes</strong> : compté seulement quand une règle de validation, de quelque nature qu’elle soit, demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.</li>
+<li><strong>Ce que les membres peuvent faire</strong> : les membres détiennent <strong>Réserver et utiliser les réservations</strong>. Un nouvel espace ne leur accorde rien : un membre qui rejoint l’espace ne peut pas réserver tant que vous ne l’avez pas coché dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rôles</a>.</li>
 </ol>
-<p>Une quatrième ligne, <strong>Serveur et version de la base</strong>, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur.</p>
+<p>Une ligne de plus, <strong>Serveur et version de la base</strong>, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur. Et tant que <strong>Factures</strong> est activé, <strong>L'identité légale et l'adresse de l'espace</strong> est obligatoire aussi : la liste la marque <strong>Nécessaire avant de facturer</strong>, car aucune facture ne peut être émise sans elle.</p>
 <p><em>Ce qui est facultatif et peut attendre</em></p>
 <ul>
 <li><strong>Formules d’adhésion et tarifs</strong></li>
@@ -205,8 +206,8 @@
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>La liste nomme qui agit : <strong>Vous</strong>, <strong>L’opérateur du serveur</strong> ou <strong>Un administrateur de la base</strong>.</li>
-<li>Facultatif ne veut pas dire sans importance : dès que vous facturez, votre identité légale est requise pour cette fonctionnalité. La liste l’appelle une information requise par vos fonctionnalités.</li>
-<li>Si vous activez la facturation sans identité légale, l’application vous laisse faire ; elle refuse au moment d’émettre une facture, et dit ce qui manque.</li>
+<li>Facultatif ne veut pas dire sans importance : des coordonnées bancaires, un prestataire de paiement ou un site sont des informations requises par vos fonctionnalités, et la liste les nomme.</li>
+<li>Si vous activez la facturation sans identité légale, l’application vous laisse faire ; la liste et <a href="fr.html#user.collaborate.attention">Ce qui vous attend</a> la signalent, et l’émission d’une facture est refusée, en disant ce qui manque.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi :</strong> <a href="#v%C3%A9rifier-votre-espace">Vérifier votre espace</a> · <a href="fr.html#user.start.get-started">La carte Premiers pas et les astuces</a></p>
 </div></article><article class="section" id="setup.before.environment" data-roles="owner coowner all"><header><h3>Un espace de test ou un espace réel <a class="permalink" href="#setup.before.environment" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-coowner">Copropriétaire</span><span class="role role-all">Tout le monde</span></div></header><div class="body"><p>Vous voulez essayer sans conséquence, puis faire tourner l’espace réel. Un espace peut être un test, un espace réel, ou une paire liée portant le même nom.</p>
@@ -267,7 +268,7 @@
 </table>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme informations requises par vos fonctionnalités.</li>
+<li>Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme (l’identité légale, quand <strong>Factures</strong> est activé, comme un domaine à part).</li>
 <li>Un espace créé depuis un modèle peut avoir la facturation activée et rien pour émettre tant que vous n’avez pas ajouté l’identité.</li>
 <li>Appliquer un modèle à un espace qui a déjà des tarifs remplace ses tranches de tarification : utilisez-le sur un nouvel espace.</li>
 </ul>
@@ -318,7 +319,7 @@
 </tr>
 <tr>
 <td>Pays, devise, fuseau horaire</td>
-<td>Les montants sont enregistrés comme des nombres, sans conversion : changer de devise une fois que de l’argent existe est risqué.</td>
+<td>Les montants sont enregistrés comme des nombres, sans conversion. Dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse tout changement de devise ou de pays. Le fuseau horaire n’est jamais verrouillé, mais chaque jour y est compté.</td>
 <td>Les choisir correctement dès le premier jour ; voir <a href="#setup.place.overview">Construire le lieu</a>.</td>
 </tr>
 <tr>
@@ -423,7 +424,7 @@
 <li>Choisissez le <strong>Pays</strong> ; la <strong>Devise</strong> et le <strong>Fuseau horaire</strong> suivent, et vous pouvez les corriger. Pour l’Atelier du Marché : France, EUR, Europe/Paris.</li>
 <li>Choisissez la <strong>Langue de l'espace</strong>, puis touchez <strong>Enregistrer</strong>.</li>
 </ol>
-<blockquote class="warn"><p><strong>Attention</strong> Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : changer de devise une fois que de l’argent existe fausserait l’intitulé de tout ce qui est déjà compté.</p>
+<blockquote class="warn"><p><strong>Attention</strong> Choisissez le pays et la devise correctement dès le premier jour. Les montants sont enregistrés comme de simples nombres : dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse de changer l’un ou l’autre : « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »</p>
 </blockquote>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
@@ -530,7 +531,7 @@
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, et assez de validateurs.</li>
+<li>Prêt veut dire prêt pour une première réservation : jours d’ouverture, fuseau horaire, devise, au moins une place, des membres qui peuvent réserver, et assez de validateurs.</li>
 <li>Tout ce qui est facultatif, comme les tarifs ou les paiements, peut être mis de côté avec <strong>Plus tard</strong> et ne bloque pas l’ouverture.</li>
 <li>Les deux cartes dépendent de la fonctionnalité <em>Carte Premiers pas</em>.</li>
 <li><strong>Pas maintenant</strong> masque la carte sur cet appareil ; le menu d’affichage du plan la ramène avec <strong>Premiers pas</strong>.</li>
@@ -651,7 +652,7 @@
 <p>Tout le reste est de niveau Plateforme et désactivé : borne et badges, plusieurs sites, suppléments d’accessoires, paiements en ligne, gestion de la TVA, le parcours d’une facture, conception des rapports, déploiements, WhatsApp, l’interface pour assistants et le reste.</p>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète. Voir <a href="#%C3%A9viter-les-fonctionnalit%C3%A9s-qui-se-contredisent">Éviter les fonctionnalités qui se contredisent</a>.</li>
+<li>La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète ; <strong>Mise en place de cet espace</strong> la marque <strong>Nécessaire avant de facturer</strong>. Voir <a href="#%C3%A9viter-les-fonctionnalit%C3%A9s-qui-se-contredisent">Éviter les fonctionnalités qui se contredisent</a>.</li>
 <li>Un espace qui existe déjà ne change jamais quand DesKilo modifie ce que reçoit un nouvel espace.</li>
 <li>Si vous partez d’un modèle, celui-ci peut activer ou désactiver quelques fonctionnalités en plus de cet ensemble. Voir <a href="#trois-points-de-d%C3%A9part">Trois points de départ</a>.</li>
 </ul>
@@ -963,8 +964,8 @@
 <li>Lisez la question ou la ligne « Également activé », et confirmez.</li>
 </ol>
 <p><em>Ce que veut dire « retenue »</em></p>
-<p>Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Fonctionnalités</a> même.</p>
-<p>D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans <strong>Mise en place de cet espace</strong>, sous <strong>Informations requises par vos fonctionnalités (identité, banque, plateformes)</strong>, en haut des réglages de l’espace.</p>
+<p>Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Fonctionnalités</a> même. <a href="fr.html#user.collaborate.attention">Ce qui vous attend</a> montre la même chose, en une ligne par prérequis désactivé.</p>
+<p>D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans <strong>Mise en place de cet espace</strong>, en haut des réglages de l’espace : l’identité légale, quand <strong>Factures</strong> est activé, sous <strong>L'identité légale et l'adresse de l'espace</strong>, le reste sous <strong>Informations requises par vos fonctionnalités (identité, banque, plateformes)</strong>.</p>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>Si quelqu’un d’autre a modifié les fonctionnalités pendant que vous regardiez, l’application n’écrit rien et le dit : « Les fonctionnalités ont changé entre-temps, rien n’a donc été enregistré. » Regardez de nouveau la liste et recommencez.</li>
@@ -985,7 +986,7 @@
 <tbody>
 <tr>
 <td><strong>Factures</strong> activées, pas d’identité légale</td>
-<td>L’émission est refusée, avec <strong>Complétez ces informations avant d'émettre</strong> qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans <strong>Mise en place de cet espace</strong>.</td>
+<td>L’émission est refusée, avec <strong>Complétez ces informations avant d'émettre</strong> qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans <strong>Mise en place de cet espace</strong>, sous <strong>L'identité légale et l'adresse de l'espace</strong>, <strong>Nécessaire avant de facturer</strong>, et dans Ce qui vous attend.</td>
 <td>La fonctionnalité est activée dès le premier jour : rien n’empêche donc d’inviter des membres et de faire tourner un mois avant que l’identité existe.</td>
 </tr>
 <tr>
@@ -995,7 +996,7 @@
 </tr>
 <tr>
 <td>Assujetti à la TVA, aucun taux en vigueur</td>
-<td>L’émission est refusée tant qu’aucun taux n’est en vigueur.</td>
+<td>L’émission est refusée tant qu’aucun taux par défaut n’est en vigueur. La description de <strong>Gestion de la TVA</strong> et l’avertissement de l’écran d’identité légale le disent.</td>
 <td>Avec <strong>Gestion de la TVA</strong> désactivée, la configuration est masquée alors que les taux enregistrés continuent de s’appliquer. Vérifiez les taux après l’avoir désactivée.</td>
 </tr>
 <tr>
@@ -1021,12 +1022,12 @@
 <tr>
 <td><strong>Relances de paiement</strong> activées, <strong>Relances de paiement automatiques</strong> activées</td>
 <td>La seconde ne peut pas être activée sans la première.</td>
-<td>Le planificateur du serveur les envoie chaque matin ; si la base n’a pas de planificateur, elles partent quand un administrateur ouvre Finances.</td>
+<td>Le serveur les envoie chaque matin si l’installation planifie des tâches ; sinon, elles partent quand un administrateur ouvre Finances. L’interrupteur et la description de la fonctionnalité le disent ; l’opérateur de votre serveur sait ce qui s’applique.</td>
 </tr>
 <tr>
 <td>Une règle de validation qui demande plus de validateurs qu’il n’en existe</td>
-<td><strong>Mise en place de cet espace</strong> dit « Une règle demande plus de validateurs que cet espace n’en compte », et cela retient la première réservation quand la règle porte sur les réservations.</td>
-<td>Les autres demandes sont créées, ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir <a href="fr.html">Qui valide</a>.</td>
+<td><strong>Mise en place de cet espace</strong> dit « Une règle demande plus de validateurs que cet espace n’en compte », et <strong>Rôles et validation des demandes</strong> devient obligatoire, quel que soit le type de demande.</td>
+<td>Les demandes créées avant que vous corrigiez ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir <a href="fr.html">Qui valide</a>.</td>
 </tr>
 <tr>
 <td><strong>Demandes de suppression de réservation</strong> activées, personne pour valider</td>
@@ -1054,7 +1055,7 @@
 <ul>
 <li>La règle d’or : si une fonctionnalité met votre nom, votre argent ou vos obligations légales sur un document, finissez ses informations avant d’en parler aux membres.</li>
 <li><strong>Mise en place de cet espace</strong> est une liste, pas un verrou. Elle ne vous empêche jamais d’activer quelque chose.</li>
-<li>La vérification « Avant que quiconque puisse réserver ici » ne parle que de ce dont une réservation a vraiment besoin : le fuseau horaire, la devise, un jour de semaine ouvert et au moins une place.</li>
+<li>La vérification « Avant que quiconque puisse réserver ici » ne parle que des domaines obligatoires : le fuseau horaire, la devise, un jour de semaine ouvert, au moins une place, des membres qui détiennent <strong>Réserver et utiliser les réservations</strong> et assez de validateurs. Quand <strong>Factures</strong> est activé, l’identité légale est aussi obligatoire, mais avant de facturer : la carte de l’espace dit « Avant de facturer », et celle de Réserver ne la mentionne jamais.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi :</strong> <a href="#votre-identit%C3%A9-l%C3%A9gale-et-ce-quil-faut-demander-%C3%A0-votre-expert-comptable">Identité légale et facturation</a> · <a href="#une-r%C3%A9p%C3%A9tition-sans-risque-dans-un-espace-de-test">Essai à blanc</a></p>
 </div></article><article class="section no-media" id="setup.features.map" data-roles="owner coowner"><header><h3>La carte des fonctionnalités <a class="permalink" href="#setup.features.map" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-coowner">Copropriétaire</span></div></header><div class="body"><p>Vous voulez un seul endroit qui dise, pour les principales fonctionnalités, ce que les membres obtiennent, ce qu’il faut et qui doit les configurer. « Nécessite » liste d’abord la fonctionnalité du dessus, puis les informations hors de l’écran Fonctionnalités. « Qui » est la personne qui doit agir avant que ce soit utile ; « Personne » veut dire que cela fonctionne dès l’activation.</p>
@@ -1814,7 +1815,7 @@
 </tbody>
 </table>
 <p>Un administrateur ne détient pas <strong>Gérer les rôles et permissions</strong>, <strong>Configurer les règles de validation</strong>, <strong>Modifier les réglages de l'espace</strong>, <strong>Gérer les tarifs et règles de facturation</strong>, <strong>Concevoir les documents</strong>, <strong>Gérer les intégrations</strong>, <strong>Gérer la configuration</strong> ni <strong>Déployer en production</strong>. Un copropriétaire les détient toutes, jusqu’à ce que vous en décochiez. Le propriétaire les détient toujours toutes.</p>
-<blockquote class="warn"><p><strong>Attention</strong> Dans un nouvel espace, la carte <strong>Utilisateur</strong> est vide. Les six permissions de tous les jours (<strong>Utiliser la messagerie</strong>, <strong>Réserver et utiliser les réservations</strong>, <strong>Voir le calendrier</strong>, <strong>Voir l'annuaire des membres</strong>, <strong>Voir son propre compte et ses factures</strong>, <strong>Voir les documents partagés</strong>) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. Cochez-les pour la carte <strong>Utilisateur</strong>, et pour la carte <strong>Administrateur·rice</strong> si les administrateurs réservent aussi, puis testez avec un second compte.</p>
+<blockquote class="warn"><p><strong>Attention</strong> Dans un nouvel espace, la carte <strong>Utilisateur</strong> est vide. Les six permissions de tous les jours (<strong>Utiliser la messagerie</strong>, <strong>Réserver et utiliser les réservations</strong>, <strong>Voir le calendrier</strong>, <strong>Voir l'annuaire des membres</strong>, <strong>Voir son propre compte et ses factures</strong>, <strong>Voir les documents partagés</strong>) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. <strong>Mise en place de cet espace</strong> affiche <strong>Ce que les membres peuvent faire</strong> comme <strong>Nécessaire pour une première réservation</strong> tant que la carte <strong>Utilisateur</strong> ne détient pas <strong>Réserver et utiliser les réservations</strong> ; elle ne vérifie pas les cinq autres. Cochez-les pour la carte <strong>Utilisateur</strong>, et pour la carte <strong>Administrateur·rice</strong> si les administrateurs réservent aussi, puis testez avec un second compte.</p>
 </blockquote>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
@@ -2152,7 +2153,7 @@
 <ol>
 <li>Ouvrez <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/validation">Règles de validation</a> et lisez chaque carte personnalisée : « Tous les admins — n’importe lesquels 2 » veut dire deux personnes.</li>
 <li>Ouvrez <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/members">Membres et forfaits</a>. Comptez les propriétaires et administrateurs actifs. Les personnes en pause ou sorties ne comptent pas.</li>
-<li>Ouvrez <strong>Mise en place de cet espace</strong> dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Espace</a>. Le domaine <strong>Rôles et validation des demandes</strong> dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Cela retient la première réservation seulement quand la règle porte sur les réservations.</li>
+<li>Ouvrez <strong>Mise en place de cet espace</strong> dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Espace</a>. Le domaine <strong>Rôles et validation des demandes</strong> dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Le domaine devient alors obligatoire, quel que soit le type de demande, et <a href="fr.html#user.collaborate.attention">Ce qui vous attend</a> le signale.</li>
 <li>Ouvrez <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/events">Événements</a>. <strong>En attente de votre confirmation</strong> montre ce qui attend, et une ligne affiche « 1/2 validations ».</li>
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
@@ -2416,7 +2417,7 @@
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>Le délai avant la première relance est aussi lu comme votre délai de paiement. Réglez-le avec les <a href="fr.html">Conditions de paiement</a>.</li>
-<li>Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si <strong>Les admins émettent des factures</strong> est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde.</li>
+<li>Les relances automatiques s'exécutent une fois par jour sur le serveur quand la base de données a son planificateur activé. Elles s'exécutent aussi quand une personne autorisée à émettre des factures (un propriétaire, un copropriétaire, ou un administrateur si <strong>Les admins émettent des factures</strong> est activé) ouvre les Finances : un espace sans planificateur les reçoit donc, les jours où quelqu'un regarde. L'interrupteur et la description de la fonctionnalité le disent aussi ; l'opérateur de votre serveur sait ce qui s'applique.</li>
 <li>La fonction <strong>Relances de paiement</strong> ne fait que rendre les règles disponibles. Une relance ne part toute seule que si <strong>Relances automatiques</strong> est activé dans les règles de relance, ce qui n'est pas le cas tant que vous ne l'avez pas choisi.</li>
 <li>Elles ignorent une facture dont un paiement est en attente ou suspendu, et une facture sans délai de paiement enregistré.</li>
 <li>Le membre reçoit une alerte dans son fil et, si les notifications push sont configurées, une notification générique ; voir <a href="#setup.notify.overview">Informer les gens</a>.</li>
@@ -2435,7 +2436,7 @@
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.</li>
-<li>Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre.</li>
+<li>Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de <strong>Gestion de la TVA</strong> et l'avertissement de l'écran d'identité légale le disent.</li>
 <li>Une déclaration est une aide au dépôt, établie à partir de vos factures émises. Vérifiez-la avant de la déposer, et ne la marquez comme déposée qu'une fois que c'est fait.</li>
 <li>Le journal des déclarations a sa propre série de numéros.</li>
 </ul>
@@ -2475,8 +2476,8 @@
 </tr>
 <tr>
 <td>Devise et pays</td>
-<td>Les montants sont stockés en unités mineures entières, sans conversion. Aucune protection n'empêche de les modifier plus tard : décidez avant la première réservation.</td>
-<td>Avant la première réservation</td>
+<td>Les montants sont stockés en unités mineures entières, sans conversion. Dès que l'espace a émis un document ou enregistré de l'argent, le serveur refuse de changer l'un ou l'autre.</td>
+<td>Au premier document ou paiement</td>
 </tr>
 </tbody>
 </table>
@@ -2730,7 +2731,7 @@
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>La surcharge vient de règles qui sollicitent trop souvent, ou de trop d'administrateurs sur une même règle.</li>
-<li>Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation peut signaler une règle de réservation qui a trop peu de validateurs.</li>
+<li>Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation signale toute règle qui a trop peu de validateurs, et Ce qui vous attend la fait remonter.</li>
 <li>Le silence vient aussi d'un push non configuré, de membres qui ont désactivé le push, et d'un système qui bloque les notifications.</li>
 <li>Les relances de paiement automatiques ne dispensent pas de regarder de temps en temps les factures ouvertes.</li>
 </ul>
@@ -3050,17 +3051,22 @@
 </tr>
 <tr>
 <td>La liste de préparation</td>
-<td>Une ligne par domaine de l'espace, avec son état, qui agit et où le régler. Domaines : <strong>Jours d’ouverture, fuseau horaire et devise</strong>, <strong>Places réservables sur le plan</strong>, <strong>Formules d’adhésion et tarifs</strong>, <strong>Inviter les premiers membres</strong>, <strong>Comment les membres paient</strong>, <strong>Rôles et validation des demandes</strong>, <strong>Export et restauration</strong>, <strong>Informations requises par vos fonctionnalités (identité, banque, plateformes)</strong>, <strong>Une première réservation</strong> et, le cas échéant, <strong>Serveur et version de la base</strong> et <strong>Accès des assistants (facultatif)</strong> (ce dernier seulement quand l'interface MCP est activée).</td>
+<td>Une ligne par domaine de l'espace, avec son état, qui agit et où le régler. Domaines : <strong>Jours d’ouverture, fuseau horaire et devise</strong>, <strong>Places réservables sur le plan</strong>, <strong>Formules d’adhésion et tarifs</strong>, <strong>Inviter les premiers membres</strong>, <strong>Comment les membres paient</strong>, <strong>Rôles et validation des demandes</strong>, <strong>Export et restauration</strong>, <strong>Ce que les membres peuvent faire</strong>, <strong>Informations requises par vos fonctionnalités (identité, banque, plateformes)</strong>, <strong>Une première réservation</strong> et, le cas échéant, <strong>L'identité légale et l'adresse de l'espace</strong> (seulement quand <strong>Factures</strong> est activé), <strong>Serveur et version de la base</strong> et <strong>Accès des assistants (facultatif)</strong> (ce dernier seulement quand l'interface MCP est activée).</td>
 <td><strong>Mise en place de cet espace</strong>, en haut d'<a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Espace</a></td>
 </tr>
 <tr>
 <td>La ligne qui empêche une première réservation</td>
-<td>Seulement ce qu'une réservation exige vraiment : un fuseau horaire, une devise, un jour d'ouverture, une place et, quand une règle de réservation demande plus de validateurs qu'il n'en existe, ces validateurs. Le reste est facultatif et peut être mis de côté avec <strong>Plus tard</strong>.</td>
+<td>Les domaines que la liste marque <strong>Nécessaire pour une première réservation</strong> : un fuseau horaire, une devise, un jour d'ouverture, une place, des membres qui détiennent <strong>Réserver et utiliser les réservations</strong> (un nouvel espace ne leur accorde rien) et, quand une règle de validation, de quelque nature qu'elle soit, demande plus de validateurs qu'il n'en existe, ces validateurs. Le reste est facultatif et peut être mis de côté avec <strong>Plus tard</strong>.</td>
 <td><strong>Avant que quiconque puisse réserver ici</strong>, sur la carte de démarrage de <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/reserve">Réserver</a></td>
 </tr>
 <tr>
+<td>La ligne qui empêche une première facture</td>
+<td>Quand <strong>Factures</strong> est activé, l'identité légale et l'adresse de l'espace. Aucune facture ne peut être émise sans elles, si bien que le domaine ne peut pas être mis de côté.</td>
+<td><strong>Mise en place de cet espace</strong> : le domaine <strong>L'identité légale et l'adresse de l'espace</strong>, marqué <strong>Nécessaire avant de facturer</strong> ; tant qu'il est la prochaine étape, le titre de la carte indique « Avant de facturer : … »</td>
+</tr>
+<tr>
 <td>Ce dont vos fonctions ont encore besoin en local</td>
-<td>L'identité légale (requise par <strong>Factures</strong>), les coordonnées bancaires, un prestataire de paiement en ligne, un compte de facturation électronique, un site.</td>
+<td>Les coordonnées bancaires, un prestataire de paiement en ligne, un compte de facturation électronique, un site. L'identité légale n'est pas listée ici : quand <strong>Factures</strong> est activé, elle forme un domaine à part (ci-dessus).</td>
 <td>La même carte, domaine <strong>Informations requises par vos fonctionnalités (identité, banque, plateformes)</strong>, avec <strong>Configurer</strong> et <strong>Recommandé</strong></td>
 </tr>
 <tr>
@@ -3075,8 +3081,18 @@
 </tr>
 <tr>
 <td>Le garde-fou de validation</td>
-<td><strong>Validations requises</strong> au-delà du nombre de personnes disponibles.</td>
-<td><strong>Pas assez de validateurs éligibles.</strong> dans l'éditeur de règle ; « Une règle demande plus de validateurs que cet espace n'en compte » dans la liste de préparation</td>
+<td><strong>Validations requises</strong> au-delà du nombre de personnes disponibles, pour tout type de demande.</td>
+<td><strong>Pas assez de validateurs éligibles.</strong> dans l'éditeur de règle ; « Une règle demande plus de validateurs que cet espace n'en compte » dans la liste de préparation, où <strong>Rôles et validation des demandes</strong> devient alors obligatoire</td>
+</tr>
+<tr>
+<td>Le verrou de la devise et du pays</td>
+<td>Dès que l'espace a émis un document ou enregistré de l'argent, le serveur refuse tout changement de <strong>Devise</strong> ou de <strong>Pays</strong>, depuis le formulaire des réglages, un import ou ailleurs. Le fuseau horaire n'est pas verrouillé.</td>
+<td>« La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. » quand vous enregistrez <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Espace</a></td>
+</tr>
+<tr>
+<td>La boîte du propriétaire</td>
+<td>Ce qui reste à configurer : une ligne « À configurer : … » pour chaque domaine obligatoire de la liste de préparation qui n'est pas prêt, et une ligne « … fonctionnalités activées attendent « … » » pour chaque fonctionnalité désactivée qui en retient d'autres.</td>
+<td><a href="fr.html#user.collaborate.attention">Ce qui vous attend</a> ; un appui ouvre l'écran où cela se règle, ou <strong>Fonctionnalités</strong></td>
 </tr>
 <tr>
 <td>Le garde-fou des séquences de numérotation</td>
@@ -3099,7 +3115,7 @@
 <ul>
 <li><strong>Mise en place de cet espace</strong> est une liste, pas un verrou. Elle ne vous empêche jamais d'activer quelque chose.</li>
 <li>La plupart des garde-fous agissent quand vous essayez d'émettre, de payer ou de réserver, pas quand vous choisissez un réglage. C'est pourquoi l'audit ci-dessous existe.</li>
-<li>La boîte du propriétaire (<a href="fr.html#user.collaborate.attention">Ce qui vous attend</a>) ne signale pas aujourd'hui les problèmes de configuration. N'attendez pas qu'elle vous les dise.</li>
+<li>La boîte du propriétaire (<a href="fr.html#user.collaborate.attention">Ce qui vous attend</a>) ne signale que les domaines obligatoires et les fonctions retenues. Les domaines facultatifs restent dans la liste de préparation : lisez-la vous-même.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#%C3%A9viter-les-fonctionnalit%C3%A9s-qui-se-contredisent">Éviter les fonctions qui se contredisent</a> · <a href="#v%C3%A9rifier-votre-espace">Vérifier votre espace</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-consistent-features-attention.fr.b8fa17aa9.jpg" alt="Les garde-fous de l'app"></div></figure></div></article><article class="section no-media" id="setup.consistent.gaps" data-roles="owner coowner admin billing"><header><h3>Les erreurs que les garde-fous ne repèrent pas <a class="permalink" href="#setup.consistent.gaps" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-coowner">Copropriétaire</span><span class="role role-admin">Administrateur·rice</span><span class="role role-billing">Administrateur·rice facturation</span></div></header><div class="body"><p>Vous voulez la liste honnête de ce qui reste de votre responsabilité. Ce sont des configurations que l'app vous laisse créer sans vous avertir. Chacune a une façon de l'éviter à la main.</p>
@@ -3119,7 +3135,7 @@
 </tr>
 <tr>
 <td>Être assujetti à la TVA sans taux en vigueur</td>
-<td>L'émission est refusée, mais seulement à la première facture. Quand <strong>Gestion de la TVA</strong> est désactivée, la configuration est masquée mais les taux enregistrés continuent de s'appliquer.</td>
+<td>L'émission est refusée, mais seulement à la première facture. La description de <strong>Gestion de la TVA</strong> et l'avertissement de l'écran d'identité légale le disent ; rien ne vous arrête plus tôt. Quand <strong>Gestion de la TVA</strong> est désactivée, la configuration est masquée mais les taux enregistrés continuent de s'appliquer.</td>
 <td>Ajouter le taux sous <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/vat">TVA</a> avant la première clôture de mois, et émettre une facture d'essai.</td>
 </tr>
 <tr>
@@ -3129,17 +3145,17 @@
 </tr>
 <tr>
 <td><strong>Factures</strong> activé sans identité légale</td>
-<td>La fonction est active dès le premier jour ; le refus arrive au moment de l'émission.</td>
+<td>La fonction est active dès le premier jour. La liste de préparation marque l'identité <strong>Nécessaire avant de facturer</strong> et Ce qui vous attend la signale, mais rien ne vous empêche d'inviter des membres et de faire tourner un mois ; le refus arrive au moment de l'émission.</td>
 <td>Renseigner l'identité avant de dire aux membres qu'ils seront facturés.</td>
 </tr>
 <tr>
-<td>Une règle qui demande plus de validateurs que vous n'en avez, hors réservations</td>
-<td>La liste de préparation ne retient la première réservation que pour les règles de réservation. L'éditeur vous laisse en enregistrer une qui dépasse le nombre de personnes disponibles. Les autres demandes sont créées, ne peuvent pas être menées à terme, et expirent après sept jours.</td>
+<td>Une règle qui demande plus de validateurs que vous n'en avez</td>
+<td>L'éditeur vous laisse en enregistrer une qui dépasse le nombre de personnes disponibles. La liste de préparation marque alors <strong>Rôles et validation des demandes</strong> comme obligatoire, quel que soit le type de demande, mais les demandes créées avant que vous corrigiez ne peuvent pas être menées à terme, et expirent après sept jours.</td>
 <td>Compter les propriétaires et administrateurs actifs après chaque règle. Voir <a href="#%C3%A9viter-les-demandes-qui-attendent-pour-toujours">Éviter les demandes qui attendent pour toujours</a>.</td>
 </tr>
 <tr>
 <td>Des membres qui ne peuvent pas ouvrir le plan</td>
-<td>Dans un nouvel espace, la carte <strong>Utilisateur</strong> de <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rôles</a> est vide et rien ne vous avertit.</td>
+<td>Dans un nouvel espace, la carte <strong>Utilisateur</strong> de <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rôles</a> est vide. La liste de préparation marque <strong>Ce que les membres peuvent faire</strong> tant que les membres ne détiennent pas <strong>Réserver et utiliser les réservations</strong>, mais elle ne vérifie que ce droit-là : les cinq autres droits du quotidien sont à cocher par vous.</td>
 <td>Cocher les droits du quotidien et rejoindre une fois avec un second compte.</td>
 </tr>
 <tr>
@@ -3154,13 +3170,13 @@
 </tr>
 <tr>
 <td>Des relances qui ne partent jamais</td>
-<td>Elles partent chaque matin depuis le serveur quand la base de données a son planificateur (pg_cron) ; sinon, elles partent quand un administrateur ouvre les Finances. Elles restent aussi muettes quand <strong>Relances de paiement automatiques</strong> est désactivé.</td>
+<td>Elles partent chaque matin depuis le serveur si l'installation planifie des tâches (pg_cron) ; sinon, quand un administrateur ouvre les Finances. L'interrupteur et la description de la fonction le disent, mais ne peuvent pas dire ce qui s'applique à votre installation. Elles restent aussi muettes quand <strong>Relances de paiement automatiques</strong> est désactivé.</td>
 <td>Demander à l'opérateur si le planificateur existe, et ouvrir vous-même les Finances s'il n'existe pas. Voir <a href="fr.html#user.money.reminders.automatic">Relances de paiement</a>.</td>
 </tr>
 <tr>
-<td>Changer de pays, de devise ou de fuseau horaire une fois que de l'argent existe</td>
-<td>Je n'ai trouvé aucun garde-fou. Les montants sont stockés comme des nombres et ne sont pas convertis : vérifiez auprès du propriétaire de l'installation avant de vous y fier.</td>
-<td>Les choisir dès le premier jour. Voir <a href="#les-d%C3%A9cisions-difficiles-%C3%A0-d%C3%A9faire">Les décisions difficiles à défaire</a>.</td>
+<td>Changer de fuseau horaire une fois que de l'argent existe</td>
+<td>Le serveur verrouille la devise et le pays dès que l'espace a émis un document ou enregistré de l'argent, mais pas le fuseau horaire, dans lequel chaque jour ouvré, chaque demi-journée et chaque jour de fermeture est compté.</td>
+<td>Le choisir dès le premier jour. Voir <a href="#les-d%C3%A9cisions-difficiles-%C3%A0-d%C3%A9faire">Les décisions difficiles à défaire</a>.</td>
 </tr>
 <tr>
 <td>Une numérotation ou une période de TVA qui ne convient pas au format de votre expert-comptable</td>
@@ -3196,7 +3212,7 @@
 <td>1</td>
 <td>Pays, devise, fuseau horaire</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Espace</a>, <strong>Informations générales</strong></td>
-<td>Atelier du Marché : France, EUR, Europe/Paris</td>
+<td>Atelier du Marché : France, EUR, Europe/Paris, réglés avant le premier document ou paiement, après quoi la devise et le pays sont verrouillés</td>
 </tr>
 <tr>
 <td>2</td>
@@ -3226,7 +3242,7 @@
 <td>6</td>
 <td>Préparation</td>
 <td><strong>Mise en place de cet espace</strong></td>
-<td>Rien sous <strong>Jours d’ouverture, fuseau horaire et devise</strong> ni <strong>Places réservables sur le plan</strong> ne demande de configuration</td>
+<td>Rien sous <strong>Jours d’ouverture, fuseau horaire et devise</strong>, <strong>Places réservables sur le plan</strong> ni <strong>Ce que les membres peuvent faire</strong> ne demande de configuration</td>
 </tr>
 <tr>
 <td>7</td>
@@ -3244,7 +3260,7 @@
 <td>9</td>
 <td>Droits du quotidien</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rôles</a></td>
-<td><strong>Utilisateur</strong> détient les six droits du quotidien</td>
+<td><strong>Utilisateur</strong> détient les six droits du quotidien, dont <strong>Réserver et utiliser les réservations</strong></td>
 </tr>
 <tr>
 <td>10</td>
@@ -3262,7 +3278,7 @@
 <td>12</td>
 <td>Nombre de validations</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/validation">Règles de validation</a></td>
-<td>Aucune règle ne demande plus de validateurs que de propriétaires et d'administrateurs actifs</td>
+<td>Aucune règle ne demande plus de validateurs que de propriétaires et d'administrateurs actifs ; <strong>Rôles et validation des demandes</strong> ne demande pas de configuration</td>
 </tr>
 <tr>
 <td>13</td>
@@ -3359,7 +3375,7 @@
 <td>26</td>
 <td>Fonctions retenues</td>
 <td><strong>Fonctionnalités</strong>, <strong>À examiner</strong></td>
-<td>Le filtre n'affiche aucun processus</td>
+<td>Le filtre n'affiche aucun processus, et Ce qui vous attend n'a aucune ligne sur des fonctions qui attendent</td>
 </tr>
 </tbody>
 </table>
@@ -3378,7 +3394,7 @@
 <td>27</td>
 <td>Identité légale</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/legal-identity">Identité légale et facturation électronique</a></td>
-<td><strong>Complétez ces informations avant d'émettre</strong> n'affiche rien quand vous démarrez une facture d'essai</td>
+<td><strong>L'identité légale et l'adresse de l'espace</strong> indique <strong>Prêt</strong>, et <strong>Complétez ces informations avant d'émettre</strong> n'affiche rien quand vous démarrez une facture d'essai</td>
 </tr>
 <tr>
 <td>28</td>
@@ -3519,8 +3535,13 @@
 <td><a href="#ce-qui-ne-se-d%C3%A9fait-pas">Argent</a></td>
 </tr>
 <tr>
-<td>Pays, devise, fuseau horaire</td>
-<td>Dès que de l'argent existe : les montants ne sont pas convertis</td>
+<td>Pays et devise</td>
+<td>Verrouillés par le serveur dès que l'espace a émis un document ou enregistré de l'argent : les montants ne sont pas convertis</td>
+<td><a href="#les-d%C3%A9cisions-difficiles-%C3%A0-d%C3%A9faire">Les décisions difficiles à défaire</a></td>
+</tr>
+<tr>
+<td>Fuseau horaire</td>
+<td>Jamais verrouillé, mais les jours y sont comptés : choisissez-le dès le premier jour</td>
 <td><a href="#les-d%C3%A9cisions-difficiles-%C3%A0-d%C3%A9faire">Les décisions difficiles à défaire</a></td>
 </tr>
 <tr>
@@ -3657,11 +3678,11 @@
 <li>Ajoutez un jour de fermeture. Voir <a href="fr.html#user.workspace.availability.closure-days">Jours de fermeture</a>.</li>
 <li>Gardez les fonctions par défaut. N'ouvrez <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Fonctionnalités</a> que pour lire ce qui est activé.</li>
 <li>Faites une réservation à votre nom, puis enregistrez votre arrivée et votre départ. Voir <a href="fr.html#user.reserve.check-in">Arriver et partir</a>.</li>
-<li>Partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir <a href="fr.html#user.workspace.code">L'identifiant de l'espace</a>.</li>
+<li>Dans <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rôles</a>, cochez les permissions de tous les jours sur la carte <strong>Utilisateur</strong>, puis partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir <a href="fr.html#user.workspace.code">L'identifiant de l'espace</a>.</li>
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture et au moins une place. Tout le reste peut attendre.</li>
+<li>Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture, au moins une place, et des membres qui détiennent <strong>Réserver et utiliser les réservations</strong>. Tout le reste peut attendre.</li>
 <li>Un plan ne peut pas être remplacé par un import dès qu'une réservation existe.</li>
 </ul>
 <p><em>C'est terminé quand</em></p>
@@ -3792,7 +3813,7 @@
 </tr>
 <tr>
 <td>Préparation</td>
-<td>La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver.</td>
+<td>La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver, et avant la première facture.</td>
 </tr>
 <tr>
 <td>Retenue</td>
@@ -3862,7 +3883,7 @@
 <td>1. Pays, devise, fuseau horaire, langue</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Réglages de l'espace</a></td>
 <td>5 minutes</td>
-<td>Oui, mais ne changez pas la devise une fois que de l'argent existe</td>
+<td>Oui, jusqu'au premier document ou paiement ; ensuite la devise et le pays sont verrouillés</td>
 </tr>
 <tr>
 <td>2. Plan</td>

@@ -543,6 +543,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Da configurare: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count funzioni attivate attendono «$feature»',
+      one: '1 funzione attivata attende «$feature»',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'In attesa dal $date';
   }
@@ -5707,7 +5723,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'L\'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi.';
+      'L\'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi. Uno spazio soggetto a IVA ne ha bisogno, insieme a un\'aliquota predefinita, per emettere una fattura: senza di essi l\'emissione viene rifiutata.';
 
   @override
   String get featureVatManagementTitle => 'Gestione IVA';
@@ -8985,7 +9001,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Questo spazio applica l\'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l\'export XML resta disattivato.';
+      'Questo spazio applica l\'IVA ma non è in vigore alcuna aliquota predefinita: nessuna fattura può essere emessa finché non ne aggiunge una. Le aliquote si modificano con «Gestione IVA» attivata.';
 
   @override
   String get legendBlocked => 'Bloccata';
@@ -12144,6 +12160,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentProviderWero => 'Wero (tramite Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Quando viene eseguito: ogni mattina sul server, se l\'installazione pianifica attività (pg_cron); altrimenti quando un amministratore apre Finanze. L\'operatore del Suo server sa quale vale.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13756,8 +13776,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessAreaInvitations => 'Invitare i primi membri';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'L\'identità legale e l\'indirizzo dello spazio';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Dati richiesti dalle funzioni (identità, banca, piattaforme)';
+
+  @override
+  String get readinessAreaMemberPermissions => 'Cosa possono fare i membri';
 
   @override
   String get readinessAreaPayments => 'Come pagano i membri';
@@ -13785,6 +13812,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Prima di fatturare: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Pronto per una prima prenotazione';
 
   @override
@@ -13792,6 +13824,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Necessario per una prima prenotazione';
+
+  @override
+  String get readinessNeededInvoicing => 'Necessario prima di fatturare';
 
   @override
   String readinessNext(String step) {
@@ -13813,6 +13848,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'La sua richiesta attende un amministratore del database';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Senza di essa non si può emettere alcuna fattura';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'I membri non possono ancora prenotare: in Ruoli, conceda loro «Prenotare e usare le prenotazioni»';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13968,6 +14011,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Riaprilo per vedere a che punto è.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.';
 
   @override
   String get refusalPermission =>
