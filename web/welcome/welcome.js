@@ -58,8 +58,10 @@
     each('[data-i18n-alt]', function (el) { var k = el.getAttribute('data-i18n-alt'); el.setAttribute('alt', table[k] || english.alt[k]); });
     each('[data-i18n-aria]', function (el) { var k = el.getAttribute('data-i18n-aria'); el.setAttribute('aria-label', table[k] || english.aria[k]); });
     each('img[data-shot]', function (img) { img.src = 'img/' + img.getAttribute('data-shot') + '.' + lang + '.webp'; });
-    each('a.guide-link', function (a) { a.href = GUIDE + lang + '.html'; });
-    each('a.setup-guide-link', function (a) { a.href = GUIDE + 'setup-' + lang + '.html'; });
+    // Guide links follow the language and keep the section they point at.
+    function anchorOf(a) { var id = a.getAttribute('data-anchor'); return id ? '#' + id : ''; }
+    each('a.guide-link', function (a) { a.href = GUIDE + lang + '.html' + anchorOf(a); });
+    each('a.setup-guide-link', function (a) { a.href = GUIDE + 'setup-' + lang + '.html' + anchorOf(a); });
     document.title = t('meta.title');
     var desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute('content', t('meta.desc'));
@@ -74,7 +76,23 @@
     var select = document.getElementById('lang');
     if (select) select.value = lang;
     renderPlanStatus();
+    renderMotion();
   }
+
+  // ---------- motion ----------
+  // Everything that moves on its own can be stopped, and stays stopped: the
+  // reader decides how long to look at a screen.
+  var still = store('deskilo.welcome.still') === '1';
+  function renderMotion() {
+    root.classList.toggle('still', still);
+    each('.motion-btn', function (b) {
+      b.hidden = reduced;
+      b.setAttribute('aria-pressed', String(still));
+      b.setAttribute('aria-label', t(still ? 'motion.play' : 'motion.pause'));
+      b.setAttribute('title', t(still ? 'motion.play' : 'motion.pause'));
+    });
+  }
+  function moving() { return !still && !document.hidden; }
 
   // ---------- theme ----------
   var savedTheme = store('deskilo.welcome.theme');
@@ -150,7 +168,7 @@
     }
     var people = ['DM', 'EF', 'AL', 'BK', 'CR'];
     window.setInterval(function () {
-      if (!visible || document.hidden) return;
+      if (!visible || !moving()) return;
       var pool = seats.filter(function (s) { return s.state !== 'mine'; });
       var s = pool[Math.floor(Math.random() * pool.length)];
       if (s.state === 'taken') s.state = 'in';
@@ -171,7 +189,7 @@
     var n = r.querySelectorAll('img').length;
     var i = 0;
     window.setInterval(function () {
-      if (document.hidden) return;
+      if (!moving()) return;
       i = (i + 1) % n;
       show(r, i);
     }, 3400);
@@ -273,6 +291,20 @@
       root.setAttribute('data-theme', next);
       store('deskilo.welcome.theme', next);
     });
+    each('.motion-btn', function (b) {
+      b.addEventListener('click', function () {
+        still = !still;
+        store('deskilo.welcome.still', still ? '1' : '0');
+        renderMotion();
+      });
+    });
+    // A link to a question opens it.
+    function openTarget() {
+      var el = window.location.hash && document.getElementById(window.location.hash.slice(1));
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    window.addEventListener('hashchange', openTarget);
+    openTarget();
     buildPlan();
     applyLanguage(pickLanguage());
     reveals();
