@@ -28,8 +28,11 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../reservations/reserve_hub_test.dart' show reservationOn, seatCenter;
+import '../reservations/reserve_hub_test.dart'
+    show pickHubDate, reservationOn, seatCenter;
 import 'fixtures/recording_fixtures.dart';
+
+final _tomorrow = kTestNow.add(const Duration(days: 1));
 
 /// The booking command answers with a refusal, worded with private
 /// detail the recording must never carry.
@@ -280,11 +283,14 @@ void main() {
   ) async {
     final repo = FakeReservationRepository()
       ..reservations.add(
-        reservationOn(kTestNow, id: 'r-mine', startHour: 0, endHour: 23),
+        // Tomorrow: on the live plan a covering booking has started, and
+        // a started booking offers Request deletion, not Cancel (#2328).
+        reservationOn(_tomorrow, id: 'r-mine', startHour: 0, endHour: 23),
       );
     final hub = await _pumpHub(tester, repo: repo);
     final controller = _recorder(hub.container);
     await _openReserve(tester);
+    await pickHubDate(tester, _tomorrow);
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cancel reservation'));
@@ -303,11 +309,14 @@ void main() {
   ) async {
     final repo = FakeReservationRepository()
       ..reservations.add(
-        reservationOn(kTestNow, id: 'r-mine', startHour: 0, endHour: 23),
+        // Tomorrow: on the live plan a covering booking has started, and
+        // a started booking offers Request deletion, not Cancel (#2328).
+        reservationOn(_tomorrow, id: 'r-mine', startHour: 0, endHour: 23),
       );
     final hub = await _pumpHub(tester, repo: repo);
     final controller = _recorder(hub.container);
     await _openReserve(tester);
+    await pickHubDate(tester, _tomorrow);
     await tester.tapAt(seatCenter(tester));
     await tester.pumpAndSettle();
     Navigator.of(tester.element(find.text('Cancel reservation'))).pop();

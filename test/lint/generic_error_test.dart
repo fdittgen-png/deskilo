@@ -78,7 +78,7 @@ const Map<String, int> _baseline = {
   'lib/features/profile/presentation/screens/settings_screen.dart': 1, // 2026-09-29 #1823 2→1: the address dialog moved to account_settings_dialogs.dart and says what failed
   'lib/features/reservations/presentation/reserve_seat_actions.dart': 3,
   'lib/features/reservations/presentation/screens/reserve_screen.dart': 1,
-  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 2,
+  'lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart': 1,
   'lib/features/reservations/presentation/widgets/space_act_sheet.dart': 1,
   'lib/features/reservations/presentation/widgets/space_scan.dart': 4,
   'lib/features/workspace/presentation/excel_export.dart': 1,

@@ -5,6 +5,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,6 +31,7 @@ Future<
   // admins get the admin actions; flags flow through as usual.
   bool regularMember = false,
   Map<String, dynamic> featureFlags = const {},
+  Clock? clock,
 }) async {
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   final reservations = FakeReservationRepository();
@@ -50,6 +52,7 @@ Future<
         floorPlan: plans,
         reservations: reservations,
         workspace: workspace,
+        clock: clock,
       ),
       child: const DeskiloApp(),
     ),

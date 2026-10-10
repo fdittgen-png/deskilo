@@ -6,7 +6,17 @@ import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 /// [fetchItems] filters by range and kinds the way `calendar_items`
 /// does — the ACCESS rules stay the server's and are not re-modelled
 /// here, so a test that wants a locked kind says so via [locked].
+///
+/// #2328 — with an [actor], a query without a member is about the
+/// caller, as on the server (`coalesce(p_member_id, me)`): the demo's
+/// "My bookings" showed everybody's because null meant "everyone" here.
+/// Items without a member (workspace-wide) stay visible.
 class FakeCalendarRepository implements CalendarRepository {
+  FakeCalendarRepository({this.actor});
+
+  /// Who "me" is; null keeps the historical "no member filter" for tests.
+  final String Function()? actor;
+
   final List<CalendarItem> items = [];
   Set<CalendarKind> locked = {};
   final List<CalendarQuery> queries = [];
@@ -21,8 +31,9 @@ class FakeCalendarRepository implements CalendarRepository {
     if (failure != null) throw failure!;
     queries.add(query);
     final kinds = query.kinds;
+    final subject = query.memberId ?? actor?.call();
     return CalendarPage(
-      subjectMemberId: query.memberId ?? 'member-1',
+      subjectMemberId: subject ?? 'member-1',
       locked: {for (final k in locked) if (kinds == null || kinds.contains(k)) k},
       items: [
         for (final i in items)
@@ -30,7 +41,7 @@ class FakeCalendarRepository implements CalendarRepository {
               i.at.isBefore(query.to) &&
               (kinds == null || kinds.contains(i.kind)) &&
               !locked.contains(i.kind) &&
-              (query.memberId == null || i.memberId == query.memberId))
+              (subject == null || i.memberId.isEmpty || i.memberId == subject))
             i,
       ]..sort((a, b) => a.at.compareTo(b.at)),
     );
