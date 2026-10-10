@@ -445,6 +445,15 @@ class UnavailableFinanceKpiRepository implements FinanceKpiRepository {
   }) async => throw const KpiUnavailable('no server in this mode');
 }
 
+/// #2327 — how a KPI read retries. A refusal or an unavailable source is
+/// an ANSWER, not a hiccup: retrying it kept the demonstration's finance
+/// cards loading for a minute. Anything else retries briefly.
+Duration? kpiRetry(int count, Object error) {
+  if (error is KpiForbidden || error is KpiUnavailable) return null;
+  if (count >= 3) return null;
+  return Duration(milliseconds: 200 << count);
+}
+
 /// The server refused: the reader may not see this KPI here.
 class KpiForbidden implements Exception {
   const KpiForbidden();

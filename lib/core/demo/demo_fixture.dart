@@ -19,7 +19,7 @@ import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
-import 'data/fixture_clock.dart';
+import 'demo_clock.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
@@ -90,7 +90,8 @@ class DemoFixture {
   /// Seeds the session. [now] is the instant the demo believes it is,
   /// so "today" is always a working day inside the opening hours.
   factory DemoFixture.build({DateTime? now}) {
-    final today = now ?? kTestNow;
+    // #2327 — 10:00 in the space's own zone, on any device.
+    final today = now ?? demoSeedNow;
     // #2313 — the features a fresh space keeps off are on in the demo.
     final workspaces =
         FakeWorkspaceRepository.withWorkspace(featureFlags: demoFeatureFlags);

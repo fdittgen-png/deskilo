@@ -3,6 +3,11 @@ import '../../../features/money/domain/account_activity.dart';
 import '../../../features/money/domain/finance_overview.dart';
 
 class FakeAccountActivityRepository implements AccountActivityRepository {
+  /// [derive], when given, answers the overview from live data (#2327:
+  /// the demonstration reads its persona's invoices from the shared money).
+  FakeAccountActivityRepository({this.derive});
+
+  final FinanceOverview Function()? derive;
   final records = <AccountActivityKind, List<AccountActivity>>{};
   bool unavailable = false;
   FinanceOverview financeOverview = const FinanceOverview();
@@ -10,7 +15,7 @@ class FakeAccountActivityRepository implements AccountActivityRepository {
   @override
   Future<FinanceOverview> overview() async {
     if (unavailable) throw StateError('financial overview unavailable');
-    return financeOverview;
+    return derive?.call() ?? financeOverview;
   }
 
   @override
