@@ -16,6 +16,22 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "attentionDecide": "À décider : {subject}",
+  "@attentionDecide": {
+    "description": "#2326: attentionDecide"
+  },
+  "attentionAdmit": "{count, plural, =1{Admettre 1 personne qui demande à rejoindre} other{Admettre {count} personnes qui demandent à rejoindre}}",
+  "@attentionAdmit": {
+    "description": "#2326: attentionAdmit"
+  },
+  "attentionIssue": "{count, plural, =1{Facturer le mois à 1 membre} other{Facturer le mois à {count} membres}}",
+  "@attentionIssue": {
+    "description": "#2326: attentionIssue"
+  },
+  "attentionWaitingSince": "En attente depuis le {date}",
+  "@attentionWaitingSince": {
+    "description": "#2326: attentionWaitingSince"
+  },
   "featureCustomFieldsTitle": "Les questions de cet espace",
   "@featureCustomFieldsTitle": {
     "description": "#1288 custom fields: featureCustomFieldsTitle"

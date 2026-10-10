@@ -618,6 +618,42 @@
   "@assistantSetupTurnOn": {
     "description": "#1827 Assistant setup: assistantSetupTurnOn"
   },
+  "attentionAdmit": "{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
+  "@attentionAdmit": {
+    "description": "#2326: attentionAdmit",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attentionDecide": "Decide: {subject}",
+  "@attentionDecide": {
+    "description": "#2326: attentionDecide",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "attentionIssue": "{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
+  "@attentionIssue": {
+    "description": "#2326: attentionIssue",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attentionWaitingSince": "Waiting since {date}",
+  "@attentionWaitingSince": {
+    "description": "#2326: attentionWaitingSince",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "authAlreadyRegistered": "This address cannot be used to create an account. Sign in or reset your password instead.",
   "@authAlreadyRegistered": {
     "description": "Inline refusal when the server itself discloses that the address is taken"

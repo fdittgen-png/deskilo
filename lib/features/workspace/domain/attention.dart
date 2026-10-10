@@ -46,24 +46,38 @@ enum AttentionKind {
   configuration,
 }
 
+/// The verb a line asks for. The screen turns it into a sentence in the
+/// reader's language (#2326) — these are keys, never printed.
+enum AttentionAction {
+  /// Answer a request waiting on this person; [Attention.subject] is the
+  /// event type's wire name.
+  decide,
+
+  /// Admit people asking to join.
+  admit,
+
+  /// Issue the month's invoices.
+  issue,
+}
+
 /// One line: who or what, the decision, and since when.
 ///
-/// [subject] and [decision] are the words the screen prints — a verb for
-/// the decision, never a noun-phrase status, because the line IS the
-/// button. [waitingSince] is what the reader can check the ranking
-/// against; it is also the tie-break.
+/// [subject] and [action] are keys the screen localizes — a verb for the
+/// decision, never a noun-phrase status, because the line IS the button.
+/// [waitingSince] is what the reader can check the ranking against; it
+/// is also the tie-break.
 class Attention {
   const Attention({
     required this.kind,
     required this.subject,
-    required this.decision,
+    required this.action,
     required this.waitingSince,
     this.count = 1,
   });
 
   final AttentionKind kind;
   final String subject;
-  final String decision;
+  final AttentionAction action;
   final DateTime waitingSince;
 
   /// How many things this one line stands for — *issue for 7 members*.
