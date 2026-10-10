@@ -72,3 +72,18 @@ class SupabaseFinanceKpiRepository implements FinanceKpiRepository {
     return financeSummaryFromJson(Map<String, dynamic>.from(row as Map));
   }
 }
+
+/// How a KPI read retries. A refusal, a missing source, a malformed
+/// answer or any answer of the server itself is final: asking again
+/// returns the same, and Riverpod's default (ten tries, up to 6.4 s
+/// apart, again in every provider that watches this one) kept a BI card
+/// loading for 76 s before it could say so. Only a transport failure is
+/// tried again, twice and quickly.
+Duration? kpiRetry(int retryCount, Object error) {
+  if (retryCount >= 2) return null;
+  return switch (error) {
+    KpiUnavailable() || KpiForbidden() || FormatException() => null,
+    PostgrestException() => null,
+    _ => Duration(milliseconds: 200 << retryCount),
+  };
+}
