@@ -519,6 +519,38 @@ class AppLocalizationsFr extends AppLocalizations {
   String get assistantSetupTurnOn => 'Activer';
 
   @override
+  String attentionAdmit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Admettre $count personnes qui demandent à rejoindre',
+      one: 'Admettre 1 personne qui demande à rejoindre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String attentionDecide(String subject) {
+    return 'À décider : $subject';
+  }
+
+  @override
+  String attentionIssue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Facturer le mois à $count membres',
+      one: 'Facturer le mois à 1 membre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String attentionWaitingSince(String date) {
+    return 'En attente depuis le $date';
+  }
+
+  @override
   String get authAlreadyRegistered =>
       'Cette adresse ne peut pas servir à créer un compte. Connectez-vous ou réinitialisez votre mot de passe.';
 

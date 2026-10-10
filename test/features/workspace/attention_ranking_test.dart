@@ -19,7 +19,7 @@ Attention _item(AttentionKind kind, {int daysWaiting = 0, int count = 1}) =>
     Attention(
       kind: kind,
       subject: kind.name,
-      decision: 'decide',
+      action: AttentionAction.decide,
       waitingSince: _now.subtract(Duration(days: daysWaiting)),
       count: count,
     );
