@@ -106,7 +106,7 @@ class DemoFixture {
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
-    final calendar = FakeCalendarRepository();
+    final calendar = FakeCalendarRepository(actor: () => actor.memberId);
     final credits = FakeCreditRepository();
     seedDemoCarnets(credits);
     final fields = FakeWorkspaceFields();
