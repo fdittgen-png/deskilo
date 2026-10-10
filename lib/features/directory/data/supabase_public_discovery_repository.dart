@@ -19,11 +19,17 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
   SupabasePublicDiscoveryRepository({
     required this.origin,
     required this.publishableKey,
+    this.local,
     http.Client Function()? transport,
   }) : transport = transport ?? http.Client.new;
 
-  /// This installation's origin and publishable key.
+  /// The directory's origin and publishable key (#2343: the global
+  /// directory on the reference deployment).
   final String origin, publishableKey;
+
+  /// #2343 — this device's own server when it is not the directory's: its
+  /// published spaces are listed whether or not it was linked.
+  final BackendEndpoint? local;
 
   /// The raw HTTP client each anonymous client is built on.
   final http.Client Function() transport;
@@ -78,7 +84,10 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
     } finally {
       await home.dispose();
     }
-    final endpoints = <String, String>{origin: publishableKey};
+    final endpoints = <String, String>{
+      origin: publishableKey,
+      if (local case final own?) own.url: own.key,
+    };
     final failures = <String>[];
     final incompatible = <String>{};
     for (final row in sourceRows) {

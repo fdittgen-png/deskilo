@@ -63,6 +63,10 @@ class DirectoryActions {
   final DirectoryParticipantRepository repository;
   Future<void> register(String origin, String key) =>
       repository.register(origin.trim(), key.trim());
+
+  /// #2343 — whether [origin] is linked to the global directory, or can be.
+  Future<DirectoryLinkState> linkState(String origin, String key) =>
+      repository.linkState(origin.trim(), key.trim());
   Future<void> apply(PublicWorkspace workspace) {
     if (workspace.id.isEmpty) throw ArgumentError('workspace required');
     return repository.apply(workspace);

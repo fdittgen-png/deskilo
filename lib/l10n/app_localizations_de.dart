@@ -3778,6 +3778,43 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get directoryLinkAction => 'Verbinden';
+
+  @override
+  String get directoryLinkCheck => 'Prüfen';
+
+  @override
+  String get directoryLinkConnect => 'Referenzserver verbinden';
+
+  @override
+  String get directoryLinkDone =>
+      'Verbunden. Die Spaces, die er veröffentlicht, sind jetzt unter Entdecken gelistet.';
+
+  @override
+  String get directoryLinkIntro =>
+      'Das globale Verzeichnis liegt auf dem Referenzserver. Ist ein Server verbunden, wird jeder Space, den er veröffentlicht, für alle unter Entdecken gelistet.';
+
+  @override
+  String get directoryLinkNeedsAccount =>
+      'Die Verbindung wird auf dem Referenzserver gespeichert: Verbinden Sie zuerst Ihr Konto dort.';
+
+  @override
+  String get directoryLinkStateDirectory =>
+      'Dies ist der Referenzserver: Die Spaces, die er veröffentlicht, sind immer gelistet.';
+
+  @override
+  String get directoryLinkStateLinkable =>
+      'Kann verbunden werden: Er antwortet und veröffentlicht Spaces, die diese App lesen kann.';
+
+  @override
+  String get directoryLinkStateLinked =>
+      'Verbunden: Die Spaces, die er veröffentlicht, sind unter Entdecken gelistet.';
+
+  @override
+  String get directoryLinkStateUnreachable =>
+      'Kann noch nicht verbunden werden: Er antwortet nicht, oder seine Version kann keine Spaces veröffentlichen.';
+
+  @override
   String get directoryLocate => 'Auf der Karte anzeigen';
 
   @override
@@ -12963,7 +13000,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalPublished => 'Im öffentlichen Verzeichnis sichtbar';
 
   @override
-  String get portalRegisterDirectory => 'Server im Verzeichnis veröffentlichen';
+  String get portalRegisterDirectory =>
+      'Server mit dem globalen Verzeichnis verbinden';
 
   @override
   String get portalRequestProfile => 'Workspace-Profil beantragen';
@@ -15719,6 +15757,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get serverConnectUseHere => 'Auf diesem Gerät verwenden';
 
   @override
+  String serverReferenceLabel(String host) {
+    return 'Referenzserver ($host)';
+  }
+
+  @override
   String get serviceOutOfStock => 'Ausverkauft';
 
   @override
@@ -16000,6 +16043,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spaceFavoriteRemove => 'Aus den Favoriten entfernen';
+
+  @override
+  String spaceHostedOn(String server) {
+    return 'Server: $server';
+  }
 
   @override
   String get spaceKindDesk => 'Tisch';

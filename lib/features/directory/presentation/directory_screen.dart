@@ -2,14 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
-import 'connection_dialog.dart';
+import 'directory_link_dialog.dart';
 import 'directory_carousel.dart';
 import 'directory_map.dart';
 import 'public_workspace_view.dart';
@@ -49,7 +51,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         key: ValueKey('directory-locate-${w.source}-${w.id}'),
         selected: _selected?.id == w.id && _selected?.source == w.source,
         title: Text(w.name),
-        subtitle: Text(w.text('address')),
+        // #2343 — the server a listed space lives on, beside its address.
+        subtitle: Text(
+          [
+            w.text('address'),
+            if (l != null && w.source.isNotEmpty) serverLabel(l, w.source),
+          ].where((part) => part.isNotEmpty).join(' · '),
+        ),
         trailing: IconButton(
           key: ValueKey('directory-locate-${w.source}/${w.id}'),
           tooltip: l?.directoryLocate ?? 'Locate on map',
@@ -211,9 +219,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   l?.portalRegisterDirectory ??
                   'Publish a server in the directory',
               icon: const Icon(Icons.add_business_outlined),
-              onPressed: () => showDialog<bool>(
+              // #2343 — opens on this device's own server: the one an
+              // operator most often wants listed.
+              onPressed: () => showDialog<void>(
                 context: context,
-                builder: (_) => const ConnectionDialog(publishDirectory: true),
+                builder: (_) => DirectoryLinkDialog(
+                  initial: ref.read(activeBackendProvider).value,
+                ),
               ),
             ),
         ],

@@ -10,6 +10,11 @@ class FakeDirectoryRepository
         PublicationRepository,
         DirectoryParticipantRepository {
   final cards = <PublicWorkspace>[];
+
+  /// #2343 — the origins linked to the global directory, and the state a
+  /// probe answers for any other.
+  final linked = <String>[];
+  DirectoryLinkState unlinked = DirectoryLinkState.linkable;
   final pages = <String, Map<String, dynamic>>{};
   final requests = <String>[];
   bool fail = false;
@@ -96,7 +101,14 @@ class FakeDirectoryRepository
   }
 
   @override
-  Future<void> register(String origin, String key) async {}
+  Future<void> register(String origin, String key) async {
+    if (fail) throw StateError('directory unavailable');
+    if (!linked.contains(origin)) linked.add(origin);
+  }
+
+  @override
+  Future<DirectoryLinkState> linkState(String origin, String key) async =>
+      linked.contains(origin) ? DirectoryLinkState.linked : unlinked;
   @override
   Future<void> apply(PublicWorkspace workspace) async {
     final refusal = refuseApply;

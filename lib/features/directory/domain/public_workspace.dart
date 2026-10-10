@@ -100,6 +100,24 @@ abstract interface class PublicationRepository {
 abstract interface class DirectoryParticipantRepository {
   Future<void> register(String origin, String key);
   Future<void> apply(PublicWorkspace workspace);
+
+  /// #2343 — where [origin] stands with the global directory.
+  Future<DirectoryLinkState> linkState(String origin, String key);
+}
+
+/// #2343 — a server and the global directory.
+enum DirectoryLinkState {
+  /// It carries the directory: its published spaces are always listed.
+  directory,
+
+  /// Linked: its published spaces are listed.
+  linked,
+
+  /// It answers with published spaces this app reads: it can be linked.
+  linkable,
+
+  /// It does not answer, or not with spaces this app can read.
+  unreachable,
 }
 
 abstract interface class AccountContactRepository {
