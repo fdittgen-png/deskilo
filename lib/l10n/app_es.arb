@@ -1979,7 +1979,7 @@
   "consentNotBody": "Sin rastreo, sin analítica, sin publicidad, sin venta ni cesión de datos. Las notificaciones push no llevan contenido — solo «tiene un mensaje nuevo»; la propia app escribe el texto. La versión F-Droid no tiene ningún servicio de Google.",
   "consentNotTitle": "Lo que DesKilo nunca hace",
   "consentReadInHelp": "Leer en la ayuda",
-  "consentReadOnWiki": "Leer en el wiki",
+  "consentReadOnWiki": "Leer en la guía en línea",
   "consentRetentionBody": "Mientras sea miembro. Cuando se va y borra, su perfil y sus mensajes desaparecen; los registros contables (facturas, pagos) se conservan el plazo legal, por identificador y no por nombre.",
   "consentRetentionTitle": "Cuánto tiempo",
   "consentReviewBody": "Este texto sigue disponible en Ajustes → Privacidad y datos, en la ayuda de la app (Privacidad) y en el wiki del proyecto. Un cambio del texto vuelve a pedir su aceptación.",

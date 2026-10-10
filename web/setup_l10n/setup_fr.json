@@ -3,7 +3,7 @@
  "setupLanguage": "Langue",
  "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe dans un espace que vous avez créé (Espace de coworking → Importer l'espace (XML)). Chaque réponse indique si l'import l'applique, si elle se saisit dans l'app ou si elle reste dans le fichier seulement ; la dernière étape liste ce qui reste à faire dans l'app.",
  "setupGuideHtml": "Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est {link} (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).",
- "setupGuideLink": "sur le wiki ↗",
+ "setupGuideLink": "en ligne ↗",
  "setupSecretsHtml": "<b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.",
  "setupExpertMode": "Tout afficher sur une page (mode expert)",
  "setupExportXml": "Exporter le XML",

@@ -8403,7 +8403,7 @@ adresse d'une seule ligne de façon fiable ; et les huit mentions de
 facture.
 
 Chacun de ces champs est documenté, champ par champ, dans le
-guide utilisateur au § 11a — le symbole d'aide
+[guide utilisateur](help:user.money.legal.identity) — le symbole d'aide
 placé à côté ouvre exactement son paragraphe.
 
 Les **instructions de paiement** (le bloc bancaire qu'imprime un

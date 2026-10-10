@@ -33,6 +33,8 @@ Families `user` (en `User-Guide.md`, fr `Guide-utilisateur.md`, de `Benutzerhand
 es `Guia-de-usuario.md`, it `Guida-utente.md`), `config` (`Admin-Configuration-Guide{,.fr,.de,.es,.it}.md`),
 `admin` (`Admin-Technical-Guide…`), `env` (`Environments-Guide…`), plus
 `Technical-Reference`, `Architecture`, `Implementation`, `Home` and `_Sidebar`.
+The user and setup families are published as the guide site (`/guide/<lang>.html`,
+`/guide/setup-<lang>.html`) and the in-app help — never as GitHub wiki pages.
 
 ## Writing a guide section (what every /doc-* command does)
 1. **Facts from the app.** For the module: its screens under
@@ -59,7 +61,8 @@ es `Guia-de-usuario.md`, it `Guida-utente.md`), `config` (`Admin-Configuration-G
    exist (`help_screen_test`). Whole-form stitches live inside `<details>`, which
    `build_help` strips.
 5. **Five languages**, prose translated, structure identical; a parameter with a help
-   symbol in the app carries one in `web/setup.html` too, linking `wiki/User-Guide#<anchor>`.
+   symbol in the app carries one in `web/setup.html` too: its `HELP` row names the anchor, and
+   the page links the guide site's section (`guide/<lang>.html#<anchor>`).
 6. **Check** (below), then one PR per module; body: the module, the new anchors, the
    image slots still empty. Mirror the wiki with `/doc-wiki` after the merge.
 

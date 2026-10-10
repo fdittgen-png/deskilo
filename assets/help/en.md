@@ -8401,7 +8401,7 @@ an e-invoice carries because a machine cannot split one line reliably;
 and the eight invoice mentions.
 
 Every one of those fields is documented, field by field, in the
-[user guide](User-Guide#11a-legal-identity-vat--mentions) — the help
+[user guide](help:user.money.legal.identity) — the help
 symbol beside each opens exactly its paragraph.
 
 **Payment instructions** (the bank block a document prints) are a

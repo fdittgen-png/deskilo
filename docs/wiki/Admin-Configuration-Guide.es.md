@@ -41,7 +41,7 @@ máquina no sabe partir con fiabilidad una dirección de una sola línea; y
 las ocho menciones de factura.
 
 Cada uno de esos campos está documentado, campo por campo, en la
-[guía de usuario](Guia-de-usuario), § 11a — el símbolo de ayuda que hay
+[guía de usuario](Guia-de-usuario#su-identidad-legal) — el símbolo de ayuda que hay
 al lado abre exactamente su párrafo.
 
 Las **instrucciones de pago** (el bloque bancario que imprime un

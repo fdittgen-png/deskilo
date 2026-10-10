@@ -119,9 +119,9 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   TextButton.icon(
                     key: const ValueKey('consent-wiki'),
                     onPressed: () =>
-                        ref.read(linkLauncherProvider)(Uri.parse(kPrivacyWikiUrl)),
+                        ref.read(linkLauncherProvider)(Uri.parse(kPrivacyGuideUrl)),
                     icon: const Icon(Icons.open_in_new, size: 18),
-                    label: Text(l10n?.consentReadOnWiki ?? 'Read on the wiki'),
+                    label: Text(l10n?.consentReadOnWiki ?? 'Read in the online guide'),
                   ),
                 ]),
               ],

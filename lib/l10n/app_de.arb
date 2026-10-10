@@ -1979,7 +1979,7 @@
   "consentNotBody": "Kein Tracking, keine Analytik, keine Werbung, kein Verkauf oder Teilen von Daten. Push-Nachrichten tragen keinen Inhalt — nur „Sie haben eine neue Nachricht“; die App selbst schreibt den Text. Die F-Droid-Version hat gar keine Google-Dienste.",
   "consentNotTitle": "Was DesKilo nie tut",
   "consentReadInHelp": "In der Hilfe lesen",
-  "consentReadOnWiki": "Im Wiki lesen",
+  "consentReadOnWiki": "Im Online-Handbuch lesen",
   "consentRetentionBody": "Solange Sie Mitglied sind. Wenn Sie gehen und löschen, verschwinden Profil und Nachrichten; Buchhaltungsbelege (Rechnungen, Zahlungen) bleiben für die gesetzliche Aufbewahrungsfrist, nach Kennung und nicht nach Name.",
   "consentRetentionTitle": "Wie lange",
   "consentReviewBody": "Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Projekt-Wiki verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.",

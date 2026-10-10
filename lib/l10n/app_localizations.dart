@@ -5362,7 +5362,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentReadOnWiki.
   ///
   /// In en, this message translates to:
-  /// **'Read on the wiki'**
+  /// **'Read in the online guide'**
   String get consentReadOnWiki;
 
   /// No description provided for @consentRetentionBody.

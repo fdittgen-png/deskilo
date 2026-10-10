@@ -3126,7 +3126,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get consentReadInHelp => 'Lire dans l\'aide';
 
   @override
-  String get consentReadOnWiki => 'Lire sur le wiki';
+  String get consentReadOnWiki => 'Lire dans le guide en ligne';
 
   @override
   String get consentRetentionBody =>

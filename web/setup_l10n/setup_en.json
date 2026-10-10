@@ -3,7 +3,7 @@
  "setupLanguage": "Language",
  "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it into a space you created (Workspace → Import workspace (XML)). Each answer says whether the import applies it, whether it is typed in the app, or whether it stays in the file only; the last step lists what remains to do in the app.",
  "setupGuideHtml": "The complete user guide — with a screenshot of every screen, long forms merged into one image — is {link} (English · Français · Deutsch · Español · Italiano) and in the app (Settings → Help).",
- "setupGuideLink": "on the wiki ↗",
+ "setupGuideLink": "online ↗",
  "setupSecretsHtml": "<b>Only put a token or credential here if you are filling in this document privately.</b> The exported file is plain text: for e-invoicing and online payments you can leave the fields empty and enter the secrets directly in the app, where they go to the server and never come back.",
  "setupExpertMode": "Show everything on one page (expert mode)",
  "setupExportXml": "Export XML",
