@@ -2668,7 +2668,7 @@
 <p>Le push ne vient pas avec l'app toute seule. Si votre espace tourne sur l'installation de référence partagée, demandez à son opérateur si le push est configuré. Si vous faites tourner votre propre installation, c'est vous ou votre responsable technique qui êtes l'opérateur.</p>
 <h4 class="lbl lbl-steps">Étapes</h4>
 <ol>
-<li>Créez un projet Firebase et compilez l'app avec lui. Sans cela, l'app reste limitée aux notifications locales, et un membre voit <strong>Cette version n'a pas de notifications push</strong>. La version distribuée par la boutique F-Droid n'a aucun push.</li>
+<li>Créez un projet Firebase et compilez l'app avec lui. Sans cela, l'app reste limitée aux notifications locales, et un membre voit <strong>Cette version n'a pas de notifications push</strong>. La version préparée pour F-Droid n'a aucun push (<a href="https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status">état F-Droid</a>).</li>
 <li>Pour iPhone et Mac, ajoutez une clé push Apple au projet Firebase.</li>
 <li>Enregistrez la clé de compte de service Firebase comme secret du serveur et déployez la fonction push.</li>
 <li>Sur votre propre installation, faites pointer la ligne <code>push_config</code> de votre base de données vers l'adresse et la clé de votre propre fonction push. Elle est préremplie avec l'adresse de l'installation de référence.</li>

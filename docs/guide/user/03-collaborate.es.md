@@ -446,10 +446,10 @@ Usted quiere saber qué le avisa y, si lo prefiere, desactivar los avisos en est
 
 **Conviene saber**
 
-- Se le avisa de las solicitudes que esperan su confirmación y de los mensajes.
+- Se le avisa de las solicitudes que esperan su confirmación y de los mensajes: en el feed y en la campana, por push cuando su instalación tiene el push configurado y, en la app instalada (no en el navegador), con un recordatorio en su dispositivo 15 minutos antes de una reserva en la que aún no ha registrado su entrada.
+- DesKilo no envía correos electrónicos propios: los únicos son los de su cuenta (confirmación de alta, restablecimiento de contraseña).
 - El contador de la campana y del icono de la app suma sus confirmaciones pendientes y sus mensajes sin leer.
-- Desactivado, la app sigue funcionando; no se envía nada a este dispositivo. No hay interruptores distintos por categoría.
-- Si su sistema bloquea las notificaciones de la app, permítalas en los ajustes del sistema.
+- Desactivado, la app sigue funcionando; no se envía nada a este dispositivo. No hay interruptores distintos por categoría. Si su sistema bloquea las notificaciones de la app, permítalas en los ajustes del sistema.
 
 **Véase también:** [Eventos y confirmaciones](help:user.collaborate.events) · [Tus datos, tus derechos](help:user.privacy.consent)
 

@@ -499,6 +499,8 @@ operator_pilot evidence for any capability. Maturity in code: no feature is `sta
 - D1. MCP status is contradictory: capability ledger says `roadmap` for `mcp.read/write/consent`
   (`docs/product/CAPABILITIES.md` l.200-225), while code, runbook and user guide describe a working endpoint.
   Ask the owner which statement is true before writing the owner guide.
+  *Resolved 2026-10-10 (#2333): the code is shipped and the ledger now says so; MCP stays off until the
+  infrastructure operator switches it on for one installation (`docs/guides/OPERATIONS.md`, MCP section).*
 - D2. Is there any server-side guard on changing `currency_code`/`country_code` after invoices exist? Only a
   direct row update was found (`updateWorkspaceLocale`) and a rights-request audit trigger on timezone. Needs a
   look at `workspaces` triggers or a live probe.

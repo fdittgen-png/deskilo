@@ -1443,10 +1443,10 @@ Vuole sapere che cosa la avvisa e, se preferisce, disattivare gli avvisi su ques
 
 **Da sapere**
 
-- Viene avvisato delle richieste in attesa della sua conferma e dei messaggi.
+- Viene avvisato delle richieste in attesa della sua conferma e dei messaggi: nel feed e sulla campanella, con una push quando la sua installazione ha configurato le push e, nell'app installata (non nel browser), con un promemoria sul suo dispositivo 15 minuti prima di una prenotazione per la quale non ha ancora fatto il check-in.
+- DesKilo non invia e-mail proprie: le sole e-mail sono quelle del suo account (conferma di iscrizione, reimpostazione della password).
 - Il conteggio sulla campanella e sull'icona dell'app somma le sue conferme in sospeso e i messaggi non letti.
-- Disattivate, l'app continua a funzionare; nulla viene inviato a questo dispositivo. Non ci sono interruttori separati per categoria.
-- Se il suo sistema blocca le notifiche dell'app, le consenta nelle impostazioni di sistema.
+- Disattivate, l'app continua a funzionare; nulla viene inviato a questo dispositivo. Non ci sono interruttori separati per categoria. Se il suo sistema blocca le notifiche dell'app, le consenta nelle impostazioni di sistema.
 
 **Vedi anche:** [Eventi e conferme](help:user.collaborate.events) · [I suoi dati, i suoi diritti](help:user.privacy.consent)
 
@@ -5763,7 +5763,7 @@ Vuole usare DesKilo dove lavora. Lo stesso account e gli stessi dati La seguono.
 - L'immagine disco per macOS dalla pagina delle versioni è firmata e notarizzata da Apple; la apra normalmente.
 - Il programma di installazione per Windows non è firmato: Windows SmartScreen segnala un editore sconosciuto; scelga Ulteriori informazioni, poi Esegui comunque.
 - La lettura del tag di una sedia funziona nei browser Chromium su Android (servono HTTPS e un tocco); le app Android e iPhone leggono i tag direttamente.
-- Una build senza servizi Google e senza push dal cloud è compilata ed è stata inviata a F-Droid; non è ancora nello store F-Droid. In essa le notifiche sono locali e la posta in arrivo fa fede.
+- Una build senza servizi Google e senza push dal cloud è preparata per F-Droid; se si può già installare da F-Droid lo indica la [pagina di stato F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). In essa le notifiche sono locali e la posta in arrivo fa fede.
 - Gli aggiornamenti arrivano dal canale da cui ha installato: Google Play, TestFlight, la pagina delle versioni oppure ricaricando l'app web.
 
 **Vedi anche:** [Il Suo badge](help:user.profile.settings.badge)
@@ -7562,7 +7562,7 @@ Le notifiche push non arrivano con l'app da sole. Se gestisce il Suo spazio sull
 
 **Passaggi**
 
-1. Crei un progetto Firebase e compili l'app con esso. Senza questo passaggio l'app resta con le sole notifiche locali e un membro vede **Questa versione non ha notifiche push**. La versione distribuita tramite lo store F-Droid non ha affatto le push.
+1. Crei un progetto Firebase e compili l'app con esso. Senza questo passaggio l'app resta con le sole notifiche locali e un membro vede **Questa versione non ha notifiche push**. La versione preparata per F-Droid non ha affatto le push ([stato F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. Per iPhone e Mac, aggiunga una chiave push Apple al progetto Firebase.
 3. Memorizzi la chiave dell'account di servizio Firebase come segreto del server e distribuisca la funzione push.
 4. Sulla Sua installazione, punti la riga `push_config` del database all'URL e alla chiave della Sua funzione push. È precompilata con l'indirizzo dell'installazione di riferimento.
@@ -9012,7 +9012,7 @@ essere ripreso dopo una correzione.
 | Integrazione | Che cosa fa | Senza di essa |
 |---|---|---|
 | **Fornitore di pagamento** | incassa un pagamento a fronte di una fattura | i pagamenti si registrano a mano; nient'altro cambia |
-| **Canale WhatsApp** | manda un sollecito o un avviso su WhatsApp | il messaggio resta nella posta dell'app |
+| **WhatsApp** | apre WhatsApp sul dispositivo: il link del gruppo dello spazio e il numero che un membro sceglie di condividere; il server non invia nulla a WhatsApp ([0136](https://github.com/fdittgen-png/deskilo/blob/master/supabase/migrations/0136_remove_whatsapp_mirror.sql)) | non compare alcun pulsante WhatsApp |
 | **Push** | consegna le notifiche a un dispositivo | le notifiche compaiono all'apertura dell'app |
 | **Piattaforma di fatturazione elettronica** | trasmette la fattura strutturata | il PDF è prodotto e inviato per altre vie |
 
@@ -9021,6 +9021,8 @@ una tabella che il file di spazio e ogni deployment saltano: nessun
 export porta quindi mai una chiave. E **un'integrazione non configurata
 degrada, non si rompe**: la funzionalità che la richiede è spenta, la
 schermata lo dice, e nulla solleva eccezioni.
+
+**Non c'è alcuna integrazione e-mail.** DesKilo non invia e-mail proprie: le sole e-mail sono quelle dell'account del servizio di accesso del server (conferma di iscrizione, reimpostazione della password, un codice di accesso). Tutto il resto raggiunge una persona nell'app: il feed degli eventi e la campanella, le push quando Firebase è configurato e, nell'app installata (non nel browser), un promemoria di check-in locale 15 minuti prima di una prenotazione ([il promemoria](https://github.com/fdittgen-png/deskilo/blob/master/lib/features/reservations/domain/check_in_reminders.dart)).
 
 ## Istanze
 

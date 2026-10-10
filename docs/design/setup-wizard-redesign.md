@@ -229,4 +229,4 @@ The finish step produces, from the answers:
    space (needs P6)?
 2. Is invoicing outside FR and DE a goal (it changes the wizard's country card)?
 3. May the page link the Setup Guide on the project site, and may the guide's screenshots come from the demo?
-4. Is the MCP assistant's status as documented in the user guide the truth (the capability ledger says roadmap)?
+4. Is the MCP assistant's status as documented in the user guide the truth (the capability ledger says roadmap)? *Answered 2026-10-10 (#2333): yes; the ledger now records MCP as shipped, off until an operator switches it on.*

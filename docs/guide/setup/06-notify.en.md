@@ -110,7 +110,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 
 **Steps**
 
-1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build distributed through the F-Droid store has no push at all.
+1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build prepared for F-Droid has no push at all ([F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. For iPhone and Mac, add an Apple push key to the Firebase project.
 3. Store the Firebase service-account key as a secret of the server and deploy the push function.
 4. On your own installation, point the `push_config` row of your database at your own push function URL and key. It is seeded with the address of the reference installation.

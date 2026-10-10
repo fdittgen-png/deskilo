@@ -511,7 +511,7 @@ You want to use DesKilo where you work. The same account and the same data follo
 - The macOS disk image from the releases page is signed and notarised by Apple; open it as usual.
 - The Windows installer is not signed: Windows SmartScreen warns about an unknown publisher; choose More info, then Run anyway.
 - Reading a chair tag works in Chromium browsers on Android (HTTPS and a tap needed); the Android and iPhone apps read tags directly.
-- A Google-free build, without cloud push, is built and has been submitted to F-Droid; it is not in the F-Droid store yet. On it, notifications are local and the inbox is the source of truth.
+- A Google-free build, without cloud push, is prepared for F-Droid; whether it can be installed from F-Droid yet is stated on the [F-Droid status page](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status). On it, notifications are local and the inbox is the source of truth.
 - Updates arrive through the channel you installed from: Google Play, TestFlight, the releases page, or reloading the web app.
 
 **See also:** [Your badge](help:user.profile.settings.badge)

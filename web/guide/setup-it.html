@@ -2668,7 +2668,7 @@
 <p>Le notifiche push non arrivano con l'app da sole. Se gestisce il Suo spazio sull'installazione di riferimento condivisa, chieda al suo operatore se le push sono configurate. Se gestisce una Sua installazione, l'operatore è Lei o la Sua persona tecnica.</p>
 <h4 class="lbl lbl-steps">Passaggi</h4>
 <ol>
-<li>Crei un progetto Firebase e compili l'app con esso. Senza questo passaggio l'app resta con le sole notifiche locali e un membro vede <strong>Questa versione non ha notifiche push</strong>. La versione distribuita tramite lo store F-Droid non ha affatto le push.</li>
+<li>Crei un progetto Firebase e compili l'app con esso. Senza questo passaggio l'app resta con le sole notifiche locali e un membro vede <strong>Questa versione non ha notifiche push</strong>. La versione preparata per F-Droid non ha affatto le push (<a href="https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status">stato F-Droid</a>).</li>
 <li>Per iPhone e Mac, aggiunga una chiave push Apple al progetto Firebase.</li>
 <li>Memorizzi la chiave dell'account di servizio Firebase come segreto del server e distribuisca la funzione push.</li>
 <li>Sulla Sua installazione, punti la riga <code>push_config</code> del database all'URL e alla chiave della Sua funzione push. È precompilata con l'indirizzo dell'installazione di riferimento.</li>
