@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/providers/auth_providers.dart';
-import '../backend/backend_config.dart';
+import '../backend/reference_backend.dart';
 import '../trace/trace_logger.dart';
 import 'cache_scope.dart';
 
@@ -467,7 +467,9 @@ CacheStore cacheStore(Ref ref) => ScopedCacheStore(
       FileCacheStore(),
       () => cacheScope(
         backendUrl:
-            bootBackendUrl.isEmpty ? BackendConfig.supabaseUrl : bootBackendUrl,
+            bootBackendUrl.isEmpty
+                ? (compiledDefaultEndpoint ?? referenceEndpoint).url
+                : bootBackendUrl,
         userId: ref.read(authRepositoryProvider).currentUserId,
       ),
     );

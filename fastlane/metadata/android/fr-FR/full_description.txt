@@ -14,6 +14,6 @@ VOUS, D'UN ESPACE À L'AUTRE
 • Demandes de personnes hors de votre cercle, liste de blocage et matrice de visibilité : vous choisissez qui voit votre nom, votre présentation, vos coordonnées et votre présence
 
 VOS DONNÉES, VOTRE CHOIX
-Hébergez vous-même le serveur sur votre propre instance Supabase, ou utilisez le déploiement de référence exploité par Florian DITTGEN, qui héberge aussi l'annuaire partagé. Logiciel libre sous licence AGPL-3.0.
+Hébergez vous-même le serveur sur votre propre instance Supabase, ou utilisez le déploiement de référence exploité par Florian DITTGEN, qui héberge aussi l'annuaire global. La version F-Droid démarre sans serveur et demande lequel utiliser : le déploiement de référence, un serveur existant, ou un nouveau qu'elle installe pour vous. Logiciel libre sous licence AGPL-3.0.
 
-RGPD : données hébergées dans l'UE sur le déploiement de référence, ni suivi ni publicité, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement. Les notifications push utilisent Firebase Cloud Messaging.
+RGPD : données hébergées dans l'UE sur le déploiement de référence, ni suivi ni publicité, accès limité par rôle et appliqué côté serveur. Vos droits sont des boutons dans Réglages → Confidentialité et données : qui voit vos données, qui y a accédé, export, effacement. Dans les versions des stores, les notifications push utilisent Firebase Cloud Messaging ; la version F-Droid n'a aucun service push.

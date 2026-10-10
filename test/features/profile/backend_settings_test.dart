@@ -260,7 +260,7 @@ void main() {
     await pumpServerScreen(tester);
     expect(find.byKey(const ValueKey('backend-status')), findsOneWidget);
     expect(
-      find.textContaining(Uri.parse(BackendConfig.supabaseUrl).host),
+      find.textContaining(Uri.parse(BackendConfig.referenceUrl).host),
       findsWidgets,
     );
     // Nothing to reset while the default is in force.
@@ -430,7 +430,12 @@ void main() {
     await tester.ensureVisible(reset);
     await tester.tap(reset);
     await tester.pumpAndSettle();
-    expect(store.value, isNull);
+    // #2343 — a build without a default stores the reference by name:
+    // an empty store there would mean "ask at the next start".
+    expect(
+      store.value?.url,
+      BackendConfig.hasDefault ? isNull : BackendConfig.referenceUrl,
+    );
   });
 
   testWidgets('#1651 — a switch saved but not restarted is pending, and '

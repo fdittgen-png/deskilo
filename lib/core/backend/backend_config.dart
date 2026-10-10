@@ -10,8 +10,7 @@
 ///   flutter build … --dart-define=SUPABASE_URL=https://…
 ///                   --dart-define=SUPABASE_KEY=sb_publishable_…
 ///
-/// #2343 — a build made with `--dart-define=DESKILO_NO_DEFAULT_SERVER=true`
-/// (the F-Droid build) ships NO default server: the first start asks the
+/// #2343 — the F-Droid build ships NO default server: the first start asks the
 /// person to pick one — the reference deployment, an existing server, or
 /// a new instance the wizard builds — and contacts nothing before that.
 /// The reference endpoint stays in the binary as one of those choices and
@@ -23,10 +22,13 @@ abstract final class BackendConfig {
   static const String referenceKey =
       'sb_publishable_PqXoa0tyQTjsZCPD_LrEQw_P7LJtalL';
 
-  /// True in a build that must start without a server.
-  static const bool noDefaultServer = bool.fromEnvironment(
-    'DESKILO_NO_DEFAULT_SERVER',
-  );
+  /// True in a build that must start without a server: one made with
+  /// `--dart-define=DESKILO_NO_DEFAULT_SERVER=true`, or the libre flavour,
+  /// whose swap (tool/fdroid_foss_swap.sh) turns the default below to
+  /// true — so the F-Droid recipe's build lines carry no extra flag. The
+  /// swap edits THIS line; a lint keeps it in the shape it matches.
+  static const bool noDefaultServer =
+      bool.fromEnvironment('DESKILO_NO_DEFAULT_SERVER');
 
   /// The compiled default server; empty when [noDefaultServer].
   static const String supabaseUrl = noDefaultServer

@@ -39,7 +39,7 @@ here instead of repeating it. Last checked: 2026-10-10.
 
 ## What differs
 
-Only the push transport. `pubspec.yaml` depends on the local package
+Two things: the push transport, and the default server. `pubspec.yaml` depends on the local package
 `deskilo_push`; the repo has two of them:
 
 | path | contents | used by |
@@ -51,13 +51,26 @@ Same name, same API. F-Droid's recipe swaps the path with one `sed`.
 On that build, notifications are local and the inbox is the source of
 truth; Settings → Advanced says the build carries no push transport.
 
+**No default server (#2343).** The same swap flips the default of
+`BackendConfig.noDefaultServer` (`lib/core/backend/backend_config.dart`)
+to true. A build made with `--dart-define=DESKILO_NO_DEFAULT_SERVER=true`
+does the same thing. The F-Droid build then compiles no default
+endpoint. On first start, before anything is contacted, it asks which
+server to use: the reference deployment by name, an existing server
+(tested before it is saved), or a new one built by the instance wizard.
+Flipping a default in the source, instead of adding the define to the
+recipe, keeps the recipe's build lines byte-for-byte what they were.
+`fdroid rewritemeta` folds lines a little past 99 characters, and the
+arm64 build line is already 99.
+
 ## Building it yourself
 
 ```sh
-sed -i 's|    path: packages/deskilo_push$|    path: packages/deskilo_push_foss|' pubspec.yaml
-flutter pub get
+bash tool/fdroid_foss_swap.sh   # GNU sed: Linux or CI
+flutter pub get --enforce-lockfile
 flutter build apk --release
-git checkout pubspec.yaml && flutter pub get   # back to the store flavour
+git checkout pubspec.yaml pubspec.lock lib/core/backend/backend_config.dart \
+  && flutter pub get   # back to the store flavour
 ```
 
 The CI job `fdroid-foss` does exactly this on every change to
@@ -76,9 +89,9 @@ the same folder the Play listing is generated from
 explicitly on !47409: *"Don't add summary and description or other
 metadata files except the build metadata in fdroiddata."* The upside is
 that the listing is maintained here, in one place, in all five languages
-— the downside is that the text has to be true for BOTH stores, so keep
-F-Droid-specific caveats (the hosted default endpoint) in the recipe's
-`AntiFeatures` block, not in the description.
+— the downside is that the text has to be true for BOTH stores. It says
+so where the builds differ: the F-Droid build starts without a server,
+and only the store builds carry push.
 
 `fdroid build -v -l de.deskilo.app` in an fdroiddata checkout reproduces
 what their builder does.
@@ -149,15 +162,23 @@ review comment:
 - **The APK must carry no extra signing block** (#787), and the dex no
   Google classes. Both are asserted by our own `fdroid-foss` gate now.
 
-`AntiFeatures: NonFreeNet` is not optional: the shipped binary's compiled
-defaults (`lib/core/backend/backend_config.dart`) point at the author's
-hosted deployment, so a user who installs and signs in does reach the
-developer's instance. The server is free software in this repository
-(AGPL-3.0-or-later: SQL migrations, RLS policies and edge functions under `supabase/`),
-and since #780 a community points the *installed* build at its own
-Supabase from Settings → Advanced → Server — but the default endpoint is
-what F-Droid ships, hence the disclosure. It can be revisited if a build
-ever ships with no default endpoint at all.
+**No `AntiFeatures` (#2343).** Until 1.0.2 the recipe declared
+`NonFreeNet`: the binary compiled the author's hosted deployment in as
+its default, so a fresh install reached it before anyone chose it.
+linsui asked on !47409 whether the server was non-free. It is not: the
+schema, RLS policies and edge functions under `supabase/` are
+AGPL-3.0-or-later and can be self-hosted. From 1.0.3 the F-Droid build
+also ships no default server (above), so nothing is contacted before
+the user picks one. The optional payment hand-offs
+(PayPal/Stripe/Mollie, configured per workspace) send the user to the
+provider's own page, and they are not declared either.
+
+- **`UpdateCheckMode: Tags ^v\d+\.\d+\.\d+$`.** The store pipelines
+  push audit tags (`v1.0.2+1663632`, `v1.0.2+…-ios`) on later commits
+  whose pubspec still reads the released version. A bare `Tags` could pick
+  one of them for a version whose `binary:` assets sit on the real
+  `v1.0.x` release, and the verification would fail (mezinster's review,
+  2026-10-06). Only release tags match the pattern.
 
 `pubspec.lock` is deliberately **kept**: `flutter pub get` re-resolves only
 the swapped path dependency and leaves every other version pinned. Deleting
