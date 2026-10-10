@@ -66,7 +66,8 @@ void seedDemoSpace(FakeFloorPlanRepository plan) {
       name: 'Team desk',
       bookableAsWhole: true,
       priceCents: 3000,
-      rect: GridRect(x: 18, y: 2, w: 10, h: 4),
+      // #2327 — two whole seat footprints (6 cells each), side by side.
+      rect: GridRect(x: 18, y: 2, w: 2 * SeatFootprint.length, h: 4),
     ),
   );
   for (final (i, id) in DemoSpace.studioSeats.indexed) {
@@ -76,7 +77,7 @@ void seedDemoSpace(FakeFloorPlanRepository plan) {
         workspaceId: ws,
         deskId: DemoSpace.teamDesk,
         name: 'S${i + 1}',
-        x: 18 + i * 4,
+        x: 18 + i * SeatFootprint.length,
         y: 2,
         orientation: SeatOrientation.n,
         chair: 'ergonomic',

@@ -314,7 +314,7 @@ class DocumentsScreen extends ConsumerWidget {
                     .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
                 children: [
                   for (final category in WorkspaceDocument.categories)
-                    if (documents.any((d) => d.category == category)) ...[
+                    if (documents.any((d) => _shelf(d) == category)) ...[
                       Padding(
                         padding: const EdgeInsets.only(
                             top: AppSpacing.sm, bottom: AppSpacing.xs),
@@ -324,7 +324,7 @@ class DocumentsScreen extends ConsumerWidget {
                         ),
                       ),
                       for (final document in documents
-                          .where((d) => d.category == category))
+                          .where((d) => _shelf(d) == category))
                         ListTile(
                           key: ValueKey('document-${document.id}'),
                           contentPadding: EdgeInsets.zero,
@@ -375,3 +375,9 @@ class DocumentsScreen extends ConsumerWidget {
     );
   }
 }
+
+/// #2327 — the shelf a document is listed under. A category this app does
+/// not know (an older or newer client wrote it) is listed under "other"
+/// rather than not at all: a library with rows must never render blank.
+String _shelf(WorkspaceDocument d) =>
+    WorkspaceDocument.categories.contains(d.category) ? d.category : 'other';
