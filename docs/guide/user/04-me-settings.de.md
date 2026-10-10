@@ -490,7 +490,7 @@ Sie möchten wissen, wer was über Sie lesen kann und wer tatsächlich nachgeseh
 
 1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
 2. Tippen Sie auf **Wer meine Daten sehen kann**.
-3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf deine Daten zugegriffen hat**.
+3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf Ihre Daten zugegriffen hat**.
 
 **Gut zu wissen**
 

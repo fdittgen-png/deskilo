@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "eventsPendingHeader": "In attesa della tua conferma",
+  "eventsPendingHeader": "In attesa della sua conferma",
   "eventAccept": "Accetta",
   "eventReject": "Rifiuta",
   "eventsEmpty": "Ancora nessun evento.",
@@ -16,7 +16,7 @@
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}",
   "pushPendingTitle": "DesKilo",
-  "pushPendingBody": "Qualcuno attende la tua conferma.",
+  "pushPendingBody": "Qualcuno attende la sua conferma.",
   "pushCancelledTitle": "Prenotazione rimossa",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "eventTypeReservationDelete": "Eliminazione prenotazione",

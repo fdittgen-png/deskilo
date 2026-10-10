@@ -337,7 +337,7 @@ L’app ha dei controlli per alcune contraddizioni e nessuno per altre. Nella ta
 
 | Se ha… | Controllo nell’app | Lacuna che resta |
 |---|---|---|
-| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completa questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
+| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completi questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
 | Un paese diverso da Francia o Germania | L’emissione dice che il paese «deve essere Francia o Germania per emettere qui». | Nulla la avvisa quando sceglie il paese o attiva la fatturazione. |
 | Registrato ai fini IVA, nessuna aliquota in vigore | L’emissione viene rifiutata finché non è in vigore un’aliquota. | Con **Gestione IVA** disattivata, la configurazione è nascosta mentre le aliquote memorizzate continuano ad applicarsi. Controlli le aliquote dopo averla disattivata. |
 | **Pagamenti online** attivi, nessun fornitore | Un nuovo pagamento online viene rifiutato quando la funzionalità è disattivata; il fornitore mancante compare in **Configurazione di questo spazio**. | Può attivarla senza un fornitore. Lo colleghi prima: [Fornitore di pagamenti](help:user.money.payments.provider). |
@@ -486,7 +486,7 @@ Vuole un unico punto che dica, per le funzionalità principali, che cosa ricevon
 | **Coppie di ambienti**, **Distribuzioni** | Un lato di prova e uno reale, con distribuzione. | | Proprietario |
 | **Configurazione nel file dello spazio** | L’intera configurazione viaggia nel file dello spazio. | **Esportazione dati (Excel)** | Proprietario |
 | **Assistente istanza** | Creare un nuovo server dall’app. | | Operatore |
-| **Cosa ti aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
+| **Cosa la aspetta** | Un unico elenco ordinato di ciò che attende Lei. | | Nessuno |
 | **Registratore di attività** | Registrare e riprodurre i passaggi di un’attività. | | Nessuno |
 | **Notifiche push** | Conferme in sospeso sul telefono. | Il servizio push dell’installazione | Operatore |
 | **Integrazione WhatsApp** | Una chat con un membro con un tocco, il link del gruppo. | **Elenco dei membri** | Proprietario |

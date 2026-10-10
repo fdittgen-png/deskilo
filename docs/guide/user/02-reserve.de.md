@@ -363,7 +363,7 @@ Sie wollten buchen, und die App hat abgelehnt, oder Sie fragen sich, was erlaubt
 | Außerhalb der Öffnungszeiten | Hängt vom Space ab. Aus: **Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.** Nur spontan: Sie können vor Ort einchecken, aber nicht im Voraus buchen. Frei: erlaubt, nie gezählt oder berechnet. Berechnet: erlaubt und als Nutzung gezählt, außer an einem Tag, an dem Sie bereits eine reguläre Buchung haben. |
 | Vergangene Buchungen | Eine Buchung an einem Tag, der bereits zu Ende ist, wird abgelehnt, es sei denn, der Inhaber erlaubt vergangene Buchungen: **Diese Buchung liegt vollständig in der Vergangenheit.** Früher am selben Tag wird sie als vergangener Besuch erfasst. |
 | Grenzen | Eine Buchung hat einen weitesten Horizont (**Zu weit voraus**, standardmäßig 90 Tage), eine kürzeste und eine längste Dauer (**Zu kurz**, **Zu lang**) und endet an dem Tag, an dem sie beginnt. |
-| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Du hast in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
+| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Sie haben in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
 | Reservierungslimit | **Reservierungslimit erreicht**, wenn Sie die meisten offenen Buchungen halten, die Ihnen erlaubt sind. |
 | Tage in Ihrem Tarif | Sind die Tage Ihres Tarifs aufgebraucht, gilt die Einstellung des Inhabers für Sie: Buchungen können enden, Sie werden eventuell gebeten, ein Paket zu kaufen, oder die zusätzlichen Tage werden berechnet. |
 
@@ -558,7 +558,7 @@ Sie möchten eine Woche oder einen Monat auf einen Blick sehen. Der Kalender bie
 
 **Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf deine Bestätigung**.
+Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf Ihre Bestätigung**.
 
 <p><img src="images/user-reserve-calendar-decisions.de.jpg" width="280"></p>
 

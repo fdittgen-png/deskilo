@@ -40,7 +40,7 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 **Passaggi**
 
 1. Apra [Impostazioni](app:/settings), che si chiama **Il mio account** quando non amministra nulla.
-2. Scelga **Cosa puoi fare qui**.
+2. Scelga **Cosa può fare qui**.
 3. Legga quale ruolo le dà ciascuna possibilità. Un membro vede **Come tutti i membri**; un amministratore vede anche **Dal ruolo Amministratore**.
 
 **Da sapere**
@@ -66,7 +66,7 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 2. Per accedere, tocchi **Accedi**.
 3. Per creare un nuovo account, tocchi **Nuovo qui? Crea un account**, inserisca un **Nome visualizzato** e tocchi **Crea account**. La password deve avere almeno 8 caratteri.
 4. Se il server la offre, tocchi **Google** sotto **oppure continua con**.
-5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlla la tua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
+5. Alcuni server chiedono prima di confermare il suo indirizzo. La schermata **Controlli la sua e-mail** indica che è stato inviato un link: lo apra su questo dispositivo. Se non arriva nulla, controlli la cartella dello spam o tocchi **Invia di nuovo l'e-mail**.
 
 <p><img src="images/user-start-account--create.it.jpg" width="280"></p>
 
@@ -97,7 +97,7 @@ Non ricorda più la password. Riceve un codice monouso per e-mail e lo usa per i
 
 **Da sapere**
 
-- Il messaggio **Password aggiornata — sei connesso.** conferma che ha funzionato; non deve accedere di nuovo.
+- Il messaggio **Password aggiornata — ha effettuato l'accesso.** conferma che ha funzionato; non deve accedere di nuovo.
 - Un codice non valido o scaduto viene rifiutato: ne richieda uno nuovo.
 - Se il codice è accettato ma la password non viene salvata, tocchi **Salva di nuovo la nuova password**.
 
@@ -116,7 +116,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**.
 2. Legga la nota, poi tocchi **Inizia**.
-3. Usi la barra in alto per scegliere con quali occhi guardare: **La proprietaria**, **Un membro** o **Un'amministratrice**. Ogni tocco sul nome passa al successivo.
+3. Usi la barra in alto per scegliere con quali occhi guardare: **Proprietario**, **Membro** o **Amministratore**. Ogni tocco sul nome passa al successivo.
 4. Tocchi **Reimposta la demo** per rimettere tutto come all'inizio.
 5. Tocchi **Esci dalla demo** quando ha finito.
 
@@ -142,9 +142,9 @@ Ha ricevuto un ID dello spazio, un codice QR o un messaggio di invito e vuole en
 **Passaggi**
 
 1. Acceda, poi tocchi **Entra con un codice** su [Io](app:/me). Dalla schermata di accesso, **Entra con un invito** la porta lì non appena ha un account.
-2. Su **Benvenuto su DesKilo**, lasci selezionato **Unisciti a uno spazio**.
+2. Su **Benvenuto su DesKilo**, lasci selezionato **Unirsi a uno spazio**.
 3. Digiti l'ID dello spazio in **Codice di invito**, oppure incolli l'intero messaggio di invito: l'ID viene trovato automaticamente. **Incolla** lo legge dagli appunti e **Scansiona codice QR** apre la fotocamera su un codice stampato.
-4. Tocchi **Controlla l’invito**. La scheda **Controlla prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
+4. Tocchi **Controlla l’invito**. La scheda **Controlli prima di aderire** indica lo spazio, il suo server, il ruolo offerto e se un amministratore deve approvare.
 5. Tocchi **Aderisci allo spazio**.
 
 **Da sapere**

@@ -40,7 +40,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
-  "instanceAccountIntro": "Create un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e incollatelo qui. L'assistente lo usa per creare e configurare il progetto; non viene mai salvato.",
+  "instanceAccountIntro": "Crei un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e lo incolli qui. L'assistente lo usa per creare e configurare il progetto; non viene mai salvato.",
   "@instanceAccountIntro": {
     "description": "#977 instance wizard: instanceAccountIntro"
   },
@@ -52,7 +52,7 @@
   "@instanceCheckToken": {
     "description": "#977 instance wizard: instanceCheckToken"
   },
-  "instanceTokenRefused": "Supabase ha rifiutato il token. Createne uno in Account → Access Tokens e incollatelo per intero.",
+  "instanceTokenRefused": "Supabase ha rifiutato il token. Ne crei uno in Account → Access Tokens e lo incolli per intero.",
   "@instanceTokenRefused": {
     "description": "#977 instance wizard: instanceTokenRefused"
   },
@@ -68,7 +68,7 @@
   "@instanceRegion": {
     "description": "#977 instance wizard: instanceRegion"
   },
-  "instanceDatabasePassword": "Password del database, scelta per voi — copiatela in un posto sicuro; l'app non ne ha più bisogno.",
+  "instanceDatabasePassword": "Password del database, scelta per Lei — la copi in un posto sicuro; l'app non ne ha più bisogno.",
   "@instanceDatabasePassword": {
     "description": "#977 instance wizard: instanceDatabasePassword"
   },
@@ -94,7 +94,7 @@
       }
     }
   },
-  "instanceUseExisting": "Oppure usa un progetto esistente:",
+  "instanceUseExisting": "Oppure usi un progetto esistente:",
   "@instanceUseExisting": {
     "description": "#977 instance wizard: instanceUseExisting"
   },
@@ -155,7 +155,7 @@
   "@instanceApplySignIn": {
     "description": "#977 instance wizard: instanceApplySignIn"
   },
-  "instanceDoneIntro": "L'istanza è pronta. Usatela su questo dispositivo, poi condividete il QR del server dalla schermata Server perché i membri si uniscano alla stessa.",
+  "instanceDoneIntro": "L'istanza è pronta. La usi su questo dispositivo, poi condivida il QR del server dalla schermata Server perché i membri si uniscano alla stessa.",
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
   },
@@ -180,14 +180,14 @@
   "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: verranno eseguite solo le {pending} migrazioni mancanti.",
   "instanceReadyCurrent": "La versione {version} di DesKilo è installata e aggiornata: lo schema non richiede nulla.",
   "instanceReadyAttention": "Questo progetto richiede attenzione: non è stato installato nulla.",
-  "instanceAttentionNotHealthy": "Supabase non segnala il progetto come operativo. Attendete che lo sia, oppure ripristinatelo nella dashboard.",
+  "instanceAttentionNotHealthy": "Supabase non segnala il progetto come operativo. Attenda che lo sia, oppure lo ripristini nella dashboard.",
   "instanceAttentionPostgres": "Usa Postgres {found}; DesKilo è pensato per Postgres {supported}.",
-  "instanceAttentionForeign": "Il suo schema public contiene tabelle che DesKilo non crea ({tables}). L'installazione lì è rifiutata; usate un progetto vuoto.",
-  "instanceAttentionUnrecorded": "Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registrate prima ciò che contiene con `dart run tool/instance.dart record`.",
-  "instanceAttentionOtherTooling": "Le sue migrazioni sono state registrate da un altro strumento, quindi non si può sapere da dove DesKilo riprenderebbe. Usate un progetto vuoto.",
+  "instanceAttentionForeign": "Il suo schema public contiene tabelle che DesKilo non crea ({tables}). L'installazione lì è rifiutata; usi un progetto vuoto.",
+  "instanceAttentionUnrecorded": "Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registri prima ciò che contiene con `dart run tool/instance.dart record`.",
+  "instanceAttentionOtherTooling": "Le sue migrazioni sono state registrate da un altro strumento, quindi non si può sapere da dove DesKilo riprenderebbe. Usi un progetto vuoto.",
   "instanceChooseAnother": "Scegli un altro progetto",
-  "instanceTokenReach": "Un token di accesso personale apre tutto il vostro account Supabase finché esiste. La procedura guidata lo tiene solo in memoria e vi dice quando potete revocarlo.",
-  "instanceRevokeToken": "Ora potete revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.",
+  "instanceTokenReach": "Un token di accesso personale apre tutto il suo account Supabase finché esiste. La procedura guidata lo tiene solo in memoria e le dice quando può revocarlo.",
+  "instanceRevokeToken": "Ora può revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.",
   "instanceDoctorIntro": "Prima che questo dispositivo la usi, il controllo di sicurezza deve passare: un allarme tiene il pulsante disattivato finché non è risolto.",
   "instanceDoctorRun": "Avvia il controllo di sicurezza",
   "instanceDoctorRunAgain": "Controlla di nuovo",

@@ -16,11 +16,11 @@
   "@deploymentFlowFromDev": {
     "description": "#998 deployment pull: deploymentFlowFromDev"
   },
-  "deploymentIntroFromProd": "Sei sul lato sviluppo. Ciò che spunti qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un'anteprima.",
+  "deploymentIntroFromProd": "È sul lato sviluppo. Ciò che spunta qui sotto viene tirato dal gemello di produzione in questo spazio, dopo un'anteprima.",
   "@deploymentIntroFromProd": {
     "description": "#998 deployment pull: deploymentIntroFromProd"
   },
-  "deploymentIntroFromDev": "Sei sul lato produzione. Ciò che spunti qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un'anteprima.",
+  "deploymentIntroFromDev": "È sul lato produzione. Ciò che spunta qui sotto viene tirato dal gemello di sviluppo in questo spazio, dopo un'anteprima.",
   "@deploymentIntroFromDev": {
     "description": "#998 deployment pull: deploymentIntroFromDev"
   },

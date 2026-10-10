@@ -294,7 +294,7 @@ Usted necesita la mesa entera, la sala entera o toda la planta, para una reunió
 
 **Conviene saber**
 
-- Un miembro necesita el derecho a reservar espacios enteros; los propietarios y los administradores lo tienen. Sin él, la hoja dice **No tienes permiso para reservar una mesa, oficina o planta entera.**
+- Un miembro necesita el derecho a reservar espacios enteros; los propietarios y los administradores lo tienen. Sin él, la hoja dice **No tiene permiso para reservar una mesa, oficina o planta entera.**
 - Un espacio entero no se puede reservar mientras una de sus plazas esté ocupada en ese periodo, y ninguna plaza se puede reservar mientras su mesa, sala o planta esté reservada como un todo.
 - Cuando el propietario pide aprobación, la reserva de un espacio entero bloquea el espacio de inmediato y espera a los validadores; si la rechazan, se cancela.
 
@@ -363,7 +363,7 @@ Usted ha intentado reservar y la app ha dicho que no, o se pregunta qué está p
 | Fuera del horario de apertura | Depende del espacio. Desactivado: **Las reservas fuera del horario de apertura no están permitidas.** Solo espontáneas: puede registrarse en el momento pero no reservar con antelación. Libre: permitido, nunca se cuenta ni se cobra. De pago: permitido y contado como uso, salvo un día en el que ya tenga una reserva normal. |
 | Reservas pasadas | Una reserva en un día que ya ha terminado se rechaza, salvo que el propietario permita reservas pasadas: **Esta reserva está completamente en el pasado.** Antes en el mismo día se registra como una visita pasada. |
 | Límites | Una reserva tiene un horizonte máximo (**Demasiado lejos**, 90 días por defecto), una duración mínima y una máxima (**Demasiado corta**, **Demasiado larga**) y termina el día en que empieza. |
-| Un solo sitio a la vez | Por defecto puede tener una reserva en un periodo dado: **Ya tienes una reserva en ese periodo**. Un administrador puede permitirle más. |
+| Un solo sitio a la vez | Por defecto puede tener una reserva en un periodo dado: **Ya tiene una reserva en ese periodo**. Un administrador puede permitirle más. |
 | Límite de reservas | **Límite de reservas alcanzado** cuando tiene el máximo de reservas abiertas que se le permite. |
 | Días de su plan | Cuando se agotan los días de su plan, se aplica el ajuste del propietario para usted: las reservas pueden detenerse, se le puede pedir que compre un paquete o se cobran los días adicionales. |
 
@@ -558,7 +558,7 @@ Usted quiere ver una semana o un mes de un vistazo. El Calendario ofrece tres ma
 
 **Público:** Miembro · Administrador/a · Propietario
 
-Se le ha pedido que confirme algo. Cuando algo necesita su respuesta, queda fijado arriba del todo en el Calendario, bajo **Esperando tu confirmación**.
+Se le ha pedido que confirme algo. Cuando algo necesita su respuesta, queda fijado arriba del todo en el Calendario, bajo **Esperando su confirmación**.
 
 <p><img src="images/user-reserve-calendar-decisions.es.jpg" width="280"></p>
 

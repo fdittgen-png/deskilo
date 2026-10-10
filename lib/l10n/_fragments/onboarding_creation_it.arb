@@ -9,8 +9,8 @@
   "onboardingSummaryBillingOn": "La fatturazione reale è possibile: le sue fatture sono dovute.",
   "onboardingSummaryBillingOff": "Nessuna fatturazione reale: i documenti sono contrassegnati come prova.",
   "onboardingSummaryServer": "Sul server {host}",
-  "onboardingIntentChanged": "La richiesta precedente potrebbe essere già stata creata. Riprovala esattamente come inviata prima di cambiare qualcosa.",
-  "onboardingIntentResumed": "Una creazione precedente potrebbe essere andata a buon fine. Riprova per verificare la stessa richiesta.",
+  "onboardingIntentChanged": "La richiesta precedente potrebbe essere già stata creata. La riprovi esattamente come inviata prima di cambiare qualcosa.",
+  "onboardingIntentResumed": "Una creazione precedente potrebbe essere andata a buon fine. Riprovi per verificare la stessa richiesta.",
   "onboardingRetryAsSent": "Riprova com'era",
-  "onboardingCurrencyUnknown": "Inserisci un codice valuta supportato, ad esempio EUR"
+  "onboardingCurrencyUnknown": "Inserisca un codice valuta supportato, ad esempio EUR"
 }

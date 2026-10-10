@@ -35,7 +35,7 @@
   "memberPageManageHeading": "Gestisci",
   "memberPageStatusActive": "Attivo",
   "memberPageNeverSeen": "Mai visto",
-  "memberPageYou": "{name} (tu)",
+  "memberPageYou": "{name} (Lei)",
   "@memberPageYou": {
     "placeholders": {
       "name": {

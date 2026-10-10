@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "privacyNoticeTitle": "Chi tratta i tuoi dati",
+  "privacyNoticeTitle": "Chi tratta i suoi dati",
   "@privacyNoticeTitle": {
     "description": "#1914 privacy notice: privacyNoticeTitle"
   },
@@ -16,7 +16,7 @@
       }
     }
   },
-  "privacyNoticeRights": "I tuoi diritti: {contact}",
+  "privacyNoticeRights": "I suoi diritti: {contact}",
   "@privacyNoticeRights": {
     "description": "#1914 privacy notice: privacyNoticeRights",
     "placeholders": {
@@ -51,11 +51,11 @@
   "@privacyNoticeEssential": {
     "description": "#1914 privacy notice: privacyNoticeEssential"
   },
-  "privacyNoticeOptional": "Facoltativo — puoi usare l'app senza",
+  "privacyNoticeOptional": "Facoltativo — può usare l'app senza",
   "@privacyNoticeOptional": {
     "description": "#1914 privacy notice: privacyNoticeOptional"
   },
-  "privacyNoticeRightsRoute": "I tuoi diritti e il contatto",
+  "privacyNoticeRightsRoute": "I suoi diritti e il contatto",
   "@privacyNoticeRightsRoute": {
     "description": "#1914 privacy notice: privacyNoticeRightsRoute"
   },
@@ -63,11 +63,11 @@
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
   },
-  "privacySpaceNoticeRead": "Hai preso visione di questa versione.",
+  "privacySpaceNoticeRead": "Ha preso visione di questa versione.",
   "@privacySpaceNoticeRead": {
     "description": "#1914 privacy notice: privacySpaceNoticeRead"
   },
-  "privacySpaceNoticeUnread": "Non ancora letta — leggila qui.",
+  "privacySpaceNoticeUnread": "Non ancora letta — la legga qui.",
   "@privacySpaceNoticeUnread": {
     "description": "#1914 privacy notice: privacySpaceNoticeUnread"
   },
@@ -75,7 +75,7 @@
   "@privacySpaceNoticeAcknowledge": {
     "description": "#1914 privacy notice: privacySpaceNoticeAcknowledge"
   },
-  "privacySpaceNoticeFailed": "Non è stato possibile registrare la presa visione. Riprova.",
+  "privacySpaceNoticeFailed": "Non è stato possibile registrare la presa visione. Riprovi.",
   "@privacySpaceNoticeFailed": {
     "description": "#1914 privacy notice: privacySpaceNoticeFailed"
   },
@@ -87,7 +87,7 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
-  "privacyPushOnDeviceFailed": "Non è stato possibile salvare la scelta. Riprova.",
+  "privacyPushOnDeviceFailed": "Non è stato possibile salvare la scelta. Riprovi.",
   "@privacyPushOnDeviceFailed": {
     "description": "#1914 privacy notice: privacyPushOnDeviceFailed"
   }

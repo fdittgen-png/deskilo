@@ -4,7 +4,7 @@
   "@taskWizardTitle": {
     "description": "Task wizard: taskWizardTitle"
   },
-  "taskWizardIntro": "Registra ciò che fai, trasformalo in una guida e segui le guide passo dopo passo nell'app vera.",
+  "taskWizardIntro": "Registri ciò che fa, lo trasformi in una guida e segua le guide passo dopo passo nell'app vera.",
   "@taskWizardIntro": {
     "description": "Task wizard: taskWizardIntro"
   },
@@ -40,7 +40,7 @@
   "@taskWizardFromRecording": {
     "description": "Task wizard: taskWizardFromRecording"
   },
-  "taskWizardFromRecordingHint": "Scegli una registrazione: diventa subito una guida.",
+  "taskWizardFromRecordingHint": "Scelga una registrazione: diventa subito una guida.",
   "@taskWizardFromRecordingHint": {
     "description": "Task wizard: taskWizardFromRecordingHint"
   },
@@ -64,7 +64,7 @@
   "@taskWizardEdit": {
     "description": "Task wizard: taskWizardEdit"
   },
-  "taskWizardNoGuides": "Ancora nessuna guida tua. Aggiungine una da una registrazione o da un file di attività.",
+  "taskWizardNoGuides": "Ancora nessuna guida sua. Ne aggiunga una da una registrazione o da un file di attività.",
   "@taskWizardNoGuides": {
     "description": "Task wizard: taskWizardNoGuides"
   },

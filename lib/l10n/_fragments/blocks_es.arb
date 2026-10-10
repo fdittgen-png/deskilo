@@ -1,10 +1,10 @@
 {
   "blockedPeopleTitle": "Personas bloqueadas",
-  "blockedPeopleEmpty": "No has bloqueado a nadie.",
-  "blockedPeopleHint": "Una persona bloqueada no puede verte ni escribirte, y tú no puedes verla ni contactarla.",
+  "blockedPeopleEmpty": "No ha bloqueado a nadie.",
+  "blockedPeopleHint": "Una persona bloqueada no puede verle ni escribirle, y usted no puede verla ni contactarla.",
   "unblockAction": "Desbloquear",
   "blockPersonAction": "Bloquear a esta persona",
-  "blockPersonConfirm": "¿Bloquear a {name}? Ninguno de los dos verá ni podrá contactar al otro. Puedes deshacerlo en Yo.",
+  "blockPersonConfirm": "¿Bloquear a {name}? Ninguno de los dos verá ni podrá contactar al otro. Puede deshacerlo en Yo.",
   "@blockPersonConfirm": {
     "placeholders": {
       "name": {

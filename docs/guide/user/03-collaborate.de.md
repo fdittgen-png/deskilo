@@ -71,7 +71,7 @@ Sie möchten einen Kollegen oder eine Kollegin etwas fragen, ohne den Workspace 
 **Schritte**
 
 1. Öffnen Sie [Mitglieder](app:/directory), tippen Sie auf eine Karte, um die Seite des Mitglieds zu öffnen, und tippen Sie dann auf **Nachrichten**.
-2. Schreiben Sie in das Feld **Deine Nachricht**.
+2. Schreiben Sie in das Feld **Ihre Nachricht**.
 3. Tippen Sie auf **Senden**.
 
 **Gut zu wissen**
@@ -94,7 +94,7 @@ Sie möchten sehen, was im Workspace geschehen ist und was auf eine Antwort wart
 **Schritte**
 
 1. Tippen Sie in der oberen Leiste auf **Ereignisse** (das Ablagesymbol mit einer Zahl) oder öffnen Sie [Ereignisse](app:/events) im Menü. Die Seite öffnet sich auf **Hinweise**.
-2. Lesen Sie oben **Wartet auf deine Bestätigung**: Anfragen, die Sie brauchen.
+2. Lesen Sie oben **Wartet auf Ihre Bestätigung**: Anfragen, die Sie brauchen.
 3. Lesen Sie den Verlauf darunter. Jede Zeile sagt, was geschehen ist; eine Sanduhr bedeutet ausstehend, ein grüner Haken bedeutet bestätigt. Geldzeilen zeigen, wer sie validiert hat und wann.
 4. Grenzen Sie den Verlauf mit den Chips ein: **Alle**, **Nachrichten**, **Reservierung**, **Check-ins**, **Finanzen**, **Mitglieder**, dann **Ungelesen** oder **Gelesen**.
 5. Tippen Sie neben **Gruppieren nach** auf **Typ**, **Datum** oder **Mitglied**, um den Verlauf in Gruppen zu falten; tippen Sie auf das Gruppensymbol, um zur flachen Liste zurückzukehren.
@@ -120,7 +120,7 @@ Jemand hat Sie gebeten, etwas zu bestätigen, und Sie möchten antworten.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](app:/events).
-2. Suchen Sie die Anfrage unter **Wartet auf deine Bestätigung**.
+2. Suchen Sie die Anfrage unter **Wartet auf Ihre Bestätigung**.
 3. Tippen Sie auf **Annehmen** oder auf das rote Kreuz, um **Ablehnen** zu wählen.
 
 **Gut zu wissen**

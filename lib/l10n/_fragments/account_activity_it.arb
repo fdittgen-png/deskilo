@@ -1,9 +1,9 @@
 {
   "accountActivityTitle": "I miei consumi e pagamenti",
   "accountPaymentsTitle": "Pagamenti",
-  "accountActivityScope": "Tutti i tuoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.",
+  "accountActivityScope": "Tutti i suoi profili su questo server, comprese le iscrizioni precedenti. Le valute sono mostrate separatamente.",
   "accountActivityEmpty": "Nessun dato da mostrare.",
-  "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocca per riprovare.",
+  "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.",
   "accountPaymentConfirmed": "Pagamento confermato",
   "accountInvoiceVoided": "Fattura annullata",
   "accountInvoiceRegrouped": "Incluso in una fattura di conguaglio",

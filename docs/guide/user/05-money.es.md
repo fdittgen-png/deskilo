@@ -294,7 +294,7 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 **Pasos**
 
 1. Abra [Eventos](app:/events), o pulse **Avisos financieros** en [Finanzas](app:/money).
-2. Busque, bajo **Esperando tu confirmación**, la línea que indica el importe y el miembro.
+2. Busque, bajo **Esperando su confirmación**, la línea que indica el importe y el miembro.
 3. Pulse **Aceptar** para confirmarlo, o la cruz para **Rechazar** el gasto.
 
 **Conviene saber**
@@ -332,7 +332,7 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Pasos**
 
-1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Tus finanzas en todos tus espacios**.
+1. Abra [Finanzas](app:/money), elija **Pagos** o **Facturas**, y pulse **Abrir para** su espacio en la tarjeta **Sus finanzas en todos sus espacios**.
 2. Elija una pestaña: **Pendiente**, **Pagadas**, **Pagos** o **Recordatorios**.
 3. Si pertenece a varios espacios, filtre por espacio en la parte superior.
 

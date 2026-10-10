@@ -12,7 +12,7 @@
   "@reportTextsTitle": {
     "description": "#880 report texts: reportTextsTitle"
   },
-  "reportTextsHint": "Le tue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.",
+  "reportTextsHint": "Le sue formulazioni, collocate in qualsiasi banda o layout come text.chiave. Ogni lingua può avere il proprio valore; uno vuoto ricade sulla lingua predefinita.",
   "@reportTextsHint": {
     "description": "#880 report texts: reportTextsHint"
   },
@@ -44,7 +44,7 @@
   "@reportTextsInherited": {
     "description": "#880 report texts: reportTextsInherited"
   },
-  "reportFieldGroupTexts": "I tuoi testi",
+  "reportFieldGroupTexts": "I suoi testi",
   "@reportFieldGroupTexts": {
     "description": "#880 report texts: reportFieldGroupTexts"
   }

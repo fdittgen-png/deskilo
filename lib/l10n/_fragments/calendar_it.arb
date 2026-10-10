@@ -3,12 +3,12 @@
   "@reservationExtendButton": {
     "description": "Detail sheet: extend a running booking's end (#574)"
   },
-  "reservationExtendLaterOnly": "Scegli un orario dopo la fine attuale.",
+  "reservationExtendLaterOnly": "Scelga un orario dopo la fine attuale.",
   "@reservationExtendLaterOnly": {
     "description": "Extend flow: picked time not after the current end (#574)"
   },
   "reservationEndEarlyButton": "Terminare prima",
-  "reservationEndEarlyAheadOnly": "Scegli un orario ancora futuro e precedente alla fine attuale.",
+  "reservationEndEarlyAheadOnly": "Scelga un orario ancora futuro e precedente alla fine attuale.",
   "@@locale": "it",
   "calendarMineTab": "Le mie",
   "calendarEveryoneTab": "Tutti",
@@ -116,7 +116,7 @@
   "@accessRuleReservations": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleEvents": "Tu, il membro che ha agito e gli admin.",
+  "accessRuleEvents": "Lei, il membro che ha agito e gli admin.",
   "@accessRuleEvents": {
     "description": "#718/#719 - calendar hub"
   },
@@ -124,7 +124,7 @@
   "@accessRuleMessages": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessRuleFinances": "Tu e chi ha il permesso finanze: {people}.",
+  "accessRuleFinances": "Lei e chi ha il permesso finanze: {people}.",
   "@accessRuleFinances": {
     "description": "#718/#719 - calendar hub",
     "placeholders": {
@@ -133,15 +133,15 @@
       }
     }
   },
-  "accessRuleReminders": "Solo tu.",
+  "accessRuleReminders": "Solo Lei.",
   "@accessRuleReminders": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessLogTitle": "Chi ha consultato i tuoi dati",
+  "accessLogTitle": "Chi ha consultato i suoi dati",
   "@accessLogTitle": {
     "description": "#718/#719 - calendar hub"
   },
-  "accessLogEmpty": "Nessuno ha consultato le tue finanze o i tuoi messaggi.",
+  "accessLogEmpty": "Nessuno ha consultato le sue finanze o i suoi messaggi.",
   "@accessLogEmpty": {
     "description": "#718/#719 - calendar hub"
   },
@@ -170,7 +170,7 @@
   "calendarEventStatusRejected": "rifiutato",
   "calendarEventStatusExpired": "scaduto",
   "accessKindNegotiations": "Negoziazioni di prezzo",
-  "accessRuleNegotiations": "Tu, i proprietari e gli admin finanze: {people}. Ogni lettura da parte di altri è registrata qui sotto.",
+  "accessRuleNegotiations": "Lei, i proprietari e gli admin finanze: {people}. Ogni lettura da parte di altri è registrata qui sotto.",
   "calendarViewAgenda": "Agenda",
   "calendarViewWeek": "Settimana",
   "calendarViewMonth": "Mese",

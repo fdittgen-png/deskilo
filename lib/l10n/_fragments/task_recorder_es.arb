@@ -214,7 +214,7 @@
   "taskRecorderValueRange": "un intervalo de fechas",
   "taskRecorderActionOpenRoleMatrix": "Abrió la matriz de roles",
   "taskRecorderActionOpenSpaceRoles": "Abrió los roles de este espacio",
-  "taskRecorderActionOpenWhatYouCanDo": "Abrió lo que puedes hacer",
+  "taskRecorderActionOpenWhatYouCanDo": "Abrió lo que puede hacer",
   "taskRecorderActionTogglePermission": "Cambió un permiso",
   "taskRecorderActionSaveRole": "Guardó un rol",
   "taskRecorderActionGiveRole": "Asignó o retiró un rol",
@@ -232,9 +232,9 @@
   "taskRecorderValueRenamed": "renombrado",
   "taskRecorderTargetDefaultRule": "la regla predeterminada",
   "taskRecorderCaptureValues": "Capturar valores (para informes de problemas)",
-  "taskRecorderCaptureValuesHint": "También guarda lo que escribes y eliges — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparte el archivo solo con quien deba ver lo que introdujiste.",
+  "taskRecorderCaptureValuesHint": "También guarda lo que escribe y elige — texto, números, fechas, interruptores — para que un desarrollador pueda reproducir el problema con el archivo. Nunca se guardan contraseñas, datos de pago, correos electrónicos, teléfonos ni otros datos de contacto personales. Comparta el archivo solo con quien deba ver lo que introdujo.",
   "taskRecorderValuesOn": "Se están capturando valores",
   "taskRecorderExportValuesTitle": "Esta grabación contiene valores",
-  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísala antes de compartirla y compártela solo con quien deba verlo.",
+  "taskRecorderExportValuesBody": "Contiene lo que se escribió y eligió durante la grabación. Revísela antes de compartirla y compártala solo con quien deba verlo.",
   "taskRecorderExportValuesConfirm": "Guardar de todos modos"
 }

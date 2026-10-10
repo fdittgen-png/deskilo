@@ -221,7 +221,7 @@ Vuole un posto per un certo giorno e un certo orario. Dalla piantina bastano poc
 
 - Nulla viene prenotato finché non tocca **Prenota**.
 - Se il posto è stato preso un secondo prima, l'app Le dice così invece di prenotarlo due volte.
-- Se la connessione si interrompe dopo il suo tocco, la schermata **La tua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
+- Se la connessione si interrompe dopo il suo tocco, la schermata **La sua richiesta di prenotazione** le permette di verificare che cosa è successo, di riprendere la stessa richiesta o di lasciarla perdere. Una richiesta non viene mai prenotata due volte.
 - In un giorno di chiusura la piantina indica **Chiuso in questo giorno** e propone il successivo giorno di apertura.
 
 **Vedi anche:** [La scheda di prenotazione](help:user.reservations.booking-sheet) · [Le regole che incontra quando prenota](help:user.reserve.policies)
@@ -294,7 +294,7 @@ Ha bisogno dell'intero tavolo, dell'intera sala o dell'intero piano, per una riu
 
 **Da sapere**
 
-- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.**
+- Un membro ha bisogno del diritto di prenotare spazi interi; i proprietari e gli amministratori ce l'hanno. Senza di esso la scheda indica **Non è autorizzato a prenotare un tavolo, ufficio o piano intero.**
 - Uno spazio intero non può essere prenotato se uno dei suoi posti è occupato in quel periodo, e nessun posto può essere prenotato mentre il suo tavolo, la sua sala o il suo piano sono prenotati per intero.
 - Dove il proprietario richiede un'approvazione, la prenotazione di uno spazio intero blocca subito lo spazio e attende i convalidatori; se la rifiutano, viene annullata.
 
@@ -363,7 +363,7 @@ Ha provato a prenotare e l'app ha detto di no, oppure si chiede che cosa sia con
 | Fuori dagli orari di apertura | Dipende dallo spazio. Disattivato: **Le prenotazioni fuori dagli orari di apertura non sono consentite.** Solo spontanee: può fare il check-in sul posto ma non prenotare in anticipo. Libero: consentito, mai conteggiato né addebitato. A pagamento: consentito e conteggiato come utilizzo, tranne in un giorno in cui ha già una prenotazione ordinaria. |
 | Prenotazioni nel passato | Una prenotazione in un giorno già concluso viene rifiutata, a meno che il proprietario consenta le prenotazioni passate: **Questa prenotazione è interamente nel passato.** Prima, nello stesso giorno, viene registrata come visita passata. |
 | Limiti | Una prenotazione ha un orizzonte massimo (**Troppo lontano**, 90 giorni per impostazione predefinita), una durata minima e una massima (**Troppo breve**, **Troppo lunga**) e termina nel giorno in cui inizia. |
-| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Hai già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
+| Un posto alla volta | Per impostazione predefinita può avere una sola prenotazione in un dato periodo: **Ha già una prenotazione in quel periodo**. Un amministratore può consentirne di più. |
 | Limite di prenotazioni | **Limite di prenotazioni raggiunto** quando ha il numero massimo di prenotazioni aperte che le è consentito. |
 | Giorni del suo piano | Quando i giorni del suo piano finiscono, si applica l'impostazione del proprietario per Lei: le prenotazioni possono fermarsi, può esserLe chiesto di acquistare un pacchetto, oppure i giorni in più vengono addebitati. |
 
@@ -558,7 +558,7 @@ Vuole vedere una settimana o un mese a colpo d'occhio. Il Calendario offre tre m
 
 **Destinatari:** Membro · Amministratore · Proprietario
 
-Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della tua conferma**.
+Le è stato chiesto di confermare qualcosa. Quando qualcosa richiede la sua risposta, viene fissato in cima al Calendario, sotto **In attesa della sua conferma**.
 
 <p><img src="images/user-reserve-calendar-decisions.it.jpg" width="280"></p>
 

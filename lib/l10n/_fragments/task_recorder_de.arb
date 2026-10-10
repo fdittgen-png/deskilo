@@ -214,7 +214,7 @@
   "taskRecorderValueRange": "Zeitraum",
   "taskRecorderActionOpenRoleMatrix": "Rollenmatrix geöffnet",
   "taskRecorderActionOpenSpaceRoles": "Die Rollen dieses Bereichs geöffnet",
-  "taskRecorderActionOpenWhatYouCanDo": "„Was du tun kannst“ geöffnet",
+  "taskRecorderActionOpenWhatYouCanDo": "„Was Sie tun können“ geöffnet",
   "taskRecorderActionTogglePermission": "Eine Berechtigung umgeschaltet",
   "taskRecorderActionSaveRole": "Eine Rolle gespeichert",
   "taskRecorderActionGiveRole": "Eine Rolle vergeben oder entzogen",
@@ -232,9 +232,9 @@
   "taskRecorderValueRenamed": "umbenannt",
   "taskRecorderTargetDefaultRule": "die Standardregel",
   "taskRecorderCaptureValues": "Werte erfassen (für Fehlerberichte)",
-  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was du eingibst und auswählst — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Gib die Datei nur an Personen weiter, die sehen dürfen, was du eingegeben hast.",
+  "taskRecorderCaptureValuesHint": "Behält zusätzlich, was Sie eingeben und auswählen — Text, Zahlen, Daten, Schalter —, damit ein Entwickler das Problem anhand der Datei nachstellen kann. Passwörter, Zahlungsdaten, E-Mail-Adressen, Telefonnummern und andere persönliche Kontaktdaten werden nie gespeichert. Geben Sie die Datei nur an Personen weiter, die sehen dürfen, was Sie eingegeben haben.",
   "taskRecorderValuesOn": "Werte werden erfasst",
   "taskRecorderExportValuesTitle": "Diese Aufnahme enthält Werte",
-  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfe sie vor dem Teilen und gib sie nur an Personen weiter, die das sehen dürfen.",
+  "taskRecorderExportValuesBody": "Sie enthält, was während der Aufnahme eingegeben und ausgewählt wurde. Prüfen Sie sie vor dem Teilen und geben Sie sie nur an Personen weiter, die das sehen dürfen.",
   "taskRecorderExportValuesConfirm": "Trotzdem speichern"
 }

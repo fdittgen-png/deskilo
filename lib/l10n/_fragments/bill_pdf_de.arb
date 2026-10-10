@@ -6,7 +6,7 @@
   "@reportCoaTitle": {
     "description": "#671 - report document text (reportCoaTitle)"
   },
-  "reportCoaIntro": "Ein Vorschlag, nicht deine Buchhaltung. Das sind die Konten, die eine Buchhalterin in deinem Land für einen Space wie deinen üblicherweise nimmt.",
+  "reportCoaIntro": "Ein Vorschlag, nicht Ihre Buchhaltung. Das sind die Konten, die man in Ihrem Land für einen Space wie Ihren üblicherweise nimmt.",
   "@reportCoaIntro": {
     "description": "#671 - report document text (reportCoaIntro)"
   },
@@ -22,7 +22,7 @@
   "@reportCoaLabel": {
     "description": "#671 - report document text (reportCoaLabel)"
   },
-  "reportCoaDisclaimer": "Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht deine Buchhaltung nicht — der Kontenrahmen deiner Steuerberatung gilt.",
+  "reportCoaDisclaimer": "Nur eine Vorschau. DesKilo führt kein Hauptbuch und macht Ihre Buchhaltung nicht — der Kontenrahmen Ihrer Steuerberatung gilt.",
   "@reportCoaDisclaimer": {
     "description": "#671 - report document text (reportCoaDisclaimer)"
   },

@@ -1,8 +1,8 @@
 {
   "messageRequestsTitle": "Richieste di messaggio",
-  "messageRequestsHint": "Queste persone non rientrano tra quelle da cui hai scelto di essere raggiungibile. Non vengono informate della tua decisione.",
+  "messageRequestsHint": "Queste persone non rientrano tra quelle da cui ha scelto di essere raggiungibile. Non vengono informate della sua decisione.",
   "requestAccept": "Accetta",
   "requestIgnore": "Ignora",
   "requestBlock": "Blocca",
-  "messengerRefusedRequestPending": "Il tuo primo messaggio attende una risposta."
+  "messengerRefusedRequestPending": "Il suo primo messaggio attende una risposta."
 }

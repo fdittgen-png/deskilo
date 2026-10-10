@@ -95,7 +95,7 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 **Schritte**
 
 1. Öffnen Sie [Einstellungen](app:/settings), das **Mein Konto** heißt, wenn Sie nichts verwalten.
-2. Wählen Sie **Was du hier tun kannst**.
+2. Wählen Sie **Was Sie hier tun können**.
 3. Lesen Sie, welche Rolle Ihnen welche Möglichkeit gibt. Ein Mitglied sieht **Wie alle Mitglieder**; eine Administratorin oder ein Administrator sieht zusätzlich **Aus der Rolle Administrator:in**.
 
 **Gut zu wissen**
@@ -120,7 +120,7 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 2. Zum Anmelden tippen Sie auf **Anmelden**.
 3. Für ein neues Konto tippen Sie auf **Neu hier? Konto erstellen**, tragen einen **Anzeigename** ein und tippen auf **Konto erstellen**. Das Passwort braucht mindestens 8 Zeichen.
 4. Wenn der Server es anbietet, tippen Sie unter **oder weiter mit** auf **Google**.
-5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sieh in dein E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
+5. Manche Server verlangen zuerst die Bestätigung Ihrer Adresse. Der Bildschirm **Sehen Sie in Ihr E-Mail-Postfach** meldet, dass ein Link verschickt wurde: Öffnen Sie ihn auf diesem Gerät. Kommt nichts an, schauen Sie im Spam-Ordner nach oder tippen Sie auf **E-Mail erneut senden**.
 
 ![](assets/help/images/user-start-account--create.de.b8fa17aa9.jpg)
 
@@ -150,7 +150,7 @@ Sie wissen Ihr Passwort nicht mehr. Sie erhalten per E-Mail einen Einmalcode und
 
 **Gut zu wissen**
 
-- Die Meldung **Passwort aktualisiert — du bist angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
+- Die Meldung **Passwort aktualisiert — Sie sind angemeldet.** bestätigt, dass es geklappt hat; Sie müssen sich nicht erneut anmelden.
 - Ein ungültiger oder abgelaufener Code wird abgelehnt: Fordern Sie einen neuen an.
 - Wird der Code akzeptiert, das Passwort aber nicht gespeichert, tippen Sie auf **Neues Passwort erneut speichern**.
 
@@ -168,7 +168,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den Hinweis und tippen Sie dann auf **Loslegen**.
-3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Die Inhaberin**, **Ein Mitglied** oder **Eine Verwaltung**. Jedes Antippen des Namens springt zum nächsten.
+3. Wählen Sie mit der Leiste oben, durch wessen Augen Sie schauen: **Inhaber**, **Mitglied** oder **Administrator:in**. Jedes Antippen des Namens springt zum nächsten.
 4. Tippen Sie auf **Demo zurücksetzen**, um alles wieder auf den Anfang zu stellen.
 5. Tippen Sie auf **Demo verlassen**, wenn Sie fertig sind.
 
@@ -764,7 +764,7 @@ Sie wollten buchen, und die App hat abgelehnt, oder Sie fragen sich, was erlaubt
 | Außerhalb der Öffnungszeiten | Hängt vom Space ab. Aus: **Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.** Nur spontan: Sie können vor Ort einchecken, aber nicht im Voraus buchen. Frei: erlaubt, nie gezählt oder berechnet. Berechnet: erlaubt und als Nutzung gezählt, außer an einem Tag, an dem Sie bereits eine reguläre Buchung haben. |
 | Vergangene Buchungen | Eine Buchung an einem Tag, der bereits zu Ende ist, wird abgelehnt, es sei denn, der Inhaber erlaubt vergangene Buchungen: **Diese Buchung liegt vollständig in der Vergangenheit.** Früher am selben Tag wird sie als vergangener Besuch erfasst. |
 | Grenzen | Eine Buchung hat einen weitesten Horizont (**Zu weit voraus**, standardmäßig 90 Tage), eine kürzeste und eine längste Dauer (**Zu kurz**, **Zu lang**) und endet an dem Tag, an dem sie beginnt. |
-| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Du hast in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
+| Ein Platz zur Zeit | Standardmäßig dürfen Sie in einem Zeitraum eine Buchung haben: **Sie haben in diesem Zeitraum bereits eine Buchung**. Ein Administrator kann Ihnen mehr erlauben. |
 | Reservierungslimit | **Reservierungslimit erreicht**, wenn Sie die meisten offenen Buchungen halten, die Ihnen erlaubt sind. |
 | Tage in Ihrem Tarif | Sind die Tage Ihres Tarifs aufgebraucht, gilt die Einstellung des Inhabers für Sie: Buchungen können enden, Sie werden eventuell gebeten, ein Paket zu kaufen, oder die zusätzlichen Tage werden berechnet. |
 
@@ -951,7 +951,7 @@ Sie möchten eine Woche oder einen Monat auf einen Blick sehen. Der Kalender bie
 
 **Zielgruppe:** Mitglied · Administrator:in · Inhaber
 
-Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf deine Bestätigung**.
+Sie wurden gebeten, etwas zu bestätigen. Braucht etwas Ihre Antwort, steht es oben im Kalender, unter **Wartet auf Ihre Bestätigung**.
 
 ![](assets/help/images/user-reserve-calendar-decisions.de.b8fa17aa9.jpg)
 
@@ -1084,7 +1084,7 @@ Sie möchten einen Kollegen oder eine Kollegin etwas fragen, ohne den Workspace 
 **Schritte**
 
 1. Öffnen Sie [Mitglieder](app:/directory), tippen Sie auf eine Karte, um die Seite des Mitglieds zu öffnen, und tippen Sie dann auf **Nachrichten**.
-2. Schreiben Sie in das Feld **Deine Nachricht**.
+2. Schreiben Sie in das Feld **Ihre Nachricht**.
 3. Tippen Sie auf **Senden**.
 
 **Gut zu wissen**
@@ -1106,7 +1106,7 @@ Sie möchten sehen, was im Workspace geschehen ist und was auf eine Antwort wart
 **Schritte**
 
 1. Tippen Sie in der oberen Leiste auf **Ereignisse** (das Ablagesymbol mit einer Zahl) oder öffnen Sie [Ereignisse](app:/events) im Menü. Die Seite öffnet sich auf **Hinweise**.
-2. Lesen Sie oben **Wartet auf deine Bestätigung**: Anfragen, die Sie brauchen.
+2. Lesen Sie oben **Wartet auf Ihre Bestätigung**: Anfragen, die Sie brauchen.
 3. Lesen Sie den Verlauf darunter. Jede Zeile sagt, was geschehen ist; eine Sanduhr bedeutet ausstehend, ein grüner Haken bedeutet bestätigt. Geldzeilen zeigen, wer sie validiert hat und wann.
 4. Grenzen Sie den Verlauf mit den Chips ein: **Alle**, **Nachrichten**, **Reservierung**, **Check-ins**, **Finanzen**, **Mitglieder**, dann **Ungelesen** oder **Gelesen**.
 5. Tippen Sie neben **Gruppieren nach** auf **Typ**, **Datum** oder **Mitglied**, um den Verlauf in Gruppen zu falten; tippen Sie auf das Gruppensymbol, um zur flachen Liste zurückzukehren.
@@ -1131,7 +1131,7 @@ Jemand hat Sie gebeten, etwas zu bestätigen, und Sie möchten antworten.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](app:/events).
-2. Suchen Sie die Anfrage unter **Wartet auf deine Bestätigung**.
+2. Suchen Sie die Anfrage unter **Wartet auf Ihre Bestätigung**.
 3. Tippen Sie auf **Annehmen** oder auf das rote Kreuz, um **Ablehnen** zu wählen.
 
 **Gut zu wissen**
@@ -1989,7 +1989,7 @@ Sie möchten wissen, wer was über Sie lesen kann und wer tatsächlich nachgeseh
 
 1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
 2. Tippen Sie auf **Wer meine Daten sehen kann**.
-3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf deine Daten zugegriffen hat**.
+3. Lesen Sie die Regel für jede Kategorie, die Personen, die sie heute nennt, und **Wer auf Ihre Daten zugegriffen hat**.
 
 **Gut zu wissen**
 
@@ -2476,7 +2476,7 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 **Schritte**
 
 1. Öffnen Sie [Ereignisse](app:/events) oder tippen Sie in [Finanzen](app:/money) auf **Finanzmeldungen**.
-2. Suchen Sie unter **Wartet auf deine Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
+2. Suchen Sie unter **Wartet auf Ihre Bestätigung** die Zeile mit dem Betrag und dem Mitglied.
 3. Tippen Sie auf **Annehmen**, um sie zu bestätigen, oder auf das Kreuz, um sie **Ablehnen**.
 
 **Gut zu wissen**
@@ -2585,7 +2585,7 @@ Sie möchten dem Gebäude seine Etagen geben, in der Reihenfolge, die man erwart
 
 - Das Löschen einer Etage entfernt jedes Büro, jeden Tisch und jeden Platz darauf. Die Bestätigung sagt, was mit Buchungen geschieht, die darauf verweisen.
 - Die Zeile unter jeder Etage zeigt, ob sie **Als Ganzes buchbar** oder **Nicht als Ganzes buchbar** ist.
-- Ohne Etage zeigt der Editor **Noch keine Etagen. Füge die erste Etage deines Workspace hinzu.**
+- Ohne Etage zeigt der Editor **Noch keine Etagen. Fügen Sie die erste Etage Ihres Workspace hinzu.**
 
 **Siehe auch:** [Eine ganze Etage buchbar machen](help:user.space.editor.level-booking) · [Räume, Tische und Plätze zeichnen](help:user.space.editor.rooms)
 
@@ -3343,13 +3343,13 @@ Sie möchten, dass der Space weiterbesteht, falls Sie einmal zurücktreten.
 
 1. Öffnen Sie [Mitglieder & Tarife](app:/members) und wählen Sie das Mitglied.
 2. Wählen Sie unter **Mit-Inhaberschaft** einen aktiven Mitinhaber oder einen Nachfolger.
-3. Um jetzt zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Um jetzt zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
-- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolgerin**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
+- Ein aktiver Mitinhaber hat schon jetzt die Berechtigungen des Inhabers. Ein Nachfolger, angezeigt als **Nachfolge**, wartet und wird Inhaber, wenn er aktiviert wird oder der Inhaber geht.
 - Geht der letzte Inhaber, wird der am besten geeignete Mitinhaber automatisch Inhaber, aktive vor Nachfolgern.
-- Mitinhaber gehören zur Funktion **Mit-Inhaberinnen**.
+- Mitinhaber gehören zur Funktion **Mitinhaber**.
 
 **Siehe auch:** [Mit-Inhaberschaft](help:user.members.co-ownership) · [Die Rollenmatrix](help:user.roles.matrix)
 
@@ -3928,15 +3928,15 @@ Sie möchten, dass jemand die Inhaberschaft mit Ihnen teilt oder übernimmt, fal
 **Schritte**
 
 1. Öffnen Sie die Mitgliederseite, gehen Sie zu **Mitgliedschaft** und tippen Sie auf **Mit-Inhaberschaft**.
-2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktive Mit-Inhaberin* oder **Nachfolgerin**.
-3. Um eine Mit-Inhaberin sofort zur vollen Inhaberin zu machen, wählen Sie **Jetzt zur Inhaberin machen**.
+2. Wählen Sie **Keine Mit-Inhaberschaft**, *Aktiver Mitinhaber* oder **Nachfolge**.
+3. Um einen Mitinhaber sofort zum vollen Inhaber zu machen, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
 - Eine aktive Mit-Inhaberin hat sofort Inhaber-Rechte und übernimmt automatisch, wenn Sie gehen.
 - Eine Nachfolgerin wird Inhaberin, wenn sie befördert wird oder der Inhaber geht.
-- Die Zeile zeigt in der Mitgliederliste **Mit-Inhaberin** oder **Nachfolgerin**.
-- Sie setzt voraus, dass die Funktion **Mit-Inhaberinnen** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
+- Die Zeile zeigt in der Mitgliederliste **Mitinhaber** oder **Nachfolge**.
+- Sie setzt voraus, dass die Funktion **Mitinhaber** eingeschaltet ist, und Sie können Ihre eigene Mit-Inhaberschaft nicht ändern.
 
 **Siehe auch:** [Die Rollenmatrix](help:user.roles.matrix)
 
@@ -5631,7 +5631,7 @@ Sie möchten auf den echten Bildschirmen durch eine Aufgabe geführt werden.
 **Gut zu wissen**
 
 - Nutzen Sie **Zurück** und **Überspringen** und öffnen Sie **Alle Schritte**, um jeden als **Offen**, **Wartet**, **Erledigt**, **Bestätigt** oder **Übersprungen** zu sehen.
-- Ein Schritt, der bucht, wartet auf die Antwort: **Warte auf das Ergebnis …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
+- Ein Schritt, der bucht, wartet auf die Antwort: **Auf das Ergebnis wird gewartet …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
 - **Anleitung beenden** beendet sie. Nichts wird rückgängig gemacht.
 - Die Anleitung pausiert, wenn sich das Konto oder der Workspace ändert oder der Aufgabenrekorder ausgeschaltet wird.
 
@@ -5711,7 +5711,7 @@ Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo ist ein erfunden
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den kurzen Hinweis und tippen Sie dann auf **Loslegen**.
-3. Nutzen Sie **Ansicht als**, um denselben Space als **Der Inhaber**, **Eine Verwaltung** oder **Ein Mitglied** zu sehen.
+3. Nutzen Sie **Ansicht als**, um denselben Space als **Inhaber**, **Administrator:in** oder **Mitglied** zu sehen.
 4. Tippen Sie auf **Demo zurücksetzen**, um sie wie am Anfang wiederherzustellen, oder auf **Demo verlassen**.
 
 **Gut zu wissen**
@@ -5811,7 +5811,7 @@ Etwas sieht falsch aus. Versuchen Sie dies, der Reihe nach.
 - Was Sie sehen, hängt von Ihrer Rolle ab: Ein fehlender Bildschirm kann eine Berechtigung sein. Fragen Sie Ihren Inhaber.
 - Administratoren können unter **Erweitert** in den [Einstellungen](app:/settings) den **Entwicklermodus** einschalten. Er fügt einen Bildschirm [Entwickler](app:/developer) hinzu, auf dem **Protokoll exportieren** und **Protokoll leeren** dem Support helfen. Er gilt für jedes Mitglied des Workspace.
 - Einen Fehler können Sie auch im Bereich „Über“ der App melden: **Fehler melden / Funktion vorschlagen**.
-- Eine Anleitung, die bei **Warte auf das Ergebnis …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
+- Eine Anleitung, die bei **Auf das Ergebnis wird gewartet …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
 
 **Siehe auch:** [Supportdetails](help:user.advanced.support)
 
@@ -6631,7 +6631,7 @@ Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder
 | Funktion | Was sie Mitgliedern bringt | Was sie braucht | Wer richtet sie ein |
 |---|---|---|---|
 | **Mitgliederverzeichnis** | Der Community-Tab: wer da ist, Status, Anwesenheit. | | Niemand |
-| **Mit-Inhaberinnen** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
+| **Mitinhaber** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
 | **Rollenverwaltung** | Die Matrix, welche Rolle welche Berechtigung hat. | | Inhaber |
 | **Rollen vergeben** | Ein Abschnitt Rollen auf jeder Mitgliedsseite. | **Rollenverwaltung** | Inhaber |
 | **Rollen dieses Bereichs** | Eigene Rollen, etwa Schatzmeister oder Schriftführer. | | Inhaber |
@@ -6791,7 +6791,7 @@ Sie möchten die Personen Ihrer Organisation den Rollen zuordnen, die DesKilo ke
 | Rolle | Wofür sie da ist | Im Verein |
 |---|---|---|
 | **Inhaber** | Die Person, die für den Space einsteht und jede Berechtigung hat. Nur ein Inhaber kann die Inhaberschaft erteilen. | Ada, die Präsidentin. |
-| **Mit-Inhaberin** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
+| **Mitinhaber** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
 | **Administrator** | Führt den Alltag: Mitglieder, Buchungen für andere, den Kiosk, Dokumente, Leistungen. Hat, was die Matrix gibt, und nicht mehr. | Chiara, die Schriftführerin. |
 | **Benutzer** | Die Person, die den Space nutzt. Hat nur die Alltagsberechtigungen, die Sie geben. | Bruno, ein Mitglied wie die anderen. |
 
@@ -6829,7 +6829,7 @@ Sie möchten, dass jede Rolle hat, was sie braucht, und sonst nichts. Das ist da
 
 **Schritte**
 
-1. Öffnen Sie [Rollen](app:/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mit-Inhaberin**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
+1. Öffnen Sie [Rollen](app:/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mitinhaber**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
 2. Lesen Sie zuerst die Karte **Administrator**. Sie zeigt, was ein Administrator heute in Ihrem Space hat.
 3. Entfernen Sie den Haken bei dem, was Sie nicht abgeben möchten. Setzen Sie die Alltagsberechtigungen, die die Karte **Benutzer** braucht (siehe unten).
 
@@ -6870,14 +6870,14 @@ Sie möchten, dass der Space weiterläuft, wenn Sie krank, verreist oder fort si
 
 | Art | Was sie bewirkt | Wählen Sie sie, wenn … |
 |---|---|---|
-| *Aktive Mit-Inhaberin* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
-| **Nachfolgerin** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
+| *Aktiver Mitinhaber* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
+| **Nachfolge** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
 
 **Schritte**
 
-1. Schalten Sie die Funktion **Mit-Inhaberinnen** unter [Funktionen](app:/features) ein. In einem neuen Space ist sie aus.
+1. Schalten Sie die Funktion **Mitinhaber** unter [Funktionen](app:/features) ein. In einem neuen Space ist sie aus.
 2. Öffnen Sie die Person unter [Mitglieder & Tarife](app:/members), gehen Sie zu **Verwalten** und tippen Sie auf **Mit-Inhaberschaft**.
-3. Wählen Sie die aktive Mit-Inhaberin oder **Nachfolgerin**. Um sofort zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Wählen Sie den aktiven Mitinhaber oder **Nachfolge**. Um sofort zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
@@ -7074,7 +7074,7 @@ Sie möchten sicher sein, dass jede Anfrage, für die Sie eine Regel anlegen, be
 1. Öffnen Sie [Freigaberegeln](app:/validation) und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.
 2. Öffnen Sie [Mitglieder & Tarife](app:/members). Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.
 3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Er hält die erste Buchung nur auf, wenn die Regel für Buchungen gilt.
-4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf deine Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
+4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
 
 **Gut zu wissen**
 
@@ -7509,7 +7509,7 @@ Push wird nur für die fünf unten mit „Push“ gekennzeichneten Zeilen gesend
 
 | Quelle | Ereignis | Wer wird informiert | Kanal | Was das Mitglied ändern kann |
 |---|---|---|---|---|
-| Validierungsregeln | Eine Anfrage braucht eine Bestätigung | Die Personen, die die Regel nennt (Feed, **Wartet auf deine Bestätigung**); der Push geht nur an das Mitglied, um das es in der Anfrage geht, nie an die Person, die sie gestellt hat; Validierer erhalten also nur dann einen Push, wenn sie dieses Mitglied sind. Text: „Jemand braucht Ihre Bestätigung.“ | Feed, Glocke; Push | Push auf dem Gerät ausschalten |
+| Validierungsregeln | Eine Anfrage braucht eine Bestätigung | Die Personen, die die Regel nennt (Feed, **Wartet auf Ihre Bestätigung**); der Push geht nur an das Mitglied, um das es in der Anfrage geht, nie an die Person, die sie gestellt hat; Validierer erhalten also nur dann einen Push, wenn sie dieses Mitglied sind. Text: „Jemand braucht Ihre Bestätigung.“ | Feed, Glocke; Push | Push auf dem Gerät ausschalten |
 | Reservierungen | Ein Administrator entfernt eine Buchung oder setzt sich darüber hinweg | Das verdrängte Mitglied sowie jeder aktive Administrator und Inhaber außer der handelnden Person. Text: „Eine Reservierung wurde von einem Administrator entfernt.“ | Feed; Push | Push auf dem Gerät ausschalten |
 | Zahlungserinnerungen | Eine Rechnung ist über das Zahlungsziel hinaus, und eine Mahnstufe wird fällig | Das Mitglied, für das die Rechnung ausgestellt ist. Die eigene Rechnung eines Inhabers erreicht den Inhaber. Text: „Eine Zahlungserinnerung wartet auf Sie.“ | Hinweis im Feed; Push | Push auf dem Gerät ausschalten |
 | Mitglieder-Benachrichtigungen | Eine neue Nachricht | Direktnachricht: der Empfänger. Gruppe: die Teilnehmenden außer dem Absender. Eine von einem Mitglied stummgeschaltete Unterhaltung bleibt für dieses Mitglied still. Text: „Sie haben eine neue Nachricht.“ | Nachrichten, Glocke; Push | Unterhaltung stummschalten, anheften oder archivieren; Push ausschalten |
@@ -7613,7 +7613,7 @@ Tun Sie das in einem Test-Space (siehe [einen gefahrlosen Probelauf](help:setup.
 
 1. Nachricht: Schreiben Sie vom Mitgliedskonto aus in [Nachrichten](app:/me?tab=messages) an den Inhaber. Im Inhaberkonto zählt die Glocke sie, und die Unterhaltung erscheint ungelesen. Öffnen Sie sie: Die Nachricht des Mitglieds zeigt eine Lesebestätigung.
 2. Erwähnung: Nennen Sie in einer Gruppenunterhaltung den Inhaber (die Erwähnungsfunktion des Nachrichtendienstes muss an sein). Ist Push eingerichtet, zeigt das Handy des Inhabers „Sie wurden in einer Unterhaltung erwähnt.“
-3. Entscheidung: Beantragen Sie als Mitglied das Löschen einer vergangenen Buchung (die Funktion **Lösch-Anträge für Buchungen** muss an sein). Der Inhaber sieht den Antrag unter **Wartet auf deine Bestätigung** in [Ereignisse](app:/events); beantworten Sie ihn und beobachten Sie, wie sich der Feed des Mitglieds ändert.
+3. Entscheidung: Beantragen Sie als Mitglied das Löschen einer vergangenen Buchung (die Funktion **Lösch-Anträge für Buchungen** muss an sein). Der Inhaber sieht den Antrag unter **Wartet auf Ihre Bestätigung** in [Ereignisse](app:/events); beantworten Sie ihn und beobachten Sie, wie sich der Feed des Mitglieds ändert.
 4. Entfernung: Entfernen Sie als Inhaber eine künftige Buchung des Mitglieds. Der Feed des Mitglieds zeigt es, und ein Handy mit Push zeigt „Eine Reservierung wurde von einem Administrator entfernt.“
 5. Erinnerung: Buchen Sie als Mitglied einen Platz, der in etwa 20 Minuten beginnt (eine Buchung, die in weniger als 15 Minuten beginnt, erhält keine Erinnerung). Etwa 15 Minuten vor Beginn zeigt das Handy des Mitglieds die Check-in-Erinnerung.
 6. Zahlungserinnerung: Schalten Sie bei eingeschaltetem **Mahnwesen** in den Mahnregeln **Automatische Mahnungen** mit einer kurzen Frist bis zur ersten Mahnung ein, stellen Sie eine Probe-Rechnung mit Zahlungsziel aus, warten Sie die Frist ab und öffnen Sie dann als Inhaber oder Mitinhaber die Finanzen; der Feed des Mitglieds zeigt den Hinweis.
@@ -8012,7 +8012,7 @@ Sie möchten eine kurze Gewohnheit, die den Space stimmig hält, in zehn Minuten
 **Schritte**
 
 1. Öffnen Sie **Einrichtung dieses Workspace**. Jeder Bereich steht weiter auf **Bereit** oder **Hier nicht nötig** oder wurde bewusst beiseitegelegt.
-2. Öffnen Sie [Ereignisse](app:/events). **Wartet auf deine Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
+2. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
 3. Zählen Sie das Team neu. Wer gegangen ist oder pausiert, kann eine Regel zu knapp machen. Siehe [Anfragen vermeiden, die ewig warten](help:setup.people.stuck).
 4. Schließen Sie den Monat: Schließtage sind eingetragen, der Monatsabschluss-Assistent ist durchgelaufen, Zahlungserinnerungen sind hinausgegangen (automatisch jeden Morgen oder beim Öffnen der Finanzen, wo die Datenbank keinen Scheduler hat). Siehe [Der Monatsabschluss-Assistent](help:user.invoicing.wizard).
 5. Ziehen Sie den Datenexport und öffnen Sie **Funktionen**, um zu prüfen, dass nach den Änderungen des Monats kein Prozess Aufmerksamkeit braucht.
@@ -8115,7 +8115,7 @@ Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der De
 **Schritte**
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Siehe [Der Demo-Workspace](help:user.advanced.demo).
-2. Wechseln Sie mit **Ansicht als** zwischen **Die Inhaberin**, **Eine Verwaltung** und **Ein Mitglied**. Machen Sie unten die drei Übungen jeder Person.
+2. Wechseln Sie mit **Ansicht als** zwischen **Inhaber**, **Administrator:in** und **Mitglied**. Machen Sie unten die drei Übungen jeder Person.
 3. Tippen Sie auf **Demo zurücksetzen**, wenn Sie den Anfangszustand wiederhaben möchten.
 
 *Als Mitglied*

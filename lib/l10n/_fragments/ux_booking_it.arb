@@ -1,9 +1,9 @@
 {
   "uxWorkspaceTime": "Ora dello spazio",
-  "uxDeviceTime": "La tua ora",
+  "uxDeviceTime": "La sua ora",
   "uxBookingFor": "Prenotazione per",
   "uxBookingChargePending": "L’importo e il consumo del piano saranno calcolati secondo il piano del membro. L’importo finale non è disponibile qui.",
-  "uxBookingModesHelp": "Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la tua presenza.",
+  "uxBookingModesHelp": "Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la sua presenza.",
   "uxBookingCheckInHelp": "Indicare anche la mia presenza alla conferma di questa prenotazione.",
   "uxManageResource": "Gestisci risorsa"
 }

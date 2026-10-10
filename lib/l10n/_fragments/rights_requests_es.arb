@@ -4,7 +4,7 @@
   "@rightsRequestsTitle": {
     "description": "#1915 rights requests: rightsRequestsTitle"
   },
-  "rightsRequestsHint": "Pide al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
+  "rightsRequestsHint": "Pida al espacio una copia, una rectificación, una limitación o la supresión — respuesta en un mes natural.",
   "@rightsRequestsHint": {
     "description": "#1915 rights requests: rightsRequestsHint"
   },
@@ -16,7 +16,7 @@
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "¿Qué pides al espacio?",
+  "rightsRequestAsk": "¿Qué pide al espacio?",
   "@rightsRequestAsk": {
     "description": "#1915 rights requests: rightsRequestAsk"
   },
@@ -37,7 +37,7 @@
       }
     }
   },
-  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+  "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtelo de nuevo.",
   "@rightsRequestFailed": {
     "description": "#1915 rights requests: rightsRequestFailed"
   },
@@ -115,15 +115,15 @@
   "@erasurePreviewOutside": {
     "description": "#1915 rights requests: erasurePreviewOutside"
   },
-  "erasureStoreMessages": "Mensajes que enviaste",
+  "erasureStoreMessages": "Mensajes que envió",
   "@erasureStoreMessages": {
     "description": "#1915 rights requests: erasureStoreMessages"
   },
-  "erasureStoreAnswers": "Tus respuestas a las preguntas del espacio",
+  "erasureStoreAnswers": "Sus respuestas a las preguntas del espacio",
   "@erasureStoreAnswers": {
     "description": "#1915 rights requests: erasureStoreAnswers"
   },
-  "erasureStoreProfile": "Tu perfil (si es tu último espacio)",
+  "erasureStoreProfile": "Su perfil (si es su último espacio)",
   "@erasureStoreProfile": {
     "description": "#1915 rights requests: erasureStoreProfile"
   },
@@ -147,11 +147,11 @@
   "@erasureStoreHeldAnswers": {
     "description": "#1915 rights requests: erasureStoreHeldAnswers"
   },
-  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntale directamente",
+  "erasureStoreOtherInstallations": "Otra instalación de DesKilo es un responsable distinto — pregúntele directamente",
   "@erasureStoreOtherInstallations": {
     "description": "#1915 rights requests: erasureStoreOtherInstallations"
   },
-  "erasureStoreDeviceCaches": "Copias en tus dispositivos — se borran al cerrar sesión en cada uno",
+  "erasureStoreDeviceCaches": "Copias en sus dispositivos — se borran al cerrar sesión en cada uno",
   "@erasureStoreDeviceCaches": {
     "description": "#1915 rights requests: erasureStoreDeviceCaches"
   },

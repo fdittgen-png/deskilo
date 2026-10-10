@@ -17,7 +17,7 @@ Vuole vedere il prodotto finito prima di prendere decisioni. Lo spazio dimostrat
 **Passaggi**
 
 1. Nella schermata di accesso, tocchi **Esplora lo spazio dimostrativo**, poi **Inizia**. Vedi [Lo spazio dimostrativo](help:user.advanced.demo).
-2. Usi **Vedi come** per passare da **La proprietaria** a **Un'amministratrice** e a **Un membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
+2. Usi **Vedi come** per passare tra **Proprietario**, **Amministratore** e **Membro**. Svolga i tre esercizi di ciascuna persona qui sotto.
 3. Tocchi **Reimposta la demo** quando la vuole come all'inizio.
 
 *Come membro*

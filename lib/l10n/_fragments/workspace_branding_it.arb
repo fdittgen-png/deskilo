@@ -68,7 +68,7 @@
       }
     }
   },
-  "coloursMalformed": "{text} non è un colore: scrivetelo come #RRGGBB.",
+  "coloursMalformed": "{text} non è un colore: lo scriva come #RRGGBB.",
   "@coloursMalformed": {
     "description": "#1289 colours screen: what was typed is not a colour",
     "placeholders": {
@@ -94,7 +94,7 @@
   "@coloursRooms": {
     "description": "#1289 colours screen: the office-fill palette heading"
   },
-  "coloursRoomsProduct": "La palette del prodotto. Aggiungete un colore per usare la vostra.",
+  "coloursRoomsProduct": "La palette del prodotto. Aggiunga un colore per usare la sua.",
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
@@ -102,7 +102,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n} colori vostri, in questo ordine.",
+  "coloursRoomsOwn": "{n} colori suoi, in questo ordine.",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -169,7 +169,7 @@
   "@symbolTitle": {
     "description": "workspace symbol"
   },
-  "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usa una foto qui sotto.",
+  "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usi una foto qui sotto.",
   "@symbolHint": {
     "description": "workspace symbol"
   },
@@ -177,7 +177,7 @@
   "@symbolLetters": {
     "description": "workspace symbol"
   },
-  "symbolLettersRule": "Usa una o due lettere o cifre per il simbolo.",
+  "symbolLettersRule": "Usi una o due lettere o cifre per il simbolo.",
   "@symbolLettersRule": {
     "description": "workspace symbol"
   },
@@ -189,17 +189,17 @@
   "@symbolSaved": {
     "description": "workspace symbol"
   },
-  "symbolTaken": "Un altro spazio usa già queste lettere con questo colore. Scegli un altro colore o altre lettere — oppure usa una foto.",
+  "symbolTaken": "Un altro spazio usa già queste lettere con questo colore. Scelga un altro colore o altre lettere — oppure usi una foto.",
   "@symbolTaken": {
     "description": "workspace symbol"
   },
   "coloursPatternTitle": "Motivo",
-  "coloursPatternHint": "Come il tuo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.",
+  "coloursPatternHint": "Come il suo colore viene disegnato sulla scheda di questo spazio in Io, sul suo chip e all’apertura, per distinguerlo dagli altri spazi.",
   "coloursPatternSolid": "Tinta unita",
   "coloursPatternStripes": "Righe",
   "coloursPatternDots": "Pois",
   "coloursPatternGrid": "Griglia",
   "coloursPatternWaves": "Onde",
   "coloursPatternSaved": "Motivo salvato.",
-  "coloursLogoHint": "Il tuo logo appare anche mentre qualcuno apre questo spazio."
+  "coloursLogoHint": "Il suo logo appare anche mentre qualcuno apre questo spazio."
 }

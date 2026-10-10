@@ -31,7 +31,7 @@ Sie möchten die Personen Ihrer Organisation den Rollen zuordnen, die DesKilo ke
 | Rolle | Wofür sie da ist | Im Verein |
 |---|---|---|
 | **Inhaber** | Die Person, die für den Space einsteht und jede Berechtigung hat. Nur ein Inhaber kann die Inhaberschaft erteilen. | Ada, die Präsidentin. |
-| **Mit-Inhaberin** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
+| **Mitinhaber** | Ein zweiter Schlüssel. Hat standardmäßig jede Berechtigung und kann übernehmen, wenn der Inhaber geht. | Die Vizepräsidentin, falls der Vorstand eine hat. |
 | **Administrator** | Führt den Alltag: Mitglieder, Buchungen für andere, den Kiosk, Dokumente, Leistungen. Hat, was die Matrix gibt, und nicht mehr. | Chiara, die Schriftführerin. |
 | **Benutzer** | Die Person, die den Space nutzt. Hat nur die Alltagsberechtigungen, die Sie geben. | Bruno, ein Mitglied wie die anderen. |
 
@@ -70,7 +70,7 @@ Sie möchten, dass jede Rolle hat, was sie braucht, und sonst nichts. Das ist da
 
 **Schritte**
 
-1. Öffnen Sie [Rollen](app:/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mit-Inhaberin**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
+1. Öffnen Sie [Rollen](app:/roles). Es gibt eine Karte pro Rolle: **Inhaber**, **Mitinhaber**, **Administrator** (der Inhaber kann sie umbenennen) und **Benutzer**.
 2. Lesen Sie zuerst die Karte **Administrator**. Sie zeigt, was ein Administrator heute in Ihrem Space hat.
 3. Entfernen Sie den Haken bei dem, was Sie nicht abgeben möchten. Setzen Sie die Alltagsberechtigungen, die die Karte **Benutzer** braucht (siehe unten).
 
@@ -112,14 +112,14 @@ Sie möchten, dass der Space weiterläuft, wenn Sie krank, verreist oder fort si
 
 | Art | Was sie bewirkt | Wählen Sie sie, wenn … |
 |---|---|---|
-| *Aktive Mit-Inhaberin* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
-| **Nachfolgerin** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
+| *Aktiver Mitinhaber* | Hat jetzt die Berechtigungen des Inhabers und übernimmt, wenn der Inhaber geht. | Sie die Arbeit teilen: die Vizepräsidentin, ein Partner. |
+| **Nachfolge** | Wartet. Wird Inhaber, wenn Sie sie befördern oder wenn Sie gehen. | Sie nur einen Erben möchten. |
 
 **Schritte**
 
-1. Schalten Sie die Funktion **Mit-Inhaberinnen** unter [Funktionen](app:/features) ein. In einem neuen Space ist sie aus.
+1. Schalten Sie die Funktion **Mitinhaber** unter [Funktionen](app:/features) ein. In einem neuen Space ist sie aus.
 2. Öffnen Sie die Person unter [Mitglieder & Tarife](app:/members), gehen Sie zu **Verwalten** und tippen Sie auf **Mit-Inhaberschaft**.
-3. Wählen Sie die aktive Mit-Inhaberin oder **Nachfolgerin**. Um sofort zu übergeben, wählen Sie **Jetzt zur Inhaberin machen**.
+3. Wählen Sie den aktiven Mitinhaber oder **Nachfolge**. Um sofort zu übergeben, wählen Sie **Jetzt zum Inhaber machen**.
 
 **Gut zu wissen**
 
@@ -322,7 +322,7 @@ Sie möchten sicher sein, dass jede Anfrage, für die Sie eine Regel anlegen, be
 1. Öffnen Sie [Freigaberegeln](app:/validation) und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.
 2. Öffnen Sie [Mitglieder & Tarife](app:/members). Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.
 3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Er hält die erste Buchung nur auf, wenn die Regel für Buchungen gilt.
-4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf deine Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
+4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
 
 **Gut zu wissen**
 

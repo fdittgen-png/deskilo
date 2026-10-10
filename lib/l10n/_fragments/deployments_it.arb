@@ -12,15 +12,15 @@
   "@deploymentTitle": {
     "description": "#988/#990 deployments: deploymentTitle"
   },
-  "deploymentIntroToProd": "Sei sul lato sviluppo. Ciò che spunti qui sotto viene distribuito al gemello di produzione, dopo un'anteprima di ciò che cambia.",
+  "deploymentIntroToProd": "È sul lato sviluppo. Ciò che spunta qui sotto viene distribuito al gemello di produzione, dopo un'anteprima di ciò che cambia.",
   "@deploymentIntroToProd": {
     "description": "#988/#990 deployments: deploymentIntroToProd"
   },
-  "deploymentIntroToDev": "Sei sul lato produzione. Ciò che spunti qui sotto viene distribuito al gemello di sviluppo, dopo un'anteprima di ciò che cambia.",
+  "deploymentIntroToDev": "È sul lato produzione. Ciò che spunta qui sotto viene distribuito al gemello di sviluppo, dopo un'anteprima di ciò che cambia.",
   "@deploymentIntroToDev": {
     "description": "#988/#990 deployments: deploymentIntroToDev"
   },
-  "deploymentNoTwin": "Questo spazio non ha un gemello di cui tu sia membro.",
+  "deploymentNoTwin": "Questo spazio non ha un gemello di cui Lei sia membro.",
   "@deploymentNoTwin": {
     "description": "#988/#990 deployments: deploymentNoTwin"
   },

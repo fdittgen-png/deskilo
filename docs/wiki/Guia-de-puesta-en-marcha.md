@@ -886,7 +886,7 @@ Usted quiere un lugar que diga, para las funciones principales, qué obtienen lo
 | **Pares de entornos**, **Despliegues** | Un lado de prueba y un lado real, con despliegue. | | Propietario |
 | **Configuración en el archivo del espacio** | Toda la configuración viaja en el archivo del espacio. | **Exportación de datos (Excel)** | Propietario |
 | **Asistente de instancia** | Crear un servidor nuevo desde la aplicación. | | Operador/a |
-| **Lo que te espera** | Una lista ordenada de lo que le espera. | | Nadie |
+| **Lo que le espera** | Una lista ordenada de lo que le espera. | | Nadie |
 | **Grabador de tareas** | Grabar y reproducir los pasos de una tarea. | | Nadie |
 | **Notificaciones push** | Confirmaciones pendientes en el teléfono. | El servicio push de la instalación | Operador/a |
 | **Integración con WhatsApp** | Un chat con un miembro con un toque, el enlace del grupo. | **Directorio de miembros** | Propietario |
@@ -1224,7 +1224,7 @@ Usted quiere estar seguro de que toda solicitud para la que crea una regla puede
 1. Abra [Reglas de validación](https://fdittgen-png.github.io/deskilo/#/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
 2. Abra [Miembros y planes](https://fdittgen-png.github.io/deskilo/#/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
 3. Abra **Configuración de este espacio** en [Espacio](https://fdittgen-png.github.io/deskilo/#/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. Solo retiene la primera reserva cuando la regla es para reservas.
-4. Abra [Eventos](https://fdittgen-png.github.io/deskilo/#/events). **Esperando tu confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
+4. Abra [Eventos](https://fdittgen-png.github.io/deskilo/#/events). **Esperando su confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
 
 **Conviene saber**
 
@@ -1676,7 +1676,7 @@ Solo se envía push en las cinco líneas marcadas con «push» más abajo. Cualq
 
 | Origen | Evento | A quién se avisa | Canal | Qué puede cambiar el miembro |
 |---|---|---|---|---|
-| Reglas de validación | Una solicitud necesita una confirmación | A las personas que nombra la regla (flujo, **Esperando tu confirmación**); el push va solo al miembro al que se refiere la solicitud, nunca a quien la hizo, de modo que los validadores reciben el push solo cuando son ese miembro. Texto: «Alguien necesita tu confirmación.» | Flujo, campana; push | Desactivar el push en el dispositivo |
+| Reglas de validación | Una solicitud necesita una confirmación | A las personas que nombra la regla (flujo, **Esperando su confirmación**); el push va solo al miembro al que se refiere la solicitud, nunca a quien la hizo, de modo que los validadores reciben el push solo cuando son ese miembro. Texto: «Alguien necesita tu confirmación.» | Flujo, campana; push | Desactivar el push en el dispositivo |
 | Reservas | Un administrador elimina o anula una reserva | Al miembro desplazado y a todos los administradores y propietarios activos excepto quien actuó. Texto: «Un administrador ha eliminado una reserva.» | Flujo; push | Desactivar el push en el dispositivo |
 | Recordatorios de pago | Una factura ha superado su plazo y vence un nivel de recordatorio | Al miembro destinatario de la factura. La factura de un propietario llega al propio propietario. Texto: «Tienes un recordatorio de pago.» | Alerta en el flujo; push | Desactivar el push en el dispositivo |
 | Notificaciones entre miembros | Un mensaje nuevo | Mensaje directo: el destinatario. Grupo: los participantes excepto el remitente. Una conversación silenciada por un miembro permanece en silencio para ese miembro. Texto: «Tienes un mensaje nuevo.» | Mensajes, campana; push | Silenciar, fijar o archivar una conversación; desactivar el push |
@@ -1784,7 +1784,7 @@ Hágalo en un espacio de prueba (véase [un ensayo seguro](#un-ensayo-seguro-en-
 
 1. Mensaje: desde la cuenta del miembro, escriba al propietario en [Mensajes](https://fdittgen-png.github.io/deskilo/#/me?tab=messages). En la cuenta del propietario, la campana lo cuenta y la conversación aparece como no leída. Ábrala: el mensaje del miembro muestra una confirmación de lectura.
 2. Mención: en una conversación de grupo, nombre al propietario (la función de menciones de la mensajería debe estar activada). Si el push está configurado, el teléfono del propietario muestra «Te han mencionado en una conversación.»
-3. Decisión: como miembro, pida eliminar una reserva pasada (la función **Solicitudes de eliminación de reservas** debe estar activada). El propietario la ve en **Esperando tu confirmación** en [Eventos](https://fdittgen-png.github.io/deskilo/#/events); respóndala y observe cómo cambia el flujo del miembro.
+3. Decisión: como miembro, pida eliminar una reserva pasada (la función **Solicitudes de eliminación de reservas** debe estar activada). El propietario la ve en **Esperando su confirmación** en [Eventos](https://fdittgen-png.github.io/deskilo/#/events); respóndala y observe cómo cambia el flujo del miembro.
 4. Eliminación: como propietario, elimine una reserva futura del miembro. El flujo del miembro la muestra, y un teléfono con push muestra «Un administrador ha eliminado una reserva.»
 5. Recordatorio: como miembro, reserve un puesto que empiece dentro de unos 20 minutos (una reserva que empieza en menos de 15 minutos no recibe recordatorio). Unos 15 minutos antes del inicio, el teléfono del miembro muestra el recordatorio de registro de entrada.
 6. Recordatorio de pago: con **Recordatorios de pago** activado, active **Recordatorios automáticos** en las reglas de recordatorio con un plazo corto hasta el primer recordatorio, emita una factura de prueba que tenga un plazo de pago, espere a que pase el plazo y abra Finanzas como propietario o copropietario; el flujo del miembro muestra la alerta.
@@ -2197,7 +2197,7 @@ Quiere un hábito breve que mantenga el espacio coherente, en diez minutos a fin
 **Pasos**
 
 1. Abra **Configuración de este espacio**. Cada ámbito sigue indicando **Listo**, o **No es necesario aquí**, o está dejado a un lado a propósito.
-2. Abra [Eventos](https://fdittgen-png.github.io/deskilo/#/events). **Esperando tu confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
+2. Abra [Eventos](https://fdittgen-png.github.io/deskilo/#/events). **Esperando su confirmación** está vacío o es pequeño, y ningún miembro lleva **Pendiente** más de uno o dos días.
 3. Vuelva a contar el equipo. Quien se haya marchado o esté en pausa puede dejar una regla corta. Véase [Evite solicitudes que esperan para siempre](#evite-solicitudes-que-esperan-para-siempre).
 4. Cierre el mes: los días de cierre están introducidos, se ha ejecutado el asistente de cierre mensual y los recordatorios de pago han salido (automáticamente cada mañana, o al abrir Finanzas cuando la base de datos no tiene programador). Véase [El asistente de cierre mensual](Guia-de-usuario#el-asistente-de-cierre-mensual).
 5. Haga la exportación de datos y abra **Funciones** para comprobar que ningún proceso requiere atención tras los cambios del mes.
@@ -2304,7 +2304,7 @@ Quiere ver el producto terminado antes de tomar decisiones. El espacio de demost
 **Pasos**
 
 1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración** y después **Empezar**. Véase [El espacio de demostración](Guia-de-usuario#el-espacio-de-demostración).
-2. Use **Ver como** para pasar entre **La propietaria**, **Una administradora** y **Un miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
+2. Use **Ver como** para pasar entre **Propietario**, **Administrador/a** y **Miembro**. Haga los tres ejercicios de cada persona que figuran a continuación.
 3. Pulse **Reiniciar la demo** cuando quiera dejarla como al principio.
 
 *Como miembro*

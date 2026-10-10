@@ -10,10 +10,10 @@
   "levelAssignMember": "Per il membro",
   "levelAssignMyself": "Io stesso",
   "levelSupplementLabel": "Prenotazioni del piano",
-  "levelNotAllowed": "Non sei autorizzato a prenotare un tavolo, ufficio o piano intero.",
+  "levelNotAllowed": "Non è autorizzato a prenotare un tavolo, ufficio o piano intero.",
   "levelConflict": "Il piano ha prenotazioni in quel periodo.",
-  "bookingOnePlace": "Hai già una prenotazione in quel periodo — un posto alla volta.",
-  "bookingCheckedInElsewhere": "Hai fatto check-in altrove — fai prima il check-out lì.",
+  "bookingOnePlace": "Ha già una prenotazione in quel periodo — un posto alla volta.",
+  "bookingCheckedInElsewhere": "Ha fatto check-in altrove — faccia prima il check-out lì.",
   "spaceNotWholeBookable": "Questo spazio non è configurato per la prenotazione intera — il proprietario attiva \"Prenotabile per intero\" nell'editor.",
   "levelFeatureOff": "Le prenotazioni di ufficio e piano sono disattivate nelle Funzionalità.",
   "levelDetail": "Intero piano",
@@ -29,7 +29,7 @@
   "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro.",
   "bookingOutsideOffError": "Le prenotazioni fuori dagli orari di apertura non sono consentite.",
   "bookingOutsideWalkUpError": "Fuori dagli orari di apertura è possibile solo un check-in spontaneo, non una prenotazione in anticipo.",
-  "bookingSameDayError": "Una prenotazione termina il giorno in cui inizia — prenota il giorno dopo separatamente.",
-  "bookingMembershipPaused": "La tua iscrizione è sospesa — un amministratore la riattiva in Membri.",
-  "bookingNotAMember": "Non sei più membro di questo spazio — chiedi un invito a un amministratore."
+  "bookingSameDayError": "Una prenotazione termina il giorno in cui inizia — prenoti il giorno dopo separatamente.",
+  "bookingMembershipPaused": "La sua iscrizione è sospesa — un amministratore la riattiva in Membri.",
+  "bookingNotAMember": "Non è più membro di questo spazio — chieda un invito a un amministratore."
 }

@@ -6,7 +6,7 @@
   "@reportCoaTitle": {
     "description": "#671 - report document text (reportCoaTitle)"
   },
-  "reportCoaIntro": "Una sugerencia, no tu contabilidad. Son las cuentas que un contable de tu país usaría normalmente para un espacio como el tuyo.",
+  "reportCoaIntro": "Una sugerencia, no su contabilidad. Son las cuentas que un contable de su país usaría normalmente para un espacio como el suyo.",
   "@reportCoaIntro": {
     "description": "#671 - report document text (reportCoaIntro)"
   },
@@ -22,7 +22,7 @@
   "@reportCoaLabel": {
     "description": "#671 - report document text (reportCoaLabel)"
   },
-  "reportCoaDisclaimer": "Solo una vista previa. DesKilo no lleva libro mayor ni hace tu contabilidad — el plan de tu contable siempre manda.",
+  "reportCoaDisclaimer": "Solo una vista previa. DesKilo no lleva libro mayor ni hace su contabilidad — el plan de su contable siempre manda.",
   "@reportCoaDisclaimer": {
     "description": "#671 - report document text (reportCoaDisclaimer)"
   },
@@ -30,7 +30,7 @@
   "@reportBadgesTitle": {
     "description": "#671 - report document text (reportBadgesTitle)"
   },
-  "reportBadgesIntro": "Corta por las líneas. Cada tarjeta lleva el código de un miembro — preséntala en el quiosco para registrarte.",
+  "reportBadgesIntro": "Corte por las líneas. Cada tarjeta lleva el código de un miembro — preséntela en el quiosco para registrarse.",
   "@reportBadgesIntro": {
     "description": "#671 - report document text (reportBadgesIntro)"
   },
@@ -42,7 +42,7 @@
   "@reportSpaceCodesTitle": {
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
-  "reportSpaceCodesIntro": "Una tarjeta por puesto, mesa, sala y planta. Pega cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.",
+  "reportSpaceCodesIntro": "Una tarjeta por puesto, mesa, sala y planta. Pegue cada tarjeta en su espacio: escanearla abre la misma ficha que el quiosco.",
   "@reportSpaceCodesIntro": {
     "description": "#671 - report document text (reportSpaceCodesIntro)"
   },

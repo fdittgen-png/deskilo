@@ -457,7 +457,7 @@ Quiere echar un vistazo antes de comprometerse. La demo es un espacio inventado,
 
 1. En la pantalla de inicio de sesión, pulse **Explorar el espacio de demostración**.
 2. Lea la breve nota y pulse **Empezar**.
-3. Use **Ver como** para ver el mismo espacio como **La propietaria**, **Una administradora** o **Un miembro**.
+3. Use **Ver como** para ver el mismo espacio como **Propietario**, **Administrador/a** o **Miembro**.
 4. Pulse **Reiniciar la demo** para devolverla a como empezó, o **Salir de la demo**.
 
 **Conviene saber**

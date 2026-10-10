@@ -1,9 +1,9 @@
 {
   "uxMoneyStatementScope": "Dettaglio mensile del periodo selezionato.",
   "uxMoneyPaymentsScope": "Saldo mensile · Fatture scadute di tutti i periodi.",
-  "uxMoneyInvoicesScope": "Le tue fatture in questo spazio · Tutti i periodi.",
+  "uxMoneyInvoicesScope": "Le sue fatture in questo spazio · Tutti i periodi.",
   "uxMoneyUsageScope": "Prenotazioni e consumi del mese selezionato.",
-  "uxMoneyDocumentsScope": "Rapporti mensili e il tuo accordo attuale.",
+  "uxMoneyDocumentsScope": "Rapporti mensili e il suo accordo attuale.",
   "uxMoneyAllPeriods": "Tutti i periodi · Credito, fatture aperte e rimborsi.",
   "uxMoneyWorkspaceTools": "Strumenti finanziari dello spazio"
 }

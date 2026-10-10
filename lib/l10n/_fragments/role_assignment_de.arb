@@ -49,11 +49,11 @@
   "@roleRefusalNotPermitted": {
     "description": "#2085 giving roles: roleRefusalNotPermitted"
   },
-  "roleRefusalOwnerOnly": "Nur die Inhaberin vergibt eine Rolle, die Rollen verwaltet.",
+  "roleRefusalOwnerOnly": "Nur der Inhaber vergibt eine Rolle, die Rollen verwaltet.",
   "@roleRefusalOwnerOnly": {
     "description": "#2085 giving roles: roleRefusalOwnerOnly"
   },
-  "roleRefusalExceedsYours": "Diese Rolle darf mehr als du, deshalb vergibt sie nur die Inhaberin.",
+  "roleRefusalExceedsYours": "Diese Rolle darf mehr als Sie, deshalb vergibt sie nur der Inhaber.",
   "@roleRefusalExceedsYours": {
     "description": "#2085 giving roles: roleRefusalExceedsYours"
   },
@@ -77,7 +77,7 @@
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
-  "whatYouCanDoTitle": "Was du hier tun kannst",
+  "whatYouCanDoTitle": "Was Sie hier tun können",
   "@whatYouCanDoTitle": {
     "description": "#2085 giving roles: whatYouCanDoTitle"
   },
@@ -94,11 +94,11 @@
   "@whatYouCanDoIntro": {
     "description": "#2085 giving roles: whatYouCanDoIntro"
   },
-  "whatYouCanDoFromOwner": "Als Inhaberin: alles",
+  "whatYouCanDoFromOwner": "Als Inhaber: alles",
   "@whatYouCanDoFromOwner": {
     "description": "#2085 giving roles: whatYouCanDoFromOwner"
   },
-  "whatYouCanDoFromCoOwner": "Als Mit-Inhaberin",
+  "whatYouCanDoFromCoOwner": "Als Mitinhaber",
   "@whatYouCanDoFromCoOwner": {
     "description": "#2085 giving roles: whatYouCanDoFromCoOwner"
   },

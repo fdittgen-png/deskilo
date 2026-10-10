@@ -3,7 +3,7 @@
   "@featurePublicHolidaysTitle": {
     "description": "#1274 public holidays: the feature switch title"
   },
-  "featurePublicHolidaysDesc": "Die Inhaberin wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung.",
+  "featurePublicHolidaysDesc": "Der Inhaber wählt ein Jahr, sieht die Feiertage, die zu Schließtagen würden, und bestätigt. Ein erneuter Lauf fügt nichts hinzu, und ein Monat mit bereits erstellter Rechnung wird übersprungen und benannt — erzeugte Feiertage ändern nie eine bereits gestellte Rechnung.",
   "@featurePublicHolidaysDesc": {
     "description": "#1274 public holidays: the feature switch description"
   },

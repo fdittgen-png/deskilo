@@ -12,7 +12,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "All'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che avete emesso. La scelta è stampata su ogni fattura.",
+  "vatExigibilitySubtitle": "All'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che ha emesso. La scelta è stampata su ogni fattura.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },

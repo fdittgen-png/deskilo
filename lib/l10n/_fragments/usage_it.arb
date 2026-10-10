@@ -10,7 +10,7 @@
   "usageCorrected": "Corretto",
   "usageWas": "era {before}",
   "usageAsk": "Fattura il tempo in cui c’ero",
-  "usageAskExplain": "Hai prenotato {booked} e sei stato {present}. Chiedi che le {saved} non usate non siano fatturate. Decide qualcun altro, mai tu.",
+  "usageAskExplain": "Ha prenotato {booked} ed è stato presente {present}. Chieda che le {saved} non usate non siano fatturate. Decide qualcun altro, mai Lei.",
   "usageReasonLabel": "Perché (facoltativo)",
   "usageAskSubmit": "Chiedi",
   "usageAskSubmitted": "Richiesto. Decide qualcun altro.",

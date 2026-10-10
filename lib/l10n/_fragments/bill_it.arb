@@ -15,15 +15,15 @@
   "entitlementTitle": "Questo mese",
   "entitlementDaysUsed": "{used} di {total} giorni usati",
   "entitlementDaysLeft": "{left} giorni rimasti",
-  "entitlementBlockedFull": "Hai usato tutti i tuoi giorni questo mese. Chiedine altri a un amministratore o richiedi mezze giornate extra.",
-  "entitlementPaygRate": "I giorni oltre il tuo piano costano {rate} ciascuno.",
-  "entitlementPackageFull": "Hai usato tutti i tuoi giorni questo mese. Acquista un pacchetto per continuare a prenotare.",
+  "entitlementBlockedFull": "Ha usato tutti i suoi giorni questo mese. Ne chieda altri a un amministratore o richieda mezze giornate extra.",
+  "entitlementPaygRate": "I giorni oltre il suo piano costano {rate} ciascuno.",
+  "entitlementPackageFull": "Ha usato tutti i suoi giorni questo mese. Acquisti un pacchetto per continuare a prenotare.",
   "billPackages": "Pacchetti di giorni",
   "payOnlineButton": "Paga online",
-  "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chiedi al proprietario dello spazio.",
+  "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chieda al proprietario dello spazio.",
   "payOnlinePendingTitle": "Pagamento online in sospeso",
   "payOnlineFailedTitle": "Pagamento online non riuscito",
-  "payOnlinePendingDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Cita questo riferimento se non va a buon fine.",
+  "payOnlinePendingDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Citi questo riferimento se non va a buon fine.",
   "payOnlineFailedDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è stato completato — nulla è stato accreditato; il saldo resta dovuto.",
   "payOnlineChooseTitle": "Paga online",
   "paymentProviderStripe": "Carta di credito (Stripe)",
@@ -60,15 +60,15 @@
   "@billInvoiceRemaining": {
     "description": "Bill invoice card: what is still owed on a partially paid invoice"
   },
-  "billCreditNoteDue": "Lo spazio ti deve questo importo: non hai nulla da pagare.",
+  "billCreditNoteDue": "Lo spazio le deve questo importo: non ha nulla da pagare.",
   "@billCreditNoteDue": {
     "description": "Bill credit-note card: refund still due from the workspace"
   },
-  "billCreditNoteRefunded": "Lo spazio ti ha rimborsato questo importo.",
+  "billCreditNoteRefunded": "Lo spazio le ha rimborsato questo importo.",
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "accountCardTitle": "Il tuo conto",
+  "accountCardTitle": "Il suo conto",
   "@accountCardTitle": {
     "description": "Money tab: title of the cross-month account position card (#512)"
   },
@@ -96,7 +96,7 @@
       }
     }
   },
-  "accountImputationHint": "Il tuo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.",
+  "accountImputationHint": "Il suo credito può saldare le fatture aperte: lo spazio lo imputa durante la riconciliazione dei pagamenti.",
   "@accountImputationHint": {
     "description": "Account card hint shown when credit and open invoices coexist (#512)"
   },
@@ -120,11 +120,11 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
-  "exportClaimRegulatory": "Il formato richiesto dalla tua amministrazione fiscale.",
+  "exportClaimRegulatory": "Il formato richiesto dalla sua amministrazione fiscale.",
   "@exportClaimRegulatory": {
     "description": "#669 - accounting export formats"
   },
-  "exportClaimExchange": "Perché il tuo commercialista lo importi e lo verifichi — non è una dichiarazione.",
+  "exportClaimExchange": "Perché il suo commercialista lo importi e lo verifichi — non è una dichiarazione.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
   },
@@ -132,11 +132,11 @@
   "@exportClaimSubset": {
     "description": "#669 - accounting export formats"
   },
-  "exportNoCompleteBooks": "Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i tuoi libri completi. Il tuo commercialista li completa.",
+  "exportNoCompleteBooks": "Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i suoi libri completi. Il suo commercialista li completa.",
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
   },
-  "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifica con il tuo commercialista se ti è richiesto.",
+  "exportUncertifiedSoftware": "Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifichi con il suo commercialista se le è richiesto.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
   },
@@ -144,7 +144,7 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
-  "datevAccountsIntro": "I numeri di consulente e di cliente te li dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
+  "datevAccountsIntro": "I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
   },
@@ -160,7 +160,7 @@
   "@sageAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
-  "sageAccountsIntro": "I valori predefiniti sono i conti che Sage fornisce di serie. Il codice IVA decide su quale dichiarazione finiscono queste scritture: verificalo con il commercialista se non sei all’aliquota ordinaria.",
+  "sageAccountsIntro": "I valori predefiniti sono i conti che Sage fornisce di serie. Il codice IVA decide su quale dichiarazione finiscono queste scritture: lo verifichi con il commercialista se non è all’aliquota ordinaria.",
   "@sageAccountsIntro": {
     "description": "#669 - accounting export formats"
   },
@@ -172,7 +172,7 @@
   "@saftLedgerTitle": {
     "description": "#669 - SAF-T derived postings"
   },
-  "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il tuo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
+  "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
   },

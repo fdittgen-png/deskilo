@@ -78,7 +78,7 @@ Usted quiere que le reconozcan en el directorio, en el plano y en los mensajes.
 
 **Conviene saber**
 
-- La fila dice **Toca para añadir una foto** hasta que tenga una y después **Toca para cambiar**.
+- La fila dice **Toque para añadir una foto** hasta que tenga una y después **Toque para cambiar**.
 - Quién ve su foto es decisión suya: véase [Quién me ve](help:user.privacy.audiences).
 - Su cuenta es suya en todos los espacios; su situación en un espacio concreto está en los Ajustes de ese espacio.
 
@@ -646,7 +646,7 @@ Usted quiere volver a leer lo que aceptó sobre sus datos.
 **Pasos**
 
 1. Abra [Privacidad y datos](app:/privacy).
-2. Toque **Tus datos, tus derechos**.
+2. Toque **Sus datos, sus derechos**.
 3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
 **Conviene saber**
@@ -691,7 +691,7 @@ Usted dirige una comunidad y quiere alojar DesKilo por su cuenta.
 
 **Pasos**
 
-1. Abra la pantalla **Servidor** y toque **Usar tu propio servidor**.
+1. Abra la pantalla **Servidor** y toque **Usar su propio servidor**.
 2. Siga los cuatro pasos que se muestran: crear un proyecto en supabase.com, instalar el esquema, copiar la URL del proyecto y la clave publicable, y después pegarlas y **Probar la conexión**.
 3. O toque **Crear una nueva instancia** para la configuración guiada.
 

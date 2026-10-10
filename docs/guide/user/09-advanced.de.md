@@ -373,7 +373,7 @@ Sie möchten auf den echten Bildschirmen durch eine Aufgabe geführt werden.
 **Gut zu wissen**
 
 - Nutzen Sie **Zurück** und **Überspringen** und öffnen Sie **Alle Schritte**, um jeden als **Offen**, **Wartet**, **Erledigt**, **Bestätigt** oder **Übersprungen** zu sehen.
-- Ein Schritt, der bucht, wartet auf die Antwort: **Warte auf das Ergebnis …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
+- Ein Schritt, der bucht, wartet auf die Antwort: **Auf das Ergebnis wird gewartet …**. Wird er abgelehnt, sagt die Anleitung, was Sie versuchen können; kam keine Antwort, bittet sie Sie, vor einem neuen Versuch nachzusehen.
 - **Anleitung beenden** beendet sie. Nichts wird rückgängig gemacht.
 - Die Anleitung pausiert, wenn sich das Konto oder der Workspace ändert oder der Aufgabenrekorder ausgeschaltet wird.
 
@@ -457,7 +457,7 @@ Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo ist ein erfunden
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden**.
 2. Lesen Sie den kurzen Hinweis und tippen Sie dann auf **Loslegen**.
-3. Nutzen Sie **Ansicht als**, um denselben Space als **Der Inhaber**, **Eine Verwaltung** oder **Ein Mitglied** zu sehen.
+3. Nutzen Sie **Ansicht als**, um denselben Space als **Inhaber**, **Administrator:in** oder **Mitglied** zu sehen.
 4. Tippen Sie auf **Demo zurücksetzen**, um sie wie am Anfang wiederherzustellen, oder auf **Demo verlassen**.
 
 **Gut zu wissen**
@@ -561,7 +561,7 @@ Etwas sieht falsch aus. Versuchen Sie dies, der Reihe nach.
 - Was Sie sehen, hängt von Ihrer Rolle ab: Ein fehlender Bildschirm kann eine Berechtigung sein. Fragen Sie Ihren Inhaber.
 - Administratoren können unter **Erweitert** in den [Einstellungen](app:/settings) den **Entwicklermodus** einschalten. Er fügt einen Bildschirm [Entwickler](app:/developer) hinzu, auf dem **Protokoll exportieren** und **Protokoll leeren** dem Support helfen. Er gilt für jedes Mitglied des Workspace.
 - Einen Fehler können Sie auch im Bereich „Über“ der App melden: **Fehler melden / Funktion vorschlagen**.
-- Eine Anleitung, die bei **Warte auf das Ergebnis …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
+- Eine Anleitung, die bei **Auf das Ergebnis wird gewartet …** hängt, bedeutet, dass keine Antwort kam: Prüfen Sie das Ergebnis, bevor Sie es erneut versuchen.
 
 **Siehe auch:** [Supportdetails](help:user.advanced.support)
 

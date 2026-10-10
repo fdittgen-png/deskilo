@@ -1,9 +1,9 @@
 {
   "accountActivityTitle": "Mi consumo y mis pagos",
   "accountPaymentsTitle": "Pagos",
-  "accountActivityScope": "Todos tus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
+  "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityEmpty": "No hay registros que mostrar.",
-  "accountActivityFailed": "No se pudo cargar tu historial financiero. Toca para reintentar.",
+  "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",
   "accountPaymentConfirmed": "Pago confirmado",
   "accountInvoiceVoided": "Factura anulada",
   "accountInvoiceRegrouped": "Incluido en una factura de liquidación",

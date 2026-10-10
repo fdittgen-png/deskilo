@@ -11,7 +11,7 @@
   "onboardingCreateButton": "Crear espacio",
   "workspaceInviteCodeLabel": "Código de invitación",
   "onboardingJoinButton": "Unirse",
-  "workspaceGenericError": "Algo salió mal. Inténtalo de nuevo.",
+  "workspaceGenericError": "Algo salió mal. Inténtelo de nuevo.",
   "countryNameDE": "Alemania",
   "countryNameAT": "Austria",
   "countryNameCH": "Suiza",
@@ -34,12 +34,12 @@
   "workspaceCodeCopied": "Copiado",
   "inviteRoleMember": "Invitación de miembro",
   "inviteRoleAdmin": "Invitación de administrador/a",
-  "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entrégalo solo a la persona a la que está destinado.",
+  "inviteAdminExplainer": "Este código es de un solo uso: admite a UNA persona como admin y luego caduca. Entréguelo solo a la persona a la que está destinado.",
   "inviteAdminNewCode": "Nuevo código de administrador/a",
   "inviteOwnerNote": "No existe invitación de propietario — solo un propietario puede conceder la propiedad, en Miembros y planes.",
   "scanJoinTitle": "Escanear QR del espacio",
-  "scanJoinHelp": "Apunta la cámara al QR de invitación — verás el espacio antes de unirte.",
-  "scanJoinNotAnInvite": "Ese QR no es una invitación de DesKilo: escanea el del mensaje de invitación.",
+  "scanJoinHelp": "Apunte la cámara al QR de invitación — verá el espacio antes de unirse.",
+  "scanJoinNotAnInvite": "Ese QR no es una invitación de DesKilo: escanee el del mensaje de invitación.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
   },
@@ -53,9 +53,9 @@
   "provenanceWorkspaceSetting": "Ajuste del espacio",
   "provenanceResetToTemplate": "Volver a la plantilla",
   "provenanceResetToDefault": "Volver al valor predeterminado",
-  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiala si tu comunidad factura en otra moneda.",
+  "workspaceSettingsCurrencyHelper": "Se propone según el país — cámbiela si su comunidad factura en otra moneda.",
   "paymentInstructionsTitle": "Instrucciones de pago",
-  "paymentInstructionsHelper": "Se muestran a los miembros en un extracto pendiente. Déjalo vacío para no mostrar nada.",
+  "paymentInstructionsHelper": "Se muestran a los miembros en un extracto pendiente. Déjelo vacío para no mostrar nada.",
   "paymentInstructionsPaypalLabel": "Enlace o usuario de PayPal.me",
   "paymentInstructionsReferenceLabel": "Indicación de referencia del pago",
   "paymentInstructionsIbanTitle": "IBAN",
@@ -65,7 +65,7 @@
   "paymentInstructionsWiseLabel": "Wisetag o enlace de pago de Wise",
   "paymentInstructionsValueCopied": "Copiado al portapapeles.",
   "workspaceWhatsappGroupTitle": "Grupo de WhatsApp",
-  "workspaceWhatsappGroupHelper": "Se muestra a los miembros para que puedan unirse al grupo de WhatsApp de la comunidad. Pega el enlace de invitación del grupo (https://chat.whatsapp.com/…). Déjalo vacío para no mostrar nada.",
+  "workspaceWhatsappGroupHelper": "Se muestra a los miembros para que puedan unirse al grupo de WhatsApp de la comunidad. Pegue el enlace de invitación del grupo (https://chat.whatsapp.com/…). Déjelo vacío para no mostrar nada.",
   "workspaceWhatsappGroupLabel": "Enlace del grupo de WhatsApp",
   "workspaceWhatsappGroupInvalid": "Debe ser un enlace de invitación de chat.whatsapp.com",
   "memberStatusActive": "Activo",
@@ -94,7 +94,7 @@
   "workspaceResetDialogTitle": "¿Restablecer este espacio?",
   "workspaceResetWarning": "Esto elimina permanentemente todas las reservas, todos los datos financieros y del libro mayor, el registro de actividad y todo el plano — plantas, salas, mesas, plazas e imágenes. Se conservan los ajustes del espacio, los tramos de tarifa, la disponibilidad, las funciones, los catálogos y los miembros. No se puede deshacer.",
   "workspaceResetConfirmPhrase": "Acepto",
-  "workspaceResetConfirmLabel": "Escribe «{phrase}» para confirmar",
+  "workspaceResetConfirmLabel": "Escriba «{phrase}» para confirmar",
   "workspaceResetConfirmButton": "Restablecer el espacio",
   "workspaceResetDone": "Espacio restablecido.",
   "workspaceDeskTransparencyTitle": "Transparencia de mesas",
@@ -106,7 +106,7 @@
   "@workspaceLanguageLabel": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
-  "workspaceLanguageHelper": "Las invitaciones se redactan por defecto en este idioma. El idioma de tu app se cambia en Ajustes.",
+  "workspaceLanguageHelper": "Las invitaciones se redactan por defecto en este idioma. El idioma de su app se cambia en Ajustes.",
   "@workspaceLanguageHelper": {
     "description": "Finance/settings UX + workspace language (#486)"
   },
@@ -146,7 +146,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
-  "documentsUrlHelper": "Pega el enlace de compartir de tu drive — los permisos se gestionan allí.",
+  "documentsUrlHelper": "Pegue el enlace de compartir de su drive — los permisos se gestionan allí.",
   "@documentsUrlHelper": {
     "description": "Workspace document library (#500)"
   },
@@ -194,7 +194,7 @@
   "@documentsCategoryOther": {
     "description": "Workspace document library (#500)"
   },
-  "documentsEmpty": "Aún no hay documentos. Enlaza tus estatutos, guías y estados desde cualquier drive.",
+  "documentsEmpty": "Aún no hay documentos. Enlace sus estatutos, guías y estados desde cualquier drive.",
   "@documentsEmpty": {
     "description": "Workspace document library (#500)"
   },
@@ -222,11 +222,11 @@
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
   },
-  "rolesIntroReadOnly": "Solo lectura: estos son los permisos de cada rol. Tu rol está resaltado.",
+  "rolesIntroReadOnly": "Solo lectura: estos son los permisos de cada rol. Su rol está resaltado.",
   "@rolesIntroReadOnly": {
     "description": "Roles screen intro for non-editors (#513)"
   },
-  "rolesYourRole": "Tu rol",
+  "rolesYourRole": "Su rol",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
   },

@@ -371,7 +371,7 @@ Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder
 | Funktion | Was sie Mitgliedern bringt | Was sie braucht | Wer richtet sie ein |
 |---|---|---|---|
 | **Mitgliederverzeichnis** | Der Community-Tab: wer da ist, Status, Anwesenheit. | | Niemand |
-| **Mit-Inhaberinnen** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
+| **Mitinhaber** | Inhaberrechte für ernannte Personen, jetzt oder bei Nachfolge. | | Inhaber |
 | **Rollenverwaltung** | Die Matrix, welche Rolle welche Berechtigung hat. | | Inhaber |
 | **Rollen vergeben** | Ein Abschnitt Rollen auf jeder Mitgliedsseite. | **Rollenverwaltung** | Inhaber |
 | **Rollen dieses Bereichs** | Eigene Rollen, etwa Schatzmeister oder Schriftführer. | | Inhaber |

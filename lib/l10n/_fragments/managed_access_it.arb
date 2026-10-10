@@ -12,7 +12,7 @@
   "@managedAccessTitle": {
     "description": "#914 managed profile access: managedAccessTitle"
   },
-  "managedAccessHint": "Predefinito: ogni proprietario e ogni admin. Restringete per ruolo, per persona o entrambi. Il proprietario può sempre cambiare questa regola — altrimenti un profilo diventerebbe inamministrabile — ma accede ai dati solo se la regola lo nomina.",
+  "managedAccessHint": "Predefinito: ogni proprietario e ogni admin. Restringa per ruolo, per persona o entrambi. Il proprietario può sempre cambiare questa regola — altrimenti un profilo diventerebbe inamministrabile — ma accede ai dati solo se la regola lo nomina.",
   "@managedAccessHint": {
     "description": "#914 managed profile access: managedAccessHint"
   },
@@ -36,7 +36,7 @@
   "@managedAccessSaved": {
     "description": "#914 managed profile access: managedAccessSaved"
   },
-  "accessKindProfile": "il vostro profilo",
+  "accessKindProfile": "il suo profilo",
   "@accessKindProfile": {
     "description": "#914 managed profile access: accessKindProfile"
   }

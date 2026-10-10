@@ -4,7 +4,7 @@
   "@featureInvoiceAddressWindow": {
     "description": "Features screen name for the #869 window-envelope address placement flag"
   },
-  "featureInvoiceAddressWindowDesc": "Colloca il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.",
+  "featureInvoiceAddressWindowDesc": "Collochi il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.",
   "@featureInvoiceAddressWindowDesc": {
     "description": "Features screen description for the #869 window-envelope address placement flag"
   },

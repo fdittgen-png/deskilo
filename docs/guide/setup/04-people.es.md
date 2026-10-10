@@ -322,7 +322,7 @@ Usted quiere estar seguro de que toda solicitud para la que crea una regla puede
 1. Abra [Reglas de validación](app:/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
 2. Abra [Miembros y planes](app:/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
 3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. Solo retiene la primera reserva cuando la regla es para reservas.
-4. Abra [Eventos](app:/events). **Esperando tu confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
+4. Abra [Eventos](app:/events). **Esperando su confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
 
 **Conviene saber**
 

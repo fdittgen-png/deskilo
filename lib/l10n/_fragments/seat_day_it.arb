@@ -9,11 +9,11 @@
       }
     }
   },
-  "seatDaySubtitle": "Chi occupa questa postazione, e quando. Tocca una prenotazione per aprirla, o una fascia libera per prenderla.",
+  "seatDaySubtitle": "Chi occupa questa postazione, e quando. Tocchi una prenotazione per aprirla, o una fascia libera per prenderla.",
   "@seatDaySubtitle": {
     "description": "#903 seat day timeline: seatDaySubtitle"
   },
-  "seatDayMine": "Tu",
+  "seatDayMine": "Lei",
   "@seatDayMine": {
     "description": "#903 seat day timeline: seatDayMine"
   },

@@ -4,7 +4,7 @@
   "@reverseChargeTitle": {
     "description": "#895 reverse charge: reverseChargeTitle"
   },
-  "reverseChargeSubtitle": "Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattiva se non fatturi mai imprese all'estero.",
+  "reverseChargeSubtitle": "Un cliente con partita IVA in un altro Stato membro è fatturato senza imposta e la assolve lui (art. 196). Disattivi se non fattura mai imprese all'estero.",
   "@reverseChargeSubtitle": {
     "description": "#895 reverse charge: reverseChargeSubtitle"
   },

@@ -1,7 +1,7 @@
 {
   "financesAllSpaces": "Todos los espacios",
-  "financesLinkTitle": "Tus finanzas en todos tus espacios",
-  "financesLinkBody": "Tus facturas, recordatorios y pagos de todos tus espacios están juntos en Yo › Finanzas.",
+  "financesLinkTitle": "Sus finanzas en todos sus espacios",
+  "financesLinkBody": "Sus facturas, recordatorios y pagos de todos sus espacios están juntos en Yo › Finanzas.",
   "financesLinkAction": "Abrir para {space}",
   "@financesLinkAction": {
     "placeholders": {

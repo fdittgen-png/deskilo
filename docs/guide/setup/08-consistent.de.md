@@ -147,7 +147,7 @@ Sie möchten eine kurze Gewohnheit, die den Space stimmig hält, in zehn Minuten
 **Schritte**
 
 1. Öffnen Sie **Einrichtung dieses Workspace**. Jeder Bereich steht weiter auf **Bereit** oder **Hier nicht nötig** oder wurde bewusst beiseitegelegt.
-2. Öffnen Sie [Ereignisse](app:/events). **Wartet auf deine Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
+2. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** ist leer oder klein, und kein Mitglied ist länger als ein, zwei Tage **Ausstehend**.
 3. Zählen Sie das Team neu. Wer gegangen ist oder pausiert, kann eine Regel zu knapp machen. Siehe [Anfragen vermeiden, die ewig warten](help:setup.people.stuck).
 4. Schließen Sie den Monat: Schließtage sind eingetragen, der Monatsabschluss-Assistent ist durchgelaufen, Zahlungserinnerungen sind hinausgegangen (automatisch jeden Morgen oder beim Öffnen der Finanzen, wo die Datenbank keinen Scheduler hat). Siehe [Der Monatsabschluss-Assistent](help:user.invoicing.wizard).
 5. Ziehen Sie den Datenexport und öffnen Sie **Funktionen**, um zu prüfen, dass nach den Änderungen des Monats kein Prozess Aufmerksamkeit braucht.

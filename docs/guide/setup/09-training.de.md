@@ -17,7 +17,7 @@ Sie möchten das fertige Produkt sehen, bevor Sie Entscheidungen treffen. Der De
 **Schritte**
 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Den Demobereich erkunden** und dann auf **Loslegen**. Siehe [Der Demo-Workspace](help:user.advanced.demo).
-2. Wechseln Sie mit **Ansicht als** zwischen **Die Inhaberin**, **Eine Verwaltung** und **Ein Mitglied**. Machen Sie unten die drei Übungen jeder Person.
+2. Wechseln Sie mit **Ansicht als** zwischen **Inhaber**, **Administrator:in** und **Mitglied**. Machen Sie unten die drei Übungen jeder Person.
 3. Tippen Sie auf **Demo zurücksetzen**, wenn Sie den Anfangszustand wiederhaben möchten.
 
 *Als Mitglied*

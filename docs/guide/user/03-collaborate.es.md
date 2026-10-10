@@ -71,7 +71,7 @@ Usted quiere preguntarle algo a un compañero sin salir del espacio.
 **Pasos**
 
 1. Abra [Miembros](app:/directory), toque una tarjeta para abrir la página del miembro y toque **Mensajes**.
-2. Escriba en el campo **Tu mensaje**.
+2. Escriba en el campo **Su mensaje**.
 3. Toque **Enviar**.
 
 **Conviene saber**
@@ -94,7 +94,7 @@ Usted quiere ver lo que ha ocurrido en el espacio y lo que espera una respuesta.
 **Pasos**
 
 1. Toque **Eventos** en la barra superior (el icono de bandeja con un número), o abra [Eventos](app:/events) desde el menú. La página se abre en **Alertas**.
-2. Lea **Esperando tu confirmación** arriba del todo: las solicitudes que le necesitan.
+2. Lea **Esperando su confirmación** arriba del todo: las solicitudes que le necesitan.
 3. Lea el flujo de debajo. Cada fila dice lo que ha ocurrido; un reloj de arena significa pendiente, una marca verde significa confirmado. Las filas de dinero muestran quién las validó y cuándo.
 4. Acote el flujo con los chips: **Todos**, **Mensajes**, **Reserva**, **Registros**, **Dinero**, **Miembros**, y después **No leídos** o **Leído**.
 5. Toque **Tipo**, **Fecha** o **Miembro** junto a **Agrupar por** para plegar el flujo en grupos; toque el símbolo de grupo para volver a la lista plana.
@@ -120,7 +120,7 @@ Alguien le ha pedido que confirme algo, y usted quiere responder.
 **Pasos**
 
 1. Abra [Eventos](app:/events).
-2. Busque la solicitud bajo **Esperando tu confirmación**.
+2. Busque la solicitud bajo **Esperando su confirmación**.
 3. Toque **Aceptar**, o la cruz roja para **Rechazar**.
 
 **Conviene saber**
@@ -147,8 +147,8 @@ Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
 
 **Conviene saber**
 
-- Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
-- Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+- Esta pantalla existe solo cuando su espacio ha activado la función **Lo que le espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
+- Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada le espera**.
 
 **Véase también:** [Eventos y confirmaciones](help:user.collaborate.events)
 

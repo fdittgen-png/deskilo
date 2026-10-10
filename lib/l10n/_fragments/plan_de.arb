@@ -33,7 +33,7 @@
   "planUntil": "bis {time}",
   "planCappedByNext": "Der Platz ist ab {time} reserviert.",
   "planCheckInFailed": "Einchecken nicht möglich — der Platz wurde eventuell gerade belegt.",
-  "planYourSeat": "Dein Platz",
+  "planYourSeat": "Ihr Platz",
   "planListViewTooltip": "Listenansicht",
   "planMapViewTooltip": "Planansicht",
   "planNowButton": "Jetzt",
@@ -53,7 +53,7 @@
   "reminderBody": "{target} beginnt um {time}",
   "planNoSeats": "Diese Etage hat noch keine Plätze.",
   "planStateFree": "Frei",
-  "planStateYours": "Deiner",
+  "planStateYours": "Ihrer",
   "planBookForLabel": "Buchen für",
   "planSendForConfirmation": "Zur Bestätigung senden",
   "planBookedForPending": "Zur Bestätigung an {name} gesendet.",
@@ -75,6 +75,6 @@
   "a11ySeatFree": "frei",
   "a11ySeatReserved": "reserviert",
   "a11ySeatOccupied": "besetzt",
-  "a11ySeatMine": "dein Platz",
+  "a11ySeatMine": "Ihr Platz",
   "a11ySeatBlocked": "nicht verfügbar"
 }

@@ -160,8 +160,8 @@
   "invoiceMatchPendingBadge": "Pendiente de validación",
   "invoiceMatchedBadge": "Pagada",
   "invoiceAlreadyInvoiced": "Este mes ya está facturado para este miembro.",
-  "invoiceMatchPickPayment": "Selecciona el pago registrado",
-  "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístralo o confírmalo primero.",
+  "invoiceMatchPickPayment": "Seleccione el pago registrado",
+  "invoiceMatchNoPayments": "No hay pago registrado que conciliar — regístrelo o confírmelo primero.",
   "invoiceStatusOpen": "Abierta",
   "invoiceCountShown": "{count} facturas",
   "@invoiceCountShown": {
@@ -212,7 +212,7 @@
       }
     }
   },
-  "invoicePickMember": "Elige un miembro para ver lo que registró su mes.",
+  "invoicePickMember": "Elija un miembro para ver lo que registró su mes.",
   "invoiceRunningMonth": "Este mes sigue en curso — sus posiciones aún pueden cambiar, y un mes solo se factura una vez.",
   "invoiceIssueAllConfirm": "¿Emitir {count} facturas de {month} por {total} en total? Una factura emitida ya no se modifica — un error se corrige con una sustitución.",
   "@invoiceIssueAllConfirm": {
@@ -241,7 +241,7 @@
   },
   "invoiceEInvoiceAction": "Factura electrónica (XML)",
   "invoiceEInvoiceExplain": "La factura EN 16931 legible por máquina — el archivo que piden las administraciones y los clientes empresa.",
-  "invoiceEInvoiceBusinessRoute": "Clientes empresa: envíala por {channel} en formato {format}.",
+  "invoiceEInvoiceBusinessRoute": "Clientes empresa: envíela por {channel} en formato {format}.",
   "@invoiceEInvoiceBusinessRoute": {
     "placeholders": {
       "channel": {
@@ -262,9 +262,9 @@
   },
   "invoiceEInvoiceTransportPeppol": "Un punto de acceso la entrega al cliente — sin plataforma pública de por medio.",
   "invoiceEInvoiceTransportClearance": "La plataforma nacional recibe la factura primero y la reenvía — enviarla directamente al cliente no es posible.",
-  "invoiceEInvoiceTransportAccredited": "Una plataforma autorizada transporta la factura y comunica los datos a la administración tributaria por ti.",
+  "invoiceEInvoiceTransportAccredited": "Una plataforma autorizada transporta la factura y comunica los datos a la administración tributaria por usted.",
   "invoiceEInvoiceTransportBilateral": "Ningún canal es obligatorio: correo, un portal o Peppol — lo que acuerdes con el cliente.",
-  "invoiceEInvoiceFormatMismatch": "{channel} solo acepta {format}: este archivo EN 16931 sirve para Peppol, compradores públicos y clientes extranjeros — tu plataforma o tu asesoría convierte el resto.",
+  "invoiceEInvoiceFormatMismatch": "{channel} solo acepta {format}: este archivo EN 16931 sirve para Peppol, compradores públicos y clientes extranjeros — su plataforma o su asesoría convierte el resto.",
   "@invoiceEInvoiceFormatMismatch": {
     "placeholders": {
       "channel": {
@@ -278,9 +278,9 @@
   "invoiceEInvoiceReady": "Listo — este archivo cumple EN 16931.",
   "invoiceEInvoiceBlockedTitle": "Un validador rechazaría este archivo:",
   "invoiceEInvoiceIncompleteTitle": "Válido, pero los perfiles nacionales estrictos piden además:",
-  "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añade tus tipos de IVA y vuelve a emitirla.",
+  "invoiceGapVatNotSupported": "El espacio cobra IVA pero esta factura no lleva ningún tipo: añada sus tipos de IVA y vuelva a emitirla.",
   "invoiceGapMissingVatId": "Falta el número de IVA — un vendedor exento debe indicarlo.",
-  "invoiceGapMissingLegalId": "Falta el número de registro (SIREN, HRB, CIF…) — nada te identifica en la factura.",
+  "invoiceGapMissingLegalId": "Falta el número de registro (SIREN, HRB, CIF…) — nada le identifica en la factura.",
   "invoiceGapMissingExemptionReason": "Falta el motivo por el que no se cobra IVA.",
   "invoiceGapMissingSellerCountry": "Falta el país del espacio.",
   "invoiceGapMissingBuyerCountry": "Falta el país del cliente.",
@@ -291,7 +291,7 @@
   "invoiceEInvoiceFixIdentity": "Completar la identidad legal",
   "legalIdentityTitle": "Identidad legal y facturación electrónica",
   "legalIdentitySubtitle": "Régimen de IVA, identificadores y las condiciones de pago por defecto del espacio",
-  "legalIdentityIntro": "Lo que una factura electrónica EN 16931 debe indicar sobre ti. Las facturas ya emitidas conservan la identidad con la que se firmaron.",
+  "legalIdentityIntro": "Lo que una factura electrónica EN 16931 debe indicar sobre usted. Las facturas ya emitidas conservan la identidad con la que se firmaron.",
   "legalIdentityRegime": "Régimen de IVA",
   "legalIdentityRegimeNotSubject": "Fuera del ámbito del IVA",
   "legalIdentityRegimeExempt": "Exento de IVA (régimen de franquicia)",
@@ -355,7 +355,7 @@
   "invoiceSendStatusRejected": "rechazada",
   "invoiceSendStatusFailed": "no transmitida",
   "einvoiceConfigTitle": "Plataforma de facturación electrónica",
-  "einvoiceConfigIntro": "Donde DesKilo deposita tus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.",
+  "einvoiceConfigIntro": "Donde DesKilo deposita sus facturas. Sirve cualquier plataforma que acepte una subida con un token — una plataforma autorizada, un punto de acceso Peppol, una plataforma nacional. El token se guarda en el servidor y nunca sale.",
   "einvoiceConfigEndpoint": "URL de subida",
   "einvoiceConfigToken": "Token o credencial",
   "einvoiceConfigHeader": "Cabecera de autenticación (Authorization por defecto)",
@@ -363,7 +363,7 @@
   "einvoiceConfigSaved": "Plataforma guardada.",
   "einvoiceConfigCleared": "Plataforma eliminada.",
   "einvoiceConfigClear": "Eliminar la plataforma",
-  "einvoiceConfigTokenSet": "Hay un token guardado (escribe uno nuevo para reemplazarlo).",
+  "einvoiceConfigTokenSet": "Hay un token guardado (escriba uno nuevo para reemplazarlo).",
   "invoiceAccountingExport": "Exportación contable",
   "invoiceAccountingExportEmpty": "No hay nada que exportar en este periodo.",
   "invoiceRegisterYear": "Año",
@@ -372,13 +372,13 @@
   "invoiceExportFec": "FEC (Francia, exigido en una inspección)",
   "invoiceExportChoose": "Exportación contable",
   "fecAccountsTitle": "Cuentas a utilizar",
-  "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbialas por las de tu asesoría.",
+  "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.",
   "fecAccountCustomers": "Clientes",
   "fecAccountRevenue": "Ventas",
   "fecAccountBank": "Banco",
-  "fecMissingSiren": "El FEC se nombra con tu número de registro — rellénalo primero en Identidad legal.",
-  "invoiceEInvoiceStaleIdentity": "Tu identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márcala como errónea y emite una sustitución para que lleve la nueva identidad.",
-  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Comprueba la conexión e inténtalo de nuevo.",
+  "fecMissingSiren": "El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.",
+  "invoiceEInvoiceStaleIdentity": "Su identidad legal ya está completa, pero esta factura se firmó antes y conserva aquello con lo que se emitió. Márquela como errónea y emita una sustitución para que lleve la nueva identidad.",
+  "einvoiceConfigUnavailable": "No se pudo cargar la configuración de la plataforma. Compruebe la conexión e inténtelo de nuevo.",
   "einvoiceEnvTitle": "¿Enviar a qué plataforma?",
   "einvoiceEnvProd": "Producción",
   "einvoiceEnvUat": "UAT (plataforma de prueba)",
@@ -409,7 +409,7 @@
   "invoiceTemplateBodyLabel": "Banda de cuerpo (las líneas de la factura)",
   "invoiceTemplateReset": "Restablecer al modelo por defecto",
   "invoiceTemplatePreview": "Vista previa",
-  "invoiceTemplateNoPreview": "Emite primero una factura — la vista previa usa la más reciente.",
+  "invoiceTemplateNoPreview": "Emita primero una factura — la vista previa usa la más reciente.",
   "reminderPdfTitleFriendly": "Recordatorio de pago",
   "reminderPdfTitleFirm": "Recordatorio",
   "reminderPdfOpeningFriendly": "este es un recordatorio amistoso: la factura de abajo sigue abierta. Seguramente un simple despiste — sin problema.",
@@ -417,7 +417,7 @@
   "reminderPdfDaysOpen": "Abierta desde hace",
   "reminderPdfDays": "días",
   "reminderPdfLevelLabel": "Nivel de recordatorio",
-  "reminderPdfClosing": "Si ya has pagado, ignora esta carta.",
+  "reminderPdfClosing": "Si ya ha pagado, ignore esta carta.",
   "dunningSettingsTitle": "Reglas de recordatorio",
   "dunningLevels": "Número de niveles de recordatorio",
   "dunningFirstAfterDays": "Días hasta el primer recordatorio",
@@ -429,7 +429,7 @@
   "reportPreviewZoomIn": "Acercar",
   "reportPreviewZoomOut": "Alejar",
   "reportPreviewFit": "Ajustar al ancho",
-  "reportPreviewTitle": "Vista rápida — tu factura más reciente",
+  "reportPreviewTitle": "Vista rápida — su factura más reciente",
   "reportPreviewSimulated": "Vista rápida — datos de ejemplo",
   "reportPresetClassic": "Clásico",
   "reportPresetFormalLetter": "Carta formal",
@@ -564,7 +564,7 @@
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportImagesEmpty": "Aún no hay imágenes — sube tu logotipo, un sello o una firma y refénciala con ![nombre].",
+  "reportImagesEmpty": "Aún no hay imágenes — suba su logotipo, un sello o una firma y referénciela con ![nombre].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
@@ -672,11 +672,11 @@
   "@reportTemplateLangDefault": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportLanguageAmbiguous": "Este país tiene varios idiomas — define primero el idioma del espacio en los Ajustes del espacio.",
+  "reportLanguageAmbiguous": "Este país tiene varios idiomas — defina primero el idioma del espacio en los Ajustes del espacio.",
   "@reportLanguageAmbiguous": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportDesignEmpty": "Banda vacía — añade un elemento abajo.",
+  "reportDesignEmpty": "Banda vacía — añada un elemento abajo.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
   },
@@ -735,7 +735,7 @@
   "@invoiceRefundButton": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceRefundExplain": "Esta nota de crédito significa que el ESPACIO debe {amount} al miembro. Registra el reembolso pagado — el importe se imputa al saldo del miembro y el documento se cierra como Reembolsada.",
+  "invoiceRefundExplain": "Esta nota de crédito significa que el ESPACIO debe {amount} al miembro. Registre el reembolso pagado — el importe se imputa al saldo del miembro y el documento se cierra como Reembolsada.",
   "@invoiceRefundExplain": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)",
     "placeholders": {
@@ -763,7 +763,7 @@
   "eventTypeInvoiceReminder": "Recordatorio de pago",
   "eventInvoiceReminderLine": "Recordatorio {level}: factura {number} — {amount} pendientes",
   "dunningAutomatic": "Recordatorios automáticos",
-  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en tus manos. Desactivado: envías cada recordatorio tú mismo.",
+  "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en sus manos. Desactivado: usted envía cada recordatorio.",
   "eventTypePriceNegotiation": "Negociación de precios",
   "eventPriceNegotiationLine": "{actor} propone condiciones para {member}: {terms}",
   "eventPriceNegotiationItems": "{count} artículos",
@@ -1218,12 +1218,12 @@
   "reportDesignFileTypeLabel": "JSON",
   "reportDesignExport": "Exportar este diseño",
   "reportDesignImport": "Importar un diseño",
-  "reportDesignImported": "Diseño importado. Guarda para conservarlo.",
+  "reportDesignImported": "Diseño importado. Guarde para conservarlo.",
   "reportDesignErrorMalformed": "Ese archivo no es JSON legible.",
   "reportDesignErrorNotADesign": "Ese archivo no es un diseño de informe de DesKilo.",
   "reportDesignErrorVersion": "Ese diseño se escribió con una versión más nueva de DesKilo.",
   "reportDesignErrorUnknownKind": "Ese diseño es de un informe que este espacio no tiene.",
-  "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábrelo e impórtalo allí.",
+  "reportDesignErrorWrongKind": "Ese diseño pertenece a otro informe. Ábralo e impórtelo allí.",
   "reportDesignErrorInvalidDesign": "Ese archivo no contiene ningún diseño legible.",
   "invoiceHoldAction": "Suspender los recordatorios",
   "@invoiceHoldAction": {
@@ -1282,11 +1282,11 @@
       }
     }
   },
-  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revises.",
+  "invoiceMaturityReview": "No se registró ningún plazo de pago acordado para esta factura: no se envían recordatorios automáticos hasta que la revise.",
   "@invoiceMaturityReview": {
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
-  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtalo de nuevo.",
+  "invoiceHoldFailed": "No se pudo cambiar la suspensión de recordatorios. Inténtelo de nuevo.",
   "@invoiceHoldFailed": {
     "description": "#1913 dunning holds: invoiceHoldFailed"
   }

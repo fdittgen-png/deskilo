@@ -4,7 +4,7 @@
   "@questionsTitle": {
     "description": "#1288 the question editor: questionsTitle"
   },
-  "questionsSubtitle": "Aparecen dentro de la información personal, bajo el nombre de tu espacio.",
+  "questionsSubtitle": "Aparecen dentro de la información personal, bajo el nombre de su espacio.",
   "@questionsSubtitle": {
     "description": "#1288 the question editor: questionsSubtitle"
   },

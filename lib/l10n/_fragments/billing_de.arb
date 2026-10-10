@@ -39,7 +39,7 @@
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",
   "payConfigTitle": "Online-Zahlungen",
   "payConfigOpen": "Einrichten",
-  "payConfigIntro": "Gib jeden Zahlungsanbieter ein, den du anbieten willst. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
+  "payConfigIntro": "Geben Sie jeden Zahlungsanbieter ein, den Sie anbieten wollen. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigConfigured": "Eingerichtet",
   "payConfigNotConfigured": "Nicht eingerichtet",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",
@@ -60,12 +60,12 @@
   "billingRulesSaved": "Rechnungsplan gespeichert.",
   "billingSubscriptionSection": "Abo, im Voraus",
   "billingSubscriptionAuto": "Automatisch erstellen",
-  "billingSubscriptionOff": "Schalte „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingSubscriptionOff": "Schalten Sie „Abo-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingAdvanceDays": "Tage vor Monatsbeginn",
   "billingSubscriptionWhen": "Erstellt am {day} für {month}",
   "billingUsageSection": "Der gerade beendete Monat",
   "billingUsageAuto": "Automatisch erstellen",
-  "billingUsageOff": "Schalte „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
+  "billingUsageOff": "Schalten Sie „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingUsageWhenZero": "Auch wenn nichts zu zahlen ist",
   "billingUsageWhenZeroHint": "Sendet ein Dokument über null — als Bestätigung, dass das Abo den ganzen Monat abgedeckt hat.",
   "@billingSubscriptionWhen": {
@@ -88,7 +88,7 @@
   "settlementAction": "Zu einer Rechnung zusammenfassen",
   "settlementConfirm": "{count} Rechnungen zu einer über {amount} zusammenfassen?",
   "settlementDone": "Zusammengefasst in {number}.",
-  "settlementNeedsTwo": "Wähle mindestens zwei offene Rechnungen desselben Mitglieds.",
+  "settlementNeedsTwo": "Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.",
   "@settlementConfirm": {
     "placeholders": {
       "count": {

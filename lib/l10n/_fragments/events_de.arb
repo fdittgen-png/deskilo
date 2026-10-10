@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "eventsPendingHeader": "Wartet auf deine Bestätigung",
+  "eventsPendingHeader": "Wartet auf Ihre Bestätigung",
   "eventAccept": "Annehmen",
   "eventReject": "Ablehnen",
   "eventsEmpty": "Noch keine Ereignisse.",
@@ -16,7 +16,7 @@
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
   "pushPendingTitle": "DesKilo",
-  "pushPendingBody": "Jemand wartet auf deine Bestätigung.",
+  "pushPendingBody": "Jemand wartet auf Ihre Bestätigung.",
   "pushCancelledTitle": "Reservierung entfernt",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "eventTypeReservationDelete": "Buchungslöschung",

@@ -20,15 +20,15 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
-  "demoPersonaMember": "Ein Mitglied",
+  "demoPersonaMember": "Mitglied",
   "@demoPersonaMember": {
     "description": "#1376 demo personas: demoPersonaMember"
   },
-  "demoPersonaAdmin": "Eine Verwaltung",
+  "demoPersonaAdmin": "Administrator:in",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
-  "demoPersonaOwner": "Die Inhaberin",
+  "demoPersonaOwner": "Inhaber",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },

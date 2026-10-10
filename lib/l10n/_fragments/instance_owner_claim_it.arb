@@ -1,5 +1,5 @@
 {
   "@@locale": "it",
-  "instanceOwnerClaimIntro": "Di chi è questa istanza? Inserisci l'e-mail con cui ti registrerai. Dopo aver confermato l'indirizzo, rivendica la titolarità da Impostazioni → Proprietario dell'istanza.",
+  "instanceOwnerClaimIntro": "Di chi è questa istanza? Inserisca l'e-mail con cui si registrerà. Dopo aver confermato l'indirizzo, rivendichi la titolarità da Impostazioni → Proprietario dell'istanza.",
   "instanceOwnerClaimLabel": "E-mail del titolare"
 }

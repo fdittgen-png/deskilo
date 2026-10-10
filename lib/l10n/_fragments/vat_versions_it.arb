@@ -40,7 +40,7 @@
   "@vatEffectiveDate": {
     "description": "#985 VAT versions and counterparty: vatEffectiveDate"
   },
-  "vatChangeNeedsSave": "Salva prima l'aliquota; poi modificala per legge.",
+  "vatChangeNeedsSave": "Salvi prima l'aliquota; poi la modifichi per legge.",
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
