@@ -3,14 +3,32 @@ defined,public.accessories,vat_rate_id,public.vat_rates,id,accessories_vat_rate_
 defined,public.accessories,workspace_id,public.workspaces,id,accessories_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.account_about,user_id,auth.users,id,account_about_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.account_badge_pins,user_id,auth.users,id,account_badge_pins_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_blocks,blocked,auth.users,id,account_blocks_blocked_fkey,CASCADE,NO ACTION,true
+defined,public.account_blocks,blocker,auth.users,id,account_blocks_blocker_fkey,CASCADE,NO ACTION,true
 defined,public.account_contact_settings,user_id,auth.users,id,account_contact_settings_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_conversations,requested_by,auth.users,id,account_conversations_requested_by_fkey,SET NULL,NO ACTION,true
 defined,public.account_conversations,user_a,auth.users,id,account_conversations_user_a_fkey,SET NULL,NO ACTION,true
 defined,public.account_conversations,user_b,auth.users,id,account_conversations_user_b_fkey,SET NULL,NO ACTION,true
 defined,public.account_field_audience,user_id,auth.users,id,account_field_audience_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.account_field_audience_spaces,user_id,auth.users,id,account_field_audience_spaces_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.account_field_audience_spaces,workspace_id,public.workspaces,id,account_field_audience_spaces_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_group_members,added_by,auth.users,id,account_group_members_added_by_fkey,SET NULL,NO ACTION,true
+defined,public.account_group_members,group_id,public.account_groups,id,account_group_members_group_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_group_members,user_id,auth.users,id,account_group_members_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_group_messages,author_id,auth.users,id,account_group_messages_author_id_fkey,SET NULL,NO ACTION,true
+defined,public.account_group_messages,group_id,public.account_groups,id,account_group_messages_group_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_groups,created_by,auth.users,id,account_groups_created_by_fkey,SET NULL,NO ACTION,true
 defined,public.account_messages,author_id,auth.users,id,account_messages_author_id_fkey,SET NULL,NO ACTION,true
 defined,public.account_messages,conversation_id,public.account_conversations,id,account_messages_conversation_id_fkey,CASCADE,NO ACTION,true
+defined,public.account_public_profiles,user_id,auth.users,id,account_public_profiles_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.analytics_history,workspace_id,public.workspaces,id,analytics_history_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.bi_views,user_id,auth.users,id,bi_views_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.bi_views,workspace_id,public.workspaces,id,bi_views_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.book_accounts,issuer_site_id,public.sites,id,book_accounts_issuer_site_id_fkey,RESTRICT,NO ACTION,true
+defined,public.book_accounts,workspace_id,public.workspaces,id,book_accounts_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.book_mappings,account_id,public.book_accounts,id,book_mappings_account_id_fkey,RESTRICT,NO ACTION,true
+defined,public.book_mappings,issuer_site_id,public.sites,id,book_mappings_issuer_site_id_fkey,RESTRICT,NO ACTION,true
+defined,public.book_mappings,workspace_id,public.workspaces,id,book_mappings_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.book_profiles,issuer_site_id,public.sites,id,book_profiles_issuer_site_id_fkey,RESTRICT,NO ACTION,true
 defined,public.book_profiles,workspace_id,public.workspaces,id,book_profiles_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.closure_days,workspace_id,public.workspaces,id,closure_days_workspace_id_fkey,CASCADE,NO ACTION,true
@@ -60,10 +78,16 @@ defined,public.expense_schedules,member_id,public.members,id,expense_schedules_m
 defined,public.expense_schedules,workspace_id,public.workspaces,id,expense_schedules_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.expense_schedules,workspace_id member_id,public.members,workspace_id id,expense_schedules_member_id_same_workspace,CASCADE,NO ACTION,true
 defined,public.fee_bands,workspace_id,public.workspaces,id,fee_bands_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.guest_participation_audit,participation_id,public.guest_participations,id,guest_participation_audit_participation_id_fkey,CASCADE,NO ACTION,true
+defined,public.guest_participations,decided_by,auth.users,id,guest_participations_decided_by_fkey,SET NULL,NO ACTION,true
+defined,public.guest_participations,guest_user_id,auth.users,id,guest_participations_guest_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.guest_participations,site_id,public.sites,id,guest_participations_site_id_fkey,SET NULL,NO ACTION,true
+defined,public.guest_participations,workspace_id,public.workspaces,id,guest_participations_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.identity_bindings,installation_id,public.installation_identity,installation_id,identity_bindings_installation_id_fkey,NO ACTION,NO ACTION,true
 defined,public.identity_bindings,local_user_id,auth.users,id,identity_bindings_local_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.instance_delegates,granted_by,auth.users,id,instance_delegates_granted_by_fkey,SET NULL,NO ACTION,true
 defined,public.instance_delegates,user_id,auth.users,id,instance_delegates_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.instance_notices,user_id,auth.users,id,instance_notices_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.invitations,member_id,public.members,id,invitations_member_id_fkey,CASCADE,NO ACTION,true
 defined,public.invitations,workspace_id,public.workspaces,id,invitations_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.invitations,workspace_id member_id,public.members,workspace_id id,invitations_member_id_same_workspace,CASCADE,NO ACTION,true
@@ -136,6 +160,7 @@ defined,public.mcp_eligibility_grants,request_id,public.mcp_eligibility_requests
 defined,public.mcp_eligibility_requests,binding_id,public.identity_bindings,id,mcp_eligibility_requests_binding_id_fkey,NO ACTION,NO ACTION,true
 defined,public.mcp_eligibility_requests,installation_id,public.installation_identity,installation_id,mcp_eligibility_requests_installation_id_fkey,NO ACTION,NO ACTION,true
 defined,public.mcp_eligibility_requests,local_user_id,auth.users,id,mcp_eligibility_requests_local_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.mcp_endpoint_probes,requested_by,auth.users,id,mcp_endpoint_probes_requested_by_fkey,SET NULL,NO ACTION,true
 defined,public.mcp_idempotency,local_user_id,auth.users,id,mcp_idempotency_local_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.mcp_idempotency,workspace_id,public.workspaces,id,mcp_idempotency_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.mcp_usage,local_user_id,auth.users,id,mcp_usage_local_user_id_fkey,CASCADE,NO ACTION,true
@@ -171,9 +196,12 @@ defined,public.members,plan_id,public.plans,id,members_plan_id_fkey,SET NULL,NO 
 defined,public.members,user_id,auth.users,id,members_user_id_fkey,SET NULL,NO ACTION,true
 defined,public.members,workspace_id,public.workspaces,id,members_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.message_events,actor_user_id,auth.users,id,message_events_actor_user_id_fkey,SET NULL,NO ACTION,true
+defined,public.message_reactions,user_id,auth.users,id,message_reactions_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.message_stars,user_id,auth.users,id,message_stars_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.number_sequences,workspace_id,public.workspaces,id,number_sequences_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.offices,level_id,public.levels,id,offices_level_id_fkey,CASCADE,NO ACTION,true
 defined,public.offices,workspace_id,public.workspaces,id,offices_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.opening_hours_history,workspace_id,public.workspaces,id,opening_hours_history_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.packages,vat_rate_id,public.vat_rates,id,packages_vat_rate_id_fkey,SET NULL,NO ACTION,true
 defined,public.packages,workspace_id,public.workspaces,id,packages_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.payment_credentials,workspace_id,public.workspaces,id,payment_credentials_workspace_id_fkey,CASCADE,NO ACTION,true
@@ -201,6 +229,7 @@ defined,public.profiles,default_workspace_id,public.workspaces,id,profiles_defau
 defined,public.profiles,id,auth.users,id,profiles_id_fkey,CASCADE,NO ACTION,true
 defined,public.profiles,person_id,public.directory_people,id,profiles_person_id_fkey,NO ACTION,NO ACTION,true
 defined,public.public_directory_sources,registered_by,auth.users,id,public_directory_sources_registered_by_fkey,SET NULL,NO ACTION,true
+defined,public.public_person_cards,user_id,auth.users,id,public_person_cards_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.public_workspace_cards,workspace_id,public.workspaces,id,public_workspace_cards_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.push_endpoints,member_id,public.members,id,push_endpoints_member_id_fkey,CASCADE,NO ACTION,true
 defined,public.quota_extensions,event_id,public.events,id,quota_extensions_event_id_fkey,NO ACTION,NO ACTION,true
@@ -214,10 +243,15 @@ defined,public.reminder_attempts,workspace_id,public.workspaces,id,reminder_atte
 defined,public.reminder_intents,invoice_id,public.invoices,id,reminder_intents_invoice_id_fkey,CASCADE,NO ACTION,true
 defined,public.reminder_intents,reminder_id,public.invoice_reminders,id,reminder_intents_reminder_id_fkey,CASCADE,NO ACTION,true
 defined,public.reminder_intents,workspace_id,public.workspaces,id,reminder_intents_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.reservation_origins,member_id,public.members,id,reservation_origins_member_id_fkey,CASCADE,NO ACTION,true
+defined,public.reservation_origins,reservation_id,public.reservations,id,reservation_origins_reservation_id_fkey,CASCADE,NO ACTION,true
+defined,public.reservation_origins,workspace_id,public.workspaces,id,reservation_origins_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.reservation_requests,member_id,public.members,id,reservation_requests_member_id_fkey,CASCADE,NO ACTION,true
 defined,public.reservation_requests,reservation_id,public.reservations,id,reservation_requests_reservation_id_fkey,SET NULL,NO ACTION,true
 defined,public.reservation_requests,workspace_id,public.workspaces,id,reservation_requests_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.reservation_requests,workspace_id member_id,public.members,workspace_id id,reservation_requests_member_id_same_workspace,CASCADE,NO ACTION,true
+defined,public.reservation_target_history,reservation_id,public.reservations,id,reservation_target_history_reservation_id_fkey,CASCADE,NO ACTION,true
+defined,public.reservation_target_history,workspace_id,public.workspaces,id,reservation_target_history_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.reservations,desk_id,public.desks,id,reservations_desk_id_fkey,RESTRICT,NO ACTION,true
 defined,public.reservations,level_id,public.levels,id,reservations_level_id_fkey,RESTRICT,NO ACTION,true
 defined,public.reservations,member_id,public.members,id,reservations_member_id_fkey,RESTRICT,NO ACTION,true
@@ -225,6 +259,10 @@ defined,public.reservations,office_id,public.offices,id,reservations_office_id_f
 defined,public.reservations,seat_id,public.seats,id,reservations_seat_id_fkey,RESTRICT,NO ACTION,true
 defined,public.reservations,workspace_id,public.workspaces,id,reservations_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.reservations,workspace_id member_id,public.members,workspace_id id,reservations_member_id_same_workspace,RESTRICT,NO ACTION,true
+defined,public.resource_favorites,member_id,public.members,id,resource_favorites_member_id_fkey,CASCADE,NO ACTION,true
+defined,public.resource_favorites,workspace_id,public.workspaces,id,resource_favorites_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.resource_ratings,member_id,public.members,id,resource_ratings_member_id_fkey,CASCADE,NO ACTION,true
+defined,public.resource_ratings,workspace_id,public.workspaces,id,resource_ratings_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.retired_invite_codes,workspace_id,public.workspaces,id,retired_invite_codes_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.rights_requests,decided_by,auth.users,id,rights_requests_decided_by_fkey,SET NULL,NO ACTION,true
 defined,public.rights_requests,member_id,public.members,id,rights_requests_member_id_fkey,SET NULL,NO ACTION,true
@@ -233,6 +271,7 @@ defined,public.rights_requests,workspace_id,public.workspaces,id,rights_requests
 defined,public.seat_accessories,accessory_id,public.accessories,id,seat_accessories_accessory_id_fkey,CASCADE,NO ACTION,true
 defined,public.seat_accessories,seat_id,public.seats,id,seat_accessories_seat_id_fkey,CASCADE,NO ACTION,true
 defined,public.seat_accessories,workspace_id,public.workspaces,id,seat_accessories_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.seat_history,workspace_id,public.workspaces,id,seat_history_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.seats,desk_id,public.desks,id,seats_desk_id_fkey,CASCADE,NO ACTION,true
 defined,public.seats,workspace_id,public.workspaces,id,seats_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.services,vat_rate_id,public.vat_rates,id,services_vat_rate_id_fkey,SET NULL,NO ACTION,true
@@ -260,6 +299,8 @@ defined,public.workspace_applications,workspace_id,public.workspaces,id,workspac
 defined,public.workspace_creation_requests,created_by,auth.users,id,workspace_creation_requests_created_by_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_creation_requests,created_workspace_id,public.workspaces,id,workspace_creation_requests_created_workspace_id_fkey,SET NULL,NO ACTION,true
 defined,public.workspace_documents,workspace_id,public.workspaces,id,workspace_documents_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.workspace_favorites,user_id,auth.users,id,workspace_favorites_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.workspace_favorites,workspace_id,public.workspaces,id,workspace_favorites_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_field_definitions,workspace_id,public.workspaces,id,workspace_field_definitions_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_field_labels,definition_id,public.workspace_field_definitions,id,workspace_field_labels_definition_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_field_labels,workspace_id,public.workspaces,id,workspace_field_labels_workspace_id_fkey,CASCADE,NO ACTION,true
@@ -275,11 +316,15 @@ defined,public.workspace_field_value_options,workspace_id,public.workspaces,id,w
 defined,public.workspace_field_values,definition_id,public.workspace_field_definitions,id,workspace_field_values_definition_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_field_values,member_id,public.members,id,workspace_field_values_member_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_field_values,workspace_id,public.workspaces,id,workspace_field_values_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.workspace_licences,plan_override,public.licence_plans,code,workspace_licences_plan_override_fkey,NO ACTION,NO ACTION,true
+defined,public.workspace_licences,workspace_id,public.workspaces,id,workspace_licences_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_mcp_policies,installation_id,public.installation_identity,installation_id,workspace_mcp_policies_installation_id_fkey,NO ACTION,NO ACTION,true
 defined,public.workspace_mcp_policies,workspace_id,public.workspaces,id,workspace_mcp_policies_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_mcp_policy_revisions,saved_by,auth.users,id,workspace_mcp_policy_revisions_saved_by_fkey,NO ACTION,NO ACTION,true
 defined,public.workspace_mcp_policy_revisions,workspace_id,public.workspaces,id,workspace_mcp_policy_revisions_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_public_pages,workspace_id,public.workspaces,id,workspace_public_pages_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.workspace_ratings,user_id,auth.users,id,workspace_ratings_user_id_fkey,CASCADE,NO ACTION,true
+defined,public.workspace_ratings,workspace_id,public.workspaces,id,workspace_ratings_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_recovery_evidence,recorded_by,auth.users,id,workspace_recovery_evidence_recorded_by_fkey,SET NULL,NO ACTION,true
 defined,public.workspace_recovery_evidence,workspace_id,public.workspaces,id,workspace_recovery_evidence_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.workspace_role_members,member_id,public.members,id,workspace_role_members_member_id_fkey,CASCADE,NO ACTION,true
@@ -295,3 +340,11 @@ defined,public.workspaces,created_by,auth.users,id,workspaces_created_by_fkey,NO
 defined,public.workspaces,subscription_vat_rate_id,public.vat_rates,id,workspaces_subscription_vat_rate_id_fkey,SET NULL,NO ACTION,true
 inferred,public.mcp_usage,event_id,public.events,id,,,,
 inferred,public.mcp_usage,workspace_id,public.workspaces,id,,,,
+inferred,public.reservation_target_history,desk_id,public.desks,id,,,,
+inferred,public.reservation_target_history,level_id,public.levels,id,,,,
+inferred,public.reservation_target_history,office_id,public.offices,id,,,,
+inferred,public.reservation_target_history,seat_id,public.seats,id,,,,
+inferred,public.seat_history,desk_id,public.desks,id,,,,
+inferred,public.seat_history,level_id,public.levels,id,,,,
+inferred,public.seat_history,office_id,public.offices,id,,,,
+inferred,public.seat_history,seat_id,public.seats,id,,,,
