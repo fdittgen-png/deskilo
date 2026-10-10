@@ -11,33 +11,14 @@
 -- VAT number in another member state (0157/0182): a French space billed
 -- a German company's desk at 0 % AE although the French VAT was due.
 --
---   * `services.supply_class` — `property` (the default: connected with
---     the premises) or `general` (a general service such as mail handling
---     or a virtual office, art. 44/45). Desks, offices, rooms, levels,
---     packages, carnets and seat accessories are property-connected by
---     nature and carry no choice.
---   * `ledger_entries.supply_class` — frozen by the server when the charge
---     is booked (a service charge takes its catalogue service's class,
---     everything else is `property`); a client value is ignored, and a
---     ledger entry is never edited afterwards.
---   * `invoice_lines_for` carries it on each ledger line as `supply`.
---   * `create_invoice` decides each line with `supply_vat_category`, the
---     one rule (its Dart twin is `supplyVatCategory`, pinned case by
---     case by place_of_supply_test against the pgTAP file): `auto` keeps
---     the seller's VAT on a property-connected line; only a general-service line to a BUSINESS (the stated
---     capacity, never the presence of a VAT number) in another member
---     state is AE, and outside the EU G. A consumer pays the seller's VAT
---     (art. 45). An explicit treatment still decides every line. Each
---     line states `supply` and `vat_category`; the breakdown groups by
---     rate AND category.
---   * A general service to a customer abroad whose capacity nobody stated
---     refuses issuing with `buyer_capacity_unknown` instead of guessing.
---   * `invoice_essentials_missing` stops refusing a foreign buyer as such
---     (`vat_treatment_unreviewed`): the line's place of supply now
---     decides. Reverse charge, export and exemption stay unreviewed.
---   * One EU set of 27 codes: `eu_country_code` normalises the VAT prefix
---     `EL` to the ISO code `GR`, and `is_eu_country` no longer lists both.
---   * The configuration transfer carries a service's class.
+--   * `services.supply_class` (property | general) and
+--     `ledger_entries.supply_class`, frozen by the server at booking.
+--   * `create_invoice` decides each line with `supply_vat_category` (Dart
+--     twin `supplyVatCategory`): a property line keeps the seller's VAT;
+--     a general service to a business elsewhere in the EU is AE, outside
+--     it G; a consumer pays the seller's VAT; unknown capacity abroad
+--     refuses with `buyer_capacity_unknown`.
+--   * One EU set of 27 codes (`EL` normalised to `GR`).
 --
 -- Issued invoices are untouched (`invoices_immutable`).
 
