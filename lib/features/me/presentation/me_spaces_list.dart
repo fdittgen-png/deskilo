@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import '../../workspace/domain/workspace.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/backend/backend_settings.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
 import '../../workspace/domain/member.dart';
@@ -131,6 +133,16 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     } else {
       await ref.read(spacePrefsProvider.notifier).moveToGroup(key, picked);
     }
+  }
+
+  /// #2343 — the server these spaces live on: the one this process runs
+  /// on (Settings may already hold the next one, pending a restart).
+  String? _hostedOn(AppLocalizations? l10n) {
+    final booted = ref.watch(bootedBackendUrlProvider);
+    final url = booted.isNotEmpty
+        ? booted
+        : ref.watch(activeBackendProvider).value?.url;
+    return l10n == null || url == null ? null : serverLabel(l10n, url);
   }
 
   @override
@@ -269,6 +281,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
         onFavorite: () => notifier.toggleFavorite(key),
         onRate: (stars) => notifier.rate(key, stars),
         onMoveToGroup: () => _pickGroup(context, key),
+        hostedOn: _hostedOn(l10n),
         leave: [
           for (final space in sides)
             SpaceLeaveItem(

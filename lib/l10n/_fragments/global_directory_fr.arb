@@ -1,0 +1,14 @@
+{
+  "directoryLinkIntro": "L’annuaire global se trouve sur le serveur de référence. Une fois un serveur relié, chaque espace qu’il publie est listé dans Découvrir, pour tout le monde.",
+  "directoryLinkCheck": "Vérifier",
+  "directoryLinkAction": "Relier",
+  "directoryLinkStateDirectory": "C’est le serveur de référence : les espaces qu’il publie sont toujours listés.",
+  "directoryLinkStateLinked": "Relié : les espaces qu’il publie sont listés dans Découvrir.",
+  "directoryLinkStateLinkable": "Peut être relié : il répond et publie des espaces que l’application sait lire.",
+  "directoryLinkStateUnreachable": "Ne peut pas encore être relié : il ne répond pas, ou sa version ne sait pas publier d’espaces.",
+  "directoryLinkDone": "Relié. Les espaces qu’il publie sont maintenant listés dans Découvrir.",
+  "directoryLinkNeedsAccount": "Le lien est enregistré sur le serveur de référence : connectez-y d’abord votre compte.",
+  "directoryLinkConnect": "Connecter le serveur de référence",
+  "spaceHostedOn": "Serveur : {server}",
+  "serverReferenceLabel": "serveur de référence ({host})"
+}

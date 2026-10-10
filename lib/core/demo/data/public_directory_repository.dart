@@ -10,6 +10,11 @@ class FakeDirectoryRepository
         PublicationRepository,
         DirectoryParticipantRepository {
   final cards = <PublicWorkspace>[];
+
+  /// #2343 — the origins linked to the global directory, and the state a
+  /// probe answers for any other.
+  final linked = <String>[];
+  DirectoryLinkState unlinked = DirectoryLinkState.linkable;
   final pages = <String, Map<String, dynamic>>{};
   final requests = <String>[];
   bool fail = false;
@@ -45,6 +50,9 @@ class FakeDirectoryRepository
   /// #2086 — the workspace's own information an inherited field follows.
   final local = <String, String>{'host_type': 'company', 'address': ''};
 
+  /// The workspace's own name, which its public page always carries.
+  String ownName = 'Demo workspace';
+
   Map<String, dynamic> _resolved(String workspace) {
     final stored = Map<String, dynamic>.from(
       (pages[workspace]?['document'] as Map?) ?? const <String, dynamic>{},
@@ -52,7 +60,7 @@ class FakeDirectoryRepository
     return {
       ...local,
       ...stored,
-      'name': 'Demo workspace',
+      'name': ownName,
       'contacts': <Map<String, dynamic>>[],
     };
   }
@@ -96,7 +104,14 @@ class FakeDirectoryRepository
   }
 
   @override
-  Future<void> register(String origin, String key) async {}
+  Future<void> register(String origin, String key) async {
+    if (fail) throw StateError('directory unavailable');
+    if (!linked.contains(origin)) linked.add(origin);
+  }
+
+  @override
+  Future<DirectoryLinkState> linkState(String origin, String key) async =>
+      linked.contains(origin) ? DirectoryLinkState.linked : unlinked;
   @override
   Future<void> apply(PublicWorkspace workspace) async {
     final refusal = refuseApply;

@@ -10,7 +10,7 @@
   "portalSendCode": "Envoyer le code de connexion",
   "portalSourceUnavailable": "Un serveur est indisponible. Cette vue est incomplète. Appuyez pour réessayer.",
   "portalDiscover": "Trouver un espace de travail",
-  "portalRegisterDirectory": "Publier un serveur dans l’annuaire",
+  "portalRegisterDirectory": "Relier un serveur à l’annuaire global",
   "portalPublication": "Page publique de l’espace",
   "portalPublished": "Visible dans l’annuaire public",
   "portalPreview": "Vue externe",

@@ -2272,6 +2272,10 @@
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
+  "demoPersonaKiosk": "La tableta del quiosco",
+  "@demoPersonaKiosk": {
+    "description": "#2327 demo personas: demoPersonaKiosk"
+  },
   "demoPersonaMember": "Miembro",
   "@demoPersonaMember": {
     "description": "#1376 demo personas: demoPersonaMember"
@@ -2575,6 +2579,16 @@
   "directoryLastSeenDays": "{days, plural, =1{Visto hace 1 día} other{Visto hace {days} días}}",
   "directoryLastSeenHours": "{hours, plural, =1{Visto hace 1 hora} other{Visto hace {hours} horas}}",
   "directoryLastSeenMinutes": "Visto hace {minutes} min",
+  "directoryLinkAction": "Vincular",
+  "directoryLinkCheck": "Comprobar",
+  "directoryLinkConnect": "Conectar el servidor de referencia",
+  "directoryLinkDone": "Vinculado. Los espacios que publica ya aparecen en Descubrir.",
+  "directoryLinkIntro": "El directorio global está en el servidor de referencia. Cuando un servidor está vinculado, cada espacio que publica aparece en Descubrir, para todos.",
+  "directoryLinkNeedsAccount": "El vínculo se registra en el servidor de referencia: conecte primero su cuenta allí.",
+  "directoryLinkStateDirectory": "Es el servidor de referencia: los espacios que publica siempre aparecen.",
+  "directoryLinkStateLinkable": "Se puede vincular: responde y publica espacios que esta aplicación puede leer.",
+  "directoryLinkStateLinked": "Vinculado: los espacios que publica aparecen en Descubrir.",
+  "directoryLinkStateUnreachable": "Aún no se puede vincular: no responde, o su versión no puede publicar espacios.",
   "directoryLocate": "Localizar en el mapa",
   "directoryLocating": "Localizando la dirección pública…",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
@@ -7977,7 +7991,7 @@
   "portalPublicPlan": "Plano público",
   "portalPublication": "Página pública del espacio",
   "portalPublished": "Visible en el directorio público",
-  "portalRegisterDirectory": "Publicar un servidor en el directorio",
+  "portalRegisterDirectory": "Vincular un servidor al directorio global",
   "portalRequestProfile": "Solicitar un perfil en este espacio",
   "portalRequestSent": "Solicitud enviada. El espacio revisará su perfil.",
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
@@ -10225,6 +10239,7 @@
   "serverConnectPasteCode": "Pegar un código de servidor",
   "serverConnectReference": "Servidor de referencia",
   "serverConnectUseHere": "Usar en este dispositivo",
+  "serverReferenceLabel": "servidor de referencia ({host})",
   "serviceOutOfStock": "Agotado",
   "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
   "serviceStockCount": "{count} en stock",
@@ -10412,6 +10427,7 @@
   "spaceCodesTitle": "Códigos QR de espacios (PDF)",
   "spaceFavoriteAdd": "Añadir a favoritos",
   "spaceFavoriteRemove": "Quitar de favoritos",
+  "spaceHostedOn": "Servidor: {server}",
   "spaceKindDesk": "Mesa",
   "spaceKindLevel": "Planta",
   "spaceKindOffice": "Oficina",

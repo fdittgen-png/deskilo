@@ -21,7 +21,8 @@ void main() {
       for (final m in fixture.workspaces.otherMembers) m.id,
     };
 
-    expect(memberIds, hasLength(demoCast.length));
+    // #2327 — the cast and the space's kiosk tablet.
+    expect(memberIds, hasLength(demoMemberships.length));
     for (final reservation in fixture.reservations.reservations) {
       expect(memberIds, contains(reservation.memberId),
           reason: 'a booking by nobody');

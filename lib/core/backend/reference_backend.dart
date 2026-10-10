@@ -9,6 +9,11 @@ const referenceEndpoint = BackendEndpoint(
   BackendConfig.referenceKey,
 );
 
+/// #2343 — where the global directory lives: on the reference deployment,
+/// whatever server this device uses. Any server can be linked to it, and
+/// the spaces a linked server publishes are listed there for everyone.
+const globalDirectoryEndpoint = referenceEndpoint;
+
 /// #2343 — whether [url] is the reference deployment's.
 bool isReferenceBackend(String url) =>
     canonicalBackendUrl(url) == BackendConfig.referenceUrl;

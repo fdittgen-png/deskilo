@@ -34,7 +34,11 @@ class SpaceRowControls extends StatelessWidget {
     this.onDown,
     this.leave = const [],
     this.onMoveToGroup,
+    this.hostedOn,
   });
+
+  /// #2343 — the server the space lives on, said first in the menu.
+  final String? hostedOn;
 
   final String rowKey, name;
   final bool favorite;
@@ -105,6 +109,24 @@ class SpaceRowControls extends StatelessWidget {
             }
           },
           itemBuilder: (_) => [
+            if (hostedOn case final server?) ...[
+              PopupMenuItem(
+                key: ValueKey('$key-host'),
+                enabled: false,
+                child: Row(
+                  children: [
+                    const Icon(Icons.dns_outlined, size: 18),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        AppLocalizations.of(context)!.spaceHostedOn(server),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const PopupMenuDivider(),
+            ],
             PopupMenuItem(
               key: ValueKey('$key-favorite'),
               value: 'favorite',

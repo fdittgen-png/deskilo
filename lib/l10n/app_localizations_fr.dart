@@ -3488,6 +3488,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get demoPersonaAdmin => 'Un administrateur';
 
   @override
+  String get demoPersonaKiosk => 'La tablette d’accueil';
+
+  @override
   String get demoPersonaMember => 'Un membre';
 
   @override
@@ -3790,6 +3793,43 @@ class AppLocalizationsFr extends AppLocalizations {
   String directoryLastSeenMinutes(int minutes) {
     return 'Vu il y a $minutes min';
   }
+
+  @override
+  String get directoryLinkAction => 'Relier';
+
+  @override
+  String get directoryLinkCheck => 'Vérifier';
+
+  @override
+  String get directoryLinkConnect => 'Connecter le serveur de référence';
+
+  @override
+  String get directoryLinkDone =>
+      'Relié. Les espaces qu’il publie sont maintenant listés dans Découvrir.';
+
+  @override
+  String get directoryLinkIntro =>
+      'L’annuaire global se trouve sur le serveur de référence. Une fois un serveur relié, chaque espace qu’il publie est listé dans Découvrir, pour tout le monde.';
+
+  @override
+  String get directoryLinkNeedsAccount =>
+      'Le lien est enregistré sur le serveur de référence : connectez-y d’abord votre compte.';
+
+  @override
+  String get directoryLinkStateDirectory =>
+      'C’est le serveur de référence : les espaces qu’il publie sont toujours listés.';
+
+  @override
+  String get directoryLinkStateLinkable =>
+      'Peut être relié : il répond et publie des espaces que l’application sait lire.';
+
+  @override
+  String get directoryLinkStateLinked =>
+      'Relié : les espaces qu’il publie sont listés dans Découvrir.';
+
+  @override
+  String get directoryLinkStateUnreachable =>
+      'Ne peut pas encore être relié : il ne répond pas, ou sa version ne sait pas publier d’espaces.';
 
   @override
   String get directoryLocate => 'Localiser sur la carte';
@@ -12990,7 +13030,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalPublished => 'Visible dans l’annuaire public';
 
   @override
-  String get portalRegisterDirectory => 'Publier un serveur dans l’annuaire';
+  String get portalRegisterDirectory => 'Relier un serveur à l’annuaire global';
 
   @override
   String get portalRequestProfile => 'Demander un profil dans cet espace';
@@ -15778,6 +15818,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get serverConnectUseHere => 'Utiliser sur cet appareil';
 
   @override
+  String serverReferenceLabel(String host) {
+    return 'serveur de référence ($host)';
+  }
+
+  @override
   String get serviceOutOfStock => 'Épuisé';
 
   @override
@@ -16058,6 +16103,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spaceFavoriteRemove => 'Retirer des favoris';
+
+  @override
+  String spaceHostedOn(String server) {
+    return 'Serveur : $server';
+  }
 
   @override
   String get spaceKindDesk => 'Table';

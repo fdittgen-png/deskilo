@@ -1,0 +1,14 @@
+{
+  "directoryLinkIntro": "La directory globale si trova sul server di riferimento. Una volta collegato un server, ogni spazio che pubblica è elencato in Scopri, per tutti.",
+  "directoryLinkCheck": "Verifica",
+  "directoryLinkAction": "Collega",
+  "directoryLinkStateDirectory": "È il server di riferimento: gli spazi che pubblica sono sempre elencati.",
+  "directoryLinkStateLinked": "Collegato: gli spazi che pubblica sono elencati in Scopri.",
+  "directoryLinkStateLinkable": "Può essere collegato: risponde e pubblica spazi che questa app sa leggere.",
+  "directoryLinkStateUnreachable": "Non può ancora essere collegato: non risponde, o la sua versione non può pubblicare spazi.",
+  "directoryLinkDone": "Collegato. Gli spazi che pubblica sono ora elencati in Scopri.",
+  "directoryLinkNeedsAccount": "Il collegamento è registrato sul server di riferimento: colleghi prima lì il suo account.",
+  "directoryLinkConnect": "Collega il server di riferimento",
+  "spaceHostedOn": "Server: {server}",
+  "serverReferenceLabel": "server di riferimento ({host})"
+}

@@ -22,10 +22,8 @@ class ConnectionDialog extends ConsumerStatefulWidget {
     super.key,
     this.origin = '',
     this.publicKey = '',
-    this.publishDirectory = false,
   });
   final String origin, publicKey;
-  final bool publishDirectory;
   @override
   ConsumerState<ConnectionDialog> createState() => _ConnectionState();
 }
@@ -99,22 +97,16 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
         ConnectionFailureReason.invalidEndpoint,
       );
     }
-    if (widget.publishDirectory) {
-      await ref
-          .read(directoryActionsProvider)
-          .register(endpoint.url, endpoint.key);
+    final registry = ref.read(connectedInstallationsProvider);
+    if (requestCode) {
+      await registry.requestCode(endpoint, _email.text);
     } else {
-      final registry = ref.read(connectedInstallationsProvider);
-      if (requestCode) {
-        await registry.requestCode(endpoint, _email.text);
-      } else {
-        await registry.connect(
-          endpoint,
-          _email.text,
-          _credential.text,
-          code: _code,
-        );
-      }
+      await registry.connect(
+        endpoint,
+        _email.text,
+        _credential.text,
+        code: _code,
+      );
     }
   }
 
@@ -220,18 +212,12 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text(
-        widget.publishDirectory
-            ? (l?.portalRegisterDirectory ??
-                  'Publish a server in the directory')
-            : (l?.portalConnect ?? 'Connect a server'),
-      ),
+      title: Text(l?.portalConnect ?? 'Connect a server'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (!widget.publishDirectory)
-              ..._joinOrCreate(AppLocalizations.of(context)!),
+            ..._joinOrCreate(AppLocalizations.of(context)!),
             TextField(
               key: const ValueKey('connection-dialog-url'),
               controller: _url,
@@ -250,39 +236,37 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
                 labelText: l?.backendKeyLabel ?? 'Publishable key',
               ),
             ),
-            if (!widget.publishDirectory) ...[
-              TextField(
-                controller: _email,
-                enabled: !_busy,
-                keyboardType: TextInputType.emailAddress,
-                autofillHints: const [AutofillHints.email],
-                decoration: InputDecoration(
-                  labelText: l?.authEmailLabel ?? 'Email',
-                ),
+            TextField(
+              controller: _email,
+              enabled: !_busy,
+              keyboardType: TextInputType.emailAddress,
+              autofillHints: const [AutofillHints.email],
+              decoration: InputDecoration(
+                labelText: l?.authEmailLabel ?? 'Email',
               ),
-              TextField(
-                controller: _credential,
-                enabled: !_busy,
-                obscureText: !_code,
-                decoration: InputDecoration(
-                  labelText: _code
-                      ? (l?.portalEmailCode ?? 'Email sign-in code')
-                      : (l?.authPasswordLabel ?? 'Password'),
-                ),
+            ),
+            TextField(
+              controller: _credential,
+              enabled: !_busy,
+              obscureText: !_code,
+              decoration: InputDecoration(
+                labelText: _code
+                    ? (l?.portalEmailCode ?? 'Email sign-in code')
+                    : (l?.authPasswordLabel ?? 'Password'),
               ),
-              SwitchListTile(
-                key: const ValueKey('connection-dialog-portal-use-code'),
-                value: _code,
-                onChanged: _busy ? null : (v) => setState(() => _code = v),
-                title: Text(l?.portalUseCode ?? 'Use an email code'),
-              ),
-              TextButton(
-                key: const ValueKey('connection-dialog-portal-send-code'),
-                onPressed: _busy ? null : () => _submit(requestCode: true),
-                child: Text(l?.portalSendCode ?? 'Send sign-in code'),
-              ),
-              ..._otherWays(AppLocalizations.of(context)!),
-            ],
+            ),
+            SwitchListTile(
+              key: const ValueKey('connection-dialog-portal-use-code'),
+              value: _code,
+              onChanged: _busy ? null : (v) => setState(() => _code = v),
+              title: Text(l?.portalUseCode ?? 'Use an email code'),
+            ),
+            TextButton(
+              key: const ValueKey('connection-dialog-portal-send-code'),
+              onPressed: _busy ? null : () => _submit(requestCode: true),
+              child: Text(l?.portalSendCode ?? 'Send sign-in code'),
+            ),
+            ..._otherWays(AppLocalizations.of(context)!),
           ],
         ),
       ),

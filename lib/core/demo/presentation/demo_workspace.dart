@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_en.dart';
 import '../../theme/app_spacing.dart';
 import '../demo_entry.dart';
 import '../demo_persona.dart';
@@ -126,18 +127,21 @@ class DemoControls extends StatelessWidget {
 
   final Widget child;
 
-  /// The next persona in the ring — owner, member, administrator, round
-  /// again — so one control covers all three.
+  /// The next persona in the ring — owner, member, administrator, the
+  /// kiosk tablet, round again — so one control covers all four.
   static DemoPersona _next(DemoPersona persona) =>
       DemoPersona.values[(persona.index + 1) % DemoPersona.values.length];
 
   /// The persona's own name, in the reader's language.
-  static String personaLabel(AppLocalizations? l10n, DemoPersona persona) =>
-      switch (persona) {
-        DemoPersona.member => l10n?.demoPersonaMember ?? 'A member',
-        DemoPersona.admin => l10n?.demoPersonaAdmin ?? 'An administrator',
-        DemoPersona.owner => l10n?.demoPersonaOwner ?? 'The owner',
-      };
+  static String personaLabel(AppLocalizations? l10n, DemoPersona persona) {
+    final words = l10n ?? AppLocalizationsEn();
+    return switch (persona) {
+      DemoPersona.member => words.demoPersonaMember,
+      DemoPersona.admin => words.demoPersonaAdmin,
+      DemoPersona.kiosk => words.demoPersonaKiosk,
+      DemoPersona.owner => words.demoPersonaOwner,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +180,7 @@ class DemoControls extends StatelessWidget {
                   ),
                   // A cycling button, not a menu: this bar renders in
                   // the app's own `builder`, ABOVE the Navigator, so it
-                  // has no Overlay to put a popup or a tooltip in. Three
+                  // has no Overlay to put a popup or a tooltip in. Four
                   // personas make one tap each the compact answer.
                   TextButton.icon(
                     key: viewAsKey,

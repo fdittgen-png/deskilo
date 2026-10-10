@@ -28,6 +28,10 @@
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"
   },
+  "demoPersonaKiosk": "La tablette d’accueil",
+  "@demoPersonaKiosk": {
+    "description": "#2327 demo personas: demoPersonaKiosk"
+  },
   "demoPersonaOwner": "Le propriétaire",
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"

@@ -1,0 +1,28 @@
+{
+  "directoryLinkIntro": "The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.",
+  "directoryLinkCheck": "Check",
+  "directoryLinkAction": "Link",
+  "directoryLinkStateDirectory": "This is the reference server: the spaces it publishes are always listed.",
+  "directoryLinkStateLinked": "Linked: the spaces it publishes are listed in Discover.",
+  "directoryLinkStateLinkable": "Can be linked: it answers, and publishes spaces this app can read.",
+  "directoryLinkStateUnreachable": "Cannot be linked yet: it does not answer, or its version cannot publish spaces.",
+  "directoryLinkDone": "Linked. The spaces it publishes are now listed in Discover.",
+  "directoryLinkNeedsAccount": "A link is recorded on the reference server: connect your account there first.",
+  "directoryLinkConnect": "Connect the reference server",
+  "spaceHostedOn": "Server: {server}",
+  "@spaceHostedOn": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "serverReferenceLabel": "reference server ({host})",
+  "@serverReferenceLabel": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  }
+}
