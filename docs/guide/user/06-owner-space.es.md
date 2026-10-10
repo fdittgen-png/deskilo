@@ -1043,6 +1043,7 @@ Usted quiere aplicar a un espacio un archivo exportado.
 - Sustituye el plano actual y sobrescribe los ajustes. No se puede deshacer.
 - Cuando un espacio ya tiene reservas, solo se aplica la configuración. El plano se conserva, y la app lo dice.
 - Un archivo ilegible, o que no es de DesKilo, se rechaza con un mensaje claro.
+- Cuando el archivo incluye una configuración y **Configuración en el archivo del espacio** está desactivada en este espacio, la app pregunta antes: **Activar y aplicar** la aplica, **Importar sin la configuración** importa el resto, y la vista previa indica entonces «Configuración: no aplicada.» Solo a quien puede cambiar la configuración se le ofrece activarla.
 
 **Véase también:** [Exportar el espacio (XML)](help:user.workspace.export.space-xml)
 

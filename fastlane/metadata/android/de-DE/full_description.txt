@@ -14,6 +14,6 @@ SIE, ÜBER SPACES HINWEG
 • Anfragen von Personen außerhalb Ihres Kreises, eine Sperrliste und eine Sichtbarkeitsmatrix: Sie bestimmen, wer Ihren Namen, Ihr Profil, Ihre Kontaktdaten und Ihre Anwesenheit sieht
 
 IHRE DATEN, IHRE WAHL
-Betreiben Sie das Backend selbst auf Ihrer eigenen Supabase-Instanz oder nutzen Sie die Referenzinstallation von Florian DITTGEN, die auch das gemeinsame Verzeichnis hostet. Freie Software unter AGPL-3.0.
+Betreiben Sie das Backend selbst auf Ihrer eigenen Supabase-Instanz oder nutzen Sie die Referenzinstallation von Florian DITTGEN, die auch das globale Verzeichnis hostet. Die F-Droid-Version startet ohne Server und fragt, welcher verwendet werden soll: die Referenzinstallation, ein bestehender Server oder ein neuer, den sie für Sie einrichtet. Freie Software unter AGPL-3.0.
 
-DSGVO: Daten auf der Referenzinstallation in der EU, kein Tracking, keine Werbung, Zugriff nach Rolle und serverseitig durchgesetzt. Ihre Rechte sind Schaltflächen unter Einstellungen → Datenschutz & Daten: wer Ihre Daten sieht, wer zugegriffen hat, Export, Löschung. Push-Benachrichtigungen nutzen Firebase Cloud Messaging.
+DSGVO: Daten auf der Referenzinstallation in der EU, kein Tracking, keine Werbung, Zugriff nach Rolle und serverseitig durchgesetzt. Ihre Rechte sind Schaltflächen unter Einstellungen → Datenschutz & Daten: wer Ihre Daten sieht, wer zugegriffen hat, Export, Löschung. In den Store-Versionen nutzen Push-Benachrichtigungen Firebase Cloud Messaging; die F-Droid-Version hat keinen Push-Dienst.

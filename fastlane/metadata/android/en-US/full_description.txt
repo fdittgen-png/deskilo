@@ -14,6 +14,6 @@ YOU, ACROSS SPACES
 • Requests from people outside your reach, a block list, and a visibility matrix: you choose who sees your name, bio, contact details and presence
 
 YOUR DATA, YOUR CHOICE
-Self-host the backend on your own Supabase instance, or use the reference deployment operated by Florian DITTGEN, which also hosts the shared directory. AGPL-3.0-licensed free software.
+Self-host the backend on your own Supabase instance, or use the reference deployment operated by Florian DITTGEN, which also hosts the global directory. The F-Droid build starts without a server and asks which one to use: the reference deployment, an existing server, or a new one it sets up for you. AGPL-3.0-licensed free software.
 
-GDPR: EU-hosted data on the reference deployment, no tracking or advertising, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure. Push notifications use Firebase Cloud Messaging.
+GDPR: EU-hosted data on the reference deployment, no tracking or advertising, access limited by role and enforced on the server. Your rights are buttons in Settings → Privacy & data: who can see your data, who accessed it, export, erasure. In the store builds, push notifications use Firebase Cloud Messaging; the F-Droid build has no push service.

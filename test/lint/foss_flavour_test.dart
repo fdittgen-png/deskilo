@@ -81,6 +81,9 @@ void main() {
     expect(recipe, isNot(contains('sed -i')),
         reason: 'the swap lives in the script; a copy here can drift');
     expect(recipe, contains('flutter build apk --release'));
-    expect(recipe, contains('AntiFeatures'));
+    // #2343 — no disclosure is needed: the libre build ships no default
+    // server (the swap flips it) and asks at first start.
+    expect(swap, contains("'DESKILO_NO_DEFAULT_SERVER', defaultValue: true"));
+    expect(recipe, isNot(contains('AntiFeatures')));
   });
 }

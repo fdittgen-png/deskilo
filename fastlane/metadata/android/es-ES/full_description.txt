@@ -14,6 +14,6 @@ TÚ, ENTRE ESPACIOS
 • Solicitudes de personas fuera de tu círculo, lista de bloqueo y matriz de visibilidad: tú decides quién ve tu nombre, tu perfil, tus datos de contacto y tu presencia
 
 TUS DATOS, TU DECISIÓN
-Aloja tú mismo el servidor en tu propia instancia de Supabase, o usa el despliegue de referencia operado por Florian DITTGEN, que también aloja el directorio compartido. Software libre con licencia AGPL-3.0.
+Aloja tú mismo el servidor en tu propia instancia de Supabase, o usa el despliegue de referencia operado por Florian DITTGEN, que también aloja el directorio global. La versión de F-Droid arranca sin servidor y pregunta cuál usar: el despliegue de referencia, un servidor existente o uno nuevo que configura por ti. Software libre con licencia AGPL-3.0.
 
-RGPD: datos alojados en la UE en el despliegue de referencia, sin seguimiento ni publicidad, acceso limitado por rol y aplicado en el servidor. Tus derechos son botones en Ajustes → Privacidad y datos: quién ve tus datos, quién accedió, exportación, borrado. Las notificaciones push usan Firebase Cloud Messaging.
+RGPD: datos alojados en la UE en el despliegue de referencia, sin seguimiento ni publicidad, acceso limitado por rol y aplicado en el servidor. Tus derechos son botones en Ajustes → Privacidad y datos: quién ve tus datos, quién accedió, exportación, borrado. En las versiones de las tiendas, las notificaciones push usan Firebase Cloud Messaging; la versión de F-Droid no tiene servicio push.

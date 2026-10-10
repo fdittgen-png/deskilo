@@ -42,6 +42,17 @@ awk '
 ' pubspec.lock > pubspec.lock.libre
 mv pubspec.lock.libre pubspec.lock
 
+# #2343 — the libre build ships no default server: the first start asks
+# which one to use, and nothing is contacted before that. The default of
+# the compile-time switch flips here, so the recipe's build lines and the
+# job that publishes the reference APKs stay the same commands.
+sed -i "s|bool.fromEnvironment('DESKILO_NO_DEFAULT_SERVER');|bool.fromEnvironment('DESKILO_NO_DEFAULT_SERVER', defaultValue: true);|" \
+  lib/core/backend/backend_config.dart
+if ! grep -q "'DESKILO_NO_DEFAULT_SERVER', defaultValue: true" lib/core/backend/backend_config.dart; then
+  echo "backend_config.dart: the no-default-server switch was not flipped" >&2
+  exit 1
+fi
+
 # Fail loudly rather than quietly shipping Firebase in a libre build.
 if grep -q 'packages/deskilo_push"' pubspec.lock; then
   echo "lockfile still points at the Firebase package" >&2
@@ -51,4 +62,4 @@ if grep -qE '^  (firebase_|_flutterfire_internals)' pubspec.lock; then
   echo "lockfile still pins Firebase packages" >&2
   exit 1
 fi
-echo "libre flavour: push transport swapped, lockfile patched"
+echo "libre flavour: push transport swapped, lockfile patched, no default server"

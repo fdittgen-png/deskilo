@@ -3705,6 +3705,7 @@ You want to apply an exported file to a space.
 - It replaces the current floor plan and overwrites the settings. This cannot be undone.
 - Once a space has bookings, only the configuration is applied. The floor plan is kept, and the app says so.
 - A file that is not readable, or not from DesKilo, is refused with a clear message.
+- When the file carries a configuration and **Configuration in the space file** is off in this space, the app asks first: **Switch it on and apply** applies it, **Import without the configuration** imports the rest, and the preview then reads “Configuration: not applied.” Only somebody who may change the configuration is offered to switch it on.
 
 **See also:** [Export the space (XML)](#export-the-space-xml)
 

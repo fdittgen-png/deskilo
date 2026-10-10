@@ -109,9 +109,13 @@ void main() {
       expect(referenceEndpoint.url, BackendConfig.referenceUrl);
       expect(isReferenceBackend('${BackendConfig.referenceUrl}/'), isTrue);
       expect(isReferenceBackend('https://mycowork.supabase.co'), isFalse);
-      // Tests run without the define: the store builds' behaviour.
-      expect(BackendConfig.hasDefault, isTrue);
-      expect(compiledDefaultEndpoint?.url, BackendConfig.supabaseUrl);
+      // The store builds have the reference as their default; the libre
+      // flavour (fdroid-foss runs this suite after the swap) has none.
+      expect(BackendConfig.hasDefault, !BackendConfig.noDefaultServer);
+      expect(
+        compiledDefaultEndpoint?.url,
+        BackendConfig.hasDefault ? BackendConfig.supabaseUrl : isNull,
+      );
     });
   });
 
