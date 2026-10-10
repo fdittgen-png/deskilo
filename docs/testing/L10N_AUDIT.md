@@ -6,13 +6,14 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-171 literal(s) in 8 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+172 literal(s) in 8 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
 | `lib/core/demo/seed/demo_calendar_seed.dart:41` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_calendar_seed.dart:138` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:174` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:177` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:183` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
@@ -184,7 +185,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 
 ## Why each file keeps its literals
 
-- **`lib/core/demo/seed/demo_calendar_seed.dart`** (3) — demo records: calendar rows as a space stores them
+- **`lib/core/demo/seed/demo_calendar_seed.dart`** (4) — demo records: calendar rows as a space stores them, an event titled `type.action` as the server writes it
 - **`lib/core/demo/seed/demo_people_seed.dart`** (8) — demo records: badge labels, document titles and a group name as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/features/money/domain/vat_catalogue.dart`** (86) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.

@@ -34,7 +34,7 @@ Every feature serves at least one of four goals; a proposal that serves none is 
   </a>
 </p>
 
-[Explore the illustrated user guide](docs/wiki/User-Guide.md) · [Configure a workspace](docs/wiki/Admin-Configuration-Guide.md) · [Releases](https://github.com/fdittgen-png/deskilo/releases) · [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
+[Explore the illustrated user guide](docs/wiki/User-Guide.md) · [Build your own space: the Setup Guide](docs/wiki/Setup-Guide.md) · [Configure a workspace](docs/wiki/Admin-Configuration-Guide.md) · [Releases](https://github.com/fdittgen-png/deskilo/releases) · [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
 
 ## What your community can do
 

@@ -25,6 +25,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'guide_links.dart';
+
 /// The guides, per language, in reading order. A language compiles the
 /// files it HAS: a guide that exists only in English joins the English
 /// bundle and waits for its translations rather than mixing languages in
@@ -32,30 +34,35 @@ import 'dart:io';
 const guides = <String, List<String>>{
   'en': [
     'User-Guide.md',
+    'Setup-Guide.md',
     'Admin-Configuration-Guide.md',
     'Admin-Technical-Guide.md',
     'Environments-Guide.md',
   ],
   'fr': [
     'Guide-utilisateur.md',
+    'Guide-de-demarrage.md',
     'Admin-Configuration-Guide.fr.md',
     'Admin-Technical-Guide.fr.md',
     'Environments-Guide.fr.md',
   ],
   'de': [
     'Benutzerhandbuch.md',
+    'Einrichtungsanleitung.md',
     'Admin-Configuration-Guide.de.md',
     'Admin-Technical-Guide.de.md',
     'Environments-Guide.de.md',
   ],
   'es': [
     'Guia-de-usuario.md',
+    'Guia-de-puesta-en-marcha.md',
     'Admin-Configuration-Guide.es.md',
     'Admin-Technical-Guide.es.md',
     'Environments-Guide.es.md',
   ],
   'it': [
     'Guida-utente.md',
+    'Guida-di-avvio.md',
     'Admin-Configuration-Guide.it.md',
     'Admin-Technical-Guide.it.md',
     'Environments-Guide.it.md',
@@ -78,8 +85,8 @@ final wikiLink = RegExp(r'\[([^\]]+)\]\((?![a-z]+://|#|/)[A-Za-z0-9-]+\)');
 
 /// The "other languages" sentence: an italic run naming the sibling
 /// guides, present in every locale's intro line.
-final otherLanguages = RegExp(r'\s*\*[^*]*\[[^\]]+\]\(User-Guide\)[^*]*\*|'
-    r'\s*\*Autres langues[^*]*\*');
+final otherLanguages = RegExp(r'\s*\*[^*]*\[[^\]]+\]\((?:User-Guide|Setup-Guide)\)[^*]*\*|'
+    r'\s*\*(?:Autres langues|Other languages)[^*]*\*');
 
 /// anchor -> the text of the heading it names, in this guide's language.
 Map<String, String> anchorsOf(String source) {
@@ -151,7 +158,15 @@ typedef RenderedGuide = ({String markdown, String anchorsJson, List<String> pres
 RenderedGuide renderLocale(String locale) {
   final listed = guides[locale]!.map((name) => File('$wikiDir/$name')).toList();
   final sources = listed.where((f) => f.existsSync()).toList();
-  final raw = sources.map((f) => f.readAsStringSync()).join('\n\n');
+  // Links the guides write for the wiki (`#heading-slug`, the web app's
+  // address) are turned back into the app's own (`help:<anchor>`, `app:/route`)
+  // one file at a time: a slug is only unique inside its own page.
+  final pages = {
+    for (final f in sources) f.uri.pathSegments.last.replaceFirst(RegExp(r'\.md$'), ''): f.readAsStringSync(),
+  };
+  final raw = sources
+      .map((f) => toAppLinks(f.readAsStringSync(), pages: pages))
+      .join('\n\n');
   return (
     markdown: compile(raw),
     anchorsJson:
@@ -194,12 +209,27 @@ void main() {
         'guide(s), ${(jsonDecode(rendered.anchorsJson) as Map).length} anchors');
   }
 
+  // Only the screenshots a guide shows are shipped: the wiki keeps every
+  // image of every language, an app needs the ones its five guides link.
+  final wanted = <String>{};
+  for (final locale in guides.keys) {
+    final text = File('$outDir/$locale.md').readAsStringSync();
+    for (final m in RegExp(r'assets/help/images/([^)\s]+)').allMatches(text)) {
+      wanted.add(m[1]!);
+    }
+  }
   var copied = 0;
-  for (final img in images.listSync().whereType<File>()) {
-    if (!img.path.endsWith('.jpg')) continue;
-    final name = img.uri.pathSegments.last;
-    img.copySync('${outImages.path}/$name');
+  for (final name in wanted) {
+    final source = File('${images.path}/$name');
+    if (!source.existsSync()) {
+      stderr.writeln('image $name is linked but is not in $wikiDir/images');
+      continue;
+    }
+    source.copySync('${outImages.path}/$name');
     copied++;
+  }
+  for (final stale in outImages.listSync().whereType<File>()) {
+    if (!wanted.contains(stale.uri.pathSegments.last)) stale.deleteSync();
   }
   stdout.writeln('copied $copied images');
 }

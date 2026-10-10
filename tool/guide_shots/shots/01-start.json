@@ -1,0 +1,372 @@
+{
+ "shots": [
+  {
+   "id": "user-start-what-is",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "What you can do here, the roles an administrator holds",
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "click": "@demoPersonaMember",
+     "wait": 3500
+    },
+    {
+     "hash": "#/settings/what-you-can-do"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-start-account",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the sign-in screen",
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoSessionLeave",
+     "wait": 3000
+    }
+   ]
+  },
+  {
+   "id": "user-start-account--create",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the create-account form",
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoSessionLeave",
+     "wait": 3000
+    },
+    {
+     "click": "@authToggleToSignUp",
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "user-start-forgot-password",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the reset-password sheet",
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoSessionLeave",
+     "wait": 3000
+    },
+    {
+     "click": "@authForgotPassword",
+     "wait": 2000
+    }
+   ]
+  },
+  {
+   "id": "user-start-demo",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the demo entry sheet",
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoSessionLeave",
+     "wait": 3000
+    },
+    {
+     "click": "@demoEntryAction",
+     "wait": 2000
+    }
+   ]
+  },
+  {
+   "id": "user-start-demo--bar",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the demo strip: persona, reset, leave",
+   "full": false,
+   "clip": [
+    0,
+    -76,
+    390,
+    126
+   ],
+   "steps": [
+    {
+     "hash": "#/me"
+    }
+   ]
+  },
+  {
+   "id": "user-start-join",
+   "fresh": true,
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the join form",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/onboarding?join=1"
+    }
+   ]
+  },
+  {
+   "id": "user-start-create",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "creating a workspace, name step then place step",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/onboarding?join=1"
+    },
+    {
+     "click": "@onboardingCreateTab"
+    }
+   ],
+   "parts": [
+    {
+     "id": "where",
+     "steps": [
+      {
+       "at": [
+        195,
+        202
+       ],
+       "wait": 800
+      },
+      {
+       "press": "S"
+      },
+      {
+       "press": "t"
+      },
+      {
+       "press": "u"
+      },
+      {
+       "press": "d"
+      },
+      {
+       "press": "i"
+      },
+      {
+       "press": "o"
+      },
+      {
+       "press": "Space"
+      },
+      {
+       "press": "L"
+      },
+      {
+       "press": "u"
+      },
+      {
+       "press": "m"
+      },
+      {
+       "press": "e"
+      },
+      {
+       "press": "n"
+      },
+      {
+       "click": "@wizardNext",
+       "wait": 1800
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-start-find",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Find a workspace",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/discover",
+     "wait": 5000
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-me-home",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Me home with My spaces",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/me"
+    }
+   ],
+   "parts": [
+    {
+     "id": "card",
+     "from": "@meGroupOther",
+     "to": "@meJoinSpace",
+     "pad": 6
+    }
+   ]
+  },
+  {
+   "id": "user-me-organise",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the options menu of a space, then the heart",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/me"
+    },
+    {
+     "click": "@spaceOptions|name=Atelier du Marché"
+    }
+   ],
+   "parts": [
+    {
+     "id": "favourite",
+     "steps": [
+      {
+       "click": "@spaceFavoriteAdd",
+       "wait": 1500
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-profile-profiles",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "Profiles",
+   "full": false,
+   "clip": false,
+   "steps": [
+    {
+     "hash": "#/profiles"
+    }
+   ],
+   "parts": [
+    {
+     "id": "row",
+     "clip": [
+      0,
+      0,
+      390,
+      200
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-start-navigation",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the menu opened from the hamburger",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/reserve",
+     "wait": 5000
+    }
+   ],
+   "parts": [
+    {
+     "id": "menu",
+     "steps": [
+      {
+       "at": [
+        28,
+        22
+       ],
+       "wait": 1500
+      }
+     ]
+    },
+    {
+     "id": "groups",
+     "steps": [
+      {
+       "click": "@uxNavPeople",
+       "wait": 1200
+      }
+     ]
+    }
+   ],
+   "clip": false
+  },
+  {
+   "id": "user-start-navigation--header",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the title bar buttons",
+   "full": false,
+   "clip": [
+    0,
+    0,
+    390,
+    46
+   ],
+   "steps": [
+    {
+     "hash": "#/reserve"
+    }
+   ],
+   "fresh": true
+  },
+  {
+   "id": "user-start-navigation--sidebar",
+   "persona": "owner",
+   "view": "desktop",
+   "shows": "the permanent sidebar on a wide window",
+   "full": false,
+   "steps": [
+    {
+     "hash": "#/reserve"
+    }
+   ]
+  },
+  {
+   "id": "user-start-get-started",
+   "persona": "owner",
+   "view": "phone",
+   "shows": "the Get started card, reopened from the view menu",
+   "full": false,
+   "clip": false,
+   "steps": [
+    {
+     "hash": "#/reserve"
+    }
+   ],
+   "parts": [
+    {
+     "id": "card",
+     "steps": [],
+     "clip": [
+      0,
+      94,
+      390,
+      275
+     ]
+    }
+   ],
+   "keepTips": true
+  }
+ ]
+}

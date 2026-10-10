@@ -318,6 +318,15 @@ test/core/help/help_hint_test.dart.
 
 ## Guides & illustrations (#765)
 
+**The user guide and the setup guide are written as chapters** (`docs/guide/user`, `docs/guide/setup`,
+contract in `docs/guide/AUTHORING.md`), one file per chapter and language. `dart run tool/build_user_guide.dart`
+assembles the wiki guides from them, `tool/build_guide_site.dart` renders the static site (`web/guide`), and the
+in-app help is compiled from the wiki. Their screenshots are taken by `tool/guide_shots/capture.mjs` from a built
+web app, in the Demo workspace, **in the language of each guide**, and are named
+`<id>[--<part>].<lang>.b<commit>.jpg` (screen, language, build); `docs/wiki/images/_shots.<lang>.json` records the
+build, version and date. A screen change is a re-run of the capture, never a hand edit. The wiki copy below applies
+to the other guide families (config, admin, env).
+
 The wiki (`docs/wiki/*.md`) is the SOURCE; `dart run tool/build_help.dart`
 regenerates `assets/help/` — never edit the help output directly. Layout
 rules for images:

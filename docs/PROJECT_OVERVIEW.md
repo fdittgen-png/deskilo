@@ -54,7 +54,7 @@ Seatsurfing (GPL, web) is the strongest open-source desk-booking tool but has no
 
 ### Founding constraints
 
-- **Notifications first** (ADR 0011, superseding ADR 0003): Firebase Cloud Messaging is the sole push transport (Android/iOS/web/macOS). No third-party tracking, no GPL dependencies (ADR 0009). The former no-GMS CI audits were removed with the F-Droid plans.
+- **Notifications first** (ADR 0011, superseding ADR 0003): Firebase Cloud Messaging is the sole push transport (Android/iOS/web/macOS). No third-party tracking, no GPL dependencies (ADR 0009). A separate FOSS build without Google services exists for F-Droid (ADR 0012, which reinstated the plan): it has local notifications only.
 - **Self-hostable backend** — Supabase is open source; `BackendConfig` accepts `--dart-define=SUPABASE_URL=…` / `SUPABASE_KEY=…` at build time.
 - **Every user-facing string translatable**, English canonical (ADR 0007).
 
@@ -963,9 +963,9 @@ gh workflow run ios-testers.yml -f email=someone@example.com
 
 **macOS:** `gh workflow run macos-app.yml -f ref=master` → a signed, notarised, stapled DMG (drag-into-Applications window built with `hdiutil`). See §13 for the honest-degradation behavior and the account-holder certificate constraint.
 
-### 15.3 F-Droid — DROPPED (ADR 0011)
+### 15.3 F-Droid — submission under review (ADR 0012)
 
-The F-Droid plans (flavor, fdroiddata recipe draft, no-GMS audits) were cancelled 2026-08-04 by owner decision: notifications are first priority, and FCM requires Google services. The recipe draft was removed.
+The F-Droid plans were cancelled on 2026-08-04 (ADR 0011: notifications first, FCM needs Google services) and reinstated on 2026-08-29 by ADR 0012, which builds a FOSS flavor that uses a local-notification package instead of FCM. The recipe is submitted as MR !47409 and is under review; DesKilo is not yet published there. See `docs/guides/fdroid.md`.
 
 ### 15.4 Windows
 

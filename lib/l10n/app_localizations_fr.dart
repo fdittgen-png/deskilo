@@ -6452,7 +6452,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Émettez un badge QR imprimable ou enregistrez une carte NFC ; révoquez un badge perdu à tout moment.';
 
   @override
-  String get helpHintBadgesTopic => 'badges RFID';
+  String get helpHintBadgesTopic => 'badge NFC';
 
   @override
   String get helpHintCalendar =>
@@ -6533,7 +6533,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vos documents : vos conditions, le rapport des paiements, le relevé du mois en PDF, la bibliothèque de documents.';
 
   @override
-  String get helpHintMoneyDocumentsTopic => 'Le volet Documents';
+  String get helpHintMoneyDocumentsTopic => 'Documents';
 
   @override
   String get helpHintMoneyInvoices =>
@@ -6544,7 +6544,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Relances de paiement automatiques';
 
   @override
-  String get helpHintMoneyInvoicesTopic => 'Le volet Factures';
+  String get helpHintMoneyInvoicesTopic => 'Factures';
 
   @override
   String get helpHintMoneyPayments =>
@@ -6557,14 +6557,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Services et Accessoires';
 
   @override
-  String get helpHintMoneyPaymentsTopic => 'Le volet Paiements';
+  String get helpHintMoneyPaymentsTopic => 'Paiement';
 
   @override
   String get helpHintMoneyStatement =>
       'Le mois tel qu\'il est : votre compte, jours utilisés et restants, abonnement, services, forfaits, positions ouvertes, avoirs et le solde. Parcourez les mois avec les flèches.';
 
   @override
-  String get helpHintMoneyStatementTopic => 'Le volet Relevé';
+  String get helpHintMoneyStatementTopic => 'Relevé';
 
   @override
   String get helpHintMoneyTopic => 'Argent';

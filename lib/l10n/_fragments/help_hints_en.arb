@@ -30,7 +30,7 @@
   "helpHintWorkspace": "Country, currency, language and billing details — documents and taxes follow these settings.",
   "helpHintWorkspaceTopic": "Workspace settings",
   "helpHintBadges": "Issue a printable QR badge or register an NFC card; revoke lost badges any time.",
-  "helpHintBadgesTopic": "NFC badges",
+  "helpHintBadgesTopic": "NFC badge",
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
@@ -43,15 +43,15 @@
     "description": "#718/#719 - help hints"
   },
   "helpHintMoneyPayments": "Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.",
-  "helpHintMoneyPaymentsTopic": "The Payments face",
+  "helpHintMoneyPaymentsTopic": "Payment",
   "helpHintMoneyPaymentsTip3Topic": "online payments",
   "helpHintMoneyStatement": "The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.",
-  "helpHintMoneyStatementTopic": "The Statement face",
+  "helpHintMoneyStatementTopic": "Statement",
   "helpHintMoneyInvoices": "Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.",
-  "helpHintMoneyInvoicesTopic": "The Invoices face",
+  "helpHintMoneyInvoicesTopic": "Invoices",
   "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
   "helpHintMoneyDocuments": "Your paperwork: your conditions, the payments report, the month's statement as PDF, the document library.",
-  "helpHintMoneyDocumentsTopic": "The Documents face",
+  "helpHintMoneyDocumentsTopic": "Documents",
   "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories",
   "helpHintMembersTipNegotiationTopic": "Price negotiations",
   "helpDotTooltip": "Open the guide",

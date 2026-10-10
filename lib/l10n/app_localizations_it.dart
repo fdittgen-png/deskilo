@@ -6436,7 +6436,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Emetti un badge QR stampabile o registra una tessera NFC; revoca i badge persi in qualsiasi momento.';
 
   @override
-  String get helpHintBadgesTopic => 'badge RFID';
+  String get helpHintBadgesTopic => 'badge NFC';
 
   @override
   String get helpHintCalendar =>
@@ -6517,7 +6517,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le tue carte: le tue condizioni, il report dei pagamenti, l\'estratto del mese in PDF, la libreria dei documenti.';
 
   @override
-  String get helpHintMoneyDocumentsTopic => 'La vista Documenti';
+  String get helpHintMoneyDocumentsTopic => 'Documenti';
 
   @override
   String get helpHintMoneyInvoices =>
@@ -6528,7 +6528,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Solleciti di pagamento automatici';
 
   @override
-  String get helpHintMoneyInvoicesTopic => 'La vista Fatture';
+  String get helpHintMoneyInvoicesTopic => 'Fatture';
 
   @override
   String get helpHintMoneyPayments =>
@@ -6541,14 +6541,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpHintMoneyPaymentsTipSupplyTopic => 'Servizi e Accessori';
 
   @override
-  String get helpHintMoneyPaymentsTopic => 'La vista Pagamenti';
+  String get helpHintMoneyPaymentsTopic => 'Pagamento';
 
   @override
   String get helpHintMoneyStatement =>
       'Il mese così com\'è: il tuo conto, giorni usati e rimasti, abbonamento, servizi, pacchetti, posizioni aperte, crediti e il saldo. Scorri i mesi con le frecce.';
 
   @override
-  String get helpHintMoneyStatementTopic => 'La vista Estratto';
+  String get helpHintMoneyStatementTopic => 'Estratto';
 
   @override
   String get helpHintMoneyTopic => 'Denaro';
@@ -6623,7 +6623,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicDeployment => 'Distribuire';
 
   @override
-  String get helpTopicDocumentLibrary => 'biblioteca documenti';
+  String get helpTopicDocumentLibrary => 'biblioteca dei documenti';
 
   @override
   String get helpTopicEinvoice => 'fattura elettronica';
@@ -6644,7 +6644,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicReadiness => 'ammissibilità';
 
   @override
-  String get helpTopicReportEditor => 'editor di report';
+  String get helpTopicReportEditor => 'editor dei report';
 
   @override
   String get helpTopicReportLayout => 'I layout posizionati';
@@ -6653,7 +6653,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicScheduledExpenses => 'Spese programmate';
 
   @override
-  String get helpTopicServer => 'il tuo server';
+  String get helpTopicServer => 'server';
 
   @override
   String get helpTopicSettings => 'Impostazioni e profilo';
@@ -6671,7 +6671,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTopicWorkingHours => 'Orari di lavoro';
 
   @override
-  String get helpTopicWorkspaceId => 'ID spazio';
+  String get helpTopicWorkspaceId => 'ID dello spazio';
 
   @override
   String get holidayAllSaints => 'Ognissanti';

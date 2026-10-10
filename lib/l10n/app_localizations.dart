@@ -11079,7 +11079,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintBadgesTopic.
   ///
   /// In en, this message translates to:
-  /// **'NFC badges'**
+  /// **'NFC badge'**
   String get helpHintBadgesTopic;
 
   /// #718/#719 - help hints
@@ -11217,7 +11217,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintMoneyDocumentsTopic.
   ///
   /// In en, this message translates to:
-  /// **'The Documents face'**
+  /// **'Documents'**
   String get helpHintMoneyDocumentsTopic;
 
   /// No description provided for @helpHintMoneyInvoices.
@@ -11235,7 +11235,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintMoneyInvoicesTopic.
   ///
   /// In en, this message translates to:
-  /// **'The Invoices face'**
+  /// **'Invoices'**
   String get helpHintMoneyInvoicesTopic;
 
   /// No description provided for @helpHintMoneyPayments.
@@ -11259,7 +11259,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintMoneyPaymentsTopic.
   ///
   /// In en, this message translates to:
-  /// **'The Payments face'**
+  /// **'Payment'**
   String get helpHintMoneyPaymentsTopic;
 
   /// No description provided for @helpHintMoneyStatement.
@@ -11271,7 +11271,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpHintMoneyStatementTopic.
   ///
   /// In en, this message translates to:
-  /// **'The Statement face'**
+  /// **'Statement'**
   String get helpHintMoneyStatementTopic;
 
   /// No description provided for @helpHintMoneyTopic.

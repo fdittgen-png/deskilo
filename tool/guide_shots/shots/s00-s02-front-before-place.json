@@ -1,0 +1,188 @@
+{
+ "shots": [
+  {
+   "id": "setup-guide-wizard",
+   "url": "/setup.html?lang={lang}",
+   "view": "phone",
+   "shows": "the setup wizard page, first screen: prepare everything in the browser",
+   "steps": [
+    {
+     "wait": 800
+    }
+   ]
+  },
+  {
+   "id": "setup-before-processes",
+   "persona": "owner",
+   "full": false,
+   "shows": "the Features screen: one card per business process with its state",
+   "steps": [
+    {
+     "hash": "#/features"
+    }
+   ]
+  },
+  {
+   "id": "setup-before-environment",
+   "persona": "owner",
+   "full": false,
+   "shows": "creating a space: One test workspace, One real workspace or a linked pair",
+   "steps": [
+    {
+     "hash": "#/onboarding?join=1"
+    },
+    {
+     "click": "@onboardingCreateTab"
+    },
+    {
+     "at": [
+      195,
+      202
+     ],
+     "wait": 800
+    },
+    {
+     "type": "Studio Lumen"
+    },
+    {
+     "click": "@wizardNext",
+     "wait": 1800
+    }
+   ]
+  },
+  {
+   "id": "setup-before-template",
+   "persona": "owner",
+   "full": false,
+   "shows": "creating a space: Start from, Empty space or a ready-made template",
+   "steps": [
+    {
+     "hash": "#/onboarding?join=1"
+    },
+    {
+     "click": "@onboardingCreateTab"
+    },
+    {
+     "at": [
+      195,
+      202
+     ],
+     "wait": 800
+    },
+    {
+     "type": "Studio Lumen"
+    },
+    {
+     "click": "@wizardNext",
+     "wait": 1800
+    },
+    {
+     "click": "@wizardNext",
+     "wait": 1800
+    }
+   ]
+  },
+  {
+   "id": "setup-place-country",
+   "persona": "owner",
+   "full": false,
+   "shows": "general details: country, currency, time zone",
+   "steps": [
+    {
+     "hash": "#/workspace-settings",
+     "wait": 5000
+    },
+    {
+     "click": "@helpHintDismiss"
+    },
+    {
+     "wait": 800
+    },
+    {
+     "scroll": 500,
+     "wait": 1200
+    }
+   ]
+  },
+  {
+   "id": "setup-place-rooms",
+   "persona": "owner",
+   "full": false,
+   "shows": "a floor with its rooms and desks",
+   "steps": [
+    {
+     "hash": "#/editor"
+    },
+    {
+     "click": "Ground floor"
+    },
+    {
+     "wait": 2500
+    }
+   ]
+  },
+  {
+   "id": "setup-place-availability",
+   "persona": "owner",
+   "clip": false,
+   "shows": "the availability screen, cut by decision",
+   "steps": [
+    {
+     "hash": "#/availability"
+    }
+   ],
+   "parts": [
+    {
+     "id": "times",
+     "from": "@availabilityOpenWeekdays",
+     "to": "@availabilityPoliciesTitle",
+     "pad": 0
+    },
+    {
+     "id": "rules",
+     "from": "@availabilityPoliciesTitle",
+     "to": "@availabilityClosureDays",
+     "pad": 0
+    },
+    {
+     "id": "closure",
+     "from": "@availabilityClosureDays",
+     "pad": 0,
+     "to": [
+      "May 1, 2023",
+      "1 mai 2023",
+      "1. Mai 2023",
+      "1 de mayo de 2023",
+      "1 maggio 2023"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "setup-place-get-started",
+   "persona": "owner",
+   "view": "phone",
+   "full": false,
+   "clip": false,
+   "shows": "the Get started card on Reserve",
+   "steps": [
+    {
+     "hash": "#/reserve"
+    }
+   ],
+   "parts": [
+    {
+     "id": "card",
+     "steps": [],
+     "clip": [
+      0,
+      94,
+      390,
+      275
+     ]
+    }
+   ],
+   "keepTips": true
+  }
+ ]
+}

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
 import '../../../../core/links/link_launcher.dart';
@@ -161,6 +162,20 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
                 ),
                 // recorder-key-exempt: a link style inside the guide text.
                 onTap: (url) {
+                  // The guide's own links: `help:<anchor>` jumps to that
+                  // section, `app:/route` opens the screen it names.
+                  if (url.startsWith('help:')) {
+                    _jump(
+                      anchor: url.substring('help:'.length),
+                      anchors: ref.read(helpAnchorsProvider(languageCode)).value ??
+                          const {},
+                    );
+                    return;
+                  }
+                  if (url.startsWith('app:/')) {
+                    context.go(url.substring('app:'.length));
+                    return;
+                  }
                   final uri = Uri.tryParse(url);
                   if (uri != null) ref.read(linkLauncherProvider)(uri);
                 },

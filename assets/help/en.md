@@ -1,2270 +1,8349 @@
 # User Guide
 
-Everything a member, admin, or owner needs to use DesKilo.
+**DesKilo — your space, working together.**
 
-> The screenshots in this guide show the app in French — every screen exists identically in all five languages (English, Français, Deutsch, Español, Italiano); switch in **Settings → Language**.
+## A coworking space run by the people who use it
 
-![](assets/help/images/settings-language.jpg)
+Picture a room where freelancers, makers and small teams share tables, a kettle and a Wi-Fi password — and the only things anyone has to ask are *where can I sit today, what do I owe, and who needs to say yes?* DesKilo answers those three questions for communities that run their own space.
 
-**My spaces and the map (#2155).** In Me → Home, each workspace has one compact identity row. **Open workspace** and **Test space** are adjacent entry buttons; the history symbol marks the last environment used. Each environment keeps its own menu. On narrow screens the identity sits above the buttons. In Discover, **Locate on map** centers a workspace; the recenter button restores that view after panning. Published coordinates take priority. When absent, opening the map for one result or locating a result searches its public address through Photon (OpenStreetMap). The returned location is explicitly approximate, may identify only the street, and never changes the published page. If lookup fails, retry or ask the owner to publish latitude and longitude. No device location is requested.
+- **Know where you can sit.** A live floor plan, bookings by half-day or by the hour, check-in and check-out, a shared calendar.
+- **Know what you owe.** One honest account per member: subscription, extra days, shared expenses, payments, statements and invoices — the same figures for the member and for the person who runs the space.
+- **Run it your way.** Roles, approvals, opening hours, prices, wording and colours are yours to set, in a handful of screens, without a landlord platform in the middle.
+- **Belong to a network.** One personal account follows you across every space you join; spaces that want to be found publish a page, and people can talk privately.
 
-## 1. Getting started
+DesKilo is free software (AGPL-3.0). It runs on phones, tablets, desktops and the web, speaks English, French, German, Spanish and Italian, and keeps your community's data portable: use the hosted service, or run the backend yourself.
 
-### Create an account
+## Start a space of your own
 
-Open the app and sign up with your email, a password (8+ characters), and a display name — or **continue with Google**. You can show or hide the password while typing with the eye button. *Forgot password?* emails you a **one-time numeric code**, which you type back into the app together with your new password — deliberately a code rather than a link, so a reset works even where deep links don't. A Google sign-in can later be attached to an existing email account under **Settings → Linked accounts**.
+You do not need a building, a business plan or an IT team to begin. A few shared desks in a back room, an association's meeting room, two floors above a café: if people gather to work, DesKilo gives them a floor plan to book, rules they agree on, and a ledger that nobody has to keep in a spreadsheet.
 
-### Create a workspace — or join one
+In about twenty minutes you can have a space people can join: a name, a plan, opening times and someone to say yes. Money, invoices, a kiosk at the door and a look of your own come later — when you want them, in the order that suits you. Try everything first in the demo workspace, which belongs to nobody and costs nothing, then follow the [Setup Guide](help:setup.guide.how-to-read) from the first step to the first booking.
 
-After signing in you land on the welcome screen with two paths:
+> **Tip** Open the demo, switch between the owner, an administrator and a member, and book a desk. Ten minutes there will tell you more than any description.
 
-- **Create a workspace** — you become its **owner**. Pick a name, country (drives the default currency), and time zone. You'll then draw your floor plan in the editor (§8).
-- **Join a workspace** — type the **workspace ID** someone shared with you, or tap **Scan QR code** and point the camera at the invite QR pinned to your space's wall. Your request arrives as **pending**: *New member* is one of the validation domains (§7), so a validator lets you in, and you then hold exactly the role the invite carries (§2).
+## Join the project
 
-### The setup questionnaire — prepare a new space before you open the app
+DesKilo is built in the open by a small community, and there is room for you:
 
-Creating a workspace means dozens of decisions that live in a dozen different screens: what a booking may look like, what a month costs, what the law wants on an invoice, who validates what. The app lets you make them one at a time, as you meet them. The **setup questionnaire** lets you make them all at once, *before* you start — on a big screen, with your accountant or your board if that helps, without touching anything live:
+- **Try it and tell us.** Install the app (the web app needs nothing; the Android closed test and the iPhone TestFlight beta are open on request) and report what surprises you.
+- **Share what you know.** Running a coworking space teaches things no developer knows. Tell us what your community needs and what got in your way.
+- **Translate and improve the guides.** This guide and the Setup Guide are plain text files in five languages, with screenshots that a single command re-shoots; a correction is a small change.
+- **Build.** The code, the roadmap and the open issues are public, with the conventions a new contributor needs.
+- **Host.** Run your own backend for your community, or ask to use the reference deployment.
 
-<https://fdittgen-png.github.io/deskilo/setup.html>
+[The project on GitHub](https://github.com/fdittgen-png/deskilo) · [Open the web app](https://fdittgen-png.github.io/deskilo/) · [Android closed test](https://play.google.com/apps/testing/de.deskilo.app) · [iPhone beta](https://testflight.apple.com/join/RgFX9zBe)
 
-It is a single web page. Nothing to install, no account, nothing sent anywhere: your answers are saved in your own browser, so you can close the tab and come back to them.
+## How to use this guide
 
-![](assets/help/images/setup-wizard.jpg)
+**Audience:** Everyone
 
-*The wizard: twelve steps in dependency order, every question saying where the setting lives in the app, with a **?** that opens this guide at the matching section.*
+Every section answers one question — *"how do I…?"* — and opens with the people it is for, so you can skip what is not yours. The screenshots come from the demo workspace, *Atelier du Marché*, whose people and figures are invented.
 
-**How you use it**
+*Pick your path*
 
-1. **Answer the steps in order** — identity, features, availability, floor plan, subscriptions, legal identity & VAT, services, payment instructions, roles & validation, members. Each step asks only what your earlier answers make possible: no VAT rates when you are not VAT-registered, no e-invoicing platform outside the EU, no day-package option for a member while no package exists, no child feature while its parent is off.
-2. **Check the feature summary.** It lists every feature the app will switch on and *how your own answers configure it*. Untick what you do not want: it is exported disabled and its configuration is left out — you can always switch it on later in Settings → Features.
-3. **Read the review step.** It separates what is complete, what is a choice to confirm and what actually blocks, each with a jump straight to the question that fixes it.
-4. **Export the XML**, then open the app: **Settings → Coworking space → Import the space (XML)** creates the settings, the accessories and the floor plan directly. The same file's `<setup>` section carries everything the importer does not — billing, legal identity, roles, members — so you can finish those screens one by one; every question told you where its answer lives.
-5. **Keep the file.** Loading it back into the page continues where you left off — including a file exported before a setting existed, which simply comes back with that setting at its default.
-
-![](assets/help/images/setup-feature-summary.jpg)
-
-*The feature summary: what the app will switch on, configured by your own answers — untick what you do not want.*
-
-**One caution.** The exported file is plain text. Fill in an e-invoicing token or a payment-provider key only if you are answering privately; otherwise leave those fields empty and type the secrets in the app, where they go straight to the server and never come back.
-
-**Skipping it costs nothing.** Every answer it collects is a setting you can also make — and change — in the app later. The questionnaire is a shortcut for the first hour, not a gate.
-
-### Profiles — one account, several spaces
-
-Workspace names lead the profile list. Open a paired workspace to choose **Development — for trying things out** or **Production — the invoices are owed**; the active environment is marked. Roles appear as supporting text, and platform-wide spaces are in a separate expandable section (#2289).
-
-One account can belong to several workspaces. **Settings → Profiles** lists them all: each row shows the space's name, **your role there** (Member, Admin, Owner) and its workspace ID. The **check mark** marks the profile you are currently in; the **star** marks your **default** — the profile the app opens with, on every device and even after a reinstall (the choice is stored with your account). Tap a row to switch, **+ Add a profile** to join yet another space. Everything in the app is scoped to the active workspace. Since #996, **switching is remembered**: tapping another profile, or the other side of a pair, makes it the default at start-up — the star follows, and you never come back after a restart to a workspace or an environment you had left.
-
-![](assets/help/images/profiles.jpg)
-
-*Profiles: every workspace your account belongs to, your role there, the star for the default, the check for the active one.*
-
-### Finding your way around
-
-The app has up to five destinations along the bottom: **Messages** (§16), **Calendar** (§5), the big central **Reserve** button (§4), **Members** (§6) and **Money** (§9). Messages and Reserve are always there; Calendar, Members and Money come and go with their feature (§8). **Messages is the inbox**: your conversations and the events & confirmations feed (§7) are its two faces, and the **bell** in the app bar jumps straight to the second with a count of what awaits you. The **gear** that opens **Settings** (§12) is in every header. On phones held sideways and on tablets, most screens switch to a **split layout** — controls in a side panel, content filling the rest. **Without the bell (#1306).** A workspace can switch the events feed off in Features. The decisions waiting for you then move to the **Calendar**: its destination carries the count, and the calendar opens with them pinned at the top, *Accept* one tap away — as long as the calendar shows decisions on its timeline.
-
-**Everything stays live.** Whatever anyone changes — a booking, a new member, a setting — is pushed to every connected device within seconds, including the one that made the change. No restart, no pull-to-refresh.
-
-**On the web: sidebar or menu.** Wide browser windows show primary destinations in a sidebar. Narrow windows and enlarged text use the **☰ menu**. Both layouts offer the destinations available to your role and enabled workspace features, with Administration grouped separately and Back to Me visible. Phones and desktop apps retain your navigation preference.
-
-**More room: swipe the bar away (#1173).** Swipe the bottom bar **down** — or double-tap it — and the tabs slide out of the way, leaving the round **Reserve** button where it is. The bar follows your finger as you pull, so you can see where it is going: let go before halfway and it springs back, past halfway and it stays away. A quick flick decides on its own, however far it travelled (#1265). The content takes the whole strip back, which on the floor plan is the difference between four rows of seats and five. Three ways bring the bar back: swipe **up** in the same strip, **long-press** the Reserve button, or use that button's *Show navigation* action with a screen reader. The choice is remembered on this device, and the app shows the hint once, the first time. **The title bar goes with it (#1322)**, so the view really is full screen: both bars follow your finger as one and come back together. The phone's status bar and the development strip stay. Scan, the editor, Privacy and Settings return with the bars, and while anything awaits your decision the Reserve button carries the count the bell showed.
-
-**Personal destinations and readable messages (#2274, #2269).** Home, Discover, Messages and the profile/settings destination each have a stable Me URL. Reload or open a copied link to restore that destination after startup; browser Back/Forward follows destination changes, and visited tabs retain their in-session state. Inbox previews read linked resources as labels. If a preview ends inside a reference, it shows the surviving label with an ellipsis, or Linked resource when no label is available. The original message remains unchanged and previews do not fetch resource details.
-
-**Space entry and account navigation (#2273, #2275, #2277).** Open workspace enters the normal workspace; Test space opens its practice environment, with an explanation on the card. The workspace keeps its real/test context visible after entry. Profile & account is a labeled navigation destination. Its persistent Profile, Privacy, Preferences and Advanced shortcuts jump to the corresponding section; Preferences puts language, theme and available region/format controls first. Visibility audiences, public-profile controls and their preview remain together under Privacy. On wide web layouts, Me and workspace destinations stay visible in a sidebar, including Back to Me and the existing Administration group. Narrow layouts and enlarged text use the compact navigation menu. Calendar controls and floor guidance scroll when enlarged text needs more height, keeping the activity feed and actions reachable.
-
-**Find my bookings (#2276).** My bookings is visible above the category strip and returns the calendar to your own reservation scope. The summary names the current member and categories; Reset filters returns to your own activity with all available categories and keeps the date selection. Booking rows show authorized floor/resource names and status where available. Missing sources retain their supplied label or say Resource unavailable. Each row still opens its original source.
-
-**Workspace navigation.** Daily destinations stay visible. Administration is organized into **People & access**, **Billing & payments**, and **Workspace setup**. Open a group to see the tools available to your role; returning from a tool preserves the open group. Back to Me and personal account destinations remain separate.
-
-## 2. Roles & invitations
-
-DesKilo has three additive roles and a co-ownership flavour on top of them, plus a device account:
-
-| Role | Can |
+| You are… | Start here |
 |---|---|
-| **Member** | Check in/out, reserve, submit expenses, see and manage their own events and ledger |
-| **Admin** | Everything a member can, plus: act *for anybody* (reservations, payments, expenses — subject to confirmation, §7), approve expenses, issue kiosk badges |
-| **Owner** | Everything an admin can, plus: edit the physical workspace, define plans and prices, manage roles, kiosk devices, and workspace settings |
-| **Co-owner** | *Active*: the owner's permissions right now, plus automatic succession. *Passive*: a successor-in-waiting with no extra permissions today |
-| **Kiosk** | A wall-mounted tablet account (§10) — shows the plan only; real members act through it with a badge |
+| New to DesKilo | [Getting started](help:user.start.overview) |
+| A member booking places | [Reserve](help:user.reserve.overview) · [Money](help:user.money.overview) |
+| An administrator | [Collaborate](help:user.collaborate.overview) · [Members & plans](help:user.people.overview) |
+| An owner setting a space up | [Your space](help:user.space.overview) · [Billing](help:user.people.overview) · [Tax & invoicing](help:user.invoicing.overview) |
+| Running an installation | [Advanced](help:user.advanced.overview) |
 
-Part of this is not carved in stone: the owner retunes **eleven administration permissions** in the **Role management** matrix (§8) — manage roles, manage members, validation policies, workspace settings, issue invoices, view finances, documents, services, approve expenses, view and manage commercial agreements. What the matrix does *not* govern is the everyday stuff — checking in, reserving, acting for another member, editing the space — which stays where the table above puts it, gated by the features and the per-member switches instead. Since #982 the matrix also carries what only an owner or an admin could do before: **sites and levels**, **tariffs and billing rules**, **reservations of others**, **the kiosk and badges**, **exports**, **document design**, **members' personal data**, **integrations** and **the configuration**. An admin row that was never edited keeps exactly what admins could do (sites, reservations, kiosk, exports, personal data); an owner who edits a row decides the whole row.
+**Good to know**
 
-**Every invitation is bound to a role.** On the owner's *Workspace ID & QR* screen two tabs hold two invites, each with its own QR code and code:
+- In the app, every `?` next to a field opens this guide at that field.
+- The audience line names the narrowest group the section is for: *Member*, *Administrator*, *Owner*, *Co-owner*, *Billing administrator* or *Operator*. What you see in the app depends on your role and on the features your owner switched on.
+- Blue text is a link: to another section, or to the screen itself.
 
-- **Member invite** — the workspace ID itself, shown under the workspace's name. Print it, pin it to the wall, share it freely: whoever scans or types it asks to join as a plain member, and a validator admits them (§7). Buttons: **Copy ID**, **Share as PNG**, **Change the workspace ID** (replace the generated ID with a memorable one, 4–20 letters/digits) and **Invite someone**.
-- **Admin invite** — a **personal, single-use code**, minted by an owner for one specific person. The screen says it plainly: *this code admits ONE person as an admin, then expires* (unused codes lapse after 14 days). Hand it only to the person it is meant for; mint a new one per admin with **New admin code**.
-- **Invitations speak the invitee's language** — the invite sheet writes the message in the language you pick (five available), defaulting to the **workspace language** set in *Workspace settings*. The owner can also customize the invitation text **per language** there, with placeholders like `{firstName}`, `{workspaceName}`, `{inviteLink}`, `{downloadUrl}`, `{role}`; a language left empty uses the built-in translated message.
+## Getting started
 
-**There is no owner invite — by design** (the screen's footer reminds you). Ownership can only be granted by an existing owner, in *Members & plans*. A workspace always keeps at least one owner. Promoting or demoting an **admin** goes through the validation flow (§7) — it applies once the workspace's validators confirm.
+DesKilo is where a community that shares a workspace books its places, keeps its memberships and settles what is owed. This chapter takes you from the first launch to a space you can work in.
 
-**Co-owners keep the workspace alive.** The owner appoints any member or admin as a co-owner (*Members & plans → the member → Co-ownership*), in one of two flavors: an **active** co-owner works with the owner's permissions immediately; a **passive** co-owner has no extra permissions until the day they are needed. Either way, succession is automatic: if the last owner leaves — exits, is removed, or their account disappears — the best co-owner (active before passive) **becomes owner instantly**, on the server, with no action required. The owner can also hand over deliberately at any time with *Promote to owner now*. One nuance: validation rules that demand the *owner's* sign-off (§7) always mean a literal owner, not an active co-owner.
+In this chapter:
+- [What DesKilo is and who does what](help:user.start.what-is)
+- [Create an account or sign in](help:user.start.account)
+- [Reset a forgotten password](help:user.start.forgot-password)
+- [Explore the demo workspace](help:user.start.demo)
+- [Join a workspace](help:user.start.join)
+- [Create a workspace](help:user.start.create)
+- [Find a workspace](help:user.start.find)
+- [Me: your home and your spaces](help:user.me.home)
+- [Keep your spaces in order](help:user.me.organise)
+- [Profiles: one account, several spaces](help:user.profile.profiles)
+- [Find your way around](help:user.start.navigation)
+- [The Get started card and the tips](help:user.start.get-started)
+- [Prepare a space with the setup questionnaire](help:user.start.questionnaire)
 
-The QR encodes a link that names the role it grants (`deskilo://join?role=…`). Tampering with the link changes nothing — the server derives the role from the code itself: the workspace ID always joins as a member, and a personal invitation joins in exactly the role it was minted with, once. A forwarded admin code that was already used — or expired — admits nobody.
+### What DesKilo is and who does what
 
-**Inviting someone by message** (*Invite someone*): each WhatsApp/SMS/share send mints its own personal single-use code and builds a ready-made message in the invitee's language. The recipient can simply copy the whole message and paste it into the app's join field — the code is detected automatically.
+**Audience:** Everyone
 
-## 3. The floor plan (in the Reserve hub)
+You want to know what the app is for and what you may do in it. DesKilo answers three everyday questions of a shared workspace: where can I work, what do I owe, and who needs to approve this. Around the spaces sits **Me**, your own account, which follows you into every space you belong to.
 
-The plan shows the active level of your space: offices, desks, and seats, color-coded — **free**, **reserved**, **occupied**, **mine**, **blocked**. It opens **instantly from the last known data** and refreshes in the background — on flaky Wi-Fi you still see the most recent state instead of a blank screen. When that state could not be refreshed, a banner says so — *Offline — availability as of 09:30* — with **Retry**, because a seat drawn free may have been taken since (#1305). An occupied seat shows who's there as their **initial** — or as their **photo**, when they set one and the owner enabled *Member photos on the plan* — with a **check badge** when they are checked in and a **green dot** when they are online in the app right now. Full first names appear where there is room for them: on the lock chip of a whole-space booking, and in the list view. When a **whole table, room or floor** is reserved, the space itself says so — a coloured wash, a strong border, and a **lock chip with the occupant's name** in the middle (a checked-in glyph once they're there); the room's label reads *Bureau 2 · Florian*. Every user sees it, on the plan, in the Reserve hub and on the kiosk.
+![](assets/help/images/user-start-what-is.en.b8fa17aa9.jpg)
 
-The plan can look like your real space: the owner can put a **photo of the room as the level background** and place freely **resizable illustration images** (plants, sofas…) on the grid. A **desk transparency** slider in the workspace settings lets the photo show through the drawn desks.
+Inside a space, what you may do depends on your role. Roles add up: everyone is a member, and the others come on top.
 
-Getting around:
-
-- Along the top: the **View** control, which names what you are looking at (*Plan ▾*) and opens the other views — **Day**, **Week** and **Month**, for exploring rather than booking (#1301); a **map / list** toggle (the list shows the same seats as rows), the **date chip** (tap to browse another day) and the window controls, which follow your workspace's granularity (§8): three **day-part chips** — morning, afternoon, full day — where the workspace books half-days; only *Full day* where it books whole days; **from → to** controls on a minute grid or a free time range; and both under *real hours*.
-- The canvas **auto-fits** your floor when it opens or when you rotate the device; **pinch to zoom** or use the **+ / −** buttons, drag the **scrollbars** along the edges, and tap the **fit** button to re-centre.
-- Pick the floor from the **level rail** on the right (1, 2, …); its **layers icon** acts on the whole level (below). In **landscape**, the controls move into a side panel so the plan fills the screen — handy on tablets.
-
-Booking from the plan:
-
-- **Walk-up check-in**: tap a free seat → the sheet suggests *now* until a canonical end → confirm. Under half-days and full days the server then **snaps the start back to the slot it belongs to**: arrive at 10:00, confirm *until 12:00*, and you book — and consume — the whole 8:00–12:00 morning (§4b). If someone reserved that seat later, your end time is capped and you're told.
-- **Check-in on a reservation**: checking in means *you are there*. Under half-days, full days and real hours **any arrival on the booking's own day** opens the window — at 10:00 you can already check in on your 12:00 afternoon. On a minute grid the window opens 15 minutes before your start, or one grid step before it when that step is longer (so 5- and 15-minute grids keep the 15 minutes, an hourly grid opens an hour early). It closes when the reservation ends; outside it the button is disabled and says when it opens. Admins can check in a member standing at their seat (while *booking for others* is on).
-- **Check-out**: manual — and it **truncates the booking to now**, so the seat frees immediately for everyone else. It is **personal by default**: an admin (the owner included) can only end someone else's check-in once *Admins may check members out* is on (§8). With **auto check-in/out** enabled, forgotten bookings close themselves — the sweep runs on every read, so a morning booking left open is completed at its own end from 12:01 onwards, not at midnight.
-- **Whole spaces**: **double-tap** a desk, a room, or an empty stretch of floor — or tap the **layers icon** on the level rail — to act on the **whole table, office or level**. **One sheet** holds all of it: the space's name, the period picker (e.g. *Thu, Aug 6 10:13 → 12:00*) with the same repetition options as a seat, an optional **For the member** selector for admins booking on someone's behalf, and the confirm button.
-- **The booking sheet** keeps the booking in view: place, date, time and **Reserve**. **Repeat** and, for operators, *Make not reservable* wait behind **More options** (#1301). Once booked, the confirmation offers **Details**, which opens the new reservation with what you can do next: check in, move, cancel.
-- **Make not reservable**: under *More options* on the booking sheet, owners and admins (with *Admins may block seats*) take the seat out of service from now on — it reads **blocked** on the plan until it is released again in the editor's seat sheet.
-- **Time scroller**: pick a from→to window (or Morning / Afternoon / Full day, depending on the workspace granularity) to see occupancy at any future moment.
-- Seats can carry **accessories** (monitor, standing desk…), some with a per-half-day supplement that shows up on your statement.
-- Bookings count against your **monthly days** (§9) — the app blocks or bills you past your plan, depending on what the owner configured for you. One exception: a booking lying **wholly outside the working hours** may be free or exempt, depending on the workspace's outside-hours policy (§4b).
-
-![](assets/help/images/reserve-plan-closed.jpg)
-
-*The plan in the Reserve hub on a closed day: the closure banner, the view switch, the date and the day-part chips, the level rail (1 · 2 · layers) and the zoom controls.*
-
-**A seat booked for part of the day looks part-booked (#903).** The plan reads a seat left to right as the open day: a booking that ends at midday fills the left half of the pad, one that starts after lunch fills the right, and a seat held all day fills whole as before. A hairline separates two neighbouring bookings so they never read as one, and each stretch carries the colour of who holds it — yours or somebody else's.
-
-**Who is on this seat today.** Tap a seat that carries **more than one booking** and the day opens instead of the usual sheet: every stretch with its hours, its occupant and whether it is done, running or still ahead, and every free stretch as something you can take — tap it and the ordinary booking sheet opens on exactly that window. A seat with a single booking behaves as it always did. The whole thing rides the *Seat day timeline* feature.
-
-## 4. Reservations (Reserve hub)
-
-After a successful join or creation, the returned workspace becomes active for the current session without changing your saved default. An existing requested task keeps its own context; a late response cannot replace a newer account, installation or workspace choice. (#1654)
-
-**Get started** (#1654) is optional guidance in the Reserve hub. It names the active workspace and environment, then suggests one action supported by the available information: choose a time, view your membership, or open Help. Opening an action never makes a booking. **Not now** hides the card for this account, server and workspace; **View → Get started** brings it back. A successful booking updates the card from the returned reservation; a failed request does not mark it complete. Long guidance scrolls so its actions remain reachable with large text. The workspace can turn off **Get started card** without disabling normal booking.
-
-The booking summary names the booked place and its current state. With accessibility enabled, reopening your seat after check-in offers **Check out** immediately, without reloading the app. (#2307)
-
-With large text or a short window, scroll the hub controls to reach the date and view actions; the floor plan keeps its own visible area (#1654).
-
-Open the **Reserve** hub (center button). Along the top: two rows of controls. The first says **what** you are looking at: the four **view buttons** and, on the plan, the **map / list** switch. The second says **when**: the **date chip**, a **Now** button once you have browsed away from today, and the same granularity-dependent window controls the plan itself uses (§3 — day-part chips, a *Full day* chip, or from → to). The **floor chips** (*All floors*, or one per level) sit on the plan itself, and the **QR scan** button (§4a) sits in the app bar, beside the editor and the bell. Then four views:
-
-- **Plan** — the floor plan filtered to your chosen window; tap a free seat to book it.
-- **Day** — every seat as a timeline row for the selected day (08:00 → 17:00 or your workspace's hours, the red line marking *now*); tap a free stretch to book, tap your own block to see its details.
-- **Week** — a seat × day grid for the whole ISO week, a day strip (*Mon 3 … Sun 9*) on top; each cell holds the day's half-day slots with the occupant's initial. Find a free half-day at a glance and tap it to book.
-- **Month** — an availability calendar: every day shows its **free-desk count** (e.g. *10/12*); tap a day to drop into its Day view.
-
-**One place at a time — by default**: the workspace sets how many overlapping reservations one member may hold, and that number is **1** unless the owner raises it (§8). At 1, booking or checking in somewhere else while one is running is refused; checking in closes any earlier check-in whose booking already ended either way. Admins and owners can **overrule**: tapping an occupied or reserved seat offers *Remove reservation (overrule)* — the reservation is removed and the member and all admins are notified through the events feed.
-
-Reservations follow the workspace **granularity rule** (§8 Availability) — half-days, full days, real hours (exact from–to times with the half/full-day windows as shortcuts), or free start/end times on the owner's slot grid. Half and full days cover the workspace's configured **working hours** (default 8:00–17:00 with the half-day boundary at 12:00). They respect the **open weekdays** and **closure days**, and the booking rules (advance horizon, minimum and maximum duration). **A booking always ends on the day it starts** — nothing crosses midnight; a stay that continues tomorrow is tomorrow's booking, made tomorrow (§4b). Repeating needs? Book a **series** (daily, weekdays, weekly) — closed days and conflicts are skipped and reported.
-
-**Deleting a past or checked-in booking is a request, not an action.** A booking whose start has passed — or where you already checked in — cannot be cancelled directly: the sheet offers **Request deletion** instead. An owner or admin decides the one question that matters for billing: was the check-in simply forgotten (the booking stays on the record), or was it never used (it is removed)? The request appears on the Events feed with your optional reason; future untouched bookings keep the normal one-tap cancel. This whole path rides the **Booking deletion requests** feature: with it off, a started or checked-in booking has neither a cancel button nor a request — it simply stays on the record.
-
-![](assets/help/images/reserve-day.jpg)
-
-*The Day view: every seat as a timeline row, the red line marking now — tap a free stretch to book it.*
-
-![](assets/help/images/reserve-week.jpg)
-
-*The Week view: a seat × day grid holding each day's half-day slots, the occupant's initial in the cell.*
-
-![](assets/help/images/reserve-month.jpg)
-
-*The Month view counts the free desks per day (8/10); tapping a day drops into its Day view.*
-
-![](assets/help/images/reserve-booking-sheet.jpg)
-
-*The booking sheet: Morning / Afternoon / Full day, Book for (admins), Repeat — and Make not reservable, for owners and admins.*
-
-### 4a. Scan a space code
-
-Every seat, desk, office and level can carry a printed **QR card** (§8). Tap the **scan button** in the Reserve hub, point the camera at the card — or type its code — and the app identifies the space and shows exactly what *you* may do there:
-
-- **Seat card** — reserve or check in on that exact seat, on the spot (today's window: morning / afternoon / full day where the workspace uses half-days, otherwise from now for the next hours).
-- **Desk card** — the desk's seats with their live state; pick a free one. A table the owner marked bookable also offers the **whole table**, with its price per half-day, exactly like an office or a level card.
-- **Office or level card** — if the owner made it reservable, the *Desk, office & level reservations* feature is on **and** you hold the personal right (§8) — owners and admins always do — you can reserve or check into the **whole office or floor** — with the same period picker (morning / afternoon / full day, or free times) and **series** options as a seat; its price per half-day is shown and lands on your bill. Otherwise the sheet tells you why, and an office falls back to its seats.
-
-**A scan opens the kiosk's own sheet.** Reading a **seat**'s code — its printed QR, or the NFC tag stuck on the chair — offers exactly what tapping that seat on the kiosk offers: the same three actions (**Check in**, **Reserve**, **Check out**), the same period derived from the workspace settings. The one difference is that you are already signed in, so there is no badge step (§4b). Table, office and level cards open their own whole-space sheet as described above; **NFC tags resolve seats only**, so a chair tag is the one tap-to-book shortcut.
-
-**Conflicts protect both directions:** an office or level cannot be reserved while any seat inside is already booked in that window — and no seat can be booked while its office or level is reserved as a whole.
-
-### 4b. How booking behaves
-
-All times below are workspace-local, and the examples assume the default working day (08:00 – 12:00 – 17:00).
-
-**Booking ahead.** What a time window may look like depends on the workspace granularity (§8 Availability):
-
-| You ask for | Half-days | Full days | Minute grid (5/15/30/60 min) | Real hours / free time range |
-|---|---|---|---|---|
-| The morning (8–12) | ✅ | ❌ — must cover the full day | ✅ if the edges sit on the grid | ✅ |
-| The afternoon (12–17) | ✅ | ❌ | ✅ | ✅ |
-| The whole working day (8–17) | ✅ | ✅ | ✅ | ✅ |
-| An odd window (9–15) | ❌ | ❌ | ✅ if on the grid | ✅ |
-| Before opening / after hours (a 6:00 start, 17–21) | only as the evening walk-up | only as the evening walk-up | ✅ — the grids are free-time | ✅ |
-| Off the grid (10:02) | — | — | ❌ — the refusal names the grid | — |
-
-The last row of that table is the only one a granularity can rule out by shape; everything else about a window is decided by rules that apply **on every granularity alike**:
-
-- The future is open up to the **advance horizon** — 90 days unless the owner changes it (§8) — and refused beyond it.
-- The **minimum and maximum duration** hold everywhere, not just on grids. Both are owner-set (§8); with the default 30-minute minimum, a half-day walk-up started at 11:45 for the 12:00 boundary is refused as too short — arrive earlier or take the afternoon.
-- **A booking ends on the day it starts.** No window may cross midnight, whatever the granularity: an evening that runs on becomes tomorrow's booking, created tomorrow. The refusal reads *"a booking must end on the day it starts"*. The evening walk-up that runs to **local midnight** is still fine — midnight is that day's own end, not a crossing. Keeping every booking inside one day is what lets each day's occupancy, quota and bill be answered on that day alone.
-- A booking on a **day that already ended** (yesterday and earlier) is refused — *"lies entirely in the past"* — unless the owner switched **Allow past bookings** on. Booking this morning's window later the same day always works.
-- A **walk-up check-in must start today**: creating an already-checked-in booking for tomorrow is refused.
-- A **closed day** refuses by name; an occupied seat refuses; and a member may hold only as many **overlapping** bookings as their allowance (below).
-- The **Outside the opening hours** policy (§8) decides what a window leaving the working day is worth, or whether it may exist at all (below).
-
-All of it is enforced in **one shared place on the server**, which is why the plan, the Reserve hub, a QR or NFC scan and the wall kiosk all offer exactly what will be accepted, and why the kiosk refuses precisely what the plan refuses — there is no "but the kiosk let me" path. A request that slips past a stale screen is refused with the reason named.
-
-**Before you ask, the app tells you (#814).** Every one of those rules is mirrored on the device by the **booking gate** (Features → *Booking gate*, under *Booking policies*, on by default): the plan tap, the Day and Week free-slot taps, the booking sheet, the kiosk one-sheet and the QR/NFC scan sheet all check the window against the availability parameters **before** offering it, and name the same reason the server would — *closed on that day*, *lies entirely in the past*, *too far ahead — bookings are open N days in advance*, *too short*, *too long*, *a booking ends on the day it starts*, *outside the opening hours*. A refused window disables **Reserve** with the reason under the period; at the kiosk the badge is simply not accepted for it, and the scan sheet refuses a closed day up front exactly as the kiosk does. The **Day, Week and Month views** draw closed days as closed — muted columns, no free-slot tap, *Closed* instead of a free-desk count — and a **legend** under the controls names the seat states (*Free · Reserved · Checked in · Mine · Blocked · Closed day*). Where the owner switched **Admins may check members out** on, an admin's sheet on an occupied seat offers **Check out {name}**. In the browser, which has no camera scanner, the scan and kiosk sheets say so and point at the typed code and the NFC tag.
-
-**How many places at once.** The workspace sets a **simultaneous-reservations** number (§8); it is **1** by default — exactly the historical one place at a time. An owner or admin may grant a single member a higher allowance in *Members & plans*, and that personal permission overrides the workspace number; nobody sets their own. The same allowance governs **check-ins**: a member allowed 2 places may be checked in at 2 places at once. Reaching the allowance refuses with the familiar message — *you already have a reservation in that period*, or *already checked in elsewhere*.
-
-**Outside the opening hours.** A window that leaves the working day — a 6:00–8:00 early morning, a 17:00–21:00 evening, the overtime walk-up running to local midnight — is governed by one workspace-wide policy with **four** mutually exclusive answers (§8), the same on every granularity.
-
-| Mode | A booking (or walk-up check-in) outside the hours |
+| Role | What it is for |
 |---|---|
-| **Off** | ❌ refused on every granularity — including the evening overtime walk-up that the day-based granularities otherwise always allow, and including a booking that merely runs **past** the day's end (16:00–20:00) or starts before it opens |
-| **Spontaneous only** | ✅ the walk-up check-in, at **either edge of the day** — the 6:00 early arrival as much as the evening overtime to midnight — ❌ reserving that window **ahead**, and ❌ a booking spilling past the day's end |
-| **Free** | ✅ allowed, but never counted and never charged: the booking is pure information — others see the space is taken, and a check-in shows where to find the person |
-| **Charged** (the default) | ✅ allowed and counted like ordinary usage — **except** on a day where you already hold a regular inside-hours booking, and the outside part then rides free |
+| Member | Book places, check in and out, write messages, follow your own money. |
+| Administrator | Everything a member does, plus acting for other members and approving requests, as far as the owner has allowed. |
+| Owner | Everything: the floor plan, prices, roles and the space's settings. A space always keeps at least one owner. |
+| Co-owner | An active co-owner holds the owner's permissions now. A successor, the passive kind, takes over when the owner leaves or promotes them. |
+| Kiosk device | A tablet on the wall that shows the plan. Members act on it with their badge. |
 
-That exemption is the point of the default: it stops "book only outside the hours to avoid paying" without charging twice a member who already used their day. Two fine points. **Free and charged look only at windows lying *wholly* outside the hours** — a booking touching the working hours at all, even by a minute, is an ordinary counted booking. **Off and Spontaneous only refuse more widely**: they also refuse the spilling window, because a space that closes at 17:00 has no business being booked until 18:00. *Spontaneous only* is where the retired **Minute bookings within working hours** switch went — the same idea, now on every granularity. A workspace that still carries the old switch reads as *Spontaneous only*, with one deliberate improvement: the old switch let only the *evening* walk-up through, whereas a mode named for spontaneity has no business turning away the member who arrives at 6:00. Booking ahead is what it refuses; walking in is what it is for. The granularity's own shape rules still apply on top, so this opens no arbitrary window.
+**Steps**
 
-**Walk-ups snap to the slot.** A walk-up (tap a free seat, scan its QR/NFC, or the kiosk) books *now* until a canonical edge — the half-day boundary, the day end, or a grid edge. Under day-based granularities the booking covers the **whole slot the end belongs to**: arriving at 10:00 and choosing *until 12:00* books the full 8:00–12:00 morning; when the snapped-back window turns out to be unavailable — someone else's booking, one of your own overlapping it, a blocked seat, a whole table/office/level taken — the booking anchors at your arrival instead, keeping the slot's end. At or after the working day's end a walk-up may run to **local midnight** (evening overtime — on every granularity, unless **Outside the opening hours** is *Off*, the one policy that refuses it); it stops there, because a booking ends on the day it starts. And a walk-up check-in must start **today**: creating a "checked-in" booking for tomorrow is refused.
+1. Open [Settings](app:/settings), named **My account** when you administer nothing.
+2. Choose **What you can do here**.
+3. Read which role gives you each ability. A member sees **As every member**; an administrator also sees **From the Administrator role**.
 
-**A scan behaves like the kiosk.** Scanning a **seat** — its printed QR card or the NFC tag on the chair — opens the very sheet the kiosk opens when that seat is tapped: **Check in**, **Reserve** or **Check out**, on the same periods derived from the workspace settings, minus the badge step, because you are already signed in. (Table, office and level QR cards open the whole-space sheet instead, §4a; NFC tags resolve seats only.) From there the space decides:
+**Good to know**
 
-| What you scan | What the sheet does |
+- The owner decides in the role matrix what administrators and other roles may do, so two spaces can differ.
+- A space can have other roles besides these, for example one for billing. They appear in the same list.
+- There is no invitation that makes someone an owner: only an existing owner grants ownership.
+
+**See also:** [The role matrix](help:user.roles.matrix) · [Join a workspace](help:user.start.join)
+
+### Create an account or sign in
+
+**Audience:** Everyone
+
+You want to get in, whether this is your first time or your hundredth. One account works in every space you join.
+
+![](assets/help/images/user-start-account.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the app. The sign-in screen asks for your **Email** and **Password**.
+2. To sign in, tap **Sign in**.
+3. To make a new account, tap **New here? Create an account**, add a **Display name**, and tap **Create account**. The password needs at least 8 characters.
+4. If the server offers it, tap **Google** under **or continue with**.
+5. Some servers ask you to confirm your address first. The screen **Check your e-mail** says a link was sent: open it on this device. If nothing arrives, look in the spam folder or tap **Send the e-mail again**.
+
+![](assets/help/images/user-start-account--create.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The eye button beside the password shows or hides what you type.
+- The first time you sign in, you are asked to read and accept the privacy terms before anything else opens.
+- A new account with no space lands on [Me](app:/me), where you can find, join or create a space.
+- **Join by invitation** on the sign-in screen keeps the errand in mind: you make your account, then paste your invitation.
+
+**See also:** [Reset a forgotten password](help:user.start.forgot-password) · [Join a workspace](help:user.start.join) · [Your data, your rights](help:user.privacy.consent)
+
+### Reset a forgotten password
+
+**Audience:** Everyone
+
+You cannot remember your password. You get a one-time code by e-mail and use it to set a new one. There is no link to click, so it works even where links do not open the app.
+
+![](assets/help/images/user-start-forgot-password.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. On the sign-in screen, tap **Forgot password?**.
+2. Type your **Email** and tap **Send code**.
+3. Open the e-mail and copy the code.
+4. Type it into **Code from the email**, choose a **New password** and tap **Set new password**.
+
+**Good to know**
+
+- The message **Password updated — you are signed in.** confirms that it worked; you do not sign in again.
+- A code that is invalid or has expired is refused: ask for a new one.
+- If the code is accepted but the password is not saved, tap **Save the new password again**.
+
+**See also:** [Create an account or sign in](help:user.start.account)
+
+### Explore the demo workspace
+
+**Audience:** Everyone
+
+You want to look around before you commit to anything. The demo is a made-up space, Atelier du Marché: the people, bookings and bills are invented, nothing you do reaches a real space, and no account is needed.
+
+![](assets/help/images/user-start-demo.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. On the sign-in screen, tap **Explore the demo workspace**.
+2. Read the note, then tap **Start exploring**.
+3. Use the strip at the top to choose who you look through: **The owner**, **A member** or **An administrator**. Each tap on the name moves to the next one.
+4. Tap **Reset the demo** to put everything back as it started.
+5. Tap **Leave the demo** when you are done.
+
+![](assets/help/images/user-start-demo--bar.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The strip is marked **Demo** and stays above every screen, so you cannot mistake it for a real space.
+- Seeing the same screen as the owner, an administrator and a member is the quickest way to learn what each role can do.
+- The demo stays on this device. Leaving it does not create an account.
+
+**See also:** [What DesKilo is and who does what](help:user.start.what-is) · [Create an account or sign in](help:user.start.account)
+
+### Join a workspace
+
+**Audience:** Everyone
+
+You were given a workspace ID, a QR code or an invitation message, and you want in. You ask to join as a member, and an administrator lets you in.
+
+![](assets/help/images/user-start-join.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Sign in, then tap **Join with a code** on [Me](app:/me). From the sign-in screen, **Join by invitation** takes you there once you have an account.
+2. On **Welcome to DesKilo**, keep **Join a workspace** selected.
+3. Type the workspace ID into **Invite code**, or paste the whole invitation message: the ID is found automatically. **Paste** reads it from the clipboard, and **Scan QR code** opens the camera on a printed code.
+4. Tap **Review invitation**. The card **Check before you join** names the workspace, its server, the role offered and whether an administrator must approve.
+5. Tap **Join workspace**.
+
+**Good to know**
+
+- Until an administrator approves, you see **Workspace membership awaiting approval**. **Check again** refreshes it, and your other spaces and your account stay available.
+- You join with exactly the role the invitation carries. The workspace ID always joins as a member; a personal admin code joins once, as an administrator.
+- An expired or replaced code is explained on screen: ask the sender for a current one.
+- In a browser the camera cannot scan: type the ID or paste the message instead.
+- If the card names another server, **Use this server** switches this device to it.
+
+**See also:** [The workspace ID](help:user.workspace.code) · [Me: your home and your spaces](help:user.me.home)
+
+### Create a workspace
+
+**Audience:** Everyone
+
+You run a community and want a space of your own. You become its owner at once.
+
+![](assets/help/images/user-start-create.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Create a workspace](app:/onboarding) from **Create a space** on [Me](app:/me).
+2. Type a **Workspace name**, then tap **Next**. **Use the suggested settings** skips straight to the last step.
+3. On **Where**, choose the **Country**; the **Currency** and **Time zone** follow it, and you can change them.
+4. On the same screen, under **What to create**, pick **One test workspace**, **One real workspace** or **A linked test and real pair**.
+5. On **Start from**, choose **Empty space** to draw your own plan, or a ready-made template.
+6. On **Confirm**, read what will be created and tap **Create workspace**.
+
+![](assets/help/images/user-start-create--where.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The selector starts on **One test workspace**, which is safe for trying things: every screen and document says so, and there is no real billing. A real one issues invoices that are owed.
+- The pair gives you two spaces with the same name, one to try things in and one that is real. You own both.
+- If the answer is lost on the way, the app keeps your entries and offers **Retry as sent**, so you never create the space twice.
+- The new space opens as soon as it exists. Setting it up is covered in the owner chapters.
+
+**See also:** [Prepare a space with the setup questionnaire](help:user.start.questionnaire) · [The workspace ID](help:user.workspace.code)
+
+### Find a workspace
+
+**Audience:** Everyone
+
+You do not have a code but you would like to find a space near you. Spaces that publish a page appear in a public directory.
+
+![](assets/help/images/user-start-find.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap **Find a workspace** on the sign-in screen, or open **Discover** on [Me](app:/me).
+2. Type a name or a place into **Search workspaces**.
+3. Switch between the **Map** and the **List** with the button at the top.
+4. Open a result to read its public page. There, **Request a workspace profile** asks to join, and **Enter** opens a space you already belong to.
+
+**Good to know**
+
+- Only spaces that chose to be visible are listed. This demo has none, so the map is empty here.
+- You can look without an account; joining needs one.
+
+**See also:** [Join a workspace](help:user.start.join)
+
+### Me: your home and your spaces
+
+**Audience:** Everyone
+
+You want one place that shows who you are and every space you belong to. **Me** is yours alone and never takes a space's colours. Under your name, **My spaces** lists each space as one card.
+
+![](assets/help/images/user-me-home.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me). If you owe money somewhere, a card at the top says **To pay** and opens your finances.
+2. Find your space under **My spaces**. A real space has an **Open workspace** button; a space with a test twin also has **Test space**.
+3. Tap the button to enter. The screen fills with the space's colour, pattern and logo, then the space opens.
+4. Tap **Join with a code** or **Create a space** below the list to add another.
+
+![](assets/help/images/user-me-home--card.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The small clock on a button marks the side you used last.
+- The small number on a button counts what waits for you there, side by side for the real space and its test twin. Press and hold the button to read the full sentence.
+- The pattern on the card's left edge is the space's own identity. If animations are switched off, the space simply opens.
+- A space that is still **Waiting for approval** shows that instead of your role.
+- A space that lives on another server shows **Open on** that server; opening it switches server and asks you to sign in there.
+
+**See also:** [Keep your spaces in order](help:user.me.organise) · [Profiles: one account, several spaces](help:user.profile.profiles)
+
+### Keep your spaces in order
+
+**Audience:** Everyone
+
+You belong to several spaces and want your own order. Hearts, groups, stars and the order are yours and stay on this device.
+
+![](assets/help/images/user-me-organise.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. On [Me](app:/me), tap the three dots on a space's card.
+2. Choose **Add to favorites**: the space moves to **Favorites** and shows a heart.
+3. Choose **Move to group…** to file it in another group, or tap the folder button above the list for **New group**.
+4. Tap one of the five stars to rate the space, or **No rating** to clear it.
+5. Type in **Search my spaces** to filter, and use the sort button to choose **My order**, **Recently used**, **Best rated** or **A–Z**.
+
+![](assets/help/images/user-me-organise--favourite.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- In **My order**, hold a card for a second to drag it, or use **Move up** and **Move down**.
+- Tap a group's name to fold it. Groups you made can be renamed or deleted from their menu; **Favorites** and **Other** are always there.
+- **Leave this space** is in the same menu. You stop being a member; bookings, invoices and messages stay with the space. Owners hand the space over first.
+- **Manage my spaces** at the bottom opens the profiles list.
+
+**See also:** [Profiles: one account, several spaces](help:user.profile.profiles) · [Erase my data](help:user.privacy.erase)
+
+### Profiles: one account, several spaces
+
+**Audience:** Everyone
+
+One account can belong to many spaces. Each space gives you a profile there: your role and your own data. The Profiles list shows them all and decides which one the app opens with.
+
+![](assets/help/images/user-profile-profiles--row.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Profiles](app:/profiles), or tap **Manage my spaces** on [Me](app:/me).
+2. Read each row: the space's name, your role there and the environment it is in.
+3. Tap a row to switch to that profile. The check mark shows the **Active profile**. The app opens with it next time, on every device.
+4. To make a profile the default without switching to it, tap the star (**Use as default at startup**); tap it again to clear it.
+5. Tap **Add a profile** to join or create one more space.
+
+**Good to know**
+
+- A space with a test twin shows one row that opens into two choices, **Development — for trying things out** and **Production — the invoices are owed**. Tap the one you want; the check mark follows.
+- Everything you see in the app belongs to the active space.
+- Your account, photo and language are not part of a profile: they are in Me and the same everywhere.
+
+**See also:** [Me: your home and your spaces](help:user.me.home) · [Join a workspace](help:user.start.join)
+
+### Find your way around
+
+**Audience:** Everyone
+
+You are in a space and want to reach a screen. Everything is in one menu, and a few buttons sit at the top.
+
+![](assets/help/images/user-start-navigation--menu.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap the ☰ button at the top left. The menu opens with your space's name, **Back to Me** and the daily destinations: **Reserve**, **Calendar**, **Members**, **Money**.
+2. Tap a destination to open it. A blue number beside it counts what waits there.
+3. Open **Reporting**, **People & access**, **Billing & payments** or **Workspace setup** to see the administration tools your role allows.
+4. At the bottom, **Documents**, **Privacy & data** and **Settings** are always close.
+5. Tap the avatar at the top right, or **Back to Me**, to leave the space and return to [Me](app:/me).
+
+![](assets/help/images/user-start-navigation--groups.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- Destinations come and go with the features the owner switched on and with your role. A plain member sees none of the administration groups.
+- When your space has Events switched on, **Events** at the top right (the tray icon with a count) collects what happened and what awaits your decision; when the Calendar holds the alerts, use its **Alerts** view. **Scan a space code** and **Edit workspace** appear on the Reserve screen when you may use them.
+- On a wide window, the menu stays open as a sidebar. A narrow window or enlarged text uses the ☰ menu.
+- In the apps for phones and computers, [Navigation style](help:user.profile.settings.navigation) in Settings lets you choose the classic bottom bar with the round **Reserve** button. Swipe that bar down for a full-screen view; swipe up, or long-press the **Reserve** button, to bring it back. A browser always uses the menu.
+
+![](assets/help/images/user-start-navigation--header.en.b8fa17aa9.jpg)
+
+![](assets/help/images/user-start-navigation--sidebar.en.b8fa17aa9.jpg)
+
+**See also:** [Navigation style](help:user.profile.settings.navigation) · [Me: your home and your spaces](help:user.me.home)
+
+### The Get started card and the tips
+
+**Audience:** Everyone
+
+You open a space and are not sure what to do first. The **Get started** card names one next step for you, and short tips explain each screen.
+
+![](assets/help/images/user-start-get-started--card.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Reserve](app:/reserve). The card **Get started in** your space appears at the top of the plan.
+2. Follow the action it offers, for example **Choose a time to book**.
+3. Tap **Not now** to put it away.
+4. To bring it back, open the view menu at the top of the plan, the one that says **Plan**, and choose **Get started**.
+
+**Good to know**
+
+- For an owner or an administrator the card tells what is missing before anyone can book, with **Finish setting up**.
+- Tips are small cards on each screen. **Dismiss hint** hides one, and **Next tip** shows another.
+- You can show every dismissed tip again with [Restore the hints](help:user.profile.settings.restore-hints).
+
+**See also:** [Restore the hints](help:user.profile.settings.restore-hints) · [Find your way around](help:user.start.navigation)
+
+### Prepare a space with the setup questionnaire
+
+**Audience:** Owner
+
+You are about to open a space and have many decisions to make: what a booking looks like, what a month costs, what an invoice must say. The setup questionnaire lets you make them all at once, before you start, on a big screen and with your accountant or your board if you like.
+
+**Steps**
+
+1. Open the questionnaire in a browser: [setup.html](https://fdittgen-png.github.io/deskilo/setup.html). There is nothing to install and no account.
+2. Answer the steps in order: *Identity*, *Features*, *Availability*, *Floor plan*, *Subscriptions*, *Legal identity and VAT*, *Services and accessories*, *Payment instructions*, *Roles and validations*, *Members and invitations*. Each step only asks what your earlier answers make possible.
+3. Read the *Feature summary* and untick what you do not want: that feature starts switched off in the app and nothing about it is exported.
+4. On *Check and export*, fix the blocking items, then tap **Export XML**.
+5. In the app, open the workspace settings and choose **Import workspace (XML)** to create the settings, accessories and floor plan.
+6. Keep the file. *Load file…* brings your answers back later, and **Reset** starts over.
+
+**Good to know**
+
+- Your answers are saved in your own browser and sent nowhere. You can close the tab and come back.
+- The file is plain text: leave tokens and keys empty and type them in the app instead.
+- Each question says where the setting lives in the app, so you can finish the rest screen by screen.
+- Skipping it costs nothing: every answer is a setting you can make or change later in the app.
+
+**See also:** [Create a workspace](help:user.start.create) · [Import the space (XML)](help:user.workspace.export.space-import)
+
+## Reserve
+
+Booking a place is the heart of DesKilo: you look at the plan of your space, choose a day and a time, tap a free place and confirm. This chapter follows that path, then covers what happens around it: the rules you meet, checking in and out, changing a booking, and the Calendar where everything dated is kept.
+
+In this chapter:
+- [The Reserve hub and the floor plan](help:user.reserve.hub)
+- [Find your way around the plan](help:user.reserve.plan-levels)
+- [See the places as a list](help:user.reserve.list)
+- [Choose the day and the time](help:user.reserve.when)
+- [Day view](help:user.reserve.day-view)
+- [Week view](help:user.reserve.week-view)
+- [Month view](help:user.reserve.month-view)
+- [Book a place](help:user.reserve.book)
+- [The booking sheet](help:user.reservations.booking-sheet)
+- [Check in now when you are already there](help:user.reserve.walk-up)
+- [Book a whole desk, room or level](help:user.reserve.whole-space)
+- [Book for someone else](help:user.reserve.for-someone)
+- [Repeat a booking](help:user.reserve.series)
+- [The rules you meet when you book](help:user.reserve.policies)
+- [Closure days and public holidays](help:user.reserve.closed-days)
+- [Check in and check out](help:user.reserve.check-in)
+- [Scan a space code](help:user.reserve.scan)
+- [Change or cancel a booking](help:user.reserve.change)
+- [When a booking is awaiting confirmation](help:user.reserve.awaiting)
+- [The Calendar tab](help:user.reserve.calendar)
+- [Agenda, Week and Month in the Calendar](help:user.reserve.calendar-views)
+- [Decisions waiting for you on the Calendar](help:user.reserve.calendar-decisions)
+- [Filter the Calendar](help:user.reserve.calendar-filters)
+- [Save a booking to your own calendar](help:user.reserve.calendar-file)
+
+### The Reserve hub and the floor plan
+
+**Audience:** Member · Administrator · Owner
+
+You want to see which places are free. The Reserve hub opens on the floor plan of one level of your space, drawn for the day and the time you are looking at.
+
+![](assets/help/images/user-reserve-hub.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Reserve](app:/reserve).
+2. Read the plan: every place carries its name and a small symbol, and a colour that says what it is.
+3. Tap a place to act on it. A free place opens the booking sheet; your own place offers check-in and cancel; someone else's place tells you who has it and until when.
+4. The legend under the date explains the colours. It is the same on the plan and in the Day, Week and Month views.
+
+| State | What it means |
 |---|---|
-| A space you hold a booking on | continues into checking **that** booking in |
-| A free space | the check-in books it implicitly, snapped to the slot like any walk-up |
-| A space someone else's booking blocks | names the holder and offers **Message them** — the conversation opens with the blocking booking referenced |
+| **Free** | Nobody holds the place in the time you chose. |
+| **Reserved** | Someone has booked it. |
+| **Checked in** | The person who booked it has arrived. |
+| **Mine** | It is your booking. |
+| **Blocked** | The place is out of service, for maintenance for example. |
+| **Closed day** | The space is closed that day (Day, Week and Month views). |
 
-The same *message the holder* action sits on the **plan** when you tap a seat someone else occupies. At the kiosk the receipt names the holder and points you to the app instead: a wall device never sends messages for you.
+**Good to know**
 
-**Checking in.** Under half-days, full days and real hours the window opens for the **whole booked day**: at 10:00 you can already check in on your 12:00 afternoon, because the slot *is* the working day. On a minute grid it opens **15 minutes before** your start — or one **grid step** before it where that step is longer, so 5-, 15- and 30-minute grids keep the 15 minutes and an hourly grid opens a full hour early. The sheet always reads the real clock, so browsing a future date never hides today's check-in on your own booking. Checking in on a different day ("tomorrow's booking today"), after the reservation ended, twice, or on a closed day is refused with the reason. If you are still checked in **elsewhere**: a booking still running blocks it once you have reached your allowance (one by default, so the first running booking already blocks — *check out there first*); one that already ended completes itself silently — stamped at its own end — and the new check-in proceeds. An admin can check a member in while *Booking for others* is on (§8 Features).
+- An occupied place shows who is there: an initial, or a photo when the person set one and your space shows photos on the plan. A small green dot means they are using the app right now.
+- A whole table, room or level that is booked says so on the plan, with the name of who holds it.
+- Some spaces show fewer states: a booked place and a checked-in place then look the same, and blocked reads **Unavailable**.
+- When the latest availability could not be loaded, a banner says **Offline** with the time of the last data and a **Retry** button, because a place shown free may have been taken since.
 
-**Checking out.** Checking out before the reserved end **truncates the booking to now** — the seat frees immediately for everyone else. After an early same-day check-in, checking out before the reserved start keeps the **real presence** (from the check-in instant to now). Forgot and came back later? The check-out still works: the booked end stays, the stamp is truthful. Checking out without a check-in — or twice — is refused. By default **check-out is personal**: an admin can only end a member's running check-in once the owner switched **Admins may check members out** on (§8). A check-in never closed at all completes itself the moment you check in somewhere else after it ended — or, with **auto check-in/out** on, at the next sweep.
+**See also:** [Choose the day and the time](help:user.reserve.when) · [The booking sheet](help:user.reservations.booking-sheet)
 
-**No-shows.** A reservation never checked in simply stays *reserved* in the history. With **auto check-in/out** on, the sweep marks the past window attended — checked in at the start, checked out at the end, completed. The sweep is **lazy**, running on every read rather than at a fixed hour, so a morning booking nobody touched is already settled when someone opens the plan at 12:01.
+### Find your way around the plan
 
-**Cancelling.**
+**Audience:** Member · Administrator · Owner
 
-| Case | What happens |
+You want to reach the level, the room or the desk you have in mind. The plan can be moved, zoomed and switched from one level to another.
+
+![](assets/help/images/user-reserve-plan-levels.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap the level name at the top right of the plan, for example **First floor**, and choose another level. Your choice is kept for the next time you open the hub.
+2. Zoom with two fingers, or with **Zoom in** and **Zoom out**. Drag the scroll bars along the edges to move.
+3. Tap **Fit the plan to the screen** to bring the whole level back into view.
+4. Read the room names in the corner of each room. Tap a place inside it to book it.
+
+**Good to know**
+
+- The level selector only offers a menu when your space has more than one level.
+- A level, a room or a desk that can be booked as a whole shows its own button or double-tap: see [Book a whole desk, room or level](help:user.reserve.whole-space).
+
+**See also:** [See the places as a list](help:user.reserve.list) · [Day view](help:user.reserve.day-view)
+
+### See the places as a list
+
+**Audience:** Member · Administrator · Owner
+
+You prefer rows to a drawing, or the plan is hard to read on a small screen. The list shows the same places, level by level and desk by desk.
+
+![](assets/help/images/user-reserve-list.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Reserve](app:/reserve), tap **List view**, the button beside the view menu.
+2. Find the place. Each row names it and says whether it is free, reserved or yours.
+3. Tap **Reserve** on a free row to open the booking sheet.
+4. To go back to the drawing, tap **Plan view**.
+
+**Good to know**
+
+- The list follows the day and the time you chose, exactly like the plan.
+- With favourites and ratings switched on, each row also carries a heart (**Add to favourites**) and stars.
+
+**See also:** [Choose the day and the time](help:user.reserve.when) · [The booking sheet](help:user.reservations.booking-sheet)
+
+### Choose the day and the time
+
+**Audience:** Member · Administrator · Owner
+
+You want to book for another day, or for a time that is not now. The two rows of controls at the top of the hub say what you look at and when.
+
+![](assets/help/images/user-reserve-when.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap the date, for example 14 May, and pick a day in the calendar. You can look up to a year ahead.
+2. Choose the time. If your space books half-days, tap **Morning**, **Afternoon** or **Full day**. If it books by the hour or on a free time range, tap the first time to set **From** and the second to set **To**.
+3. Read the line under the controls: it names the day, the period and the hours in the workspace's time zone, and in yours when it differs.
+4. To come back to today, tap **Now**.
+
+**Good to know**
+
+- Which controls you see follows the space's rules: some spaces book half-days, some whole days only, some any time on a grid.
+- On a phone the day-part chips are small icons of a half or a whole day. Hold one to read its name and its hours.
+- The plan answers for the time you chose: a place shown free is free for all of it.
+- Where bookings are per half-day, the period you start on is your usual one, set in [Default booking period](help:user.profile.settings.default-period).
+
+**See also:** [The Reserve hub and the floor plan](help:user.reserve.hub) · [Book a place](help:user.reserve.book)
+
+### Day view
+
+**Audience:** Member · Administrator · Owner
+
+You want to see who is where during the day, not only at one moment. The **Day** view lays out every place as a row along the hours.
+
+![](assets/help/images/user-reserve-day-view.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Reserve](app:/reserve), open the view menu, which reads **Plan** at first, and choose **Day**.
+2. Pick the day with the date button. Choose a level with the chips above the rows: **All levels** or one level.
+3. Read the bars. Each one is a booking, with the name of who holds it; yours stand out in the colour of **Mine**.
+4. Tap a free stretch of a row to book that place for the time you chose. Tap your own booking to open its details; tap someone else's to see who holds it and until when.
+
+**Good to know**
+
+- A closed day is drawn as closed and cannot be booked.
+- The menu behind the **View** control also holds **Week** and **Month**.
+
+**See also:** [Week view](help:user.reserve.week-view) · [Change or cancel a booking](help:user.reserve.change)
+
+### Week view
+
+**Audience:** Member · Administrator · Owner
+
+You want to find a free morning or afternoon in the coming days. The **Week** view shows places down the side and the days of the week across.
+
+![](assets/help/images/user-reserve-week-view.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the view menu and choose **Week**.
+2. Find your day. Each day has two cells side by side, the morning and the afternoon. A filled cell shows the initial of whoever holds it.
+3. Tap an empty cell to book that half of the day on that place.
+4. Tap a day name at the top to jump to that day in the **Day** view.
+
+**Good to know**
+
+- Closed days are greyed out and carry a closure mark.
+- Choose **All levels** or one level with the chips above the grid.
+
+**See also:** [Day view](help:user.reserve.day-view) · [Month view](help:user.reserve.month-view)
+
+### Month view
+
+**Audience:** Member · Administrator · Owner
+
+You want to know which days have room. The **Month** view counts the free places for every day.
+
+![](assets/help/images/user-reserve-month-view.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the view menu and choose **Month**.
+2. Read each day: the number of free places out of the total, for example 6/6. Closed days read **Closed**.
+3. Tap a day to open it in the **Day** view, where you see who is booked.
+
+**Good to know**
+
+- The count covers all levels of the space.
+- Today is ringed.
+
+**See also:** [Closure days and public holidays](help:user.reserve.closed-days) · [Day view](help:user.reserve.day-view)
+
+### Book a place
+
+**Audience:** Member · Administrator · Owner
+
+You want a place for a given day and time. From the plan it takes a few taps: the day, the time, the place, and a confirmation.
+
+**Steps**
+
+1. Open [Reserve](app:/reserve) and choose the day and the time, as described in [Choose the day and the time](help:user.reserve.when).
+2. Choose the level, if your space has several.
+3. Tap a free place. The booking sheet opens on it.
+4. Check the line that names the place and the period, change what you need, and tap **Reserve**.
+5. A message confirms the booking. Tap **Details** in it to open the new booking.
+
+**Good to know**
+
+- Nothing is booked until you tap **Reserve**.
+- If the place was taken a second ago, the app tells you instead of double-booking it.
+- If the connection drops after you tapped, the screen **Your booking request** lets you check what happened, resume the same request or let it go. A request is never booked twice.
+- On a closed day the plan says **Closed on this day** and offers the next open day.
+
+**See also:** [The booking sheet](help:user.reservations.booking-sheet) · [The rules you meet when you book](help:user.reserve.policies)
+
+### The booking sheet
+
+**Audience:** Member · Administrator · Owner
+
+You tapped a free place and the sheet opens. It shows what you are about to book and lets you adjust it before you confirm. The sheet only proposes: the space's rules are checked when you confirm.
+
+![](assets/help/images/user-reservations-booking-sheet.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Read the summary: the workspace, level, desk and place, who the booking is for, the day, the hours and the repetition.
+2. Adjust the period. Under half-days, tap **Morning**, **Afternoon** or **Full day**. On a time grid, set **From** and **Until**; on a minute grid a slider named **Duration** sets the length.
+3. Open **More options** to repeat the booking.
+4. Optionally add the place to your favourites with the heart, or rate it with the stars.
+5. Tap **Reserve**.
+
+**Good to know**
+
+- If the chosen period is not allowed, a line in red under the period says why and **Reserve** stays greyed out.
+- If another booking follows on the same place, the sheet says that the seat is reserved from that time and stops your booking there.
+- Administrators see **Book for** and, for blocking a place, **Manage resource**.
+- When the chosen period includes this moment, a switch **Check in right away** appears, off by default.
+
+**See also:** [Check in now when you are already there](help:user.reserve.walk-up) · [Repeat a booking](help:user.reserve.series) · [Book for someone else](help:user.reserve.for-someone)
+
+### Check in now when you are already there
+
+**Audience:** Member · Administrator · Owner
+
+You are standing at a free place and want to take it right now. On today's plan the booking sheet offers two actions side by side.
+
+![](assets/help/images/user-reserve-walk-up.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Reserve](app:/reserve) on today, with no other time chosen, and tap a free place.
+2. At the top of the sheet choose **Reserve** or **Check in now**.
+3. **Reserve** keeps the period you chose. **Check in now** switches to the current period and marks you present.
+4. Tap **Check in** to confirm.
+
+**Good to know**
+
+- The check-in stops where the next booking on that place begins, and the sheet tells you.
+- A walk-up check-in must start today.
+- Where bookings are per half-day, the check-in ends with the current half-day, or with the day when your usual period is the full day.
+
+**See also:** [Check in and check out](help:user.reserve.check-in) · [The rules you meet when you book](help:user.reserve.policies)
+
+### Book a whole desk, room or level
+
+**Audience:** Member · Administrator · Owner
+
+You need the whole table, the whole room or the whole floor, for a meeting or a day. Spaces that are set up for it can be booked as one.
+
+![](assets/help/images/user-reserve-whole-space.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. On the plan, double-tap the desk, the room or the empty floor. For a level you can also tap **Reserve level**, the button under the level selector.
+2. The sheet names the space, the period and the **Price per half-day** when there is one.
+3. Tap **Check in** to take it now, or **Reserve** to book it for the period shown.
+4. In the booking sheet that opens, choose the period and tap **Reserve**.
+
+**Good to know**
+
+- A member needs the right to book whole spaces; owners and administrators have it. Without it the sheet says **You are not allowed to reserve a whole desk, office or level.**
+- A whole space cannot be booked while one of its places is taken in that period, and no place can be booked while its table, room or level is booked as a whole.
+- Where the owner asks for approval, a whole-space booking blocks the space at once and waits for the validators; if they reject it, it is cancelled.
+
+**See also:** [When a booking is awaiting confirmation](help:user.reserve.awaiting) · [Scan a space code](help:user.reserve.scan)
+
+### Book for someone else
+
+**Audience:** Administrator · Owner
+
+You want to book a place on a member's behalf. Administrators can pick the member in the booking sheet.
+
+![](assets/help/images/user-reserve-for-someone.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a free place in [Reserve](app:/reserve) to open the booking sheet.
+2. Open **Book for** and choose the member.
+3. The summary now reads **Booking for** that member, and the button changes to **Send for confirmation**.
+4. Tap **Send for confirmation**. A message says **Sent to** the member **for confirmation**.
+
+**Good to know**
+
+- The member has to accept before the booking exists. They find the request on their Calendar and in their notifications.
+- A booking made for someone else is never checked in and cannot repeat.
+- The **Book for** field only appears if the owner lets administrators book for members. For a whole level, the owner decides who may assign it.
+
+**See also:** [When a booking is awaiting confirmation](help:user.reserve.awaiting) · [Decisions waiting for you on the Calendar](help:user.reserve.calendar-decisions)
+
+### Repeat a booking
+
+**Audience:** Member · Administrator · Owner
+
+You sit at the same place every Tuesday, or every weekday for a month. A repeating booking creates all the dates at once.
+
+![](assets/help/images/user-reserve-series.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the booking sheet on a free place and the first day you want.
+2. Open **More options**.
+3. In **Repeat**, choose **Every day**, **Every weekday** or **Weekly**. The default is **Does not repeat**.
+4. Set **Repeat until**, the last date. The sheet proposes four weeks ahead.
+5. Tap **Reserve**. A dialog tells you how many bookings were created.
+
+**Good to know**
+
+- Dates that could not be booked are listed in the dialog and skipped. The others stand.
+- To cancel a repeating booking, open one of its dates and choose **Cancel this occurrence** or **Cancel this and following**.
+- You can also turn a single booking into a repeating one from **Edit times** in its details.
+- Repeating is not offered when you book for someone else.
+
+**See also:** [Change or cancel a booking](help:user.reserve.change) · [The booking sheet](help:user.reservations.booking-sheet)
+
+### The rules you meet when you book
+
+**Audience:** Member · Administrator · Owner
+
+You tried to book and the app said no, or you wonder what is allowed. Your owner sets the rules of the space; this is what you see of them.
+
+| Rule | What you see |
 |---|---|
-| A future booking of yours | ✅ cancelled with one tap |
-| Your running, checked-in booking | ❌ no outright cancel — the sheet offers **Request deletion** (§4) and **End earlier** (below) instead, because the presence already happened |
-| Giving back the rest of the day | ✅ **End earlier** on a running booking: under half-days and full days it moves the end to the half-day boundary while that is still ahead; on grids it opens a snapped picker that refuses anything not ahead of now. The start is immovable, and the freed time is immediately bookable by others |
-| A completed or already cancelled booking | ❌ nothing left to cancel |
-| Someone else's booking | ❌ for a member; ✅ for an admin/owner — the overrule (§4), attributed to the admin in the events feed |
-| A series, "this and following" | ✅ cancels the remaining *reserved* occurrences from that date; checked-in and completed ones keep their history |
-| A **past or checked-in** booking you want removed | a **deletion request** (§4): a validator confirms (removed) or rejects (kept); a new request supersedes a pending one, and future bookings are told to cancel directly |
+| Opening hours and open days | The plan and the views follow the working day, 08:00 to 17:00 by default, with the half-day split at 12:00. A closed day says **Closed on this day**. |
+| Outside the opening hours | Depends on the space. Off: **Bookings outside the opening hours are not allowed.** Spontaneous only: you can check in on the spot but not book ahead. Free: allowed, never counted or charged. Charged: allowed and counted as usage, except on a day you already hold a regular booking. |
+| Past bookings | A booking on a day that has already ended is refused unless the owner allows past bookings: **This booking lies entirely in the past.** Earlier on the same day it is recorded as a past visit. |
+| Limits | A booking has a longest horizon (**Too far ahead**, 90 days by default), a shortest and a longest length (**Too short**, **Too long**) and ends on the day it starts. |
+| One place at a time | By default you may hold one booking in a given period: **You already have a booking in that period**. An administrator may allow you more. |
+| Reservation limit | **Reservation limit reached** when you hold the most open bookings you are allowed. |
+| Days in your plan | When your plan's days run out, the owner's setting for you applies: bookings may stop, you may be asked to buy a package, or the extra days are charged. |
 
-**Approvals.** Where the owner put a validation policy on **whole-space reservations** (§7), the booking blocks the space immediately and waits for the quorum — a reject cancels it; no policy, no approval step. Deletion requests ride the same framework. **Nobody validates their own event** — with one exception the owner switches on deliberately: in the validation rules (§7), two independent switches let **admins** and/or **owners** settle *their own* **reservation deletion** requests on the spot instead of waiting for a validator. Both are **off by default**, they reach reservation deletions and nothing else, and an auto-settled deletion is marked as such in the events feed — always distinguishable from a peer-reviewed one.
+**Steps**
 
-#### The booking sheet
+1. When a period is refused, read the red line under it in the booking sheet.
+2. Change the day, the time or the place, or ask an administrator.
+3. If your days are used up, open [Money](app:/money) to see your plan and, where offered, tap **Request extra half-days**.
 
-What opens when you tap a free place: the window, whether you check in
-now, and for an administrator, who it is for. The sheet only proposes —
-every rule is checked by the server when you confirm, so a place that
-was taken a second ago is refused here rather than double-booked.
+**Good to know**
 
-### 4c. Save a booking to your own calendar (#1643)
+- The same rules apply on the plan, in the Reserve hub, on a scanned code and at the wall kiosk.
+- The app checks a period before it offers it, so most refusals appear in the sheet and not after you tapped.
 
-Every surface that opens one of **your own** bookings — the plan, Day,
-Week, the calendar timeline — offers **Save calendar file**. It writes a
-standard `.ics` file (RFC 5545) that any calendar imports: Google, Outlook,
-Apple, Thunderbird, or your phone's. Before anything is saved you see
-exactly what the file will say — the booked space, the time, the space's
-name as the location, the status — and, under *File contents*, the file
-itself.
+**See also:** [Booking policies](help:user.workspace.availability.policies) · [Simultaneous reservations](help:user.members.simultaneous) · [Reservation limit](help:user.members.reservation-limit)
 
-**What the file carries, and what it never does.** The time as an
-instant (in UTC, so it lands at the right hour in your calendar wherever
-you are and across a clock change), the booked space, the workspace name,
-and *Confirmed* or *Cancelled*. Nothing else: no amount, no name, no
-e-mail address, no note, no link, no invitation to anybody — and a
-cancelled booking is exported as cancelled, never as a live event.
+### Closure days and public holidays
 
-**A snapshot, not a subscription.** The file describes the booking as it
-is at the moment you save. If the booking is moved or cancelled later,
-a file already saved or shared does not change, and a file you shared
-cannot be taken back. Saving the same booking again produces a file with
-the same identifier, so most calendars replace the earlier event rather
-than adding a second one — though that is the importer's decision, not
-the app's. If the booking changed between the preview and your tap on
-*Save*, nothing is written: the preview refreshes and asks you to look
-again.
+**Audience:** Member · Administrator · Owner
 
-The file lands in your downloads (on a device: the Downloads folder; in
-a browser: wherever your browser puts downloads). It is a **feature** an
-owner can switch off under *Settings → Features*; it is on by default.
-Nothing is written to any calendar by the app itself, and nothing syncs.
+You want to know why a day cannot be booked. Your space is closed on some weekdays and on the closure days the owner has added, such as public holidays.
 
-**Booking window (#2270).** The summary below the controls shows the weekday, full date, Today or Tomorrow where applicable, selected period, exact workspace hours and timezone. If your personal timezone differs, your time appears alongside it. Period changes and custom time changes update this summary before you choose a seat. Wide screens also name the period choices; on narrow screens the selected period stays readable in the summary.
+![](assets/help/images/user-reserve-closed-days.en.b8fa17aa9.jpg)
 
-**Reading the plan (#2271).** The selected floor is named on the plan, including a workspace with one floor; its menu lists full floor names. Seats carry an opaque identifier with a shape matching the legend: open circle for free, lock for reserved, check for present, star for yours and blocked symbol for unavailable. Zoom in on a dense plan to read the seat names; screen readers keep the full name and state at every zoom. In list view the floor selector sits above the rows so it cannot cover their booking actions.
+**Steps**
 
-**Review before confirming (#2272).** The form names the workspace, floor/resource, person, full date, exact hours, timezone and recurrence before the booking decision. It states when the final charge and allowance calculation are unavailable. Reserve keeps the selected window; Check in now uses the current window and marks you present. The separate immediate check-in switch adds presence to a current reservation. Confirmation stays visible while the details scroll. Favorites and ratings follow the booking controls; maintenance waits in Manage resource, for authorized operators. In the seat list, Reserve opens the booking form and feedback has its own action (#2268).
+1. Choose the day in [Reserve](app:/reserve). A closed day shows a banner, **Closed on this day**.
+2. Tap the shortcut in the banner, which reads "Show" and the next open day, to go there.
+3. In **Month**, closed days read **Closed**; in **Week** they are greyed with a mark; in **Day** they are marked as closed, under the legend entry **Closed day**.
+4. In the Calendar, closed days are struck through, and the day's list states **Closed** with the reason when the owner gave one.
 
-## 5. Calendar (Calendar tab)
+**Good to know**
 
-The month at a glance, with two scopes and two shapes:
+- On a closed day the places carry the blocked symbol and cannot be booked or checked in to.
+- Public holidays appear exactly like any other closure day.
 
-**The calendar is a selector, not a stage (#718).** Pick a **day** or a **range**; what you see is one feed of everything dated that you may see — bookings, check-ins and check-outs, alerts, messages, invoices, payments, consumption, reminders — grouped by day, filtered by kind with the chips, and **every row opens its source** (the booking, the conversation, the alert, the invoice, the month on Finances). A member with the finance or member-administration permission can look at another member; kinds the server does not allow for that member show as **locked**, never as an empty day. The shield opens *Who can see this*, with the access log.
+**See also:** [Month view](help:user.reserve.month-view) · [Closure days](help:user.workspace.availability.closure-days) · [Open weekdays](help:user.workspace.availability.open-weekdays)
 
-**Three views (#818).** With *Calendar views* on (default), the tab opens on the **Agenda** — everything dated in the **next 30 days**, grouped under *Today · Tomorrow · weekday* headers, the arrows stepping 30 days and **Today** jumping back. **Week** shows a strip of seven pills (weekday, number, coloured markers, count) with the whole week's feed below; **Month** a compact grid where each day carries up to three **markers** — *bookings & presence*, *alerts & messages*, *money* — today ringed, the selected day filled, **closed days** muted and struck through; tap a day to read it below (the legend under the grid names the colours). A closed day says so in the feed, with the closure's reason. The feed also carries two facts it did not before: the **payment due date** of every open invoice (issue date + the reminder term) and each **scheduled expense** falling due. The kind chips and the member picker keep narrowing the query as before; the shield opens *Who can see this*. Off, the plain day-or-range selector stays.
+### Check in and check out
 
-- **Mine / Everyone** — your own bookings, or the whole community's; every member has this toggle, since the plan and the Reserve hub's week grid already show everybody's occupancy. The dots under a day tell you at a glance: **red** = you have a booking, **blue** = other members do, **both dots** = both. Today is ringed.
-- The **shape toggle** beside it switches the lower half between an **agenda list** (each reservation as a card: time window, member, space) and a **day timeline** (seats × the hours of the selected day). The seats × *days* week grid lives in the Reserve hub (§4), not here.
-- The **floor chips** (*All floors* / per level) filter the **timeline**.
-- Tap a day in the month grid to load it below. In landscape the calendar and the detail use the split layout.
+**Audience:** Member · Administrator · Owner
 
-![](assets/help/images/calendar-agenda.jpg)
+You arrive at your place, and later you leave. Checking in says you are there; checking out frees what you no longer need.
 
-*The Calendar tab: a day or a range, the kind chips, one feed grouped by day — every row opens its source.*
+![](assets/help/images/user-reserve-check-in.en.b8fa17aa9.jpg)
 
-## 6. Members directory (Members tab)
+**Steps**
 
-![](assets/help/images/member-profile-sheet.jpg)
+1. Open [Reserve](app:/reserve), find the day of your booking and tap your own place, the one marked **Mine**.
+2. Tap **Check in**. If it is greyed out, it tells you when it opens, for example "Check-in opens on 14 May".
+3. When you leave, tap your place again and tap **Check out**. The rest of the booking is released at once for others.
+4. The booking then reads **Completed: checked out at** the time.
 
-*A member's profile: today's booking, contact, and — where you may see it — their money position.*
+**Good to know**
 
-**Tap a member for their profile (#704).** Their photo, role and status; what they have booked and whether they are checked in right now; and **Contact** — the opt-in WhatsApp number for everyone, the **e-mail address and plan share for admins**. Where you may see the figures — **your own always, somebody else's with the *View finances* permission** — the profile also carries **Money**: the net position (who owes whom), the open invoices with what is left on each, the payments already in, and the month being consumed right now. The same card the Money tab shows, so the two can never disagree.
+- Check-in opens 15 minutes before the start, or one grid step before when the grid is coarser. Where bookings are per half-day, per day or per real hour, it opens for the whole day of the booking.
+- It closes when the booking ends: **This reservation is over — check-in is no longer possible.**
+- If you are still checked in somewhere else, check out there first.
+- With auto check-in and check-out on, a booking nobody checked in or out completes itself once its time has passed. Without it, a booking you did not check in reads **This period is over without a check-in.**
+- At a wall kiosk you check in with your badge; see [Your badge](help:user.profile.settings.badge) and [NFC badge check-in](help:user.badges.nfc).
 
-**One page per member (#825).** Tapping a member now opens a **full page**: their photo with the presence dot, role chips, their own status line, **when they were last seen** ("Seen 20 h ago", not a bare number), and since when they are a member. A **Right now** card says in one sentence whether they are checked in, hold a reservation this minute, or when their **next** booking is — tap it, or any upcoming row, to open that booking. **Quick actions** sit below: Messages, WhatsApp and (for admins) e-mail, plus *Add a service* and *Send the financial agreement* where those apply. The contact and money cards follow, unchanged. **Admins and owners** get a **Manage** section on the same page — *Membership* (approve or reject, pause, role, co-ownership, kiosk), *Booking rules* (reservation limit, simultaneous reservations, whole-level bookings as a switch), *Billing* (subscription, when days run out, negotiations) and *Badges & access* — every row showing its **current value**, so nothing has to be opened to be known. The rows in *Settings → Members & plans* open the same page.
+**See also:** [Scan a space code](help:user.reserve.scan) · [Change or cancel a booking](help:user.reserve.change)
 
-See who's part of your community:
+### Scan a space code
 
-- Each member card shows their **photo** (or initial), **role chip** (Admin, Owner), **custom status** ("in Berlin till Friday…"), an **online / last-seen** indicator (*Online*, *10 min*, *2 d*) and a **reservation chip**: checked-in seat, *Reserved now*, or next upcoming reservation.
-- Tap a member for their **detail sheet** — role, presence, their **upcoming reservations**, and **Messages**.
-- **Messages**: a per-member **conversation thread** (up to 500 characters per message) — open it from the **Messages** tab (§16), the member's sheet or their directory profile, read the whole exchange as chat bubbles and send from the same place. Every message reaches the other side twice over: a **push** that carries no content at all (*"You have a new message"* — by privacy design), and, once the app is running, a local notification that does show your name and text.). The full text is always readable in the **Messages** tab, for the recipient and the sender (the push itself carries no content, by privacy design). Admins get a **Notify all admins** megaphone — in *Members & plans* (Settings → Administration), not on the Members tab, which has no app bar of its own — reaching every admin including the owner. Toggleable via the *Member notifications* feature. While composing, two chips let you **link a reservation or live check-in — yours or any other member's** — or **a space** (seat, table, room or level) — the reference shows as a tappable link on both sides: a reservation link opens that reservation, a space link opens the space’s booking sheet, perfect for discussing a future booking.
-- The **message icon** on a card messages that member on **WhatsApp** (if they shared their number); the **group button** opens your community's WhatsApp group (set by the owner).
-- Set your own photo, status, and phone visibility in **Settings** (§12).
-- Admins and owners additionally see each member's **email** under the name — plain members don't: member-to-member contact stays the opt-in WhatsApp number.
+**Audience:** Member · Administrator · Owner
 
-![](assets/help/images/members-directory.jpg)
+You stand in front of a desk, a room or a seat that carries a QR card, or a chair with an NFC tag. Scanning shows what you may do there, without searching the plan.
 
-*The directory: photo or initial, role chip, status, online/last-seen, and the next reservation on each card.*
+![](assets/help/images/user-reserve-scan.en.b8fa17aa9.jpg)
 
-## 7. Events & confirmations (Messages → Events)
+**Steps**
 
-**Blue counters.** Alerts counts new workspace updates (including invoices, reminders and changes), unread broadcasts and decisions awaiting you, with each item counted once. Opening Alerts acknowledges new updates; pending decisions remain until resolved. This device remembers updates separately for each person, server and workspace. In Me, Messages counts unread messages across connected servers; muted or archived conversations stay quiet. Zero hides the counter; larger counts display **99+**.
+1. In [Reserve](app:/reserve), tap **Scan a space code**, the scanner icon at the top of the screen.
+2. Point the camera at the card, or type the printed number in **Code** and tap **Confirm**. Hold your phone to a chair's NFC tag where the device supports it.
+3. For a seat, choose **Check in**, **Reserve** or **Check out**, the same actions as at the kiosk, without the badge step.
+4. For a table, an office or a level, the sheet shows its state, its period and its **Price per half-day**; tap **Check in**, **Reserve** or **Show on plan**.
 
-**Where it lives.** The feed is the second face of the **Messages** tab, and the **bell** in every app bar is a shortcut straight onto it, carrying the count of what awaits you. One place holds the alerts, so reading one there is reading it everywhere. With the reworked messaging the tab is labelled **Alerts**, and it marks itself read only while it is the face on screen — switching to it is reading it, having it behind the chats is not.
+**Good to know**
 
-The events feed is the audit trail of your workspace: reservations created/changed/cancelled, payments recorded, invoices paid, expenses submitted, extra-days requests, role changes, deletion requests. Members see their own events; admins and owners see everyone's. **Filter chips** (All · Reservation · Payment · Expense · …) narrow the list — your choice is remembered — and a **Group by** menu folds the feed into groups by type, day or member (tap the group symbol to return to the flat list); each row carries its status icon — an **hourglass** while pending, a **green check** once confirmed — and money events show *who validated them and when* right on the row.
+- If someone else holds the space, the sheet says who and offers to message that person.
+- A code that is not from this workspace says **Not a space code of this workspace.** A removed space says **This code does not match any space here anymore.**
+- In a browser the camera is not available: type the code instead. An NFC tag only identifies seats.
+- The scanner icon only appears when your space uses QR codes.
 
-**Waiting for your confirmation:** whenever an admin does something *for somebody else* — books a seat for you, records your payment, demotes an admin — it stays **pending until confirmed**. Pending items are pinned on top with a red ✕ and a green **Accept** button, and you get a notification. Actions you take on yourself never need confirmation.
+**See also:** [Book a whole desk, room or level](help:user.reserve.whole-space) · [Check in and check out](help:user.reserve.check-in)
 
-**Messages moved.** Member messages now live in their own **Messages** tab (§16), not here — a message in two places is one you can mark read in one and still see unread in the other. This feed keeps the one message kind that has no conversation to live in: a **broadcast to all admins**.
+### Change or cancel a booking
 
-**Validation quorum:** for money matters and role changes the owner defines *who* must approve and *how many* approvals are needed. **Nobody validates their own event** — only another person can (one owner-configured exception, for reservation deletions, below); where no other validator exists, the request simply waits. After 7 days without an answer, what happens depends on which way the request cuts. A request **you submitted** for yourself — a deletion, extra half-days, an invoice write-off — **expires**: nothing costly is ever granted silently. Something an admin **did for you** — created or modified a booking, recorded a payment — **auto-confirms** instead, because it already happened and the feed only asked you to acknowledge it; a booking an admin made for you is then granted and consumes your quota. An expired **invoice payment** — a match, a refund or a regrouping nobody decided in time — releases what it held: the payment, the credit note and the regrouped invoices are back where they were (#816).
+**Audience:** Member · Administrator · Owner
 
-The owner tunes this per **domain** in **Settings → Validation rules** — fourteen cards, one per event type, each inheriting from the **default rule** until edited: *Default rule, Payment, Expense, Service, Extra half-days, Booking deletion, Role change, New member, Reservation, Whole-space reservations, Invoice payment*, *Outstanding write-off*, *Price negotiation* and *Scheduled expense*. A rule sets the number of required validations, *which* admins may validate (all, or named ones), and whether the owner must always sign off. The **Booking deletion** rule carries two more switches — *admins delete without validation* and *owners delete without validation*, both **off by default** — the single, deliberate exception to "nobody validates their own event": that requester's own deletion request settles itself and stays marked **auto-validated** in the feed. They apply to reservation deletions and to nothing else. Since #982 six more acts carry a card: **Invoice issue**, **Invoice cancellation**, **Refund**, **Membership change**, **Subscription change** and **Permission matrix change**. Each applies at once when no rule asks otherwise and waits for the decision when one does, exactly like a booking deletion; a rule on a money act also carries an **amount threshold** (*Only above this amount*), so "invoices above 500 € need two validators" is one rule.
+Your plans changed. You can move a booking, shorten it, extend it or cancel it, as far as it has not been used.
 
-![](assets/help/images/validation-rules.jpg)
+![](assets/help/images/user-reserve-change.en.b8fa17aa9.jpg)
 
- 
+**Steps**
 
-![](assets/help/images/validation-rule-edit.jpg)
+1. Open the booking: tap it in the **Day** or **Week** view, in the Calendar, or tap **Details** in the message that follows a booking.
+2. For a booking that has not started, tap **Edit times** to choose another period, or **Cancel reservation** to remove it.
+3. For a repeating booking, choose **Cancel this occurrence** or **Cancel this and following**.
+4. For a booking you are checked in to, **Stay longer** and **End earlier** appear when the space's rules allow a later or earlier end. The start does not move.
+5. For a booking that has started, been checked in or been completed, and where your space allows deletion requests, tap **Request deletion**, give a reason if you wish, and tap **Send request**.
 
-*Left: one rule per domain, inheriting from the default. Right: editing a rule — required validations, allowed validators, owner sign-off.*
+**Good to know**
 
-![](assets/help/images/messages-events.jpg)
+- **Request deletion** does not delete anything: an owner or administrator decides whether the check-in was only forgotten, in which case the booking stays, or whether the booking was never used, in which case it is removed.
+- An administrator can remove someone else's booking with **Remove reservation (overrule)**; the member and the administrators are told.
+- **Show on plan** jumps to the place on the plan.
 
-*The Events face of Messages: kind chips, Unread / Read, and Group by Type · Date · Member.*
+**See also:** [Check in and check out](help:user.reserve.check-in) · [Save a booking to your own calendar](help:user.reserve.calendar-file) · [Repeat a booking](help:user.reserve.series)
+
+### When a booking is awaiting confirmation
+
+**Audience:** Member · Administrator · Owner
+
+A booking or request reads **awaiting confirmation**. It does not mean something went wrong: someone still has to say yes.
+
+**Steps**
+
+1. Look at what is waiting: the Calendar lists it with the words **awaiting confirmation**, and a decision addressed to you sits at the top.
+2. If it is for you to decide, tap **Accept** or the cross on the Calendar.
+3. If you are waiting for someone else, nothing is needed from you; the answer arrives as a notification and on the Calendar.
+
+What waits for a confirmation:
+
+- A booking an administrator made for you: you confirm it.
+- A whole-space booking, when the owner asks validators to approve it. The space stays blocked while it waits, and a rejection cancels the booking.
+- A request to delete a booking that has already started, been checked in or been completed.
+
+**Good to know**
+
+- Who may validate and how many must agree is the owner's rule; see [Validation rules](help:user.validation.overview).
+- A request shows its progress, for example 1/2 validations, and later its outcome: validated, refused, rejected or expired.
+
+**See also:** [Book for someone else](help:user.reserve.for-someone) · [Decisions waiting for you on the Calendar](help:user.reserve.calendar-decisions)
+
+### The Calendar tab
+
+**Audience:** Member · Administrator · Owner
+
+You want everything dated in one place: your bookings, check-ins, alerts, messages, payments due. The Calendar tab lists it by day and every row opens its source.
+
+![](assets/help/images/user-reserve-calendar.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Calendar](app:/calendar). It opens on the **Agenda**: the next 30 days, grouped under **Today**, **Tomorrow** and the day names.
+2. Use the arrows to step 30 days at a time, or tap the date for a day picker. The button at the top right brings you back to **Today**.
+3. Tap a row to open it: a booking opens its details, a message its conversation, an invoice its sheet.
+4. Narrow the list with the chips below, as described in [Filter the Calendar](help:user.reserve.calendar-filters).
+
+**Good to know**
+
+- Bookings appear for everyone in the space, because the plan shows occupancy to everyone. Messages and money stay private to you and to the people the space's rules allow.
+- A member with the finance or member permission can switch the list to another member with the **Me** chip. What the server does not allow shows as locked, not as an empty day.
+- If your space keeps the simpler calendar, you pick one day or a range of days instead of the three views.
+
+**See also:** [Agenda, Week and Month in the Calendar](help:user.reserve.calendar-views) · [Save a booking to your own calendar](help:user.reserve.calendar-file)
+
+### Agenda, Week and Month in the Calendar
+
+**Audience:** Member · Administrator · Owner
+
+You want to see a week or a month at a glance. The Calendar offers three ways to look.
+
+![](assets/help/images/user-reserve-calendar-views.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Choose **Agenda**, **Week** or **Month** in the bar at the top. The fourth button, **Alerts**, shows your alerts when your space offers them.
+2. In **Week**, tap a day among the seven to read its list below.
+3. In **Month**, tap a day in the grid. Under each day up to three dots show what it holds: bookings and presence, alerts and messages, money. Today is ringed.
+4. Closed days are greyed and struck through.
+
+**Good to know**
+
+- In **Month** the list below shows only the day you selected; in **Week** it lists the whole week.
+- The arrows step by a week or a month, according to the view.
+- The Calendar also shows the date a payment is due and each scheduled expense that falls due.
+
+**See also:** [The Calendar tab](help:user.reserve.calendar) · [Closure days and public holidays](help:user.reserve.closed-days)
+
+### Decisions waiting for you on the Calendar
+
+**Audience:** Member · Administrator · Owner
+
+You were asked to confirm something. When something needs your answer, it is pinned at the top of the Calendar, under **Waiting for your confirmation**.
+
+![](assets/help/images/user-reserve-calendar-decisions.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Calendar](app:/calendar). Each waiting decision is a card with a short text and the date it was sent.
+2. Read the card. It may show how many validations it has, for example 1/2 validations.
+3. Tap **Accept** to agree, or the cross to refuse.
+4. Open the **Alerts** view to see the whole list with its history.
+
+**Good to know**
+
+- The **Alerts** button in the bar shows how many decisions wait for you.
+- Once you answered, the decision leaves the top and appears in the list with its outcome.
+
+**See also:** [When a booking is awaiting confirmation](help:user.reserve.awaiting) · [Validation rules](help:user.validation.overview)
+
+### Filter the Calendar
+
+**Audience:** Member · Administrator · Owner
+
+The list is long and you only look for bookings. The chips under the bar narrow it.
+
+![](assets/help/images/user-reserve-calendar-filters.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap **My bookings** to keep only bookings. Tap it again to see everything.
+2. Or choose chips such as **Bookings**, **Check-ins** and **Check-outs**; **All** shows every kind.
+3. To undo your choices, tap **Reset filters**, the funnel button.
+4. A line above the chips repeats what you see, for example Me · Bookings.
+
+**Good to know**
+
+- Several chips can be on at once.
+- Which chips are offered depends on what your space has switched on, for example validations.
+
+**See also:** [The Calendar tab](help:user.reserve.calendar) · [Agenda, Week and Month in the Calendar](help:user.reserve.calendar-views)
+
+### Save a booking to your own calendar
+
+**Audience:** Member · Administrator · Owner
+
+You want a booking in your phone's or your computer's calendar. The app writes a standard calendar file that Google, Outlook, Apple and others import.
+
+![](assets/help/images/user-reserve-calendar-file.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open one of your own bookings, in the **Day** view, the **Week** view or the Calendar.
+2. Tap **Save calendar file**.
+3. Read the preview: the **Event**, **When**, **Location**, **Status** and the **File** name. Open **File contents** to read the file itself.
+4. Tap **Save**. The app saves the file, usually in your downloads folder, and tells you where; open it with your calendar.
+
+**Good to know**
+
+- The file carries the time, the place, the workspace name and whether the booking is confirmed or cancelled. No amount, no name, no e-mail address.
+- It is a snapshot: if the booking changes later, a file already saved does not change.
+- If the booking changed between the preview and **Save**, nothing is written and the preview refreshes.
+- Your owner can switch this feature off.
+
+**See also:** [Change or cancel a booking](help:user.reserve.change) · [The Calendar tab](help:user.reserve.calendar)
+
+## Collaborate: members, requests, messages and the wider network
+
+In this chapter:
+- [The Members directory](help:user.collaborate.directory) and [a member's page](help:user.collaborate.member-page)
+- [Writing to a member](help:user.collaborate.contact)
+- [Events & confirmations](help:user.collaborate.events), [accepting or declining](help:user.collaborate.accept) and [What needs you](help:user.collaborate.attention)
+- [Validation rules, domain by domain](help:user.validation.overview) (administrators and owners)
+- [Messages](help:user.collaborate.messages), [new conversations and groups](help:user.collaborate.messages-new), [message requests](help:user.collaborate.message-requests) and [blocking](help:user.collaborate.block)
+- [Notifications](help:user.collaborate.notifications)
+- [Discover](help:user.collaborate.discover), [your public profile](help:user.collaborate.public-profile) and [your visits as a guest](help:user.collaborate.guest-visits)
+
+### The Members directory
+
+**Audience:** Member · Administrator · Owner
+
+You want to see who is in your workspace, who is here today and who is about to be.
+
+![](assets/help/images/user-collaborate-directory.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Members](app:/directory) from the menu (or from the bottom bar if you chose the classic navigation style).
+2. Read each card: photo or initials, name, role badge (**Owner** or **Administrator**; plain members carry none), the person's status line, and two small chips.
+3. Read the chips. The first one is the booking: **Checked in** with the place, **Reserved now**, or the next booking (day, time, place). The second says **Online**, or when the person was last seen.
+4. Tap a card to open [the member's page](help:user.collaborate.member-page).
+5. Pull the list down to refresh it.
+
+**Good to know**
+
+- Only active members are listed, in alphabetical order.
+- Administrators and owners also see each person's e-mail address under the name. Members do not: between members, contact stays opt-in.
+- If your owner set up a WhatsApp group, a **Open WhatsApp group** line sits above the list.
+
+**See also:** [A member's page](help:user.collaborate.member-page) · [Writing to a member](help:user.collaborate.contact)
+
+### A member's page
+
+**Audience:** Member · Administrator · Owner
+
+You want to know whether a colleague is in, when they come next, and how to reach them.
+
+![](assets/help/images/user-collaborate-member-page.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Members](app:/directory).
+2. Read the top card: photo, role, presence and the person's own status line. Further down you can see how long they have been a member.
+3. Read **Right now**: whether the person is checked in, holds a booking this minute, or when their next booking is. Tap a booking to open it.
+4. Use the buttons: **Messages**, **Chat on WhatsApp** and, for administrators, **E-mail**.
+
+**Good to know**
+
+- **Contact** shows a WhatsApp number only when the person chose to share it.
+- Where you may see them, money figures (open invoices, payments, the current month) sit on the same page. You always see your own; someone else's only with the right to view finances.
+- Administrators and owners also get a **Manage** area with **Membership**, **Booking rules**, **Billing** and **Badges & access**, each row showing its current value.
+
+**See also:** [Writing to a member](help:user.collaborate.contact) · [The member's actions](help:user.members.actions)
+
+### Writing to a member
+
+**Audience:** Member · Administrator · Owner
+
+You want to ask a colleague something without leaving the workspace.
+
+![](assets/help/images/user-collaborate-contact.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Members](app:/directory), tap a card to open the member's page, then tap **Messages**.
+2. Type in the **Your message** field.
+3. Tap **Send**.
+
+**Good to know**
+
+- Messages read oldest to newest, under day separators. A tick under your message means it was delivered; a blue double tick means it was read.
+- Tap the **…** beside a bubble for the message actions (react with an emoji, star, copy, edit within 15 minutes, forward, delete). The paperclip button attaches a reservation or a space; the other person sees a link that opens it.
+- This needs the **Member notifications** feature of your workspace.
+
+**See also:** [Messages](help:user.collaborate.messages)
+
+### Events & confirmations
+
+**Audience:** Member · Administrator · Owner
+
+You want to see what happened in the workspace, and what is waiting for an answer.
+
+![](assets/help/images/user-collaborate-events.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap **Events** in the top bar (the tray icon with a number), or open [Events](app:/events) from the menu. The page opens on **Alerts**.
+2. Read **Waiting for your confirmation** at the top: requests that need you.
+3. Read the feed below. Each row says what happened; an hourglass means pending, a green check means confirmed. Money rows show who validated them and when.
+4. Narrow the feed with the chips: **All**, **Messages**, **Reservation**, **Check-ins**, **Money**, **Members**, then **Unread** or **Read**.
+5. Tap **Type**, **Date** or **Member** next to **Group by** to fold the feed into groups; tap the group symbol to go back to the flat list.
+
+**Good to know**
+
+- An event is created whenever something is booked, changed or cancelled, a payment or an expense is recorded, extra half-days or a deletion are requested, a role changes or someone joins.
+- Members see their own events; administrators and owners see everyone's.
+- Your filter is remembered. The number on the Events button counts new updates and decisions waiting for you.
+- **Open my messenger** at the top takes you to your [conversations](help:user.collaborate.messages).
+
+**See also:** [Accept or decline a request](help:user.collaborate.accept) · [Validation rules](help:user.validation.overview)
+
+### Accept or decline a request
+
+**Audience:** Member · Administrator · Owner
+
+Somebody asked you to confirm something, and you want to answer.
+
+![](assets/help/images/user-collaborate-accept.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Events](app:/events).
+2. Find the request under **Waiting for your confirmation**.
+3. Tap **Accept**, or the red cross to **Decline**.
+
+**Good to know**
+
+- When an administrator does something for you (books a place, records your payment), it stays pending until you confirm. What you do for yourself never needs your own confirmation.
+- Nobody confirms their own request: it waits for another person, or for the rule's exception ([validation rules](help:user.validation.overview)).
+- After seven days without an answer, an act that creates or changes something (an administrator booking for you, say) is confirmed automatically; a deletion or a charge expires instead.
+- A row can show progress such as "1/2 validations" when the rule asks for several.
+
+**See also:** [Events & confirmations](help:user.collaborate.events) · [Required validations](help:user.validation.required-count)
+
+### What needs you
+
+**Audience:** Administrator · Owner
+
+You want one place that answers: does anything need me today?
+
+**Steps**
+
+1. Open [What needs you](app:/attention).
+2. Read the lines in order: each one is a decision (for example a request to confirm or a person waiting to be admitted), the most costly delays first.
+3. Tap a line to deal with it.
+
+**Good to know**
+
+- This screen exists only when your workspace has switched on the **What needs you** feature; without it the address leads back to the start page.
+- Several identical decisions are shown as one line. When nothing is waiting, the screen says **Nothing needs you**.
+
+**See also:** [Events & confirmations](help:user.collaborate.events)
 
 ### Validation rules, domain by domain
 
-Each kind of act — a member joining, a reservation being deleted, an
-invoice written off, extra half-days granted — has its own rule saying
-whether a human must decide before it takes effect, and who. A decision
-is always an event: who decided, when, and on what. Nothing is validated
-silently.
+**Audience:** Owner
+
+You decide, for each kind of act, whether a person must confirm it first, and who.
+
+![](assets/help/images/user-validation-overview.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Validation rules](app:/validation) (it is also in Settings).
+2. Read the three groups: **Money**, **Bookings** and **People and roles**. Each states what stays unchanged until the act is accepted.
+3. Read a card from left to right: someone asks, the people who may validate, it takes effect. A card says **Inherits default** or **Customized**.
+4. Tap a card to edit its rule. Tap **Default policy** to change what every other card inherits.
+
+**Good to know**
+
+- A rule covers acts such as payments, expenses, services, extra half-days, booking deletions, reservations, role changes, new members, invoices, refunds and subscription changes.
+- Every decision is an event: who decided, when, and on what. Nothing is validated silently.
+- The banner on top applies to every rule: **Nobody validates their own**.
+- You need the permission to configure validation policies; owners always have it.
+
+**See also:** [Required validations](help:user.validation.required-count) · [The role matrix](help:user.roles.matrix)
 
 ### Required validations
 
-How many people must confirm before the act goes through. One is the
-common case; two is for money. Setting it higher than the number of
-people who *may* validate is refused, because a rule nobody can satisfy
-blocks the act forever.
+**Audience:** Owner
+
+You choose how many people must confirm before the act goes through.
+
+![](assets/help/images/user-validation-required-count.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Validation rules](app:/validation).
+2. Tap the plus or minus beside **Required validations**.
+3. Tap **Save**.
+
+**Good to know**
+
+- One is the usual case; two is common for money.
+- If you ask for more validations than there are people who may give them, the sheet warns **Not enough eligible validators** and does not save: a rule nobody can satisfy would block the act forever.
+
+**See also:** [Who may validate](help:user.validation.who-may)
 
 ### Who may validate
 
-Either **any administrator**, or a named list you pick. A named list
-survives someone becoming an administrator later — being an admin does
-not silently add you to a list somebody chose deliberately.
+**Audience:** Owner
+
+You choose which people are allowed to give the confirmation.
+
+![](assets/help/images/user-validation-who-may.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Validation rules](app:/validation).
+2. Under **Who validates**, pick **Admins**, **Listed persons** or **All members**.
+3. For **Admins**, keep **Admins may validate** on and choose **All admins** or tap the names of specific administrators. Switch it off and only owners validate.
+4. For **Listed persons**, pick exactly the people you want.
+5. Tap **Save**.
+
+**Good to know**
+
+- The owner may always validate.
+- A named list is a deliberate choice: someone who later becomes an administrator is not added to it.
+- The choice of scope appears when your workspace has the validation scopes feature on; otherwise a rule works with administrators.
+
+**See also:** [An owner is required](help:user.validation.owner-required)
 
 ### An owner is required
 
-At least one of the confirmations must come from an owner, whatever else
-the count says. Use it where an administrator's approval alone should
-not be enough.
+**Audience:** Owner
+
+For some acts an administrator's approval alone is not enough.
+
+![](assets/help/images/user-validation-owner-required.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Validation rules](app:/validation).
+2. Switch on **Owner must always validate**.
+3. Tap **Save**.
+
+**Good to know**
+
+- At least one of the confirmations then comes from an owner, whatever the required number says. The card shows "and the owner, always".
+
+**See also:** [Required validations](help:user.validation.required-count) · [An owner may confirm their own request](help:user.validation.owner-self)
 
 ### An owner may confirm their own request
 
-Off, an owner's own request still waits for somebody else. On, it is
-theirs to settle. This is the switch that decides whether a one-person
-space works at all.
+**Audience:** Owner
+
+You run a space on your own and need to be able to settle your own requests.
+
+![](assets/help/images/user-validation-owner-self.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Validation rules](app:/validation).
+2. Switch on **The owner may validate their own**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Off, an owner's own request waits for someone else. On, the owner settles it.
+- This is the owner's exception alone: an administrator never validates their own act.
+- The switch appears when your workspace has the validation chain feature on.
+
+**See also:** [Auto-validate an owner's own request](help:user.validation.auto-validate-owner)
 
 ### One after another
 
-Confirmations are collected in the order of the list rather than in any
-order. Slower, and the right shape when the second reader is meant to
-see the first one's decision.
+**Audience:** Owner
+
+You want the confirmations collected in order, so the second person sees the first one's decision.
+
+![](assets/help/images/user-validation-sequential.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a card in [Validation rules](app:/validation).
+2. Switch on **One after another**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The next validation is asked for once the previous one has passed, and the validation trail numbers each step.
+- It is slower; use it when the order matters.
+- On money rules you can also set **Only above this amount**: smaller amounts apply straight away.
+
+**See also:** [Required validations](help:user.validation.required-count)
 
 ### Auto-validate an owner's own request
 
-The request is recorded **already settled** rather than raised and then
-confirmed — so nobody is pinged about a closed question. The event still
-exists, marked as decided by the system, so the audit trail is
-unbroken.
+**Audience:** Owner
+
+You do not want a ping about a question that is already closed.
+
+![](assets/help/images/user-validation-auto-validate-owner.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Validation rules](app:/validation), tap the **Booking deletion** card.
+2. Switch on **Owners delete without validation**.
+3. Tap **Save**.
+
+**Good to know**
+
+- An owner's own deletion request then settles itself and stays marked **Auto-validated** in the feed, so the trail is unbroken.
+- This switch exists on the **Booking deletion** rule only, and it is off by default.
+
+**See also:** [Auto-validate an administrator's own request](help:user.validation.auto-validate-admin)
 
 ### Auto-validate an administrator's own request
 
-The same for administrators, and deliberately **independent** of the
-owner switch: every owner also carries the administrator role, so one
-switch could not have expressed "owners yes, admins no".
+**Audience:** Owner
 
-## 8. For owners: the editor & settings
+You want administrators to delete their own bookings without waiting.
 
-Administration lives in three sections of **Settings**, each entry shown only to whoever holds the permission it needs (#1307): **This workspace** — *Coworking space* (the workspace settings), *Availability*, *Billing*, *Services*, *Accessories*, *Billing & reports* (the invoicing hub with the report editor and reminder rules in its header), *Number sequences*, *Payment instructions*, *Validation rules* and *Features*; **Administration** — *Members & plans*, *Online payments*, *RFID / NFC badges*, *Sites* and *Workspace ID & QR*; **Governance** — *Role management*, *Deployment* and the space's environment (some ride their feature: *Accessories*, *Online payments*, *RFID / NFC badges*…). One rule to know: **a feature's settings entry only appears while that feature is enabled** — switch *Online payments* off in **Features** and its configuration screen disappears with it (and comes back when you re-enable it). The **Features** entry itself is always there, so you can always switch a module back on.
+![](assets/help/images/user-validation-auto-validate-admin.en.b8fa17aa9.jpg)
 
-**Creating a workspace, step by step (#1303).** Onboarding walks through **Name → Where → Start from → Confirm**. *Where* holds the country (preset from this device), currency, time zone, whether the space is for trying things out or real, and the dev/prod pair; *Start from* is the template gallery. **Back** keeps everything already typed. *Use the suggested settings* on the first step jumps straight to **Confirm**, which lists exactly what will be created before **Create workspace**. If a template cannot be applied, the confirm step offers **Create without a template**, so nobody is left stuck. Before anything is created, **Confirm** also names what the chosen template sets up (*Sets up: Space & plan, Wording…*). If this server cannot apply the template at all, it says so there: **Create workspace** stays disabled and **Create without a template** is offered instead.
+**Steps**
 
-On small screens, enlarged text or with the keyboard open, the creation form and its actions scroll together when needed. The current step stays readable and Back keeps your draft (#1653).
+1. In [Validation rules](app:/validation), tap the **Booking deletion** card.
+2. Switch on **Admins delete without validation**.
+3. Tap **Save**.
 
-Back and Escape return to the previous step. Leaving a populated draft asks whether to keep editing or discard; an untouched form exits directly. Template filters scroll horizontally so long labels leave room for results (#1653).
+**Good to know**
 
-Create workspace keeps its label while sending and accepts one request at a time. If the result cannot be confirmed, an inline message keeps your draft available for a retry of the same request; leaving a view never cancels a server write (#1653).
+- It is independent of the owner switch: every owner is also an administrator, so one switch could not say "owners yes, administrators no".
+- Off by default, and only for booking deletions.
 
-Suggested steps are marked as skipped, rather than completed. Open the current-step heading to review progress on a small screen. Moving back preserves the draft; transitions respect reduced motion (#1653).
+**See also:** [Auto-validate an owner's own request](help:user.validation.auto-validate-owner)
 
-**Country, currency, time zone (#711).** The country picker now covers the 32 countries the app can declare tax in (EU-27, Switzerland, Norway, the UK, the US and Canada). Currency is a **picker** of the codes the app can format — each with its symbol, and each with the right number of decimals: a yen has none, a dinar has three, and every amount, invoice and online payment respects that. Time zone is a **searchable list** of the IANA zones the clock can actually install; a typo can no longer save. **A new workspace starts in your device's country (#1303):** its currency and time zone come with it, all three editable before you create — `fr_CH` proposes Switzerland, a phone set to German proposes Germany, and anything the catalogue does not know proposes France.
+### Messages
 
-### The space editor
+**Audience:** Everyone
 
-Open the **editor** from the Reserve hub's app bar (crossed tools icon). The **Space editor** screen lists your floors — drag to reorder, the **layers icon** marks a level *Bookable as a whole*, the **⋮ menu** renames or deletes, **+ Add a floor** extends the building. Open a floor to draw it on the grid with the bottom toolbar — **Select · Office · Table · Seat · Image · Erase**:
+You want all your conversations in one list, whichever space or server they belong to.
 
-- An **office** gets a name, an optional *Bookable as a whole* switch and a **price per half-day**.
-- A **table** gets a name, the same whole-table option and its own **price per half-day**.
-- A **seat** gets a name, a **seating direction** (↑ → ↓ ←), an optional **chair type**, its **accessories** (each may carry a per-half-day supplement) and a **Blocked (maintenance)** switch. Its **NFC/RFID tag** field takes the chair tag's UID in hex — read it with the tag button or type it — so a tap on the chair resolves this seat (§4a).
-- **Image** places a resizable illustration; the photo icon in the app bar sets the level's **background photo**.
-- Deleting a space that has history is the **owner's** call, and with *Delete spaces with history* on (the default) it just works: bookings that referenced the space keep a text snapshot of what it was, and any still-reserved booking on it is cancelled automatically. Switch the feature off and a space with future reservations has to be emptied by hand first.
+![](assets/help/images/user-collaborate-messages.en.b8fa17aa9.jpg)
 
-![](assets/help/images/space-editor-floors.jpg)
+**Steps**
 
-*The Space editor's floor list: drag to reorder, the layers icon marks a level bookable as a whole.*
+1. Open [Messages](app:/me?tab=messages) in Me.
+2. Read each row: the title, the context (for example "In" a space, "Person to person", "Group"), the last message and the unread count.
+3. Filter with **All**, **Unread** or **Archived**, open **Starred** for the messages you starred, or tap the magnifier to search.
+4. Press and hold a row to **Pin to top**, **Mute notifications**, **Mark as unread** or **Archive**.
+5. Tap a row to open the conversation.
 
-![](assets/help/images/space-editor-canvas.jpg)
+**Good to know**
 
-*A floor on the grid with the bottom toolbar — Select · Office · Table · Seat · Image · Erase.*
+- Conversations from your other connected servers appear in the same list, with the server named.
+- A message you wrote shows a tick when delivered and a blue double tick once read.
+- An archived conversation keeps its history. A muted one stays silent but is still counted.
+- From the workspace, **Open my messenger** (in Alerts) leads here.
 
-![](assets/help/images/space-editor-seat.jpg)
+**See also:** [Writing to a member](help:user.collaborate.contact) · [Start a conversation or a group](help:user.collaborate.messages-new)
 
-*A seat's sheet: name, seating direction, chair type, accessories, the NFC/RFID tag field and the blocked switch.*
+### Start a conversation or a group
 
-### Workspace ID & QR
+**Audience:** Everyone
 
-Your role-bound invites (§2): member invite = the workspace ID (replace it with a memorable one, copy it, share the QR as PNG), admin invite = single-use personal codes.
+You want to write to someone new, or to several people at once.
 
-![](assets/help/images/workspace-id-qr.jpg)
+![](assets/help/images/user-collaborate-messages-new.en.b8fa17aa9.jpg)
 
-*Workspace ID & QR: the member invite (QR + ID — copy, change, share as PNG, invite someone) and the admin-invite tab.*
+**Steps**
 
-#### The workspace ID
+1. In [Messages](app:/me?tab=messages), tap **New conversation**.
+2. Type a name under **Find available people** and tap the magnifier.
+3. Tap the person; the chat opens.
+4. For a group, tap **New group** instead, give it a **Group name**, **Add people** and tap **Create group**.
 
-Four to twenty letters or digits, unique across DesKilo. It is both the
-human-readable name of the space and the **walk-in invite**: anyone with
-it can ask to join, and every join still waits for an administrator to
-confirm. Change it and the old one stops working immediately — print the
-QR again.
+![](assets/help/images/user-collaborate-messages-group.en.b8fa17aa9.jpg)
 
-### Availability
+**Good to know**
 
-#### Open days & granularity
+- You find people who chose to be reachable: each person decides under **Who can start a conversation with me**.
+- In a group, tap its name to see the members; an administrator can add or remove people, rename it or allow only administrators to post (**Only admins can post**). Anyone can **Leave group**.
+- A long message is limited to 4000 characters.
 
-- **Open weekdays** — chips Mon…Sun.
-- **Booking granularity** — one of: *free time range*, *5 / 15 / 30 / 60-minute slots*, *half-days (morning & afternoon)*, *full days only*, or *real hours* (exact from–to, with half/full-day shortcuts).
+**See also:** [Message requests](help:user.collaborate.message-requests)
 
-![](assets/help/images/availability-basics.jpg)
+### Message requests
 
-*Open weekdays and the granularity choice — what a booking may look like starts here.*
+**Audience:** Everyone
 
-#### Working hours
+Someone you did not choose to hear from wrote to you, and you decide what happens.
 
-- **Working hours** — day start, half-day boundary, day end (default 08:00 / 12:00 / 17:00). Half-day and full-day slots everywhere — reservations, check-in and billing — follow these hours; under *real hours* you also set how many hours bill as a half and a full day.
-- **Closure days** — dated exceptions, added with **+**.
+**Steps**
 
-![](assets/help/images/availability-hours.jpg)
+1. Open [Messages](app:/me?tab=messages). A card **Message requests** appears above your conversations when there is one.
+2. Read the first message.
+3. Tap **Accept** to turn it into a conversation, **Ignore** to hide it, or **Block** to end all contact.
 
-*The working hours: day start, half-day boundary, day end — every half-day and full-day slot follows them.*
+**Good to know**
 
-#### Booking policies
+- The card says it plainly: these people are outside the ones you chose to be reachable by, and they are not told what you decide.
+- Who may write to you first is set in Me, under **Who can start a conversation with me**.
 
-- **Booking policies** — four entries that relax or tighten the rules of §4b (the section rides the *Booking policies* feature); the two switches are both **off by default**:
-  - **Allow past bookings** — members may backfill a booking that already ended (yesterday and earlier). Off, such bookings are refused; booking a window earlier the *same day* is always allowed either way. Switch it on for spaces that record attendance after the fact.
-  - **Admins may check members out** — an admin can end a member's running check-in. Off, check-out is strictly personal. Useful where staff closes the room in the evening.
-  - **Outside the opening hours** — one question, four mutually exclusive answers, the same on every granularity: *what may happen outside the working day?* **Off** — nothing: no booking ahead, no walk-up, and a booking spilling past the day's end (or starting before it opens) is refused too. **Spontaneous only** — the walk-up check-in stays possible at **either edge of the day**, the early arrival before opening as much as the evening overtime to midnight, while reserving ahead outside the hours is refused; this is where the old **Minute bookings within working hours** switch went, and workspaces that had it on read as this (that switch allowed only the evening walk-up — the mode is named for spontaneity, not for the evening, so the morning walk-in is allowed too). **Free** — allowed, never counted and never charged (pure presence information). **Charged** (the **default**) — counted like ordinary usage, except on a day where the member already holds a regular inside-hours booking, when the outside part rides free.
-  - **Simultaneous reservations per member** — how many overlapping bookings one member may hold, check-ins included. **1** by default: one place at a time. An owner or admin can grant a single member a higher allowance in *Members & plans* (never for themselves), and that personal permission wins over this number.
+**See also:** [Block someone](help:user.collaborate.block) · [Who can see my data](help:user.privacy.visibility)
 
-![](assets/help/images/availability-outside.jpg)
+### Block someone
 
-*The outside-the-opening-hours policy: one question, four mutually exclusive answers — the same on every granularity.*
+**Audience:** Everyone
 
-#### Booking limits
+You want a person to stop seeing you and writing to you.
 
-  Below them sits **Booking limits** — three numbers the server has always enforced and that the app can now set:
+![](assets/help/images/user-collaborate-me-privacy--blocked.en.b8fa17aa9.jpg)
 
-  - **Advance booking horizon** — how many days ahead a booking may start (default **90**); beyond it the booking is refused by name.
-  - **Minimum duration** — the shortest booking accepted (default **30 minutes**), on every granularity. It is exactly why an 11:45 arrival for the 12:00 half-day boundary is refused as too short.
-  - **Maximum duration** — the longest accepted (default **24 hours**). Since a booking ends on the day it starts, a full day is the ceiling and the picker offers nothing above it.
+**Steps**
 
-  Set a minimum above the maximum and the screen says so, because the server checks each bound on its own and would simply refuse every booking without explaining why.
+1. Tap **Block** on a message request, or **Block this person** in a conversation.
+2. Confirm.
+3. To undo it, open Me, then **Blocked people**, and tap **Unblock** beside the name.
 
-![](assets/help/images/availability-limits.jpg)
+**Good to know**
 
-*The booking limits — advance horizon, minimum and maximum duration — and the closure days beneath them.*
+- A block works both ways: neither of you sees or reaches the other.
+- The person is not told.
 
-  The two **auto-validation** switches — *admins delete without validation*, *owners delete without validation* — are not here: they live with the validation rules (§7), off by default, and reach reservation deletions only.
+**See also:** [Message requests](help:user.collaborate.message-requests)
 
-#### Open weekdays
+### Notifications
 
-Which days of the week the space is open at all. A booking that touches
-a closed weekday is refused with that reason, and the plan draws the day
-as shut rather than empty.
+**Audience:** Everyone
 
-#### Granularity
+You want to know what alerts you, and to switch alerts off on this device if you prefer.
 
-What a booking may be: a **half day**, a **full day**, or a **slot** on
-a grid of N minutes. A booking that does not sit on the grid is refused
-and told the step, so nobody has to guess it.
+![](assets/help/images/user-collaborate-notifications.en.b8fa17aa9.jpg)
 
-#### Working hours
+**Steps**
 
-The start and end of the working day. With the granularity, they decide
-what a half-day is — which is the unit every allowance, every quota and
-every invoice line counts in.
+1. Open [Privacy & data](app:/privacy).
+2. Use the switch **Push notifications on this device** to turn push on or off.
+3. To silence one conversation, press and hold it in [Messages](app:/me?tab=messages) and choose **Mute notifications**.
 
-**Where the hours came from (#1307).** A chip under the heading says whether the hours are the *Product default*, came *From template «…»*, or are a *Workspace setting*. **Reset to template** puts back the hours the last applied template delivered; **Reset to product default** removes the workspace's own hours. Editing stays in the fields below.
+**Good to know**
 
-#### Closure days
+- You are alerted to requests waiting for your confirmation and to messages.
+- The count on the bell and the app icon adds your pending confirmations and unread messages.
+- Off, the app keeps working; nothing is sent to this device. There are no separate switches per category.
+- If your system blocks the app's notifications, allow them in the system settings.
 
-Dates the space is shut regardless of the weekday: holidays, a week in
-August, a day for the plumber. A booking touching one is refused and
-says so.
+**See also:** [Events & confirmations](help:user.collaborate.events) · [Your data, your rights](help:user.privacy.consent)
 
-#### Booking policies
+### Discover
 
-The rules the server enforces on every creation path — the app, a
-scanned QR, the wall kiosk — so a rule written once binds all three.
+**Audience:** Everyone
 
-#### Allow past bookings
+You want to find workspaces that publish themselves, and write to their hosts.
 
-Off, a booking lying entirely in the past is refused. On, it is allowed.
-A **same-day** retroactive booking is legal either way: someone who sat
-down at nine should be able to say so at ten.
+![](assets/help/images/user-collaborate-discover.en.b8fa17aa9.jpg)
 
-#### Administrators may check out
+**Steps**
 
-Lets an administrator end someone else's presence. Useful when a member
-leaves without checking out and the seat would otherwise stay occupied
-until the day ends.
+1. Open [Discover](app:/me?tab=discover) in Me. It opens on the map.
+2. Type in **Search workspaces** and tap the magnifier.
+3. Swipe the cards under the map, or tap the pin symbol on a card to **Locate on map**.
+4. Tap the list button to switch to **List**, and the map button to come back to **Map**.
+5. Tap a workspace to read its public page: description, address, contacts, website, public floor plan.
+6. Use **Write to the hosts**, the chat button beside a host, **Enter** or **Request a workspace profile**, as the workspace offers.
 
-#### Outside the opening hours
+**Good to know**
 
-Four answers, each with its own refusal sentence: **off** (refused),
-**walk-up only** (a spontaneous check-in is possible, booking ahead is
-not), **free**, or **charged** (allowed and counted). A booking that
-merely spills over the edge is treated as outside under the strict
-modes; billing counts only a booking lying *entirely* outside.
+- Only workspaces whose owner chose **Visible in the public directory** appear. If none match, the screen says **No published workspaces found.**
+- Writing to someone or asking to join connects you to that workspace's server first, and asks you before anything is sent.
+- Your messages with people on other servers appear in [Messages](help:user.collaborate.messages); manage those servers under **Connected servers**.
+- Owners publish their page from their settings.
 
-#### Booking limits
+**See also:** [Start a conversation or a group](help:user.collaborate.messages-new)
 
-The advance horizon (how far ahead booking opens), the minimum and
-maximum duration of one booking, and how many bookings a member may hold
-that overlap in time. Each refusal names the limit and its value, so the
-message is the rule.
+### Your public profile
 
-### Features
+**Audience:** Everyone
 
-**Processes first** (#1327). The screen opens on one card per business process — *Workspace & access*, *Billing & payments* and the rest — rather than on a hundred switches. Each card says its state in words beside an icon: **Active** (every feature of the process works), **Partial** (some do), **Available** (none is on yet) or **Needs attention** (a feature is switched on but waits for a prerequisite that is off). It counts the active subprocesses and the features that are on, and warns when switching the whole process on would also need a feature from another process. Tap a card to see its subprocesses and what each feature is doing; tap a feature to reach its switch. One search field reaches processes, subprocesses and features, and shows each result under its path (*Workspace & access › Physical access*); the chips **All**, **Active**, **Available** and **Needs attention** narrow the cards — a partial process counts as both active and available. The **Switches** view, above the list, keeps every switch, their search and the **Changed** chip. **Switch a process on or off (#1329).** Opened, a card offers **Switch on** and **Switch off** for the whole process and for each subprocess. Both open the same preview before anything is written: what is switched, what is *also needed* and pulled in from another process, what *works again* because its prerequisite comes back, and what is *already on*. Switching off something other features still need is refused first: you choose to keep everything as it is, to switch off what you asked for and keep the dependants' settings (they stop working until the prerequisite returns), or to switch the dependants off too. The write is made against exactly what the preview showed; if someone changed the features in the meantime, nothing is written, the preview is refreshed and you are asked again. The app reports success only once it has read the result back. **What a feature is, and why it is on (#1328).** Tap a feature on a card and it is explained before anything changes: its place (*process › subprocess*), what it provides, what it **requires** (with *in ‹process›* when the prerequisite lives elsewhere), what **uses** it, and why it is on or off right now — *switched on*, *switched on and needed by …*, or *held back: it needs …, which is off*. The technical key sits behind **Technical details**. **Change it among the switches** takes you to its switch.
+You want people outside your spaces to be able to read a few words about you.
 
-![](assets/help/images/features-tree.jpg)
+![](assets/help/images/user-collaborate-me-privacy--public-profile.en.b8fa17aa9.jpg)
 
-*The Features screen's Switches view: every module with its description; an indented child needs its parent.*
+**Steps**
 
-Switch whole modules on or off per workspace — each toggle carries its description right on the screen: calendar tab, events tab, notification feed grouping, money tab, services, accessory supplements, online payments, invoices, admins issue invoices, invoice PDF template, payment reminders (dunning), VAT management, VAT declarations, e-invoice delivery to the customer, PDF export, series booking, booking for others, push notifications, admins may block seats, table/desk & level reservations, admins may assign levels, kiosk mode, RFID/NFC badges, QR badges, kiosk member photos, members directory, WhatsApp integration, space QR codes, chair NFC tags, member photos on the plan, co-owners, auto check-in/out, data export (Excel), working hours, booking policies, member notifications, document library, member reports, booking deletion requests, role management, plan-object deletion, contextual help hints, and interface animations. Switching a module off removes *all* of its screens and buttons for every member.
+1. Open Me, then the **Privacy** section.
+2. Switch on **Public profile** and confirm **Publish**.
+3. Tap **Copy the link** and share it.
+4. Switch it off at any time to withdraw it.
 
-The list is **hierarchical**: a feature that needs another sits indented under it with a *Requires…* note, and is greyed out while its parent is off — *Money* carries services, accessory supplements, online payments and invoicing; *Invoices* carries the admin delegation, the PDF template, the payment reminders, VAT management (with the declarations beneath it again) and the customer e-invoice delivery; *Kiosk mode* carries three children — RFID/NFC badges, QR badges and kiosk member photos; *Table/desk & level reservations* carries *admins may assign levels*; *Members directory* carries the WhatsApp integration; *Events tab* carries the feed grouping. Switching a parent off takes its whole subtree out of the app; the child's stored choice comes back untouched when the parent returns.
+**Good to know**
 
-#### A feature switch
+- Anyone with the link, signed in or not, reads your name, profession and bio. Contact details, presence and spaces stay private.
+- A link to a profile that is withdrawn or unknown says **This profile is not public.**
+- **How others see me** previews what each audience sees.
 
-Every functionality is one switch. Turn it on and **all** of its
-surfaces appear — the tile, the tab, the button, the deep link; turn it
-off and none of them remain, including a bookmarked URL. What a switch
-never undoes is arithmetic already applied: an invoice issued while a
-feature was on keeps what it says. Some switches need another switch
-first, and one waiting on its parent says so instead of failing quietly.
+**See also:** [Who can see my data](help:user.privacy.visibility)
 
-### Members & plans
+### Your visits as a guest
 
-Tap a member to open their **management sheet** — every per-member action in one place: **Send the financial agreement** (§11d), **Messages**, **Add a service** (service, quantity, billing month → *submit for confirmation*), **Subscription** (their percentage), **When the days run out** (the over-consumption policy, §9), **Reservation limit** (how many **open** reservations the member may hold in total, whenever they fall), **Simultaneous reservations** (how many bookings may **overlap in time** — the personal allowance that overrides the workspace number, §4b; two different caps, so read the labels), **May reserve a whole desk, office or level**, **Badges** (§10), **Name admin** (validated, §7), **Co-ownership**, **Turn into a kiosk** — or **Revert the kiosk to a member** on a device account — **Approve** or **Reject** a pending membership, and **Pause the membership**. Each row shows the member's **email** under the name.
+**Audience:** Everyone
 
-![](assets/help/images/members-plans-list.jpg)
+You asked to visit a space without becoming a member, and want to follow it.
 
-*Members & plans: e-mail, plan share and role chips per row; megaphone, add and filters in the app bar.*
+**Steps**
 
-![](assets/help/images/member-management-sheet.jpg)
+1. Open Me, then Home.
+2. Find **My visits**: each visit shows the space, the time and a status (**Requested**, **Confirmed**, **Declined**, **Cancelled** or **Expired**).
+3. To withdraw one that is still ahead, tap **Cancel this visit**.
 
- 
+**Good to know**
 
-![](assets/help/images/member-add-service.jpg)
+- A visit is not a membership: it gives no role and no subscription.
+- The list appears only when you have visits, and only where the space has the **Guest visits** feature on.
 
-*A member's management sheet — every per-member action in one place — and the Add-a-service dialog beside it, naming the service, the quantity and the month it lands in.*
+**See also:** [Discover](help:user.collaborate.discover)
 
-![](assets/help/images/member-management-sheet-self.jpg)
+## Settings & profile, and your data
 
-*Your own sheet is shorter: nobody grants themselves rights (no admin/whole-space/simultaneous rows on yourself).*
+Everything personal about DesKilo lives in two places: **Me**, which is yours in every workspace, and **Settings**, which is where a single workspace keeps what is specific to your membership there. This chapter walks through both, then your privacy rights and the option to run your own server.
 
-![](assets/help/images/member-subscription.jpg)
+In this chapter:
+- [How Settings is organised](help:user.settings.organisation) and the [workspace-only switch](help:user.settings.scope)
+- Your account: [photo](help:user.profile.settings.photo), [personal information](help:user.profile.settings.personal-info), [address](help:user.profile.settings.address), [VAT number](help:user.profile.settings.vat-id), [payment terms](help:user.profile.settings.payment-terms), [WhatsApp](help:user.profile.settings.whatsapp), [status](help:user.profile.settings.status), [default booking period](help:user.profile.settings.default-period)
+- Your badge: [the badge](help:user.profile.settings.badge) and [its PIN](help:user.profile.settings.badge-pin)
+- How the app looks and reads: [language](help:user.profile.settings.language), [theme](help:user.profile.settings.theme), [navigation](help:user.profile.settings.navigation), [numbers and dates](help:user.profile.settings.regional-formats), [clock](help:user.profile.settings.clock), [time zone](help:user.profile.settings.device-zone), [hints](help:user.profile.settings.restore-hints), [front camera](help:user.profile.settings.front-camera), [linked accounts](help:user.profile.settings.linked-accounts)
+- Privacy & your data: [who can see my data](help:user.privacy.visibility), [who sees me](help:user.privacy.audiences), [public profile](help:user.privacy.public-profile), [export](help:user.privacy.export), [erase](help:user.privacy.erase), [rights requests](help:user.privacy.requests), [push](help:user.privacy.push), [your rights](help:user.privacy.consent)
+- [Your own server](help:user.backend.server)
 
- 
+### How Settings is organised
 
-![](assets/help/images/member-reservation-limit.jpg)
+**Audience:** Everyone
 
-*The subscription dialog (the member's percentage) and the reservation-limit dialog (the cap on open reservations).*
+You want to know where a setting lives before you hunt for it.
 
-#### The workspace library
+![](assets/help/images/user-settings-overview.en.b8fa17aa9.jpg)
 
-*Settings → Workspace library* (#1120), when the feature is on.
+**Steps**
 
-**Start from the library.** Search by name, description or tag, and narrow with the tag chips — the two combine, and a card says what the template gives: its plan in numbers, *with its settings* when hours, prices or rules travel too (#1280). Every template you may see — the built-in
-one, the public ones, and the ones somebody shared with your e-mail
-address. *Preview changes* shows, group by group, what the template would do here: **New** groups are ticked, groups that would **change what you have** are offered but left unticked, groups **already the same** have nothing to apply, and a group that **needs attention** says why and cannot be chosen. **Apply N changes** applies exactly what is ticked — never the whole template — and prices or roles ask once more. Applying a newer version of a template you applied before marks what you changed since as **Customized here** and leaves it unticked, so an update never quietly undoes your own choice. Under a group that switches features, the preview lists each switch by its **business process** — *Billing & payments: Invoicing on* — the same processes the Features screen shows; the template still carries feature keys, and the app writes exactly the change-set it previewed (#1330). Levels, rooms, desks and seats merge **by name**; nothing you already have is removed.
+1. Open [Settings](app:/settings). If your workspace calls it **My account**, it is the same screen.
+2. Stay on **My settings** for everything about you. Owners and administrators also see **Manage workspace**, which holds the workspace configuration; members who administer nothing see no second tab.
+3. Use the three shortcuts under the tabs to jump: **My account**, **My membership**, **Advanced**.
+4. Open **Back to Me** to return to your Me page.
 
-**Your templates.** *Save this space as a template* snapshots your floor
-plan. Prices, plan images and your site's address are stripped before it
-is stored. The sheet asks **what travels** — tick the groups to publish, a template of opening hours alone is fine — and says what **never** leaves the space (bank details, sites and their addresses, legal identifiers, invitation texts, document links and designs) and **which names go with the plan**, because rooms and desks merge by name and so cannot be hidden. Add **tags** so others find it (#1280). Each template is **Only me** until you say otherwise:
-*People I invite* (by e-mail — the invitation works the moment that
-address signs in, and nothing is revealed about whether it already has
-an account) or *Everyone*, which puts it in the library.
+**Good to know**
 
-**More than a plan** (#1276). A template also carries how the space
-works: opening hours and booking rules, tariffs, services, packages,
-accessories, validation rules, the role matrix, reminders, closure days,
-number formats (never the counters), the lexicon and the feature profile.
-What belongs to your space alone never travels — sites and their
-addresses, your legal identifiers and VAT number, legal mentions, bank
-details, invitation texts, document links and document designs. The
-server strips them before the template is stored, whatever the app sent.
-Applying merges: closure days, your prices on the plan and anything
-else the space already has stay where they are. One exception: a fee schedule the template carries replaces yours as
-a whole, because its bands cover 0–100 % together and two schedules
-cannot be interleaved. Saving again under the same name
-updates the template and raises its version, and every application is
-recorded with what the space held before. A template made by a newer
-DesKilo that this server does not understand is refused, never
-half-applied.
+- **My account** is a short card: it points to Me, where your photo, language, theme and sign-ins live for every workspace.
+- **My membership** is what concerns this workspace only: what you can do here, your badge and PIN, your status, your default booking period, your payment conditions and the documents.
+- **Advanced** starts closed. It concerns this device: the server, push, the front camera.
+- Under the sections you also find **Help**, the app version, the privacy policy and **Sign out**.
 
-Two templates are built in: **A tiny space** (two levels, eight seats) and **Association de coworking (France)**. The second is what a French coworking association usually needs from day one: half-days from 07:00 to 13:00 and 13:00 to 19:00, Monday to Friday; this year's and next year's public holidays for the workspace's country as closure days (never in a month already invoiced); subscriptions at 50 % and 100 % charged 50 € and 100 €; no VAT; French as the workspace language, with the association's own words (*Place*, *Étage*, *Réservations*); validations taken in the calendar, with the events tab and the members directory switched off; and two levels ready to book (#1282). Country, currency and time zone always come from onboarding.
+**See also:** [The workspace-only switch](help:user.settings.scope) · [Your own server](help:user.backend.server)
 
-A new space always starts with a room, whatever this feature says:
-onboarding offers *Start from* with the built-in template selected.
+### Choose a setting only for this workspace
 
-#### Core and Platform
+**Audience:** Everyone
 
-The Features screen has two sections (#1063).
+You want English in one workspace and French in the others, or a dark theme in just one of them.
 
-**Core** is what every space needs — the floor plan, bookings, members,
-memberships, the ledger, payments, invoices, basic administration. A new
-space starts with it on.
+![](assets/help/images/user-settings-scope.en.b8fa17aa9.jpg)
 
-**Platform** is everything a sophisticated operator needs and nobody else
-does: VAT groups and rate versions, e-invoicing, the report designer and
-positioned layouts, several sites, the dev/prod pair and deployment,
-kiosk and badges, managed profiles, validation quorum. A new space starts
-without it, and you switch on what you actually run.
+**Steps**
 
-Nothing is removed and nothing is hidden — every switch is still there,
-in the Platform section, live. The change is only about what a space
-meets before it has asked for anything.
+1. Open [Settings](app:/settings) and look at **My account**.
+2. Switch on **Only for this workspace**. The language, theme and regional rows appear right there.
+3. Change what you want. It applies to this workspace only.
+4. To undo, tap **Use my defaults**.
 
-**A space that already exists keeps exactly the features it has.** The
-tiers decide what a *new* workspace is created with; they never reach
-backwards.
+**Good to know**
 
-#### Which environments an invitation gives
+- With the switch off, you edit your defaults, the ones that apply everywhere.
+- A setting you changed only for this workspace is listed under **In this space** in the card.
+- The switch covers language, appearance and regional formats, nothing else.
 
-When your space has a production twin, the invitation sheet asks one
-question: **Also give access to production?** (#1119)
+**See also:** [App language](help:user.profile.settings.language) · [Theme](help:user.profile.settings.theme) · [Numbers and dates](help:user.profile.settings.regional-formats)
 
-They join the test space either way. Production is added on top, never
-instead — the test twin is where you try things out, and somebody who
-existed only in production could not be rehearsed against.
+### Your account and photo
 
-The role still decides. If the role you are inviting does not hold
-*Access production*, the invitation refuses to be created and says so,
-rather than failing later when the person redeems it. An invitation never
-grants what the role matrix withholds.
+**Audience:** Everyone
 
-Switch it on in *Settings → Features → Choose the environments a person
-is activated on*; it ships off, and invitations made before it redeem to
-the test space exactly as they did.
+You want people to recognise you in the directory, on the plan and in messages.
 
-#### How a membership began
+![](assets/help/images/user-profile-settings-photo.en.b8fa17aa9.jpg)
 
-Each member carries one discreet line saying how they got here (#1110):
-**Founded this space**, **Joined by invitation**, or **Profile created by
-an admin**.
+![](assets/help/images/user-profile-settings-photo-sheet.en.b8fa17aa9.jpg)
 
-It is a fact, not a status, and it changes nothing about what somebody
-may do. A profile an admin created and handed over keeps saying so after
-the person takes it over — the date of the handover is a separate thing.
+**Steps**
 
-Who sees it: the member themselves, and anyone who manages members.
-Nobody else. Switch it on in *Settings → Features → How each member got
-here*; it ships off.
+1. Open [Me](app:/me?tab=me). Your account is the **Profile**, **Preferences**, **Advanced** and **Privacy** blocks of that page.
+2. Tap **Photo**.
+3. Choose **Choose a photo** and pick an image, or choose **Remove photo**.
 
-#### A member's subscription
+**Good to know**
 
-The percentage of the month's working half-days the member is entitled
-to. It picks the fee band, and the band decides what the month costs.
-A negotiated value off the list is possible only where the space allows
-one.
+- The row says **Tap to add a photo** until you have one, then **Tap to change**.
+- Who sees your photo is your decision: see [Who sees me](help:user.privacy.audiences).
+- Your account is yours across workspaces; your standing in one workspace is in its Settings.
 
-#### When days run out
-
-What happens past the allowance, for this member: refuse further
-bookings, charge them at the overage price, or let them buy a day
-package. The space's own default applies until you set one here.
-
-#### Reservation limit
-
-How many **open** reservations this member may hold in total. It bounds
-the size of the backlog, and is a different thing from the simultaneous
-limit below.
-
-#### Simultaneous reservations
-
-How many bookings this member may hold that **overlap in time**. One is
-the default, and it is what stops a member holding two desks for the
-same afternoon. You can never set your own.
-
-#### VAT treatment
-
-What the counterparty makes of the tax: domestic, an intra-EU business
-that self-assesses under the reverse charge, an intra-EU consumer, or an
-export. It is decided from the member's country and VAT number, and it
-is frozen on each document at issue.
-
-#### Price negotiation
-
-A price agreed with this member that differs from the catalogue. It is
-recorded as a negotiation rather than typed over the tariff, so the
-document says what was agreed and the catalogue stays true.
-
-#### Co-ownership
-
-Raises a member to co-owner. A co-owner has an owner's permissions and
-counts as an owner wherever a rule asks for one — including the rule
-that the last active owner can never be removed.
-
-#### The member's actions
-
-Everything an administrator can do for one member — subscription,
-overage, agreement, pause, limits, badges, role — gathered in one sheet
-so nothing has to be looked for on another screen.
-
-### Billing
-
-- **Fee tiers** — the price ladder behind percentage subscriptions: each tier says *from X %*, *up to Y %*, the monthly **fee** and the per-extra-half-day **overage rate**. **+ Add a tier** extends the ladder.
-- **Subscription levels** — which percentages members may pick (chips: 25 % · 50 % · 75 % · 100 %, plus your own values), and an optional **negotiated free value** switch.
-- **Day packages** — a number of days for a price (name · days · price), each with its own enable toggle; members on the *packages* policy buy them when their days run out.
-
-![](assets/help/images/billing-tiers.jpg)
-
-*Fee tiers (from % · up to % · fee · overage) and the subscription levels members may pick.*
-
-![](assets/help/images/billing-packages.jpg)
-
-*Day packages: a number of days for a price, each with its own enable toggle.*
-
-#### Fee bands
-
-The price ladder behind percentage subscriptions. Each band covers a
-stretch of the percentage scale and says what a month inside it costs.
-A member's tariff picks a band; the band decides the fee and the
-overage price, never the other way round.
-
-#### Up to %
-
-The top of the band. The next band starts where this one ends, so the
-ladder has no gaps and no overlaps — a percentage always lands in
-exactly one band.
-
-#### Monthly fee
-
-What a month in this band costs, whether or not the allowance is used.
-It carries its own VAT group, so the rate follows the catalogue rather
-than being typed here.
-
-#### Overage
-
-The price of one half-day past the allowance. Leave it empty and extra
-half-days are refused instead of charged; set it and they are billed at
-this price on the same invoice.
-
-#### Subscription levels
-
-Which percentages a member may choose — the chips a member sees when
-picking a tariff. Add your own values beside the usual 25 · 50 · 75 ·
-100.
-
-#### Level value
-
-One percentage, 1 to 100. It is a share of the working half-days in a
-month, which is what makes the allowance follow the calendar instead of
-a fixed number of days.
-
-#### Allow a negotiated value
-
-Lets an administrator set a percentage that is not on the list, for one
-member. Off by default: a value nobody else can see is a value nobody
-else can check.
-
-#### Day packages
-
-A number of days sold for one price, bought when the days are needed
-rather than subscribed to monthly. Each package has its own enable
-toggle, so an old one can stop being sold without disappearing from the
-invoices that carry it.
-
-#### New package
-
-Name, days and price, then add. A package becomes buyable as soon as it
-is active.
-
-#### Package name
-
-What a member sees in the shop and what the invoice line says. Rename
-it and only future documents change: an issued invoice keeps the name
-it was sold under.
-
-#### Package days
-
-How many days the package grants. They are spent as they are used and
-they do not expire with the month.
-
-#### Package price
-
-The price of the whole package, with its own VAT group. The invoice
-line shows the price and the rate that applied on the day it was sold.
-
-#### Invoice schedule
-
-When the month is billed. The subscription line is issued **ahead** of
-the month it covers and the usage lines follow it, which is why an
-invoice can name a month that has not happened yet.
-
-### Services and Accessories
-
-The catalogs behind §9 — owner-defined extras (lockers, printing…, each with a price and optional VAT rate) and per-seat equipment with optional per-half-day supplements. Both are plain lists with a **+** button.
-
-![](assets/help/images/services-catalog.jpg)
-
- 
-
-![](assets/help/images/services-new-service.jpg)
-
-*The services catalog and a new service — name, price, its own VAT rate where the regime charges one.*
-
-![](assets/help/images/accessories-catalog.jpg)
-
- 
-
-![](assets/help/images/accessory-edit-dialog.jpg)
-
-*The accessories catalog and an accessory's editor — the supplement bills per reserved half-day.*
-
-**Stock (#731).** A service that came from a supply shows *N in stock* / *Out of stock*; a consumption larger than the shelf is refused.
-
-#### A service
-
-Anything sold that is not a seat: a meeting-room hour, a printing
-bundle, a locker, a coffee subscription. A service can be put on an
-invoice by an administrator or attached to a package.
-
-#### Service name
-
-What the invoice line says. Rename it and only future documents change:
-an issued invoice keeps the name it was sold under.
-
-#### Service price
-
-The price of one unit, with its own VAT group — the rate follows the
-catalogue rather than being typed here, so a rate change never reaches
-back into a document already issued.
-
-#### Active
-
-Whether the service can still be sold. Switching it off stops new sales
-and leaves every invoice that carries it untouched, which is what you
-want for something discontinued rather than mistaken.
-
-### Workspace settings (Coworking space)
-
-**Configure by task.** General details, payments, community and invitations, appearance, new-member defaults, templates and data, and the danger zone have separate sections. General details opens first; open another section when you need it. Setup readiness stays above the tasks. Save remains at the bottom of the screen as you scroll. Closed sections retain their drafts, and Save opens and scrolls to invalid fields. Pages opened from a section keep their own save controls. The horizontal section menu stays visible: choose a section to open it and move straight to it. Scroll within the form when needed; drafts stay in place.
-
-**Reports (#2301).** In **Billing & payments → Reports**, use the horizontal sections: **Financial reports** for the invoice register (including accounting exports and annual archives), workspace status, and VAT; **Business analytics** for workspace performance; **Workspace documents** for configuration PDF, workspace report, printable space QR cards and Excel exports; **Templates** for document design. Only permitted, enabled actions appear. Personal statements remain in **Me → Finances**; member badge printing stays with the selected member. Workspace settings keeps XML backup/import and the workspace library, with a shortcut to Reports. The danger-zone heading and shortcut use red.
-
-The workspace's own screen, top to bottom:
-
-- **Identity** — name, country, currency (proposed from the country, editable), time zone, **workspace language** (invitations default to it; *sender's app language* is an option) and the postal **address** printed on invoices.
-
-![](assets/help/images/workspace-identity.jpg)
-
-*Identity: country drives the proposed currency and time zone; the workspace language writes the invitations.*
-- **Payments & billing** — the **payment instructions** members see on an unpaid bill (IBAN, PayPal.me link, Wero phone number, Lydia, Wisetag, payment reference hint — leave a field empty to hide it), and **Legal identity & e-invoicing** (§11a).
-
-![](assets/help/images/workspace-billing-links.jpg)
-
- 
-
-![](assets/help/images/payment-instructions.jpg)
-
-*Payments & billing: the two entries into payment instructions and legal identity — and the instructions form itself, field by field.*
-- **WhatsApp group** — the community group link shown in the directory.
-- **Invitation message** — the per-language invitation templates (§2).
-
-![](assets/help/images/workspace-invitation.jpg)
-
-*The invitation message per language, with its placeholders, and the desk-transparency slider beneath.*
-- **Desk transparency** — the slider that lets a background photo show through drawn desks.
-- **Invoice PDF template** and **Reminder rules** — shortcuts to the report editor and the dunning configuration (§11).
-- **Exports** — *Export the space (XML)* (settings + floor plan, no personal data — back it up, template it, migrate an instance), *Export the configuration (PDF)* (a full snapshot: settings, members, plan), *Workspace report* (everything about the space through the report engine's « workspace » template), *Space QR codes (PDF)* (one credit-card QR per seat, desk, office and level, ten per A4), *Export the data (Excel)* (one workbook: reservations, payments, invoices, members, plan — one tab each), *Import the space (XML)* (restores settings and floor plan; replaces the current plan). Every export lands in your device's **Downloads** folder.
-- **The whole configuration travels (#916)** — with *Configuration in the space file* on (it is by default), *Export the space (XML)* also carries a `<configuration>` section: tariffs and packages, VAT rates, the legal identity and every invoice mention, booking and validation rules, roles, reminder rules, the document designs, sites, closure days and document links — plus the plan's prices, whole-booking flags, site names and seat tags. *Import the space (XML)* applies that section first, even on a space that already has bookings; only the floor plan itself stays refused once reservations exist, and the import then says so. Never in the file: the invite code, e-invoice and payment provider credentials, members, reservations, invoices and payments. Exporting a space, importing the file elsewhere and exporting again gives the same file, byte for byte.
-
-![](assets/help/images/workspace-exports.jpg)
-
-*The exports block — XML, configuration PDF, workspace report, space QR codes, Excel, XML import — and the danger zone.*
-- **The setup questionnaire** — <https://fdittgen-png.github.io/deskilo/setup.html> (§1 explains it in full): the standalone page that collects a whole configuration *before* the app exists. **Import the space (XML)** above is where its file lands — settings, accessories and floor plan directly; the file's `<setup>` section carries billing, legal identity, roles and members for the screens that own them.
-- **Danger zone** — **Reset the workspace**: deletes all reservations, the accounting and the floor plan; keeps settings and members. Guarded by a typed confirmation.
-
-**One Save, all or nothing (#1451).** **Save** writes the whole form in one step: country, currency and time zone, the WhatsApp group, the address, the workspace language, the invitation templates, desk transparency and how a new member starts. If any of it is refused, none of it is kept. If someone else changed these settings while you had the form open, nothing is saved, the app says so, and what you typed stays on screen. Pressing Save again after a lost connection does not save anything twice.
-
-#### Country
-
-Where the organisation is established. It decides the default currency,
-the VAT rate catalogue offered to you, and the statutory wording an
-exempt or out-of-scope seller prints when you write none yourself.
-
-#### Currency and time zone
-
-The currency every price and document is expressed in, and the zone the
-space's own clock runs on. **The time zone is not cosmetic**: a working
-day, a half-day boundary and a closure day are all counted in it, so a
-member abroad sees the space's day rather than their own.
-
-#### Workspace language
-
-The language the space speaks by default. Invitations are written in it,
-and a document falls back to it when the reader has no language of their
-own.
-
-It is **not your own app language**. That one lives in *Settings →
-Language*, it changes what **you** see, and nobody else is affected by
-it. This one belongs to the space and changes what the space **writes to
-other people**.
-
-#### Letterhead address
-
-The free-text address a paper document prints. It is separate from the
-**structured address** on the legal identity, which is what an e-invoice
-carries — a machine cannot split one line reliably, and a person reading
-a letter would rather see the line.
-
-#### WhatsApp group
-
-The group a notice can be posted to. Optional, and it changes nothing
-else: without it a message stays in the app's own inbox.
-
-#### Invitation message
-
-The text an invitation carries, per language. Write it once and every
-invitation in that language uses it; the code and the link are added by
-the app, so never paste one into the text.
-
-**Message language** above the box says which of the five drafts is on
-screen. It is not a setting: nothing about it is saved, and it opens on
-the workspace language every time.
-
-#### Wording
-
-The words this space uses for the product's own terms. Rename a seat,
-the legend labels, the tabs or the booking words — per language — and
-everything else keeps the product's own wording.
-
-The product's word is always shown beneath your own, so you can see
-what you are replacing. **Reset** removes your word rather than saving
-the product's in its place: a term you have reset follows the product
-when its wording later changes.
-
-Terms are grouped by where they appear, not listed by name — two of
-them read *Reserve* in English and the group is what tells them apart.
-
-#### Colours
-
-*Settings → Workspace → Colours*, with *Workspace colours* switched on
-(*Settings → Features*). Pick one of the eight colours or type any
-`#RRGGBB`, and the screen shows what it does before you save: the light
-and the dark theme the app derives from it, side by side.
-
-The app keeps its own contrast guarantees whatever colour it is given.
-Where a shade would be too pale to read on a surface, the app deepens
-that shade — the hue is yours, the legibility is the product's — and a
-colour it could not make readable is refused, naming the pair, and
-nothing is saved. **Product colours** removes your colour rather than
-storing the product's in its place, so this space follows the product
-when its palette later changes.
-
-The colour also arrives with the setup questionnaire's file, an
-imported workspace XML (`brand-color` on `<settings>`) or a template,
-and travels to a twin as the *Colours* group — measured the same way
-before it is stored.
-
-The DesKilo mark, the colours of the seat states and the production
-banner are never a workspace's to restyle.
-
-**Emblem.** The space's own small mark, shown **beneath** the app's name
-in the menu — and nowhere else. Choose a PNG, JPEG or WebP and the app
-redraws it at 512 pixels at most and stores that: the file's own
-metadata, which for a photograph includes where it was taken, never
-leaves your device. **Remove** takes it away. A space without one, or a
-mark that is slow or will not decode, renders exactly as it always has.
-
-The mark never replaces the DesKilo logo, and it is not shown on the
-profile switcher, where the coloured circle says whether a space is a
-real one or a place to try things out — a safety signal is not a
-branding opportunity.
-
-**Room colours.** Under the brand colour, *Room colours* paints the plan
-with your own fills instead of the product's eight. Add up to eight —
-the order is what the plan reads, so a room keeps its colour when you
-add another — tap one to remove it, and **Product colours** hands the
-palette back. Leave it empty and the plan looks exactly as it always
-has.
-
-#### Desk transparency
-
-How much of the background image shows through a desk on the plan. Turn
-it up when the plan is drawn over a photograph and the furniture matters;
-down when the places matter more than the room.
-
-#### Export the space (XML)
-
-The whole space as one file: the floor plan, and — with *Configuration in
-the space file* on — tariffs, VAT rates, the legal identity and every
-invoice mention, booking and validation rules, roles, reminder rules, the
-document designs, sites, closure days and document links. **Never in the
-file:** the invite code, e-invoice and payment credentials, members,
-reservations, invoices and payments.
-
-#### Import the space (XML)
-
-Applies that file here. The configuration section is applied even to a
-space that already has bookings; only the floor plan itself is refused
-once reservations exist, and the import says so rather than failing
-silently.
-
-#### Export the configuration (PDF)
-
-Every parameter of the space as a document you can read, sign or hand to
-an accountant. It is a snapshot, not a backup — the XML is the file that
-can be imported back.
-
-#### Workspace report
-
-The space itself as a document: sites, levels, places, tariffs and the
-rules in force. Useful as an annex to a lease or an insurance file.
-
-#### Space QR codes (PDF)
-
-One printable sheet of QR codes, one per place. Stick them on the desks
-and a member can book or check in by scanning the place they are standing
-at.
-
-#### Export the data (Excel)
-
-The operational data — members, reservations, usage, invoices, payments —
-as a spreadsheet, for the analysis the app does not do. It is an export,
-not a transfer: nothing reads it back.
-
-It arrives as **one ZIP** (#1310): `workspace.xlsx`, a `manifest.json`
-that states how many rows each tab holds, which schema version the data
-came from and a SHA-256 for every file, and `files/` with the space's own
-stored files — plan backgrounds and images, the report images. Every table
-is read to its end; an export that cannot be complete fails with a message
-instead of saving less. Accounts do not travel: people re-join and claim
-their profile on another server.
-
-### Space QR codes & whole-space reservations
-
-Four steps turn "scan the code on the desk" into the daily booking flow (§4a):
-
-1. In the **editor**, mark a table, an office or a level **Bookable as a whole** and give it a **price per half-day** — the table's or office's property sheet, or for a level the **layers icon right on its row**.
-2. Enable **Desk, office & level reservations** in **Features** (off by default).
-3. Grant each entitled member **"May reserve a whole desk, office or level"** — owners and admins set it in the member's management sheet, never for themselves. Owners and admins hold the right themselves without the switch, in the app and at the **kiosk** alike.
-4. Print the cards: **Reports → Workspace documents → Space QR codes (PDF)** — cut them out and stick each card on its space.
-
-An office reservation covers **all the desks inside it**; a level reservation covers the whole floor. Both are only possible while nothing inside is booked — and they show up as their own lines on the member's bill.
-
-### Co-owners
-
-Make sure the community never depends on one account:
-
-1. Open *Members & plans → the member → **Co-ownership*** and pick **active** (owner permissions now) or **passive** (successor-in-waiting).
-2. Hand over at any time with ***Promote to owner now*** — the co-owner becomes a full owner alongside you.
-3. If the last owner ever leaves the workspace, the best co-owner is **promoted automatically** on the server — active before passive. This safety net works even while the *Co-owners* feature toggle is off (the toggle only hides the appointment buttons).
-
-### Role management
-
-One central matrix decides **which role holds which permission** — manage roles, manage members, validation policies, workspace settings, issue invoices & match payments, view finances, documents, services, approve expenses, view and manage commercial agreements. Open it under *Settings → Governance → Role management* (its feature flag must be on):
-
-- The **owner always holds every permission** — the row is locked.
-- Whoever holds *Manage roles & permissions* edits the other rows. A **co-owner** starts with everything ("co-owner can have less" — the owner removes what they want); an **admin** starts with today's admin abilities; a **member** with none.
-- Everyone else with any permission sees the matrix **read-only**, their own role highlighted.
-- An untouched matrix means the defaults — nothing changes until the owner edits it. The legacy *admin invoicing* feature flag keeps granting invoicing to admins for compatibility. The server enforces the same matrix in every invoicing RPC — issue, replace, cancel, remind, match, refund, write-off and regroup all ask `has_permission` (#816) — so the UI and the database cannot disagree; a member granted *issue invoices* can use it like an admin.
-
-**Who validates (#732).** A rule names its **scope**: *Admins* (the owner and every admin, or the ones you list), *Listed persons* (the owner and exactly the people you pick — a plain member can be a validator), or *All members*. The count and the owner sign-off keep their meaning, and nobody ever validates their own event. Feature *Validators by role or person*.
-
-![](assets/help/images/roles-matrix.jpg)
-
-*Role management: the owner card locked, the co-owner card fully granted by default — the admin and member cards follow with the same eleven permissions.*
-
-#### The role matrix
-
-Roles down one side, permissions across. Every cell is a switch, except
-the ones an owner always holds. A permission is asked of the server
-through one function, so revoking a cell revokes it everywhere at once:
-the screen hides the control, and the call behind it refuses anyway.
-
-### Setting up online payments
-
-Each community collects to its **own** provider account; the app never keeps the secret keys on any device — they live on the server.
-
-1. Open **Settings → Online payments** (owner only).
-2. Pick a provider and paste its keys from that provider's dashboard:
-   - **PayPal** — Client ID, Secret, Environment (start with *sandbox*), Webhook ID, Return URL (PayPal Developer → your REST app).
-   - **Credit card (Stripe)** — Secret key, Webhook signing secret, Return URL (Stripe → API keys / Webhooks).
-   - **Mollie** — API key, Return URL (offers iDEAL, Bancontact, cards…).
-   - **Wero (via Mollie)** — the same Mollie API key, with Wero enabled in your Mollie account.
-3. **Save** — a green *Configured* chip appears. Turn on the **Online payments** feature (Settings → Features), and members see **Pay online** on an outstanding bill. (The *Online payments* settings entry itself only shows while the feature is on.)
-
-![](assets/help/images/online-payments-config.jpg)
-
-*One card per provider — PayPal shown; Stripe, Mollie and Wero take the same shape: keys in, a Configured chip back.*
-
-A saved secret is never shown again — leave its field blank to keep it, type to replace it, **Remove** to clear the provider. Fees are the provider's (typically ~1.5–3% per payment, no monthly fee); DesKilo adds nothing, and the manual bank-transfer/IBAN route stays free.
-
-If a payment doesn't start, turn on **Settings → Advanced → Developer mode** and open the **Developer** screen: the *payments* trace shows exactly which providers are configured and which fields are still missing.
-
-![](assets/help/images/developer-screen.jpg)
-
-#### The provider dashboards, step by step
-
-Keep **test and live environments strictly apart**: every provider has separate keys per mode, and the keys you paste into DesKilo must all belong to the same mode. In the URLs below, `<project-ref>` is your Supabase project reference (self-hosters use their own instance's URL).
-
-**PayPal**
-
-1. Sign in at [developer.paypal.com](https://developer.paypal.com) and open **Apps & Credentials**.
-2. Flip the **Sandbox / Live** toggle — start in *sandbox*; switch to *live* only for production. DesKilo's *Environment* field must match the keys.
-3. **Create a REST-API app** — this generates the **Client ID** and **Secret**.
-4. In the app, add a **webhook**: URL `https://<project-ref>.supabase.co/functions/v1/paypal-webhook`, subscribed at least to *Payment capture completed* (plus *denied* / *order voided*). Copy the **Webhook ID**. In DesKilo the webhook is not optional — it is how a payment gets settled onto the bill.
-5. Paste Client ID, Secret, Environment, Webhook ID, and your Return URL into **Settings → Online payments → PayPal**. Nothing is stored in the app or on any device — everything goes to the server.
-
-**Stripe (credit cards & Cartes Bancaires)**
-
-1. Sign in at [dashboard.stripe.com](https://dashboard.stripe.com) and open **Developers**.
-2. The **Test mode / Live mode** toggle decides which keys you see. DesKilo needs only the **Secret key** — the checkout is created server-side, so the *publishable* key is not used.
-3. Under **Settings → Payment methods**, enable the card networks you want. **Targeting France? Explicitly enable Cartes Bancaires** — French members often prefer CB over international Visa/Mastercard routing.
-4. Under **Developers → Webhooks**, add the endpoint `https://<project-ref>.supabase.co/functions/v1/stripe-webhook` with the `checkout.session.completed` event, and copy the **Webhook signing secret**.
-5. Paste the Secret key, the signing secret, and your Return URL into **Settings → Online payments → Credit card (Stripe)**.
-
-**Mollie (iDEAL, Bancontact, Wero…)**
-
-1. Sign in at [my.mollie.com](https://my.mollie.com) → **Developers → API keys** and copy the **Test** or **Live API key** (the mode is encoded in the key itself).
-2. Under **Settings → Payment methods**, enable what your members should see: **iDEAL** (Netherlands), **Bancontact** (Belgium), cards — and **Wero**, the European Payments Initiative wallet for instant account-to-account payments in Germany, France, and Belgium (the successor to Paylib and giropay).
-3. In DesKilo, **Mollie** and **Wero** are two provider cards sharing the same API key — a Wero payment is created as a Mollie payment with the Wero method. Configure whichever you want members to see.
-4. Redirect and webhook URLs are set **automatically by DesKilo** on every payment (redirect = your Return URL, webhook = the `mollie-webhook` function) — nothing to configure in the Mollie dashboard.
-
-#### More payment methods (outlook)
-
-| Provider / method | Focus | How it fits DesKilo |
-|---|---|---|
-| **Apple Pay / Google Pay** | Mobile wallets, one-tap checkout | Enable them in your Stripe (or Mollie) dashboard — they appear on the hosted payment page automatically, with no DesKilo change and no extra base fee. |
-| **Klarna** | Buy now, pay later | Same: switch it on in Stripe/Mollie and it shows up at checkout — relevant for larger amounts. |
-| **Adyen** | Enterprise & omnichannel, one API for nearly every method | Not integrated — would be a new provider in DesKilo (contributions welcome). |
-| **Braintree** | Mobile & web drop-in UI (PayPal-owned) | Not integrated — DesKilo's direct PayPal integration already covers that ground. |
-
-#### The payment provider
-
-Which service takes the money — PayPal, Stripe, Mollie, or Wero through
-Mollie. A probe reports which providers are ready and which fields are
-still missing, so you learn it here rather than from a failed payment.
-
-#### Provider credentials
-
-The keys the provider issued you. They are **write-only**: you can
-replace a field or clear a provider, but the values are never shown
-again, not to you and not to any client — the screen reads back only the
-key names. Leave a field blank to keep what is stored. They live on the
-workspace and never enter a space file or a deployment.
-
-#### Payment methods
-
-Which ways of paying the space accepts and what each one is called on a
-document — transfer, card, cash, cheque. The label is what an invoice
-and a receipt print.
-
-### Setting up RFID / NFC badges
-
-Physical cards let people check in with a tap — no phone needed.
-
-1. Open **Settings → RFID / NFC badges** (owner only). Switch **Enable NFC badge check-in** on, and read the **device status** line — it distinguishes *ready*, *NFC turned off in Android settings*, and *no NFC hardware*. Android phones and tablets with NFC, and **iPhones**, can read a tag; iPads have no NFC hardware at all.
-2. Give each member a card: **Members & plans → the member → Badges → Register a card**, then hold their card to the device. Any card with a readable chip works (MIFARE, NTAG…). Members can also do it **themselves**: **Settings → My badge** mints their printable QR badge and registers their own card — no admin needed.
-3. Use them at a **kiosk** (§10): the member taps the card to reserve or check in. Revoke a lost card from the same Badges dialog; **swipe a revoked badge to the right to delete it** for good (after a confirmation).
-
-Badges belong to **one workspace** — the dialog names which one you're registering into, so register the card under the workspace whose kiosk will read it. The same physical card can serve you in several workspaces. A badge QR saved **as PDF** prints ten credit-card copies on one A4 page — spares included.
-
-![](assets/help/images/nfc-config.jpg)
-
-*Step 1 — the NFC switch, and the device-status line that says whether this device can read a card.*
-
-![](assets/help/images/member-badges-dialog.jpg)
-
-*Step 2 — a member's badges: QR badge and registered card, each with its revoke and its own "signs me in" switch.*
-
-![](assets/help/images/my-badge-code.jpg)
-
-*Self-service: Settings → My badge mints the printable QR badge; the badge code is yours alone to set.*
-
-## 9. Money (Finances tab)
-
-**Finance alerts.** The blue Finance count combines new financial updates and financial decisions awaiting you. Open Finance alerts from Money to see only that category. Reading it keeps other updates unread, and pending decisions retain their count until resolved. Zero is hidden; counts above 99 display 99+.
-
-Your ledger answers *what do I owe, what am I owed* — and *how much can I still book*. In portrait the month's bill scrolls above the action buttons; in landscape the actions move into a side panel and the bill fills the rest. The **‹ month ›** header browses any month; the **PDF button** exports the visible bill (§ below).
-
-**The bill, card by card:**
-
-- **This month** — how many **days** your subscription includes this month, how many you've **used**, how many are **left**, with a progress bar. A booked morning counts as 0.5 days — unless it lies wholly outside the working hours and the workspace's outside-hours policy makes it free or exempt (§4b): the very same rule drives the quota here and the amount on the bill. The monthly entitlement follows the workspace's open days and your percentage — the subscription card beneath spells it out (*3 of 42 half-days used, 21 open days*).
-- **Overage** — the extra half-days beyond your plan, at your fee tier's rate.
-- **Consumed services** — each service consumption with the services total.
-- **Accessory supplements** — the per-half-day extras attached to the seats you booked.
-- **Level, office and desk reservations** — whole-space bookings, each at its price per half-day.
-- **Day packages** — packs bought this month.
-- **Open positions** — everything still *awaiting validation* (expenses, service consumptions…), in its own amber-rimmed card: these amounts are not yet on the bill.
-- **Payments & credits** — recorded payments, approved expense reimbursements, credit notes, adjustments.
-- **Invoice card** — once the month is invoiced: number, state chip, total, what's paid, what remains (§9a).
-- **Your account** — your real cross-month position, when there is one (§9a).
-- **Balance** — settled / outstanding, and below it the **payment instructions** and **Pay online** when something is owed.
-
-**When your days run out**, what happens is the owner's per-member choice:
-
-- **Blocked** (default) — no more bookings; ask an admin, or request **extra half-days** right from the Finances tab (validators approve; approved days still bill at the overage rate).
-- **Pay-as-you-go** — you can keep booking; each extra day bills at your fee tier's overage rate (shown on the card).
-- **Packages** — tap **Buy a package** and pick one of the owner's day packs; your days increase immediately and the price lands on this month's bill.
-
-A member can also have **no subscription** — a visitor who comes now and then (#1279): no monthly fee, no subscription line on the invoice, and no included half-days, so bookings need a package or credits. **No subscription** and **Pay-as-you-go** never combine, because that would book for free; the app and the server both refuse the pair.
-
-**Carnets** (Features → *Carnets*, under invoicing; off by default) are prepaid half-days (#1279). The owner defines them in **Billing** (name, half-days, price, and a validity in months, or none, so they never expire), and whoever issues invoices sells one from a member's page. The sale is charged **once**, on that month's bill. After that, every half-day a member books beyond what their subscription includes is taken from their carnets, soonest-expiring first, across as many months as it lasts; cancelling a booking gives its half-day back. Spending posts nothing to the bill, and a half-day a carnet covered is never billed as overage too. The member page shows how many half-days are left.
-
-**The actions, grouped by meaning:**
-
-- **Pay** — **Record a payment** ("I paid") with its method, the **date the money moved** (defaults to today) and the **month it settles** (defaults to the running one, one step back for arrears, one forward for a prepayment) — the other side confirms. That month decides which bill and which invoice the credit lands on. **Pay online** (when enabled) pays the amount owed straight away — with **PayPal, a credit card (Stripe), Mollie, or Wero**, whichever the workspace enabled (several show a chooser).
-- **Requests** — **Submit an expense** (bought coffee for the space? another admin approves it — no self-approval — and it credits your statement), **Request extra half-days**, **Add a consumption** (owner-defined services — lockers, printing… — you confirm what you consumed).
-- **Documents** — **Invoices** (yours are always readable here: positions, balance, status — and for issuers the invoicing hub, §11), **My conditions** (which renders the document titled *Financial agreement*) and the **monthly payments report**, self-service (§11).
-
-Finances has **five destinations**: **Statement · Payments · Invoices · Usage · Documents**. The month chooser and statement PDF belong to the monthly views; **Invoices covers all periods** and has no month selector. Full tab labels scroll when needed on a small screen.
-
-#### NFC badge check-in
-
-Turns on tapping a card instead of scanning a QR. The card's UID is
-stored as a **hash**, never as itself, so a badge can be revoked but
-never read back out of DesKilo. Android only; elsewhere the QR badge
-does the same job.
-
-### 9a. Once the month is invoiced, the invoice decides
-
-- Your bill shows an **invoice card** — number, state, total, what's paid, what remains — and the month reads **settled** as soon as the invoice is paid, its remainder cancelled, or its credit note refunded, even when the settling payment was recorded in a later month. A **partially paid** invoice keeps the month outstanding at exactly the **remaining** amount (that's also what *Pay online* charges). A **credit note** month shows what the workspace owes you back — nothing to pay on your side.
-- **Your account** — when you hold spare credit (an avoir, or payments left over from a past month), the Finances tab shows your real cross-month position in an expandable account summary below the monthly detail: **credit on account**, every **open invoice** with its remaining amount, refunds the workspace owes, and the resulting **net position**. Your credit can settle open invoices — the workspace applies it when matching payments (imputation). Months before your membership began owe nothing and never read outstanding.
-
-### 9b. Quick view, save, share — every report
-
-Every report in the app — the bill, invoices, proformas, credit notes, your self-service documents — offers the same three actions: **Quick view** (see the rendered document on screen before any PDF exists), **Download PDF** (save locally) and **Share PDF** (hand it to any app — WhatsApp, mail, …).
-
-**Reports speak the reader's language:** a document prints in the **member's** language when a template exists for it, otherwise in the **workspace language**, and failing both in the **language of the workspace's country** (§11 templates per language). Where that country has no single language, the app does not guess — it refuses and asks you to *set the workspace language first*.
-
-**Every document as a standard letter (#874).** With *Letter standard for every document* on, a document the owner never designed — invoice, proforma, statement, financial agreement, payments report, consumption report, every reminder level — prints as a positioned letter: the letterhead at 20 mm, the recipient inside the DL envelope window (110 mm across, 45 mm down), the identification block resuming at 90 mm, one footer on every page with the bank details and the reference, a short strip on pages 2+. Fold on the marks and the address shows. A designed layout always wins; `dart run tool/report.dart default --kind usage` prints a default to start from.
-
-### 9c. The Statement face
-
-The monthly balance leads this view; usage and charges follow. Help tips sit after the content and actions.
-
-**The selected month first.** Days included, used and left, subscription, consumed services and supplements, packages, pending positions, credits, the issued invoice and its balance describe the selected period. Below this detail, expand **Your account** to read credit, open invoices and refunds across **all periods**. Its net position is separate from the monthly balance. Negotiated prices are in **Documents**, beside your current agreement.
-
-![](assets/help/images/statement-account.jpg)
-
-*Examples of account details and negotiated prices. Expand Your account under the monthly detail; find negotiated prices in Documents.*
-
-![](assets/help/images/statement-balance.jpg)
-
-*The bottom of the Statement: services, pending items still awaiting validation, payments & credits, and the balance.*
-
-### 9d. The Payments face
-
-**Pay, then requests.** The overdue notice, monthly balance, payment instructions, online payment and recorded-payment actions form the payment group. **Requests** separately groups expenses, scheduled expenses, extra half-days and consumption. The link to all your spaces comes after these actions.
-
-**Supplies (#731).** Bought coffee capsules or vacuum bags for the space? In **Submit an expense**, switch on *This is a supply for the space*, name the item (or pick an existing one), the quantity and what one consumption will cost (prefilled from amount ÷ quantity). Once the expense is validated you are reimbursed as usual **and** the item goes on the shelf as a consumable service with that stock; members who use it add a consumption and pay for it, the stock counts down, and at zero the item cannot be consumed until the next supply. Feature *Supplies from expenses* (needs Services).
-
-![](assets/help/images/finances-payments.jpg)
-
-*The Payments face: the balance and its state, Record a payment, then Submit an expense, Request extra half-days, Add a consumption.*
-
-### 9e. The Invoices face
-
-**Issuance limits (#1917).** Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.
-
-Turning off subscription or usage invoices also stops that invoice type in the wizard and at the issuing command. Whole-month invoices remain available while invoicing is enabled; existing documents and statements remain readable.
-
-**Your invoices · All periods.** The summary shows open amounts and overdue counts once, followed by every invoice issued to you, newest first. The selected monthly statement does not filter this archive. Expand **Workspace finance tools** above the summary for the existing invoice register, workspace status and cost-sharing entries available to your role and enabled features. Invoice rows still open their detail sheet, documents and payment destination.
-
-**The journey (#812).** Every row also carries the invoice's **journey bar** — *Issued · Payment · Confirmation · Closed*, the current step ringed — and **your move** in one sentence: *pay X by date*, *you declared X — the workspace is confirming it*, *your payment is registered — the workspace matches it*, *paid on … — closed*. **How it works** on the headline card opens the four steps with what the workspace does and what you do. Feature *The journey of an invoice* (under Invoices).
-
-![](assets/help/images/finances-invoices.jpg)
-
- 
-
-![](assets/help/images/invoice-detail.jpg)
-
-*The Invoices face — the headline card and every invoice issued to you — and an invoice's detail sheet: positions, balance, signature, quick view / PDF / share.*
-
-### 9f. The Documents face
-
-**The rest of the paperwork:** **My conditions** (your financial agreement), the **monthly payments report**, **this month's statement as PDF**, and the **document library** when the workspace uses one (§11d). Switch the faces off in Features → *Finance faces* to get the single column back.
-
-![](assets/help/images/finances-documents.jpg)
-
-*The Documents face: My conditions, the payments report, the month's statement as PDF, the document library.*
-
-### 9g. Price negotiations
-
-**The tariff is the default; your deal is yours.** An owner or a finance admin can propose a **price negotiation** for a member — a monthly fee, an overage rate per half-day, a discount on the supplements (accessories, whole-space reservations) — each optional, the tariff where absent. The proposal lands in Événements for the rule's validators (*Price negotiation* domain, or the default rule); once confirmed it applies from the chosen month and supersedes the previous deal. In **Documents** the card *My negotiated prices* shows the tariff struck through beside your prices, since when, and **Who can see this**: you, the owners and the finance admins — every read by someone else is logged and listed there (§14). Feature *Price negotiations*.
-
-**Services, packages and the occupation (#744).** The deal can also fix the **occupation** — the percentage of open days included each month, negotiated together with its price (applied to the member once validated, the previous value shown beside it) — and a **unit price per service and per package**: a consumption or a package purchase is charged at the member's price, the catalogue price shown struck through in the sheets and on the card.
-
-### 9h. Scheduled expenses
-
-**Subscriptions keep paying themselves — with you in the loop.** Any member, whatever their role, can **schedule a recurring expense** (internet, phone, electricity…): an amount, a first occurrence, a rule — every X days, weeks, months or years — and how long it runs (*X times*, *until a date*, or both; whichever ends first). The **schedule itself is validated first** (its own *Scheduled expense* validation domain), so the amount on it is an amount the validators approved. From then on, every due date **materialises an occurrence and presents it to you** on the Payments face — nothing is ever booked silently:
-
-- Confirm it **at the validated amount** and the expense is added to your expenses immediately — already settled, since the schedule was approved.
-- Confirm it **at a different amount** and a short **explanation is mandatory**; the expense then goes through the normal expense validation. Confirmed → added; **rejected → it comes back to you**, and you can change the amount and/or the description and resend it.
-
-The list of your schedules (state, rule, next due date) and the *Schedule a recurring expense* form live behind **Finances → Payments → Scheduled expenses**; ending a schedule is one tap there. Feature *Scheduled expenses* (under the Finances tab).
-
-#### A scheduled expense
-
-A cost that comes back — the internet bill, the cleaner, the rent. You
-describe it once and the app raises each occurrence on its due day, so
-nobody has to remember it. Each occurrence still goes through whatever
-validation the expense domain asks for; scheduling creates the request,
-it does not approve it.
-
-#### What
-
-The name every occurrence carries. It is what the ledger line and the
-validation request say, so write it the way you would want to read it
-six months later.
-
-#### Amount
-
-What one occurrence costs. Change it and only the occurrences not yet
-raised follow; the ones already in the ledger keep the amount they were
-raised with.
-
-#### Description
-
-The longer text, for whoever validates it. Optional, and the place for a
-contract number or a supplier reference.
-
-#### First occurrence
-
-The date the first one falls due. Every later occurrence is counted from
-here, so moving it moves the whole series.
-
-#### Every
-
-The interval between occurrences — every month, every three months,
-every year. With the first occurrence it decides every due date the
-series will ever have.
-
-#### Number of times
-
-How many occurrences to raise. Leave it empty for a series that does not
-stop, and use *Until* instead when the end is a date rather than a
-count.
-
-#### Until
-
-The date after which nothing more is raised. Optional: without it the
-series runs until you stop it, which is usually right for rent and
-wrong for a twelve-month instalment.
-
-### 9i. The consumption report
-
-Since the participation is **billed ahead of its month** and **consumed** during it, the month deserves a closing word. **Month consumption report** — on the Usage face and among the Documents — is a letter to the member: what the participation paid for (the fee, the included half-days), what was actually consumed (half-days, supplements), what is left or exceeded, and, beneath, **every usage record** of the month with its counted time. The figures are the statement's and the records' — nothing is recomputed. Like every letter it is viewed, saved or shared, printed with the workspace's letterhead and, once designed, its own layout (the designer lists it as *Consumption report*). Since #1000 the line names its month — « Septembre 100 % » — so every invoice reads as the month it is for.
-
-## 10. Kiosk mode (wall tablet)
-
-Mount an Android tablet or iPad by the door and let people check in as they walk in:
-
-1. The owner creates a normal account for the device, joins it to the workspace, and flags it as a **kiosk** in *Members & plans*.
-2. **Kiosk mode never starts by itself.** On every app start the tablet asks *Start kiosk mode?* — confirm and the pad locks down: full-screen floor plan only, back button disabled, and on **Android** the app pins itself so nothing else can be opened, which means leaving kiosk mode there involves restarting the tablet. An **iPad** has no such pinning, so only the route lock applies — use iOS **Guided Access** (Settings → Accessibility) to get the equivalent. Choose *Not now* instead and the app opens normally — useful for setup. The kiosk designation itself can be reverted at any time: on the device under **Settings → Kiosk device**, or by the owner in *Members & plans*.
-3. Each member carries a **badge** — minted by an admin (*Members & plans → Badges*) or by the member themselves (**Settings → My badge**, §8): a printable **QR badge** and/or their **RFID/NFC card**. Each rides its own feature toggle (**QR badges**, **RFID/NFC badges**), both under *Kiosk mode*, so a workspace can offer one credential, the other, or both.
-4. At the kiosk, tap a seat (or **This level** — which needs whole-space reservations enabled *and* that level marked bookable) — **ONE sheet** opens with everything on it: **Check in** already selected (one tap switches to **Reserve** or **Check out**), the **period already derived from the workspace settings**, and the **badge reader live** at the bottom. Under half-days, the part of the day you are standing in is preselected (Morning / Afternoon / Day chips to change it — a running window starts *now*, day-parts already over are not offered at all, and what *is* greyed out is a still-future part while **Check in** is the chosen action, since you cannot be present in advance; after hours a single *Rest of the day* remains, running to midnight and no further, because a booking ends on the day it starts). Under timed granularities: From/To pickers snapped to the slot grid, a check-in's start pinned to *now*. The sheet **names the rule it follows** — the granularity and today's working-hours windows — so what it offers is exactly what the settings allow; on a **closed day** the kiosk says so up front with a banner instead of failing at the end. Reserving a window that has already begun also offers **Check in right away** (on by default): one badge presentation books the reservation *already checked in*. Then present the badge:
-   - **Tap the RFID/NFC card.** While the card reader is armed the camera stays down; if NFC is off or absent, the sheet says so explicitly.
-   - Or tap **Scan the QR badge** — the tablet reads the printed badge **with its own camera** (front camera by default, since a wall tablet's back lens faces the wall; switch in *Settings → Scan with the front camera*). A USB/Bluetooth wedge scanner or typing the code works too.
-5. **The badge IS the confirmation:** it executes immediately, and a **self-dismissing receipt** shows *who* was recognized — with their **profile photo**, where the *Member photos at the kiosk* feature is on — *what* happened, *where* and *until when*, then the wall is clean for the next member. The wall plan shows occupant photos the same way. The happy path is two gestures: tap your seat, present your badge.
-
-**What the wall deliberately cannot do.** Tap a seat someone else holds and the kiosk **names the holder and points you at your phone**: a wall device never sends a message on a member's behalf, because anyone standing in front of it could. The *Message them* action for a blocked space lives in the app (§4b). Everything the kiosk *does* offer is checked by the same server rules as the app — including the past-day guard, the walk-up-must-start-today guard and the same-day rule — so the wall refuses exactly what the plan refuses.
-
-Your identity exists only for the moment of the operation: the credential is sent **only for that operation** — once to identify you, once to carry out the action — and **nothing is stored**, on the tablet or anywhere else. The booking is made **in your name**, and you are "signed out" the instant it completes. (Per-operation Google sign-in is still on the roadmap; **iPads have no NFC hardware**, so on an iPad the camera QR path is the way.)
-
-## 11. Invoicing (owners & billing admins)
-
-*Owners issue invoices; admins too once they hold the **issue invoices** permission (Role management, §8 — or the legacy **Admins issue invoices** feature delegation). The **Invoices** feature sits under Finances in the feature list.*
-
-**Bank details for countries without IBAN (#711).** Under *Payment instructions*, beside the IBAN: bank name, account number, a routing code named the way your country names it — *sort code* in the UK, *routing number* in the US, *transit · institution* in Canada — and a BIC/SWIFT for cross-border transfers. Only filled fields print on the how-to-pay card.
-
-An invoice in DesKilo is generated, never composed: its positions are **derived exclusively from the month's tracked data** — subscription, overage, supplements, services, packages — minus the month's payments and credits, so the bottom line **is the balance due**. Each document snapshots the workspace's and the member's postal addresses (set yours in **Settings → Personal information**; the workspace address is in the workspace settings) and is **digitally signed** at issue — it never changes afterwards. A **detailed annex** (the month's ledger and attendance) can be attached with one switch when issuing.
-
-**The journey of an invoice (#812).** With the feature *The journey of an invoice* on (default), the hub tells the process instead of listing states. A **stage strip** replaces the summary pills — *1 · To issue · 2 · To collect · 3 · To confirm · 4 · Closed* — with live counts (To collect at the remaining value, with the overdue count in red; To confirm holds every invoice whose next move is not the member's: a declared payment awaiting another admin, a registered payment awaiting its match, a match or write-off awaiting the validators, a credit note to refund); each tile is one tap from its tab. Every **open card** carries the **journey bar** (*Issued · Payment · Confirmation · Closed*) and the **next move** as a sentence — *waiting for Flo's payment of €250 — due 27 May*, *Flo owes €250 — overdue by 6 days*, *Flo declared a payment of €250 — another admin confirms it in Events*, *a payment of €250 is registered — match it to this invoice*, *payment matched — awaiting the validators' decision*, *credit note — refund €8 to Flo and record it*. The action that move expects from you is the card's **one labelled button** (*Send reminder 2*, *Mark as paid*, *Record the refund*, *Open Events*); the rest stay icons with tooltips. The **detail sheet** opens on the same bar and sentence, its dated facts under a *Timeline* heading, and the expected action leads the list. The **?** in the header opens **How invoicing works** — the four steps, each with the workspace's side and the member's — the same sheet members open from their Invoices face.
-
-Issuers open **Finances → Invoices** and land on a three-tab hub under a live summary strip (*N to invoice · N open · X outstanding · N to refund · Y*):
-
-- **To invoice** — every member whose previous month has billable data and no invoice yet, with what the month adds up to: issue per member (with a preview of the derived positions) or **Invoice all** in one sweep — which asks for confirmation first, naming the count, the month and the total. The **New invoice** button opens the same sheet for any member and month — member picker, ‹ month ›, the derived positions, the balance, the **detailed annex** switch and **Issue the invoice** (a green *Invoice issued.* snack confirms). **One active invoice per member and month** — a month only becomes invoiceable again after its invoice was cancelled. The issue sheet opens on the **completed month** (the moment its numbers stop moving); pick the running month instead and it warns you, because that month can only be invoiced once.
-- **Open** — issued invoices awaiting settlement, oldest first; anything waiting longer than 30 days turns red, in the card and in the summary strip. Every action is an icon with a tooltip (cancel · proforma · reminder · mark as paid). **Tap a card to read the invoice.** **Send a reminder** records the reminder and shares the PDF with a message — the card shows *Reminded ×N*. **Mark as erroneous** cancels the invoice for correction (an explicit dialog warns the action is irreversible): it moves to the archive struck through, and a **replacement** re-derives the same month from the corrected data, referencing the original. **Mark as paid** matches a real payment (below). **A partial payment does not close an invoice**: it stays on Open, badged *Partially paid* with the remaining amount, until the outstanding remainder is explicitly **cancelled through the validation framework** — an admin/owner requests the write-off (with a reason), the validators confirm, and only then does the invoice move to the archive as *Partially paid · remainder cancelled*. **A NEGATIVE invoice is a credit note (avoir)** — the month's credits exceeded its charges, so the WORKSPACE owes the member: its PDF is titled *Credit note*, it gets no reminders and no member-payment matching; instead the card shows *To refund* with **Record the refund** — the payout books against the member's balance (validated like any settlement when a policy applies; a reject reopens it) and the document closes as *Refunded*. The summary strip separates the two directions of the payment process: *N open · X outstanding* counts positive invoices at their **remaining** value (a €500 invoice with €280 paid counts €220), while *N to refund · Y* totals the open credit notes the workspace still owes.
-- **Archive** — closed invoices, filterable by member and month and sortable; cancelled invoices are **hidden by default** — the *Show cancelled* chip brings the correction trail back; the bar under the filters says how many invoices match and **Clear filters** brings the whole archive back. Each row carries its status chip (*Paid*, *Partially paid*, *Erroneous* struck through, credit notes with their negative amount), its month and its amount, with **Download PDF** right there. **Tap a row to open the invoice** — positions, balance, who it was billed to, where it stands (*Paid €300.00 on Aug 6*, *Reminded ×1 · last reminder…*, *Annex: 5 entries, 10 check-ins*), which invoice it replaces or was replaced by, its signature — and every action it still allows, spelled out: **Quick view**, **Download PDF**, **Share PDF**, export the **e-invoice (XML)**, remind, mark as paid, mark erroneous, issue a replacement.
-
-**Marking as paid means matching a real payment — or applying a credit.** The dialog lists the member's registered payments — recorded transfers and confirmed online payments — and you map the invoice to one of them; there is no amount to type (no registered payment yet? the dialog says so: *record it or confirm it first*). It also lists the member's **account credits** (credit-note excess): matching one imputes the avoir on the invoice, past months included — the standard alternative to a cash refund, for associations and companies alike. Each credit spends exactly once: one already deducted inside an issued invoice can never settle a second document. Paid **more**? Create a **credit note** for the excess (a credit on the member's ledger) or force-accept with a mandatory note. Paid **less**? Accept it with a mandatory note. Everyone with invoicing access is notified of paid invoices, and the owner can put an **Invoice payment** validation rule (§7) on them: the match then waits for the quorum — a reject reopens the invoice.
-
-**A paid invoice is definitive.** Once matched it can never be cancelled, replaced or altered — corrections happen before payment, by cancelling the open invoice and issuing its replacement. A payment that did **not** cover the whole amount, accepted with a note, shows as **partially paid** rather than paid.
-
-**Proforma.** Two of the hub's three tabs carry a proforma action: on **To invoice** it renders the month's derived positions as a quote — no number, no signature, stamped PROFORMA, and **nothing is issued**; on **Open** it re-renders the issued invoice as a payment request that cannot pass for the original. Both offer the quick-view / download / share triad.
-
-**Stamps.** A cancelled invoice carries a large diagonal **ERRONEOUS** across every page of its PDF, in light grey over the content: it cannot be mistaken for a valid document on a desk or a photocopy. The same stamp says **PROFORMA** on a quote, and **COPY** on any invoice rendered by someone other than its issuer — the workspace holds the original.
-
-![](assets/help/images/dunning-rules.jpg)
-
-*The reminder rules: levels, days until the first reminder, days between levels — and the Automatic reminders switch.*
-
-**Reminders (Mahnwesen).** The owner sets the **reminder rules** (checklist icon in the Invoices header, or *Workspace settings → Reminder rules*): how many levels, days until the first reminder, days between levels. Overdue open invoices are flagged **"Reminder N due"** and the bell icon on the card turns red — nothing is sent for you unless **Automatic reminders** is on (§11e). A manual reminder is recorded at its level and lands in the member's feed exactly like an automatic one (#816). Sending generates a **payment-reminder letter** (level 1 friendly, higher levels firmer) from that level's template — shipped ready-made in your language, printed in the *member's* language, and editable per level in the report editor with the extra fields `{{ reminder_level }}`, `{{ reminder_date }}` and `{{ days_open }}`.
-
-![](assets/help/images/invoice-register.jpg)
-
-*The register: one line per invoice, the sum at the foot, the year picker, and the accounting-export button (SAF-T / FEC).*
-
-**The register.** The list icon in the Invoices app bar opens a one-line-per-invoice ledger: **date · name · amount · status**, sorted by date (tap the Date header to flip the direction), with the sum at the foot, and a **year** picker once there is more than one. Its export button opens the **Accounting export** sheet: **SAF-T (XML, international)** and — for a French workspace — **FEC (France, required in a tax audit)**.
-
-**Handing the period to your accountant.** From the register, issuers export **SAF-T** — the OECD's *Standard Audit File for Tax*, the XML accounting software and tax administrations read. It covers exactly what the register shows, so picking 2026 gives you the 2026 file: the company as your own invoices state it, every customer, every invoice with its lines and totals, and the payments that settled them. Cancelled invoices stay in the file marked *annulled* — an audit file never deletes what happened. What it deliberately leaves out is the **chart of accounts**: DesKilo does not invent account numbers, because a wrong code has to be unbooked by hand. Your accountant maps the invoices onto their own accounts, which is their job and takes them a minute.
-
-**France: the FEC.** A French workspace gets a second choice, the **FEC** (*Fichier des Écritures Comptables*) — the file an audit legally demands (art. L47 A-I du LPF). It is not XML: a tab-separated flat file of accounting **entries**, named `<SIREN>FEC<YYYYMMDD>.txt` as the arrêté requires, with the 18 mandated columns in their mandated order. Because it is made of entries it *cannot* avoid account numbers, so the export asks for them first — pre-filled with the *plan comptable général* (411 clients, 706 prestations, 512 banque) and yours to correct. Each invoice books its receivable against revenue at the **gross** amount, the credits it netted and the payment that settled it book as cash on their own dates, lettered with the invoice number. Cancelled invoices are absent: one voided before payment was never booked, so there is nothing to reverse. The *name* column follows the reader — an issuer scans member names, a member scans their own invoice numbers. Members see only what concerns them: issued, and never a cancelled one. Since #927 the entry number is derived from the document it books — `VE-` plus the invoice number, `BQ-…-P` for the settling payment — rather than counted per file, so two exports of overlapping periods carry the same number for the same entry, which is what the file requires.
-
-![](assets/help/images/invoices-admin.jpg)
-
-*The issuers' hub: To invoice · Open · Archive under the live summary strip; an open invoice with its four actions (cancel · proforma · reminder · mark as paid).*
-
-![](assets/help/images/invoices-to-invoice.jpg)
-
- 
-
-![](assets/help/images/invoice-new-sheet.jpg)
-
-*To invoice with nothing left and the summary chip — and the New invoice sheet: member, month, the derived positions, the detailed annex switch.*
-
-### 11a. Legal identity, VAT & mentions
-
-**Before the first export, fill in the legal identity.** In *Workspace settings → **Legal identity & e-invoicing*** the owner declares:
-
-- The **VAT regime** — it decides the number the EN 16931 norm demands: outside the scope of VAT, a **company registration number** (SIREN, HRB, CIF…); VAT-exempt under a small-business scheme, a **VAT number** plus the **reason no VAT is charged** (the field suggests the proper wording — *TVA non applicable, art. 293 B du CGI*, or for services to members of an association *Exonération de TVA, art. 261, 7-1° du CGI*). The regime is enforced end to end: only a VAT-registered workspace ever stamps a rate onto a subscription, supplement, service or package, and the VAT pickers simply disappear under any other regime.
-- The structured **address** (street, postal code, city) beside the free-text letterhead address.
-- The **e-invoicing platform** (§11b).
-- The **invoice mentions**, with an **Organization type** switch — *Company / business* vs *Association (loi 1901)*: legal form & capital (e.g. *Association loi 1901*), trade register (companies: RCS; associations: **RNA W… · SIRET if assigned**), payment terms, late-payment penalty, the **€40 recovery indemnity**, early-payment discount (escompte), professional insurance, special mentions. Each clause prints the statutory default wording when left empty — and an association's documents drop the B2B-only clause defaults (late penalty, recovery indemnity, escompte are mandatory only between professionals; whatever you type still prints).
-
-Members add their **country** — and their VAT number if they invoice as a business — beside their address in *Settings → Personal information*. DesKilo checks all of this **before** producing an e-invoice and refuses with the missing item named, because an invoice a platform rejects is worse than no invoice.
-
-**Your personal information (#886).** *Settings → Personal information* holds what every document prints about you: first name and **family name** (written in capitals on documents, as on official mail), an optional **company**, street, postal code, city, country, telephone, the **e-mail your documents go to**, and — if you invoice as a business — your VAT number and registration id. The form previews the block exactly as the invoice's envelope window will show it: name, company, street, `POSTAL CITY`, and the country only when you live abroad. Lists and documents call you by this name; the free-text address of older versions remains the fallback until you fill the form.
-
-**Managed profiles (#887).** Someone joins the association before they have the app? An admin opens **Members → Add a managed profile** and fills in the same identity form. The member exists at once — you book seats for them, issue their invoices (printed with the identity you typed), set their subscription — and their page carries a **Managed** chip. When the person is ready, **Hand over to the person** mints a personal code bound to that profile (QR, link or message, like any invitation). They create their account, enter the code, and take the profile over: reservations, invoices and subscription stay theirs, the identity you typed lands in their own settings (their data from then on — only fields they left empty are filled), and the membership goes through the usual join approval. **Revoke handover** withdraws an unused code.
-
-**Who administers a managed profile (#914/#915).** A managed profile holds a real person's identity before they have an account: address, telephone, e-mail, tax identifiers. Those fields are no longer readable by other members — only the name and company are, because the members list needs them. The rest lives behind a **rule**, and every read is **written down**. By default the rule is the one from before: every owner and every admin. Turn on *Who administers a profile* to narrow it by role, by named people, or both. The owner may always **change** the rule — otherwise a profile whose only named admin leaves would become unadministrable — but only reaches the data when the rule names them. The rule guards the identity and the handover; booking and invoicing stay ordinary workspace bookkeeping. When the person takes their profile over, *Settings → Privacy → Who can see what* shows them the rule that applied and everyone who actually opened or changed their details.
-
-**Development or production (#917).** A workspace declares whether it is real. A **development** workspace says so on a strip present on every screen, and every document it prints carries "DEVELOPMENT" across the page — ahead of any other stamp, because a rehearsal invoice that is also a credit note is first of all an invoice that does not exist. The choice is made **at creation** and defaults to development: the careful answer to "is this real?" is no until somebody says otherwise. Every workspace created before this version is therefore a development one. Only the **owner** may declare a workspace production — an admin cannot quietly take the mark off the documents they issue — and the app confirms, saying what stops happening. Invoices already issued do not change: the watermark is applied when the document is printed.
-
-**A client can be a company (#910).** A managed profile does not need a first name: a **company name** is enough. When no personal name is given, the company becomes the addressee — on the invoice, in the lists, in the payment thread — and it then drops out of the address beneath it, since it is already the line above. Name a person and nothing changes: the company stays in the address block, between the name and the street. Documents already issued benefit too — the company name was frozen on them all along, it simply was not read.
-
-**The company first, the person after (#912).** When a client carries both a company name and a personal one, the document is addressed to the **company** — it is the company that owes the invoice — and names the person on the line below, with the form of address they chose:
-
-> SASU KaloA
-> Mr Guilhem MARTIN
-> 209 rue Jean Bart, Immeuble AGORA 1B
-> 31670 LABÈGE
-
-The **form of address** is a field in your personal information: *Mr*, *Ms*, or *None*, which prints the name alone. It is never guessed from a first name, and each reader sees it in their own language — *Monsieur* in French, *Herr* in German. With no company, nothing changes: the person stays the addressee.
-
-**The due date is on the document (#910).** Every invoice now prints its **settlement date**, taken from the delay in your reminder rules — the same delay the app counts down in the payment thread, so the two can no longer announce different dates. A design can place it anywhere with `due_date`. And a one-page document no longer carries a page number: "1/1" tells nobody anything.
-
-**Prices in DesKilo include VAT.** What you type as a subscription price, a service price or a day-pack price is what the member pays. Turning VAT on does not change a single amount anyone owes — it says how much of that amount is tax. That is why a bill, a statement and a quota never move when you add rates, and why no total ever needs reconciling. Under a VAT-charging regime the catalogue says so out loud: every service and day-pack row names its included rate (*incl. VAT 20 %*), the billing editor lets the owner pick the tariff's own VAT rate (default: the workspace default) and shows the VAT share inside each band amount as you type, each accessory can carry its own rate (default: the workspace default), and every price field reminds you it is gross.
-
-#### Setting the rates
-
-*Legal identity & e-invoicing → **VAT rates***. An empty list means VAT is off, which is how every workspace starts. **Use the usual rates** fills the list with your country's standard, intermediate and reduced rates as a first draft — a starting point, not tax advice. One rate is the **default** (the star): subscriptions, overage, supplements and adjustments use it, and so does every service that has none of its own. A service and a day pack each carry their own rate, picked in their editor. Removing a rate never deletes it — one an invoice or a service still refers to is kept, deactivated, so nothing is silently re-taxed. All of this is the *VAT management* feature toggle: switched off, the rate editor and every rate picker disappear while the stored rates keep applying — the tax math itself is never toggleable — and the *VAT declarations* toggle lives beneath it.
-
-#### The periodic VAT declaration
-
-(*VAT rates → VAT declaration*, VAT-registered workspaces only). Pick the filing period — a month or a quarter, whatever your regime requires — and **Generate**: the app aggregates that period's issued invoices per rate **with the exact arithmetic the invoices carry**, so the return matches every document to the cent. The result shows the per-rate net base and output VAT, mapped onto your country's **official form lines** (France's CA3 boxes 08/09/9B/11, Germany's UStVA Kennzahlen 81/86, a generic per-rate list elsewhere). Every declaration exports as **PDF** and **machine-readable XML**; if an upload platform is configured under e-invoicing, **Transmit** sends it there electronically and records the acknowledgement — otherwise take the numbers to your tax portal (EFI, ELSTER…) or your accountant and **Mark as filed**. Either way the declaration becomes immutable, with its channel and receipt on record. The catalogue of suggested rates covers every EU member state, Switzerland (including the 3.8 % accommodation rate), Norway and the Canadian provinces; the US has no federal VAT, so the app says so instead of guessing. A filing aid, not tax advice — verify with your accountant.
-
-**What it changes on a document.** An invoice issued after the rates exist carries the breakdown as issued: the positions table gains a rate column, and above the total the PDF shows the **net** and one line per rate. The **e-invoice (XML)** carries what EN 16931 requires in both UBL and CII; **SAF-T** declares each rate in its tax table; the **FEC** books the receivable gross against revenue net plus a **collected VAT** account (445710 by default, yours to change).
-
-**An invoice already issued never changes.** It carries the rates, the identity and the amounts it was signed with — that is what makes it an invoice. If a document has to carry new figures, mark it **erroneous** and issue a **replacement**: the correction chain is visible on both documents, which is exactly what an audit wants to see.
-
-**How documents are numbered (#925).** Each journal — invoices, credit notes, VAT declarations, member numbers, payment references — has its own **series**, taken in the database the moment a document is issued: gapless (a document that fails takes nothing), exact however many admins issue at once, and on the year of **your** timezone, not UTC. The owner sets the format on one screen, *Settings → Number sequences*: prefix, year or month, digits, when the counter restarts, with a preview of the next number. The format applies to what comes next; an issued document never changes, and the counter can be raised but never lowered. **A series never repeats a number (#1320):** it restarts at most as often as it prints its date — no date never restarts, the year restarts at most every year — so the screen offers only those restarts. Changing the restart takes effect at the next period, never inside this one, and removing the date from a series that already issued numbers needs a new prefix or suffix in the same step.
-
-**Invoicing a business in another EU country (#895).** A workspace that charges VAT does not charge it to a **business in another member state**: that customer self-assesses the tax (art. 196). When the customer's profile carries a VAT number and a country different from yours, the invoice is issued **without tax**, states the category the norm wants (AE) and prints the statutory mention — *Autoliquidation*, *Steuerschuldnerschaft des Leistungsempfängers*, whichever your country speaks. The price stays the tariff: nothing is added, nothing is taken off. The e-invoice check refuses to send such a document until the customer's VAT number is there, since it is what proves the tax is theirs. A workspace that never invoices businesses abroad turns the whole thing off on *Legal identity → Reverse charge for EU businesses*.
-
-**Invoicing a town hall, a hospital, the State (#922).** A deposit on **Chorus Pro** requires, for most public entities, an **engagement number** (BT-13) or a **service code** (BT-10). Both are entered **when the invoice is issued**, frozen on the document, printed under the member number, and carried in the XML — UBL and Factur-X alike — where the norm places them. The e-invoice check **warns** when an invoice is bound for the public platform with neither; it does not block, because a member is not a mairie.
-
-**When VAT falls due (#896).** A VAT-registered workspace declares either **on invoices** — the tax is due when you issue the document — or **on receipts** — it is due the day the customer pays. In France services are on receipts unless you opt for invoices; Germany calls it *Ist-Versteuerung*, Italy *IVA per cassa*. Choose in *Legal identity → VAT falls due*. On receipts, a period declares **the payments received inside it** rather than the documents issued: a part payment carries a share of every rate in the document, in proportion, and the rounding goes to the widest rate so the total matches exactly what was received. The accountant's VAT report follows the same rule — a position there is a payment, dated the day it arrived — so report and declaration cannot drift apart. Every invoice prints the matching mention, and the declarations screen names the basis in use.
-
-**A reversal gives back the tax too (#894).** A credit that cancels a VAT-bearing charge now names the rate it reverses, so the document's breakdown shows that tax as negative and the declaration nets it out — a distributed expense given back (#828) reverses at the rate it charged. Money moving — a payment, a reimbursement — carries no rate and never touches the tax, as before. A document whose total is negative is typed as a **credit note (381)** in the e-invoice, not as an invoice.
-
-**Payment conditions per member (#881).** The wording above is the workspace's default for everyone. A member may carry **their own** — a longer payment term for a key account, say. It is never typed on the member directly: an admin holding the *Request payment-condition changes* permission opens the member's page, **Payment conditions → Request a change**, fills only the fields that differ (an empty field keeps the workspace's wording) and gives a reason; the request becomes a **Payment conditions** validation card decided like every other domain (the owner, by default), and the override applies on confirmation. The member sees the effective conditions read-only on their page and in **Settings → Payment conditions**, labelled *Workspace default* or *Member's own*; every invoice and reminder prints the effective ones, and a layout may test `payment_terms_source`. *Use the workspace default again* asks to drop the override — through the same validation.
-**VAT — the compliance checklist (#878).** Reviewed 2026-09-05 against Directive 2006/112/EC and EN 16931 (ADR 0015). What holds: the seller's regime is **frozen on each document** at issue (an association that becomes exempt keeps its earlier out-of-scope invoices as they were); the per-rate breakdown is frozen too, rounded per line exactly as the server does; numbering is continuous and documents never change (corrections void and reissue). What the app now does for you: an **exempt or out-of-scope seller's documents print the statutory mention of their country** (FR art. 293 B CGI, DE § 19 UStG, AT, ES, IT, BE, NL, LU, else the Directive) when you wrote none in *Legal identity*; the e-invoice check **warns when a customer's VAT number does not have its country's shape**. What stays the owner's: keep the rate catalogue current when a rate changes; a VAT-charging seller must hold a VAT id. The three limits the review recorded are now closed: credit notes reverse VAT (#894), intra-EU reverse charge is decided at issue (#895), and the cash basis is a workspace setting (#896).
-**The VAT report (#878).** On *VAT declarations*, for the selected month or quarter: **VAT report (PDF)** — every taxable position (document, date, customer, net, rate, VAT, gross, category, the reversed original when any), subtotals per rate and category, period totals — as a letter you can view, save or share and design like every document (*VAT report* in the editor); **VAT report (CSV)** — the same positions, semicolon-separated, for the accountant.
-
-#### Organisation type
-
-*Company / business* or *Association (loi 1901)*. It decides which clause defaults a document prints: the late-payment penalty, the recovery indemnity and the early-payment discount are obligations **between professionals**, so an association's invoices drop those defaults. Anything you type yourself always prints, whichever type is set.
-
-#### Legal form and capital
-
-What the organisation legally is, printed under its name: *SASU au capital de 1 000 €*, *Association loi 1901*. Left empty, a company prints nothing and an association prints its statutory form.
-
-#### Trade register
-
-The registration a reader can check you with: a company's **RCS** and city, an association's **RNA W…** and its **SIRET** when one has been assigned. It is what a customer's accountant looks for, and what the e-invoice check refuses to send without.
-
-#### Payment terms
-
-When the money is due — *on receipt of invoice, within 30 days* by default. It prints on every invoice and it is what the reminder rules count from.
-
-#### Late-payment penalty
-
-The interest a late payment carries. Between professionals the mention is obligatory; the default states the legal rate in force. An association prints nothing here unless you write something.
-
-#### Recovery indemnity
-
-The fixed **€40** owed for collection costs on a late professional payment. Same rule: obligatory between professionals, dropped for an association, always printed when you write it.
-
-#### Early-payment discount
-
-Whether paying early earns a discount. Most spaces grant none, and the default says so in the words the law expects — saying *no discount* is itself a mandatory mention between professionals.
-
-#### Professional insurance
-
-The insurer, the policy and its geographical cover. Required of regulated trades; left empty it prints nothing.
-
-#### Special mentions
-
-Anything else your trade or your country demands, printed after the others. The place for a membership number, a mediation body, or a clause your accountant asks for.
-
-#### VAT regime
-
-Whether the workspace is **outside the scope of VAT**, **exempt** under a small-business scheme, or **charges VAT**. It decides which number the EN 16931 norm demands from you, and which statutory sentence a document prints. The regime is **frozen on each document at issue**, so changing it never rewrites an invoice already sent.
-
-#### VAT number
-
-The intra-community number, checked for the shape its country uses. It is what a document needs before it can be sent when you charge VAT, and what proves the tax is the customer's on a reverse charge.
-
-#### VAT account
-
-The account collected VAT is posted to in the chart of accounts. The accounting exports and the accountant's reports follow it.
-
-#### Reason no VAT is charged
-
-The sentence an exempt or out-of-scope seller must print. Left empty, DesKilo prints your country's statutory wording — *art. 293 B du CGI* in France, *§ 19 UStG* in Germany, and the Directive elsewhere.
-
-#### Company registration number
-
-SIREN, SIRET, HRB, CIF — the identifier the norm demands from a seller who charges no VAT. Without it an e-invoice from an out-of-scope workspace cannot be issued.
-
-#### Structured address
-
-Street, post code and city as three separate fields, beside the free-text letterhead address. The letterhead is what a paper document prints; **the structured address is what the e-invoice carries**, because a machine cannot split one line reliably.
-
-### 11b. Where the e-invoice has to go (EU)
-
-The **e-invoice (XML)** action opens a sheet that answers this for the workspace's own country before handing the file over: which channel business customers expect it on, whether a platform sits in the path, and which channel public buyers use. Four models exist in the union:
-
-- **Peppol** — an access point delivers the file to the customer; no government platform in between. Belgium's B2B mandate works exactly this way, and Peppol is how public buyers are reached across the EU (Directive 2014/55/EU makes every authority able to receive an EN 16931 invoice).
-- **Accredited platforms** — France: you pick a *plateforme agréée* (the renamed PDP), it routes the invoice and reports the data to the tax administration. The public portal is a directory, not a mailbox. Public-sector invoices stay on **Chorus Pro**.
-- **Clearance platforms** — Italy (**SdI**, FatturaPA), Poland (**KSeF**, FA(3)), Romania (**RO e-Factura** via the SPV, CIUS-RO): the platform receives the invoice *first* and passes it on; sending straight to the customer is not an option. Each mandates its own syntax, so the sheet warns that the EN 16931 file DesKilo exports is not the one they accept — use it for Peppol, public buyers and foreign customers, and let your platform or accountant convert.
-- **No imposed channel** — Germany today: receiving has been mandatory since 2025 and issuing phases in, but an e-mail attachment is a legal e-invoice; XRechnung and ZUGFeRD are the expected syntaxes. Public sector: **OZG-RE / ZRE**, or Peppol.
-
-**Factur-X — one file, both readers.** The e-invoice sheet offers **Factur-X (PDF)** first: an ordinary-looking invoice PDF with the machine-readable invoice *inside it* (the EN 16931 data as CII, which is what the format mandates). A human opens it and sees the invoice; a platform opens it and finds `factur-x.xml`. It is what most French and German small businesses actually exchange, and it needs no second file. The plain **XML** stays available underneath for platforms that ask for it bare.
-
-**Sending it, without leaving the app.** The owner registers the workspace's platform in *Legal identity → **E-invoicing platform***: an **upload URL**, a **token or credential**, optionally the **Authorization header** shape and the **file field name**. Any platform that accepts an upload with a credential works — a *plateforme agréée*, a Peppol access point, a national platform. The token is stored server-side, never travels back to a phone, and the app can only tell you that one is set. Once configured, the e-invoice sheet leads with **Send to the platform**: the Factur-X document goes straight out, and the invoice's detail sheet records when it left, what the platform answered and the id it gave back. Every attempt is logged — accepted, refused or undelivered — because a document that *may* have left is worse than one that failed.
-
-**A second leg, straight to the customer.** Reaching the government platform is not the same as reaching the buyer, and several customers run their own receiving service. So the same screen takes a **second destination** — the customer's endpoint, with its own URL, token, Authorization header shape and file field name — and the send sheet then offers both legs, each recording its own transmission history. It rides the **E-invoice delivery to the customer** feature, under *Invoices*; leave it off and only the platform leg exists, exactly as before.
-
-**Rehearsing without risk.** The same screen takes **test endpoints** (the platform's UAT or a dev target: URL + token each) next to the production one. With the workspace's **developer mode** on (a workspace-wide setting only owners and admins can flip, under Settings → Advanced), sending offers the choice of environment, a test submission is marked as such on the invoice's transmission history, and the production endpoint is never used for a rehearsal — an unconfigured test environment simply refuses instead of falling back.
-
-DesKilo still transmits nothing on its own account: it produces the document and hands it to the platform you chose. Mandate calendars keep moving: check your own tax administration before the deadline that concerns you.
-
-#### The e-invoicing platform
-
-Where a structured invoice is transmitted, and with which credentials.
-A document can go to **two destinations at once**: the platform your
-country mandates, and the customer's own service. Either may be left
-off. Credentials live on the workspace and never enter a space file or
-a deployment, so an export you send to a colleague carries the
-configuration and not the keys.
-
-#### Upload URL
-
-The address the invoice is posted to. Copy it from the platform's own
-documentation — a trailing slash or a missing version segment is the
-usual reason a transmission fails with nothing useful to read.
-
-#### Token or credential
-
-The secret that authenticates you to the platform. Once saved it is
-never shown again, not even to you: the screen says *set* and nothing
-more. Re-enter it to replace it, leave it blank to keep it.
-
-#### Auth header
-
-The HTTP header the token travels in — `Authorization` for most
-platforms, a vendor-specific name for a few. If the platform's
-documentation shows `Bearer <token>`, put the header name here and the
-bare token above.
-
-#### File field name
-
-The name of the multipart form field the document is uploaded under.
-Platforms differ (`file`, `invoice`, `document`), and getting it wrong
-produces a rejection that names no field at all.
-
-#### UAT endpoint and token
-
-The platform's acceptance environment, where a real transmission can be
-rehearsed against real validation without issuing anything. Fill these
-before the first live send, not after.
-
-#### Dev endpoint and token
-
-The endpoint a **development workspace** uses. It cannot reach a
-government platform, which is what makes a test invoice impossible to
-mistake for a real one.
-
-### 11c. The report editor — every document, four presets, five languages
-
-The **Invoice PDF template** (pencil icon in the Invoices header, or *Reports → Templates*) is a banded reporting tool for every document the app prints. Three report **bands** render onto the PDF — header, body (the invoice lines), footer — while the e-invoice XML is never touched.
-
-- **Placeholders and markup, as a guide (#966)** — in markup mode the flat run of every field is gone. One expander, *Placeholders and markup*, closed until you open it, holds: two sentences on how a band works; **Insert a field…**, the searchable picker grouped by topic (document, client, seller, amounts, bank details, legal mentions, usage, VAT, sites, status, loops, your texts) with a one-line meaning under every name, searchable by that meaning too; the **line markup** one sign per row with what it does; and three **ready-made pieces** (a line only when the value exists, one row per invoice line, the title that says invoice, credit note or proforma). Everything you tap lands at the caret of the band you last edited.
-
-- **One report per document**: chips switch between **Invoice · Proforma · Statement · Agreement · Payments · Workspace · Reminder levels**. The proforma falls back to the invoice bands until you customize it; a customized statement replaces the built-in monthly-bill PDF.
-- **Per language**: a second chip row — *Default (all languages)* · EN · FR · DE · ES · IT — stores a translation overlay per document; a member's report prints in *their* language when a template exists for it, else in the workspace default.
-- **Markup or Visual**: the **Markup** mode edits the bands as text — [Liquid](https://shopify.github.io/liquid/) conditions and loops (`{{ number }}`, `{% if proforma %}…{% endif %}`, `{% for line in lines %}…{% endfor %}`) plus a simple line markup: `#` title, `##` section, `>` small print, `---` divider, `a | b` table row, `=` bold row, `::: … ||| … :::` side-by-side columns (the seller-left / client-right address block and the right-aligned totals of a French facture — the shipped templates follow that exact structure), `![name]` an image from the workspace's **image library** (*Insert an image*). The **Visual** mode is a page-true design surface in the professional-designer tradition (Crystal Reports, Docentric): the three bands are edited **on a white A4 page** at the document's own margins, in the document's exact print typography — same font, sizes, colors and right-aligned amount columns as the generated PDF — with labeled band strips, dashed page-break guides where the PDF will paginate, and a zoom control (fit width, 75/100/150 %). `{{ tokens }}` stay highlighted; tap a line to edit it in place, add lines, move them, insert data fields from a palette. A **Design ↔ Preview** toggle merges your unsaved bands with your live (or sample) data through the real report engine on the same page — fields out, values in.
-- **Templates gallery** (*Templates*): four ready-made presets for every document — **Classic · Simple · Detailed · Formal letter** — pick one and extend it. Every invoice preset already carries the statutory mentions (§11a).
-- **Quick preview** renders the result instantly in the app — your newest invoice, or simulated sample data when none exists (watermarked *sample data*) — no PDF round-trip; **Preview** produces the PDF; **Reset to default** hands back the built-in layout as a working example. A broken template never blocks a document — the built-in layout takes over; the void watermark, digital signature, annex and page numbers stay fixed.
-- **Full-screen designer** (flag *Report designer*): the editor opens as its **own page**, in Visual mode, with **Undo / Redo** and **Save** in the toolbar. Tap an element and it is edited **in its own typography** — the title in title size, the small print small. The **+** under the active element inserts a **typed element** below it (title, section, text, small print, table row, divider, spacer, image, columns, logic); the **{ }** button opens a **searchable field picker** grouped by document, member, amounts, legal mentions and loops; **long-press and drag** a line to reorder it, or send it to **another band** from its menu. An image carries its **size** (small, medium, large) and **alignment** (left, centre, right), written as `![name|l|center]`. *Templates* and *Reset* ask before replacing a layout you have; leaving with unsaved work asks too. When a template does not render, the preview **says which band and why** instead of a generic error. On a wide screen **design and preview sit side by side**, and the page counts how many pages the document will print on. The three structural documents — **Chart of accounts · Member badges · Space QR cards** — have their own chips.
-
-Template variables (invoice family): `{{ number }}`, `{{ member }}`, `{{ workspace }}`, `{{ workspace_address }}`, `{{ period }}`, `{{ period_month }}`, `{{ period_year }}`, `{{ issued }}`, `{{ issued_by }}`, `{{ replaces }}`, `{{ total }}`, `{{ charges }}`, `{{ payments }}`, `{{ voided }}`, `{{ proforma }}`, `{{ copy }}`, `{{ lines }}` (each with `label`, `kind`, `pct`, `month`, `unit_price`, `qty`, `net`, `vat_rate`, `amount` — so a design writes `{{ line.month }} {{ line.pct }} %` for the recurring position, #1002), `{{ has_vat }}`, `{{ vat }}`, `{{ net_total }}`, `{{ vat_total }}`, `{{ credit_note }}`, `{{ refund_total }}` — and the legal set: `{{ seller_legal_form }}`, `{{ seller_registration }}`, `{{ seller_vat_id }}`, `{{ seller_legal_id }}`, `{{ exemption_reason }}`, `{{ client_address }}`, `{{ client_vat_id }}`, `{{ client_legal_id }}`, `{{ payment_terms }}`, `{{ late_penalty }}`, `{{ recovery_indemnity }}`, `{{ escompte }}`, `{{ insurance }}`, `{{ special_mentions }}`.
-
-![](assets/help/images/report-designer-markup.jpg)
-
-*The Markup mode: the three bands as text, the variable legend, the per-document and per-language chips.*
-
-![](assets/help/images/report-designer-design.jpg)
-
- 
-
-![](assets/help/images/report-designer-preview.jpg)
-
-*The Visual mode — Design edits labeled bands on the true A4 page; Preview merges your unsaved bands with live data through the real engine.*
-
-#### The invoice PDF template
-
-Which design an invoice is printed with, and the texts that design
-carries. A design is per document kind and per language; a reader with
-no language of their own gets the workspace's.
-
-#### The report editor
-
-Where a document's design is written. Two ways in: **bands** — header,
-body, continuation, footer, one sign per line — and a **positioned
-layout** in XML for a document that must satisfy a window envelope or a
-national form. A layout wins over the bands for the kind it is set on.
-
-### 11d. The report suite & the document library
-
-- **Financial agreement** — every standing price that applies to a member: subscription, extra half-day, services, packages, accessory supplements and the whole-space prices, **desks and tables included**. Owners/admins send it from a member's action sheet; every member can quick-view/download/share their own from *Finances → Documents*.
-- **Payments report** — everything you paid, declared or had validated in a month: your little balance sheet, self-service on the same row.
-- **Workspace report** — identity, floor-plan counts, availability, features and prices: *Reports → Workspace documents → Workspace report*.
-- **Document library** — *Settings → Documents*: the workspace's statutes, user guides, financial statements and meeting minutes, LINKED from whatever system you already use — Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud or any https link (the drive keeps managing its own access; the app never stores foreign credentials). Every entry has a **visibility role**: every member, admins and owners, or owners only — enforced server-side, so a member never even downloads a list containing board documents. Admins and owners curate with the + button; a *Document library* feature toggle gates the whole thing.
-
-![](assets/help/images/documents-library.jpg)
-
- 
-
-![](assets/help/images/documents-add-dialog.jpg)
-
-*The document library, and adding a document: title, link, storage, category, visible by.*
-
-#### Document title
-
-What the library shows and what a member searches by. It is the only
-part of a document entry anybody reads, so write it for them.
-
-#### Link
-
-The `https://…` address the document lives at. DesKilo stores the link,
-not the file, which is why the document keeps whatever access rules its
-own service enforces.
-
-#### Stored on
-
-Which service holds it — a drive, a wiki, a file server. It is a label
-for the reader, not a connection: nothing is fetched on your behalf.
-
-#### Category
-
-How the library groups the entry. Categories are yours to invent; the
-list offers what the space already uses.
-
-#### Visible to
-
-Which roles may see the entry at all. This is enforced by the server,
-not just hidden in the list — a member without the role does not receive
-the row.
-
-### 11e. Automatic payment reminders
-
-With **Automatic payment reminders** on (Features, child of *Payment reminders*) and the switch **Automatic reminders** in the reminder rules (Invoices → Reminder rules), the dunning levels apply themselves: every morning — and whenever an owner or admin opens Finances — an **open** invoice whose waiting period has run (the *days until the first reminder* from its issue date, then the *days between reminders* after the previous one) gets its next level recorded. The member sees a **Payment reminder** alert in Événements ("Reminder 2: invoice X — amount still due") and receives a push; their Invoices face reads *overdue by N days*. Levels never exceed the configured count; a matched invoice is never reminded; switching the rule off leaves reminders a manual action, one tap per invoice as before.
-
-#### Reminder rules
-
-How many reminders an unpaid invoice gets, how long after the term each
-one goes, and what each one says. Once a day the open invoices past
-their term move to their next level; a level already reached is never
-re-sent.
-
-#### Automatic reminders
-
-Off, reminders are sent by hand. On, once a day every open invoice past
-its term moves to its next level and sends what that level says. A level
-already reached is never sent twice, so turning this on does not flood
-anybody with the backlog.
-
-### 11f. Regrouping invoices (settlement)
-
-**One document instead of three.** A member on the split billing cycle (§11) can hold a subscription invoice, an end-of-month invoice and last month's leftover at once. **Regroup into one invoice** (merge icon in the Invoices header, feature *Regroup invoices*) folds a member's open, unpaid invoices into one **settlement** invoice carrying their sum. The sources are **not cancelled**: they stay in the archive exactly as issued, each pointing at the settlement that now carries its balance, and the settlement lists every source with its positions. From then on the settlement is what is owed, paid and reminded; a source can no longer be cancelled, replaced or matched on its own. VAT is not restated — each source already declared its own tax, so the settlement's lines carry 0 % and name the invoices that carry it.
-
-**Validated like any payment.** A settlement is an *invoice payment* event: where the owner put a rule on that domain (§7) it waits for the validators; a **reject** — or an expiry — cancels the settlement document and releases its sources, which are owed separately again. **Cancelling** a settlement (*Mark erroneous*) releases its sources the same way.
-
-**Regrouped invoices fold under the regrouping one (#831).** The regrouping invoice now carries **every line of the invoices it replaces**, grouped under their numbers, with their VAT — it is complete on its own, and it is the one that is owed, chased, matched and closed. The regrouped invoices leave the open list, the archive and the member's list as peers and **nest under the regrouping invoice** ("Regrouped in INV-…"), in the hub and on the member's side. Opening one shows a banner saying so; every operation on it is off; the one thing left is its **PDF, stamped with the number it was regrouped in**. For the accountant, the regrouping document is transparent: every export and the VAT declaration carry the original invoices, and the payment received on the regrouping is allocated to them, oldest first — each original is lettered exactly as if it had been paid on its own. In the app, an original reads "Paid through INV-…" once its regrouping is paid. When you download, share or preview a regrouping invoice, it asks whether to attach the invoices it replaced: attached, each follows on its own pages, after the new one and never running into it, stamped as regrouped.
-
-### 11g. The month-close wizard
-
-The three assistants — **month close**, **regroup into one invoice**, **distribute an expense** — share one shape (#872): numbered steps across the top, the step's content, then **Back · i / n · Next** and a closing action on the last step. Learn it once; every toolbar entry is named *Assistant · …*.
-
-The **month-close wizard** (flag *Invoicing wizard*; the wand in the Invoices header, or the card on top of *To invoice*) strings the whole invoicing work into **one guided process** with a step rail: **Review** (which run, which period, what is pending), **Issue** (the run's invoices in one batch — members already covered show as done, untick anyone to leave them out), **Send** (share or download each PDF), **Remind** (everything overdue by your reminder rules, recorded and pushed in one tap, the letter one tap per row), **Payments** (confirm or reject what members declared; **register** a bank or cash payment for a member — they confirm it from their side), **Match** (every open invoice against the member's credit; rows with credit are ready), **Close** (regroup a member's several invoices into one, write off a remainder, refund a credit note — each through validation) and **Summary** (what the run did, and what is still open with whose move it is). Two runs: **Start of month** for the subscriptions paid ahead (the wizard suggests it from your advance window), **End of month** for the usage, consumption and extra charges of the month that just closed.
-
-### 11h. Shared expenses, distributed
-
-**Distribute an expense** (flag *Shared expenses*; the split icon in the Invoices header) takes one shared cost — a cleaning bill, an internet upgrade, a broken chair — and splits it over the members: **equal** shares, **pro rata of the subscription** percentage, **pro rata of usage** (half-days used in the period), or a **custom key** typed per member. Every share is previewed, the cents add up exactly, and nothing is booked until you confirm. The shares are booked as adjustment lines on the period you choose, so they appear on each member's **next usage invoice** (the end-of-month run of the wizard, §11g). Flip **Reversal** to give money back instead: the same split books **credits**, which net against the month's charges and, when they exceed them, derive a **credit note** the workspace refunds (§11). A distribution is an event of its own kind: with a validation rule on *Shared expense* it waits for the quorum and books once confirmed; without one the issuer's decision stands. The history under the form shows every distribution and where it stands.
-
-### 11i. Usage: what each booking actually cost
-
-**Usage** (flag *Usage records*; a face of the Finances tab) shows the month's counted bookings, one card each, with three numbers kept deliberately apart: the window **booked**, the time you were actually **present**, and what of it is **billed**. Booking is the commitment; presence is the fact.
-
-Two rules follow from that, and the cards say both out loud. A booking **nobody checked into bills in full** — not turning up is not a discount. And a booking you **left early** bills in full too, until somebody else agrees otherwise: the card offers **Bill the time I was here**, which asks for the unused time to stop counting. You never decide that request yourself; it goes to whoever your *Early departure* validation rule names, and if there is no rule it stands at once. Accepted, the booking's own end moves to the moment you checked out, so the statement, the half-day cap and the invoice all follow — and the card keeps saying what the billed time **was**, so both numbers stay readable side by side.
-
-You see your own records; whoever may see the workspace's money sees everyone's. An admin or owner can **remove** a record, and where a *Usage record removal* rule is configured the member concerned is the one who validates it.
-
-### 11j. Taking a report design out, and bringing it back
-
-**Export this design** (flag *Export and import report designs*, in the report editor) writes the open report's layout to one JSON file. **Import a design** reads one back.
-
-The file is not a bare dump. Beside the three bands it carries a `howToEdit` block naming what each band is for, the Liquid syntax, every markup line the renderer accepts, the image sizes and alignments, and the full list of placeholders — enough that a person, or a tool such as Claude, can open it, change the layout and hand it back without guessing. That block is regenerated on every export, so editing it does nothing and cannot corrupt a design; only `kind`, `language` and `design` are read on the way in.
-
-Every report has this — invoice, proforma, statement, financial agreement, payments report, workspace report, chart of accounts, member badges, space QR cards and each reminder level — and a report added to DesKilo later gets it automatically.
-
-An import is **refused with the reason** when the file is not readable JSON, is not a DesKilo design, was written by a newer version, is for a report this workspace does not have, or belongs to a **different** report — a design is never silently retargeted. An accepted import lands in the editor, not in the workspace: nothing changes until you press **Save**, so you can preview it first and leave without keeping it.
-
-## 12. Settings & profile
-
-The horizontal section menu stays visible: choose a section to open it and move straight to it. Scroll within the form when needed; drafts stay in place.
-
-**Choose the scope.** My settings holds your account shortcut, membership controls, device diagnostics, help and sign out. Manage workspace contains only the configuration and administration tools permitted by your role, labeled with the workspace name. Its task groups open when needed; Advanced starts closed. The two scopes keep their scroll position as you switch. Members without administration tools see their personal settings directly.
-
-Your personal screen, top to bottom:
-
-![](assets/help/images/settings-personal.jpg)
-
-*The personal block: profiles, photo, region & formats, WhatsApp, status, default booking period, address, help, badge.*
-
-![](assets/help/images/settings-admin.jpg)
-
-*For owners, the Administration section follows — every admin screen of §8 starts here.*
-
-![](assets/help/images/settings-preferences.jpg)
-
-*Preferences and Advanced: language, theme, front-camera scan, push status, developer mode.*
-
-![](assets/help/images/settings-about.jpg)
-
-*About: version, author, the open-source licence, the privacy policy, bug reports, and how to support the project.*
-
-![](assets/help/images/profiles.jpg)
-
- 
-
-![](assets/help/images/region-formats.jpg)
-
- 
-
-![](assets/help/images/linked-accounts.jpg)
-
- 
-
-![](assets/help/images/settings-language.jpg)
-
-*Four of the personal screens: Profiles, Region & formats, Linked accounts, and the Language chooser.*
-
-![](assets/help/images/settings-whatsapp-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-status-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-address-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-default-period-dialog.jpg)
-
-*The four personal dialogs: WhatsApp number, status line, postal address, default booking period.*
-
-![](assets/help/images/settings-theme-dialog.jpg)
-
- 
-
-![](assets/help/images/settings-photo-sheet.jpg)
-
- 
-
-![](assets/help/images/developer-screen.jpg)
-
-*Theme, the photo sheet, and the Developer trace screen.*
-
-**Privacy & data (#719)** — who can see your data, who did, export, erasure, the policy. See §14.
-
-**Region & formats (#711).** How *you* read what the workspace shows: **numbers & dates** in a region of your choice (`fr_CH`, `en_GB`, `de_AT` … independent of the app language), the **clock** (24h, 12h, or whatever that region does), and whether times show in the **workspace's zone** — the one bookings are made in, and the default — or **your device's**, labelled wherever the two differ. A preview line shows the three choices added up. The currency is always the workspace's; only its spelling is yours. Stored on your profile, so it follows you across devices.
-
-- **Profiles** (§1) and your **photo** (tap to change — pick or remove). On a workspace with several sites, the profile also names your **home site** — the address your documents carry and the levels that are yours by default — and a tap on it lets you switch site yourself (#974).
-- **My account** (#1307) — who you are and how the app speaks to you, on every workspace: your **photo**; **Personal information** (or **Address**) — your postal address (printed on your invoices), country and optional VAT number; **WhatsApp** — your number, visible to fellow members only if you set it (§6); **Region & formats**; **Linked accounts** — attach a Google sign-in to your email account; **My badge** (§8); **Language** (system default or one of five); **Theme** (system / light / dark); **Navigation** (default for the device, the classic bottom bar with the round button, or the menu like the web — on the web, the sidebar or compact menu adapts automatically, so the choice is not offered there); and **Show help hints again** — which brings back every contextual tip you dismissed. Those tips are small carousels on the forms themselves: swipe forward and back through several *astuces* per screen, each with a *Learn more* link that jumps straight to the matching section of this guide.
-- **My membership** — your standing in *this* workspace: **Status** — a free line (40 characters) shown in the directory; **Default booking period** (the window the booking sheets open on, so your usual half-day or from–to is already filled in); your **Payment conditions**; **Documents** — the workspace's document library (§11d). The directory itself is the **Members** destination of the bottom bar, not an entry here.
-- **This workspace**, **Administration** and **Governance** — only for whoever holds the permission each entry needs (§8): how the space works, running its people and devices, and what the space is.
-- **Advanced** — this device: the **server** it talks to, its push-notification status, **Scan with the front camera** (for wall tablets), the workspace-wide **Developer mode** switch, the **Developer** trace screen (§8 payments).
-- **Help & about** — **Help**, the built-in guide in your language; the app version, the author (Florian DITTGEN), the free-software licence (AGPL-3.0-or-later) with the source on GitHub, the privacy policy, a bug-report/feature link, and how to **support the project** (PayPal, Revolut).
-- **Sign out**.
-
-### 11k. Your own texts, per language (#880)
-
-Some wording is yours, not the design's: a greeting, a seasonal note, a legal paragraph, the name of the bank. The **Texts** panel at the foot of the report designer holds them as `key → value`. **Add a text** asks for a key (letters, digits, underscores — `greeting`), then you write the value; any band or positioned layout prints it with the placeholder `text.greeting` between double braces, offered by the field picker under **Your texts**. Change the value and every document changes — the design is untouched. With a language chip selected the panel edits that language's values; an empty one falls back to the default language's, exactly as documents do. A key nobody filled in prints nothing (and a condition on it stays false). An exported layout file carries the texts of its language in a `<texts>` element; importing brings them back.
-
-### Your own server — point the app at your community's Supabase
-
-By default the app talks to its own server, and nothing here needs your attention. But DesKilo's backend is part of the source code — the schema, the row-level-security policies and the edge functions — so a community can run **its own Supabase project** and keep every byte on it. **Settings → Advanced → Server** switches this device over, with no rebuild:
-
-1. **Create a project** at supabase.com — the free tier is enough to start.
-2. **Install the schema**: run the SQL files in `supabase/migrations` from the source repository, in order.
-3. **Copy the credentials**: in the Supabase dashboard, *Project Settings → API keys* holds the **Project URL** and the **publishable key** (the publishable key is meant to ship in a client; the server's row-level security is what protects the data).
-4. **Enter them** in Settings → Server — paste each field, press **Test the connection**, then **Save**.
-
-**Create a new instance (#977).** The Server screen also carries a wizard for people who run a coworking space, not a database. Create a free account at supabase.com, make a personal access token there (Account → Access Tokens) and paste it into the wizard: it lists your organisations, creates the project in the region nearest to your space (or takes an existing empty one), installs every migration of the app in order with a progress bar, deploys every function, switches e-mail confirmation on with the app's links allowed, and finally points this device at the new server — the QR on the Server screen then brings the members. Every step can be retried on its own; the token is never stored. Each migration is recorded as it installs (#1314), so a closed app or a lost connection resumes where it stopped and never runs a migration twice, and the doctor (`dart run tool/instance.dart doctor`) reads the schema as sound. An instance built before that recorded nothing: `dart run tool/instance.dart record --ref … --through <NNNN>` marks the migrations it already has without running them. People who prefer a terminal get the same builder as `dart run tool/instance.dart create --token … --org … --name …`.
-
-**Using an existing project (#1308).** Choosing one of your existing projects first reads what it holds, without changing anything: an empty project is installed in full; a DesKilo schema with a version is only **upgraded** with the migrations it lacks (or needs nothing when current); an install that stopped part-way resumes. A project whose public schema holds tables DesKilo never creates, that runs another Postgres major, that is not healthy, or whose migrations were recorded by other tooling **needs attention**: the reason is shown, nothing runs, and *Choose another project* goes back to the list. The same read finds the functions the project already has and whether its sign-in settings already pass, so reopening the wizard on a half-built project deploys only the missing functions and skips a sign-in step that is already right. Before the device uses the new server, the last step runs the **security check** (the same doctor as `dart run tool/instance.dart doctor`): *Protected* lets you continue, an alarm keeps **Use this instance on this device** off and names what to fix, and a warning is shown without blocking. A personal access token reaches your whole Supabase account while it lives, so the wizard says so before you paste it and reminds you at the end that you can revoke it — DesKilo kept no copy.
-
-The test says which part is wrong rather than just failing: *could not reach that address*, *the key was refused*, or *the tables are missing* — that last one means the project answered but step 2 has not been done yet.
-
-**Members don't type any of this.** Once the owner's device is on the community's server, the **QR button** on that screen shows a code; every member scans it in their own Settings → Server and lands on the same instance.
-
-**Who owns the server, and is it current (#1309).** For a project of your own the screen names it — *Your Supabase project ‹ref›* — and says who owns it: your Supabase organization. The project was created there with your own token, which the wizard held only in memory, so DesKilo keeps no access to it and cannot orphan it. **Open in Supabase** goes to that project's dashboard, where Supabase asks you to sign in. A version line compares the server's schema with what this app needs: *Up to date*, or *Needs an update* with the way to apply only what is missing. After a successful test the time of the last one is shown. **Use the app's server** changes this device only and never touches your Supabase project. **Run a full check** on the same screen runs the security check the setup wizard uses, on demand: paste a personal access token for that check only, and the screen answers *Protected* or *Attention required* with the findings. The token is used for that check and never stored.
-
-Switching signs you out and takes effect when the app is next opened — the session belonged to the other server. **Use the app's server** returns to the default at any time.
-
-### Your WhatsApp number
-
-Shown to the members of your spaces in the directory, so someone can
-reach you without leaving the app. Optional, and clearing it removes it
-everywhere at once.
-
-### Your status line
-
-One short line beside your name in the directory — *In a call · back at
-14:00*. It is yours to set and yours to clear; nobody else can change
-it.
-
-### Default booking period
-
-Which half of the day a booking assumes when you do not say. It only
-pre-selects: every booking screen still lets you choose, and the space's
-granularity decides what the halves are.
+**See also:** [Profiles](help:user.profile.profiles) · [Who sees me](help:user.privacy.audiences)
 
 ### Personal information
 
-First name, family name, company, the structured address, telephone and
-e-mail. This is what a document naming you as the buyer prints, which is
-why an invoice with a bare display name means this screen is empty.
+**Audience:** Everyone
+
+You want your invoices and letters to carry your name and details correctly.
+
+![](assets/help/images/user-profile-settings-personal-info.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Personal information**.
+2. Choose a **Form of address** if you want one printed before your name, then fill in **First name**, **Family name**, **Company (optional)**, the address, **Telephone** and **E-mail for documents**.
+3. Check **On your documents**, which shows how it will print.
+4. Answer any questions your workspace adds under its own heading, then tap **Save**.
+
+**Good to know**
+
+- Your family name and your city are written in capitals, as on official mail.
+- An empty form shows **Not filled in yet**.
+- The answers to your workspace's questions are personal data: they are part of your export and are erased when you leave the space.
+
+**See also:** [Your address](help:user.profile.settings.address) · [Your VAT number](help:user.profile.settings.vat-id)
 
 ### Your address
 
-The free-text address printed on your invoices. Where *Personal
-information* exists it supersedes this; the field stays for spaces that
-have not switched.
+**Audience:** Everyone
+
+You want invoices sent to the right place.
+
+![](assets/help/images/user-profile-settings-address.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Personal information**.
+2. Fill in **Street and number**, **Postal code** and **City**.
+3. Pick your **Country**, then tap **Save**.
+
+**Good to know**
+
+- Where your workspace does not use the personal information form, Me shows a simpler **Address** row with a **Country** choice instead.
+- The address is printed on your invoices.
+
+**See also:** [Personal information](help:user.profile.settings.personal-info)
 
 ### Your VAT number
 
-Fill it only if you are invoiced as a business. It is what decides
-whether a cross-border invoice is issued **without tax** under the
-reverse charge — and the e-invoice check refuses to send such a document
-until it is there.
+**Audience:** Everyone
+
+You are invoiced as a business and want the invoice to show your VAT number.
+
+![](assets/help/images/user-profile-settings-vat-id.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Personal information**.
+2. Type your number in **VAT number (optional)**.
+3. Add your **Company / registration id (optional)** if you have one, then tap **Save**.
+
+**Good to know**
+
+- Leave it empty if you are a private person.
+- Whether an invoice carries VAT depends on this number and on the country; the workspace applies its own rules.
+
+**See also:** [Personal information](help:user.profile.settings.personal-info)
 
 ### Your payment terms
 
-The terms that apply to you specifically, when an administrator has
-negotiated any. Empty means the space's own terms apply.
+**Audience:** Member
 
-### Restore the hints
+You want to know on what terms you are invoiced.
 
-Brings back every help hint you have dismissed. Nothing else is reset.
+![](assets/help/images/user-profile-settings-payment-terms.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Settings](app:/settings) and, under **My membership**, tap **Payment conditions**.
+2. Read the badge: **Workspace default**, or **Member's own** if terms were agreed with you.
+3. Read the conditions: you cannot change them yourself. To have them changed, ask an administrator.
+
+**Good to know**
+
+- An administrator or owner with the permission proposes a change from your member page: **Request a change**, only the fields to change (a field left empty keeps the workspace's wording), a **Reason (optional)**, then **Submit request**.
+- The workspace sets these conditions; a change goes through its validation and applies once validated.
+
+**See also:** [Your VAT number](help:user.profile.settings.vat-id)
+
+### Your WhatsApp number
+
+**Audience:** Everyone
+
+You want colleagues to reach you on WhatsApp, or to stop sharing the number.
+
+![](assets/help/images/user-profile-settings-whatsapp.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **WhatsApp**.
+2. Type your number in **WhatsApp number**, with the country code.
+3. Tap **Save**. To stop sharing, empty the field and save.
+
+**Good to know**
+
+- It reads **Not shared** until you set it.
+- Who sees the number is under **WhatsApp and e-mail** in [Who sees me](help:user.privacy.audiences).
+- The row only appears when your workspace uses WhatsApp.
+
+**See also:** [Who sees me](help:user.privacy.audiences)
+
+### Your status line
+
+**Audience:** Member
+
+You want a short line beside your name, such as "In a call · back at 14:00".
+
+![](assets/help/images/user-profile-settings-status.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Settings](app:/settings) and, under **My membership**, tap **Status**.
+2. Type your line in **Status**.
+3. Tap **Save**. To clear it, empty the field and save.
+
+**Good to know**
+
+- It is optional and short; the field stops you at its limit.
+- Members of your workspaces see it in the member directory.
+- It says **No status** until you write one.
+
+**See also:** [Who sees me](help:user.privacy.audiences)
+
+### Default booking period
+
+**Audience:** Member
+
+You usually book the same half-day and want it already chosen.
+
+**Steps**
+
+1. Open [Settings](app:/settings) and, under **My membership**, tap **Default booking period**.
+2. Choose **Morning**, **Afternoon**, **Full day** or **No preference (full day)**.
+
+**Good to know**
+
+- It only pre-selects: you can still change the period each time you book.
+- The row appears only when your workspace's booking setup offers a choice.
+
+**See also:** [The booking sheet](help:user.reservations.booking-sheet)
 
 ### Your badge
 
-The QR or NFC badge that identifies you at the door and on the kiosk.
-The app stores only a hash of it: a badge can be revoked but never read
-back, which is why replacing a lost one means issuing a new badge rather
-than recovering the old.
+**Audience:** Member
+
+You want a badge or a card to identify you at the door or the kiosk.
+
+![](assets/help/images/user-profile-settings-badge.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Settings](app:/settings) and, under **My membership**, tap **My badge**.
+2. Tap **New badge** to get your QR code, then **Save as PDF** to print it, or tap **Register card** and hold your RFID or NFC card to the back of the device.
+3. To retire a badge, tap **Revoke**.
+
+**Good to know**
+
+- A new QR code is shown only once: save it right away.
+- A revoked badge stops working at once. Issue a new one rather than looking for the old.
+- **Signs me in** is off by default: a badge that checks you in does not sign you in until you switch it on, and it needs a PIN first.
+- **New badge** needs the **QR badges** feature and **Register card** the **RFID / NFC badges** feature; your workspace may offer only one of them.
+
+**See also:** [Your badge PIN](help:user.profile.settings.badge-pin)
 
 ### Your badge PIN
 
-A short code asked for beside the badge where a space wants two factors.
-It protects the actions a badge can take, not the badge itself.
+**Audience:** Member
+
+You want to sign in by scanning your badge instead of typing your e-mail.
+
+![](assets/help/images/user-profile-settings-badge-pin.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Settings](app:/settings) and, under **My membership**, tap **My PIN**.
+2. Choose **Set a PIN**, enter it in **New PIN**, repeat it in **Repeat it** and save.
+3. Open **My badge** and switch on **Signs me in** for the badge you want.
+
+**Good to know**
+
+- The row reads **No PIN yet** or **PIN set**.
+- Only you can set it, and nobody, not even an owner, can read it back.
+- **Change PIN** replaces it; **Remove PIN** switches off badge sign-in for all your badges.
+
+**See also:** [Your badge](help:user.profile.settings.badge)
 
 ### App language
 
-The language of the app on **this device**, independent of the space's
-own language and of the language your documents come in. Leave it on the
-system setting and it follows the phone.
+**Audience:** Everyone
+
+You want the app in your own language.
+
+![](assets/help/images/user-profile-settings-language.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Language**.
+2. Pick a language, or **System default** to follow your phone.
+
+**Good to know**
+
+- It applies to every workspace, unless you set one for a single workspace with [Only for this workspace](help:user.settings.scope).
+- Each language is written in its own name, so you can always find yours.
+
+**See also:** [Numbers and dates](help:user.profile.settings.regional-formats)
 
 ### Theme
 
-Light, dark, or the signature blend — again per device. The system
-setting follows the phone's own light and dark switch.
+**Audience:** Everyone
+
+You want the app lighter or darker.
+
+![](assets/help/images/user-profile-settings-theme.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Theme**.
+2. Pick **System default**, **Light** or **Dark**.
+
+**Good to know**
+
+- **System default** follows your phone's own light and dark switch.
+- Like the language, it can be set for one workspace only.
+
+**See also:** [App language](help:user.profile.settings.language)
 
 ### Navigation style
 
-Whether the app navigates by a bottom bar or a side rail. On a wide
-screen the rail gives the plan more room; on a phone the bar is easier
-to reach.
+**Audience:** Everyone
 
-### My account instead of Settings (#1598)
+You prefer the bottom bar, or the menu you know from the web.
 
-A space can decide that a member who administers nothing meets **My
-account** where the **Settings** gear is — in the bar at the top, and in
-the menu on a wide screen. It is the same screen behind the same tap:
-your profile and your photo, your membership, your language and regional
-preferences, your privacy and data rights, Help, switching profiles and
-signing out are all exactly where they were. Only the name and the icon
-change, so nobody has to look for their own account behind a word that
-sounds like somebody else's settings.
+**Steps**
 
-Anyone a role entrusts with something — an owner, a co-owner, an
-administrator, or a member one of this space's own roles delegates to —
-keeps **Settings** and everything it opens. The entry follows the
-permissions rather than the title, so a delegation made this morning
-shows up without restarting the app.
+1. Open [Me](app:/me?tab=me) and tap **Navigation**.
+2. Choose **Default for this device**, **Classic: the bottom bar and the round button** or **Menu: the hamburger, like the web**.
 
-It is a name, not a lock. Nothing is taken away and nothing is given:
-the administration screens refuse exactly the people they always
-refused, whether they are reached from a menu or typed in as an address.
+**Good to know**
 
-Owners switch it on under *Settings → Features*. A space that leaves it
-off keeps the gear precisely as it is today.
+- The row is hidden in the web version, which always uses the menu, and appears only when your workspace offers it.
 
-### MCP interface (#1607)
-
-A space can make the **MCP interface** available, so that an AI
-assistant can be connected to DesKilo. The switch is availability and
-nothing more: turning it on enrols nobody, approves no request, grants
-no role and registers no client. A person who wants to use it still
-needs a grant the owner configures **and** the instance administrator
-approves — two distinct steps, even when one person holds both hats —
-and every operation the assistant performs keeps answering to the
-permissions, features and rules the app already applies. While it is
-off, the MCP entry points are hidden and calls are refused; existing
-grants stay visible and can be revoked. The switch travels with a
-template like any other feature; grants, approvals and consents never do,
-so enabling it on a copy of a space opens nothing. Owners switch it on
-under *Settings → Features*; it is off by default.
-
-### The demo workspace
-
-An invented workspace anybody can open from the sign-in screen, without
-an account. It has its own people, its own bookings and its own bills,
-and a **Reset** that puts everything back exactly as it was. **View as**
-looks at the same space as a member, an administrator or the owner, so
-you can see what each of them sees.
-
-Nothing done inside it reaches a real workspace, and nothing leaves the
-device. Leaving forgets the session, and so does closing the app: the
-next visit starts from the same invented space.
-
-It is not a way to show a **real** space without showing its members.
-Everything in the demo is invented, so there is nothing to hide; a real
-workspace on screen still shows the real people in it, unless
-**Filming mode** is on — which is the next section.
-
-### Filming mode (#1514)
-
-For the times you have to show the **real** workspace — a support video,
-a screenshot in a guide, a picture for the shop, a slide at a
-conference. Switch **Filming mode** on and every name, e-mail address,
-telephone number, postal address and profile photograph on screen
-belongs to an invented person. The floor plan, the bookings, the seats
-and the amounts stay exactly the ones this space really has.
-
-The substitution happens before anything is drawn, not on top of it, so
-there is nothing that can be forgotten: a screen cannot show a real name
-because no real name ever reaches it. The same member is always the same
-invented person, on the plan, in the directory and on an invoice, so a
-recording still makes sense to follow.
-
-A banner sits at the top of every screen while it is on, so nobody films
-for ten minutes thinking it was active — and nobody works for a day on
-invented names thinking they were real. Switch it off in *Settings →
-Features* as soon as the filming is done.
-
-Two things to know. While it is on, the identity forms refuse to save:
-what they are showing is invented, and saving it would write that over
-somebody's real details. And nothing can hide what a person typed
-— a message, a note, a seat label — so read what is on the screen before
-you film it.
-
-If the picture does not have to be of *this* space, use the demo
-workspace instead: everything in it is invented from the start.
-
-### Front camera for scanning
-
-Uses the front lens instead of the back one. For a wall-mounted tablet
-whose back camera faces the wall.
-
-### Profiles
-
-One account, several spaces. The switcher shows each space you belong
-to, a development and production pair as one card with two chips, and
-switching becomes your default — a restart opens where you left.
+**See also:** [How Settings is organised](help:user.settings.organisation)
 
 ### Numbers and dates
 
-Which conventions numbers and dates are written in on **this device**.
-Separate from the app's language on purpose: someone may want an English
-app writing French dates.
+**Audience:** Everyone
+
+You want amounts and dates written the way you read them, whatever the app language.
+
+![](assets/help/images/user-profile-settings-regional-formats.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Region & formats](app:/formats).
+2. Tap **Numbers & dates** and pick a region, or **Automatic** to follow the app language.
+3. Check the preview line above: it shows an amount, a date and a time as you will see them.
+
+**Good to know**
+
+- It is independent of the language: an English app can write French dates.
+- It can be set for one workspace only with [Only for this workspace](help:user.settings.scope).
+- The row appears only when your workspace uses **Region & formats**.
+
+**See also:** [Clock](help:user.profile.settings.clock)
 
 ### Clock
 
-Twelve or twenty-four hours. It changes how times are written, never
-what they mean.
+**Audience:** Everyone
+
+You prefer 24-hour or 12-hour times.
+
+![](assets/help/images/user-profile-settings-clock.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Region & formats](app:/formats).
+2. Under **Clock**, choose **Auto**, **24h** or **12h**.
+
+**Good to know**
+
+- **Auto** does what your region does.
+- It changes how times are written, never what they mean.
+- The row appears only when your workspace uses **Region & formats**.
+
+**See also:** [Show times in my time zone](help:user.profile.settings.device-zone)
 
 ### Show times in my time zone
 
-Off, times are the space's own — which is what a booking actually is.
-On, they are converted to where you are. Useful when travelling, and
-worth turning back off before comparing a screen with a colleague's.
+**Audience:** Everyone
 
-### Your own server
+You are travelling and want times as your own clock shows them.
 
-Which Supabase project this app talks to. The default is DesKilo's own;
-point it at a project you host and the app is yours end to end. Changing
-it signs you out, because an account exists on a server rather than in
-the app.
+![](assets/help/images/user-profile-settings-device-zone.en.b8fa17aa9.jpg)
 
-### How to run your own
+**Steps**
 
-The bundle builds a second database from every migration in order, the
-edge functions, the buckets and the seed. That is what makes a
-self-hosted DesKilo identical to the reference one rather than a fork of
-it.
+1. Open [Region & formats](app:/formats).
+2. Switch **Show times in my time zone** on.
 
-### Who can see my data
+**Good to know**
 
-What each role in each of your spaces can read about you. It is a
-statement of what the server enforces, not a set of switches — the
-answer is the same whether or not this screen is open.
+- Off, times are in the workspace's zone, the one bookings are made in. This is the default.
+- On, times follow your device and are labelled wherever they differ from the workspace's.
+- The row appears only when your workspace uses **Region & formats**.
 
-**Blocking a person (#2211).** A block stops personal messages in both directions, including forwards and screenshot notices. Earlier messages stay in the conversation. Unblock the person to allow delivery again. Workspace and group conversations follow their own rules.
+**See also:** [Clock](help:user.profile.settings.clock)
+
+### Restore the hints
+
+**Audience:** Everyone
+
+You dismissed the help hints and now want them back.
+
+![](assets/help/images/user-profile-settings-restore-hints.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me).
+2. Tap **Show help hints again**.
+
+**Good to know**
+
+- A message confirms: **Help hints will be shown again.**
+- Nothing else is reset.
+- The row appears only when your workspace uses help hints.
+
+**See also:** [How Settings is organised](help:user.settings.organisation)
+
+### Front camera for scanning
+
+**Audience:** Everyone
+
+You scan badges with a wall-mounted tablet whose back camera faces the wall.
+
+![](assets/help/images/user-profile-settings-front-camera.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Settings](app:/settings) and open **Advanced**.
+2. Switch **Scan with the front camera** on to use the screen-side camera, or off for the back camera.
+
+**Good to know**
+
+- It is on by default and applies to this device only.
+
+**See also:** [Your badge](help:user.profile.settings.badge)
+
+### Linked accounts
+
+**Audience:** Everyone
+
+You want to sign in with another identity, such as a Google account, as well as your e-mail.
+
+![](assets/help/images/user-profile-settings-linked-accounts.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and tap **Linked accounts**.
+2. Tap **Link** beside a provider and finish in the browser.
+3. To remove one, tap **Unlink**.
+
+**Good to know**
+
+- A linked identity shows **Linked**.
+
+**See also:** [Profiles](help:user.profile.profiles)
+
+### Privacy: who can see my data
+
+**Audience:** Everyone
+
+You want to know who can read what about you, and who actually looked.
+
+![](assets/help/images/user-privacy-overview.en.b8fa17aa9.jpg)
+
+![](assets/help/images/user-privacy-visibility.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy).
+2. Tap **Who can see my data**.
+3. Read the rule for each category, the people it names today, and **Who accessed your data**.
+
+**Good to know**
+
+- Your data is never tracked or sold. Roles decide who reads it, and the server enforces that.
+- The sheet states the rule; there is nothing to switch on it. To choose what other members see of your profile, use [Who sees me](help:user.privacy.audiences).
+
+**See also:** [Who sees me](help:user.privacy.audiences) · [Your data, your rights](help:user.privacy.consent)
+
+### Choose who sees me
+
+**Audience:** Everyone
+
+You want to decide, one item at a time, who sees your name, bio, contact details and presence.
+
+![](assets/help/images/user-privacy-audiences--card.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and scroll to **Privacy**, to the **Who sees me** card.
+2. Tap an item: **About me**, **Name and photo**, **Profession and bio**, **WhatsApp and e-mail**, **In the space today** or **Who can start a conversation with me**.
+3. Choose an audience, for example **Nobody**, **Members of my spaces** or **Members of chosen spaces**, tick spaces if you chose some, and tap **Save**.
+4. Check **How others see me** at the foot of the card.
+
+**Good to know**
+
+- Nothing is public unless you choose it.
+- Widening an audience asks you to confirm first.
+- **Blocked people** below the card lists whoever you blocked; they cannot see or reach you and you cannot reach them. Tap **Unblock** to undo it.
+- **Anyone signed in** is offered only for some items, such as **Name and photo** and **Profession and bio**. **WhatsApp and e-mail** and **In the space today** never go wider than your own spaces.
+
+**See also:** [Public profile](help:user.privacy.public-profile) · [Who can see my data](help:user.privacy.visibility)
+
+### Publish a public profile
+
+**Audience:** Everyone
+
+You want a page with your name and a few words that people can read without an account.
+
+![](assets/help/images/user-privacy-public-profile.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and find **Public profile** in the **Who sees me** card.
+2. Switch it on and confirm with **Publish**.
+3. Tap **Copy the link** to share it.
+
+**Good to know**
+
+- Anyone with the link reads your name, profession and bio. Contact details, presence and spaces stay private.
+- Off, people who are not signed in see nothing of you.
+
+**See also:** [Choose who sees me](help:user.privacy.audiences)
 
 ### Export my data
 
-Everything DesKilo holds about you, as a file you keep. It is produced
-on request rather than kept ready, so it says what is true at the moment
-you ask.
+**Audience:** Everyone
+
+You want a copy of everything DesKilo holds about you.
+
+![](assets/help/images/user-privacy-export.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy).
+2. Tap **Export my data**.
+3. Save or share the file that is produced.
+
+**Good to know**
+
+- It is one JSON file, built at the moment you ask.
+- The row appears only when your workspace offers data export.
+
+**See also:** [Rights requests](help:user.privacy.requests)
 
 ### Erase my data
 
-Removes you and what is yours. What cannot be erased is what the law
-requires the **space** to keep: an issued invoice is a document of the
-organisation, and it stays with the buyer identity it was issued with.
-The screen says which spaces this affects before anything happens.
+**Audience:** Everyone
+
+You want to leave a workspace and have your data erased.
+
+![](assets/help/images/user-privacy-erase.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy).
+2. Tap **Leave this workspace and erase my data**.
+3. Read what it will do, type the confirmation word and tap **Erase**.
+
+**Good to know**
+
+- It cancels your open bookings and blanks your messages in this space. Your profile is cleared when this is your last space; past bookings stay as the space's occupancy record.
+- Accounting records stay for the legal retention period, by identifier and not by name.
+- The row appears together with data export. It is greyed out for an owner, who must hand the workspace over first, under Co-ownership.
+
+**See also:** [Export my data](help:user.privacy.export)
+
+### Rights requests
+
+**Audience:** Everyone
+
+You want to ask the workspace for a copy, a correction, a restriction or erasure, and keep a record.
+
+![](assets/help/images/user-privacy-requests.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy) and tap **My rights requests**.
+2. Tap **Make a request** and choose what you ask: see a copy of your data, take it elsewhere, correct it, restrict its use, object to a use, or erase it.
+3. Add **Details (optional)** and tap **Send the request**.
+
+**Good to know**
+
+- The space answers within one calendar month; the sheet shows the date.
+- Each request shows whether it was received, extended (with the new date and the reason), answered or refused.
+
+**See also:** [Export my data](help:user.privacy.export) · [Erase my data](help:user.privacy.erase)
+
+### Push notifications on this device
+
+**Audience:** Everyone
+
+You want to stop notifications from being sent to this device, or turn them back on.
+
+![](assets/help/images/user-privacy-push.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Privacy & data](app:/privacy).
+2. Switch **Push notifications on this device** off or on.
+
+**Good to know**
+
+- Off, the app keeps working and nothing is sent to this device.
+- On, this device's address and each notification go to the push service.
+
+**See also:** [Your data, your rights](help:user.privacy.consent)
 
 ### Your data, your rights
 
-What is collected, why, on what legal basis, and how long it is kept.
-Consent that is asked for is recorded with its date, so you can see what
-you agreed to and when.
+**Audience:** Everyone
 
-## 13. Notifications
+You want to reread what you accepted about your data.
 
-Check-in reminders, pending confirmations, expense decisions — and when an admin **removes one of your reservations** (overrule), you and the admins are notified. Delivery is local-first; server pushes arrive out of the box on Android, iPhone/iPad, the browser and macOS (Firebase Cloud Messaging) — *Settings → Advanced* shows whether push is active on this device. The app-icon badge shows your pending-confirmations count **plus your unread messages** — on Android, iPhone/iPad, the macOS Dock, the Windows taskbar, and installed web apps. Member messages are announced **once per device with the sender and the full text** — including anything sent while the app was closed, announced the moment you next open it. That announcement is always raised **locally, by the app itself**: the pushed payload never carries a name, a time or a word of the message (§6), so what travels over the network says only that something arrived. A conversation you **muted** (§16) stays silent: nothing is announced for it, though it still counts on its row and on the badge.
+![](assets/help/images/user-privacy-consent.en.b8fa17aa9.jpg)
 
-## 14. Privacy
+**Steps**
 
-**Consent (#751).** The first time an account opens the app — and again whenever this text changes — a consent screen shows the whole of it: what is processed, what is never done, who can see what, who is responsible, how long, your rights, and where to read it again. Nothing else is reachable until you tick *I have read this and I accept* — the acceptance (version and date) is recorded on your account and follows you across devices. Read it again anytime in **Settings → Privacy & data → Your data, your rights**, here in the help, or on the project wiki.
+1. Open [Privacy & data](app:/privacy).
+2. Tap **Your data, your rights**.
+3. Read the text: what is processed, what is never done, who sees what, who is responsible, how long, and your rights.
 
-Minimal data: name, email, plan, bookings, ledger. You control your photo, your status and whether your phone number is visible in the directory; on the plan a seat of yours shows an initial, or your photo where the owner enabled member photos. Kiosk badges are stored only as hashes — a lost badge is revoked, not guessed. No tracking, no third-party analytics. Your ledger rows and invoices are **kept as they are** when you erase your account — they are the workspace's accounting records, not yours to withdraw, and the law requires the community to keep them for the statutory period. What is cleared is your profile: name, photo, WhatsApp number, status, address and VAT id. They are not anonymized; the name on an invoice already issued stays on it.
+**Good to know**
 
-**GDPR (#719).** DesKilo is built for the EU General Data Protection Regulation: EU-hosted data, no tracking or analytics, access limited by role and enforced on the server, and four rights you exercise yourself in **the shield button in the top bar (Privacy & data)**: **who can see my data** (the rule per category and the people it currently names), **who accessed my data** (a server-written log of every read of your finances or messages by someone else — never skippable), **export my data** (one JSON file, art. 20) and **leave with erasure** (art. 17: your bookings are cancelled, your messages blanked, your profile cleared; accounting records are kept under the legal retention named in the policy, referenced by an id, not a name). Messages are readable only by the people in the conversation, whatever their role; invoices and payments only by you and those with the finance permission.
+- It shows the date and version you accepted; a change of the text asks for your acceptance again.
+- **Privacy policy**, just below, opens the full policy online.
 
-## 15. Platforms
+**See also:** [Who can see my data](help:user.privacy.visibility)
 
-Android (Google Play), iPhone/iPad, desktop — **macOS** (a DMG: drag DesKilo into Applications) and **Windows** (an MSI installer) built from every release — and the **browser**: the same app, nothing to install, at the address your workspace publishes. Your data follows your account, so a desk booked on a phone shows up in a browser tab a second later.
+### Your own server
 
-The browser does more than you might expect: **Web NFC works** in Chromium browsers on Android over HTTPS, which is one way a chair tag gets configured from a phone browser — the installed **Android and iPhone apps read tags directly**, so that is usually the easier route. What it cannot do is scan a QR code with the camera the way the kiosk does. Everything else — plan, bookings, members, money, invoices, PDF downloads — is the same app. On first launch of the macOS DMG, right-click the app and choose *Open*: the build is not yet notarised by Apple, so a plain double-click gets a Gatekeeper warning.
+**Audience:** Everyone
 
-## 16. Messages
-The **Messages** tab is your workspace's messaging centre: every conversation in one list, the most recent at the top, people and groups together. A row shows the last message, when it arrived, and how many you have not read. Tap the **pencil** to start something new.
+By default the app uses DesKilo's service. Your community may run its own server, and you want to connect to it.
 
-**People or a group, one sheet.** Pick a single person for a private chat; pick two or more and a **name field appears** — that is a group. The name is **unique in your workspace**, so nobody has to guess which *Team* they are writing to; if it is taken the app says so and you change one word.
+![](assets/help/images/user-backend-server.en.b8fa17aa9.jpg)
 
-**Telling them apart at a glance.** A person shows their photo in a circle. A group shows a **square badge** with a group symbol, and — until someone writes in it — how many members it has.
+**Steps**
 
-**Inside a conversation.** Messages read oldest to newest as chat bubbles, with emojis and **reference links** live: a reservation link opens that reservation, a space link opens its booking sheet, each with a *Show on plan* jump. The composer sits below. **Long-press a bubble to delete** it, confirmed first. Your own messages carry a check next to the time: **grey = delivered**, **blue = read**.
+1. Open [Settings](app:/settings), then **Advanced**, then **Server**.
+2. Choose **Connect an existing organization**.
+3. Tap **Scan a server QR**, or paste the code into **Server code**.
+4. Save. The app signs you out and uses the new server the next time it opens.
 
-**Keeping the list in order.** Chips above the list narrow it to **All**, **Unread** or **Archived**. **Long-press a row** to **pin** it to the top, **mute** it, **mark it unread** to come back to it later, or **archive** it — an archived conversation leaves the list, keeps its history and comes back by itself when someone writes in it. A pin and a crossed bell on the row say which is which.
+**Good to know**
 
-**A conversation is a page.** It opens full height with a back arrow, and its address can be shared or bookmarked. Messages sit under **day separators**, so a bubble shows the time alone; **Load earlier messages** at the top fetches older history. What you type but do not send stays as a **draft** for that conversation. **Swipe right** to quote a message and tap the quoted block in a reply to jump to the original; **swipe left** to take back a message of yours that nobody has read yet. The **paperclip** attaches a reservation or a space, and a counter appears as you near the length limit.
+- You never need an administrator key.
+- **Use the app's server** takes you back to the default at any time.
+- Your account lives on a server, which is why switching signs you out.
 
-**Starting one.** Tap the pencil, then tap a person — the chat opens at once. Flip the **Group** switch to pick several people and give the group its name.
+**See also:** [How to run your own](help:user.backend.how)
 
-**Tap the name at the top.** In a private chat it opens the other person's **profile** — today's booking, whether they are checked in right now, their status, and how to reach them. In a group it opens the **member list**, where a group admin can add or remove people, and anyone can leave. Leaving never strands a group without an admin.
+### How to run your own
 
-**Search** (the magnifier) looks in three places at once: **people**, **groups**, and the **words inside messages**. A result takes you straight to the person, the group, or the message.
+**Audience:** Everyone
 
-**No photos or files.** Messages carry text, plus links to a reservation or a space. That is deliberate: a coworking app is not a file host.
+You run a community and want to host DesKilo yourself.
 
-**Notifications.** A message you *receive* alerts you and counts on the **Messages** tab; opening the conversation clears it. Messages no longer appear in the bell — that is for confirmations and workspace events. The one exception is an **all-admins broadcast**, which has no conversation to live in and stays there.
+![](assets/help/images/user-backend-how.en.b8fa17aa9.jpg)
 
-![](assets/help/images/messages-discussions.jpg)
+**Steps**
 
-*The conversation list: people and groups together, unread counts, the pencil to start something new.*
+1. Open the **Server** screen and tap **Use your own server**.
+2. Follow the four steps shown: create a project at supabase.com, install the schema, copy the Project URL and the publishable key, then paste them and **Test the connection**.
+3. Or tap **Create a new instance** for the guided set-up.
 
-![](assets/help/images/messages-conversation.jpg)
+**Good to know**
 
-*A private chat: bubbles oldest to newest, the grey/blue read receipts on your own messages.*
+- The test tells you what is wrong: unreachable address, refused key or missing tables.
+- Members join the same server by scanning the QR on this screen.
+- The operator side, environments and deployment, is in the advanced chapter.
 
-![](assets/help/images/messages-conversation-links.jpg)
+**See also:** [Your own server](help:user.backend.server)
 
-*A group message carrying a reservation link and a space link — both live, both with a Show-on-plan jump.*
+## Money
 
-### Platform owner
+Everything you owe, have paid and have been invoiced lives in the **Money** tab: one place to read the month, settle it, find an invoice and ask for a change.
 
-The account that operates the installation sees, under *Profiles*, **every workspace** in the database: its own as usual, the others **greyed out** with their environment and member count. Tapping a greyed-out workspace shows its **owners** with their e-mail — and that read is logged, visible to the owners of the workspace concerned. An owner always has an e-mail address: the app refuses to create a workspace or to name a co-owner without one.
-### Workspace status and guided repartition (#934)
+In this chapter:
+- [Read your statement](help:user.money.statement) and [what an invoice changes](help:user.money.statement.invoiced)
+- [Pay what you owe](help:user.money.payments) and [record a payment](help:user.money.payments.record)
+- [Your invoices](help:user.money.invoices) and [what each booking cost](help:user.money.usage)
+- [Finance alerts](help:user.money.alerts), [reports](help:user.money.reports) and [your negotiated prices](help:user.money.negotiation)
+- [Open a document](help:user.money.documents.library) from the library
+- [Submit an expense](help:user.money.expense) and [approve or decline one](help:user.money.expense.approve)
+- [How amounts are shown](help:user.money.amounts) and [your finances across spaces](help:user.money.finances)
+- For billing administrators: [Invoicing at a glance](help:user.money.invoicing)
 
-*Money → Workspace status* shows owners and admins, over a period of their choice, what the workspace **invoiced** (net of credit notes), **collected**, **reimbursed** and **shared out**, then the same member by member with their subscription percentage — and prints it as a report. *Share a cost* proposes each member's share **by subscription percentage**, lets you leave a member out or adjust a weight, books the shares as today (lines on the next usage invoice) and **remembers the rule** for next month.
+### Read your statement
 
-### Complete accounting exports (#936)
+**Audience:** Member
 
-The FEC and the DATEV file now carry, beside sales and bank, a **purchases journal**: expenses reimbursed to members and shared costs split over them. A **credit note** is booked as a reversed sale (it was absent). The expense account is asked at export time like the others. A development workspace produces a file marked **DEV**: it is not the real books.
+You want to know where the month stands: what you used, what it costs and what is left to settle.
 
-### Sites (#945)
+![](assets/help/images/user-money-statement--top.en.b8fa17aa9.jpg)
 
-A workspace can have **several addresses**. *Settings → Sites*: the default site carries the workspace's address; add a site per additional address (street, post code, city, the establishment's registration) and assign its levels. Every member has a **home site** (member page): that is the address their documents will carry. Deleting a site returns its levels and members to the default site.
+**Steps**
 
-### Sites on documents (#946)
+1. Open [Money](app:/money) and stay on **Statement**.
+2. Use the arrows beside the month name to browse other months.
+3. Read **Balance** first: **Outstanding** in red means you owe it, **Settled** means nothing is left.
+4. Read **This month** below it: the days you used out of the days your plan includes, and the days left.
+5. Read the cards that follow: your subscription, extra half-days, services, packages, open positions and **Payments & credits**.
 
-With several sites, an invoice carries **the address and registration of the member's home site** on the seller side (the default site keeps the workspace address), names the site under the header, and — when the attendance details are printed — lists the **other sites** the member worked from during the month. The e-invoice follows the same address.
-### Numbers per site (#948)
+**Good to know**
 
-In France the VAT number and the exemption belong to the legal entity; each establishment has its own **SIRET**, which the site carries. A site that is a **distinct legal entity** may also carry its own VAT number and exemption mention — documents issued at that site take them. That is usually the sign of a separate workspace; the screen says so.
+- A booked morning or afternoon counts as half a day, so you may see values like 0.5 days.
+- The card also states your plan's rule. With pay as you go it always shows the rate of extra days; with the other two rules it tells you to ask an administrator or to buy a package once all your days are used.
+- A line marked "pending validation" is waiting for someone to confirm it and is not counted yet.
+- Tap the PDF icon beside the month to export the bill.
 
-### VAT groups (#947)
+**See also:** [Pay what you owe](help:user.money.payments) · [What each booking cost](help:user.money.usage)
 
-Each rate now carries the **fiscal group** of what it taxes: standard, intermediate, reduced, super-reduced, zero, exempt, not subject, **deposit** (outside the VAT base) or **excise-bearing** (beer, spirits, sugar drinks: excise inside the price, standard VAT). *Settings → VAT* shows what falls in each group in your country and the exemption reason a group implies. An association not subject to VAT keeps category O on its documents. A deposit beside taxed lines cannot go out as an e-invoice (EN 16931): the app says so and you issue it separately.
-### Deployment between the two sides (#988, #990)
+### When a month has been invoiced
 
-Under **Settings → Governance → Deployment** — shown while the *Deployments* feature is on, the workspace has its twin and you hold a deploy permission — the configuration and master data travel between the two sides **entity by entity**: *Identity & legal, VAT, Tariffs, Services, Packages, Accessories, Sites, Booking rules, Validation rules, Role matrix, Reminder rules, Document designs, Document links, Closure days, Invitation templates, Features*. Tick an entity and what it needs is ticked along (services need the VAT rates). **The direction is the side you stand on**: from the development side the button says *Deploy to PROD*, from the production side *Deploy to DEV*. Nothing moves before a **preview** says, per entity, what would be added, changed and removed on the other side; a preview with nothing to do says so and deploys nothing. Every deployment lands in the **journal** — who, when, in which direction, which entities — with **Roll back** on the latest one, which puts back what the other side held before. Members, reservations, ledgers, invoices, payments and events never travel; neither do credentials or document counters. The floor plan keeps travelling through the space file. Since #1004 the **floor plans** deploy too — levels with their site, prices and whole-booking flags, offices, desks and seats with chairs, amenities and accessories, the backgrounds and the plan images — as a **merge**: what the other side has is added or updated, what only this side has is reported and kept, because a seat may hold a booking; badge tags and blocks never travel, and the images are copied along. Since #1010 the **payment instructions** (the bank block an invoice prints) are an entity too, and deploying the **document designs** copies their images — the logo — along, as the plan does. Since #1006 a deployment always goes **into the side you stand on**: on the production side the button reads *Pull from DEV*, on the development side *Pull from PROD* — nothing can be pushed onto the other side by mistake — and after the preview a **confirmation** names the side that is written and the entities before anything moves. It needs the permission of the target direction (*Deploy to production* on the prod, *Deploy to development* on the dev) on the side you stand on. The list is grouped into *Configuration*, *Master data* and *Reports* (the document designs: every report kind, preset and language).
+**Audience:** Member
 
-### Environment pairs and the deploy permissions (#987, #989)
+You want to know which figure to trust once the workspace has sent you an invoice for a month.
 
-A workspace is now created **together with its twin**: the development side and the production side share the same name, country, currency and time zone, you own both, and **Profiles** shows the couple as **one card with two chips, DEV and PROD** — tap a chip to switch sides. A workspace created before the pairs, or created alone (untick *Create the development and production pair*), gets its twin on demand under **Settings → Advanced → Create its twin**: the configuration is copied once, and nothing else. The couple is switched off with the *Environment pairs* feature, which leaves two ordinary entries. Since #1550 a space created **with** its twin is created with that feature already on — asking for a pair and then being shown two spaces was the app contradicting itself — while a space created alone keeps it off. One side decides for the couple, and it is the development one, so switching the feature on from the DEV shows the card without leaving a second PROD row behind. Spaces created between 2026-09-11 and the fix are repaired on the next update.
+![](assets/help/images/user-money-statement-invoiced--card.en.b8fa17aa9.jpg)
 
-Three permissions join the role matrix: **Deploy to production**, **Deploy to development** and **Enter the production workspace**. Whoever may deploy to production may always deploy to development. Owners and co-owners hold all three; admins hold *Deploy to development* and *Enter the production workspace*; members hold none until you give it. Two rules follow: **a member of the production side is always a member of the development side** (the membership is mirrored, role and status included), and **a role enters the production side only while it holds that permission** — an invitation, a join or a claim into the prod is refused otherwise, and the app says why.
+**Steps**
 
-### VAT like an ERP — dated rate versions, one tax point, the counterparty (#985)
+1. Open [Money](app:/money) and go back to the invoiced month with the left arrow.
+2. Look for the card named **Invoice** (or **Credit note** when the total is negative) followed by its number.
+3. Read the state on the card, then **Invoice total**; a partly paid invoice also shows **Paid so far** and **Remaining to pay**.
 
-Two flags under *VAT management* turn the rates into what an ERP calls a **posting setup**.
+**Good to know**
 
-- **VAT rate versions.** A rate is a **family of dated versions**. When the law changes a rate, tap **Change by law** on the row, type the new percentage and the effective date: the old value closes on that date, the successor opens on it, and every service, package, accessory or subscription that pointed at the old row keeps pointing at it — the app walks the family and applies **the value in force on the tax point date**. Nothing is edited in place, nothing is re-pointed. The **tax point** of a billed month is its last day, or the invoice date when the month is billed ahead (the prepayment rule); a charge stamped at booking (a service, a package) keeps its stamp. So a month that ended before the change is taxed at the old value even when its invoice is issued — or re-issued — after it, and only the supplies dated after the change use the new value. The configuration export carries the versions and the family.
-- **VAT by counterparty.** On a member's page, **VAT treatment** says who this buyer is for tax: *Automatic* (today's rule: reverse charge for a business in another EU state), *Domestic VAT* whatever the country (a desk is a service connected with immovable property), *Reverse charge* (category AE), *Outside the EU* (category G, with the statutory mention), or *Exempt buyer* with the reason printed on the invoice (category E). The invoice applies the matrix buyer × product: an exempt or not-subject group stays what it is; a taxable group takes the buyer's category. The e-invoice carries the category and its VATEX code.
+- Once a month is invoiced, the invoice decides whether it is settled. The payment that clears it usually arrives in a later month, so the month's own balance is no longer the reference.
+- A credit note reads "The workspace owes you this amount": there is nothing to pay on your side.
 
-The country catalogue names the **group** of every rate it proposes (standard, intermediate, reduced, super-reduced), so seeding a workspace yields one row per legal group in every country, and the change-by-law action is the same everywhere.
+**See also:** [Your invoices](help:user.money.invoices)
 
-### Year archive (#957)
+### Pay what you owe
 
-*Accounting exports → Year archive* downloads one zip named after the registration number and the year: every invoice as PDF/A-3 with its embedded e-invoice, the **invoice register** (number, date, amount, status and each document's integrity word), the FEC on the default accounts and the audit trail. A development workspace produces a file marked DEV.
+**Audience:** Member
 
-### What needs you (#1247)
+You want to settle your balance and know how the workspace expects the money.
 
-*What needs you* is one screen that answers a single question: **does anything need me?** Switch the **Decision surface** feature on and it appears at `/attention`. Each line is one decision — the events waiting on your answer, the people waiting to join, the month whose members have billable data and no invoice yet — with what it is about, what the decision is, and how long it has been waiting. Several members waiting for the same decision are **one line**, not one line each: *issue for 7 members*.
+![](assets/help/images/user-money-payments.en.b8fa17aa9.jpg)
 
-The order is not the order things happened: it is **what the delay costs**. Money first (a payment nobody confirmed is cash standing still), then a person who is blocked on you, then a month that has to close, then the instance itself, then configuration that is not doing what it says.
+**Steps**
 
-What is **not** there is as deliberate. Occupancy, balances and unread counts are numbers, not decisions: nobody can act on a number, and each of them belongs to the screen that owns it. A surface that ranked everything would rank nothing. When nothing is waiting the screen says so — *Nothing needs you* — rather than showing an empty list you have to interpret.
+1. Open [Money](app:/money) and choose **Payments**.
+2. Check **Balance** under **Pay**; overdue invoices from all periods are called out above it.
+3. Read **Payment instructions**: the bank details, the payment reference to quote and the other ways the workspace accepts. Tap an IBAN or a value to copy it.
+4. If the button is there, tap **Pay online**.
+5. Once you have paid another way, [record the payment](help:user.money.payments.record).
 
-The feature is off until you ask for it, and it sits **beside** the alerts bell rather than replacing it.
+**Good to know**
 
-**Reading analytics (#1982).** Seat utilisation is reserved seat time divided by offered seat time, not measured attendance. Past, current and future periods now say what their figures mean; the computation time uses the workspace clock. Current periods include future dates. Future bookings are not a demand forecast, and revisiting a past period recalculates today’s records rather than recreating what was known then. Partial or stale periods do not produce a performance-change figure. Refresh data keeps your selection. Unreserved and blocked seat-hours remain distinct. Missing or invalid source data is unavailable, never zero.
+- The instructions appear only while something is owed, and only if the workspace has set them up. If there is nothing, ask your administrator how to pay.
+- An online payment the provider has not confirmed shows as **Online payment pending**: the balance keeps showing what is owed until it is confirmed.
+- Under **Requests** you can also submit an expense, ask for **Request extra half-days** or, if your plan works with packages, **Buy a package**.
 
-The workspace financial status explains its subtotal: invoiced amounts less credit notes, reimbursements and credits. This is neither profit nor a bank balance. Matched and received payments overlap; do not add them together.
+**See also:** [Record a payment](help:user.money.payments.record) · [Submit an expense](help:user.money.expense)
 
-In web BI, **Analyses** selects capacity, invoiced amounts and collected amounts according to your permissions and the enabled features. Invoiced amounts follow invoice months; collected amounts follow the month payments were matched to invoices, not a bank statement date. Credit notes are shown separately. **Save view** keeps your selection privately or, with the necessary rights, for the team. A default view opens with fresh data and current permissions; it never saves a copy of the figures.
+### Record a payment
+
+**Audience:** Member
+
+You paid by transfer, cash or another way and you want the workspace to know.
+
+![](assets/help/images/user-money-payments-record.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money), choose **Payments** and tap **Record a payment**.
+2. Enter the **Amount**.
+3. Tap how you paid: **Bank transfer**, **Cash**, **PayPal**, **TWINT**, **Card**, **Wero**, **Lydia**, **Wise** or **Other**. Tap it again to clear it.
+4. Check **Payment date** and **Applies to**, the month this payment settles.
+5. Add a **Note (optional)**, then tap **Submit for confirmation**.
+
+**Good to know**
+
+- Your payment is not final when you send it. It waits as "pending validation" until the people the workspace has chosen confirm it, as set in [Validation rules](help:user.validation.overview). Only then does it settle your balance.
+- Your payment date cannot be in the future. **Applies to** can reach one month ahead, to pay in advance.
+
+**See also:** [Pay what you owe](help:user.money.payments) · [Finance alerts](help:user.money.alerts)
+
+### Your invoices
+
+**Audience:** Member
+
+You want to find an invoice, see whether it is paid and get its PDF.
+
+![](assets/help/images/user-money-invoices.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money) and choose **Invoices**.
+2. Read the list, newest first. Each row shows the number, a status chip, the month, the date and the amount.
+3. Tap an invoice to open it.
+4. Tap **Quick view** to read it on screen, **Download PDF** to save it or **Share PDF** to send it.
+
+![](assets/help/images/user-money-invoices-detail.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The statuses are **Open**, **Awaiting validation**, **Paid**, **Partially paid**, **Partially paid · remainder cancelled** and **Refunded**. An open invoice says when it is due or how many days it is overdue, and how many reminders you have received.
+- Tap the payment icon on an open invoice to go to **Payments**.
+- If the list is empty, the workspace has not invoiced you yet; it invoices a month once it closes.
+- Invoices cannot be edited. A wrong invoice is marked **Erroneous** and replaced by a new one, and the erroneous one leaves your list. When invoices are regrouped into one, the regrouped invoice replaces them in your list.
+
+**See also:** [Pay what you owe](help:user.money.payments) · [Your finances across spaces](help:user.money.finances)
+
+### What each booking cost
+
+**Audience:** Member · Administrator
+
+You want to see, booking by booking, what was billed this month.
+
+![](assets/help/images/user-money-usage.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money) and choose **Usage**.
+2. Pick the month with the arrows.
+3. Read each card: the day, the time, the place, then **Booked**, **Present** and **Billed**.
+4. For a booking you left early, tap **Bill the time I was here**, add a reason if you like and tap **Ask**.
+5. For a summary of the month, tap **Month consumption report**.
+
+**Good to know**
+
+- A booking nobody checked in to is billed in full, and the card says so.
+- Your request is never decided by you: someone else accepts or refuses it. A corrected row keeps showing what it used to be.
+- Administrators can ask to **Remove this record**.
+
+**See also:** [Reports](help:user.money.reports) · [The booking sheet](help:user.reservations.booking-sheet)
+
+### Finance alerts
+
+**Audience:** Member · Administrator
+
+You want to see what is waiting on you in money matters, without reading the whole feed.
+
+![](assets/help/images/user-money-alerts.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money).
+2. Tap **Finance alerts**, the row at the top. The number on the bell is how many are waiting.
+3. Read the list: the requests you must confirm come first, then the money events.
+
+**Good to know**
+
+- This is the usual alerts view of [Events](app:/events), already filtered on money.
+- Payments, expenses and extra half-days you submitted appear here while they wait for confirmation, and show who validated or declined them.
+- The row appears when the **Events tab** feature is on.
+
+**See also:** [Approve or decline an expense](help:user.money.expense.approve)
+
+### Reports: quick view, download, share
+
+**Audience:** Member
+
+You want a document about your own money, to read, keep or send to your accountant.
+
+![](assets/help/images/user-money-reports.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money) and choose **Documents**.
+2. Pick the month with the arrows, for the reports that depend on a month.
+3. Tap a report: **My conditions**, **Payments report**, **Consumption report** or **This month's statement (PDF)**.
+4. Choose **Quick view**, **Download PDF** or **Share PDF**.
+
+![](assets/help/images/user-money-reports-actions.en.b8fa17aa9.jpg)
+
+**Good to know**
+
+- The same three choices appear on every report and every invoice.
+- **Quick view** shows the document on screen without saving anything.
+- A report you cannot see is not switched on in your workspace.
+
+**See also:** [Your invoices](help:user.money.invoices) · [Your negotiated prices](help:user.money.negotiation)
+
+### Your negotiated prices
+
+**Audience:** Member
+
+You want to know whether you pay the workspace tariff or a price agreed just for you.
+
+![](assets/help/images/user-money-negotiation--card.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money) and choose **Documents**.
+2. Read **My negotiated prices**: for **Monthly fee**, **Overage per half-day** and **Discount on supplements**, **Tariff** shows what everyone pays and **Mine** what you pay.
+3. Tap **Who can see this** to learn who can read your prices.
+
+**Good to know**
+
+- "You are on the workspace tariff" means no deal applies; your column shows a dash.
+- When a deal applies, the card says since which month, and the tariff figure is crossed out.
+- A deal proposed for you waits as "awaiting validation" and applies only once validated.
+- You cannot change a deal here; an administrator proposes it. See [Price negotiation](help:user.members.negotiation).
+
+**See also:** [Read your statement](help:user.money.statement)
+
+### Open a document from the library
+
+**Audience:** Member
+
+You want the statutes, a guide or the statements your workspace has shared.
+
+**Steps**
+
+1. Open [Money](app:/money), choose **Documents** and tap **Document library**, or go straight to [Documents](app:/documents).
+2. Find your document under its category: **Statutes & legal**, **Financial statements**, **Meeting minutes**, **Guides & manuals** or **Other documents**.
+3. Tap it. It opens in your browser from wherever it is stored.
+
+**Good to know**
+
+- You only see the documents your role may read; a lock marks those limited to **Admins and owners** or **Owners only**.
+- The library holds links. Who may open the file is decided where it is stored, not in DesKilo.
+- Administrators with the right permission add and remove documents; see [Document title](help:user.documents.title).
+
+**See also:** [Reports](help:user.money.reports)
+
+### Submit an expense
+
+**Audience:** Member
+
+You paid something for the space and you want the workspace to reimburse you.
+
+![](assets/help/images/user-money-expense.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money), choose **Payments** and tap **Submit an expense**.
+2. Enter the **Amount**.
+3. Pick a **Category**: **Coffee & kitchen**, **Equipment**, **Supplies** or **Other**.
+4. Write a **Description**.
+5. If you bought something members will use, turn on **This is a supply for the space** (it appears when your workspace has **Supplies from expenses** switched on) and fill in the item, the quantity and the unit price.
+6. Tap **Submit for confirmation**.
+
+**Good to know**
+
+- You see "Expense submitted — waiting for approval". The expense counts only once it is confirmed.
+- A confirmed supply goes on the shelf as a service: members who use it pay for it.
+- Recurring costs have their own door, **Scheduled expenses**, next to this button.
+
+**See also:** [Approve or decline an expense](help:user.money.expense.approve)
+
+### Approve or decline an expense
+
+**Audience:** Administrator · Owner
+
+An expense is waiting and you decide whether the workspace pays it.
+
+![](assets/help/images/user-money-expense-approve.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Events](app:/events), or tap **Finance alerts** in [Money](app:/money).
+2. Look under **Waiting for your confirmation** for the line naming the amount and the member.
+3. Tap **Accept** to confirm it, or the cross to **Decline** it.
+
+**Good to know**
+
+- Some expenses need more than one validation. The line shows how many are done, such as "1/2 validations".
+- Who may validate, and how many are required, is set in [Validation rules](help:user.validation.overview).
+- Each decision stays on the line: who confirmed or declined, and when. The member sees the outcome.
+- **Finance alerts** in Money appears when the **Events tab** feature is on.
+
+**See also:** [Finance alerts](help:user.money.alerts)
+
+### How amounts are shown
+
+**Audience:** Everyone
+
+You want to read a figure without second-guessing what it includes.
+
+**Good to know**
+
+- Amounts use your workspace's currency and your number format. An invoice keeps the currency it was issued in.
+- On the statement, charges carry a minus sign and payments and credits a plus. A balance in red is money you owe.
+- Where a price includes VAT it says so, for example "incl. VAT 20 %". The invoice PDF lists the VAT it contains.
+- If your workspace does not charge VAT, no VAT is shown.
+- Days are shown in whole and half days.
+
+**See also:** [Read your statement](help:user.money.statement) · [Your invoices](help:user.money.invoices)
+
+### Your finances across spaces
+
+**Audience:** Member
+
+You belong to several spaces and want all your invoices, payments and reminders in one place.
+
+**Steps**
+
+1. Open [Money](app:/money), choose **Payments** or **Invoices**, and tap **Open for** your space on the card **Your finances across spaces**.
+2. Choose a tab: **Outstanding**, **Paid**, **Payments** or **Reminders**.
+3. If you belong to several spaces, filter by space at the top.
+
+**Good to know**
+
+- **Outstanding** shows "Nothing to pay — you are up to date" when you owe nothing.
+- **Reminders** lists the reminders you have received, with their level.
+- Full history, usage and other servers are reachable from the same screen.
+
+**See also:** [Your invoices](help:user.money.invoices)
+
+### Invoicing at a glance
+
+**Audience:** Billing administrator · Owner
+
+You issue and chase the invoices of the whole workspace and want to know where to start.
+
+![](assets/help/images/user-money-invoicing.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Invoicing](app:/invoices).
+2. Read the tabs: **To invoice** lists members still to be invoiced for the month, **Open** the invoices issued and unpaid, and **Archive** those that are closed.
+3. Read the line of four steps under the banner: **To issue**, **To collect**, **To confirm** and **Closed**, with a count for each.
+4. Tap **Month-close wizard** to invoice a month, or **New invoice** for a single one.
+5. Tap the tools icon for the invoice register, reminder rules, the invoice PDF template and **My finances**.
+
+**Good to know**
+
+- Invoices are never edited or deleted. A wrong one is marked erroneous and replaced.
+- The full workflow, from month-close to settlement and reminders, is in chapter 08: [Reminder rules](help:user.money.reminders.rules) and [The invoice PDF template](help:user.money.reports.invoice-template) are good places to continue.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules)
+
+## Your space, set up by you (Workspace settings)
+
+This chapter is for the people who run a space: owners, co-owners and the administrators they trust with the settings. Here you draw the floors, decide who may come in and when, choose which features exist, give the space its look and its words, and take a copy of everything.
+
+In this chapter:
+- [Draw your floors, rooms and desks](help:user.space.editor.levels)
+- [Invite people with the workspace ID](help:user.workspace.code)
+- [Say when the space is open](help:user.workspace.availability.open-weekdays)
+- [Switch features on and off](help:user.features.processes)
+- [Fill in the workspace settings](help:user.workspace.settings.country)
+- [Give the space its colours and words](help:user.workspace.settings.wording)
+- [Decide who may do what](help:user.roles.matrix)
+- [Run a wall tablet and badges](help:user.kiosk.mode)
+- [Keep a library of documents](help:user.documents.add)
+- [Export and import the space](help:user.workspace.export.space-xml)
+
+> **Tip** Most screens in this chapter sit in the menu under **Workspace**, **Availability**, **Features** and **Roles**. Each entry only appears for people who hold the permission it needs, and some only while their feature is switched on. An administrator sees these screens only if the owner has given them the permission in the role matrix.
+
+### Space editor: add, rename and delete floors
+
+**Audience:** Owner · Administrator
+
+You want to give the building its floors, in the order people expect them. The **Workspace editor** lists every floor of the space.
+
+![](assets/help/images/user-space-editor-levels.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace editor](app:/editor), or tap **Edit workspace** on the Reserve screen.
+2. Tap **Add level**, type the name and tap **Save**.
+3. Drag the handle at the left of a floor to change the order.
+4. Tap the three dots (**Level actions**) to **Rename** or **Delete** a floor.
+5. Tap a floor to draw on it.
+
+**Good to know**
+
+- Deleting a floor removes every office, desk and seat on it. The confirmation says what becomes of bookings that point at them.
+- The line under each floor tells you whether it is **Bookable as a whole** or **Not bookable as a whole**.
+- Without any floor the editor says **No levels yet. Add the first floor of your workspace.**
+
+**See also:** [Book a whole floor](help:user.space.editor.level-booking) · [Draw rooms, desks and seats](help:user.space.editor.rooms)
+
+### Let members book a whole floor
+
+**Audience:** Owner · Administrator
+
+You want one team to be able to take a complete floor for a day.
+
+![](assets/help/images/user-space-editor-level-booking.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In the [Workspace editor](app:/editor), tap the layers button on the floor's row.
+2. Switch on **Bookable as a whole**.
+3. Type the **Price per half-day**.
+4. Tap **Save**.
+
+**Good to know**
+
+- The layers button is filled when the floor is bookable as a whole.
+- Booking a whole floor, office or desk also needs the **Desk, office & level reservations** feature. Each member needs the level-reservation right; administrators have it automatically. See [A feature switch](help:user.features.switch).
+
+**See also:** [Office and desk properties](help:user.space.editor.office)
+
+### Draw rooms, desks and seats
+
+**Audience:** Owner · Administrator
+
+You want the plan on screen to look like the real floor. Everything sits inside a room: you draw a room, put desks in it, then put seats on the desks.
+
+![](assets/help/images/user-space-editor-rooms.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open a floor from the [Workspace editor](app:/editor). An empty floor offers **Draw the first room**.
+2. Tap **Office** and drag on the grid to draw a room.
+3. Tap **Desk** and drag inside the room to draw a desk.
+4. Tap **Seat**, then tap a desk to add a seat to it.
+5. Tap **Image**, then tap where an illustration should go.
+6. Tap an element to select it. The bar at the bottom offers **Duplicate**, **Properties** and **Delete**.
+
+**Good to know**
+
+- Tapping the armed tool a second time puts it down again, and the canvas goes back to selecting.
+- The app refuses a shape that is **Overlaps an existing element.** or **Must be fully inside an office.** Seats can only be placed on a desk, and a desk that is full says **No room left on this desk.**
+- The picture button at the top right sets, replaces or removes the **Background image** of the floor, for example a scan of the real plan.
+- Deleting a room takes its desks and seats with it.
+
+**See also:** [Seat properties](help:user.space.editor.seat) · [Desk transparency](help:user.workspace.settings.desk-transparency)
+
+### Name an office or a desk and put a price on it
+
+**Audience:** Owner · Administrator
+
+You want a room or a desk to carry its own name, and to be bookable in one piece.
+
+![](assets/help/images/user-space-editor-office.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Select the office or the desk on the floor and tap **Properties**.
+2. Change **Office name** (or **Desk name**).
+3. Switch on **Bookable as a whole** if somebody may reserve it entire, with everything inside it.
+4. Type the **Price per half-day** that appears.
+5. Tap **Save**.
+
+**Good to know**
+
+- The price field only appears while the switch is on.
+- A room that is bookable as a whole can only be reserved while nothing inside it is booked.
+
+**See also:** [Book a whole floor](help:user.space.editor.level-booking) · [Seat properties](help:user.space.editor.seat)
+
+### Set up a seat
+
+**Audience:** Owner · Administrator
+
+You want a seat to say which way the chair faces, what comes with it and when it is out of service.
+
+![](assets/help/images/user-space-editor-seat.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Select the seat on the floor and tap **Properties**.
+2. Change **Seat name**.
+3. Pick the **Sitting direction**: the arrow shows which way the chair faces on the plan.
+4. Choose a **Chair type**.
+5. Tap the **Accessories** that belong to this seat. A price shown beside one is a supplement per half-day.
+6. If the seat carries a tag, type its number into **NFC/RFID tag**, or use **Read a tag now**. The tag field appears when the **NFC/RFID chair tags** feature is on, and reading needs a device that can read tags.
+7. Switch on **Blocked (maintenance)** to take the seat out of service, then tap **Save**.
+
+**Good to know**
+
+- A tag number can only belong to one chair: **This tag is already linked to another chair.**
+- With no accessory yet, the sheet offers **No accessories yet — set them up**.
+
+**See also:** [NFC badge check-in](help:user.badges.nfc)
+
+### The workspace ID
+
+**Audience:** Owner · Administrator
+
+You want people to find your space and ask to join. The **Workspace ID & QR** screen shows the member invite: a QR code and the ID behind it.
+
+![](assets/help/images/user-workspace-code.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace ID & QR](app:/workspace-code). The **Member invite** tab is shown.
+2. Tap **Copy ID** to paste the ID anywhere, or **Share as PNG** to print or post the QR code.
+3. To choose an ID people can remember, tap **Change workspace ID**, type 4 to 20 letters or digits and tap **Save**.
+
+**Good to know**
+
+- The ID is unique across DesKilo. If it is taken, or not 4 to 20 letters or digits, the app says **That ID was rejected**.
+- Anyone who scans the code or types the ID asks to join as a member. Nobody gets in without approval.
+- Once you change the ID, the old one stops working. Print the QR code again.
+- The **Administrator invite** tab is for owners and co-owners.
+
+**See also:** [Administrator invite](help:user.workspace.code.admin) · [Invite someone](help:user.workspace.code.invite)
+
+### Invite an administrator
+
+**Audience:** Owner
+
+You want to bring in a person who will help run the space. The **Administrator invite** tab gives you a code for exactly one person.
+
+![](assets/help/images/user-workspace-code-admin.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace ID & QR](app:/workspace-code) and tap **Administrator invite**.
+2. Give the code, or its QR, to the person it is meant for.
+3. For the next administrator, tap **New administrator code**.
+
+**Good to know**
+
+- The code admits one person as an administrator, then it expires.
+- There is no owner invite. Only an owner can grant ownership, in **Members & plans**.
+
+**See also:** [The workspace ID](help:user.workspace.code) · [The role matrix](help:user.roles.matrix)
+
+### Invite someone by message
+
+**Audience:** Owner · Administrator
+
+You want to send a friendly, ready-made invitation instead of a bare code.
+
+![](assets/help/images/user-workspace-code-invite.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. On [Workspace ID & QR](app:/workspace-code), tap **Invite someone**.
+2. Fill in **First name (optional)**, **Last name (optional)** and the phone number if you want.
+3. Under **Roles on arrival**, tap any role this person should receive when they join.
+4. Pick the **Message language**.
+5. Send it with **WhatsApp**, **SMS** or **Share…**.
+
+**Good to know**
+
+- The message explains the steps: download, create an account, join. It is written in the language you pick, and starts from the one set as [Workspace language](help:user.workspace.settings.language).
+- Each message carries its own personal code. You can write your own text under [Invitation message](help:user.workspace.settings.invitation-message).
+
+**See also:** [The workspace ID](help:user.workspace.code)
+
+### Open weekdays
+
+**Audience:** Owner · Administrator with the permission
+
+You want the space to be open only on the days you work. The **Availability** screen starts with the days of the week.
+
+![](assets/help/images/user-workspace-availability--open-weekdays.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability).
+2. Under **Open weekdays**, tap a day to open or close it.
+
+**Good to know**
+
+- At least one weekday must stay open.
+- A booking that touches a closed weekday is refused, and the plan draws that day as closed.
+
+**See also:** [Closure days](help:user.workspace.availability.closure-days) · [Granularity](help:user.workspace.availability.granularity)
+
+### Granularity
+
+**Audience:** Owner · Administrator with the permission
+
+You want bookings to follow a rhythm that suits your space: half days, full days, or any time you like.
+
+![](assets/help/images/user-workspace-availability--granularity.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability).
+2. Under **Booking granularity**, choose the shape of a booking.
+
+**Good to know**
+
+- The choices are **Free time period**, **5-minute slots**, **15-minute slots**, **30-minute slots**, **1-hour slots**, **Half days (morning & afternoon)**, **Full days only** and **Real hours (exact from–to, half/full days as shortcuts)**. **Real hours** appears when the **Working hours** feature is on.
+- The plan, the booking sheet, a scanned code and the kiosk all offer only what the granularity allows.
+
+**See also:** [Working hours](help:user.workspace.availability.working-hours)
+
+### Working hours
+
+**Audience:** Owner · Administrator with the permission
+
+You want a morning, an afternoon and a day to mean the same thing everywhere.
+
+![](assets/help/images/user-workspace-availability--working-hours.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability).
+2. Under **Working hours**, tap **Day starts**, **Half-day boundary** and **Day ends** and set each time.
+3. With **Real hours** granularity, also set **Hours billed as a half day** and **Hours billed as a full day**.
+
+**Good to know**
+
+- Half-day and full-day windows in reservations, check-in and invoicing follow these hours.
+- The small tag under the title says whether the hours are the product default, come from a template or are your own. **Reset to template** and **Reset to product default** take them back.
+- The day must run in order: start, then the half-day boundary, then the end.
+- This section is part of the **Working hours** feature.
+
+**See also:** [Outside the opening hours](help:user.workspace.availability.outside-hours)
+
+### Closure days
+
+**Audience:** Owner · Administrator with the permission
+
+You want a holiday, a week in August or a day for the plumber to close the space without anyone booking it.
+
+![](assets/help/images/user-workspace-availability--closure-days.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability) and go to **Closure days**.
+2. Tap **Add closure day**, pick the date and, if you like, a **Reason (optional)**.
+3. To remove one, tap the bin beside it.
+
+**Good to know**
+
+- A booking on a closure day is refused and the reason is shown.
+- Days that are already invoiced cannot be turned into closure days by the public holidays generator.
+
+**See also:** [Public holidays](help:user.workspace.availability.public-holidays)
+
+### Public holidays
+
+**Audience:** Owner · Administrator with the permission
+
+You want a whole year of public holidays as closure days in one go.
+
+**Steps**
+
+1. In [Availability](app:/availability), under **Closure days**, tap **Add public holidays**.
+2. Use the arrows to choose the year. The sheet lists the dates that would become closure days.
+3. Tap the button at the bottom to create them.
+4. Prefer an open-data list? Tap **Import public holidays (open data)**, pick the region and confirm.
+
+**Good to know**
+
+- Nothing is created before you confirm, and days that already exist are marked.
+- Months that are already invoiced are skipped.
+- These entries appear when the **Public holidays** feature is on. **Import public holidays (open data)** also needs the **Import public holidays** feature.
+
+**See also:** [Closure days](help:user.workspace.availability.closure-days)
+
+### Booking policies
+
+**Audience:** Owner · Administrator with the permission
+
+You want to relax or tighten the rules of booking. Whatever you set here holds on every way of booking: the app, a scanned code and the kiosk.
+
+![](assets/help/images/user-workspace-availability--policies.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability) and go to **Booking policies**.
+2. Switch the policies you want on or off.
+3. Under **Outside the opening hours** and **Booking limits**, set the rest.
+
+**Good to know**
+
+- The two switches are off by default.
+- This section is part of the **Booking policies** feature.
+- The line **What the plan tells apart** below it explains the states members see on the plan.
+
+**See also:** [Allow past bookings](help:user.workspace.availability.allow-past) · [Admins may check members out](help:user.workspace.availability.admin-checkout) · [Booking limits](help:user.workspace.availability.limits)
+
+### Allow past bookings
+
+**Audience:** Owner · Administrator with the permission
+
+You want members to record a booking after the fact, for a space that notes attendance later.
+
+**Steps**
+
+1. In [Availability](app:/availability), under **Booking policies**, switch on **Allow past bookings**.
+
+**Good to know**
+
+- Off, a booking that already ended on an earlier day is refused.
+- Booking an earlier window on the same day is always allowed.
+
+**See also:** [Booking policies](help:user.workspace.availability.policies)
+
+### Administrators may check out
+
+**Audience:** Owner · Administrator with the permission
+
+You want staff to close the room in the evening and end the check-ins people forgot.
+
+**Steps**
+
+1. In [Availability](app:/availability), under **Booking policies**, switch on **Admins may check members out**.
+
+**Good to know**
+
+- Off, check-out is strictly personal.
+- With it on, an administrator can end a member's running check-in.
+
+**See also:** [Booking policies](help:user.workspace.availability.policies)
+
+### Outside the opening hours
+
+**Audience:** Owner · Administrator with the permission
+
+You want to say what happens when somebody arrives early or stays late. One answer applies to every granularity.
+
+![](assets/help/images/user-workspace-availability--outside-hours.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Availability](app:/availability), find **Outside the opening hours**.
+2. Choose **Off**, **Spontaneous only**, **Free** or **Charged**.
+
+**Good to know**
+
+- **Off**: nothing outside the hours, no booking ahead, no walk-up.
+- **Spontaneous only**: walk-up check-ins stay possible, evening overtime included, but booking ahead outside the hours is refused.
+- **Free**: allowed, never counted and never charged.
+- **Charged**: allowed and counted like ordinary usage, except on a day when the member already holds a regular booking.
+- A booking that touches the working hours is an ordinary booking.
+
+**See also:** [Working hours](help:user.workspace.availability.working-hours)
+
+### Booking limits
+
+**Audience:** Owner · Administrator with the permission
+
+You want to say how far ahead people may book, how short or long a booking may be, and how many they may hold at once.
+
+![](assets/help/images/user-workspace-availability--limits.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Availability](app:/availability), find **Simultaneous reservations per member** and use the minus and plus buttons.
+2. Under **Booking limits**, set **Advance booking horizon**, **Minimum duration** and **Maximum duration**.
+
+**Good to know**
+
+- **Simultaneous reservations per member** is how many overlapping bookings one member may hold. 1 keeps one place at a time.
+- A booking ends on the day it starts, so a full day is the longest it can be.
+- The minimum cannot exceed the maximum, otherwise no booking would be accepted. The screen warns you.
+- Every refusal names the limit and its value.
+
+**See also:** [Booking policies](help:user.workspace.availability.policies)
+
+### Switch whole processes on or off
+
+**Audience:** Owner · Co-owner
+
+You want a bird's-eye view of what the space can do, and to switch a whole area on at once. The **Features** screen opens on one card per business process.
+
+![](assets/help/images/user-features-processes.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Features](app:/features). The **Processes** view is shown.
+2. Read each card: its state, how many subprocesses are active and how many features are on.
+3. Open a card and tap **Switch on** or **Switch off** for the whole process or one subprocess.
+4. Read the preview, then confirm.
+
+**Good to know**
+
+- A card is **Active** when all its features work, **Partial** when some do, **Available** when none is on yet, and **Needs attention** when a feature is on but waits for a prerequisite that is off.
+- The chips **All**, **Active**, **Available** and **Needs attention** narrow the cards, and **Search processes and features** reaches everything.
+- The preview lists what is switched on, what is **Also needed** from another process and what is already on. Switching something off that other features need is refused until you choose what happens to them.
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### A feature switch
+
+**Audience:** Owner · Co-owner
+
+You want to turn one single feature on or off.
+
+![](assets/help/images/user-features-switches.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Features](app:/features) and tap **Switches**.
+2. Find the feature with **Search features**, or narrow the list with **Changed** or **Maturity**.
+3. Flip its switch.
+
+**Good to know**
+
+- Switch a feature on and every part of it appears: the tab, the button, the link. Switch it off and none remains, even a saved link.
+- A feature that needs another sits under it with **Requires…** and says **Waiting on the feature above** while the parent is off. Its own choice is kept.
+- Switching a feature on can also switch on what it needs. The app tells you.
+- A feature not yet reviewed as stable asks you to confirm first: it may change and has known limits.
+- Something already done stays done. An invoice issued while a feature was on keeps what it says.
+
+**See also:** [Switch whole processes on or off](help:user.features.processes)
+
+### Country
+
+**Audience:** Owner · Administrator with the permission
+
+You want the space to know where it is established. **Workspace** opens on **General details**.
+
+![](assets/help/images/user-workspace-settings--country.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings).
+2. Under **General details**, pick the **Country**.
+3. Tap **Save** at the bottom.
+
+**Good to know**
+
+- The country proposes the currency and the time zone, and decides which VAT rates are offered.
+- **Save** writes the whole form together. If someone changed these settings meanwhile, nothing is saved and what you typed stays on screen.
+
+**See also:** [Currency and time zone](help:user.workspace.settings.currency-timezone)
+
+### Currency and time zone
+
+**Audience:** Owner · Administrator with the permission
+
+You want prices and days to be counted the way your space counts them.
+
+![](assets/help/images/user-workspace-settings--currency-timezone.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), under **General details**, pick the **Currency**.
+2. Search for the **Time zone** and choose it.
+3. Tap **Save**.
+
+**Good to know**
+
+- The currency is proposed from the country. You can override it.
+- The time zone is not cosmetic: a working day, a half-day boundary and a closure day are all counted in it, so a member abroad sees the space's day rather than their own.
+
+**See also:** [Country](help:user.workspace.settings.country)
+
+### Workspace language
+
+**Audience:** Owner · Administrator with the permission
+
+You want invitations and documents to speak the language of your community.
+
+![](assets/help/images/user-workspace-settings--language.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), under **General details**, open **Workspace language**.
+2. Pick a language, or **Sender's app language**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Invitations are written in this language by default.
+- It is not your own app language. That one only changes what you see, and lives in your personal settings.
+
+**See also:** [Invitation message](help:user.workspace.settings.invitation-message)
+
+### Letterhead address
+
+**Audience:** Owner · Administrator with the permission
+
+You want your postal address on the paper the space sends out.
+
+![](assets/help/images/user-workspace-settings--address.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), under **General details**, fill in **Workspace address**.
+2. Tap **Save**.
+
+**Good to know**
+
+- It is free text, printed as it is on letters and invoices.
+- The structured address that an e-invoice needs is a separate entry, under the legal identity.
+
+**See also:** [Country](help:user.workspace.settings.country)
+
+### WhatsApp group
+
+**Audience:** Owner · Administrator with the permission
+
+You want members to find your community's WhatsApp group.
+
+![](assets/help/images/user-workspace-settings-community--whatsapp-group.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Community & invitations**.
+2. Paste the group's invite link into **WhatsApp group link**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The link must be a chat.whatsapp.com invite link, otherwise the field says so.
+- Leave it empty to show nothing.
+
+**See also:** [Invitation message](help:user.workspace.settings.invitation-message)
+
+### Invitation message
+
+**Audience:** Owner · Administrator with the permission
+
+You want invitations to sound like you, in every language you use.
+
+![](assets/help/images/user-workspace-settings-community--invitation-message.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Community & invitations**.
+2. Under **Message language**, choose which language's text you are editing.
+3. Write the text. Tap a tag such as {firstName} or {inviteLink} to insert it where the cursor is.
+4. Tap **Save**.
+
+**Good to know**
+
+- Leave the box empty to use the built-in message in that language.
+- The **Message language** row only says which draft is on screen. It is not saved, and it opens on the workspace language each time.
+- The tags are filled in when you send an invitation. The code and the link come from the app, so do not paste them yourself.
+
+**See also:** [Invite someone by message](help:user.workspace.code.invite)
+
+### Start new members the same way
+
+**Audience:** Owner · Administrator with the permission
+
+You want everyone who joins to begin with the same subscription and the same rule for when their days run out.
+
+![](assets/help/images/user-workspace-settings-members--defaults.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **New members**.
+2. Set the **Subscription** percentage with the minus and plus buttons.
+3. Choose **Blocked once used up**, **Pay as you go** or **Must buy a package**.
+4. Tap **Save**.
+
+**Good to know**
+
+- Until you choose, new members start at 100% with bookings blocked once the entitlement is used.
+- A member's own subscription is set later, on the member's page.
+
+**See also:** [A member's subscription](help:user.members.subscription)
+
+### Wording
+
+**Audience:** Owner · Administrator with the permission
+
+You want the app to use your words: another name for a seat, for a status on the plan, for a tab.
+
+![](assets/help/images/user-workspace-settings-wording.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Appearance & wording** and tap **Wording**.
+2. Find a word with **Search a word**, or tap **Changed only** to see what you renamed.
+3. Tap the pencil beside it and type your word, per language.
+
+**Good to know**
+
+- The product's word stays shown beneath yours, so you see what you replace.
+- **Reset** removes your word instead of copying the product's. The term then follows the product when its wording changes.
+- Terms are grouped by where they appear: **Legend**, **The space**, **Navigation**, **Booking**.
+
+**See also:** [Colours](help:user.workspace.settings.colours)
+
+### Colours
+
+**Audience:** Owner · Administrator with the permission
+
+You want the app to wear your colour. Pick one and the app derives its light and dark themes from it.
+
+![](assets/help/images/user-workspace-settings-colours--colours.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Appearance & wording** and tap **Colours**. The row is there while **Workspace colours** is on in the features.
+2. Tap one of the colours, or type a code such as #0F766E into **Colour**.
+3. Check **What it looks like**, in **Light** and **Dark**.
+4. Tap **Save**. **Product colours** removes yours.
+
+**Good to know**
+
+- The app keeps its own contrast. If a colour would be unreadable somewhere, it is refused and the screen names the pair.
+- Under **Room colours** you can add up to eight colours of your own for the rooms on the plan.
+- The DesKilo mark, the colours of the seat states and the production banner are never restyled.
+
+**See also:** [Pattern](help:user.workspace.settings.pattern) · [Symbol and emblem](help:user.workspace.settings.branding)
+
+### Pattern
+
+**Audience:** Owner · Administrator with the permission
+
+You want your space easy to tell apart from the others a person belongs to.
+
+![](assets/help/images/user-workspace-settings-colours--pattern.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Colours](app:/settings/colours).
+2. Under **Pattern**, tap **Plain**, **Stripes**, **Dots**, **Grid** or **Waves**.
+
+**Good to know**
+
+- The pattern draws your colour on this space's card in Me, on its chip and while the space opens.
+- It saves as soon as you tap it.
+
+**See also:** [Colours](help:user.workspace.settings.colours)
+
+### Symbol and emblem
+
+**Audience:** Owner · Administrator with the permission
+
+You want a small mark that stands for the space: letters on a colour, or your own logo.
+
+![](assets/help/images/user-workspace-settings-colours--branding.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Colours](app:/settings/colours) and go to **Symbol**.
+2. Type one or two **Letters**, pick a colour and tap **Save**.
+3. Under **Emblem**, tap **Choose an image** to add your logo. **Remove** takes it away.
+
+**Good to know**
+
+- Letters on a colour are unique to a workspace. If another space already has the same, the app asks you to change the colour or the letters.
+- The emblem is shown beneath the app's name in the menu, and while someone opens this space. It is redrawn at most 512 pixels wide, and the photo's own details, such as where it was taken, are not kept.
+- The emblem never replaces the DesKilo logo.
+
+**See also:** [Colours](help:user.workspace.settings.colours)
+
+### Desk transparency
+
+**Audience:** Owner · Administrator with the permission
+
+You drew the plan over a photograph and want the room to show through the furniture.
+
+![](assets/help/images/user-workspace-settings-appearance--desk-transparency.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Appearance & wording**.
+2. Drag the **Desk transparency** slider. The value shows as **Opacity**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Lower the opacity so a level's background photo shows through the tables.
+- Turn it up to 100% when the places matter more than the room.
+
+**See also:** [Draw rooms, desks and seats](help:user.space.editor.rooms)
+
+### Public workspace page
+
+**Audience:** Owner
+
+You want people outside your space to find it and see what it offers.
+
+![](assets/help/images/user-workspace-settings-public-page.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Public workspace page](app:/settings/public-page), or tap it at the top of **Workspace**.
+2. Switch on **Visible in the public directory**.
+3. Choose the kind of host, and complete **Description**, **Public address**, **Public email**, **Public phone** and **Website**.
+4. Tap **Save and preview the external view**.
+
+**Good to know**
+
+- Fields marked **From workspace information** follow the workspace's own details. **Use workspace information** puts them back after you changed them.
+- **Reset all public data to workspace information** replaces every field that has a workspace counterpart.
+- Administrators can choose for themselves whether they are shown as public administrators.
+
+**See also:** [Discover and the public network](help:user.collaborate.discover)
+
+### The role matrix
+
+**Audience:** Owner · Co-owner
+
+You want to decide which permissions each role holds. **Roles** shows one card per role with a tick for every permission it holds.
+
+![](assets/help/images/user-roles-matrix.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Roles](app:/roles).
+2. On the card of a role, tick or untick a permission such as **Manage roles & permissions**, **Manage members**, **Edit workspace settings** or **Issue invoices & match payments**.
+
+**Good to know**
+
+- Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it and never take anything away.
+- The owner always holds every permission, so that card is locked. A co-owner may hold less.
+- Anyone who may not manage roles sees the matrix read-only, with **Your role** highlighted.
+- A permission is checked by the server in every place, so unticking it removes it everywhere at once.
+- The **Roles** entry shows when the **Role management** feature is on.
+
+**See also:** [Roles this space defines](help:user.roles.space) · [Co-owners](help:user.roles.co-owners)
+
+### Roles this space defines
+
+**Audience:** Owner · Co-owner
+
+You want roles that fit your space, such as a host or an accountant, on top of the basic ones.
+
+![](assets/help/images/user-roles-space.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Roles](app:/roles), tap **The roles this space defines**, or open [Roles this space defines](app:/settings/roles-of-this-space). This screen appears when the **Roles this space defines** feature is on.
+2. Tap **Add a role**.
+3. Give the role a name, then choose **What it adds**.
+4. Tap **Save the role**.
+5. To give it to a member, open the member's page, find **Roles** and tap **Add a role**.
+
+**Good to know**
+
+- Each role adds permissions to what its holders can already do. None takes anything away, and the owner always keeps every permission.
+- A role you no longer want can be put aside with **In use** switched off.
+- The role's key never changes: the people who hold it point at it.
+- Nobody can give a role to themselves. A role that manages roles can only be given by the owner.
+
+**See also:** [The role matrix](help:user.roles.matrix)
+
+### Co-owners
+
+**Audience:** Owner
+
+You want the space to survive if you ever step away.
+
+**Steps**
+
+1. Open [Members & plans](app:/members) and choose the member.
+2. Under **Co-ownership**, choose an active co-owner or a successor.
+3. To hand over now, choose **Promote to owner now**.
+
+**Good to know**
+
+- An active co-owner has the owner's permissions now. A successor, shown as **Successor**, waits and becomes owner when activated or when the owner leaves.
+- If the last owner leaves, the best co-owner becomes owner automatically, active before successor.
+- Co-owners are part of the **Co-owners** feature.
+
+**See also:** [Co-ownership](help:user.members.co-ownership) · [The role matrix](help:user.roles.matrix)
+
+### Kiosk mode: A wall tablet for check-in
+
+**Audience:** Owner · Administrator
+
+You want a tablet by the door where people check in with a badge.
+
+**Steps**
+
+1. Create an account for the tablet, join the workspace with it and, in [Members & plans](app:/members), use **Make kiosk device** on that member.
+2. Make sure **Kiosk mode** is on in [Features](app:/features).
+3. On the tablet, open the app. It asks **Start kiosk mode?**. Tap **Start kiosk mode**.
+4. A member taps a seat, or **This level**, and presents a badge: a card, or a printed QR code.
+
+**Good to know**
+
+- Kiosk mode never starts by itself. **Not now — open the app normally** opens the app as usual, which is handy for setup.
+- In kiosk mode the tablet only shows the plan. To leave it you restart the tablet. To make the account a normal member again, use **Kiosk device** under **Settings** on the device or **Revert kiosk to member** in **Members & plans**.
+- The sheet that opens names the rule it follows. On a closed day the kiosk says **The workspace is closed today** up front.
+- The badge is the confirmation: it identifies the member, carries out the action and the screen clears for the next person. A seat held by someone else shows who holds it and points you to the app.
+- Badges come with their own features, **RFID / NFC badges** and QR badges, both under **Kiosk mode**.
+- A wall tablet cannot be shown here: the kiosk only starts on a device marked as one.
+
+**See also:** [NFC badge check-in](help:user.badges.nfc) · [Space QR codes (PDF)](help:user.workspace.export.space-qr)
+
+### NFC badge check-in
+
+**Audience:** Owner · Administrator
+
+You want members to check in by tapping a card, with no phone.
+
+![](assets/help/images/user-badges-nfc.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [RFID / NFC badges](app:/nfc-config).
+2. Switch on **Enable NFC badge check-in**.
+3. Read the **This device** line: it says whether this device can read cards.
+4. Give each member a card in [Members & plans](app:/members): open the member's badges, tap **Register card**, then hold the card to the back of the device.
+
+**Good to know**
+
+- You need an Android device with NFC. iPads have no NFC, and QR badges still work there.
+- The badge manager also lets you issue a **New badge**, **Revoke** one, and **Save as PDF** for printing. A revoked badge can be deleted for good.
+- **Signs me in** is off by default: a badge that checks you in does not log you in until the member chooses to.
+- Each member can also make their own badge in their personal settings.
+
+**See also:** [A wall tablet for check-in](help:user.kiosk.mode)
+
+### Add a document to the library
+
+**Audience:** Owner · Administrator
+
+You want to gather your statutes, guides, statements and minutes in one place for the members who need them. The library holds links, not files.
+
+![](assets/help/images/user-documents-add.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Documents](app:/documents) and tap the plus button.
+2. Fill in **Title** and **Link (https://…)**.
+3. Choose **Stored on**, **Category** and **Visible to**.
+4. Tap **Save**.
+
+**Good to know**
+
+- The library needs the **Document library** feature, and the permission to manage it.
+- Remove a document with its bin: it asks **Remove document?** first.
+- Members who may open the library see the documents they are allowed to, grouped by category.
+
+**See also:** [Document title](help:user.documents.title) · [Link](help:user.documents.url) · [Visible to](help:user.documents.role)
+
+### Document title
+
+**Audience:** Owner · Administrator
+
+You want members to recognise a document at a glance.
+
+**Steps**
+
+1. In the add-a-document form, type the **Title**.
+
+**Good to know**
+
+- A document needs a title and an https:// link, or **Save** is refused.
+- Write it for the reader, as it is the line they see in the library.
+
+**See also:** [Add a document to the library](help:user.documents.add)
+
+### Link
+
+**Audience:** Owner · Administrator
+
+You want the document to open where it already lives.
+
+**Steps**
+
+1. Paste the share link from your drive into **Link (https://…)**.
+
+**Good to know**
+
+- DesKilo stores the link, not the file. Access rights stay managed where the document is.
+- The link must begin with https://.
+
+**See also:** [Stored on](help:user.documents.provider)
+
+### Stored on
+
+**Audience:** Owner · Administrator
+
+You want members to see where the document is kept.
+
+**Steps**
+
+1. Choose **Stored on**: Google Drive, OneDrive, SharePoint, Dropbox, Nextcloud or **Link**.
+
+**Good to know**
+
+- It is a label with an icon. Nothing is fetched for you.
+
+**See also:** [Link](help:user.documents.url)
+
+### Category
+
+**Audience:** Owner · Administrator
+
+You want the library to read like a tidy shelf.
+
+**Steps**
+
+1. Choose a **Category**: **Statutes & legal**, **Guides & manuals**, **Financial statements**, **Meeting minutes** or **Other documents**.
+
+**Good to know**
+
+- The library groups documents under these headings, and only shows a heading that has a document.
+
+**See also:** [Visible to](help:user.documents.role)
+
+### Visible to
+
+**Audience:** Owner · Administrator
+
+You want some documents for everyone and some for the board only.
+
+**Steps**
+
+1. Choose **Visible to**: **Every member**, **Admins and owners** or **Owners only**.
+
+**Good to know**
+
+- The server enforces it. A member who may not see a document does not receive it at all.
+
+**See also:** [Add a document to the library](help:user.documents.add)
+
+### Export the space (XML)
+
+**Audience:** Owner · Administrator with the permission
+
+You want a file with the floor plan and settings, to keep as a backup, to reuse or to move to another space.
+
+![](assets/help/images/user-workspace-settings-tools--tools.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings) and go to **Templates & data**.
+2. Tap **Export workspace (XML)**.
+
+**Good to know**
+
+- It carries settings and the floor plan. It never holds members, bookings or money data, nor the invite code or payment credentials.
+- With **Configuration in the space file** on, the file also carries tariffs, VAT rates, rules, roles and more.
+- The file is saved on your device.
+
+**See also:** [Import the space (XML)](help:user.workspace.export.space-import)
+
+### Import the space (XML)
+
+**Audience:** Owner · Administrator with the permission
+
+You want to apply an exported file to a space.
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), under **Templates & data**, tap **Import workspace (XML)**.
+2. Choose the file and read the preview: levels, offices, desks, seats and configuration.
+3. Tap **Replace and import**.
+
+**Good to know**
+
+- It replaces the current floor plan and overwrites the settings. This cannot be undone.
+- Once a space has bookings, only the configuration is applied. The floor plan is kept, and the app says so.
+- A file that is not readable, or not from DesKilo, is refused with a clear message.
+
+**See also:** [Export the space (XML)](help:user.workspace.export.space-xml)
+
+### Export the configuration (PDF)
+
+**Audience:** Owner · Administrator with the permission
+
+You want a document of every parameter, to read, sign or give to an accountant.
+
+![](assets/help/images/user-workspace-export-reports.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Reports](app:/reports?section=documents) and choose **Workspace documents**.
+2. Tap **Export configuration (PDF)**.
+
+**Good to know**
+
+- It is a complete snapshot of settings, members and the floor plan. It is a record, not a backup: only the XML can be imported back.
+
+**See also:** [Export the space (XML)](help:user.workspace.export.space-xml)
+
+### Workspace report
+
+**Audience:** Owner · Administrator with the permission
+
+You want the space as a document: its places, prices and rules.
+
+**Steps**
+
+1. Open [Reports](app:/reports?section=documents) and choose **Workspace documents**.
+2. Tap **Workspace report**.
+
+**Good to know**
+
+- It is made by the report editor's workspace template, so its look follows the design you chose.
+
+**See also:** [Export the configuration (PDF)](help:user.workspace.export.config-pdf)
+
+### Space QR codes (PDF)
+
+**Audience:** Owner · Administrator with the permission
+
+You want a QR card on every seat, desk, office and floor, so people book or check in by scanning it.
+
+**Steps**
+
+1. Open [Reports](app:/reports?section=documents) and choose **Workspace documents**.
+2. Tap **Space QR codes (PDF)**.
+3. Choose **Card size**, **QR code size** and the **Information on the card**, then tap **Save**.
+4. Print, cut and stick each card on its place.
+
+**Good to know**
+
+- It needs the **Space QR codes** feature.
+- Scanning a card opens the same sheet the kiosk shows.
+
+**See also:** [A wall tablet for check-in](help:user.kiosk.mode)
+
+### Export the data (Excel)
+
+**Audience:** Owner · Administrator with the permission
+
+You want your figures in a spreadsheet for your own analysis.
+
+**Steps**
+
+1. Open [Reports](app:/reports?section=documents) and choose **Workspace documents**.
+2. Tap **Export data (Excel)**.
+
+**Good to know**
+
+- It arrives as one ZIP: a workbook with a tab for bookings, payments, invoices, members and the floor plan, a manifest that counts the rows, and the space's stored files.
+- It needs the **Data export (Excel)** feature and the permission to export data. It is an export only: nothing reads it back.
+
+**See also:** [Export the space (XML)](help:user.workspace.export.space-xml)
+
+### Sites
+
+**Audience:** Owner · Administrator
+
+You run more than one address, and want each level and member to belong to the right one.
+
+**Steps**
+
+1. Switch on **Sites** in [Features](app:/features).
+2. Open [Sites](app:/settings/sites) and tap **Add a site**.
+3. Fill in **Site name**, **Street**, **Post code**, **City** and the levels that belong to it.
+
+**Good to know**
+
+- The default site carries the workspace's address. A member's home site is the address on their documents.
+- **Delete this site** sends its levels and members back to the default site.
+- A site that is its own legal entity can carry its own registration and VAT number.
+
+## Members, plans and billing
+
+This chapter is for owners and billing administrators. It follows the money from the person to the price list: who is in your space and on which plan, how each plan is priced, what else you sell, how members pay you, and the costs you pay yourself.
+
+In this chapter:
+- [Members & plans](help:user.members.list): the list, the member page and everything you can set for one person
+- [Billing](help:user.money.billing.fee-bands): fee bands, subscription levels, day packages and the invoice schedule
+- [Services and accessories](help:user.money.services.overview): the extras you sell
+- [Payment instructions and online payments](help:user.money.payments.methods): how members pay you
+- [Scheduled expenses](help:user.money.expenses.schedule): costs that come back on their own
+
+### Members & plans
+
+**Audience:** Administrator · Owner
+
+You want to see who is in your space, on which plan, and open anyone to change their settings.
+
+![](assets/help/images/user-members-list.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Members & plans](app:/members) from the menu.
+2. Read each row: the e-mail, the plan share (or **No subscription**), the role, and a status when it is not the usual one: **Pending**, **Paused** or **Exited**.
+3. Tap a row to open that person's [member page](help:user.members.page).
+
+**Good to know**
+
+- A row also shows **max** and **at once** chips when you set a [reservation limit](help:user.members.reservation-limit) or more than one [simultaneous reservation](help:user.members.simultaneous).
+- Depending on the features switched on, the top bar (icon buttons with tooltips) offers **Notify all admins**, **Add a managed profile** and, for owners, **Invite a member** and **Billing**.
+- Administrators reach this screen too; the controls that change money or roles stay with the owner.
+
+**See also:** [Invite a member](help:user.members.invite) · [Billing](help:user.money.billing.fee-bands)
+
+### Invite a member
+
+**Audience:** Owner
+
+You want someone to join your space.
+
+**Steps**
+
+1. In [Members & plans](app:/members), tap **Invite a member**.
+2. Share the workspace ID or its QR code, as described in [The workspace ID](help:user.workspace.code).
+3. When the person asks to join, their row appears as **Pending**. Open it and choose **Approve membership** or **Reject membership**.
+
+**Good to know**
+
+- Rejecting lets you add a short comment.
+- Until you decide, the person has no access to the space.
+
+**See also:** [Pending and paused members](help:user.members.pending) · [Add a managed profile](help:user.members.managed)
+
+### Add a managed profile
+
+**Audience:** Administrator · Owner
+
+Someone has no account yet, but you want to book, invoice and manage for them. You create a profile, run it yourself, and hand it over when the person joins.
+
+![](assets/help/images/user-members-managed.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Members & plans](app:/members), tap **Add a managed profile**.
+2. Fill in the person's identity and save. The member page then carries a **Managed** chip.
+3. To correct the details later, open the member page and choose **Edit identity**.
+4. When the person is ready, choose **Hand over to the person**. It creates a personal code bound to this profile.
+5. Changed your mind before the code was used? Choose **Revoke handover**.
+
+**Good to know**
+
+- Whoever uses the code takes the profile over, with its reservations, invoices and subscription, once you approve the membership.
+- Nobody can send a message to a managed member, because no one would read it.
+- The feature must be switched on in [Features](help:user.features.switch).
+
+**See also:** [The member page](help:user.members.page)
+
+### The member page
+
+**Audience:** Administrator · Owner
+
+You want everything about one person on a single page: who they are, what they booked, how to reach them, what they owe, and every setting you can change.
+
+![](assets/help/images/user-members-page--top.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Tap a member in [Members & plans](app:/members).
+2. Read the top of the page: **Right now** shows the next bookings, then come the contact details and the money position.
+3. Use the buttons under the name for a quick action. Depending on features and your rights you will see some of **Messages**, **E-mail**, **Add a service** or **Send the financial agreement**.
+4. Jump to **Manage** to change the person's settings, grouped as **Membership**, **Booking rules**, **Billing** and **Badges & access**.
+
+**Good to know**
+
+- Every setting row shows its current value, so you rarely need to open it to know the answer.
+- Your own page is shorter: nobody can grant themselves rights.
+- If the page is not switched on for your space, the same actions appear in a list when you tap the row.
+
+**See also:** [The member's actions](help:user.members.actions) · [Roles and co-owners](help:user.roles.matrix)
+
+### The member's actions
+
+**Audience:** Administrator · Owner
+
+You want to know which setting lives where, and who may change it.
+
+![](assets/help/images/user-members-actions--membership.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open a [member page](help:user.members.page) and go to **Manage**.
+2. In **Membership**, choose **Pause membership** or **Reactivate membership**, set [Co-ownership](help:user.members.co-ownership), or **Make kiosk device**.
+3. In **Booking rules**, set the [Reservation limit](help:user.members.reservation-limit), the [Simultaneous reservations](help:user.members.simultaneous) and the [VAT treatment](help:user.members.vat-treatment); the **Whole-space bookings** switch appears when the feature is on.
+4. In **Billing**, set the [Subscription](help:user.members.subscription), [When days run out](help:user.members.overage-policy) and [Price negotiation](help:user.members.negotiation).
+5. In **Badges & access**, open **Badges** to issue or revoke the person's badges.
+
+**Good to know**
+
+- Billing and membership changes belong to the owner. Administrators set the booking limits.
+- You can never change your own limits or co-ownership.
+- Only active members offer most of these rows.
+
+**See also:** [Booking rules](help:user.members.reservation-limit) · [Billing group](help:user.members.subscription)
+
+### Pending and paused members
+
+**Audience:** Administrator · Owner
+
+A newcomer waits for your decision, or a member takes a break, and you want the space to treat them accordingly.
+
+![](assets/help/images/user-members-pending--membership.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member whose row says **Pending**.
+2. Under **Membership**, choose **Approve membership** to let the person in, or **Reject membership** to refuse.
+3. To put an active member on hold, open their page and choose **Pause membership**.
+4. To bring them back, choose **Reactivate membership**.
+
+**Good to know**
+
+- The decision on a new member can also be taken through the validation rules, as described in [Validation rules](help:user.validation.overview).
+- Pausing is for owners and keeps all history.
+- A member who left shows **Exited**, and cannot be paused.
+
+**See also:** [Invite a member](help:user.members.invite)
+
+### A member's subscription
+
+**Audience:** Owner
+
+You want to set which share of the month's days a member is entitled to. The share picks the fee band, and the band sets the monthly price.
+
+![](assets/help/images/user-members-subscription.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Billing** and tap **Subscription**.
+2. Pick **No subscription**, one of the levels you offer, or type a number in **Custom (1–100)**.
+3. Tap a level to apply it, or **Save** for a custom value.
+
+**Good to know**
+
+- The levels offered are the ones you chose in [Subscription levels](help:user.money.billing.levels).
+- As owner you can always type a custom value.
+- **No subscription** is for visitors who buy carnets. It cannot be combined with pay-as-you-go: choose a block or a package first.
+
+**See also:** [Fee bands](help:user.money.billing.fee-bands) · [When days run out](help:user.members.overage-policy)
+
+### When days run out
+
+**Audience:** Owner
+
+You want to decide what happens when a member has used their whole monthly allowance.
+
+![](assets/help/images/user-members-overage-policy.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Billing** and tap **When days run out**.
+2. Choose **Block further booking**, **Charge overage (pay-as-you-go)** or **Require buying a package**.
+
+**Good to know**
+
+- Pay-as-you-go is greyed out for a member without a subscription, because it would let them book for free.
+- The overage price comes from the [fee band](help:user.money.billing.band-overage); the packages come from [Day packages](help:user.money.billing.packages).
+
+**See also:** [A member's subscription](help:user.members.subscription)
+
+### Reservation limit
+
+**Audience:** Administrator · Owner
+
+You want to cap how many open reservations one member can hold in total.
+
+![](assets/help/images/user-members-reservation-limit.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Booking rules** and tap **Reservation limit**.
+2. Tap **No limit**, a preset (1, 2, 3, 5 or 10), or type a number in **Custom (1–100)**.
+3. Tap **Save** for a custom number.
+
+**Good to know**
+
+- It counts all open reservations, whenever they fall. It is a different thing from [simultaneous reservations](help:user.members.simultaneous), which counts overlaps.
+- The list shows **max** and the number beside the member.
+- You cannot set your own limit.
+
+**See also:** [Booking limits](help:user.workspace.availability.limits)
+
+### Simultaneous reservations
+
+**Audience:** Administrator · Owner
+
+You want to allow one member to hold bookings that overlap in time, for example two places at once.
+
+![](assets/help/images/user-members-simultaneous.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Booking rules** and tap **Simultaneous reservations**.
+2. Pick **Workspace default**, or a number: 1, 2, 3 or 5.
+
+**Good to know**
+
+- **Workspace default** follows the number set in [Availability](help:user.workspace.availability.policies); one means one place at a time.
+- It is not the same as the [reservation limit](help:user.members.reservation-limit), which counts all open bookings.
+- You cannot set your own.
+
+**See also:** [Booking policies](help:user.workspace.availability.policies)
+
+### VAT treatment
+
+**Audience:** Administrator · Owner
+
+You want to tell the app who this member is for VAT, so their invoices carry the right tax.
+
+![](assets/help/images/user-members-vat-treatment.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Booking rules** and tap **VAT treatment**.
+2. Pick **Automatic**, **Domestic VAT**, **Reverse charge**, **Outside the EU** or **Exempt buyer**.
+3. For **Exempt buyer**, type the **Exemption reason (printed on the invoice)**.
+4. Tap **Save**.
+
+**Good to know**
+
+- **Automatic** applies the usual rule: reverse charge for a business in another EU state.
+- The same group offers **Customer capacity** (**Business**, **Consumer** or **Not stated**), which decides which payment clauses an invoice prints. It needs the permission to issue invoices.
+- **Reverse charge**, **Outside the EU** and **Exempt buyer** are recorded, but the invoices of such members cannot be issued in the app yet: they are issued outside the app with your accountant.
+- The **VAT by counterparty** feature must be on for the VAT treatment row, which administrators and owners see; the rates are set in [VAT rates](help:user.money.vat.rates).
+
+**See also:** [VAT regime](help:user.money.vat.regime)
+
+### Price negotiation
+
+**Audience:** Billing administrator · Owner
+
+You agreed a price with a member that differs from your tariff, and you want it recorded as a deal rather than typed over the tariff.
+
+![](assets/help/images/user-members-negotiation.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Billing** and tap **Price negotiation**.
+2. Fill only what differs: **Occupation**, **Monthly fee**, **Overage per half-day**, **Discount on supplements**, or a unit price under **Services and packages**.
+3. Add a **Note** if useful.
+4. Tap **Propose for validation**.
+
+**Good to know**
+
+- A field left empty keeps the tariff.
+- The deal waits for validation before it applies, as described in [Validation rules](help:user.validation.overview).
+- Once active, the member sees it on their money page, with **Who can see this**. People who may only view negotiations see it as **Read only**.
+
+**See also:** [Fee bands](help:user.money.billing.fee-bands)
+
+### Co-ownership
+
+**Audience:** Owner
+
+You want someone to share ownership with you, or to take over if you leave.
+
+![](assets/help/images/user-members-co-ownership.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the member page, go to **Membership** and tap **Co-ownership**.
+2. Choose **No co-ownership**, **Active co-owner**, or **Successor**.
+3. To make a co-owner a full owner right away, choose **Promote to owner now**.
+
+**Good to know**
+
+- An active co-owner has owner permissions now, and takes over automatically if you leave.
+- A successor becomes owner when promoted or when the owner leaves.
+- The row shows **Co-owner** or **Successor** in the members list.
+- It needs the **Co-owners** feature to be on, and you cannot change your own co-ownership.
+
+**See also:** [The role matrix](help:user.roles.matrix)
+
+### Fee bands
+
+**Audience:** Owner · Billing administrator
+
+You want to price your plans: what a month costs for each share of the days, and what an extra half-day costs.
+
+![](assets/help/images/user-money-billing-fee-bands--bands.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Billing](app:/billing) from the menu.
+2. Under **Fee bands**, set **To %**, **Monthly fee** and **Overage** on each row.
+3. Tap **Add band** to split the last band, or the minus icon to remove one.
+4. Choose the **VAT rate** the tariff is taxed at. It is saved as soon as you pick it.
+5. Tap **Save** to store the bands.
+
+**Good to know**
+
+- Each row starts where the previous one ends, and the last one always ends at 100%. If the bands do not add up, the screen says "Bands must increase and end at 100%."
+- Prices are gross: VAT is included, when your space charges it.
+- Removing a band merges its range into the one before.
+
+**See also:** [A member's subscription](help:user.members.subscription) · [Subscription levels](help:user.money.billing.levels)
+
+#### Up to %
+
+The top of the band, from 1 to 100. The next band starts where this one ends, so a percentage always falls into exactly one band. The last band is fixed at 100.
+
+#### Monthly fee
+
+What a month in this band costs. When you charge VAT the row shows the VAT share included.
+
+#### Overage
+
+The price of one half-day beyond the allowance, for members whose policy is pay-as-you-go.
+
+### Subscription levels
+
+**Audience:** Owner · Billing administrator
+
+You want to choose which percentages you offer when you give someone a plan.
+
+![](assets/help/images/user-money-billing-fee-bands--levels.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Billing](app:/billing), find **Subscription levels**.
+2. Tap a preset (25%, 50%, 75%, 100%) to switch it on or off.
+3. To add your own, type a number in **Level (1–100)** and tap **Add level**.
+4. Tap **Save**.
+
+**Good to know**
+
+- The levels you pick are the ones offered in a member's [Subscription](help:user.members.subscription).
+- Remove a level you added with the cross on its chip.
+
+**See also:** [Fee bands](help:user.money.billing.fee-bands)
+
+#### Level value
+
+One percentage from 1 to 100: the share of the month's days that the plan includes.
+
+#### Allow a negotiated value
+
+The switch **Allow negotiated custom value** is saved with the levels. As owner you can always type a custom percentage in a member's **Subscription**, whatever this switch says.
+
+### Day packages
+
+**Audience:** Owner · Billing administrator
+
+You want to sell blocks of days to members who run out of their allowance.
+
+![](assets/help/images/user-money-billing-fee-bands--packages.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Billing](app:/billing), find **Day packages**. Each row shows the days, the price and a switch.
+2. Switch a package off to stop selling it, or on to sell it again.
+3. To create a package, follow [New package](help:user.money.billing.package-new).
+
+**Good to know**
+
+- Members whose policy is **Require buying a package** buy these when their days run out.
+- A package that has been sold keeps its price, days and rate. To change them, switch it off and add a new one.
+
+**See also:** [When days run out](help:user.members.overage-policy)
+
+### New package
+
+**Audience:** Owner · Billing administrator
+
+You want to add a block of days to your price list.
+
+![](assets/help/images/user-money-billing-fee-bands--new.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Billing](app:/billing), under **New package**, type the name, the days and the price.
+2. Choose its **VAT rate**.
+3. Tap **Add package**.
+
+**Good to know**
+
+- The package is for sale as soon as it appears, switched on.
+- Where the carnets feature is on, a **Carnets** editor sits below.
+
+**See also:** [Day packages](help:user.money.billing.packages)
+
+#### Package name
+
+What members see when they buy, and what the invoice line says.
+
+#### Package days
+
+How many days the package grants, one or more.
+
+#### Package price
+
+The price of the whole package, gross. The row shows the days, the price and, when VAT applies, the VAT included.
+
+### Invoice schedule
+
+**Audience:** Owner · Billing administrator
+
+You want to choose when the two automatic invoices go out: the subscription before the month, and the month's consumption after it.
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings) and the **Payments & billing** group.
+2. Tap **Invoice schedule**.
+3. Under **Subscription, in advance**, switch **Issue automatically** on or off and pick **Days before the month starts**. The line below tells you the resulting date.
+4. Under **The month just finished**, switch **Issue automatically** on or off. Switch on **Also when there is nothing to pay** to send a document reading zero.
+5. Tap **Save**.
+
+**Good to know**
+
+- Each half needs its feature switched on in [Features](help:user.features.switch): "Subscription invoices" and "End-of-month invoices".
+- The subscription invoice can therefore name a month that has not started yet.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules) · [Fee bands](help:user.money.billing.fee-bands)
+
+### A service
+
+**Audience:** Owner · Billing administrator
+
+You sell something that is not a seat: a locker, printing, coffee. You list it once and add it to a member's month in a tap.
+
+![](assets/help/images/user-money-services-overview.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Services](app:/services) from the menu.
+2. Tap a service to edit it, or the plus button to create **New service**.
+3. Fill in the [Name](help:user.money.services.name), the [Price](help:user.money.services.price) and, when you charge VAT, the **VAT rate**.
+4. Tap **Save**.
+
+**Good to know**
+
+- A service is never deleted, only deactivated, because invoices refer to it.
+- A service that comes from a stock shows how many are left, or **Out of stock**.
+- To record one for a member, use **Add a service** on their page.
+
+**See also:** [Accessories](help:user.money.accessories) · [The member page](help:user.members.page)
+
+#### Service name
+
+What the invoice line says. Rename it and only new documents change.
+
+#### Service price
+
+The price of one unit, gross: the member pays exactly this, and VAT is part of it. The **VAT rate** only decides how much of it is tax.
+
+#### Active
+
+When editing a service, the **Active** switch decides whether it can still be sold. Switch it off for something discontinued; the list greys it and writes **Inactive**.
+
+### Accessories
+
+**Audience:** Administrator · Owner
+
+You rent equipment with a place, such as a monitor or a chair, and charge a supplement for each half-day.
+
+![](assets/help/images/user-money-accessories-edit.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Accessories](app:/accessories) from the menu.
+2. Tap an accessory, or the plus button for **New accessory**.
+3. Fill in **Name** and **Supplement per half-day**; choose the **VAT rate** if your space charges VAT.
+4. Switch **Active** off to stop offering it, then tap **Save**.
+
+**Good to know**
+
+- The list shows each supplement as an amount "per half-day", or **No supplement**.
+- Like services, accessories are deactivated, never deleted.
+- The feature must be on in [Features](help:user.features.switch).
+
+**See also:** [A service](help:user.money.services.overview)
+
+### Payment methods and instructions
+
+**Audience:** Owner · Billing administrator
+
+You want members to know how to pay you by transfer or wallet, without you sending the details each time.
+
+![](assets/help/images/user-money-payments-methods.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Payment instructions](app:/payment-methods) from the menu.
+2. Fill what applies: **IBAN**, **Bank name**, **Account number**, the bank code, **BIC / SWIFT**.
+3. Add the wallets you accept: **PayPal.me link or handle**, **Wero phone number**, **Lydia phone number or username**, **Wisetag or Wise payment link**.
+4. Add a **Payment reference hint** if members should quote something.
+5. Tap **Save**.
+
+**Good to know**
+
+- Members see these details on an unpaid statement. Leave everything empty to show nothing.
+- The bank code field is named after your country: sort code, routing number, or bank code.
+- This is manual payment. To let members pay by card inside the app, see [The payment provider](help:user.money.payments.provider).
+
+**See also:** [Provider credentials](help:user.money.payments.credentials)
+
+### The payment provider
+
+**Audience:** Owner
+
+You want members to pay an outstanding bill online, into your own provider account.
+
+![](assets/help/images/user-money-payments-provider.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Switch on the online payments feature in [Features](help:user.features.switch).
+2. Open [Online payments](app:/payment-config) from the menu.
+3. Find the provider you use: **PayPal**, **Credit card (Stripe)**, **Mollie — iDEAL, Bancontact…** or **Wero (via Mollie)**.
+4. Fill its keys, as described in [Provider credentials](help:user.money.payments.credentials), and tap **Save**.
+5. Check that the card says **Configured**.
+
+**Good to know**
+
+- Each provider is a separate card with a status chip, **Configured** or **Not configured**.
+- Wero is paid through Mollie: enter the same Mollie API key and return URL on the Wero card as on the Mollie card.
+- Providers charge their own fees. The manual transfer route stays free.
+- **Remove** clears a provider.
+
+**See also:** [Payment methods](help:user.money.payments.methods)
+
+#### Provider credentials
+
+The keys come from the provider's own dashboard: **Client ID**, **Secret**, **Environment**, **Webhook ID** and **Return URL** for PayPal; **Secret key**, **Webhook signing secret** and **Return URL** for Stripe; **API key** and **Return URL** for Mollie and Wero. Keep test and live keys apart: all keys you enter must belong to the same mode.
+
+Secrets are stored on the server and never shown again. A saved one reads **Set — leave blank to keep**; type a new value to replace it.
+
+### Scheduled expenses
+
+**Audience:** Member · Administrator · Owner
+
+You pay for something that comes back, such as internet or electricity. You describe it once and the app presents each due date to you.
+
+![](assets/help/images/user-money-expenses-schedule.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Money](app:/money) and the **Payments** face.
+2. Tap **Scheduled expenses**. Existing schedules show their amount, rule, state and next date.
+3. Tap **Schedule a recurring expense** and fill in the form, as described in [What](help:user.money.expenses.what) and the fields after it.
+4. Tap **Schedule it**.
+
+**Good to know**
+
+- A new schedule is **Awaiting validation** until the validators confirm it, then **Active**. It can also end **Rejected** or **Ended**.
+- Each due date is then presented to you before it counts: confirm it at the validated amount, or at another amount with an explanation, which is validated again.
+- Tap **End this schedule** to stop one. Finished ones are listed under **Ended and rejected**.
+- The feature must be on in [Features](help:user.features.switch).
+
+**See also:** [Validation rules](help:user.validation.overview)
+
+#### What
+
+![](assets/help/images/user-money-expenses-what.en.b8fa17aa9.jpg)
+
+The name each occurrence carries, for example Internet. Write it as you want to read it later. **Amount** is what one occurrence costs, and **Description** is optional text for whoever validates.
+
+#### Amount
+
+What one occurrence costs, in your workspace currency. A different amount at confirmation needs an explanation and is validated again.
+
+#### Description
+
+Optional text for the validators, such as a contract number or a supplier reference.
+
+#### First occurrence
+
+The date the first one falls due. Every later date counts from here.
+
+#### Every
+
+The interval, a number and a unit: days, weeks, months or years. Every 1 month reads "monthly".
+
+#### Number of times
+
+The field **Repetitions (empty = until the end date)**: how many occurrences to raise.
+
+#### Until
+
+**Until (optional)** is the date after which nothing more is raised. With both a number and a date, the series stops at whichever comes first. With neither, it runs until you end it.
+
+## Tax, invoicing and accounting
+
+For owners and billing administrators: who you are as a seller, how VAT is handled, where e-invoices go, how your documents look, and the monthly rhythm of issuing, sending and chasing invoices.
+
+> **Careful** DesKilo prints what you declare and checks that the required details are present. It does not certify your invoices, your VAT treatment or your books. Whenever a section below says "confirm with your accountant", please do.
+
+In this chapter:
+- Your legal identity and the mentions printed on every invoice
+- VAT: regime, number, rates, groups and the periodic declaration
+- E-invoicing: where the machine-readable invoice is sent
+- The invoice PDF template and the report editor
+- Issuing and closing a month: the Invoicing screen, the month-close wizard, regrouping, shared expenses
+- Payment reminders
+- The invoice register, accounting exports and business analytics
+
+### Your legal identity
+
+**Audience:** Owner
+
+You want your invoices to name you correctly: who you are, how you are registered and how you charge VAT.
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings) and tap **Legal identity & e-invoicing**, or go straight to [Legal identity & e-invoicing](app:/legal-identity).
+2. Work from the top: the VAT regime first, then the identifiers, the address and the **Invoice mentions**.
+3. Tap **Save** at the bottom.
+
+**Good to know**
+
+- The screen shows only the fields your VAT regime needs. Change the regime and the form follows.
+- Invoices already issued keep the identity they were signed with. A change applies to the next ones.
+- Only owners can open this screen.
+
+**See also:** [VAT regime](help:user.money.vat.regime) · [Organisation type](help:user.money.legal.seller-kind) · [E-invoicing](help:user.money.einvoice.overview)
+
+### Organisation type
+
+**Audience:** Owner
+
+You run either a business or a non-profit association, and your invoices should read accordingly.
+
+![](assets/help/images/user-money-legal-seller-kind--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity) and scroll to **Invoice mentions**.
+2. Choose **Company / business** or **Association (non-profit)**.
+3. Tap **Save**.
+
+**Good to know**
+
+- For an association, the example texts change (for instance a registration such as RNA instead of a trade register). Which payment clauses print depends on your country and on the customer's capacity, not on the organisation type.
+- An association with no trading activity is normally outside the scope of VAT. The screen warns you if you pick "exempt" for an association; confirm the right choice with your accountant.
+
+**See also:** [Customer capacity](help:user.money.legal.customer-capacity) · [VAT regime](help:user.money.vat.regime)
+
+### Default customer capacity
+
+**Audience:** Owner
+
+Business customers and private individuals are not owed the same payment clauses. You set the default for the workspace.
+
+![](assets/help/images/user-money-legal-customer-capacity--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, find **Default customer capacity**.
+2. Choose **Not stated**, **Business** or **Consumer**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The statutory late-penalty, recovery-indemnity and discount defaults apply only to business customers of a French workspace; for other countries nothing is printed unless you wrote it. A consumer never receives the recovery indemnity.
+- A member's own capacity wins over this default.
+- Every invoice keeps the clauses it was issued with.
+
+**See also:** [Late-payment penalty](help:user.money.legal.late-penalty) · [Recovery indemnity](help:user.money.legal.recovery)
+
+### Legal form and capital
+
+**Audience:** Owner
+
+Your invoices state the legal form of your business and, where it applies, its share capital.
+
+![](assets/help/images/user-money-legal-legal-form--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Legal form & capital**.
+2. Type the line as it should print, for example "SARL au capital de 7 500 €" (an association might write "Association loi 1901").
+3. Tap **Save**.
+
+**Good to know**
+
+- The text is printed as you type it, up to 300 characters. Check the exact wording required for your legal form with your accountant.
+
+**See also:** [Trade register](help:user.money.legal.registration)
+
+### Trade register
+
+**Audience:** Owner
+
+You show where your organisation is registered.
+
+![](assets/help/images/user-money-legal-registration--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Trade register**.
+2. Type the registration line, for example "RCS Saint-Brieuc 680 357 910". An association might enter an RNA number, and a SIRET if it has one.
+3. Tap **Save**.
+
+**Good to know**
+
+- This line is a mention printed on the document. The identifier the e-invoice itself needs is the [company registration number](help:user.money.legal.legal-id) or the [VAT number](help:user.money.vat.number), depending on your regime.
+
+**See also:** [Legal form and capital](help:user.money.legal.legal-form)
+
+### Payment terms
+
+**Audience:** Owner
+
+You state when invoices are due.
+
+![](assets/help/images/user-money-legal-payment-terms--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Payment terms**.
+2. Type your terms, for example "Payment within 30 days of the invoice date".
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, invoices print "Payment on receipt."
+- A member can have their own payment terms; those print on that member's documents instead.
+- Reminders do not read this text: they count from the invoice date plus **Days until the first reminder** in the reminder rules. The payment terms are only what the document prints.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules)
+
+### Late-payment penalty
+
+**Audience:** Owner
+
+You state the penalty for late payment.
+
+![](assets/help/images/user-money-legal-late-penalty--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Late-payment penalty**.
+2. Type your clause, or leave it empty.
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, nothing is invented for you, except for a French workspace invoicing a business customer, where the statutory wording prints (three times the legal interest rate).
+- Confirm the clause that applies to your country with your accountant.
+
+**See also:** [Default customer capacity](help:user.money.legal.customer-capacity)
+
+### Recovery indemnity
+
+**Audience:** Owner
+
+You state the fixed indemnity for collection costs.
+
+![](assets/help/images/user-money-legal-recovery--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Recovery indemnity**.
+2. Type your clause, or leave it empty.
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, the fixed indemnity of €40 prints only on invoices from a French workspace to a business customer.
+- A consumer never receives this mention.
+
+**See also:** [Default customer capacity](help:user.money.legal.customer-capacity)
+
+### Early-payment discount
+
+**Audience:** Owner
+
+You say whether paying early earns a discount.
+
+![](assets/help/images/user-money-legal-escompte--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Early-payment discount**.
+2. Type the conditions of your discount, or leave it empty.
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, invoices from a French workspace to a business customer print "No discount for early payment."; elsewhere the line is left out unless you write one.
+
+**See also:** [Payment terms](help:user.money.legal.payment-terms)
+
+### Professional insurance
+
+**Audience:** Owner
+
+If your activity requires you to name your professional insurance, it prints on your invoices.
+
+![](assets/help/images/user-money-legal-insurance--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Professional insurance**.
+2. Type the insurer, the policy and the geographical cover as they should read.
+3. Tap **Save**.
+
+**Good to know**
+
+- There is no default: an empty field prints nothing.
+- Whether you must state it depends on your activity. Ask your accountant.
+
+**See also:** [Special mentions](help:user.money.legal.special-mentions)
+
+### Special mentions
+
+**Audience:** Owner
+
+A line of your own that must appear on every invoice.
+
+![](assets/help/images/user-money-legal-special-mentions--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In **Invoice mentions**, tap **Special mentions**.
+2. Type the text.
+3. Tap **Save**.
+
+**Good to know**
+
+- Nothing prints when the field is empty.
+- Below the mentions, when the **Envelope address window** feature is on, **Address window** sets where the recipient's address sits so it shows through a window envelope.
+
+**See also:** [The invoice PDF template](help:user.money.reports.invoice-template)
+
+### VAT regime
+
+**Audience:** Owner
+
+You declare how your organisation stands with VAT. The choice decides which number your documents need.
+
+![](assets/help/images/user-money-vat-regime--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity).
+2. In **VAT regime**, choose **Outside the scope of VAT**, **VAT-exempt (small-business scheme)** or **VAT-registered (charges VAT)**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Outside the scope of VAT: no VAT number is printed; the company registration number identifies you.
+- Exempt or registered: your VAT number is asked for.
+- Choosing the regime is a tax decision, not a software setting. Confirm it with your accountant before you issue invoices.
+- In this version the app issues invoices itself for workspaces in France or Germany, to domestic customers, under the VAT-registered or the outside-the-scope regime. Invoices under the VAT-exempt regime are issued outside the app with your accountant.
+
+**See also:** [VAT number](help:user.money.vat.number) · [Company registration number](help:user.money.legal.legal-id)
+
+### Reverse charge for EU businesses
+
+**Audience:** Owner
+
+When you charge VAT and invoice a business in another EU country, the tax can be due by the customer.
+
+![](assets/help/images/user-money-vat-reverse-charge--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Choose **VAT-registered (charges VAT)** as the regime.
+2. Switch **Reverse charge for EU businesses** on or off.
+3. Tap **Save**.
+
+**Good to know**
+
+- On: the app recognises a business with a VAT number in another member state. Today the app does not issue those invoices itself: you issue them outside the app with your accountant.
+- Off: turn it off if you never invoice businesses abroad.
+- The option appears only for the VAT-registered regime.
+
+**See also:** [VAT treatment of a member](help:user.members.vat-treatment)
+
+### When VAT falls due
+
+**Audience:** Owner
+
+You choose whether VAT is counted when you issue the invoice or when you are paid.
+
+![](assets/help/images/user-money-vat-due--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Choose **VAT-registered (charges VAT)** as the regime.
+2. In **VAT falls due**, choose **On invoices (accrual)** or **On receipts (cash)**.
+3. Tap **Save**.
+
+**Good to know**
+
+- On receipts, a period declares what customers paid inside it; on invoices, what you issued.
+- The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration).
+- Which basis applies to you is a tax question for your accountant.
+
+**See also:** [The periodic VAT declaration](help:user.money.vat.declaration)
+
+### VAT account
+
+**Audience:** Owner
+
+Your accountant wants collected VAT booked on a specific account.
+
+![](assets/help/images/user-money-vat-account--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Choose **VAT-registered (charges VAT)** as the regime.
+2. Type your account number in **VAT account**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The accounting export books collected VAT on this account. Left empty, it uses 445710.
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export)
+
+### VAT number
+
+**Audience:** Owner
+
+Your VAT identification number appears on your invoices and e-invoices.
+
+![](assets/help/images/user-money-vat-number--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity).
+2. Type the number in **VAT number**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The field appears for the exempt and registered regimes. Outside the scope of VAT it is replaced by the company registration number.
+- Your members have their own VAT number in their settings, for their documents.
+
+**See also:** [Company registration number](help:user.money.legal.legal-id)
+
+### Reason no VAT is charged
+
+**Audience:** Owner
+
+When no VAT is charged, the law usually wants the reason printed on the invoice.
+
+![](assets/help/images/user-money-vat-exemption-reason--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity).
+2. Type the legal basis in **Why no VAT is charged**, for instance "TVA non applicable, art. 293 B du CGI".
+3. Tap **Save**.
+
+**Good to know**
+
+- The app cannot know which basis applies to you. Take the exact wording from your accountant.
+- The wording is printed on the invoice. For now the app does not issue invoices under the exempt regime itself: they are issued outside the app with your accountant.
+
+**See also:** [VAT regime](help:user.money.vat.regime)
+
+### Company registration number
+
+**Audience:** Owner
+
+If you are outside the scope of VAT, your registration number identifies you on e-invoices.
+
+![](assets/help/images/user-money-legal-legal-id--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Set **VAT regime** to **Outside the scope of VAT**.
+2. Type the number in **Company registration number**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Under the other regimes this field is replaced by the VAT number.
+- An association usually uses its registration (for instance RNA, or SIRET if assigned).
+
+**See also:** [Trade register](help:user.money.legal.registration)
+
+### Structured address
+
+**Audience:** Owner
+
+An e-invoice needs your address in separate parts, not as one block of text.
+
+![](assets/help/images/user-money-legal-address--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity).
+2. Fill **Street**, **Post code** and **City**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The street starts from the address already in your workspace settings, so you complete it rather than retype it.
+- Invoices cannot be issued without the workspace postal address.
+
+**See also:** [Letterhead address](help:user.workspace.settings.address)
+
+### Setting the rates
+
+**Audience:** Owner · Billing administrator
+
+You list the VAT rates your invoices may use. What members pay does not change: prices include VAT, and the tax is extracted from them.
+
+![](assets/help/images/user-money-vat-rates--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [VAT](app:/vat) (from **Legal identity & e-invoicing**, tap **VAT rates**).
+2. On an empty list, tap **Use the usual rates** (if your country has a catalogue) to start from your country's rates, or **Add a rate** and fill the name and **Rate %** (0 to 99.99).
+3. Tap the star on exactly one rate to make it the default.
+4. Tap **Save**.
+
+**Good to know**
+
+- The usual rates are a starting point. Which supply falls under which rate is a question for your accountant.
+- The default rate is used by subscriptions and by anything without its own rate.
+- A rate still used by an invoice or a service is kept, deactivated, rather than deleted.
+- With no rate while you are VAT-registered, invoices show no tax and the XML export stays disabled.
+- This screen needs the **VAT management** feature; the VAT rates entry on the legal identity screen shows only for the VAT-registered regime.
+
+**See also:** [VAT groups](help:user.money.vat.groups) · [Change by law](help:user.money.vat.change-by-law)
+
+### VAT groups
+
+**Audience:** Owner · Billing administrator
+
+A group says what kind of rate this is, so the invoice puts it in the right category.
+
+![](assets/help/images/user-money-vat-groups.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [VAT](app:/vat).
+2. On each rate, when the **VAT groups** feature is on, choose a **Group**: **Standard**, **Intermediate**, **Reduced**, **Super-reduced**, **Zero rate**, **Exempt**, **Not subject**, **Deposit (outside VAT)** or **Excise-bearing**.
+3. For an exempt or not-subject group, fill the **Exemption reason** that appears.
+4. Tap **Save**.
+
+**Good to know**
+
+- **What falls in each group** lists examples for your country, as a guide only.
+- A line outside VAT, such as a refundable deposit, cannot share a document with taxed lines; issue it on its own.
+
+**See also:** [Setting the rates](help:user.money.vat.rates)
+
+### Change a rate by law
+
+**Audience:** Owner · Billing administrator
+
+A rate changes from a given date. Old supplies keep the old value; the new one applies from that day.
+
+![](assets/help/images/user-money-vat-change-by-law.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [VAT](app:/vat) and make sure the rate is saved.
+2. Tap the **Change by law** button on the rate.
+3. Type **New rate %** and the **Effective date (YYYY-MM-DD)**.
+4. Tap **Save** in the dialog, then **Save** on the screen.
+
+**Good to know**
+
+- The old rate closes on that date and a new one opens, with the star moved along if it was the default.
+- Nothing already issued is re-pointed.
+
+**See also:** [Setting the rates](help:user.money.vat.rates)
+
+### The periodic VAT declaration
+
+**Audience:** Owner
+
+You want a ready summary of the VAT of a period to file with the tax office or hand to your accountant.
+
+![](assets/help/images/user-money-vat-declaration.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [VAT declaration](app:/vat-declarations).
+2. Choose the **Period** and tap **Generate**.
+3. Open the result with **PDF** or **XML export**, or look at **VAT report (PDF)** and **VAT report (CSV)**.
+4. Once you have filed it yourself, tap **Mark as filed**.
+
+**Good to know**
+
+- It exists only under the VAT-registered regime. The note at the top says whether the period counts invoices or receipts.
+- It is a filing aid generated from the period's issued invoices, not tax advice. Verify it against your accounting before filing.
+- A filed declaration can no longer be changed.
+- Where a platform is set up in [E-invoicing](help:user.money.einvoice.overview), a **Transmit** button can send it.
+
+**See also:** [When VAT falls due](help:user.money.vat.due) · [Accounting exports](help:user.invoicing.accounting-export)
+
+### The e-invoicing platform
+
+**Audience:** Owner · Billing administrator
+
+You tell DesKilo where to post your invoices as machine-readable files.
+
+![](assets/help/images/user-money-einvoice-overview--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config) (also reachable from **Legal identity & e-invoicing**).
+2. Fill **Upload URL** and **Token or credential**, and the two optional fields if your platform asks for them.
+3. Tap **Save**. **Remove the platform** clears the settings.
+
+**Good to know**
+
+- Any platform that accepts an upload with a token works: an approved platform, a Peppol access point, a national platform.
+- The token is stored on the server and never shown again.
+- The valid file is an EN 16931 invoice. Whether your country requires a platform, and which, is something to confirm with your accountant.
+
+**See also:** [Sending an e-invoice](help:user.money.einvoice.send) · [Legal identity](help:user.money.legal.identity)
+
+### Upload URL
+
+**Audience:** Owner · Billing administrator
+
+The address at which your platform receives invoices.
+
+![](assets/help/images/user-money-einvoice-endpoint--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. Paste the address in **Upload URL**, exactly as your platform documents it.
+3. Tap **Save**.
+
+**Good to know**
+
+- It comes from your platform's documentation or your provider.
+
+**See also:** [Token or credential](help:user.money.einvoice.token)
+
+### Token or credential
+
+**Audience:** Owner · Billing administrator
+
+The secret that proves to the platform that the upload is yours.
+
+![](assets/help/images/user-money-einvoice-token--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. Paste the key in **Token or credential**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Once saved, the screen says "A token is stored". Type a new one only to replace it.
+- It is kept on the server and never comes back out.
+
+**See also:** [Auth header](help:user.money.einvoice.auth-header)
+
+### Auth header
+
+**Audience:** Owner · Billing administrator
+
+The name of the header that carries the token.
+
+![](assets/help/images/user-money-einvoice-auth-header--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. If your platform expects another header than the standard one, type its name in **Auth header (default Authorization)**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, **Authorization** is used.
+
+**See also:** [File field name](help:user.money.einvoice.file-field)
+
+### File field name
+
+**Audience:** Owner · Billing administrator
+
+The name of the form field that carries the invoice file.
+
+![](assets/help/images/user-money-einvoice-file-field--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. If your platform expects another field name, type it in **File field name (default file)**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Left empty, **file** is used.
+
+**See also:** [Upload URL](help:user.money.einvoice.endpoint)
+
+### Customer delivery service
+
+**Audience:** Owner · Billing administrator
+
+Your customer may receive its invoices elsewhere than a government platform: its own Peppol access point, portal or agreed upload service.
+
+![](assets/help/images/user-money-einvoice-customer-delivery--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. In **Customer delivery service**, fill the same four fields as above.
+3. Tap **Save**.
+
+**Good to know**
+
+- It is separate from the government platform. Both can be set up, and each invoice offers both sends.
+
+**See also:** [Sending an e-invoice](help:user.money.einvoice.send)
+
+### UAT endpoint and token
+
+**Audience:** Owner · Billing administrator
+
+You want to rehearse before sending real invoices.
+
+![](assets/help/images/user-money-einvoice-uat--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. Under **Test environments (UAT / Dev)**, fill **UAT upload URL** and **UAT token or credential**.
+3. Tap **Save**.
+
+**Good to know**
+
+- The choice of environment appears at send time only while developer mode is on.
+- A test send is logged as a test send.
+
+**See also:** [Dev endpoint and token](help:user.money.einvoice.dev)
+
+### Dev endpoint and token
+
+**Audience:** Owner · Billing administrator
+
+A second test endpoint, for development.
+
+![](assets/help/images/user-money-einvoice-dev--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [E-invoicing platform](app:/einvoice-config).
+2. Under **Test environments (UAT / Dev)**, fill **Dev upload URL** and **Dev token or credential**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Same rules as for UAT. The real submission always goes to the production endpoint.
+
+**See also:** [UAT endpoint and token](help:user.money.einvoice.uat)
+
+### Sending an e-invoice
+
+**Audience:** Owner · Billing administrator
+
+You want to hand an issued invoice over in its machine-readable form.
+
+**Steps**
+
+1. Open an invoice in [Invoicing](app:/invoices) and tap **E-invoice (XML)**.
+2. Read the check at the top of the sheet: it says whether the file is ready or what is missing.
+3. Tap **Send to the government platform**, **Send to the customer's service**, or download or share the file (**Download Factur-X (PDF)** carries the XML inside the PDF).
+
+**Good to know**
+
+- If something is missing, the sheet lists it. **Complete the legal identity** takes you to the screen that fixes it.
+- An invoice signed before you completed your identity keeps what it was issued with. Mark it erroneous and issue a replacement if it matters.
+- Which channel a customer must use depends on your country and the customer. Confirm with your accountant.
+
+**See also:** [The e-invoicing platform](help:user.money.einvoice.overview) · [The Invoicing screen](help:user.invoicing.hub)
+
+### The invoice PDF template
+
+**Audience:** Owner · Billing administrator
+
+You want your invoices to look like yours: logo, layout, wording.
+
+![](assets/help/images/user-money-reports-invoice-template.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Reports](app:/reports?section=templates) and the **Templates** tab.
+2. Tap **Report editor**.
+
+**Good to know**
+
+- The template changes the PDF only. The e-invoice XML is never touched.
+- Anyone with permission to design documents can do this.
+- A template that does not render never blocks a document: the built-in layout takes over.
+
+**See also:** [The report editor](help:user.money.reports.editor)
+
+### The report editor
+
+**Audience:** Owner · Billing administrator
+
+You design a document on a page, instead of writing code.
+
+![](assets/help/images/user-money-reports-editor.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Report editor](app:/report-editor).
+2. Pick the document with the chips (Invoice, Proforma, Statement, reminders and the other reports).
+3. In **Design**, tap a line to edit it, add lines, or drag to reorder. Tap **Preview** to see it with your data.
+4. Tap **Save**.
+
+**Good to know**
+
+- The **Markup** mode edits the same bands as text.
+- **Insert image** places a logo, stamp or signature from the image library.
+- **Quick preview** renders instantly with your newest invoice, or sample data if there is none. **Reset to default** brings back the built-in layout.
+- **Export this design** and **Import a design** carry a design in and out as a file. **Positioned layout (XML)** is for documents that must match a window envelope or a national form.
+- Leaving with unsaved work asks first.
+
+**See also:** [Templates and presets](help:user.money.reports.presets) · [Languages](help:user.money.reports.languages)
+
+### Ready-made templates
+
+**Audience:** Owner · Billing administrator
+
+You start from a finished design and change what you want.
+
+![](assets/help/images/user-money-reports-presets.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Report editor](app:/report-editor) and pick a document.
+2. Tap **Templates** and choose **Professional**, **Classic**, **Simple**, **Detailed** or **Formal letter**.
+3. Confirm the replacement if the app asks, then edit and **Save**.
+
+**Good to know**
+
+- Replacing a layout can be undone with **Undo**.
+- The structural reports (chart of accounts, badges, QR cards) have one shipped layout.
+- Invoice templates already carry your legal mentions. They still print only what you entered under [Invoice mentions](help:user.money.legal.identity).
+
+**See also:** [The report editor](help:user.money.reports.editor)
+
+### One design per language
+
+**Audience:** Owner · Billing administrator
+
+Your members read their documents in their own language.
+
+![](assets/help/images/user-money-reports-languages--f.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Report editor](app:/report-editor).
+2. Under the document, choose **Default (all languages)** or one of **EN**, **FR**, **DE**, **ES**, **IT**.
+3. Edit the bands for that language and **Save**. **Use the default for this language** removes an own design.
+
+**Good to know**
+
+- A dot on a language means it has its own design; otherwise it inherits the default.
+- A member's document prints in their language when a design exists for it, otherwise in the workspace default.
+
+**See also:** [Workspace language](help:user.workspace.settings.language)
+
+### The Invoicing screen
+
+**Audience:** Owner · Billing administrator
+
+You see at a glance what to issue, what to collect and what is closed.
+
+![](assets/help/images/user-invoicing-hub.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Invoicing](app:/invoices).
+2. Read the strip: **To issue**, **To collect**, **To confirm**, **Closed**.
+3. Work in the three tabs: **To invoice** (members with something tracked, not yet invoiced), **Open** (issued, unpaid) and **Archive** (paid or closed).
+4. Tap the tools icon for the other tools.
+
+**Good to know**
+
+- You see invoices for the whole workspace. Your own are in your finances, under **My finances**.
+- Invoices are never edited or deleted: a wrong one is marked erroneous and replaced.
+- The **How invoicing works** entry explains who moves at each step.
+
+**See also:** [New invoice](help:user.invoicing.new-invoice) · [Open invoices](help:user.invoicing.open)
+
+### Issue an invoice
+
+**Audience:** Owner · Billing administrator
+
+You invoice a member for a month.
+
+![](assets/help/images/user-invoicing-new-invoice.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap **New invoice**, or **Issue** on a row of **To invoice**.
+2. Pick the **Member** and the month. The positions come from what was tracked.
+3. Switch on **Include the detailed annex (check-ins, services, payments)** if you want it.
+4. Tap **Issue invoice**. In **To invoice**, **Invoice all** issues every row.
+
+**Good to know**
+
+- Invoices are derived from tracked data and cannot be composed by hand. The bottom line is the **Balance due**.
+- A month can only be invoiced once per member, and a month still running warns you that positions may change.
+- If a required detail is missing, **Complete these details before issuing** lists it (address, VAT number, exemption basis, VAT rate; also the workspace country, which must be France or Germany).
+- In this version, issuing in the app is available for workspaces in France or Germany, for domestic customers. Cross-border, reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant.
+- An issued invoice is signed and immutable.
+
+**See also:** [Month-close wizard](help:user.invoicing.wizard)
+
+### Chase and settle open invoices
+
+**Audience:** Owner · Billing administrator
+
+You follow what is unpaid and close it properly.
+
+![](assets/help/images/user-invoicing-open.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), open the **Open** tab and tap an invoice.
+2. Use the actions it offers: **Send a reminder**, **Mark as paid** (match a registered payment), **Cancel outstanding amount**, **Mark erroneous**, or share the PDF.
+3. Paid invoices move to **Archive**.
+
+**Good to know**
+
+- An invoice is paid once a real payment is matched to it. A difference needs a note, or a credit note for the excess.
+- Cancelling an outstanding amount goes through validation.
+- **Mark erroneous** cannot be undone. Do it before payment, never after.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules) · [Regroup invoices](help:user.invoicing.settlement)
+
+### The month-close wizard
+
+**Audience:** Owner · Billing administrator
+
+One guided path for the money routine: issue, send, remind, register payments, match and close.
+
+![](assets/help/images/user-invoicing-wizard.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap **Month-close wizard** (or open the [Invoicing wizard](app:/invoicing/wizard)).
+2. Choose the run: **Start of month** (subscriptions members pay ahead, for the coming month) or **End of month** (usage, consumption and extra charges of the month just ended). The date proposes one.
+3. Follow the steps: **Review**, **Issue**, **Send**, **Remind**, **Payments**, **Match**, **Close**, **Summary**.
+4. Tap **Next** at each step, and **Finish** at the end.
+
+**Good to know**
+
+- You can untick a member to leave them out of a batch; members already covered show as done.
+- **Summary** lists what the run did, and what is still open and whose move it is.
+- A step with nothing to do says so.
+
+**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Regroup invoices](help:user.invoicing.settlement)
+
+### Regroup invoices into one
+
+**Audience:** Owner · Billing administrator
+
+A member has several open invoices and should pay a single one.
+
+![](assets/help/images/user-invoicing-settlement.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap the tools icon and **Regroup into one invoice**.
+2. Choose at least two open invoices of the same member.
+3. Confirm. You are asked whether to attach the regrouped invoices.
+
+**Good to know**
+
+- The new invoice is what is owed and chased. The originals stay readable behind it.
+- Lines and VAT are carried over; the VAT declaration counts the originals once.
+
+**See also:** [Open invoices](help:user.invoicing.open)
+
+### Distribute a shared expense
+
+**Audience:** Owner · Billing administrator
+
+A cost shared by the community is split among members.
+
+![](assets/help/images/user-invoicing-shared-expense.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap the tools icon and **Distribute an expense**.
+2. Describe **The expense**, then choose **Split by**: **Equal**, **Subscription**, **Usage** or **Custom key**.
+3. Check the **Shares**, untick anyone to **Leave out**, and tap **Book the shares**.
+
+**Good to know**
+
+- Once booked (after validation, if a rule asks for it), the shares land as lines on each member's next usage invoice.
+- **Reversal — give back as credit notes** returns the money.
+- **Remember this rule** proposes the adjusted rule again next month.
+
+**See also:** [The month-close wizard](help:user.invoicing.wizard)
+
+### Reminder rules
+
+**Audience:** Owner · Billing administrator
+
+You decide when and how often an overdue invoice is chased.
+
+![](assets/help/images/user-money-reminders-rules.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap the tools icon and **Reminder rules**.
+2. Set **Number of reminder levels**, **Days until the first reminder** and **Days between reminders**.
+3. Tap **Save**.
+
+**Good to know**
+
+- Reminders print the payment mentions you set up.
+- A reminder is recorded for the invoice and shows as a **Reminded** badge.
+
+**See also:** [Automatic reminders](help:user.money.reminders.automatic) · [Payment terms](help:user.money.legal.payment-terms)
+
+### Automatic reminders
+
+**Audience:** Owner · Billing administrator
+
+You want reminders to leave on their own.
+
+![](assets/help/images/user-money-reminders-automatic.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open **Reminder rules** in the Invoicing tools.
+2. Switch **Automatic reminders** on.
+3. Tap **Save**.
+
+**Good to know**
+
+- Once a day, invoices past their recorded payment term get their next level, for the amount still outstanding.
+- Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
+- Off: you send each reminder yourself.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules)
+
+### The invoice register
+
+**Audience:** Owner · Billing administrator
+
+All invoices in one sortable list.
+
+![](assets/help/images/user-invoicing-register.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Invoice register](app:/invoice-register).
+2. Pick the **Year** or **All years**.
+3. Sort by **Date**, **Name** or **Amount**; the total is at the bottom.
+
+**Good to know**
+
+- Members see their own; people who issue invoices see the workspace.
+- The accounting export starts here.
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export)
+
+### Accounting exports
+
+**Audience:** Owner · Billing administrator
+
+You hand the year's invoices and payments to your accountant.
+
+![](assets/help/images/user-invoicing-accounting-export.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Invoice register](app:/invoice-register) and tap **Accounting export**.
+2. In **Export for accounting**, choose a format, such as **FEC (France, required in an audit)**, **SAF-T (XML, international)**, **Accounting CSV**, **Audit trail** or **Year archive (zip)**. The list depends on your country; a few countries add their own, such as **DATEV (Buchungsstapel)**.
+3. In **Before you save**, read the check, then tap **Save file and report**.
+
+**Good to know**
+
+- Each format says what it claims. "For your accountant to import and review — not a filing" is not a tax return.
+- DesKilo keeps no double-entry ledger: the files are rebuilt from invoices and payments, and your accountant completes them.
+- A file is blocked until problems in the source are fixed.
+- Some formats note that DesKilo is not certified software in your country.
+
+**See also:** [VAT account](help:user.money.vat.account) · [The invoice register](help:user.invoicing.register)
+
+### Business analytics
+
+**Audience:** Owner · Billing administrator
+
+You look at how the workspace performs.
+
+**Steps**
+
+1. Open [Business analytics](app:/bi), or **Reporting** in the menu.
+2. Choose **Period length** (**Month**, **Quarter**, **Year**), a comparison, and a grouping where offered.
+3. Read the analyses by area, such as **Finance** (**Invoiced**, **Collected**) and **Space and capacity**.
+4. Save a view under **Views**, or tap **Export as PDF**.
+
+**Good to know**
+
+- You only see analyses you are allowed to read.
+- Collected is payments matched to invoices. It is not a profit: no costs are in the figure.
+- The current period is partial; its figures still change.
+
+**See also:** [The Invoicing screen](help:user.invoicing.hub)
+
+## Advanced
+
+**Audience:** Owner · Operator
+
+The things around the everyday work: the test side of a space and the real one, assistants, the task recorder and its guided tours, the demo, the apps on each device, and what to do when something does not work.
+
+In this chapter:
+- [A space has two sides](help:user.advanced.environments) · [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space) · [Who may deploy](help:user.advanced.deploy-permissions) · [Deploy between the sides](help:user.advanced.deploy) · [Workspace status and the year archive](help:user.advanced.status-archive)
+- [Your own server](help:user.advanced.own-server)
+- [Assistants](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect) · [Approvals](help:user.advanced.assistants-approve) · [What assistants may do](help:user.advanced.assistants-policy)
+- [The task recorder](help:user.advanced.recorder) · [Record a task](help:user.advanced.recorder-record) · [Review a recording](help:user.advanced.recorder-review) · [Make a guide](help:user.advanced.guide-make) · [Follow a guide](help:user.advanced.guide-play) · [The circle menu](help:user.advanced.guide-circle) · [Edit a guide](help:user.advanced.guide-edit) · [Privacy of recordings](help:user.advanced.recorder-privacy)
+- [The demo workspace](help:user.advanced.demo) · [Filming mode](help:user.advanced.filming)
+- [Platforms](help:user.advanced.platforms) · [Support details](help:user.advanced.support) · [When something does not work](help:user.advanced.troubleshooting)
+- [The app's words](help:user.advanced.glossary) · [Accessibility and keyboard](help:user.advanced.accessibility) · [More help](help:user.advanced.help)
+
+### A space has two sides
+
+**Audience:** Owner
+
+You want a place to try things out without touching the real bookings and invoices. A space can come as a pair: a test side and a real side, with the same name.
+
+![](assets/help/images/user-advanced-environments.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. When you create a space, keep **Create the development and production pair** ticked. Both sides belong to you from the first second.
+2. Already have a space on its own? Open [Settings](app:/settings), go to **Governance** and tap **Create its twin**. The configuration is copied once.
+3. From then on the two sides are independent. Only a deployment moves anything from one to the other.
+
+**Good to know**
+
+- The development side is called **Development — for trying things out**. The production side is **Production — the invoices are owed**.
+- Every document printed on the development side carries a watermark, so it cannot be mistaken for a real one.
+- **Create its twin** only appears when the **Environment pairs** feature is on, and only to the owner. Deploying between the sides belongs to the holders of the deploy permissions.
+- Members, bookings, invoices and payments are never copied between the sides.
+
+**See also:** [Enter a side](help:user.advanced.enter-environment) · [A test space](help:user.advanced.test-space)
+
+### Enter the real side or the test side
+
+**Audience:** Everyone
+
+You want to open a space on the side you need. Your account sees both sides of a pair, each with its own button.
+
+**Steps**
+
+1. Open [Me](app:/me) and find the space under **My spaces**.
+2. Tap **Open workspace** for the real side, or **Test space** for the side to practise on.
+3. Or open [Profiles](app:/profiles): the pair is one card. Tap it, then **Choose an environment** between **DEV** and **PROD**.
+
+**Good to know**
+
+- A side you may not enter is greyed out and does nothing.
+- A person who is a member of the real side is always a member of the test side too.
+- The test button carries the hint "Test space: practice bookings and invoices"; the real one "Real bookings and invoices".
+
+**See also:** [Who may deploy](help:user.advanced.deploy-permissions)
+
+### What a test space is for
+
+**Audience:** Owner
+
+You are about to change prices, rules or the plan and want to see the effect first. Do it on the test space.
+
+**Steps**
+
+1. Enter the test side with **Test space**.
+2. Configure, import a space file, invite a colleague, issue a trial invoice, move seats, print.
+3. When it is right, [deploy it to the real side](help:user.advanced.deploy).
+
+**Good to know**
+
+- The **Workspace type** switch in [Settings](app:/settings) (under **Governance**) says which kind a space is. Only owners see it.
+- Declaring a space production asks **Declare this workspace production?** — the banner goes away and documents lose their watermark. Invoices already issued keep the watermark they had.
+- Declare production only when the invoices leaving the space are really owed.
+- When you invite someone, you can choose whether they also reach the production space: **Test workspace** or **Production workspace**. They join the test space either way.
+
+**See also:** [A space has two sides](help:user.advanced.environments)
+
+### Who may deploy and enter production
+
+**Audience:** Owner · Co-owner
+
+You decide who may touch the real side. Three permissions in the role matrix control it.
+
+**Steps**
+
+1. Open [Roles](app:/roles).
+2. Find **Enter the production workspace**, **Deploy to development** and **Deploy to production**.
+3. Switch each on for the roles that need it.
+
+**Good to know**
+
+- Owners and co-owners hold all three. Administrators hold **Deploy to development** and **Enter the production workspace**. Members hold none until you give it.
+- Whoever may deploy to production may always deploy to development.
+- A role enters the production side only while it holds **Enter the production workspace**: an invitation or a join into production is refused otherwise, and the app says why.
+
+**See also:** [The role matrix](help:user.roles.matrix) · [Deploy between the sides](help:user.advanced.deploy)
+
+### Deploy between the two sides
+
+**Audience:** Owner · Co-owner · Administrator
+
+You settled the configuration on one side and want the other to have it.
+
+**Steps**
+
+1. Stand on the side you want to write, and open [Settings](app:/settings) → **Governance** → [Deployment](app:/deployment).
+2. Tick what should travel. Entities are grouped as **Configuration**, **Master data** and **Reports**; what an entity **needs** is ticked with it.
+3. Tap **Pull from PROD…** (from the development side) or **Pull from DEV…** (from the production side).
+4. Read the preview: **What changes on the production side**, or on the development side. When both sides agree, it says **No change**.
+5. Confirm. The question names the side that is written: **Deploy into this DEV?** or **Deploy into this PROD?**
+
+**Good to know**
+
+- A deployment always goes into the side you stand on. Nothing can be pushed onto the other side by mistake.
+- Every deployment lands in the **Journal**. **Roll back** on the latest one puts back what the side held before.
+- Floor plans are merged: what only this side has is kept, because a seat may hold a booking. Badge tags never travel.
+- Members, bookings, invoices, payments, events and credentials never travel.
+- The entry only shows when the **Deployments** feature is on, the space has a twin, and you hold a deploy permission.
+
+**See also:** [Who may deploy](help:user.advanced.deploy-permissions)
+
+### Workspace status and the year archive
+
+**Audience:** Owner · Administrator · Billing administrator
+
+You want one look at what the space invoiced and collected, and a complete file of the year for your records.
+
+**Steps**
+
+1. Open [Workspace status](app:/money/status). Pick the months in **From** and **To**.
+2. Read **Invoiced**, **Credit notes**, **Payments matched**, **Payments received**, **Expenses reimbursed**, **Expenses shared out** and **Credits granted**; **Net** sums it up. Tap the printer to **Print the status**.
+3. For the yearly file, choose **Year archive (zip)** in the invoice exports.
+
+**Good to know**
+
+- **Net** is neither a profit nor a bank balance. Matched and received payments overlap, so do not add them together.
+- The status appears when the **Workspace status** feature is on.
+- A development space produces files marked DEV: they are not the real books.
+
+**See also:** [Workspace report](help:user.workspace.export.workspace-report)
+
+### Run your own server
+
+**Audience:** Operator · Owner
+
+You want your community's data on a server you control, or you belong to an organisation that runs one.
+
+**Steps**
+
+1. Read how a server is set up in [How to run your own](help:user.backend.how).
+2. On each device, point the app at it: [Your own server](help:user.backend.server).
+3. Check [Me](app:/me) → **Where my spaces live**: it lists the servers this account uses.
+
+**Good to know**
+
+- The app points at one server for sign-in; **This device uses** shows which. The other servers you belong to appear under **Where my spaces live**.
+- An invitation is only checked on its own server, so join a space while the app points at the server that issued it.
+- An operator can switch assistants on for the whole installation — see [Approvals](help:user.advanced.assistants-approve).
+
+**See also:** [Your own server](help:user.backend.server)
+
+### Assistants: what they are
+
+**Audience:** Everyone
+
+An AI assistant such as Claude or ChatGPT can check and book things for you in DesKilo. It acts as you, only in the workspaces and for the actions you approve.
+
+![](assets/help/images/user-advanced-assistants-policy.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Assistants](app:/assistants). **Where you stand here** lists what is still missing for you: **Google sign-in**, **Identity for assistants**, **Database approval**, **Workspace offer**, **Your role**, **Your consent**, **Server**.
+2. Work down the list; each line says who takes the next step.
+
+**Good to know**
+
+- Several people take part: you, the owner or an administrator of the workspace, a database administrator and the installation's operator. No single person can open everything.
+- Switching assistants on grants nobody anything by itself.
+- Under **Connected assistants** you see what is connected and can **Disconnect** it. **Your assistant use today** counts **Requests**, **Refused**, **Applied** and **Awaiting validation**.
+
+**See also:** [Connect an assistant](help:user.advanced.assistants-connect)
+
+### Connect an assistant
+
+**Audience:** Member · Administrator · Owner
+
+You want your assistant to work with your own bookings and account.
+
+**Steps**
+
+1. Open [Connect an assistant](app:/assistants/connect). Under **Before you connect**, every line should say **Done**.
+2. Under **Which assistant do you use?**, pick **Claude**, **Claude Code**, **ChatGPT**, **Cursor**, **VS Code** or **Other**. Copy **Your DesKilo address for assistants** into it as the steps show.
+3. Sign in when the assistant asks, then pick this workspace and what the assistant may do there.
+4. Tap **Test the connection** and ask your assistant: "Using DesKilo, what are my bookings this week?"
+
+**Good to know**
+
+- The assistant itself asks you to approve the workspace and each kind of operation; nothing is chosen for you.
+- Connecting needs the **MCP interface** feature in the workspace. If it is off, the screen sends you to Assistants.
+- Not working? **Test the connection** says what it still waits for.
+- **Disconnect** removes the assistant from every workspace on this database. What it already read is not taken back.
+
+**See also:** [Approvals](help:user.advanced.assistants-approve)
+
+### Approvals and confirmations for assistants
+
+**Audience:** Owner · Operator
+
+Assistants are approved in layers, so a person cannot switch one on alone.
+
+**Steps**
+
+1. The workspace owner (or whoever manages integrations) opens [Assistant setup](app:/settings/assistant-setup) and works down it: **Turn assistants on for this workspace**, **Choose what assistants may do**.
+2. Each member asks once: **Ask for approval**. A database administrator decides in [Assistant approvals](app:/database/assistant-approvals) with **Approve** or **Reject**.
+3. The installation's operator opens [Installation: assistants](app:/installation/assistants) and taps **Turn on for every workspace**. The page also lists **Database administrators** and **Assistant clients**, each **Approved**, **Blocked** or **Waiting for approval**.
+4. When an assistant sends a high-impact request, you are asked: **Confirm an assistant request**. **Confirm** lets it send that exact request once; **Decline** does nothing.
+
+**Good to know**
+
+- Approvals and the installation's changes need your second factor.
+- Approval expires; the screen tells you the days left and you ask again.
+- A confirmed request still follows the workspace's validation rules.
+- With no other database administrator, the operator approves access, with a reason, for up to 30 days.
+
+**See also:** [What assistants may do](help:user.advanced.assistants-policy)
+
+### What assistants may do in a workspace
+
+**Audience:** Owner · Administrator
+
+You decide which services a workspace offers to assistants.
+
+**Steps**
+
+1. Open [Assistant access](app:/settings/assistants).
+2. Switch **Offer assistant services** on.
+3. Under **Records an assistant may act on**, choose **Own records only** or **Workspace-wide**.
+4. Tick the operations, in groups: **Own bookings and account**, **Financial requests**, **Membership requests**, **Validations**.
+5. Tap **Save**.
+
+**Good to know**
+
+- Operations read like "See free places", "Book a place for you", "Check you in" or "Cancel your bookings that have not started".
+- Assistants get minimised answers. **Optional details** lets you allow more; each person still chooses for themselves.
+- Assistants already connected only get new services when each person approves again.
+- Turn the **MCP interface** feature on in [Features](app:/features) first. It is off by default.
+- It is for people who hold the integrations permission; owners always do.
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### The task recorder and guided tours
+
+**Audience:** Everyone
+
+You want to show someone how a task is done, or be shown. Record the task once, turn it into a guide, and follow it step by step on the real app.
+
+![](assets/help/images/user-advanced-wizard.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open the [Task wizard](app:/task-wizard): in the menu on a wide screen, or under **Advanced** in [Me](app:/me).
+2. **Guides** holds your own guides and the ones that come with the app, such as **Book a place**.
+3. **Recordings** lists the tasks you recorded, and **Record a task** starts a new one.
+4. **Tools** opens a task file without an account.
+
+**Good to know**
+
+- Everything stays on your device until you export it.
+- The task recorder is a feature (**Task recorder**). When it is off, the Task wizard does not appear in the menus.
+- You need to be signed in to record or to follow a guide.
+
+**See also:** [Record a task](help:user.advanced.recorder-record) · [Follow a guide](help:user.advanced.guide-play)
+
+### Record a task
+
+**Audience:** Everyone
+
+You want to capture what you do, so it can become a document or a guide.
+
+![](assets/help/images/user-advanced-record.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In the [Task recorder](app:/task-recorder), read **Before you record**.
+2. Tap **Start recording**.
+3. Do the task as usual, on any screen of the space or of [Me](app:/me).
+4. Use the bar that shows **Recording** to **Pause**, **Resume**, **Add a note** or **Stop**.
+
+**Good to know**
+
+- A recording lasts up to 500 steps or 30 minutes, and is deleted from the device after 30 days. A file you exported stays where you saved it.
+- Each step names the screen, the action and what the app answered, such as **Booked** or **Refused**.
+- Sign-in, payment, messages and other protected screens leave only a marker.
+- If you move to another account or workspace, the recording ends.
+
+**See also:** [Privacy of recordings](help:user.advanced.recorder-privacy)
+
+### Review, edit and export a recording
+
+**Audience:** Everyone
+
+You want to check what was captured before you share it.
+
+**Steps**
+
+1. In the [Task wizard](app:/task-wizard), tap a recording under **Recordings**.
+2. Read the steps. Tap **Leave out of the export** on any step you do not want; **Put back** brings it back.
+3. Look at **What the file will contain**.
+4. Choose **Export a file**, **Export a task package** or **Export as Word document**.
+
+**Good to know**
+
+- Leaving a step out changes only the export. The recording on the device is unchanged.
+- To read a file from someone else, use **Open a task file** in the [Task workbench](app:/task-workbench). Nothing is uploaded, and no account is needed.
+- A damaged file or a file made by a newer version is refused with a plain message.
+- **Delete from this device** removes the recording; exported files are not touched.
+
+**See also:** [Make a guide](help:user.advanced.guide-make)
+
+### Make a guide from a recording
+
+**Audience:** Everyone
+
+You want others to follow a task you recorded.
+
+**Steps**
+
+1. In the [Task wizard](app:/task-wizard), tap **Make a guide** beside a recording. Or choose **Add a guide** → **From one of my recordings** or **From a task file or package**.
+2. Check the draft. Each step is written as the reader will see it.
+3. Give it a name under **Name of the guide**.
+4. Tap **Add to my guides**.
+
+**Good to know**
+
+- The guide is kept on your device under **Guides**. A guide can be edited or deleted: **Delete this guide** does not touch its recording.
+- A step that books waits for the real answer. Nothing is done for the reader.
+- **Save the guide** writes it to a file you can hand over.
+
+**See also:** [Edit a guide](help:user.advanced.guide-edit)
+
+### Follow a guide
+
+**Audience:** Everyone
+
+You want to be walked through a task on the real screens.
+
+**Steps**
+
+1. In the [Task wizard](app:/task-wizard), tap **Start the guide** beside one of the guides.
+2. A panel shows Step 1 of … and what to do, for instance "Tap “Reserve”." or "Fill in “…”, then leave the field."
+3. Tap **Open & highlight** to go to the right screen and see the control marked.
+4. Do the step yourself. The guide notices and moves on. For a reading step, tap **Done**.
+
+**Good to know**
+
+- Use **Back** and **Skip**, and open **All steps** to see each one as **To do**, **Waiting**, **Done**, **Acknowledged** or **Skipped**.
+- A step that books waits for the answer: **Waiting for the result…**. If it is refused, the guide says what to try; if no answer came, it asks you to check before trying again.
+- **Stop the guide** ends it. Nothing is undone.
+- The guide pauses when the account or workspace changes, or when the task recorder is turned off.
+
+**See also:** [The circle menu](help:user.advanced.guide-circle)
+
+### The circle menu
+
+**Audience:** Everyone
+
+You need the whole screen to work, but want the guide close by. Minimise it.
+
+**Steps**
+
+1. In the guide panel, tap **Minimise the guide**. It shrinks to a small circle.
+2. Tap the circle for a menu: Show the guide (step … of …), **Open & highlight**, a button to the step's page, **Done**, **Skip**, **Back**, **Resume** and **Stop the guide**.
+3. Pick **Show the guide** to open the panel again.
+
+**Good to know**
+
+- The menu only offers what makes sense now: **Resume** only while paused, **Done** only for a reading step.
+- The panel's **Close** hides it; the guide itself stays where it was.
+- Open & highlight takes you to the page of the step and points at the control; the page button takes you to the page only.
+
+**See also:** [Follow a guide](help:user.advanced.guide-play)
+
+### Edit or repair a guide
+
+**Audience:** Everyone
+
+A guide reads badly, or a step points to the wrong page. Fix it in the draft.
+
+**Steps**
+
+1. In the [Task wizard](app:/task-wizard), tap **Edit** beside your guide.
+2. On a step, tap **Write the words** and type your own text.
+3. Under **Step destination**, choose the page the step refers to. Tap **Open & highlight** to check.
+4. Switch **The reader may skip it** on for a step that is optional.
+5. Tap **Save the changes**.
+
+**Good to know**
+
+- A step marked **An instruction still to be written** needs your words. **A step the recorder cannot describe** and **Do this step yourself** are done by the reader.
+- Steps on protected screens, such as payment, ask the reader to do them alone.
+- You cannot make a guide expect an outcome its action does not have; that part is fixed.
+- A guide that names steps this version does not know can be read, not followed.
+
+**See also:** [Make a guide](help:user.advanced.guide-make)
+
+### What a recording keeps
+
+**Audience:** Everyone
+
+You want to know exactly what leaves nothing behind.
+
+**Steps**
+
+1. Open the [Task recorder](app:/task-recorder).
+2. Read **Before you record**.
+3. Leave **Capture values (for issue reports)** off unless a developer asked for it.
+
+**Good to know**
+
+- Normally a recording never keeps what you type, names, amounts, messages, codes or passwords.
+- With **Capture values** on, it also keeps what you type and choose, so a developer can reproduce a problem. Passwords, payment details, e-mail addresses and phone numbers are still never kept. Exporting it asks **This recording contains values**.
+- Nothing is uploaded: you decide what to export.
+- Share a file only with people who should see what you entered.
+
+**See also:** [Record a task](help:user.advanced.recorder-record)
+
+### The demo workspace
+
+**Audience:** Everyone
+
+You want to look around before you commit. The demo is an invented space, open to anybody, without an account.
+
+**Steps**
+
+1. On the sign-in screen, tap **Explore the demo workspace**.
+2. Read the short note, then tap **Start exploring**.
+3. Use **View as** to see the same space as **The owner**, **An administrator** or **A member**.
+4. Tap **Reset the demo** to bring it back as it started, or **Leave the demo**.
+
+**Good to know**
+
+- Everything is invented: people, bookings and bills. Nothing reaches a real workspace and nothing leaves your device.
+- A banner reads **Demo** on every screen.
+- Closing the app forgets the session.
+- The offer only shows when the **The demo workspace** feature is on.
+
+**See also:** [Filming mode](help:user.advanced.filming)
+
+### Filming mode
+
+**Audience:** Owner
+
+You must show your real space — in a video, a picture or a talk — without showing its members.
+
+**Steps**
+
+1. Open [Features](app:/features) and search **Filming mode**.
+2. Switch it on. A banner reads **Filming mode — invented people** on every screen.
+3. Film. When you are done, switch it off again.
+
+**Good to know**
+
+- Every name, e-mail, telephone number, address and photograph becomes an invented person, the same one everywhere. The plan, the bookings and the figures stay real.
+- While it is on, identity forms refuse to save, so invented details cannot overwrite real ones.
+- It cannot hide what someone typed, such as a message or a seat label. Read the screen before you film.
+- For a picture that does not need to be of this space, use [the demo](help:user.advanced.demo).
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### DesKilo on your devices
+
+**Audience:** Everyone
+
+You want to use DesKilo where you work. The same account and the same data follow you.
+
+**Steps**
+
+1. **Android:** join the closed test on Google Play.
+2. iPhone and iPad: join the beta through TestFlight.
+3. **Computer:** a macOS disk image or a **Windows** installer from the releases page; or just open the web app.
+4. **Browser:** open the address your workspace publishes. Nothing to install.
+
+**Good to know**
+
+- A desk booked on a phone shows in a browser tab a moment later.
+- The macOS disk image from the releases page is signed and notarised by Apple; open it as usual.
+- The Windows installer is not signed: Windows SmartScreen warns about an unknown publisher; choose More info, then Run anyway.
+- Reading a chair tag works in Chromium browsers on Android (HTTPS and a tap needed); the Android and iPhone apps read tags directly.
+- A Google-free build, without cloud push, is built and has been submitted to F-Droid; it is not in the F-Droid store yet. On it, notifications are local and the inbox is the source of truth.
+- Updates arrive through the channel you installed from: Google Play, TestFlight, the releases page, or reloading the web app.
+
+**See also:** [Your badge](help:user.profile.settings.badge)
+
+### Support details
+
+**Audience:** Everyone
+
+You contact support and want to send what helps them, without exposing anything private.
+
+![](assets/help/images/user-advanced-support.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Help](app:/help) and tap the support icon (**Support details**).
+2. Choose **Last hour** or **Last 24 hours**.
+3. Tap **Prepare preview** and read what it holds: Preview: … bytes.
+4. Tap **Save**, then send the file.
+
+**Good to know**
+
+- Only bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded.
+- A shared file cannot be revoked.
+- If the context changed, the screen asks you to prepare a new preview.
+- An operator can run `doctor --support-json` for the server side.
+
+**See also:** [When something does not work](help:user.advanced.troubleshooting)
+
+### When something does not work
+
+**Audience:** Everyone
+
+Something looks wrong. Try these, in order.
+
+**Steps**
+
+1. Look for a message on the screen; most say what to do. "Something went wrong. Please try again." is worth one retry.
+2. Check you are on the side you think: **Test space** or **Open workspace** in [Me](app:/me).
+3. Check [Features](app:/features): a function missing from the menu is usually a feature that is off. Only an owner can change it.
+4. Check the server under [Your own server](help:user.backend.server): **This device uses** names it.
+5. Prepare [Support details](help:user.advanced.support) and send them.
+
+**Good to know**
+
+- What you see depends on your role: a missing screen may be a permission. Ask your owner.
+- Administrators can switch on **Developer mode** under **Advanced** in [Settings](app:/settings). It adds a [Developer](app:/developer) screen where **Export trace** and **Clear trace** help support. It applies to every member of the workspace.
+- You can also report a bug from the app's About section: **Report a bug / suggest a feature**.
+- A guide stuck on **Waiting for the result…** means no answer arrived: check the result before retrying.
+
+**See also:** [Support details](help:user.advanced.support)
+
+### The app's words
+
+**Audience:** Everyone
+
+The words you meet most, and what they mean here.
+
+| Word | What it means |
+|---|---|
+| **Workspace** (also called a space) | A place run by a community: its plan, members, rules and money. You can belong to several. |
+| **Me** | Your own account: profile, messages, spaces and settings, across all your spaces. |
+| **Plan** | Either the floor plan you book from, or a membership plan — see **Members & plans**. |
+| **Level** | A floor or zone of the plan. A level can be reserved as a whole when the feature is on. |
+| **Desk** | A bookable place. Offices and rooms group desks. |
+| **Half-day** | The unit bookings and subscriptions are counted in. |
+| **Validation** | A rule saying an action needs one or more confirmations before it counts. |
+| **Events** | The feed of what happened, with decisions waiting for you on top. |
+| **Kiosk** | A shared tablet at the door where people check in with a badge. |
+| **Feature** | A function the owner switches on or off for the whole space. |
+| **Role** | What a person may do in a space. Permissions are set per role. |
+| **Environment** | The development side (test) or the production side (real) of a space. |
+| **Twin** | The other side of a pair. |
+| **Deployment** | Moving configuration from one side of a pair to the other. |
+| **Assistant** | An AI tool connected to your account, acting only as you allow. |
+| **Operator** | The person who runs the installation the app talks to. |
+
+**Good to know**
+
+- Owners can change the words a space uses under **Wording**; the app then shows the space's own.
+
+**See also:** [Wording](help:user.workspace.settings.wording)
+
+### Accessibility and keyboard
+
+**Audience:** Everyone
+
+You want the app to suit how you work.
+
+**Steps**
+
+1. Pick a look under [Settings](app:/settings): **Theme**, **Language**, **Numbers & dates**.
+2. For calmer screens, turn on your device's reduced-motion setting.
+3. On a computer, press Escape in a wizard to step back.
+
+**Good to know**
+
+- The device's reduced-motion setting always wins over the **Interface animations** feature; an owner can also switch that feature off.
+- Leaving a wizard with unsaved changes asks first: **Keep editing** or **Discard**.
+- Controls carry text labels, so a screen reader announces them.
+- On the web and on a computer, a wide window shows the menu beside the content.
+
+**See also:** [Theme](help:user.profile.settings.theme) · [App language](help:user.profile.settings.language)
+
+### Where to get more help
+
+**Audience:** Everyone
+
+You are stuck on one field or one screen.
+
+**Steps**
+
+1. Tap the **?** next to a field: the guide opens at that field.
+2. Open [Help](app:/help) for the whole guide; **Contents** jumps to a chapter.
+3. Tips on a screen can be dismissed with **Dismiss hint**; **Next tip** and **Previous tip** page through them, **Learn more** opens the guide.
+4. To see dismissed hints again, use **Show help hints again** in your settings.
+
+**Good to know**
+
+- The guide works offline, in your language.
+- Your administrator can answer questions about your space; Support details help when it is the app.
+
+**See also:** [Restore the hints](help:user.profile.settings.restore-hints) · [Support details](help:user.advanced.support)
+
+# Setup Guide
+
+**DesKilo — build your space, step by step.** For the person who is about to create a coworking space, an association's room or a shared office, and wants to know what is possible, what is necessary and in which order.
+
+## How to use this guide
+
+**Audience:** Owner · Co-owner · Administrator · Operator
+
+This guide explains the *why*, the *order* and the *consequences* of setting a space up. The clicks themselves are in the [User Guide](help:user.guide.how-to-read); each section here links to the exact place. The running example is the demo space, *Atelier du Marché* in Pézenas: an association with a room, a handful of desks and a monthly membership. Its people and figures are invented.
+
+*Three levels, in this order*
+
+| Level | What you do | How long |
+|---|---|---|
+| **Open** | A place, opening times, the people who approve, an invitation. At the end members can book. | about 20 minutes |
+| **Run** | Roles, tariffs, payments, notifications. At the end the space can live from day to day. | an afternoon, spread over days |
+| **Grow** | Invoicing and tax, reports, a kiosk at the door, analytics, assistants. Only when you need them. | when the time comes |
+
+Only **Open** is required to start. Stop after any level: nothing forces you on.
+
+*Pick your path*
+
+| You want… | Start here |
+|---|---|
+| To know what DesKilo can do and what to prepare | [Before you start](help:setup.before.overview) |
+| A place members can book, today | [Build the place](help:setup.place.overview) |
+| To say who may do what, and who approves | [The role matrix](help:user.roles.matrix) |
+| To charge for membership | [Money](help:setup.money.overview) |
+| To tell members what is happening | [Notifications](help:setup.notify.overview) |
+| To issue invoices and declare VAT | [Invoicing](help:setup.money.invoicing) · [VAT](help:setup.money.vat) |
+| A wall tablet, reports or analytics | [Kiosk](help:user.kiosk.mode) · [The report editor](help:user.money.reports.editor) · [Business analytics](help:user.invoicing.bi) |
+| To let an assistant act for you | [Assistants](help:user.advanced.assistants) |
+
+*Two companions*
+
+- **The setup wizard page** (`setup.html`) lets you prepare everything in your browser before you touch the app: answers are saved in the browser, nothing is sent anywhere, and you can export a file the app reads. It is the best place to think with your accountant. See [Prepare a space with the setup questionnaire](help:user.start.questionnaire).
+
+![](assets/help/images/setup-guide-wizard.en.b8fa17aa9.jpg)
+
+- **The demo workspace** lets you practise first, with nothing real at stake. See [The demo workspace](help:user.advanced.demo).
+
+**Good to know**
+
+- Every section names its audience in the second line, so you can skip what is not yours.
+- A block that starts with **Careful** marks a decision that becomes hard to undo, and says when.
+- This guide never certifies anything legal or fiscal: it says what the app does and what to confirm with an accountant.
+
+## Before you start
+
+A little preparation saves you the two things that cost most later: retyping, and decisions you cannot take back. This chapter shows what DesKilo does, what you really need to open, and what to have at hand.
+
+In this chapter:
+- [What DesKilo can do](help:setup.before.what)
+- [What is necessary and what is optional](help:setup.before.necessary)
+- [A test space or a real one](help:setup.before.environment)
+- [Start from a template or from nothing](help:setup.before.template)
+- [What to prepare](help:setup.before.prepare)
+- [Decisions that are hard to undo](help:setup.before.permanent)
+- [Who does what](help:setup.before.who)
+
+### What DesKilo can do
+
+**Audience:** Owner · Co-owner
+
+You want a picture of the whole before you choose anything. DesKilo groups its features into nine processes; the **Features** screen shows one card per process with its state.
+
+![](assets/help/images/setup-before-processes.en.b8fa17aa9.jpg)
+
+*The nine processes, in plain words*
+
+| Process | What it gives a member |
+|---|---|
+| **Workspace & access** | A way in: join with the workspace ID, a role, a badge. |
+| **Space management** | A place that looks like the real one: floors, rooms, desks, opening times. |
+| **Reservations & usage** | Booking a desk or a room, checking in and out, seeing what is free. |
+| **Calendar & coordination** | A calendar, messages and requests that someone confirms. |
+| **Membership commerce** | A plan, service prices and agreements. |
+| **Billing & payments** | A statement, invoices, payment, reminders, VAT. |
+| **Documents & information** | Documents to read, reports to print, their own data to export. |
+| **Operations & administration** | A space that carries its own colours and words. |
+| **Integrations & automation** | Notifications and documents delivered through outside services. |
+
+**Good to know**
+
+- A new space starts with a sensible set of features on; you do not have to decide on them one by one. Switching a feature off stops new business only and deletes nothing.
+- A feature that needs another one switches it on with it, and the screen names what came on. See [A feature switch](help:user.features.switch).
+- Features marked alpha or beta ask for your consent when you switch them on.
+
+**See also:** [Switch features on and off](help:user.features.processes)
+
+### What is necessary and what is optional
+
+**Audience:** Owner · Co-owner · Administrator
+
+You want to know the shortest road to a space people can book. The app keeps a readiness list called **Setting up this space** and, on the Reserve screen, tells owners **Before anyone can book here** what is missing.
+
+*What must be there before the first booking*
+
+1. **Opening days, time zone and currency**: a time zone, a currency and at least one open weekday.
+2. **Bookable places on the floor plan**: at least one seat.
+3. **Roles and who validates requests**: counted only when a policy on reservations asks for more validators than the space has. A rule asking for two approvals with only you in the space would leave requests waiting for ever.
+
+A fourth row, **Server and database version**, blocks only when the server is behind this app; it then waits for the server operator.
+
+*What is optional, and can be set aside for later*
+
+- **Membership plans and tariffs**
+- **Invite the first members**
+- **How members pay**
+- **Export and recovery**
+- **Details your features need (identity, bank, platforms)**
+- **A first booking**
+
+Each of these can be set aside with **Later** and brought back; the list says whether a step is **Needs configuration**, **Ready**, **Not needed here** or **Waiting for someone else**. Two more states exist: **Not verified yet** (**Export and recovery** turns Ready only after a real export in the last 90 days) and a row that could not be read.
+
+**Good to know**
+
+- The list names who acts: **You**, **The server operator** or **A database administrator**.
+- Optional does not mean unimportant: once you invoice, your legal identity is required for that feature. The list calls it a detail your features need.
+- If you switch invoicing on without legal identity, the app lets you; it refuses at the moment of issuing an invoice, and says what is missing.
+
+**See also:** [Check your space](help:setup.place.check) · [The Get started card and the tips](help:user.start.get-started)
+
+### A test space or a real one
+
+**Audience:** Owner · Co-owner · Operator
+
+You want to try things without consequences, then run the real space. A space can be a test, a real one, or a linked pair with the same name.
+
+![](assets/help/images/setup-before-environment.en.b8fa17aa9.jpg)
+
+| Option | Choose it when | What happens |
+|---|---|---|
+| **One test workspace** | You are learning. | Every screen and document says it is a test: documents carry a watermark. No real billing. |
+| **One real workspace** | You know your settings. | The invoices it issues are owed. |
+| **A linked test and real pair** | You want to rehearse changes before the real members see them. | Two spaces, both yours. Only a deployment moves configuration from one to the other; members, bookings, invoices and payments never travel. |
+
+**Good to know**
+
+- The selector starts on the test option.
+- The environment is a statement by the owner; anyone with the configuration permission (the owner always) can change it later, and invoices already issued keep the watermark they carried, so start with a test space if you are unsure.
+- To practise with no space of your own, use the demo workspace.
+
+**See also:** [A space has two sides](help:user.advanced.environments) · [Create a workspace](help:user.start.create) · [A test space](help:user.advanced.test-space)
+
+### Start from a template or from nothing
+
+**Audience:** Owner
+
+You want a head start without being locked into someone else's choices. When you create a space, **Start from** offers **Empty space** or a ready-made template, and is preselected on *A tiny space*; choose *Empty space* if you want a blank canvas.
+
+![](assets/help/images/setup-before-template.en.b8fa17aa9.jpg)
+
+*The two built-in templates*
+
+| Template | What it sets up |
+|---|---|
+| A tiny space | Two levels, four desks, eight seats, nothing else: enough to book, scan and browse from the first minute. |
+| Association de coworking (France) | Half days 7:00–13:00 and 13:00–19:00, Monday to Friday, public holidays, 50 % and 100 % memberships, two prepaid books of half-days (10 and 20), board roles (treasurer, secretary, room steward), a calendar for validations, and two floors ready to book. It also sets the workspace language to French and the VAT regime to *not subject to VAT*; only three words are renamed (Place, Étage, Réservations). The template's name is French in every app language. |
+
+**Good to know**
+
+- A template never carries your legal identity, bank details, sites, invitations or document links: those are yours, and the readiness list names them as details your features need.
+- A template-created space can have invoicing on and nothing to issue with until you add the identity.
+- Applying a template to a space that already has tariffs replaces its fee bands: use it on a new space.
+
+**See also:** [Create a workspace](help:user.start.create)
+
+### What to prepare
+
+**Audience:** Owner
+
+You want the facts at hand so that setting up takes minutes, not days. Gather these first.
+
+**Before you start**
+
+- [ ] The **legal identity**: association or company, registered name, address, registration and VAT numbers if you have them.
+- [ ] An **accountant** (or someone who will confirm tax choices): invoices and VAT are the part to check with a professional.
+- [ ] A tariff idea: free, a flat membership, or a percentage of days with a monthly fee.
+- [ ] **Bank details** members will pay to (IBAN and BIC, or the method used in your country).
+- [ ] A list of the first people: names and e-mail addresses, and who will approve requests.
+- [ ] A floor plan sketch: floors, rooms, how many desks and seats, and whether a whole room can be booked.
+- [ ] Your opening days and hours, and the days you close.
+
+**Good to know**
+
+- You can open without the legal identity and the bank details; you need them before the first invoice.
+- Write the sketch on paper first. The app draws floors, rooms, desks and seats; it is faster to enter a plan you have already thought through.
+
+**See also:** [Prepare a space with the setup questionnaire](help:user.start.questionnaire)
+
+### Decisions that are hard to undo
+
+**Audience:** Owner · Co-owner
+
+You want to know which choices to slow down for. Most settings can be changed any day. These cannot, or not cleanly.
+
+> **Careful** An issued invoice never changes, and its number is never reused. If you are wrong, you correct with a cancellation, a credit note or a refund request, not with an edit.
+
+| Decision | When it becomes permanent | What to do instead |
+|---|---|---|
+| Invoice number format and sequence | The next number can be raised, never lowered. After the first invoice you can no longer print less of the date than the series shows. | Preview the format, ask your accountant, then issue. |
+| The month of an issued invoice | Once a member's month is invoiced it is locked; closure days and public-holiday imports skip it. | Set closure days before month-end. |
+| VAT regime and rates | Rates are versioned by date and never edited; a submitted VAT declaration is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
+| Country, currency, time zone | Amounts are stored as numbers with no conversion, so changing the currency once money exists is unsafe. | Choose them right on day one; see [Build the place](help:setup.place.overview). |
+| Floor plan replacement | Importing a plan is refused once reservations exist. | Edit floors and rooms one by one in the editor. |
+| Workspace ID | It is what members type and what the printed QR codes point to. You can change it (4 to 20 letters or digits) with **Change workspace ID**, but the old ID stops working at once. | Choose a short, memorable ID before you print anything; change it early if you must. |
+| Test or real | A real space issues invoices that are owed; dev documents are watermarked. | Start in a test space, deploy when ready. |
+| A rule that needs more validators than you have | Requests wait for ever. | Count your validators before you require two. |
+
+**Good to know**
+
+- Switching a feature off never erases data.
+- Deleting a floor removes every office, desk and seat on it.
+
+**See also:** [Money](help:setup.money.permanent)
+
+### Who does what
+
+**Audience:** Owner · Co-owner · Administrator · Operator
+
+You want to know whom to call for what. Three people can be involved, and the readiness list names them.
+
+| Who | What they do |
+|---|---|
+| **Owner** (and *Co-owner*) | Everything about the space: floors, hours, features, roles, tariffs, legal identity, invitations, deployments. Co-owners hold every permission by default; the owner decides what administrators may do. |
+| **Operator** | Runs the installation: the server and its secrets, and the database updates. Needed to make push notifications work, and for anything the readiness list calls **Waiting for someone else**. |
+| **Database administrator** | Approves a member's access for assistants. |
+
+**Good to know**
+
+- On a shared installation the operator is usually the platform's, not you.
+- Administrators act within the permissions the owner gave them in the [role matrix](help:user.roles.matrix).
+- If a section says **The server operator**, the app cannot do it from your screen.
+
+**See also:** [Decide who may do what](help:user.roles.matrix) · [Deploy permissions](help:user.advanced.deploy-permissions)
+
+## Build the place
+
+This chapter makes the first level, **Open**: where the space is, what it looks like, when it is open and what the rules of booking are. In about twenty minutes the space can be booked. The example is *Atelier du Marché*, an association in Pézenas with two floors and a room.
+
+In this chapter:
+- [Country, currency, time zone and language](help:setup.place.where)
+- [The floor plan](help:setup.place.plan)
+- [Opening times and booking rules](help:setup.place.times)
+- [Closing days and public holidays](help:setup.place.closure)
+- [Check your space](help:setup.place.check)
+
+### Country, currency, time zone and language
+
+**Audience:** Owner · Administrator
+
+You want the space to know where it lives. These four choices drive more than they seem to.
+
+![](assets/help/images/setup-place-country.en.b8fa17aa9.jpg)
+
+*What each choice drives*
+
+| Choice | What it decides |
+|---|---|
+| **Country** | The currency and time zone it proposes, and the public holidays offered as closure days (see below). |
+| **Currency** | How every amount is shown and counted. |
+| **Time zone** | What a working day, a half-day boundary and a closure day mean; a member abroad sees the space's day. |
+| **Workspace language** | The language invitations and shared message references are written in by default. |
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings) and go to **General details**.
+2. Pick the **Country**; the **Currency** and **Time zone** follow, and you can correct them. For Atelier du Marché: France, EUR, Europe/Paris.
+3. Pick the **Workspace language**, then tap **Save**.
+
+> **Careful** Choose country and currency right on day one. Amounts are stored as plain numbers, so changing the currency after money exists would mislabel everything already counted.
+
+**Good to know**
+
+- The app lists many countries, but issuing invoices inside DesKilo works for France and Germany only today. Elsewhere you keep statements and issue invoices outside the app.
+- The workspace language is not your own app language, which is in your personal settings.
+
+**See also:** [Country](help:user.workspace.settings.country) · [Currency and time zone](help:user.workspace.settings.currency-timezone) · [Workspace language](help:user.workspace.settings.language)
+
+### The floor plan
+
+**Audience:** Owner · Administrator
+
+You want the plan on screen to look like the real place. It is built in four layers: levels, then offices (rooms), then desks, then seats. A member books a seat; a seat is what the readiness list counts.
+
+![](assets/help/images/setup-place-rooms.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Sketch on paper: floors, rooms, desks, seats.
+2. Open [Workspace editor](app:/editor) and add the floors with **Add level**.
+3. Open a floor and draw each room with **Office**, then **Desk** and **Seat** inside it.
+4. If a team may take a room or a floor for a day, switch on whole-room booking in its properties.
+
+**Good to know**
+
+- Start small: a first floor, one room, a few seats. Everything can be added afterwards.
+- A whole floor, office or desk can be booked only if **Desk, office & level reservations** is on and the member has the permission.
+- The built-in template A tiny space gives you two levels, four desks and eight seats to adjust.
+- Deleting a floor removes everything on it, and a plan import is refused once reservations exist.
+
+**See also:** [Add, rename and delete floors](help:user.space.editor.levels) · [Draw rooms, desks and seats](help:user.space.editor.rooms) · [Let members book a whole floor](help:user.space.editor.level-booking)
+
+### Opening times and booking rules
+
+**Audience:** Owner · Administrator
+
+You want bookings to follow the rhythm of your place. One screen, **Availability**, holds the days, the shape of a booking, the working hours and the rules. The server applies them everywhere: plan, booking sheet, scanned codes and kiosk.
+
+![](assets/help/images/setup-place-availability--times.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Availability](app:/availability).
+2. Choose the **Open weekdays** (at least one) and the **Booking granularity**.
+3. Set the **Working hours**: **Day starts**, **Half-day boundary**, **Day ends**.
+4. Under **Booking policies**, decide on **Allow past bookings**, **Outside the opening hours** and the **Booking limits**.
+
+![](assets/help/images/setup-place-availability--rules.en.b8fa17aa9.jpg)
+
+*Recommended starting points (suggestions, not rules; the default for **Outside the opening hours** is **Charged**, and the association template does not change it)*
+
+| Scenario | Granularity | Hours | Outside hours | Past bookings | Limits |
+|---|---|---|---|---|---|
+| A few shared desks | **Free time period** or **1-hour slots** | Day 8:00–17:00 | **Free** | Off | One booking at a time; horizon 30 days |
+| An association room (Atelier du Marché) | **Half days (morning & afternoon)** | 7:00, boundary 13:00, end 19:00 | **Off** | Off | One booking at a time; horizon 90 days |
+| A coworking with half-days | **Half days (morning & afternoon)** | 8:00, boundary 12:00, end 18:00 | **Charged** | Off | One or two at a time; horizon 90 days |
+
+**Good to know**
+
+- Outside the opening hours, **Off** refuses everything, **Spontaneous only** allows walk-ups, **Free** allows without counting, **Charged** counts like ordinary usage except on a day the member already holds a regular booking.
+- The day must run in order: start, then boundary, then end; the minimum duration cannot exceed the maximum.
+- A booking ends on the day it starts. Past bookings are off by default; booking an earlier window on the same day is always allowed.
+- Half-day and full-day windows also drive check-in and invoicing, so settle the hours before you set prices.
+
+**See also:** [Open weekdays](help:user.workspace.availability.open-weekdays) · [Granularity](help:user.workspace.availability.granularity) · [Working hours](help:user.workspace.availability.working-hours) · [Outside the opening hours](help:user.workspace.availability.outside-hours) · [Booking limits](help:user.workspace.availability.limits)
+
+### Closing days and public holidays
+
+**Audience:** Owner · Administrator
+
+You want the space to be shut on holidays without anyone booking them by mistake.
+
+![](assets/help/images/setup-place-availability--closure.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. In [Availability](app:/availability), go to **Closure days**.
+2. Tap **Add public holidays** (if you do not see it, switch on the feature *Public holidays* first; it is off by default) to create a whole year in one go, or **Add closure day** for a single date such as an inventory day.
+3. Check the list and remove any day you actually work.
+
+**Good to know**
+
+- Built-in holiday lists exist for France and Germany. For other countries switch on *Public holidays* and *Import public holidays* (open data, needs a connection). Nothing is created before you confirm.
+- A booking on a closure day is refused, and the plan shows the day as closed with its reason.
+- Months that are already invoiced are skipped, so add closure days before the month closes.
+
+**See also:** [Closure days](help:user.workspace.availability.closure-days) · [Public holidays](help:user.workspace.availability.public-holidays)
+
+### Check your space
+
+**Audience:** Owner · Administrator
+
+You want proof that the space is ready, before you invite anyone. Two cards say so.
+
+![](assets/help/images/setup-place-get-started--card.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings): the card **Setting up this space** lists each area with its state, and the next step.
+2. Open [Reserve](app:/reserve). Owners and administrators with the configuration permission see the card **Get started in** your space. If something is missing it says **Before anyone can book here**, with **Finish setting up**.
+3. Book one seat yourself as a test, then cancel it.
+
+**Good to know**
+
+- Ready means ready for a first booking: opening days, time zone, currency, at least one seat, and enough validators.
+- Anything optional, such as tariffs or payments, can be set aside with **Later** and does not block opening.
+- Both cards depend on the feature *Get started card*.
+- **Not now** hides the card on this device; the view menu on the plan brings it back with **Get started**.
+
+**Result** A space that members can book. Next: invite the first people, then the roles and tariffs of the second level.
+
+**See also:** [The Get started card and the tips](help:user.start.get-started) · [Invite people with the workspace ID](help:user.workspace.code) · [Roles](help:user.roles.matrix)
+
+## Choose what your space offers
+
+A space is not one product with a hundred settings. It is a handful of things you decide to offer, one at a time. This chapter explains how DesKilo groups what it can do, what a new space already has, how the pieces depend on each other, and in which order to switch them on so that you never offer something you cannot yet run.
+
+In this chapter:
+- [Features and processes](help:setup.features.what)
+- [Core and Platform: what a new space has](help:setup.features.tiers)
+- [Features that need other features](help:setup.features.dependencies)
+- [Switching off deletes nothing](help:setup.features.off)
+- [Beta, Unreviewed and the question before you switch on](help:setup.features.maturity)
+- [Three starting points](help:setup.features.profiles)
+- [The order to switch things on](help:setup.features.order)
+- [Switch a feature on safely](help:setup.features.safely)
+- [Avoid features that contradict each other](help:setup.features.consistency)
+- [The feature map](help:setup.features.map)
+
+### Features and processes
+
+**Audience:** Owner · Co-owner
+
+You want to know what you are switching when you open **Features**. Everything DesKilo can do beyond the basics is a feature with its own switch. To keep a hundred switches readable, the screen groups them by what they are for.
+
+![](assets/help/images/setup-features-what.en.b8fa17aa9.jpg)
+
+*How it is organised*
+
+- A **process** is a business job: for example **Billing & payments** or **Calendar & coordination**. There are nine.
+- A **subprocess** is a step of that job: **Invoicing**, **Payment collection** and **VAT management** are three of the five steps of **Billing & payments**.
+- A **feature** is one switch inside a subprocess: **Invoices**, **Payment reminders**, **VAT declarations**.
+
+*The nine processes and their subprocesses*
+
+| Process | Subprocesses |
+|---|---|
+| **Workspace & access** | **People & membership** · **Physical access** |
+| **Space management** | **Space structure** · **Opening days & hours** · **Space presentation** |
+| **Reservations & usage** | **Booking desks & spaces** · **Attendance & usage** |
+| **Calendar & coordination** | **Calendar views** · **Decisions & approvals** · **Member communication** |
+| **Membership commerce** | **Services & pricing** |
+| **Billing & payments** | **Financial records** · **Invoicing** · **Payment collection** · **Shared expenses** · **VAT management** |
+| **Documents & information** | **Document publication** · **Report design** · **Personal data access & exports** |
+| **Operations & administration** | **Configuration & deployment** · **Application experience** |
+| **Integrations & automation** | **External delivery** |
+
+**Good to know**
+
+- A feature belongs to exactly one process, even when it needs a feature of another. The card says so: "Switching it all on also needs: Money tab (Billing & payments)".
+- Membership plans and the floor plan editor are not features: they are always there. Their settings sit in Workspace and Billing, not on this screen. Prepaid carnets are a feature: see **Carnets**.
+- Switching a feature off hides it from every screen where it appeared; it is not a permission. Who may do what is decided in [Roles](help:user.roles.matrix).
+
+**See also:** [What DesKilo can do](help:setup.before.what) · [Switch whole processes on or off](help:user.features.processes)
+
+### Core and Platform: what a new space has
+
+**Audience:** Owner · Co-owner
+
+You want to know what members find on the first day, before you have switched anything.
+
+![](assets/help/images/setup-features-tiers.en.b8fa17aa9.jpg)
+
+Every feature belongs to one of two tiers, and a new space is created from them:
+
+| Tier | In the app's words | What a new space gets |
+|---|---|---|
+| **Core** | What every space needs. On from the first day. | On, when the feature is meant to be on at the start. |
+| **Platform** | Asked for, never assumed. Switch on what this space actually runs. | Off. In **Switches**, they are listed under the **Platform** tier. |
+
+A new space starts with 45 features on, all of them Core (46 if you create the test twin at the same time: **Environment pairs** is then on as well). In plain words:
+
+- Booking: reserve a seat on the plan, repeat a booking (**Series booking**), book for someone else (**Book for others**), see a half-booked seat as part-filled (**Seat day timeline**), save a booking to a personal calendar (**Calendar file of a booking**), booking rules such as past bookings and outside hours (**Booking policies**, **Booking gate**), request the deletion of a past booking (**Booking deletion requests**), print QR cards for places (**Space QR codes**), configurable working hours (**Working hours**).
+- People: the community tab (**Members directory**), one page per member (**Member page**), the central role matrix (**Role management** and **Giving roles**), personal details for letters and invoices (**Personal information**), distinct initials on avatars (**Distinct avatar initials**).
+- Calendar and messages: the calendar in several views (**Calendar tab**, **Calendar hub**, **Calendar views**), the activity feed and confirmations (**Events tab**), private and group conversations (**Member notifications**, **Messages, reworked**) with references, forwarding, mentions, swipe gestures and screen-capture protection, the grouping of the notification feed (**Notification feed grouping**), and the button to write to the hosts of a published page (**Write to the hosts**).
+- Money: the Finances tab with its four faces (**Money tab**, **Finances in four faces**), invoices (**Invoices**), a service catalogue (**Services**), a PDF of the monthly bill (**PDF export**).
+- Documents and data: the document library (**Document library**), data export for the owner (**Data export (Excel)**), and each member's own export and erasure (**Export & erasure**).
+- Comfort: help hints, the Get started card, favourites and ratings for places, animations, regional formats and the choice of navigation style.
+- Delivery: **Push notifications**, which only reach phones once whoever runs the installation has set up the push service (see [How members are told](help:setup.notify.channels)).
+- Plan tidying: **Delete spaces with history** and **Name a single-room level by the level**.
+
+Everything else is Platform and off: kiosk and badges, several sites, accessory supplements, online payments, VAT management, the invoice journey, report design, deployments, WhatsApp, the assistant interface and the rest.
+
+**Good to know**
+
+- The invoices feature is on from the start, but nothing can be issued until your legal identity is complete. See [Avoid features that contradict each other](help:setup.features.consistency).
+- A space that already exists never changes when DesKilo changes what a new space gets.
+- If you start from a template, the template can switch a few features on or off on top of this set. See [Three starting points](help:setup.features.profiles).
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### Features that need other features
+
+**Audience:** Owner · Co-owner
+
+You want to switch something on and be sure it works, or switch something off without breaking what hangs from it.
+
+Many features sit under another one. **Online payments** needs **Money tab**; **Payment reminders** needs **Invoices**; **Automatic payment reminders** needs **Payment reminders**; **VAT declarations** needs **VAT management**, which needs **Invoices**. In the **Switches** list a feature that needs another one shows **Requires** followed by the name of its parent.
+
+**What the app does**
+
+| You | The app |
+|---|---|
+| Switch a feature on whose parent is off | Switches the whole chain on, and names what came on with it: "Also switched on: …". |
+| Switch a parent off | Does not erase its children's choices. They are stored as you set them, but they do nothing; the row says "Waiting on the feature above — switch that on and this one works again". |
+| Switch the parent on again | The children that were on work again at once. |
+| Switch a whole process or subprocess off while something still needs it | Refuses and names who needs it ("… is still needed by: …"), unless you choose **Switch off anyway, keep their settings** or to switch the dependants off too. |
+
+**Good to know**
+
+- A child that is on but waits for its parent makes its process show **Needs attention**. That is the one state in which a switch and the app disagree, so it is worth a look. See [Switch a feature on safely](help:setup.features.safely).
+- A parent can be in a different process from its child: **Services** (Membership commerce) needs **Money tab** (Billing & payments). The card then warns that switching it all on also needs the other.
+- The check is made on the feature, not on a permission: a role that may do something is never enough if the feature is off.
+
+**See also:** [A feature switch](help:user.features.switch) · [Switch whole processes on or off](help:user.features.processes)
+
+### Switching off deletes nothing
+
+**Audience:** Owner · Co-owner
+
+You want to change your mind later, so you need to know what a switch does not touch.
+
+Switching a feature off stops new business. It does not delete a single record: invoices, bookings, messages, roles and settings stay where they are, and switching the feature on again brings them back. Something already done stays done: an invoice issued while the feature was on keeps what it says.
+
+Behind this, DesKilo sorts the actions of a switchable feature into three kinds:
+
+| Kind | What the switch does to it | Example |
+|---|---|---|
+| New work (*acceptNew*) | Stops when the feature is off. | Starting a new conversation with the hosts; giving a member a custom role; blocking a seat; starting a new online payment. |
+| Work already open (*serviceExisting*) | Carries on, so nothing is left hanging. | Answering a conversation already started; taking a custom role back; lifting a seat block; settling a payment already open. |
+| Unsafe paths (*suspended*) | Stay shut whatever the switch says. | Reserved for a path the server judges unsafe; no action is classed this way today. |
+
+Three features say it on their row, in these words: "Off: nothing new starts; what is already open can still be answered and closed." They are **Write to the hosts**, **Roles this space defines** and **Admins can block seats**. **Auto check-in/out at day end** also stops its end-of-day sweep when it is off, but its row does not say so. On a server that cannot confirm this, the row says "do not count on it".
+
+**Good to know**
+
+- Money already committed is always settled: a payment return or a refund is never blocked by a switch.
+- With **Online payments** off, the server refuses a new online payment; one that is already open still settles. Its row carries no note about this.
+- A switch is not a way to hide something from one person. Use [Roles](help:user.roles.matrix) for that.
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### Beta, Unreviewed and the question before you switch on
+
+**Audience:** Owner · Co-owner
+
+You see a small word under a feature's name and you want to know what to do with it.
+
+![](assets/help/images/setup-features-maturity.en.b8fa17aa9.jpg)
+
+Each row of **Switches** carries a maturity badge, which says how far the feature has been reviewed against evidence:
+
+| Badge | It means |
+|---|---|
+| **Unreviewed** | Nobody has yet assessed it against evidence. It says nothing bad about it. |
+| **Alpha** | Assessed, at an early stage. |
+| **Beta** | Assessed, with known limits; its tests run on every change. |
+| **Stable** | Assessed, and also qualified with real providers, hardware or operators. |
+
+At the time of writing most features read **Unreviewed**, eighteen read **Beta**, and none has reached **Stable** yet.
+
+*What the app asks*
+
+1. Flip the switch of an **Alpha** or **Beta** feature.
+2. The app asks **Switch on an experimental feature?** and says: "Not yet reviewed as stable: … It may change and has known limits. Switch on only if this space accepts that."
+3. It names the stage of each feature and the features that would come on with it because they are needed.
+4. Tap **Switch on** to accept, or **Cancel**: nothing is written.
+
+**Good to know**
+
+- **Unreviewed** features do not ask. Only **Alpha** and **Beta** ask.
+- The question is asked on a single switch. A whole-process **Switch on** shows what it will switch on, but does not ask this question: switch **Beta** features one by one.
+- Beta features at the time of writing include **Invoices**, **Online payments**, **VAT management**, **Carnets**, **Shared expenses**, **Usage records**, **Booking policies**, **Series booking**, **Booking gate**, **Booking deletion requests**, **Finances in four faces**, **Supplies from expenses**, **Validators by role or person**, **Chained validations**, **Auto check-in/out at day end**, **Data export (Excel)**, **E-invoice delivery to customers** and **Demo workspace**. Read each feature's limits with **More** before you rely on it for money.
+- Several of these are Core and already on in a new space. They start on without the question; it appears only when you switch one back on.
+- **Maturity** narrows the list to one stage, which is a quick way to see everything experimental that your space already uses.
+
+**See also:** [A feature switch](help:user.features.switch)
+
+### Three starting points
+
+**Audience:** Owner · Co-owner
+
+You do not want to decide a hundred things. Here are three realistic starting points; each one lists exactly what is on. Pick the nearest, then adjust.
+
+The first needs no template. The second is the ready-made template of the app. The third is built from the features themselves. They are named after what they offer, not after a size.
+
+### A few shared places
+
+**Audience:** Owner
+
+You run a handful of desks or rooms that people book, and nothing else yet. Create the space with **Empty space** or the template "A tiny space" under **Start from**: two levels, four desks and eight seats, enough to book, scan and browse.
+
+The template sets no features, so the space has exactly the 45 Core features of [Core and Platform](help:setup.features.tiers). Nothing is switched on beyond that. For this profile, leave the rest alone:
+
+- Booking, calendar, messages, directory, QR cards for places, the document library and help hints are all there.
+- **Money tab** and **Invoices** are on, but until you enter your legal identity and tariffs they only show an empty statement.
+- Nothing needs configuring outside the plan and the opening hours. See [Your place](help:setup.place.overview).
+
+> **Tip** If you never charge anything, you can leave the money features on without harm: members just see nothing to pay.
+
+### An association with a room
+
+**Audience:** Owner
+
+You are a French association that shares a room, with a bureau, members who pay a fee, and half-day bookings. Choose the template "Association de coworking (France)" under **Start from**. It sets up the opening rules, fee bands at 50 % and 100 %, two prepaid packs, the roles of the bureau, French wording and two floors, and it carries this feature profile:
+
+- The 45 Core features, **except** four it switches **off**: **Events tab**, **Members directory**, **Member page** and **Notification feed grouping**. A small association does not need a feed of events or a directory beside its conversations.
+- Four it switches **on**, because the bureau needs them: **Validations on the calendar** (decisions shown on the calendar), **Carnets** (prepaid half-days for people who do not subscribe, Beta), **Roles this space defines** (treasurer, secretary, room referent) and **Workspace vocabulary** (the association's own words).
+
+That is 45 − 4 + 4 = 45 features on. The template carries no identity, so the address, the registration number and the bank details stay yours to enter, and the VAT regime starts as "not subject".
+
+**Good to know**
+
+- Carnets is Beta and is switched on by the template without the question; that is the template's choice, and you can switch it off.
+- The template leaves **Invoices** on from the Core set. An association that does not invoice can leave it.
+
+### A coworking that invoices
+
+**Audience:** Owner
+
+You rent desks to members and send them invoices every month, in France or Germany. There is no ready-made template, so this profile is a list of what to add to the Core set, in this order. Everything in it chains from **Money tab** and **Invoices**, which are already on.
+
+| # | Switch on | Why | Needs |
+|---|---|---|---|
+| 1 | **Number sequences** | Decide how documents are numbered before the first one exists. | **Invoices** |
+| 2 | **Subscription invoices** | The membership fee is invoiced before the month it pays for. | **Invoices** |
+| 3 | **Usage records** | A record of the time really used (Beta). | **Invoices** |
+| 4 | **End-of-month invoices** | What the month cost beyond the subscription is invoiced separately. | **Invoices** |
+| 5 | **Invoicing wizard** | One guided month-close for whoever does the billing. | **Invoices** |
+| 6 | **The journey of an invoice** | Every invoice shows where it stands and whose move it is. | **Invoices** |
+| 7 | **Invoice PDF template** | Your own introduction and footer text on the PDF. | **Invoices** |
+| 8 | **Member reports** | The financial agreement and the monthly payments report for members. | **Money tab** |
+| 9 | **Payment reminders** | Reminder levels, a letter per level, "Reminder due" on late invoices. | **Invoices** |
+| 10 | **Consumption report** | A letter at month end with what was used. | **Usage records** |
+
+Then add only what applies to you:
+
+- **VAT management** (Beta) if your space is registered for VAT. Then **VAT declarations**, and **VAT rate versions** and **VAT groups** if your accountant asks for them.
+- **Admins issue invoices** if you want a billing administrator to issue them. The owner always can.
+- **Online payments** (Beta) only when you have a payment provider to connect.
+- **Automatic payment reminders** only after you read [what it does](help:setup.money.reminders).
+- **Accessory supplements**, **Carnets** and **Shared expenses** when you bill those things.
+
+**Good to know**
+
+- Before the first invoice, complete your legal identity and VAT. See [Legal identity and invoicing](help:setup.money.identity).
+- Issuing here works for spaces in France and Germany only.
+- Switch these on one at a time and issue a test invoice in a test space first. See [The order to switch things on](help:setup.features.order).
+
+**See also:** [Money and invoicing](help:setup.money.overview) · [Start from a template or from nothing](help:setup.before.template)
+
+### The order to switch things on
+
+**Audience:** Owner · Co-owner
+
+You want to avoid the day on which everything is on and nothing works. Go one process at a time, and look at each from a member's side before you move on.
+
+![](assets/help/images/setup-features-order.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Keep the Core set and make the basics work: the places, the opening hours, one tariff. See [Your place](help:setup.place.overview).
+2. Open [Features](app:/features) and open one process card. Choose the process that matches your next need, not the one that looks most complete.
+3. Tap **Switch on** for a subprocess, or open a single feature among **Switches**.
+4. Read the preview: what is **Also needed**, what is already on.
+5. Look at it as a member: sign in as one (a second account, or the test side of your space) and do what a member would do.
+6. Only then move on to the next process.
+
+*A sensible order*
+
+| Step | Process | Why this place in the order |
+|---|---|---|
+| 1 | **Space management** | Nothing can be booked without a place and opening hours. |
+| 2 | **Reservations & usage** | Booking rules shape everything after them. |
+| 3 | **Workspace & access** | Roles and who validates, before the first invitation. |
+| 4 | **Calendar & coordination** | Messages and validations need people to exist. |
+| 5 | **Membership commerce**, then **Billing & payments** | Prices before invoices; legal identity before the first invoice. |
+| 6 | **Documents & information**, **Integrations & automation** | They dress and deliver what the others produce. |
+| 7 | **Operations & administration** | Pairs, deployments and transfers once the space is worth copying. |
+
+**Good to know**
+
+- Switching on is cheap and switching off deletes nothing, so a wrong step costs time, not data. The exception is anything that issues an invoice: see [Decisions that are hard to undo](help:setup.before.permanent).
+- A test space is the right place to try a process. See [A test space or a real one](help:setup.before.environment) and [A test space](help:user.advanced.test-space).
+- Invite members last, after the roles, the validation rules and the tariffs they will meet.
+
+**See also:** [Switch whole processes on or off](help:user.features.processes)
+
+### Switch a feature on safely
+
+**Audience:** Owner · Co-owner
+
+You are about to change a feature and you want to see the effect before it exists.
+
+![](assets/help/images/setup-features-safely.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Features](app:/features). The **Processes** view is shown.
+2. Tap **Needs attention**. Only the processes holding something that is on but waiting remain.
+3. Open a card. A feature **On, waiting for** a named parent is the thing to fix.
+4. Fix it by switching the parent on, or by switching the feature off.
+5. To change one feature, tap **Switches**, find it with **Search features** and flip its switch.
+6. Read the question or the "Also switched on" line, and confirm.
+
+*What "held back" means*
+
+A feature is held back when you chose it but something it needs is off. Its own switch stays on, which is why it is easy to miss: the screen says the feature is on, and the app does not offer it. The card says how many features are held back ("… on but wait for a switched-off prerequisite") and which prerequisite they wait for, and you fix it in [Features](app:/features) itself.
+
+Other things a feature can wait for are not on this screen. A feature can be on and fully allowed while its details are missing: your legal identity, a site, a payment provider. Those appear in **Setting up this space**, under **Details your features need (identity, bank, platforms)**, at the top of the workspace settings.
+
+**Good to know**
+
+- If somebody else changed the features while you were looking, the app writes nothing and says so: "The features changed meanwhile, so nothing was written." Look at the list again and switch again.
+- **Changed** counts the switches that differ from the registry default. On a new space it already shows a number (the Platform features that start off), so it is not a count of your own changes.
+- Nobody but an owner or co-owner can write features. The server checks again at the moment of writing.
+
+**See also:** [Switch whole processes on or off](help:user.features.processes) · [A feature switch](help:user.features.switch)
+
+### Avoid features that contradict each other
+
+**Audience:** Owner · Co-owner · Billing administrator
+
+You want to know which combinations leave a space half-working, and which of them the app catches for you.
+
+The app has guards for some contradictions and none for others. In the table, a guard is what the app does; a gap is what stays your responsibility.
+
+| If you have… | Guard in the app | Gap that remains |
+|---|---|---|
+| **Invoices** on, no legal identity | Issuing is refused, with **Complete these details before issuing** listing the missing address, VAT number and so on. The need also shows in **Setting up this space**. | The feature is on from the first day, so nothing prevents inviting members and running a month before the identity exists. |
+| A country other than France or Germany | Issuing says the country "must be France or Germany for issuing here". | Nothing warns you when you choose the country or switch invoicing on. |
+| Registered for VAT, no rate in force | Issuing is refused until a rate is in force. | With **VAT management** off, the configuration is hidden while the stored rates keep applying. Check the rates after switching it off. |
+| **Online payments** on, no provider | A new online payment is refused when the feature is off; the missing provider shows in **Setting up this space**. | You can switch it on without a provider. Connect it first: [Payment provider](help:user.money.payments.provider). |
+| **Kiosk mode** on, no badges and no kiosk member | **RFID / NFC badges**, **QR badges**, **Member photos at the kiosk** and **Sign in with a badge** cannot be on without it. | Nothing checks that a kiosk member exists or that a badge has been issued. See [Run a wall tablet](help:user.kiosk.mode). |
+| **Sites** on, no site | **At least one site** appears among the details your features need. | The switch can be on with no site. |
+| **Push notifications** on, no push service | Members still get everything in the app. | Phones receive nothing until whoever runs the installation has set up the push service. See [How members are told](help:setup.notify.channels). |
+| **Payment reminders** on, **Automatic payment reminders** on | The second cannot be on without the first. | The server's scheduler sends them each morning; if the database has no scheduler, they are sent when an administrator opens Finances. |
+| A validation rule asking more validators than exist | **Setting up this space** says "A policy asks for more validators than this space has", and it holds up the first booking when the rule is for reservations. | Other requests are created, cannot be completed and expire after seven days. See [Who validates](help:user.validation.overview). |
+| **Booking deletion requests** on, nobody to validate | Same readiness line. | Same gap. |
+| **Desk, office & level reservations** on | **Admins can assign levels** needs it. | Each member also needs the right; nothing checks that anybody has it. |
+| A child feature on, its parent off | **Needs attention**, and "Waiting on the feature above". | None: this one is fully covered. |
+| A space made from a template | The template names what is yours to enter (identity, bank, site). | It carries none of them, so a space can start with **Invoices** on and nothing to issue with. |
+
+**Good to know**
+
+- The rule of thumb: if a feature brings your name, your money or your legal duties onto a document, finish its details before you tell members.
+- **Setting up this space** is a list, not a lock. It never stops you from switching something on.
+- The check "Before anyone can book here" only speaks about what a booking truly needs: the time zone, the currency, an open weekday and at least one seat.
+
+**See also:** [Legal identity and invoicing](help:setup.money.identity) · [Dry run](help:setup.money.dry-run)
+
+### The feature map
+
+**Audience:** Owner · Co-owner
+
+You want one place that says, for the main features, what members get, what it needs and who has to set it up. "Needs" lists the feature above it first, then the details outside the Features screen. "Who" is the person who must do something before it is useful; "Nobody" means it works the moment it is on.
+
+*Workspace & access*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Members directory** | The community tab: who is here, statuses, presence. | | Nobody |
+| **Co-owners** | Owner permissions for appointed people, now or on succession. | | Owner |
+| **Role management** | The matrix of which role holds which permission. | | Owner |
+| **Giving roles** | A Roles section on each member page. | **Role management** | Owner |
+| **Roles this space defines** | Roles of your own, such as treasurer or secretary. | | Owner |
+| **Questions this space asks** | Your own questions in the identity form. | | Owner |
+| **Personal information** | Name, address, phone and ids that letters print. | | Members |
+| **Managed profiles** | Members without an account, booked and invoiced for. | **Members directory** | Administrator |
+| **Member page** | One page per member. | **Members directory** | Nobody |
+| **Guest visits** | A person who is not a member can ask to visit. | | Whoever admits visits |
+| **Kiosk mode** | A wall tablet locked to the live plan. | A tablet and a kiosk member | Owner |
+| **RFID / NFC badges** | Check in by tapping a card. | **Kiosk mode**, Android with NFC, issued badges | Owner |
+| **QR badges** | Printable QR badge cards. | **Kiosk mode** | Owner |
+| **Sign in with a badge** | Badge and PIN instead of typing an e-mail. | **RFID / NFC badges** | Owner, then each member |
+| **NFC/RFID chair tags** | A chip on a chair opens its seat. | Tags | Owner |
+| **Space QR codes** | Printable QR cards per place. | | Nobody |
+
+*Space management*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Sites** | Several addresses, each with its own registration. | At least one site | Owner |
+| **Delete spaces with history** | Owners can delete a place that has past bookings. | | Nobody |
+| **Admins can block seats** | Seats marked not reservable for maintenance. | | Owner |
+| **Working hours** | The working day and exact-hours booking. | | Owner |
+| **Public holidays** | Closure days from the holidays of a year. | | Owner |
+| **Import public holidays** | Holidays of a country or region imported. | **Public holidays** | Owner |
+| **Seat utilisation** | A monthly figure for how much was booked. | | Owner |
+| **Member photos on the plan** | Occupants' photos on seats. | | Nobody |
+| **Workspace vocabulary** | The space's own words for a few labels. | | Owner |
+| **Workspace colours** | The brand colour and room colours. | | Owner |
+| **Public workspace listing** | A public page with what you choose to show. | | Owner |
+
+*Reservations & usage*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Series booking** | Repeat a booking. | | Nobody |
+| **Book for others** | Admins book for members. | | Nobody |
+| **Desk, office & level reservations** | Book a whole desk, office or floor. | A right granted per member | Owner |
+| **Admins can assign levels** | Admins assign those reservations. | **Desk, office & level reservations** | Owner |
+| **Booking policies** | Past bookings, bookings outside hours, admin check-out. | | Owner |
+| **Booking gate** | Every surface checks the rules and names the reason. | **Booking policies** | Nobody |
+| **Auto check-in/out at day end** | Unchecked bookings complete themselves. | | Owner |
+| **Usage records** | The time really used, and a request to stop billing unused time. | **Invoices** | Billing administrator |
+
+*Calendar & coordination*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Calendar tab**, **Calendar hub**, **Calendar views** | Month, week and agenda, with everything dated. | | Nobody |
+| **Validations on the calendar** | Decisions shown when they were taken. | **Calendar hub** | Nobody |
+| **Events tab** | The activity feed and confirmations. | | Nobody |
+| **Notification feed grouping** | Notifications grouped in the feed. | | Nobody |
+| **Validators by role or person** | A rule can name who validates and how many. | | Owner |
+| **Chained validations** | Validations asked one after another. | | Owner |
+| **Booking deletion requests** | A member asks to delete a past booking. | A validator | Owner |
+| **Member notifications** | Private and group conversations. | | Nobody |
+| **Messages, reworked** | Inbox bar, pin, mute, archive, drafts. | | Nobody |
+| **Write to the hosts** | A person who finds your page can write to you. | A published page | Owner |
+| **Mentions in groups**, **Message forwarding**, **Screen capture protection** | Messaging extras. | **Member notifications** | Nobody |
+
+*Membership commerce*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Services** | A catalogue of things to consume and pay for. | **Money tab** | Billing administrator |
+| **Accessory supplements** | Priced seat accessories per half-day. | **Money tab** | Billing administrator |
+| **Price negotiations** | Conditions of their own for one member. | **Money tab** | Billing administrator |
+| **Payment conditions per member** | Payment terms of their own. | **Invoices** | Billing administrator |
+| **Carnets** | Prepaid half-days (Beta). | **Invoices**, a pack defined | Billing administrator |
+
+*Billing & payments*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Money tab** | The Finances tab: statement, payments, expenses. | | Nobody |
+| **Finances in four faces** | Statement, Payments, Invoices, Documents. | **Money tab** | Nobody |
+| **Member reports** | The agreement and the monthly payments report. | **Money tab** | Billing administrator |
+| **Invoices** | Immutable signed invoices (Beta). | **Money tab**, legal identity, VAT, FR or DE | Billing administrator |
+| **Admins issue invoices** | Administrators issue them too. | **Invoices** | Owner |
+| **Subscription invoices** | The fee invoiced before its month. | **Invoices**, a date | Billing administrator |
+| **End-of-month invoices** | Usage invoiced after the month. | **Invoices** | Billing administrator |
+| **Regroup invoices** | Several open invoices as one. | **Invoices** | Billing administrator |
+| **The journey of an invoice** | Where each invoice stands. | **Invoices** | Nobody |
+| **Invoicing wizard** | A guided month-close. | **Invoices** | Billing administrator |
+| **Number sequences** | Numbering per journal. | **Invoices** | Billing administrator |
+| **Online payments** | Pay online (Beta). | **Money tab**, a payment provider | Owner |
+| **Payment reminders** | Reminder levels and letters. | **Invoices**, rules | Billing administrator |
+| **Automatic payment reminders** | Reminders sent by themselves. | **Payment reminders** | Billing administrator |
+| **Supplies from expenses** | Supplies bought become services. | **Services** | Billing administrator |
+| **Scheduled expenses** | Recurring costs scheduled. | **Money tab** | Billing administrator |
+| **Shared expenses** | Costs shared between members. | **Invoices** | Billing administrator |
+| **Repartition wizard** | A guided split of a shared cost. | **Shared expenses** | Billing administrator |
+| **Accounting book** | Who keeps the official books. | **Invoices** | Billing administrator |
+| **VAT management** | VAT rates and pickers (Beta). | **Invoices**, VAT regime | Billing administrator |
+| **VAT declarations** | The periodic return. | **VAT management** | Billing administrator |
+| **VAT groups**, **VAT rate versions**, **VAT by counterparty** | Finer VAT handling. | **VAT management** | Billing administrator |
+
+*Documents & information, Operations, Integrations*
+
+| Feature | What it adds for members | What it needs | Who configures |
+|---|---|---|---|
+| **Document library** | Statutes, minutes, guides, per role. | | Owner |
+| **PDF export** | The monthly bill as a PDF. | | Nobody |
+| **Invoice PDF template** | Your texts on the invoice. | **Invoices** | Owner |
+| **Report designer**, **Positioned report layouts**, **Report texts** | Designed reports. | **Invoice PDF template** | Owner |
+| **Consumption report** | A monthly letter on what was used. | **Usage records** | Billing administrator |
+| **VAT report** | Every taxable line, with a CSV. | **VAT declarations** | Billing administrator |
+| **Data access log** | Members see who looked at their finances. | **Money tab** | Nobody |
+| **Data export (Excel)** | The owner exports the data as a workbook (Beta). | The permission **Export accounting and data** | Owner |
+| **Export & erasure** | A member exports and erases their own data. | | Nobody |
+| **Filming mode** | Replaces real people with invented ones on screen. | | Owner |
+| **Environment pairs**, **Deployments** | A test side and a real side, with deployment. | | Owner |
+| **Configuration in the space file** | The whole configuration travels in the space file. | **Data export (Excel)** | Owner |
+| **Instance wizard** | Create a new server from the app. | | Operator |
+| **What needs you** | One ranked list of what waits for you. | | Nobody |
+| **Task recorder** | Record and replay the steps of a task. | | Nobody |
+| **Push notifications** | Pending confirmations on the phone. | The push service of the installation | Operator |
+| **WhatsApp integration** | A chat with a member in one tap, the group link. | **Members directory** | Owner |
+| **E-invoice delivery to customers** | Sending to the customer's own platform (Beta). | **Invoices**, an account | Billing administrator |
+| **MCP interface** | An assistant can be connected. | A grant per person, approved by the installation | Owner, then Operator |
+
+**Good to know**
+
+- Names are the ones of the **Switches** list. The Core and Platform tier of each is shown there.
+- A few features are not listed here. Features of comfort (help hints, animations, navigation style, regional formats) have no table row: they work the moment they are on.
+
+**See also:** [Who does what](help:setup.before.who) · [Switch features on and off](help:user.features.processes)
+
+## People, roles and decisions
+
+A space is its people. Before you invite the first of them, decide three things: who may do what, how someone gets in, and which acts need a second person to say yes. They are quick to set and awkward to repair once forty people rely on them.
+
+In this chapter:
+- [Who does what in a real organisation](help:setup.people.organisation)
+- [The role matrix: least privilege](help:setup.people.matrix)
+- [Co-owners: more than one person who can act](help:setup.people.coowner)
+- [How people join](help:setup.people.join)
+- [The invitation message, language by language](help:setup.people.invitation)
+- [Managed profiles](help:setup.people.managed)
+- [Validation: what a rule is made of](help:setup.people.validation)
+- [Three presets to copy](help:setup.people.presets)
+- [Avoid requests that wait for ever](help:setup.people.stuck)
+- [The first week of your members](help:setup.people.first-week)
+
+The running example is *Atelier du Marché*. Imagine it is run by an association: Ada is the president, Chiara the secretary, Bruno the treasurer. Every step below is shown on that space.
+
+### Who does what in a real organisation
+
+**Audience:** Owner · Co-owner
+
+You want to map the people of your organisation onto the roles DesKilo has, so that nobody holds more than their job needs.
+
+![](assets/help/images/setup-people-members.en.b8fa17aa9.jpg)
+
+*The four base roles*
+
+| Role | What it is for | In the association |
+|---|---|---|
+| **Owner** | The person who answers for the space and holds every permission. Only an owner can grant ownership. | Ada, the president. |
+| **Co-owner** | A second key. Holds every permission by default, and can take over when the owner leaves. | The vice-president, if the board has one. |
+| **Administrator** | Runs the day: members, bookings of others, the kiosk, documents, services. Holds what the matrix gives and no more. | Chiara, the secretary. |
+| **User** | The person who uses the space. Holds only the everyday permissions you give. | Bruno, a member like the others. |
+
+Everyone has exactly one base role. A role the space defines, such as *Host* or *Accountant*, is added on top of it and never takes anything away.
+
+*A treasurer without being an administrator*
+
+Bruno keeps the books but should not edit the floor plan or approve new members. Give him the base role **User** and add a role of your own, for instance *Accountant*, with four permissions: **View workspace finances**, **Issue invoices & match payments**, **Export accounting and data** and **Read the workspace figures**. Nothing more. No such role is built in; you create it with the steps below.
+
+![](assets/help/images/setup-people-roles-space.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Roles this space defines](app:/settings/roles-of-this-space) and tap **Add a role**. See [Roles this space defines](help:user.roles.space).
+2. Name the role, choose **What it adds**, tap **Save the role**.
+3. Open the person in [Members & plans](app:/members), find **Roles** and tap **Add a role**.
+
+**Good to know**
+
+- **Roles this space defines** is a feature of its own and is off in a new space. Switch it on in [Features](app:/features).
+- Nobody can give a role to themselves. Giving a role needs **Manage roles & permissions**, and only an owner can give a role that carries it.
+- A role the space defines takes effect at once and is recorded. Only making someone an administrator, or taking it away, follows the **Role change** validation rule.
+
+**Result** Each person of the board holds the permissions of their job, and the owner remains the only one who can change that.
+
+**See also:** [The role matrix](help:user.roles.matrix)
+
+### The role matrix: least privilege
+
+**Audience:** Owner · Co-owner
+
+You want each role to hold what it needs and nothing else. That is the principle of least privilege: start small, add when someone asks, because a permission given is rarely taken back with grace.
+
+![](assets/help/images/setup-people-roles-matrix.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Roles](app:/roles). There is one card per role: **Owner**, **Co-owner**, **Administrator** (the owner can rename it) and **User**.
+2. Read the card of the **Administrator** first. It shows what an administrator holds in your space today.
+3. Untick what you do not want to delegate. Tick the everyday permissions the **User** card needs (see below).
+
+*What an administrator holds by default*
+
+| Group | Permissions |
+|---|---|
+| People | **Manage members**, **Read members' personal data** |
+| Bookings and the place | **Manage reservations of others**, **Operate the kiosk and badges**, **Manage sites and edit the floor plan** |
+| Money, read and approve | **View workspace finances**, **Approve expenses**, **Manage services & packages**, **View commercial agreements**, **Manage commercial agreements**, **Request payment-condition changes**, **Export accounting and data** |
+| Documents and figures | **Manage the document library**, **Read the workspace figures** |
+| Two sides of a space | **Deploy to development**, **Enter the production workspace** |
+
+An administrator does not hold **Manage roles & permissions**, **Configure validation policies**, **Edit workspace settings**, **Manage tariffs and billing rules**, **Design the documents**, **Manage integrations**, **Manage the configuration** or **Deploy to production**. A co-owner holds all of them until you untick some. The owner always holds all of them.
+
+> **Careful** In a new space the **User** card is empty. The six everyday permissions (**Use the messenger**, **Book and use reservations**, **See the calendar**, **See the member directory**, **See their own account and invoices**, **See the shared documents**) are held only through the matrix or a role. Until you tick them, a member who joins cannot open the plan. The demo shows them already ticked, which hides this. Tick them for the **User** card, and for the **Administrator** card if administrators also book, then test with a second account.
+
+**Good to know**
+
+- By default an administrator can read all finances and the personal data of every member. If your administrators are volunteers, think about whether they should.
+- **Admins issue invoices** (a feature, off by default, under **Invoices**) gives administrators **Issue invoices & match payments** whatever the matrix says. Prefer the tick in the matrix, or a role of your own, which is more precise.
+- Unticking a permission removes it everywhere at once; the server checks it, not only the menu.
+- Every change of the matrix is recorded as an event. The **Role management** feature only shows the screen; switched off, the matrix you saved still applies, you just cannot edit it.
+
+**Result** A matrix you can explain in one sentence per role.
+
+**See also:** [The role matrix](help:user.roles.matrix) · [Who does what](help:setup.before.who)
+
+### Co-owners: more than one person who can act
+
+**Audience:** Owner · Co-owner
+
+You want the space to keep working when you are ill, away or gone. Every space needs more than one person who can act. By default only owners and co-owners hold the permissions that change features, roles, validation rules and the workspace ID, and only an owner can make another owner.
+
+![](assets/help/images/setup-people-coowner.en.b8fa17aa9.jpg)
+
+*The two kinds*
+
+| Kind | What it does | Choose it when |
+|---|---|---|
+| **Active co-owner** | Holds the owner's permissions now, and takes over if the owner leaves. | You share the work: the vice-president, a partner. |
+| **Successor** | Waits. Becomes owner when you promote them or when you leave. | You only want an heir. |
+
+**Steps**
+
+1. Switch on the **Co-owners** feature in [Features](app:/features). It is off in a new space.
+2. Open the person in [Members & plans](app:/members), go to **Manage** and tap **Co-ownership**.
+3. Choose **Active co-owner** or **Successor**. To hand over now, choose **Promote to owner now**.
+
+**Good to know**
+
+- If the last owner leaves, the best co-owner becomes owner on their own, an active one before a successor.
+- Two administrators are not the same thing: an administrator holds only what the matrix gives and can never hand ownership on.
+- A rule that says **Owner must always validate** asks for an owner. Check on your test side that your co-owner can still decide what you expect.
+
+**Result** The space has a second person who can act.
+
+**See also:** [Co-owners](help:user.roles.co-owners) · [Co-ownership](help:user.members.co-ownership)
+
+### How people join
+
+**Audience:** Owner · Administrator
+
+You want to choose how people reach your space and who lets them in. Four ways exist, and every one of them ends in the same place: a person asking to join, and someone deciding.
+
+![](assets/help/images/setup-people-workspace-code.en.b8fa17aa9.jpg)
+
+| Way | What the person receives | What they become |
+|---|---|---|
+| The workspace ID | A short word, typed in the app. | A member, after approval. |
+| The QR code | The same ID as a picture to print or post (**Share as PNG**). | A member, after approval. |
+| An invitation message | A text with a personal code, valid for one person, in the language you pick. | The role you offer, after approval. |
+| An administrator code | A one-person code from the **Administrator invite** tab. | An administrator, once. |
+
+**Steps**
+
+1. Open [Workspace ID & QR](app:/workspace-code). Choose an ID people can remember with **Change workspace ID**: 4 to 20 letters or digits, unique across DesKilo.
+2. For a named person, tap **Invite someone**. Fill in the name, tick **Roles on arrival** if they should receive a role, pick the **Message language** and send.
+3. When someone asks to join, their row in [Members & plans](app:/members) says **Pending**. Open it and choose **Approve membership** or **Reject membership**.
+
+**Good to know**
+
+- Nobody gets in without a decision. Until it is taken, the newcomer sees a waiting screen and nothing else.
+- The decision follows the rule of **New member** in [Validation rules](app:/validation): by default one owner or administrator suffices; if you require two, the first approval leaves the person pending.
+- If you change the workspace ID, the old one stops working. Print the QR code again.
+- There is no owner invite. Ownership is given in **Members & plans**.
+
+**Result** People can find you, and you decide who stays.
+
+**See also:** [The workspace ID](help:user.workspace.code) · [Join a workspace](help:user.start.join) · [Pending and paused members](help:user.members.pending)
+
+### The invitation message, language by language
+
+**Audience:** Owner · Administrator
+
+You want an invitation that sounds like your space, in the language of the person who gets it. Each language has its own text; the one you do not write falls back to the built-in message.
+
+![](assets/help/images/setup-people-invite.en.b8fa17aa9.jpg)
+
+![](assets/help/images/setup-people-invitation-message--message.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings) and go to **Community & invitations**.
+2. Under **Message language** choose the language you write for. The row opens on your workspace language.
+3. Write the text. Tap a tag to insert it where the cursor is. The limit is 2000 characters.
+4. Repeat for each language your members use, then tap **Save**.
+
+*The tags*
+
+| Tag | Filled in with |
+|---|---|
+| `{firstName}` `{lastName}` `{phone}` | What you typed in **Invite someone**. Empty if you typed nothing. |
+| `{workspaceName}` | The name of your space. |
+| `{workspaceId}` | The personal invitation code of this message (not the public workspace ID). |
+| `{inviteLink}` | A link that opens the app on the right server with the code filled in. |
+| `{downloadUrl}` | The store page of the app. |
+| `{role}` | The role the invitation offers, in the language of the message. |
+
+**Good to know**
+
+- Leave the box empty and the app writes its own message in that language. It explains the steps: download, create an account, join with the code.
+- Do not paste a code or a link yourself. Each send creates its own code, valid for one person.
+- A tag you misspell stays visible in the sent text: read the preview before you send.
+- The built-in message tells the person the code is single-use and valid for 14 days.
+
+**Result** An invitation your members can follow without asking you.
+
+**See also:** [Invitation message](help:user.workspace.settings.invitation-message) · [Invite someone by message](help:user.workspace.code.invite)
+
+### Managed profiles
+
+**Audience:** Owner · Administrator
+
+You want to book, invoice and manage for someone who has no account yet: a visitor, an elderly member, a person who prefers paper.
+
+**Steps**
+
+1. Switch on **Managed profiles** in [Features](app:/features).
+2. In [Members & plans](app:/members), tap **Add a managed profile** and fill in the identity.
+3. When the person is ready, open their page and choose **Hand over to the person**. It creates a personal code bound to the profile.
+
+**Good to know**
+
+- Whoever redeems the code takes over the profile with its bookings, invoices and subscription, once you approve the membership.
+- Take the handover back with **Revoke handover** if the code was not used yet.
+
+**See also:** [Add a managed profile](help:user.members.managed)
+
+### Validation: what a rule is made of
+
+**Audience:** Owner
+
+You want to choose, act by act, whether a second person must agree. A validation domain is one kind of act with its own rule: *a payment*, *an expense*, *a new member*, *a booking deletion*. In **Validation rules** the domains sit in three groups.
+
+![](assets/help/images/setup-people-validation-overview.en.b8fa17aa9.jpg)
+
+| Group | Domains, in plain words | While it waits |
+|---|---|---|
+| **Money** | A payment, an expense, a service, an invoice matched to its payment, an invoice issued or cancelled, a refund, a write-off, a price agreement, a shared expense, a scheduled expense, a payment-condition change, an early departure, a usage record removed | The amount does not count on anybody's statement. |
+| **Bookings** | **Extra half-days** a member asks for, **Whole-space reservations**, a booking made for a member by an administrator, a **Booking deletion** | The seat stays as it was. |
+| **People and roles** | **New member**, a role change, a change of status, a subscription change, a change of the permission matrix | The person keeps the access they have now. |
+
+Every domain starts with **Inherits default**: one validation by any administrator or owner. **Default policy** is the rule all the others inherit. A domain you open and save becomes **Customized**.
+
+*The knobs of a rule*
+
+| Setting | What it means | Needs |
+|---|---|---|
+| **Required validations** | How many people must say yes. | |
+| **Who validates** | **Admins**, **Listed persons** or **All members**. The owner always may. | **Validators by role or person**: without it the choice is not shown and administrators validate. After switching it off, check again the rules that named **Listed persons** |
+| **Admins may validate** | Off, only owners validate. | |
+| **Owner must always validate** | One of the yes answers must come from an owner. | |
+| **The owner may validate their own** | The owner's own request is not left waiting for someone else. An administrator never gets this. | **Chained validations** |
+| **One after another** | The second is asked once the first has said yes. | **Chained validations** |
+| **Only above this amount** | Below it, the act applies at once. Money domains only. | **Chained validations** |
+| **Admins delete without validation** / **Owners delete without validation** | Their own **Booking deletion** settles itself and stays marked as auto-validated. Off by default. | |
+
+![](assets/help/images/setup-people-validation-sheet.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Validation rules](app:/validation). Tap **Default policy** and decide what everything else inherits.
+2. Tap a domain, set the knobs, tap **Save**.
+3. Keep few exceptions. Each exception is one more thing you must remember when someone says "why is this waiting?".
+
+**Good to know**
+
+- Nobody validates their own act. It waits for someone else, unless the owner exception is switched on.
+- Every decision is recorded: who, when, on what.
+- A request nobody answers expires after seven days, swept the next time anyone opens Events. An act an administrator did for a member is confirmed automatically instead.
+
+**See also:** [Validation rules, domain by domain](help:user.validation.overview) · [Who may validate](help:user.validation.who-may) · [Auto-validate](help:user.validation.auto-validate-admin)
+
+### Three presets to copy
+
+**Audience:** Owner
+
+You want a rule set you can copy today and refine later. Choose one; each relies on the default scope, owner and administrators, so no extra feature is needed.
+
+| Preset | Choose it when | What you set | Validators you need |
+|---|---|---|---|
+| *Open join* | You know the people who will scan your code. | Nothing. Every domain inherits the default: one validation by any owner or administrator. A join is still never automatic. | 1 (you) |
+| *Approve joins* | A board decides who enters. | **New member**: **Required validations** 2, **Owner must always validate** on. | 2: an owner and one administrator |
+| *Approve joins and bookings* | Seats or whole rooms are scarce, or booking deletions need a witness. | *Approve joins*, plus on **Whole-space reservations**, **Extra half-days** and **Booking deletion**: **Required validations** 1. | 2 at least, 3 to be comfortable |
+
+In the association: Ada is the owner, Chiara an administrator. With *Approve joins*, Ada and Chiara both approve each newcomer. With the third preset a whole room Bruno books is blocked for him at once, but Ada or Chiara can still refuse it, and a deletion Chiara asks for is decided by Ada, not by Chiara.
+
+**Steps**
+
+1. Open [Validation rules](app:/validation).
+2. Tap **New member**, set what the table says, tap **Save**.
+3. For the third preset, repeat on the other three domains.
+4. Open **Members & plans** and count your active owners and administrators. It must be at least the number in the last column.
+
+**Good to know**
+
+- An ordinary booking by a member is never held for approval by these presets. What waits is a whole room, extra half-days, a deletion and the join.
+- A preset is a starting point. Raise a number only when you have enough people to answer.
+
+**See also:** [Required validations](help:user.validation.required-count) · [An owner is required](help:user.validation.owner-required)
+
+### Avoid requests that wait for ever
+
+**Audience:** Owner · Co-owner
+
+You want to be sure that every request you create a rule for can be answered. A rule that needs more validators than exist is not refused everywhere: the request is created, nobody can complete it, and it expires after seven days.
+
+> **Careful** The editor counts one extra validator for the person concerned, so it lets you save **Required validations** one above the people you have. That extra yes exists only for a booking an administrator made for a member, and for some payments. For a join or a money request it does not exist. Do not rely on the editor to count for you.
+
+*Count before you require*
+
+| You require | You need, besides the person who asks |
+|---|---|
+| 1 | One active owner or administrator |
+| 2 | Two active owners or administrators |
+| 2 with **Owner must always validate** | An owner and one more |
+| A **Listed persons** list | Each person on it must be active; a new administrator is not added automatically |
+
+*How to check*
+
+1. Open [Validation rules](app:/validation) and read each customised card: "All admins — any 2" means two people.
+2. Open [Members & plans](app:/members). Count the active owners and administrators. Paused and exited people do not count.
+3. Open **Setting up this space** in [Workspace](app:/workspace-settings). The area **Roles and who validates requests** says "A policy asks for more validators than this space has" when it counts too few. It holds up the first booking only when the rule is for reservations.
+4. Open [Events](app:/events). **Waiting for your confirmation** shows what is waiting, and a row shows "1/2 validations".
+
+**Good to know**
+
+- The editor itself says **Not enough eligible validators.** when a count clearly exceeds the people available. It does not catch every case.
+- A solo owner who asks for something for themselves is waiting for someone else: either add an administrator, or switch on **The owner may validate their own** under **Chained validations**.
+- Pausing or removing an administrator can leave a rule short. Recount after every change of team.
+
+**Result** Every rule can be answered by people who exist.
+
+**See also:** [Required validations](help:user.validation.required-count) · [Keep it consistent](help:setup.consistent.overview)
+
+### The first week of your members
+
+**Audience:** Owner · Administrator
+
+You want your first members to succeed without asking you. What you tell them in the first week decides how much you answer in the second.
+
+*Before you invite anyone*
+
+1. Sign in as a second person on a test account and join your space. Check that you can open the plan and book a seat.
+2. Approve that account as a member, and have the second validator approve too if you require two.
+
+**Steps**
+
+1. Send the invitation message. It tells people how to download the app, create an account and join. See [Join a workspace](help:user.start.join).
+2. Approve each newcomer the same day. A person waiting for a day starts with a doubt.
+3. Tell them the three first things: the plan and booking ([Reserve a place](help:user.reserve.book)), checking in ([Check in and out](help:user.reserve.check-in)), and where their requests wait ([Events](help:user.collaborate.events)).
+4. Tell them what you see about them and what they control ([Who can see my data](help:user.privacy.visibility)).
+5. Name one person to ask, and where: the messenger, or the desk.
+
+**Good to know**
+
+- When an administrator does something for a member, it stays pending until the member confirms. Warn them, or the first booking you make for someone will look like a mistake.
+- Members who do not use push notifications still find everything under **Events**.
+- On the first Reserve visit the **Get started** card shows owners what is still missing. Members have their own short tips. See [The Get started card and the tips](help:user.start.get-started).
+
+**Result** People who know how to book, how to check in and whom to ask.
+
+**See also:** [Week 0 to week 4](help:setup.training.overview) · [How members are told](help:setup.notify.members)
+
+## Money and tax
+
+For owners and billing administrators who are about to decide how a space is paid for. This chapter is about the decisions and their order; the clicks are in the user guide, and every section links to them.
+
+> **Careful** DesKilo records, calculates and prints what you declare, and it checks that the required details are present. It does not certify your invoices, your VAT treatment or your books. Wherever this chapter says "ask your accountant", please do.
+
+In this chapter:
+- Whether members pay at all, and who issues the invoices
+- How a tariff is built, with figures from the demo space *Atelier du Marché*
+- How members pay you
+- Your legal identity, and the questions to bring to your accountant
+- Manual or automatic invoicing, reminders, and VAT in outline
+- The money decisions that cannot be taken back, and how to rehearse safely
+
+### Decide first: do members pay, and who issues the invoices
+
+**Audience:** Owner
+
+You choose how far DesKilo goes in your money. Everything else in this chapter follows from this one choice, and it is easy to change upwards later, hard to change downwards once invoices exist.
+
+![](assets/help/images/setup-money-paths.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+Answer two questions: do members pay you for the space, and do you want the legal invoices to come out of DesKilo?
+
+| Path | Choose it when | What happens |
+|---|---|---|
+| 1. No money | The space is free, or members are friends who share the rent outside the app | You leave the money features off. Members book; nobody is billed. |
+| 2. Statements and payments, invoices outside | You already have an accountant or an invoicing tool, or you work in a country DesKilo cannot issue invoices for | Members have a monthly statement, you record the payments you receive, and you export the figures for your accountant. The legal invoices are produced elsewhere. |
+| 3. Invoices issued by DesKilo | You are in France or Germany, and you are either VAT-registered or outside the scope of VAT (an association, for example) | DesKilo produces signed, numbered invoices from what was booked, with your legal identity printed on them. |
+
+**Steps**
+
+1. Pick your path from the table.
+2. For path 2 or 3, switch on the money features you need in [Features](help:user.features.switch): **Invoices** is the base of everything that is issued, and the features below it (**Subscription invoices**, **End-of-month invoices**, **Payment reminders**, **VAT management**) come on one by one.
+3. For path 3, continue with [your legal identity](help:setup.money.identity) before the first booking, not after.
+
+**Good to know**
+
+- In-app invoice issuing exists today for a workspace in **France** or **Germany**. In any other country, use path 2: statements stay available.
+- The server refuses to issue, and the list **Complete these details before issuing** says why, when a detail is missing or when the treatment is one DesKilo does not handle: cross-border sales, reverse charge, export and VAT-exempt invoices must be reviewed and issued outside the app with your accountant.
+- A seller on the small-business exemption scheme (franchise en base, Kleinunternehmer) cannot issue invoices in the app: the server refuses the exempt VAT category. Keep path 2, and issue those invoices elsewhere.
+- Switching a feature off stops new business of that kind; it deletes nothing.
+- You can stay on path 2 forever. Many associations do.
+
+**Result**
+
+You know which of the three paths is yours, and which features it needs.
+
+**See also:** [Invoicing at a glance](help:user.money.invoicing) · [Switch whole processes on or off](help:user.features.processes)
+
+### Design a tariff
+
+**Audience:** Owner · Billing administrator
+
+You turn "what is a place worth?" into numbers DesKilo can apply every month without you.
+
+![](assets/help/images/setup-money-bands--bands.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+Keep the model in mind. It reads from left to right, and each step feeds the next:
+
+1. Subscription percentage: A member holds a percentage of the month: 25, 50, 75 or 100 %, or a value you allow.
+2. Half-day allowance: The percentage becomes a number of half-days for the month: the number of open days, times two, times the percentage, rounded up.
+3. Fee band: The percentage falls into one band, which gives the monthly fee and the price of an extra half-day. A band covers "above its start, up to and including its end", and the bands together must cover 0 to 100 % without a gap.
+4. Overage policy: When the allowance is used up, each member is either blocked, charged the overage price, or asked to buy a package.
+5. Packages and services: A day package sells extra half-days in advance at a price you set; services (a coffee, a locker, printing) are sold on top.
+
+**Steps**
+
+1. Decide the percentages you want to offer under **Subscription levels**, and whether an owner may type a negotiated value (see [Subscription levels](help:user.money.billing.levels)).
+2. Set one row per range in **Fee bands**: its upper limit, the monthly fee and the overage price (see [Fee bands](help:user.money.billing.fee-bands)).
+3. Decide the default for members who run out: [When days run out](help:user.members.overage-policy).
+4. Add the [Day packages](help:user.money.billing.packages) and [services](help:user.money.services.overview) you sell.
+
+**Good to know**
+
+- The arithmetic is frozen on every issued document. Changing a price changes next month, never a month already invoiced.
+- Opening hours and closure days decide how many open days a month has, and so the size of the allowance. Set them first.
+- A member with no subscription is for visitors who buy carnets; they cannot be on pay-as-you-go.
+
+**See also:** [Billing](help:user.money.billing.fee-bands) · [A member's subscription](help:user.members.subscription)
+
+### A worked example
+
+**Audience:** Owner · Billing administrator
+
+You follow one member through one month with the figures of *Atelier du Marché*, so you can check your own numbers the same way.
+
+![](assets/help/images/setup-money-packages--packages.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+The demo space has three fee bands, in euros and VAT included. The figures are the demo's own, not a recommendation.
+
+| Band | Monthly fee | Extra half-day | Half-days in a 22-open-day month |
+|---|---|---|---|
+| up to 25 % | 0.00 | 15.00 | 11 |
+| above 25 %, up to 50 % | 150.00 | 8.00 | 22 |
+| above 50 %, up to 100 % | 250.00 | 0.00 | 44 (at 100 %) |
+
+**Steps**
+
+1. A member holds 50 %. In a month with 22 open days the allowance is 22 × 2 × 50 / 100 = 22 half-days.
+2. 50 % falls in the second band (above 25, up to 50): the fee is 150.00, whatever the member uses.
+3. The member books 24 half-days. Two are over the allowance, at 8.00 each: 16.00.
+4. The month costs 150.00 + 16.00 = 166.00, before any service. In the demo the prices are gross: the 20 % VAT is inside them, and the screen shows it under each price.
+5. Compare with a package: the demo's 5-day pack costs 40.00 and adds 10 half-days (5 days, two half-days each), that is 4.00 a half-day. Against 8.00 of overage it pays off from the sixth extra half-day in a month.
+
+**Good to know**
+
+- An overage price of 0.00 means extra half-days cost nothing under pay-as-you-go.
+- The statement a member sees shows the same lines: fee, included, used, extra, overage.
+- Prices are shown including VAT when VAT is on; the tax is extracted from them.
+- If a member and you agree on other conditions, see [price negotiation](help:setup.money.negotiation).
+
+**Result**
+
+You can predict a member's bill from three numbers: their percentage, the open days, the bookings.
+
+**See also:** [Read your statement](help:user.money.statement) · [What each booking cost](help:user.money.usage)
+
+### Price negotiation
+
+**Audience:** Owner · Billing administrator
+
+You want one member to pay different conditions from the tariff, in a way that leaves a trace.
+
+**Steps**
+
+1. Switch on the price negotiation feature in [Features](help:user.features.switch).
+2. Propose conditions on the member page: a different monthly fee, overage rate, discount on supplements, unit prices, or occupation percentage (see [Price negotiation](help:user.members.negotiation)).
+3. Let the validation rule for price negotiations decide who confirms it.
+
+**Good to know**
+
+- The tariff stays the default; a negotiated price belongs to one member.
+- It is seen by the member, the owners and the people with the right to view commercial agreements, and every read is logged.
+- Decide your policy before you open: one exception granted quietly becomes the price everyone asks for.
+
+**See also:** [Your negotiated prices](help:user.money.negotiation)
+
+### How members pay you
+
+**Audience:** Owner · Billing administrator
+
+You choose where a member's money goes, and how much of the work DesKilo does for you.
+
+![](assets/help/images/setup-money-payment-instructions.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Start with the free route: fill the [payment instructions](help:user.money.payments.methods): your IBAN and bank details, and any of PayPal.me, Wero, Lydia or Wise you accept, plus a reference hint.
+2. Members see these details on an unpaid statement. When a payment reaches your account, you or a billing administrator [record it](help:user.money.payments.record).
+3. Only if you want members to pay inside the app, connect a provider in [Online payments](help:user.money.payments.provider): PayPal, Stripe or Mollie. It needs the **Online payments** feature and your own account at the provider.
+
+**Good to know**
+
+- DesKilo records payments; with the manual route it never moves money.
+- A provider charges its own fees, takes the keys of your account (the credentials sheet explains how they are entered).
+- With **Online payments** off, a new online payment is refused; one already open can still settle.
+- A space built from a template does not carry payment details: enter them in each space. A configuration export does carry them.
+
+**See also:** [Pay what you owe](help:user.money.payments) · [Provider credentials](help:user.money.payments.credentials)
+
+### Your legal identity, and what to ask your accountant
+
+**Audience:** Owner
+
+You tell DesKilo who is selling, so every invoice names you correctly. This is the part to settle with a professional.
+
+![](assets/help/images/setup-money-legal--top.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+The screen is [Legal identity & e-invoicing](app:/legal-identity). Have these ready:
+
+- your organisation type: a business, or a non-profit association;
+- your VAT regime: outside the scope of VAT, VAT-exempt (small-business scheme), or VAT-registered. The app can issue invoices for the first and the last only; with the small-business exemption, the screen records your status but invoices must be issued elsewhere (path 2);
+- your registration number, and your VAT number if you have one;
+- your postal address, as it appears on your registration;
+- the reason no VAT is charged, if you charge none.
+
+> **Careful** Choosing the regime is a tax decision, not a software setting. An association with no trading activity is normally outside VAT, and the screen warns you if you pick "exempt" for one. Confirm the choice before you issue the first invoice.
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity) and work from the top: the **VAT regime** first, then the identifiers, the address and the **Invoice mentions**.
+2. Fill the payment terms, the late-payment mentions and the other mentions your country requires (see [Your legal identity](help:user.money.legal.identity)).
+3. Tap **Save**, then read the invoice template once with your accountant (see [The invoice PDF template](help:user.money.reports.invoice-template)).
+
+> **Tip** Questions to bring to your accountant:
+
+> 1. Which organisation type and which VAT regime am I in?
+> 2. What are my registration number and my VAT number, and how do I write them?
+> 3. If I charge no VAT, which legal wording justifies it?
+> 4. Which mentions must appear on my invoices (payment term, late-payment penalty, recovery indemnity, early-payment discount, insurance)?
+> 5. How should invoices be numbered, and does the number restart each year or each month?
+> 6. Does VAT fall due when I invoice or when I am paid?
+> 7. Must I send e-invoices to a government platform, and which one?
+> 8. Do I need periodic VAT returns, and how often?
+
+**Good to know**
+
+- Invoices already issued keep the identity they were signed with; a change applies to the next ones.
+- Only an owner or an active co-owner can open this screen, and the **Invoices** feature must be on.
+- A space made from a template does not carry your identity: enter it again. A deployment between the two sides of a pair does carry it.
+
+**See also:** [VAT regime](help:user.money.vat.regime) · [The e-invoicing platform](help:user.money.einvoice.overview) · [Organisation type](help:user.money.legal.seller-kind)
+
+### Invoice by hand or automatically
+
+**Audience:** Owner · Billing administrator
+
+You decide whether a person presses the buttons each month or DesKilo does.
+
+**Steps**
+
+1. For a first month, work by hand: open [Invoicing](app:/invoices), read **To issue**, and issue one member's invoice (see [Issue an invoice](help:user.invoicing.new-invoice)).
+2. For a routine, use the [month-close wizard](help:user.invoicing.wizard): it walks through **Review**, **Issue**, **Send**, **Remind**, **Payments**, **Match**, **Close** and **Summary**.
+3. To automate, switch on **Subscription invoices** and **End-of-month invoices** in [Features](help:user.features.switch), then set the days in [Invoice schedule](help:user.money.billing.schedule).
+
+**Good to know**
+
+- Two documents exist per month: the subscription fee, issued ahead of the month, and what the month actually cost, issued after it. An invoice can be dated a few days ahead (three by default, set in the invoice schedule), so one dated 29 August can name September.
+- On the server, a daily run issues both when the installation's database has its scheduler enabled; if you are unsure, ask the operator.
+- Each kind of invoice (subscription, end-of-month) can be issued once per member and month. Invoices cannot be edited or deleted; a wrong one is marked erroneous and replaced.
+- By default the owner and co-owners issue invoices. **Admins issue invoices** extends this to administrators.
+
+**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Chase and settle open invoices](help:user.invoicing.open)
+
+### Payment reminders
+
+**Audience:** Owner · Billing administrator
+
+You decide how late is late, and who does the chasing.
+
+![](assets/help/images/setup-money-reminders.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Switch on **Payment reminders** in [Features](help:user.features.switch). It sits under **Invoices**.
+2. Set the number of levels and the delays in [Reminder rules](help:user.money.reminders.rules): days until the first reminder, days between reminders.
+3. Decide whether reminders leave on their own: switch **Automatic reminders** on in the same dialog (see [Automatic reminders](help:user.money.reminders.automatic)); the feature **Automatic payment reminders** must be on too.
+
+**Good to know**
+
+- The delay before the first reminder is also read as your payment term. Set it with [Payment terms](help:user.money.legal.payment-terms).
+- Automatic reminders run once a day on the server when the database has its scheduler enabled. They also run when someone who may issue invoices (an owner, a co-owner, or an administrator if **Admins issue invoices** is on) opens Finances, so a space without the scheduler still gets them, on the days someone looks.
+- The **Payment reminders** feature only makes the rules available. A reminder leaves on its own only when **Automatic reminders** is switched on in the reminder rules, which is off until you choose it.
+- They skip an invoice with a payment pending or on hold, and an invoice without a recorded payment term.
+- The member gets an alert in their feed and, if push is set up, a generic notification; see [Tell people](help:setup.notify.overview).
+
+**See also:** [Payment terms](help:user.money.legal.payment-terms)
+
+### VAT in outline
+
+**Audience:** Owner · Billing administrator
+
+You want to know what VAT will ask of you before you switch it on.
+
+![](assets/help/images/setup-money-vat--rates.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Only if you are VAT-registered, switch on **VAT management** in [Features](help:user.features.switch).
+2. Set the rates in [VAT](app:/vat): **Use the usual rates** for your country, then mark exactly one as the default (see [Setting the rates](help:user.money.vat.rates)).
+3. Give each rate its group, and an exemption reason where it applies (see [VAT groups](help:user.money.vat.groups)).
+4. When the law changes a rate, use **Change by law** so older invoices keep their rate (see [Change a rate by law](help:user.money.vat.change-by-law)).
+5. If you must file returns, switch on **VAT declarations** and generate each period in [VAT declaration](help:user.money.vat.declaration).
+
+**Good to know**
+
+- A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
+- Registered without a default rate in force, the server refuses to issue.
+- A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
+- The declaration journal has its own number series.
+
+**See also:** [VAT regime](help:user.money.vat.regime) · [When VAT falls due](help:user.money.vat.due)
+
+### What cannot be undone
+
+**Audience:** Owner
+
+You want to know, before the first invoice, what you will not be able to change afterwards.
+
+![](assets/help/images/setup-money-numbering.en.b8fa17aa9.jpg)
+
+> **Careful** From the first issued invoice, the items below are permanent. Decide them with your accountant first.
+
+| Decision | What becomes permanent | When |
+|---|---|---|
+| An issued invoice | It is signed and immutable: amounts, parties, VAT breakdown and tariff arithmetic stay as printed. A correction is a cancellation, a credit note or a refund, each a new document. | At issue |
+| Invoice number | Numbers are gapless and drawn in the database at the moment of issue. The next number can be raised, never lowered. A change of format applies from then on. A restart cannot be more frequent than the date the number prints. | At the first issue |
+| An invoiced month | A month with an invoice for a member is closed for that member. Closure days and holiday imports skip such months and name them. | At the first invoice for it |
+| VAT rates | Rates are versioned by date, never edited. A submitted VAT declaration is never recomputed. | At the first use |
+| Currency and country | Amounts are stored as whole minor units without conversion. No guard was found that stops changing them later: decide before the first booking. | Before the first booking |
+
+**Steps**
+
+1. Open [Number sequences](app:/settings/number-sequences) and set the prefix, the suffix, the date part, the digits and the restart for each journal (invoices, credit notes, VAT declarations, members, payments). The screen needs the **Number sequences** feature.
+2. Show the result to your accountant before the first invoice.
+3. Choose the country, currency and time zone in [Workspace settings](help:user.workspace.settings.country) before anybody books.
+
+**Good to know**
+
+- Numbers are not wasted: a document that fails to issue takes none.
+- The two states of a space, test and production, exist so that nothing here is tried for real; see [a safe dry run](help:setup.money.dry-run).
+
+**See also:** [The invoice register](help:user.invoicing.register) · [Currency and time zone](help:user.workspace.settings.currency-timezone)
+
+### A safe dry run in a test space
+
+**Audience:** Owner
+
+You rehearse the whole money routine once, with nothing real at stake.
+
+**Steps**
+
+1. Create or open a test workspace (**One test workspace**, or the DEV side of a linked pair); see [Test space](help:user.advanced.test-space) and [Environments](help:user.advanced.environments).
+2. Enter the legal identity, the rates, the tariff and the payment instructions as you intend to run them.
+3. Invite two or three people to book a few days; add a service for one of them.
+4. Run the [month-close wizard](help:user.invoicing.wizard) from start to end and read the invoice PDF.
+5. Record a payment, let a reminder fall due, and read the statement as the member.
+6. Show the PDFs and the accounting export to your accountant.
+
+**Good to know**
+
+- A test space watermarks every document and says it is a test; nothing is owed.
+- Declaring a space production removes the watermark; invoices already issued keep theirs.
+- The pair can pull the configuration from one side to the other, but credentials do not travel.
+
+**Result**
+
+A first month you have already seen, and a list of questions answered before they cost anything.
+
+**See also:** [The two environments](help:user.advanced.environments) · [Accounting exports](help:user.invoicing.accounting-export)
+
+## Tell people
+
+For owners who want members and administrators to hear about what matters, and only that. This chapter describes what DesKilo really sends, who receives it, what you configure and what you leave to the operator of the installation.
+
+In this chapter:
+- The channels, in plain words
+- A table: what happens, who is told, by which channel, what a member can change
+- What you configure, and what the operator must do for push
+- A test plan with two accounts
+- How to avoid both overload and silence
+
+### The channels, in plain words
+
+**Audience:** Owner · Administrator
+
+You want a clear picture of the ways DesKilo can reach a person, before you promise anything to your members.
+
+![](assets/help/images/setup-notify-features.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+There are six ways, and they are not equal. Most of the work is done inside the app.
+
+| Channel | What it is | What it needs |
+|---|---|---|
+| The events feed and the bell | Everything that happens in the space is written to a feed. The bell counts new updates and the decisions waiting for you. | **Events tab**; **Notification feed grouping** is an option on top |
+| Messages | Private and group conversations between members, with read receipts and links to a booking or a space. | **Member notifications** |
+| Push | A short notification on a phone or computer, even when the app is closed. The text is generic: no names, no times. | **Push notifications** on, **and** a push set-up by the operator; see [the operator's part](help:setup.notify.operator) |
+| The check-in reminder | A notification on the member's own device, 15 minutes before a booking they have not yet checked in to. | The member's system permission. Not in the browser version. |
+| Payment reminders | An alert in the feed and a push to the member whose invoice is overdue. | **Payment reminders** and **Automatic payment reminders**; see [Payment reminders](help:setup.money.reminders) |
+| WhatsApp | A group link you publish, and the WhatsApp number a member chooses to share. The app opens WhatsApp; nothing is sent from the server. | **WhatsApp integration** |
+
+**Good to know**
+
+- DesKilo sends no e-mail of its own beyond the account e-mails (sign-up confirmation, password reset). Invitations are texts you share from your own phone.
+- There is no per-event subscription: a member cannot pick "tell me about expenses but not about bookings".
+- A notification may be delayed or lost like any push; the feed and the message list are the record.
+
+**See also:** [Notifications](help:user.collaborate.notifications) · [Events & confirmations](help:user.collaborate.events)
+
+### Who is told what
+
+**Audience:** Owner · Administrator
+
+You want to know, event by event, who hears about it and how.
+
+![](assets/help/images/setup-notify-events.en.b8fa17aa9.jpg)
+
+**Before you start**
+
+Push is sent only for the five lines marked "push" below. Every other event (a booking made, a payment recorded, a member joining) appears in the feed and nowhere else.
+
+| Source | Event | Who is told | Channel | What the member can change |
+|---|---|---|---|---|
+| Validation rules | A request needs a confirmation | The people the rule names (feed, **Waiting for your confirmation**); the push goes only to the member the request is about, never to the person who made it, so validators are pushed only when they are that member. Text: "Someone needs your confirmation." | Feed, bell; push | Switch push off on the device |
+| Reservations | An administrator removes or overrules a booking | The member displaced, and every active administrator and owner except the one who acted. Text: "A reservation was removed by an admin." | Feed; push | Switch push off on the device |
+| Payment reminders | An invoice is past its term and a reminder level falls due | The member the invoice is for. An owner's own invoice reaches the owner. Text: "A payment reminder is waiting for you." | Feed alert; push | Switch push off on the device |
+| Member notifications | A new message | Direct message: the recipient. Group: the participants except the sender. A conversation muted by a member stays silent for that member. Text: "You have a new message." | Messages, bell; push | Mute, pin or archive a conversation; switch push off |
+| Message mentions | A group message names someone | The people named, even in a muted conversation. Text: "You were mentioned in a conversation." | Messages; push | Switch push off |
+| Reservations | A booking is ahead | The member who booked, on their own device, 15 minutes before it starts, for bookings in the next seven days | Local notification | Refuse the system permission |
+| WhatsApp integration | Nothing is sent | The group link is shown in the directory; a member may share their number | Opens WhatsApp | Share or hide the number |
+
+**Good to know**
+
+- When the app is open, a removed-booking push is replaced by a notification in the member's language. For messages, mentions, confirmations and payment reminders the open app currently shows its generic text ("Someone needs your confirmation."). The generic English texts of the table appear when the app is in the background or closed.
+- An administrator is told only about what they act on or what a rule gives them; there is no "everything" digest.
+- Members see their own events; administrators and owners see everyone's.
+
+**See also:** [Validation rules](help:user.validation.overview) · [Messages](help:user.collaborate.messages)
+
+### What you configure
+
+**Audience:** Owner
+
+You decide which of these channels exist in your space and who is asked to decide what.
+
+![](assets/help/images/setup-notify-validation.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Open [Features](help:user.features.switch) and check the notification switches: **Push notifications**, **Member notifications**, **Events tab**, **Notification feed grouping**, **Payment reminders**, **Automatic payment reminders** and **WhatsApp integration**.
+2. Set the [validation rules](help:user.validation.overview): for each kind of request, how many validations are required and who may give them. This decides who is asked, and so who sees a decision waiting.
+3. Decide whether an administrator's or an owner's own request settles itself; see [Auto-validate an administrator's own request](help:user.validation.auto-validate-admin) and [Auto-validate an owner's own request](help:user.validation.auto-validate-owner). A request that is settled already never pings anyone.
+4. Write the invitation message members receive, and paste the community group link; see [Invitation message](help:user.workspace.settings.invitation-message) and [WhatsApp group](help:user.workspace.settings.whatsapp-group).
+5. Switch on **Booking deletion requests** if members may ask to delete a past or checked-in booking: someone then has to answer.
+
+**Good to know**
+
+- Defaults for a new space: the events tab, member notifications and grouping are on; **Payment reminders** and **Automatic payment reminders** are on as features, but no reminder is sent until you switch **Automatic reminders** on in the reminder rules.
+- **Push notifications** is on by default, but it delivers nothing until the operator has set it up.
+- Switching a feature off stops new activity of that kind. It does not delete what exists.
+- Roles decide who can see and answer what; see [The role matrix](help:user.roles.matrix).
+
+**See also:** [Who may validate](help:user.validation.who-may) · [Required validations](help:user.validation.required-count)
+
+### The operator's part: making push work
+
+**Audience:** Operator · Owner
+
+You want push on members' phones, and you need to know who does what.
+
+**Before you start**
+
+Push does not come with the app by itself. If you run your space on the shared reference installation, ask its operator whether push is configured. If you run your own installation, you or your technical person are the operator.
+
+**Steps**
+
+1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build distributed through the F-Droid store has no push at all.
+2. For iPhone and Mac, add an Apple push key to the Firebase project.
+3. Store the Firebase service-account key as a secret of the server and deploy the push function.
+4. On your own installation, point the `push_config` row of your database at your own push function URL and key. It is seeded with the address of the reference installation.
+5. Test it with two accounts, as described in [the test plan](help:setup.notify.test).
+
+**Good to know**
+
+- Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.
+- The detailed checklist is for the operator: see [Platforms](help:user.advanced.platforms) and [Your own server](help:user.advanced.own-server).
+- Push text never carries a name or a time: this is deliberate, for privacy.
+
+**See also:** [Push notifications on this device](help:user.privacy.push)
+
+### What members control
+
+**Audience:** Owner · Administrator
+
+You want to tell your members honestly what they can switch off.
+
+![](assets/help/images/setup-notify-push.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. A member opens [Privacy & data](app:/privacy) and uses **Push notifications on this device** to stop or resume push on that device.
+2. In [Messages](app:/me?tab=messages), a member presses and holds a conversation to **Pin to top**, **Mute notifications**, **Mark as unread** or **Archive**.
+3. In the system settings of the phone, a member can refuse notifications altogether, check-in reminders included.
+4. In their profile, a member decides whether to share a WhatsApp number.
+
+**Good to know**
+
+- A muted conversation stays silent but is still counted; a mention overrides a mute.
+- A member who turns push off on one device is not affected on another.
+- There are no per-category switches. If a member needs less noise, mute conversations; if they need none, switch push off.
+
+**See also:** [Notifications](help:user.collaborate.notifications) · [Your data, your rights](help:user.privacy.consent)
+
+### A test plan: send yourself one of each
+
+**Audience:** Owner · Administrator · Operator
+
+You make sure each channel works before your members depend on it.
+
+**Before you start**
+
+Do this in a test space (see [a safe dry run](help:setup.money.dry-run)). You need two accounts: yours as owner, and a second one as a member, on another phone, another browser, or the same phone after signing out. The demo space lets you see the screens with its personas, but it sends no real push.
+
+**Steps**
+
+1. Message: from the member account, write to the owner in [Messages](app:/me?tab=messages). On the owner account, the bell counts it and the conversation shows unread. Open it: the member's message shows a read receipt.
+2. Mention: in a group conversation, name the owner (the mentions feature of messaging must be on). If push is set up, the owner's phone shows "You were mentioned in a conversation."
+3. Decision: as the member, ask to delete a past booking (the **Booking deletion requests** feature must be on). The owner sees it under **Waiting for your confirmation** in [Events](app:/events); answer it and watch the member's feed change.
+4. Removal: as the owner, remove a future booking of the member. The member's feed shows it, and a phone with push shows "A reservation was removed by an admin."
+5. Reminder: as the member, book a place that starts in about 20 minutes (a booking starting in under 15 minutes gets no reminder). About 15 minutes before it starts, the member's phone shows the check-in reminder.
+6. Payment reminder: with **Payment reminders** on, switch **Automatic reminders** on in the reminder rules with a short first-reminder delay, issue a trial invoice that has a payment term, wait past the delay, then open Finances as an owner or co-owner; the member's feed shows the alert.
+7. Mute: as the member, mute the conversation, send another message from the owner, and check that nothing rings but the unread count rises.
+
+**Good to know**
+
+- Steps 2 and 4 show a push only if the operator's set-up is complete. If they fail while the others work, the fault is in the set-up, not in your rules.
+- On the browser version of the app, there is no check-in reminder.
+- A phone that blocks notifications shows nothing at all; check the system settings first.
+
+**Result**
+
+You have seen, with your own eyes, every channel a member will rely on.
+
+**See also:** [The channels](help:setup.notify.channels) · [Start a conversation or a group](help:user.collaborate.messages-new)
+
+### Avoid overload, and avoid silence
+
+**Audience:** Owner · Administrator
+
+You want people to be told what needs them, and not drowned.
+
+**Steps**
+
+1. Keep **Notification feed grouping** on: members and administrators can fold the feed by type, day or member.
+2. Ask for validation only where a decision is real: every rule that requires validation creates a request somebody must answer. See [Validation rules](help:user.validation.overview).
+3. Use the auto-validation switches for requests where the answer is obvious.
+4. Look at [What needs you](help:user.collaborate.attention) from time to time: it ranks what is waiting.
+
+**Good to know**
+
+- Overload comes from rules that ask too often or from too many administrators on one rule.
+- Silence comes from a rule with nobody to answer it: requiring two validations when only the owner exists, or listing administrators who have left, leaves requests waiting for ever. The setup readiness card can flag a booking rule with too few validators.
+- Silence also comes from push without set-up, from members who turned push off, and from a system that blocks notifications.
+- Automatic payment reminders are not a substitute for looking at the open invoices from time to time.
+
+**See also:** [Who may validate](help:user.validation.who-may) · [Required validations](help:user.validation.required-count)
+
+## Documents and reports
+
+**Audience:** Owner · Co-owner · Billing administrator
+
+Everything DesKilo prints or exports comes from one engine and one place to design it. This chapter tells you which documents exist, the order in which to prepare them, what you may hand to your accountant, and where an AI assistant can help you and where it must not. The clicks are in the user guide; here you get the reasons and the order.
+
+The running example is the demo space *Atelier du Marché*.
+
+### The documents the app produces
+
+**Audience:** Owner · Billing administrator
+
+You want to know what exists before you design anything, and who receives each document.
+
+![](assets/help/images/setup-reports-hub.en.b8fa17aa9.jpg)
+
+Every document is one *kind*. Each kind has its own design, so changing the invoice never changes the statement.
+
+| Document | Who receives it | Where you find it |
+|---|---|---|
+| Invoice and credit note (one shared design) | The member, or the customer of an invoiced month | [Invoicing](help:user.invoicing.hub) |
+| Proforma | A member who needs a quote or a prepayment request | Same screen |
+| Statement | The member (their account over a period) | [The statement](help:user.money.statement) |
+| Agreement | The member (the negotiated conditions) | [Price negotiation](help:user.money.negotiation) |
+| Payments, usage | The member, the billing administrator | [Payments](help:user.money.payments) · [Usage](help:user.money.usage) |
+| Reminder letters, level 1 to 9 | The member with an overdue invoice | [Reminder rules](help:user.money.reminders.rules) |
+| Workspace report and workspace status | You, the board, an auditor | **Reports** |
+| VAT declaration | You, then the tax platform | [The periodic VAT declaration](help:user.money.vat.declaration) |
+| Badges, space QR codes | Members at the door, your walls | [Space QR codes](help:user.workspace.export.space-qr) · [Badges](help:user.badges.nfc) |
+
+**Good to know**
+
+- The **Reports** screen groups them under **Financial reports**, **Workspace documents**, **Business analytics** and **Templates**, depending on your permissions.
+- A few reports (chart of accounts, badges, QR cards) have one shipped layout. The others can be redesigned.
+- Documents drawn from a test space carry a watermark that says so. See [What a test space is for](help:user.advanced.test-space).
+
+**See also:** [Reports](help:user.money.reports) · [The invoice PDF template](help:user.money.reports.invoice-template)
+
+### The designer, in owner terms
+
+**Audience:** Owner · Billing administrator
+
+You want a letter that looks like yours without learning a language of markup.
+
+![](assets/help/images/setup-reports-professional.en.b8fa17aa9.jpg)
+
+A document is a page made of **bands**. The *header* carries your letterhead and the recipient. The *body* carries the lines. The *continuation* strip starts on page two, and the *footer* repeats on every page with your payment terms and legal mentions. You edit them in **Design** and check them in **Preview**; **Markup** shows the same bands as text for the day you need it.
+
+| Piece | What it gives you | Choose it when |
+|---|---|---|
+| Presets (**Professional**, **Classic**, **Simple**, **Detailed**, **Formal letter**) | A finished design to start from. The presets differ for invoices, proformas, statements, agreements and reminders; structural documents have one shipped layout | Always: start from **Professional** and change little |
+| One design per language | A member reads the document in their own language | Your members do not all read one language |
+| Letterhead and window envelope | Sender, recipient and body placed where a window envelope expects them | You post invoices on paper |
+| Positioned layout (XML) | Each element placed by millimetres, for a national form | A document must match a fixed form |
+| Image library | A logo, a stamp or a signature reused across designs | You have a logo |
+| Design exchange | A design written to a file and read back | A person or a tool outside the app edits it |
+
+Two facts keep you from surprises. The letter standard prints a recipient in the window on the right for a French space and on the left for a German one, unless you override it. And a design that fails to render never blocks a document: the built-in layout takes over.
+
+> **Careful** The wording in a design is not legal advice. Appearance and translation alone do not establish legal compliance or satisfy an electronic-invoicing obligation. What an invoice must say is decided under [Your legal identity](help:user.money.legal.identity), and confirmed by your accountant.
+
+**See also:** [The report editor](help:user.money.reports.editor) · [Ready-made templates](help:user.money.reports.presets) · [One design per language](help:user.money.reports.languages)
+
+### The sequence to follow
+
+**Audience:** Owner · Billing administrator
+
+You are about to design documents and want to do it once, in the right order.
+
+![](assets/help/images/setup-reports-presets.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Fix your legal identity first: organisation type, address, registration, VAT regime and the special mentions. A design prints only what you entered there. See [Your legal identity](help:user.money.legal.identity).
+2. Open [Report editor](app:/report-editor), pick the document and start from **Professional** under **Templates**.
+3. Add a language version for each language your members read. Choose **EN**, **FR**, **DE**, **ES** or **IT** under the document. See [One design per language](help:user.money.reports.languages).
+4. Check each one with **Quick preview**. It uses your newest invoice, or sample data when there is none.
+5. Rehearse on a test space: enter it, issue a trial invoice, print it and send it to your accountant. See [What a test space is for](help:user.advanced.test-space).
+6. Freeze the design before the first invoice. Write down what you decided, then change a design only when a rule changes.
+
+**Good to know**
+
+- Replacing a layout can be undone with **Undo** until you leave the editor.
+- An issued invoice is a frozen document. Changing the design later changes new documents, never the ones already issued.
+- With the same wording in two languages, ask someone who reads the second language to read the preview.
+
+> **Careful** The invoice number and the legal mentions printed on an invoice become permanent with the first issued invoice. Settle them before it, not after.
+
+**Result:** every document you will send looks like yours, in each language, and has been read once by someone other than you.
+
+**See also:** [Your legal identity](help:user.money.legal.identity) · [The invoice PDF template](help:user.money.reports.invoice-template)
+
+### What you hand your accountant
+
+**Audience:** Owner · Billing administrator
+
+You want your accountant to have what they need, and to know what the app does not claim.
+
+![](assets/help/images/setup-reports-export.en.b8fa17aa9.jpg)
+
+Start from the [Invoice register](app:/invoice-register), which lists every invoice with its status, and tap **Accounting export**. Each format says in the sheet what it claims.
+
+| File | What it claims | What it does not claim |
+|---|---|---|
+| FEC | The French format an audit asks for, rebuilt from invoices and payments | Complete books. Your accountant completes them |
+| DATEV | An exchange file for German accountants' software, read and posted by a person | A filing, or a handover for a tax audit |
+| SAF-T | The international structure, deliberately partial: invoices and payments, no general ledger | A complete accounting file. It says so in its header |
+| SAF-T PT, Sage 50 | A Portuguese regulatory format (uncertified) and a British/Irish exchange format, depending on your country | A filing or a certification |
+| Accounting CSV, Audit trail, Year archive (zip) | A reading aid for your accountant | A filing |
+
+The list of formats depends on your country. FEC and DATEV ask for your account numbers, and FEC also for your registration number: have them ready. The VAT figures for the period are in [The periodic VAT declaration](help:user.money.vat.declaration).
+
+*What the app does not do*
+
+- It keeps invoices, payments and a running account per member. It does not keep a double-entry ledger over a chart of accounts, so it cannot replace accounting software.
+- Some obligations remain with you and your accountant: complete books, certified software where your country demands it, and the target authority's acceptance.
+- A file is blocked until the problems in the source are fixed.
+
+**Good to know**
+
+- Exporting is a read. You can repeat it for any period.
+- Prepare a short brief for your accountant before the first invoice: your VAT regime, when VAT falls due, the numbering you chose and the exports you will want. See [AI help](help:setup.reports.ai).
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export) · [The invoice register](help:user.invoicing.register) · [VAT account](help:user.money.vat.account)
+
+### Business analytics in outline
+
+**Audience:** Owner · Billing administrator
+
+You want to see how the space performs once it runs, without a spreadsheet.
+
+![](assets/help/images/setup-reports-documents.en.b8fa17aa9.jpg)
+
+**Business analytics** shows figures by area: invoiced and collected, occupancy and capacity. You choose a period (month, quarter or year), compare it with another, save a view and export it as a PDF. You see only the analyses your role may read.
+
+Collected is payments matched to invoices. It is not a profit, because no costs are in the figure, and the current period is partial.
+
+For a document about the whole space, the **Workspace documents** tab holds the **Workspace report**, **Space QR codes (PDF)**, **Export data (Excel)** and **Export configuration (PDF)**. Use the last two as a recovery copy before a big change.
+
+**See also:** [Business analytics](help:user.invoicing.bi) · [Exports](help:user.workspace.export.workspace-report)
+
+### Help from an AI assistant
+
+**Audience:** Owner · Co-owner
+
+An AI chat tool can save you hours on the words around your setup. It cannot be the one who decides what is legally or fiscally right. This section is about the tools you use outside DesKilo; the assistant connection inside the app is described at the end.
+
+*What an outside tool is good for*
+
+- Drafting the invitation message you send to your first members. See [The invitation message](help:user.workspace.settings.invitation-message). The placeholders such as the first name or the invite link stay as they are.
+- Wording the special mentions you will submit to your accountant, as a draft to check, never as a final text.
+- Translating a design's wording into another language, so that you only have to review it.
+- Explaining a report or a statement to a member in plain words.
+- Preparing the brief of your choices for your accountant: country, organisation type, VAT regime, numbering, exports.
+- Drafting the picture behind your floor plan, from photographs, in an image tool.
+
+*What it must not decide*
+
+- The legal mentions of an invoice, the VAT treatment of an activity, the reason no VAT is charged, and the VAT rates.
+- Anything that becomes permanent: an invoice number format, a VAT regime, the currency, an issued invoice.
+- Whether something is compliant. A confident answer is not a verified one, and your accountant is.
+
+*The safe workflow*
+
+1. Ask the tool for a draft. Give it a scenario, not your members' names or any personal data.
+2. Paste the draft into the field, in the **Report editor** or in the settings.
+3. Look at it in **Preview** with sample data.
+4. Send the text that has legal weight to your accountant and wait for the answer.
+5. Try the whole flow on a test space before the real one.
+
+> **Careful** Do not paste a token, a password, a bank number or a member's personal data into an outside tool.
+
+*DesKilo's own assistant connection*
+
+The app lets an assistant such as Claude or ChatGPT act for a member through a protocol called MCP. It is off by default and is a feature you switch on (**MCP interface**, see [A feature switch](help:user.features.switch)). It is made in layers, so no one person can open everything.
+
+![](assets/help/images/setup-reports-assistants.en.b8fa17aa9.jpg)
+
+| Layer | Who | What they do |
+|---|---|---|
+| The installation | The operator | Turns assistants on for the installation. |
+| The workspace | You, the owner | Switch the feature on, then choose in [What assistants may do](help:user.advanced.assistants-policy) which services are offered and whether an assistant sees own records only or workspace-wide. |
+| The database | A database administrator | Approves each person's request. |
+| The member | Each member | Asks once for approval and chooses this workspace. |
+| A request with impact | The member, on their device | Confirms the exact request, which still follows your validation rules. |
+
+A member's assistant works on that member's own records: find and describe free places, favourites and ratings, book, change or cancel one's own reservation, ask to delete a started booking, check in and out, read one's statement and invoices, and list and answer the validations one is asked for. A few requests (invoice issue, invoice void, refund, member status change, subscription share) are for staff only: they need staff rights, the person's confirmation in the app, and then your validation rules. It has no operation that configures a space: it cannot switch a feature on, set a tariff, change a role or build a plan. It cannot set your space up for you, and it acts only within what you expose.
+
+**Good to know**
+
+- Switching assistants on grants nobody anything by itself.
+- Each approval expires; the screen tells how many days remain.
+- Read the steps in [Approvals and confirmations for assistants](help:user.advanced.assistants-approve).
+
+**See also:** [Assistants: what they are](help:user.advanced.assistants) · [Connect an assistant](help:user.advanced.assistants-connect)
+
+### Working with a developer: the design file and the report tool
+
+**Audience:** Owner · Operator
+
+Someone technical is helping you, and a design must be edited or proved outside the app.
+
+**Steps**
+
+1. In [Report editor](app:/report-editor), use **Export this design** to write the design as one file. The file says what its fields mean and which placeholders exist. **Import a design** reads it back; a file for another report, or from a newer version, is refused with the reason.
+2. A developer can proof the design from a terminal with the report tool, described in the technical administrator's guide: `check` measures a layout against the window-envelope contract and exits non-zero when ink lands in the window; `render` makes the PDF; `sample` writes a data file with every placeholder; `describe` lists the vocabulary.
+3. Back in the app, import the file, preview it with **Quick preview** and **Save**.
+
+**Good to know**
+
+- The design exchange is a feature (**Export and import report designs**), under the report features of [Features](app:/features). Switch it on first.
+- The tool needs the source code of the app; it is for the person who runs your installation, not for daily use.
+
+**See also:** [The report editor](help:user.money.reports.editor) · [The invoice PDF template](help:user.money.reports.invoice-template)
+
+## Keep it consistent
+
+A space can be wrong in two ways: a setting that is missing, and two settings that contradict each other. DesKilo catches some of both, and says so on screen. This chapter lists what it catches and where you see it, says plainly what it does not catch, and gives you an audit to run before the doors open and a short routine to run every month.
+
+In this chapter:
+- [The guards the app gives you](help:setup.consistent.guards)
+- [The mistakes the guards do not catch](help:setup.consistent.gaps)
+- [The pre-launch audit](help:setup.consistent.audit)
+- [The monthly routine](help:setup.consistent.monthly)
+- [When something looks wrong](help:setup.consistent.wrong)
+- [What cannot be undone](help:setup.consistent.irreversible)
+
+The running example is *Atelier du Marché*. Its owner, Ada, runs the audit once in a test space and once more in the real one.
+
+### The guards the app gives you
+
+**Audience:** Owner · Co-owner · Administrator · Billing administrator
+
+You want to know which of your mistakes the app will point out, and where it will do it, so that you look in the right place.
+
+![](assets/help/images/setup-consistent-features-attention.en.b8fa17aa9.jpg)
+
+| Guard | What it catches | Where you see it |
+|---|---|---|
+| A feature that needs another | A feature cannot work without the one it needs. Switching a feature on switches its parent on and names what came on. Switching a parent off holds its children back and keeps their own choice. | **Features**: the switch flow with its preview, **Requires…** and **Waiting on the feature above** |
+| A process held back | A feature that is on but waits for something that is off. | **Features**, **Processes** view: the state **Needs attention** and its filter chip |
+| The readiness list | One line per area of the space, with its state, who acts and where to set it. Areas: **Opening days, time zone and currency**, **Bookable places on the floor plan**, **Membership plans and tariffs**, **Invite the first members**, **How members pay**, **Roles and who validates requests**, **Export and recovery**, **Details your features need (identity, bank, platforms)**, **A first booking** and, when relevant, **Server and database version** and **Assistant access (optional)** (the latter only with the MCP interface on). | **Setting up this space**, at the top of [Workspace](app:/workspace-settings) |
+| The line that stops a first booking | Only what a booking truly needs: a time zone, a currency, an open weekday, one seat, and, when a booking rule asks for more validators than exist, those validators. The rest is optional and can be set aside with **Later**. | **Before anyone can book here**, on the Get started card of [Reserve](app:/reserve) |
+| What your features still need locally | Legal identity (needed by **Invoices**), bank details, an online payment provider, an e-invoicing account, a site. | The same card, area **Details your features need (identity, bank, platforms)**, with **Set up** and **Recommended** |
+| The invoice guard | An invoice is refused until it is complete: the workspace address, its VAT number, a country France or Germany, a legal basis for an exemption, the member's name, address and VAT number when reverse charge applies, a VAT rate in force, an explanation for every line billed at 0 %. Cross-border, reverse-charge, export and exempt invoices are refused: issue them outside the app. | **Complete these details before issuing**, with the missing items listed |
+| The online payment guard | With **Online payments** off, the server refuses a new online payment. One already open still settles. | The payment screens (the feature row carries no note about it) |
+| The validation guard | **Required validations** above the people available. | **Not enough eligible validators.** in the rule editor; "A policy asks for more validators than this space has" in the readiness list |
+| The number sequence guard | A reset more frequent than the date printed in the number is refused. | [Number sequences](app:/settings/number-sequences), when you save |
+| The maturity check | A feature reviewed as **Alpha** or **Beta**. | A confirmation before you switch it on, and a badge on every switch |
+| The plan replacement check | Replacing the floor plan or the settings from a file. | A warning that it cannot be undone. The plan is refused once reservations exist |
+
+**Good to know**
+
+- **Setting up this space** is a list, not a lock. It never stops you from switching something on.
+- Most guards act when you try to issue, pay or book, not when you choose a setting. That is why the audit below exists.
+- The owner inbox ([What needs you](help:user.collaborate.attention)) does not raise configuration problems today. Do not wait for it to tell you.
+
+**See also:** [Avoid features that contradict each other](help:setup.features.consistency) · [Check your space](help:setup.place.check)
+
+### The mistakes the guards do not catch
+
+**Audience:** Owner · Co-owner · Billing administrator
+
+You want the honest list of what stays your responsibility. These are configurations the app lets you create and does not warn about. Each has a way to avoid it by hand.
+
+| Mistake | Why nothing stops it | Avoid it by |
+|---|---|---|
+| Choosing a country other than France or Germany and expecting invoices | The app offers many countries and VAT rates, but issues invoices only for France and Germany. Nothing says so when you choose the country. | Deciding before you promise members an invoice. Elsewhere, keep statements in the app and issue invoices outside it. |
+| Being registered for VAT with no rate in force | Issuing is refused, but only at the first invoice. With **VAT management** off, the configuration is hidden but the stored rates keep applying. | Adding the rate under [VAT](app:/vat) before the first month-close, and running a trial invoice. |
+| **Online payments** on with no provider | You can switch it on; the missing provider shows only as an item in the readiness list. | Connecting the provider first, then switching on. |
+| **Invoices** on with no legal identity | The feature is on from the first day; the refusal comes at issue time. | Filling in the identity before telling members they will be invoiced. |
+| A rule needing more validators than you have, outside bookings | The readiness list holds up the first booking only for reservation rules. The editor lets you save one above the people available. Other requests are created, cannot be completed, and expire after seven days. | Counting active owners and administrators after each rule. See [Avoid requests that wait for ever](help:setup.people.stuck). |
+| Members who cannot open the plan | In a new space the **User** card of [Roles](app:/roles) is empty and nothing warns you. | Ticking the everyday permissions and joining once with a second account. |
+| A space made from a template | A template never carries the identity, bank details, sites or invitations. | Treating the area **Details your features need (identity, bank, platforms)** as a to-do list. |
+| A settings file that promises more than it delivers | Today the file carries the role matrix, your own roles and every validation rule, but not the members, the invoice and member numbers, the VAT period or whole-space prices. What it carries is applied only if **Configuration in the space file** is on in the target. A plan is not replaced once reservations exist. | Re-entering what it does not carry by hand, and reading the preview before **Replace and import**. |
+| Reminders that never run | They run every morning on the server when the database has its scheduler (pg_cron); if it has none, they run when an administrator opens Finances. They also stay silent when **Automatic payment reminders** is off. | Asking the operator whether the scheduler exists, and opening Finances yourself if it does not. See [Payment reminders](help:user.money.reminders.automatic). |
+| Changing country, currency or time zone once money exists | I found no guard. Amounts are stored as numbers and are not converted: check with the owner of the installation before relying on one. | Choosing them on day one. See [Decisions that are hard to undo](help:setup.before.permanent). |
+| Numbering or VAT period that does not suit your accountant's format | The app does not compare them with the country's accounting export. | Asking your accountant for the numbering format and the export they use before you issue. See [Accounting exports](help:user.invoicing.accounting-export). |
+| Taking a test for the real space | Beyond the watermark on printed documents, the difference is easy to miss. | Looking at the test-space banner and the side shown in [Me](app:/me) before you act. |
+
+**Good to know**
+
+- A kiosk with no kiosk member, a site feature with no site, push without a push service: [Avoid features that contradict each other](help:setup.features.consistency).
+- The app is stricter than it looks about invoices and looser than it looks about everything else. When in doubt, issue a trial invoice in a test space.
+
+**See also:** [A safe dry run](help:setup.money.dry-run)
+
+### The pre-launch audit
+
+**Audience:** Owner · Co-owner
+
+You want proof, not a feeling, before you open. Thirty-one checks, in three levels. Run *Open* before you invite anyone, *Run* before you promise anything about money, *Grow* before the first invoice leaves. Do it in a test space first, with a second person.
+
+*Open: a place people can book*
+
+| # | Check | Where | Good looks like |
+|---|---|---|---|
+| 1 | Country, currency, time zone | [Workspace](app:/workspace-settings), **General details** | Atelier du Marché: France, EUR, Europe/Paris |
+| 2 | Workspace language | Same screen | The language your invitations are written in |
+| 3 | Open weekdays and hours | [Availability](app:/availability) | The days you open are ticked; the hours match the day |
+| 4 | Closure days | Availability, closure days | Holidays and closures for the next months are in, before the first month-end |
+| 5 | At least one seat | [Workspace editor](app:/editor) | Every room you rent has seats |
+| 6 | Readiness | **Setting up this space** | Nothing under **Opening days, time zone and currency** or **Bookable places on the floor plan** needs configuration |
+| 7 | You booked a seat | [Reserve](app:/reserve) | The seat is booked, checked in and cancelled without a surprise |
+| 8 | The workspace ID | [Workspace ID & QR](app:/workspace-code) | The ID is one you can say aloud; the QR is printed |
+| 9 | Everyday permissions | [Roles](app:/roles) | **User** holds the six everyday permissions |
+| 10 | A second account joined | Another device | It was approved and could open the plan and book |
+| 11 | More than one person can act | [Members & plans](app:/members) | An owner plus a co-owner or an administrator, all **Active** |
+| 12 | Validation counts | [Validation rules](app:/validation) | No rule asks for more validators than active owners and administrators |
+| 13 | The invitation in each language | **Community & invitations** | You read each version once; no tag is left unfilled |
+| 14 | The side you are on | [Me](app:/me) | The test-space banner is shown, or not, as you intended |
+
+*Run: people pay and roles hold*
+
+| # | Check | Where | Good looks like |
+|---|---|---|---|
+| 15 | Fee bands | [Billing](app:/billing) | Every share a member can choose falls in a band; no gap between 0 and 100 percent |
+| 16 | Plans offered | Billing, levels | Only the plans you want to sell |
+| 17 | What new members start with | **New members**, in Workspace | The subscription and the rule when days run out are the ones you chose |
+| 18 | Packages and services | Billing, [Services](app:/services) | Names and prices read right to a member |
+| 19 | How members pay | **How members pay** in the readiness list | The area reads **Ready** and the bank details you expect (IBAN, reference) are shown in Settings; a provider alone also turns it ready |
+| 20 | Online payments | [Features](app:/features) | Off, unless a provider is connected |
+| 21 | Administrators | Members & plans | Each one is a person you would trust with every member's data |
+| 22 | Administrator card of the matrix | Roles | You can read each tick and defend it |
+| 23 | Who is told what | [How members are told](help:setup.notify.members) | Members find everything under **Events**; push only if the operator set it up |
+| 24 | Kiosk and badges | [Features](app:/features) | Off, or a kiosk member exists and badges are issued |
+| 25 | Sites | Features | Off, or at least one site exists |
+| 26 | Features held back | **Features**, **Needs attention** | The filter shows no process |
+
+*Grow: invoices, tax and records*
+
+| # | Check | Where | Good looks like |
+|---|---|---|---|
+| 27 | Legal identity | [Legal identity & e-invoicing](app:/legal-identity) | **Complete these details before issuing** shows nothing when you start a trial invoice |
+| 28 | VAT regime and rates | [VAT](app:/vat) | The regime is the one your accountant gave; a rate is in force for your default |
+| 29 | Number format | [Number sequences](app:/settings/number-sequences) | You read the preview and your accountant agrees |
+| 30 | A trial invoice | Test space, month-close wizard | It issued, in each language your members read, without a missing item |
+| 31 | A recent export | **Export and recovery** | "A recent export is on record" |
+
+**Steps**
+
+1. Print the three tables or copy them into your notes.
+2. Run *Open* and tick each line as you see the *good* column, not as you remember it.
+3. Do the same for *Run* and *Grow* in the test space, with your accountant for the lines of *Grow*.
+4. Repeat the lines that changed when you move to the real space. A template or a settings file does not carry all of them.
+
+**Result** A list you can show someone, and a space you have seen working before anyone depends on it.
+
+**See also:** [Week 0 to week 4](help:setup.training.overview) · [A safe dry run](help:setup.money.dry-run) · [The sequence to follow](help:setup.reports.sequence)
+
+### The monthly routine
+
+**Audience:** Owner · Administrator · Billing administrator
+
+You want a short habit that keeps the space coherent, in ten minutes at month-end.
+
+**Steps**
+
+1. Open **Setting up this space**. Every area still reads **Ready**, or **Not needed here**, or is set aside on purpose.
+2. Open [Events](app:/events). **Waiting for your confirmation** is empty or small, and no member has been **Pending** for more than a day or two.
+3. Recount the team. Anyone who left or was paused can leave a rule short. See [Avoid requests that wait for ever](help:setup.people.stuck).
+4. Close the month: closure days are entered, the month-close wizard is run, payment reminders have gone out (automatically each morning, or on opening Finances where the database has no scheduler). See [The month-close wizard](help:user.invoicing.wizard).
+5. Take the data export, and open **Features** to check that no process needs attention after the changes of the month.
+
+**Good to know**
+
+- Writing the date of the last run on the first line of your notes tells the next person when it was last true.
+- Anything changed during the month in the role matrix or in a validation rule is worth one more check of the audit lines 9, 11 and 12.
+
+**Result** A space that stays what you set up.
+
+**See also:** [The pre-launch audit](help:setup.consistent.audit)
+
+### When something looks wrong
+
+**Audience:** Owner · Co-owner · Administrator
+
+You want to know what to try, in what order, and whom to ask.
+
+![](assets/help/images/setup-consistent-recovery-export.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Read the message on the screen. Most say what to do.
+2. Check the side. Look at the test-space banner and the side shown in [Me](app:/me). Documents printed on the test side carry a watermark and nothing there is owed; the real side issues invoices that are.
+3. Check [Features](app:/features) and [Roles](app:/roles): a missing function is a feature that is off or a permission nobody ticked.
+4. Open **Setting up this space** and read the area that matches the symptom.
+5. Prepare **Support details** under [Help](app:/help): choose **Last hour** or **Last 24 hours**, **Prepare preview**, read it, **Save**, and send the file. It holds counts and checks only, not identities, credentials or business records.
+6. Before you change anything big, take the data export (below).
+
+*Who to ask*
+
+| About | Ask |
+|---|---|
+| A setting of your space, a rule, a role | You, then your co-owner |
+| An invoice, VAT, a number | Your accountant, with the trial invoice |
+| An area that says **Waiting for someone else** or **The server operator** | The operator of your installation |
+| An assistant that is not approved | A database administrator |
+| An error you cannot explain | Support, with the support file |
+
+*The recovery export*
+
+1. Open [Reports](app:/reports?section=documents) and choose **Workspace documents**.
+2. Tap **Export data (Excel)**. It needs the **Data export (Excel)** feature and the permission **Export accounting and data**. You get one ZIP: a workbook with a tab per dataset, a manifest counting the rows, and the stored files.
+3. Tap **Export configuration (PDF)** for a record of the parameters and, in **Workspace**, **Export workspace (XML)** for the plan and settings.
+
+**Good to know**
+
+- A completed data export is recorded; the readiness area **Export and recovery** says so for 90 days, then reads that the export is older.
+- The PDF is a record, not a backup. Only the XML can be imported back, and it never holds members or money.
+- Keep the file somewhere only you can open: it contains your members.
+
+**See also:** [Support details](help:user.advanced.support) · [When something does not work](help:user.advanced.troubleshooting) · [Export the data (Excel)](help:user.workspace.export.excel)
+
+### What cannot be undone
+
+**Audience:** Owner · Co-owner · Billing administrator
+
+You want one page that says what to slow down for. The full list, with what to do instead, is [Decisions that are hard to undo](help:setup.before.permanent). This is the recap.
+
+> **Careful** An issued invoice never changes and its number is never reused. A mistake is corrected with a cancellation, a credit note or a refund request, not with an edit.
+
+| Decision | Permanent from | Covered in |
+|---|---|---|
+| Invoice number format and sequence | The first issued invoice | [Decisions that are hard to undo](help:setup.before.permanent) |
+| A member's invoiced month | The moment the invoice is issued | [Money](help:setup.money.permanent) |
+| Legal mentions on the invoice | The first issued invoice | [The sequence to follow](help:setup.reports.sequence) |
+| VAT regime and rates | Rates are versioned by date and never edited; a submitted declaration is never recomputed | [Money](help:setup.money.permanent) |
+| Country, currency, time zone | When money exists: amounts are not converted | [Decisions that are hard to undo](help:setup.before.permanent) |
+| Floor plan replacement | Refused once a reservation exists; deleting a floor removes what is on it | [Decisions that are hard to undo](help:setup.before.permanent) |
+| The workspace ID | When you change it, the old one stops working at once; reprint the QR | [How people join](help:setup.people.join) |
+| Ownership | An owner can give it; there is no owner invite | [Co-owners](help:setup.people.coowner) |
+| A matrix or validation change | It is recorded as an event and takes effect for everyone at once | [The role matrix](help:setup.people.matrix) |
+| Test or real | A real space issues invoices that are owed | [Before you start](help:setup.before.overview) |
+| An export shared | A shared file cannot be revoked | [When something looks wrong](help:setup.consistent.wrong) |
+
+**Good to know**
+
+- Switching a feature off never erases data.
+- A file with credentials is not a backup. Keep tokens out of any file you send.
+
+**Result** You know which lines to read twice.
+
+**See also:** [Before you start](help:setup.before.overview)
+
+## Learn it in four weeks
+
+**Audience:** Owner · Co-owner
+
+You do not have to understand DesKilo before you start. You have to understand it in the right order, and to practise each step where a mistake costs nothing. This chapter is a four-week path of about half an hour a day, with a week of looking around first. Each week ends with a checklist: when every box is ticked, go on.
+
+The rule of the whole path: *learn on the demo, build on a test space, and only then touch the real space.*
+
+### Week 0: look around the demo
+
+**Audience:** Owner
+
+You want to see the finished product before you make decisions. The demo workspace *Atelier du Marché* is invented, open to anybody and changes nothing real.
+
+**Steps**
+
+1. On the sign-in screen, tap **Explore the demo workspace**, then **Start exploring**. See [The demo workspace](help:user.advanced.demo).
+2. Use **View as** to move between **The owner**, **An administrator** and **A member**. Do the three exercises of each person below.
+3. Tap **Reset the demo** when you want it back as it started.
+
+*As a member*
+
+| Exercise | Expected result |
+|---|---|
+| Book a place for tomorrow on the plan. See [Book a place](help:user.reserve.book). | The place turns to *Reserved* on your plan and the booking is in your calendar. |
+| Open your statement. See [The statement](help:user.money.statement). | You see what you owe, paid and open, for the period. |
+| Send a message to another member. See [Messages](help:user.collaborate.messages). | The message appears in the conversation with a single tick (sent); a double tick appears when the other person opens it. |
+
+*As an administrator*
+
+| Exercise | Expected result |
+|---|---|
+| Open the members list and read one member's page. | You see their plan, their status and their account. |
+| Answer a pending expense request (for example the printer paper). See [Validation rules](help:user.validation.overview). | The request leaves your list and its status changes for the requester. Other requests may need the owner as well and stay open. |
+| Open [Invoice register](app:/invoice-register) and read one invoice. | You see the lines, the status and an integrity mark. |
+
+*As the owner*
+
+| Exercise | Expected result |
+|---|---|
+| Open [Features](app:/features) and read the cards of two processes. See [Features and processes](help:user.features.processes). | You see which capabilities are on, which are waiting for a prerequisite and why. |
+| Open [Roles](app:/roles) and compare **Administrator** with **Owner**. | The owner holds every permission, the administrator a part of them. |
+| Open the report editor and look at **Preview** on an invoice. See [The report editor](help:user.money.reports.editor). | You see an invoice as a member would receive it. |
+
+*You are done when*
+
+- [ ] You can say in one sentence what each of the three people sees that the others do not.
+- [ ] You found where a request is validated, where an invoice is read and where a feature is switched.
+- [ ] You wrote down three things you want in your own space and three you do not.
+
+**See also:** [Get started](help:user.start.get-started) · [The app's words](help:user.advanced.glossary)
+
+### Week 1: Open
+
+**Audience:** Owner
+
+You build the place and its opening times in a test space, so that a member could book. Nothing is invoiced yet.
+
+**Steps**
+
+1. Create a test space of your own, or enter the test side of your space. See [Create a workspace](help:user.start.create) and [What a test space is for](help:user.advanced.test-space).
+2. Set the country, currency, time zone and language. See [Country](help:user.workspace.settings.country).
+3. Draw one level with one room and three seats in the [Space editor](app:/editor). See [The floor plan editor](help:user.space.overview).
+4. Choose the open weekdays, the granularity and the working hours. See [Open weekdays](help:user.workspace.availability.open-weekdays).
+5. Add a closure day. See [Closure days](help:user.workspace.availability.closure-days).
+6. Keep the default features. Open [Features](app:/features) only to read what is on.
+7. Make a booking as yourself, then check in and out. See [Check in and out](help:user.reserve.check-in).
+8. Share the workspace ID with one person and let them join. See [The workspace ID](help:user.workspace.code).
+
+**Good to know**
+
+- A space can be booked once it has a time zone, a currency, at least one open weekday and at least one seat. Everything else can wait.
+- A floor plan cannot be replaced by an import once a reservation exists.
+
+*You are done when*
+
+- [ ] A second person found the space with its ID and booked a seat without your help.
+- [ ] You can explain why the plan shows a seat as *Reserved*, *Free* or *Blocked*.
+- [ ] You know your opening rules without looking: days, hours, half-day boundary.
+
+**See also:** [Working hours](help:user.workspace.availability.working-hours) · [Booking policies](help:user.workspace.availability.policies)
+
+### Week 2: Run
+
+**Audience:** Owner · Administrator
+
+You decide who may do what, what each member pays, and who is told what. You do it with a second person, because rules only show themselves when someone else meets them.
+
+![](assets/help/images/setup-training-roles.en.b8fa17aa9.jpg)
+
+**Steps**
+
+1. Role-play a validation with a second person. Make them an administrator, set one required validation for bookings, then book as a member and let the administrator confirm. See [Validation rules](help:user.validation.overview) and [Roles](help:user.roles.space).
+2. Raise the required number to two and watch the request wait. Then reduce it again. A rule that needs more validators than exist leaves requests waiting for ever.
+3. Write the tariffs on paper first: subscription levels in per cent, the fee band of each level, the price beyond the allowance. Then enter them in Billing, and give the level to the member in Members & plans. See [Members & plans](help:user.members.subscription).
+4. Give the second person a level and let them book beyond their allowance. Read the statement.
+5. Test the notifications: a message, a pending request, a cancelled booking. See [Notifications](help:user.collaborate.notifications).
+6. Open [Roles](app:/roles) and check what an administrator may do. Remove one permission and see what disappears for them.
+
+**Good to know**
+
+- In-app notifications work at once. Push notifications also need the operator's setup, so a test may show nothing on a phone. Ask your operator.
+- Automatic payment reminders run once a day on the server when the installation has its scheduler, and also when an authorised person opens Finances.
+
+*You are done when*
+
+- [ ] You watched a request pass through the validation you configured, and one stay waiting.
+- [ ] Your tariffs fit on one sheet and the statement of the test member matches your arithmetic.
+- [ ] You know who is told what.
+
+**See also:** [Validation rules](help:user.validation.overview) · [Roles and permissions](help:user.roles.matrix)
+
+### Week 3: Grow
+
+**Audience:** Owner · Billing administrator
+
+You make the first invoice, in two languages, in the test space, with your accountant looking over your shoulder.
+
+**Steps**
+
+1. Fill in your legal identity and VAT regime together with your accountant. See [Your legal identity](help:user.money.legal.identity) and [VAT regime](help:user.money.vat.regime).
+2. Close a month and issue a trial invoice in the test space. See [The month-close wizard](help:user.invoicing.wizard).
+3. Open the invoice with the design of **Professional**, then in a second language. See [One design per language](help:user.money.reports.languages).
+4. Export the register for the period in the format your accountant uses. See [Accounting exports](help:user.invoicing.accounting-export).
+5. Ask the accountant three questions: Are the mentions right? Is the treatment of VAT right? Can you read the file?
+6. Write down the answers. They become the brief for the real space.
+
+**Good to know**
+
+- The app issues invoices in France and Germany only today. It refuses to issue when an essential is missing and names what is missing.
+- Invoices in a test space carry a watermark that says so.
+
+> **Careful** After the first issued invoice in the real space, the invoice is frozen, its number cannot be reused and that month is locked for the member. Corrections go through a void, a credit note or a refund.
+
+*You are done when*
+
+- [ ] One trial invoice exists, read by your accountant, in two languages.
+- [ ] You exported a file for the accountant and they opened it.
+- [ ] You have the written answers.
+
+**See also:** [Documents and reports](help:setup.reports.overview) · [The invoice register](help:user.invoicing.register)
+
+### Week 4: go live
+
+**Audience:** Owner · Co-owner
+
+You move from rehearsal to the real space, and you do not do it alone: five people invite you to watch.
+
+*The go-live checklist*
+
+1. Decide whether you keep your test space as your rehearsal side or create the real space. If the space has two sides, deploy from the test side to the real one. See [Deploy between the two sides](help:user.advanced.deploy).
+2. If you create the real space instead, repeat what worked: the same country, currency and time zone, the same plan, rules, tariffs and roles. A template, a configuration transfer or a deployment between the two sides carries most of it. See [Export, import and configuration](help:user.workspace.export.space-xml).
+3. Enter your legal identity again in the real space. A template never carries it; a deployment between the two sides does, but never credentials. Check it either way.
+4. Declare the space production only when the invoices that leave it are really owed. See [Enter the real side or the test side](help:user.advanced.enter-environment).
+5. Invite five people, not fifty. See [The invitation message](help:user.workspace.settings.invitation-message).
+6. Watch their first bookings. Open [Reserve](app:/reserve) and read what the **Get started** card still asks for.
+7. After one week, review: which question did they ask, which rule surprised them, which setting do you now want to change.
+
+**Good to know**
+
+- Credentials such as e-invoice tokens or payment provider keys never travel between spaces. Enter them again.
+- A recovery copy before the first invoice is cheap. See [Documents and reports](help:setup.reports.accountant).
+
+*You are done when*
+
+- [ ] Five real people booked without asking you how.
+- [ ] You know where to look when something does not work.
+- [ ] You scheduled your first month-close.
+
+**See also:** [A space has two sides](help:user.advanced.environments)
+
+### Twenty words of the setup
+
+**Audience:** Owner · Co-owner
+
+The decisions you will meet have names. This is what each one means in DesKilo.
+
+| Term | Meaning |
+|---|---|
+| Granularity | The unit of a booking: half-day, day, hour or minutes. It decides how the plan is cut. |
+| Half-day boundary | The time that separates a morning from an afternoon, set with the start and end of the working day. |
+| Overage | Use beyond a member's allowance. You choose to block it, charge it as it comes or sell packages. |
+| Fee band | The price of a subscription, by the percentage of the allowance the member takes. |
+| Validation domain | A kind of request with its own rule: a booking, an expense, a refund and others. |
+| Quorum | The number of validators a request needs. More than the people who can validate leaves it waiting. |
+| Exigibility | The moment VAT falls due: at invoicing or at payment. |
+| Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
+| Environment pair | A test side and a real side of one space. |
+| Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |
+| Readiness | The checklist at the top of the workspace settings that says what is missing before people can book. |
+| Held back | A feature that is on but waits for another one that is off. |
+| Kiosk | A shared screen at the door where members check in and out. |
+| Badge | A card or tag a member shows to check in at a kiosk. |
+| Managed profile | A member you run for someone who has no account yet, handed over later with a code. |
+| Closure day | A day when the space is shut, such as a holiday. |
+| Wording (lexicon) | The words you replace in the app to match your place, such as how a member is called. |
+| Recovery export | A copy of the settings and data you save before a big change. It shows in the readiness list. |
+| Offered level | A subscription level you offer to members. It must exist before anyone picks it. |
+| Seller kind | The type of organisation you are when you invoice. It decides the default mentions. |
+
+**See also:** [The app's words](help:user.advanced.glossary)
+
+### Where to ask for help
+
+**Audience:** Everyone
+
+You are stuck on one field or one decision.
+
+**Steps**
+
+1. Tap the **?** next to a field. The guide opens at that field.
+2. Open [Help](app:/help) and use **Contents** to jump. Tips on screens can be paged with **Next tip**.
+3. When it is the app that fails, open **Support details** and send the preview. See [Support details](help:user.advanced.support).
+4. For a decision about law or tax, ask your accountant. For your installation, ask its operator. For the way other owners did it, ask your community.
+
+**Good to know**
+
+- The guide works offline and in your language.
+- Contact the support with the file from **Support details**. It holds no identity and no business record.
+
+**See also:** [Where to get more help](help:user.advanced.help)
+
+### The cheat sheet
+
+**Audience:** Owner · Co-owner
+
+The whole setup on one page. *Reversible* tells you whether you can change your mind after you have done it.
+
+| Step | Where in the app | How long | Reversible? |
+|---|---|---|---|
+| 1. Country, currency, time zone, language | [Workspace settings](app:/workspace-settings) | 5 minutes | Yes, but do not change the currency once money exists |
+| 2. Floor plan | [Space editor](app:/editor) | 30 minutes | Yes, until the first reservation; then edit one object at a time |
+| 3. Opening rules | Availability | 10 minutes | Yes |
+| 4. Features | [Features](app:/features) | 10 minutes | Yes. Switching off stops new use and deletes nothing |
+| 5. Roles and validation | [Roles](app:/roles) | 20 minutes | Yes, but a rule needing too many validators blocks requests |
+| 6. Tariffs and levels | [Billing](app:/billing) (levels are assigned in Members & plans) | 1 hour | Yes for the future; issued amounts stay |
+| 7. Legal identity and VAT regime | Legal identity | 1 hour with your accountant | Careful after the first invoice |
+| 8. Invoice numbering and mentions | Legal identity | 20 minutes | No, after the first invoice |
+| 9. Report designs | [Report editor](app:/report-editor) | 1 hour | Yes for new documents; issued ones stay |
+| 10. Invitation message | Workspace settings | 10 minutes | Yes |
+| 11. Notifications test | Messages, requests | 20 minutes | Yes |
+| 12. Trial invoice on the test side | Invoicing | 1 hour | The test side only |
+| 13. Real space or deploy | [Me](app:/me) | 1 hour | Careful: production means invoices are owed |
+| 14. Invite the first five | Workspace settings | 10 minutes | Yes |
+
+**See also:** [The sequence to follow](help:setup.reports.sequence)
 
 # Admin guide — configuring the space
 
@@ -2576,7 +8655,7 @@ than several folders.
 
 Document *designs* — the layout of an invoice or a letter — are a
 different thing, and live in the
-[technical guide](Admin-Technical-Guide#documents-and-reports).
+[technical guide](help:admin.reports.overview).
 
 ## Roles and permissions
 
@@ -2591,7 +8670,7 @@ the button, and the RPC behind it refuses anyway.
 The environment permissions live here too — *Enter the production
 workspace*, *Deploy to development*, *Deploy to production* — and are
 explained in the
-[environments guide](Environments-Guide#who-may-do-what).
+[environments guide](help:env.pair.permissions).
 
 ## Validation rules
 

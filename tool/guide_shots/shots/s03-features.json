@@ -1,0 +1,130 @@
+{
+ "shots": [
+  {
+   "id": "setup-features-what",
+   "persona": "owner",
+   "full": false,
+   "shows": "the Features screen on its Processes view: one card per business process",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "setup-features-order",
+   "persona": "owner",
+   "full": false,
+   "shows": "one process card opened: its subprocesses and the state of each feature",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@processWorkspaceAccess"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "setup-features-tiers",
+   "persona": "owner",
+   "full": false,
+   "shows": "the Switches view: search, the Changed chip, the Maturity filter and the rows with their badges",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@featuresViewSwitches"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  },
+  {
+   "id": "setup-features-maturity",
+   "persona": "owner",
+   "full": false,
+   "shows": "the question asked before an experimental (Beta) feature is switched on",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@featuresViewSwitches"
+    },
+    {
+     "wait": 1000
+    },
+    {
+     "fill": [
+      "@featuresSearchLabel",
+      "@featureCarnetsTitle"
+     ]
+    },
+    {
+     "wait": 1200
+    },
+    {
+     "css": "[role=switch]",
+     "wait": 1500
+    },
+    {
+     "css": "[role=switch]",
+     "wait": 3000
+    }
+   ]
+  },
+  {
+   "id": "setup-features-safely",
+   "persona": "owner",
+   "full": false,
+   "shows": "the Needs attention filter: processes holding a feature that is on but waits for a switched-off prerequisite",
+   "steps": [
+    {
+     "hash": "#/features"
+    },
+    {
+     "click": "@featuresViewSwitches"
+    },
+    {
+     "wait": 1000
+    },
+    {
+     "fill": [
+      "@featuresSearchLabel",
+      "@featureMoneyTab"
+     ]
+    },
+    {
+     "wait": 1200
+    },
+    {
+     "css": "[role=switch]"
+    },
+    {
+     "wait": 2000
+    },
+    {
+     "click": "@featuresViewProcesses"
+    },
+    {
+     "wait": 1500
+    },
+    {
+     "click": "@processStateNeedsAttention"
+    },
+    {
+     "wait": 1500
+    }
+   ]
+  }
+ ]
+}

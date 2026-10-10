@@ -1,0 +1,1017 @@
+{
+ "shots": [
+  {
+   "id": "user-reserve-hub",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      133,
+      300
+     ],
+     "wait": 600
+    }
+   ],
+   "shows": "the plan of one level on a day with bookings: free, reserved and mine"
+  },
+  {
+   "id": "user-reserve-plan-levels",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      313,
+      237
+     ],
+     "wait": 1000
+    },
+    {
+     "click": "First floor"
+    },
+    {
+     "click": "@a11yRecentre"
+    },
+    {
+     "at": [
+      133,
+      300
+     ],
+     "wait": 600
+    }
+   ],
+   "shows": "the first floor: a meeting room and a studio, level selector and zoom buttons"
+  },
+  {
+   "id": "user-reserve-list",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      245,
+      67
+     ],
+     "wait": 1500
+    },
+    {
+     "at": [
+      330,
+      67
+     ],
+     "wait": 600
+    }
+   ],
+   "shows": "the same level as a list of places"
+  },
+  {
+   "id": "user-reserve-when",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      330,
+      67
+     ],
+     "wait": 600
+    }
+   ],
+   "clip": [
+    0,
+    40,
+    390,
+    175
+   ],
+   "shows": "the view, date and time controls after choosing another day"
+  },
+  {
+   "id": "user-reserve-day-view",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "Plan",
+      "Plano",
+      "Piantina"
+     ]
+    },
+    {
+     "click": [
+      "Day",
+      "Jour",
+      "Tag",
+      "Día",
+      "Giorno",
+      "Journée",
+      "Ganzer Tag",
+      "Giornata"
+     ]
+    },
+    {
+     "at": [
+      330,
+      67
+     ],
+     "wait": 600
+    }
+   ],
+   "shows": "the Day view: one row per place along the hours"
+  },
+  {
+   "id": "user-reserve-week-view",
+   "persona": "owner",
+   "view": "tablet",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "Plan",
+      "Plano",
+      "Piantina"
+     ]
+    },
+    {
+     "click": [
+      "Week",
+      "Semaine",
+      "Woche",
+      "Semana",
+      "Settimana"
+     ]
+    },
+    {
+     "at": [
+      330,
+      67
+     ],
+     "wait": 600
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    820,
+    440
+   ],
+   "shows": "the Week view: places by days, half-days side by side"
+  },
+  {
+   "id": "user-reserve-month-view",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "Plan",
+      "Plano",
+      "Piantina"
+     ]
+    },
+    {
+     "click": [
+      "Month",
+      "Mois",
+      "Monat",
+      "Mes",
+      "Mese"
+     ]
+    },
+    {
+     "at": [
+      330,
+      67
+     ],
+     "wait": 600
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    430
+   ],
+   "shows": "the Month view with free places per day and closed days"
+  },
+  {
+   "id": "user-reservations-booking-sheet",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": "A4 ·",
+     "wait": 2200
+    }
+   ],
+   "shows": "the booking sheet for a free place on another day"
+  },
+  {
+   "id": "user-reserve-walk-up",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": "A4 ·",
+     "wait": 2200
+    }
+   ],
+   "shows": "the booking sheet for a free place today: Reserve or Check in now"
+  },
+  {
+   "id": "user-reserve-check-in",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      130,
+      412
+     ],
+     "wait": 2200
+    }
+   ],
+   "shows": "the sheet of my own booking"
+  },
+  {
+   "id": "user-reserve-change",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "Plan",
+      "Plano",
+      "Piantina"
+     ]
+    },
+    {
+     "click": [
+      "Day",
+      "Jour",
+      "Tag",
+      "Día",
+      "Giorno",
+      "Journée",
+      "Ganzer Tag",
+      "Giornata"
+     ]
+    },
+    {
+     "click": "Bruno",
+     "wait": 2200
+    }
+   ],
+   "shows": "the details of my booking: edit times, cancel, save calendar file"
+  },
+  {
+   "id": "user-reserve-scan",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": "@spaceScanTitle",
+     "wait": 1800
+    }
+   ],
+   "shows": "the scan a space code sheet"
+  },
+  {
+   "id": "user-reserve-whole-space",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "click": "@demoPersonaMember",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "at": [
+      313,
+      237
+     ],
+     "wait": 1000
+    },
+    {
+     "click": "First floor"
+    },
+    {
+     "click": "@levelReserveButton",
+     "wait": 2000
+    }
+   ],
+   "shows": "the sheet for a whole level"
+  },
+  {
+   "id": "user-reserve-for-someone",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "click": "@demoPersonaMember",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": "A4 ·",
+     "wait": 2000
+    },
+    {
+     "click": [
+      "Book for",
+      "Réserver pour",
+      "Buchen für",
+      "Reservar para",
+      "Prenota per"
+     ]
+    },
+    {
+     "click": "Bruno Kessler",
+     "wait": 1200
+    }
+   ],
+   "shows": "booking for a member: Send for confirmation"
+  },
+  {
+   "id": "user-reserve-series",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": true,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": "A4 ·",
+     "wait": 2000
+    },
+    {
+     "click": [
+      "More options",
+      "Plus d'options",
+      "Weitere Optionen",
+      "Más opciones",
+      "Altre opzioni"
+     ]
+    },
+    {
+     "click": [
+      "Repeat",
+      "Répéter",
+      "Wiederholen",
+      "Repetir",
+      "Ripeti",
+      "Répétition",
+      "Wiederholung",
+      "Repetición",
+      "Ripetizione"
+     ]
+    },
+    {
+     "click": [
+      "Weekly",
+      "Chaque semaine",
+      "Wöchentlich",
+      "Semanalmente",
+      "Ogni settimana"
+     ],
+     "wait": 1200
+    }
+   ],
+   "clip": [
+    0,
+    598,
+    390,
+    632
+   ],
+   "shows": "the booking sheet with a weekly repeat"
+  },
+  {
+   "id": "user-reserve-closed-days",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "28",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ],
+     "wait": 1500
+    },
+    {
+     "at": [
+      133,
+      300
+     ],
+     "wait": 600
+    }
+   ],
+   "shows": "a closed day: the banner and the plan with blocked places"
+  },
+  {
+   "id": "user-reserve-calendar",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/calendar"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    398
+   ],
+   "shows": "the Calendar tab: decisions on top, views, filters"
+  },
+  {
+   "id": "user-reserve-calendar-decisions",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/calendar"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    195
+   ],
+   "shows": "a decision waiting for the member, pinned at the top of the Calendar"
+  },
+  {
+   "id": "user-reserve-calendar-views",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/calendar"
+    },
+    {
+     "click": "@calendarViewMonth"
+    }
+   ],
+   "clip": [
+    0,
+    0,
+    390,
+    545
+   ],
+   "shows": "the Calendar month view with markers and closed days"
+  },
+  {
+   "id": "user-reserve-calendar-filters",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/calendar"
+    },
+    {
+     "click": "@uxMyBookings",
+     "wait": 1800
+    }
+   ],
+   "shows": "the Calendar filtered to bookings"
+  },
+  {
+   "id": "user-reserve-calendar-file",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "steps": [
+    {
+     "click": "@demoPersonaOwner",
+     "wait": 3500
+    },
+    {
+     "hash": "#/reserve"
+    },
+    {
+     "click": [
+      "13 May",
+      "13 mai",
+      "13. Mai",
+      "13 may",
+      "13 mag"
+     ]
+    },
+    {
+     "click": "14",
+     "wait": 800
+    },
+    {
+     "click": [
+      "OK",
+      "ACEPTAR",
+      "Aceptar"
+     ]
+    },
+    {
+     "click": "@gettingStartedNotNow",
+     "wait": 900
+    },
+    {
+     "click": "@helpHintDismiss",
+     "wait": 700
+    },
+    {
+     "click": [
+      "Plan",
+      "Plano",
+      "Piantina"
+     ]
+    },
+    {
+     "click": [
+      "Day",
+      "Jour",
+      "Tag",
+      "Día",
+      "Giorno",
+      "Journée",
+      "Ganzer Tag",
+      "Giornata"
+     ]
+    },
+    {
+     "click": "Bruno"
+    },
+    {
+     "click": "@reservationCalendarFileButton",
+     "wait": 2000
+    }
+   ],
+   "shows": "the preview before a booking is saved to a calendar file"
+  }
+ ]
+}
