@@ -10,6 +10,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app_initializer.dart';
 import 'package:deskilo/app/bootstrap.dart';
+import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,7 +21,9 @@ StartupStages _stages({
   Future<Never> Function()? read,
 }) =>
     StartupStages(
-      readStored: read ?? () async => null,
+      // #2343 — a server is stored: a build without a default only reaches
+      // this start-up after the first-start choice stored one.
+      readStored: read ?? () async => referenceEndpoint,
       restoreGuard: (_) => (restore ?? () async {})(),
       initializeSupabase: ({
         required url,

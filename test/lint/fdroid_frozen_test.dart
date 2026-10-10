@@ -47,8 +47,18 @@ import 'package:flutter_test/flutter_test.dart';
 /// PIN MOVED 2026-09-27, on the owner's instruction: the licence is
 /// AGPL-3.0-or-later (ADR 0031) and the recipe still said 0BSD. The
 /// `License:` field is the only change.
-const _frozenBytes = 9987;
-const _frozenHash = '0x2623c815b3385e98';
+///
+/// PIN MOVED 2026-10-10 (#2343), for what F-Droid asked on !47409:
+/// linsui (2026-09-02) on the AntiFeatures line, "Is this server
+/// non-foss? / I thought this is not needed", and mezinster's review
+/// (2026-10-06): drop or reword NonFreeNet, restrict UpdateCheckMode to
+/// release tags, move to the newest release, and declare AGPL-3.0-or-later
+/// with the first build past the relicensing. So: no AntiFeatures (the
+/// libre build ships no default server and asks at first start),
+/// `UpdateCheckMode: Tags ^v\d+\.\d+\.\d+$`, three 1.0.3 entries
+/// (41/42/43) replacing the 0BSD-era ones, CurrentVersion to match.
+const _frozenBytes = 5303;
+const _frozenHash = '0xe7ffcef5770fc4b1';
 
 /// FNV-1a, 64-bit. Hand-rolled because `crypto` is not a direct
 /// dependency of this package and adding one to detect an edited YAML
