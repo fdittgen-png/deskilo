@@ -1043,6 +1043,7 @@ Vuole applicare a uno spazio un file esportato.
 - Sostituisce la piantina attuale e sovrascrive le impostazioni. Non si può annullare.
 - Quando uno spazio ha già delle prenotazioni, viene applicata solo la configurazione. La piantina viene mantenuta, e l'app lo dice.
 - Un file illeggibile, o che non proviene da DesKilo, viene rifiutato con un messaggio chiaro.
+- Quando il file contiene una configurazione e **Configurazione nel file dello spazio** è disattivata in questo spazio, l'app chiede prima: **Attiva e applica** la applica, **Importa senza la configurazione** importa il resto, e l'anteprima indica allora «Configurazione: non applicata.» Solo chi può modificare la configurazione si vede proporre di attivarla.
 
 **Vedi anche:** [Esportare lo spazio (XML)](help:user.workspace.export.space-xml)
 

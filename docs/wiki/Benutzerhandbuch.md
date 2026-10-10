@@ -3705,6 +3705,7 @@ Sie möchten eine exportierte Datei auf einen Space anwenden.
 - Sie ersetzt den aktuellen Etagenplan und überschreibt die Einstellungen. Das lässt sich nicht rückgängig machen.
 - Sobald ein Space Buchungen hat, wird nur die Konfiguration angewendet. Der Etagenplan bleibt erhalten, und die App sagt es.
 - Eine Datei, die nicht lesbar oder nicht von DesKilo ist, wird mit einer klaren Meldung abgelehnt.
+- Enthält die Datei eine Konfiguration und ist **Konfiguration in der Raumdatei** in diesem Space ausgeschaltet, fragt die App zuerst: **Aktivieren und übernehmen** wendet sie an, **Ohne Konfiguration importieren** importiert den Rest, und die Vorschau zeigt dann „Konfiguration: nicht übernommen.“ Nur wer die Konfiguration ändern darf, bekommt das Einschalten angeboten.
 
 **Siehe auch:** [Den Space exportieren (XML)](#den-space-exportieren-xml)
 

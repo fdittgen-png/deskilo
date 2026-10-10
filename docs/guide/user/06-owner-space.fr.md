@@ -1043,6 +1043,7 @@ Vous voulez appliquer un fichier exporté à un espace.
 - Cela remplace le plan actuel et écrase les réglages. Impossible de revenir en arrière.
 - Dès qu'un espace a des réservations, seule la configuration est appliquée. Le plan est conservé, et l'application le dit.
 - Un fichier illisible, ou qui ne vient pas de DesKilo, est refusé avec un message clair.
+- Quand le fichier contient une configuration et que **Configuration dans le fichier de l'espace** est désactivée dans cet espace, l'application demande d'abord : **Activer et appliquer** l'applique, **Importer sans la configuration** importe le reste, et l'aperçu indique alors « Configuration : non appliquée. » Seule une personne qui peut modifier la configuration se voit proposer de l'activer.
 
 **Voir aussi:** [Exporter l'espace (XML)](help:user.workspace.export.space-xml)
 
