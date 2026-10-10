@@ -6,7 +6,6 @@ import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
-import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
@@ -110,7 +109,6 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../../features/workspace/domain/kpi_contract.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
-import '../../features/workspace/domain/bi_saved_view.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import 'demo_fixture.dart';
 import '../push/push_opt_out.dart';
@@ -120,7 +118,7 @@ import '../push/push_opt_out.dart';
 /// [fixture] is the session's data; a new one is a new session.
 List<Override> demoOverrides(DemoFixture fixture) {
   // #1847 — the one in-memory directory behind its three interfaces.
-  final directory = FakeDirectoryRepository();
+  final directory = fixture.directory;
   return [
       // The clock first: everything the fixture seeded is relative to it,
       // so a demo opened next year still shows a booking for today.
@@ -185,12 +183,14 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
       meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823
-      // #1835 — the visitor's own visits, in memory; Demo holds none.
+      // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider
-          .overrideWithValue(FakeGuestParticipationRepository()),
+          .overrideWithValue(fixture.guests),
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
-      messengerRepositoryProvider.overrideWith((ref, source) => FakeMessengerRepository()),
+      // #2327 — this server's is the fixture's, seeded; any other is empty.
+      messengerRepositoryProvider.overrideWith((ref, source) =>
+          source.isEmpty ? fixture.messenger : FakeMessengerRepository()),
       accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
@@ -202,7 +202,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1918 — no server to compute capacity on: the tile says so.
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
       // #1923 C — saved views live in memory for the demonstration.
-      biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
+      biViewRepositoryProvider.overrideWithValue(fixture.biViews),
       // #1924 — the finance cards sum the demo's own invoices and
       // matches, with the server's predicates.
       financeKpiRepositoryProvider.overrideWithValue(

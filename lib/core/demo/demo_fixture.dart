@@ -24,6 +24,10 @@ import 'data/floor_plan_repository.dart';
 import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/deployment_repository.dart';
+import 'data/guest_participation_repository.dart';
+import 'data/messenger_repository.dart';
+import 'data/public_directory_repository.dart';
+import '../../features/workspace/domain/bi_saved_view.dart';
 import 'data/notification_service.dart';
 import 'data/realtime_sync.dart';
 import 'data/reservation_repository.dart';
@@ -41,6 +45,8 @@ import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
+import 'seed/demo_network_seed.dart';
+import 'seed/demo_twin_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_space_seed.dart';
 
@@ -76,6 +82,10 @@ class DemoFixture {
     required this.accessories,
     required this.profiles,
     required this.deployments,
+    required this.directory,
+    required this.guests,
+    required this.messenger,
+    required this.biViews,
     required this.files,
     required this.imports,
     required this.fields,
@@ -139,6 +149,20 @@ class DemoFixture {
     seedDemoVatDeclarations(money, today);
     seedDemoCalendar(calendar,
         reservations: reservations, money: money, events: events);
+    // #2327 — the processes that reach beyond the space: its twin, the
+    // directory, guest visits, message requests, saved analyses.
+    final deployments = FakeDeploymentRepository(
+      actor: () => workspaces.memberNames[actor.memberId] ?? '',
+      clock: () => today,
+    );
+    seedDemoTwin(workspaces, deployments, today,
+        actorName: demoCast.first.name);
+    final directory = FakeDirectoryRepository();
+    seedDemoDirectory(directory);
+    // The wall tablet greets the member whose badge it read.
+    reservations
+      ..kioskUserId = demoCast[1].userId
+      ..kioskName = demoCast[1].name;
     final problems = validateDemoFixture(
       workspaces: workspaces,
       plan: floorPlan,
@@ -165,7 +189,11 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       profiles: demoProfiles(),
-      deployments: FakeDeploymentRepository(),
+      deployments: deployments,
+      directory: directory,
+      guests: demoGuestVisits(today),
+      messenger: demoMessenger(today),
+      biViews: demoBiViews(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),
       fields: fields,
@@ -196,6 +224,13 @@ class DemoFixture {
   final FakeAccessoryRepository accessories;
   final FakeProfileRepository profiles;
   final FakeDeploymentRepository deployments;
+
+  /// #2327 — the public directory, the guest's visits, this server's
+  /// messenger and the saved analyses, seeded so a Reset reseeds them.
+  final FakeDirectoryRepository directory;
+  final FakeGuestParticipationRepository guests;
+  final FakeMessengerRepository messenger;
+  final InMemoryBiViewRepository biViews;
   final FakeWorkspaceFiles files;
   final InMemoryWorkspaceImport imports;
 

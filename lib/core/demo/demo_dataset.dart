@@ -39,6 +39,7 @@ class DemoPerson {
     this.status = MemberStatus.active,
     this.isAdmin = false,
     this.isOwner = false,
+    this.isKiosk = false,
     this.email = '',
     this.phone = '',
     this.address = '',
@@ -51,6 +52,9 @@ class DemoPerson {
   final MemberStatus status;
   final bool isAdmin;
   final bool isOwner;
+
+  /// #2327 — a wall tablet's account rather than a person (0043).
+  final bool isKiosk;
 
   /// #1514 — the contact block a guide screenshot exists to document.
   ///
@@ -128,6 +132,21 @@ const demoCast = <DemoPerson>[
 ];
 
 /// Seeds [workspaces] with the cast.
+/// #2327 — the space's wall tablet: an account, not a person, so it is
+/// not in [demoCast]. It has a membership flagged as a kiosk, which is
+/// what the router locks to the kiosk screen, and the persona ring can
+/// look through it.
+const demoKioskDevice = DemoPerson(
+  memberId: 'member-kiosk',
+  userId: 'user-kiosk',
+  name: 'Front desk tablet',
+  subscriptionPct: 0,
+  isKiosk: true,
+);
+
+/// Every membership the space has: the cast and its tablet.
+const demoMemberships = [...demoCast, demoKioskDevice];
+
 void seedDemoPeople(FakeWorkspaceRepository workspaces) =>
     seedDemoPeopleAs(workspaces, demoCast.first);
 
@@ -165,6 +184,7 @@ Member _memberOf(DemoPerson person) => Member(
       userId: person.userId,
       isAdmin: person.isAdmin,
       isOwner: person.isOwner,
+      isKiosk: person.isKiosk,
       status: person.status,
       subscriptionPct: person.subscriptionPct,
     );
@@ -184,7 +204,7 @@ void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
   workspaces.otherMembers
     ..clear()
     ..addAll([
-      for (final person in demoCast)
+      for (final person in demoMemberships)
         if (person.memberId != me.memberId) _memberOf(person),
     ]);
 
@@ -197,7 +217,8 @@ void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
   workspaces.memberNames
     ..clear()
     ..addEntries([
-      for (final person in demoCast) MapEntry(person.memberId, person.name),
+      for (final person in demoMemberships)
+        MapEntry(person.memberId, person.name),
     ]);
   workspaces.memberEmails
     ..clear()
@@ -219,7 +240,7 @@ FakeProfileRepository demoProfiles({DemoPerson? me}) {
   return FakeProfileRepository(
     myUserId: visitor.userId,
     profiles: [
-      for (final person in demoCast)
+      for (final person in demoMemberships)
         Profile(
           id: person.userId,
           displayName: person.name,

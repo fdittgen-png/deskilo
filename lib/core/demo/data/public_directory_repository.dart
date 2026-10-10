@@ -50,6 +50,9 @@ class FakeDirectoryRepository
   /// #2086 — the workspace's own information an inherited field follows.
   final local = <String, String>{'host_type': 'company', 'address': ''};
 
+  /// The workspace's own name, which its public page always carries.
+  String ownName = 'Demo workspace';
+
   Map<String, dynamic> _resolved(String workspace) {
     final stored = Map<String, dynamic>.from(
       (pages[workspace]?['document'] as Map?) ?? const <String, dynamic>{},
@@ -57,7 +60,7 @@ class FakeDirectoryRepository
     return {
       ...local,
       ...stored,
-      'name': 'Demo workspace',
+      'name': ownName,
       'contacts': <Map<String, dynamic>>[],
     };
   }

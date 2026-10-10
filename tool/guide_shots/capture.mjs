@@ -45,7 +45,7 @@ const taken = new Date().toISOString().slice(0, 10);
 const made = [];
 const LOCALE = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT' };
 const VIEW = { phone: [390, 844], tablet: [820, 1100], desktop: [1280, 860] };
-const PERSONA = { owner: 'demoPersonaOwner', admin: 'demoPersonaAdmin', member: 'demoPersonaMember' };
+const PERSONA = { owner: 'demoPersonaOwner', admin: 'demoPersonaAdmin', member: 'demoPersonaMember', kiosk: 'demoPersonaKiosk' };
 
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.wasm': 'application/wasm', '.png': 'image/png', '.css': 'text/css' };
 const server = http.createServer((q, r) => {
@@ -129,8 +129,9 @@ for (const lang of langs) {
     await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   }
   // The demo bar's chip is not a menu: each tap moves to the next persona
-  // (owner -> member -> administrator -> owner) and the chip names the one in use.
-  const CYCLE = ['owner', 'member', 'admin'];
+  // (owner -> member -> administrator -> kiosk tablet -> owner) and the chip
+  // names the one in use.
+  const CYCLE = ['owner', 'member', 'admin', 'kiosk'];
   async function setPersona(p) {
     for (let i = 0; i < CYCLE.length && persona !== p; i++) {
       await click(t(PERSONA[persona]));

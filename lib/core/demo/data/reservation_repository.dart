@@ -509,12 +509,12 @@ class FakeReservationRepository implements ReservationRepository {
     if (badgeToken == 'bad-badge') {
       throw const PostgrestException(message: 'badge not recognized');
     }
-    return (name: 'Flo', userId: kioskUserId, hasAvatar: kioskHasAvatar);
+    return (name: kioskName, userId: kioskUserId, hasAvatar: kioskHasAvatar);
   }
 
   /// #616 — what kioskIdentify resolves to; tests flip these to
   /// exercise the receipt's photo path.
-  String kioskUserId = 'user-1';
+  String kioskUserId = 'user-1', kioskName = 'Flo';
   bool kioskHasAvatar = false;
 
   @override
