@@ -11,6 +11,7 @@
 // Everything is placed relative to [DemoFixture.seededAt], never to a
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
+import '../../features/plan/domain/grid_geometry.dart';
 import '../../features/plan/domain/seat.dart';
 import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/invoice.dart';
@@ -23,6 +24,7 @@ import 'data/money_repository.dart';
 import 'data/profile_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
+import 'demo_clock.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
 
@@ -241,6 +243,18 @@ FakeProfileRepository demoProfiles({DemoPerson? me}) {
 void seedDemoPlan(FakeFloorPlanRepository plan) {
   plan.seedSmallPlan();
   final first = plan.seats.single;
+  // #2327 — one footprint apart, on a desk long enough for four: at three
+  // cells apart the 6-cell seats overlapped and A1–A4 read on top of each
+  // other on a phone.
+  final desk = plan.desks.single;
+  plan.desks[0] = desk.copyWith(
+    rect: GridRect(
+      x: desk.rect.x,
+      y: desk.rect.y,
+      w: 4 * SeatFootprint.length,
+      h: desk.rect.h,
+    ),
+  );
   for (var i = 1; i < 4; i++) {
     plan.seats.add(
       Seat(
@@ -248,7 +262,7 @@ void seedDemoPlan(FakeFloorPlanRepository plan) {
         workspaceId: first.workspaceId,
         deskId: first.deskId,
         name: 'A${i + 1}',
-        x: first.x + i * 3,
+        x: first.x + i * SeatFootprint.length,
         y: first.y,
         orientation: first.orientation,
         chair: first.chair,
@@ -266,7 +280,9 @@ void seedDemoReservations(
   // The LAST seat, so the first one stays free: a visitor must be able to
   // book something on the plan they land on (#1378).
   final seatId = plan.seats.isEmpty ? 'seat-1' : plan.seats.last.id;
-  final morning = DateTime(now.year, now.month, now.day, 9);
+  // #2327 — nine o'clock in the space, on any device.
+  final today = demoDateOf(now);
+  final morning = demoAt(today.year, today.month, today.day, 9);
   reservations.reservations
     ..clear()
     ..addAll([

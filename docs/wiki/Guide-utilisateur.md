@@ -1021,7 +1021,7 @@ La liste est longue et vous ne cherchez que des réservations. Les pastilles sou
 
 **Étapes**
 
-1. Touchez **Mes réservations** pour ne garder que les réservations. Touchez-le de nouveau pour tout voir.
+1. Touchez **Mes réservations** pour ne garder que vos propres réservations. Touchez-le de nouveau pour tout voir.
 2. Ou choisissez des pastilles comme **Réservations**, **Pointages** et **Départs** ; **Tous** montre tous les types.
 3. Pour annuler vos choix, touchez **Réinitialiser les filtres**, le bouton en forme d'entonnoir.
 4. Une ligne au-dessus des pastilles répète ce que vous voyez, par exemple Moi · Réservations.

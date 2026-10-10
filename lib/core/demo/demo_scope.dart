@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
@@ -189,7 +191,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
       messengerRepositoryProvider.overrideWith((ref, source) => FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository()),
+      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
@@ -201,9 +203,14 @@ List<Override> demoOverrides(DemoFixture fixture) {
       kpiRepositoryProvider.overrideWithValue(const UnavailableKpiRepository()),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(InMemoryBiViewRepository()),
-      // #1924 — no server to sum invoices on: the cards say so.
+      // #1924 — the finance cards sum the demo's own invoices and
+      // matches, with the server's predicates.
       financeKpiRepositoryProvider.overrideWithValue(
-        const UnavailableFinanceKpiRepository(),
+        DemoFinanceKpiRepository(
+          money: fixture.money,
+          workspaces: fixture.workspaces,
+          now: fixture.seededAt,
+        ),
       ),
 
       // #1377 — the ways an effect could leave the app, each pointed at

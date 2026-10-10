@@ -125,7 +125,7 @@ final class FinanceSummaryProvider
     required FinanceSummaryFamily super.from,
     required (String, String, String) super.argument,
   }) : super(
-         retry: null,
+         retry: kpiRetry,
          name: r'financeSummaryProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -165,7 +165,7 @@ final class FinanceSummaryProvider
   }
 }
 
-String _$financeSummaryHash() => r'da8fae35bba78af3e3c846bebb00a873e553a3c4';
+String _$financeSummaryHash() => r'2838b299f77ee42bc55f4b8fb388cb982ac683d8';
 
 /// One read per workspace and months, shared by every finance card.
 
@@ -177,7 +177,7 @@ final class FinanceSummaryFamily extends $Family
         > {
   FinanceSummaryFamily._()
     : super(
-        retry: null,
+        retry: kpiRetry,
         name: r'financeSummaryProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
@@ -222,7 +222,7 @@ final class SeatCapacityMonthProvider
     required SeatCapacityMonthFamily super.from,
     required (String, int, int) super.argument,
   }) : super(
-         retry: null,
+         retry: kpiRetry,
          name: r'seatCapacityMonthProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -262,7 +262,7 @@ final class SeatCapacityMonthProvider
   }
 }
 
-String _$seatCapacityMonthHash() => r'e1d12eb1fe5f16a64d47fcf3c97712004af8ea38';
+String _$seatCapacityMonthHash() => r'2887b1f11bdfbadea2f7083ad17c3f2b63b79d35';
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
@@ -275,7 +275,7 @@ final class SeatCapacityMonthFamily extends $Family
         > {
   SeatCapacityMonthFamily._()
     : super(
-        retry: null,
+        retry: kpiRetry,
         name: r'seatCapacityMonthProvider',
         dependencies: null,
         $allTransitiveDependencies: null,

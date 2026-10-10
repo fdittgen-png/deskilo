@@ -22,6 +22,7 @@ import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
 import '../data/reservation_repository.dart';
 import '../data/workspace_repository.dart';
+import '../demo_clock.dart';
 import 'demo_space_seed.dart';
 import 'demo_people_seed.dart';
 
@@ -122,7 +123,7 @@ void seedDemoHistoryBookings(
   DateTime now,
 ) {
   final window = plan.seats.first.id;
-  final today = DateTime(now.year, now.month, now.day);
+  final today = demoDateOf(now); // #2327 — the space's calendar
   final closed = {
     for (final c in workspaces.closureDays)
       DateTime(c.day.year, c.day.month, c.day.day),
@@ -131,7 +132,7 @@ void seedDemoHistoryBookings(
   // on (the hand-written story) keeps that one.
   final taken = {
     for (final r in reservations.reservations)
-      (r.memberId, DateTime(r.startsAt.year, r.startsAt.month, r.startsAt.day)),
+      (r.memberId, demoDateOf(r.startsAt)),
   };
   final end = demoHistoryEnd(now);
   final added = <Reservation>[];
@@ -147,8 +148,8 @@ void seedDemoHistoryBookings(
       final offset = day.difference(today).inDays;
       if (offset == 0 || offset == 1) continue;
       if (taken.contains((regular.memberId, day))) continue;
-      final starts = day.add(Duration(hours: regular.from));
-      final ends = day.add(Duration(hours: regular.to));
+      final starts = demoAt(day.year, day.month, day.day, regular.from);
+      final ends = demoAt(day.year, day.month, day.day, regular.to);
       final past = day.isBefore(today);
       added.add(
         Reservation(

@@ -2402,6 +2402,7 @@ const List<String> uiKeyPatterns = [
   'check-in-sheets-plan-cancel-reservation-button-{}',
   'check-in-sheets-plan-check-in-button-{}',
   'check-in-sheets-plan-check-out-button-{}',
+  'check-in-sheets-request-deletion-button-{}',
   'co-owner-{}',
   'colours-pattern-{}',
   'colours-pick-{}',
