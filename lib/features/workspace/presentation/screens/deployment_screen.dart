@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -324,7 +325,8 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                     subtitle: Text([
                       if (d.actorName.isNotEmpty) d.actorName,
                       if (d.createdAt != null)
-                        d.createdAt!.toIso8601String().substring(0, 16).replaceFirst('T', ' '),
+                        // #2352 — the reader's clock, never the raw UTC instant.
+                        appFormatOf(context).dateTime(d.createdAt!),
                       if (d.isRolledBack)
                         l10n?.deploymentRolledBackLabel ?? 'rolled back',
                     ].join(' · ')),
