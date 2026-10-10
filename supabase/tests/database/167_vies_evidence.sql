@@ -49,6 +49,18 @@ $seed$;
 
 select pg_temp.seed();
 
+-- What the edge function does with the service role: a call that carries
+-- no user (auth.uid() is null).
+create or replace function pg_temp.vies(p_vat text, p_status text, p_consultation text, p_detail text)
+returns void language plpgsql as $v$
+declare c text := current_setting('request.jwt.claims', true);
+begin
+  perform set_config('request.jwt.claims', '', true);
+  perform public.record_vies_check(current_setting('deskilo.v.m')::uuid, p_vat, p_status, p_consultation, p_detail);
+  perform set_config('request.jwt.claims', c, true);
+end;
+$v$;
+
 -- What the edge function asks VIES, for the issuer.
 set local role authenticated;
 select is(public.vies_check_subject(current_setting('deskilo.v.ws')::uuid, current_setting('deskilo.v.m')::uuid)
@@ -77,8 +89,8 @@ select is(public.invoice_issue_readiness(current_setting('deskilo.v.ws')::uuid,
 
 -- VIES down: recorded as an outage, and still refused.
 reset role;
-select lives_ok($$select public.record_vies_check(current_setting('deskilo.v.m')::uuid,
-          'DE123456789','unavailable','','MS_UNAVAILABLE')$$, 'the service role records an outage');
+select lives_ok($$select pg_temp.vies('DE123456789','unavailable','','MS_UNAVAILABLE')$$,
+          'the service role records an outage');
 set local role authenticated;
 select throws_ok($$select public.create_invoice(current_setting('deskilo.v.ws')::uuid,
           current_setting('deskilo.v.m')::uuid, '2026-09')$$, 'DKI01', 'invoice_essentials_missing',
@@ -89,7 +101,7 @@ select is(public.invoice_issue_readiness(current_setting('deskilo.v.ws')::uuid,
 
 -- A valid check of another number is not evidence for this one.
 reset role;
-select public.record_vies_check(current_setting('deskilo.v.m')::uuid, 'DE999999999', 'valid', 'WAPIOTHER', '');
+select pg_temp.vies('DE999999999', 'valid', 'WAPIOTHER', '');
 set local role authenticated;
 select is(public.invoice_issue_readiness(current_setting('deskilo.v.ws')::uuid,
           current_setting('deskilo.v.m')::uuid, '2026-09'), array['vies_unverified'],
@@ -97,7 +109,7 @@ select is(public.invoice_issue_readiness(current_setting('deskilo.v.ws')::uuid,
 
 -- Valid: mail handling is AE, the desk keeps French VAT, the number is frozen.
 reset role;
-select public.record_vies_check(current_setting('deskilo.v.m')::uuid, 'DE123456789', 'valid', 'WAPIAAAAZ1', '');
+select pg_temp.vies('DE123456789', 'valid', 'WAPIAAAAZ1', '');
 set local role authenticated;
 select lives_ok($$select public.create_invoice(current_setting('deskilo.v.ws')::uuid,
           current_setting('deskilo.v.m')::uuid, '2026-09')$$, 'a verified reverse charge is issued');
