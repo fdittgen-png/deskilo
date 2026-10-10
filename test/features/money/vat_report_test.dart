@@ -25,8 +25,17 @@ Invoice _invoice(
   DateTime? voidedAt,
   String? settledBy,
   String replaces = '',
-}) =>
-    Invoice(
+}) {
+  // #2355 — the report reads the tax-point engine, which apportions the
+  // document's LINES; a fixture given only its breakdown carries one
+  // line per rate, as the issued document does.
+  if (lines.isEmpty) {
+    lines = [
+      for (final t in vat)
+        InvoiceLine(label: 'x', amountCents: t.grossCents, vatPercent: t.percent),
+    ];
+  }
+  return Invoice(
       id: 'inv-$number',
       workspaceId: 'ws-1',
       memberId: 'member-1',
@@ -48,6 +57,7 @@ Invoice _invoice(
       settledByInvoiceId: settledBy,
       replacesNumber: replaces,
     );
+}
 
 void main() {
   group('statutory mentions', () {

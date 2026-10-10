@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'vat_tax_point.dart';
 
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
 /// compliant professional invoice must (or may) print beyond the 0069
@@ -13,7 +14,7 @@ class InvoiceLegal {
     this.sellerKind = '',
     this.customerCapacity = '',
     this.reverseChargeOptIn = true,
-    this.vatExigibility = 'invoice',
+    this.vatTaxPoint,
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -38,13 +39,36 @@ class InvoiceLegal {
   /// #895 — the stored switch; read it through [reverseCharge].
   final bool reverseChargeOptIn;
 
-  /// #896 — WHEN the tax becomes due: `invoice` (sur les débits — the
-  /// day the document is issued) or `payment` (sur les encaissements —
-  /// the day the customer pays, which is the rule for services in
-  /// France unless the seller opted for the debits).
-  final String vatExigibility;
+  /// #2355 — WHEN the tax becomes due, as the owner chose it: the
+  /// country's legal default, the invoice date (France's « option pour
+  /// les débits ») or cash. Null when the workspace never chose — the
+  /// country's default then applies, which in France is receipts. Read
+  /// it through [taxPointBasis]: what a choice means depends on the
+  /// seller's country (`vat_tax_point.dart`).
+  ///
+  /// Stored as `vat_tax_point`; the two-value `vat_exigibility` of #896
+  /// is still read (`invoice` → the invoice date, `payment` → cash) and
+  /// still written beside it for a non-default choice, because the SQL
+  /// snapshot freezes that key on every issued invoice (0349, 0401).
+  final VatTaxPointOption? vatTaxPoint;
 
-  bool get onPaymentBasis => vatExigibility == 'payment';
+  /// The basis a seller in [country] declares on.
+  VatTaxPointBasis taxPointBasis(String country) =>
+      vatTaxPointBasis(country, vatTaxPoint);
+
+  /// The #896 two-value key for [country]: `payment` when the tax waits
+  /// for the money, `invoice` otherwise — what the printed mention reads.
+  String exigibilityIn(String country) =>
+      taxPointBasis(country).onReceipts ? 'payment' : 'invoice';
+
+  /// The legacy key written beside [vatTaxPoint] for a non-default
+  /// choice; the server derives the default's from the country.
+  static String? _legacyExigibility(VatTaxPointOption? option) =>
+      switch (option) {
+        VatTaxPointOption.invoice => 'invoice',
+        VatTaxPointOption.cash => 'payment',
+        _ => null,
+      };
 
   /// Whether this seller is a non-profit association.
   bool get isAssociation => sellerKind == 'association';
@@ -89,7 +113,13 @@ class InvoiceLegal {
           _ => '',
         },
         reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
-        vatExigibility: json['vat_exigibility'] as String? ?? 'invoice',
+        vatTaxPoint:
+            VatTaxPointOption.fromWire(json['vat_tax_point'] as String?) ??
+                switch (json['vat_exigibility']) {
+                  'invoice' => VatTaxPointOption.invoice,
+                  'payment' => VatTaxPointOption.cash,
+                  _ => null,
+                },
         legalForm: json['legal_form'] as String? ?? '',
         registration: json['registration'] as String? ?? '',
         paymentTerms: json['payment_terms'] as String? ?? '',
@@ -104,7 +134,8 @@ class InvoiceLegal {
         'seller_kind': sellerKind,
         'customer_capacity': customerCapacity,
         'reverse_charge': reverseChargeOptIn,
-        'vat_exigibility': vatExigibility,
+        'vat_tax_point': ?vatTaxPoint?.name,
+        'vat_exigibility': ?_legacyExigibility(vatTaxPoint),
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -121,7 +152,7 @@ class InvoiceLegal {
       other.sellerKind == sellerKind &&
       other.customerCapacity == customerCapacity &&
       other.reverseChargeOptIn == reverseChargeOptIn &&
-      other.vatExigibility == vatExigibility &&
+      other.vatTaxPoint == vatTaxPoint &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -132,7 +163,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(vatExigibility, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
+  int get hashCode => Object.hash(vatTaxPoint, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

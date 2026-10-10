@@ -10086,6 +10086,12 @@ abstract class AppLocalizations {
   /// **'Collected VAT'**
   String get fecAccountVat;
 
+  /// #2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)
+  ///
+  /// In en, this message translates to:
+  /// **'VAT collected, not yet due'**
+  String get fecAccountVatPending;
+
   /// Dialog body: why it asks
   ///
   /// In en, this message translates to:
@@ -32258,6 +32264,12 @@ abstract class AppLocalizations {
   /// **'XML export'**
   String get vatDeclXml;
 
+  /// #2355 vat tax point: vatDeclarationBasisEarlierOf
+  ///
+  /// In en, this message translates to:
+  /// **'Basis: invoice or payment, whichever came first (VAT on the earlier of the two dates).'**
+  String get vatDeclarationBasisEarlierOf;
+
   /// #896 vat exigibility: vatDeclarationBasisInvoice
   ///
   /// In en, this message translates to:
@@ -32269,6 +32281,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Basis: receipts (VAT on payments received during the period).'**
   String get vatDeclarationBasisPayment;
+
+  /// #2355 vat tax point: vatDeclarationBasisServicePeriod
+  ///
+  /// In en, this message translates to:
+  /// **'Basis: service period (VAT in the month the service was performed; advance payments in the month received).'**
+  String get vatDeclarationBasisServicePeriod;
 
   /// #985 VAT versions and counterparty: vatEffectiveDate
   ///
@@ -32303,7 +32321,7 @@ abstract class AppLocalizations {
   /// #896 vat exigibility: vatExigibilitySubtitle
   ///
   /// In en, this message translates to:
-  /// **'On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.'**
+  /// **'The legal default depends on your country: receipts in France, the month of the service in Germany and Spain, invoice or payment whichever comes first in Italy, the United Kingdom and Canada, the invoice in Switzerland. It decides what a period declares and is printed on every invoice.'**
   String get vatExigibilitySubtitle;
 
   /// #896 vat exigibility: vatExigibilityTitle
@@ -32521,6 +32539,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'since'**
   String get vatSince;
+
+  /// #2355 vat tax point: vatTaxPointEarlierOf
+  ///
+  /// In en, this message translates to:
+  /// **'On the invoice or the payment, whichever comes first'**
+  String get vatTaxPointEarlierOf;
+
+  /// #2355 vat tax point: vatTaxPointLegalDefault
+  ///
+  /// In en, this message translates to:
+  /// **'{rule} — legal default'**
+  String vatTaxPointLegalDefault(String rule);
+
+  /// #2355 vat tax point: vatTaxPointNoticeFr
+  ///
+  /// In en, this message translates to:
+  /// **'Services in France are taxed on receipts unless the business opted for the debits. This space never chose, so its declarations now follow receipts. If you opted for the debits, choose it under Legal identity & e-invoicing.'**
+  String get vatTaxPointNoticeFr;
+
+  /// #2355 vat tax point: vatTaxPointServicePeriod
+  ///
+  /// In en, this message translates to:
+  /// **'When the service is performed (advance payments when received)'**
+  String get vatTaxPointServicePeriod;
 
   /// VAT settings screen title
   ///

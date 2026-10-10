@@ -21,5 +21,9 @@
   "vatPdfNet": "Netto",
   "vatPdfVat": "MwSt.",
   "fecAccountVat": "Vereinnahmte Steuer",
-  "vatKeptRate": "Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert."
+  "vatKeptRate": "Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.",
+  "fecAccountVatPending": "Umsatzsteuer, noch nicht fällig",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  }
 }

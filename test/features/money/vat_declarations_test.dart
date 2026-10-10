@@ -32,7 +32,9 @@ Invoice _invoice(
       memberId: 'member-1',
       number: 'INV-$id',
       issuedAt: issuedAt,
-      period: '2026-08',
+      // #2355 — the service month is the issue month: a German space
+      // declares the month the service was performed.
+      period: '${issuedAt.year}-${issuedAt.month.toString().padLeft(2, '0')}',
       title: 'Invoice $id',
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),

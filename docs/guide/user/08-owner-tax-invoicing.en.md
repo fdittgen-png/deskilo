@@ -306,21 +306,22 @@ When you charge VAT and invoice a business in another EU country, the tax can be
 
 **Audience:** Owner
 
-You choose whether VAT is counted when you issue the invoice or when you are paid.
+Each invoice's VAT falls due on the day the law of your country sets — when you are paid, when the service is performed, or when you invoice. You keep that rule, or choose the option your country allows.
 
 <p><img src="images/user-money-vat-due--f.en.jpg" width="280"></p>
 
 **Steps**
 
 1. Choose **VAT-registered (charges VAT)** as the regime.
-2. In **VAT falls due**, choose **On invoices (accrual)** or **On receipts (cash)**.
+2. In **VAT falls due**, keep the first option, your country's legal rule, or choose the option your country allows: **On invoices (accrual)** in France, **On receipts (cash)** elsewhere.
 3. Tap **Save**.
 
 **Good to know**
 
-- On receipts, a period declares what customers paid inside it; on invoices, what you issued.
-- The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration).
-- Which basis applies to you is a tax question for your accountant.
+- The legal rule for services: on receipts in France; the month the service is performed in Germany and Spain, advance payments when received; the invoice or the payment, whichever comes first, in Italy, the United Kingdom and Canada; the invoice in Switzerland.
+- On receipts, an invoice paid in instalments falls into as many periods as it had payments. A credit note counts when it is issued (on receipts, when refunded), never in the period of the invoice it corrects.
+- The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration), the VAT report and the FEC and DATEV exports alike. A French space that never chose follows receipts, and its owner is told once.
+- Which option applies to you is a tax question for your accountant.
 
 **See also:** [The periodic VAT declaration](help:user.money.vat.declaration)
 

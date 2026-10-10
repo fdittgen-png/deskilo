@@ -4544,21 +4544,22 @@ When you charge VAT and invoice a business in another EU country, the tax can be
 
 **Audience:** Owner
 
-You choose whether VAT is counted when you issue the invoice or when you are paid.
+Each invoice's VAT falls due on the day the law of your country sets — when you are paid, when the service is performed, or when you invoice. You keep that rule, or choose the option your country allows.
 
 ![](assets/help/images/user-money-vat-due--f.en.b8fa17aa9.jpg)
 
 **Steps**
 
 1. Choose **VAT-registered (charges VAT)** as the regime.
-2. In **VAT falls due**, choose **On invoices (accrual)** or **On receipts (cash)**.
+2. In **VAT falls due**, keep the first option, your country's legal rule, or choose the option your country allows: **On invoices (accrual)** in France, **On receipts (cash)** elsewhere.
 3. Tap **Save**.
 
 **Good to know**
 
-- On receipts, a period declares what customers paid inside it; on invoices, what you issued.
-- The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration).
-- Which basis applies to you is a tax question for your accountant.
+- The legal rule for services: on receipts in France; the month the service is performed in Germany and Spain, advance payments when received; the invoice or the payment, whichever comes first, in Italy, the United Kingdom and Canada; the invoice in Switzerland.
+- On receipts, an invoice paid in instalments falls into as many periods as it had payments. A credit note counts when it is issued (on receipts, when refunded), never in the period of the invoice it corrects.
+- The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration), the VAT report and the FEC and DATEV exports alike. A French space that never chose follows receipts, and its owner is told once.
+- Which option applies to you is a tax question for your accountant.
 
 **See also:** [The periodic VAT declaration](help:user.money.vat.declaration)
 
@@ -7320,7 +7321,7 @@ The screen is [Legal identity & e-invoicing](app:/legal-identity). Have these re
 > 3. If I charge no VAT, which legal wording justifies it?
 > 4. Which mentions must appear on my invoices (payment term, late-payment penalty, recovery indemnity, early-payment discount, insurance)?
 > 5. How should invoices be numbered, and does the number restart each year or each month?
-> 6. Does VAT fall due when I invoice or when I am paid?
+> 6. When does VAT on my services fall due under my country's rule (payment, service month, invoice), and should I opt for another basis?
 > 7. Must I send e-invoices to a government platform, and which one?
 > 8. Do I need periodic VAT returns, and how often?
 
@@ -8292,7 +8293,7 @@ The decisions you will meet have names. This is what each one means in DesKilo.
 | Fee band | The price of a subscription, by the percentage of the allowance the member takes. |
 | Validation domain | A kind of request with its own rule: a booking, an expense, a refund and others. |
 | Quorum | The number of validators a request needs. More than the people who can validate leaves it waiting. |
-| Exigibility | The moment VAT falls due: at invoicing or at payment. |
+| Exigibility | The moment VAT falls due — the tax point: on receipt of payment, in the month the service is performed or at the invoice, as the country's law sets, unless the business opted for another basis. |
 | Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
 | Environment pair | A test side and a real side of one space. |
 | Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |

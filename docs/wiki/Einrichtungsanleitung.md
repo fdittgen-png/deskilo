@@ -1474,7 +1474,7 @@ Der Bildschirm heißt [Rechtliche Identität & E-Rechnung](https://fdittgen-png.
 > 3. Wenn ich keine Umsatzsteuer berechne: Mit welchem Gesetzestext begründe ich das?
 > 4. Welche Angaben müssen auf meinen Rechnungen stehen (Zahlungsziel, Verzugszinsen, Einziehungspauschale, Skonto, Versicherung)?
 > 5. Wie sind Rechnungen zu nummerieren, und beginnt die Nummer jedes Jahr oder jeden Monat neu?
-> 6. Wird die Umsatzsteuer mit der Rechnung fällig oder mit der Zahlung (Soll- oder Ist-Versteuerung)?
+> 6. Wann entsteht die Umsatzsteuer auf meine Leistungen nach der Regel meines Landes (Zahlung, Leistungsmonat, Rechnung), und soll ich eine andere Grundlage wählen, etwa die Ist-Versteuerung?
 > 7. Muss ich E-Rechnungen an eine staatliche Plattform senden, und an welche?
 > 8. Brauche ich regelmäßige Umsatzsteuer-Voranmeldungen, und wie oft?
 
@@ -2482,7 +2482,7 @@ Die Entscheidungen, denen Sie begegnen werden, haben Namen. Hier steht, was jede
 | Gebührenband | Der Preis eines Abos, nach dem Prozentsatz des Kontingents, den das Mitglied nimmt. |
 | Validierungsbereich | Eine Art von Anfrage mit eigener Regel: eine Buchung, eine Ausgabe, eine Erstattung und andere. |
 | Quorum | Die Zahl der Validierer, die eine Anfrage braucht. Mehr, als es Personen zum Validieren gibt, lässt sie warten. |
-| Fälligkeit | Der Moment, in dem die Umsatzsteuer fällig wird: bei der Rechnungsstellung oder bei der Zahlung. |
+| Fälligkeit | Der Moment, in dem die Umsatzsteuer entsteht: bei Zahlungseingang, im Monat der Leistung oder mit der Rechnung, wie das Gesetz des Landes es bestimmt, sofern das Unternehmen keine andere Grundlage gewählt hat (Ist-Versteuerung). |
 | Neubeginn der Nummerierung | Wie oft die Rechnungsnummer wieder von vorn beginnt. Das darf nicht häufiger sein als das auf der Rechnung gedruckte Datum. |
 | Umgebungspaar | Eine Testseite und eine echte Seite eines Space. |
 | Vorlage | Eine gespeicherte Einrichtung (Plan, Regeln, Tarife, Rollen), die Sie auf einen neuen Space anwenden können. Sie übernimmt nie Identität oder Zahlungsangaben. |

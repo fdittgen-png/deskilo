@@ -21,12 +21,15 @@ import '../domain/fec.dart';
 import '../domain/invoice.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
+import '../domain/vat_tax_point.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
 import '../domain/invoice_line_text.dart';
 import 'report_strings_l10n.dart';
+import 'vat_report_actions.dart';
+import 'vat_tax_point_labels.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/accountant_handoff_preflight.dart';
 import 'widgets/export_accounts_dialogs.dart';
@@ -106,6 +109,15 @@ Future<void> exportAccountingFile(
   final repo = ref.read(moneyRepositoryProvider);
   final ledger = await repo.fetchWorkspaceLedger(workspace.id);
   final repartitions = await repo.fetchExpenseRepartitions(workspace.id);
+  // #2355 — when each invoice's VAT falls due, on the basis the
+  // declaration uses: the FEC's collected VAT and DATEV's tax periods
+  // then agree with the return and the VAT report.
+  final taxPoints = vatTaxPointLedger(
+    exported,
+    matches: matches,
+    instalments: await repo.fetchInvoiceInstalments(workspace.id),
+    basis: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode),
+  );
   final memberNames =
       ref.read(memberNamesProvider).value ?? const <String, String>{};
   if (!context.mounted) return;
@@ -163,6 +175,8 @@ Future<void> exportAccountingFile(
             memberNames: memberNames,
             repartitions: repartitions,
             expensesLabel: l10n?.fecAccountExpenses ?? 'Achats et charges',
+            taxPoints: taxPoints,
+            vatPendingLabel: vatWords(l10n).fecAccountVatPending,
           ),
           fecFileName(company.legalId, DateTime(year, 12, 31),
               development: development),
@@ -197,6 +211,7 @@ Future<void> exportAccountingFile(
             development: development,
             currency: workspace.currencyCode,
             batchName: workspace.name,
+            taxPoints: taxPoints,
           ),
           datevFileName(year, invoices.last.issuedAt.month),
         ),
@@ -408,6 +423,7 @@ Future<void> exportAccountingFile(
             ledger: ledger,
             memberNames: memberNames,
             repartitions: repartitions,
+            taxPoints: taxPoints,
           ));
           if (!context.mounted) return;
           await savePdfToDownloads(

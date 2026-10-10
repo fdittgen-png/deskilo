@@ -4544,21 +4544,22 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Public:** Propriétaire
 
-Vous choisissez si la TVA est comptée à l'émission de la facture ou à l'encaissement.
+La TVA de chaque facture devient exigible le jour que fixe la loi de votre pays — à l'encaissement, à l'exécution de la prestation ou à la facture. Vous gardez cette règle, ou vous choisissez l'option que votre pays permet.
 
 ![](assets/help/images/user-money-vat-due--f.fr.b8fa17aa9.jpg)
 
 **Étapes**
 
 1. Choisissez **Assujetti à la TVA (facture la TVA)** comme régime.
-2. Dans **Exigibilité de la TVA**, choisissez **Sur les débits (à la facture)** ou **Sur les encaissements (au paiement)**.
+2. Dans **Exigibilité de la TVA**, gardez la première option, la règle légale de votre pays, ou choisissez l'option que votre pays permet : **Sur les débits (à la facture)** en France, **Sur les encaissements (au paiement)** ailleurs.
 3. Touchez **Enregistrer**.
 
 **Bon à savoir**
 
-- Sur les encaissements, une période déclare ce que les clients ont payé pendant cette période ; sur les débits, ce que vous avez émis.
-- Le choix est imprimé sur chaque facture et pilote la [déclaration de TVA](help:user.money.vat.declaration).
-- La base qui vous concerne est une question fiscale pour votre comptable.
+- La règle légale pour les prestations de services : les encaissements en France ; le mois où la prestation est exécutée en Allemagne et en Espagne, les acomptes à leur encaissement ; la facture ou le paiement, au premier des deux, en Italie, au Royaume-Uni et au Canada ; la facture en Suisse.
+- Sur les encaissements, une facture payée en plusieurs fois tombe dans autant de périodes que de paiements. Un avoir compte à son émission (sur les encaissements, à son remboursement), jamais dans la période de la facture qu'il corrige.
+- Le choix est imprimé sur chaque facture — l'option pour les débits avec la mention légale — et pilote à l'identique la [déclaration de TVA](help:user.money.vat.declaration), le rapport de TVA et les exports FEC et DATEV. Un espace français qui n'avait jamais choisi suit les encaissements, et son propriétaire en est averti une fois.
+- L'option qui vous concerne est une question fiscale pour votre comptable.
 
 **Voir aussi:** [La déclaration périodique de TVA](help:user.money.vat.declaration)
 
@@ -7320,7 +7321,7 @@ L'écran est [Identité légale et facturation électronique](app:/legal-identit
 > 3. Si je ne facture pas de TVA, quelle mention légale le justifie ?
 > 4. Quelles mentions doivent figurer sur mes factures (délai de paiement, pénalité de retard, indemnité forfaitaire de recouvrement, escompte pour paiement anticipé, assurance) ?
 > 5. Comment numéroter les factures, et la numérotation repart-elle chaque année ou chaque mois ?
-> 6. La TVA est-elle exigible à la facturation ou à l'encaissement ?
+> 6. Quand la TVA sur mes prestations devient-elle exigible selon la règle de mon pays (encaissement, mois de la prestation, facture), et dois-je opter pour une autre base, comme les débits ?
 > 7. Dois-je envoyer des factures électroniques à une plateforme publique, et laquelle ?
 > 8. Ai-je besoin de déclarations de TVA périodiques, et à quel rythme ?
 
@@ -8292,7 +8293,7 @@ Les décisions que vous allez rencontrer ont des noms. Voici ce que chacun signi
 | Palier tarifaire | Le prix d'un abonnement, selon le pourcentage du quota que prend le membre. |
 | Domaine de validation | Un type de demande avec sa propre règle : une réservation, une note de frais, un remboursement et d'autres. |
 | Quorum | Le nombre de validateurs dont une demande a besoin. Plus que le nombre de personnes qui peuvent valider, et elle reste en attente. |
-| Exigibilité | Le moment où la TVA devient due : à la facturation ou au paiement. |
+| Exigibilité | Le moment où la TVA devient due — le fait générateur : à l'encaissement, au mois de la prestation ou à la facture, selon la loi du pays, sauf option pour une autre base (les débits en France). |
 | Remise à zéro de la numérotation | La fréquence à laquelle le numéro de facture repart de zéro. Elle ne peut pas être plus fréquente que la date imprimée sur la facture. |
 | Paire d'environnements | Un côté test et un côté réel d'un même espace. |
 | Modèle | Une configuration enregistrée (plan, règles, tarifs, rôles) que vous pouvez appliquer à un nouvel espace. Il ne reprend jamais l'identité ni les coordonnées de paiement. |

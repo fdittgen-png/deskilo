@@ -185,10 +185,14 @@ String exemptionMentionFor({
     };
 
 /// #896 — the mention a seller must print about WHEN its tax falls due.
-/// France asks for it explicitly (« TVA acquittée sur les encaissements /
-/// sur les débits »); elsewhere it is said once, plainly, and harms
-/// nothing. Empty for a seller that charges no VAT — there is no tax to
-/// be due.
+/// France REQUIRES one when the seller opted for the debits, in the
+/// words of CGI art. 242 nonies A, I-13° (« Option pour le paiement de
+/// la taxe d'après les débits », #2355); on receipts — the legal rule for
+/// services — it says so. Elsewhere it is said once, plainly, and harms
+/// nothing; Italy's per cassa and Spain's criterio de caja mentions are
+/// statutory too. [onPaymentBasis] is whether the tax waits for the
+/// money (`VatTaxPointBasis.onReceipts`). Empty for a seller that
+/// charges no VAT — there is no tax to be due.
 String exigibilityMention({
   required VatRegime regime,
   required String sellerCountry,
@@ -198,7 +202,7 @@ String exigibilityMention({
   return switch (sellerCountry.trim().toUpperCase()) {
     'FR' => onPaymentBasis
         ? 'TVA acquittée sur les encaissements.'
-        : 'TVA acquittée sur les débits.',
+        : "Option pour le paiement de la taxe d'après les débits.",
     'DE' || 'AT' => onPaymentBasis
         ? 'Umsatzsteuer nach vereinnahmten Entgelten (Ist-Versteuerung).'
         : 'Umsatzsteuer nach vereinbarten Entgelten (Soll-Versteuerung).',

@@ -4767,21 +4767,22 @@ Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in 
 
 **Zielgruppe:** Inhaber
 
-Sie wählen, ob die Umsatzsteuer beim Ausstellen der Rechnung oder bei Zahlungseingang gezählt wird.
+Die Umsatzsteuer jeder Rechnung entsteht an dem Tag, den das Gesetz Ihres Landes bestimmt — bei Zahlungseingang, mit Ausführung der Leistung oder mit der Rechnung. Sie behalten diese Regel oder wählen die Option, die Ihr Land erlaubt.
 
 <p><img src="images/user-money-vat-due--f.de.b8fa17aa9.jpg" width="280"></p>
 
 **Schritte**
 
 1. Wählen Sie **Umsatzsteuerpflichtig (berechnet USt.)** als Regime.
-2. Wählen Sie bei **Entstehung der Umsatzsteuer** **Nach vereinbarten Entgelten (Soll)** oder **Nach vereinnahmten Entgelten (Ist)**.
+2. Behalten Sie bei **Entstehung der Umsatzsteuer** die erste Option, die gesetzliche Regel Ihres Landes, oder wählen Sie die Option, die Ihr Land erlaubt: **Nach vereinnahmten Entgelten (Ist)** in Deutschland, **Nach vereinbarten Entgelten (Soll)** in Frankreich.
 3. Tippen Sie auf **Speichern**.
 
 **Gut zu wissen**
 
-- Bei Zahlungseingängen meldet ein Zeitraum, was Kunden darin bezahlt haben; bei Rechnungen, was Sie ausgestellt haben.
-- Die Wahl wird auf jeder Rechnung gedruckt und bestimmt die [Umsatzsteuererklärung](#die-periodische-umsatzsteuererklärung).
-- Welche Grundlage für Sie gilt, ist eine steuerliche Frage für Ihre Buchhaltung.
+- Die gesetzliche Regel für Dienstleistungen: der Zahlungseingang in Frankreich; der Monat der Leistung in Deutschland und Spanien, Anzahlungen bei Zahlungseingang; die Rechnung oder die Zahlung, je nachdem, was zuerst erfolgt, in Italien, im Vereinigten Königreich und in Kanada; die Rechnung in der Schweiz.
+- Nach vereinnahmten Entgelten fällt eine in Raten bezahlte Rechnung in so viele Zeiträume, wie sie Zahlungen hatte. Eine Gutschrift zählt bei ihrer Ausstellung (nach vereinnahmten Entgelten bei der Erstattung), nie im Zeitraum der berichtigten Rechnung.
+- Die Wahl wird auf jeder Rechnung gedruckt und bestimmt gleichermaßen die [Umsatzsteuererklärung](#die-periodische-umsatzsteuererklärung), den Umsatzsteuerbericht und die FEC- und DATEV-Exporte; DATEV erhält das Datum der Steuerperiode in Feld 116.
+- Welche Option für Sie gilt, ist eine steuerliche Frage für Ihre Buchhaltung.
 
 **Siehe auch:** [Die periodische Umsatzsteuererklärung](#die-periodische-umsatzsteuererklärung)
 

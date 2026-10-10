@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #896 — WHEN the tax falls due.
+// #896 — WHEN the tax falls due. #2355 made it a per-country engine
+// (`vat_tax_point_test.dart` holds its rules); this file holds the
+// setting, the printed mention and the agreement of declaration and
+// report on the receipts basis.
 //
 // A seller on the CASH basis (« TVA sur les encaissements », § 20 UStG's
 // Ist-Versteuerung, IVA per cassa) owes the tax the day the customer
@@ -16,6 +19,7 @@ import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -54,19 +58,47 @@ InvoiceMatch _paid(String id, DateTime on, int cents) => InvoiceMatch(
 final _august = (DateTime(2026, 8, 1), DateTime(2026, 8, 31));
 final _september = (DateTime(2026, 9, 1), DateTime(2026, 9, 30));
 
+/// #2355 — what a payment of [paidCents] declares, rate by rate.
+Map<double, int> _shares(Invoice invoice, int paidCents) => {
+      for (final a in taxPointsOf(
+          invoice, [TaxPointPayment(DateTime(2026, 9, 1), paidCents)],
+          basis: VatTaxPointBasis.receipt))
+        a.percent: a.grossCents,
+    };
+
+/// #2355 — the declaration on the receipts basis, through the engine.
+List<VatDeclarationLine> _onPayment({
+  required List<Invoice> invoices,
+  required Map<String, InvoiceMatch> matches,
+  required DateTime periodStart,
+  required DateTime periodEnd,
+}) =>
+    vatDeclarationLinesOf(
+        vatTaxPointLedger(invoices,
+            matches: matches, basis: VatTaxPointBasis.receipt),
+        periodStart,
+        periodEnd);
+
 void main() {
   group('the setting', () {
-    test('a workspace that never chose is on the invoice basis', () {
+    // #2355 — this used to read "a workspace that never chose is on the
+    // invoice basis", for every country. The default is the country's.
+    test('a workspace that never chose is on its country\'s default: '
+        'receipts in France, the service month in Germany, earlier-of in '
+        'the United Kingdom', () {
       const legal = InvoiceLegal();
-      expect(legal.vatExigibility, 'invoice');
-      expect(legal.onPaymentBasis, isFalse);
+      expect(legal.vatTaxPoint, isNull);
+      expect(legal.taxPointBasis('FR').rule, VatTaxPointRule.receipt);
+      expect(legal.taxPointBasis('DE').rule, VatTaxPointRule.servicePeriod);
+      expect(legal.taxPointBasis('GB').rule, VatTaxPointRule.earlierOf);
+      expect(legal.taxPointBasis('CH').rule, VatTaxPointRule.invoiceDate);
     });
 
     test('the choice round-trips through the wire key the SQL reads', () {
-      const legal = InvoiceLegal(vatExigibility: 'payment');
+      const legal = InvoiceLegal(vatTaxPoint: VatTaxPointOption.cash);
       expect(legal.toJson()['vat_exigibility'], 'payment');
       expect(
-        InvoiceLegal.fromJson(legal.toJson()).onPaymentBasis,
+        InvoiceLegal.fromJson(legal.toJson()).taxPointBasis('DE').onReceipts,
         isTrue,
       );
       expect(legal, isNot(const InvoiceLegal()));
@@ -89,7 +121,9 @@ void main() {
           sellerCountry: 'FR',
           onPaymentBasis: false,
         ),
-        'TVA acquittée sur les débits.',
+        "Option pour le paiement de la taxe d'après les débits.",
+        reason: 'CGI art. 242 nonies A, I-13°: the option is stated in '
+            'these words',
       );
     });
 
@@ -120,7 +154,7 @@ void main() {
   });
 
   group('the document says it', () {
-    Workspace ws(String exigibility) => Workspace(
+    Workspace ws(String? exigibility) => Workspace(
           id: 'ws-1',
           name: 'Demo SARL',
           countryCode: 'FR',
@@ -128,7 +162,7 @@ void main() {
           timezone: 'Europe/Paris',
           inviteCode: 'CODE',
           vatRegime: 'vat_registered',
-          invoiceLegal: {'vat_exigibility': exigibility},
+          invoiceLegal: {'vat_exigibility': ?exigibility},
         );
 
     test('a cash-basis seller prints the encaissements mention', () {
@@ -138,10 +172,18 @@ void main() {
       );
     });
 
-    test('and a seller on the invoice basis prints the other one', () {
+    test('and a seller that opted for the debits says so', () {
       expect(
         legalMentionData(const ReportStrings(), ws('invoice'))['vat_exigibility_mention'],
-        'TVA acquittée sur les débits.',
+        "Option pour le paiement de la taxe d'après les débits.",
+      );
+    });
+
+    test('a French seller that never chose is on receipts — the legal rule '
+        'for services — and its documents say so (#2355)', () {
+      expect(
+        legalMentionData(const ReportStrings(), ws(null))['vat_exigibility_mention'],
+        'TVA acquittée sur les encaissements.',
       );
     });
 
@@ -163,17 +205,17 @@ void main() {
     ]);
 
     test('a full payment is the whole document, rate by rate', () {
-      expect(paymentSharesByRate(mixed, 10000), {20.0: 6000, 10.0: 4000});
+      expect(_shares(mixed, 10000), {20.0: 6000, 10.0: 4000});
     });
 
     test('a part payment carries part of every rate', () {
-      expect(paymentSharesByRate(mixed, 5000), {20.0: 3000, 10.0: 2000});
+      expect(_shares(mixed, 5000), {20.0: 3000, 10.0: 2000});
     });
 
     test('the rounding remainder goes to the widest rate — the shares '
         'always add up to what was received', () {
       for (final paid in [1, 7, 33, 999, 3333, 9999]) {
-        final shares = paymentSharesByRate(mixed, paid);
+        final shares = _shares(mixed, paid);
         expect(
           shares.values.fold(0, (s, c) => s + c),
           paid,
@@ -183,11 +225,11 @@ void main() {
     });
 
     test('nothing paid, or nothing owed, splits into nothing', () {
-      expect(paymentSharesByRate(mixed, 0), isEmpty);
+      expect(_shares(mixed, 0), isEmpty);
       final free = _invoice('f', DateTime(2026, 8, 10), const [
         InvoiceLine(kind: 'service', label: 'Offert', amountCents: 0),
       ]);
-      expect(paymentSharesByRate(free, 1000), isEmpty);
+      expect(_shares(free, 1000), isEmpty);
     });
   });
 
@@ -217,7 +259,7 @@ void main() {
 
     test('on the cash basis it is due in the month of payment', () {
       expect(
-        computeVatDeclarationLinesOnPayment(
+        _onPayment(
           invoices: [invoice],
           matches: matches,
           periodStart: _august.$1,
@@ -225,7 +267,7 @@ void main() {
         ),
         isEmpty,
       );
-      final september = computeVatDeclarationLinesOnPayment(
+      final september = _onPayment(
         invoices: [invoice],
         matches: matches,
         periodStart: _september.$1,
@@ -240,7 +282,7 @@ void main() {
 
     test('an instalment declares only what it settled', () {
       final half = {'a': _paid('a', DateTime(2026, 9, 3), 6000)};
-      final line = computeVatDeclarationLinesOnPayment(
+      final line = _onPayment(
         invoices: [invoice],
         matches: half,
         periodStart: _september.$1,
@@ -253,7 +295,7 @@ void main() {
     test('a voided document is never due, whoever paid it', () {
       final voided = invoice.copyWith(voidedAt: DateTime(2026, 9, 4));
       expect(
-        computeVatDeclarationLinesOnPayment(
+        _onPayment(
           invoices: [voided],
           matches: matches,
           periodStart: _september.$1,
@@ -266,7 +308,7 @@ void main() {
     test('a payment for a document nobody loaded is skipped, not crashed',
         () {
       expect(
-        computeVatDeclarationLinesOnPayment(
+        _onPayment(
           invoices: const [],
           matches: matches,
           periodStart: _september.$1,
@@ -292,6 +334,7 @@ void main() {
         end: _september.$2,
         zeroCategory: 'S',
         matches: matches,
+        basis: VatTaxPointBasis.receipt,
       );
       expect(report.positions, hasLength(1));
       expect(report.positions.single.issuedAt, DateTime(2026, 9, 3));
@@ -309,8 +352,9 @@ void main() {
           end: period.$2,
           zeroCategory: 'S',
           matches: matches,
+          basis: VatTaxPointBasis.receipt,
         );
-        final declared = computeVatDeclarationLinesOnPayment(
+        final declared = _onPayment(
           invoices: [invoice],
           matches: matches,
           periodStart: period.$1,

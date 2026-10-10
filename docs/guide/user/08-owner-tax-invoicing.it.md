@@ -306,21 +306,22 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Destinatari:** Proprietario
 
-Sceglie se l'IVA viene conteggiata all'emissione della fattura o all'incasso.
+L'IVA di ogni fattura diventa esigibile il giorno che fissa la legge del suo Paese: all'incasso, all'esecuzione della prestazione o alla fattura. Lei mantiene questa regola o sceglie l'opzione che il suo Paese consente.
 
 <p><img src="images/user-money-vat-due--f.it.jpg" width="280"></p>
 
 **Passaggi**
 
 1. Scelga **Soggetto IVA (applica IVA)** come regime.
-2. In **Esigibilità dell’IVA**, scelga **Alla fattura (criterio ordinario)** o **All'incasso (IVA per cassa)**.
+2. In **Esigibilità dell’IVA**, mantenga la prima opzione, la regola di legge del suo Paese, o scelga l'opzione che il suo Paese consente: **All'incasso (IVA per cassa)** in Italia, **Alla fattura (criterio ordinario)** in Francia.
 3. Tocchi **Salva**.
 
 **Da sapere**
 
-- All'incasso, un periodo dichiara ciò che i clienti hanno pagato in quel periodo; alla fattura, ciò che Lei ha emesso.
-- La scelta è stampata su ogni fattura e guida la [dichiarazione IVA](help:user.money.vat.declaration).
-- Quale criterio si applichi a Lei è una questione fiscale per il Suo commercialista.
+- La regola di legge per le prestazioni di servizi: l'incasso in Francia; il mese in cui la prestazione è eseguita in Germania e Spagna, gli acconti all'incasso; la fattura o il pagamento, se anteriore, in Italia, nel Regno Unito e in Canada; la fattura in Svizzera.
+- All'incasso, una fattura pagata a rate cade in tanti periodi quanti sono i pagamenti; con l'IVA per cassa, ciò che non è incassato diventa esigibile un anno dopo l'operazione. Una nota di credito conta alla sua emissione (all'incasso, al rimborso), mai nel periodo della fattura che corregge.
+- La scelta è stampata su ogni fattura e guida allo stesso modo la [dichiarazione IVA](help:user.money.vat.declaration), il rapporto IVA e le esportazioni FEC e DATEV.
+- Quale opzione si applichi a Lei è una questione fiscale per il Suo commercialista.
 
 **Vedi anche:** [La dichiarazione IVA periodica](help:user.money.vat.declaration)
 

@@ -18,8 +18,8 @@
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Invoice _inv(
@@ -34,7 +34,9 @@ Invoice _inv(
       workspaceId: 'ws-1',
       memberId: 'member-1',
       number: id.toUpperCase(),
-      issuedAt: DateTime.utc(2026, 8, 1),
+      // #2355 — mid-month: tax points are calendar days on the workspace
+      // clock, and an instant at UTC midnight is still July somewhere.
+      issuedAt: DateTime.utc(2026, 8, 5),
       period: '2026-08',
       title: '2026-08',
       lines: [
@@ -90,11 +92,11 @@ void main() {
 
   test('the cash-basis declaration reports the regrouped sources', () {
     final view = accountingView([a, b, s], rawMatches);
-    final lines = computeVatDeclarationLinesOnPayment(
-      invoices: view.invoices,
-      matches: view.matches,
-      periodStart: start,
-      periodEnd: end,
+    final lines = vatDeclarationLinesOf(
+      vatTaxPointLedger(view.invoices,
+          matches: view.matches, basis: VatTaxPointBasis.receipt),
+      start,
+      end,
     );
     final vat = lines.fold<int>(0, (sum, l) => sum + l.vatCents);
     expect(vat, 4000, reason: 'two €120 invoices at 20% = €40 of VAT');
@@ -109,6 +111,7 @@ void main() {
       end: end,
       zeroCategory: 'Z',
       matches: view.matches,
+      basis: VatTaxPointBasis.receipt,
     );
     expect(onPayment.positions, hasLength(2));
     expect(

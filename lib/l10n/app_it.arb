@@ -3875,6 +3875,10 @@
   },
   "fecAccountRevenue": "Ricavi",
   "fecAccountVat": "IVA incassata",
+  "fecAccountVatPending": "IVA a debito non ancora esigibile",
+  "@fecAccountVatPending": {
+    "description": "#2355 FEC export: the collected-VAT account the tax waits on until its tax point (receipts, service month)"
+  },
   "fecAccountsIntro": "Un FEC è fatto di scritture contabili, quindi richiede numeri di conto. Questi sono i conti del piano contabile francese — li sostituisca con quelli del suo commercialista.",
   "fecAccountsTitle": "Conti da utilizzare",
   "fecMissingSiren": "Il FEC prende il nome dal numero di registrazione — inseriscilo prima in Identità legale.",
@@ -11516,6 +11520,10 @@
   "@vatDeclXml": {
     "description": "Machine-readable export button"
   },
+  "vatDeclarationBasisEarlierOf": "Base: fattura o pagamento, il primo dei due (IVA alla data più precoce).",
+  "@vatDeclarationBasisEarlierOf": {
+    "description": "#2355 vat tax point: vatDeclarationBasisEarlierOf"
+  },
   "vatDeclarationBasisInvoice": "Base: fatture (IVA sui documenti emessi nel periodo).",
   "@vatDeclarationBasisInvoice": {
     "description": "#896 vat exigibility: vatDeclarationBasisInvoice"
@@ -11523,6 +11531,10 @@
   "vatDeclarationBasisPayment": "Base: incassi (IVA sui pagamenti ricevuti nel periodo).",
   "@vatDeclarationBasisPayment": {
     "description": "#896 vat exigibility: vatDeclarationBasisPayment"
+  },
+  "vatDeclarationBasisServicePeriod": "Base: periodo della prestazione (IVA nel mese in cui la prestazione è eseguita; acconti nel mese dell'incasso).",
+  "@vatDeclarationBasisServicePeriod": {
+    "description": "#2355 vat tax point: vatDeclarationBasisServicePeriod"
   },
   "vatEffectiveDate": "Data di effetto (AAAA-MM-GG)",
   "@vatEffectiveDate": {
@@ -11541,7 +11553,7 @@
   "@vatExigibilityPayment": {
     "description": "#896 vat exigibility: vatExigibilityPayment"
   },
-  "vatExigibilitySubtitle": "All'incasso, un periodo dichiara ciò che i clienti hanno pagato al suo interno; alla fattura, ciò che ha emesso. La scelta è stampata su ogni fattura.",
+  "vatExigibilitySubtitle": "La regola di legge dipende dal Paese: l'incasso in Francia, il mese della prestazione in Germania e Spagna, la fattura o il pagamento se anteriore in Italia, nel Regno Unito e in Canada, la fattura in Svizzera. Decide ciò che un periodo dichiara ed è stampata su ogni fattura.",
   "@vatExigibilitySubtitle": {
     "description": "#896 vat exigibility: vatExigibilitySubtitle"
   },
@@ -11645,6 +11657,27 @@
   "vatSince": "dal",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
+  },
+  "vatTaxPointEarlierOf": "Alla fattura o al pagamento, se anteriore",
+  "@vatTaxPointEarlierOf": {
+    "description": "#2355 vat tax point: vatTaxPointEarlierOf"
+  },
+  "vatTaxPointLegalDefault": "{rule} — regola di legge",
+  "@vatTaxPointLegalDefault": {
+    "description": "#2355 vat tax point: vatTaxPointLegalDefault",
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTaxPointNoticeFr": "In Francia le prestazioni di servizi sono tassate all'incasso, salvo opzione per i débits. Questo spazio non ha mai scelto: le sue dichiarazioni seguono ora gli incassi. Se ha optato per i débits, lo scelga in Identità legale e fatturazione elettronica.",
+  "@vatTaxPointNoticeFr": {
+    "description": "#2355 vat tax point: vatTaxPointNoticeFr"
+  },
+  "vatTaxPointServicePeriod": "All'esecuzione della prestazione (acconti all'incasso)",
+  "@vatTaxPointServicePeriod": {
+    "description": "#2355 vat tax point: vatTaxPointServicePeriod"
   },
   "vatTitle": "IVA",
   "vatTreatmentAuto": "Automatico",

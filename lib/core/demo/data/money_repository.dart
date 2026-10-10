@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
@@ -716,6 +717,18 @@ class FakeMoneyRepository implements MoneyRepository {
       byName: 'Flo',
     );
   }
+
+  /// #2355 — the instalments recorded one by one; tests seed them here.
+  final invoiceInstalmentsStore = <String, List<TaxPointPayment>>{};
+
+  @override
+  Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(
+    String workspaceId,
+  ) async =>
+      {
+        for (final entry in invoiceInstalmentsStore.entries)
+          entry.key: List.of(entry.value),
+      };
 
   @override
   Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>

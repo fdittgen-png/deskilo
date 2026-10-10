@@ -190,7 +190,7 @@ Le decisioni che incontrerà hanno dei nomi. Ecco che cosa significa ciascuno in
 | Fascia tariffaria | Il prezzo di un abbonamento, in base alla percentuale della quota che il membro sceglie. |
 | Dominio di convalida | Un tipo di richiesta con una propria regola: una prenotazione, una spesa, un rimborso e altri. |
 | Quorum | Il numero di convalidatori di cui una richiesta ha bisogno. Un numero maggiore delle persone che possono convalidare la lascia in attesa. |
-| Esigibilità | Il momento in cui l'IVA diventa dovuta: alla fatturazione o al pagamento. |
+| Esigibilità | Il momento in cui l'IVA diventa dovuta: all'incasso, nel mese della prestazione o alla fattura, secondo la legge del Paese, salvo opzione per un'altra base (l'IVA per cassa in Italia). |
 | Azzeramento della numerazione | Con quale frequenza il numero di fattura riparte da capo. Non può essere più frequente della data stampata sulla fattura. |
 | Coppia di ambienti | Un lato di prova e un lato reale di uno stesso spazio. |
 | Modello | Una configurazione salvata (planimetria, regole, tariffe, ruoli) che può applicare a un nuovo spazio. Non porta mai con sé identità né dati di pagamento. |

@@ -105,7 +105,10 @@ Map<String, Object?> legalMentionData(
       regime: vatRegimeFromWire(
           seller?.vatRegime ?? workspace?.vatRegime ?? 'not_subject'),
       sellerCountry: seller?.country ?? workspace?.countryCode ?? '',
-      onPaymentBasis: frozen?.onPaymentBasis ?? legal.onPaymentBasis,
+      onPaymentBasis: frozen?.onPaymentBasis ??
+          legal
+              .taxPointBasis(seller?.country ?? workspace?.countryCode ?? '')
+              .onReceipts,
     ),
     // #895 — a reverse-charged supply states WHY no tax is charged, and
     // that mention is statutory: it wins over the seller's own text.

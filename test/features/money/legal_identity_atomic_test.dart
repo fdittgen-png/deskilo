@@ -21,6 +21,7 @@
 // repeats.
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -70,7 +71,7 @@ void main() {
       vatRegime: 'subject',
       invoiceLegal: const InvoiceLegal(
         paymentTerms: 'on receipt',
-        vatExigibility: 'debits',
+        vatTaxPoint: VatTaxPointOption.invoice,
       ).toJson(),
     );
 
@@ -79,7 +80,7 @@ void main() {
     expect(w.invoiceLegal['payment_terms'], 'on receipt',
         reason: 'one call carries both, so the invoice can never quote a '
             'regime the mentions beside it contradict');
-    expect(w.invoiceLegal['vat_exigibility'], 'debits');
+    expect(w.invoiceLegal['vat_tax_point'], 'invoice');
   });
 
   test('the mentions are replaced wholesale, not merged', () async {

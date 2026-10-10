@@ -376,6 +376,7 @@ void main() {
   group('DATEV bookings are well formed, whatever is in them', () {
     late List<List<String>> rows;
     late List<String> header;
+    late List<String> columns;
 
     setUp(() {
       final file = buildDatevFile(
@@ -391,6 +392,7 @@ void main() {
       final lines =
           file.substring(1).split('\r\n').where((l) => l.isNotEmpty).toList();
       header = lines.first.split(';');
+      columns = lines[1].split(';');
       rows = [for (final l in lines.skip(2)) l.split(';')];
     });
 
@@ -403,13 +405,17 @@ void main() {
           reason: 'Erzeugt am is YYYYMMDDHHMMSSFFF');
     });
 
-    test('every row carries the first 20 fields, no gaps', () {
+    test('every row carries every field up to 116, no gaps', () {
       // DATEV positions by column and tolerates a truncated TAIL. It
       // does not tolerate a hole: one missing field shifts every
-      // following column into the wrong meaning.
+      // following column into the wrong meaning. #2355 — the rows run to
+      // field 116, `Datum Zuord. Steuerperiode`, and so does the header.
       expect(rows, isNotEmpty);
+      expect(columns, hasLength(116));
+      expect(columns.last, 'Datum Zuord. Steuerperiode');
+      expect(columns[114], 'Leistungsdatum');
       for (final row in rows) {
-        expect(row, hasLength(20), reason: 'row: $row');
+        expect(row, hasLength(116), reason: 'row: $row');
       }
     });
 

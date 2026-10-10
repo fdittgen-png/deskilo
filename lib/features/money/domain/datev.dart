@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/time/workspace_time.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
+import 'vat_tax_point.dart';
 
 /// DATEV-Format **EXTF Buchungsstapel** (#669) — the file a German or
 /// Austrian *Steuerberater* imports into DATEV Rechnungswesen. It is an
@@ -37,6 +39,14 @@ import 'ledger_entry.dart';
 ///     the mark rather than transcoding to Windows-1252, because a
 ///     coworking in Munich bills members called Kowalczyk and Škoda, and
 ///     Windows-1252 cannot spell either.
+///  5. The TAX PERIOD of a booking is its Belegdatum's unless field 116,
+///     `Datum Zuord. Steuerperiode`, says otherwise (#2355). A
+///     subscription invoiced on 25 August for September is taxed in
+///     September under § 13 UStG, so its sale carries 30.09. there; one
+///     paid in instalments on a cash basis is split into one booking per
+///     payment day. The dates come from the tax-point engine
+///     (`vat_tax_point.dart`), the same the declaration sums. Every row
+///     therefore runs to column 116.
 ///
 /// WHY THERE IS NO GENERALLEDGER-COMPLETE SAF-T HERE. Portugal's
 /// accounting SAF-T, Romania's D406 and Poland's JPK_KR all mandate
@@ -116,6 +126,8 @@ String buildDatevFile({
   List<LedgerEntry> ledger = const [],
   List<ExpenseRepartition> repartitions = const [],
   bool development = false,
+  List<VatTaxPointAmount>? taxPoints,
+  DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
 }) {
   // DATEV is CSV with ');' and quoted text. A ';' or a newline inside a
   // label would shift every following column.
@@ -132,6 +144,8 @@ String buildDatevFile({
   /// DDMM. The year is the header's, not the booking's.
   String dayMonth(DateTime d) =>
       '${d.day.toString().padLeft(2, '0')}${d.month.toString().padLeft(2, '0')}';
+
+  String ddmmyyyy(DateTime d) => '${dayMonth(d)}${d.year}';
 
   String ymd(DateTime d) => '${d.year}'
       '${d.month.toString().padLeft(2, '0')}'
@@ -155,11 +169,14 @@ String buildDatevFile({
     '', '', '', '', '', '', '', '', '',
   ].join(';');
 
-  const columns = 'Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen;'
-      'WKZ Umsatz;Kurs;Basisumsatz;WKZ Basisumsatz;Konto;'
-      'Gegenkonto (ohne BU-Schlüssel);BU-Schlüssel;Belegdatum;Belegfeld 1;'
-      'Belegfeld 2;Skonto;Buchungstext;Postensperre;Diverse Adressnummer;'
-      'Geschäftspartnerbank;Sachverhalt;Zinssperre;Beleglink';
+  final columns = [
+    'Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen;'
+        'WKZ Umsatz;Kurs;Basisumsatz;WKZ Basisumsatz;Konto;'
+        'Gegenkonto (ohne BU-Schlüssel);BU-Schlüssel;Belegdatum;Belegfeld 1;'
+        'Belegfeld 2;Skonto;Buchungstext;Postensperre;Diverse Adressnummer;'
+        'Geschäftspartnerbank;Sachverhalt;Zinssperre;Beleglink',
+    ..._datevColumns21To116,
+  ].join(';');
 
   final rows = <String>[];
 
@@ -172,6 +189,7 @@ String buildDatevFile({
     required DateTime date,
     required String documentRef,
     required String text,
+    DateTime? taxPeriodDate,
   }) {
     // Direction: we always state the DEBIT account in `Konto` and the
     // credit in `Gegenkonto`, so the flag is always 'S'. Writing the
@@ -184,7 +202,52 @@ String buildDatevFile({
       q(documentRef), '', '',
       q(text),
       '', '', '', '', '', '',
+      // Fields 21–115 stay empty; 116 is the tax period's date, TTMMJJJJ.
+      for (var i = 21; i <= 115; i++) '',
+      if (taxPeriodDate == null) '' else ddmmyyyy(taxPeriodDate),
     ].join(';'));
+  }
+
+  // #2355 — the engine's tax points per invoice; with a ledger given, an
+  // invoice it holds nothing for has no tax due yet.
+  final index = taxPoints == null ? null : VatTaxPointIndex(taxPoints);
+
+  /// The sale of [invoice] ([cents], always positive), booked once per
+  /// tax point date: each part is the share of the document that falls
+  /// due that day, the last part what is not due yet (no field 116 —
+  /// the Belegdatum's period, or DATEV's own Ist-Versteuerung).
+  void bookSale({
+    required Invoice invoice,
+    required int cents,
+    required String debit,
+    required String credit,
+    required String text,
+  }) {
+    final issued = dayOf(invoice.issuedAt);
+    final total = invoice.lines.fold(0, (s, l) => s + l.amountCents);
+    final byDay = index?.byDay(invoice.id, (a) => a.grossCents) ?? const {};
+    final days = byDay.keys.toList();
+    final whole = days.length == 1 && byDay[days.single] == total;
+    if (index == null || total == 0 || (whole && days.single == issued)) {
+      book(cents: cents, debit: debit, credit: credit,
+          date: invoice.issuedAt, documentRef: invoice.number, text: text);
+      return;
+    }
+    var covered = 0;
+    var booked = 0;
+    for (final day in days) {
+      covered += byDay[day]!;
+      final upTo = (cents * covered / total).round();
+      if (upTo - booked == 0) continue;
+      book(cents: upTo - booked, debit: debit, credit: credit,
+          date: invoice.issuedAt, documentRef: invoice.number, text: text,
+          taxPeriodDate: day);
+      booked = upTo;
+    }
+    if (cents - booked != 0) {
+      book(cents: cents - booked, debit: debit, credit: credit,
+          date: invoice.issuedAt, documentRef: invoice.number, text: text);
+    }
   }
 
   for (final invoice in invoices) {
@@ -194,12 +257,11 @@ String buildDatevFile({
     // #936 — a credit note is a sale reversed: the accounts swap and the
     // amount is positive, as a Buchungsstapel wants it.
     if (invoice.isCreditNote) {
-      book(
+      bookSale(
+        invoice: invoice,
         cents: -invoice.totalCents,
         debit: accounts.revenue,
         credit: accounts.customers,
-        date: invoice.issuedAt,
-        documentRef: invoice.number,
         text: 'Gutschrift ${invoice.number}',
       );
       continue;
@@ -218,12 +280,11 @@ String buildDatevFile({
     // base under it. The FEC has always split these; this did not.
     final charges = invoice.chargesCents;
     if (charges == 0) continue;
-    book(
+    bookSale(
+      invoice: invoice,
       cents: charges,
       debit: accounts.customers,
       credit: accounts.revenue,
-      date: invoice.issuedAt,
-      documentRef: invoice.number,
       text: 'Rechnung ${invoice.number}',
     );
     // The credits the document itself carries: money in, receivable
@@ -293,3 +354,57 @@ String buildDatevFile({
   }
   return '$datevBom$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
 }
+
+/// Fields 21 to 116 of the EXTF Buchungsstapel (format 700, category 21),
+/// in DATEV's order: the importer reads by position, so field 116,
+/// `Datum Zuord. Steuerperiode`, needs every field before it (#2355).
+final List<String> _datevColumns21To116 = List.unmodifiable([
+  for (var i = 1; i <= 8; i++) ...[
+    'Beleginfo - Art $i',
+    'Beleginfo - Inhalt $i',
+  ],
+  'KOST1 - Kostenstelle',
+  'KOST2 - Kostenstelle',
+  'Kost-Menge',
+  'EU-Land u. UStID (Bestimmung)',
+  'EU-Steuersatz (Bestimmung)',
+  'Abw. Versteuerungsart',
+  'Sachverhalt L+L',
+  'Funktionsergänzung L+L',
+  'BU 49 Hauptfunktionstyp',
+  'BU 49 Hauptfunktionsnummer',
+  'BU 49 Funktionsergänzung',
+  for (var i = 1; i <= 20; i++) ...[
+    'Zusatzinformation - Art $i',
+    'Zusatzinformation - Inhalt $i',
+  ],
+  'Stück',
+  'Gewicht',
+  'Zahlweise',
+  'Forderungsart',
+  'Veranlagungsjahr',
+  'Zugeordnete Fälligkeit',
+  'Skontotyp',
+  'Auftragsnummer',
+  'Buchungstyp',
+  'USt-Schlüssel (Anzahlungen)',
+  'EU-Mitgliedstaat (Anzahlungen)',
+  'Sachverhalt L+L (Anzahlungen)',
+  'EU-Steuersatz (Anzahlungen)',
+  'Erlöskonto (Anzahlungen)',
+  'Herkunft-Kz',
+  'Buchungs GUID',
+  'KOST-Datum',
+  'SEPA-Mandatsreferenz',
+  'Skontosperre',
+  'Gesellschaftername',
+  'Beteiligtennummer',
+  'Identifikationsnummer',
+  'Zeichnernummer',
+  'Postensperre bis',
+  'Bezeichnung SoBil-Sachverhalt',
+  'Kennzeichen SoBil-Buchung',
+  'Festschreibung',
+  'Leistungsdatum',
+  'Datum Zuord. Steuerperiode',
+]);

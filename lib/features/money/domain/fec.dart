@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'expense_repartition.dart';
 import 'invoice.dart';
+import '../../../core/time/workspace_time.dart';
 import 'ledger_entry.dart';
 import 'vat_regime.dart';
+import 'vat_tax_point.dart';
 
 /// The accounts a FEC cannot be written without. Defaults follow the
 /// French *plan comptable général*; an accountant using a different chart
@@ -15,6 +17,7 @@ class FecAccounts {
     this.bank = '512000',
     this.vat = '445710',
     this.expenses = '606000',
+    this.vatPending = '445740',
   });
 
   /// PCG 411 — Clients (the receivable).
@@ -34,6 +37,11 @@ class FecAccounts {
   /// costs. 606 "achats non stockés" by default; the accountant's chart
   /// wins at export time like the others.
   final String expenses;
+
+  /// #2355 — PCG 44574, TVA collectée en attente: the VAT an invoice
+  /// carries but whose tax point has not come yet (services on receipts,
+  /// a service month still to come). It moves to [vat] on the tax point.
+  final String vatPending;
 }
 
 /// Journal codes and labels. Two journals are enough for an invoicing-only
@@ -45,6 +53,9 @@ const _bankJournalLabel = 'Banque';
 // #936 — purchases: what the workspace paid or owes, not what it sold.
 const _purchasesJournal = 'HA';
 const _purchasesJournalLabel = 'Achats';
+// #2355 — the VAT moving from pending to due on its tax point.
+const _miscJournal = 'OD';
+const _miscJournalLabel = 'Opérations diverses';
 
 /// The 18 columns of the FEC, in the order the arrêté du 29 juillet 2013
 /// fixes them (BIC/IS variant). Order is not negotiable: the DGFiP's own
@@ -101,7 +112,14 @@ String fecFileName(String legalId, DateTime fiscalYearEnd,
 ///  * journal **BQ** — the payment that MATCHED the invoice, when the
 ///    invoice still had a balance to settle. Skipped when the solde was
 ///    already zero: that money is the credit lines above, and booking it
-///    twice would inflate the bank.
+///    twice would inflate the bank;
+///  * journal **OD** (#2355) — when [taxPoints] (the tax-point engine's
+///    ledger, `vat_tax_point.dart`) dates an invoice's VAT elsewhere than
+///    its issue day, the sale books that VAT on the pending account
+///    (44574) and each tax point moves its share to 44571 on its own
+///    date, so the collected-VAT account carries exactly what the
+///    declaration and the VAT report declare. Without [taxPoints] every
+///    VAT is due on the issue day, as before.
 ///
 /// Cancelled invoices are absent. One that was voided before payment was
 /// never booked, so there is nothing to reverse — and its replacement
@@ -126,6 +144,9 @@ String buildFecFile({
   Map<String, String> memberNames = const {},
   List<ExpenseRepartition> repartitions = const [],
   String expensesLabel = 'Achats et charges',
+  List<VatTaxPointAmount>? taxPoints,
+  String vatPendingLabel = "TVA collectée en attente d'exigibilité",
+  DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
 }) {
   String money(int cents) =>
       // #1077 — two decimals is CORRECT here: the FEC is a French tax
@@ -192,6 +213,41 @@ String buildFecFile({
     ]);
   }
 
+  // #2355 — the engine's tax points per invoice; with a ledger given, an
+  // invoice it holds nothing for has no VAT due yet.
+  final index = taxPoints == null ? null : VatTaxPointIndex(taxPoints);
+  bool deferred(Invoice invoice, int booked) =>
+      index != null &&
+      booked != 0 &&
+      index.vatAwayFrom(invoice.id, dayOf(invoice.issuedAt), booked);
+
+  /// One OD entry per tax point day: the VAT due that day leaves the
+  /// pending account for the collected one (the reverse for a credit
+  /// note).
+  void releaseVat(Invoice invoice, String label) {
+    var ordinal = 0;
+    for (final MapEntry(key: day, value: vat)
+        in index!.byDay(invoice.id, (a) => a.vatCents).entries) {
+      if (vat == 0) continue;
+      final number = '$_miscJournal-${invoice.number}-T${++ordinal}';
+      for (final (account, accountLabel, debit) in [
+        (accounts.vatPending, vatPendingLabel, vat > 0),
+        (accounts.vat, vatLabel, vat < 0),
+      ]) {
+        write(
+          journal: _miscJournal, journalLabel: _miscJournalLabel,
+          number: number, date: day,
+          account: account, accountLabel: accountLabel,
+          auxNumber: '', auxLabel: '',
+          pieceRef: invoice.number, pieceDate: invoice.issuedAt,
+          label: label,
+          debitCents: debit ? vat.abs() : 0, creditCents: debit ? 0 : vat.abs(),
+          letter: '', validDate: day,
+        );
+      }
+    }
+  }
+
   final ordered = [
     for (final invoice in invoices)
       if (!invoice.isVoided) invoice,
@@ -220,6 +276,10 @@ String buildFecFile({
       final slices = invoice.vatBreakdown(zeroCategory: zeroCategory)
           .where((s) => s.netCents != 0 || s.vatCents != 0)
           .toList();
+      final pending = deferred(invoice, [
+        for (final s in slices)
+          if (s.vatCents < 0) s.vatCents,
+      ].fold(0, (a, b) => a + b));
       if (slices.isEmpty) {
         write(
           journal: _salesJournal, journalLabel: _salesJournalLabel,
@@ -245,7 +305,8 @@ String buildFecFile({
           write(
             journal: _salesJournal, journalLabel: _salesJournalLabel,
             number: entry, date: invoice.issuedAt,
-            account: accounts.vat, accountLabel: vatLabel,
+            account: pending ? accounts.vatPending : accounts.vat,
+            accountLabel: pending ? vatPendingLabel : vatLabel,
             auxNumber: '', auxLabel: '',
             pieceRef: invoice.number, pieceDate: invoice.issuedAt,
             label: label, debitCents: -slice.vatCents, creditCents: 0,
@@ -262,6 +323,7 @@ String buildFecFile({
         label: label, debitCents: 0, creditCents: total,
         letter: letter, validDate: invoice.issuedAt,
       );
+      if (pending) releaseVat(invoice, label);
       continue;
     }
     final charges = invoice.lines
@@ -296,6 +358,10 @@ String buildFecFile({
             .taxCategoryCode;
     final breakdown = invoice.vatBreakdown(zeroCategory: zeroCategory);
     final manyRates = breakdown.length > 1;
+    final pending = deferred(invoice, [
+      for (final total in breakdown)
+        if (total.vatCents > 0) total.vatCents,
+    ].fold(0, (a, b) => a + b));
     for (final total in breakdown) {
       // With several rates the entry label says which one, so a human
       // reading the journal can tell the lines apart.
@@ -325,8 +391,8 @@ String buildFecFile({
           journalLabel: _salesJournalLabel,
           number: entry,
           date: invoice.issuedAt,
-          account: accounts.vat,
-          accountLabel: vatLabel,
+          account: pending ? accounts.vatPending : accounts.vat,
+          accountLabel: pending ? vatPendingLabel : vatLabel,
           auxNumber: '',
           auxLabel: '',
           pieceRef: invoice.number,
@@ -339,6 +405,8 @@ String buildFecFile({
         );
       }
     }
+
+    if (pending) releaseVat(invoice, label);
 
     // The credits the invoice netted: money that had already arrived.
     var creditOrdinal = 0;

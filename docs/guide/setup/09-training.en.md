@@ -190,7 +190,7 @@ The decisions you will meet have names. This is what each one means in DesKilo.
 | Fee band | The price of a subscription, by the percentage of the allowance the member takes. |
 | Validation domain | A kind of request with its own rule: a booking, an expense, a refund and others. |
 | Quorum | The number of validators a request needs. More than the people who can validate leaves it waiting. |
-| Exigibility | The moment VAT falls due: at invoicing or at payment. |
+| Exigibility | The moment VAT falls due — the tax point: on receipt of payment, in the month the service is performed or at the invoice, as the country's law sets, unless the business opted for another basis. |
 | Numbering reset | How often the invoice number starts again. It cannot be more frequent than the date printed on the invoice. |
 | Environment pair | A test side and a real side of one space. |
 | Template | A saved setup (plan, rules, tariffs, roles) you can apply to a new space. It never carries identity or payment details. |

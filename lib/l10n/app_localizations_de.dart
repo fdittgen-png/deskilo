@@ -5865,6 +5865,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get fecAccountVat => 'Vereinnahmte Steuer';
 
   @override
+  String get fecAccountVatPending => 'Umsatzsteuer, noch nicht fällig';
+
+  @override
   String get fecAccountsIntro =>
       'Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetzen Sie sie durch die Ihrer Buchhaltung.';
 
@@ -18862,12 +18865,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclXml => 'XML-Export';
 
   @override
+  String get vatDeclarationBasisEarlierOf =>
+      'Grundlage: Rechnung oder Zahlung, je nachdem, was zuerst erfolgte (Steuer zum früheren der beiden Daten).';
+
+  @override
   String get vatDeclarationBasisInvoice =>
       'Grundlage: vereinbarte Entgelte (Steuer auf im Zeitraum gestellte Rechnungen).';
 
   @override
   String get vatDeclarationBasisPayment =>
       'Grundlage: vereinnahmte Entgelte (Steuer auf im Zeitraum erhaltene Zahlungen).';
+
+  @override
+  String get vatDeclarationBasisServicePeriod =>
+      'Grundlage: Leistungszeitraum (Steuer im Monat der Leistung; Anzahlungen im Monat des Zahlungseingangs).';
 
   @override
   String get vatEffectiveDate => 'Wirksam ab (JJJJ-MM-TT)';
@@ -18887,7 +18898,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'Nach vereinnahmten Entgelten meldet ein Zeitraum, was Kunden darin bezahlt haben; nach vereinbarten Entgelten, was Sie gestellt haben. Die Wahl steht auf jeder Rechnung.';
+      'Die gesetzliche Regel hängt vom Land ab: Zahlungseingang in Frankreich, Leistungsmonat in Deutschland und Spanien, Rechnung oder Zahlung (was zuerst erfolgt) in Italien, im Vereinigten Königreich und in Kanada, die Rechnung in der Schweiz. Sie bestimmt, was ein Zeitraum meldet, und steht auf jeder Rechnung.';
 
   @override
   String get vatExigibilityTitle => 'Entstehung der Umsatzsteuer';
@@ -19003,6 +19014,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatSince => 'ab';
+
+  @override
+  String get vatTaxPointEarlierOf =>
+      'Mit Rechnung oder Zahlung, je nachdem, was zuerst erfolgt';
+
+  @override
+  String vatTaxPointLegalDefault(String rule) {
+    return '$rule — gesetzliche Regel';
+  }
+
+  @override
+  String get vatTaxPointNoticeFr =>
+      'In Frankreich werden Dienstleistungen nach Zahlungseingang besteuert, sofern das Unternehmen nicht zur Besteuerung nach Rechnungsstellung (débits) optiert hat. Dieser Bereich hat nie gewählt; seine Erklärungen folgen jetzt den Zahlungseingängen. Wenn Sie optiert haben, wählen Sie dies unter Rechtliche Identität & E-Rechnung.';
+
+  @override
+  String get vatTaxPointServicePeriod =>
+      'Mit Ausführung der Leistung (Anzahlungen bei Zahlungseingang)';
 
   @override
   String get vatTitle => 'Mehrwertsteuer';

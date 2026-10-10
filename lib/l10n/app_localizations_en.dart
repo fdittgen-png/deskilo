@@ -5820,6 +5820,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fecAccountVat => 'Collected VAT';
 
   @override
+  String get fecAccountVatPending => 'VAT collected, not yet due';
+
+  @override
   String get fecAccountsIntro =>
       'A FEC is made of accounting entries, so it needs account numbers. These are the French chart defaults — change them to your accountant\'s.';
 
@@ -18664,12 +18667,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclXml => 'XML export';
 
   @override
+  String get vatDeclarationBasisEarlierOf =>
+      'Basis: invoice or payment, whichever came first (VAT on the earlier of the two dates).';
+
+  @override
   String get vatDeclarationBasisInvoice =>
       'Basis: invoices (VAT on documents issued during the period).';
 
   @override
   String get vatDeclarationBasisPayment =>
       'Basis: receipts (VAT on payments received during the period).';
+
+  @override
+  String get vatDeclarationBasisServicePeriod =>
+      'Basis: service period (VAT in the month the service was performed; advance payments in the month received).';
 
   @override
   String get vatEffectiveDate => 'Effective date (YYYY-MM-DD)';
@@ -18688,7 +18699,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatExigibilitySubtitle =>
-      'On receipts, a period declares what customers paid inside it; on invoices, what you issued. The choice is printed on every invoice.';
+      'The legal default depends on your country: receipts in France, the month of the service in Germany and Spain, invoice or payment whichever comes first in Italy, the United Kingdom and Canada, the invoice in Switzerland. It decides what a period declares and is printed on every invoice.';
 
   @override
   String get vatExigibilityTitle => 'VAT falls due';
@@ -18804,6 +18815,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatSince => 'since';
+
+  @override
+  String get vatTaxPointEarlierOf =>
+      'On the invoice or the payment, whichever comes first';
+
+  @override
+  String vatTaxPointLegalDefault(String rule) {
+    return '$rule — legal default';
+  }
+
+  @override
+  String get vatTaxPointNoticeFr =>
+      'Services in France are taxed on receipts unless the business opted for the debits. This space never chose, so its declarations now follow receipts. If you opted for the debits, choose it under Legal identity & e-invoicing.';
+
+  @override
+  String get vatTaxPointServicePeriod =>
+      'When the service is performed (advance payments when received)';
 
   @override
   String get vatTitle => 'VAT';
