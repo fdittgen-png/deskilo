@@ -11447,7 +11447,11 @@
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
   },
-  "vatDeclGenerate": "Genera",
+  "vatDeclFiled": "Presentata",
+  "@vatDeclFiled": {
+    "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclGenerate": "Prepara",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
@@ -11455,11 +11459,11 @@
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
   },
-  "vatDeclMarkFiled": "Segna come inviata",
+  "vatDeclMarkFiled": "Segna come presentata",
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Confermi di aver inviato personalmente questa dichiarazione (portale dell’agenzia o il suo commercialista). Diventa immutabile.",
+  "vatDeclMarkFiledConfirm": "Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -11475,33 +11479,33 @@
   "@vatDeclPeriod": {
     "description": "Filing-period label"
   },
+  "vatDeclPrepared": "Preparata",
+  "@vatDeclPrepared": {
+    "description": "Status chip: the server computed the return, ready to file (#2357)"
+  },
   "vatDeclRate": "Aliquota",
   "@vatDeclRate": {
     "description": "Rate column"
+  },
+  "vatDeclReceipt": "Riferimento della ricevuta dell’amministrazione finanziaria",
+  "@vatDeclReceipt": {
+    "description": "Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)"
   },
   "vatDeclRegimeGate": "Le dichiarazioni esistono solo sotto il regime soggetto a IVA — lo configuri nelle impostazioni IVA.",
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
-  "vatDeclRejected": "La piattaforma ha rifiutato la dichiarazione.",
-  "@vatDeclRejected": {
-    "description": "Error snack when the platform rejects"
+  "vatDeclScreenTitle": "Preparazione della dichiarazione IVA",
+  "@vatDeclScreenTitle": {
+    "description": "Title of the VAT return screen: the app prepares the return, the owner files it (#2357)"
   },
   "vatDeclSeller": "Venditore",
   "@vatDeclSeller": {
     "description": "Seller identity line on the declaration PDF"
   },
-  "vatDeclSent": "Dichiarazione trasmessa.",
-  "@vatDeclSent": {
-    "description": "Success snack after platform transmission"
-  },
   "vatDeclStatus": "Stato",
   "@vatDeclStatus": {
     "description": "Status label on the PDF"
-  },
-  "vatDeclSubmitted": "Inviata",
-  "@vatDeclSubmitted": {
-    "description": "Submitted status chip"
   },
   "vatDeclTitle": "Dichiarazione IVA",
   "@vatDeclTitle": {
@@ -11510,10 +11514,6 @@
   "vatDeclTotals": "Totali",
   "@vatDeclTotals": {
     "description": "Totals row"
-  },
-  "vatDeclTransmit": "Trasmetti",
-  "@vatDeclTransmit": {
-    "description": "Send through the configured platform channel"
   },
   "vatDeclVat": "IVA",
   "@vatDeclVat": {

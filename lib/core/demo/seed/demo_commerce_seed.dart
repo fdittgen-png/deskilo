@@ -75,7 +75,7 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
       workspaceId: 'ws-1',
       periodStart: start,
       periodEnd: end,
-      status: submitted ? 'submitted' : 'draft',
+      status: submitted ? 'filed' : 'prepared',
       lines: [
         VatDeclarationLine(
           percent: 20,
@@ -92,6 +92,7 @@ void seedDemoVatDeclarations(FakeMoneyRepository money, DateTime now) {
       createdAt: end.add(const Duration(days: 5)),
       submittedAt: submitted ? end.add(const Duration(days: 12)) : null,
       submittedChannel: submitted ? 'manual' : '',
+      submittedReceipt: submitted ? 'EFI-${start.year}-$label' : '',
       number: submitted ? 'CA3-${start.year}-$label' : '',
     );
   }

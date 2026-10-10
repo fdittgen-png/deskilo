@@ -974,7 +974,7 @@ constraint validation_policies.validation_policies_workspace_id_fkey FOREIGN KEY
 constraint vat_declarations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint vat_declarations.system_company_present CHECK ((company_id IS NOT NULL))
 constraint vat_declarations.vat_declarations_pkey PRIMARY KEY (id)
-constraint vat_declarations.vat_declarations_status_check CHECK ((status = ANY (ARRAY['draft'::text, 'submitted'::text])))
+constraint vat_declarations.vat_declarations_status_check CHECK ((status = ANY (ARRAY['draft'::text, 'prepared'::text, 'filed'::text])))
 constraint vat_declarations.vat_declarations_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint vat_declarations.vat_declarations_workspace_id_period_start_period_end_key UNIQUE (workspace_id, period_start, period_end)
 constraint vat_rates.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -1262,6 +1262,7 @@ routine public.clear_readiness_acknowledgement(p_workspace_id uuid, p_section te
 routine public.close_space_inquiry(p_inquiry uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:847119f0bdef
 routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_refusal_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c774bc970470
+routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) -> TABLE(percent numeric, category text, tax_point date, credit_note boolean, gross_cents bigint, net_cents bigint, vat_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:bf6398c58765
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
 routine public.confirm_expense_occurrence(p_occurrence_id uuid, p_amount_cents integer, p_reason text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:2e9422068815
@@ -1442,7 +1443,7 @@ routine public.mark_inquiry_read(p_inquiry uuid) -> void | function | definer | 
 routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6f6a75025f9d
 routine public.mark_member_notes_read(p_workspace_id uuid, p_from_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d0a83c717a6
 routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | function | definer | volatile | exec:service_role | body:75d9d37905a1
-routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:7c361ab46af4
+routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:ca635717c1de
 routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
@@ -1731,7 +1732,7 @@ routine public.save_book_account(p_workspace_id uuid, p_issuer_site_id uuid, p_i
 routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_role text, p_account_id uuid, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6eff4c88c7c4
 routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a8c6b0169bf2
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
-routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:08998635ec7f
+routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:f4309509ad0a
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
 routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[], p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2800511d785e
 routine public.save_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean, p_options jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c85c87cb44a5
@@ -1862,11 +1863,17 @@ routine public.usage_records_for(p_workspace_id uuid, p_period text, p_member_id
 routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:96b330bb6f32
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:authenticated,service_role | body:a772dde0819a
+routine public.vat_declarations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:7e545bd2ecfe
 routine public.vat_rate_family(p_rate_id uuid) -> SETOF vat_rates | function | definer | stable | exec:authenticated,service_role | body:be13b7375d62
 routine public.vat_rate_id_by_label(p_workspace_id uuid, p_label text) -> uuid | function | definer | stable | exec:authenticated,service_role | body:c5e190aea085
 routine public.vat_rate_in_force(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:cdcf63ee9bc5
 routine public.vat_rate_percent_at(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:authenticated,service_role | body:89d0065cfc67
+routine public.vat_return_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:289cdc3e37ab
+routine public.vat_return_summary(p_workspace_id uuid, p_start date, p_end date) -> TABLE(lines jsonb, total_net_cents integer, total_vat_cents integer, invoice_count integer) | function | definer | stable | exec:service_role | body:a8b5a17b4940
+routine public.vat_split_net(p_gross bigint, p_percent numeric) -> bigint | function | invoker | immutable | exec:authenticated,service_role | body:9614bff5ba9f
 routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c
+routine public.vat_tax_point_basis(p_country text, p_option text) -> TABLE(rule text, backstop text) | function | invoker | immutable | exec:authenticated,service_role | body:69909a2a7c2b
+routine public.vat_tax_point_policy(p_country text) -> TABLE(standard text, invoice_option boolean, cash_option boolean, cash_backstop text) | function | invoker | immutable | exec:authenticated,service_role | body:9d2a74e93df1
 routine public.verify_invoice_signature(p_invoice_id uuid) -> text | function | definer | stable | exec:authenticated,service_role | body:65e617ac44a2
 routine public.visible_account(p_user_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5f4b79b2c75b
 routine public.void_invoice(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:f65d910e8d0a
@@ -2100,6 +2107,7 @@ trigger space_inquiry_messages.inquiry_messages_refs_guard CREATE TRIGGER inquir
 trigger space_inquiry_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger usage_records.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.usage_records FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger validation_policies.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.validation_policies FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger vat_declarations.vat_declarations_guard CREATE TRIGGER vat_declarations_guard BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION vat_declarations_guard()
 trigger vat_declarations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_declarations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger vat_rates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.vat_rates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_application_messages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_application_messages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

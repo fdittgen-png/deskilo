@@ -21218,7 +21218,11 @@
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
   },
-  "vatDeclGenerate": "Generate",
+  "vatDeclFiled": "Filed",
+  "@vatDeclFiled": {
+    "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclGenerate": "Prepare",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
@@ -21230,7 +21234,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.",
+  "vatDeclMarkFiledConfirm": "Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -21246,33 +21250,33 @@
   "@vatDeclPeriod": {
     "description": "Filing-period label"
   },
+  "vatDeclPrepared": "Prepared",
+  "@vatDeclPrepared": {
+    "description": "Status chip: the server computed the return, ready to file (#2357)"
+  },
   "vatDeclRate": "Rate",
   "@vatDeclRate": {
     "description": "Rate column"
+  },
+  "vatDeclReceipt": "Receipt reference from the tax authority",
+  "@vatDeclReceipt": {
+    "description": "Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)"
   },
   "vatDeclRegimeGate": "Declarations exist only under the VAT-registered regime — configure it under VAT settings.",
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
-  "vatDeclRejected": "The platform refused the declaration.",
-  "@vatDeclRejected": {
-    "description": "Error snack when the platform rejects"
+  "vatDeclScreenTitle": "Preparation of the VAT return",
+  "@vatDeclScreenTitle": {
+    "description": "Title of the VAT return screen: the app prepares the return, the owner files it (#2357)"
   },
   "vatDeclSeller": "Seller",
   "@vatDeclSeller": {
     "description": "Seller identity line on the declaration PDF"
   },
-  "vatDeclSent": "Declaration transmitted.",
-  "@vatDeclSent": {
-    "description": "Success snack after platform transmission"
-  },
   "vatDeclStatus": "Status",
   "@vatDeclStatus": {
     "description": "Status label on the PDF"
-  },
-  "vatDeclSubmitted": "Submitted",
-  "@vatDeclSubmitted": {
-    "description": "Submitted status chip"
   },
   "vatDeclTitle": "VAT declaration",
   "@vatDeclTitle": {
@@ -21281,10 +21285,6 @@
   "vatDeclTotals": "Totals",
   "@vatDeclTotals": {
     "description": "Totals row"
-  },
-  "vatDeclTransmit": "Transmit",
-  "@vatDeclTransmit": {
-    "description": "Send through the configured platform channel"
   },
   "vatDeclVat": "VAT",
   "@vatDeclVat": {

@@ -3,7 +3,7 @@
 -- refuse actual authenticated issuance before numbering. Domestic ordinary
 -- charges remain usable; existing invoice snapshots persist.
 -- #2354: a buyer abroad is no longer refused as such — a desk is supplied
--- where the building stands, so it carries the seller's VAT (166).
+-- where the building stands, so it carries the seller's VAT (167).
 begin;
 select plan(11);
 

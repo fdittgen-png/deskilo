@@ -4565,8 +4565,9 @@ L'IVA di ogni fattura diventa esigibile il giorno che fissa la legge del suo Pae
 - All'incasso, una fattura pagata a rate cade in tanti periodi quanti sono i pagamenti; con l'IVA per cassa, ciò che non è incassato diventa esigibile un anno dopo l'operazione. Una nota di credito conta alla sua emissione (all'incasso, al rimborso), mai nel periodo della fattura che corregge.
 - La scelta è stampata su ogni fattura e guida allo stesso modo la [dichiarazione IVA](help:user.money.vat.declaration), il rapporto IVA e le esportazioni FEC e DATEV.
 - Quale opzione si applichi a Lei è una questione fiscale per il Suo commercialista.
+- Una fattura conserva la regola che ha stampato: emessa per cassa, attende il pagamento; con l'opzione per l'emissione è esigibile all'emissione, qualunque cosa lo spazio scelga in seguito.
 
-**Vedi anche:** [La dichiarazione IVA periodica](help:user.money.vat.declaration)
+**Vedi anche:** [Preparare la dichiarazione IVA](help:user.money.vat.declaration)
 
 ### Conto IVA
 
@@ -4741,27 +4742,28 @@ Un'aliquota cambia a partire da una data. Le operazioni passate conservano il ve
 
 **Vedi anche:** [Impostare le aliquote](help:user.money.vat.rates)
 
-### La dichiarazione IVA periodica
+### Preparare la dichiarazione IVA
 
 **Destinatari:** Proprietario
 
-Vuole un riepilogo pronto dell'IVA di un periodo da presentare all'ufficio delle imposte o consegnare al Suo commercialista.
+Vuole l'IVA di un periodo calcolata dalle Sue fatture e dagli incassi, pronta da presentare all'amministrazione finanziaria o da consegnare al Suo commercialista.
 
 ![](assets/help/images/user-money-vat-declaration.it.b8fa17aa9.jpg)
 
 **Passaggi**
 
 1. Apra [Dichiarazione IVA](app:/vat-declarations).
-2. Scelga il **Periodo** e tocchi **Genera**.
+2. Scelga il **Periodo** e tocchi **Prepara**.
 3. Apra il risultato con **PDF** o **Esporta XML**, oppure consulti **Report IVA (PDF)** e **Report IVA (CSV)**.
-4. Dopo averla presentata Lei stesso, tocchi **Segna come inviata**.
+4. Presenti Lei stesso la dichiarazione all'amministrazione finanziaria (o tramite il Suo commercialista), poi tocchi **Segna come presentata** e inserisca il **Riferimento della ricevuta dell’amministrazione finanziaria**.
 
 **Da sapere**
 
-- Esiste solo con il regime di soggetto IVA. La nota in alto indica se il periodo conteggia le fatture o gli incassi.
-- È un ausilio alla presentazione generato dalle fatture emesse nel periodo, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
-- Una dichiarazione presentata non si può più modificare.
-- Dove una piattaforma è configurata in [Fatturazione elettronica](help:user.money.einvoice.overview), un pulsante **Trasmetti** può inviarla.
+- Esiste solo con il regime di soggetto IVA. La nota in alto indica quando l'IVA del periodo diventa esigibile.
+- Il server calcola gli importi dalle fatture, dagli incassi registrati uno per uno e dall'esigibilità di ogni fattura. Ogni aliquota è suddivisa per categoria: aliquota ordinaria, inversione contabile, esente e aliquota zero restano separate. Le fatture di raggruppamento sono escluse; il loro pagamento conta per le fatture che raggruppano.
+- Una dichiarazione passa da **Bozza** a **Preparata** e poi a **Presentata**. Prepararla di nuovo sostituisce gli importi; una volta presentata, nulla la modifica. Se una fattura o un incasso del periodo è cambiato dopo la preparazione, l'app si rifiuta di segnarla come presentata finché non la prepara di nuovo.
+- L'app non trasmette dichiarazioni: la Francia presenta tramite EDI-TVA o lo spazio professionale di impots.gouv, la Germania tramite ELSTER. La piattaforma di fatturazione elettronica trasporta solo fatture.
+- È un ausilio alla presentazione, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
 
 **Vedi anche:** [Quando l'IVA diventa esigibile](help:user.money.vat.due) · [Esportazioni contabili](help:user.invoicing.accounting-export)
 
@@ -7397,13 +7399,13 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 2. Imposti le aliquote in [IVA](app:/vat): **Usa le aliquote consuete** per il Suo paese, poi ne contrassegni esattamente una come predefinita (vedi [Impostare le aliquote](help:user.money.vat.rates)).
 3. Assegni a ogni aliquota il suo gruppo e, dove serve, un motivo di esenzione (vedi [Gruppi IVA](help:user.money.vat.groups)).
 4. Quando la legge cambia un'aliquota, usi **Modifica per legge** così che le fatture precedenti mantengano la loro aliquota (vedi [Modificare un'aliquota per legge](help:user.money.vat.change-by-law)).
-5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e generi ogni periodo in [Dichiarazione IVA](help:user.money.vat.declaration).
+5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e prepari ogni periodo in [Dichiarazione IVA](help:user.money.vat.declaration).
 
 **Da sapere**
 
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
 - Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
-- Una dichiarazione è un ausilio alla presentazione, costruito dalle Sue fatture emesse. La verifichi prima di presentarla e la segni come presentata solo dopo averlo fatto.
+- Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
 **Vedi anche:** [Regime IVA](help:user.money.vat.regime) · [Quando l'IVA diventa esigibile](help:user.money.vat.due)
@@ -8464,8 +8466,12 @@ esattamente a quanto ricevuto.
 Le **dichiarazioni** sono costruite per un periodo a partire dai
 documenti (o dagli incassi) che contiene, riportate nelle caselle del
 modulo del tuo paese — CA3 in Francia, UStVA in Germania — e prodotte in
-PDF e XML. Una dichiarazione passa da bozza a presentata, e una
-presentata non viene mai ricalcolata.
+PDF e XML. I suoi importi sono calcolati dal server
+(`compute_vat_return`, #2357), mai inviati dall'app; passa da preparata
+a presentata, presentata dal proprietario con il riferimento della
+ricevuta dell'amministrazione finanziaria, e una presentata non cambia
+più. L'app non trasmette alcuna dichiarazione: la Francia presenta
+tramite EDI-TVA o impots.gouv, la Germania tramite ELSTER.
 
 Il catalogo completo delle aliquote di un paese è fornito con l'app
 (UE27, CH, NO, CA); tenerlo aggiornato quando un governo cambia

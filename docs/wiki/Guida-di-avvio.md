@@ -1549,13 +1549,13 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 2. Imposti le aliquote in [IVA](https://fdittgen-png.github.io/deskilo/#/vat): **Usa le aliquote consuete** per il Suo paese, poi ne contrassegni esattamente una come predefinita (vedi [Impostare le aliquote](Guida-utente#impostare-le-aliquote)).
 3. Assegni a ogni aliquota il suo gruppo e, dove serve, un motivo di esenzione (vedi [Gruppi IVA](Guida-utente#gruppi-iva)).
 4. Quando la legge cambia un'aliquota, usi **Modifica per legge** così che le fatture precedenti mantengano la loro aliquota (vedi [Modificare un'aliquota per legge](Guida-utente#modificare-unaliquota-per-legge)).
-5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e generi ogni periodo in [Dichiarazione IVA](Guida-utente#la-dichiarazione-iva-periodica).
+5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e prepari ogni periodo in [Dichiarazione IVA](Guida-utente#preparare-la-dichiarazione-iva).
 
 **Da sapere**
 
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
 - Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
-- Una dichiarazione è un ausilio alla presentazione, costruito dalle Sue fatture emesse. La verifichi prima di presentarla e la segni come presentata solo dopo averlo fatto.
+- Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
 **Vedi anche:** [Regime IVA](Guida-utente#regime-iva) · [Quando l'IVA diventa esigibile](Guida-utente#quando-liva-diventa-esigibile)
@@ -1855,7 +1855,7 @@ Ogni documento è un *tipo*. Ogni tipo ha il proprio progetto, perciò modificar
 | Pagamenti, utilizzo | Il membro, l'amministratore di fatturazione | [Pagamenti](Guida-utente#pagare-quanto-dovuto) · [Utilizzo](Guida-utente#quanto-è-costata-ogni-prenotazione) |
 | Lettere di sollecito, dal livello 1 al 9 | Il membro con una fattura scaduta | [Regole di sollecito](Guida-utente#regole-di-sollecito) |
 | Report dello spazio e stato dello spazio | Lei, il consiglio, un revisore | **Report** |
-| Dichiarazione IVA | Lei, poi la piattaforma fiscale | [La dichiarazione IVA periodica](Guida-utente#la-dichiarazione-iva-periodica) |
+| Dichiarazione IVA | Lei, poi la piattaforma fiscale | [La dichiarazione IVA periodica](Guida-utente#preparare-la-dichiarazione-iva) |
 | Badge, codici QR degli spazi | I membri alla porta, le Sue pareti | [Codici QR degli spazi](Guida-utente#codici-qr-degli-spazi-pdf) · [Badge](Guida-utente#check-in-con-badge-nfc) |
 
 **Da sapere**
@@ -1941,7 +1941,7 @@ Parta dal [Registro fatture](https://fdittgen-png.github.io/deskilo/#/invoice-re
 | SAF-T PT, Sage 50 | Un formato normativo portoghese (non certificato) e un formato di scambio britannico/irlandese, a seconda del Suo paese | Una presentazione o una certificazione |
 | CSV contabile, Traccia di controllo, Archivio annuale (zip) | Un ausilio di lettura per il Suo commercialista | Una presentazione |
 
-L'elenco dei formati dipende dal Suo paese. FEC e DATEV chiedono i Suoi numeri di conto, e il FEC anche il Suo numero di registrazione: li tenga pronti. Le cifre IVA del periodo si trovano in [La dichiarazione IVA periodica](Guida-utente#la-dichiarazione-iva-periodica).
+L'elenco dei formati dipende dal Suo paese. FEC e DATEV chiedono i Suoi numeri di conto, e il FEC anche il Suo numero di registrazione: li tenga pronti. Le cifre IVA del periodo si trovano in [La dichiarazione IVA periodica](Guida-utente#preparare-la-dichiarazione-iva).
 
 *Che cosa l'app non fa*
 

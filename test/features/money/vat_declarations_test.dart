@@ -3,7 +3,9 @@
 // VAT declarations (#534/0107): the rate catalogue covers the governed
 // territories, the aggregation matches the invoices' own vatSplit, the
 // official-box mapping (CA3/UStVA/generic), the XML export, and the
-// screen's generate → PDF/XML → transmit/mark-filed lifecycle.
+// screen's prepare → PDF/XML → mark-filed lifecycle. #2357: the figures
+// are the server's (the fake computes them with the Dart twin), nothing
+// transmits a return, and filing needs the authority's receipt.
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
@@ -12,6 +14,7 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -208,7 +211,8 @@ void main() {
       workspace.workspaces[0] =
           workspace.workspaces[0].copyWith(vatRegime: regime);
       final money = FakeMoneyRepository()
-        // The platform channel is configured — the Transmit button shows.
+        // The e-invoicing channel is configured: it still transmits no
+        // VAT return (#2357).
         ..einvoiceGateway =
             const EInvoiceGatewayConfig(configured: true);
       money.invoices.add(_invoice(
@@ -234,7 +238,7 @@ void main() {
       return money;
     }
 
-    testWidgets('generate builds the draft from the month\'s invoices',
+    testWidgets('prepare stores the month\'s return, computed for it',
         (tester) async {
       final money = await pump(tester);
 
@@ -242,7 +246,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final declaration = money.vatDeclarations.single;
-      expect(declaration.status, 'draft');
+      expect(declaration.status, 'prepared');
       expect(declaration.totalNetCents, 10000);
       expect(declaration.totalVatCents, 2000);
       expect(declaration.invoiceCount, 1);
@@ -263,7 +267,8 @@ void main() {
         vatRegime: 'vat_registered',
         invoiceLegal: const {'vat_exigibility': 'payment'},
       );
-      final money = FakeMoneyRepository();
+      final money = FakeMoneyRepository()
+        ..vatReturnBasis = VatTaxPointBasis.receipt;
       final issued = DateTime(kTestNow.year, kTestNow.month, 3);
       final a = _invoice('a', issued, const [
         InvoiceLine(label: 'Desk', amountCents: 12000, vatPercent: 20),
@@ -326,22 +331,18 @@ void main() {
       expect(declaration.totalNetCents, 20000);
     });
 
-    testWidgets('transmit sends through the platform and stamps submitted',
+    testWidgets('nothing transmits a return, even with a configured channel',
         (tester) async {
       final money = await pump(tester);
       await tester.tap(find.byKey(const ValueKey('vat-decl-generate')));
       await tester.pumpAndSettle();
       final id = money.vatDeclarations.single.id;
 
-      await tester.tap(find.byKey(ValueKey('vat-decl-send-$id')));
-      await tester.pumpAndSettle();
-
-      expect(money.sentDeclarationIds, [id]);
-      expect(money.vatDeclarations.single.isSubmitted, isTrue);
-      expect(money.vatDeclarations.single.submittedChannel, 'platform');
+      expect(find.byKey(ValueKey('vat-decl-send-$id')), findsNothing);
+      expect(find.byKey(ValueKey('vat-decl-filed-$id')), findsOneWidget);
     });
 
-    testWidgets('mark as filed asks first, then locks the declaration',
+    testWidgets('mark as filed needs the receipt, then locks the return',
         (tester) async {
       final money = await pump(tester);
       await tester.tap(find.byKey(const ValueKey('vat-decl-generate')));
@@ -350,14 +351,22 @@ void main() {
 
       await tester.tap(find.byKey(ValueKey('vat-decl-filed-$id')));
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('vat-decl-filed-confirm')));
+      final confirm = find.byKey(const ValueKey('vat-decl-filed-confirm'));
+      expect(tester.widget<FilledButton>(confirm).onPressed, isNull,
+          reason: 'no receipt reference, no filing');
+      await tester.enterText(
+          find.byKey(const ValueKey('vat-decl-receipt')), ' EFI-0042 ');
+      await tester.pumpAndSettle();
+      await tester.tap(confirm);
       await tester.pumpAndSettle();
 
-      expect(money.vatDeclarations.single.isSubmitted, isTrue);
-      expect(money.vatDeclarations.single.submittedChannel, 'manual');
-      // Submitted → the transmit/mark buttons are gone.
-      expect(find.byKey(ValueKey('vat-decl-send-$id')), findsNothing);
+      final filed = money.vatDeclarations.single;
+      expect(filed.isFiled, isTrue);
+      expect(filed.submittedChannel, 'manual');
+      expect(filed.submittedReceipt, 'EFI-0042');
+      // Filed → no action changes it any more.
       expect(find.byKey(ValueKey('vat-decl-filed-$id')), findsNothing);
+      expect(find.textContaining('EFI-0042'), findsOneWidget);
     });
 
     testWidgets('an exempt workspace hits the regime gate', (tester) async {

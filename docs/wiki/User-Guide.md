@@ -4787,10 +4787,11 @@ Each invoice's VAT falls due on the day the law of your country sets — when yo
 
 - The legal rule for services: on receipts in France; the month the service is performed in Germany and Spain, advance payments when received; the invoice or the payment, whichever comes first, in Italy, the United Kingdom and Canada; the invoice in Switzerland.
 - On receipts, an invoice paid in instalments falls into as many periods as it had payments. A credit note counts when it is issued (on receipts, when refunded), never in the period of the invoice it corrects.
-- The choice is printed on every invoice and drives the [VAT declaration](#the-periodic-vat-declaration), the VAT report and the FEC and DATEV exports alike. A French space that never chose follows receipts, and its owner is told once.
+- The choice is printed on every invoice and drives the [VAT declaration](#preparing-the-vat-return), the VAT report and the FEC and DATEV exports alike. A French space that never chose follows receipts, and its owner is told once.
 - Which option applies to you is a tax question for your accountant.
+- An invoice keeps the rule it printed: one issued on receipts waits for the money, one that printed the option for the debits is due when issued, whatever the space chooses later.
 
-**See also:** [The periodic VAT declaration](#the-periodic-vat-declaration)
+**See also:** [Preparing the VAT return](#preparing-the-vat-return)
 
 <!-- anchor: user.money.vat.account -->
 ### VAT account
@@ -4974,27 +4975,28 @@ A rate changes from a given date. Old supplies keep the old value; the new one a
 **See also:** [Setting the rates](#setting-the-rates)
 
 <!-- anchor: user.money.vat.declaration -->
-### The periodic VAT declaration
+### Preparing the VAT return
 
 **Audience:** Owner
 
-You want a ready summary of the VAT of a period to file with the tax office or hand to your accountant.
+You want the VAT of a period computed from your invoices and payments, ready to file with the tax office or hand to your accountant.
 
 <p><img src="images/user-money-vat-declaration.en.b8fa17aa9.jpg" width="280"></p>
 
 **Steps**
 
 1. Open [VAT declaration](https://fdittgen-png.github.io/deskilo/#/vat-declarations).
-2. Choose the **Period** and tap **Generate**.
+2. Choose the **Period** and tap **Prepare**.
 3. Open the result with **PDF** or **XML export**, or look at **VAT report (PDF)** and **VAT report (CSV)**.
-4. Once you have filed it yourself, tap **Mark as filed**.
+4. File the return yourself with the tax authority (or through your accountant), then tap **Mark as filed** and type the **Receipt reference from the tax authority**.
 
 **Good to know**
 
-- It exists only under the VAT-registered regime. The note at the top says whether the period counts invoices or receipts.
-- It is a filing aid generated from the period's issued invoices, not tax advice. Verify it against your accounting before filing.
-- A filed declaration can no longer be changed.
-- Where a platform is set up in [E-invoicing](#the-e-invoicing-platform), a **Transmit** button can send it.
+- It exists only under the VAT-registered regime. The note at the top says when the period's VAT falls due.
+- The server computes the figures, from the invoices, the payments recorded one by one and each invoice's tax point. Each rate is split by category: standard, reverse charge, exempt and zero-rated stay apart. Settlements are left out; their payment counts for the invoices they regroup.
+- A return goes **Draft** → **Prepared** → **Filed**. Preparing again replaces the figures; once filed, nothing changes it. If an invoice or a payment of the period changed since you prepared it, the app refuses to mark it filed until you prepare it again.
+- The app does not transmit a return: France files through EDI-TVA or the professional space on impots.gouv, Germany through ELSTER. The e-invoicing platform carries invoices only.
+- It is a filing aid, not tax advice. Verify it against your accounting before filing.
 
 **See also:** [When VAT falls due](#when-vat-falls-due) · [Accounting exports](#accounting-exports)
 

@@ -280,13 +280,13 @@ You want to know what VAT will ask of you before you switch it on.
 2. Set the rates in [VAT](app:/vat): **Use the usual rates** for your country, then mark exactly one as the default (see [Setting the rates](help:user.money.vat.rates)).
 3. Give each rate its group, and an exemption reason where it applies (see [VAT groups](help:user.money.vat.groups)).
 4. When the law changes a rate, use **Change by law** so older invoices keep their rate (see [Change a rate by law](help:user.money.vat.change-by-law)).
-5. If you must file returns, switch on **VAT declarations** and generate each period in [VAT declaration](help:user.money.vat.declaration).
+5. If you must file returns, switch on **VAT declarations** and prepare each period in [VAT declaration](help:user.money.vat.declaration).
 
 **Good to know**
 
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
 - Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
-- A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
+- The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
 - The declaration journal has its own number series.
 
 **See also:** [VAT regime](help:user.money.vat.regime) · [When VAT falls due](help:user.money.vat.due)

@@ -11447,7 +11447,11 @@
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
   },
-  "vatDeclGenerate": "Erstellen",
+  "vatDeclFiled": "Abgegeben",
+  "@vatDeclFiled": {
+    "description": "Status chip: the owner filed the return with the tax authority (#2357)"
+  },
+  "vatDeclGenerate": "Vorbereiten",
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
@@ -11459,7 +11463,7 @@
   "@vatDeclMarkFiled": {
     "description": "Manual-filing action"
   },
-  "vatDeclMarkFiledConfirm": "Bestätigen Sie, dass Sie diese Voranmeldung selbst abgegeben haben (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.",
+  "vatDeclMarkFiledConfirm": "Bestätigen Sie, dass Sie diese Voranmeldung selbst beim Finanzamt abgegeben haben (ELSTER oder Ihr Steuerberater), und geben Sie die Referenz der Eingangsbestätigung ein. Danach ist sie unveränderlich.",
   "@vatDeclMarkFiledConfirm": {
     "description": "Confirmation before marking a declaration manually filed"
   },
@@ -11475,33 +11479,33 @@
   "@vatDeclPeriod": {
     "description": "Filing-period label"
   },
+  "vatDeclPrepared": "Vorbereitet",
+  "@vatDeclPrepared": {
+    "description": "Status chip: the server computed the return, ready to file (#2357)"
+  },
   "vatDeclRate": "Steuersatz",
   "@vatDeclRate": {
     "description": "Rate column"
+  },
+  "vatDeclReceipt": "Referenz der Eingangsbestätigung des Finanzamts",
+  "@vatDeclReceipt": {
+    "description": "Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)"
   },
   "vatDeclRegimeGate": "Voranmeldungen gibt es nur unter dem umsatzsteuerpflichtigen Regime — in den USt-Einstellungen konfigurieren.",
   "@vatDeclRegimeGate": {
     "description": "Gate banner when the workspace is not vat_registered"
   },
-  "vatDeclRejected": "Die Plattform hat die Voranmeldung abgelehnt.",
-  "@vatDeclRejected": {
-    "description": "Error snack when the platform rejects"
+  "vatDeclScreenTitle": "Vorbereitung der Umsatzsteuer-Voranmeldung",
+  "@vatDeclScreenTitle": {
+    "description": "Title of the VAT return screen: the app prepares the return, the owner files it (#2357)"
   },
   "vatDeclSeller": "Verkäufer",
   "@vatDeclSeller": {
     "description": "Seller identity line on the declaration PDF"
   },
-  "vatDeclSent": "Voranmeldung übermittelt.",
-  "@vatDeclSent": {
-    "description": "Success snack after platform transmission"
-  },
   "vatDeclStatus": "Status",
   "@vatDeclStatus": {
     "description": "Status label on the PDF"
-  },
-  "vatDeclSubmitted": "Übermittelt",
-  "@vatDeclSubmitted": {
-    "description": "Submitted status chip"
   },
   "vatDeclTitle": "Umsatzsteuer-Voranmeldung",
   "@vatDeclTitle": {
@@ -11510,10 +11514,6 @@
   "vatDeclTotals": "Summen",
   "@vatDeclTotals": {
     "description": "Totals row"
-  },
-  "vatDeclTransmit": "Übermitteln",
-  "@vatDeclTransmit": {
-    "description": "Send through the configured platform channel"
   },
   "vatDeclVat": "USt",
   "@vatDeclVat": {

@@ -232,7 +232,7 @@
   "user.money.vat.rates": "Die Sätze festlegen",
   "user.money.vat.groups": "Steuergruppen",
   "user.money.vat.change-by-law": "Einen Satz per Gesetz ändern",
-  "user.money.vat.declaration": "Die periodische Umsatzsteuererklärung",
+  "user.money.vat.declaration": "Die Umsatzsteuer-Voranmeldung vorbereiten",
   "user.money.einvoice.overview": "Die E-Rechnungs-Plattform",
   "user.money.einvoice.endpoint": "Upload-URL",
   "user.money.einvoice.token": "Token oder Zugangsdaten",

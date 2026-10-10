@@ -4565,8 +4565,9 @@ Die Umsatzsteuer jeder Rechnung entsteht an dem Tag, den das Gesetz Ihres Landes
 - Nach vereinnahmten Entgelten fällt eine in Raten bezahlte Rechnung in so viele Zeiträume, wie sie Zahlungen hatte. Eine Gutschrift zählt bei ihrer Ausstellung (nach vereinnahmten Entgelten bei der Erstattung), nie im Zeitraum der berichtigten Rechnung.
 - Die Wahl wird auf jeder Rechnung gedruckt und bestimmt gleichermaßen die [Umsatzsteuererklärung](help:user.money.vat.declaration), den Umsatzsteuerbericht und die FEC- und DATEV-Exporte; DATEV erhält das Datum der Steuerperiode in Feld 116.
 - Welche Option für Sie gilt, ist eine steuerliche Frage für Ihre Buchhaltung.
+- Eine Rechnung behält die Regel, die sie aufgedruckt hat: auf Zahlungseingänge ausgestellt, wartet sie auf das Geld; mit der Option für die Sollbesteuerung entsteht die Steuer bei Ausstellung, gleich was der Bereich später wählt.
 
-**Siehe auch:** [Die periodische Umsatzsteuererklärung](help:user.money.vat.declaration)
+**Siehe auch:** [Die Umsatzsteuer-Voranmeldung vorbereiten](help:user.money.vat.declaration)
 
 ### Steuerkonto
 
@@ -4741,27 +4742,28 @@ Ein Satz ändert sich ab einem bestimmten Datum. Frühere Leistungen behalten de
 
 **Siehe auch:** [Die Sätze festlegen](help:user.money.vat.rates)
 
-### Die periodische Umsatzsteuererklärung
+### Die Umsatzsteuer-Voranmeldung vorbereiten
 
 **Zielgruppe:** Inhaber
 
-Sie möchten eine fertige Zusammenfassung der Umsatzsteuer eines Zeitraums, um sie beim Finanzamt einzureichen oder Ihrer Buchhaltung zu übergeben.
+Sie möchten die Umsatzsteuer eines Zeitraums aus Ihren Rechnungen und Zahlungseingängen berechnet haben, bereit zur Abgabe beim Finanzamt oder zur Übergabe an Ihre Buchhaltung.
 
 ![](assets/help/images/user-money-vat-declaration.de.b8fa17aa9.jpg)
 
 **Schritte**
 
-1. Öffnen Sie die [Umsatzsteuererklärung](app:/vat-declarations).
-2. Wählen Sie den **Zeitraum** und tippen Sie auf **Erstellen**.
+1. Öffnen Sie die [Umsatzsteuer-Voranmeldung](app:/vat-declarations).
+2. Wählen Sie den **Zeitraum** und tippen Sie auf **Vorbereiten**.
 3. Öffnen Sie das Ergebnis mit **PDF** oder **XML-Export**, oder sehen Sie sich den **MwSt-Bericht (PDF)** und den **MwSt-Bericht (CSV)** an.
-4. Wenn Sie sie selbst eingereicht haben, tippen Sie auf **Als abgegeben markieren**.
+4. Geben Sie die Voranmeldung selbst beim Finanzamt ab (oder über Ihren Steuerberater), tippen Sie dann auf **Als abgegeben markieren** und geben Sie die **Referenz der Eingangsbestätigung des Finanzamts** ein.
 
 **Gut zu wissen**
 
-- Es gibt sie nur beim Regime „umsatzsteuerpflichtig“. Der Hinweis oben sagt, ob der Zeitraum Rechnungen oder Zahlungseingänge zählt.
-- Sie ist eine Einreichungshilfe, erzeugt aus den im Zeitraum ausgestellten Rechnungen, keine Steuerberatung. Prüfen Sie sie vor dem Einreichen anhand Ihrer Buchhaltung.
-- Eine abgegebene Erklärung lässt sich nicht mehr ändern.
-- Ist unter [E-Rechnung](help:user.money.einvoice.overview) eine Plattform eingerichtet, kann eine Schaltfläche **Übermitteln** sie senden.
+- Es gibt sie nur beim Regime „umsatzsteuerpflichtig“. Der Hinweis oben sagt, wann die Umsatzsteuer des Zeitraums entsteht.
+- Der Server berechnet die Beträge aus den Rechnungen, den einzeln erfassten Zahlungseingängen und dem Steuerzeitpunkt jeder Rechnung. Jeder Steuersatz wird nach Kategorie aufgeteilt: Regelsatz, Reverse Charge, steuerfrei und Nullsatz bleiben getrennt. Sammelrechnungen bleiben außen vor; ihre Zahlung zählt für die zusammengefassten Rechnungen.
+- Eine Voranmeldung geht von **Entwurf** über **Vorbereitet** zu **Abgegeben**. Erneutes Vorbereiten ersetzt die Beträge; abgegeben ändert sie nichts mehr. Hat sich seit der Vorbereitung eine Rechnung oder Zahlung des Zeitraums geändert, verweigert die App das Markieren als abgegeben, bis Sie sie erneut vorbereiten.
+- Die App übermittelt keine Voranmeldung: Deutschland gibt über ELSTER ab, Frankreich über EDI-TVA oder den Unternehmensbereich von impots.gouv. Die E-Rechnungsplattform transportiert nur Rechnungen.
+- Sie ist eine Hilfe zur Abgabe, keine Steuerberatung. Prüfen Sie sie vor der Abgabe anhand Ihrer Buchhaltung.
 
 **Siehe auch:** [Wann die Umsatzsteuer entsteht](help:user.money.vat.due) · [Buchhaltungsexporte](help:user.invoicing.accounting-export)
 
@@ -7397,13 +7399,13 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 2. Legen Sie die Sätze unter [USt](app:/vat) fest: **Übliche Sätze übernehmen** für Ihr Land, dann genau einen davon als Standard markieren (siehe [Die Sätze festlegen](help:user.money.vat.rates)).
 3. Ordnen Sie jedem Satz seine Gruppe zu, und wo es zutrifft, einen Befreiungsgrund (siehe [USt-Gruppen](help:user.money.vat.groups)).
 4. Ändert das Gesetz einen Satz, verwenden Sie **Änderung per Gesetz**, damit ältere Rechnungen ihren Satz behalten (siehe [Einen Satz per Gesetz ändern](help:user.money.vat.change-by-law)).
-5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und erzeugen jeden Zeitraum unter [USt-Voranmeldung](help:user.money.vat.declaration).
+5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und bereiten Sie jeden Zeitraum unter [USt-Voranmeldung](help:user.money.vat.declaration) vor.
 
 **Gut zu wissen**
 
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
 - Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
-- Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.
+- Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
 **Siehe auch:** [Steuerregime](help:user.money.vat.regime) · [Wann die Umsatzsteuer fällig wird](help:user.money.vat.due)
@@ -8465,8 +8467,12 @@ damit die Summe exakt dem entspricht, was eingegangen ist.
 **Meldungen** werden für einen Zeitraum aus den darin enthaltenen
 Dokumenten (oder Zahlungen) gebildet, auf die Felder des Formulars Ihres
 Landes übertragen — UStVA in Deutschland, CA3 in Frankreich — und als PDF
-und XML erzeugt. Eine Meldung geht von Entwurf auf eingereicht, und eine
-eingereichte wird nie neu berechnet.
+und XML erzeugt. Ihre Beträge berechnet der Server
+(`compute_vat_return`, #2357), die App sendet keine; eine Meldung geht
+von vorbereitet auf abgegeben, abgegeben vom Inhaber mit der Referenz
+der Eingangsbestätigung des Finanzamts, und eine abgegebene ändert sich
+nie mehr. Die App übermittelt keine Meldung: Deutschland gibt über
+ELSTER ab, Frankreich über EDI-TVA oder impots.gouv.
 
 Der vollständige Satzkatalog eines Landes wird mit der App ausgeliefert
 (EU27, CH, NO, CA); ihn aktuell zu halten, wenn eine Regierung einen Satz

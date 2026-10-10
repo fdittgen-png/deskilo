@@ -9,9 +9,13 @@
 // printed on the form must be counted on the same date as the money. A
 // voided invoice is behind nothing; a document counts once.
 //
-// **The answer.** Filed is something the platform GRANTS, so a refusal
-// carries the reason it gave. Both derivations sat in a closure on the
-// declarations screen, where arguing with them meant pumping a widget.
+// **The server's figures (#2357).** The declaration stores what the
+// server computes (`compute_vat_return`, 0402, the SQL twin of this
+// engine); [vatDeclarationDraft] stays the Dart side of that pair, which
+// the VAT report reads and `vat_return_parity_test.dart` pins.
+//
+// **Filed** is what the owner records after filing with the authority,
+// with the receipt it gave: no upload marks a return filed.
 import '../domain/invoice.dart';
 import '../domain/money_repository.dart';
 import '../domain/vat_declaration.dart';
@@ -72,60 +76,23 @@ VatDeclarationDraft vatDeclarationDraft({
   );
 }
 
-/// What the e-invoicing platform did with a declaration.
-sealed class VatTransmission {
-  const VatTransmission();
-}
-
-/// The platform took it: submitted, with its receipt.
-class VatDeclarationFiled extends VatTransmission {
-  const VatDeclarationFiled();
-}
-
-/// It came back, and [detail] is the platform's own words — "it did not
-/// work" is not a reason anybody can act on.
-class VatDeclarationRefused extends VatTransmission {
-  const VatDeclarationRefused(this.detail);
-  final String detail;
-}
-
 /// Declaring VAT, as the decisions behind it.
 class VatDeclarations {
   const VatDeclarations(this._money);
 
   final MoneyRepository _money;
 
-  /// Recomputes the period's draft and saves it.
+  /// Prepares the period's return: the server computes its figures.
   Future<void> declare({
     required String workspaceId,
-    required String currency,
     required DateTime periodStart,
     required DateTime periodEnd,
-    required Iterable<Invoice> invoices,
-    required Map<String, InvoiceMatch> matches,
-    required VatTaxPointBasis basis,
-  }) async {
-    final draft = vatDeclarationDraft(
-      invoices: invoices,
-      matches: matches,
-      // #2355 — every payment recorded one by one: on receipts an
-      // instalment-paid invoice declares each part in its own period.
-      instalments: await _money.fetchInvoiceInstalments(workspaceId),
-      periodStart: periodStart,
-      periodEnd: periodEnd,
-      basis: basis,
-    );
-    await _money.saveVatDeclaration(
-      workspaceId: workspaceId,
-      periodStart: periodStart,
-      periodEnd: periodEnd,
-      lines: draft.lines,
-      totalNetCents: draft.totalNetCents,
-      totalVatCents: draft.totalVatCents,
-      currency: currency,
-      invoiceCount: draft.invoiceCount,
-    );
-  }
+  }) =>
+      _money.saveVatDeclaration(
+        workspaceId: workspaceId,
+        periodStart: periodStart,
+        periodEnd: periodEnd,
+      );
 
   /// #2355 — the VAT report of [start]..[end] on [basis]: the same tax
   /// points, from the same payments, the declaration sums.
@@ -150,33 +117,13 @@ class VatDeclarations {
         basis: basis,
       );
 
-  /// Sends the declaration document and reports what came back.
-  Future<VatTransmission> transmit({
-    required String workspaceId,
-    required String declarationId,
-    required String fileName,
-    required List<int> bytes,
-  }) async {
-    final submission = await _money.sendVatDeclaration(
-      workspaceId: workspaceId,
-      declarationId: declarationId,
-      fileName: fileName,
-      // The declaration travels as the document the authority reads.
-      mimeType: 'application/pdf',
-      bytes: bytes,
-    );
-    return submission.accepted
-        ? const VatDeclarationFiled()
-        : VatDeclarationRefused(submission.detail);
-  }
-
-  /// Somebody filed it themselves, at the portal or through their
-  /// accountant. The CHANNEL is the decision, and it is `manual`
-  /// precisely because no platform answered: a caller free to name it
-  /// could stamp a declaration `platform` that no platform ever saw.
-  Future<void> fileByHand(String declarationId) =>
+  /// The owner filed it with the authority (its portal, or through their
+  /// accountant) and records the [receipt] reference it gave. The channel
+  /// is `manual` because nothing in the app carried it.
+  Future<void> fileByHand(String declarationId, {required String receipt}) =>
       _money.markVatDeclarationSubmitted(
         declarationId: declarationId,
         channel: 'manual',
+        receipt: receipt,
       );
 }

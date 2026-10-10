@@ -232,7 +232,7 @@
   "user.money.vat.rates": "Fijar los tipos",
   "user.money.vat.groups": "Grupos de IVA",
   "user.money.vat.change-by-law": "Cambiar un tipo por ley",
-  "user.money.vat.declaration": "La declaración periódica de IVA",
+  "user.money.vat.declaration": "Preparar la declaración del IVA",
   "user.money.einvoice.overview": "La plataforma de facturación electrónica",
   "user.money.einvoice.endpoint": "URL de subida",
   "user.money.einvoice.token": "Token o credencial",

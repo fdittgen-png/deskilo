@@ -32186,10 +32186,16 @@ abstract class AppLocalizations {
   /// **'No declarations yet — pick a period and generate the first one.'**
   String get vatDeclEmpty;
 
+  /// Status chip: the owner filed the return with the tax authority (#2357)
+  ///
+  /// In en, this message translates to:
+  /// **'Filed'**
+  String get vatDeclFiled;
+
   /// Generate-declaration button
   ///
   /// In en, this message translates to:
-  /// **'Generate'**
+  /// **'Prepare'**
   String get vatDeclGenerate;
 
   /// Invoice-count column
@@ -32207,7 +32213,7 @@ abstract class AppLocalizations {
   /// Confirmation before marking a declaration manually filed
   ///
   /// In en, this message translates to:
-  /// **'Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.'**
+  /// **'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.'**
   String get vatDeclMarkFiledConfirm;
 
   /// Net taxable base column
@@ -32228,11 +32234,23 @@ abstract class AppLocalizations {
   /// **'Period'**
   String get vatDeclPeriod;
 
+  /// Status chip: the server computed the return, ready to file (#2357)
+  ///
+  /// In en, this message translates to:
+  /// **'Prepared'**
+  String get vatDeclPrepared;
+
   /// Rate column
   ///
   /// In en, this message translates to:
   /// **'Rate'**
   String get vatDeclRate;
+
+  /// Field in the mark-as-filed dialog: the receipt reference the tax authority gave (#2357)
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt reference from the tax authority'**
+  String get vatDeclReceipt;
 
   /// Gate banner when the workspace is not vat_registered
   ///
@@ -32240,11 +32258,11 @@ abstract class AppLocalizations {
   /// **'Declarations exist only under the VAT-registered regime — configure it under VAT settings.'**
   String get vatDeclRegimeGate;
 
-  /// Error snack when the platform rejects
+  /// Title of the VAT return screen: the app prepares the return, the owner files it (#2357)
   ///
   /// In en, this message translates to:
-  /// **'The platform refused the declaration.'**
-  String get vatDeclRejected;
+  /// **'Preparation of the VAT return'**
+  String get vatDeclScreenTitle;
 
   /// Seller identity line on the declaration PDF
   ///
@@ -32252,23 +32270,11 @@ abstract class AppLocalizations {
   /// **'Seller'**
   String get vatDeclSeller;
 
-  /// Success snack after platform transmission
-  ///
-  /// In en, this message translates to:
-  /// **'Declaration transmitted.'**
-  String get vatDeclSent;
-
   /// Status label on the PDF
   ///
   /// In en, this message translates to:
   /// **'Status'**
   String get vatDeclStatus;
-
-  /// Submitted status chip
-  ///
-  /// In en, this message translates to:
-  /// **'Submitted'**
-  String get vatDeclSubmitted;
 
   /// Title of the periodic VAT declaration screen/PDF (#534)
   ///
@@ -32281,12 +32287,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Totals'**
   String get vatDeclTotals;
-
-  /// Send through the configured platform channel
-  ///
-  /// In en, this message translates to:
-  /// **'Transmit'**
-  String get vatDeclTransmit;
 
   /// Tax amount column
   ///

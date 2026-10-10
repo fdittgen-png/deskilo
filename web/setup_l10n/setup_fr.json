@@ -303,7 +303,7 @@
  "legalMemberNumbering": "Numérotation des adhérents",
  "legalMemberNumberingHint": "Le numéro d'adhérent est attribué à l'arrivée et ne change jamais ; il figure sur la facture sous « N° Adhérent ».",
  "legalVatPeriod": "Période de déclaration de TVA",
- "legalVatPeriodHint": "La périodicité que votre régime impose. La déclaration agrège ce qui devient exigible pendant la période au fait générateur de chaque facture — son émission, son paiement ou le mois de la prestation, selon votre pays et votre choix — par taux (CA3, UStVA…), et se transmet ou s'exporte en PDF/XML.",
+ "legalVatPeriodHint": "La périodicité que votre régime impose. La déclaration agrège ce qui devient exigible pendant la période au fait générateur de chaque facture — son émission, son paiement ou le mois de la prestation, selon votre pays et votre choix — par taux (CA3, UStVA…), calculée par le serveur, et s'exporte en PDF/XML pour que vous la déposiez auprès de l'administration.",
  "legalBillingAddress": "Adresse de facturation",
  "legalMentions": "Mentions de facturation (vide = formule légale par défaut)",
  "mentionLegalForm": "Forme juridique et capital",

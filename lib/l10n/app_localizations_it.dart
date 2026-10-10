@@ -18806,17 +18806,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna dichiarazione — scelga un periodo e generi la prima.';
 
   @override
-  String get vatDeclGenerate => 'Genera';
+  String get vatDeclFiled => 'Presentata';
+
+  @override
+  String get vatDeclGenerate => 'Prepara';
 
   @override
   String get vatDeclInvoices => 'Fatture';
 
   @override
-  String get vatDeclMarkFiled => 'Segna come inviata';
+  String get vatDeclMarkFiled => 'Segna come presentata';
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Confermi di aver inviato personalmente questa dichiarazione (portale dell’agenzia o il suo commercialista). Diventa immutabile.';
+      'Confermi di aver presentato personalmente questa dichiarazione all’amministrazione finanziaria (il portale o il Suo commercialista) e inserisca il riferimento della ricevuta. Diventa poi immutabile.';
 
   @override
   String get vatDeclNet => 'Imponibile';
@@ -18828,35 +18831,33 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclPeriod => 'Periodo';
 
   @override
+  String get vatDeclPrepared => 'Preparata';
+
+  @override
   String get vatDeclRate => 'Aliquota';
+
+  @override
+  String get vatDeclReceipt =>
+      'Riferimento della ricevuta dell’amministrazione finanziaria';
 
   @override
   String get vatDeclRegimeGate =>
       'Le dichiarazioni esistono solo sotto il regime soggetto a IVA — lo configuri nelle impostazioni IVA.';
 
   @override
-  String get vatDeclRejected => 'La piattaforma ha rifiutato la dichiarazione.';
+  String get vatDeclScreenTitle => 'Preparazione della dichiarazione IVA';
 
   @override
   String get vatDeclSeller => 'Venditore';
 
   @override
-  String get vatDeclSent => 'Dichiarazione trasmessa.';
-
-  @override
   String get vatDeclStatus => 'Stato';
-
-  @override
-  String get vatDeclSubmitted => 'Inviata';
 
   @override
   String get vatDeclTitle => 'Dichiarazione IVA';
 
   @override
   String get vatDeclTotals => 'Totali';
-
-  @override
-  String get vatDeclTransmit => 'Trasmetti';
 
   @override
   String get vatDeclVat => 'IVA';

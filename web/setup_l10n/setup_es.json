@@ -303,7 +303,7 @@
  "legalMemberNumbering": "Numeración de los socios",
  "legalMemberNumberingHint": "El número de socio se asigna al llegar y no cambia nunca; figura en la factura como «N.º de socio».",
  "legalVatPeriod": "Periodo de declaración del IVA",
- "legalVatPeriodHint": "La periodicidad que impone su régimen. La declaración suma lo que se devenga en el periodo en el momento de devengo de cada factura — su emisión, su pago o el mes del servicio, según su país y su elección — por tipo (CA3, UStVA…), y se transmite o se exporta en PDF/XML.",
+ "legalVatPeriodHint": "La periodicidad que impone su régimen. La declaración suma lo que se devenga en el periodo en el momento de devengo de cada factura — su emisión, su pago o el mes del servicio, según su país y su elección — por tipo (CA3, UStVA…), calculada por el servidor, y se exporta en PDF/XML para que usted la presente ante la administración.",
  "legalBillingAddress": "Dirección de facturación",
  "legalMentions": "Menciones de facturación (vacío = fórmula legal predeterminada)",
  "mentionLegalForm": "Forma jurídica y capital",

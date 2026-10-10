@@ -280,13 +280,13 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 2. Imposti le aliquote in [IVA](app:/vat): **Usa le aliquote consuete** per il Suo paese, poi ne contrassegni esattamente una come predefinita (vedi [Impostare le aliquote](help:user.money.vat.rates)).
 3. Assegni a ogni aliquota il suo gruppo e, dove serve, un motivo di esenzione (vedi [Gruppi IVA](help:user.money.vat.groups)).
 4. Quando la legge cambia un'aliquota, usi **Modifica per legge** così che le fatture precedenti mantengano la loro aliquota (vedi [Modificare un'aliquota per legge](help:user.money.vat.change-by-law)).
-5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e generi ogni periodo in [Dichiarazione IVA](help:user.money.vat.declaration).
+5. Se deve presentare dichiarazioni, attivi **Dichiarazioni IVA** e prepari ogni periodo in [Dichiarazione IVA](help:user.money.vat.declaration).
 
 **Da sapere**
 
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
 - Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
-- Una dichiarazione è un ausilio alla presentazione, costruito dalle Sue fatture emesse. La verifichi prima di presentarla e la segni come presentata solo dopo averlo fatto.
+- Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
 **Vedi anche:** [Regime IVA](help:user.money.vat.regime) · [Quando l'IVA diventa esigibile](help:user.money.vat.due)

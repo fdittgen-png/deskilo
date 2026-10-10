@@ -4787,10 +4787,11 @@ L'IVA di ogni fattura diventa esigibile il giorno che fissa la legge del suo Pae
 
 - La regola di legge per le prestazioni di servizi: l'incasso in Francia; il mese in cui la prestazione è eseguita in Germania e Spagna, gli acconti all'incasso; la fattura o il pagamento, se anteriore, in Italia, nel Regno Unito e in Canada; la fattura in Svizzera.
 - All'incasso, una fattura pagata a rate cade in tanti periodi quanti sono i pagamenti; con l'IVA per cassa, ciò che non è incassato diventa esigibile un anno dopo l'operazione. Una nota di credito conta alla sua emissione (all'incasso, al rimborso), mai nel periodo della fattura che corregge.
-- La scelta è stampata su ogni fattura e guida allo stesso modo la [dichiarazione IVA](#la-dichiarazione-iva-periodica), il rapporto IVA e le esportazioni FEC e DATEV.
+- La scelta è stampata su ogni fattura e guida allo stesso modo la [dichiarazione IVA](#preparare-la-dichiarazione-iva), il rapporto IVA e le esportazioni FEC e DATEV.
 - Quale opzione si applichi a Lei è una questione fiscale per il Suo commercialista.
+- Una fattura conserva la regola che ha stampato: emessa per cassa, attende il pagamento; con l'opzione per l'emissione è esigibile all'emissione, qualunque cosa lo spazio scelga in seguito.
 
-**Vedi anche:** [La dichiarazione IVA periodica](#la-dichiarazione-iva-periodica)
+**Vedi anche:** [Preparare la dichiarazione IVA](#preparare-la-dichiarazione-iva)
 
 <!-- anchor: user.money.vat.account -->
 ### Conto IVA
@@ -4974,27 +4975,28 @@ Un'aliquota cambia a partire da una data. Le operazioni passate conservano il ve
 **Vedi anche:** [Impostare le aliquote](#impostare-le-aliquote)
 
 <!-- anchor: user.money.vat.declaration -->
-### La dichiarazione IVA periodica
+### Preparare la dichiarazione IVA
 
 **Destinatari:** Proprietario
 
-Vuole un riepilogo pronto dell'IVA di un periodo da presentare all'ufficio delle imposte o consegnare al Suo commercialista.
+Vuole l'IVA di un periodo calcolata dalle Sue fatture e dagli incassi, pronta da presentare all'amministrazione finanziaria o da consegnare al Suo commercialista.
 
 <p><img src="images/user-money-vat-declaration.it.b8fa17aa9.jpg" width="280"></p>
 
 **Passaggi**
 
 1. Apra [Dichiarazione IVA](https://fdittgen-png.github.io/deskilo/#/vat-declarations).
-2. Scelga il **Periodo** e tocchi **Genera**.
+2. Scelga il **Periodo** e tocchi **Prepara**.
 3. Apra il risultato con **PDF** o **Esporta XML**, oppure consulti **Report IVA (PDF)** e **Report IVA (CSV)**.
-4. Dopo averla presentata Lei stesso, tocchi **Segna come inviata**.
+4. Presenti Lei stesso la dichiarazione all'amministrazione finanziaria (o tramite il Suo commercialista), poi tocchi **Segna come presentata** e inserisca il **Riferimento della ricevuta dell’amministrazione finanziaria**.
 
 **Da sapere**
 
-- Esiste solo con il regime di soggetto IVA. La nota in alto indica se il periodo conteggia le fatture o gli incassi.
-- È un ausilio alla presentazione generato dalle fatture emesse nel periodo, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
-- Una dichiarazione presentata non si può più modificare.
-- Dove una piattaforma è configurata in [Fatturazione elettronica](#la-piattaforma-di-fatturazione-elettronica), un pulsante **Trasmetti** può inviarla.
+- Esiste solo con il regime di soggetto IVA. La nota in alto indica quando l'IVA del periodo diventa esigibile.
+- Il server calcola gli importi dalle fatture, dagli incassi registrati uno per uno e dall'esigibilità di ogni fattura. Ogni aliquota è suddivisa per categoria: aliquota ordinaria, inversione contabile, esente e aliquota zero restano separate. Le fatture di raggruppamento sono escluse; il loro pagamento conta per le fatture che raggruppano.
+- Una dichiarazione passa da **Bozza** a **Preparata** e poi a **Presentata**. Prepararla di nuovo sostituisce gli importi; una volta presentata, nulla la modifica. Se una fattura o un incasso del periodo è cambiato dopo la preparazione, l'app si rifiuta di segnarla come presentata finché non la prepara di nuovo.
+- L'app non trasmette dichiarazioni: la Francia presenta tramite EDI-TVA o lo spazio professionale di impots.gouv, la Germania tramite ELSTER. La piattaforma di fatturazione elettronica trasporta solo fatture.
+- È un ausilio alla presentazione, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
 
 **Vedi anche:** [Quando l'IVA diventa esigibile](#quando-liva-diventa-esigibile) · [Esportazioni contabili](#esportazioni-contabili)
 

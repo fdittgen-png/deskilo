@@ -3,7 +3,7 @@
 // #2354 — the place-of-supply rule exists twice: `supplyVatCategory` in
 // Dart (the member screen's explainer) and `public.supply_vat_category`
 // in SQL (what create_invoice applies). This file keeps them one rule:
-// every `supply_vat_category(...)` case the pgTAP file 166 runs against
+// every `supply_vat_category(...)` case the pgTAP file 167 runs against
 // the database is parsed here and run through the Dart twin, expecting
 // the same answer. A case added on one side is a case on both.
 //
@@ -46,7 +46,7 @@ String _latestDefinition(String function) {
 
 void main() {
   test('every SQL case of the rule gives the same answer in Dart', () {
-    final sql = File('supabase/tests/database/166_place_of_supply.sql')
+    final sql = File('supabase/tests/database/167_place_of_supply.sql')
         .readAsStringSync();
     final cases = _case.allMatches(sql).toList();
     expect(

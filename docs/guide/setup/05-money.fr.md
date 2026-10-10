@@ -280,13 +280,13 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 2. Réglez les taux dans [TVA](app:/vat) : **Utiliser les taux usuels** de votre pays, puis marquez-en un seul comme taux par défaut (voir [Régler les taux](help:user.money.vat.rates)).
 3. Donnez à chaque taux son groupe, et un motif d'exonération là où il s'applique (voir [Groupes de TVA](help:user.money.vat.groups)).
 4. Quand la loi change un taux, utilisez **Changement par la loi** pour que les anciennes factures gardent leur taux (voir [Changer un taux par la loi](help:user.money.vat.change-by-law)).
-5. Si vous devez déposer des déclarations, activez **Déclarations de TVA** et générez chaque période dans [Déclaration de TVA](help:user.money.vat.declaration).
+5. Si vous devez déposer des déclarations, activez **Déclarations de TVA** et préparez chaque période dans [Déclaration de TVA](help:user.money.vat.declaration).
 
 **Bon à savoir**
 
 - Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.
 - Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent.
-- Une déclaration est une aide au dépôt, établie à partir de vos factures émises. Vérifiez-la avant de la déposer, et ne la marquez comme déposée qu'une fois que c'est fait.
+- Le serveur calcule chaque déclaration à partir de vos factures, de vos encaissements et de l'exigibilité. Déposez-la vous-même auprès de l'administration fiscale, puis marquez-la déposée avec la référence de l'accusé de réception : l'application ne transmet rien.
 - Le journal des déclarations a sa propre série de numéros.
 
 **Voir aussi:** [Régime de TVA](help:user.money.vat.regime) · [Quand la TVA devient exigible](help:user.money.vat.due)

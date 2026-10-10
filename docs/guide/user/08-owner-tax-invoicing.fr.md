@@ -322,8 +322,9 @@ La TVA de chaque facture devient exigible le jour que fixe la loi de votre pays 
 - Sur les encaissements, une facture payée en plusieurs fois tombe dans autant de périodes que de paiements. Un avoir compte à son émission (sur les encaissements, à son remboursement), jamais dans la période de la facture qu'il corrige.
 - Le choix est imprimé sur chaque facture — l'option pour les débits avec la mention légale — et pilote à l'identique la [déclaration de TVA](help:user.money.vat.declaration), le rapport de TVA et les exports FEC et DATEV. Un espace français qui n'avait jamais choisi suit les encaissements, et son propriétaire en est averti une fois.
 - L'option qui vous concerne est une question fiscale pour votre comptable.
+- Une facture garde la règle qu'elle a imprimée : émise sur les encaissements, elle attend le paiement ; portant l'option pour les débits, elle est exigible dès son émission, quel que soit le choix ultérieur de l'espace.
 
-**Voir aussi:** [La déclaration périodique de TVA](help:user.money.vat.declaration)
+**Voir aussi:** [Préparer la déclaration de TVA](help:user.money.vat.declaration)
 
 <!-- anchor: user.money.vat.account -->
 ### Compte de TVA
@@ -507,27 +508,28 @@ Un taux change à partir d'une date donnée. Les anciennes prestations gardent l
 **Voir aussi:** [Définir les taux](help:user.money.vat.rates)
 
 <!-- anchor: user.money.vat.declaration -->
-### La déclaration périodique de TVA
+### Préparer la déclaration de TVA
 
 **Public:** Propriétaire
 
-Vous voulez un récapitulatif prêt à l'emploi de la TVA d'une période, à déposer auprès de l'administration fiscale ou à remettre à votre comptable.
+Vous voulez la TVA d'une période calculée à partir de vos factures et de vos encaissements, prête à déposer auprès de l'administration fiscale ou à remettre à votre comptable.
 
 <p><img src="images/user-money-vat-declaration.fr.jpg" width="280"></p>
 
 **Étapes**
 
 1. Ouvrez [Déclaration de TVA](app:/vat-declarations).
-2. Choisissez la **Période** et touchez **Générer**.
+2. Choisissez la **Période** et touchez **Préparer**.
 3. Ouvrez le résultat avec **PDF** ou **Export XML**, ou consultez **Rapport de TVA (PDF)** et **Rapport de TVA (CSV)**.
-4. Une fois que vous l'avez déposée vous-même, touchez **Marquer comme déposée**.
+4. Déposez vous-même la déclaration auprès de l'administration fiscale (ou par votre comptable), puis touchez **Marquer comme déposée** et saisissez la **Référence de l’accusé de réception de l’administration fiscale**.
 
 **Bon à savoir**
 
-- Elle n'existe que sous le régime des assujettis à la TVA. La note en haut indique si la période compte les factures ou les encaissements.
-- C'est une aide au dépôt générée à partir des factures émises de la période, pas un conseil fiscal. Vérifiez-la avec votre comptabilité avant de la déposer.
-- Une déclaration déposée ne peut plus être modifiée.
-- Lorsqu'une plateforme est configurée dans [Facturation électronique](help:user.money.einvoice.overview), un bouton **Télétransmettre** peut l'envoyer.
+- Elle n'existe que sous le régime des assujettis à la TVA. La note en haut indique quand la TVA de la période devient exigible.
+- Le serveur calcule les montants, à partir des factures, des encaissements enregistrés un à un et de l'exigibilité de chaque facture. Chaque taux est ventilé par catégorie : taux normal, autoliquidation, exonération et taux zéro restent séparés. Les factures de regroupement sont écartées ; leur paiement compte pour les factures qu'elles regroupent.
+- Une déclaration passe de **Brouillon** à **Préparée** puis **Déposée**. La préparer à nouveau remplace les montants ; une fois déposée, plus rien ne la modifie. Si une facture ou un encaissement de la période a changé depuis la préparation, l'application refuse de la marquer déposée tant qu'elle n'a pas été préparée à nouveau.
+- L'application ne télétransmet pas de déclaration : la France dépose par EDI-TVA ou l'espace professionnel d'impots.gouv, l'Allemagne par ELSTER. La plateforme de facturation électronique ne transporte que les factures.
+- C'est une aide au dépôt, pas un conseil fiscal. Vérifiez-la avec votre comptabilité avant de la déposer.
 
 **Voir aussi:** [Exigibilité de la TVA](help:user.money.vat.due) · [Exports comptables](help:user.invoicing.accounting-export)
 

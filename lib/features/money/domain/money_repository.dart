@@ -39,35 +39,22 @@ abstract class MoneyRepository {
   /// The workspace's VAT declarations (0107), newest period first.
   Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId);
 
-  /// Creates or regenerates the DRAFT declaration for a period (0107) —
-  /// numbers computed client-side with the invoices' own vatSplit.
+  /// #2357 — prepares (or prepares again) the return of a period. The
+  /// SERVER computes its figures (`compute_vat_return`, 0402); the client
+  /// sends the period alone and then reads the stored row.
   Future<String> saveVatDeclaration({
     required String workspaceId,
     required DateTime periodStart,
     required DateTime periodEnd,
-    required List<VatDeclarationLine> lines,
-    required int totalNetCents,
-    required int totalVatCents,
-    required String currency,
-    required int invoiceCount,
   });
 
-  /// Stamps a draft submitted (channel: platform | export | manual).
+  /// Records that the owner filed the prepared return with the tax
+  /// authority ([channel] `manual` or `export`), with the [receipt]
+  /// reference the authority gave — the only way a return is filed.
   Future<void> markVatDeclarationSubmitted({
     required String declarationId,
     required String channel,
-    String receipt = '',
-  });
-
-  /// Transmits the declaration document through the configured
-  /// e-invoicing platform channel (#534) — an accepted upload stamps
-  /// the declaration submitted server-side with the receipt.
-  Future<EInvoiceSubmission> sendVatDeclaration({
-    required String workspaceId,
-    required String declarationId,
-    required String fileName,
-    required String mimeType,
-    required List<int> bytes,
+    required String receipt,
   });
 
   /// The workspace's invoice-PDF template (#454, 0088); empty when the

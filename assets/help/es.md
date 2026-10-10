@@ -4565,8 +4565,9 @@ El IVA de cada factura se devenga el día que fija la ley de su país: con el co
 - Con el cobro, una factura pagada a plazos cae en tantos periodos como pagos tuvo; con el criterio de caja, lo no cobrado se devenga el 31 de diciembre del año siguiente. Una nota de crédito cuenta al emitirse (con el cobro, al reembolsarse), nunca en el periodo de la factura que corrige.
 - La elección se imprime en cada factura y determina por igual la [declaración de IVA](help:user.money.vat.declaration), el informe de IVA y las exportaciones FEC y DATEV.
 - Qué opción le corresponde es una cuestión fiscal para su gestor.
+- Una factura conserva la regla que imprimió: emitida según cobros, espera al pago; con la opción por el devengo a la emisión, es exigible al emitirse, elija lo que elija después el espacio.
 
-**Véase también:** [La declaración periódica de IVA](help:user.money.vat.declaration)
+**Véase también:** [Preparar la declaración del IVA](help:user.money.vat.declaration)
 
 ### Cuenta de IVA
 
@@ -4741,27 +4742,28 @@ Un tipo cambia a partir de una fecha determinada. Las operaciones antiguas conse
 
 **Véase también:** [Fijar los tipos](help:user.money.vat.rates)
 
-### La declaración periódica de IVA
+### Preparar la declaración del IVA
 
 **Público:** Propietario
 
-Quiere un resumen listo del IVA de un periodo para presentarlo a Hacienda o entregarlo a su gestor.
+Quiere el IVA de un periodo calculado a partir de sus facturas y cobros, listo para presentarlo ante la administración tributaria o entregarlo a su gestor.
 
 ![](assets/help/images/user-money-vat-declaration.es.b8fa17aa9.jpg)
 
 **Pasos**
 
 1. Abra [Declaración de IVA](app:/vat-declarations).
-2. Elija el **Periodo** y pulse **Generar**.
+2. Elija el **Periodo** y pulse **Preparar**.
 3. Abra el resultado con **PDF** o **Exportar XML**, o consulte el **Informe de IVA (PDF)** y el **Informe de IVA (CSV)**.
-4. Cuando la haya presentado usted mismo, pulse **Marcar como presentada**.
+4. Presente usted mismo la declaración ante la administración tributaria (o a través de su gestor), pulse **Marcar como presentada** e introduzca la **Referencia del justificante de la administración tributaria**.
 
 **Conviene saber**
 
-- Solo existe con el régimen de sujeto a IVA. La nota de arriba indica si el periodo cuenta facturas o cobros.
-- Es una ayuda para la presentación generada a partir de las facturas emitidas en el periodo, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
-- Una declaración presentada ya no se puede modificar.
-- Cuando hay una plataforma configurada en [Facturación electrónica](help:user.money.einvoice.overview), un botón **Transmitir** puede enviarla.
+- Solo existe con el régimen de sujeto a IVA. La nota de arriba indica cuándo se devenga el IVA del periodo.
+- El servidor calcula los importes a partir de las facturas, de los cobros registrados uno a uno y del devengo de cada factura. Cada tipo se desglosa por categoría: tipo general, inversión del sujeto pasivo, exenta y tipo cero quedan separadas. Las facturas de agrupación se excluyen; su cobro cuenta para las facturas que agrupan.
+- Una declaración pasa de **Borrador** a **Preparada** y luego a **Presentada**. Prepararla de nuevo sustituye los importes; una vez presentada, nada la modifica. Si una factura o un cobro del periodo ha cambiado desde la preparación, la aplicación se niega a marcarla como presentada hasta que la prepare de nuevo.
+- La aplicación no transmite declaraciones: Francia presenta por EDI-TVA o el espacio profesional de impots.gouv, Alemania por ELSTER. La plataforma de facturación electrónica solo transporta facturas.
+- Es una ayuda para la presentación, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
 
 **Véase también:** [Cuándo se devenga el IVA](help:user.money.vat.due) · [Exportaciones contables](help:user.invoicing.accounting-export)
 
@@ -7397,13 +7399,13 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 2. Fije los tipos en [IVA](app:/vat): **Usar los tipos habituales** de su país y marque exactamente uno como predeterminado (véase [Fijar los tipos](help:user.money.vat.rates)).
 3. Dé a cada tipo su grupo y, cuando proceda, un motivo de exención (véase [Grupos de IVA](help:user.money.vat.groups)).
 4. Cuando la ley cambie un tipo, use **Cambio por ley** para que las facturas antiguas conserven su tipo (véase [Cambiar un tipo por ley](help:user.money.vat.change-by-law)).
-5. Si debe presentar declaraciones, active **Declaraciones de IVA** y genere cada periodo en [Declaración de IVA](help:user.money.vat.declaration).
+5. Si debe presentar declaraciones, active **Declaraciones de IVA** y prepare cada periodo en [Declaración de IVA](help:user.money.vat.declaration).
 
 **Conviene saber**
 
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
 - Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
-- Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
+- El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
 - El diario de declaraciones tiene su propia serie de numeración.
 
 **Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)
@@ -8460,8 +8462,12 @@ amplio para que el total coincida exactamente con lo recibido.
 Las **declaraciones** se construyen para un periodo a partir de los
 documentos (o los cobros) que contiene, trasladadas a las casillas del
 formulario de su país — CA3 en Francia, UStVA en Alemania — y se producen
-en PDF y XML. Una declaración pasa de borrador a presentada, y una
-presentada no se vuelve a calcular nunca.
+en PDF y XML. Sus importes los calcula el servidor
+(`compute_vat_return`, #2357), nunca los envía la app; pasa de preparada
+a presentada, presentada por el propietario con la referencia del
+justificante de la administración tributaria, y una presentada ya no
+cambia. La app no transmite ninguna declaración: Francia presenta por
+EDI-TVA o impots.gouv, Alemania por ELSTER.
 
 El catálogo completo de tipos de un país viene con la app (UE27, CH, NO,
 CA); mantenerlo al día cuando un gobierno cambia un tipo le corresponde a

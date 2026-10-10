@@ -112,6 +112,9 @@ void main() {
           resolution: 'exact',
           matchedAt: DateTime(now.year, now.month, 2, 12),
         );
+        // #2357 — the server reads the French default (receipts); the
+        // fake stands in for it with the same engine.
+        money.vatReturnBasis = vatTaxPointBasis('FR', null);
         // Half last month, half this month: this month declares half.
         money.invoiceInstalmentsStore['a'] = [
           TaxPointPayment(DateTime(now.year, now.month - 1, 20, 12), 6000),

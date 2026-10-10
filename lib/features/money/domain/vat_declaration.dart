@@ -14,9 +14,14 @@ class VatDeclarationLine {
     required this.netCents,
     required this.vatCents,
     required this.invoiceCount,
+    this.category = '',
   });
 
   final double percent;
+
+  /// #2357 — the UNCL5305 category the server keeps apart at one rate
+  /// (S, AE, E, Z, G, O); '' on a line an older client computed.
+  final String category;
   final int grossCents;
   final int netCents;
   final int vatCents;
@@ -24,6 +29,7 @@ class VatDeclarationLine {
 
   Map<String, dynamic> toJson() => {
         'percent': percent,
+        if (category.isNotEmpty) 'category': category,
         'gross_cents': grossCents,
         'net_cents': netCents,
         'vat_cents': vatCents,
@@ -33,6 +39,7 @@ class VatDeclarationLine {
   factory VatDeclarationLine.fromJson(Map<String, dynamic> json) =>
       VatDeclarationLine(
         percent: (json['percent'] as num).toDouble(),
+        category: json['category'] as String? ?? '',
         grossCents: (json['gross_cents'] as num?)?.toInt() ?? 0,
         netCents: (json['net_cents'] as num).toInt(),
         vatCents: (json['vat_cents'] as num).toInt(),
@@ -41,7 +48,10 @@ class VatDeclarationLine {
 }
 
 /// A periodic VAT declaration (0107): the per-rate output-VAT summary of
-/// one filing period, with its draft → submitted lifecycle.
+/// one filing period. #2357 (0402): the server computes the figures
+/// (`compute_vat_return`) and the lifecycle is draft (figures an older
+/// client sent) → prepared (the server's figures) → filed (by the owner,
+/// with the authority's receipt reference).
 class VatDeclaration implements SystemStamped {
   const VatDeclaration({
     required this.id,
@@ -71,7 +81,7 @@ class VatDeclaration implements SystemStamped {
   final DateTime periodStart;
   final DateTime periodEnd;
 
-  /// 'draft' | 'submitted'.
+  /// 'draft' | 'prepared' | 'filed' ('submitted' before 0402).
   final String status;
   final List<VatDeclarationLine> lines;
   final int totalNetCents;
@@ -81,13 +91,18 @@ class VatDeclaration implements SystemStamped {
   final DateTime createdAt;
   final DateTime? submittedAt;
 
-  /// 'platform' | 'export' | 'manual' once submitted.
+  /// 'manual' | 'export' once filed ('platform' on a return an upload
+  /// stamped before 0402).
   final String submittedChannel;
   final String submittedReceipt;
   /// #928 — DECL-2026-0001, drawn when the declaration is filed; '' for a draft.
   final String number;
 
-  bool get isSubmitted => status == 'submitted';
+  /// Filed with the tax authority: immutable from then on.
+  bool get isFiled => status == 'filed' || status == 'submitted';
+
+  /// The server's figures, ready to be filed.
+  bool get isPrepared => status == 'prepared';
 
   factory VatDeclaration.fromRow(Map<String, dynamic> row) => VatDeclaration(
         system: SystemColumns.fromRow(row),
@@ -161,10 +176,14 @@ List<VatFormBox> vatFormBoxes(
   List<VatDeclarationLine> lines,
 ) {
   final code = countryCode.toUpperCase();
+  // #2357 — the server keeps the categories of one rate apart (0 % AE, E
+  // and Z are three lines); the boxes still sum them per rate until the
+  // form mappings read the category.
+  final byRate = _perRate(lines);
   VatDeclarationLine? at(double percent) =>
-      lines.where((l) => l.percent == percent).firstOrNull;
+      byRate.where((l) => l.percent == percent).firstOrNull;
   List<VatDeclarationLine> others(Set<double> named) =>
-      [for (final l in lines) if (!named.contains(l.percent)) l];
+      [for (final l in byRate) if (!named.contains(l.percent)) l];
 
   switch (code) {
     case 'FR':
@@ -241,7 +260,7 @@ List<VatFormBox> vatFormBoxes(
       ];
     default:
       return [
-        for (final l in lines)
+        for (final l in byRate)
           VatFormBox(
               code: _pct(l.percent),
               label: l.percent == 0
@@ -251,6 +270,30 @@ List<VatFormBox> vatFormBoxes(
               vatCents: l.vatCents),
       ];
   }
+}
+
+/// [lines] summed per rate, in their first appearance's order.
+List<VatDeclarationLine> _perRate(List<VatDeclarationLine> lines) {
+  final out = <double, VatDeclarationLine>{};
+  for (final l in lines) {
+    final seen = out[l.percent];
+    out[l.percent] = seen == null
+        ? VatDeclarationLine(
+            percent: l.percent,
+            grossCents: l.grossCents,
+            netCents: l.netCents,
+            vatCents: l.vatCents,
+            invoiceCount: l.invoiceCount,
+          )
+        : VatDeclarationLine(
+            percent: l.percent,
+            grossCents: seen.grossCents + l.grossCents,
+            netCents: seen.netCents + l.netCents,
+            vatCents: seen.vatCents + l.vatCents,
+            invoiceCount: seen.invoiceCount + l.invoiceCount,
+          );
+  }
+  return out.values.toList();
 }
 
 String _pct(double percent) {
@@ -291,6 +334,9 @@ String vatDeclarationXml({
       for (final line in declaration.lines) {
         builder.element('rate', nest: () {
           builder.attribute('percent', line.percent.toString());
+          if (line.category.isNotEmpty) {
+            builder.attribute('category', line.category);
+          }
           builder.element('net-cents', nest: line.netCents.toString());
           builder.element('vat-cents', nest: line.vatCents.toString());
           builder.element('invoice-count',

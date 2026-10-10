@@ -18828,7 +18828,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch keine Voranmeldungen — Zeitraum wählen und die erste erstellen.';
 
   @override
-  String get vatDeclGenerate => 'Erstellen';
+  String get vatDeclFiled => 'Abgegeben';
+
+  @override
+  String get vatDeclGenerate => 'Vorbereiten';
 
   @override
   String get vatDeclInvoices => 'Rechnungen';
@@ -18838,7 +18841,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Bestätigen Sie, dass Sie diese Voranmeldung selbst abgegeben haben (ELSTER/Portal oder Steuerberater). Sie wird unveränderlich.';
+      'Bestätigen Sie, dass Sie diese Voranmeldung selbst beim Finanzamt abgegeben haben (ELSTER oder Ihr Steuerberater), und geben Sie die Referenz der Eingangsbestätigung ein. Danach ist sie unveränderlich.';
 
   @override
   String get vatDeclNet => 'Bemessungsgrundlage';
@@ -18850,35 +18853,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclPeriod => 'Zeitraum';
 
   @override
+  String get vatDeclPrepared => 'Vorbereitet';
+
+  @override
   String get vatDeclRate => 'Steuersatz';
+
+  @override
+  String get vatDeclReceipt =>
+      'Referenz der Eingangsbestätigung des Finanzamts';
 
   @override
   String get vatDeclRegimeGate =>
       'Voranmeldungen gibt es nur unter dem umsatzsteuerpflichtigen Regime — in den USt-Einstellungen konfigurieren.';
 
   @override
-  String get vatDeclRejected => 'Die Plattform hat die Voranmeldung abgelehnt.';
+  String get vatDeclScreenTitle => 'Vorbereitung der Umsatzsteuer-Voranmeldung';
 
   @override
   String get vatDeclSeller => 'Verkäufer';
 
   @override
-  String get vatDeclSent => 'Voranmeldung übermittelt.';
-
-  @override
   String get vatDeclStatus => 'Status';
-
-  @override
-  String get vatDeclSubmitted => 'Übermittelt';
 
   @override
   String get vatDeclTitle => 'Umsatzsteuer-Voranmeldung';
 
   @override
   String get vatDeclTotals => 'Summen';
-
-  @override
-  String get vatDeclTransmit => 'Übermitteln';
 
   @override
   String get vatDeclVat => 'USt';

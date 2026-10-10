@@ -303,7 +303,7 @@
  "legalMemberNumbering": "Mitgliedsnummerierung",
  "legalMemberNumberingHint": "Die Mitgliedsnummer wird beim Beitritt vergeben und ändert sich nie; sie steht auf der Rechnung unter „Mitgliedsnummer“.",
  "legalVatPeriod": "Voranmeldungszeitraum",
- "legalVatPeriodHint": "Der Zeitraum, den Ihr Regime vorschreibt. Die Voranmeldung summiert, was im Zeitraum zum Steuerzeitpunkt jeder Rechnung entsteht — Ausstellung, Zahlung oder Leistungsmonat, wie Ihr Land und Ihre Wahl es vorsehen — je Satz (CA3, UStVA…), und wird übermittelt oder als PDF/XML exportiert.",
+ "legalVatPeriodHint": "Der Zeitraum, den Ihr Regime vorschreibt. Die Voranmeldung summiert, was im Zeitraum zum Steuerzeitpunkt jeder Rechnung entsteht — Ausstellung, Zahlung oder Leistungsmonat, wie Ihr Land und Ihre Wahl es vorsehen — je Satz (CA3, UStVA…), vom Server berechnet, und wird als PDF/XML exportiert, damit Sie sie beim Finanzamt abgeben.",
  "legalBillingAddress": "Rechnungsadresse",
  "legalMentions": "Rechnungsangaben (leer = gesetzliche Standardformulierung)",
  "mentionLegalForm": "Rechtsform & Kapital",

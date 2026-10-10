@@ -1549,13 +1549,13 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 2. Fije los tipos en [IVA](https://fdittgen-png.github.io/deskilo/#/vat): **Usar los tipos habituales** de su país y marque exactamente uno como predeterminado (véase [Fijar los tipos](Guia-de-usuario#fijar-los-tipos)).
 3. Dé a cada tipo su grupo y, cuando proceda, un motivo de exención (véase [Grupos de IVA](Guia-de-usuario#grupos-de-iva)).
 4. Cuando la ley cambie un tipo, use **Cambio por ley** para que las facturas antiguas conserven su tipo (véase [Cambiar un tipo por ley](Guia-de-usuario#cambiar-un-tipo-por-ley)).
-5. Si debe presentar declaraciones, active **Declaraciones de IVA** y genere cada periodo en [Declaración de IVA](Guia-de-usuario#la-declaración-periódica-de-iva).
+5. Si debe presentar declaraciones, active **Declaraciones de IVA** y prepare cada periodo en [Declaración de IVA](Guia-de-usuario#preparar-la-declaración-del-iva).
 
 **Conviene saber**
 
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
 - Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
-- Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
+- El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
 - El diario de declaraciones tiene su propia serie de numeración.
 
 **Véase también:** [Régimen de IVA](Guia-de-usuario#régimen-de-iva) · [Cuándo se devenga el IVA](Guia-de-usuario#cuándo-se-devenga-el-iva)
@@ -1855,7 +1855,7 @@ Cada documento es de un *tipo*. Cada tipo tiene su propio diseño, de modo que c
 | Pagos, uso | El miembro, el administrador de facturación | [Pagos](Guia-de-usuario#pague-lo-que-debe) · [Uso](Guia-de-usuario#cuánto-costó-cada-reserva) |
 | Cartas de recordatorio, nivel 1 a 9 | El miembro con una factura vencida | [Reglas de recordatorio](Guia-de-usuario#reglas-de-recordatorio) |
 | Informe del espacio y estado del espacio | Usted, la junta, un auditor | **Informes** |
-| Declaración de IVA | Usted, y después la plataforma tributaria | [La declaración periódica de IVA](Guia-de-usuario#la-declaración-periódica-de-iva) |
+| Declaración de IVA | Usted, y después la plataforma tributaria | [La declaración periódica de IVA](Guia-de-usuario#preparar-la-declaración-del-iva) |
 | Credenciales, códigos QR de espacios | Los miembros en la puerta, sus paredes | [Códigos QR de espacios](Guia-de-usuario#códigos-qr-de-espacios-pdf) · [Credenciales](Guia-de-usuario#registro-con-credencial-nfc) |
 
 **Conviene saber**
@@ -1941,7 +1941,7 @@ Empiece por el [Registro de facturas](https://fdittgen-png.github.io/deskilo/#/i
 | SAF-T PT, Sage 50 | Un formato regulatorio portugués (no certificado) y un formato de intercambio británico/irlandés, según su país | Una presentación ni una certificación |
 | CSV contable, Pista de auditoría, Archivo del año (zip) | Una ayuda de lectura para su gestor | Una presentación |
 
-La lista de formatos depende de su país. FEC y DATEV piden sus números de cuenta, y FEC también su número de registro: téngalos a mano. Las cifras de IVA del periodo están en [La declaración periódica de IVA](Guia-de-usuario#la-declaración-periódica-de-iva).
+La lista de formatos depende de su país. FEC y DATEV piden sus números de cuenta, y FEC también su número de registro: téngalos a mano. Las cifras de IVA del periodo están en [La declaración periódica de IVA](Guia-de-usuario#preparar-la-declaración-del-iva).
 
 *Lo que la aplicación no hace*
 
