@@ -1159,6 +1159,7 @@ Sie möchten einen Ort, der antwortet: Braucht mich heute etwas?
 
 - Dieser Bildschirm existiert nur, wenn Ihr Workspace die Funktion **Was auf Sie wartet** eingeschaltet hat; ohne sie führt die Adresse zurück zur Startseite.
 - Mehrere gleiche Entscheidungen erscheinen als eine Zeile. Wartet nichts, sagt der Bildschirm **Nichts wartet auf Sie**.
+- Er listet auch Konfiguration, die noch fehlt: „Einzurichten: …“ für jeden erforderlichen Bereich der Einrichtungsliste, der nicht bereit ist (nur für jemanden, der den Space konfiguriert), und „… eingeschaltete Funktionen warten auf „…““, wenn eine ausgeschaltete Funktion andere zurückhält. Ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder **Funktionen**.
 
 **Siehe auch:** [Ereignisse und Bestätigungen](help:user.collaborate.events)
 
@@ -3022,6 +3023,7 @@ Sie möchten, dass der Space weiß, wo er seinen Sitz hat. **Workspace** öffnet
 **Gut zu wissen**
 
 - Das Land schlägt die Währung und die Zeitzone vor und bestimmt, welche Umsatzsteuersätze angeboten werden.
+- Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lässt sich das Land nicht mehr ändern: Beim Speichern erscheint „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“
 - **Speichern** schreibt das ganze Formular zusammen. Hat zwischenzeitlich jemand diese Einstellungen geändert, wird nichts gespeichert, und was Sie eingegeben haben, bleibt auf dem Bildschirm.
 
 **Siehe auch:** [Währung und Zeitzone](help:user.workspace.settings.currency-timezone)
@@ -3042,7 +3044,7 @@ Sie möchten, dass Preise und Tage so gezählt werden, wie Ihr Space zählt.
 
 **Gut zu wissen**
 
-- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben.
+- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben, bis der Space ein Dokument ausgestellt oder Geld erfasst hat; danach steht sie fest.
 - Die Zeitzone ist nicht nur Kosmetik: Ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag werden alle in ihr gezählt, sodass ein Mitglied im Ausland den Tag des Spaces sieht und nicht seinen eigenen.
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)
@@ -4683,7 +4685,7 @@ Sie listen die Umsatzsteuersätze auf, die Ihre Rechnungen verwenden dürfen. Wa
 - Die üblichen Sätze sind ein Ausgangspunkt. Welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Buchhaltung.
 - Der Standardsatz wird von Abos und von allem verwendet, was keinen eigenen Satz hat.
 - Ein Satz, den noch eine Rechnung oder eine Leistung verwendet, wird deaktiviert beibehalten statt gelöscht.
-- Ohne Satz zeigen Rechnungen bei Umsatzsteuerpflicht keine Steuer, und der XML-Export bleibt deaktiviert.
+- Gilt bei Umsatzsteuerpflicht kein Standardsatz, kann keine Rechnung ausgestellt werden; der Bildschirm der rechtlichen Identität warnt davor.
 - Dieser Bildschirm setzt die Funktion **USt-Verwaltung** voraus; der Eintrag Steuersätze im Bildschirm der rechtlichen Identität erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
 **Siehe auch:** [Steuergruppen](help:user.money.vat.groups) · [Änderung per Gesetz](help:user.money.vat.change-by-law)
@@ -5205,6 +5207,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Einmal am Tag erhalten Rechnungen, die ihre festgehaltene Zahlungsfrist überschritten haben, ihre nächste Stufe, über den noch offenen Betrag.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
+- Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
 
 **Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
 
@@ -5987,9 +5990,10 @@ Sie möchten den kürzesten Weg zu einem Space, den man buchen kann. Die App fü
 
 1. **Öffnungstage, Zeitzone und Währung**: eine Zeitzone, eine Währung und mindestens ein geöffneter Wochentag.
 2. **Buchbare Plätze im Grundriss**: mindestens ein Platz.
-3. **Rollen und wer Anfragen bestätigt**: zählt nur, wenn eine Regel für Buchungen mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.
+3. **Rollen und wer Anfragen bestätigt**: zählt nur, wenn eine Validierungsregel, gleich welcher Art, mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.
+4. **Was Mitglieder dürfen**: Mitglieder halten **Buchen und Reservierungen nutzen**. Ein neuer Space gewährt ihnen nichts, ein beitretendes Mitglied kann also nicht buchen, bis Sie es unter [Rollen](app:/roles) ankreuzen.
 
-Eine vierte Zeile, **Server und Datenbankversion**, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers.
+Eine weitere Zeile, **Server und Datenbankversion**, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers. Und solange **Rechnungen** eingeschaltet ist, ist auch **Rechtliche Identität und Adresse des Space** erforderlich: Die Liste markiert sie mit **Vor der Rechnungsstellung nötig**, weil ohne sie keine Rechnung ausgestellt werden kann.
 
 *Was optional ist und auf später warten kann*
 
@@ -6005,8 +6009,8 @@ Jeden dieser Punkte können Sie mit **Später** zurückstellen und wieder hervor
 **Gut zu wissen**
 
 - Die Liste nennt, wer handelt: **Sie**, **Der Serverbetreiber** oder **Eine Datenbankadministration**.
-- Optional heißt nicht unwichtig: Sobald Sie Rechnungen stellen, ist Ihre rechtliche Identität für diese Funktion Pflicht. Die Liste nennt sie eine Angabe, die Ihre Funktionen brauchen.
-- Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; sie verweigert erst das Ausstellen einer Rechnung und sagt, was fehlt.
+- Optional heißt nicht unwichtig: Bankdaten, ein Zahlungsanbieter oder ein Standort sind Angaben, die Ihre Funktionen brauchen, und die Liste nennt sie.
+- Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; die Liste und [Was auf Sie wartet](help:user.collaborate.attention) nennen sie, und das Ausstellen einer Rechnung wird verweigert, mit dem Hinweis, was fehlt.
 
 **Siehe auch:** [Ihren Space prüfen](help:setup.place.check) · [Die Karte „Erste Schritte“ und die Tipps](help:user.start.get-started)
 
@@ -6049,7 +6053,7 @@ Sie möchten einen Vorsprung, ohne an fremde Entscheidungen gebunden zu sein. Be
 
 **Gut zu wissen**
 
-- Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie Angaben, die Ihre Funktionen brauchen.
+- Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie (die rechtliche Identität, bei eingeschalteten **Rechnungen**, als eigenen Bereich).
 - In einem aus einer Vorlage erstellten Space können Rechnungen eingeschaltet sein, ohne dass Sie etwas ausstellen können, solange die Identität fehlt.
 - Wenden Sie eine Vorlage auf einen Space an, der schon Tarife hat, ersetzt sie dessen Gebührenstufen: Nutzen Sie sie für einen neuen Space.
 
@@ -6091,7 +6095,7 @@ Sie möchten wissen, bei welchen Entscheidungen Sie sich Zeit lassen sollten. Di
 | Format und Folge der Rechnungsnummer | Die nächste Nummer lässt sich erhöhen, nie senken. Nach der ersten Rechnung können Sie vom Datum nicht mehr weniger drucken, als die Reihe zeigt. | Das Format in der Vorschau ansehen, die Steuerberatung fragen, dann ausstellen. |
 | Der Monat einer ausgestellten Rechnung | Ist der Monat eines Mitglieds einmal abgerechnet, ist er gesperrt; Schließtage und Feiertagsimporte überspringen ihn. | Schließtage vor dem Monatsende festlegen. |
 | Umsatzsteuerregelung und Steuersätze | Sätze werden nach Datum versioniert und nie bearbeitet; eine übermittelte Umsatzsteuererklärung wird nie neu berechnet. | Ab einem Datum einen neuen Satz hinzufügen; die Regelung mit der Steuerberatung entscheiden. |
-| Land, Währung, Zeitzone | Beträge werden als Zahlen ohne Umrechnung gespeichert; die Währung zu ändern, sobald Geld im Spiel ist, ist unsicher. | Sie am ersten Tag richtig wählen; siehe [Den Ort aufbauen](help:setup.place.overview). |
+| Land, Währung, Zeitzone | Beträge werden als Zahlen ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von Währung oder Land ab. Die Zeitzone wird nie gesperrt, aber jeder Tag wird in ihr gezählt. | Sie am ersten Tag richtig wählen; siehe [Den Ort aufbauen](help:setup.place.overview). |
 | Ersetzen des Grundrisses | Ein Plan-Import wird abgelehnt, sobald Buchungen existieren. | Etagen und Räume einzeln im Editor bearbeiten. |
 | Workspace-ID | Sie ist das, was Mitglieder eintippen und worauf die gedruckten QR-Codes zeigen. Sie können sie (4 bis 20 Buchstaben oder Ziffern) mit **Workspace-ID ändern** ändern, aber die alte ID funktioniert sofort nicht mehr. | Eine kurze, einprägsame ID wählen, bevor Sie etwas drucken; wenn nötig, früh ändern. |
 | Test oder echt | Ein echter Space stellt Rechnungen aus, die geschuldet sind; Dokumente des Test-Spaces tragen ein Wasserzeichen. | In einem Test-Space beginnen, übertragen, wenn Sie bereit sind. |
@@ -6158,7 +6162,7 @@ Sie möchten, dass der Space weiß, wo er zu Hause ist. Diese vier Angaben besti
 2. Wählen Sie das **Land**; **Währung** und **Zeitzone** folgen, und Sie können sie korrigieren. Für das Atelier du Marché: Frankreich, EUR, Europe/Paris.
 3. Wählen Sie die **Sprache des Arbeitsbereichs** und tippen Sie auf **Speichern**.
 
-> **Achtung** Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; die Währung zu ändern, wenn schon Geld gezählt wurde, würde alles Bisherige falsch beschriften.
+> **Achtung** Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server deshalb jede Änderung von beiden ab: „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“
 
 **Gut zu wissen**
 
@@ -6263,7 +6267,7 @@ Sie möchten den Beweis, dass der Space bereit ist, bevor Sie jemanden einladen.
 
 **Gut zu wissen**
 
-- Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz und genug Bestätigende.
+- Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz, Mitglieder, die buchen dürfen, und genug Bestätigende.
 - Alles Optionale, etwa Tarife oder Zahlungen, können Sie mit **Später** zurückstellen; es verhindert das Öffnen nicht.
 - Beide Karten hängen von der Funktion *Karte „Erste Schritte“* ab.
 - **Jetzt nicht** blendet die Karte auf diesem Gerät aus; das Ansichtsmenü auf dem Plan holt sie mit **Erste Schritte** zurück.
@@ -6354,7 +6358,7 @@ Alles andere gehört zur Plattform und ist aus: Kiosk und Badges, mehrere Stando
 
 **Gut zu wissen**
 
-- Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist. Siehe [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency).
+- Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist; **Einrichtung dieses Workspace** markiert sie mit **Vor der Rechnungsstellung nötig**. Siehe [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency).
 - Ein bestehender Space ändert sich nie, wenn DesKilo ändert, was ein neuer Space bekommt.
 - Beginnen Sie mit einer Vorlage, kann die Vorlage zusätzlich zu diesem Satz einige Funktionen ein- oder ausschalten. Siehe [Drei Ausgangspunkte](help:setup.features.profiles).
 
@@ -6576,9 +6580,9 @@ Sie sind dabei, eine Funktion zu ändern, und möchten die Wirkung sehen, bevor 
 
 *Was „zurückgehalten“ bedeutet*
 
-Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in [Funktionen](app:/features).
+Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in [Funktionen](app:/features). [Was auf Sie wartet](help:user.collaborate.attention) zeigt dasselbe als eine Zeile pro ausgeschalteter Voraussetzung.
 
-Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in **Einrichtung dieses Workspace** unter **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, oben in den Workspace-Einstellungen.
+Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in **Einrichtung dieses Workspace**, oben in den Workspace-Einstellungen: die rechtliche Identität, bei eingeschalteten **Rechnungen**, als **Rechtliche Identität und Adresse des Space**, der Rest unter **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**.
 
 **Gut zu wissen**
 
@@ -6598,15 +6602,15 @@ Die App hat Schutzvorkehrungen für manche Widersprüche und für andere keine. 
 
 | Wenn Sie … haben | Schutz in der App | Verbleibende Lücke |
 |---|---|---|
-| **Rechnungen** an, keine rechtliche Identität | Das Ausstellen wird verweigert; **Vor der Ausstellung bitte ergänzen** listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in **Einrichtung dieses Workspace**. | Die Funktion ist ab dem ersten Tag an; nichts hindert Sie also daran, Mitglieder einzuladen und einen Monat laufen zu lassen, bevor die Identität existiert. |
+| **Rechnungen** an, keine rechtliche Identität | Das Ausstellen wird verweigert; **Vor der Ausstellung bitte ergänzen** listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in **Einrichtung dieses Workspace**, als **Rechtliche Identität und Adresse des Space**, **Vor der Rechnungsstellung nötig**, und in Was auf Sie wartet. | Die Funktion ist ab dem ersten Tag an; nichts hindert Sie also daran, Mitglieder einzuladen und einen Monat laufen zu lassen, bevor die Identität existiert. |
 | Ein anderes Land als Frankreich oder Deutschland | Das Ausstellen sagt, das Land „muss Frankreich oder Deutschland sein, um hier auszustellen“. | Nichts warnt Sie, wenn Sie das Land wählen oder die Rechnungsstellung einschalten. |
-| Für die Umsatzsteuer registriert, kein gültiger Satz | Das Ausstellen wird verweigert, bis ein Satz gilt. | Bei ausgeschalteter **USt-Verwaltung** ist die Konfiguration verborgen, während die gespeicherten Sätze weiter gelten. Prüfen Sie die Sätze nach dem Ausschalten. |
+| Für die Umsatzsteuer registriert, kein gültiger Satz | Das Ausstellen wird verweigert, bis ein Standardsatz gilt. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es. | Bei ausgeschalteter **USt-Verwaltung** ist die Konfiguration verborgen, während die gespeicherten Sätze weiter gelten. Prüfen Sie die Sätze nach dem Ausschalten. |
 | **Online-Zahlungen** an, kein Anbieter | Eine neue Online-Zahlung wird abgelehnt, wenn die Funktion aus ist; der fehlende Anbieter erscheint in **Einrichtung dieses Workspace**. | Sie können sie ohne Anbieter einschalten. Binden Sie ihn zuerst an: [Zahlungsanbieter](help:user.money.payments.provider). |
 | **Kiosk-Modus** an, keine Badges und kein Kiosk-Mitglied | **RFID-/NFC-Badges**, **QR-Badges**, **Mitgliederfotos am Kiosk** und **Mit Ausweis anmelden** können ohne ihn nicht an sein. | Nichts prüft, ob ein Kiosk-Mitglied existiert oder ein Badge ausgegeben wurde. Siehe [Ein Wand-Tablet betreiben](help:user.kiosk.mode). |
 | **Standorte** an, kein Standort | **Mindestens ein Standort** erscheint unter den Angaben, die Ihre Funktionen brauchen. | Der Schalter kann ohne Standort an sein. |
 | **Push-Benachrichtigungen** an, kein Push-Dienst | Mitglieder bekommen weiterhin alles in der App. | Telefone erhalten nichts, bis die Betreiberin oder der Betreiber der Installation den Push-Dienst eingerichtet hat. Siehe [Wie Mitglieder informiert werden](help:setup.notify.channels). |
-| **Mahnwesen** an, **Automatische Zahlungserinnerungen** an | Die zweite kann ohne die erste nicht an sein. | Der Planer des Servers versendet sie jeden Morgen; hat die Datenbank keinen Planer, werden sie versendet, wenn ein Administrator Finanzen öffnet. |
-| Eine Freigaberegel verlangt mehr Prüfer, als es gibt | **Einrichtung dieses Workspace** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ und hält die erste Buchung auf, wenn die Regel für Buchungen gilt. | Andere Anfragen werden angelegt, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe [Wer bestätigt](help:user.validation.overview). |
+| **Mahnwesen** an, **Automatische Zahlungserinnerungen** an | Die zweite kann ohne die erste nicht an sein. | Der Server versendet sie jeden Morgen, sofern die Installation Aufgaben plant; sonst werden sie versendet, wenn ein Administrator Finanzen öffnet. Der Schalter und die Funktionsbeschreibung sagen es; der Betreiber Ihres Servers weiß, was zutrifft. |
+| Eine Freigaberegel verlangt mehr Prüfer, als es gibt | **Einrichtung dieses Workspace** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, und **Rollen und wer Anfragen bestätigt** wird erforderlich, gleich welche Art von Anfrage. | Anfragen, die vor Ihrer Korrektur angelegt wurden, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe [Wer bestätigt](help:user.validation.overview). |
 | **Lösch-Anträge für Buchungen** an, niemand zum Bestätigen | Dieselbe Bereitschaftszeile. | Dieselbe Lücke. |
 | **Tisch-, Büro- & Etagen-Reservierungen** an | **Admins können Etagen zuweisen** braucht sie. | Jedes Mitglied braucht außerdem das Recht; nichts prüft, ob es jemand hat. |
 | Eine untergeordnete Funktion an, ihre übergeordnete aus | **Braucht Aufmerksamkeit** und „Wartet auf die Funktion darüber“. | Keine: Dieser Fall ist vollständig abgedeckt. |
@@ -6616,7 +6620,7 @@ Die App hat Schutzvorkehrungen für manche Widersprüche und für andere keine. 
 
 - Die Faustregel: Bringt eine Funktion Ihren Namen, Ihr Geld oder Ihre rechtlichen Pflichten auf ein Dokument, vervollständigen Sie ihre Angaben, bevor Sie es den Mitgliedern sagen.
 - **Einrichtung dieses Workspace** ist eine Liste, keine Sperre. Sie hindert Sie nie daran, etwas einzuschalten.
-- Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über das, was eine Buchung wirklich braucht: die Zeitzone, die Währung, einen geöffneten Wochentag und mindestens einen Platz.
+- Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über die erforderlichen Bereiche: die Zeitzone, die Währung, einen geöffneten Wochentag, mindestens einen Platz, Mitglieder mit **Buchen und Reservierungen nutzen** und genug Bestätigende. Bei eingeschalteten **Rechnungen** ist auch die rechtliche Identität erforderlich, aber vor der Rechnungsstellung: Die Karte des Space sagt „Vor der Rechnungsstellung“, die Karte unter Reservieren nennt sie nie.
 
 **Siehe auch:** [Rechtliche Identität und Rechnungen](help:setup.money.identity) · [Probelauf](help:setup.money.dry-run)
 
@@ -6845,7 +6849,7 @@ Sie möchten, dass jede Rolle hat, was sie braucht, und sonst nichts. Das ist da
 
 Ein Administrator hat nicht **Rollen & Berechtigungen verwalten**, **Validierungsregeln konfigurieren**, **Workspace-Einstellungen bearbeiten**, **Tarife und Abrechnungsregeln verwalten**, **Dokumente gestalten**, **Integrationen verwalten**, **Konfiguration verwalten** oder **In die Produktion ausrollen**. Eine Mit-Inhaberin hat alle, bis Sie einige abwählen. Der Inhaber hat sie immer alle.
 
-> **Achtung** In einem neuen Space ist die Karte **Benutzer** leer. Die sechs Alltagsberechtigungen (**Den Messenger nutzen**, **Buchen und Reservierungen nutzen**, **Den Kalender sehen**, **Das Mitgliederverzeichnis sehen**, **Das eigene Konto und die eigenen Rechnungen sehen**, **Die geteilten Dokumente sehen**) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. Haken Sie sie bei der Karte **Benutzer** an, und bei der Karte **Administrator**, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.
+> **Achtung** In einem neuen Space ist die Karte **Benutzer** leer. Die sechs Alltagsberechtigungen (**Den Messenger nutzen**, **Buchen und Reservierungen nutzen**, **Den Kalender sehen**, **Das Mitgliederverzeichnis sehen**, **Das eigene Konto und die eigenen Rechnungen sehen**, **Die geteilten Dokumente sehen**) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. **Einrichtung dieses Workspace** zeigt **Was Mitglieder dürfen** als **Nötig für eine erste Buchung**, bis die Karte **Benutzer** **Buchen und Reservierungen nutzen** hält; die fünf anderen prüft sie nicht. Haken Sie sie bei der Karte **Benutzer** an, und bei der Karte **Administrator**, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.
 
 **Gut zu wissen**
 
@@ -7073,7 +7077,7 @@ Sie möchten sicher sein, dass jede Anfrage, für die Sie eine Regel anlegen, be
 
 1. Öffnen Sie [Freigaberegeln](app:/validation) und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.
 2. Öffnen Sie [Mitglieder & Tarife](app:/members). Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.
-3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Er hält die erste Buchung nur auf, wenn die Regel für Buchungen gilt.
+3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Der Bereich wird dann erforderlich, gleich welche Art von Anfrage, und [Was auf Sie wartet](help:user.collaborate.attention) meldet ihn.
 4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
 
 **Gut zu wissen**
@@ -7365,7 +7369,7 @@ Sie bestimmen, ab wann eine Zahlung überfällig ist und wer nachfasst.
 **Gut zu wissen**
 
 - Die Frist bis zur ersten Mahnung gilt zugleich als Ihr Zahlungsziel. Legen Sie es mit den [Zahlungsbedingungen](help:user.money.legal.payment-terms) fest.
-- Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn **Admins stellen Rechnungen aus** an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht.
+- Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn **Admins stellen Rechnungen aus** an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht. Der Schalter und die Funktionsbeschreibung sagen es ebenfalls; der Betreiber Ihres Servers weiß, was zutrifft.
 - Die Funktion **Mahnwesen** stellt nur die Regeln bereit. Eine Mahnung geht erst dann von selbst hinaus, wenn **Automatische Mahnungen** in den Mahnregeln eingeschaltet ist; das ist zunächst aus, bis Sie es wählen.
 - Übersprungen werden Rechnungen mit ausstehender oder angehaltener Zahlung und Rechnungen ohne erfasstes Zahlungsziel.
 - Das Mitglied erhält einen Hinweis in seinem Feed und, wenn Push eingerichtet ist, eine allgemein gehaltene Benachrichtigung; siehe [Menschen informieren](help:setup.notify.overview).
@@ -7391,7 +7395,7 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 **Gut zu wissen**
 
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
-- Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung.
+- Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
 - Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
@@ -7413,7 +7417,7 @@ Sie möchten vor der ersten Rechnung wissen, was Sie danach nicht mehr ändern k
 | Rechnungsnummer | Nummern sind lückenlos und werden im Moment der Ausstellung in der Datenbank vergeben. Die nächste Nummer lässt sich erhöhen, nie senken. Ein neues Format gilt ab dann. Ein Neubeginn der Zählung darf nicht häufiger sein als das Datum, das die Nummer druckt. | Bei der ersten Ausstellung |
 | Ein abgerechneter Monat | Ein Monat, für den ein Mitglied eine Rechnung hat, ist für dieses Mitglied abgeschlossen. Schließtage und Feiertagsimporte überspringen solche Monate und nennen sie. | Bei der ersten Rechnung dafür |
 | Umsatzsteuersätze | Sätze werden nach Datum versioniert und nie bearbeitet. Eine eingereichte Voranmeldung wird nie neu berechnet. | Bei der ersten Verwendung |
-| Währung und Land | Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Eine Sperre gegen spätere Änderungen wurde nicht gefunden: Entscheiden Sie vor der ersten Buchung. | Vor der ersten Buchung |
+| Währung und Land | Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von beiden ab. | Beim ersten Dokument oder der ersten Zahlung |
 
 **Schritte**
 
@@ -7647,7 +7651,7 @@ Sie möchten, dass Menschen erfahren, was sie betrifft, und nicht überschüttet
 **Gut zu wissen**
 
 - Überflutung entsteht durch Regeln, die zu oft fragen, oder durch zu viele Administratoren für eine Regel.
-- Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft kann eine Buchungsregel mit zu wenigen Validierern anzeigen.
+- Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft zeigt jede Regel mit zu wenigen Validierern an, und Was auf Sie wartet meldet sie.
 - Stille entsteht auch durch Push ohne Einrichtung, durch Mitglieder, die Push ausgeschaltet haben, und durch ein System, das Benachrichtigungen blockiert.
 - Automatische Zahlungserinnerungen ersetzen nicht den gelegentlichen Blick auf die offenen Rechnungen.
 
@@ -7894,12 +7898,15 @@ Sie möchten wissen, auf welche Ihrer Fehler die App hinweist und wo sie es tut,
 |---|---|---|
 | Eine Funktion, die eine andere braucht | Eine Funktion kann ohne die, die sie braucht, nicht arbeiten. Wer eine Funktion einschaltet, schaltet ihre übergeordnete ein und erfährt, was dazugekommen ist. Wer eine übergeordnete ausschaltet, hält die untergeordneten zurück und behält deren eigene Wahl. | **Funktionen**: der Schaltablauf mit Vorschau, **Benötigt** und **Wartet auf die Funktion darüber** |
 | Ein zurückgehaltener Prozess | Eine Funktion, die an ist, aber auf etwas wartet, das aus ist. | **Funktionen**, Ansicht **Prozesse**: der Zustand **Braucht Aufmerksamkeit** und sein Filter-Chip |
-| Die Bereitschaftsliste | Eine Zeile pro Bereich des Space, mit Zustand, Verantwortlichem und Ort der Einstellung. Bereiche: **Öffnungstage, Zeitzone und Währung**, **Buchbare Plätze im Grundriss**, **Mitgliedschaftsmodelle und Tarife**, **Die ersten Mitglieder einladen**, **Wie Mitglieder bezahlen**, **Rollen und wer Anfragen bestätigt**, **Export und Wiederherstellung**, **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, **Eine erste Buchung** und, wenn es zutrifft, **Server und Datenbankversion** sowie **Assistentenzugang (optional)** (Letzterer nur bei eingeschalteter MCP-Schnittstelle). | **Einrichtung dieses Workspace**, oben in [Workspace](app:/workspace-settings) |
-| Die Zeile, die eine erste Buchung verhindert | Nur das, was eine Buchung wirklich braucht: eine Zeitzone, eine Währung, einen Öffnungstag, einen Platz und, wenn eine Buchungsregel mehr Validierer verlangt, als es gibt, diese Validierer. Der Rest ist optional und lässt sich mit **Später** beiseitelegen. | **Bevor hier jemand buchen kann**, auf der Karte „Erste Schritte“ in [Reservieren](app:/reserve) |
-| Was Ihre Funktionen lokal noch brauchen | Rechtliche Identität (für **Rechnungen**), Bankverbindung, ein Anbieter für Online-Zahlungen, ein E-Rechnungs-Konto, ein Standort. | Dieselbe Karte, Bereich **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, mit **Einrichten** und **Empfohlen** |
+| Die Bereitschaftsliste | Eine Zeile pro Bereich des Space, mit Zustand, Verantwortlichem und Ort der Einstellung. Bereiche: **Öffnungstage, Zeitzone und Währung**, **Buchbare Plätze im Grundriss**, **Mitgliedschaftsmodelle und Tarife**, **Die ersten Mitglieder einladen**, **Wie Mitglieder bezahlen**, **Rollen und wer Anfragen bestätigt**, **Export und Wiederherstellung**, **Was Mitglieder dürfen**, **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, **Eine erste Buchung** und, wenn es zutrifft, **Rechtliche Identität und Adresse des Space** (nur bei eingeschalteten **Rechnungen**), **Server und Datenbankversion** sowie **Assistentenzugang (optional)** (Letzterer nur bei eingeschalteter MCP-Schnittstelle). | **Einrichtung dieses Workspace**, oben in [Workspace](app:/workspace-settings) |
+| Die Zeile, die eine erste Buchung verhindert | Die Bereiche, die die Liste als **Nötig für eine erste Buchung** markiert: eine Zeitzone, eine Währung, einen Öffnungstag, einen Platz, Mitglieder mit **Buchen und Reservierungen nutzen** (ein neuer Space gewährt ihnen nichts) und, wenn eine Validierungsregel gleich welcher Art mehr Validierer verlangt, als es gibt, diese Validierer. Der Rest ist optional und lässt sich mit **Später** beiseitelegen. | **Bevor hier jemand buchen kann**, auf der Karte „Erste Schritte“ in [Reservieren](app:/reserve) |
+| Die Zeile, die eine erste Rechnung verhindert | Bei eingeschalteten **Rechnungen** die rechtliche Identität und die Adresse des Space. Ohne sie kann keine Rechnung ausgestellt werden, deshalb lässt sich der Bereich nicht beiseitelegen. | **Einrichtung dieses Workspace**: der Bereich **Rechtliche Identität und Adresse des Space**, markiert mit **Vor der Rechnungsstellung nötig**; solange er der nächste Schritt ist, lautet die Überschrift der Karte „Vor der Rechnungsstellung: …“ |
+| Was Ihre Funktionen lokal noch brauchen | Bankverbindung, ein Anbieter für Online-Zahlungen, ein E-Rechnungs-Konto, ein Standort. Die rechtliche Identität steht nicht hier: Bei eingeschalteten **Rechnungen** ist sie ein eigener Bereich (oben). | Dieselbe Karte, Bereich **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)**, mit **Einrichten** und **Empfohlen** |
 | Der Rechnungsschutz | Eine Rechnung wird abgelehnt, bis sie vollständig ist: die Anschrift des Workspace, seine Umsatzsteuer-Identifikationsnummer, ein Land Frankreich oder Deutschland, eine Rechtsgrundlage für eine Befreiung, Name, Anschrift und Umsatzsteuer-Identifikationsnummer des Mitglieds bei Reverse-Charge, ein gültiger Steuersatz, eine Erklärung für jede mit 0 % abgerechnete Zeile. Grenzüberschreitende, Reverse-Charge-, Ausfuhr- und steuerfreie Rechnungen werden abgelehnt: Stellen Sie sie außerhalb der App aus. | **Vor der Ausstellung bitte ergänzen**, mit den fehlenden Punkten |
 | Der Schutz bei Online-Zahlungen | Ist **Online-Zahlungen** aus, lehnt der Server eine neue Online-Zahlung ab. Eine bereits offene wird noch abgeschlossen. | Die Zahlungsbildschirme (die Funktionszeile trägt dazu keinen Hinweis) |
-| Der Validierungsschutz | **Erforderliche Validierungen** über der Zahl der verfügbaren Personen. | **Nicht genügend berechtigte Validierer.** im Regeleditor; „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ in der Bereitschaftsliste |
+| Der Validierungsschutz | **Erforderliche Validierungen** über der Zahl der verfügbaren Personen, bei jeder Art von Anfrage. | **Nicht genügend berechtigte Validierer.** im Regeleditor; „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ in der Bereitschaftsliste, wo **Rollen und wer Anfragen bestätigt** dann erforderlich wird |
+| Die Sperre von Währung und Land | Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von **Währung** oder **Land** ab, ob aus dem Einstellungsformular, einem Import oder anderswo. Die Zeitzone ist nicht gesperrt. | „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“ beim Speichern in [Workspace](app:/workspace-settings) |
+| Der Posteingang des Inhabers | Was noch zu konfigurieren ist: eine Zeile „Einzurichten: …“ für jeden erforderlichen Bereich der Bereitschaftsliste, der nicht bereit ist, und eine Zeile „… eingeschaltete Funktionen warten auf „…““ für jede ausgeschaltete Funktion, die andere zurückhält. | [Was auf Sie wartet](help:user.collaborate.attention); ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder **Funktionen** |
 | Der Schutz der Nummernkreise | Ein Neubeginn, der häufiger ist als das in der Nummer gedruckte Datum, wird abgelehnt. | [Nummernkreise](app:/settings/number-sequences), beim Speichern |
 | Die Reifeprüfung | Eine Funktion, die als **Alpha** oder **Beta** eingestuft ist. | Eine Rückfrage, bevor Sie sie einschalten, und ein Abzeichen auf jedem Schalter |
 | Die Prüfung beim Ersetzen des Plans | Das Ersetzen des Grundrisses oder der Einstellungen aus einer Datei. | Eine Warnung, dass es sich nicht rückgängig machen lässt. Der Plan wird abgelehnt, sobald Reservierungen existieren |
@@ -7908,7 +7915,7 @@ Sie möchten wissen, auf welche Ihrer Fehler die App hinweist und wo sie es tut,
 
 - **Einrichtung dieses Workspace** ist eine Liste, keine Sperre. Sie hindert Sie nie daran, etwas einzuschalten.
 - Die meisten Schutzmechanismen greifen, wenn Sie versuchen auszustellen, zu zahlen oder zu buchen, nicht wenn Sie eine Einstellung wählen. Deshalb gibt es die Prüfung unten.
-- Der Posteingang des Inhabers ([Was auf Sie wartet](help:user.collaborate.attention)) meldet heute keine Konfigurationsprobleme. Warten Sie nicht darauf.
+- Der Posteingang des Inhabers ([Was auf Sie wartet](help:user.collaborate.attention)) meldet nur die erforderlichen Bereiche und die zurückgehaltenen Funktionen. Die optionalen Bereiche bleiben in der Bereitschaftsliste: Lesen Sie sie selbst.
 
 **Siehe auch:** [Funktionen vermeiden, die sich widersprechen](help:setup.features.consistency) · [Ihren Space prüfen](help:setup.place.check)
 
@@ -7921,15 +7928,15 @@ Sie möchten die ehrliche Liste dessen, was in Ihrer Verantwortung bleibt. Das s
 | Fehler | Warum nichts ihn verhindert | Vermeiden Sie ihn durch |
 |---|---|---|
 | Ein anderes Land als Frankreich oder Deutschland wählen und Rechnungen erwarten | Die App bietet viele Länder und Steuersätze an, stellt aber nur für Frankreich und Deutschland Rechnungen aus. Bei der Länderwahl sagt Ihnen das nichts. | Entscheiden, bevor Sie Mitgliedern eine Rechnung versprechen. Anderswo bleiben die Kontoauszüge in der App, und Rechnungen stellen Sie außerhalb aus. |
-| Umsatzsteuerpflichtig sein, ohne dass ein Satz gilt | Die Ausstellung wird abgelehnt, aber erst bei der ersten Rechnung. Ist **USt-Verwaltung** aus, ist die Konfiguration verborgen, die gespeicherten Sätze gelten aber weiter. | Den Satz unter [USt](app:/vat) vor dem ersten Monatsabschluss ergänzen und eine Probe-Rechnung ausstellen. |
+| Umsatzsteuerpflichtig sein, ohne dass ein Satz gilt | Die Ausstellung wird abgelehnt, aber erst bei der ersten Rechnung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es; vorher hält Sie nichts auf. Ist **USt-Verwaltung** aus, ist die Konfiguration verborgen, die gespeicherten Sätze gelten aber weiter. | Den Satz unter [USt](app:/vat) vor dem ersten Monatsabschluss ergänzen und eine Probe-Rechnung ausstellen. |
 | **Online-Zahlungen** an, ohne Anbieter | Sie können es einschalten; der fehlende Anbieter erscheint nur als Punkt in der Bereitschaftsliste. | Zuerst den Anbieter verbinden, dann einschalten. |
-| **Rechnungen** an, ohne rechtliche Identität | Die Funktion ist vom ersten Tag an an; die Ablehnung kommt bei der Ausstellung. | Die Identität eintragen, bevor Sie Mitgliedern sagen, dass sie Rechnungen bekommen. |
-| Eine Regel, die mehr Validierer braucht, als Sie haben, außerhalb von Buchungen | Die Bereitschaftsliste hält nur bei Reservierungsregeln die erste Buchung auf. Der Editor lässt Sie eine Regel speichern, die über der Zahl der verfügbaren Personen liegt. Andere Anfragen werden angelegt, können nicht abgeschlossen werden und laufen nach sieben Tagen ab. | Nach jeder Regel die aktiven Inhaber und Administratoren zählen. Siehe [Anfragen vermeiden, die ewig warten](help:setup.people.stuck). |
-| Mitglieder, die den Plan nicht öffnen können | In einem neuen Space ist die Karte **Benutzer** unter [Rollen](app:/roles) leer, und nichts warnt Sie. | Die alltäglichen Berechtigungen ankreuzen und einmal mit einem zweiten Konto beitreten. |
+| **Rechnungen** an, ohne rechtliche Identität | Die Funktion ist vom ersten Tag an an. Die Bereitschaftsliste markiert die Identität mit **Vor der Rechnungsstellung nötig**, und Was auf Sie wartet meldet sie, aber nichts hindert Sie daran, Mitglieder einzuladen und einen Monat laufen zu lassen; die Ablehnung kommt bei der Ausstellung. | Die Identität eintragen, bevor Sie Mitgliedern sagen, dass sie Rechnungen bekommen. |
+| Eine Regel, die mehr Validierer braucht, als Sie haben | Der Editor lässt Sie eine Regel speichern, die über der Zahl der verfügbaren Personen liegt. Die Bereitschaftsliste markiert dann **Rollen und wer Anfragen bestätigt** als erforderlich, gleich welche Art von Anfrage, aber Anfragen, die vor Ihrer Korrektur angelegt wurden, können nicht abgeschlossen werden und laufen nach sieben Tagen ab. | Nach jeder Regel die aktiven Inhaber und Administratoren zählen. Siehe [Anfragen vermeiden, die ewig warten](help:setup.people.stuck). |
+| Mitglieder, die den Plan nicht öffnen können | In einem neuen Space ist die Karte **Benutzer** unter [Rollen](app:/roles) leer. Die Bereitschaftsliste markiert **Was Mitglieder dürfen**, bis Mitglieder **Buchen und Reservierungen nutzen** halten, prüft aber nur diese eine: Die fünf anderen alltäglichen Berechtigungen kreuzen Sie selbst an. | Die alltäglichen Berechtigungen ankreuzen und einmal mit einem zweiten Konto beitreten. |
 | Ein Space, der aus einer Vorlage entsteht | Eine Vorlage übernimmt nie die Identität, die Bankverbindung, Standorte oder Einladungen. | Den Bereich **Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)** als To-do-Liste behandeln. |
 | Eine Einstellungsdatei, die mehr verspricht, als sie hält | Heute enthält die Datei die Rollenmatrix, Ihre eigenen Rollen und jede Validierungsregel, nicht aber die Mitglieder, die Rechnungs- und Mitgliedsnummern, den Umsatzsteuerzeitraum oder die Preise des ganzen Space. Was sie enthält, wird nur angewendet, wenn **Konfiguration in der Raumdatei** im Ziel an ist. Ein Plan wird nicht ersetzt, sobald Reservierungen existieren. | Das, was sie nicht enthält, von Hand neu eintragen und die Vorschau lesen, bevor Sie auf **Ersetzen und importieren** tippen. |
-| Mahnungen, die nie laufen | Sie laufen jeden Morgen auf dem Server, wenn die Datenbank einen Scheduler (pg_cron) hat; hat sie keinen, laufen sie, wenn ein Administrator die Finanzen öffnet. Sie bleiben auch stumm, wenn **Automatische Zahlungserinnerungen** aus ist. | Den Betreiber fragen, ob es den Scheduler gibt, und selbst die Finanzen öffnen, wenn nicht. Siehe [Automatische Mahnungen](help:user.money.reminders.automatic). |
-| Land, Währung oder Zeitzone ändern, sobald Geld im Spiel ist | Ich habe keine Sperre gefunden. Beträge werden als Zahlen gespeichert und nicht umgerechnet: Klären Sie es mit dem Eigentümer der Installation, bevor Sie sich darauf verlassen. | Sie am ersten Tag wählen. Siehe [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent). |
+| Mahnungen, die nie laufen | Sie laufen jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn ein Administrator die Finanzen öffnet. Der Schalter und die Funktionsbeschreibung sagen es, können aber nicht erkennen, was für Ihre Installation zutrifft. Sie bleiben auch stumm, wenn **Automatische Zahlungserinnerungen** aus ist. | Den Betreiber fragen, ob es den Scheduler gibt, und selbst die Finanzen öffnen, wenn nicht. Siehe [Automatische Mahnungen](help:user.money.reminders.automatic). |
+| Die Zeitzone ändern, sobald Geld im Spiel ist | Der Server sperrt Währung und Land, sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, nicht aber die Zeitzone, in der jeder Arbeitstag, jeder halbe Tag und jeder Schließtag gezählt wird. | Sie am ersten Tag wählen. Siehe [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent). |
 | Eine Nummerierung oder ein Umsatzsteuerzeitraum, der nicht zum Format Ihres Steuerberaters passt | Die App vergleicht sie nicht mit dem Buchhaltungsexport des Landes. | Ihren Steuerberater vor der Ausstellung nach dem Nummernformat und dem Export fragen, den er nutzt. Siehe [Buchhaltungsexporte](help:user.invoicing.accounting-export). |
 | Einen Test für den echten Space halten | Über das Wasserzeichen auf gedruckten Dokumenten hinaus ist der Unterschied leicht zu übersehen. | Vor dem Handeln auf das Banner des Test-Space und die in [Ich](app:/me) angezeigte Seite achten. |
 
@@ -7950,18 +7957,18 @@ Sie wollen einen Beleg, kein Gefühl, bevor Sie öffnen. Einunddreißig Prüfpun
 
 | # | Prüfpunkt | Wo | So sieht es richtig aus |
 |---|---|---|---|
-| 1 | Land, Währung, Zeitzone | [Workspace](app:/workspace-settings), **Allgemeine Angaben** | Atelier du Marché: Frankreich, EUR, Europe/Paris |
+| 1 | Land, Währung, Zeitzone | [Workspace](app:/workspace-settings), **Allgemeine Angaben** | Atelier du Marché: Frankreich, EUR, Europe/Paris, festgelegt vor dem ersten Dokument oder der ersten Zahlung, danach sind Währung und Land gesperrt |
 | 2 | Sprache des Workspace | Derselbe Bildschirm | Die Sprache, in der Ihre Einladungen geschrieben sind |
 | 3 | Öffnungstage und -zeiten | [Verfügbarkeit](app:/availability) | Die Tage, an denen Sie öffnen, sind angekreuzt; die Zeiten passen zum Tag |
 | 4 | Schließtage | Verfügbarkeit, Schließtage | Feiertage und Schließungen der nächsten Monate sind eingetragen, vor dem ersten Monatsende |
 | 5 | Mindestens ein Platz | [Workspace-Editor](app:/editor) | Jeder Raum, den Sie vermieten, hat Plätze |
-| 6 | Bereitschaft | **Einrichtung dieses Workspace** | Unter **Öffnungstage, Zeitzone und Währung** und **Buchbare Plätze im Grundriss** braucht nichts eine Konfiguration |
+| 6 | Bereitschaft | **Einrichtung dieses Workspace** | Unter **Öffnungstage, Zeitzone und Währung**, **Buchbare Plätze im Grundriss** und **Was Mitglieder dürfen** braucht nichts eine Konfiguration |
 | 7 | Sie haben einen Platz gebucht | [Reservieren](app:/reserve) | Der Platz wird gebucht, eingecheckt und storniert, ohne Überraschung |
 | 8 | Die Workspace-ID | [Workspace-ID & QR](app:/workspace-code) | Die ID lässt sich laut aussprechen; der QR-Code ist gedruckt |
-| 9 | Alltägliche Berechtigungen | [Rollen](app:/roles) | **Benutzer** hält die sechs alltäglichen Berechtigungen |
+| 9 | Alltägliche Berechtigungen | [Rollen](app:/roles) | **Benutzer** hält die sechs alltäglichen Berechtigungen, darunter **Buchen und Reservierungen nutzen** |
 | 10 | Ein zweites Konto ist beigetreten | Ein anderes Gerät | Es wurde genehmigt und konnte den Plan öffnen und buchen |
 | 11 | Mehr als eine Person kann handeln | [Mitglieder & Tarife](app:/members) | Ein Inhaber plus ein Mitinhaber oder ein Administrator, alle **Aktiv** |
-| 12 | Zahl der Validierungen | [Validierungsregeln](app:/validation) | Keine Regel verlangt mehr Validierer als aktive Inhaber und Administratoren |
+| 12 | Zahl der Validierungen | [Validierungsregeln](app:/validation) | Keine Regel verlangt mehr Validierer als aktive Inhaber und Administratoren; **Rollen und wer Anfragen bestätigt** braucht keine Konfiguration |
 | 13 | Die Einladung in jeder Sprache | **Gemeinschaft und Einladungen** | Sie haben jede Version einmal gelesen; kein Platzhalter bleibt unausgefüllt |
 | 14 | Die Seite, auf der Sie sind | [Ich](app:/me) | Das Banner des Test-Space wird angezeigt oder nicht, wie beabsichtigt |
 
@@ -7980,13 +7987,13 @@ Sie wollen einen Beleg, kein Gefühl, bevor Sie öffnen. Einunddreißig Prüfpun
 | 23 | Wer wird worüber informiert | [Wie Mitglieder informiert werden](help:setup.notify.members) | Mitglieder finden alles unter **Ereignisse**; Push nur, wenn der Betreiber es eingerichtet hat |
 | 24 | Kiosk und Ausweise | [Funktionen](app:/features) | Aus, oder ein Kiosk-Mitglied existiert und Ausweise sind ausgegeben |
 | 25 | Standorte | Funktionen | Aus, oder mindestens ein Standort existiert |
-| 26 | Zurückgehaltene Funktionen | **Funktionen**, **Braucht Aufmerksamkeit** | Der Filter zeigt keinen Prozess |
+| 26 | Zurückgehaltene Funktionen | **Funktionen**, **Braucht Aufmerksamkeit** | Der Filter zeigt keinen Prozess, und Was auf Sie wartet hat keine Zeile über wartende Funktionen |
 
 *Wachsen: Rechnungen, Steuern und Unterlagen*
 
 | # | Prüfpunkt | Wo | So sieht es richtig aus |
 |---|---|---|---|
-| 27 | Rechtliche Identität | [Rechtliche Identität & E-Rechnung](app:/legal-identity) | **Vor der Ausstellung bitte ergänzen** zeigt nichts, wenn Sie eine Probe-Rechnung beginnen |
+| 27 | Rechtliche Identität | [Rechtliche Identität & E-Rechnung](app:/legal-identity) | **Rechtliche Identität und Adresse des Space** steht auf **Bereit**, und **Vor der Ausstellung bitte ergänzen** zeigt nichts, wenn Sie eine Probe-Rechnung beginnen |
 | 28 | Steuerregime und Sätze | [USt](app:/vat) | Das Regime ist das, das Ihr Steuerberater genannt hat; für Ihren Standard gilt ein Satz |
 | 29 | Nummernformat | [Nummernkreise](app:/settings/number-sequences) | Sie haben die Vorschau gelesen, und Ihr Steuerberater ist einverstanden |
 | 30 | Eine Probe-Rechnung | Test-Space, Monatsabschluss-Assistent | Sie wurde ausgestellt, in jeder Sprache, die Ihre Mitglieder lesen, ohne fehlenden Punkt |
@@ -8081,7 +8088,8 @@ Sie möchten eine Seite, die sagt, wo Sie langsamer werden sollten. Die vollstä
 | Der abgerechnete Monat eines Mitglieds | Dem Moment, in dem die Rechnung ausgestellt wird | [Geld](help:setup.money.permanent) |
 | Rechtliche Angaben auf der Rechnung | Der ersten ausgestellten Rechnung | [Die Reihenfolge, der Sie folgen](help:setup.reports.sequence) |
 | Steuerregime und Sätze | Sätze werden nach Datum versioniert und nie bearbeitet; eine eingereichte Voranmeldung wird nie neu berechnet | [Geld](help:setup.money.permanent) |
-| Land, Währung, Zeitzone | Sobald Geld im Spiel ist: Beträge werden nicht umgerechnet | [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent) |
+| Land und Währung | Vom Server gesperrt, sobald der Space ein Dokument ausgestellt oder Geld erfasst hat: Beträge werden nicht umgerechnet | [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent) |
+| Zeitzone | Nie gesperrt, aber die Tage werden in ihr gezählt: Wählen Sie sie am ersten Tag | [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent) |
 | Ersetzen des Grundrisses | Wird abgelehnt, sobald eine Reservierung existiert; das Löschen eines Stockwerks entfernt, was darauf ist | [Schwer rückgängig zu machende Entscheidungen](help:setup.before.permanent) |
 | Die Workspace-ID | Wenn Sie sie ändern, hört die alte sofort auf zu funktionieren; drucken Sie den QR-Code neu | [Wie Menschen beitreten](help:setup.people.join) |
 | Eigentümerschaft | Ein Inhaber kann sie abgeben; es gibt keine Einladung zum Inhaber | [Mitinhaber](help:setup.people.coowner) |
@@ -8165,11 +8173,11 @@ Sie bauen den Ort und seine Öffnungszeiten in einem Test-Space auf, sodass ein 
 5. Fügen Sie einen Schließtag hinzu. Siehe [Schließtage](help:user.workspace.availability.closure-days).
 6. Behalten Sie die Standardfunktionen. Öffnen Sie [Funktionen](app:/features) nur, um zu lesen, was an ist.
 7. Buchen Sie als Sie selbst und checken Sie dann ein und aus. Siehe [Ein- und auschecken](help:user.reserve.check-in).
-8. Teilen Sie die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe [Die Workspace-ID](help:user.workspace.code).
+8. Haken Sie unter [Rollen](app:/roles) die Alltagsberechtigungen auf der Karte **Benutzer** an, teilen Sie dann die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe [Die Workspace-ID](help:user.workspace.code).
 
 **Gut zu wissen**
 
-- Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat. Alles andere kann warten.
+- Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat und Mitglieder **Buchen und Reservierungen nutzen** halten. Alles andere kann warten.
 - Ein Grundriss lässt sich nicht mehr durch einen Import ersetzen, sobald eine Reservierung existiert.
 
 *Sie sind fertig, wenn*
@@ -8287,7 +8295,7 @@ Die Entscheidungen, denen Sie begegnen werden, haben Namen. Hier steht, was jede
 | Neubeginn der Nummerierung | Wie oft die Rechnungsnummer wieder von vorn beginnt. Das darf nicht häufiger sein als das auf der Rechnung gedruckte Datum. |
 | Umgebungspaar | Eine Testseite und eine echte Seite eines Space. |
 | Vorlage | Eine gespeicherte Einrichtung (Plan, Regeln, Tarife, Rollen), die Sie auf einen neuen Space anwenden können. Sie übernimmt nie Identität oder Zahlungsangaben. |
-| Bereitschaft | Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können. |
+| Bereitschaft | Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können und bevor die erste Rechnung ausgestellt wird. |
 | Zurückgehalten | Eine Funktion, die an ist, aber auf eine andere wartet, die aus ist. |
 | Kiosk | Ein gemeinsamer Bildschirm an der Tür, an dem Mitglieder ein- und auschecken. |
 | Ausweis | Eine Karte oder ein Tag, den ein Mitglied zum Einchecken an einem Kiosk vorzeigt. |
@@ -8328,7 +8336,7 @@ Die gesamte Einrichtung auf einer Seite. *Umkehrbar* sagt Ihnen, ob Sie Ihre Mei
 
 | Schritt | Wo in der App | Wie lange | Umkehrbar? |
 |---|---|---|---|
-| 1. Land, Währung, Zeitzone, Sprache | [Workspace-Einstellungen](app:/workspace-settings) | 5 Minuten | Ja, aber ändern Sie die Währung nicht mehr, sobald Geld im Spiel ist |
+| 1. Land, Währung, Zeitzone, Sprache | [Workspace-Einstellungen](app:/workspace-settings) | 5 Minuten | Ja, bis zum ersten Dokument oder zur ersten Zahlung; danach sind Währung und Land gesperrt |
 | 2. Grundriss | [Space-Editor](app:/editor) | 30 Minuten | Ja, bis zur ersten Reservierung; danach Objekt für Objekt bearbeiten |
 | 3. Öffnungsregeln | Verfügbarkeit | 10 Minuten | Ja |
 | 4. Funktionen | [Funktionen](app:/features) | 10 Minuten | Ja. Ausschalten stoppt die neue Nutzung und löscht nichts |

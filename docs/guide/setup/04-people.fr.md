@@ -86,7 +86,7 @@ Vous voulez que chaque rôle détienne ce dont il a besoin, et rien d’autre. C
 
 Un administrateur ne détient pas **Gérer les rôles et permissions**, **Configurer les règles de validation**, **Modifier les réglages de l'espace**, **Gérer les tarifs et règles de facturation**, **Concevoir les documents**, **Gérer les intégrations**, **Gérer la configuration** ni **Déployer en production**. Un copropriétaire les détient toutes, jusqu’à ce que vous en décochiez. Le propriétaire les détient toujours toutes.
 
-> **Attention** Dans un nouvel espace, la carte **Utilisateur** est vide. Les six permissions de tous les jours (**Utiliser la messagerie**, **Réserver et utiliser les réservations**, **Voir le calendrier**, **Voir l'annuaire des membres**, **Voir son propre compte et ses factures**, **Voir les documents partagés**) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. Cochez-les pour la carte **Utilisateur**, et pour la carte **Administrateur·rice** si les administrateurs réservent aussi, puis testez avec un second compte.
+> **Attention** Dans un nouvel espace, la carte **Utilisateur** est vide. Les six permissions de tous les jours (**Utiliser la messagerie**, **Réserver et utiliser les réservations**, **Voir le calendrier**, **Voir l'annuaire des membres**, **Voir son propre compte et ses factures**, **Voir les documents partagés**) ne sont détenues que par la matrice ou par un rôle. Tant que vous ne les cochez pas, un membre qui arrive ne peut pas ouvrir le plan. La démonstration les montre déjà cochées, ce qui masque ce point. **Mise en place de cet espace** affiche **Ce que les membres peuvent faire** comme **Nécessaire pour une première réservation** tant que la carte **Utilisateur** ne détient pas **Réserver et utiliser les réservations** ; elle ne vérifie pas les cinq autres. Cochez-les pour la carte **Utilisateur**, et pour la carte **Administrateur·rice** si les administrateurs réservent aussi, puis testez avec un second compte.
 
 **Bon à savoir**
 
@@ -321,7 +321,7 @@ Vous voulez être sûr que chaque demande pour laquelle vous créez une règle p
 
 1. Ouvrez [Règles de validation](app:/validation) et lisez chaque carte personnalisée : « Tous les admins — n’importe lesquels 2 » veut dire deux personnes.
 2. Ouvrez [Membres et forfaits](app:/members). Comptez les propriétaires et administrateurs actifs. Les personnes en pause ou sorties ne comptent pas.
-3. Ouvrez **Mise en place de cet espace** dans [Espace](app:/workspace-settings). Le domaine **Rôles et validation des demandes** dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Cela retient la première réservation seulement quand la règle porte sur les réservations.
+3. Ouvrez **Mise en place de cet espace** dans [Espace](app:/workspace-settings). Le domaine **Rôles et validation des demandes** dit « Une règle demande plus de validateurs que cet espace n’en compte » quand il en compte trop peu. Le domaine devient alors obligatoire, quel que soit le type de demande, et [Ce qui vous attend](help:user.collaborate.attention) le signale.
 4. Ouvrez [Événements](app:/events). **En attente de votre confirmation** montre ce qui attend, et une ligne affiche « 1/2 validations ».
 
 **Bon à savoir**

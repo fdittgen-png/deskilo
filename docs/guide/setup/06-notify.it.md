@@ -198,7 +198,7 @@ Vuole che le persone vengano informate di ciò che le riguarda, senza sommergerl
 **Da sapere**
 
 - Il sovraccarico nasce da regole che chiedono troppo spesso o da troppi amministratori su una sola regola.
-- Il silenzio nasce da una regola senza nessuno che risponda: richiedere due convalide quando esiste solo il proprietario, oppure elencare amministratori che se ne sono andati, lascia le richieste in attesa per sempre. La scheda di prontezza della configurazione può segnalare una regola di prenotazione con troppo pochi convalidatori.
+- Il silenzio nasce da una regola senza nessuno che risponda: richiedere due convalide quando esiste solo il proprietario, oppure elencare amministratori che se ne sono andati, lascia le richieste in attesa per sempre. La scheda di prontezza della configurazione segnala qualsiasi regola con troppo pochi convalidatori, e la Sua posta lo riporta.
 - Il silenzio nasce anche da una push senza configurazione, da membri che hanno spento la push e da un sistema che blocca le notifiche.
 - I solleciti di pagamento automatici non sostituiscono uno sguardo ogni tanto alle fatture aperte.
 

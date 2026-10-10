@@ -495,6 +495,7 @@ Sie möchten, dass der Space weiß, wo er seinen Sitz hat. **Workspace** öffnet
 **Gut zu wissen**
 
 - Das Land schlägt die Währung und die Zeitzone vor und bestimmt, welche Umsatzsteuersätze angeboten werden.
+- Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lässt sich das Land nicht mehr ändern: Beim Speichern erscheint „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“
 - **Speichern** schreibt das ganze Formular zusammen. Hat zwischenzeitlich jemand diese Einstellungen geändert, wird nichts gespeichert, und was Sie eingegeben haben, bleibt auf dem Bildschirm.
 
 **Siehe auch:** [Währung und Zeitzone](help:user.workspace.settings.currency-timezone)
@@ -516,7 +517,7 @@ Sie möchten, dass Preise und Tage so gezählt werden, wie Ihr Space zählt.
 
 **Gut zu wissen**
 
-- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben.
+- Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben, bis der Space ein Dokument ausgestellt oder Geld erfasst hat; danach steht sie fest.
 - Die Zeitzone ist nicht nur Kosmetik: Ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag werden alle in ihr gezählt, sodass ein Mitglied im Ausland den Tag des Spaces sieht und nicht seinen eigenen.
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)

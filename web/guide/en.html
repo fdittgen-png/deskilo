@@ -961,6 +961,7 @@
 <ul>
 <li>This screen exists only when your workspace has switched on the <strong>What needs you</strong> feature; without it the address leads back to the start page.</li>
 <li>Several identical decisions are shown as one line. When nothing is waiting, the screen says <strong>Nothing needs you</strong>.</li>
+<li>It also lists configuration that is not done: &quot;Set up: …&quot; for each required area of the setup list that is not ready (only for someone who configures the space), and &quot;… switched-on features wait for “…”&quot; when a switched-off feature holds others back. A tap opens the screen where it is set up, or <strong>Features</strong>.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.collaborate.events">Events &amp; confirmations</a></p>
 </div></article><article class="section" id="user.validation.overview" data-roles="owner"><header><h3>Validation rules, domain by domain <a class="permalink" href="#user.validation.overview" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span></div></header><div class="body"><p>You decide, for each kind of act, whether a person must confirm it first, and who.</p>
@@ -2243,6 +2244,7 @@
 <h4 class="lbl lbl-know">Good to know</h4>
 <ul>
 <li>The country proposes the currency and the time zone, and decides which VAT rates are offered.</li>
+<li>Once the space has issued a document or recorded money, the country can no longer be changed: saving says &quot;The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.&quot;</li>
 <li><strong>Save</strong> writes the whole form together. If someone changed these settings meanwhile, nothing is saved and what you typed stays on screen.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.workspace.settings.currency-timezone">Currency and time zone</a></p>
@@ -2256,7 +2258,7 @@
 </ol>
 <h4 class="lbl lbl-know">Good to know</h4>
 <ul>
-<li>The currency is proposed from the country. You can override it.</li>
+<li>The currency is proposed from the country. You can override it until the space has issued a document or recorded money; after that it is fixed.</li>
 <li>The time zone is not cosmetic: a working day, a half-day boundary and a closure day are all counted in it, so a member abroad sees the space's day rather than their own.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.workspace.settings.country">Country</a></p>
@@ -3365,7 +3367,7 @@
 <li>The usual rates are a starting point. Which supply falls under which rate is a question for your accountant.</li>
 <li>The default rate is used by subscriptions and by anything without its own rate.</li>
 <li>A rate still used by an invoice or a service is kept, deactivated, rather than deleted.</li>
-<li>With no rate while you are VAT-registered, invoices show no tax and the XML export stays disabled.</li>
+<li>With no default rate in force while you are VAT-registered, no invoice can be issued; the legal identity screen warns about it.</li>
 <li>This screen needs the <strong>VAT management</strong> feature; the VAT rates entry on the legal identity screen shows only for the VAT-registered regime.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.money.vat.groups">VAT groups</a> · <a href="#user.money.vat.change-by-law">Change by law</a></p>
@@ -3720,6 +3722,7 @@
 <li>Once a day, invoices past their recorded payment term get their next level, for the amount still outstanding.</li>
 <li>Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.</li>
 <li>Off: you send each reminder yourself.</li>
+<li>When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.</li>
 </ul>
 <p class="see-also"><strong>See also:</strong> <a href="#user.money.reminders.rules">Reminder rules</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-reminders-automatic.en.b8fa17aa9.jpg" alt="Automatic reminders"></div></figure></div></article><article class="section" id="user.invoicing.register" data-roles="owner billing"><header><h3>The invoice register <a class="permalink" href="#user.invoicing.register" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Owner</span><span class="role role-billing">Billing administrator</span></div></header><div class="body"><p>All invoices in one sortable list.</p>

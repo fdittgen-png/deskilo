@@ -86,7 +86,7 @@ You want each role to hold what it needs and nothing else. That is the principle
 
 An administrator does not hold **Manage roles & permissions**, **Configure validation policies**, **Edit workspace settings**, **Manage tariffs and billing rules**, **Design the documents**, **Manage integrations**, **Manage the configuration** or **Deploy to production**. A co-owner holds all of them until you untick some. The owner always holds all of them.
 
-> **Careful** In a new space the **User** card is empty. The six everyday permissions (**Use the messenger**, **Book and use reservations**, **See the calendar**, **See the member directory**, **See their own account and invoices**, **See the shared documents**) are held only through the matrix or a role. Until you tick them, a member who joins cannot open the plan. The demo shows them already ticked, which hides this. Tick them for the **User** card, and for the **Administrator** card if administrators also book, then test with a second account.
+> **Careful** In a new space the **User** card is empty. The six everyday permissions (**Use the messenger**, **Book and use reservations**, **See the calendar**, **See the member directory**, **See their own account and invoices**, **See the shared documents**) are held only through the matrix or a role. Until you tick them, a member who joins cannot open the plan. The demo shows them already ticked, which hides this. **Setting up this space** shows **What members may do** as **Needed for a first booking** until the **User** card holds **Book and use reservations**; it does not check the five others. Tick them for the **User** card, and for the **Administrator** card if administrators also book, then test with a second account.
 
 **Good to know**
 
@@ -321,7 +321,7 @@ You want to be sure that every request you create a rule for can be answered. A 
 
 1. Open [Validation rules](app:/validation) and read each customised card: "All admins — any 2" means two people.
 2. Open [Members & plans](app:/members). Count the active owners and administrators. Paused and exited people do not count.
-3. Open **Setting up this space** in [Workspace](app:/workspace-settings). The area **Roles and who validates requests** says "A policy asks for more validators than this space has" when it counts too few. It holds up the first booking only when the rule is for reservations.
+3. Open **Setting up this space** in [Workspace](app:/workspace-settings). The area **Roles and who validates requests** says "A policy asks for more validators than this space has" when it counts too few. The area then becomes required, whatever the kind of request, and [What needs you](help:user.collaborate.attention) raises it.
 4. Open [Events](app:/events). **Waiting for your confirmation** shows what is waiting, and a row shows "1/2 validations".
 
 **Good to know**

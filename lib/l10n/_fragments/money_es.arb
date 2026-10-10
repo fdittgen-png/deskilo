@@ -169,7 +169,7 @@
   "@featureVatManagementTitle": {
     "description": "Feature toggle title: VAT management (#544)"
   },
-  "featureVatManagementDesc": "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose.",
+  "featureVatManagementDesc": "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose. Un espacio sujeto a IVA la necesita, junto con un tipo por defecto, para emitir una factura: sin ellos la emisión se rechaza.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -333,7 +333,6 @@
   "scheduledExpensesTitle": "Gastos programados",
   "scheduledExpensesIntro": "Las suscripciones que paga el espacio — internet, teléfono, electricidad. La programación se valida una vez; cada vencimiento se le presenta antes de contar.",
   "scheduledExpensesEmpty": "Aún no hay gastos programados.",
-
   "scheduledExpensesFinished": "Finalizadas y rechazadas ({count})",
   "scheduleNew": "Programar un gasto recurrente",
   "scheduleCancel": "Terminar esta programación",

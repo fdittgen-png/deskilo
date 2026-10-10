@@ -9,6 +9,8 @@ import 'dart:async';
 import 'app/app.dart';
 import 'app/app_initializer.dart';
 import 'app/bootstrap.dart';
+import 'app/server_choice_app.dart';
+import 'features/workspace/providers/workspace_providers.dart';
 import 'core/files/file_saver.dart';
 import 'core/notifications/deferred_notification_service.dart';
 import 'core/notifications/local_notification_service.dart';
@@ -28,6 +30,24 @@ Future<void> main() async {
   // #992 — a row whose system columns break the server's invariants is
   // reported to the trace, never trusted silently.
   SystemColumns.onBreach = (detail) => trace.warn('data', detail);
+
+  // #2343 — a build without a default server (F-Droid) asks which server
+  // to use before anything is contacted. The choice is stored, and the
+  // essential start-up below runs on it: no restart.
+  if (await needsServerChoice().catchError((Object e, StackTrace st) {
+    trace.error('boot', 'stored server unreadable', error: e, stackTrace: st);
+    return false;
+  })) {
+    final chosen = Completer<void>();
+    runApp(ProviderScope(
+      overrides: [
+        enabledFeaturesSyncProvider
+            .overrideWithValue(ServerChoiceApp.features),
+      ],
+      child: ServerChoiceApp(onChosen: chosen.complete),
+    ));
+    await chosen.future;
+  }
 
   // Defensive boot (#86, #2015): the essential start-up runs ONCE, with a
   // deadline. A failure or a hang shows a truthful recovery screen instead

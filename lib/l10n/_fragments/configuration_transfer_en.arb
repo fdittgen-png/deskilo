@@ -26,5 +26,39 @@
   "workspaceXmlImportConfigurationOnly": "The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationOffTitle": "This file carries a configuration",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
+  "workspaceXmlImportConfigurationOffBody": "The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, so the import would not apply them. Switch it on to apply them now.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, and only somebody who may change its configuration can switch it on. The import can continue without them.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationSkip": "Import without the configuration",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Switch it on and apply",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Configuration: not applied.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   }
 }

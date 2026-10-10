@@ -31,7 +31,11 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../providers/attention_providers.dart';
+import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_readiness.dart';
+import '../feature_names.dart';
 import '../widgets/local_setup_views.dart' show eventTypeWord;
+import '../widgets/workspace_readiness_card.dart' show readinessAreaLabel;
 
 class AttentionScreen extends ConsumerWidget {
   const AttentionScreen({super.key});
@@ -105,7 +109,7 @@ class _Row extends StatelessWidget {
       title: Text(attentionTitle(l10n, item), style: theme.textTheme.bodyLarge),
       subtitle: Text(l10n.attentionWaitingSince(since)),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => context.push(attentionRoute(item.action)),
+      onTap: () => context.push(attentionRoute(item)),
     );
   }
 
@@ -125,12 +129,27 @@ String attentionTitle(AppLocalizations l10n, Attention item) =>
         l10n.attentionDecide(eventTypeWord(l10n, item.subject)),
       AttentionAction.admit => l10n.attentionAdmit(item.count),
       AttentionAction.issue => l10n.attentionIssue(item.count),
+      AttentionAction.setUp => l10n.attentionSetUp(
+          readinessAreaLabel(l10n, readinessAreaOf(item.subject)),
+        ),
+      AttentionAction.unblock => l10n.attentionUnblock(
+          item.count,
+          featureName(
+            l10n,
+            WorkspaceFeature.values.asNameMap()[item.subject] ??
+                WorkspaceFeature.values.first,
+          ),
+        ),
     };
 
 /// Where a tap takes the person: the screen where that decision is made.
 /// Each route's own redirect handles a feature or permission that is off.
-String attentionRoute(AttentionAction action) => switch (action) {
+String attentionRoute(Attention item) =>
+    item.route ??
+    switch (item.action) {
       AttentionAction.decide => '/events',
       AttentionAction.admit => '/members',
       AttentionAction.issue => '/invoicing/wizard',
+      AttentionAction.setUp => '/workspace-settings',
+      AttentionAction.unblock => '/features',
     };

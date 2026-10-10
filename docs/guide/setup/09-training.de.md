@@ -68,11 +68,11 @@ Sie bauen den Ort und seine Öffnungszeiten in einem Test-Space auf, sodass ein 
 5. Fügen Sie einen Schließtag hinzu. Siehe [Schließtage](help:user.workspace.availability.closure-days).
 6. Behalten Sie die Standardfunktionen. Öffnen Sie [Funktionen](app:/features) nur, um zu lesen, was an ist.
 7. Buchen Sie als Sie selbst und checken Sie dann ein und aus. Siehe [Ein- und auschecken](help:user.reserve.check-in).
-8. Teilen Sie die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe [Die Workspace-ID](help:user.workspace.code).
+8. Haken Sie unter [Rollen](app:/roles) die Alltagsberechtigungen auf der Karte **Benutzer** an, teilen Sie dann die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe [Die Workspace-ID](help:user.workspace.code).
 
 **Gut zu wissen**
 
-- Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat. Alles andere kann warten.
+- Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat und Mitglieder **Buchen und Reservierungen nutzen** halten. Alles andere kann warten.
 - Ein Grundriss lässt sich nicht mehr durch einen Import ersetzen, sobald eine Reservierung existiert.
 
 *Sie sind fertig, wenn*
@@ -194,7 +194,7 @@ Die Entscheidungen, denen Sie begegnen werden, haben Namen. Hier steht, was jede
 | Neubeginn der Nummerierung | Wie oft die Rechnungsnummer wieder von vorn beginnt. Das darf nicht häufiger sein als das auf der Rechnung gedruckte Datum. |
 | Umgebungspaar | Eine Testseite und eine echte Seite eines Space. |
 | Vorlage | Eine gespeicherte Einrichtung (Plan, Regeln, Tarife, Rollen), die Sie auf einen neuen Space anwenden können. Sie übernimmt nie Identität oder Zahlungsangaben. |
-| Bereitschaft | Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können. |
+| Bereitschaft | Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können und bevor die erste Rechnung ausgestellt wird. |
 | Zurückgehalten | Eine Funktion, die an ist, aber auf eine andere wartet, die aus ist. |
 | Kiosk | Ein gemeinsamer Bildschirm an der Tür, an dem Mitglieder ein- und auschecken. |
 | Ausweis | Eine Karte oder ein Tag, den ein Mitglied zum Einchecken an einem Kiosk vorzeigt. |
@@ -237,7 +237,7 @@ Die gesamte Einrichtung auf einer Seite. *Umkehrbar* sagt Ihnen, ob Sie Ihre Mei
 
 | Schritt | Wo in der App | Wie lange | Umkehrbar? |
 |---|---|---|---|
-| 1. Land, Währung, Zeitzone, Sprache | [Workspace-Einstellungen](app:/workspace-settings) | 5 Minuten | Ja, aber ändern Sie die Währung nicht mehr, sobald Geld im Spiel ist |
+| 1. Land, Währung, Zeitzone, Sprache | [Workspace-Einstellungen](app:/workspace-settings) | 5 Minuten | Ja, bis zum ersten Dokument oder zur ersten Zahlung; danach sind Währung und Land gesperrt |
 | 2. Grundriss | [Space-Editor](app:/editor) | 30 Minuten | Ja, bis zur ersten Reservierung; danach Objekt für Objekt bearbeiten |
 | 3. Öffnungsregeln | Verfügbarkeit | 10 Minuten | Ja |
 | 4. Funktionen | [Funktionen](app:/features) | 10 Minuten | Ja. Ausschalten stoppt die neue Nutzung und löscht nichts |

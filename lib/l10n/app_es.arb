@@ -336,6 +336,14 @@
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
+  "attentionSetUp": "Por configurar: {area}",
+  "@attentionSetUp": {
+    "description": "#2332: attentionSetUp"
+  },
+  "attentionUnblock": "{count, plural, =1{1 función activada espera «{feature}»} other{{count} funciones activadas esperan «{feature}»}}",
+  "@attentionUnblock": {
+    "description": "#2332: attentionUnblock"
+  },
   "attentionWaitingSince": "En espera desde el {date}",
   "@attentionWaitingSince": {
     "description": "#2326: attentionWaitingSince"
@@ -3785,7 +3793,7 @@
   "@featureVatGroupsDesc": {
     "description": "#947 VAT groups: featureVatGroupsDesc"
   },
-  "featureVatManagementDesc": "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose.",
+  "featureVatManagementDesc": "El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose. Un espacio sujeto a IVA la necesita, junto con un tipo por defecto, para emitir una factura: sin ellos la emisión se rechaza.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -5961,7 +5969,7 @@
   "legalIdentitySubtitle": "Régimen de IVA, identificadores y las condiciones de pago por defecto del espacio",
   "legalIdentityTitle": "Identidad legal y facturación electrónica",
   "legalIdentityVatId": "Número de IVA",
-  "legalIdentityVatWarning": "Este espacio cobra IVA pero no hay ningún tipo configurado: las facturas no muestran impuesto y la exportación XML sigue desactivada.",
+  "legalIdentityVatWarning": "Este espacio cobra IVA pero no hay ningún tipo por defecto vigente: no se puede emitir ninguna factura hasta que añada uno. Los tipos se editan con «Gestión del IVA» activada.",
   "legendBlocked": "Bloqueada",
   "legendClosed": "Día cerrado",
   "legendFree": "Libre",
@@ -7433,6 +7441,10 @@
   "paymentProviderMollie": "Mollie — iDEAL, Bancontact…",
   "paymentProviderStripe": "Tarjeta (Stripe)",
   "paymentProviderWero": "Wero (con Mollie)",
+  "paymentRemindersWhen": "Cuándo se ejecuta: cada mañana en el servidor, si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.",
+  "@paymentRemindersWhen": {
+    "description": "#2332: when automatic payment reminders run"
+  },
   "paymentRoutingNumberLabel": "Routing number",
   "@paymentRoutingNumberLabel": {
     "description": "#711 - globalization"
@@ -8543,7 +8555,15 @@
   "readinessAreaBackend": "Servidor y versión de la base de datos",
   "readinessAreaFirstBooking": "Una primera reserva",
   "readinessAreaInvitations": "Invitar a los primeros miembros",
+  "readinessAreaLegalIdentity": "La identidad legal y la dirección del espacio",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
   "readinessAreaLocalSetup": "Datos que necesitan sus funciones (identidad, banco, plataformas)",
+  "readinessAreaMemberPermissions": "Lo que pueden hacer los miembros",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
   "readinessAreaPayments": "Cómo pagan los miembros",
   "readinessAreaPricing": "Planes de membresía y tarifas",
   "readinessAreaRecovery": "Exportación y recuperación",
@@ -8551,14 +8571,30 @@
   "readinessAreaResources": "Puestos reservables en el plano",
   "readinessAreaRolesValidation": "Roles y quién valida las solicitudes",
   "readinessBlocked": "Antes de una primera reserva: {step}",
+  "readinessBlockedInvoicing": "Antes de facturar: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing"
+  },
   "readinessFirstBookingReady": "Listo para una primera reserva",
   "readinessLater": "Necesario más adelante",
   "readinessNeededFirst": "Necesario para una primera reserva",
+  "readinessNeededInvoicing": "Necesario antes de facturar",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
   "readinessNext": "Siguiente: {step}",
   "readinessReasonEligibilityExpired": "Su habilitación para asistentes ha caducado",
   "readinessReasonEligibilityMissing": "Ningún administrador de la base de datos le ha habilitado para asistentes",
   "readinessReasonEligibilityNoIdentity": "Inicie sesión primero con su identidad verificada",
   "readinessReasonEligibilityRequested": "Su solicitud espera a un administrador de la base de datos",
+  "readinessReasonInvoicingNeedsIdentity": "Sin ella no se puede emitir ninguna factura",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessReasonMembersCannotBook": "Los miembros aún no pueden reservar: en Roles, concédales «Reservar y usar las reservas»",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
   "readinessReasonNoEvidence": "Aún no se ha registrado ninguna exportación ni restauración",
   "readinessReasonNoPolicies": "Ninguna solicitud espera a un validador",
   "readinessReasonNotExposed": "Este espacio aún no expone nada a los asistentes",
@@ -8629,6 +8665,10 @@
   "refTypeInvoice": "Factura",
   "refusalAlreadyDecided": "Alguien ya lo ha decidido. La lista muestra el resultado.",
   "refusalChangedMeanwhile": "Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.",
+  "refusalMoneyLocaleLocked": "La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.",
+  "@refusalMoneyLocaleLocked": {
+    "description": "#2332: refusalMoneyLocaleLocked"
+  },
   "refusalPermission": "No tiene permiso para esto. Un propietario del espacio puede concederlo en Gestión de roles.",
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
   "regionalClock": "Reloj",
@@ -10171,6 +10211,20 @@
   },
   "seriesBookedCount": "{count, plural, =1{1 reserva creada} other{{count} reservas creadas}}",
   "seriesSkippedTitle": "Omitidas (ya ocupadas):",
+  "serverChoiceExistingTitle": "Un servidor que ya existe",
+  "serverChoiceIntro": "Esta versión de DesKilo viene sin servidor. Elija dónde viven sus espacios. Podrá cambiarlo más tarde en Ajustes → Avanzado → Servidor.",
+  "serverChoiceNewBody": "Cree un proyecto gratuito de Supabase y deje que la aplicación instale todo lo que DesKilo necesita: el esquema, las funciones y las reglas de inicio de sesión.",
+  "serverChoiceNewTitle": "Un servidor nuevo propio",
+  "serverChoiceReferenceAction": "Usar el servidor de referencia",
+  "serverChoiceReferenceBody": "Lo gestiona el autor de DesKilo con el mismo software libre que cualquier otro servidor. También aloja el directorio global de espacios.",
+  "serverChoiceReferenceTitle": "El servidor de referencia",
+  "serverChoiceTitle": "Elija su servidor",
+  "serverConnectIntro": "Únase a un servidor en el que ya tenga una cuenta, o cree uno nuevo.",
+  "serverConnectNoAccount": "¿Aún no tiene cuenta allí? Use este servidor en este dispositivo y regístrese en él.",
+  "serverConnectNoCode": "El portapapeles no contiene ningún código de servidor.",
+  "serverConnectPasteCode": "Pegar un código de servidor",
+  "serverConnectReference": "Servidor de referencia",
+  "serverConnectUseHere": "Usar en este dispositivo",
   "serviceOutOfStock": "Agotado",
   "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
   "serviceStockCount": "{count} en stock",
@@ -12066,9 +12120,39 @@
   "workspaceXmlExportSubtitle": "Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros.",
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImport": "Importar el espacio (XML)",
+  "workspaceXmlImportConfigurationOffBody": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, así que la importación no los aplicaría. Actívela para aplicarlos ahora.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, y solo quien puede cambiar su configuración puede activarla. La importación puede continuar sin ellos.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffTitle": "Este archivo contiene una configuración",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
   "workspaceXmlImportConfigurationOnly": "La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationSkip": "Importar sin la configuración",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Activar y aplicar",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
   },
   "workspaceXmlImportConfirm": "Sustituir e importar",
   "workspaceXmlImportPartial": "Parte de la importación se aplicó antes de detenerse: revise los ajustes y el plano abajo.",
@@ -12090,6 +12174,10 @@
         "type": "int"
       }
     }
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Configuración: no aplicada.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   },
   "workspaceXmlImportPreviewCounts": "Plantas: {levels} · Salas: {offices} · Mesas: {desks} · Puestos: {seats}",
   "workspaceXmlImportPreviewTitle": "¿Sustituir el plano?",

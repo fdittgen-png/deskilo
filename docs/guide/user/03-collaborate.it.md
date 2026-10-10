@@ -149,6 +149,7 @@ Vuole un unico posto che risponda: oggi c'è qualcosa che ha bisogno di me?
 
 - Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa la aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
 - Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente la aspetta**.
+- Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure **Funzionalità**.
 
 **Vedi anche:** [Eventi e conferme](help:user.collaborate.events)
 

@@ -26,5 +26,39 @@
   "workspaceXmlImportConfigurationOnly": "La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationOffTitle": "Este archivo contiene una configuración",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
+  "workspaceXmlImportConfigurationOffBody": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, así que la importación no los aplicaría. Actívela para aplicarlos ahora.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, y solo quien puede cambiar su configuración puede activarla. La importación puede continuar sin ellos.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationSkip": "Importar sin la configuración",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Activar y aplicar",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Configuración: no aplicada.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   }
 }

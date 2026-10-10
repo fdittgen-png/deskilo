@@ -86,7 +86,7 @@ Usted quiere que cada rol tenga lo que necesita y nada más. Es el principio del
 
 Un administrador no tiene **Gestionar roles y permisos**, **Configurar reglas de validación**, **Editar la configuración del espacio**, **Gestionar tarifas y reglas de facturación**, **Diseñar los documentos**, **Gestionar integraciones**, **Gestionar la configuración** ni **Desplegar en producción**. Un copropietario los tiene todos hasta que usted desmarque alguno. El propietario siempre los tiene todos.
 
-> **Atención** En un espacio nuevo, la tarjeta **Usuario** está vacía. Los seis permisos cotidianos (**Usar la mensajería**, **Reservar y usar las reservas**, **Ver el calendario**, **Ver el directorio de miembros**, **Ver su propia cuenta y sus facturas**, **Ver los documentos compartidos**) solo se tienen a través de la matriz o de un rol. Mientras no los marque, un miembro que se une no puede abrir el plano. La demostración los muestra ya marcados, lo que lo oculta. Márquelos en la tarjeta **Usuario**, y en la tarjeta **Administrador** si los administradores también reservan, y pruebe después con una segunda cuenta.
+> **Atención** En un espacio nuevo, la tarjeta **Usuario** está vacía. Los seis permisos cotidianos (**Usar la mensajería**, **Reservar y usar las reservas**, **Ver el calendario**, **Ver el directorio de miembros**, **Ver su propia cuenta y sus facturas**, **Ver los documentos compartidos**) solo se tienen a través de la matriz o de un rol. Mientras no los marque, un miembro que se une no puede abrir el plano. La demostración los muestra ya marcados, lo que lo oculta. **Configuración de este espacio** muestra **Lo que pueden hacer los miembros** como **Necesario para una primera reserva** hasta que la tarjeta **Usuario** tenga **Reservar y usar las reservas**; no comprueba los otros cinco. Márquelos en la tarjeta **Usuario**, y en la tarjeta **Administrador** si los administradores también reservan, y pruebe después con una segunda cuenta.
 
 **Conviene saber**
 
@@ -321,7 +321,7 @@ Usted quiere estar seguro de que toda solicitud para la que crea una regla puede
 
 1. Abra [Reglas de validación](app:/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
 2. Abra [Miembros y planes](app:/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
-3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. Solo retiene la primera reserva cuando la regla es para reservas.
+3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. El área pasa entonces a ser obligatoria, sea cual sea el tipo de solicitud, y [Lo que le necesita](help:user.collaborate.attention) la muestra.
 4. Abra [Eventos](app:/events). **Esperando su confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
 
 **Conviene saber**

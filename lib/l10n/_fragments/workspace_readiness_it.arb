@@ -8,6 +8,30 @@
   "readinessStateNeeds": "Da configurare",
   "readinessStateUnverified": "Non ancora verificato",
   "readinessNeededFirst": "Necessario per una prima prenotazione",
+  "readinessAreaMemberPermissions": "Cosa possono fare i membri",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
+  "readinessAreaLegalIdentity": "L'identità legale e l'indirizzo dello spazio",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
+  "readinessReasonMembersCannotBook": "I membri non possono ancora prenotare: in Ruoli, conceda loro «Prenotare e usare le prenotazioni»",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
+  "readinessReasonInvoicingNeedsIdentity": "Senza di essa non si può emettere alcuna fattura",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessNeededInvoicing": "Necessario prima di fatturare",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
+  "readinessBlockedInvoicing": "Prima di fatturare: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing"
+  },
   "readinessLater": "Necessario più avanti",
   "readinessAreaRegionRules": "Giorni di apertura, fuso orario e valuta",
   "readinessAreaResources": "Posti prenotabili sulla planimetria",

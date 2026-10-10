@@ -83,7 +83,7 @@ Tout le reste est de niveau Plateforme et désactivé : borne et badges, plusieu
 
 **Bon à savoir**
 
-- La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète. Voir [Éviter les fonctionnalités qui se contredisent](help:setup.features.consistency).
+- La fonctionnalité de factures est activée dès le départ, mais rien ne peut être émis tant que votre identité légale n’est pas complète ; **Mise en place de cet espace** la marque **Nécessaire avant de facturer**. Voir [Éviter les fonctionnalités qui se contredisent](help:setup.features.consistency).
 - Un espace qui existe déjà ne change jamais quand DesKilo modifie ce que reçoit un nouvel espace.
 - Si vous partez d’un modèle, celui-ci peut activer ou désactiver quelques fonctionnalités en plus de cet ensemble. Voir [Trois points de départ](help:setup.features.profiles).
 
@@ -314,9 +314,9 @@ Vous êtes sur le point de modifier une fonctionnalité et vous voulez voir l’
 
 *Ce que veut dire « retenue »*
 
-Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans [Fonctionnalités](app:/features) même.
+Une fonctionnalité est retenue quand vous l’avez choisie mais que quelque chose dont elle a besoin est désactivé. Son propre interrupteur reste activé, c’est pourquoi on la manque facilement : l’écran dit que la fonctionnalité est activée, et l’application ne la propose pas. La carte indique combien de fonctionnalités sont retenues (« … sont activées mais attendent un prérequis désactivé ») et quel prérequis elles attendent, et vous corrigez cela dans [Fonctionnalités](app:/features) même. [Ce qui vous attend](help:user.collaborate.attention) montre la même chose, en une ligne par prérequis désactivé.
 
-D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans **Mise en place de cet espace**, sous **Informations requises par vos fonctionnalités (identité, banque, plateformes)**, en haut des réglages de l’espace.
+D’autres choses qu’une fonctionnalité peut attendre ne figurent pas sur cet écran. Une fonctionnalité peut être activée et pleinement autorisée alors que ses informations manquent : votre identité légale, un site, un prestataire de paiement. Elles apparaissent dans **Mise en place de cet espace**, en haut des réglages de l’espace : l’identité légale, quand **Factures** est activé, sous **L'identité légale et l'adresse de l'espace**, le reste sous **Informations requises par vos fonctionnalités (identité, banque, plateformes)**.
 
 **Bon à savoir**
 
@@ -337,15 +337,15 @@ L’application a des garde-fous pour certaines contradictions et aucun pour d�
 
 | Si vous avez… | Garde-fou dans l’application | Lacune qui subsiste |
 |---|---|---|
-| **Factures** activées, pas d’identité légale | L’émission est refusée, avec **Complétez ces informations avant d'émettre** qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans **Mise en place de cet espace**. | La fonctionnalité est activée dès le premier jour : rien n’empêche donc d’inviter des membres et de faire tourner un mois avant que l’identité existe. |
+| **Factures** activées, pas d’identité légale | L’émission est refusée, avec **Complétez ces informations avant d'émettre** qui liste l’adresse, le numéro de TVA, etc. manquants. Le besoin apparaît aussi dans **Mise en place de cet espace**, sous **L'identité légale et l'adresse de l'espace**, **Nécessaire avant de facturer**, et dans Ce qui vous attend. | La fonctionnalité est activée dès le premier jour : rien n’empêche donc d’inviter des membres et de faire tourner un mois avant que l’identité existe. |
 | Un pays autre que la France ou l’Allemagne | L’émission dit que le pays « doit être la France ou l’Allemagne pour émettre ici ». | Rien ne vous avertit quand vous choisissez le pays ou activez la facturation. |
-| Assujetti à la TVA, aucun taux en vigueur | L’émission est refusée tant qu’aucun taux n’est en vigueur. | Avec **Gestion de la TVA** désactivée, la configuration est masquée alors que les taux enregistrés continuent de s’appliquer. Vérifiez les taux après l’avoir désactivée. |
+| Assujetti à la TVA, aucun taux en vigueur | L’émission est refusée tant qu’aucun taux par défaut n’est en vigueur. La description de **Gestion de la TVA** et l’avertissement de l’écran d’identité légale le disent. | Avec **Gestion de la TVA** désactivée, la configuration est masquée alors que les taux enregistrés continuent de s’appliquer. Vérifiez les taux après l’avoir désactivée. |
 | **Paiements en ligne** activés, pas de prestataire | Un nouveau paiement en ligne est refusé quand la fonctionnalité est désactivée ; l’absence de prestataire apparaît dans **Mise en place de cet espace**. | Vous pouvez l’activer sans prestataire. Connectez-le d’abord : [Prestataire de paiement](help:user.money.payments.provider). |
 | **Mode borne** activé, pas de badges ni de membre borne | **Badges RFID / NFC**, **Badges QR**, **Photos des membres à la borne** et **Connexion par badge** ne peuvent pas être activés sans lui. | Rien ne vérifie qu’un membre borne existe ni qu’un badge a été émis. Voir [Faire tourner une tablette murale](help:user.kiosk.mode). |
 | **Sites** activés, aucun site | **Au moins un site** apparaît parmi les informations requises par vos fonctionnalités. | L’interrupteur peut être activé sans aucun site. |
 | **Notifications push** activées, pas de service de notifications | Les membres reçoivent quand même tout dans l’application. | Les téléphones ne reçoivent rien tant que la personne qui fait tourner l’installation n’a pas configuré le service de notifications. Voir [Comment les membres sont informés](help:setup.notify.channels). |
-| **Relances de paiement** activées, **Relances de paiement automatiques** activées | La seconde ne peut pas être activée sans la première. | Le planificateur du serveur les envoie chaque matin ; si la base n’a pas de planificateur, elles partent quand un administrateur ouvre Finances. |
-| Une règle de validation qui demande plus de validateurs qu’il n’en existe | **Mise en place de cet espace** dit « Une règle demande plus de validateurs que cet espace n’en compte », et cela retient la première réservation quand la règle porte sur les réservations. | Les autres demandes sont créées, ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir [Qui valide](help:user.validation.overview). |
+| **Relances de paiement** activées, **Relances de paiement automatiques** activées | La seconde ne peut pas être activée sans la première. | Le serveur les envoie chaque matin si l’installation planifie des tâches ; sinon, elles partent quand un administrateur ouvre Finances. L’interrupteur et la description de la fonctionnalité le disent ; l’opérateur de votre serveur sait ce qui s’applique. |
+| Une règle de validation qui demande plus de validateurs qu’il n’en existe | **Mise en place de cet espace** dit « Une règle demande plus de validateurs que cet espace n’en compte », et **Rôles et validation des demandes** devient obligatoire, quel que soit le type de demande. | Les demandes créées avant que vous corrigiez ne peuvent pas être menées à bien et expirent au bout de sept jours. Voir [Qui valide](help:user.validation.overview). |
 | **Demandes de suppression de réservation** activées, personne pour valider | La même ligne de préparation. | La même lacune. |
 | **Réservations de table, bureau et niveau** activées | **Les admins peuvent attribuer des niveaux** en a besoin. | Chaque membre doit aussi en avoir le droit ; rien ne vérifie que quelqu’un l’a. |
 | Une fonctionnalité enfant activée, son parent désactivé | **À examiner**, et « En attente de la fonction au-dessus ». | Aucune : ce cas est entièrement couvert. |
@@ -355,7 +355,7 @@ L’application a des garde-fous pour certaines contradictions et aucun pour d�
 
 - La règle d’or : si une fonctionnalité met votre nom, votre argent ou vos obligations légales sur un document, finissez ses informations avant d’en parler aux membres.
 - **Mise en place de cet espace** est une liste, pas un verrou. Elle ne vous empêche jamais d’activer quelque chose.
-- La vérification « Avant que quiconque puisse réserver ici » ne parle que de ce dont une réservation a vraiment besoin : le fuseau horaire, la devise, un jour de semaine ouvert et au moins une place.
+- La vérification « Avant que quiconque puisse réserver ici » ne parle que des domaines obligatoires : le fuseau horaire, la devise, un jour de semaine ouvert, au moins une place, des membres qui détiennent **Réserver et utiliser les réservations** et assez de validateurs. Quand **Factures** est activé, l’identité légale est aussi obligatoire, mais avant de facturer : la carte de l’espace dit « Avant de facturer », et celle de Réserver ne la mentionne jamais.
 
 **Voir aussi :** [Identité légale et facturation](help:setup.money.identity) · [Essai à blanc](help:setup.money.dry-run)
 

@@ -68,11 +68,11 @@ Vous construisez le lieu et ses horaires dans un espace de test, pour qu'un memb
 5. Ajoutez un jour de fermeture. Voir [Jours de fermeture](help:user.workspace.availability.closure-days).
 6. Gardez les fonctions par défaut. N'ouvrez [Fonctionnalités](app:/features) que pour lire ce qui est activé.
 7. Faites une réservation à votre nom, puis enregistrez votre arrivée et votre départ. Voir [Arriver et partir](help:user.reserve.check-in).
-8. Partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir [L'identifiant de l'espace](help:user.workspace.code).
+8. Dans [Rôles](app:/roles), cochez les permissions de tous les jours sur la carte **Utilisateur**, puis partagez l'identifiant de l'espace avec une personne et laissez-la le rejoindre. Voir [L'identifiant de l'espace](help:user.workspace.code).
 
 **Bon à savoir**
 
-- Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture et au moins une place. Tout le reste peut attendre.
+- Un espace peut être réservé dès qu'il a un fuseau horaire, une devise, au moins un jour d'ouverture, au moins une place, et des membres qui détiennent **Réserver et utiliser les réservations**. Tout le reste peut attendre.
 - Un plan ne peut pas être remplacé par un import dès qu'une réservation existe.
 
 *C'est terminé quand*
@@ -194,7 +194,7 @@ Les décisions que vous allez rencontrer ont des noms. Voici ce que chacun signi
 | Remise à zéro de la numérotation | La fréquence à laquelle le numéro de facture repart de zéro. Elle ne peut pas être plus fréquente que la date imprimée sur la facture. |
 | Paire d'environnements | Un côté test et un côté réel d'un même espace. |
 | Modèle | Une configuration enregistrée (plan, règles, tarifs, rôles) que vous pouvez appliquer à un nouvel espace. Il ne reprend jamais l'identité ni les coordonnées de paiement. |
-| Préparation | La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver. |
+| Préparation | La liste de contrôle en haut des réglages de l'espace, qui dit ce qui manque avant que l'on puisse réserver, et avant la première facture. |
 | Retenue | Une fonction activée qui attend une autre fonction désactivée. |
 | Kiosque | Un écran partagé à la porte où les membres enregistrent leur arrivée et leur départ. |
 | Badge | Une carte ou une étiquette qu'un membre présente pour s'enregistrer à un kiosque. |
@@ -237,7 +237,7 @@ Toute la mise en place sur une page. *Réversible* vous dit si vous pouvez chang
 
 | Étape | Où dans l'app | Durée | Réversible ? |
 |---|---|---|---|
-| 1. Pays, devise, fuseau horaire, langue | [Réglages de l'espace](app:/workspace-settings) | 5 minutes | Oui, mais ne changez pas la devise une fois que de l'argent existe |
+| 1. Pays, devise, fuseau horaire, langue | [Réglages de l'espace](app:/workspace-settings) | 5 minutes | Oui, jusqu'au premier document ou paiement ; ensuite la devise et le pays sont verrouillés |
 | 2. Plan | [Éditeur de l'espace](app:/editor) | 30 minutes | Oui, jusqu'à la première réservation ; ensuite, modifiez un objet à la fois |
 | 3. Règles d'ouverture | Disponibilité | 10 minutes | Oui |
 | 4. Fonctionnalités | [Fonctionnalités](app:/features) | 10 minutes | Oui. Désactiver arrête les nouveaux usages et ne supprime rien |

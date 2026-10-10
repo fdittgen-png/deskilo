@@ -258,7 +258,7 @@ Decide quando un pagamento è in ritardo e chi si occupa di sollecitare.
 **Da sapere**
 
 - Il tempo prima del primo sollecito vale anche come Suo termine di pagamento. Lo imposti con i [Termini di pagamento](help:user.money.legal.payment-terms).
-- I solleciti automatici girano una volta al giorno sul server quando il database ha lo scheduler attivo. Girano anche quando chi può emettere fatture (un proprietario, un comproprietario o un amministratore, se **Gli admin emettono fatture** è attivo) apre Finanze: così anche uno spazio senza scheduler li riceve, nei giorni in cui qualcuno guarda.
+- I solleciti automatici girano una volta al giorno sul server quando il database ha lo scheduler attivo. Girano anche quando chi può emettere fatture (un proprietario, un comproprietario o un amministratore, se **Gli admin emettono fatture** è attivo) apre Finanze: così anche uno spazio senza scheduler li riceve, nei giorni in cui qualcuno guarda. Lo dicono anche l'interruttore e la descrizione della funzionalità; l'operatore del Suo server sa quale vale.
 - La funzione **Solleciti di pagamento** rende disponibili soltanto le regole. Un sollecito parte da solo solo se **Solleciti automatici** è attivo nelle regole di sollecito, e questo resta spento finché non lo sceglie Lei.
 - Saltano una fattura con un pagamento in sospeso o in attesa, e una fattura senza termine di pagamento registrato.
 - Il membro riceve un avviso nel suo flusso e, se le notifiche push sono configurate, una notifica generica; vedi [Informare le persone](help:setup.notify.overview).
@@ -285,7 +285,7 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 **Da sapere**
 
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
-- Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere.
+- Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
 - Una dichiarazione è un ausilio alla presentazione, costruito dalle Sue fatture emesse. La verifichi prima di presentarla e la segni come presentata solo dopo averlo fatto.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
@@ -308,7 +308,7 @@ Vuole sapere, prima della prima fattura, che cosa non potrà più cambiare in se
 | Numero di fattura | I numeri sono senza interruzioni e vengono assegnati nel database al momento dell'emissione. Il numero successivo può essere alzato, mai abbassato. Un cambio di formato vale da quel momento. Un azzeramento non può essere più frequente della data stampata nel numero. | Alla prima emissione |
 | Un mese fatturato | Un mese con una fattura per un membro è chiuso per quel membro. I giorni di chiusura e le importazioni dei giorni festivi saltano questi mesi e li nominano. | Alla prima fattura del mese |
 | Aliquote IVA | Le aliquote sono versionate per data, mai modificate. Una dichiarazione IVA presentata non viene mai ricalcolata. | Al primo utilizzo |
-| Valuta e paese | Gli importi sono memorizzati in unità minime intere, senza conversione. Non è stata trovata alcuna protezione che impedisca di cambiarli in seguito: li decida prima della prima prenotazione. | Prima della prima prenotazione |
+| Valuta e paese | Gli importi sono memorizzati in unità minime intere, senza conversione. Quando lo spazio ha emesso un documento o registrato denaro, il server rifiuta di cambiare l'uno o l'altra. | Al primo documento o pagamento |
 
 **Passaggi**
 

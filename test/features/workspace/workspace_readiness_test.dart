@@ -494,4 +494,79 @@ void main() {
     expect(find.text('Next: Membership plans and tariffs'), findsOneWidget);
     expect(find.textContaining('Set aside for later'), findsNothing);
   });
+
+  test('0399 words: what members may do, and the legal identity', () {
+    final s = ReadinessSection.listFromJson([
+      {
+        'section': 'member_permissions',
+        'state': 'needs_configuration',
+        'required': true,
+        'reason': 'members_cannot_book',
+        'route': '/roles',
+        'count': 0,
+      },
+      {
+        'section': 'legal_identity',
+        'state': 'needs_configuration',
+        'required': true,
+        'reason': 'invoicing_needs_identity',
+        'route': '/legal-identity',
+      },
+    ]);
+    expect(s.map((x) => x.area), [
+      ReadinessArea.memberPermissions,
+      ReadinessArea.legalIdentity,
+    ]);
+    expect(s.every((x) => x.blocking), isTrue);
+    expect(s.map((x) => readinessSectionCode(x.area)),
+        ['member_permissions', 'legal_identity']);
+  });
+
+  testWidgets('the legal identity is named as holding back invoicing', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(readinessSections: [
+        const ReadinessSection(
+          area: ReadinessArea.legalIdentity,
+          state: ReadinessState.needsConfiguration,
+          required: true,
+          reason: 'invoicing_needs_identity',
+          route: '/legal-identity',
+        ),
+      ]),
+    );
+    expect(
+      find.text("Before invoicing: The space's legal identity and address"),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Needed before invoicing'), findsOneWidget);
+    expect(find.textContaining('No invoice can be issued without it'),
+        findsOneWidget);
+  });
+
+  testWidgets('members who cannot book are a blocker that says why', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(readinessSections: [
+        const ReadinessSection(
+          area: ReadinessArea.memberPermissions,
+          state: ReadinessState.needsConfiguration,
+          required: true,
+          reason: 'members_cannot_book',
+          route: '/roles',
+        ),
+      ]),
+    );
+    expect(find.text('Before a first booking: What members may do'),
+        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('workspace-readiness-all')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Book and use reservations'), findsOneWidget);
+  });
 }

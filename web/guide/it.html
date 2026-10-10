@@ -961,6 +961,7 @@
 <ul>
 <li>Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione <strong>Cosa la aspetta</strong>; senza di essa l'indirizzo riporta alla pagina iniziale.</li>
 <li>Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica <strong>Niente la aspetta</strong>.</li>
+<li>Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure <strong>Funzionalità</strong>.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.collaborate.events">Eventi e conferme</a></p>
 </div></article><article class="section" id="user.validation.overview" data-roles="owner"><header><h3>Regole di convalida, ambito per ambito <a class="permalink" href="#user.validation.overview" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span></div></header><div class="body"><p>Decide, per ogni tipo di atto, se una persona deve prima confermarlo e chi.</p>
@@ -2243,6 +2244,7 @@
 <h4 class="lbl lbl-know">Da sapere</h4>
 <ul>
 <li>Il paese propone la valuta e il fuso orario, e decide quali aliquote IVA vengono offerte.</li>
+<li>Quando lo spazio ha emesso un documento o registrato denaro, il paese non si può più cambiare: il salvataggio dice «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.»</li>
 <li><strong>Salva</strong> scrive insieme tutto il modulo. Se nel frattempo qualcuno ha modificato queste impostazioni, non viene salvato nulla e ciò che ha digitato resta sullo schermo.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.workspace.settings.currency-timezone">Valuta e fuso orario</a></p>
@@ -2256,7 +2258,7 @@
 </ol>
 <h4 class="lbl lbl-know">Da sapere</h4>
 <ul>
-<li>La valuta viene proposta in base al paese. Può cambiarla.</li>
+<li>La valuta viene proposta in base al paese. Può cambiarla finché lo spazio non ha emesso un documento o registrato denaro; dopo è fissata.</li>
 <li>Il fuso orario non è un dettaglio estetico: una giornata lavorativa, il limite di mezza giornata e un giorno di chiusura sono tutti contati in base ad esso, perciò un membro all'estero vede la giornata dello spazio e non la propria.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.workspace.settings.country">Paese</a></p>
@@ -3365,7 +3367,7 @@
 <li>Le aliquote consuete sono un punto di partenza. Quale operazione rientri in quale aliquota è una questione per il Suo commercialista.</li>
 <li>L'aliquota predefinita è usata dagli abbonamenti e da tutto ciò che non ha un'aliquota propria.</li>
 <li>Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata, invece di essere eliminata.</li>
-<li>Senza alcuna aliquota, mentre è soggetto IVA, le fatture non mostrano imposta e l'esportazione XML resta disattivata.</li>
+<li>Senza alcuna aliquota predefinita in vigore, mentre è soggetto IVA, non si può emettere alcuna fattura; la schermata dell'identità legale lo segnala.</li>
 <li>Questa schermata richiede la funzione <strong>Gestione IVA</strong>; la voce delle aliquote IVA nella schermata dell'identità legale compare solo con il regime di soggetto IVA.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.money.vat.groups">Gruppi IVA</a> · <a href="#user.money.vat.change-by-law">Modifica per legge</a></p>
@@ -3720,6 +3722,7 @@
 <li>Una volta al giorno, le fatture oltre il termine di pagamento registrato ricevono il livello successivo, per l'importo ancora da pagare.</li>
 <li>Mai mentre un pagamento è in sospeso o la fattura è sospesa. Le fatture senza termine registrato restano a Lei.</li>
 <li>Disattivati: invia Lei stesso ogni sollecito.</li>
+<li>Quando viene eseguito: ogni mattina sul server se l'installazione pianifica attività, altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.</li>
 </ul>
 <p class="see-also"><strong>Vedi anche:</strong> <a href="#user.money.reminders.rules">Regole di sollecito</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-reminders-automatic.it.b8fa17aa9.jpg" alt="Solleciti automatici"></div></figure></div></article><article class="section" id="user.invoicing.register" data-roles="owner billing"><header><h3>Il registro fatture <a class="permalink" href="#user.invoicing.register" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Proprietario</span><span class="role role-billing">Amministratore fatturazione</span></div></header><div class="body"><p>Tutte le fatture in un unico elenco ordinabile.</p>

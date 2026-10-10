@@ -16,18 +16,20 @@ reset role;
 
 select is((select string_agg(e->>'section', ',' order by o) from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o <= 7),
   'region_rules,resources,pricing,invitations,payments,roles_validation,recovery', 'seven sections in the order a space is set up (0295 adds roles and validation)');
+-- 0399 (#2332): what members may do follows, always required — a new
+-- space grants plain members nothing, so nobody but its staff can book.
+select is((select e->>'section' || ':' || (e->>'required') || ':' || (e->>'reason') from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o = 8),
+  'member_permissions:true:members_cannot_book', 'members cannot book until the owner grants it');
 -- 0287: the local setup the switched-on features need, as one more
--- section, present exactly when there is anything to set up locally.
-select is((select e->>'section' from jsonb_array_elements(current_setting('t.r')::jsonb) with ordinality x(e, o) where o = 8),
-  case when jsonb_array_length(current_setting('t.local')::jsonb) > 0 then 'local_setup' end,
-  'the local setup follows when a feature needs it');
-select is((select (e->>'required')::boolean from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'local_setup'),
-  case when jsonb_array_length(current_setting('t.local')::jsonb) > 0 then false end,
-  'and never blocks a first booking');
+-- section, never blocking a first booking.
+select is((select coalesce(bool_or((e->>'required')::boolean), false) from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'local_setup'),
+  false, 'and never blocks a first booking');
 select is((select e->>'state' from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'recovery'),
   'unverified', 'recovery is never claimed without evidence');
 select is((select string_agg(e->>'section', ',') from jsonb_array_elements(current_setting('t.r')::jsonb) e where (e->>'required')::boolean),
-  'region_rules,resources', 'only rules and places block a first booking, while no reservation policy is short');
+  'region_rules,resources,member_permissions'
+    || case when public.feature_effective(current_setting('t.ws')::uuid, 'invoicing') then ',legal_identity' else '' end,
+  'rules, places, members'' permissions and — under invoicing — the legal identity are required, while no policy is short');
 select is((select e->>'state' from jsonb_array_elements(current_setting('t.r')::jsonb) e where e->>'section' = 'invitations'),
   'needs_configuration', 'a space of one has invited nobody yet');
 

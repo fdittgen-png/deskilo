@@ -495,6 +495,7 @@ Vuole che lo spazio sappia dove ha sede. **Spazio di lavoro** si apre su **Infor
 **Da sapere**
 
 - Il paese propone la valuta e il fuso orario, e decide quali aliquote IVA vengono offerte.
+- Quando lo spazio ha emesso un documento o registrato denaro, il paese non si può più cambiare: il salvataggio dice «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.»
 - **Salva** scrive insieme tutto il modulo. Se nel frattempo qualcuno ha modificato queste impostazioni, non viene salvato nulla e ciò che ha digitato resta sullo schermo.
 
 **Vedi anche:** [Valuta e fuso orario](help:user.workspace.settings.currency-timezone)
@@ -516,7 +517,7 @@ Vuole che i prezzi e i giorni siano contati come li conta il suo spazio.
 
 **Da sapere**
 
-- La valuta viene proposta in base al paese. Può cambiarla.
+- La valuta viene proposta in base al paese. Può cambiarla finché lo spazio non ha emesso un documento o registrato denaro; dopo è fissata.
 - Il fuso orario non è un dettaglio estetico: una giornata lavorativa, il limite di mezza giornata e un giorno di chiusura sono tutti contati in base ad esso, perciò un membro all'estero vede la giornata dello spazio e non la propria.
 
 **Vedi anche:** [Paese](help:user.workspace.settings.country)

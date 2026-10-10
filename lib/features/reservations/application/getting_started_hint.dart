@@ -219,7 +219,14 @@ GettingStartedHint? noOwnerReadinessGuidance(GettingStartedFacts facts) => null;
 /// check (null) says nothing rather than guessing.
 OwnerReadinessGuidance readinessGuidance(List<ReadinessSection>? sections) =>
     (facts) {
-      final next = sections == null ? null : nextReadinessStep(sections);
+      // #2332 — the legal identity holds back invoicing, not a booking:
+      // the Get started card on Reserve never names it.
+      final next = sections == null
+          ? null
+          : nextReadinessStep([
+              for (final s in sections)
+                if (s.area != ReadinessArea.legalIdentity) s,
+            ]);
       if (next == null || !next.blocking) return null;
       return GettingStartedHint(
         reason: GettingStartedReason.setupIncomplete,

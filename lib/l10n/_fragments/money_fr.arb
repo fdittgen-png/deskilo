@@ -169,7 +169,7 @@
   "@featureVatManagementTitle": {
     "description": "Feature toggle title: VAT management (#544)"
   },
-  "featureVatManagementDesc": "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer.",
+  "featureVatManagementDesc": "L'éditeur des taux de TVA et les sélecteurs de taux des services, forfaits, accessoires et paliers. Désactivé, la configuration disparaît ; les taux enregistrés continuent de s'appliquer. Un espace assujetti à la TVA en a besoin, avec un taux par défaut, pour émettre une facture : sans eux, l'émission est refusée.",
   "@featureVatManagementDesc": {
     "description": "Feature toggle description: VAT management (#544)"
   },
@@ -333,7 +333,6 @@
   "scheduledExpensesTitle": "Dépenses programmées",
   "scheduledExpensesIntro": "Les abonnements que l'espace paie — internet, téléphone, électricité. La programmation est validée une fois ; chaque échéance vous est présentée avant de compter.",
   "scheduledExpensesEmpty": "Aucune dépense programmée pour le moment.",
-
   "scheduledExpensesFinished": "Terminées et refusées ({count})",
   "scheduleNew": "Programmer une dépense récurrente",
   "scheduleCancel": "Terminer cette programmation",

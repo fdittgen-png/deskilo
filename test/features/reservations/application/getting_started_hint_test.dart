@@ -476,5 +476,21 @@ void main() {
         expect(hint?.action, GettingStartedAction.chooseTime, reason: '$sections');
       }
     });
+
+    test('the legal identity holds back invoicing, never a booking (#2332)',
+        () {
+      const identity = ReadinessSection(
+        area: ReadinessArea.legalIdentity,
+        state: ReadinessState.needsConfiguration,
+        required: true,
+        route: '/legal-identity',
+      );
+      final hint = chooseGettingStartedHint(
+        _facts(membership: _owner),
+        dismissed: false,
+        ownerGuidance: readinessGuidance(const [identity]),
+      );
+      expect(hint?.action, GettingStartedAction.chooseTime);
+    });
   });
 }

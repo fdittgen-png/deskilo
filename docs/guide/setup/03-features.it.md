@@ -83,7 +83,7 @@ Tutto il resto è Piattaforma e disattivato: chiosco e badge, più sedi, supplem
 
 **Da sapere**
 
-- La funzionalità delle fatture è attiva fin dall’inizio, ma non si può emettere nulla finché la sua identità legale non è completa. Veda [Evitare funzionalità in contraddizione tra loro](help:setup.features.consistency).
+- La funzionalità delle fatture è attiva fin dall’inizio, ma non si può emettere nulla finché la sua identità legale non è completa; **Configurazione di questo spazio** la segna **Necessario prima di fatturare**. Veda [Evitare funzionalità in contraddizione tra loro](help:setup.features.consistency).
 - Uno spazio già esistente non cambia mai quando DesKilo modifica ciò che riceve un nuovo spazio.
 - Se parte da un modello, il modello può attivare o disattivare alcune funzionalità in aggiunta a questo insieme. Veda [Tre punti di partenza](help:setup.features.profiles).
 
@@ -314,9 +314,9 @@ Sta per cambiare una funzionalità e vuole vedere l’effetto prima che esista.
 
 *Che cosa significa «trattenuta»*
 
-Una funzionalità è trattenuta quando l’ha scelta, ma qualcosa di cui ha bisogno è disattivato. Il suo interruttore resta attivo, ed è per questo che è facile non accorgersene: la schermata dice che la funzionalità è attiva, e l’app non la offre. La scheda indica quante funzionalità sono trattenute («… attive ma attendono un prerequisito disattivato») e quale prerequisito attendono, e Lei lo sistema nella schermata [Funzionalità](app:/features) stessa.
+Una funzionalità è trattenuta quando l’ha scelta, ma qualcosa di cui ha bisogno è disattivato. Il suo interruttore resta attivo, ed è per questo che è facile non accorgersene: la schermata dice che la funzionalità è attiva, e l’app non la offre. La scheda indica quante funzionalità sono trattenute («… attive ma attendono un prerequisito disattivato») e quale prerequisito attendono, e Lei lo sistema nella schermata [Funzionalità](app:/features) stessa. [Che cosa richiede la Sua attenzione](help:user.collaborate.attention) mostra la stessa cosa con una riga per ogni prerequisito disattivato.
 
-Altre cose che una funzionalità può attendere non si trovano in questa schermata. Una funzionalità può essere attiva e pienamente consentita mentre mancano i suoi dati: la sua identità legale, una sede, un fornitore di pagamenti. Compaiono in **Configurazione di questo spazio**, sotto **Dati richiesti dalle funzioni (identità, banca, piattaforme)**, in cima alle impostazioni dello spazio di lavoro.
+Altre cose che una funzionalità può attendere non si trovano in questa schermata. Una funzionalità può essere attiva e pienamente consentita mentre mancano i suoi dati: la sua identità legale, una sede, un fornitore di pagamenti. Compaiono in **Configurazione di questo spazio**, in cima alle impostazioni dello spazio: l’identità legale, con **Fatture** attiva, come **L'identità legale e l'indirizzo dello spazio**, il resto sotto **Dati richiesti dalle funzioni (identità, banca, piattaforme)** di lavoro.
 
 **Da sapere**
 
@@ -337,15 +337,15 @@ L’app ha dei controlli per alcune contraddizioni e nessuno per altre. Nella ta
 
 | Se ha… | Controllo nell’app | Lacuna che resta |
 |---|---|---|
-| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completi questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
+| **Fatture** attive, nessuna identità legale | L’emissione viene rifiutata, con **Completi questi dati prima dell'emissione** che elenca l’indirizzo mancante, il numero di partita IVA e così via. La necessità compare anche in **Configurazione di questo spazio**, come **L'identità legale e l'indirizzo dello spazio**, **Necessario prima di fatturare**, e nella Sua posta. | La funzionalità è attiva dal primo giorno, quindi nulla impedisce di invitare i membri e di gestire un mese prima che esista l’identità. |
 | Un paese diverso da Francia o Germania | L’emissione dice che il paese «deve essere Francia o Germania per emettere qui». | Nulla la avvisa quando sceglie il paese o attiva la fatturazione. |
-| Registrato ai fini IVA, nessuna aliquota in vigore | L’emissione viene rifiutata finché non è in vigore un’aliquota. | Con **Gestione IVA** disattivata, la configurazione è nascosta mentre le aliquote memorizzate continuano ad applicarsi. Controlli le aliquote dopo averla disattivata. |
+| Registrato ai fini IVA, nessuna aliquota in vigore | L’emissione viene rifiutata finché non è in vigore un’aliquota predefinita. La descrizione di **Gestione IVA** e l’avviso nella schermata dell’identità legale lo dicono. | Con **Gestione IVA** disattivata, la configurazione è nascosta mentre le aliquote memorizzate continuano ad applicarsi. Controlli le aliquote dopo averla disattivata. |
 | **Pagamenti online** attivi, nessun fornitore | Un nuovo pagamento online viene rifiutato quando la funzionalità è disattivata; il fornitore mancante compare in **Configurazione di questo spazio**. | Può attivarla senza un fornitore. Lo colleghi prima: [Fornitore di pagamenti](help:user.money.payments.provider). |
 | **Modalità chiosco** attiva, nessun badge e nessun membro chiosco | **Badge RFID / NFC**, **Badge QR**, **Foto dei membri al chiosco** e **Accedi con un badge** non possono essere attivi senza di essa. | Nulla verifica che esista un membro chiosco o che sia stato emesso un badge. Veda [Gestire un tablet a muro](help:user.kiosk.mode). |
 | **Sedi** attive, nessuna sede | **Almeno una sede** compare tra i dati richiesti dalle funzioni. | L’interruttore può essere attivo senza alcuna sede. |
 | **Notifiche push** attive, nessun servizio push | I membri ricevono comunque tutto nell’app. | I telefoni non ricevono nulla finché chi gestisce l’installazione non ha configurato il servizio push. Veda [Come vengono informati i membri](help:setup.notify.channels). |
-| **Solleciti di pagamento** attivi, **Solleciti di pagamento automatici** attivi | I secondi non possono essere attivi senza i primi. | L’utilità di pianificazione del server li invia ogni mattina; se il database non ha un’utilità di pianificazione, vengono inviati quando un amministratore apre Finanze. |
-| Una regola di convalida che richiede più validatori di quanti ne esistano | **Configurazione di questo spazio** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» e blocca la prima prenotazione quando la regola riguarda le prenotazioni. | Le altre richieste vengono create, non possono essere completate e scadono dopo sette giorni. Veda [Chi convalida](help:user.validation.overview). |
+| **Solleciti di pagamento** attivi, **Solleciti di pagamento automatici** attivi | I secondi non possono essere attivi senza i primi. | Il server li invia ogni mattina se l’installazione pianifica attività; altrimenti vengono inviati quando un amministratore apre Finanze. L’interruttore e la descrizione della funzionalità lo dicono; l’operatore del Suo server sa quale vale. |
+| Una regola di convalida che richiede più validatori di quanti ne esistano | **Configurazione di questo spazio** dice «Una regola richiede più validatori di quanti ne abbia questo spazio» e **Ruoli e chi convalida le richieste** diventa obbligatoria, qualunque sia il tipo di richiesta. | Le richieste create prima della correzione non possono essere completate e scadono dopo sette giorni. Veda [Chi convalida](help:user.validation.overview). |
 | **Richieste di eliminazione prenotazioni** attive, nessuno che convalidi | Stessa riga di preparazione. | Stessa lacuna. |
 | **Prenotazioni di tavolo, ufficio e piano** attive | **Gli admin possono assegnare piani** ne ha bisogno. | Ogni membro deve inoltre avere il diritto; nulla verifica che qualcuno lo abbia. |
 | Una funzionalità figlia attiva, la sua madre disattivata | **Richiede attenzione** e «In attesa della funzione qui sopra». | Nessuna: questo caso è pienamente coperto. |
@@ -355,7 +355,7 @@ L’app ha dei controlli per alcune contraddizioni e nessuno per altre. Nella ta
 
 - La regola pratica: se una funzionalità porta su un documento il suo nome, il suo denaro o i suoi obblighi legali, completi i suoi dati prima di avvisare i membri.
 - **Configurazione di questo spazio** è un elenco, non un blocco. Non le impedisce mai di attivare qualcosa.
-- Il controllo «Prima che qualcuno possa prenotare qui» parla solo di ciò di cui una prenotazione ha davvero bisogno: il fuso orario, la valuta, un giorno della settimana aperto e almeno un posto.
+- Il controllo «Prima che qualcuno possa prenotare qui» parla solo delle aree obbligatorie: il fuso orario, la valuta, un giorno della settimana aperto, almeno un posto, membri che possiedono **Prenotare e usare le prenotazioni** e abbastanza validatori. Con **Fatture** attiva anche l’identità legale è obbligatoria, ma prima di fatturare: la scheda dello spazio dice «Prima di fatturare» e quella di Prenota non la nomina mai.
 
 **Vedi anche:** [Identità legale e fatturazione](help:setup.money.identity) · [Prova a vuoto](help:setup.money.dry-run)
 

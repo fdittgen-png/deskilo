@@ -543,6 +543,22 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Da configurare: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count funzioni attivate attendono «$feature»',
+      one: '1 funzione attivata attende «$feature»',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'In attesa dal $date';
   }
@@ -5707,7 +5723,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'L\'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi.';
+      'L\'editor delle aliquote IVA e i selettori di aliquota su servizi, pacchetti, accessori e tariffe. Disattivato nasconde la configurazione; le aliquote salvate continuano ad applicarsi. Uno spazio soggetto a IVA ne ha bisogno, insieme a un\'aliquota predefinita, per emettere una fattura: senza di essi l\'emissione viene rifiutata.';
 
   @override
   String get featureVatManagementTitle => 'Gestione IVA';
@@ -8984,7 +9000,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Questo spazio applica l\'IVA ma non è configurata alcuna aliquota: le fatture non espongono imposta e l\'export XML resta disattivato.';
+      'Questo spazio applica l\'IVA ma non è in vigore alcuna aliquota predefinita: nessuna fattura può essere emessa finché non ne aggiunge una. Le aliquote si modificano con «Gestione IVA» attivata.';
 
   @override
   String get legendBlocked => 'Bloccata';
@@ -12143,6 +12159,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentProviderWero => 'Wero (tramite Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Quando viene eseguito: ogni mattina sul server, se l\'installazione pianifica attività (pg_cron); altrimenti quando un amministratore apre Finanze. L\'operatore del Suo server sa quale vale.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13755,8 +13775,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get readinessAreaInvitations => 'Invitare i primi membri';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'L\'identità legale e l\'indirizzo dello spazio';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Dati richiesti dalle funzioni (identità, banca, piattaforme)';
+
+  @override
+  String get readinessAreaMemberPermissions => 'Cosa possono fare i membri';
 
   @override
   String get readinessAreaPayments => 'Come pagano i membri';
@@ -13784,6 +13811,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Prima di fatturare: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Pronto per una prima prenotazione';
 
   @override
@@ -13791,6 +13823,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Necessario per una prima prenotazione';
+
+  @override
+  String get readinessNeededInvoicing => 'Necessario prima di fatturare';
 
   @override
   String readinessNext(String step) {
@@ -13812,6 +13847,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'La sua richiesta attende un amministratore del database';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Senza di essa non si può emettere alcuna fattura';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'I membri non possono ancora prenotare: in Ruoli, conceda loro «Prenotare e usare le prenotazioni»';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13967,6 +14010,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.';
 
   @override
   String get refusalPermission =>
@@ -15648,6 +15695,54 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get seriesSkippedTitle => 'Saltate (già occupate):';
+
+  @override
+  String get serverChoiceExistingTitle => 'Un server già esistente';
+
+  @override
+  String get serverChoiceIntro =>
+      'Questa versione di DesKilo è priva di server. Scelga dove si trovano i suoi spazi. Potrà cambiarlo in seguito in Impostazioni → Avanzate → Server.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Crei un progetto Supabase gratuito e lasci che l’app installi tutto ciò che serve a DesKilo: lo schema, le funzioni e le regole di accesso.';
+
+  @override
+  String get serverChoiceNewTitle => 'Un nuovo server suo';
+
+  @override
+  String get serverChoiceReferenceAction => 'Usa il server di riferimento';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Gestito dall’autore di DesKilo con lo stesso software libero di ogni altro server. Ospita anche la directory globale degli spazi.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'Il server di riferimento';
+
+  @override
+  String get serverChoiceTitle => 'Scelga il suo server';
+
+  @override
+  String get serverConnectIntro =>
+      'Si unisca a un server su cui ha già un account, oppure ne crei uno nuovo.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'Non ha ancora un account lì? Usi questo server su questo dispositivo e si registri.';
+
+  @override
+  String get serverConnectNoCode =>
+      'Gli appunti non contengono alcun codice server.';
+
+  @override
+  String get serverConnectPasteCode => 'Incolla un codice server';
+
+  @override
+  String get serverConnectReference => 'Server di riferimento';
+
+  @override
+  String get serverConnectUseHere => 'Usa su questo dispositivo';
 
   @override
   String get serviceOutOfStock => 'Esaurito';
@@ -19697,8 +19792,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get workspaceXmlImport => 'Importa lo spazio (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'Il file contiene tariffe, l\'identità legale, regole di prenotazione e di convalida e ruoli. In questo spazio «$feature» è disattivata, quindi l\'importazione non li applicherebbe. La attivi per applicarli ora.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'Il file contiene tariffe, l\'identità legale, regole di prenotazione e di convalida e ruoli. In questo spazio «$feature» è disattivata, e solo chi può modificarne la configurazione può attivarla. L\'importazione può continuare senza di essi.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'Questo file contiene una configurazione';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'La configurazione è stata applicata. La planimetria è stata mantenuta: questo spazio ha già prenotazioni, la sua planimetria non può essere sostituita.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Importa senza la configurazione';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn => 'Attiva e applica';
 
   @override
   String get workspaceXmlImportConfirm => 'Sostituisci e importa';
@@ -19720,6 +19836,10 @@ class AppLocalizationsIt extends AppLocalizations {
   ) {
     return 'Configurazione: $settings impostazioni, $rows righe in $tables tabelle';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Configurazione: non applicata.';
 
   @override
   String workspaceXmlImportPreviewCounts(

@@ -1010,6 +1010,18 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
   String attentionIssue(int count);
 
+  /// #2332: attentionSetUp
+  ///
+  /// In en, this message translates to:
+  /// **'Set up: {area}'**
+  String attentionSetUp(String area);
+
+  /// #2332: attentionUnblock
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}'**
+  String attentionUnblock(int count, String feature);
+
   /// #2326: attentionWaitingSince
   ///
   /// In en, this message translates to:
@@ -9837,7 +9849,7 @@ abstract class AppLocalizations {
   /// Feature toggle description: VAT management (#544)
   ///
   /// In en, this message translates to:
-  /// **'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.'**
+  /// **'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused.'**
   String get featureVatManagementDesc;
 
   /// Feature toggle title: VAT management (#544)
@@ -15357,7 +15369,7 @@ abstract class AppLocalizations {
   /// Warning shown for the VAT-registered regime
   ///
   /// In en, this message translates to:
-  /// **'This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.'**
+  /// **'This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.'**
   String get legalIdentityVatWarning;
 
   /// No description provided for @legendBlocked.
@@ -20738,6 +20750,12 @@ abstract class AppLocalizations {
   /// **'Wero (via Mollie)'**
   String get paymentProviderWero;
 
+  /// #2332: when automatic payment reminders run
+  ///
+  /// In en, this message translates to:
+  /// **'When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.'**
+  String get paymentRemindersWhen;
+
   /// #711 - globalization
   ///
   /// In en, this message translates to:
@@ -23480,11 +23498,23 @@ abstract class AppLocalizations {
   /// **'Invite the first members'**
   String get readinessAreaInvitations;
 
+  /// #2332: readinessAreaLegalIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s legal identity and address'**
+  String get readinessAreaLegalIdentity;
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:
   /// **'Details your features need (identity, bank, platforms)'**
   String get readinessAreaLocalSetup;
+
+  /// #2332: readinessAreaMemberPermissions
+  ///
+  /// In en, this message translates to:
+  /// **'What members may do'**
+  String get readinessAreaMemberPermissions;
 
   /// #1636 workspace_readiness
   ///
@@ -23528,6 +23558,12 @@ abstract class AppLocalizations {
   /// **'Before a first booking: {step}'**
   String readinessBlocked(String step);
 
+  /// #2332: readinessBlockedInvoicing
+  ///
+  /// In en, this message translates to:
+  /// **'Before invoicing: {area}'**
+  String readinessBlockedInvoicing(String area);
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:
@@ -23545,6 +23581,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needed for a first booking'**
   String get readinessNeededFirst;
+
+  /// #2332: readinessNeededInvoicing
+  ///
+  /// In en, this message translates to:
+  /// **'Needed before invoicing'**
+  String get readinessNeededInvoicing;
 
   /// #1636 workspace_readiness
   ///
@@ -23575,6 +23617,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your request waits for a database administrator'**
   String get readinessReasonEligibilityRequested;
+
+  /// #2332: readinessReasonInvoicingNeedsIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice can be issued without it'**
+  String get readinessReasonInvoicingNeedsIdentity;
+
+  /// #2332: readinessReasonMembersCannotBook
+  ///
+  /// In en, this message translates to:
+  /// **'Members cannot book yet: in Roles, grant them “Book and use reservations”'**
+  String get readinessReasonMembersCannotBook;
 
   /// #1636 workspace_readiness
   ///
@@ -23857,6 +23911,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
+
+  /// #2332: refusalMoneyLocaleLocked
+  ///
+  /// In en, this message translates to:
+  /// **'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.'**
+  String get refusalMoneyLocaleLocked;
 
   /// #1305 Shown when the server refuses an action for lack of a permission
   ///
@@ -26845,6 +26905,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Skipped (already taken):'**
   String get seriesSkippedTitle;
+
+  /// No description provided for @serverChoiceExistingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A server that already exists'**
+  String get serverChoiceExistingTitle;
+
+  /// No description provided for @serverChoiceIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.'**
+  String get serverChoiceIntro;
+
+  /// No description provided for @serverChoiceNewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.'**
+  String get serverChoiceNewBody;
+
+  /// No description provided for @serverChoiceNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new server of your own'**
+  String get serverChoiceNewTitle;
+
+  /// No description provided for @serverChoiceReferenceAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the reference server'**
+  String get serverChoiceReferenceAction;
+
+  /// No description provided for @serverChoiceReferenceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.'**
+  String get serverChoiceReferenceBody;
+
+  /// No description provided for @serverChoiceReferenceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The reference server'**
+  String get serverChoiceReferenceTitle;
+
+  /// No description provided for @serverChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your server'**
+  String get serverChoiceTitle;
+
+  /// No description provided for @serverConnectIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a server where you already have an account, or create a new one.'**
+  String get serverConnectIntro;
+
+  /// No description provided for @serverConnectNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No account there yet? Use this server on this device and sign up there.'**
+  String get serverConnectNoAccount;
+
+  /// No description provided for @serverConnectNoCode.
+  ///
+  /// In en, this message translates to:
+  /// **'The clipboard holds no server code.'**
+  String get serverConnectNoCode;
+
+  /// No description provided for @serverConnectPasteCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a server code'**
+  String get serverConnectPasteCode;
+
+  /// No description provided for @serverConnectReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference server'**
+  String get serverConnectReference;
+
+  /// No description provided for @serverConnectUseHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Use on this device'**
+  String get serverConnectUseHere;
 
   /// No description provided for @serviceOutOfStock.
   ///
@@ -33788,11 +33932,41 @@ abstract class AppLocalizations {
   /// **'Import workspace (XML)'**
   String get workspaceXmlImport;
 
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, so the import would not apply them. Switch it on to apply them now.'**
+  String workspaceXmlImportConfigurationOffBody(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, and only somebody who may change its configuration can switch it on. The import can continue without them.'**
+  String workspaceXmlImportConfigurationOffNoRight(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle
+  ///
+  /// In en, this message translates to:
+  /// **'This file carries a configuration'**
+  String get workspaceXmlImportConfigurationOffTitle;
+
   /// #916 configuration transfer: workspaceXmlImportConfigurationOnly
   ///
   /// In en, this message translates to:
   /// **'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.'**
   String get workspaceXmlImportConfigurationOnly;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip
+  ///
+  /// In en, this message translates to:
+  /// **'Import without the configuration'**
+  String get workspaceXmlImportConfigurationSkip;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn
+  ///
+  /// In en, this message translates to:
+  /// **'Switch it on and apply'**
+  String get workspaceXmlImportConfigurationSwitchOn;
 
   /// Destructive confirm button of the import preview dialog (#165)
   ///
@@ -33821,6 +33995,12 @@ abstract class AppLocalizations {
     int tables,
     int rows,
   );
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration: not applied.'**
+  String get workspaceXmlImportPreviewConfigurationSkipped;
 
   /// Summary line in the import preview dialog counting what the picked file contains (#165)
   ///

@@ -1209,6 +1209,7 @@ Vuole un unico posto che risponda: oggi c'è qualcosa che ha bisogno di me?
 
 - Questa schermata esiste solo se il suo spazio di lavoro ha attivato la funzione **Cosa la aspetta**; senza di essa l'indirizzo riporta alla pagina iniziale.
 - Più decisioni identiche vengono mostrate come una sola riga. Quando non c'è nulla in attesa, la schermata indica **Niente la aspetta**.
+- Elenca anche la configurazione non completata: «Da configurare: …» per ogni area obbligatoria dell'elenco di configurazione che non è pronta (solo per chi configura lo spazio), e «… funzioni attivate attendono «…»» quando una funzione spenta ne trattiene altre. Un tocco apre la schermata in cui si configura, oppure **Funzionalità**.
 
 **Vedi anche:** [Eventi e conferme](#eventi-e-conferme)
 
@@ -3156,6 +3157,7 @@ Vuole che lo spazio sappia dove ha sede. **Spazio di lavoro** si apre su **Infor
 **Da sapere**
 
 - Il paese propone la valuta e il fuso orario, e decide quali aliquote IVA vengono offerte.
+- Quando lo spazio ha emesso un documento o registrato denaro, il paese non si può più cambiare: il salvataggio dice «La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.»
 - **Salva** scrive insieme tutto il modulo. Se nel frattempo qualcuno ha modificato queste impostazioni, non viene salvato nulla e ciò che ha digitato resta sullo schermo.
 
 **Vedi anche:** [Valuta e fuso orario](#valuta-e-fuso-orario)
@@ -3177,7 +3179,7 @@ Vuole che i prezzi e i giorni siano contati come li conta il suo spazio.
 
 **Da sapere**
 
-- La valuta viene proposta in base al paese. Può cambiarla.
+- La valuta viene proposta in base al paese. Può cambiarla finché lo spazio non ha emesso un documento o registrato denaro; dopo è fissata.
 - Il fuso orario non è un dettaglio estetico: una giornata lavorativa, il limite di mezza giornata e un giorno di chiusura sono tutti contati in base ad esso, perciò un membro all'estero vede la giornata dello spazio e non la propria.
 
 **Vedi anche:** [Paese](#paese)
@@ -4912,7 +4914,7 @@ Elenca le aliquote IVA che le Sue fatture possono usare. Ciò che pagano i membr
 - Le aliquote consuete sono un punto di partenza. Quale operazione rientri in quale aliquota è una questione per il Suo commercialista.
 - L'aliquota predefinita è usata dagli abbonamenti e da tutto ciò che non ha un'aliquota propria.
 - Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata, invece di essere eliminata.
-- Senza alcuna aliquota, mentre è soggetto IVA, le fatture non mostrano imposta e l'esportazione XML resta disattivata.
+- Senza alcuna aliquota predefinita in vigore, mentre è soggetto IVA, non si può emettere alcuna fattura; la schermata dell'identità legale lo segnala.
 - Questa schermata richiede la funzione **Gestione IVA**; la voce delle aliquote IVA nella schermata dell'identità legale compare solo con il regime di soggetto IVA.
 
 **Vedi anche:** [Gruppi IVA](#gruppi-iva) · [Modifica per legge](#modificare-unaliquota-per-legge)
@@ -5458,6 +5460,7 @@ Vuole che i solleciti partano da soli.
 - Una volta al giorno, le fatture oltre il termine di pagamento registrato ricevono il livello successivo, per l'importo ancora da pagare.
 - Mai mentre un pagamento è in sospeso o la fattura è sospesa. Le fatture senza termine registrato restano a Lei.
 - Disattivati: invia Lei stesso ogni sollecito.
+- Quando viene eseguito: ogni mattina sul server se l'installazione pianifica attività, altrimenti quando un amministratore apre Finanze. L'operatore del Suo server sa quale vale.
 
 **Vedi anche:** [Regole di sollecito](#regole-di-sollecito)
 

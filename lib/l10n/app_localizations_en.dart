@@ -540,6 +540,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Set up: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count switched-on features wait for “$feature”',
+      one: '1 switched-on feature waits for “$feature”',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'Waiting since $date';
   }
@@ -5669,7 +5685,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.';
+      'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused.';
 
   @override
   String get featureVatManagementTitle => 'VAT management';
@@ -8919,7 +8935,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.';
+      'This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.';
 
   @override
   String get legendBlocked => 'Blocked';
@@ -12049,6 +12065,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentProviderWero => 'Wero (via Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13644,8 +13664,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readinessAreaInvitations => 'Invite the first members';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'The space\'s legal identity and address';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Details your features need (identity, bank, platforms)';
+
+  @override
+  String get readinessAreaMemberPermissions => 'What members may do';
 
   @override
   String get readinessAreaPayments => 'How members pay';
@@ -13671,6 +13698,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Before invoicing: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Ready for a first booking';
 
   @override
@@ -13678,6 +13710,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Needed for a first booking';
+
+  @override
+  String get readinessNeededInvoicing => 'Needed before invoicing';
 
   @override
   String readinessNext(String step) {
@@ -13699,6 +13734,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'Your request waits for a database administrator';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'No invoice can be issued without it';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'Members cannot book yet: in Roles, grant them “Book and use reservations”';
 
   @override
   String get readinessReasonNoEvidence => 'No export or restore recorded yet';
@@ -13851,6 +13894,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'This changed in the meantime. Reopen it to see where it stands.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.';
 
   @override
   String get refusalPermission =>
@@ -15515,6 +15562,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get seriesSkippedTitle => 'Skipped (already taken):';
+
+  @override
+  String get serverChoiceExistingTitle => 'A server that already exists';
+
+  @override
+  String get serverChoiceIntro =>
+      'This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.';
+
+  @override
+  String get serverChoiceNewBody =>
+      'Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.';
+
+  @override
+  String get serverChoiceNewTitle => 'A new server of your own';
+
+  @override
+  String get serverChoiceReferenceAction => 'Use the reference server';
+
+  @override
+  String get serverChoiceReferenceBody =>
+      'Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.';
+
+  @override
+  String get serverChoiceReferenceTitle => 'The reference server';
+
+  @override
+  String get serverChoiceTitle => 'Choose your server';
+
+  @override
+  String get serverConnectIntro =>
+      'Join a server where you already have an account, or create a new one.';
+
+  @override
+  String get serverConnectNoAccount =>
+      'No account there yet? Use this server on this device and sign up there.';
+
+  @override
+  String get serverConnectNoCode => 'The clipboard holds no server code.';
+
+  @override
+  String get serverConnectPasteCode => 'Paste a server code';
+
+  @override
+  String get serverConnectReference => 'Reference server';
+
+  @override
+  String get serverConnectUseHere => 'Use on this device';
 
   @override
   String get serviceOutOfStock => 'Out of stock';
@@ -19513,8 +19607,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceXmlImport => 'Import workspace (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “$feature” off, so the import would not apply them. Switch it on to apply them now.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “$feature” off, and only somebody who may change its configuration can switch it on. The import can continue without them.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'This file carries a configuration';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Import without the configuration';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn =>
+      'Switch it on and apply';
 
   @override
   String get workspaceXmlImportConfirm => 'Replace and import';
@@ -19536,6 +19652,10 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return 'Configuration: $settings settings, $rows rows in $tables tables';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Configuration: not applied.';
 
   @override
   String workspaceXmlImportPreviewCounts(

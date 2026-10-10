@@ -454,7 +454,7 @@ Sie listen die Umsatzsteuersätze auf, die Ihre Rechnungen verwenden dürfen. Wa
 - Die üblichen Sätze sind ein Ausgangspunkt. Welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Buchhaltung.
 - Der Standardsatz wird von Abos und von allem verwendet, was keinen eigenen Satz hat.
 - Ein Satz, den noch eine Rechnung oder eine Leistung verwendet, wird deaktiviert beibehalten statt gelöscht.
-- Ohne Satz zeigen Rechnungen bei Umsatzsteuerpflicht keine Steuer, und der XML-Export bleibt deaktiviert.
+- Gilt bei Umsatzsteuerpflicht kein Standardsatz, kann keine Rechnung ausgestellt werden; der Bildschirm der rechtlichen Identität warnt davor.
 - Dieser Bildschirm setzt die Funktion **USt-Verwaltung** voraus; der Eintrag Steuersätze im Bildschirm der rechtlichen Identität erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
 **Siehe auch:** [Steuergruppen](help:user.money.vat.groups) · [Änderung per Gesetz](help:user.money.vat.change-by-law)
@@ -1000,6 +1000,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 - Einmal am Tag erhalten Rechnungen, die ihre festgehaltene Zahlungsfrist überschritten haben, ihre nächste Stufe, über den noch offenen Betrag.
 - Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.
 - Aus: Sie senden jede Mahnung selbst.
+- Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.
 
 **Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
 

@@ -68,11 +68,11 @@ Construye el lugar y sus horarios en un espacio de prueba, para que un miembro p
 5. Añada un día de cierre. Véase [Días de cierre](help:user.workspace.availability.closure-days).
 6. Conserve las funciones por defecto. Abra [Funciones](app:/features) solo para leer lo que está activado.
 7. Haga una reserva usted mismo y registre después la entrada y la salida. Véase [Registrar entrada y salida](help:user.reserve.check-in).
-8. Comparta el ID del espacio con una persona y deje que se una. Véase [El ID del espacio](help:user.workspace.code).
+8. En [Roles](app:/roles), marque los permisos cotidianos en la tarjeta **Usuario** y comparta después el ID del espacio con una persona y deje que se una. Véase [El ID del espacio](help:user.workspace.code).
 
 **Conviene saber**
 
-- Un espacio puede reservarse cuando tiene una zona horaria, una moneda, al menos un día laborable abierto y al menos un puesto. Todo lo demás puede esperar.
+- Un espacio puede reservarse cuando tiene una zona horaria, una moneda, al menos un día laborable abierto, al menos un puesto y miembros que tengan **Reservar y usar las reservas**. Todo lo demás puede esperar.
 - Un plano no se puede sustituir mediante una importación cuando ya existe una reserva.
 
 *Ha terminado cuando*
@@ -194,7 +194,7 @@ Las decisiones con las que se encontrará tienen nombre. Esto es lo que signific
 | Reinicio de numeración | Cada cuánto vuelve a empezar el número de factura. No puede ser más frecuente que la fecha impresa en la factura. |
 | Par de entornos | Un lado de prueba y un lado real de un mismo espacio. |
 | Plantilla | Una configuración guardada (plano, reglas, tarifas, roles) que puede aplicar a un espacio nuevo. Nunca incluye la identidad ni los datos de pago. |
-| Preparación | La lista de comprobación al principio de los ajustes del espacio que dice qué falta antes de que la gente pueda reservar. |
+| Preparación | La lista de comprobación al principio de los ajustes del espacio que dice qué falta antes de que la gente pueda reservar, y antes de la primera factura. |
 | Retenida | Una función que está activada pero espera a otra que está desactivada. |
 | Quiosco | Una pantalla compartida en la puerta donde los miembros registran su entrada y su salida. |
 | Credencial | Una tarjeta o etiqueta que un miembro muestra para registrarse en un quiosco. |
@@ -237,7 +237,7 @@ Toda la configuración en una página. *Reversible* indica si puede cambiar de o
 
 | Paso | Dónde en la aplicación | Cuánto dura | ¿Reversible? |
 |---|---|---|---|
-| 1. País, moneda, zona horaria, idioma | [Ajustes del espacio](app:/workspace-settings) | 5 minutos | Sí, pero no cambie la moneda cuando ya exista dinero |
+| 1. País, moneda, zona horaria, idioma | [Ajustes del espacio](app:/workspace-settings) | 5 minutos | Sí, hasta el primer documento o pago; después la moneda y el país quedan bloqueados |
 | 2. Plano | [Editor del espacio](app:/editor) | 30 minutos | Sí, hasta la primera reserva; después se edita un objeto cada vez |
 | 3. Reglas de apertura | Disponibilidad | 10 minutos | Sí |
 | 4. Funciones | [Funciones](app:/features) | 10 minutos | Sí. Desactivar detiene el uso nuevo y no borra nada |

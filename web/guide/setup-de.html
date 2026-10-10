@@ -189,9 +189,10 @@
 <ol>
 <li><strong>Öffnungstage, Zeitzone und Währung</strong>: eine Zeitzone, eine Währung und mindestens ein geöffneter Wochentag.</li>
 <li><strong>Buchbare Plätze im Grundriss</strong>: mindestens ein Platz.</li>
-<li><strong>Rollen und wer Anfragen bestätigt</strong>: zählt nur, wenn eine Regel für Buchungen mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.</li>
+<li><strong>Rollen und wer Anfragen bestätigt</strong>: zählt nur, wenn eine Validierungsregel, gleich welcher Art, mehr Bestätigende verlangt, als der Space hat. Eine Regel, die zwei Freigaben verlangt, während nur Sie im Space sind, ließe Anfragen für immer warten.</li>
+<li><strong>Was Mitglieder dürfen</strong>: Mitglieder halten <strong>Buchen und Reservierungen nutzen</strong>. Ein neuer Space gewährt ihnen nichts, ein beitretendes Mitglied kann also nicht buchen, bis Sie es unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rollen</a> ankreuzen.</li>
 </ol>
-<p>Eine vierte Zeile, <strong>Server und Datenbankversion</strong>, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers.</p>
+<p>Eine weitere Zeile, <strong>Server und Datenbankversion</strong>, blockiert nur, wenn der Server hinter dieser App zurückliegt; dann wartet sie auf die Betreiberin oder den Betreiber des Servers. Und solange <strong>Rechnungen</strong> eingeschaltet ist, ist auch <strong>Rechtliche Identität und Adresse des Space</strong> erforderlich: Die Liste markiert sie mit <strong>Vor der Rechnungsstellung nötig</strong>, weil ohne sie keine Rechnung ausgestellt werden kann.</p>
 <p><em>Was optional ist und auf später warten kann</em></p>
 <ul>
 <li><strong>Mitgliedschaftsmodelle und Tarife</strong></li>
@@ -205,8 +206,8 @@
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Die Liste nennt, wer handelt: <strong>Sie</strong>, <strong>Der Serverbetreiber</strong> oder <strong>Eine Datenbankadministration</strong>.</li>
-<li>Optional heißt nicht unwichtig: Sobald Sie Rechnungen stellen, ist Ihre rechtliche Identität für diese Funktion Pflicht. Die Liste nennt sie eine Angabe, die Ihre Funktionen brauchen.</li>
-<li>Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; sie verweigert erst das Ausstellen einer Rechnung und sagt, was fehlt.</li>
+<li>Optional heißt nicht unwichtig: Bankdaten, ein Zahlungsanbieter oder ein Standort sind Angaben, die Ihre Funktionen brauchen, und die Liste nennt sie.</li>
+<li>Schalten Sie Rechnungen ohne rechtliche Identität ein, lässt die App das zu; die Liste und <a href="de.html#user.collaborate.attention">Was auf Sie wartet</a> nennen sie, und das Ausstellen einer Rechnung wird verweigert, mit dem Hinweis, was fehlt.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#ihren-space-pr%C3%BCfen">Ihren Space prüfen</a> · <a href="de.html#user.start.get-started">Die Karte „Erste Schritte“ und die Tipps</a></p>
 </div></article><article class="section" id="setup.before.environment" data-roles="owner coowner operator"><header><h3>Ein Test-Space oder ein echter <a class="permalink" href="#setup.before.environment" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-coowner">Mitinhaber</span><span class="role role-operator">Betreiber:in</span></div></header><div class="body"><p>Sie möchten Dinge ohne Folgen ausprobieren und danach den echten Space betreiben. Ein Space kann ein Test sein, ein echter oder ein verknüpftes Paar mit demselben Namen.</p>
@@ -267,7 +268,7 @@
 </table>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie Angaben, die Ihre Funktionen brauchen.</li>
+<li>Eine Vorlage bringt nie Ihre rechtliche Identität, Bankdaten, Standorte, Einladungen oder Dokumentenlinks mit: Die gehören Ihnen, und die Bereitschaftsliste nennt sie (die rechtliche Identität, bei eingeschalteten <strong>Rechnungen</strong>, als eigenen Bereich).</li>
 <li>In einem aus einer Vorlage erstellten Space können Rechnungen eingeschaltet sein, ohne dass Sie etwas ausstellen können, solange die Identität fehlt.</li>
 <li>Wenden Sie eine Vorlage auf einen Space an, der schon Tarife hat, ersetzt sie dessen Gebührenstufen: Nutzen Sie sie für einen neuen Space.</li>
 </ul>
@@ -318,7 +319,7 @@
 </tr>
 <tr>
 <td>Land, Währung, Zeitzone</td>
-<td>Beträge werden als Zahlen ohne Umrechnung gespeichert; die Währung zu ändern, sobald Geld im Spiel ist, ist unsicher.</td>
+<td>Beträge werden als Zahlen ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von Währung oder Land ab. Die Zeitzone wird nie gesperrt, aber jeder Tag wird in ihr gezählt.</td>
 <td>Sie am ersten Tag richtig wählen; siehe <a href="#setup.place.overview">Den Ort aufbauen</a>.</td>
 </tr>
 <tr>
@@ -423,7 +424,7 @@
 <li>Wählen Sie das <strong>Land</strong>; <strong>Währung</strong> und <strong>Zeitzone</strong> folgen, und Sie können sie korrigieren. Für das Atelier du Marché: Frankreich, EUR, Europe/Paris.</li>
 <li>Wählen Sie die <strong>Sprache des Arbeitsbereichs</strong> und tippen Sie auf <strong>Speichern</strong>.</li>
 </ol>
-<blockquote class="warn"><p><strong>Achtung</strong> Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; die Währung zu ändern, wenn schon Geld gezählt wurde, würde alles Bisherige falsch beschriften.</p>
+<blockquote class="warn"><p><strong>Achtung</strong> Wählen Sie Land und Währung am ersten Tag richtig. Beträge werden als einfache Zahlen gespeichert; sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server deshalb jede Änderung von beiden ab: „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“</p>
 </blockquote>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
@@ -530,7 +531,7 @@
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz und genug Bestätigende.</li>
+<li>Bereit heißt bereit für eine erste Buchung: Öffnungstage, Zeitzone, Währung, mindestens ein Platz, Mitglieder, die buchen dürfen, und genug Bestätigende.</li>
 <li>Alles Optionale, etwa Tarife oder Zahlungen, können Sie mit <strong>Später</strong> zurückstellen; es verhindert das Öffnen nicht.</li>
 <li>Beide Karten hängen von der Funktion <em>Karte „Erste Schritte“</em> ab.</li>
 <li><strong>Jetzt nicht</strong> blendet die Karte auf diesem Gerät aus; das Ansichtsmenü auf dem Plan holt sie mit <strong>Erste Schritte</strong> zurück.</li>
@@ -651,7 +652,7 @@
 <p>Alles andere gehört zur Plattform und ist aus: Kiosk und Badges, mehrere Standorte, Zubehör-Aufpreise, Online-Zahlungen, USt-Verwaltung, der Weg einer Rechnung, Berichtsgestaltung, Ausrollungen, WhatsApp, die Assistentenschnittstelle und der Rest.</p>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist. Siehe <a href="#setup.features.consistency">Funktionen vermeiden, die sich widersprechen</a>.</li>
+<li>Die Funktion Rechnungen ist von Anfang an an, doch ausstellen lässt sich nichts, bevor Ihre rechtliche Identität vollständig ist; <strong>Einrichtung dieses Workspace</strong> markiert sie mit <strong>Vor der Rechnungsstellung nötig</strong>. Siehe <a href="#setup.features.consistency">Funktionen vermeiden, die sich widersprechen</a>.</li>
 <li>Ein bestehender Space ändert sich nie, wenn DesKilo ändert, was ein neuer Space bekommt.</li>
 <li>Beginnen Sie mit einer Vorlage, kann die Vorlage zusätzlich zu diesem Satz einige Funktionen ein- oder ausschalten. Siehe <a href="#setup.features.profiles">Drei Ausgangspunkte</a>.</li>
 </ul>
@@ -963,8 +964,8 @@
 <li>Lesen Sie die Frage oder die Zeile „Ebenfalls eingeschaltet“ und bestätigen Sie.</li>
 </ol>
 <p><em>Was „zurückgehalten“ bedeutet</em></p>
-<p>Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Funktionen</a>.</p>
-<p>Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in <strong>Einrichtung dieses Workspace</strong> unter <strong>Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)</strong>, oben in den Workspace-Einstellungen.</p>
+<p>Eine Funktion ist zurückgehalten, wenn Sie sie gewählt haben, aber etwas, das sie braucht, aus ist. Ihr eigener Schalter bleibt an, weshalb man es leicht übersieht: Der Bildschirm sagt, die Funktion sei an, und die App bietet sie nicht an. Die Karte sagt, wie viele Funktionen zurückgehalten sind („… sind an, warten aber auf eine ausgeschaltete Voraussetzung“) und auf welche Voraussetzung sie warten; beheben Sie es direkt in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Funktionen</a>. <a href="de.html#user.collaborate.attention">Was auf Sie wartet</a> zeigt dasselbe als eine Zeile pro ausgeschalteter Voraussetzung.</p>
+<p>Auf anderes, worauf eine Funktion warten kann, geht dieser Bildschirm nicht ein. Eine Funktion kann an und voll erlaubt sein, während ihre Angaben fehlen: Ihre rechtliche Identität, ein Standort, ein Zahlungsanbieter. Diese erscheinen in <strong>Einrichtung dieses Workspace</strong>, oben in den Workspace-Einstellungen: die rechtliche Identität, bei eingeschalteten <strong>Rechnungen</strong>, als <strong>Rechtliche Identität und Adresse des Space</strong>, der Rest unter <strong>Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)</strong>.</p>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Hat jemand anderes die Funktionen geändert, während Sie hinsahen, schreibt die App nichts und sagt es: „Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert.“ Sehen Sie die Liste noch einmal an und schalten Sie erneut.</li>
@@ -985,7 +986,7 @@
 <tbody>
 <tr>
 <td><strong>Rechnungen</strong> an, keine rechtliche Identität</td>
-<td>Das Ausstellen wird verweigert; <strong>Vor der Ausstellung bitte ergänzen</strong> listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in <strong>Einrichtung dieses Workspace</strong>.</td>
+<td>Das Ausstellen wird verweigert; <strong>Vor der Ausstellung bitte ergänzen</strong> listet die fehlende Adresse, Umsatzsteuernummer usw. auf. Der Bedarf erscheint auch in <strong>Einrichtung dieses Workspace</strong>, als <strong>Rechtliche Identität und Adresse des Space</strong>, <strong>Vor der Rechnungsstellung nötig</strong>, und in Was auf Sie wartet.</td>
 <td>Die Funktion ist ab dem ersten Tag an; nichts hindert Sie also daran, Mitglieder einzuladen und einen Monat laufen zu lassen, bevor die Identität existiert.</td>
 </tr>
 <tr>
@@ -995,7 +996,7 @@
 </tr>
 <tr>
 <td>Für die Umsatzsteuer registriert, kein gültiger Satz</td>
-<td>Das Ausstellen wird verweigert, bis ein Satz gilt.</td>
+<td>Das Ausstellen wird verweigert, bis ein Standardsatz gilt. Die Beschreibung von <strong>USt-Verwaltung</strong> und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.</td>
 <td>Bei ausgeschalteter <strong>USt-Verwaltung</strong> ist die Konfiguration verborgen, während die gespeicherten Sätze weiter gelten. Prüfen Sie die Sätze nach dem Ausschalten.</td>
 </tr>
 <tr>
@@ -1021,12 +1022,12 @@
 <tr>
 <td><strong>Mahnwesen</strong> an, <strong>Automatische Zahlungserinnerungen</strong> an</td>
 <td>Die zweite kann ohne die erste nicht an sein.</td>
-<td>Der Planer des Servers versendet sie jeden Morgen; hat die Datenbank keinen Planer, werden sie versendet, wenn ein Administrator Finanzen öffnet.</td>
+<td>Der Server versendet sie jeden Morgen, sofern die Installation Aufgaben plant; sonst werden sie versendet, wenn ein Administrator Finanzen öffnet. Der Schalter und die Funktionsbeschreibung sagen es; der Betreiber Ihres Servers weiß, was zutrifft.</td>
 </tr>
 <tr>
 <td>Eine Freigaberegel verlangt mehr Prüfer, als es gibt</td>
-<td><strong>Einrichtung dieses Workspace</strong> sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ und hält die erste Buchung auf, wenn die Regel für Buchungen gilt.</td>
-<td>Andere Anfragen werden angelegt, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe <a href="de.html">Wer bestätigt</a>.</td>
+<td><strong>Einrichtung dieses Workspace</strong> sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, und <strong>Rollen und wer Anfragen bestätigt</strong> wird erforderlich, gleich welche Art von Anfrage.</td>
+<td>Anfragen, die vor Ihrer Korrektur angelegt wurden, können nicht abgeschlossen werden und verfallen nach sieben Tagen. Siehe <a href="de.html">Wer bestätigt</a>.</td>
 </tr>
 <tr>
 <td><strong>Lösch-Anträge für Buchungen</strong> an, niemand zum Bestätigen</td>
@@ -1054,7 +1055,7 @@
 <ul>
 <li>Die Faustregel: Bringt eine Funktion Ihren Namen, Ihr Geld oder Ihre rechtlichen Pflichten auf ein Dokument, vervollständigen Sie ihre Angaben, bevor Sie es den Mitgliedern sagen.</li>
 <li><strong>Einrichtung dieses Workspace</strong> ist eine Liste, keine Sperre. Sie hindert Sie nie daran, etwas einzuschalten.</li>
-<li>Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über das, was eine Buchung wirklich braucht: die Zeitzone, die Währung, einen geöffneten Wochentag und mindestens einen Platz.</li>
+<li>Die Prüfung „Bevor hier jemand buchen kann“ spricht nur über die erforderlichen Bereiche: die Zeitzone, die Währung, einen geöffneten Wochentag, mindestens einen Platz, Mitglieder mit <strong>Buchen und Reservierungen nutzen</strong> und genug Bestätigende. Bei eingeschalteten <strong>Rechnungen</strong> ist auch die rechtliche Identität erforderlich, aber vor der Rechnungsstellung: Die Karte des Space sagt „Vor der Rechnungsstellung“, die Karte unter Reservieren nennt sie nie.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#ihre-rechtliche-identit%C3%A4t-und-was-sie-ihren-steuerberater-fragen">Rechtliche Identität und Rechnungen</a> · <a href="#setup.money.dry-run">Probelauf</a></p>
 </div></article><article class="section no-media" id="setup.features.map" data-roles="owner coowner"><header><h3>Die Funktionslandkarte <a class="permalink" href="#setup.features.map" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-coowner">Mitinhaber</span></div></header><div class="body"><p>Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder bekommen, was sie brauchen und wer sie einrichten muss. „Braucht“ nennt zuerst die übergeordnete Funktion, dann die Angaben außerhalb des Bildschirms Funktionen. „Wer“ ist die Person, die etwas tun muss, bevor die Funktion nützt; „Niemand“ heißt, sie funktioniert, sobald sie an ist.</p>
@@ -1814,7 +1815,7 @@
 </tbody>
 </table>
 <p>Ein Administrator hat nicht <strong>Rollen &amp; Berechtigungen verwalten</strong>, <strong>Validierungsregeln konfigurieren</strong>, <strong>Workspace-Einstellungen bearbeiten</strong>, <strong>Tarife und Abrechnungsregeln verwalten</strong>, <strong>Dokumente gestalten</strong>, <strong>Integrationen verwalten</strong>, <strong>Konfiguration verwalten</strong> oder <strong>In die Produktion ausrollen</strong>. Eine Mit-Inhaberin hat alle, bis Sie einige abwählen. Der Inhaber hat sie immer alle.</p>
-<blockquote class="warn"><p><strong>Achtung</strong> In einem neuen Space ist die Karte <strong>Benutzer</strong> leer. Die sechs Alltagsberechtigungen (<strong>Den Messenger nutzen</strong>, <strong>Buchen und Reservierungen nutzen</strong>, <strong>Den Kalender sehen</strong>, <strong>Das Mitgliederverzeichnis sehen</strong>, <strong>Das eigene Konto und die eigenen Rechnungen sehen</strong>, <strong>Die geteilten Dokumente sehen</strong>) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. Haken Sie sie bei der Karte <strong>Benutzer</strong> an, und bei der Karte <strong>Administrator</strong>, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.</p>
+<blockquote class="warn"><p><strong>Achtung</strong> In einem neuen Space ist die Karte <strong>Benutzer</strong> leer. Die sechs Alltagsberechtigungen (<strong>Den Messenger nutzen</strong>, <strong>Buchen und Reservierungen nutzen</strong>, <strong>Den Kalender sehen</strong>, <strong>Das Mitgliederverzeichnis sehen</strong>, <strong>Das eigene Konto und die eigenen Rechnungen sehen</strong>, <strong>Die geteilten Dokumente sehen</strong>) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. <strong>Einrichtung dieses Workspace</strong> zeigt <strong>Was Mitglieder dürfen</strong> als <strong>Nötig für eine erste Buchung</strong>, bis die Karte <strong>Benutzer</strong> <strong>Buchen und Reservierungen nutzen</strong> hält; die fünf anderen prüft sie nicht. Haken Sie sie bei der Karte <strong>Benutzer</strong> an, und bei der Karte <strong>Administrator</strong>, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.</p>
 </blockquote>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
@@ -2152,7 +2153,7 @@
 <ol>
 <li>Öffnen Sie <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/validation">Freigaberegeln</a> und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.</li>
 <li>Öffnen Sie <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/members">Mitglieder &amp; Tarife</a>. Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.</li>
-<li>Öffnen Sie <strong>Einrichtung dieses Workspace</strong> unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a>. Der Bereich <strong>Rollen und wer Anfragen bestätigt</strong> sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Er hält die erste Buchung nur auf, wenn die Regel für Buchungen gilt.</li>
+<li>Öffnen Sie <strong>Einrichtung dieses Workspace</strong> unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a>. Der Bereich <strong>Rollen und wer Anfragen bestätigt</strong> sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Der Bereich wird dann erforderlich, gleich welche Art von Anfrage, und <a href="de.html#user.collaborate.attention">Was auf Sie wartet</a> meldet ihn.</li>
 <li>Öffnen Sie <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/events">Ereignisse</a>. <strong>Wartet auf Ihre Bestätigung</strong> zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.</li>
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
@@ -2416,7 +2417,7 @@
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Die Frist bis zur ersten Mahnung gilt zugleich als Ihr Zahlungsziel. Legen Sie es mit den <a href="de.html#user.money.legal.payment-terms">Zahlungsbedingungen</a> fest.</li>
-<li>Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn <strong>Admins stellen Rechnungen aus</strong> an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht.</li>
+<li>Automatische Mahnungen laufen einmal täglich auf dem Server, wenn die Datenbank ihren Scheduler aktiviert hat. Sie laufen auch, wenn jemand mit dem Recht, Rechnungen auszustellen (ein Inhaber, ein Mitinhaber oder, wenn <strong>Admins stellen Rechnungen aus</strong> an ist, ein Administrator), die Finanzen öffnet; ein Space ohne Scheduler bekommt sie also an den Tagen, an denen jemand hinsieht. Der Schalter und die Funktionsbeschreibung sagen es ebenfalls; der Betreiber Ihres Servers weiß, was zutrifft.</li>
 <li>Die Funktion <strong>Mahnwesen</strong> stellt nur die Regeln bereit. Eine Mahnung geht erst dann von selbst hinaus, wenn <strong>Automatische Mahnungen</strong> in den Mahnregeln eingeschaltet ist; das ist zunächst aus, bis Sie es wählen.</li>
 <li>Übersprungen werden Rechnungen mit ausstehender oder angehaltener Zahlung und Rechnungen ohne erfasstes Zahlungsziel.</li>
 <li>Das Mitglied erhält einen Hinweis in seinem Feed und, wenn Push eingerichtet ist, eine allgemein gehaltene Benachrichtigung; siehe <a href="#setup.notify.overview">Menschen informieren</a>.</li>
@@ -2435,7 +2436,7 @@
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.</li>
-<li>Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung.</li>
+<li>Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von <strong>USt-Verwaltung</strong> und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.</li>
 <li>Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.</li>
 <li>Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.</li>
 </ul>
@@ -2475,8 +2476,8 @@
 </tr>
 <tr>
 <td>Währung und Land</td>
-<td>Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Eine Sperre gegen spätere Änderungen wurde nicht gefunden: Entscheiden Sie vor der ersten Buchung.</td>
-<td>Vor der ersten Buchung</td>
+<td>Beträge werden als ganze kleinste Einheiten ohne Umrechnung gespeichert. Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von beiden ab.</td>
+<td>Beim ersten Dokument oder der ersten Zahlung</td>
 </tr>
 </tbody>
 </table>
@@ -2730,7 +2731,7 @@
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Überflutung entsteht durch Regeln, die zu oft fragen, oder durch zu viele Administratoren für eine Regel.</li>
-<li>Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft kann eine Buchungsregel mit zu wenigen Validierern anzeigen.</li>
+<li>Stille entsteht durch eine Regel, die niemand beantworten kann: Verlangen Sie zwei Validierungen, obwohl es nur den Inhaber gibt, oder nennen Sie Administratoren, die gegangen sind, bleiben Anfragen für immer offen. Die Karte zur Einrichtungsbereitschaft zeigt jede Regel mit zu wenigen Validierern an, und Was auf Sie wartet meldet sie.</li>
 <li>Stille entsteht auch durch Push ohne Einrichtung, durch Mitglieder, die Push ausgeschaltet haben, und durch ein System, das Benachrichtigungen blockiert.</li>
 <li>Automatische Zahlungserinnerungen ersetzen nicht den gelegentlichen Blick auf die offenen Rechnungen.</li>
 </ul>
@@ -3050,17 +3051,22 @@
 </tr>
 <tr>
 <td>Die Bereitschaftsliste</td>
-<td>Eine Zeile pro Bereich des Space, mit Zustand, Verantwortlichem und Ort der Einstellung. Bereiche: <strong>Öffnungstage, Zeitzone und Währung</strong>, <strong>Buchbare Plätze im Grundriss</strong>, <strong>Mitgliedschaftsmodelle und Tarife</strong>, <strong>Die ersten Mitglieder einladen</strong>, <strong>Wie Mitglieder bezahlen</strong>, <strong>Rollen und wer Anfragen bestätigt</strong>, <strong>Export und Wiederherstellung</strong>, <strong>Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)</strong>, <strong>Eine erste Buchung</strong> und, wenn es zutrifft, <strong>Server und Datenbankversion</strong> sowie <strong>Assistentenzugang (optional)</strong> (Letzterer nur bei eingeschalteter MCP-Schnittstelle).</td>
+<td>Eine Zeile pro Bereich des Space, mit Zustand, Verantwortlichem und Ort der Einstellung. Bereiche: <strong>Öffnungstage, Zeitzone und Währung</strong>, <strong>Buchbare Plätze im Grundriss</strong>, <strong>Mitgliedschaftsmodelle und Tarife</strong>, <strong>Die ersten Mitglieder einladen</strong>, <strong>Wie Mitglieder bezahlen</strong>, <strong>Rollen und wer Anfragen bestätigt</strong>, <strong>Export und Wiederherstellung</strong>, <strong>Was Mitglieder dürfen</strong>, <strong>Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)</strong>, <strong>Eine erste Buchung</strong> und, wenn es zutrifft, <strong>Rechtliche Identität und Adresse des Space</strong> (nur bei eingeschalteten <strong>Rechnungen</strong>), <strong>Server und Datenbankversion</strong> sowie <strong>Assistentenzugang (optional)</strong> (Letzterer nur bei eingeschalteter MCP-Schnittstelle).</td>
 <td><strong>Einrichtung dieses Workspace</strong>, oben in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a></td>
 </tr>
 <tr>
 <td>Die Zeile, die eine erste Buchung verhindert</td>
-<td>Nur das, was eine Buchung wirklich braucht: eine Zeitzone, eine Währung, einen Öffnungstag, einen Platz und, wenn eine Buchungsregel mehr Validierer verlangt, als es gibt, diese Validierer. Der Rest ist optional und lässt sich mit <strong>Später</strong> beiseitelegen.</td>
+<td>Die Bereiche, die die Liste als <strong>Nötig für eine erste Buchung</strong> markiert: eine Zeitzone, eine Währung, einen Öffnungstag, einen Platz, Mitglieder mit <strong>Buchen und Reservierungen nutzen</strong> (ein neuer Space gewährt ihnen nichts) und, wenn eine Validierungsregel gleich welcher Art mehr Validierer verlangt, als es gibt, diese Validierer. Der Rest ist optional und lässt sich mit <strong>Später</strong> beiseitelegen.</td>
 <td><strong>Bevor hier jemand buchen kann</strong>, auf der Karte „Erste Schritte“ in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/reserve">Reservieren</a></td>
 </tr>
 <tr>
+<td>Die Zeile, die eine erste Rechnung verhindert</td>
+<td>Bei eingeschalteten <strong>Rechnungen</strong> die rechtliche Identität und die Adresse des Space. Ohne sie kann keine Rechnung ausgestellt werden, deshalb lässt sich der Bereich nicht beiseitelegen.</td>
+<td><strong>Einrichtung dieses Workspace</strong>: der Bereich <strong>Rechtliche Identität und Adresse des Space</strong>, markiert mit <strong>Vor der Rechnungsstellung nötig</strong>; solange er der nächste Schritt ist, lautet die Überschrift der Karte „Vor der Rechnungsstellung: …“</td>
+</tr>
+<tr>
 <td>Was Ihre Funktionen lokal noch brauchen</td>
-<td>Rechtliche Identität (für <strong>Rechnungen</strong>), Bankverbindung, ein Anbieter für Online-Zahlungen, ein E-Rechnungs-Konto, ein Standort.</td>
+<td>Bankverbindung, ein Anbieter für Online-Zahlungen, ein E-Rechnungs-Konto, ein Standort. Die rechtliche Identität steht nicht hier: Bei eingeschalteten <strong>Rechnungen</strong> ist sie ein eigener Bereich (oben).</td>
 <td>Dieselbe Karte, Bereich <strong>Angaben, die Ihre Funktionen brauchen (Identität, Bank, Plattformen)</strong>, mit <strong>Einrichten</strong> und <strong>Empfohlen</strong></td>
 </tr>
 <tr>
@@ -3075,8 +3081,18 @@
 </tr>
 <tr>
 <td>Der Validierungsschutz</td>
-<td><strong>Erforderliche Validierungen</strong> über der Zahl der verfügbaren Personen.</td>
-<td><strong>Nicht genügend berechtigte Validierer.</strong> im Regeleditor; „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ in der Bereitschaftsliste</td>
+<td><strong>Erforderliche Validierungen</strong> über der Zahl der verfügbaren Personen, bei jeder Art von Anfrage.</td>
+<td><strong>Nicht genügend berechtigte Validierer.</strong> im Regeleditor; „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“ in der Bereitschaftsliste, wo <strong>Rollen und wer Anfragen bestätigt</strong> dann erforderlich wird</td>
+</tr>
+<tr>
+<td>Die Sperre von Währung und Land</td>
+<td>Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lehnt der Server jede Änderung von <strong>Währung</strong> oder <strong>Land</strong> ab, ob aus dem Einstellungsformular, einem Import oder anderswo. Die Zeitzone ist nicht gesperrt.</td>
+<td>„Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“ beim Speichern in <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a></td>
+</tr>
+<tr>
+<td>Der Posteingang des Inhabers</td>
+<td>Was noch zu konfigurieren ist: eine Zeile „Einzurichten: …“ für jeden erforderlichen Bereich der Bereitschaftsliste, der nicht bereit ist, und eine Zeile „… eingeschaltete Funktionen warten auf „…““ für jede ausgeschaltete Funktion, die andere zurückhält.</td>
+<td><a href="de.html#user.collaborate.attention">Was auf Sie wartet</a>; ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder <strong>Funktionen</strong></td>
 </tr>
 <tr>
 <td>Der Schutz der Nummernkreise</td>
@@ -3099,7 +3115,7 @@
 <ul>
 <li><strong>Einrichtung dieses Workspace</strong> ist eine Liste, keine Sperre. Sie hindert Sie nie daran, etwas einzuschalten.</li>
 <li>Die meisten Schutzmechanismen greifen, wenn Sie versuchen auszustellen, zu zahlen oder zu buchen, nicht wenn Sie eine Einstellung wählen. Deshalb gibt es die Prüfung unten.</li>
-<li>Der Posteingang des Inhabers (<a href="de.html#user.collaborate.attention">Was auf Sie wartet</a>) meldet heute keine Konfigurationsprobleme. Warten Sie nicht darauf.</li>
+<li>Der Posteingang des Inhabers (<a href="de.html#user.collaborate.attention">Was auf Sie wartet</a>) meldet nur die erforderlichen Bereiche und die zurückgehaltenen Funktionen. Die optionalen Bereiche bleiben in der Bereitschaftsliste: Lesen Sie sie selbst.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#setup.features.consistency">Funktionen vermeiden, die sich widersprechen</a> · <a href="#ihren-space-pr%C3%BCfen">Ihren Space prüfen</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/setup-consistent-features-attention.de.b8fa17aa9.jpg" alt="Die Schutzmechanismen der App"></div></figure></div></article><article class="section no-media" id="setup.consistent.gaps" data-roles="owner coowner billing"><header><h3>Die Fehler, die die Schutzmechanismen nicht erkennen <a class="permalink" href="#setup.consistent.gaps" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-coowner">Mitinhaber</span><span class="role role-billing">Abrechnungsadministrator:in</span></div></header><div class="body"><p>Sie möchten die ehrliche Liste dessen, was in Ihrer Verantwortung bleibt. Das sind Konfigurationen, die die App Sie anlegen lässt, ohne zu warnen. Für jede gibt es einen Weg, sie von Hand zu vermeiden.</p>
@@ -3119,7 +3135,7 @@
 </tr>
 <tr>
 <td>Umsatzsteuerpflichtig sein, ohne dass ein Satz gilt</td>
-<td>Die Ausstellung wird abgelehnt, aber erst bei der ersten Rechnung. Ist <strong>USt-Verwaltung</strong> aus, ist die Konfiguration verborgen, die gespeicherten Sätze gelten aber weiter.</td>
+<td>Die Ausstellung wird abgelehnt, aber erst bei der ersten Rechnung. Die Beschreibung von <strong>USt-Verwaltung</strong> und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es; vorher hält Sie nichts auf. Ist <strong>USt-Verwaltung</strong> aus, ist die Konfiguration verborgen, die gespeicherten Sätze gelten aber weiter.</td>
 <td>Den Satz unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/vat">USt</a> vor dem ersten Monatsabschluss ergänzen und eine Probe-Rechnung ausstellen.</td>
 </tr>
 <tr>
@@ -3129,17 +3145,17 @@
 </tr>
 <tr>
 <td><strong>Rechnungen</strong> an, ohne rechtliche Identität</td>
-<td>Die Funktion ist vom ersten Tag an an; die Ablehnung kommt bei der Ausstellung.</td>
+<td>Die Funktion ist vom ersten Tag an an. Die Bereitschaftsliste markiert die Identität mit <strong>Vor der Rechnungsstellung nötig</strong>, und Was auf Sie wartet meldet sie, aber nichts hindert Sie daran, Mitglieder einzuladen und einen Monat laufen zu lassen; die Ablehnung kommt bei der Ausstellung.</td>
 <td>Die Identität eintragen, bevor Sie Mitgliedern sagen, dass sie Rechnungen bekommen.</td>
 </tr>
 <tr>
-<td>Eine Regel, die mehr Validierer braucht, als Sie haben, außerhalb von Buchungen</td>
-<td>Die Bereitschaftsliste hält nur bei Reservierungsregeln die erste Buchung auf. Der Editor lässt Sie eine Regel speichern, die über der Zahl der verfügbaren Personen liegt. Andere Anfragen werden angelegt, können nicht abgeschlossen werden und laufen nach sieben Tagen ab.</td>
+<td>Eine Regel, die mehr Validierer braucht, als Sie haben</td>
+<td>Der Editor lässt Sie eine Regel speichern, die über der Zahl der verfügbaren Personen liegt. Die Bereitschaftsliste markiert dann <strong>Rollen und wer Anfragen bestätigt</strong> als erforderlich, gleich welche Art von Anfrage, aber Anfragen, die vor Ihrer Korrektur angelegt wurden, können nicht abgeschlossen werden und laufen nach sieben Tagen ab.</td>
 <td>Nach jeder Regel die aktiven Inhaber und Administratoren zählen. Siehe <a href="#setup.people.stuck">Anfragen vermeiden, die ewig warten</a>.</td>
 </tr>
 <tr>
 <td>Mitglieder, die den Plan nicht öffnen können</td>
-<td>In einem neuen Space ist die Karte <strong>Benutzer</strong> unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rollen</a> leer, und nichts warnt Sie.</td>
+<td>In einem neuen Space ist die Karte <strong>Benutzer</strong> unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rollen</a> leer. Die Bereitschaftsliste markiert <strong>Was Mitglieder dürfen</strong>, bis Mitglieder <strong>Buchen und Reservierungen nutzen</strong> halten, prüft aber nur diese eine: Die fünf anderen alltäglichen Berechtigungen kreuzen Sie selbst an.</td>
 <td>Die alltäglichen Berechtigungen ankreuzen und einmal mit einem zweiten Konto beitreten.</td>
 </tr>
 <tr>
@@ -3154,12 +3170,12 @@
 </tr>
 <tr>
 <td>Mahnungen, die nie laufen</td>
-<td>Sie laufen jeden Morgen auf dem Server, wenn die Datenbank einen Scheduler (pg_cron) hat; hat sie keinen, laufen sie, wenn ein Administrator die Finanzen öffnet. Sie bleiben auch stumm, wenn <strong>Automatische Zahlungserinnerungen</strong> aus ist.</td>
+<td>Sie laufen jeden Morgen auf dem Server, sofern die Installation Aufgaben plant (pg_cron); sonst, wenn ein Administrator die Finanzen öffnet. Der Schalter und die Funktionsbeschreibung sagen es, können aber nicht erkennen, was für Ihre Installation zutrifft. Sie bleiben auch stumm, wenn <strong>Automatische Zahlungserinnerungen</strong> aus ist.</td>
 <td>Den Betreiber fragen, ob es den Scheduler gibt, und selbst die Finanzen öffnen, wenn nicht. Siehe <a href="de.html#user.money.reminders.automatic">Automatische Mahnungen</a>.</td>
 </tr>
 <tr>
-<td>Land, Währung oder Zeitzone ändern, sobald Geld im Spiel ist</td>
-<td>Ich habe keine Sperre gefunden. Beträge werden als Zahlen gespeichert und nicht umgerechnet: Klären Sie es mit dem Eigentümer der Installation, bevor Sie sich darauf verlassen.</td>
+<td>Die Zeitzone ändern, sobald Geld im Spiel ist</td>
+<td>Der Server sperrt Währung und Land, sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, nicht aber die Zeitzone, in der jeder Arbeitstag, jeder halbe Tag und jeder Schließtag gezählt wird.</td>
 <td>Sie am ersten Tag wählen. Siehe <a href="#entscheidungen-die-sich-schwer-r%C3%BCckg%C3%A4ngig-machen-lassen">Schwer rückgängig zu machende Entscheidungen</a>.</td>
 </tr>
 <tr>
@@ -3196,7 +3212,7 @@
 <td>1</td>
 <td>Land, Währung, Zeitzone</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace</a>, <strong>Allgemeine Angaben</strong></td>
-<td>Atelier du Marché: Frankreich, EUR, Europe/Paris</td>
+<td>Atelier du Marché: Frankreich, EUR, Europe/Paris, festgelegt vor dem ersten Dokument oder der ersten Zahlung, danach sind Währung und Land gesperrt</td>
 </tr>
 <tr>
 <td>2</td>
@@ -3226,7 +3242,7 @@
 <td>6</td>
 <td>Bereitschaft</td>
 <td><strong>Einrichtung dieses Workspace</strong></td>
-<td>Unter <strong>Öffnungstage, Zeitzone und Währung</strong> und <strong>Buchbare Plätze im Grundriss</strong> braucht nichts eine Konfiguration</td>
+<td>Unter <strong>Öffnungstage, Zeitzone und Währung</strong>, <strong>Buchbare Plätze im Grundriss</strong> und <strong>Was Mitglieder dürfen</strong> braucht nichts eine Konfiguration</td>
 </tr>
 <tr>
 <td>7</td>
@@ -3244,7 +3260,7 @@
 <td>9</td>
 <td>Alltägliche Berechtigungen</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rollen</a></td>
-<td><strong>Benutzer</strong> hält die sechs alltäglichen Berechtigungen</td>
+<td><strong>Benutzer</strong> hält die sechs alltäglichen Berechtigungen, darunter <strong>Buchen und Reservierungen nutzen</strong></td>
 </tr>
 <tr>
 <td>10</td>
@@ -3262,7 +3278,7 @@
 <td>12</td>
 <td>Zahl der Validierungen</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/validation">Validierungsregeln</a></td>
-<td>Keine Regel verlangt mehr Validierer als aktive Inhaber und Administratoren</td>
+<td>Keine Regel verlangt mehr Validierer als aktive Inhaber und Administratoren; <strong>Rollen und wer Anfragen bestätigt</strong> braucht keine Konfiguration</td>
 </tr>
 <tr>
 <td>13</td>
@@ -3359,7 +3375,7 @@
 <td>26</td>
 <td>Zurückgehaltene Funktionen</td>
 <td><strong>Funktionen</strong>, <strong>Braucht Aufmerksamkeit</strong></td>
-<td>Der Filter zeigt keinen Prozess</td>
+<td>Der Filter zeigt keinen Prozess, und Was auf Sie wartet hat keine Zeile über wartende Funktionen</td>
 </tr>
 </tbody>
 </table>
@@ -3378,7 +3394,7 @@
 <td>27</td>
 <td>Rechtliche Identität</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/legal-identity">Rechtliche Identität &amp; E-Rechnung</a></td>
-<td><strong>Vor der Ausstellung bitte ergänzen</strong> zeigt nichts, wenn Sie eine Probe-Rechnung beginnen</td>
+<td><strong>Rechtliche Identität und Adresse des Space</strong> steht auf <strong>Bereit</strong>, und <strong>Vor der Ausstellung bitte ergänzen</strong> zeigt nichts, wenn Sie eine Probe-Rechnung beginnen</td>
 </tr>
 <tr>
 <td>28</td>
@@ -3519,8 +3535,13 @@
 <td><a href="#was-sich-nicht-r%C3%BCckg%C3%A4ngig-machen-l%C3%A4sst">Geld</a></td>
 </tr>
 <tr>
-<td>Land, Währung, Zeitzone</td>
-<td>Sobald Geld im Spiel ist: Beträge werden nicht umgerechnet</td>
+<td>Land und Währung</td>
+<td>Vom Server gesperrt, sobald der Space ein Dokument ausgestellt oder Geld erfasst hat: Beträge werden nicht umgerechnet</td>
+<td><a href="#entscheidungen-die-sich-schwer-r%C3%BCckg%C3%A4ngig-machen-lassen">Schwer rückgängig zu machende Entscheidungen</a></td>
+</tr>
+<tr>
+<td>Zeitzone</td>
+<td>Nie gesperrt, aber die Tage werden in ihr gezählt: Wählen Sie sie am ersten Tag</td>
 <td><a href="#entscheidungen-die-sich-schwer-r%C3%BCckg%C3%A4ngig-machen-lassen">Schwer rückgängig zu machende Entscheidungen</a></td>
 </tr>
 <tr>
@@ -3657,11 +3678,11 @@
 <li>Fügen Sie einen Schließtag hinzu. Siehe <a href="de.html">Schließtage</a>.</li>
 <li>Behalten Sie die Standardfunktionen. Öffnen Sie <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/features">Funktionen</a> nur, um zu lesen, was an ist.</li>
 <li>Buchen Sie als Sie selbst und checken Sie dann ein und aus. Siehe <a href="de.html#user.reserve.check-in">Ein- und auschecken</a>.</li>
-<li>Teilen Sie die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe <a href="de.html#user.workspace.code">Die Workspace-ID</a>.</li>
+<li>Haken Sie unter <a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/roles">Rollen</a> die Alltagsberechtigungen auf der Karte <strong>Benutzer</strong> an, teilen Sie dann die Workspace-ID mit einer Person und lassen Sie sie beitreten. Siehe <a href="de.html#user.workspace.code">Die Workspace-ID</a>.</li>
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat. Alles andere kann warten.</li>
+<li>Ein Space ist buchbar, sobald er eine Zeitzone, eine Währung, mindestens einen Öffnungstag und mindestens einen Platz hat und Mitglieder <strong>Buchen und Reservierungen nutzen</strong> halten. Alles andere kann warten.</li>
 <li>Ein Grundriss lässt sich nicht mehr durch einen Import ersetzen, sobald eine Reservierung existiert.</li>
 </ul>
 <p><em>Sie sind fertig, wenn</em></p>
@@ -3792,7 +3813,7 @@
 </tr>
 <tr>
 <td>Bereitschaft</td>
-<td>Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können.</td>
+<td>Die Checkliste oben in den Workspace-Einstellungen, die sagt, was fehlt, bevor Menschen buchen können und bevor die erste Rechnung ausgestellt wird.</td>
 </tr>
 <tr>
 <td>Zurückgehalten</td>
@@ -3862,7 +3883,7 @@
 <td>1. Land, Währung, Zeitzone, Sprache</td>
 <td><a class="app-link" target="_blank" rel="noopener" href="https://fdittgen-png.github.io/deskilo/#/workspace-settings">Workspace-Einstellungen</a></td>
 <td>5 Minuten</td>
-<td>Ja, aber ändern Sie die Währung nicht mehr, sobald Geld im Spiel ist</td>
+<td>Ja, bis zum ersten Dokument oder zur ersten Zahlung; danach sind Währung und Land gesperrt</td>
 </tr>
 <tr>
 <td>2. Grundriss</td>

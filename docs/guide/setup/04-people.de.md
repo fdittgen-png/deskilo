@@ -86,7 +86,7 @@ Sie möchten, dass jede Rolle hat, was sie braucht, und sonst nichts. Das ist da
 
 Ein Administrator hat nicht **Rollen & Berechtigungen verwalten**, **Validierungsregeln konfigurieren**, **Workspace-Einstellungen bearbeiten**, **Tarife und Abrechnungsregeln verwalten**, **Dokumente gestalten**, **Integrationen verwalten**, **Konfiguration verwalten** oder **In die Produktion ausrollen**. Eine Mit-Inhaberin hat alle, bis Sie einige abwählen. Der Inhaber hat sie immer alle.
 
-> **Achtung** In einem neuen Space ist die Karte **Benutzer** leer. Die sechs Alltagsberechtigungen (**Den Messenger nutzen**, **Buchen und Reservierungen nutzen**, **Den Kalender sehen**, **Das Mitgliederverzeichnis sehen**, **Das eigene Konto und die eigenen Rechnungen sehen**, **Die geteilten Dokumente sehen**) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. Haken Sie sie bei der Karte **Benutzer** an, und bei der Karte **Administrator**, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.
+> **Achtung** In einem neuen Space ist die Karte **Benutzer** leer. Die sechs Alltagsberechtigungen (**Den Messenger nutzen**, **Buchen und Reservierungen nutzen**, **Den Kalender sehen**, **Das Mitgliederverzeichnis sehen**, **Das eigene Konto und die eigenen Rechnungen sehen**, **Die geteilten Dokumente sehen**) gelten nur über die Matrix oder eine Rolle. Solange Sie sie nicht angehakt haben, kann ein beitretendes Mitglied den Plan nicht öffnen. Die Demo zeigt sie schon angehakt, was das verdeckt. **Einrichtung dieses Workspace** zeigt **Was Mitglieder dürfen** als **Nötig für eine erste Buchung**, bis die Karte **Benutzer** **Buchen und Reservierungen nutzen** hält; die fünf anderen prüft sie nicht. Haken Sie sie bei der Karte **Benutzer** an, und bei der Karte **Administrator**, wenn auch Administratoren buchen, und testen Sie dann mit einem zweiten Konto.
 
 **Gut zu wissen**
 
@@ -321,7 +321,7 @@ Sie möchten sicher sein, dass jede Anfrage, für die Sie eine Regel anlegen, be
 
 1. Öffnen Sie [Freigaberegeln](app:/validation) und lesen Sie jede angepasste Karte: „Alle Admins — beliebige 2“ bedeutet zwei Personen.
 2. Öffnen Sie [Mitglieder & Tarife](app:/members). Zählen Sie die aktiven Inhaber und Administratoren. Pausierte und ausgetretene Personen zählen nicht.
-3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Er hält die erste Buchung nur auf, wenn die Regel für Buchungen gilt.
+3. Öffnen Sie **Einrichtung dieses Workspace** unter [Workspace](app:/workspace-settings). Der Bereich **Rollen und wer Anfragen bestätigt** sagt „Eine Regel verlangt mehr Prüfer, als dieser Bereich hat“, wenn zu wenige gezählt werden. Der Bereich wird dann erforderlich, gleich welche Art von Anfrage, und [Was auf Sie wartet](help:user.collaborate.attention) meldet ihn.
 4. Öffnen Sie [Ereignisse](app:/events). **Wartet auf Ihre Bestätigung** zeigt, was wartet, und eine Zeile zeigt „1/2 Validierungen“.
 
 **Gut zu wissen**
