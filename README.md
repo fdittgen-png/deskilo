@@ -150,7 +150,7 @@ The code includes workspace-scoped server permissions, personal-data export and 
 
 Store builds use Firebase Cloud Messaging for push notifications. A separate build without Google services is prepared for F-Droid; whether it is published there yet is stated in one place, the [F-Droid status](docs/guides/fdroid.md#status). See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
-There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
+The software is free and stays free: there is no software license fee. Hosting by the author, the reference deployment included, is free for every workspace registered by 31 December 2027; workspaces registered from 1 January 2028 pay for hosting. Customisations, including exclusive features, can be commissioned from the author. Your own hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 
 </details>
 
