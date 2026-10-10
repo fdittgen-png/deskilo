@@ -6,6 +6,7 @@ Para propietarios y administradores de facturación: quién es usted como vended
 > **Atención** DesKilo imprime lo que usted declara y comprueba que estén presentes los datos obligatorios. No certifica sus facturas, su tratamiento del IVA ni su contabilidad. Cada vez que una sección siguiente diga «consúltelo con su gestor», hágalo.
 
 En este capítulo:
+- Lo que emite la aplicación por sí misma y lo que queda en manos de su gestor
 - Su identidad legal y las menciones que se imprimen en cada factura
 - IVA: régimen, número, tipos, grupos y la declaración periódica
 - Facturación electrónica: adónde se envía la factura legible por máquina
@@ -13,6 +14,33 @@ En este capítulo:
 - Emitir y cerrar un mes: la pantalla de Facturación, el asistente de cierre mensual, la reagrupación, los gastos compartidos
 - Recordatorios de pago
 - El registro de facturas, las exportaciones contables y el análisis de negocio
+
+<!-- anchor: user.invoicing.scope -->
+### Lo que emite la aplicación y lo que queda en manos de su gestor
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere saber, antes de confiar en ella, qué facturas emite DesKilo por sí mismo y cuáles sigue emitiendo con su gestor. Este es el alcance de esta versión.
+
+| Situación | En la aplicación | Fuera de la aplicación |
+|---|---|---|
+| Un espacio en Francia o Alemania, sujeto al IVA o fuera del ámbito del IVA | Facturas emitidas, numeradas, enviadas y seguidas | — |
+| Un puesto, una oficina o una sala, sea quien sea el cliente, también en el extranjero | Emitidas con su IVA: el lugar de la prestación es el edificio | — |
+| Un espacio en otro país | Reservas, extractos y pagos | Las facturas, con su gestor |
+| El régimen exento de IVA | — | Las facturas, con su gestor |
+| Inversión del sujeto pasivo, exportación, comprador exento | Registrado en el miembro | Las facturas, con su gestor |
+| Factura electrónica | El archivo EN 16931, enviado a la plataforma que usted configura | La elección de la plataforma y lo que le exige el sistema nacional |
+| Contabilidad | Exportaciones reconstruidas a partir de facturas y pagos | El libro mayor, el cierre y las cuentas |
+| Declaración de IVA | Los importes, calculados a partir de facturas y pagos | Su presentación ante la administración tributaria |
+
+**Conviene saber**
+
+- La factura electrónica tiene tres pasos: DesKilo produce la factura estructurada; el conector la envía a su plataforma; la plataforma la hace llegar al cliente y a la administración según el sistema nacional. Un archivo válido es solo el primer paso.
+- En Francia, solo una plataforma autorizada (plateforme agréée) puede transmitir facturas dentro de la reforma, y DesKilo no lo es: configure la plataforma que elija. Todas las empresas afectadas deben poder recibir facturas electrónicas a partir del 1 de septiembre de 2026; las pymes y las microempresas deben emitirlas a partir del 1 de septiembre de 2027.
+- DesKilo no lleva una contabilidad por partida doble: su gestor completa los archivos exportados.
+- Esta tabla cambia con la aplicación. Cuando una fila pasa a la aplicación, esta sección lo dice.
+
+**Véase también:** [Emitir una factura](help:user.invoicing.new-invoice) · [La plataforma de facturación electrónica](help:user.money.einvoice.overview) · [Exportaciones contables](help:user.invoicing.accounting-export) · [Régimen de IVA](help:user.money.vat.regime)
 
 <!-- anchor: user.money.legal.identity -->
 ### Su identidad legal
@@ -553,6 +581,7 @@ Indica a DesKilo dónde enviar sus facturas como archivos legibles por máquina.
 - Sirve cualquier plataforma que acepte una subida con un token: una plataforma homologada, un punto de acceso Peppol, una plataforma nacional.
 - El token se guarda en el servidor y no vuelve a mostrarse.
 - El archivo válido es una factura EN 16931. Si su país exige una plataforma, y cuál, es algo que debe confirmar con su gestor.
+- Enviar el archivo es el segundo de tres pasos: véase [Lo que emite la aplicación y lo que queda en manos de su gestor](help:user.invoicing.scope).
 
 **Véase también:** [Enviar una factura electrónica](help:user.money.einvoice.send) · [Identidad legal](help:user.money.legal.identity)
 

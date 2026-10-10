@@ -112,12 +112,32 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 
 **Siehe auch:** [Die Rollenmatrix](#die-rollenmatrix) · [Einem Workspace beitreten](#einem-workspace-beitreten)
 
+<!-- anchor: user.start.paths -->
+### Drei Wege durch dieses Handbuch
+
+**Zielgruppe:** Alle
+
+Sie müssen nicht erst alles lesen. Wählen Sie den Weg, der zu dem passt, was Sie jetzt tun möchten: Jeder Schritt ist ein Abschnitt dieses Handbuchs, in der Reihenfolge, in der Sie ihn brauchen.
+
+| Weg | Schritte, der Reihe nach | Fertig, wenn |
+|---|---|---|
+| Zum ersten Mal als Mitglied | [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden) → [Einem Workspace beitreten](#einem-workspace-beitreten) → [Einen Platz buchen](#einen-platz-buchen) → [Ihre Abrechnung lesen](#ihre-abrechnung-lesen) → [Ein- und Auschecken](#ein--und-auschecken) | Sie haben gebucht, wissen, was es kostet, und haben sich an- und abgemeldet. |
+| Einen Space in Betrieb nehmen | [Ein paar gemeinsame Plätze](Einrichtungsanleitung#ein-paar-gemeinsame-plätze) → [Räume, Tische und Plätze zeichnen](#räume-tische-und-plätze-zeichnen) → [Arbeitszeiten](#arbeitszeiten) → [Buchungsgrenzen](#buchungsgrenzen) → [Ein Mitglied einladen](#ein-mitglied-einladen) → [Der Kalender-Tab](#der-kalender-tab) | Ein Mitglied, das Sie eingeladen haben, hat gebucht, und Sie sehen die Buchung. |
+| Der erste Monatsabschluss | [Rechnungsstellung im Überblick](#rechnungsstellung-im-überblick) → [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](#was-die-app-ausstellt-und-was-bei-ihrer-steuerberatung-bleibt) → [Der Monatsabschluss-Assistent](#der-monatsabschluss-assistent) → [Offene Rechnungen nachverfolgen und begleichen](#offene-rechnungen-nachverfolgen-und-begleichen) → [Buchhaltungsexporte](#buchhaltungsexporte) | Der Monat ist im Umfang der App abgerechnet, die Zahlungen sind zugeordnet und die Datei liegt bei Ihrer Steuerberatung. |
+
+**Gut zu wissen**
+
+- Ein kleiner Space braucht nur die ersten beiden Wege. Rechnungen, Umsatzsteuer und die erweiterten Funktionen können warten, bis der Space sie braucht, und das Ausschalten einer Funktion löscht nichts.
+- Die Einrichtungsanleitung erklärt das Warum und die Reihenfolge für einen neuen Space; dieses Handbuch erklärt die Handgriffe.
+
+**Siehe auch:** [Was DesKilo ist und wer was tut](#was-deskilo-ist-und-wer-was-tut) · [Die Reihenfolge beim Einschalten](Einrichtungsanleitung#die-reihenfolge-beim-einschalten)
+
 <!-- anchor: user.start.account -->
 ### Konto erstellen oder anmelden
 
 **Zielgruppe:** Alle
 
-Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie beitreten.
+Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie auf demselben Server beitreten.
 
 <p><img src="images/user-start-account.de.b8fa17aa9.jpg" width="280"></p>
 
@@ -139,6 +159,28 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 - **Mit Einladung beitreten** auf dem Anmeldebildschirm merkt sich Ihr Vorhaben: Sie legen Ihr Konto an und fügen dann Ihre Einladung ein.
 
 **Siehe auch:** [Vergessenes Passwort zurücksetzen](#vergessenes-passwort-zurücksetzen) · [Einem Workspace beitreten](#einem-workspace-beitreten) · [Ihre Daten, Ihre Rechte](#ihre-daten-ihre-rechte)
+
+<!-- anchor: user.start.identity -->
+### Ihr Konto, Ihre Spaces und Ihr Server
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was Sie von einem Space zum nächsten begleitet und warum die App Sie manchmal erneut anmelden lässt. Dieses Handbuch verwendet vier Wörter, immer im selben Sinn:
+
+| Wort | Die Frage, die es beantwortet | Was es ist |
+|---|---|---|
+| Konto | Wer bin ich? | Ihre E-Mail, Ihr Passwort, Ihr Name und Ihre persönlichen Einstellungen. Es liegt auf einem Server. |
+| Mitgliedschaft | Was darf ich in diesem Space? | Ihre Rolle, Ihr Tarif, Ihre Buchungen und Ihr Geld in einem Space. Jeder Space legt seine eigenen Regeln fest. |
+| Server | Wo wird dieser Space aufbewahrt? | Die Installation, die den Space speichert: der gemeinsame Referenzserver oder einer, den eine Organisation selbst betreibt. |
+| Sitzung | Bin ich hier angemeldet? | Ihre Anmeldung auf diesem Gerät, bei jeweils einem Server. |
+
+**Gut zu wissen**
+
+- Ein Konto gilt für alle Spaces auf demselben Server: Wer dort einem weiteren Space beitritt, erhält eine Mitgliedschaft, kein neues Konto.
+- Ein Space auf einem anderen Server braucht ein Konto auf diesem Server. Ihn zu öffnen wechselt den Server und bittet Sie, sich dort anzumelden; Ihr Konto auf dem ersten Server bleibt, wie es ist.
+- Ein Serverwechsel meldet Sie ab, weil Ihr Konto auf dem Server liegt, den Sie verlassen.
+
+**Siehe auch:** [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden) · [Ich: Ihr Zuhause und Ihre Spaces](#ich-ihr-zuhause-und-ihre-spaces) · [Ihr eigener Server](#ihr-eigener-server)
 
 <!-- anchor: user.start.forgot-password -->
 ### Vergessenes Passwort zurücksetzen
@@ -4473,6 +4515,7 @@ Für Inhaber und Abrechnungsadministratoren: wer Sie als Verkäufer sind, wie di
 > **Achtung** DesKilo druckt, was Sie angeben, und prüft, ob die erforderlichen Angaben vorhanden sind. Es bescheinigt weder Ihre Rechnungen noch Ihre Umsatzsteuerbehandlung noch Ihre Buchführung. Wo ein Abschnitt unten „mit Ihrer Buchhaltung klären“ sagt, tun Sie das bitte.
 
 In diesem Kapitel:
+- Was die App selbst ausstellt und was bei Ihrer Steuerberatung bleibt
 - Ihre rechtliche Identität und die Angaben, die auf jeder Rechnung stehen
 - Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
 - E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
@@ -4480,6 +4523,33 @@ In diesem Kapitel:
 - Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
 - Zahlungserinnerungen
 - Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
+
+<!-- anchor: user.invoicing.scope -->
+### Was die App ausstellt und was bei Ihrer Steuerberatung bleibt
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten wissen, bevor Sie sich darauf verlassen, welche Rechnungen DesKilo selbst ausstellt und welche Sie weiterhin mit Ihrer Steuerberatung ausstellen. Das ist der Umfang dieser Version.
+
+| Situation | In der App | Außerhalb der App |
+|---|---|---|
+| Ein Space in Frankreich oder Deutschland, umsatzsteuerpflichtig oder außerhalb des Anwendungsbereichs der Umsatzsteuer | Rechnungen ausgestellt, nummeriert, versendet und verfolgt | — |
+| Ein Platz, ein Büro oder ein Raum, für jeden Kunden, auch im Ausland | Mit Ihrer Umsatzsteuer ausgestellt: Ort der Leistung ist das Gebäude | — |
+| Ein Space in einem anderen Land | Buchungen, Abrechnungen und Zahlungen | Die Rechnungen, mit Ihrer Steuerberatung |
+| Das steuerbefreite Regime | — | Die Rechnungen, mit Ihrer Steuerberatung |
+| Reverse-Charge, Ausfuhr, befreiter Käufer | Beim Mitglied erfasst | Die Rechnungen, mit Ihrer Steuerberatung |
+| E-Rechnung | Die Datei nach EN 16931, an die von Ihnen eingerichtete Plattform übermittelt | Die Wahl der Plattform und was das nationale Verfahren von Ihnen verlangt |
+| Buchhaltung | Exporte, aus Rechnungen und Zahlungen neu aufgebaut | Das Hauptbuch, der Abschluss und die Bücher |
+| Umsatzsteuer-Voranmeldung | Die Beträge, aus Rechnungen und Zahlungen berechnet | Die Abgabe beim Finanzamt |
+
+**Gut zu wissen**
+
+- Die E-Rechnung hat drei Schritte: DesKilo erzeugt die strukturierte Rechnung; der Connector übermittelt sie an Ihre Plattform; die Plattform stellt sie dem Kunden und der Behörde nach dem nationalen Verfahren zu. Eine gültige Datei ist nur der erste Schritt.
+- In Frankreich darf nur eine zugelassene Plattform (plateforme agréée) Rechnungen im Rahmen der Reform übermitteln, und DesKilo ist keine: Richten Sie die Plattform Ihrer Wahl ein. Alle betroffenen Unternehmen müssen ab dem 1. September 2026 E-Rechnungen empfangen können; kleine und mittlere Unternehmen und Kleinstunternehmen müssen sie ab dem 1. September 2027 ausstellen.
+- DesKilo führt keine doppelte Buchführung: Ihre Steuerberatung ergänzt die exportierten Dateien.
+- Diese Tabelle ändert sich mit der App. Wenn eine Zeile in die App wandert, sagt dieser Abschnitt es.
+
+**Siehe auch:** [Eine Rechnung ausstellen](#eine-rechnung-ausstellen) · [Die E-Rechnungs-Plattform](#die-e-rechnungs-plattform) · [Buchhaltungsexporte](#buchhaltungsexporte) · [Steuerregime](#steuerregime)
 
 <!-- anchor: user.money.legal.identity -->
 ### Ihre rechtliche Identität
@@ -5020,6 +5090,7 @@ Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden 
 - Jede Plattform, die einen Upload mit einem Token annimmt, funktioniert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform.
 - Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
 - Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
+- Die Datei zu übermitteln ist der zweite von drei Schritten: siehe [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](#was-die-app-ausstellt-und-was-bei-ihrer-steuerberatung-bleibt).
 
 **Siehe auch:** [Eine E-Rechnung senden](#eine-e-rechnung-senden) · [Rechtliche Identität](#ihre-rechtliche-identität)
 

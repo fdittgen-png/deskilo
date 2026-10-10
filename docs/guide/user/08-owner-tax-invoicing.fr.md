@@ -6,6 +6,7 @@ Pour les propriétaires et les administrateurs facturation : qui vous êtes en t
 > **Attention** DesKilo imprime ce que vous déclarez et vérifie que les informations obligatoires sont présentes. Il ne certifie ni vos factures, ni votre traitement de la TVA, ni votre comptabilité. Chaque fois qu'une section ci-dessous dit « à confirmer avec votre comptable », faites-le.
 
 Dans ce chapitre :
+- Ce que l'application émet elle-même, et ce qui reste chez votre comptable
 - Votre identité légale et les mentions imprimées sur chaque facture
 - La TVA : régime, numéro, taux, groupes et déclaration périodique
 - La facturation électronique : où part la facture lisible par une machine
@@ -13,6 +14,33 @@ Dans ce chapitre :
 - Émettre et clôturer un mois : l'écran Facturation, l'assistant de clôture, le regroupement, les dépenses partagées
 - Les relances de paiement
 - Le registre des factures, les exports comptables et l'analyse d'activité
+
+<!-- anchor: user.invoicing.scope -->
+### Ce que l'application émet, et ce qui reste chez votre comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez savoir, avant de vous y fier, quelles factures DesKilo émet lui-même et lesquelles vous émettez encore avec votre comptable. Voici le périmètre de cette version.
+
+| Situation | Dans l'application | Hors de l'application |
+|---|---|---|
+| Un espace en France ou en Allemagne, assujetti à la TVA ou hors du champ de la TVA | Factures émises, numérotées, envoyées et suivies | — |
+| Un poste, un bureau ou une salle, quel que soit le client, même à l'étranger | Émis avec votre TVA : le lieu de la prestation est le bâtiment | — |
+| Un espace dans un autre pays | Réservations, relevés et paiements | Les factures, avec votre comptable |
+| Le régime d'exonération de TVA | — | Les factures, avec votre comptable |
+| Autoliquidation, export, acheteur exonéré | Enregistré sur le membre | Les factures, avec votre comptable |
+| Facturation électronique | Le fichier EN 16931, déposé sur la plateforme que vous configurez | Le choix de la plateforme et ce que le dispositif national vous demande |
+| Comptabilité | Des exports reconstruits à partir des factures et des paiements | Le grand livre, la clôture et les comptes |
+| Déclaration de TVA | Les montants, calculés à partir des factures et des paiements | Son dépôt auprès de l'administration fiscale |
+
+**Bon à savoir**
+
+- La facturation électronique tient en trois étapes : DesKilo produit la facture structurée ; le connecteur la dépose sur votre plateforme ; la plateforme la transmet au client et à l'administration selon le dispositif national. Un fichier valide n'est que la première étape.
+- En France, seule une plateforme agréée peut transmettre les factures dans le cadre de la réforme, et DesKilo n'en est pas une : configurez la plateforme que vous choisissez. Toutes les entreprises concernées doivent pouvoir recevoir des factures électroniques à partir du 1er septembre 2026 ; les PME et les microentreprises doivent les émettre à partir du 1er septembre 2027.
+- DesKilo ne tient pas de grand livre en partie double : votre comptable complète les fichiers exportés.
+- Ce tableau évolue avec l'application. Quand une ligne passe dans l'application, cette section le dit.
+
+**Voir aussi:** [Émettre une facture](help:user.invoicing.new-invoice) · [La plateforme de facturation électronique](help:user.money.einvoice.overview) · [Exports comptables](help:user.invoicing.accounting-export) · [Régime de TVA](help:user.money.vat.regime)
 
 <!-- anchor: user.money.legal.identity -->
 ### Votre identité légale
@@ -553,6 +581,7 @@ Vous indiquez à DesKilo où déposer vos factures sous forme de fichiers lisibl
 - Toute plateforme qui accepte un envoi avec un jeton fonctionne : une plateforme agréée, un point d'accès Peppol, une plateforme nationale.
 - Le jeton est stocké sur le serveur et n'est plus jamais affiché.
 - Le fichier valide est une facture EN 16931. Savoir si votre pays impose une plateforme, et laquelle, est à confirmer avec votre comptable.
+- Déposer le fichier est la deuxième de trois étapes : voir [Ce que l'application émet, et ce qui reste chez votre comptable](help:user.invoicing.scope).
 
 **Voir aussi:** [Envoyer une facture électronique](help:user.money.einvoice.send) · [Identité légale](help:user.money.legal.identity)
 

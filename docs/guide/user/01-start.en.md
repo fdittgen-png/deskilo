@@ -51,12 +51,32 @@ Inside a space, what you may do depends on your role. Roles add up: everyone is 
 
 **See also:** [The role matrix](help:user.roles.matrix) · [Join a workspace](help:user.start.join)
 
+<!-- anchor: user.start.paths -->
+### Three paths through this guide
+
+**Audience:** Everyone
+
+You do not need to read everything first. Pick the path that matches what you want to do now: each step is a section of this guide, in the order you need it.
+
+| Path | Steps, in order | Done when |
+|---|---|---|
+| First time as a member | [Create an account or sign in](help:user.start.account) → [Join a workspace](help:user.start.join) → [Book a place](help:user.reserve.book) → [Read your statement](help:user.money.statement) → [Check in and check out](help:user.reserve.check-in) | You booked, you know what it costs, and you checked in and out. |
+| Put a space into service | [A few shared places](help:setup.features.profile-tiny) → [Draw rooms, desks and seats](help:user.space.editor.rooms) → [Working hours](help:user.workspace.availability.working-hours) → [Booking limits](help:user.workspace.availability.limits) → [Invite a member](help:user.members.invite) → [The Calendar tab](help:user.reserve.calendar) | A member you invited has booked, and you see the booking. |
+| First month-end | [Invoicing at a glance](help:user.money.invoicing) → [What the app issues, and what stays with your accountant](help:user.invoicing.scope) → [The month-close wizard](help:user.invoicing.wizard) → [Chase and settle open invoices](help:user.invoicing.open) → [Accounting exports](help:user.invoicing.accounting-export) | The month is invoiced within what the app supports, payments are matched, and the file is with your accountant. |
+
+**Good to know**
+
+- A small space needs only the first two paths. Invoicing, VAT and the advanced features can wait until the space needs them, and switching a feature off deletes nothing.
+- The setup guide explains the why and the order for a new space; this guide explains the clicks.
+
+**See also:** [What DesKilo is and who does what](help:user.start.what-is) · [The order to switch things on](help:setup.features.order)
+
 <!-- anchor: user.start.account -->
 ### Create an account or sign in
 
 **Audience:** Everyone
 
-You want to get in, whether this is your first time or your hundredth. One account works in every space you join.
+You want to get in, whether this is your first time or your hundredth. One account works in every space you join on the same server.
 
 <p><img src="images/user-start-account.en.jpg" width="280"></p>
 
@@ -78,6 +98,28 @@ You want to get in, whether this is your first time or your hundredth. One accou
 - **Join by invitation** on the sign-in screen keeps the errand in mind: you make your account, then paste your invitation.
 
 **See also:** [Reset a forgotten password](help:user.start.forgot-password) · [Join a workspace](help:user.start.join) · [Your data, your rights](help:user.privacy.consent)
+
+<!-- anchor: user.start.identity -->
+### Your account, your spaces and your server
+
+**Audience:** Everyone
+
+You want to know what follows you from one space to the next, and why the app sometimes asks you to sign in again. This guide uses four words, always in the same sense:
+
+| Word | The question it answers | What it is |
+|---|---|---|
+| Account | Who am I? | Your e-mail, password, name and personal settings. It lives on one server. |
+| Membership | What may I do in this space? | Your role, your plan, your bookings and your money in one space. Each space sets its own rules. |
+| Server | Where is this space kept? | The installation that stores the space: the shared reference server, or one that an organisation runs itself. |
+| Session | Am I signed in here? | Your sign-in on this device, to one server at a time. |
+
+**Good to know**
+
+- One account covers every space on the same server: joining another space there adds a membership, not an account.
+- A space kept on another server needs an account on that server. Opening it switches server and asks you to sign in there; your account on the first server stays as it is.
+- Changing server signs you out, because your account lives on the server you leave.
+
+**See also:** [Create an account or sign in](help:user.start.account) · [Me: your home and your spaces](help:user.me.home) · [Your own server](help:user.backend.server)
 
 <!-- anchor: user.start.forgot-password -->
 ### Reset a forgotten password

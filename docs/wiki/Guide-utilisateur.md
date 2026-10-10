@@ -112,12 +112,32 @@ Dans un espace, ce que vous pouvez faire dépend de votre rôle. Les rôles s'ad
 
 **Voir aussi:** [La matrice des rôles](#la-matrice-des-rôles) · [Rejoindre un espace](#rejoindre-un-espace)
 
+<!-- anchor: user.start.paths -->
+### Trois parcours dans ce guide
+
+**Public:** Tout le monde
+
+Inutile de tout lire d'abord. Choisissez le parcours qui correspond à ce que vous voulez faire maintenant : chaque étape est une section de ce guide, dans l'ordre où vous en avez besoin.
+
+| Parcours | Étapes, dans l'ordre | Terminé quand |
+|---|---|---|
+| Première utilisation comme membre | [Créer un compte ou se connecter](#créer-un-compte-ou-se-connecter) → [Rejoindre un espace](#rejoindre-un-espace) → [Réserver une place](#réserver-une-place) → [Lire votre relevé](#lire-votre-relevé) → [Check-in et check-out](#check-in-et-check-out) | Vous avez réservé, vous savez ce que cela coûte, et vous avez signalé votre arrivée puis votre départ. |
+| Mettre un espace en service | [Quelques places partagées](Guide-de-demarrage#quelques-places-partagées) → [Dessiner pièces, tables et places](#dessiner-pièces-tables-et-places) → [Horaires de travail](#horaires-de-travail) → [Limites de réservation](#limites-de-réservation) → [Inviter un membre](#inviter-un-membre) → [L'onglet Calendrier](#longlet-calendrier) | Un membre que vous avez invité a réservé, et vous voyez sa réservation. |
+| Première fin de mois | [La facturation en un coup d'œil](#la-facturation-en-un-coup-dœil) → [Ce que l'application émet, et ce qui reste chez votre comptable](#ce-que-lapplication-émet-et-ce-qui-reste-chez-votre-comptable) → [L'assistant de clôture](#lassistant-de-clôture) → [Relancer et solder les factures en cours](#relancer-et-solder-les-factures-en-cours) → [Exports comptables](#exports-comptables) | Le mois est facturé dans le périmètre de l'application, les paiements sont rapprochés et le fichier est chez votre comptable. |
+
+**Bon à savoir**
+
+- Un petit espace n'a besoin que des deux premiers parcours. La facturation, la TVA et les fonctions avancées peuvent attendre que l'espace en ait besoin, et désactiver une fonction ne supprime rien.
+- Le guide de démarrage explique le pourquoi et l'ordre pour un nouvel espace ; ce guide explique les gestes.
+
+**Voir aussi:** [Ce qu'est DesKilo et qui fait quoi](#ce-quest-deskilo-et-qui-fait-quoi) · [L’ordre d’activation](Guide-de-demarrage#lordre-dactivation)
+
 <!-- anchor: user.start.account -->
 ### Créer un compte ou se connecter
 
 **Public:** Tout le monde
 
-Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul compte fonctionne dans tous les espaces que vous rejoignez.
+Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul compte fonctionne dans tous les espaces que vous rejoignez sur le même serveur.
 
 <p><img src="images/user-start-account.fr.b8fa17aa9.jpg" width="280"></p>
 
@@ -139,6 +159,28 @@ Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul 
 - **Rejoindre sur invitation** sur l'écran de connexion garde votre démarche en mémoire : vous créez votre compte, puis vous collez votre invitation.
 
 **Voir aussi:** [Réinitialiser un mot de passe oublié](#réinitialiser-un-mot-de-passe-oublié) · [Rejoindre un espace](#rejoindre-un-espace) · [Vos données, vos droits](#vos-données-vos-droits)
+
+<!-- anchor: user.start.identity -->
+### Votre compte, vos espaces et votre serveur
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce qui vous suit d'un espace à l'autre, et pourquoi l'application vous demande parfois de vous reconnecter. Ce guide emploie quatre mots, toujours dans le même sens :
+
+| Mot | La question à laquelle il répond | Ce que c'est |
+|---|---|---|
+| Compte | Qui suis-je ? | Votre e-mail, votre mot de passe, votre nom et vos réglages personnels. Il réside sur un serveur. |
+| Adhésion | Que puis-je faire dans cet espace ? | Votre rôle, votre formule, vos réservations et votre argent dans un espace. Chaque espace fixe ses propres règles. |
+| Serveur | Où cet espace est-il conservé ? | L'installation qui stocke l'espace : le serveur de référence partagé, ou celui qu'une organisation exploite elle-même. |
+| Session | Suis-je connecté ici ? | Votre connexion sur cet appareil, à un seul serveur à la fois. |
+
+**Bon à savoir**
+
+- Un compte couvre tous les espaces du même serveur : rejoindre un autre espace sur ce serveur ajoute une adhésion, pas un compte.
+- Un espace conservé sur un autre serveur demande un compte sur ce serveur. L'ouvrir change de serveur et vous demande de vous y connecter ; votre compte sur le premier serveur reste tel quel.
+- Changer de serveur vous déconnecte, parce que votre compte réside sur le serveur que vous quittez.
+
+**Voir aussi:** [Créer un compte ou se connecter](#créer-un-compte-ou-se-connecter) · [Moi : votre accueil et vos espaces](#moi--votre-accueil-et-vos-espaces) · [Votre propre serveur](#votre-propre-serveur)
 
 <!-- anchor: user.start.forgot-password -->
 ### Réinitialiser un mot de passe oublié
@@ -4473,6 +4515,7 @@ Pour les propriétaires et les administrateurs facturation : qui vous êtes en t
 > **Attention** DesKilo imprime ce que vous déclarez et vérifie que les informations obligatoires sont présentes. Il ne certifie ni vos factures, ni votre traitement de la TVA, ni votre comptabilité. Chaque fois qu'une section ci-dessous dit « à confirmer avec votre comptable », faites-le.
 
 Dans ce chapitre :
+- Ce que l'application émet elle-même, et ce qui reste chez votre comptable
 - Votre identité légale et les mentions imprimées sur chaque facture
 - La TVA : régime, numéro, taux, groupes et déclaration périodique
 - La facturation électronique : où part la facture lisible par une machine
@@ -4480,6 +4523,33 @@ Dans ce chapitre :
 - Émettre et clôturer un mois : l'écran Facturation, l'assistant de clôture, le regroupement, les dépenses partagées
 - Les relances de paiement
 - Le registre des factures, les exports comptables et l'analyse d'activité
+
+<!-- anchor: user.invoicing.scope -->
+### Ce que l'application émet, et ce qui reste chez votre comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez savoir, avant de vous y fier, quelles factures DesKilo émet lui-même et lesquelles vous émettez encore avec votre comptable. Voici le périmètre de cette version.
+
+| Situation | Dans l'application | Hors de l'application |
+|---|---|---|
+| Un espace en France ou en Allemagne, assujetti à la TVA ou hors du champ de la TVA | Factures émises, numérotées, envoyées et suivies | — |
+| Un poste, un bureau ou une salle, quel que soit le client, même à l'étranger | Émis avec votre TVA : le lieu de la prestation est le bâtiment | — |
+| Un espace dans un autre pays | Réservations, relevés et paiements | Les factures, avec votre comptable |
+| Le régime d'exonération de TVA | — | Les factures, avec votre comptable |
+| Autoliquidation, export, acheteur exonéré | Enregistré sur le membre | Les factures, avec votre comptable |
+| Facturation électronique | Le fichier EN 16931, déposé sur la plateforme que vous configurez | Le choix de la plateforme et ce que le dispositif national vous demande |
+| Comptabilité | Des exports reconstruits à partir des factures et des paiements | Le grand livre, la clôture et les comptes |
+| Déclaration de TVA | Les montants, calculés à partir des factures et des paiements | Son dépôt auprès de l'administration fiscale |
+
+**Bon à savoir**
+
+- La facturation électronique tient en trois étapes : DesKilo produit la facture structurée ; le connecteur la dépose sur votre plateforme ; la plateforme la transmet au client et à l'administration selon le dispositif national. Un fichier valide n'est que la première étape.
+- En France, seule une plateforme agréée peut transmettre les factures dans le cadre de la réforme, et DesKilo n'en est pas une : configurez la plateforme que vous choisissez. Toutes les entreprises concernées doivent pouvoir recevoir des factures électroniques à partir du 1er septembre 2026 ; les PME et les microentreprises doivent les émettre à partir du 1er septembre 2027.
+- DesKilo ne tient pas de grand livre en partie double : votre comptable complète les fichiers exportés.
+- Ce tableau évolue avec l'application. Quand une ligne passe dans l'application, cette section le dit.
+
+**Voir aussi:** [Émettre une facture](#émettre-une-facture) · [La plateforme de facturation électronique](#la-plateforme-de-facturation-électronique) · [Exports comptables](#exports-comptables) · [Régime de TVA](#régime-de-tva)
 
 <!-- anchor: user.money.legal.identity -->
 ### Votre identité légale
@@ -5020,6 +5090,7 @@ Vous indiquez à DesKilo où déposer vos factures sous forme de fichiers lisibl
 - Toute plateforme qui accepte un envoi avec un jeton fonctionne : une plateforme agréée, un point d'accès Peppol, une plateforme nationale.
 - Le jeton est stocké sur le serveur et n'est plus jamais affiché.
 - Le fichier valide est une facture EN 16931. Savoir si votre pays impose une plateforme, et laquelle, est à confirmer avec votre comptable.
+- Déposer le fichier est la deuxième de trois étapes : voir [Ce que l'application émet, et ce qui reste chez votre comptable](#ce-que-lapplication-émet-et-ce-qui-reste-chez-votre-comptable).
 
 **Voir aussi:** [Envoyer une facture électronique](#envoyer-une-facture-électronique) · [Identité légale](#votre-identité-légale)
 

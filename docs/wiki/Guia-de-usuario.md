@@ -112,12 +112,32 @@ Dentro de un espacio, lo que puede hacer depende de su rol. Los roles se suman: 
 
 **Véase también:** [La matriz de roles](#la-matriz-de-roles) · [Unirse a un espacio](#unirse-a-un-espacio)
 
+<!-- anchor: user.start.paths -->
+### Tres recorridos por esta guía
+
+**Público:** Todos
+
+No necesita leerlo todo primero. Elija el recorrido que corresponde a lo que quiere hacer ahora: cada paso es una sección de esta guía, en el orden en que la necesita.
+
+| Recorrido | Pasos, en orden | Terminado cuando |
+|---|---|---|
+| Primera vez como miembro | [Crear una cuenta o iniciar sesión](#crear-una-cuenta-o-iniciar-sesión) → [Unirse a un espacio](#unirse-a-un-espacio) → [Reservar una plaza](#reservar-una-plaza) → [Consulte su extracto](#consulte-su-extracto) → [Registrar la llegada y la salida](#registrar-la-llegada-y-la-salida) | Ha reservado, sabe lo que cuesta y ha registrado su entrada y su salida. |
+| Poner un espacio en servicio | [Unos pocos lugares compartidos](Guia-de-puesta-en-marcha#unos-pocos-lugares-compartidos) → [Dibujar salas, mesas y asientos](#dibujar-salas-mesas-y-asientos) → [Horario de trabajo](#horario-de-trabajo) → [Límites de reserva](#límites-de-reserva) → [Invite a un miembro](#invite-a-un-miembro) → [La pestaña Calendario](#la-pestaña-calendario) | Un miembro al que invitó ha reservado y usted ve la reserva. |
+| El primer cierre de mes | [La facturación de un vistazo](#la-facturación-de-un-vistazo) → [Lo que emite la aplicación y lo que queda en manos de su gestor](#lo-que-emite-la-aplicación-y-lo-que-queda-en-manos-de-su-gestor) → [El asistente de cierre mensual](#el-asistente-de-cierre-mensual) → [Reclamar y saldar facturas abiertas](#reclamar-y-saldar-facturas-abiertas) → [Exportaciones contables](#exportaciones-contables) | El mes está facturado dentro de lo que admite la aplicación, los pagos están conciliados y el archivo está en manos de su gestor. |
+
+**Conviene saber**
+
+- Un espacio pequeño solo necesita los dos primeros recorridos. La facturación, el IVA y las funciones avanzadas pueden esperar a que el espacio las necesite, y desactivar una función no borra nada.
+- La guía de puesta en marcha explica el porqué y el orden para un espacio nuevo; esta guía explica los gestos.
+
+**Véase también:** [Qué es DesKilo y quién hace qué](#qué-es-deskilo-y-quién-hace-qué) · [El orden para activar las cosas](Guia-de-puesta-en-marcha#el-orden-para-activar-las-cosas)
+
 <!-- anchor: user.start.account -->
 ### Crear una cuenta o iniciar sesión
 
 **Público:** Todos
 
-Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirve en todos los espacios a los que se una.
+Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirve en todos los espacios a los que se una en el mismo servidor.
 
 <p><img src="images/user-start-account.es.b8fa17aa9.jpg" width="280"></p>
 
@@ -139,6 +159,28 @@ Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirv
 - **Unirse con invitación** en la pantalla de inicio de sesión recuerda el motivo de su visita: usted crea su cuenta y después pega su invitación.
 
 **Véase también:** [Restablecer una contraseña olvidada](#restablecer-una-contraseña-olvidada) · [Unirse a un espacio](#unirse-a-un-espacio) · [Tus datos, tus derechos](#tus-datos-tus-derechos)
+
+<!-- anchor: user.start.identity -->
+### Su cuenta, sus espacios y su servidor
+
+**Público:** Todos
+
+Quiere saber qué le acompaña de un espacio a otro y por qué la aplicación a veces le pide que vuelva a iniciar sesión. Esta guía usa cuatro palabras, siempre en el mismo sentido:
+
+| Palabra | La pregunta que responde | Qué es |
+|---|---|---|
+| Cuenta | ¿Quién soy? | Su correo, su contraseña, su nombre y sus ajustes personales. Reside en un servidor. |
+| Membresía | ¿Qué puedo hacer en este espacio? | Su rol, su plan, sus reservas y su dinero en un espacio. Cada espacio fija sus propias reglas. |
+| Servidor | ¿Dónde se guarda este espacio? | La instalación que almacena el espacio: el servidor de referencia compartido, o uno que una organización gestiona por su cuenta. |
+| Sesión | ¿He iniciado sesión aquí? | Su inicio de sesión en este dispositivo, en un solo servidor a la vez. |
+
+**Conviene saber**
+
+- Una cuenta cubre todos los espacios del mismo servidor: unirse a otro espacio allí añade una membresía, no una cuenta.
+- Un espacio guardado en otro servidor necesita una cuenta en ese servidor. Abrirlo cambia de servidor y le pide que inicie sesión allí; su cuenta en el primer servidor queda como está.
+- Cambiar de servidor cierra su sesión, porque su cuenta reside en el servidor que deja.
+
+**Véase también:** [Crear una cuenta o iniciar sesión](#crear-una-cuenta-o-iniciar-sesión) · [Yo: su inicio y sus espacios](#yo-su-inicio-y-sus-espacios) · [Su propio servidor](#su-propio-servidor)
 
 <!-- anchor: user.start.forgot-password -->
 ### Restablecer una contraseña olvidada
@@ -4473,6 +4515,7 @@ Para propietarios y administradores de facturación: quién es usted como vended
 > **Atención** DesKilo imprime lo que usted declara y comprueba que estén presentes los datos obligatorios. No certifica sus facturas, su tratamiento del IVA ni su contabilidad. Cada vez que una sección siguiente diga «consúltelo con su gestor», hágalo.
 
 En este capítulo:
+- Lo que emite la aplicación por sí misma y lo que queda en manos de su gestor
 - Su identidad legal y las menciones que se imprimen en cada factura
 - IVA: régimen, número, tipos, grupos y la declaración periódica
 - Facturación electrónica: adónde se envía la factura legible por máquina
@@ -4480,6 +4523,33 @@ En este capítulo:
 - Emitir y cerrar un mes: la pantalla de Facturación, el asistente de cierre mensual, la reagrupación, los gastos compartidos
 - Recordatorios de pago
 - El registro de facturas, las exportaciones contables y el análisis de negocio
+
+<!-- anchor: user.invoicing.scope -->
+### Lo que emite la aplicación y lo que queda en manos de su gestor
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere saber, antes de confiar en ella, qué facturas emite DesKilo por sí mismo y cuáles sigue emitiendo con su gestor. Este es el alcance de esta versión.
+
+| Situación | En la aplicación | Fuera de la aplicación |
+|---|---|---|
+| Un espacio en Francia o Alemania, sujeto al IVA o fuera del ámbito del IVA | Facturas emitidas, numeradas, enviadas y seguidas | — |
+| Un puesto, una oficina o una sala, sea quien sea el cliente, también en el extranjero | Emitidas con su IVA: el lugar de la prestación es el edificio | — |
+| Un espacio en otro país | Reservas, extractos y pagos | Las facturas, con su gestor |
+| El régimen exento de IVA | — | Las facturas, con su gestor |
+| Inversión del sujeto pasivo, exportación, comprador exento | Registrado en el miembro | Las facturas, con su gestor |
+| Factura electrónica | El archivo EN 16931, enviado a la plataforma que usted configura | La elección de la plataforma y lo que le exige el sistema nacional |
+| Contabilidad | Exportaciones reconstruidas a partir de facturas y pagos | El libro mayor, el cierre y las cuentas |
+| Declaración de IVA | Los importes, calculados a partir de facturas y pagos | Su presentación ante la administración tributaria |
+
+**Conviene saber**
+
+- La factura electrónica tiene tres pasos: DesKilo produce la factura estructurada; el conector la envía a su plataforma; la plataforma la hace llegar al cliente y a la administración según el sistema nacional. Un archivo válido es solo el primer paso.
+- En Francia, solo una plataforma autorizada (plateforme agréée) puede transmitir facturas dentro de la reforma, y DesKilo no lo es: configure la plataforma que elija. Todas las empresas afectadas deben poder recibir facturas electrónicas a partir del 1 de septiembre de 2026; las pymes y las microempresas deben emitirlas a partir del 1 de septiembre de 2027.
+- DesKilo no lleva una contabilidad por partida doble: su gestor completa los archivos exportados.
+- Esta tabla cambia con la aplicación. Cuando una fila pasa a la aplicación, esta sección lo dice.
+
+**Véase también:** [Emitir una factura](#emitir-una-factura) · [La plataforma de facturación electrónica](#la-plataforma-de-facturación-electrónica) · [Exportaciones contables](#exportaciones-contables) · [Régimen de IVA](#régimen-de-iva)
 
 <!-- anchor: user.money.legal.identity -->
 ### Su identidad legal
@@ -5020,6 +5090,7 @@ Indica a DesKilo dónde enviar sus facturas como archivos legibles por máquina.
 - Sirve cualquier plataforma que acepte una subida con un token: una plataforma homologada, un punto de acceso Peppol, una plataforma nacional.
 - El token se guarda en el servidor y no vuelve a mostrarse.
 - El archivo válido es una factura EN 16931. Si su país exige una plataforma, y cuál, es algo que debe confirmar con su gestor.
+- Enviar el archivo es el segundo de tres pasos: véase [Lo que emite la aplicación y lo que queda en manos de su gestor](#lo-que-emite-la-aplicación-y-lo-que-queda-en-manos-de-su-gestor).
 
 **Véase también:** [Enviar una factura electrónica](#enviar-una-factura-electrónica) · [Identidad legal](#su-identidad-legal)
 
