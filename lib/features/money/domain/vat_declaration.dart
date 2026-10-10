@@ -260,7 +260,7 @@ class VatFormBox {
 /// their EDI partner uploads).
 ///
 ///  * FR — CA3 (form 3310): base+VAT per rate on lines 08 (20 %),
-///    9B (5,5 %), 09 (10 %), 11 (2,1 %); everything else on line 14
+///    09 (5,5 %), 9B (10 %), 11 (2,1 %); everything else on line 14
 ///    ("opérations imposables à un autre taux").
 ///  * DE — UStVA (USt 1 A): Kz 81 (19 %) / Kz 86 (7 %) carry the NET
 ///    base, the tax computes on the form; other rates on Kz 35/36.
@@ -286,16 +286,18 @@ List<VatFormBox> vatFormBoxes(
               label: 'Taux normal 20 %',
               netCents: l.netCents,
               vatCents: l.vatCents),
-        if (at(10.0) case final l?)
-          VatFormBox(
-              code: '09',
-              label: 'Taux réduit 10 %',
-              netCents: l.netCents,
-              vatCents: l.vatCents),
+        // #2357 — 3310-CA3-SD: line 09 is the 5,5 % rate (code 0105) and
+        // line 9B the 10 % rate (code 0151); they were swapped.
         if (at(5.5) case final l?)
           VatFormBox(
-              code: '9B',
+              code: '09',
               label: 'Taux réduit 5,5 %',
+              netCents: l.netCents,
+              vatCents: l.vatCents),
+        if (at(10.0) case final l?)
+          VatFormBox(
+              code: '9B',
+              label: 'Taux réduit 10 %',
               netCents: l.netCents,
               vatCents: l.vatCents),
         if (at(2.1) case final l?)

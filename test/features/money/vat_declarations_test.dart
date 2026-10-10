@@ -131,7 +131,18 @@ void main() {
       ];
       final fr = vatFormBoxes('FR', lines);
       expect(fr.singleWhere((b) => b.code == '08').vatCents, 4000);
-      expect(fr.singleWhere((b) => b.code == '9B').netCents, 10000);
+      // #2357 — 3310-CA3-SD: 09 is the 5,5 % rate, 9B the 10 % rate.
+      expect(fr.singleWhere((b) => b.code == '09').netCents, 10000);
+      expect(fr.where((b) => b.code == '9B'), isEmpty);
+      final ten = vatFormBoxes('FR', const [
+        VatDeclarationLine(
+            percent: 10,
+            grossCents: 11000,
+            netCents: 10000,
+            vatCents: 1000,
+            invoiceCount: 1),
+      ]);
+      expect(ten.single.code, '9B');
 
       const german = [
         VatDeclarationLine(
