@@ -49,6 +49,7 @@
   <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8C6.9 7.4 5 8.8 5 11.9c0 1.9.7 3.9 1.6 5.2.8 1.1 1.4 2 2.5 2s1.4-.7 2.7-.7 1.6.7 2.7.7 1.8-1.1 2.5-2.1c.8-1.1 1.1-2.2 1.1-2.3 0 0-1.7-.7-1.7-2.1zM14.2 5.8c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.5.9.1 1.9-.5 2.5-1.2z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16v4"/></symbol>
   <symbol id="i-fdroid" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="3"/><path d="M7 9L5 5.5M17 9l2-3.5"/><circle cx="12" cy="14.5" r="2.5"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5 2 2 0 0 0 2 2.5h14v-5"/><path d="M8 7.5h8M8 11h5"/></symbol>
@@ -107,10 +108,11 @@
       <h1 class="reveal" data-i18n-html="hero.title">Your coworking space,<br><span class="grad">run together.</span></h1>
       <p class="lead reveal" data-i18n="hero.lead">Book a desk on a live floor plan, give every member the same transparent account the admins see, and let the people your community names approve what matters. On a phone, a tablet or in a browser — on the shared server or on your own.</p>
       <div class="cta-row reveal">
-        <a class="btn btn-primary" href="https://fdittgen-png.github.io/deskilo/"><svg class="ic"><use href="#i-play"/></svg><span data-i18n="hero.demo">Try the demo</span></a>
+        <a class="btn btn-primary" href="https://fdittgen-png.github.io/deskilo/#/auth?demo=1"><svg class="ic"><use href="#i-play"/></svg><span data-i18n="hero.demo">Try the demo</span></a>
         <a class="btn btn-ghost" href="#start"><span data-i18n="hero.start">Start your space</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
-      <p class="hint reveal" data-i18n="hero.hint">The demo needs no account: choose “Explore the demo workspace” on the sign-in screen. Nothing you do there leaves your device.</p>
+      <p class="hint reveal" data-i18n="hero.hint">No account needed: the demo opens with a short note, and nothing you do there leaves your device.</p>
+      <p class="beta-note reveal" data-i18n-html="hero.beta"><b>Beta</b> — ready for a pilot. <a href="#faq-ready">What it does today, and what not yet</a></p>
       <ul class="proof reveal">
         <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="hero.p1">Web · Android · iPhone · Windows · macOS</span></li>
         <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="hero.p2">English · Français · Deutsch · Español · Italiano</span></li>
@@ -128,6 +130,7 @@
           <img data-shot="collaborate-accept" src="img/collaborate-accept.en.webp" alt="Requests waiting for a decision" data-i18n-alt="alt.accept" width="468" height="922">
         </div>
       </div>
+      <button class="motion-btn on-hero" type="button" aria-pressed="false" aria-label="Pause the animations"><svg class="ic only-run"><use href="#i-pause"/></svg><svg class="ic only-still"><use href="#i-play"/></svg></button>
       <div class="float f1" aria-hidden="true"><span class="fi ok"><svg class="ic"><use href="#i-check"/></svg></span><div><b data-i18n="float.booked">Desk A3 booked</b><small data-i18n="float.when">Thu 14 May · 19:00 → 23:00</small></div></div>
       <div class="float f2" aria-hidden="true"><span class="fi warn"><svg class="ic"><use href="#i-people"/></svg></span><div><b data-i18n="float.request">Bruno asks for 4 extra half-days</b><small><span class="mini-btn" data-i18n="float.accept">Accept</span></small></div></div>
       <div class="float f3" aria-hidden="true"><span class="fi info"><svg class="ic"><use href="#i-chat"/></svg></span><div><b>Ada</b><small data-i18n="float.chat">Thursday morning is free — I moved it for you.</small></div></div>
@@ -151,7 +154,7 @@
     <header class="sec-head reveal">
       <p class="kicker" data-i18n="val.kicker">Three questions, answered at a glance</p>
       <h2 data-i18n="val.title">Everyone sees the same truth.</h2>
-      <p class="sub" data-i18n="val.sub">Most tools are built for the person who runs the space. DesKilo is built for the community: the member and the treasurer read the same plan, the same figures and the same history.</p>
+      <p class="sub" data-i18n="val.sub">Built for the members as much as for the people who run the space: the member and the treasurer read the same plan, the same figures and the same history.</p>
     </header>
     <div class="cards3">
       <article class="vcard reveal">
@@ -186,7 +189,7 @@
         <li><i class="s-in"></i><span data-i18n="try.in">Checked in</span></li>
         <li><i class="s-mine"></i><span data-i18n="try.mine">Yours</span></li>
       </ul>
-      <p class="status" id="plan-status" aria-live="polite"></p>
+      <div class="plan-tools"><p class="status" id="plan-status" aria-live="polite"></p><button class="motion-btn" type="button" aria-pressed="false" aria-label="Pause the animations"><svg class="ic only-run"><use href="#i-pause"/></svg><svg class="ic only-still"><use href="#i-play"/></svg></button></div>
     </div>
     <div class="floor reveal" id="floor" role="group" aria-label="Interactive floor plan" data-i18n-aria="try.aria">
       <div class="room r-main">
@@ -259,7 +262,7 @@
         <li class="step" data-step="4">
           <span class="step-n">05</span>
           <h3 data-i18n="s5.t">Invoices that look right</h3>
-          <p data-i18n="s5.p">Gapless numbering, credit notes, VAT, reminders and a PDF in your own layout. Payments are recorded or handed off online, and the books export for your accountant.</p>
+          <p data-i18n="s5.p">Gapless numbering, credit notes, VAT, reminders and a PDF in your own layout, for spaces in France and Germany. Payments are recorded or handed off online, and the exports go to your accountant.</p>
           <div class="step-shot"><div class="phone sm"><div class="screen"><img data-shot="money-invoices-detail" src="img/money-invoices-detail.en.webp" alt="An invoice with its timeline" data-i18n-alt="alt.invoice" width="468" height="922" loading="lazy"></div></div></div>
         </li>
         <li class="step" data-step="5">
@@ -271,7 +274,7 @@
         <li class="step" data-step="6">
           <span class="step-n">07</span>
           <h3 data-i18n="s7.t">Talk without leaving the app</h3>
-          <p data-i18n="s7.p">Private conversations and groups that can point at a booking or an invoice. You choose who sees your name, contact details and presence — and the space operator never reads your messages.</p>
+          <p data-i18n="s7.p">Private conversations and groups that can point at a booking or an invoice. You choose who sees your name, contact details and presence, and only the people in a conversation can open it — not the space's owners or administrators.</p>
           <div class="step-shot"><div class="phone sm"><div class="screen"><img data-shot="collaborate-contact" src="img/collaborate-contact.en.webp" alt="A private conversation" data-i18n-alt="alt.chat" width="468" height="922" loading="lazy"></div></div></div>
         </li>
         <li class="step" data-step="7">
@@ -291,38 +294,14 @@
     <header class="sec-head reveal">
       <p class="kicker" data-i18n="feat.kicker">Everything a community needs</p>
       <h2 data-i18n="feat.title">One app instead of a spreadsheet, a calendar, a group chat and an invoicing tool.</h2>
-      <p class="sub" data-i18n="feat.sub">Switch on only the modules your space needs. Each one declares what it depends on, so nothing half-works.</p>
+      <p class="sub" data-i18n="feat.sub">Start small. Switch on what your space needs today and add the rest when it needs it. Each module declares what it depends on, so nothing half-works, and switching one off deletes nothing.</p>
     </header>
     <div class="bento">
+      <h3 class="stage reveal"><span class="stage-n">1</span><span data-i18n="stage.1">Day one — book and welcome</span></h3>
       <article class="tile t-wide reveal">
         <span class="vic teal"><svg class="ic"><use href="#i-calendar"/></svg></span>
         <h3 data-i18n="f1.t">Bookings, the way you work</h3>
         <p data-i18n="f1.p">Half-days, whole days or exact hours, series, whole rooms or a whole level, opening hours, closure days, public holidays and limits per member.</p>
-      </article>
-      <article class="tile reveal">
-        <span class="vic amber"><svg class="ic"><use href="#i-euro"/></svg></span>
-        <h3 data-i18n="f2.t">Memberships</h3>
-        <p data-i18n="f2.p">Plans, tiers, day packages, negotiated prices and overage rules per member.</p>
-      </article>
-      <article class="tile reveal">
-        <span class="vic red"><svg class="ic"><use href="#i-doc"/></svg></span>
-        <h3 data-i18n="f3.t">Invoicing &amp; VAT</h3>
-        <p data-i18n="f3.p">Invoices, credit notes, reminders, VAT regimes and declarations, structured e-invoice files.</p>
-      </article>
-      <article class="tile reveal">
-        <span class="vic teal"><svg class="ic"><use href="#i-wallet"/></svg></span>
-        <h3 data-i18n="f4.t">Shared expenses</h3>
-        <p data-i18n="f4.p">Coffee, cleaning, internet: split a cost among members, once or on a schedule.</p>
-      </article>
-      <article class="tile reveal">
-        <span class="vic amber"><svg class="ic"><use href="#i-download"/></svg></span>
-        <h3 data-i18n="f5.t">Accounting exports</h3>
-        <p data-i18n="f5.p">FEC, SAF-T, CSV, audit trail and a yearly archive for your accountant.</p>
-      </article>
-      <article class="tile t-wide reveal">
-        <span class="vic red"><svg class="ic"><use href="#i-tune"/></svg></span>
-        <h3 data-i18n="f6.t">A report designer, page-true</h3>
-        <p data-i18n="f6.p">Invoices, statements and agreements in your own layout, per language, with a live A4 preview — or start from a ready-made preset.</p>
       </article>
       <article class="tile reveal">
         <span class="vic teal"><svg class="ic"><use href="#i-roles"/></svg></span>
@@ -330,9 +309,9 @@
         <p data-i18n="f7.p">Owner, co-owners, admins, hosts, accountants — and a permission matrix you can read.</p>
       </article>
       <article class="tile reveal">
-        <span class="vic amber"><svg class="ic"><use href="#i-kiosk"/></svg></span>
-        <h3 data-i18n="f8.t">Kiosk, QR &amp; NFC</h3>
-        <p data-i18n="f8.p">A wall tablet at the entrance, badges and printed desk codes for check-in.</p>
+        <span class="vic amber"><svg class="ic"><use href="#i-people"/></svg></span>
+        <h3 data-i18n="f11.t">One “Me” across all your spaces</h3>
+        <p data-i18n="f11.p">One account for every space on a server. Spaces on other servers sit on the same Home and ask you to sign in there. Favourites, ratings and your own order.</p>
       </article>
       <article class="tile reveal">
         <span class="vic red"><svg class="ic"><use href="#i-chat"/></svg></span>
@@ -340,19 +319,53 @@
         <p data-i18n="f9.p">Conversations, groups, message requests and a block list you control.</p>
       </article>
       <article class="tile reveal">
+        <span class="vic red"><svg class="ic"><use href="#i-shield"/></svg></span>
+        <h3 data-i18n="f12.t">Privacy built in</h3>
+        <p data-i18n="f12.p">Export, erase, see who accessed your data — buttons, not e-mails.</p>
+      </article>
+      <article class="tile reveal">
         <span class="vic teal"><svg class="ic"><use href="#i-globe"/></svg></span>
         <h3 data-i18n="f10.t">Be found</h3>
         <p data-i18n="f10.p">Publish a public page in the shared directory and on the map — only if you want to.</p>
       </article>
+      <article class="tile t-min reveal">
+        <span class="vic teal"><svg class="ic"><use href="#i-book"/></svg></span>
+        <h3 data-i18n="fmin.t">A minimal space, step by step</h3>
+        <p data-i18n="fmin.p">A floor plan, opening hours and an invitation: the setup guide walks a small space through it.</p>
+        <a class="tile-link setup-guide-link" data-anchor="setup.features.profile-tiny" href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html#setup.features.profile-tiny"><span data-i18n="fmin.a">Open the setup guide</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      </article>
+      <h3 class="stage reveal"><span class="stage-n">2</span><span data-i18n="stage.2">When members pay — plans and money</span></h3>
       <article class="tile reveal">
-        <span class="vic amber"><svg class="ic"><use href="#i-people"/></svg></span>
-        <h3 data-i18n="f11.t">One “Me” across all your spaces</h3>
-        <p data-i18n="f11.p">A personal account for every space you belong to — on this server and on others you connect. Favourites, ratings and your own order on Home.</p>
+        <span class="vic amber"><svg class="ic"><use href="#i-euro"/></svg></span>
+        <h3 data-i18n="f2.t">Memberships</h3>
+        <p data-i18n="f2.p">Plans, tiers, day packages, negotiated prices and overage rules per member.</p>
       </article>
       <article class="tile reveal">
-        <span class="vic red"><svg class="ic"><use href="#i-shield"/></svg></span>
-        <h3 data-i18n="f12.t">Privacy built in</h3>
-        <p data-i18n="f12.p">Export, erase, see who accessed your data — buttons, not e-mails.</p>
+        <span class="vic teal"><svg class="ic"><use href="#i-wallet"/></svg></span>
+        <h3 data-i18n="f4.t">Shared expenses</h3>
+        <p data-i18n="f4.p">Coffee, cleaning, internet: split a cost among members, once or on a schedule.</p>
+      </article>
+      <article class="tile reveal">
+        <span class="vic red"><svg class="ic"><use href="#i-doc"/></svg></span>
+        <h3 data-i18n="f3.t">Invoicing &amp; VAT</h3>
+        <p data-i18n="f3.p">Invoices, credit notes, reminders and VAT, issued in the app for spaces in France and Germany. Reverse charge, export and exempt cases go through your accountant.</p>
+        <a class="tile-link guide-link" data-anchor="user.invoicing.scope" href="https://fdittgen-png.github.io/deskilo/guide/en.html#user.invoicing.scope"><span data-i18n="f3.a">What the app issues</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="tile reveal">
+        <span class="vic amber"><svg class="ic"><use href="#i-download"/></svg></span>
+        <h3 data-i18n="f5.t">Accounting exports</h3>
+        <p data-i18n="f5.p">FEC, SAF-T, CSV, an audit trail and a yearly archive, rebuilt from invoices and payments. Your accountant keeps the ledger.</p>
+      </article>
+      <h3 class="stage reveal"><span class="stage-n">3</span><span data-i18n="stage.3">When the space grows</span></h3>
+      <article class="tile reveal">
+        <span class="vic red"><svg class="ic"><use href="#i-tune"/></svg></span>
+        <h3 data-i18n="f6.t">A report designer, page-true</h3>
+        <p data-i18n="f6.p">Invoices, statements and agreements in your own layout, per language, with a live A4 preview — or start from a ready-made preset.</p>
+      </article>
+      <article class="tile reveal">
+        <span class="vic amber"><svg class="ic"><use href="#i-kiosk"/></svg></span>
+        <h3 data-i18n="f8.t">Kiosk, QR &amp; NFC</h3>
+        <p data-i18n="f8.p">A wall tablet at the entrance, badges and printed desk codes for check-in.</p>
       </article>
       <article class="tile reveal">
         <span class="vic teal"><svg class="ic"><use href="#i-spark"/></svg></span>
@@ -481,7 +494,7 @@
   <div class="wrap">
     <header class="sec-head reveal">
       <p class="kicker" data-i18n="why.kicker">Why DesKilo and not something else</p>
-      <h2 data-i18n="why.title">A community tool, not a landlord's dashboard.</h2>
+      <h2 data-i18n="why.title">Built for the members as much as for the managers.</h2>
     </header>
     <div class="why-grid">
       <article class="why reveal"><span class="vic teal"><svg class="ic"><use href="#i-lock"/></svg></span><h3 data-i18n="w1.t">No licence fee, no lock-in</h3><p data-i18n="w1.p">The code is free software (AGPL-3.0). Export everything — configuration, members, plan, books — and move whenever you like.</p></article>
@@ -491,19 +504,19 @@
     </div>
     <div class="compare reveal" role="region" aria-labelledby="cmp-cap" tabindex="0">
       <table>
-        <caption id="cmp-cap" data-i18n="cmp.cap">How DesKilo compares with the usual options</caption>
+        <caption id="cmp-cap" data-i18n="cmp.cap">Three ways to run a space, compared as ways of working — not as named products</caption>
         <thead>
-          <tr><th scope="col"></th><th scope="col" class="us">DesKilo</th><th scope="col" data-i18n="cmp.saas">Typical coworking software</th><th scope="col" data-i18n="cmp.diy">Spreadsheet + group chat</th></tr>
+          <tr><th scope="col"></th><th scope="col" class="us">DesKilo</th><th scope="col" data-i18n="cmp.saas">A provider-run service</th><th scope="col" data-i18n="cmp.diy">Spreadsheet + group chat</th></tr>
         </thead>
         <tbody>
-          <tr><th scope="row" data-i18n="cmp.r1">Licence cost</th><td class="us" data-i18n="cmp.r1a">None</td><td data-i18n="cmp.r1b">Monthly, often per member or per location</td><td data-i18n="cmp.r1c">None</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r2">Who holds the data</th><td class="us" data-i18n="cmp.r2a">You choose: shared server or your own</td><td data-i18n="cmp.r2b">The vendor</td><td data-i18n="cmp.r2c">Scattered files and threads</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r3">Source code</th><td class="us" data-i18n="cmp.r3a">Open (AGPL-3.0)</td><td data-i18n="cmp.r3b">Usually closed</td><td>—</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r4">Live floor plan &amp; check-in</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r4b">Often, in higher tiers</td><td><span class="no" data-i18n="cmp.no">No</span></td></tr>
-          <tr><th scope="row" data-i18n="cmp.r5">Member sees the same account as the admin</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r5b">Rarely</td><td data-i18n="cmp.r5c">Only if someone shares it</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r6">Approvals by people the community names</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r6b">Mostly admin-only</td><td data-i18n="cmp.r6c">In the chat, if at all</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r7">Invoices, VAT, accounting exports</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r7b">Yes, sometimes as add-ons</td><td data-i18n="cmp.r7c">By hand</td></tr>
-          <tr><th scope="row" data-i18n="cmp.r8">Leave whenever you like</th><td class="us" data-i18n="cmp.r8a">Full export, self-hosting</td><td data-i18n="cmp.r8b">Depends on the vendor</td><td data-i18n="cmp.r8c">Yes</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r1">Licence cost</th><td class="us" data-i18n="cmp.r1a">None</td><td data-i18n="cmp.r1b">A subscription, priced by the provider</td><td data-i18n="cmp.r1c">None</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r2">Who holds the data</th><td class="us" data-i18n="cmp.r2a">You choose: shared server or your own</td><td data-i18n="cmp.r2b">The provider</td><td data-i18n="cmp.r2c">Scattered files and threads</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r3">Source code</th><td class="us" data-i18n="cmp.r3a">Open (AGPL-3.0)</td><td data-i18n="cmp.r3b">Up to the provider</td><td>—</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r4">Live floor plan &amp; check-in</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r4b">Depends on the product and the plan</td><td><span class="no" data-i18n="cmp.no">No</span></td></tr>
+          <tr><th scope="row" data-i18n="cmp.r5">Member sees the same account as the admin</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r5b">Depends on the product</td><td data-i18n="cmp.r5c">Only if someone shares it</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r6">Approvals by people the community names</th><td class="us"><span class="yes" data-i18n="cmp.yes">Yes</span></td><td data-i18n="cmp.r6b">Depends on the product</td><td data-i18n="cmp.r6c">In the chat, if at all</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r7">Invoices, VAT, accounting exports</th><td class="us" data-i18n="cmp.r7a">In France and Germany; exports for your accountant</td><td data-i18n="cmp.r7b">Depends on the product</td><td data-i18n="cmp.r7c">By hand</td></tr>
+          <tr><th scope="row" data-i18n="cmp.r8">Leave whenever you like</th><td class="us" data-i18n="cmp.r8a">Full export, self-hosting</td><td data-i18n="cmp.r8b">Depends on the provider's export</td><td data-i18n="cmp.r8c">Yes</td></tr>
         </tbody>
       </table>
     </div>
@@ -517,7 +530,7 @@
       <header class="sec-head left reveal">
         <p class="kicker" data-i18n="host.kicker">Shared server or your own — or both</p>
         <h2 data-i18n="host.title">Your data lives where you decide.</h2>
-        <p class="sub" data-i18n="host.sub">Any DesKilo server can be linked to the global directory, so its public spaces are found next to everyone else's. One personal account connects them all.</p>
+        <p class="sub" data-i18n="host.sub">Any DesKilo server can be linked to the global directory, so its public spaces are found next to everyone else's. Home lists your spaces from every server you use; each server keeps its own sign-in.</p>
       </header>
       <div class="host-cards">
         <article class="hcard reveal">
@@ -582,8 +595,8 @@
       <li class="tl reveal">
         <span class="tl-n">1</span>
         <h3 data-i18n="t1.t">Look around</h3>
-        <p data-i18n="t1.p">Open the web app and choose “Explore the demo workspace”: a fictional community you can visit as owner, admin or member.</p>
-        <a class="link" href="https://fdittgen-png.github.io/deskilo/"><span data-i18n="t1.a">Open the demo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <p data-i18n="t1.p">Open the demo: a short note explains it, then you visit a fictional community as owner, admin or member.</p>
+        <a class="link" href="https://fdittgen-png.github.io/deskilo/#/auth?demo=1"><span data-i18n="t1.a">Open the demo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
       </li>
       <li class="tl reveal">
         <span class="tl-n">2</span>
@@ -642,9 +655,11 @@
       <details class="reveal"><summary data-i18n="q3.q">Do members have to install anything?</summary><p data-i18n="q3.a">No. The web app works in any browser. The Android and iPhone apps add push notifications and scanning QR codes with the camera.</p></details>
       <details class="reveal"><summary data-i18n="q4.q">How do I run my own server?</summary><p data-i18n="q4.a">Open a free account at supabase.com, make a personal access token and choose “Create a new instance” on the app's server screen. The wizard creates the project, installs the schema, deploys the server functions and sets up sign-in. The technical guide covers backups and upgrades.</p></details>
       <details class="reveal"><summary data-i18n="q5.q">How do people find our space?</summary><p data-i18n="q5.a">Publish a public page in the shared directory — an explicit owner action you can withdraw. A self-hosted server can be linked to the global directory too, so its public spaces are listed beside the others.</p></details>
-      <details class="reveal"><summary data-i18n="q6.q">Is it ready for my space?</summary><p data-i18n="q6.a">DesKilo is in beta and used by its first community. It suits spaces willing to run a pilot, check their own workflows and tell us what got in the way. Online payments and e-invoicing should be tested with your own provider first.</p></details>
+      <details class="reveal" id="faq-ready"><summary data-i18n="q6.q">Is it ready for my space?</summary><p data-i18n-html="q6.a">DesKilo is in beta and used by its first community. It suits spaces willing to run a pilot, check their own workflows and tell us what got in the way. Invoicing in the app covers spaces in France and Germany — <a class="guide-link" data-anchor="user.invoicing.scope" href="https://fdittgen-png.github.io/deskilo/guide/en.html#user.invoicing.scope">see what stays with your accountant</a>. Online payments and e-invoicing should be tested with your own provider first.</p></details>
       <details class="reveal"><summary data-i18n="q7.q">Can we change it or contribute?</summary><p data-i18n="q7.a">Yes. The code is AGPL-3.0: keep the author's credit and publish your changes, or ask for a commercial licence. Translations, tests, bug reports and pull requests are welcome on GitHub.</p></details>
       <details class="reveal"><summary data-i18n="q8.q">Can DesKilo be adapted to our space?</summary><p data-i18n="q8.a">Yes. Customisations can be commissioned from the author, including exclusive features built for your space only. Get in touch on GitHub.</p></details>
+      <details class="reveal"><summary data-i18n="q9.q">Who can read our messages?</summary><p data-i18n="q9.a">Only the people in a conversation can open it in the app — not the space&#39;s owners or administrators. Messages are not end-to-end encrypted: whoever runs the server can technically reach its database. That is one more reason a community may prefer to run its own server.</p></details>
+      <details class="reveal"><summary data-i18n="q10.q">Does DesKilo replace our accountant?</summary><p data-i18n-html="q10.a">No. It issues invoices for spaces in France and Germany within a stated scope, and prepares exports rebuilt from invoices and payments. It keeps no double-entry ledger and files no tax return — <a class="guide-link" data-anchor="user.invoicing.scope" href="https://fdittgen-png.github.io/deskilo/guide/en.html#user.invoicing.scope">what the app issues, and what stays with your accountant</a>.</p></details>
     </div>
   </div>
 </section>

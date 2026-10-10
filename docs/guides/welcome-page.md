@@ -31,6 +31,21 @@ five.
 Every claim must be true of master. Before writing that the app does
 something, find the screen or the ARB string that does it.
 
+## Keeping the promises honest
+
+The page says only what the guide documents (#2400):
+
+- **Invoicing** names its scope (France and Germany; reverse charge, export and exempt cases with the accountant)
+  and links `guide/<lang>.html#user.invoicing.scope`. When that scope changes, change both together.
+- **Messages**: only the people in a conversation can open it in the app; they are not end-to-end encrypted.
+- **Accounts**: one account per server; spaces on other servers ask for a sign-in there.
+- **Comparison**: ways of working (provider-run service, spreadsheet + chat), never named or unnamed products' features.
+- **Hosting**: the same dates as `q1.a` and `h1.p` everywhere.
+
+A link with `class="guide-link"` or `"setup-guide-link"` and a `data-anchor` follows the reader's language and
+keeps the anchor. The demo buttons open `#/auth?demo=1`. The pause buttons (`.motion-btn`) stop everything that
+moves on its own and remember it (`deskilo.welcome.still`).
+
 ## Changing the screenshots
 
 The screenshots are the user and setup guides' captures of the demo
