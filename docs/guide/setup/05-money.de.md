@@ -280,13 +280,13 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 2. Legen Sie die Sätze unter [USt](app:/vat) fest: **Übliche Sätze übernehmen** für Ihr Land, dann genau einen davon als Standard markieren (siehe [Die Sätze festlegen](help:user.money.vat.rates)).
 3. Ordnen Sie jedem Satz seine Gruppe zu, und wo es zutrifft, einen Befreiungsgrund (siehe [USt-Gruppen](help:user.money.vat.groups)).
 4. Ändert das Gesetz einen Satz, verwenden Sie **Änderung per Gesetz**, damit ältere Rechnungen ihren Satz behalten (siehe [Einen Satz per Gesetz ändern](help:user.money.vat.change-by-law)).
-5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und erzeugen jeden Zeitraum unter [USt-Voranmeldung](help:user.money.vat.declaration).
+5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und bereiten Sie jeden Zeitraum unter [USt-Voranmeldung](help:user.money.vat.declaration) vor.
 
 **Gut zu wissen**
 
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
 - Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
-- Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.
+- Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
 **Siehe auch:** [Steuerregime](help:user.money.vat.regime) · [Wann die Umsatzsteuer fällig wird](help:user.money.vat.due)

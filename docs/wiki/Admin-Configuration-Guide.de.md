@@ -93,8 +93,12 @@ damit die Summe exakt dem entspricht, was eingegangen ist.
 **Meldungen** werden für einen Zeitraum aus den darin enthaltenen
 Dokumenten (oder Zahlungen) gebildet, auf die Felder des Formulars Ihres
 Landes übertragen — UStVA in Deutschland, CA3 in Frankreich — und als PDF
-und XML erzeugt. Eine Meldung geht von Entwurf auf eingereicht, und eine
-eingereichte wird nie neu berechnet.
+und XML erzeugt. Ihre Beträge berechnet der Server
+(`compute_vat_return`, #2357), die App sendet keine; eine Meldung geht
+von vorbereitet auf abgegeben, abgegeben vom Inhaber mit der Referenz
+der Eingangsbestätigung des Finanzamts, und eine abgegebene ändert sich
+nie mehr. Die App übermittelt keine Meldung: Deutschland gibt über
+ELSTER ab, Frankreich über EDI-TVA oder impots.gouv.
 
 Der vollständige Satzkatalog eines Landes wird mit der App ausgeliefert
 (EU27, CH, NO, CA); ihn aktuell zu halten, wenn eine Regierung einen Satz

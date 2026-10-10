@@ -84,8 +84,11 @@ goes to the widest rate so the total matches what was received exactly.
 **Declarations** are built for a period from the documents (or the
 payments) it contains, mapped to the boxes your country's form uses —
 CA3 in France, UStVA in Germany — and produced as PDF and XML. A
-declaration goes draft → submitted, and a submitted one is never
-recomputed.
+declaration's figures are computed by the server (`compute_vat_return`,
+#2357), never sent by the app; it goes prepared → filed, filed by the
+owner with the tax authority's receipt reference, and a filed one never
+changes. The app transmits no return: France files through EDI-TVA or
+impots.gouv, Germany through ELSTER.
 
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.

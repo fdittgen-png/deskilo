@@ -1549,13 +1549,13 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 2. Legen Sie die Sätze unter [USt](https://fdittgen-png.github.io/deskilo/#/vat) fest: **Übliche Sätze übernehmen** für Ihr Land, dann genau einen davon als Standard markieren (siehe [Die Sätze festlegen](Benutzerhandbuch#die-sätze-festlegen)).
 3. Ordnen Sie jedem Satz seine Gruppe zu, und wo es zutrifft, einen Befreiungsgrund (siehe [USt-Gruppen](Benutzerhandbuch#steuergruppen)).
 4. Ändert das Gesetz einen Satz, verwenden Sie **Änderung per Gesetz**, damit ältere Rechnungen ihren Satz behalten (siehe [Einen Satz per Gesetz ändern](Benutzerhandbuch#einen-satz-per-gesetz-ändern)).
-5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und erzeugen jeden Zeitraum unter [USt-Voranmeldung](Benutzerhandbuch#die-periodische-umsatzsteuererklärung).
+5. Müssen Sie Erklärungen abgeben, schalten Sie **USt-Voranmeldungen** ein und bereiten Sie jeden Zeitraum unter [USt-Voranmeldung](Benutzerhandbuch#die-umsatzsteuer-voranmeldung-vorbereiten) vor.
 
 **Gut zu wissen**
 
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
 - Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
-- Eine Voranmeldung ist eine Hilfe für die Abgabe, erstellt aus Ihren ausgestellten Rechnungen. Prüfen Sie sie, bevor Sie sie abgeben, und markieren Sie sie erst als abgegeben, wenn Sie es getan haben.
+- Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
 **Siehe auch:** [Steuerregime](Benutzerhandbuch#steuerregime) · [Wann die Umsatzsteuer fällig wird](Benutzerhandbuch#wann-die-umsatzsteuer-entsteht)
@@ -1855,7 +1855,7 @@ Jedes Dokument ist eine eigene *Art*. Jede Art hat ihr eigenes Layout; wenn Sie 
 | Zahlungen, Nutzung | Das Mitglied, der Abrechnungsadministrator | [Zahlungen](Benutzerhandbuch#offenes-bezahlen) · [Nutzung](Benutzerhandbuch#was-jede-buchung-gekostet-hat) |
 | Mahnschreiben, Stufe 1 bis 9 | Das Mitglied mit einer überfälligen Rechnung | [Mahnregeln](Benutzerhandbuch#mahnregeln) |
 | Workspace-Bericht und Workspace-Status | Sie, der Vorstand, ein Prüfer | **Berichte** |
-| Umsatzsteuer-Voranmeldung | Sie, danach die Steuerplattform | [Die periodische Umsatzsteuer-Voranmeldung](Benutzerhandbuch#die-periodische-umsatzsteuererklärung) |
+| Umsatzsteuer-Voranmeldung | Sie, danach die Steuerplattform | [Die periodische Umsatzsteuer-Voranmeldung](Benutzerhandbuch#die-umsatzsteuer-voranmeldung-vorbereiten) |
 | Ausweise, Raum-QR-Codes | Mitglieder an der Tür, Ihre Wände | [Raum-QR-Codes](Benutzerhandbuch#raum-qr-codes-pdf) · [Ausweise](Benutzerhandbuch#nfc-badge-check-in) |
 
 **Gut zu wissen**
@@ -1941,7 +1941,7 @@ Beginnen Sie beim [Rechnungsregister](https://fdittgen-png.github.io/deskilo/#/i
 | SAF-T PT, Sage 50 | Ein portugiesisches Aufsichtsformat (nicht zertifiziert) und ein britisch-irisches Austauschformat, je nach Ihrem Land | Eine Abgabe oder eine Zertifizierung |
 | Buchhaltungs-CSV, Prüfpfad, Jahresarchiv (zip) | Eine Lesehilfe für Ihren Steuerberater | Eine Abgabe |
 
-Die Liste der Formate hängt von Ihrem Land ab. FEC und DATEV verlangen Ihre Kontonummern, FEC zusätzlich Ihre Registernummer: Halten Sie sie bereit. Die Umsatzsteuerzahlen für den Zeitraum finden Sie unter [Die periodische Umsatzsteuer-Voranmeldung](Benutzerhandbuch#die-periodische-umsatzsteuererklärung).
+Die Liste der Formate hängt von Ihrem Land ab. FEC und DATEV verlangen Ihre Kontonummern, FEC zusätzlich Ihre Registernummer: Halten Sie sie bereit. Die Umsatzsteuerzahlen für den Zeitraum finden Sie unter [Die periodische Umsatzsteuer-Voranmeldung](Benutzerhandbuch#die-umsatzsteuer-voranmeldung-vorbereiten).
 
 *Was die App nicht leistet*
 

@@ -210,7 +210,7 @@ You want to know which choices to slow down for. Most settings can be changed an
 |---|---|---|
 | Invoice number format and sequence | The next number can be raised, never lowered. After the first invoice you can no longer print less of the date than the series shows. | Preview the format, ask your accountant, then issue. |
 | The month of an issued invoice | Once a member's month is invoiced it is locked; closure days and public-holiday imports skip it. | Set closure days before month-end. |
-| VAT regime and rates | Rates are versioned by date and never edited; a submitted VAT declaration is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
+| VAT regime and rates | Rates are versioned by date and never edited; a filed VAT return is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
 | Country, currency, time zone | Amounts are stored as numbers with no conversion. Once the space has issued a document or recorded money, the server refuses any change of currency or country. The time zone is never locked, but every day is counted in it. | Choose them right on day one; see [Build the place](#build-the-place). |
 | Floor plan replacement | Importing a plan is refused once reservations exist. | Edit floors and rooms one by one in the editor. |
 | Workspace ID | It is what members type and what the printed QR codes point to. You can change it (4 to 20 letters or digits) with **Change workspace ID**, but the old ID stops working at once. | Choose a short, memorable ID before you print anything; change it early if you must. |
@@ -1549,13 +1549,13 @@ You want to know what VAT will ask of you before you switch it on.
 2. Set the rates in [VAT](https://fdittgen-png.github.io/deskilo/#/vat): **Use the usual rates** for your country, then mark exactly one as the default (see [Setting the rates](User-Guide#setting-the-rates)).
 3. Give each rate its group, and an exemption reason where it applies (see [VAT groups](User-Guide#vat-groups)).
 4. When the law changes a rate, use **Change by law** so older invoices keep their rate (see [Change a rate by law](User-Guide#change-a-rate-by-law)).
-5. If you must file returns, switch on **VAT declarations** and generate each period in [VAT declaration](User-Guide#the-periodic-vat-declaration).
+5. If you must file returns, switch on **VAT declarations** and prepare each period in [VAT declaration](User-Guide#preparing-the-vat-return).
 
 **Good to know**
 
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
 - Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
-- A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
+- The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
 - The declaration journal has its own number series.
 
 **See also:** [VAT regime](User-Guide#vat-regime) · [When VAT falls due](User-Guide#when-vat-falls-due)
@@ -1855,7 +1855,7 @@ Every document is one *kind*. Each kind has its own design, so changing the invo
 | Payments, usage | The member, the billing administrator | [Payments](User-Guide#pay-what-you-owe) · [Usage](User-Guide#what-each-booking-cost) |
 | Reminder letters, level 1 to 9 | The member with an overdue invoice | [Reminder rules](User-Guide#reminder-rules) |
 | Workspace report and workspace status | You, the board, an auditor | **Reports** |
-| VAT declaration | You, then the tax platform | [The periodic VAT declaration](User-Guide#the-periodic-vat-declaration) |
+| VAT declaration | You, then the tax platform | [The periodic VAT declaration](User-Guide#preparing-the-vat-return) |
 | Badges, space QR codes | Members at the door, your walls | [Space QR codes](User-Guide#space-qr-codes-pdf) · [Badges](User-Guide#nfc-badge-check-in) |
 
 **Good to know**
@@ -1941,7 +1941,7 @@ Start from the [Invoice register](https://fdittgen-png.github.io/deskilo/#/invoi
 | SAF-T PT, Sage 50 | A Portuguese regulatory format (uncertified) and a British/Irish exchange format, depending on your country | A filing or a certification |
 | Accounting CSV, Audit trail, Year archive (zip) | A reading aid for your accountant | A filing |
 
-The list of formats depends on your country. FEC and DATEV ask for your account numbers, and FEC also for your registration number: have them ready. The VAT figures for the period are in [The periodic VAT declaration](User-Guide#the-periodic-vat-declaration).
+The list of formats depends on your country. FEC and DATEV ask for your account numbers, and FEC also for your registration number: have them ready. The VAT figures for the period are in [The periodic VAT declaration](User-Guide#preparing-the-vat-return).
 
 *What the app does not do*
 

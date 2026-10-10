@@ -94,8 +94,12 @@ esattamente a quanto ricevuto.
 Le **dichiarazioni** sono costruite per un periodo a partire dai
 documenti (o dagli incassi) che contiene, riportate nelle caselle del
 modulo del tuo paese — CA3 in Francia, UStVA in Germania — e prodotte in
-PDF e XML. Una dichiarazione passa da bozza a presentata, e una
-presentata non viene mai ricalcolata.
+PDF e XML. I suoi importi sono calcolati dal server
+(`compute_vat_return`, #2357), mai inviati dall'app; passa da preparata
+a presentata, presentata dal proprietario con il riferimento della
+ricevuta dell'amministrazione finanziaria, e una presentata non cambia
+più. L'app non trasmette alcuna dichiarazione: la Francia presenta
+tramite EDI-TVA o impots.gouv, la Germania tramite ELSTER.
 
 Il catalogo completo delle aliquote di un paese è fornito con l'app
 (UE27, CH, NO, CA); tenerlo aggiornato quando un governo cambia

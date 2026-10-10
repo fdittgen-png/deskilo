@@ -18811,7 +18811,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune déclaration — choisissez une période et générez la première.';
 
   @override
-  String get vatDeclGenerate => 'Générer';
+  String get vatDeclFiled => 'Déposée';
+
+  @override
+  String get vatDeclGenerate => 'Préparer';
 
   @override
   String get vatDeclInvoices => 'Factures';
@@ -18821,7 +18824,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Confirmez avoir déposé cette déclaration vous-même (portail des impôts ou votre comptable). Elle devient immuable.';
+      'Confirmez avoir déposé vous-même cette déclaration auprès de l’administration fiscale (son portail ou votre comptable) et saisissez la référence de l’accusé de réception. Elle devient ensuite immuable.';
 
   @override
   String get vatDeclNet => 'Base HT';
@@ -18833,35 +18836,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclPeriod => 'Période';
 
   @override
+  String get vatDeclPrepared => 'Préparée';
+
+  @override
   String get vatDeclRate => 'Taux';
+
+  @override
+  String get vatDeclReceipt =>
+      'Référence de l’accusé de réception de l’administration fiscale';
 
   @override
   String get vatDeclRegimeGate =>
       'Les déclarations n’existent que sous le régime assujetti à la TVA — configurez-le dans les réglages TVA.';
 
   @override
-  String get vatDeclRejected => 'La plateforme a refusé la déclaration.';
+  String get vatDeclScreenTitle => 'Préparation de la déclaration de TVA';
 
   @override
   String get vatDeclSeller => 'Vendeur';
 
   @override
-  String get vatDeclSent => 'Déclaration télétransmise.';
-
-  @override
   String get vatDeclStatus => 'Statut';
-
-  @override
-  String get vatDeclSubmitted => 'Déposée';
 
   @override
   String get vatDeclTitle => 'Déclaration de TVA';
 
   @override
   String get vatDeclTotals => 'Totaux';
-
-  @override
-  String get vatDeclTransmit => 'Télétransmettre';
 
   @override
   String get vatDeclVat => 'TVA';

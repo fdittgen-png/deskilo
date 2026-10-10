@@ -68,21 +68,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String workspaceId,
     required DateTime periodStart,
     required DateTime periodEnd,
-    required List<VatDeclarationLine> lines,
-    required int totalNetCents,
-    required int totalVatCents,
-    required String currency,
-    required int invoiceCount,
   }) async {
+    // #2357 — the period alone: the server computes the figures.
     final id = await _client.rpc<dynamic>('save_vat_declaration', params: {
       'p_workspace_id': workspaceId,
       'p_period_start': periodStart.toIso8601String().substring(0, 10),
       'p_period_end': periodEnd.toIso8601String().substring(0, 10),
-      'p_lines': [for (final line in lines) line.toJson()],
-      'p_total_net_cents': totalNetCents,
-      'p_total_vat_cents': totalVatCents,
-      'p_currency': currency,
-      'p_invoice_count': invoiceCount,
     });
     return id as String;
   }
@@ -91,45 +82,13 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<void> markVatDeclarationSubmitted({
     required String declarationId,
     required String channel,
-    String receipt = '',
+    required String receipt,
   }) async {
     await _client.rpc<void>('mark_vat_declaration_submitted', params: {
       'p_declaration_id': declarationId,
       'p_channel': channel,
       'p_receipt': receipt,
     });
-  }
-
-  @override
-  Future<EInvoiceSubmission> sendVatDeclaration({
-    required String workspaceId,
-    required String declarationId,
-    required String fileName,
-    required String mimeType,
-    required List<int> bytes,
-  }) async {
-    final data = await _invokeSend({
-      'workspace_id': workspaceId,
-      'declaration_id': declarationId,
-      'file_name': fileName,
-      'mime_type': mimeType,
-      'content_base64': base64Encode(bytes),
-    });
-    if (data == null) {
-      return const EInvoiceSubmission(
-        status: EInvoiceSubmissionStatus.failed,
-        detail: 'not_deployed',
-      );
-    }
-    final status = data['status'] as String?;
-    return EInvoiceSubmission(
-      status: EInvoiceSubmissionStatus.values.firstWhere(
-        (s) => s.name == status,
-        orElse: () => EInvoiceSubmissionStatus.failed,
-      ),
-      externalId: data['external_id'] as String? ?? '',
-      detail: data['detail'] as String? ?? (data['error'] as String? ?? ''),
-    );
   }
 
   @override

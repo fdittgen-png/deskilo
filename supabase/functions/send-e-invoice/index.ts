@@ -171,6 +171,18 @@ Deno.serve(async (req) => {
   }
   const workspaceId = payload.workspace_id ?? "";
   if (!workspaceId) return json({ error: "workspace_id required" }, 400);
+  // #2357 — a VAT return is not an upload. France files it through
+  // EDI-TVA or EFI, Germany through ELSTER: the owner files it with the
+  // authority and records the receipt (mark_vat_declaration_submitted).
+  // This channel carries invoices only and never marks a return filed.
+  if (payload.declaration_id) {
+    return json({
+      error: "vat_return_not_transmitted",
+      detail:
+        "A VAT return is filed by its owner with the tax authority; " +
+        "this channel carries invoices only.",
+    }, 410);
+  }
 
   const admin: SupabaseClient = createClient(url, serviceKey);
 
@@ -290,67 +302,6 @@ Deno.serve(async (req) => {
 
   if (missing.length > 0) {
     return json({ error: "not_configured", missing, environment }, 409);
-  }
-
-  // #534 — VAT declarations ride the SAME configured channel: the owner
-  // (only) posts the declaration document to the platform; an accepted
-  // upload stamps the declaration submitted with the platform's receipt.
-  const declarationId = payload.declaration_id ?? "";
-  if (declarationId) {
-    if (!me.is_owner) {
-      return json({ error: "only the owner files VAT declarations" }, 403);
-    }
-    const content2 = payload.content_base64 ?? "";
-    if (!content2) return json({ error: "content_base64 required" }, 400);
-    const { data: declaration } = await admin
-      .from("vat_declarations")
-      .select("id, workspace_id, status, period_start")
-      .eq("id", declarationId)
-      .maybeSingle();
-    if (!declaration || declaration.workspace_id !== workspaceId) {
-      return json({ error: "unknown declaration" }, 404);
-    }
-    if (declaration.status === "submitted") {
-      return json({ error: "already submitted" }, 409);
-    }
-    const bytes2 = Uint8Array.from(atob(content2), (c) => c.charCodeAt(0));
-    let outcome2: {
-      status: "accepted" | "rejected" | "failed";
-      externalId: string;
-      detail: string;
-    };
-    try {
-      // A declaration is a filing: it goes to the government platform no
-      // matter what destination a client claims.
-      outcome2 = await submitGeneric(
-        configFor(configForDestination(fullCfg, "government"), environment),
-        payload.file_name || `vat-${declaration.period_start}.pdf`,
-        payload.mime_type || "application/pdf",
-        bytes2,
-      );
-    } catch (error) {
-      console.error("send-e-invoice: VAT declaration transmission failed", error);
-      outcome2 = {
-        status: "failed",
-        externalId: "",
-        detail: String(error).slice(0, 500),
-      };
-    }
-    if (outcome2.status === "accepted") {
-      await admin.from("vat_declarations").update({
-        status: "submitted",
-        submitted_at: new Date().toISOString(),
-        submitted_channel: "platform",
-        submitted_receipt:
-          (outcome2.externalId || outcome2.detail).slice(0, 500),
-      }).eq("id", declarationId);
-    }
-    return json({
-      status: outcome2.status,
-      external_id: outcome2.externalId,
-      detail: outcome2.detail,
-      environment,
-    }, outcome2.status === "accepted" ? 200 : 502);
   }
 
   const invoiceId = payload.invoice_id ?? "";

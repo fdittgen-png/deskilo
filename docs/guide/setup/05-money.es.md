@@ -280,13 +280,13 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 2. Fije los tipos en [IVA](app:/vat): **Usar los tipos habituales** de su país y marque exactamente uno como predeterminado (véase [Fijar los tipos](help:user.money.vat.rates)).
 3. Dé a cada tipo su grupo y, cuando proceda, un motivo de exención (véase [Grupos de IVA](help:user.money.vat.groups)).
 4. Cuando la ley cambie un tipo, use **Cambio por ley** para que las facturas antiguas conserven su tipo (véase [Cambiar un tipo por ley](help:user.money.vat.change-by-law)).
-5. Si debe presentar declaraciones, active **Declaraciones de IVA** y genere cada periodo en [Declaración de IVA](help:user.money.vat.declaration).
+5. Si debe presentar declaraciones, active **Declaraciones de IVA** y prepare cada periodo en [Declaración de IVA](help:user.money.vat.declaration).
 
 **Conviene saber**
 
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
 - Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
-- Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
+- El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
 - El diario de declaraciones tiene su propia serie de numeración.
 
 **Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)

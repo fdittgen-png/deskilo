@@ -91,8 +91,13 @@ exactement à ce qui a été reçu.
 Les **déclarations** sont construites pour une période à partir des
 documents (ou des paiements) qu'elle contient, transposées dans les
 cases du formulaire de votre pays — CA3 en France, UStVA en Allemagne —
-et produites en PDF et en XML. Une déclaration passe de brouillon à
-déposée, et une déclaration déposée n'est jamais recalculée.
+et produites en PDF et en XML. Ses montants sont calculés par le
+serveur (`compute_vat_return`, #2357), jamais envoyés par l'app ; elle
+passe de préparée à déposée, déposée par le propriétaire avec la
+référence de l'accusé de réception de l'administration, et une
+déclaration déposée ne change plus. L'app ne télétransmet aucune
+déclaration : la France dépose par EDI-TVA ou impots.gouv, l'Allemagne
+par ELSTER.
 
 Le catalogue complet des taux d'un pays est livré avec l'app (UE27, CH,
 NO, CA) ; le tenir à jour quand un gouvernement change un taux vous

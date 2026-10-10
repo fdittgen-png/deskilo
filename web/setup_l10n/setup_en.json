@@ -303,7 +303,7 @@
  "legalMemberNumbering": "Member numbering",
  "legalMemberNumberingHint": "The member number is assigned on joining and never changes; it appears on the invoice as “Member no.”.",
  "legalVatPeriod": "VAT declaration period",
- "legalVatPeriodHint": "The period your regime requires. The declaration adds up what falls due in the period at each invoice's tax point — its issue, its payment or its service month, as your country and your choice say — per rate (CA3, UStVA…), and is transmitted or exported as PDF/XML.",
+ "legalVatPeriodHint": "The period your regime requires. The declaration adds up what falls due in the period at each invoice's tax point — its issue, its payment or its service month, as your country and your choice say — per rate (CA3, UStVA…), computed by the server, and exported as PDF/XML for you to file with the authority.",
  "legalBillingAddress": "Billing address",
  "legalMentions": "Invoice mentions (empty = default legal wording)",
  "mentionLegalForm": "Legal form & capital",

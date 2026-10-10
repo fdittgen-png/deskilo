@@ -322,8 +322,9 @@ El IVA de cada factura se devenga el día que fija la ley de su país: con el co
 - Con el cobro, una factura pagada a plazos cae en tantos periodos como pagos tuvo; con el criterio de caja, lo no cobrado se devenga el 31 de diciembre del año siguiente. Una nota de crédito cuenta al emitirse (con el cobro, al reembolsarse), nunca en el periodo de la factura que corrige.
 - La elección se imprime en cada factura y determina por igual la [declaración de IVA](help:user.money.vat.declaration), el informe de IVA y las exportaciones FEC y DATEV.
 - Qué opción le corresponde es una cuestión fiscal para su gestor.
+- Una factura conserva la regla que imprimió: emitida según cobros, espera al pago; con la opción por el devengo a la emisión, es exigible al emitirse, elija lo que elija después el espacio.
 
-**Véase también:** [La declaración periódica de IVA](help:user.money.vat.declaration)
+**Véase también:** [Preparar la declaración del IVA](help:user.money.vat.declaration)
 
 <!-- anchor: user.money.vat.account -->
 ### Cuenta de IVA
@@ -507,27 +508,28 @@ Un tipo cambia a partir de una fecha determinada. Las operaciones antiguas conse
 **Véase también:** [Fijar los tipos](help:user.money.vat.rates)
 
 <!-- anchor: user.money.vat.declaration -->
-### La declaración periódica de IVA
+### Preparar la declaración del IVA
 
 **Público:** Propietario
 
-Quiere un resumen listo del IVA de un periodo para presentarlo a Hacienda o entregarlo a su gestor.
+Quiere el IVA de un periodo calculado a partir de sus facturas y cobros, listo para presentarlo ante la administración tributaria o entregarlo a su gestor.
 
 <p><img src="images/user-money-vat-declaration.es.jpg" width="280"></p>
 
 **Pasos**
 
 1. Abra [Declaración de IVA](app:/vat-declarations).
-2. Elija el **Periodo** y pulse **Generar**.
+2. Elija el **Periodo** y pulse **Preparar**.
 3. Abra el resultado con **PDF** o **Exportar XML**, o consulte el **Informe de IVA (PDF)** y el **Informe de IVA (CSV)**.
-4. Cuando la haya presentado usted mismo, pulse **Marcar como presentada**.
+4. Presente usted mismo la declaración ante la administración tributaria (o a través de su gestor), pulse **Marcar como presentada** e introduzca la **Referencia del justificante de la administración tributaria**.
 
 **Conviene saber**
 
-- Solo existe con el régimen de sujeto a IVA. La nota de arriba indica si el periodo cuenta facturas o cobros.
-- Es una ayuda para la presentación generada a partir de las facturas emitidas en el periodo, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
-- Una declaración presentada ya no se puede modificar.
-- Cuando hay una plataforma configurada en [Facturación electrónica](help:user.money.einvoice.overview), un botón **Transmitir** puede enviarla.
+- Solo existe con el régimen de sujeto a IVA. La nota de arriba indica cuándo se devenga el IVA del periodo.
+- El servidor calcula los importes a partir de las facturas, de los cobros registrados uno a uno y del devengo de cada factura. Cada tipo se desglosa por categoría: tipo general, inversión del sujeto pasivo, exenta y tipo cero quedan separadas. Las facturas de agrupación se excluyen; su cobro cuenta para las facturas que agrupan.
+- Una declaración pasa de **Borrador** a **Preparada** y luego a **Presentada**. Prepararla de nuevo sustituye los importes; una vez presentada, nada la modifica. Si una factura o un cobro del periodo ha cambiado desde la preparación, la aplicación se niega a marcarla como presentada hasta que la prepare de nuevo.
+- La aplicación no transmite declaraciones: Francia presenta por EDI-TVA o el espacio profesional de impots.gouv, Alemania por ELSTER. La plataforma de facturación electrónica solo transporta facturas.
+- Es una ayuda para la presentación, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
 
 **Véase también:** [Cuándo se devenga el IVA](help:user.money.vat.due) · [Exportaciones contables](help:user.invoicing.accounting-export)
 

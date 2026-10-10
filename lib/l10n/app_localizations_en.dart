@@ -18605,7 +18605,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No declarations yet — pick a period and generate the first one.';
 
   @override
-  String get vatDeclGenerate => 'Generate';
+  String get vatDeclFiled => 'Filed';
+
+  @override
+  String get vatDeclGenerate => 'Prepare';
 
   @override
   String get vatDeclInvoices => 'Invoices';
@@ -18615,7 +18618,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclMarkFiledConfirm =>
-      'Confirm you filed this declaration yourself (tax-office portal or your accountant). It becomes immutable.';
+      'Confirm that you filed this return yourself with the tax authority (its portal or your accountant) and enter the receipt reference it gave you. The return then becomes immutable.';
 
   @override
   String get vatDeclNet => 'Net base';
@@ -18627,35 +18630,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclPeriod => 'Period';
 
   @override
+  String get vatDeclPrepared => 'Prepared';
+
+  @override
   String get vatDeclRate => 'Rate';
+
+  @override
+  String get vatDeclReceipt => 'Receipt reference from the tax authority';
 
   @override
   String get vatDeclRegimeGate =>
       'Declarations exist only under the VAT-registered regime — configure it under VAT settings.';
 
   @override
-  String get vatDeclRejected => 'The platform refused the declaration.';
+  String get vatDeclScreenTitle => 'Preparation of the VAT return';
 
   @override
   String get vatDeclSeller => 'Seller';
 
   @override
-  String get vatDeclSent => 'Declaration transmitted.';
-
-  @override
   String get vatDeclStatus => 'Status';
-
-  @override
-  String get vatDeclSubmitted => 'Submitted';
 
   @override
   String get vatDeclTitle => 'VAT declaration';
 
   @override
   String get vatDeclTotals => 'Totals';
-
-  @override
-  String get vatDeclTransmit => 'Transmit';
 
   @override
   String get vatDeclVat => 'VAT';

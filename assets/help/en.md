@@ -4560,8 +4560,9 @@ Each invoice's VAT falls due on the day the law of your country sets — when yo
 - On receipts, an invoice paid in instalments falls into as many periods as it had payments. A credit note counts when it is issued (on receipts, when refunded), never in the period of the invoice it corrects.
 - The choice is printed on every invoice and drives the [VAT declaration](help:user.money.vat.declaration), the VAT report and the FEC and DATEV exports alike. A French space that never chose follows receipts, and its owner is told once.
 - Which option applies to you is a tax question for your accountant.
+- An invoice keeps the rule it printed: one issued on receipts waits for the money, one that printed the option for the debits is due when issued, whatever the space chooses later.
 
-**See also:** [The periodic VAT declaration](help:user.money.vat.declaration)
+**See also:** [Preparing the VAT return](help:user.money.vat.declaration)
 
 ### VAT account
 
@@ -4736,27 +4737,28 @@ A rate changes from a given date. Old supplies keep the old value; the new one a
 
 **See also:** [Setting the rates](help:user.money.vat.rates)
 
-### The periodic VAT declaration
+### Preparing the VAT return
 
 **Audience:** Owner
 
-You want a ready summary of the VAT of a period to file with the tax office or hand to your accountant.
+You want the VAT of a period computed from your invoices and payments, ready to file with the tax office or hand to your accountant.
 
 ![](assets/help/images/user-money-vat-declaration.en.b8fa17aa9.jpg)
 
 **Steps**
 
 1. Open [VAT declaration](app:/vat-declarations).
-2. Choose the **Period** and tap **Generate**.
+2. Choose the **Period** and tap **Prepare**.
 3. Open the result with **PDF** or **XML export**, or look at **VAT report (PDF)** and **VAT report (CSV)**.
-4. Once you have filed it yourself, tap **Mark as filed**.
+4. File the return yourself with the tax authority (or through your accountant), then tap **Mark as filed** and type the **Receipt reference from the tax authority**.
 
 **Good to know**
 
-- It exists only under the VAT-registered regime. The note at the top says whether the period counts invoices or receipts.
-- It is a filing aid generated from the period's issued invoices, not tax advice. Verify it against your accounting before filing.
-- A filed declaration can no longer be changed.
-- Where a platform is set up in [E-invoicing](help:user.money.einvoice.overview), a **Transmit** button can send it.
+- It exists only under the VAT-registered regime. The note at the top says when the period's VAT falls due.
+- The server computes the figures, from the invoices, the payments recorded one by one and each invoice's tax point. Each rate is split by category: standard, reverse charge, exempt and zero-rated stay apart. Settlements are left out; their payment counts for the invoices they regroup.
+- A return goes **Draft** → **Prepared** → **Filed**. Preparing again replaces the figures; once filed, nothing changes it. If an invoice or a payment of the period changed since you prepared it, the app refuses to mark it filed until you prepare it again.
+- The app does not transmit a return: France files through EDI-TVA or the professional space on impots.gouv, Germany through ELSTER. The e-invoicing platform carries invoices only.
+- It is a filing aid, not tax advice. Verify it against your accounting before filing.
 
 **See also:** [When VAT falls due](help:user.money.vat.due) · [Accounting exports](help:user.invoicing.accounting-export)
 
@@ -6096,7 +6098,7 @@ You want to know which choices to slow down for. Most settings can be changed an
 |---|---|---|
 | Invoice number format and sequence | The next number can be raised, never lowered. After the first invoice you can no longer print less of the date than the series shows. | Preview the format, ask your accountant, then issue. |
 | The month of an issued invoice | Once a member's month is invoiced it is locked; closure days and public-holiday imports skip it. | Set closure days before month-end. |
-| VAT regime and rates | Rates are versioned by date and never edited; a submitted VAT declaration is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
+| VAT regime and rates | Rates are versioned by date and never edited; a filed VAT return is never recomputed. | Add a new rate from a date; decide the regime with your accountant. |
 | Country, currency, time zone | Amounts are stored as numbers with no conversion. Once the space has issued a document or recorded money, the server refuses any change of currency or country. The time zone is never locked, but every day is counted in it. | Choose them right on day one; see [Build the place](help:setup.place.overview). |
 | Floor plan replacement | Importing a plan is refused once reservations exist. | Edit floors and rooms one by one in the editor. |
 | Workspace ID | It is what members type and what the printed QR codes point to. You can change it (4 to 20 letters or digits) with **Change workspace ID**, but the old ID stops working at once. | Choose a short, memorable ID before you print anything; change it early if you must. |
@@ -7392,13 +7394,13 @@ You want to know what VAT will ask of you before you switch it on.
 2. Set the rates in [VAT](app:/vat): **Use the usual rates** for your country, then mark exactly one as the default (see [Setting the rates](help:user.money.vat.rates)).
 3. Give each rate its group, and an exemption reason where it applies (see [VAT groups](help:user.money.vat.groups)).
 4. When the law changes a rate, use **Change by law** so older invoices keep their rate (see [Change a rate by law](help:user.money.vat.change-by-law)).
-5. If you must file returns, switch on **VAT declarations** and generate each period in [VAT declaration](help:user.money.vat.declaration).
+5. If you must file returns, switch on **VAT declarations** and prepare each period in [VAT declaration](help:user.money.vat.declaration).
 
 **Good to know**
 
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
 - Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
-- A declaration is a filing aid made from your issued invoices. Verify it before you file, and mark it filed only once you have.
+- The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
 - The declaration journal has its own number series.
 
 **See also:** [VAT regime](help:user.money.vat.regime) · [When VAT falls due](help:user.money.vat.due)
@@ -8438,8 +8440,11 @@ goes to the widest rate so the total matches what was received exactly.
 **Declarations** are built for a period from the documents (or the
 payments) it contains, mapped to the boxes your country's form uses —
 CA3 in France, UStVA in Germany — and produced as PDF and XML. A
-declaration goes draft → submitted, and a submitted one is never
-recomputed.
+declaration's figures are computed by the server (`compute_vat_return`,
+#2357), never sent by the app; it goes prepared → filed, filed by the
+owner with the tax authority's receipt reference, and a filed one never
+changes. The app transmits no return: France files through EDI-TVA or
+impots.gouv, Germany through ELSTER.
 
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.
