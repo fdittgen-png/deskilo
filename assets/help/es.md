@@ -979,7 +979,7 @@ La lista es larga y usted solo busca reservas. Los chips bajo la barra la acotan
 
 **Pasos**
 
-1. Toque **Mis reservas** para conservar solo las reservas. Tóquelo de nuevo para verlo todo.
+1. Toque **Mis reservas** para conservar solo sus propias reservas. Tóquelo de nuevo para verlo todo.
 2. O elija chips como **Reservas**, **Registros** y **Salidas**; **Todo** muestra todos los tipos.
 3. Para deshacer sus elecciones, toque **Restablecer filtros**, el botón del embudo.
 4. Una línea sobre los chips repite lo que ve, por ejemplo Yo · Reservas.
@@ -1159,6 +1159,7 @@ Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
 
 - Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
 - Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+- También muestra la configuración pendiente: «Por configurar: …» por cada ámbito obligatorio de la lista de preparación que no está listo (solo para quien configura el espacio), y «… funciones activadas esperan «…»» cuando una función desactivada retiene otras. Un toque abre la pantalla donde se configura, o **Funciones**.
 
 **Véase también:** [Eventos y confirmaciones](help:user.collaborate.events)
 
@@ -3022,6 +3023,7 @@ Usted quiere que el espacio sepa dónde está establecido. **Espacio** se abre e
 **Conviene saber**
 
 - El país propone la moneda y la zona horaria, y decide qué tipos de IVA se ofrecen.
+- En cuanto el espacio ha emitido un documento o registrado dinero, el país ya no se puede cambiar: al guardar se indica «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.»
 - **Guardar** escribe todo el formulario junto. Si alguien cambió estos ajustes entretanto, no se guarda nada y lo que usted escribió se queda en pantalla.
 
 **Véase también:** [Moneda y zona horaria](help:user.workspace.settings.currency-timezone)
@@ -3042,7 +3044,7 @@ Usted quiere que los precios y los días se cuenten como los cuenta su espacio.
 
 **Conviene saber**
 
-- La moneda se propone a partir del país. Puede cambiarla.
+- La moneda se propone a partir del país. Puede cambiarla hasta que el espacio haya emitido un documento o registrado dinero; después queda fijada.
 - La zona horaria no es cosmética: una jornada, un límite de media jornada y un día de cierre se cuentan en ella, así que un miembro en el extranjero ve el día del espacio y no el suyo.
 
 **Véase también:** [País](help:user.workspace.settings.country)
@@ -4683,7 +4685,7 @@ Enumera los tipos de IVA que pueden usar sus facturas. Lo que pagan los miembros
 - Los tipos habituales son un punto de partida. Qué operación va con qué tipo es una pregunta para su gestor.
 - El tipo por defecto lo usan las suscripciones y todo lo que no tiene tipo propio.
 - Un tipo que todavía usa una factura o un servicio se conserva, desactivado, en lugar de eliminarse.
-- Si no hay ningún tipo mientras está sujeto a IVA, las facturas no muestran impuesto y la exportación XML queda desactivada.
+- Si no hay ningún tipo por defecto en vigor mientras está sujeto a IVA, no se puede emitir ninguna factura; la pantalla de identidad legal lo advierte.
 - Esta pantalla requiere la función **Gestión del IVA**; la entrada de tipos de IVA de la pantalla de identidad legal solo aparece con el régimen de sujeto a IVA.
 
 **Véase también:** [Grupos de IVA](help:user.money.vat.groups) · [Cambio por ley](help:user.money.vat.change-by-law)
@@ -5205,6 +5207,7 @@ Quiere que los recordatorios salgan solos.
 - Una vez al día, las facturas que han superado su plazo de pago registrado reciben el nivel siguiente, por el importe aún pendiente.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
+- Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
 
 **Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
 
@@ -5987,9 +5990,10 @@ Usted quiere conocer el camino más corto hacia un espacio que se pueda reservar
 
 1. **Días de apertura, zona horaria y moneda**: una zona horaria, una moneda y al menos un día de apertura.
 2. **Puestos reservables en el plano**: al menos un asiento.
-3. **Roles y quién valida las solicitudes**: solo cuenta cuando una regla sobre reservas exige más validadores de los que tiene el espacio. Una regla que pida dos aprobaciones cuando usted está solo en el espacio dejaría las solicitudes esperando para siempre.
+3. **Roles y quién valida las solicitudes**: solo cuenta cuando una regla de validación, de cualquier tipo, exige más validadores de los que tiene el espacio. Una regla que pida dos aprobaciones cuando usted está solo en el espacio dejaría las solicitudes esperando para siempre.
+4. **Lo que pueden hacer los miembros**: los miembros tienen **Reservar y usar las reservas**. Un espacio nuevo no les concede nada, así que un miembro que se une no puede reservar hasta que usted lo marque en [Roles](app:/roles).
 
-Una cuarta fila, **Servidor y versión de la base de datos**, solo bloquea cuando el servidor va por detrás de esta aplicación; entonces espera al operador del servidor.
+Una fila más, **Servidor y versión de la base de datos**, solo bloquea cuando el servidor va por detrás de esta aplicación; entonces espera al operador del servidor. Y mientras **Facturas** está activada, **La identidad legal y la dirección del espacio** también es obligatoria: la lista la marca como **Necesario antes de facturar**, porque sin ella no se puede emitir ninguna factura.
 
 *Lo que es opcional y puede dejarse para más tarde*
 
@@ -6005,8 +6009,8 @@ Cada uno de estos pasos puede aplazarse con **Más adelante** y recuperarse desp
 **Conviene saber**
 
 - La lista nombra quién actúa: **Usted**, **El operador del servidor** o **Un administrador de la base de datos**.
-- Opcional no significa poco importante: en cuanto factura, su identidad legal es obligatoria para esa función. La lista la llama un dato que necesitan sus funciones.
-- Si activa la facturación sin identidad legal, la aplicación se lo permite; se niega en el momento de emitir una factura y dice qué falta.
+- Opcional no significa poco importante: los datos bancarios, un proveedor de pagos o una sede son datos que necesitan sus funciones, y la lista los nombra.
+- Si activa la facturación sin identidad legal, la aplicación se lo permite; la lista y [Lo que le necesita](help:user.collaborate.attention) la nombran, y la emisión de una factura se rechaza indicando qué falta.
 
 **Véase también:** [Revisar su espacio](help:setup.place.check) · [La tarjeta Primeros pasos y los consejos](help:user.start.get-started)
 
@@ -6049,7 +6053,7 @@ Usted quiere una ventaja inicial sin quedar atado a las decisiones de otros. Al 
 
 **Conviene saber**
 
-- Una plantilla nunca incluye su identidad legal, sus datos bancarios, sus sedes, sus invitaciones ni los enlaces a documentos: eso es cosa suya, y la lista de preparación lo nombra como datos que necesitan sus funciones.
+- Una plantilla nunca incluye su identidad legal, sus datos bancarios, sus sedes, sus invitaciones ni los enlaces a documentos: eso es cosa suya, y la lista de preparación lo nombra (la identidad legal, con **Facturas** activada, como un ámbito propio).
 - Un espacio creado con una plantilla puede tener la facturación activada y nada con lo que emitir hasta que añada la identidad.
 - Aplicar una plantilla a un espacio que ya tiene tarifas sustituye sus tramos de cuota: úsela en un espacio nuevo.
 
@@ -6091,7 +6095,7 @@ Usted quiere saber en qué decisiones conviene ir despacio. La mayoría de los a
 | Formato y secuencia del número de factura | El siguiente número puede subirse, nunca bajarse. Tras la primera factura ya no se puede imprimir menos de la fecha que muestra la serie. | Previsualice el formato, consulte a su contable y después emita. |
 | El mes de una factura emitida | Una vez facturado el mes de un miembro queda bloqueado; los días de cierre y las importaciones de días festivos lo omiten. | Fije los días de cierre antes de fin de mes. |
 | Régimen de IVA y tipos | Los tipos se versionan por fecha y nunca se editan; una declaración de IVA presentada no se vuelve a calcular. | Añada un tipo nuevo desde una fecha; decida el régimen con su contable. |
-| País, moneda, zona horaria | Los importes se guardan como números, sin conversión, así que cambiar la moneda cuando ya hay dinero es arriesgado. | Elíjalos bien desde el primer día; véase [Construir el lugar](help:setup.place.overview). |
+| País, moneda, zona horaria | Los importes se guardan como números, sin conversión. En cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cualquier cambio de moneda o de país. La zona horaria nunca se bloquea, pero cada día se cuenta en ella. | Elíjalos bien desde el primer día; véase [Construir el lugar](help:setup.place.overview). |
 | Sustitución del plano | Se rechaza importar un plano cuando ya hay reservas. | Edite las plantas y las salas una por una en el editor. |
 | ID del espacio | Es lo que escriben los miembros y lo que señalan los códigos QR impresos. Puede cambiarlo (de 4 a 20 letras o cifras) con **Cambiar el ID del espacio**, pero el ID antiguo deja de funcionar de inmediato. | Elija un ID corto y fácil de recordar antes de imprimir nada; cámbielo pronto si debe hacerlo. |
 | Prueba o real | Un espacio real emite facturas exigibles; los documentos de desarrollo llevan marca de agua. | Empiece en un espacio de prueba y despliegue cuando esté listo. |
@@ -6158,7 +6162,7 @@ Usted quiere que el espacio sepa dónde vive. Estas cuatro elecciones determinan
 2. Elija el **País**; la **Moneda** y la **Zona horaria** se proponen solas y puede corregirlas. Para Atelier du Marché: Francia, EUR, Europe/Paris.
 3. Elija el **Idioma del espacio** y toque **Guardar**.
 
-> **Atención** Elija bien el país y la moneda desde el primer día. Los importes se guardan como simples números, así que cambiar la moneda cuando ya hay dinero etiquetaría mal todo lo ya contado.
+> **Atención** Elija bien el país y la moneda desde el primer día. Los importes se guardan como simples números, así que en cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cambiar uno u otro: «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.»
 
 **Conviene saber**
 
@@ -6263,7 +6267,7 @@ Usted quiere una prueba de que el espacio está listo antes de invitar a nadie. 
 
 **Conviene saber**
 
-- Listo significa listo para una primera reserva: días de apertura, zona horaria, moneda, al menos un asiento y suficientes validadores.
+- Listo significa listo para una primera reserva: días de apertura, zona horaria, moneda, al menos un asiento, miembros que pueden reservar y suficientes validadores.
 - Todo lo opcional, como las tarifas o los pagos, puede aplazarse con **Más adelante** y no impide abrir.
 - Ambas tarjetas dependen de la función *Tarjeta de primeros pasos*.
 - **Ahora no** oculta la tarjeta en este dispositivo; el menú de vista del plano la recupera con **Primeros pasos**.
@@ -6354,7 +6358,7 @@ Todo lo demás es Plataforma y está desactivado: quiosco y credenciales, varias
 
 **Conviene saber**
 
-- La función de facturas está activada desde el principio, pero no se puede emitir nada hasta que su identidad legal esté completa. Véase [Evite funciones que se contradicen](help:setup.features.consistency).
+- La función de facturas está activada desde el principio, pero no se puede emitir nada hasta que su identidad legal esté completa; **Configuración de este espacio** la marca como **Necesario antes de facturar**. Véase [Evite funciones que se contradicen](help:setup.features.consistency).
 - Un espacio que ya existe nunca cambia cuando DesKilo cambia lo que recibe un espacio nuevo.
 - Si parte de una plantilla, la plantilla puede activar o desactivar unas pocas funciones además de este conjunto. Véase [Tres puntos de partida](help:setup.features.profiles).
 
@@ -6576,9 +6580,9 @@ Usted está a punto de cambiar una función y quiere ver el efecto antes de que 
 
 *Qué significa «retenida»*
 
-Una función está retenida cuando usted la eligió pero algo que necesita está desactivado. Su propio interruptor sigue activado, y por eso es fácil pasarlo por alto: la pantalla dice que la función está activada, y la aplicación no la ofrece. La tarjeta indica cuántas funciones están retenidas («… están activadas pero esperan un requisito desactivado») y qué requisito esperan, y se arregla en [Funciones](app:/features) mismo.
+Una función está retenida cuando usted la eligió pero algo que necesita está desactivado. Su propio interruptor sigue activado, y por eso es fácil pasarlo por alto: la pantalla dice que la función está activada, y la aplicación no la ofrece. La tarjeta indica cuántas funciones están retenidas («… están activadas pero esperan un requisito desactivado») y qué requisito esperan, y se arregla en [Funciones](app:/features) mismo. [Lo que le necesita](help:user.collaborate.attention) muestra lo mismo en una línea por cada requisito desactivado.
 
-Otras cosas que una función puede esperar no están en esta pantalla. Una función puede estar activada y plenamente permitida mientras faltan sus datos: su identidad legal, una sede, un proveedor de pago. Esos aparecen en **Configuración de este espacio**, en **Datos que necesitan sus funciones (identidad, banco, plataformas)**, en lo alto de los ajustes del espacio.
+Otras cosas que una función puede esperar no están en esta pantalla. Una función puede estar activada y plenamente permitida mientras faltan sus datos: su identidad legal, una sede, un proveedor de pago. Esos aparecen en **Configuración de este espacio**, en lo alto de los ajustes del espacio: la identidad legal, con **Facturas** activada, como **La identidad legal y la dirección del espacio**, y lo demás en **Datos que necesitan sus funciones (identidad, banco, plataformas)**.
 
 **Conviene saber**
 
@@ -6598,15 +6602,15 @@ La aplicación tiene salvaguardas para algunas contradicciones y ninguna para ot
 
 | Si tiene… | Salvaguarda de la aplicación | Laguna que queda |
 |---|---|---|
-| **Facturas** activadas, sin identidad legal | Se rechaza la emisión, con **Complete estos datos antes de emitir** listando la dirección, el número de IVA, etc. que faltan. La necesidad también aparece en **Configuración de este espacio**. | La función está activada desde el primer día, así que nada impide invitar a los miembros y llevar un mes antes de que exista la identidad. |
+| **Facturas** activadas, sin identidad legal | Se rechaza la emisión, con **Complete estos datos antes de emitir** listando la dirección, el número de IVA, etc. que faltan. La necesidad también aparece en **Configuración de este espacio**, como **La identidad legal y la dirección del espacio**, **Necesario antes de facturar**, y en Lo que le necesita. | La función está activada desde el primer día, así que nada impide invitar a los miembros y llevar un mes antes de que exista la identidad. |
 | Un país distinto de Francia o Alemania | Al emitir, dice que el país «debe ser Francia o Alemania para emitir aquí». | Nada avisa al elegir el país ni al activar la facturación. |
-| Registrado a efectos del IVA, sin ningún tipo en vigor | Se rechaza la emisión hasta que haya un tipo en vigor. | Con **Gestión del IVA** desactivada, la configuración queda oculta mientras los tipos guardados siguen aplicándose. Compruebe los tipos tras desactivarla. |
+| Registrado a efectos del IVA, sin ningún tipo en vigor | Se rechaza la emisión hasta que haya un tipo por defecto en vigor. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen. | Con **Gestión del IVA** desactivada, la configuración queda oculta mientras los tipos guardados siguen aplicándose. Compruebe los tipos tras desactivarla. |
 | **Pagos en línea** activados, sin proveedor | Se rechaza un pago en línea nuevo cuando la función está desactivada; el proveedor que falta aparece en **Configuración de este espacio**. | Puede activarla sin proveedor. Conéctelo antes: [Proveedor de pago](help:user.money.payments.provider). |
 | **Modo quiosco** activado, sin credenciales ni miembro de quiosco | **Credenciales RFID / NFC**, **Credenciales QR**, **Fotos de los miembros en el quiosco** e **Iniciar sesión con credencial** no pueden estar activadas sin él. | Nada comprueba que exista un miembro de quiosco ni que se haya emitido una credencial. Véase [Ponga en marcha una tableta de pared](help:user.kiosk.mode). |
 | **Sedes** activadas, sin ninguna sede | **Al menos una sede** aparece entre los datos que necesitan sus funciones. | El interruptor puede estar activado sin ninguna sede. |
 | **Notificaciones push** activadas, sin servicio push | Los miembros siguen recibiendo todo en la aplicación. | Los teléfonos no reciben nada hasta que quien gestiona la instalación haya configurado el servicio push. Véase [Cómo se informa a los miembros](help:setup.notify.channels). |
-| **Recordatorios de pago** activados, **Recordatorios de pago automáticos** activados | Los segundos no pueden estar activados sin los primeros. | El programador del servidor los envía cada mañana; si la base de datos no tiene programador, se envían cuando un administrador abre Finanzas. |
-| Una regla de validación que pide más validadores de los que hay | **Configuración de este espacio** dice «Una regla pide más validadores de los que tiene este espacio» y retiene la primera reserva cuando la regla es para reservas. | Las demás solicitudes se crean, no se pueden completar y caducan a los siete días. Véase [Quién valida](help:user.validation.overview). |
+| **Recordatorios de pago** activados, **Recordatorios de pago automáticos** activados | Los segundos no pueden estar activados sin los primeros. | El servidor los envía cada mañana si la instalación programa tareas; si no, se envían cuando un administrador abre Finanzas. El interruptor y la descripción de la función lo dicen; el operador de su servidor sabe cuál se aplica. |
+| Una regla de validación que pide más validadores de los que hay | **Configuración de este espacio** dice «Una regla pide más validadores de los que tiene este espacio», y **Roles y quién valida las solicitudes** pasa a ser obligatorio, sea cual sea el tipo de solicitud. | Las solicitudes creadas antes de corregirlo no se pueden completar y caducan a los siete días. Véase [Quién valida](help:user.validation.overview). |
 | **Solicitudes de eliminación de reservas** activadas, nadie que valide | La misma línea de preparación. | La misma laguna. |
 | **Reservas de mesa, oficina y planta** activadas | **Los admins pueden asignar plantas** la necesita. | Además, cada miembro necesita el derecho; nada comprueba que alguien lo tenga. |
 | Una función dependiente activada, su función de origen desactivada | **Requiere atención**, y «Esperando a la función de arriba». | Ninguna: este caso está totalmente cubierto. |
@@ -6616,7 +6620,7 @@ La aplicación tiene salvaguardas para algunas contradicciones y ninguna para ot
 
 - La regla práctica: si una función lleva a un documento su nombre, su dinero o sus obligaciones legales, termine sus datos antes de avisar a los miembros.
 - **Configuración de este espacio** es una lista, no un cerrojo. Nunca le impide activar algo.
-- La comprobación «Antes de que alguien pueda reservar aquí» solo habla de lo que una reserva necesita de verdad: la zona horaria, la moneda, un día de apertura y al menos un asiento.
+- La comprobación «Antes de que alguien pueda reservar aquí» solo habla de los ámbitos obligatorios: la zona horaria, la moneda, un día de apertura, al menos un asiento, miembros que tengan **Reservar y usar las reservas** y suficientes validadores. Con **Facturas** activada, la identidad legal también es obligatoria, pero antes de facturar: la tarjeta del espacio dice «Antes de facturar» y la de Reservar nunca la nombra.
 
 **Véase también:** [Identidad legal y facturación](help:setup.money.identity) · [Ensayo en seco](help:setup.money.dry-run)
 
@@ -6845,7 +6849,7 @@ Usted quiere que cada rol tenga lo que necesita y nada más. Es el principio del
 
 Un administrador no tiene **Gestionar roles y permisos**, **Configurar reglas de validación**, **Editar la configuración del espacio**, **Gestionar tarifas y reglas de facturación**, **Diseñar los documentos**, **Gestionar integraciones**, **Gestionar la configuración** ni **Desplegar en producción**. Un copropietario los tiene todos hasta que usted desmarque alguno. El propietario siempre los tiene todos.
 
-> **Atención** En un espacio nuevo, la tarjeta **Usuario** está vacía. Los seis permisos cotidianos (**Usar la mensajería**, **Reservar y usar las reservas**, **Ver el calendario**, **Ver el directorio de miembros**, **Ver su propia cuenta y sus facturas**, **Ver los documentos compartidos**) solo se tienen a través de la matriz o de un rol. Mientras no los marque, un miembro que se une no puede abrir el plano. La demostración los muestra ya marcados, lo que lo oculta. Márquelos en la tarjeta **Usuario**, y en la tarjeta **Administrador** si los administradores también reservan, y pruebe después con una segunda cuenta.
+> **Atención** En un espacio nuevo, la tarjeta **Usuario** está vacía. Los seis permisos cotidianos (**Usar la mensajería**, **Reservar y usar las reservas**, **Ver el calendario**, **Ver el directorio de miembros**, **Ver su propia cuenta y sus facturas**, **Ver los documentos compartidos**) solo se tienen a través de la matriz o de un rol. Mientras no los marque, un miembro que se une no puede abrir el plano. La demostración los muestra ya marcados, lo que lo oculta. **Configuración de este espacio** muestra **Lo que pueden hacer los miembros** como **Necesario para una primera reserva** hasta que la tarjeta **Usuario** tenga **Reservar y usar las reservas**; no comprueba los otros cinco. Márquelos en la tarjeta **Usuario**, y en la tarjeta **Administrador** si los administradores también reservan, y pruebe después con una segunda cuenta.
 
 **Conviene saber**
 
@@ -7073,7 +7077,7 @@ Usted quiere estar seguro de que toda solicitud para la que crea una regla puede
 
 1. Abra [Reglas de validación](app:/validation) y lea cada tarjeta personalizada: «Todos los admins — 2 cualesquiera» significa dos personas.
 2. Abra [Miembros y planes](app:/members). Cuente los propietarios y administradores activos. Las personas en pausa o que han salido no cuentan.
-3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. Solo retiene la primera reserva cuando la regla es para reservas.
+3. Abra **Configuración de este espacio** en [Espacio](app:/workspace-settings). El área **Roles y quién valida las solicitudes** dice «Una regla pide más validadores de los que tiene este espacio» cuando cuenta pocos. El área pasa entonces a ser obligatoria, sea cual sea el tipo de solicitud, y [Lo que le necesita](help:user.collaborate.attention) la muestra.
 4. Abra [Eventos](app:/events). **Esperando tu confirmación** muestra lo que está esperando, y una fila muestra «1/2 validaciones».
 
 **Conviene saber**
@@ -7365,7 +7369,7 @@ Usted decide cuándo se considera tarde y quién se encarga de reclamar.
 **Conviene saber**
 
 - El plazo antes del primer recordatorio se lee también como su plazo de pago. Fíjelo en [Condiciones de pago](help:user.money.legal.payment-terms).
-- Los recordatorios automáticos se ejecutan una vez al día en el servidor cuando la base de datos tiene su programador activado. También se ejecutan cuando alguien autorizado a emitir facturas (un propietario, un copropietario o un administrador si **Los admins emiten facturas** está activado) abre Finanzas, de modo que un espacio sin programador igualmente los recibe, los días en que alguien mira.
+- Los recordatorios automáticos se ejecutan una vez al día en el servidor cuando la base de datos tiene su programador activado. También se ejecutan cuando alguien autorizado a emitir facturas (un propietario, un copropietario o un administrador si **Los admins emiten facturas** está activado) abre Finanzas, de modo que un espacio sin programador igualmente los recibe, los días en que alguien mira. El interruptor y la descripción de la función también lo dicen; el operador de su servidor sabe cuál se aplica.
 - La función **Recordatorios de pago** solo pone las reglas a su disposición. Un recordatorio sale solo únicamente cuando **Recordatorios automáticos** está activado en las reglas de recordatorio, lo cual no ocurre hasta que usted lo decide.
 - Se omiten las facturas con un pago pendiente o en espera, y las facturas sin plazo de pago registrado.
 - El miembro recibe una alerta en su flujo y, si las notificaciones push están configuradas, una notificación genérica; véase [Avisar a las personas](help:setup.notify.overview).
@@ -7391,7 +7395,7 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 **Conviene saber**
 
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
-- Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir.
+- Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
 - Una declaración es una ayuda para presentar, elaborada a partir de sus facturas emitidas. Verifíquela antes de presentarla y márquela como presentada solo cuando lo haya hecho.
 - El diario de declaraciones tiene su propia serie de numeración.
 
@@ -7413,7 +7417,7 @@ Quiere saber, antes de la primera factura, qué no podrá cambiar después.
 | Número de factura | Los números son correlativos, sin huecos, y se asignan en la base de datos en el momento de emitir. El número siguiente puede subirse, nunca bajarse. Un cambio de formato se aplica desde ese momento. Un reinicio no puede ser más frecuente que la fecha que imprime el número. | En la primera emisión |
 | Un mes facturado | Un mes con una factura para un miembro queda cerrado para ese miembro. Los días de cierre y las importaciones de festivos omiten esos meses y los nombran. | En la primera factura de ese mes |
 | Tipos de IVA | Los tipos se versionan por fecha, nunca se editan. Una declaración de IVA presentada no se recalcula nunca. | En el primer uso |
-| Moneda y país | Los importes se guardan como unidades menores enteras, sin conversión. No se encontró ninguna protección que impida cambiarlos más tarde: decídalos antes de la primera reserva. | Antes de la primera reserva |
+| Moneda y país | Los importes se guardan como unidades menores enteras, sin conversión. En cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cambiar uno u otro. | En el primer documento o pago |
 
 **Pasos**
 
@@ -7647,7 +7651,7 @@ Quiere que las personas se enteren de lo que las necesita, sin ahogarlas.
 **Conviene saber**
 
 - El exceso viene de reglas que preguntan con demasiada frecuencia o de demasiados administradores en una misma regla.
-- El silencio viene de una regla sin nadie que la responda: exigir dos validaciones cuando solo existe el propietario, o nombrar a administradores que ya se han marchado, deja las solicitudes esperando para siempre. La tarjeta de preparación puede señalar una regla de reserva con pocos validadores.
+- El silencio viene de una regla sin nadie que la responda: exigir dos validaciones cuando solo existe el propietario, o nombrar a administradores que ya se han marchado, deja las solicitudes esperando para siempre. La tarjeta de preparación señala cualquier regla con pocos validadores, y Lo que le necesita la muestra.
 - El silencio viene también de un push sin configurar, de miembros que desactivaron el push y de un sistema que bloquea las notificaciones.
 - Los recordatorios de pago automáticos no sustituyen el repaso ocasional de las facturas abiertas.
 
@@ -7894,12 +7898,15 @@ Quiere saber cuáles de sus errores señalará la aplicación y dónde lo hará,
 |---|---|---|
 | Una función que necesita otra | Una función no puede funcionar sin la que necesita. Activar una función activa la función de la que depende y nombra lo que se ha activado. Desactivar la función de la que otras dependen retiene las dependientes y conserva su propia elección. | **Funciones**: el flujo de activación con su vista previa, **Requiere…** y *Esperando la función de arriba* |
 | Un proceso retenido | Una función que está activada pero espera algo que está desactivado. | **Funciones**, vista **Procesos**: el estado **Requiere atención** y su filtro |
-| La lista de preparación | Una línea por ámbito del espacio, con su estado, quién actúa y dónde se configura. Ámbitos: **Días de apertura, zona horaria y moneda**, **Puestos reservables en el plano**, **Planes de membresía y tarifas**, **Invitar a los primeros miembros**, **Cómo pagan los miembros**, **Roles y quién valida las solicitudes**, **Exportación y recuperación**, **Datos que necesitan sus funciones (identidad, banco, plataformas)**, **Una primera reserva** y, cuando proceda, **Servidor y versión de la base de datos** y **Acceso de asistentes (opcional)** (este último solo con la interfaz MCP activada). | **Configuración de este espacio**, en la parte superior de [Espacio](app:/workspace-settings) |
-| La línea que impide una primera reserva | Solo lo que una reserva necesita de verdad: una zona horaria, una moneda, un día laborable abierto, un puesto y, cuando una regla de reserva pide más validadores de los que existen, esos validadores. Lo demás es opcional y se puede dejar a un lado con **Más adelante**. | *Antes de que nadie pueda reservar aquí*, en la tarjeta Primeros pasos de [Reservar](app:/reserve) |
-| Lo que sus funciones aún necesitan en local | Identidad legal (la necesita **Facturas**), datos bancarios, un proveedor de pagos en línea, una cuenta de facturación electrónica, un sitio. | La misma tarjeta, ámbito **Datos que necesitan sus funciones (identidad, banco, plataformas)**, con **Configurar** y **Recomendado** |
+| La lista de preparación | Una línea por ámbito del espacio, con su estado, quién actúa y dónde se configura. Ámbitos: **Días de apertura, zona horaria y moneda**, **Puestos reservables en el plano**, **Planes de membresía y tarifas**, **Invitar a los primeros miembros**, **Cómo pagan los miembros**, **Roles y quién valida las solicitudes**, **Exportación y recuperación**, **Lo que pueden hacer los miembros**, **Datos que necesitan sus funciones (identidad, banco, plataformas)**, **Una primera reserva** y, cuando proceda, **La identidad legal y la dirección del espacio** (solo con **Facturas** activada), **Servidor y versión de la base de datos** y **Acceso de asistentes (opcional)** (este último solo con la interfaz MCP activada). | **Configuración de este espacio**, en la parte superior de [Espacio](app:/workspace-settings) |
+| La línea que impide una primera reserva | Los ámbitos que la lista marca como **Necesario para una primera reserva**: una zona horaria, una moneda, un día laborable abierto, un puesto, miembros que tengan **Reservar y usar las reservas** (un espacio nuevo no les concede nada) y, cuando una regla de validación de cualquier tipo pide más validadores de los que existen, esos validadores. Lo demás es opcional y se puede dejar a un lado con **Más adelante**. | *Antes de que nadie pueda reservar aquí*, en la tarjeta Primeros pasos de [Reservar](app:/reserve) |
+| La línea que impide una primera factura | Con **Facturas** activada, la identidad legal y la dirección del espacio. Sin ellas no se puede emitir ninguna factura, así que el ámbito no se puede dejar a un lado. | **Configuración de este espacio**: el ámbito **La identidad legal y la dirección del espacio**, marcado como **Necesario antes de facturar**; mientras es el paso siguiente, el titular de la tarjeta dice «Antes de facturar: …» |
+| Lo que sus funciones aún necesitan en local | Datos bancarios, un proveedor de pagos en línea, una cuenta de facturación electrónica, un sitio. La identidad legal no figura aquí: con **Facturas** activada es un ámbito propio (arriba). | La misma tarjeta, ámbito **Datos que necesitan sus funciones (identidad, banco, plataformas)**, con **Configurar** y **Recomendado** |
 | La protección de la factura | Una factura se rechaza hasta que está completa: la dirección del espacio, su número de IVA, un país que sea Francia o Alemania, un fundamento legal para una exención, el nombre, la dirección y el número de IVA del miembro cuando se aplica la inversión del sujeto pasivo, un tipo de IVA en vigor, una explicación para cada línea facturada al 0 %. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas se rechazan: emítalas fuera de la aplicación. | **Complete estos datos antes de emitir**, con los elementos que faltan |
 | La protección del pago en línea | Con **Pagos en línea** desactivado, el servidor rechaza un pago en línea nuevo. Uno ya abierto aún se liquida. | Las pantallas de pago (la fila de la función no lleva ninguna nota al respecto) |
-| La protección de la validación | **Validaciones requeridas** por encima de las personas disponibles. | **No hay suficientes validadores elegibles.** en el editor de reglas; «Una política pide más validadores de los que tiene este espacio» en la lista de preparación |
+| La protección de la validación | **Validaciones requeridas** por encima de las personas disponibles, para cualquier tipo de solicitud. | **No hay suficientes validadores elegibles.** en el editor de reglas; «Una regla pide más validadores de los que tiene este espacio» en la lista de preparación, donde **Roles y quién valida las solicitudes** pasa entonces a ser obligatorio |
+| El bloqueo de la moneda y el país | En cuanto el espacio ha emitido un documento o registrado dinero, el servidor rechaza cualquier cambio de **Moneda** o de **País**, desde el formulario de ajustes, una importación o cualquier otro sitio. La zona horaria no queda bloqueada. | «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.» al guardar [Espacio](app:/workspace-settings) |
+| La bandeja del propietario | Lo que queda por configurar: una línea «Por configurar: …» por cada ámbito obligatorio de la lista de preparación que no está listo, y una línea «… funciones activadas esperan «…»» por cada función desactivada que retiene otras. | [Lo que le necesita](help:user.collaborate.attention); un toque abre la pantalla donde se configura, o **Funciones** |
 | La protección de la serie de numeración | Se rechaza un reinicio más frecuente que la fecha impresa en el número. | [Series de numeración](app:/settings/number-sequences), al guardar |
 | El control de madurez | Una función evaluada como **Alfa** o **Beta**. | Una confirmación antes de activarla y una insignia en cada interruptor |
 | El control de sustitución del plano | Sustituir el plano o los ajustes desde un archivo. | Un aviso de que no se puede deshacer. El plano se rechaza cuando ya existen reservas |
@@ -7908,7 +7915,7 @@ Quiere saber cuáles de sus errores señalará la aplicación y dónde lo hará,
 
 - **Configuración de este espacio** es una lista, no un candado. Nunca le impide activar algo.
 - La mayoría de las protecciones actúan cuando intenta emitir, pagar o reservar, no cuando elige un ajuste. Por eso existe la auditoría de más abajo.
-- La bandeja del propietario ([Lo que le necesita](help:user.collaborate.attention)) hoy no avisa de problemas de configuración. No espere a que se lo diga.
+- La bandeja del propietario ([Lo que le necesita](help:user.collaborate.attention)) solo muestra los ámbitos obligatorios y las funciones retenidas. Los ámbitos opcionales se quedan en la lista de preparación: léala usted mismo.
 
 **Véase también:** [Evite funciones que se contradicen](help:setup.features.consistency) · [Revise su espacio](help:setup.place.check)
 
@@ -7921,15 +7928,15 @@ Quiere la lista honesta de lo que sigue siendo responsabilidad suya. Son configu
 | Error | Por qué nada lo impide | Cómo evitarlo |
 |---|---|---|
 | Elegir un país distinto de Francia o Alemania y esperar facturas | La aplicación ofrece muchos países y tipos de IVA, pero solo emite facturas para Francia y Alemania. Nada lo dice al elegir el país. | Decidirlo antes de prometer una factura a los miembros. En otros países, mantenga los extractos en la aplicación y emita las facturas fuera de ella. |
-| Estar registrado en el IVA sin ningún tipo en vigor | Se rechaza la emisión, pero solo en la primera factura. Con **Gestión del IVA** desactivada, la configuración queda oculta pero los tipos guardados siguen aplicándose. | Añadir el tipo en [IVA](app:/vat) antes del primer cierre mensual y emitir una factura de prueba. |
+| Estar registrado en el IVA sin ningún tipo en vigor | Se rechaza la emisión, pero solo en la primera factura. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen; nada se lo impide antes. Con **Gestión del IVA** desactivada, la configuración queda oculta pero los tipos guardados siguen aplicándose. | Añadir el tipo en [IVA](app:/vat) antes del primer cierre mensual y emitir una factura de prueba. |
 | **Pagos en línea** activados sin proveedor | Puede activarlos; la falta de proveedor solo aparece como un elemento de la lista de preparación. | Conectar primero el proveedor y activar después. |
-| **Facturas** activadas sin identidad legal | La función está activada desde el primer día; el rechazo llega en el momento de emitir. | Rellenar la identidad antes de decir a los miembros que se les facturará. |
-| Una regla que necesita más validadores de los que tiene, fuera de las reservas | La lista de preparación retiene la primera reserva solo por las reglas de reserva. El editor le deja guardar una por encima de las personas disponibles. Las demás solicitudes se crean, no pueden completarse y caducan a los siete días. | Contar los propietarios y administradores activos tras cada regla. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck). |
-| Miembros que no pueden abrir el plano | En un espacio nuevo, la tarjeta **Usuario** de [Roles](app:/roles) está vacía y nada le avisa. | Marcar los permisos de uso diario y unirse una vez con una segunda cuenta. |
+| **Facturas** activadas sin identidad legal | La función está activada desde el primer día. La lista de preparación marca la identidad como **Necesario antes de facturar** y Lo que le necesita la muestra, pero nada le impide invitar a miembros y llevar un mes entero; el rechazo llega en el momento de emitir. | Rellenar la identidad antes de decir a los miembros que se les facturará. |
+| Una regla que necesita más validadores de los que tiene | El editor le deja guardar una por encima de las personas disponibles. La lista de preparación marca entonces **Roles y quién valida las solicitudes** como obligatorio, sea cual sea el tipo de solicitud, pero las solicitudes creadas antes de corregirlo no pueden completarse y caducan a los siete días. | Contar los propietarios y administradores activos tras cada regla. Véase [Evite solicitudes que esperan para siempre](help:setup.people.stuck). |
+| Miembros que no pueden abrir el plano | En un espacio nuevo, la tarjeta **Usuario** de [Roles](app:/roles) está vacía. La lista de preparación marca **Lo que pueden hacer los miembros** hasta que los miembros tengan **Reservar y usar las reservas**, pero solo comprueba ese: los otros cinco permisos de uso diario le corresponde marcarlos a usted. | Marcar los permisos de uso diario y unirse una vez con una segunda cuenta. |
 | Un espacio creado a partir de una plantilla | Una plantilla nunca incluye la identidad, los datos bancarios, los sitios ni las invitaciones. | Tratar el ámbito **Datos que necesitan sus funciones (identidad, banco, plataformas)** como una lista de tareas. |
 | Un archivo de ajustes que promete más de lo que entrega | Hoy el archivo incluye la matriz de roles, sus propios roles y todas las reglas de validación, pero no los miembros, los números de factura y de miembro, el periodo de IVA ni los precios de todo el espacio. Lo que incluye solo se aplica si **Configuración en el archivo del espacio** está activada en el destino. Un plano no se sustituye cuando ya existen reservas. | Volver a introducir a mano lo que no incluye y leer la vista previa antes de **Sustituir e importar**. |
-| Recordatorios que nunca se ejecutan | Se ejecutan cada mañana en el servidor cuando la base de datos tiene su programador (pg_cron); si no lo tiene, se ejecutan cuando un administrador abre Finanzas. También permanecen en silencio cuando **Recordatorios de pago automáticos** está desactivada. | Preguntar al operador si existe el programador y abrir usted mismo Finanzas si no existe. Véase [Recordatorios de pago](help:user.money.reminders.automatic). |
-| Cambiar el país, la moneda o la zona horaria cuando ya hay dinero | No encontré ninguna protección. Los importes se guardan como números y no se convierten: consúltelo con el propietario de la instalación antes de fiarse de uno. | Elegirlos el primer día. Véase [Decisiones difíciles de deshacer](help:setup.before.permanent). |
+| Recordatorios que nunca se ejecutan | Se ejecutan cada mañana en el servidor si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El interruptor y la descripción de la función lo dicen, pero no pueden saber cuál se aplica a su instalación. También permanecen en silencio cuando **Recordatorios de pago automáticos** está desactivada. | Preguntar al operador si existe el programador y abrir usted mismo Finanzas si no existe. Véase [Recordatorios de pago](help:user.money.reminders.automatic). |
+| Cambiar la zona horaria cuando ya hay dinero | El servidor bloquea la moneda y el país en cuanto el espacio ha emitido un documento o registrado dinero, pero no la zona horaria, en la que se cuentan cada día laborable, cada media jornada y cada día de cierre. | Elegirla el primer día. Véase [Decisiones difíciles de deshacer](help:setup.before.permanent). |
 | Una numeración o un periodo de IVA que no encaja con el formato de su gestor | La aplicación no los compara con la exportación contable del país. | Pedir a su gestor el formato de numeración y la exportación que usa antes de emitir. Véase [Exportaciones contables](help:user.invoicing.accounting-export). |
 | Tomar una prueba por el espacio real | Más allá de la marca de agua en los documentos impresos, la diferencia es fácil de pasar por alto. | Mirar el banner del espacio de prueba y el lado que se muestra en [Yo](app:/me) antes de actuar. |
 
@@ -7950,18 +7957,18 @@ Quiere pruebas, no una sensación, antes de abrir. Treinta y una comprobaciones,
 
 | N.º | Comprobación | Dónde | Qué aspecto tiene lo correcto |
 |---|---|---|---|
-| 1 | País, moneda, zona horaria | [Espacio](app:/workspace-settings), **Datos generales** | Atelier du Marché: Francia, EUR, Europe/Paris |
+| 1 | País, moneda, zona horaria | [Espacio](app:/workspace-settings), **Datos generales** | Atelier du Marché: Francia, EUR, Europe/Paris, fijados antes del primer documento o pago, tras el cual la moneda y el país quedan bloqueados |
 | 2 | Idioma del espacio | La misma pantalla | El idioma en que están escritas sus invitaciones |
 | 3 | Días y horas de apertura | [Disponibilidad](app:/availability) | Los días en que abre están marcados; las horas encajan con el día |
 | 4 | Días de cierre | Disponibilidad, días de cierre | Los festivos y cierres de los próximos meses están introducidos, antes del primer fin de mes |
 | 5 | Al menos un puesto | [Editor del espacio](app:/editor) | Cada sala que alquila tiene puestos |
-| 6 | Preparación | **Configuración de este espacio** | Nada en **Días de apertura, zona horaria y moneda** ni en **Puestos reservables en el plano** necesita configuración |
+| 6 | Preparación | **Configuración de este espacio** | Nada en **Días de apertura, zona horaria y moneda**, **Puestos reservables en el plano** ni **Lo que pueden hacer los miembros** necesita configuración |
 | 7 | Usted reservó un puesto | [Reservar](app:/reserve) | El puesto se reserva, se registra y se cancela sin sorpresas |
 | 8 | El ID del espacio | [ID del espacio y QR](app:/workspace-code) | El ID es uno que se puede decir en voz alta; el QR está impreso |
-| 9 | Permisos de uso diario | [Roles](app:/roles) | **Usuario** tiene los seis permisos de uso diario |
+| 9 | Permisos de uso diario | [Roles](app:/roles) | **Usuario** tiene los seis permisos de uso diario, entre ellos **Reservar y usar las reservas** |
 | 10 | Se unió una segunda cuenta | Otro dispositivo | Fue aprobada y pudo abrir el plano y reservar |
 | 11 | Más de una persona puede actuar | [Miembros y planes](app:/members) | Un propietario más un copropietario o un administrador, todos **Activo** |
-| 12 | Recuento de validaciones | [Reglas de validación](app:/validation) | Ninguna regla pide más validadores que propietarios y administradores activos |
+| 12 | Recuento de validaciones | [Reglas de validación](app:/validation) | Ninguna regla pide más validadores que propietarios y administradores activos; **Roles y quién valida las solicitudes** no necesita configuración |
 | 13 | La invitación en cada idioma | **Comunidad e invitaciones** | Leyó cada versión una vez; no queda ninguna etiqueta sin rellenar |
 | 14 | El lado en que está | [Yo](app:/me) | El banner del espacio de prueba aparece, o no, como usted pretendía |
 
@@ -7980,13 +7987,13 @@ Quiere pruebas, no una sensación, antes de abrir. Treinta y una comprobaciones,
 | 23 | A quién se avisa de qué | [Cómo se avisa a los miembros](help:setup.notify.members) | Los miembros encuentran todo en **Eventos**; push solo si el operador lo configuró |
 | 24 | Quiosco y credenciales | [Funciones](app:/features) | Desactivados, o existe un miembro de quiosco y se han emitido credenciales |
 | 25 | Sitios | Funciones | Desactivados, o existe al menos un sitio |
-| 26 | Funciones retenidas | **Funciones**, **Requiere atención** | El filtro no muestra ningún proceso |
+| 26 | Funciones retenidas | **Funciones**, **Requiere atención** | El filtro no muestra ningún proceso, y Lo que le necesita no tiene ninguna línea sobre funciones que esperan |
 
 *Crecer: facturas, impuestos y registros*
 
 | N.º | Comprobación | Dónde | Qué aspecto tiene lo correcto |
 |---|---|---|---|
-| 27 | Identidad legal | [Identidad legal y facturación electrónica](app:/legal-identity) | **Complete estos datos antes de emitir** no muestra nada al iniciar una factura de prueba |
+| 27 | Identidad legal | [Identidad legal y facturación electrónica](app:/legal-identity) | **La identidad legal y la dirección del espacio** indica **Listo**, y **Complete estos datos antes de emitir** no muestra nada al iniciar una factura de prueba |
 | 28 | Régimen de IVA y tipos | [IVA](app:/vat) | El régimen es el que le dio su gestor; hay un tipo en vigor para el predeterminado |
 | 29 | Formato de numeración | [Series de numeración](app:/settings/number-sequences) | Leyó la vista previa y su gestor está de acuerdo |
 | 30 | Una factura de prueba | Espacio de prueba, asistente de cierre mensual | Se emitió, en cada idioma que leen sus miembros, sin ningún elemento que falte |
@@ -8081,7 +8088,8 @@ Quiere una página que diga en qué hay que ir despacio. La lista completa, con 
 | El mes facturado de un miembro | El momento en que se emite la factura | [Dinero](help:setup.money.permanent) |
 | Menciones legales de la factura | La primera factura emitida | [La secuencia que debe seguir](help:setup.reports.sequence) |
 | Régimen de IVA y tipos | Los tipos se versionan por fecha y nunca se editan; una declaración presentada no se recalcula nunca | [Dinero](help:setup.money.permanent) |
-| País, moneda, zona horaria | Cuando existe dinero: los importes no se convierten | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
+| País y moneda | Bloqueados por el servidor en cuanto el espacio ha emitido un documento o registrado dinero: los importes no se convierten | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
+| Zona horaria | Nunca se bloquea, pero los días se cuentan en ella: elíjala el primer día | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
 | Sustitución del plano | Se rechaza cuando existe una reserva; borrar una planta elimina lo que contiene | [Decisiones difíciles de deshacer](help:setup.before.permanent) |
 | El ID del espacio | Cuando lo cambia, el anterior deja de funcionar al instante; reimprima el QR | [Cómo se une la gente](help:setup.people.join) |
 | La propiedad | Un propietario puede cederla; no existe invitación de propietario | [Copropietarios](help:setup.people.coowner) |
@@ -8165,11 +8173,11 @@ Construye el lugar y sus horarios en un espacio de prueba, para que un miembro p
 5. Añada un día de cierre. Véase [Días de cierre](help:user.workspace.availability.closure-days).
 6. Conserve las funciones por defecto. Abra [Funciones](app:/features) solo para leer lo que está activado.
 7. Haga una reserva usted mismo y registre después la entrada y la salida. Véase [Registrar entrada y salida](help:user.reserve.check-in).
-8. Comparta el ID del espacio con una persona y deje que se una. Véase [El ID del espacio](help:user.workspace.code).
+8. En [Roles](app:/roles), marque los permisos cotidianos en la tarjeta **Usuario** y comparta después el ID del espacio con una persona y deje que se una. Véase [El ID del espacio](help:user.workspace.code).
 
 **Conviene saber**
 
-- Un espacio puede reservarse cuando tiene una zona horaria, una moneda, al menos un día laborable abierto y al menos un puesto. Todo lo demás puede esperar.
+- Un espacio puede reservarse cuando tiene una zona horaria, una moneda, al menos un día laborable abierto, al menos un puesto y miembros que tengan **Reservar y usar las reservas**. Todo lo demás puede esperar.
 - Un plano no se puede sustituir mediante una importación cuando ya existe una reserva.
 
 *Ha terminado cuando*
@@ -8287,7 +8295,7 @@ Las decisiones con las que se encontrará tienen nombre. Esto es lo que signific
 | Reinicio de numeración | Cada cuánto vuelve a empezar el número de factura. No puede ser más frecuente que la fecha impresa en la factura. |
 | Par de entornos | Un lado de prueba y un lado real de un mismo espacio. |
 | Plantilla | Una configuración guardada (plano, reglas, tarifas, roles) que puede aplicar a un espacio nuevo. Nunca incluye la identidad ni los datos de pago. |
-| Preparación | La lista de comprobación al principio de los ajustes del espacio que dice qué falta antes de que la gente pueda reservar. |
+| Preparación | La lista de comprobación al principio de los ajustes del espacio que dice qué falta antes de que la gente pueda reservar, y antes de la primera factura. |
 | Retenida | Una función que está activada pero espera a otra que está desactivada. |
 | Quiosco | Una pantalla compartida en la puerta donde los miembros registran su entrada y su salida. |
 | Credencial | Una tarjeta o etiqueta que un miembro muestra para registrarse en un quiosco. |
@@ -8328,7 +8336,7 @@ Toda la configuración en una página. *Reversible* indica si puede cambiar de o
 
 | Paso | Dónde en la aplicación | Cuánto dura | ¿Reversible? |
 |---|---|---|---|
-| 1. País, moneda, zona horaria, idioma | [Ajustes del espacio](app:/workspace-settings) | 5 minutos | Sí, pero no cambie la moneda cuando ya exista dinero |
+| 1. País, moneda, zona horaria, idioma | [Ajustes del espacio](app:/workspace-settings) | 5 minutos | Sí, hasta el primer documento o pago; después la moneda y el país quedan bloqueados |
 | 2. Plano | [Editor del espacio](app:/editor) | 30 minutos | Sí, hasta la primera reserva; después se edita un objeto cada vez |
 | 3. Reglas de apertura | Disponibilidad | 10 minutos | Sí |
 | 4. Funciones | [Funciones](app:/features) | 10 minutos | Sí. Desactivar detiene el uso nuevo y no borra nada |

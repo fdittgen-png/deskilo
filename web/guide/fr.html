@@ -830,7 +830,7 @@
 
 <h4 class="lbl lbl-steps">Étapes</h4>
 <ol>
-<li>Touchez <strong>Mes réservations</strong> pour ne garder que les réservations. Touchez-le de nouveau pour tout voir.</li>
+<li>Touchez <strong>Mes réservations</strong> pour ne garder que vos propres réservations. Touchez-le de nouveau pour tout voir.</li>
 <li>Ou choisissez des pastilles comme <strong>Réservations</strong>, <strong>Pointages</strong> et <strong>Départs</strong> ; <strong>Tous</strong> montre tous les types.</li>
 <li>Pour annuler vos choix, touchez <strong>Réinitialiser les filtres</strong>, le bouton en forme d'entonnoir.</li>
 <li>Une ligne au-dessus des pastilles répète ce que vous voyez, par exemple Moi · Réservations.</li>
@@ -961,6 +961,7 @@
 <ul>
 <li>Cet écran n'existe que lorsque votre espace a activé la fonctionnalité <strong>Ce qui vous attend</strong> ; sans elle, l'adresse ramène à la page d'accueil.</li>
 <li>Plusieurs décisions identiques sont regroupées en une seule ligne. Quand rien n'attend, l'écran indique <strong>Rien ne vous attend</strong>.</li>
+<li>Il liste aussi la configuration inachevée : « À configurer : … » pour chaque domaine obligatoire de la liste de mise en place qui n'est pas prêt (seulement pour qui configure l'espace), et « … fonctionnalités activées attendent « … » » quand une fonctionnalité désactivée en retient d'autres. Un appui ouvre l'écran où cela se règle, ou <strong>Fonctionnalités</strong>.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#%C3%A9v%C3%A9nements-et-confirmations">Événements et confirmations</a></p>
 </div></article><article class="section" id="user.validation.overview" data-roles="owner"><header><h3>Règles de validation, domaine par domaine <a class="permalink" href="#user.validation.overview" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span></div></header><div class="body"><p>Vous décidez, pour chaque type d'acte, si une personne doit d'abord le confirmer, et laquelle.</p>
@@ -2243,6 +2244,7 @@
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
 <li>Le pays propose la devise et le fuseau horaire, et détermine les taux de TVA proposés.</li>
+<li>Dès que l'espace a émis un document ou enregistré de l'argent, le pays ne peut plus être changé : l'enregistrement indique « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »</li>
 <li><strong>Enregistrer</strong> écrit tout le formulaire d'un coup. Si quelqu'un a modifié ces réglages entre-temps, rien n'est enregistré et ce que vous avez saisi reste à l'écran.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#user.workspace.settings.currency-timezone">Devise et fuseau horaire</a></p>
@@ -2256,7 +2258,7 @@
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>
 <ul>
-<li>La devise est proposée d'après le pays. Vous pouvez la changer.</li>
+<li>La devise est proposée d'après le pays. Vous pouvez la changer tant que l'espace n'a émis aucun document ni enregistré d'argent ; ensuite, elle est figée.</li>
 <li>Le fuseau horaire n'est pas décoratif : un jour ouvré, une limite de demi-journée et un jour de fermeture sont tous comptés dedans, si bien qu'un membre à l'étranger voit la journée de l'espace plutôt que la sienne.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#user.workspace.settings.country">Pays</a></p>
@@ -3365,7 +3367,7 @@
 <li>Les taux usuels sont un point de départ. Savoir quelle prestation relève de quel taux est une question pour votre comptable.</li>
 <li>Le taux par défaut est utilisé par les abonnements et par tout ce qui n'a pas de taux propre.</li>
 <li>Un taux encore utilisé par une facture ou un service est conservé, désactivé, plutôt que supprimé.</li>
-<li>Sans aucun taux alors que vous êtes assujetti à la TVA, les factures n'affichent aucune taxe et l'export XML reste désactivé.</li>
+<li>Sans taux par défaut en vigueur alors que vous êtes assujetti à la TVA, aucune facture ne peut être émise ; l'écran d'identité légale vous en avertit.</li>
 <li>Cet écran demande la fonctionnalité <strong>Gestion de la TVA</strong> ; l'entrée Taux de TVA de l'écran d'identité légale n'apparaît que pour le régime des assujettis à la TVA.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#user.money.vat.groups">Groupes de TVA</a> · <a href="#user.money.vat.change-by-law">Changement par la loi</a></p>
@@ -3720,6 +3722,7 @@
 <li>Une fois par jour, les factures qui ont dépassé leur échéance enregistrée passent au niveau suivant, pour le montant encore dû.</li>
 <li>Jamais tant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée vous sont laissées.</li>
 <li>Désactivées : vous envoyez chaque relance vous-même.</li>
+<li>Quand cela s'exécute : chaque matin sur le serveur si l'installation planifie des tâches, sinon quand un administrateur ouvre Finances. L'opérateur de votre serveur sait ce qui s'applique.</li>
 </ul>
 <p class="see-also"><strong>Voir aussi:</strong> <a href="#r%C3%A8gles-de-relance">Règles de relance</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-reminders-automatic.fr.b8fa17aa9.jpg" alt="Relances automatiques"></div></figure></div></article><article class="section" id="user.invoicing.register" data-roles="owner admin billing"><header><h3>Le registre des factures <a class="permalink" href="#user.invoicing.register" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Propriétaire</span><span class="role role-admin">Administrateur·rice</span><span class="role role-billing">Administrateur·rice facturation</span></div></header><div class="body"><p>Toutes les factures dans une seule liste triable.</p>

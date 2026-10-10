@@ -1010,6 +1010,18 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
   String attentionIssue(int count);
 
+  /// #2332: attentionSetUp
+  ///
+  /// In en, this message translates to:
+  /// **'Set up: {area}'**
+  String attentionSetUp(String area);
+
+  /// #2332: attentionUnblock
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}'**
+  String attentionUnblock(int count, String feature);
+
   /// #2326: attentionWaitingSince
   ///
   /// In en, this message translates to:
@@ -9897,7 +9909,7 @@ abstract class AppLocalizations {
   /// Feature toggle description: VAT management (#544)
   ///
   /// In en, this message translates to:
-  /// **'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying.'**
+  /// **'The VAT rate editor and the rate pickers on services, packs, accessories and the tariff. Off hides the configuration; stored rates keep applying. A space registered for VAT needs it on, and a default rate, before it can issue an invoice: without them issuing is refused.'**
   String get featureVatManagementDesc;
 
   /// Feature toggle title: VAT management (#544)
@@ -15417,7 +15429,7 @@ abstract class AppLocalizations {
   /// Warning shown for the VAT-registered regime
   ///
   /// In en, this message translates to:
-  /// **'This workspace charges VAT but no rate is set up: invoices show no tax and the XML export stays disabled until you add one.'**
+  /// **'This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.'**
   String get legalIdentityVatWarning;
 
   /// No description provided for @legendBlocked.
@@ -20798,6 +20810,12 @@ abstract class AppLocalizations {
   /// **'Wero (via Mollie)'**
   String get paymentProviderWero;
 
+  /// #2332: when automatic payment reminders run
+  ///
+  /// In en, this message translates to:
+  /// **'When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.'**
+  String get paymentRemindersWhen;
+
   /// #711 - globalization
   ///
   /// In en, this message translates to:
@@ -23540,11 +23558,23 @@ abstract class AppLocalizations {
   /// **'Invite the first members'**
   String get readinessAreaInvitations;
 
+  /// #2332: readinessAreaLegalIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s legal identity and address'**
+  String get readinessAreaLegalIdentity;
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:
   /// **'Details your features need (identity, bank, platforms)'**
   String get readinessAreaLocalSetup;
+
+  /// #2332: readinessAreaMemberPermissions
+  ///
+  /// In en, this message translates to:
+  /// **'What members may do'**
+  String get readinessAreaMemberPermissions;
 
   /// #1636 workspace_readiness
   ///
@@ -23588,6 +23618,12 @@ abstract class AppLocalizations {
   /// **'Before a first booking: {step}'**
   String readinessBlocked(String step);
 
+  /// #2332: readinessBlockedInvoicing
+  ///
+  /// In en, this message translates to:
+  /// **'Before invoicing: {area}'**
+  String readinessBlockedInvoicing(String area);
+
   /// #1636 workspace_readiness
   ///
   /// In en, this message translates to:
@@ -23605,6 +23641,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needed for a first booking'**
   String get readinessNeededFirst;
+
+  /// #2332: readinessNeededInvoicing
+  ///
+  /// In en, this message translates to:
+  /// **'Needed before invoicing'**
+  String get readinessNeededInvoicing;
 
   /// #1636 workspace_readiness
   ///
@@ -23635,6 +23677,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your request waits for a database administrator'**
   String get readinessReasonEligibilityRequested;
+
+  /// #2332: readinessReasonInvoicingNeedsIdentity
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice can be issued without it'**
+  String get readinessReasonInvoicingNeedsIdentity;
+
+  /// #2332: readinessReasonMembersCannotBook
+  ///
+  /// In en, this message translates to:
+  /// **'Members cannot book yet: in Roles, grant them “Book and use reservations”'**
+  String get readinessReasonMembersCannotBook;
 
   /// #1636 workspace_readiness
   ///
@@ -23917,6 +23971,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
+
+  /// #2332: refusalMoneyLocaleLocked
+  ///
+  /// In en, this message translates to:
+  /// **'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.'**
+  String get refusalMoneyLocaleLocked;
 
   /// #1305 Shown when the server refuses an action for lack of a permission
   ///
@@ -33944,11 +34004,41 @@ abstract class AppLocalizations {
   /// **'Import workspace (XML)'**
   String get workspaceXmlImport;
 
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, so the import would not apply them. Switch it on to apply them now.'**
+  String workspaceXmlImportConfigurationOffBody(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight
+  ///
+  /// In en, this message translates to:
+  /// **'The file carries tariffs, legal identity, booking and validation rules and roles. This space has “{feature}” off, and only somebody who may change its configuration can switch it on. The import can continue without them.'**
+  String workspaceXmlImportConfigurationOffNoRight(String feature);
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle
+  ///
+  /// In en, this message translates to:
+  /// **'This file carries a configuration'**
+  String get workspaceXmlImportConfigurationOffTitle;
+
   /// #916 configuration transfer: workspaceXmlImportConfigurationOnly
   ///
   /// In en, this message translates to:
   /// **'The configuration was applied. The floor plan was kept: this space already has reservations, so its plan cannot be replaced.'**
   String get workspaceXmlImportConfigurationOnly;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip
+  ///
+  /// In en, this message translates to:
+  /// **'Import without the configuration'**
+  String get workspaceXmlImportConfigurationSkip;
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn
+  ///
+  /// In en, this message translates to:
+  /// **'Switch it on and apply'**
+  String get workspaceXmlImportConfigurationSwitchOn;
 
   /// Destructive confirm button of the import preview dialog (#165)
   ///
@@ -33977,6 +34067,12 @@ abstract class AppLocalizations {
     int tables,
     int rows,
   );
+
+  /// #2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration: not applied.'**
+  String get workspaceXmlImportPreviewConfigurationSkipped;
 
   /// Summary line in the import preview dialog counting what the picked file contains (#165)
   ///

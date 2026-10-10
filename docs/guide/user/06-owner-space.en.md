@@ -495,6 +495,7 @@ You want the space to know where it is established. **Workspace** opens on **Gen
 **Good to know**
 
 - The country proposes the currency and the time zone, and decides which VAT rates are offered.
+- Once the space has issued a document or recorded money, the country can no longer be changed: saving says "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved."
 - **Save** writes the whole form together. If someone changed these settings meanwhile, nothing is saved and what you typed stays on screen.
 
 **See also:** [Currency and time zone](help:user.workspace.settings.currency-timezone)
@@ -516,7 +517,7 @@ You want prices and days to be counted the way your space counts them.
 
 **Good to know**
 
-- The currency is proposed from the country. You can override it.
+- The currency is proposed from the country. You can override it until the space has issued a document or recorded money; after that it is fixed.
 - The time zone is not cosmetic: a working day, a half-day boundary and a closure day are all counted in it, so a member abroad sees the space's day rather than their own.
 
 **See also:** [Country](help:user.workspace.settings.country)

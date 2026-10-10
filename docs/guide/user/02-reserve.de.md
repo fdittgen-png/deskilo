@@ -587,7 +587,7 @@ Die Liste ist lang, und Sie suchen nur Buchungen. Die Chips unter der Leiste gre
 
 **Schritte**
 
-1. Tippen Sie auf **Meine Buchungen**, um nur Buchungen zu behalten. Tippen Sie erneut darauf, um alles zu sehen.
+1. Tippen Sie auf **Meine Buchungen**, um nur Ihre eigenen Buchungen zu behalten. Tippen Sie erneut darauf, um alles zu sehen.
 2. Oder wählen Sie Chips wie **Buchungen**, **Check-ins** und **Check-outs**; **Alle** zeigt jede Art.
 3. Um Ihre Auswahl rückgängig zu machen, tippen Sie auf **Filter zurücksetzen**, die Trichter-Schaltfläche.
 4. Eine Zeile über den Chips wiederholt, was Sie sehen, zum Beispiel Ich · Buchungen.

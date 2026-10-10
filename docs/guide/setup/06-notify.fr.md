@@ -198,7 +198,7 @@ Vous voulez que les gens soient prévenus de ce qui les concerne, sans être noy
 **Bon à savoir**
 
 - La surcharge vient de règles qui sollicitent trop souvent, ou de trop d'administrateurs sur une même règle.
-- Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation peut signaler une règle de réservation qui a trop peu de validateurs.
+- Le silence vient d'une règle que personne ne peut traiter : exiger deux validations alors que seul le propriétaire existe, ou lister des administrateurs partis, laisse les demandes en attente pour toujours. La carte de préparation de l'installation signale toute règle qui a trop peu de validateurs, et Ce qui vous attend la fait remonter.
 - Le silence vient aussi d'un push non configuré, de membres qui ont désactivé le push, et d'un système qui bloque les notifications.
 - Les relances de paiement automatiques ne dispensent pas de regarder de temps en temps les factures ouvertes.
 

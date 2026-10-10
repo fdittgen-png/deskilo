@@ -8,6 +8,30 @@
   "readinessStateNeeds": "Por configurar",
   "readinessStateUnverified": "Aún no verificado",
   "readinessNeededFirst": "Necesario para una primera reserva",
+  "readinessAreaMemberPermissions": "Lo que pueden hacer los miembros",
+  "@readinessAreaMemberPermissions": {
+    "description": "#2332: readinessAreaMemberPermissions"
+  },
+  "readinessAreaLegalIdentity": "La identidad legal y la dirección del espacio",
+  "@readinessAreaLegalIdentity": {
+    "description": "#2332: readinessAreaLegalIdentity"
+  },
+  "readinessReasonMembersCannotBook": "Los miembros aún no pueden reservar: en Roles, concédales «Reservar y usar las reservas»",
+  "@readinessReasonMembersCannotBook": {
+    "description": "#2332: readinessReasonMembersCannotBook"
+  },
+  "readinessReasonInvoicingNeedsIdentity": "Sin ella no se puede emitir ninguna factura",
+  "@readinessReasonInvoicingNeedsIdentity": {
+    "description": "#2332: readinessReasonInvoicingNeedsIdentity"
+  },
+  "readinessNeededInvoicing": "Necesario antes de facturar",
+  "@readinessNeededInvoicing": {
+    "description": "#2332: readinessNeededInvoicing"
+  },
+  "readinessBlockedInvoicing": "Antes de facturar: {area}",
+  "@readinessBlockedInvoicing": {
+    "description": "#2332: readinessBlockedInvoicing"
+  },
   "readinessLater": "Necesario más adelante",
   "readinessAreaRegionRules": "Días de apertura, zona horaria y moneda",
   "readinessAreaResources": "Puestos reservables en el plano",

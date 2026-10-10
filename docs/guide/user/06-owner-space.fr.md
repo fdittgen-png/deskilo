@@ -495,6 +495,7 @@ Vous voulez que l'espace sache où il est établi. **Espace** s'ouvre sur **Info
 **Bon à savoir**
 
 - Le pays propose la devise et le fuseau horaire, et détermine les taux de TVA proposés.
+- Dès que l'espace a émis un document ou enregistré de l'argent, le pays ne peut plus être changé : l'enregistrement indique « La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré. »
 - **Enregistrer** écrit tout le formulaire d'un coup. Si quelqu'un a modifié ces réglages entre-temps, rien n'est enregistré et ce que vous avez saisi reste à l'écran.
 
 **Voir aussi:** [Devise et fuseau horaire](help:user.workspace.settings.currency-timezone)
@@ -516,7 +517,7 @@ Vous voulez que les prix et les jours soient comptés comme votre espace les com
 
 **Bon à savoir**
 
-- La devise est proposée d'après le pays. Vous pouvez la changer.
+- La devise est proposée d'après le pays. Vous pouvez la changer tant que l'espace n'a émis aucun document ni enregistré d'argent ; ensuite, elle est figée.
 - Le fuseau horaire n'est pas décoratif : un jour ouvré, une limite de demi-journée et un jour de fermeture sont tous comptés dedans, si bien qu'un membre à l'étranger voit la journée de l'espace plutôt que la sienne.
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)

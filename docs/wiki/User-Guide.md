@@ -1021,7 +1021,7 @@ The list is long and you only look for bookings. The chips under the bar narrow 
 
 **Steps**
 
-1. Tap **My bookings** to keep only bookings. Tap it again to see everything.
+1. Tap **My bookings** to keep only your own bookings. Tap it again to see everything.
 2. Or choose chips such as **Bookings**, **Check-ins** and **Check-outs**; **All** shows every kind.
 3. To undo your choices, tap **Reset filters**, the funnel button.
 4. A line above the chips repeats what you see, for example Me · Bookings.
@@ -1209,6 +1209,7 @@ You want one place that answers: does anything need me today?
 
 - This screen exists only when your workspace has switched on the **What needs you** feature; without it the address leads back to the start page.
 - Several identical decisions are shown as one line. When nothing is waiting, the screen says **Nothing needs you**.
+- It also lists configuration that is not done: "Set up: …" for each required area of the setup list that is not ready (only for someone who configures the space), and "… switched-on features wait for “…”" when a switched-off feature holds others back. A tap opens the screen where it is set up, or **Features**.
 
 **See also:** [Events & confirmations](#events--confirmations)
 
@@ -3156,6 +3157,7 @@ You want the space to know where it is established. **Workspace** opens on **Gen
 **Good to know**
 
 - The country proposes the currency and the time zone, and decides which VAT rates are offered.
+- Once the space has issued a document or recorded money, the country can no longer be changed: saving says "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved."
 - **Save** writes the whole form together. If someone changed these settings meanwhile, nothing is saved and what you typed stays on screen.
 
 **See also:** [Currency and time zone](#currency-and-time-zone)
@@ -3177,7 +3179,7 @@ You want prices and days to be counted the way your space counts them.
 
 **Good to know**
 
-- The currency is proposed from the country. You can override it.
+- The currency is proposed from the country. You can override it until the space has issued a document or recorded money; after that it is fixed.
 - The time zone is not cosmetic: a working day, a half-day boundary and a closure day are all counted in it, so a member abroad sees the space's day rather than their own.
 
 **See also:** [Country](#country)
@@ -4912,7 +4914,7 @@ You list the VAT rates your invoices may use. What members pay does not change: 
 - The usual rates are a starting point. Which supply falls under which rate is a question for your accountant.
 - The default rate is used by subscriptions and by anything without its own rate.
 - A rate still used by an invoice or a service is kept, deactivated, rather than deleted.
-- With no rate while you are VAT-registered, invoices show no tax and the XML export stays disabled.
+- With no default rate in force while you are VAT-registered, no invoice can be issued; the legal identity screen warns about it.
 - This screen needs the **VAT management** feature; the VAT rates entry on the legal identity screen shows only for the VAT-registered regime.
 
 **See also:** [VAT groups](#vat-groups) · [Change by law](#change-a-rate-by-law)
@@ -5458,6 +5460,7 @@ You want reminders to leave on their own.
 - Once a day, invoices past their recorded payment term get their next level, for the amount still outstanding.
 - Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
 - Off: you send each reminder yourself.
+- When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.
 
 **See also:** [Reminder rules](#reminder-rules)
 

@@ -1021,7 +1021,7 @@ La lista es larga y usted solo busca reservas. Los chips bajo la barra la acotan
 
 **Pasos**
 
-1. Toque **Mis reservas** para conservar solo las reservas. Tóquelo de nuevo para verlo todo.
+1. Toque **Mis reservas** para conservar solo sus propias reservas. Tóquelo de nuevo para verlo todo.
 2. O elija chips como **Reservas**, **Registros** y **Salidas**; **Todo** muestra todos los tipos.
 3. Para deshacer sus elecciones, toque **Restablecer filtros**, el botón del embudo.
 4. Una línea sobre los chips repite lo que ve, por ejemplo Yo · Reservas.
@@ -1209,6 +1209,7 @@ Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
 
 - Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
 - Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+- También muestra la configuración pendiente: «Por configurar: …» por cada ámbito obligatorio de la lista de preparación que no está listo (solo para quien configura el espacio), y «… funciones activadas esperan «…»» cuando una función desactivada retiene otras. Un toque abre la pantalla donde se configura, o **Funciones**.
 
 **Véase también:** [Eventos y confirmaciones](#eventos-y-confirmaciones)
 
@@ -3156,6 +3157,7 @@ Usted quiere que el espacio sepa dónde está establecido. **Espacio** se abre e
 **Conviene saber**
 
 - El país propone la moneda y la zona horaria, y decide qué tipos de IVA se ofrecen.
+- En cuanto el espacio ha emitido un documento o registrado dinero, el país ya no se puede cambiar: al guardar se indica «La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.»
 - **Guardar** escribe todo el formulario junto. Si alguien cambió estos ajustes entretanto, no se guarda nada y lo que usted escribió se queda en pantalla.
 
 **Véase también:** [Moneda y zona horaria](#moneda-y-zona-horaria)
@@ -3177,7 +3179,7 @@ Usted quiere que los precios y los días se cuenten como los cuenta su espacio.
 
 **Conviene saber**
 
-- La moneda se propone a partir del país. Puede cambiarla.
+- La moneda se propone a partir del país. Puede cambiarla hasta que el espacio haya emitido un documento o registrado dinero; después queda fijada.
 - La zona horaria no es cosmética: una jornada, un límite de media jornada y un día de cierre se cuentan en ella, así que un miembro en el extranjero ve el día del espacio y no el suyo.
 
 **Véase también:** [País](#país)
@@ -4912,7 +4914,7 @@ Enumera los tipos de IVA que pueden usar sus facturas. Lo que pagan los miembros
 - Los tipos habituales son un punto de partida. Qué operación va con qué tipo es una pregunta para su gestor.
 - El tipo por defecto lo usan las suscripciones y todo lo que no tiene tipo propio.
 - Un tipo que todavía usa una factura o un servicio se conserva, desactivado, en lugar de eliminarse.
-- Si no hay ningún tipo mientras está sujeto a IVA, las facturas no muestran impuesto y la exportación XML queda desactivada.
+- Si no hay ningún tipo por defecto en vigor mientras está sujeto a IVA, no se puede emitir ninguna factura; la pantalla de identidad legal lo advierte.
 - Esta pantalla requiere la función **Gestión del IVA**; la entrada de tipos de IVA de la pantalla de identidad legal solo aparece con el régimen de sujeto a IVA.
 
 **Véase también:** [Grupos de IVA](#grupos-de-iva) · [Cambio por ley](#cambiar-un-tipo-por-ley)
@@ -5458,6 +5460,7 @@ Quiere que los recordatorios salgan solos.
 - Una vez al día, las facturas que han superado su plazo de pago registrado reciben el nivel siguiente, por el importe aún pendiente.
 - Nunca mientras haya un pago pendiente o la factura esté en espera. Las facturas sin plazo registrado quedan en sus manos.
 - Desactivado: usted envía cada recordatorio.
+- Cuándo se ejecuta: cada mañana en el servidor si la instalación programa tareas; si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.
 
 **Véase también:** [Reglas de recordatorio](#reglas-de-recordatorio)
 

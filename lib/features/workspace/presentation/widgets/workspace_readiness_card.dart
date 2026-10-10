@@ -40,6 +40,13 @@ String readinessAreaLabel(
     l10n?.readinessAreaAssistant ?? 'Assistant access (optional)',
   ReadinessArea.firstBooking =>
     l10n?.readinessAreaFirstBooking ?? 'A first booking',
+  // #2332 — English only where no localization is installed.
+  ReadinessArea.memberPermissions =>
+    (l10n ?? lookupAppLocalizations(const Locale('en')))
+        .readinessAreaMemberPermissions,
+  ReadinessArea.legalIdentity =>
+    (l10n ?? lookupAppLocalizations(const Locale('en')))
+        .readinessAreaLegalIdentity,
   ReadinessArea.unknown => '',
 };
 
@@ -64,6 +71,11 @@ String? readinessReasonLabel(AppLocalizations? l10n, String? reason) =>
       'too_few_validators' =>
         l10n?.readinessReasonTooFewValidators ??
             'A policy asks for more validators than this space has',
+      'members_cannot_book' => (l10n ?? lookupAppLocalizations(const Locale('en')))
+          .readinessReasonMembersCannotBook,
+      'invoicing_needs_identity' =>
+        (l10n ?? lookupAppLocalizations(const Locale('en')))
+            .readinessReasonInvoicingNeedsIdentity,
       'no_policies' =>
         l10n?.readinessReasonNoPolicies ?? 'No request waits for a validator',
       'no_evidence' =>
@@ -170,6 +182,10 @@ class WorkspaceReadinessCard extends ConsumerWidget {
     final applicable = sections.where((s) => s.applicable);
     final ready = applicable.where((s) => s.state == ReadinessState.ready);
     final headline = switch (next) {
+      // #2332 — the legal identity holds back invoicing, not a booking.
+      final n? when n.blocking && n.area == ReadinessArea.legalIdentity =>
+        (l10n ?? lookupAppLocalizations(const Locale('en')))
+            .readinessBlockedInvoicing(readinessAreaLabel(l10n, n.area)),
       final n? when n.blocking =>
         l10n?.readinessBlocked(readinessAreaLabel(l10n, n.area)) ??
             'Before a first booking: ${readinessAreaLabel(l10n, n.area)}',
@@ -242,7 +258,10 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                             if (s.acknowledged && s.canSetAside)
                               l10n?.readinessSetAside ?? 'Set aside for later'
                             else if (s.state != ReadinessState.notApplicable)
-                              s.required
+                              s.required && s.area == ReadinessArea.legalIdentity
+                                  ? (l10n ?? lookupAppLocalizations(const Locale('en')))
+                                        .readinessNeededInvoicing
+                                  : s.required
                                   ? (l10n?.readinessNeededFirst ??
                                         'Needed for a first booking')
                                   : (l10n?.readinessLater ?? 'Needed later'),

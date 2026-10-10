@@ -587,7 +587,7 @@ The list is long and you only look for bookings. The chips under the bar narrow 
 
 **Steps**
 
-1. Tap **My bookings** to keep only bookings. Tap it again to see everything.
+1. Tap **My bookings** to keep only your own bookings. Tap it again to see everything.
 2. Or choose chips such as **Bookings**, **Check-ins** and **Check-outs**; **All** shows every kind.
 3. To undo your choices, tap **Reset filters**, the funnel button.
 4. A line above the chips repeats what you see, for example Me · Bookings.

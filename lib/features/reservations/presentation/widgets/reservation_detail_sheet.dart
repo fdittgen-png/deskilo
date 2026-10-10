@@ -25,6 +25,7 @@ import '../../../plan/providers/seat_context_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/own_booking_removal.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
@@ -78,9 +79,9 @@ class ReservationDetailSheet extends ConsumerWidget {
     // check-in forgotten, or was the booking unused?).
     final now = ref.read(clockProvider).now();
     final mine = r.memberId == myMemberId;
-    final started = !r.startsAt.isAfter(now);
-    final editable =
-        mine && r.status == ReservationStatus.reserved && !started;
+    // #2328 — the same rule the plan's "your seat" sheet reads.
+    final removal = ownBookingRemovalOf(ref, r);
+    final editable = mine && removal == OwnBookingRemoval.cancel;
     // #574 — a RUNNING booking may still grow: sitting in the morning
     // seat and staying the day extends the end to a later canonical
     // edge (the server keeps the start immovable).
@@ -96,14 +97,8 @@ class ReservationDetailSheet extends ConsumerWidget {
         r.status == ReservationStatus.checkedIn &&
         r.endsAt.isAfter(now) &&
         _earlierEndFor(ref, r, now) != null;
-    final deletionRequestable = mine &&
-        !editable &&
-        ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.deletionRequests) &&
-        (r.status == ReservationStatus.checkedIn ||
-            r.status == ReservationStatus.completed ||
-            (r.status == ReservationStatus.reserved && started));
+    final deletionRequestable =
+        mine && removal == OwnBookingRemoval.requestDeletion;
     // #1643 — MY booking, in my own calendar: any state, since a
     // cancelled one exports as cancelled rather than being hidden.
     final calendarFile = mine &&
@@ -299,77 +294,11 @@ class ReservationDetailSheet extends ConsumerWidget {
     );
   }
 
-  /// #492 — the request dialog: explains that an owner/admin validates
-  /// (forgotten check-in vs unused booking), takes an optional reason,
-  /// and files the pending event.
+  /// #492 — the request dialog, then the sheet closes (#2328: the plan's
+  /// seat sheet files the same request through [requestBookingDeletion]).
   Future<void> _requestDeletion(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
-    final reasonController = TextEditingController();
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.reservationDeleteRequestButton ??
-            'Request deletion'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n?.reservationDeleteRequestExplain ??
-                'Past or checked-in bookings are not deleted directly. '
-                    'An owner or admin will decide: was the check-in '
-                    'simply forgotten (the booking stays), or was it '
-                    'never used (it is removed)?'),
-            const SizedBox(height: AppSpacing.md),
-            TextField(
-              key: const ValueKey('reservation-delete-reason'),
-              controller: reasonController,
-              maxLength: 300,
-              maxLines: 2,
-              decoration: InputDecoration(
-                labelText: l10n?.reservationDeleteReasonLabel ??
-                    'Reason (optional)',
-                counterText: '',
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            key: const ValueKey('reservation-detail-sheet-cancel'),
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
-          ),
-          FilledButton(
-            key: const ValueKey('reservation-delete-submit'),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.reservationDeleteSubmit ??
-                'Send request'),
-          ),
-        ],
-      ),
-    );
-    final reason = reasonController.text;
-    if (confirmed != true || !context.mounted) return;
-    if (!await runGuarded(
-      context,
-      domain: 'reservations',
-      message: 'reservation deletion request failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
-      action: () => ref
-          .read(eventRepositoryProvider)
-          .requestReservationDeletion(reservation.id, reason: reason),
-    )) {
-      return;
-    }
-    invalidateBookingData(ref);
-    if (!context.mounted) return;
-    Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n?.reservationDeleteSubmitted ??
-          'Deletion requested — an owner or admin will decide.',
-    );
+    if (!await requestBookingDeletion(context, ref, reservation)) return;
+    if (context.mounted) Navigator.of(context).pop();
   }
 
   // ── cancel ──
@@ -881,4 +810,85 @@ Future<void> showReservationDetail(
   Navigator.of(context).popUntil((route) =>
       route is! ModalBottomSheetRoute && route is! RawDialogRoute);
   context.go('/plan');
+}
+
+// #2328 — removing MY booking, shared with the plan's "your seat" sheet
+// so both offer the same action for the same state and file the same
+// request.
+
+/// [ownBookingRemoval] on the real clock and this space's features.
+OwnBookingRemoval ownBookingRemovalOf(WidgetRef ref, Reservation r) =>
+    ownBookingRemoval(
+      r,
+      now: ref.read(clockProvider).now(),
+      deletionRequests: ref
+          .read(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.deletionRequests),
+    );
+
+/// #492 — the request dialog: explains that an owner/admin validates
+/// (forgotten check-in vs unused booking), takes an optional reason,
+/// and files the pending event. True once the request is filed.
+Future<bool> requestBookingDeletion(
+  BuildContext context,
+  WidgetRef ref,
+  Reservation reservation,
+) async {
+  // English only where no localization is installed (a bare test app).
+  final l10n =
+      AppLocalizations.of(context) ??
+      lookupAppLocalizations(const Locale('en'));
+  final reasonController = TextEditingController();
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(l10n.reservationDeleteRequestButton),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.reservationDeleteRequestExplain),
+          const SizedBox(height: AppSpacing.md),
+          TextField(
+            key: const ValueKey('reservation-delete-reason'),
+            controller: reasonController,
+            maxLength: 300,
+            maxLines: 2,
+            decoration: InputDecoration(
+              labelText: l10n.reservationDeleteReasonLabel,
+              counterText: '',
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('reservation-detail-sheet-cancel'),
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          key: const ValueKey('reservation-delete-submit'),
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          child: Text(l10n.reservationDeleteSubmit),
+        ),
+      ],
+    ),
+  );
+  final reason = reasonController.text;
+  if (confirmed != true || !context.mounted) return false;
+  if (!await runGuarded(
+    context,
+    domain: 'reservations',
+    message: 'reservation deletion request failed',
+    action: () => ref
+        .read(eventRepositoryProvider)
+        .requestReservationDeletion(reservation.id, reason: reason),
+  )) {
+    return false;
+  }
+  invalidateBookingData(ref);
+  if (!context.mounted) return true;
+  AppSnack.success(context, l10n.reservationDeleteSubmitted);
+  return true;
 }

@@ -38,6 +38,8 @@ import '../../domain/booking_granularity.dart';
 import '../../domain/workspace_settings_save.dart';
 import '../../domain/space_code_entries.dart';
 import '../widgets/local_setup_views.dart';
+import '../widgets/configuration_transfer_prompt.dart';
+import '../../application/toggle_workspace_feature.dart';
 import '../widgets/space_codes_options_dialog.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
@@ -756,12 +758,27 @@ class _WorkspaceSettingsScreenState
 
       final counts = workspaceXmlPlanCounts(data);
       // #916 — the configuration section applies when the feature is on;
-      // a v1/v2 file has none.
+      // a v1/v2 file has none. #2331 — with the feature off it is no
+      // longer skipped in silence: the owner is asked first, and may
+      // switch the feature on for this import.
       final configuration = data.configuration;
-      final applyConfiguration = configuration != null &&
-          ref
+      var switchTransferOn = false;
+      if (configuration != null &&
+          !ref
               .read(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.configurationTransfer);
+              .contains(WorkspaceFeature.configurationTransfer)) {
+        final choice = await askConfigurationTransfer(context,
+            maySwitchOn: ref
+                .read(myPermissionsProvider)
+                .contains(WorkspacePermission.manageConfiguration));
+        if (choice == null || !mounted) return;
+        switchTransferOn = choice;
+      }
+      final applyConfiguration = configuration != null &&
+          (switchTransferOn ||
+              ref
+                  .read(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.configurationTransfer));
       final configurationCount =
           applyConfiguration ? configurationCounts(configuration) : null;
       final confirmed = await showDialog<bool>(
@@ -800,6 +817,9 @@ class _WorkspaceSettingsScreenState
                             'settings, ${configurationCount.rows} rows in '
                             '${configurationCount.tables} tables',
                   ),
+                if (configuration != null && !applyConfiguration)
+                  Text((l10n ?? lookupAppLocalizations(const Locale('en')))
+                      .workspaceXmlImportPreviewConfigurationSkipped),
                 const SizedBox(height: 12),
                 Text(
                   l10n?.workspaceXmlImportPreviewWarning ??
@@ -837,6 +857,12 @@ class _WorkspaceSettingsScreenState
       final importRepository = ref.read(workspaceImportRepositoryProvider);
       // #916 — the configuration first: it has no reservation hazard and
       // must land even when the plan below is refused.
+      if (switchTransferOn) {
+        await toggleWorkspaceFeature(ref,
+            workspace: workspace,
+            feature: WorkspaceFeature.configurationTransfer,
+            value: true);
+      }
       if (applyConfiguration) {
         await importRepository.importConfiguration(
             workspace.id, configuration);
@@ -873,7 +899,16 @@ class _WorkspaceSettingsScreenState
         PaymentInstructions.fromDb(data.settings.paymentInstructions),
       );
       anythingApplied = true;
-      await repository.setFeatureFlags(workspace.id, data.settings.featureFlags);
+      // #2331 — the file's own flags must not switch back off what the
+      // owner just switched on for this import.
+      await repository.setFeatureFlags(workspace.id, {
+        ...data.settings.featureFlags,
+        if (switchTransferOn)
+          for (final e in featureFlagsToggleDelta(
+                  feature: WorkspaceFeature.configurationTransfer, value: true)
+              .entries)
+            e.key.dbKey: e.value,
+      });
       // #1289 — a brand seed the document carries is measured before it
       // is written; refused, the rest of the import still applies.
       final brandRefused = await applyImportedBrandSeed(

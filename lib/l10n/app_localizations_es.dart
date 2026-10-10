@@ -544,6 +544,22 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String attentionSetUp(String area) {
+    return 'Por configurar: $area';
+  }
+
+  @override
+  String attentionUnblock(int count, String feature) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count funciones activadas esperan «$feature»',
+      one: '1 función activada espera «$feature»',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionWaitingSince(String date) {
     return 'En espera desde el $date';
   }
@@ -5745,7 +5761,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureVatManagementDesc =>
-      'El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose.';
+      'El editor de tipos de IVA y los selectores de tipo en servicios, bonos, accesorios y tarifas. Desactivado oculta la configuración; los tipos guardados siguen aplicándose. Un espacio sujeto a IVA la necesita, junto con un tipo por defecto, para emitir una factura: sin ellos la emisión se rechaza.';
 
   @override
   String get featureVatManagementTitle => 'Gestión del IVA';
@@ -9017,7 +9033,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get legalIdentityVatWarning =>
-      'Este espacio cobra IVA pero no hay ningún tipo configurado: las facturas no muestran impuesto y la exportación XML sigue desactivada.';
+      'Este espacio cobra IVA pero no hay ningún tipo por defecto vigente: no se puede emitir ninguna factura hasta que añada uno. Los tipos se editan con «Gestión del IVA» activada.';
 
   @override
   String get legendBlocked => 'Bloqueada';
@@ -12164,6 +12180,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentProviderWero => 'Wero (con Mollie)';
 
   @override
+  String get paymentRemindersWhen =>
+      'Cuándo se ejecuta: cada mañana en el servidor, si la instalación programa tareas (pg_cron); si no, cuando un administrador abre Finanzas. El operador de su servidor sabe cuál se aplica.';
+
+  @override
   String get paymentRoutingNumberLabel => 'Routing number';
 
   @override
@@ -13779,8 +13799,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get readinessAreaInvitations => 'Invitar a los primeros miembros';
 
   @override
+  String get readinessAreaLegalIdentity =>
+      'La identidad legal y la dirección del espacio';
+
+  @override
   String get readinessAreaLocalSetup =>
       'Datos que necesitan sus funciones (identidad, banco, plataformas)';
+
+  @override
+  String get readinessAreaMemberPermissions =>
+      'Lo que pueden hacer los miembros';
 
   @override
   String get readinessAreaPayments => 'Cómo pagan los miembros';
@@ -13808,6 +13836,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String readinessBlockedInvoicing(String area) {
+    return 'Antes de facturar: $area';
+  }
+
+  @override
   String get readinessFirstBookingReady => 'Listo para una primera reserva';
 
   @override
@@ -13815,6 +13848,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get readinessNeededFirst => 'Necesario para una primera reserva';
+
+  @override
+  String get readinessNeededInvoicing => 'Necesario antes de facturar';
 
   @override
   String readinessNext(String step) {
@@ -13836,6 +13872,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get readinessReasonEligibilityRequested =>
       'Su solicitud espera a un administrador de la base de datos';
+
+  @override
+  String get readinessReasonInvoicingNeedsIdentity =>
+      'Sin ella no se puede emitir ninguna factura';
+
+  @override
+  String get readinessReasonMembersCannotBook =>
+      'Los miembros aún no pueden reservar: en Roles, concédales «Reservar y usar las reservas»';
 
   @override
   String get readinessReasonNoEvidence =>
@@ -13992,6 +14036,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
+
+  @override
+  String get refusalMoneyLocaleLocked =>
+      'La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.';
 
   @override
   String get refusalPermission =>
@@ -19757,8 +19805,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceXmlImport => 'Importar el espacio (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «$feature» desactivada, así que la importación no los aplicaría. Actívela para aplicarlos ahora.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «$feature» desactivada, y solo quien puede cambiar su configuración puede activarla. La importación puede continuar sin ellos.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'Este archivo contiene una configuración';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Importar sin la configuración';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn => 'Activar y aplicar';
 
   @override
   String get workspaceXmlImportConfirm => 'Sustituir e importar';
@@ -19780,6 +19849,10 @@ class AppLocalizationsEs extends AppLocalizations {
   ) {
     return 'Configuración: $settings ajustes, $rows filas en $tables tablas';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Configuración: no aplicada.';
 
   @override
   String workspaceXmlImportPreviewCounts(

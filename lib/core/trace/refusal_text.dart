@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_en.dart';
 import '../data/server_error.dart';
 
 /// #1305 S2 — the refusals every surface can meet, whatever it was doing.
@@ -17,7 +18,16 @@ import '../data/server_error.dart';
 /// hit. Substrings are pinned against the migrations by
 /// `test/core/trace/refusal_text_test.dart` — a server message that stops
 /// being raised fails there, not silently in front of a member.
-enum KnownRefusal { permission, session, alreadyDecided, changedMeanwhile }
+enum KnownRefusal {
+  permission,
+  session,
+  alreadyDecided,
+  changedMeanwhile,
+
+  /// #2332 (0399, DK423) — the currency or country of a space that has
+  /// already issued a document or recorded money.
+  moneyLocaleLocked,
+}
 
 /// Substrings of server refusals that mean "you may not".
 const List<String> permissionRefusalSubstrings = [
@@ -59,6 +69,7 @@ KnownRefusal? knownRefusalOf(Object error) {
   // 42501 is Postgres's own insufficient_privilege — an RLS refusal or a
   // revoked grant, which never carries one of our sentences.
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
+  if (serverErrorCode(error) == 'DK423') return KnownRefusal.moneyLocaleLocked;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -86,5 +97,7 @@ String? knownRefusalText(AppLocalizations? l10n, Object error) =>
           'Someone has already decided this. The list shows the outcome.',
       KnownRefusal.changedMeanwhile => l10n?.refusalChangedMeanwhile ??
           'This changed in the meantime. Reopen it to see where it stands.',
+      KnownRefusal.moneyLocaleLocked =>
+        (l10n ?? AppLocalizationsEn()).refusalMoneyLocaleLocked,
       null => null,
     };

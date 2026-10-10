@@ -1740,6 +1740,7 @@ Map<String, _Getter> _part7() => {
   'workspaceInvitePasteHint': (l) => l.workspaceInvitePasteHint,
   'workspaceWhatsappGroupLabel': (l) => l.workspaceWhatsappGroupLabel,
   'workspaceWhatsappGroupTitle': (l) => l.workspaceWhatsappGroupTitle,
+  'workspaceXmlImportConfigurationSkip': (l) => l.workspaceXmlImportConfigurationSkip,
 };
 
 Map<String, _Getter> _part8() => {
@@ -2186,6 +2187,7 @@ Map<String, _Getter> _part9() => {
   'wizardWhoYou': (l) => l.wizardWhoYou,
   'workbookStatePresent': (l) => l.workbookStatePresent,
   'workspaceConfigEmptyLevel': (l) => l.workspaceConfigEmptyLevel,
+  'workspaceXmlImportConfigurationOffTitle': (l) => l.workspaceXmlImportConfigurationOffTitle,
 };
 
 Map<String, _Getter> _part10() => {
@@ -3691,6 +3693,7 @@ Map<String, _Getter> _part16() => {
   'vatTreatmentReasonField': (l) => l.vatTreatmentReasonField,
   'visibilityPreviewNothing': (l) => l.visibilityPreviewNothing,
   'visitGuestNote': (l) => l.visitGuestNote,
+  'workspaceXmlImportPreviewConfigurationSkipped': (l) => l.workspaceXmlImportPreviewConfigurationSkipped,
 };
 
 Map<String, _Getter> _part17() => {
@@ -4766,6 +4769,7 @@ Map<String, _Getter> _part21() => {
   'workspaceCurrencyLabel': (l) => l.workspaceCurrencyLabel,
   'workspaceInviteCodeInvalid': (l) => l.workspaceInviteCodeInvalid,
   'workspaceLanguageUnset': (l) => l.workspaceLanguageUnset,
+  'workspaceXmlImportConfigurationSwitchOn': (l) => l.workspaceXmlImportConfigurationSwitchOn,
 };
 
 Map<String, _Getter> _part22() => {

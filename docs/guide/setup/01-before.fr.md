@@ -54,9 +54,10 @@ Vous voulez connaître le chemin le plus court vers un espace que l’on peut r�
 
 1. **Jours d’ouverture, fuseau horaire et devise** : un fuseau horaire, une devise et au moins un jour de la semaine ouvert.
 2. **Places réservables sur le plan** : au moins une place.
-3. **Rôles et validation des demandes** : compté seulement quand une règle de réservation demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.
+3. **Rôles et validation des demandes** : compté seulement quand une règle de validation, de quelque nature qu’elle soit, demande plus de validateurs que l’espace n’en a. Une règle qui exige deux approbations alors que vous êtes seul dans l’espace laisserait les demandes en attente pour toujours.
+4. **Ce que les membres peuvent faire** : les membres détiennent **Réserver et utiliser les réservations**. Un nouvel espace ne leur accorde rien : un membre qui rejoint l’espace ne peut pas réserver tant que vous ne l’avez pas coché dans [Rôles](app:/roles).
 
-Une quatrième ligne, **Serveur et version de la base**, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur.
+Une ligne de plus, **Serveur et version de la base**, ne bloque que si le serveur est en retard sur cette application ; elle attend alors l’opérateur du serveur. Et tant que **Factures** est activé, **L'identité légale et l'adresse de l'espace** est obligatoire aussi : la liste la marque **Nécessaire avant de facturer**, car aucune facture ne peut être émise sans elle.
 
 *Ce qui est facultatif et peut attendre*
 
@@ -72,8 +73,8 @@ Chacune de ces étapes peut être mise de côté avec **Plus tard** et reprise e
 **Bon à savoir**
 
 - La liste nomme qui agit : **Vous**, **L’opérateur du serveur** ou **Un administrateur de la base**.
-- Facultatif ne veut pas dire sans importance : dès que vous facturez, votre identité légale est requise pour cette fonctionnalité. La liste l’appelle une information requise par vos fonctionnalités.
-- Si vous activez la facturation sans identité légale, l’application vous laisse faire ; elle refuse au moment d’émettre une facture, et dit ce qui manque.
+- Facultatif ne veut pas dire sans importance : des coordonnées bancaires, un prestataire de paiement ou un site sont des informations requises par vos fonctionnalités, et la liste les nomme.
+- Si vous activez la facturation sans identité légale, l’application vous laisse faire ; la liste et [Ce qui vous attend](help:user.collaborate.attention) la signalent, et l’émission d’une facture est refusée, en disant ce qui manque.
 
 **Voir aussi :** [Vérifier votre espace](help:setup.place.check) · [La carte Premiers pas et les astuces](help:user.start.get-started)
 
@@ -118,7 +119,7 @@ Vous voulez prendre de l’avance sans être enfermé dans les choix de quelqu�
 
 **Bon à savoir**
 
-- Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme informations requises par vos fonctionnalités.
+- Un modèle ne contient jamais votre identité légale, vos coordonnées bancaires, vos sites, vos invitations ni vos liens de documents : ils vous appartiennent, et la liste de préparation les nomme (l’identité légale, quand **Factures** est activé, comme un domaine à part).
 - Un espace créé depuis un modèle peut avoir la facturation activée et rien pour émettre tant que vous n’avez pas ajouté l’identité.
 - Appliquer un modèle à un espace qui a déjà des tarifs remplace ses tranches de tarification : utilisez-le sur un nouvel espace.
 
@@ -162,7 +163,7 @@ Vous voulez savoir sur quels choix prendre votre temps. La plupart des réglages
 | Format et séquence des numéros de facture | Le numéro suivant peut être augmenté, jamais diminué. Après la première facture, vous ne pouvez plus imprimer moins de la date que ne le montre la série. | Voir l’aperçu du format, consulter votre comptable, puis émettre. |
 | Le mois d’une facture émise | Dès que le mois d’un membre est facturé, il est verrouillé ; les jours de fermeture et les imports de jours fériés l’ignorent. | Fixer les jours de fermeture avant la fin du mois. |
 | Régime de TVA et taux | Les taux sont versionnés par date et jamais modifiés ; une déclaration de TVA transmise n’est jamais recalculée. | Ajouter un nouveau taux à partir d’une date ; décider du régime avec votre comptable. |
-| Pays, devise, fuseau horaire | Les montants sont enregistrés comme des nombres, sans conversion : changer de devise une fois que de l’argent existe est risqué. | Les choisir correctement dès le premier jour ; voir [Construire le lieu](help:setup.place.overview). |
+| Pays, devise, fuseau horaire | Les montants sont enregistrés comme des nombres, sans conversion. Dès que l’espace a émis un document ou enregistré de l’argent, le serveur refuse tout changement de devise ou de pays. Le fuseau horaire n’est jamais verrouillé, mais chaque jour y est compté. | Les choisir correctement dès le premier jour ; voir [Construire le lieu](help:setup.place.overview). |
 | Remplacement du plan | L’import d’un plan est refusé dès que des réservations existent. | Modifier les étages et les salles un par un dans l’éditeur. |
 | ID de l’espace | C’est ce que les membres saisissent et ce vers quoi pointent les QR codes imprimés. Vous pouvez le changer (4 à 20 lettres ou chiffres) avec **Changer l'ID de l'espace**, mais l’ancien ID cesse de fonctionner aussitôt. | Choisir un ID court et facile à retenir avant d’imprimer quoi que ce soit ; le changer tôt si nécessaire. |
 | Test ou réel | Un espace réel émet des factures dues ; les documents de développement portent un filigrane. | Commencer dans un espace de test, déployer quand tout est prêt. |

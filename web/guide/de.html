@@ -830,7 +830,7 @@
 
 <h4 class="lbl lbl-steps">Schritte</h4>
 <ol>
-<li>Tippen Sie auf <strong>Meine Buchungen</strong>, um nur Buchungen zu behalten. Tippen Sie erneut darauf, um alles zu sehen.</li>
+<li>Tippen Sie auf <strong>Meine Buchungen</strong>, um nur Ihre eigenen Buchungen zu behalten. Tippen Sie erneut darauf, um alles zu sehen.</li>
 <li>Oder wählen Sie Chips wie <strong>Buchungen</strong>, <strong>Check-ins</strong> und <strong>Check-outs</strong>; <strong>Alle</strong> zeigt jede Art.</li>
 <li>Um Ihre Auswahl rückgängig zu machen, tippen Sie auf <strong>Filter zurücksetzen</strong>, die Trichter-Schaltfläche.</li>
 <li>Eine Zeile über den Chips wiederholt, was Sie sehen, zum Beispiel Ich · Buchungen.</li>
@@ -961,6 +961,7 @@
 <ul>
 <li>Dieser Bildschirm existiert nur, wenn Ihr Workspace die Funktion <strong>Was auf Sie wartet</strong> eingeschaltet hat; ohne sie führt die Adresse zurück zur Startseite.</li>
 <li>Mehrere gleiche Entscheidungen erscheinen als eine Zeile. Wartet nichts, sagt der Bildschirm <strong>Nichts wartet auf Sie</strong>.</li>
+<li>Er listet auch Konfiguration, die noch fehlt: „Einzurichten: …“ für jeden erforderlichen Bereich der Einrichtungsliste, der nicht bereit ist (nur für jemanden, der den Space konfiguriert), und „… eingeschaltete Funktionen warten auf „…““, wenn eine ausgeschaltete Funktion andere zurückhält. Ein Tippen öffnet den Bildschirm, auf dem es eingerichtet wird, oder <strong>Funktionen</strong>.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#ereignisse-und-best%C3%A4tigungen">Ereignisse und Bestätigungen</a></p>
 </div></article><article class="section" id="user.validation.overview" data-roles="owner"><header><h3>Validierungsregeln, Bereich für Bereich <a class="permalink" href="#user.validation.overview" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span></div></header><div class="body"><p>Sie entscheiden für jede Art von Handlung, ob zuerst eine Person sie bestätigen muss, und wer.</p>
@@ -2243,6 +2244,7 @@
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
 <li>Das Land schlägt die Währung und die Zeitzone vor und bestimmt, welche Umsatzsteuersätze angeboten werden.</li>
+<li>Sobald der Space ein Dokument ausgestellt oder Geld erfasst hat, lässt sich das Land nicht mehr ändern: Beim Speichern erscheint „Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.“</li>
 <li><strong>Speichern</strong> schreibt das ganze Formular zusammen. Hat zwischenzeitlich jemand diese Einstellungen geändert, wird nichts gespeichert, und was Sie eingegeben haben, bleibt auf dem Bildschirm.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#w%C3%A4hrung-und-zeitzone">Währung und Zeitzone</a></p>
@@ -2256,7 +2258,7 @@
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben.</li>
+<li>Die Währung wird aus dem Land vorgeschlagen. Sie können sie überschreiben, bis der Space ein Dokument ausgestellt oder Geld erfasst hat; danach steht sie fest.</li>
 <li>Die Zeitzone ist nicht nur Kosmetik: Ein Arbeitstag, eine Halbtagsgrenze und ein Schließtag werden alle in ihr gezählt, sodass ein Mitglied im Ausland den Tag des Spaces sieht und nicht seinen eigenen.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#user.workspace.settings.country">Land</a></p>
@@ -3365,7 +3367,7 @@
 <li>Die üblichen Sätze sind ein Ausgangspunkt. Welche Leistung unter welchen Satz fällt, ist eine Frage für Ihre Buchhaltung.</li>
 <li>Der Standardsatz wird von Abos und von allem verwendet, was keinen eigenen Satz hat.</li>
 <li>Ein Satz, den noch eine Rechnung oder eine Leistung verwendet, wird deaktiviert beibehalten statt gelöscht.</li>
-<li>Ohne Satz zeigen Rechnungen bei Umsatzsteuerpflicht keine Steuer, und der XML-Export bleibt deaktiviert.</li>
+<li>Gilt bei Umsatzsteuerpflicht kein Standardsatz, kann keine Rechnung ausgestellt werden; der Bildschirm der rechtlichen Identität warnt davor.</li>
 <li>Dieser Bildschirm setzt die Funktion <strong>USt-Verwaltung</strong> voraus; der Eintrag Steuersätze im Bildschirm der rechtlichen Identität erscheint nur beim Regime „umsatzsteuerpflichtig“.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#user.money.vat.groups">Steuergruppen</a> · <a href="#einen-satz-per-gesetz-%C3%A4ndern">Änderung per Gesetz</a></p>
@@ -3720,6 +3722,7 @@
 <li>Einmal am Tag erhalten Rechnungen, die ihre festgehaltene Zahlungsfrist überschritten haben, ihre nächste Stufe, über den noch offenen Betrag.</li>
 <li>Nie, solange eine Zahlung aussteht oder die Rechnung angehalten ist. Rechnungen ohne festgehaltene Frist bleiben Ihnen überlassen.</li>
 <li>Aus: Sie senden jede Mahnung selbst.</li>
+<li>Wann es läuft: jeden Morgen auf dem Server, sofern die Installation Aufgaben plant, sonst, wenn ein Administrator die Finanzen öffnet. Der Betreiber Ihres Servers weiß, was zutrifft.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#user.money.reminders.rules">Mahnregeln</a></p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-reminders-automatic.de.b8fa17aa9.jpg" alt="Automatische Mahnungen"></div></figure></div></article><article class="section" id="user.invoicing.register" data-roles="owner billing"><header><h3>Das Rechnungsregister <a class="permalink" href="#user.invoicing.register" aria-label="link">#</a></h3><div class="roles"><span class="role role-owner">Inhaber</span><span class="role role-billing">Abrechnungsadministrator:in</span></div></header><div class="body"><p>Alle Rechnungen in einer sortierbaren Liste.</p>

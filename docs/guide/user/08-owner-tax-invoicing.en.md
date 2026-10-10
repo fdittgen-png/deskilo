@@ -454,7 +454,7 @@ You list the VAT rates your invoices may use. What members pay does not change: 
 - The usual rates are a starting point. Which supply falls under which rate is a question for your accountant.
 - The default rate is used by subscriptions and by anything without its own rate.
 - A rate still used by an invoice or a service is kept, deactivated, rather than deleted.
-- With no rate while you are VAT-registered, invoices show no tax and the XML export stays disabled.
+- With no default rate in force while you are VAT-registered, no invoice can be issued; the legal identity screen warns about it.
 - This screen needs the **VAT management** feature; the VAT rates entry on the legal identity screen shows only for the VAT-registered regime.
 
 **See also:** [VAT groups](help:user.money.vat.groups) · [Change by law](help:user.money.vat.change-by-law)
@@ -1000,6 +1000,7 @@ You want reminders to leave on their own.
 - Once a day, invoices past their recorded payment term get their next level, for the amount still outstanding.
 - Never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you.
 - Off: you send each reminder yourself.
+- When it runs: each morning on the server where the installation schedules jobs, otherwise when an administrator opens Finances. Your server operator knows which applies.
 
 **See also:** [Reminder rules](help:user.money.reminders.rules)
 

@@ -149,6 +149,7 @@ Usted quiere un solo lugar que responda: ¿hay algo que me necesite hoy?
 
 - Esta pantalla existe solo cuando su espacio ha activado la función **Lo que te espera**; sin ella, la dirección lleva de vuelta a la página de inicio.
 - Varias decisiones idénticas se muestran como una sola línea. Cuando no hay nada en espera, la pantalla dice **Nada te espera**.
+- También muestra la configuración pendiente: «Por configurar: …» por cada ámbito obligatorio de la lista de preparación que no está listo (solo para quien configura el espacio), y «… funciones activadas esperan «…»» cuando una función desactivada retiene otras. Un toque abre la pantalla donde se configura, o **Funciones**.
 
 **Véase también:** [Eventos y confirmaciones](help:user.collaborate.events)
 

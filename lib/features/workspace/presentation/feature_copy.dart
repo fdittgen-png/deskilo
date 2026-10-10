@@ -129,7 +129,10 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
           l10n?.featureVatManagementDesc ??
               'The VAT rate editor and the rate pickers on services, '
                   'packs, accessories and the tariff. Off hides the '
-                  'configuration; stored rates keep applying.',
+                  'configuration; stored rates keep applying. A space '
+                  'registered for VAT needs it on, and a default rate, '
+                  'before it can issue an invoice: without them issuing is '
+                  'refused.',
         WorkspaceFeature.vatDeclarations =>
           l10n?.featureVatDeclarationsDesc ??
               'Generate the periodic VAT return from issued invoices, '
