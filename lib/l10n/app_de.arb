@@ -12066,9 +12066,39 @@
   "workspaceXmlExportSubtitle": "Einstellungen und Raumplan als teilbare Datei. Ohne Mitglieder, Buchungen oder Finanzdaten.",
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImport": "Workspace importieren (XML)",
+  "workspaceXmlImportConfigurationOffBody": "Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „{feature}“ deaktiviert, daher würde der Import sie nicht übernehmen. Aktivieren Sie die Funktion, um sie jetzt zu übernehmen.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "Die Datei enthält Tarife, die rechtliche Identität, Buchungs- und Bestätigungsregeln sowie Rollen. In diesem Raum ist „{feature}“ deaktiviert, und nur wer seine Konfiguration ändern darf, kann die Funktion aktivieren. Der Import kann ohne sie fortfahren.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffTitle": "Diese Datei enthält eine Konfiguration",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
   "workspaceXmlImportConfigurationOnly": "Die Konfiguration wurde übernommen. Der Grundriss blieb erhalten: dieser Raum hat bereits Buchungen, sein Grundriss kann nicht ersetzt werden.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationSkip": "Ohne Konfiguration importieren",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Aktivieren und übernehmen",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
   },
   "workspaceXmlImportConfirm": "Ersetzen und importieren",
   "workspaceXmlImportPartial": "Ein Teil des Imports wurde übernommen, bevor er abbrach — prüfen Sie die Einstellungen und den Plan unten.",
@@ -12090,6 +12120,10 @@
         "type": "int"
       }
     }
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Konfiguration: nicht übernommen.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   },
   "workspaceXmlImportPreviewCounts": "Etagen: {levels} · Räume: {offices} · Tische: {desks} · Plätze: {seats}",
   "workspaceXmlImportPreviewTitle": "Raumplan ersetzen?",

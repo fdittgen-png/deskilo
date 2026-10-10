@@ -97,6 +97,9 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
 .finding button{margin-left:auto;white-space:nowrap}
 .summary{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;margin:8px 0}
 .summary b.ok{color:var(--ok)}.summary b.warn{color:var(--warn)}.summary b.err{color:var(--err)}
+.dest{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:600;vertical-align:middle;border:1px solid var(--line);color:var(--muted)}
+.dest.import{color:var(--ok)}.dest.app{color:var(--warn)}.dest.file{color:var(--err)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;color:var(--muted);margin:6px 0}
 @media(prefers-color-scheme:dark){.req{background:#43272a}.req.met{background:#26331f}input.missing,select.missing,textarea.missing{background:#33201f}.gate{background:#2b1c1c}.gate.ok{background:#1d2a1d}:root{--bg:#191310;--card:#231b16;--ink:#f2e9e1;--muted:#a89a8e;--line:#3a2f27;--ok:#7fc383;--warn:#e0b25a;--err:#e08585}.chip,input,select,textarea,td input,.step{background:#2a211b;color:var(--ink)}.card{background:#1f1813}footer{background:#231b16}.dep{background:#1f1813}.help:hover{background:#3a2f27}.step.cur{background:var(--accent);color:#fff}}
 </style>
 <body>
@@ -315,8 +318,23 @@ const FEATURES=[
  ['demoMode',0],
 ];
 // Permission keys in the roles screen's order; names from the app's perm* strings.
-const PERMS=['manageRoles','manageMembers','manageValidation','workspaceSettings','issueInvoices','viewFinances','manageDocuments','manageServices','approveExpenses','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageBilling','manageReservations','operateKiosk','exportData','designDocuments','viewPersonalData','manageIntegrations','manageConfiguration'];
-const PERM_DEFAULTS={co_owner:PERMS.slice(),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageReservations','operateKiosk','exportData','viewPersonalData'],member:[]};
+// #2331 — all of them (WorkspacePermission, pinned by test): the matrix now
+// travels in <configuration> as `role_permissions`, and a stored role row
+// REPLACES the app's defaults, so a permission the page did not offer would
+// be taken away. The everyday six are what lets a member book at all.
+const PERMS=['manageRoles','manageMembers','manageValidation','workspaceSettings','issueInvoices','viewFinances','manageDocuments','manageServices','approveExpenses','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageBilling','manageReservations','operateKiosk','exportData','designDocuments','viewPersonalData','manageIntegrations','manageConfiguration','deployToProd','deployToDev','accessProd','viewAnalytics','useMessages','makeReservations','viewCalendar','viewDirectory','viewMyMoney','viewDocuments'];
+const EVERYDAY_PERMS=['useMessages','makeReservations','viewCalendar','viewDirectory','viewMyMoney','viewDocuments'];
+// The app's everydayMatrix(): the role defaults plus the everyday six.
+const PERM_DEFAULTS={co_owner:PERMS.slice(),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageReservations','operateKiosk','exportData','viewPersonalData','deployToDev','accessProd','viewAnalytics',...EVERYDAY_PERMS],member:EVERYDAY_PERMS.slice()};
+// The ten a page older than #2331 never offered: an answer saved then has
+// none of them, and gets their defaults instead of losing them.
+const PERMS_ADDED_2331=['deployToProd','deployToDev','accessProd','viewAnalytics',...EVERYDAY_PERMS];
+function upgradePerms(perms){for(const role of Object.keys(PERM_DEFAULTS)){const list=perms[role];if(!Array.isArray(list))continue;
+ if(!list.some(p=>PERMS_ADDED_2331.includes(p)))perms[role]=[...list,...PERM_DEFAULTS[role].filter(p=>PERMS_ADDED_2331.includes(p))]}return perms}
+// #2331 — where DesKilo can issue an invoice itself today: the legal clauses
+// were reviewed for these sellers only (server: `seller_country_unsupported`,
+// migration 0395; client: the invoiceMissingSellerCountry refusal).
+const INVOICING_COUNTRIES=['FR','DE'];
 // [ISO code, currency, time zone, bank scheme]; names from the app's countryName* strings.
 const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','sepa'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.
@@ -350,6 +368,11 @@ const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
 // eventType* strings. Each inherits from the default rule until a card is
 // edited, which is exactly what `on` models here.
 const DOMAINS=['payment','expense','service','quota','reservation_delete','role_change','member_join','reservation','space_reservation','invoice_payment','adjustment','invoice_writeoff','price_negotiation','expense_schedule','payment_terms_change','invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change'];
+// The feature a domain's card needs; without it the card is not offered.
+const DOMAIN_GATE={payment_terms_change:'memberPaymentTerms',expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
+// #2331 — the page's domain keys that are not the event type the server
+// stores (validation_policies_event_type_check): 'service' is a service charge.
+const DOMAIN_EVENT_TYPE={service:'service_charge'};
 const HORIZON=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['60','optDays',{n:60}],['90','optDaysDefault',{n:90}],['120','optDays',{n:120}],['180','optDays',{n:180}],['365','optOneYear'],['730','optYears',{n:2}]];
 const DURATIONS=[['5','optMinutes',{n:5}],['10','optMinutes',{n:10}],['15','optMinutes',{n:15}],['30','optMinutesDefaultMin',{n:30}],['45','optMinutes',{n:45}],['60','optOneHour'],['90','optHourAndHalf'],['120','optHours',{n:2}],['180','optHours',{n:3}],['240','optHours',{n:4}],['300','optHours',{n:5}],['360','optHours',{n:6}],['480','optHours',{n:8}],['600','optHours',{n:10}],['720','optHours',{n:12}],['1440','optHoursDefaultMax',{n:24}]];
 const VATPERIOD=[['month','vatPeriodMonth'],['quarter','vatPeriodQuarter']];
@@ -387,14 +410,18 @@ const DEFAULTS={
  einvoice:{url:'',token:'',header:'',field:'',uatUrl:'',uatToken:'',devUrl:'',devToken:'',
            customerUrl:'',customerToken:'',customerHeader:'',customerField:''},
  vatPeriod:'quarter',
- features:Object.fromEntries(FEATURES.map(f=>[f[0],!!f[1]])),
+ // FEATURES says what a NEW workspace starts with (pinned to the registry);
+ // the page's own answer for the configuration transfer starts ON (#2331):
+ // every questionnaire carries configuration answers, and the switch is
+ // what lets the importing space keep applying them.
+ features:{...Object.fromEntries(FEATURES.map(f=>[f[0],!!f[1]])),configurationTransfer:true,dataExport:true},
  sites:[],levels:[{name:T('defaultFirstLevel'),offices:[newOffice(1)]}],
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:''},
  org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'invoice',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
  reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
- perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),
+ perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),permsV:2,
  validation:{required:1,ownerSignOff:false},
  domains:Object.fromEntries(DOMAINS.map(d=>[d,{on:false,required:1,ownerSignOff:false}])),
  autoValidate:{admin:false,owner:false},
@@ -415,6 +442,7 @@ function restore(stored){
   if(Array.isArray(v)||Array.isArray(d)||typeof v!=='object'||d===undefined||typeof d!=='object')out[k]=v;
   else out[k]=Object.assign(d,v);
  }
+ if(!stored.permsV)upgradePerms(out.perms);
  return out;
 }
 let S=restore(JSON.parse(localStorage.getItem(LS)||'null'));
@@ -503,7 +531,17 @@ const STEP_HELP={identity:'identity',features:'features',availability:'availabil
 // The little ? beside every field: straight to the guide section, the app
 // location in the tooltip. Falls back to the step's own section.
 function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:WIKI+anchor,target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
-const lbl=(t,hk)=>h('label',{},t,helpIcon(hk));
+// #2331 — where each answer lands. 'import': the app applies it when the
+// file is imported. 'app': the import cannot carry it, so it is typed in the
+// app. 'file': written into the file for your records and for this page,
+// never read by the app (secrets never travel). Keyed by the answer's path;
+// what is not listed is applied by the import. The review step lists every
+// 'app' and 'file' answer as what remains to do in the app.
+const DEST={name:'app',environment:'app',vatPeriod:'app',members:'app',einvoice:'file'};
+const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
+const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
+function destBadge(path){if(path==null)return null;const d=destOf(path);return h('span',{class:'dest '+d,title:T(DEST_TEXT[d][1])},T(DEST_TEXT[d][0]))}
+const lbl=(t,hk,path)=>h('label',{},t,helpIcon(hk),destBadge(path));
 function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ '+T('helpLink',{app:T(app)}))}
 // "This question is hidden because…" — the guide's way of saying why,
 // with a jump to the step that would change the answer.
@@ -559,13 +597,13 @@ function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,pla
   i.classList.toggle('missing',!met);badge.classList.toggle('met',met);
   badge.textContent=(met?'✓ ':'')+T('setupRequired');why.classList.toggle('met',met)};
  i.oninput=()=>{set(path,i.value);paint()};
- const d=h('div',{},h('label',{},label,badge,helpIcon(hk)),i);
+ const d=h('div',{},h('label',{},label,badge,helpIcon(hk),destBadge(path)),i);
  if(hint)d.append(h('p',{class:'hint'},hint));
  if(why)d.append(why);
  if(rq&&rq.fix)d.append(dep(T('reqByEarlierChoice'),rq.fix.step));
  paint();
  return d}
-function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk),destBadge(path)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
 function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
 function checkbox(label,desc,checked,onch,cls='',hk){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,hk?helpIcon(hk):null,desc?h('div',{class:'d'},desc):null))}
 function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',{class:'body'},...kids));s.querySelector('h2').onclick=()=>s.classList.toggle('closed');return s}
@@ -587,7 +625,7 @@ const STEPS=[
  build(){return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
-  h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])]),T('identityCountryHint'),v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[1];S.timezone=c[2];save()}},'region'),
+  h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[1];S.timezone=c[2];save()}},'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
@@ -596,7 +634,9 @@ const STEPS=[
   // refuses one that cannot be read, so the page only checks the shape.
   input(T('identityBrandColor'),'brandColor',T('identityBrandColorHint'),'text','#C2410C','identity'),
  ]},
- check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));return f}},
+ check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
+  // #2331 — the server refuses to issue for any other seller country.
+  if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))f.push(F.warn(T('identityWarnInvoicingCountry',{country:countryName(S.country),list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),'identity'));return f}},
 
 {id:'features',get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
@@ -615,7 +655,7 @@ const STEPS=[
   return kids},
  check(){const f=[];const n=FEATURES.filter(([k])=>on(k)).length;f.push(F.ok(T('featuresOkCount',{n,total:FEATURES.length})));
   if(!on('moneyTab'))f.push(F.warn(T('featuresWarnMoney'),'features'));
-  if(on('onlinePayments'))f.push(F.warn(T('featuresWarnOnline'),'features'));
+  if(on('onlinePayments'))f.push(F.warn(T('featuresWarnOnline'),'features'),F.warn(T('featuresWarnOnlineProvider'),'features'));
   if(on('kioskMode')&&!on('nfcBadges')&&!on('qrBadges'))f.push(F.warn(T('featuresWarnKiosk'),'features'));
   return f}},
 
@@ -623,14 +663,14 @@ const STEPS=[
  build(){const wd=h('div',{class:'chips'},...WD.map(v=>chip(weekdayName(v),S.weekdays.includes(v),o=>{S.weekdays=o?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
   const gran=opts(on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day'));
   const halfUsed=['half_day','hours','flexible'].includes(S.granularity);
-  const k=[lbl(T('availOpenDays'),'availability'),wd,help('availability'),
+  const k=[lbl(T('availOpenDays'),'availability','weekdays'),wd,help('availability'),
    selectEl(T('availGranularity'),'granularity',gran,on('workingHours')?'':T('availGranularityHint'),null,'availability'),
    on('workingHours')?null:needs('workingHours'),
    h('div',{class:'row'},input(T('availDayStart'),'dayStart','','time','','hours'),halfUsed?input(T('availBoundary'),'boundary',T('availBoundaryHint'),'time','','hours'):null,input(T('availDayEnd'),'dayEnd','','time','','hours')),
    ...(S.granularity==='hours'?[lbl(T('availHourEquivalents'),'availability'),h('p',{class:'hint'},T('availHourEquivalentsHint')),
      h('div',{class:'row'},input(T('availHalfDayHours'),'halfDayHours','','number','4','availability'),input(T('availFullDayHours'),'fullDayHours','','number','8','availability'))]:[]),
-   lbl(T('availClosures'),'availability'),tableRows([T('colDate')],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ '+T('availAddClosure'))];
-  if(on('bookingPolicies')){k.push(lbl(T('availPolicies'),'booking'),help('booking'),
+   lbl(T('availClosures'),'availability','closures'),tableRows([T('colDate')],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ '+T('availAddClosure'))];
+  if(on('bookingPolicies')){k.push(lbl(T('availPolicies'),'booking','policies'),help('booking'),
    checkbox(T('availAllowPast'),T('availAllowPastDesc'),S.policies.allowPast,v=>{S.policies.allowPast=v;save()},'','booking'),
    checkbox(T('availAdminCheckout'),T('availAdminCheckoutDesc'),S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()},'','booking'),
    selectEl(T('availOutsideHours'),'policies.outsideHours',outsideOpts(),T('availOutsideHoursHint'),null,'booking'),
@@ -661,14 +701,14 @@ const STEPS=[
   S.levels.forEach((lv,li)=>{const offices=[];
    lv.offices.forEach((of,oi)=>{const desks=tableRows([T('planDeskName'),T('planSeats'),T('planSeatPrefix')],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:T('defaultDesk',{n:of.desks.length+1}),seats:4,prefix:T('defaultSeatPrefix')}),'+ '+T('planAddDesk'));
     offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planOfficeName'),'plan'),bind(of,'name')),
-     whole?h('div',{},lbl(T('planOfficeWhole'),'whole'),(()=>{const s=yesNo();s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
+     whole?h('div',{},lbl(T('planOfficeWhole'),'whole','levels'),(()=>{const s=yesNo();s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
      whole&&of.bookable?h('div',{},lbl(T('planOfficePrice',{currency:S.currency}),'whole'),bind(of,'price','number')):h('div')),desks,
      h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ '+T('planRemoveOffice'))))});
-   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planLevelName'),'plan'),bind(lv,'name')),on('multiSite')&&S.sites.length?h('div',{},lbl(T('planSite'),'plan'),(()=>{const sel=h('select');sel.append(h('option',{value:''},T('planDefaultSite')));S.sites.forEach(st=>sel.append(h('option',{value:st.name},st.name)));sel.value=lv.site||'';sel.onchange=()=>{lv.site=sel.value;save()};return sel})()):h('div'),
-    whole?h('div',{},lbl(T('planLevelWhole'),'whole'),(()=>{const s=yesNo();s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
+   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planLevelName'),'plan','levels'),bind(lv,'name')),on('multiSite')&&S.sites.length?h('div',{},lbl(T('planSite'),'plan'),(()=>{const sel=h('select');sel.append(h('option',{value:''},T('planDefaultSite')));S.sites.forEach(st=>sel.append(h('option',{value:st.name},st.name)));sel.value=lv.site||'';sel.onchange=()=>{lv.site=sel.value;save()};return sel})()):h('div'),
+    whole?h('div',{},lbl(T('planLevelWhole'),'whole','levels'),(()=>{const s=yesNo();s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
     ...offices,h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push(newOffice(lv.offices.length+1));save();render()}},'+ '+T('planAddOffice')),
     h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ '+T('planRemoveLevel'))))});
-  if(on('multiSite')){body.push(lbl(T('planSites'),'plan'),h('p',{class:'hint'},T('planSitesHint')));
+  if(on('multiSite')){body.push(lbl(T('planSites'),'plan','sites'),h('p',{class:'hint'},T('planSitesHint')));
    S.sites.forEach((st,si)=>{body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planSiteName'),'plan'),bind(st,'name')),h('div',{},lbl(T('fieldStreet'),'plan'),bind(st,'street')),h('div',{},lbl(T('fieldPostal'),'plan'),bind(st,'postal')),h('div',{},lbl(T('fieldCity'),'plan'),bind(st,'city')),h('div',{},lbl(T('planSiteLegalId'),'plan'),bind(st,'legalId'))),
     h('button',{class:'del',type:'button',onclick:()=>{S.sites.splice(si,1);S.levels.forEach(l=>{if(l.site===st.name)l.site=''});save();render()}},'✕ '+T('planRemoveSite'))))});
    body.push(h('button',{class:'add',type:'button',onclick:()=>{S.sites.push({name:T('defaultSite',{n:S.sites.length+2}),street:'',postal:'',city:'',legalId:''});save();render()}},'+ '+T('planAddSite')));}
@@ -681,11 +721,11 @@ const STEPS=[
   return f}},
 
 {id:'billing',get title(){return T('billingTitle')},get why(){return T('billingWhy')},applies(){return on('moneyTab')},
- build(){return[help('billing'),lbl(T('billingTiers'),'billing'),h('p',{class:'hint'},T('billingTiersHint')),
+ build(){return[help('billing'),lbl(T('billingTiers'),'billing','tiers'),h('p',{class:'hint'},T('billingTiersHint')),
   tableRows([T('billingFrom'),T('billingTo'),T('billingFee',{currency:S.currency}),T('billingOverage',{currency:S.currency})],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ '+T('billingAddTier')),
-  lbl(T('billingLevels'),'billing'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
+  lbl(T('billingLevels'),'billing','subLevels'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
   checkbox(T('billingFreeLevel'),'',S.freeLevel,v=>{S.freeLevel=v;save()},'','billing'),
-  lbl(T('billingPackages'),'packages'),h('p',{class:'hint'},T('billingPackagesHint')),help('packages'),
+  lbl(T('billingPackages'),'packages','packages'),h('p',{class:'hint'},T('billingPackagesHint')),help('packages'),
   tableRows([T('colName'),T('colDays'),T('colPrice',{currency:S.currency})],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ '+T('billingAddPackage'))]},
  check(){const f=[];
   // Same shape: a palier with a bracket and no fee is dropped by the
@@ -707,35 +747,38 @@ const STEPS=[
   selectEl(T('legalVatRegime'),'vatRegime',[['not_subject',T('regimeNotSubject')],['exempt',T('regimeExempt')],['registered',T('regimeRegistered')]],T('legalVatRegimeHint'),null,'vat'),
   h('div',{class:'row'},input(T('legalRegNumber'),'regNumber',T(S.org==='association'?'legalRegNumberHintAssociation':'legalRegNumberHintCompany'),'text','','legal'),S.vatRegime!=='not_subject'?input(T('legalVatId'),'vatId','','text','','vat'):null),
   !registered()?input(T('legalExemption'),'exemption',T('legalExemptionHint'),'text','','vat'):null];
-  if(registered()){if(on('vatManagement')){const history=on('vatRateHistory')?[T('colValidFrom')]:[];k.push(lbl(T('legalVatRates'),'vat'),h('p',{class:'hint'},T('legalVatRatesHint')),help('vat'),
+  if(registered()){if(on('vatManagement')){const history=on('vatRateHistory')?[T('colValidFrom')]:[];k.push(lbl(T('legalVatRates'),'vat','vatRates'),h('p',{class:'hint'},T('legalVatRatesHint')),help('vat'),
     ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},T(VAT_NOTES[S.country]))]:[]),
     tableRows(on('vatGroups')?[T('colLabel'),T('colRate'),T('colGroup'),...history]:[T('colLabel'),T('colRate'),...history],S.vatRates,(r)=>on('vatGroups')?[bind(r,'label'),bind(r,'percent','number'),(()=>{const sel=h('select');opts(VAT_GROUPS).forEach(([v,l])=>sel.append(h('option',{value:v},l)));sel.value=r.group||'standard';sel.onchange=()=>{r.group=sel.value;save()};return sel})(),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])]:[bind(r,'label'),bind(r,'percent','number'),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:''}),'+ '+T('legalAddRate')),
     VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},T('legalSuggestRates',{country:countryName(country()[0]),rates:VAT_RATES[S.country].map(r=>r[1]).join(', ')}));b.onclick=()=>{S.vatRates=VAT_RATES[S.country].map(([label,percent])=>({label,percent}));save();render()};return b})():null)}
    else k.push(needs('vatManagement'),h('p',{class:'hint'},T('legalNoVatManagementHint')));
    k.push(selectEl(T('legalVatExigibility'),'vatExigibility',opts(VATEXIGIBILITY),T('legalVatExigibilityHint'),null,'vat'));
-   k.push(lbl(T('legalInvoiceNumbering'),'legal'),h('p',{class:'hint'},T('legalInvoiceNumberingHint')),
+   k.push(lbl(T('legalInvoiceNumbering'),'legal','numbering'),h('p',{class:'hint'},T('legalInvoiceNumberingHint')),
     h('div',{class:'row'},input(T('fieldPrefix'),'numbering.prefix','','text','INV-'),selectEl(T('colDate'),'numbering.datePart',opts(NUMDATE),'',null,'legal'),input(T('fieldDigits'),'numbering.digits','','number','4'),selectEl(T('numReset'),'numbering.reset',opts(numResets()),numResetHint(),null,'legal')));
-   k.push(lbl(T('legalMemberNumbering'),'legal'),h('p',{class:'hint'},T('legalMemberNumberingHint')),
+   k.push(lbl(T('legalMemberNumbering'),'legal','memberNumbering'),h('p',{class:'hint'},T('legalMemberNumberingHint')),
     h('div',{class:'row'},input(T('fieldPrefix'),'memberNumbering.prefix','','text','M-'),input(T('fieldDigits'),'memberNumbering.digits','','number','4')));
    if(on('vatDeclarations'))k.push(selectEl(T('legalVatPeriod'),'vatPeriod',opts(VATPERIOD),T('legalVatPeriodHint'),null,'vat'));else k.push(needs('vatDeclarations'))}
   k.push(lbl(T('legalBillingAddress'),'legal'),h('div',{class:'row'},input(T('fieldStreet'),'street','','text','','legal'),input(T('fieldPostal'),'postal','','text','','legal'),input(T('fieldCity'),'city','','text','','legal')),
-   lbl(T('legalMentions'),'legal'),help('legal'),
+   lbl(T('legalMentions'),'legal','mentions'),help('legal'),
    input(T('mentionLegalForm'),'mentions.legalForm',T('mentionLegalFormHint')),input(T('mentionTerms'),'mentions.terms',T('mentionTermsHint')),
    h('div',{class:'row'},input(T('mentionPenalty'),'mentions.penalty',''),input(T('mentionRecovery'),'mentions.recovery','')),
    h('div',{class:'row'},input(T('mentionEscompte'),'mentions.escompte',''),input(T('mentionInsurance'),'mentions.insurance','')),input(T('mentionSpecial'),'mentions.special',''));
-  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
+  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
    if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>{S.reminders.automatic=v;save()},'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
-  if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
+  if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice','einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
     input(T('einvoiceUrl'),'einvoice.url','','text','https://…'),h('div',{class:'row'},input(T('einvoiceToken'),'einvoice.token',''),input(T('einvoiceHeader'),'einvoice.header',T('einvoiceHeaderHint'),'text','Authorization')),input(T('einvoiceField'),'einvoice.field',T('einvoiceFieldHint'),'text','file'),
     h('details',{},h('summary',{},T('einvoiceTestEnvs')),h('p',{class:'hint'},T('einvoiceTestEnvsHint')),h('div',{class:'row'},input(T('einvoiceUatUrl'),'einvoice.uatUrl',''),input(T('einvoiceUatToken'),'einvoice.uatToken','')),h('div',{class:'row'},input(T('einvoiceDevUrl'),'einvoice.devUrl',''),input(T('einvoiceDevToken'),'einvoice.devToken',''))));
-   if(on('einvoiceCustomerDelivery'))k.push(lbl(T('einvoiceCustomer'),'einvoice'),h('p',{class:'hint'},T('einvoiceCustomerHint')),input(T('einvoiceCustomerUrl'),'einvoice.customerUrl',''),h('div',{class:'row'},input(T('einvoiceCustomerToken'),'einvoice.customerToken',''),input(T('einvoiceCustomerHeader'),'einvoice.customerHeader','','text','Authorization')),input(T('einvoiceCustomerField'),'einvoice.customerField','','text','file'));else k.push(needs('einvoiceCustomerDelivery'))}
+   if(on('einvoiceCustomerDelivery'))k.push(lbl(T('einvoiceCustomer'),'einvoice','einvoice'),h('p',{class:'hint'},T('einvoiceCustomerHint')),input(T('einvoiceCustomerUrl'),'einvoice.customerUrl',''),h('div',{class:'row'},input(T('einvoiceCustomerToken'),'einvoice.customerToken',''),input(T('einvoiceCustomerHeader'),'einvoice.customerHeader','','text','Authorization')),input(T('einvoiceCustomerField'),'einvoice.customerField','','text','file'));else k.push(needs('einvoiceCustomerDelivery'))}
   else k.push(dep(T('legalNonEu',{country:countryName(country()[0])}),'identity'),help('einvoice'));
   return k},
  check(){const f=[];if(!S.regNumber.trim())f.push(F.warn(T('legalWarnNoRegNumber'),'legal'));
   if(S.vatRegime!=='not_subject'&&!S.vatId.trim())f.push(F.err(T(registered()?'legalErrVatIdRegistered':'legalErrVatIdExempt'),'legal'));
   if(!registered()&&!S.exemption.trim())f.push(F.warn(T('legalWarnNoExemption'),'legal'));
   if(registered()&&on('vatManagement')&&!S.vatRates.some(r=>String(r.label).trim()&&r.percent!==''))f.push(F.err(T('legalErrNoRates'),'legal'));
+  // #2331 — a registered seller with no rate the app can resolve: the
+  // server refuses every invoice (vat_rate_unresolved).
+  if(registered()&&!on('vatManagement'))f.push(F.err(T('legalErrRegisteredNoVatManagement',{feature:quoted(featureTitle('vatManagement'))}),'features'));
   if(!S.street.trim()||!S.postal.trim()||!S.city.trim())f.push(F.err(T('legalErrAddress'),'legal'));
   const ei=S.einvoice;if(isEU()&&ei.url.trim()&&!ei.token.trim())f.push(F.warn(T('legalWarnEinvoiceToken'),'legal'));
   if(on('einvoiceCustomerDelivery')&&ei.customerUrl.trim()&&!ei.customerToken.trim())f.push(F.warn(T('legalWarnCustomerToken'),'legal'));
@@ -745,8 +788,8 @@ const STEPS=[
 
 {id:'services',get title(){return T('servicesTitle')},get why(){return T('servicesWhy')},applies(){return on('services')||on('accessorySupplements')},
  build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');
-  if(on('services'))k.push(lbl(T('servicesServices'),'services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ '+T('servicesAdd')));else k.push(needs('services'));
-  if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
+  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ '+T('servicesAdd')));else k.push(needs('services'));
+  if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.err(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
@@ -758,7 +801,7 @@ const STEPS=[
   if(sc==='uk')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('paySortCode'),'pay.bank_code','')),input(T('payBankName'),'pay.bank_name',''),input(T('payIbanIntl'),'pay.iban',T('optional')));
   if(sc==='us')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('payRoutingNumber'),'pay.bank_code','')),input(T('payBankName'),'pay.bank_name',''));
   if(sc==='ca')k.push(h('div',{class:'row'},input(T('payAccountNumber'),'pay.account_number',''),input(T('payTransit'),'pay.bank_code',T('payTransitHint'))),input(T('payBankName'),'pay.bank_name',''));
-  k.push(lbl(T('payMobile'),'pay'),h('div',{class:'row'},input(T('payPaypal'),'pay.paypal_me',''),isEU()?input(T('payWero'),'pay.wero',T('payWeroHint')):null),
+  k.push(lbl(T('payMobile'),'pay','pay'),h('div',{class:'row'},input(T('payPaypal'),'pay.paypal_me',''),isEU()?input(T('payWero'),'pay.wero',T('payWeroHint')):null),
    h('div',{class:'row'},S.country==='FR'?input(T('payLydia'),'pay.lydia',''):null,input(T('payWise'),'pay.wise','')),input(T('payReference'),'pay.reference',T('payReferenceHint')));
   if(on('onlinePayments'))k.push(dep(T('payOnlineDep'),'features'),help('online'));
   return k},
@@ -768,20 +811,20 @@ const STEPS=[
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(){const k=[];
   if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','roleCoOwner'],['admin','roleAdmin'],['member','roleEveryMember']]){if(role==='co_owner'&&!on('coOwner'))continue;
-    k.push(h('div',{class:'card'},lbl(T(label),'roles'),...PERMS.filter(p=>p!=='issueInvoices'||on('invoicing')).filter(p=>p!=='manageServices'||on('services')).filter(p=>p!=='manageDocuments'||on('documents')).filter(p=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(p=>checkbox(permName(p),'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()},'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
+    k.push(h('div',{class:'card'},lbl(T(label),'roles','perms'),...PERMS.filter(p=>p!=='issueInvoices'||on('invoicing')).filter(p=>p!=='manageServices'||on('services')).filter(p=>(p!=='manageDocuments'&&p!=='viewDocuments')||on('documents')).filter(p=>!['deployToProd','deployToDev','accessProd'].includes(p)||on('environmentPairs')).filter(p=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(p=>checkbox(permName(p),'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()},'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
   else k.push(needs('roleManagement'),h('p',{class:'hint'},T('rolesDefaultMatrixHint')),help('roles'));
   if(on('adminInvoicing'))k.push(dep(T('rolesAdminInvoicingDep',{feature:quoted(featureTitle('adminInvoicing'))}),'features'));
-  k.push(lbl(T('rolesDefaultRule'),'validation'),help('validation'),h('p',{class:'hint'},T('rolesDefaultRuleHint')),
+  k.push(lbl(T('rolesDefaultRule'),'validation','validation'),help('validation'),h('p',{class:'hint'},T('rolesDefaultRuleHint')),
    h('div',{class:'row'},input(T('rolesRequired'),'validation.required','','number'),checkbox(T('rolesOwnerAlways'),'',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()},'','validation')),
-   lbl(T('rolesDomains'),'validation'),h('p',{class:'hint'},T('rolesDomainsHint')));
-  const gate={payment_terms_change:'memberPaymentTerms',expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
+   lbl(T('rolesDomains'),'validation','domains'),h('p',{class:'hint'},T('rolesDomainsHint')));
+  const gate=DOMAIN_GATE;
   for(const dk of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
    const head=checkbox(domainName(dk),'',d.on,v=>{d.on=v;save()},'','validation');if(!d.on){k.push(head);continue}
    const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
    const row=[h('div',{},lbl(T('rolesRequired'),'validation'),req),h('div',{},h('label',{},' '),checkbox(T('rolesOwnerSignOff'),'',d.ownerSignOff,v=>{d.ownerSignOff=v;save()},'','validation'))];
    if(on('validationScopes')){const sc=h('select');for(const[v,l]of[['admins',T('scopeAdmins')],['members',T('scopeMembers')]])sc.append(h('option',{value:v},l));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},lbl(T('rolesWhoValidates'),'scopes'),sc,help('scopes'),h('p',{class:'hint'},T('rolesWhoValidatesHint'))))}
    k.push(h('div',{class:'card'},head,h('div',{class:'row'},...row)))}
-  if(on('deletionRequests'))k.push(lbl(T('rolesAutoDelete'),'validation'),h('p',{class:'hint'},T('rolesAutoDeleteHint')),
+  if(on('deletionRequests'))k.push(lbl(T('rolesAutoDelete'),'validation','autoValidate'),h('p',{class:'hint'},T('rolesAutoDeleteHint')),
    checkbox(T('rolesAutoOwner'),'',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()},'','validation'),checkbox(T('rolesAutoAdmin'),'',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()},'','validation'));
   else{S.autoValidate={admin:false,owner:false};k.push(needs('deletionRequests'))}
   return k},
@@ -794,7 +837,7 @@ const STEPS=[
  build(){const pk=S.packages.some(p=>p.name.trim());const whole=on('levelBooking');const sim=on('bookingPolicies');
   const cols=[T('colName'),T('colEmail'),T('colRole'),T('colSubscription'),T('colOverage'),...(whole?[T('colWholeSpaces')]:[]),...(sim?[T('colSimultaneous')]:[]),T('colLimit')];
   const hint=[T('membersHint',{packages:pk?T('membersHintPackages'):''}),whole?T('membersHintWhole'):null,sim?T('membersHintSimultaneous'):null].filter(Boolean).join(' ');
-  const k=[help('members'),h('p',{class:'hint'},hint),
+  const k=[help('members'),h('p',{class:'hint'},hint,destBadge('members')),
    tableRows(cols,S.members,(m)=>[bind(m,'name'),bind(m,'email','email'),
     (()=>{const s=h('select');s.append(h('option',{value:'member'},T('roleMember')),h('option',{value:'admin'},T('roleAdmin')));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),
     (()=>{const s=h('select');(S.freeLevel?['25','50','75','80','100']:S.subLevels.length?S.subLevels:['100']).forEach(v=>s.append(h('option',{value:v},v+' %')));if(S.freeLevel){s.remove();return bind(m,'pct','number')}s.value=m.pct||'100';if(![...s.options].some(o=>o.value===s.value)){s.value=s.options[0].value;m.pct=s.value}s.onchange=()=>{m.pct=s.value;save()};return s})(),
@@ -803,7 +846,7 @@ const STEPS=[
     ...(sim?[bind(m,'simultaneous','number')]:[]),bind(m,'limit','number')],
     ()=>({name:'',email:'',role:'member',pct:S.subLevels[0]||'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),'+ '+T('membersAdd')),
    !pk&&on('moneyTab')?dep(T('membersPackagesHidden'),'billing'):null,
-   lbl(T('membersInvites'),'invites'),help('invites'),h('p',{class:'hint'},T('membersInvitesHint')),
+   lbl(T('membersInvites'),'invites','invites'),help('invites'),h('p',{class:'hint'},T('membersInvitesHint')),
    ...['fr','en','de','es','it'].map(c=>input(ENDONYMS[c],'invites.'+c,''))];
   if(on('whatsappIntegration'))k.push(input(T('membersWhatsapp'),'whatsapp',T('membersWhatsappHint'),'text','','whatsapp'));else k.push(needs('whatsappIntegration'));
   k.push(dep(T('membersConsent')),help('consent'));
@@ -906,6 +949,10 @@ const STEPS=[
    return h('div',{class:'finding '+(n?'ok':'off')},h('span',{class:'lvl'},n?'✓':'–'),h('span',{},processTitle(p.key)+' — '+(n?T('reviewProcessCount',{n,total:feats.length,list:subs.join(T('listSep'))}):T('reviewProcessOff')),...waiting.map(w=>h('div',{class:'d'},w))))})));
   for(const st of STEPS){if(st.id==='review')continue;const rows=all.filter(x=>x.from===st.id);if(!rows.length)continue;
    k.push(h('div',{class:'card'},h('label',{},(STEPS.indexOf(st)+1)+' · '+st.title+(st.applies&&!st.applies()?' — '+T('reviewNotApplicable'):'')),...rows.map(x=>h('div',{class:'finding '+x.lvl},h('span',{class:'lvl'},x.lvl==='ok'?'✓':x.lvl==='warn'?'⚠':'✕'),h('span',{},x.t),x.lvl!=='ok'&&x.step?h('button',{class:'chip',type:'button',onclick:()=>go(x.step)},T('reviewFix')):null))))}
+  // #2331 — what the import does NOT do, said before the owner finds out.
+  const todo=toDoInApp();
+  k.push(h('div',{class:'card'},lbl(T('reviewToDoTitle')),h('p',{class:'hint'},T('reviewToDoHint')),
+   ...todo.map(t=>h('div',{class:'finding warn'},h('span',{class:'lvl'},'→'),h('span',{},t)))));
   const gate=h('div',{class:'gate'+(c.err?'':' ok')});
   if(c.err){gate.append(h('b',{},T('reviewGateBlocked',{n:c.err})),
     h('ul',{},...all.filter(x=>x.lvl==='err').map(x=>{const li=h('li',{},x.t+' ');
@@ -919,6 +966,18 @@ const STEPS=[
   k.push(xb,help('identity'));
   return k},check(){return[]}},
 ];
+// #2331 — every answer the import cannot apply (DEST 'app' / 'file'), and
+// what nothing in the page asks for but the space needs, in the order the
+// owner meets them in the app.
+function toDoInApp(){const out=[T('todoCreateSpace',{name:S.name.trim()||'—'})];
+ const ms=S.members.filter(m=>String(m.email||'').trim());
+ out.push(ms.length?T('todoInviteMembers',{n:ms.length}):T('todoInviteNobody'));
+ if(on('onlinePayments'))out.push(T('todoOnlineProvider'));
+ if(on('invoicing')&&registered()&&on('vatDeclarations'))out.push(T('todoVatPeriod',{period:T(S.vatPeriod==='month'?'vatPeriodMonth':'vatPeriodQuarter')}));
+ if(on('invoicing')&&isEU())out.push(T('todoEinvoice'));
+ if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))out.push(T('todoInvoiceOutside',{country:countryName(S.country)}));
+ out.push(T('todoImportFile'));
+ return out}
 function findings(){const out=[];for(const st of STEPS){if(st.id==='review')continue;if(st.applies&&!st.applies()){continue}for(const x of st.check())out.push({...x,from:st.id})}return out}
 function stepStatus(st){if(st.applies&&!st.applies())return 'na';if(st.id==='review')return '';const f=st.check();if(f.some(x=>x.lvl==='err'))return 'err';if(f.some(x=>x.lvl==='warn'))return 'warn';return 'ok'}
 
@@ -935,6 +994,7 @@ function render(){
  // #800 — a sub-feature's choice SURVIVES its parent being switched off,
  // as in the app: switching the parent back on finds it as it was.
  const F_=document.getElementById('form');F_.textContent='';
+ F_.append(h('div',{class:'legend'},...Object.keys(DEST_TEXT).map(d=>h('span',{},h('span',{class:'dest '+d},T(DEST_TEXT[d][0])),' '+T(DEST_TEXT[d][1])))));
  const list=applicable();if(!list.some(s=>s.id===cur))cur=list[0].id;
  const idx=list.findIndex(s=>s.id===cur);
  document.getElementById('bar').style.width=Math.round((idx)/(list.length-1)*100)+'%';
@@ -992,6 +1052,20 @@ function cfgField(push,ind,name,v){
  if(Array.isArray(v)){push(`${pad}<field${n} type="array">`);v.forEach(x=>cfgField(push,ind+2,null,x));push(`${pad}</field>`);return}
  push(`${pad}<field${n} type="object">`);Object.keys(v).sort().forEach(k=>cfgField(push,ind+2,k,v[k]));push(`${pad}</field>`);
 }
+// #2331 — the default rule (event type null) and the per-domain rules, as
+// validation_policies rows inside the server's CHECKs (1–10 approvals, a
+// validator scope it knows). They used to live in <setup> only — or carry
+// 'service' and a 'named' scope, which the server refuses outright.
+function validationPolicies(){
+ const n=x=>Math.min(10,Math.max(1,parseInt(x)||1));
+ const row=(eventType,required,owner,scope,auto)=>({event_type:eventType,required_count:n(required),admins_may_validate:true,owner_required:!!owner,
+  auto_validate_admin:!!(auto&&auto.admin),auto_validate_owner:!!(auto&&auto.owner),validator_scope:scope==='members'?'members':'admins',owner_may_self_validate:false,sequential:false});
+ const out=[row(null,S.validation.required,S.validation.ownerSignOff,'admins',null)];
+ const auto=on('deletionRequests')?S.autoValidate:null;
+ for(const k of DOMAINS){const d=S.domains[k],g=DOMAIN_GATE[k];if(g&&!on(g))continue;
+  if(d&&d.on)out.push(row(DOMAIN_EVENT_TYPE[k]||k,d.required,d.ownerSignOff,on('validationScopes')?d.validators:'admins',k==='reservation_delete'?auto:null));
+  else if(k==='reservation_delete'&&auto&&(auto.admin||auto.owner))out.push(row(k,S.validation.required,S.validation.ownerSignOff,'admins',auto))}
+ return out}
 function configurationTree(){
  const cents=x=>Math.round((parseFloat(x)||0)*100),int=(x,d)=>{const n=parseInt(x);return isNaN(n)?d:n};
  const vatLabel=pct=>{if(pct===''||pct==null)return null;const r=(S.vatRates||[]).find(r=>parseFloat(r.percent)===parseFloat(pct));return r?String(r.label).trim():null};
@@ -1013,33 +1087,52 @@ function configurationTree(){
  const wStart=hm(S.dayStart,480),wEnd=hm(S.dayEnd,1020),rawBnd=hm(S.boundary,720);
  const wBnd=(rawBnd>wStart&&rawBnd<wEnd)?rawBnd:Math.floor((wStart+wEnd)/2);
  const halfH=Math.max(1,int(S.halfDayHours,4)),fullH=Math.max(halfH,int(S.fullDayHours,8));
+ const SUB_PRESETS=[25,50,75,100],levels=[...new Set((S.subLevels||[]).map(x=>int(x,0)).filter(x=>x>0))].sort((a,b)=>a-b);
  const ws={
   address:S.address||'',street:S.street||'',postal_code:S.postal||'',city:S.city||'',
-  default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:int(S.deskOpacity,100),
+  default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:Math.min(100,Math.max(20,int(S.deskOpacity,100))),
   invitation_templates:Object.fromEntries(Object.entries(S.invites).filter(([,v])=>String(v).trim()).map(([k,v])=>[k,String(v).trim()])),
-  vat_regime:S.vatRegime||'not_subject',vat_id:S.vatId||'',legal_id:S.regNumber||'',tax_exemption_reason:S.exemption||'',
+  // #2331 — the column's own words: the page says "registered", the
+  // workspaces row (and every issuing guard) says "vat_registered". The
+  // page's word made the whole import fail on its CHECK constraint.
+  vat_regime:({registered:'vat_registered',exempt:'exempt'})[S.vatRegime]||'not_subject',vat_id:S.vatId||'',legal_id:S.regNumber||'',tax_exemption_reason:S.exemption||'',
   booking_rules:{granularity:S.granularity,open_weekdays:S.weekdays.map(d=>int(d,1)),outside_hours_mode:on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged',legend_profile:S.policies.legendProfile||'full',
    advance_horizon_days:int(S.horizonDays,90),min_duration_minutes:int(S.minDuration,30),max_duration_minutes:int(S.maxDuration,1440),
    work_start_minutes:wStart,half_boundary_minutes:wBnd,work_end_minutes:wEnd,half_day_hours:halfH,full_day_hours:fullH,
    allow_past_bookings:on('bookingPolicies')&&!!S.policies.allowPast,admin_check_out:on('bookingPolicies')&&!!S.policies.adminCheckout,
    simultaneous_reservations:on('bookingPolicies')?Math.max(1,int(S.policies.simultaneous,1)):1},
-  subscription_levels:{enabled_presets:(S.subLevels||[]).map(x=>int(x,0)).filter(x=>x>0),extra_levels:[],allow_custom:false},
+  // #2331 — the app's SubscriptionLevels: 25/50/75/100 are presets, any
+  // other step (80) is an extra level, and "free value" is allow_custom.
+  subscription_levels:{enabled_presets:levels.filter(x=>SUB_PRESETS.includes(x)),extra_levels:levels.filter(x=>!SUB_PRESETS.includes(x)),allow_custom:!!S.freeLevel},
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
    recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
-   seller_kind:S.org||'association',customer_capacity:S.customerCapacity||'',vat_exigibility:S.vatExigibility||'invoice'},
+   seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_exigibility:S.vatExigibility||'invoice'},
  };
- if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14)};
+ // #2331 — the role matrix, in the column's shape (role -> permission
+ // names). Written only while the page asks for it; a role row REPLACES
+ // the app's defaults for that role, which is why the page offers all 31.
+ if(on('roleManagement'))ws.role_permissions=Object.fromEntries(Object.keys(PERM_DEFAULTS).map(role=>[role,PERMS.filter(p=>(S.perms[role]||[]).includes(p))]));
+ if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
  const t={
   fee_bands:S.tiers.filter(x=>x.fee!=='').map(x=>({from_pct:int(x.from,0),to_pct:int(x.to,100),fee_cents:cents(x.fee),overage_fee_cents:cents(x.over)})),
   packages:S.packages.filter(p=>p.name.trim()).map(p=>({name:p.name.trim(),days:int(p.days,0),price_cents:cents(p.price),active:true,vat_rate:null})),
   closure_days:S.closures.filter(Boolean).map(d=>({day:d,reason:''})),
-  validation_policies:DOMAINS.map(k=>[k,S.domains[k]]).filter(([,d])=>d&&d.on).map(([k,d])=>({event_type:k,required_count:int(d.required,1),admins_may_validate:true,
-   owner_required:!!d.ownerSignOff,auto_validate_admin:k==='reservation_delete'&&!!S.autoValidate.admin,auto_validate_owner:k==='reservation_delete'&&!!S.autoValidate.owner,
-   validator_scope:d.validators||'admins',owner_may_self_validate:false,sequential:false})),
+  validation_policies:validationPolicies(),
  };
+ // #2331 — the two series the page asks for (only while invoicing as a
+ // VAT-registered seller, where the step shows them), in the server's
+ // shape and inside its CHECKs: 1–9 digits, a prefix of at most 16, a
+ // restart no more often than the date it prints (0217 refuses the pair
+ // and, with it, the whole configuration).
+ if(on('invoicing')&&registered()){const nb=S.numbering,mb=S.memberNumbering,dig=x=>Math.min(9,Math.max(1,int(x,4))),pre=x=>String(x??'').slice(0,16);
+  const dp=['none','year','year_month'].includes(nb.datePart)?nb.datePart:'year',ok=RESETS_FOR[dp];
+  t.number_sequences=[{journal:'invoice',prefix:pre(nb.prefix),suffix:'',date_part:dp,digits:dig(nb.digits),reset:ok.includes(nb.reset)?nb.reset:ok[ok.length-1],gapless:true},
+   {journal:'member',prefix:pre(mb.prefix),suffix:'',date_part:'none',digits:dig(mb.digits),reset:'never',gapless:true}]}
  if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vat)}));
+ // #2331 — group and exemption are NOT NULL columns (defaults 'standard'
+ // and ''): a null made the import refuse the whole configuration.
  if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
-   category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:null,outside_base:false,exemption_reason:null,valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
+   category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:'standard',outside_base:false,exemption_reason:'',valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
  if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',
    legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
  return {workspace:ws,tables:t};
@@ -1061,13 +1154,16 @@ function exportXml(){
  // floor plan — app-importable, auto-layout (seat footprint 6x4, ADR 0005)
  push('  <floor-plan>');
  S.levels.forEach((lv,li)=>{
-  push(`    <level name="${esc(lv.name||(XML_LEVEL_FALLBACK+' '+(li+1)))}" sort-order="${li}"${lv.site?` site="${esc(lv.site)}"`:``}>`);
+  // #2331 — whole-space booking travels in the plan (schema v3): the level's
+  // flag, and each bookable room's price.
+  push(`    <level name="${esc(lv.name||(XML_LEVEL_FALLBACK+' '+(li+1)))}" sort-order="${li}"${lv.site?` site="${esc(lv.site)}"`:``}${on('levelBooking')&&lv.bookable?` bookable-as-whole="true"`:``}>`);
   let ox=1;
   lv.offices.forEach(of=>{
    const desks=of.desks.filter(d=>(parseInt(d.seats)||0)>0);
    let dw=0,dh=0;const geo=desks.map(d=>{const n=parseInt(d.seats)||1;const cols=Math.ceil(n/2);const w=cols*6;const hgt=n>cols?8:4;dw=Math.max(dw,w);dh+=hgt+1;return{d,n,cols,w,hgt}});
    const ow=dw+2,oh=Math.max(dh+1,5);
-   push(`      <office name="${esc(of.name)}" color="4288585374" bookable-as-whole="${!!of.bookable}" x="${ox}" y="1" w="${ow}" h="${oh}">`);
+   const whole=on('levelBooking')&&!!of.bookable,price=whole&&num(of.price)>=0?Math.round(num(of.price)*100):0;
+   push(`      <office name="${esc(of.name)}" color="4288585374" bookable-as-whole="${whole}" x="${ox}" y="1" w="${ow}" h="${oh}"${price?` price-cents="${price}"`:``}>`);
    let dy=2;
    geo.forEach(({d,n,cols,w,hgt})=>{
     push(`        <desk name="${esc(d.name)}" x="${ox+1}" y="${dy}" w="${w}" h="${hgt}">`);
@@ -1080,8 +1176,12 @@ function exportXml(){
  });
  push('  </floor-plan>');
  // configuration — app-importable (schema v3, #916): what the <setup> block
- // below says, in the shape the app stores, so the import applies it
- if(on('configurationTransfer')){const tree=configurationTree();push('  <configuration>');Object.keys(tree).sort().forEach(k=>cfgField(push,4,k,tree[k]));push('  </configuration>')}
+ // below says, in the shape the app stores, so the import applies it.
+ // #2331 — ALWAYS. It used to be written only with the configuration
+ // transfer ticked, so a page left on its defaults produced a file whose
+ // tariffs, legal identity, rules and roles nothing could ever apply. The
+ // app now asks before applying it to a space that has the feature off.
+ {const tree=configurationTree();push('  <configuration>');Object.keys(tree).sort().forEach(k=>cfgField(push,4,k,tree[k]));push('  </configuration>')}
  // setup extension — read back by the configurator
  push('  <setup>');
  push(`    <availability granularity="${S.granularity}" day-start="${S.dayStart}" half-boundary="${S.boundary}" day-end="${S.dayEnd}" open-weekdays="${S.weekdays.join(',')}" allow-past-bookings="${on('bookingPolicies')&&!!S.policies.allowPast}" outside-hours-mode="${on('bookingPolicies')?(S.policies.outsideHours||'charged'):'charged'}" simultaneous-reservations="${on('bookingPolicies')?(S.policies.simultaneous||'1'):'1'}" admin-check-out="${on('bookingPolicies')&&!!S.policies.adminCheckout}" advance-horizon-days="${S.horizonDays}" min-duration-minutes="${S.minDuration}" max-duration-minutes="${S.maxDuration}" legend-profile="${S.policies.legendProfile||'full'}">`);
@@ -1111,7 +1211,7 @@ function exportXml(){
  if(on('invoicing')&&isEU()&&Object.values(ei).some(v=>String(v).trim()))
   push(`      <einvoice url="${esc(ei.url)}" token="${esc(ei.token)}" auth-header="${esc(ei.header)}" file-field="${esc(ei.field)}" uat-url="${esc(ei.uatUrl)}" uat-token="${esc(ei.uatToken)}" dev-url="${esc(ei.devUrl)}" dev-token="${esc(ei.devToken)}" customer-url="${esc(ei.customerUrl)}" customer-token="${esc(ei.customerToken)}" customer-auth-header="${esc(ei.customerHeader)}" customer-file-field="${esc(ei.customerField)}"/>`);
  push('    </legal>');
- push('    <roles>');
+ push('    <roles permissions-version="2">');
  if(on('roleManagement'))for(const[role,list]of Object.entries(S.perms))push(`      <role name="${role}" permissions="${list.join(',')}"/>`);
  push(`      <validation required="${S.validation.required}" owner-sign-off="${S.validation.ownerSignOff}">`);
  for(const k of DOMAINS){const d=S.domains[k];if(d&&d.on)
@@ -1140,7 +1240,7 @@ function parseBack(text){
   Object.keys(S.pay).forEach(k=>S.pay[k]='');st.querySelectorAll('payment-instruction').forEach(p=>{S.pay[p.getAttribute('key')]=p.getAttribute('value')||''});}
  S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));
  const lvls=[...root.querySelectorAll('floor-plan > level')];
- if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),site:l.getAttribute('site')||'',offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||XML_SEAT_FALLBACK+' 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||XML_SEAT_FALLBACK}})}))}));
+ if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),site:l.getAttribute('site')||'',bookable:l.getAttribute('bookable-as-whole')==='true',offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:o.hasAttribute('price-cents')?String((parseInt(o.getAttribute('price-cents'))||0)/100):'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||XML_SEAT_FALLBACK+' 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||XML_SEAT_FALLBACK}})}))}));
  const su=root.querySelector('setup');if(!su)return;
  const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:(av.getAttribute('admin-check-out')??av.getAttribute('admin-checkout'))==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1',legendProfile:av.getAttribute('legend-profile')||'full'};
   S.horizonDays=av.getAttribute('advance-horizon-days')||S.horizonDays;
@@ -1156,6 +1256,8 @@ S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')|
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;
   const ei=le.querySelector('einvoice');if(ei)S.einvoice={url:ei.getAttribute('url')||'',token:ei.getAttribute('token')||'',header:ei.getAttribute('auth-header')||'',field:ei.getAttribute('file-field')||'',uatUrl:ei.getAttribute('uat-url')||'',uatToken:ei.getAttribute('uat-token')||'',devUrl:ei.getAttribute('dev-url')||'',devToken:ei.getAttribute('dev-token')||'',customerUrl:ei.getAttribute('customer-url')||'',customerToken:ei.getAttribute('customer-token')||'',customerHeader:ei.getAttribute('customer-auth-header')||'',customerField:ei.getAttribute('customer-file-field')||''}}
  su.querySelectorAll('roles > role').forEach(r=>S.perms[r.getAttribute('name')]=(r.getAttribute('permissions')||'').split(',').filter(Boolean));
+ // #2331 — a file from before the page offered all 31 permissions.
+ if(su.querySelector('roles')?.getAttribute('permissions-version')!=='2')upgradePerms(S.perms);
  const va=su.querySelector('roles > validation');if(va){S.validation={required:va.getAttribute('required'),ownerSignOff:va.getAttribute('owner-sign-off')==='true'};
   DOMAINS.forEach(k=>{S.domains[k]={on:false,required:1,ownerSignOff:false}});
   S.autoValidate={admin:false,owner:false};

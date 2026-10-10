@@ -12066,9 +12066,39 @@
   "workspaceXmlExportSubtitle": "Ajustes y plano del espacio en un archivo para compartir. Sin miembros, reservas ni datos financieros.",
   "workspaceXmlFileTypeLabel": "XML",
   "workspaceXmlImport": "Importar el espacio (XML)",
+  "workspaceXmlImportConfigurationOffBody": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, así que la importación no los aplicaría. Actívela para aplicarlos ahora.",
+  "@workspaceXmlImportConfigurationOffBody": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffBody",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffNoRight": "El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «{feature}» desactivada, y solo quien puede cambiar su configuración puede activarla. La importación puede continuar sin ellos.",
+  "@workspaceXmlImportConfigurationOffNoRight": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffNoRight",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "workspaceXmlImportConfigurationOffTitle": "Este archivo contiene una configuración",
+  "@workspaceXmlImportConfigurationOffTitle": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationOffTitle"
+  },
   "workspaceXmlImportConfigurationOnly": "La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.",
   "@workspaceXmlImportConfigurationOnly": {
     "description": "#916 configuration transfer: workspaceXmlImportConfigurationOnly"
+  },
+  "workspaceXmlImportConfigurationSkip": "Importar sin la configuración",
+  "@workspaceXmlImportConfigurationSkip": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSkip"
+  },
+  "workspaceXmlImportConfigurationSwitchOn": "Activar y aplicar",
+  "@workspaceXmlImportConfigurationSwitchOn": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportConfigurationSwitchOn"
   },
   "workspaceXmlImportConfirm": "Sustituir e importar",
   "workspaceXmlImportPartial": "Parte de la importación se aplicó antes de detenerse: revisa los ajustes y el plano abajo.",
@@ -12090,6 +12120,10 @@
         "type": "int"
       }
     }
+  },
+  "workspaceXmlImportPreviewConfigurationSkipped": "Configuración: no aplicada.",
+  "@workspaceXmlImportPreviewConfigurationSkipped": {
+    "description": "#2331 configuration transfer prompt: workspaceXmlImportPreviewConfigurationSkipped"
   },
   "workspaceXmlImportPreviewCounts": "Plantas: {levels} · Salas: {offices} · Mesas: {desks} · Puestos: {seats}",
   "workspaceXmlImportPreviewTitle": "¿Sustituir el plano?",

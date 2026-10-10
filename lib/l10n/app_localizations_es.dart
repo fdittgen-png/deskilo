@@ -19661,8 +19661,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceXmlImport => 'Importar el espacio (XML)';
 
   @override
+  String workspaceXmlImportConfigurationOffBody(String feature) {
+    return 'El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «$feature» desactivada, así que la importación no los aplicaría. Actívela para aplicarlos ahora.';
+  }
+
+  @override
+  String workspaceXmlImportConfigurationOffNoRight(String feature) {
+    return 'El archivo contiene tarifas, la identidad legal, reglas de reserva y de validación y roles. Este espacio tiene «$feature» desactivada, y solo quien puede cambiar su configuración puede activarla. La importación puede continuar sin ellos.';
+  }
+
+  @override
+  String get workspaceXmlImportConfigurationOffTitle =>
+      'Este archivo contiene una configuración';
+
+  @override
   String get workspaceXmlImportConfigurationOnly =>
       'La configuración se aplicó. El plano se conservó: este espacio ya tiene reservas, así que su plano no puede reemplazarse.';
+
+  @override
+  String get workspaceXmlImportConfigurationSkip =>
+      'Importar sin la configuración';
+
+  @override
+  String get workspaceXmlImportConfigurationSwitchOn => 'Activar y aplicar';
 
   @override
   String get workspaceXmlImportConfirm => 'Sustituir e importar';
@@ -19684,6 +19705,10 @@ class AppLocalizationsEs extends AppLocalizations {
   ) {
     return 'Configuración: $settings ajustes, $rows filas en $tables tablas';
   }
+
+  @override
+  String get workspaceXmlImportPreviewConfigurationSkipped =>
+      'Configuración: no aplicada.';
 
   @override
   String workspaceXmlImportPreviewCounts(
