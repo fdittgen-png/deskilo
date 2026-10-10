@@ -21,6 +21,7 @@ import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
+import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 
@@ -1511,8 +1512,10 @@ class FakeMoneyRepository implements MoneyRepository {
     required String name,
     required int priceCents,
     String? vatRateId,
+    SupplyClass supplyClass = SupplyClass.property,
   }) async {
     final service = ServiceItem(
+      supplyClass: supplyClass,
       id: 'service-${services.length + 1}',
       workspaceId: workspaceId,
       name: name,
@@ -1531,10 +1534,12 @@ class FakeMoneyRepository implements MoneyRepository {
     int? priceCents,
     bool? active,
     String? vatRateId,
+    SupplyClass? supplyClass,
   }) async {
     final i = services.indexWhere((s) => s.id == serviceId);
     if (i < 0) throw StateError('unknown service');
     final updated = services[i].copyWith(
+      supplyClass: supplyClass ?? services[i].supplyClass,
       name: name ?? services[i].name,
       priceCents: priceCents ?? services[i].priceCents,
       active: active ?? services[i].active,

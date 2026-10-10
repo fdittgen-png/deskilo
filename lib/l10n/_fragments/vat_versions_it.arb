@@ -52,7 +52,7 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "memberVatTreatmentExplainer": "Chi è questo membro ai fini IVA: la regola automatica (inversione contabile per un'impresa di un altro Stato UE), IVA nazionale in ogni caso, inversione contabile, fuori UE o un acquirente esente con il motivo stampato sulla fattura.",
+  "memberVatTreatmentExplainer": "Chi è questo membro ai fini IVA. Automatico: una postazione, un ufficio o una sala è tassato dove si trova l'immobile, con la Sua IVA per qualsiasi cliente; solo un servizio generico (non connesso ai locali) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Le altre scelte valgono per tutte le righe.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },

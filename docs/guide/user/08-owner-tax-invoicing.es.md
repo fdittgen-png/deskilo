@@ -295,7 +295,7 @@ Cuando cobra IVA y factura a una empresa de otro país de la UE, el impuesto pue
 
 **Conviene saber**
 
-- Activado: la aplicación reconoce a una empresa con número de IVA en otro Estado miembro. Hoy la aplicación no emite esas facturas por sí misma: usted las emite fuera de la aplicación con su gestor.
+- Activado: un servicio general (no vinculado a los locales) a una empresa de otro país de la UE aplica la inversión del sujeto pasivo. Un puesto, una oficina o una sala nunca: lleva su IVA, sea cual sea el número de IVA del cliente. Hoy la aplicación no emite por sí misma las facturas con inversión del sujeto pasivo: usted las emite fuera de la aplicación con su gestor.
 - Desactivado: desactívelo si nunca factura a empresas del extranjero.
 - La opción solo aparece con el régimen de sujeto a IVA.
 
@@ -862,7 +862,7 @@ Factura un mes a un miembro.
 - Las facturas se derivan de datos registrados y no se pueden componer a mano. La línea final es el **Saldo**.
 - Un mes solo se puede facturar una vez por miembro, y un mes aún en curso le avisa de que las partidas pueden cambiar.
 - Si falta un dato obligatorio, **Complete estos datos antes de emitir** lo enumera (dirección, número de IVA, fundamento de la exención, tipo de IVA; también el país del espacio, que debe ser Francia o Alemania).
-- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, para clientes nacionales. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor.
+- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, también para clientes en el extranjero: un puesto, una oficina o una sala lleva su IVA viva donde viva el cliente. Las facturas con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor, y un servicio general a un cliente en el extranjero requiere antes su condición (empresa o consumidor).
 - Una factura emitida está firmada y es inmutable.
 
 **Véase también:** [Asistente de cierre mensual](help:user.invoicing.wizard)

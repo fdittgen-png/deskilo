@@ -2836,7 +2836,8 @@
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li><strong>Automatisch</strong> wendet die übliche Regel an: Steuerschuldnerschaft des Empfängers bei einem Unternehmen in einem anderen EU-Staat.</li>
+<li><strong>Automatisch</strong> wendet den Leistungsort an: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (siehe <a href="#user.money.services.supply">Leistungsort einer Leistung</a>) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Empfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Ein Verbraucher zahlt Ihre Umsatzsteuer, wo immer er lebt. Der Dialog zeigt, was die gewählte Behandlung mit jeder Art von Position macht.</li>
+<li><strong>Steuerschuldnerschaft des Empfängers</strong> ist nur für ein Mitglied gedacht, das Leistungen ohne Bezug zu den Räumlichkeiten kauft: Sie gilt für alle Positionen.</li>
 <li>Dieselbe Gruppe bietet die <strong>Kundeneigenschaft</strong> (<strong>Unternehmer</strong>, <strong>Verbraucher</strong> oder <strong>Nicht angegeben</strong>), die bestimmt, welche Zahlungsklauseln eine Rechnung druckt. Dafür brauchen Sie das Recht, Rechnungen auszustellen.</li>
 <li><strong>Steuerschuldnerschaft des Empfängers</strong>, <strong>Außerhalb der EU</strong> und <strong>Befreiter Käufer</strong> werden erfasst, aber die Rechnungen solcher Mitglieder lassen sich in der App noch nicht ausstellen: Sie werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.</li>
 <li>Die Funktion <strong>USt nach Kunde</strong> muss eingeschaltet sein, damit die Zeile USt-Behandlung erscheint, und zwar für Administratoren und Inhaber; die Sätze legen Sie unter <a href="#die-s%C3%A4tze-festlegen">Steuersätze</a> fest.</li>
@@ -2985,6 +2986,8 @@
 <p>Was die Rechnungszeile sagt. Wenn Sie sie umbenennen, ändern sich nur neue Dokumente.</p>
 <h4>Preis der Leistung</h4>
 <p>Der Preis einer Einheit, brutto: Das Mitglied zahlt genau diesen Betrag, und die Umsatzsteuer ist darin enthalten. Der <strong>Steuersatz</strong> bestimmt nur, wie viel davon Steuer ist.</p>
+<h4>Leistungsort einer Leistung</h4>
+<p>Wo die Umsatzsteuer auf diese Leistung geschuldet wird. <strong>Mit den Räumlichkeiten verbunden</strong>, die Voreinstellung, behält Ihre Umsatzsteuer für jeden Kunden: Ein Arbeitsplatz, ein Büro, ein Raum und alles, was vor Ort genutzt wird, werden dort besteuert, wo das Gebäude liegt. Wählen Sie <strong>Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)</strong> nur für das, was nicht an das Gebäude gebunden ist, etwa Postbearbeitung oder ein virtuelles Büro: Für ein Unternehmen in einem anderen EU-Land fällt diese Position dann unter die Steuerschuldnerschaft des Empfängers, für ein Unternehmen außerhalb der EU ist sie nicht steuerbar; ein Verbraucher zahlt weiterhin Ihre Umsatzsteuer. Jede erfasste Leistung behält die Wahl, die bei ihrer Erfassung galt. Das Feld erscheint, wenn Sie Umsatzsteuer berechnen und die Funktion <strong>Leistungsort je Leistung</strong> eingeschaltet ist.</p>
 <h4>Aktiv</h4>
 <p>Beim Bearbeiten einer Leistung entscheidet der Schalter <strong>Aktiv</strong>, ob sie noch verkauft werden kann. Schalten Sie ihn bei einer eingestellten Leistung aus; die Liste graut sie aus und schreibt <strong>Inaktiv</strong>.</p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-services-overview.de.b8fa17aa9.jpg" alt="Eine Leistung"></div></figure></div></article><article class="section" id="user.money.accessories" data-roles="admin owner"><header><h3>Zubehör <a class="permalink" href="#user.money.accessories" aria-label="link">#</a></h3><div class="roles"><span class="role role-admin">Administrator:in</span><span class="role role-owner">Inhaber</span></div></header><div class="body"><p>Sie vermieten Ausstattung zu einem Platz, etwa einen Monitor oder einen Stuhl, und berechnen für jeden halben Tag einen Aufpreis.</p>
@@ -3265,7 +3268,7 @@
 </ol>
 <h4 class="lbl lbl-know">Gut zu wissen</h4>
 <ul>
-<li>Ein: Die App erkennt ein Unternehmen mit Umsatzsteuer-ID in einem anderen Mitgliedstaat. Heute stellt die App diese Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.</li>
+<li>Ein: Eine allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden) an ein Unternehmen in einem anderen EU-Land fällt unter die Steuerschuldnerschaft des Empfängers. Ein Arbeitsplatz, ein Büro oder ein Raum nie: Er trägt Ihre Umsatzsteuer, gleich welche Umsatzsteuer-ID der Kunde hat. Heute stellt die App solche Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.</li>
 <li>Aus: Schalten Sie es aus, wenn Sie nie Unternehmen im Ausland in Rechnung stellen.</li>
 <li>Die Option erscheint nur beim Regime „umsatzsteuerpflichtig“.</li>
 </ul>
@@ -3633,7 +3636,7 @@
 <li>Rechnungen werden aus erfassten Daten abgeleitet und lassen sich nicht von Hand zusammenstellen. Die letzte Zeile ist der <strong>Saldo</strong>.</li>
 <li>Ein Monat kann pro Mitglied nur einmal abgerechnet werden, und bei einem laufenden Monat werden Sie gewarnt, dass sich Positionen ändern können.</li>
 <li>Fehlt eine erforderliche Angabe, listet <strong>Vor der Ausstellung bitte ergänzen</strong> sie auf (Adresse, Umsatzsteuer-ID, Befreiungsgrundlage, Steuersatz; auch das Land des Space, das Frankreich oder Deutschland sein muss).</li>
-<li>In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, für inländische Kunden. Grenzüberschreitende Rechnungen, Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.</li>
+<li>In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, auch für Kunden im Ausland: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer, wo immer der Kunde lebt. Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt, und eine allgemeine Dienstleistung an einen Kunden im Ausland braucht zuerst dessen Kundeneigenschaft (Unternehmer oder Verbraucher).</li>
 <li>Eine ausgestellte Rechnung ist signiert und unveränderlich.</li>
 </ul>
 <p class="see-also"><strong>Siehe auch:</strong> <a href="#user.invoicing.wizard">Monatsabschluss-Assistent</a></p>

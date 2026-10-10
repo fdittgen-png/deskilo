@@ -4066,7 +4066,8 @@ You want to tell the app who this member is for VAT, so their invoices carry the
 
 **Good to know**
 
-- **Automatic** applies the usual rule: reverse charge for a business in another EU state.
+- **Automatic** applies the place of supply: a desk, an office or a room carries your VAT for every customer; only a general service (see [Place of supply of a service](#place-of-supply-of-a-service)) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. A consumer pays your VAT wherever they live. The dialog shows what the chosen treatment does to each kind of line.
+- **Reverse charge** is meant only for a member who buys services not connected with the premises: it applies to every line.
 - The same group offers **Customer capacity** (**Business**, **Consumer** or **Not stated**), which decides which payment clauses an invoice prints. It needs the permission to issue invoices.
 - **Reverse charge**, **Outside the EU** and **Exempt buyer** are recorded, but the invoices of such members cannot be issued in the app yet: they are issued outside the app with your accountant.
 - The **VAT by counterparty** feature must be on for the VAT treatment row, which administrators and owners see; the rates are set in [VAT rates](#setting-the-rates).
@@ -4309,6 +4310,11 @@ What the invoice line says. Rename it and only new documents change.
 #### Service price
 
 The price of one unit, gross: the member pays exactly this, and VAT is part of it. The **VAT rate** only decides how much of it is tax.
+
+<!-- anchor: user.money.services.supply -->
+#### Place of supply of a service
+
+Where the VAT on this service is due. **Connected with the premises**, the default, keeps your VAT for every customer: a desk, an office, a room and whatever is used on the premises are taxed where the building stands. Choose **General service (not connected with the premises)** only for what is not tied to the building, such as mail handling or a virtual office: for a business in another EU country that line is then reverse-charged, and for a business outside the EU it is outside the scope; a consumer still pays your VAT. Each charge keeps the choice it was recorded with. The field shows when you charge VAT and the **Place of supply per service** feature is on.
 
 <!-- anchor: user.money.services.active -->
 #### Active
@@ -4756,7 +4762,7 @@ When you charge VAT and invoice a business in another EU country, the tax can be
 
 **Good to know**
 
-- On: the app recognises a business with a VAT number in another member state. Today the app does not issue those invoices itself: you issue them outside the app with your accountant.
+- On: a general service (not connected with the premises) to a business in another EU country is reverse-charged. A desk, an office or a room never is: it carries your VAT, whatever the customer's VAT number. Today the app does not issue reverse-charged invoices itself: you issue them outside the app with your accountant.
 - Off: turn it off if you never invoice businesses abroad.
 - The option appears only for the VAT-registered regime.
 
@@ -5323,7 +5329,7 @@ You invoice a member for a month.
 - Invoices are derived from tracked data and cannot be composed by hand. The bottom line is the **Balance due**.
 - A month can only be invoiced once per member, and a month still running warns you that positions may change.
 - If a required detail is missing, **Complete these details before issuing** lists it (address, VAT number, exemption basis, VAT rate; also the workspace country, which must be France or Germany).
-- In this version, issuing in the app is available for workspaces in France or Germany, for domestic customers. Cross-border, reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant.
+- In this version, issuing in the app is available for workspaces in France or Germany, including for customers abroad: a desk, an office or a room carries your VAT wherever the customer lives. Reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant, and a general service to a customer abroad needs the customer's capacity (business or consumer) first.
 - An issued invoice is signed and immutable.
 
 **See also:** [Month-close wizard](#the-month-close-wizard)

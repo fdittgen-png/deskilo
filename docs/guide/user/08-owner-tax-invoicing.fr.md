@@ -295,7 +295,7 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Bon à savoir**
 
-- Activée : l'app reconnaît une entreprise dotée d'un numéro de TVA dans un autre État membre. Aujourd'hui, l'app n'émet pas elle-même ces factures : vous les émettez hors de l'app avec votre comptable.
+- Activée : une prestation générale (non rattachée aux locaux) à une entreprise d'un autre pays de l'UE est autoliquidée. Un poste, un bureau ou une salle ne l'est jamais : il porte votre TVA, quel que soit le numéro de TVA du client. Aujourd'hui, l'app n'émet pas elle-même les factures autoliquidées : vous les émettez hors de l'app avec votre comptable.
 - Désactivée : désactivez-la si vous ne facturez jamais d'entreprises à l'étranger.
 - L'option n'apparaît que pour le régime des assujettis à la TVA.
 
@@ -862,7 +862,7 @@ Vous facturez un membre pour un mois.
 - Les factures sont dérivées des données suivies et ne se composent pas à la main. La dernière ligne est le **Solde**.
 - Un mois ne peut être facturé qu'une fois par membre, et un mois encore en cours vous avertit que les positions peuvent changer.
 - Si une information obligatoire manque, **Complétez ces informations avant d'émettre** la liste (adresse, numéro de TVA, fondement de l'exonération, taux de TVA ; aussi le pays de l'espace, qui doit être la France ou l'Allemagne).
-- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, pour des clients nationaux. Les factures transfrontalières, en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable.
+- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, y compris pour des clients à l'étranger : un poste, un bureau ou une salle porte votre TVA où que vive le client. Les factures en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable, et une prestation générale à un client à l'étranger demande d'abord sa qualité (professionnel ou consommateur).
 - Une facture émise est signée et immuable.
 
 **Voir aussi:** [Assistant de clôture](help:user.invoicing.wizard)

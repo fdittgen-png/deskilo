@@ -2836,7 +2836,8 @@
 </ol>
 <h4 class="lbl lbl-know">Conviene saber</h4>
 <ul>
-<li><strong>Automático</strong> aplica la regla habitual: inversión del sujeto pasivo para una empresa de otro Estado de la UE.</li>
+<li><strong>Automático</strong> aplica el lugar de prestación: un puesto, una oficina o una sala lleva su IVA para cualquier cliente; solo un servicio general (véase <a href="#lugar-de-prestaci%C3%B3n-de-un-servicio">Lugar de prestación de un servicio</a>) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Un consumidor paga su IVA viva donde viva. El diálogo muestra lo que el tratamiento elegido hace con cada tipo de línea.</li>
+<li><strong>Inversión del sujeto pasivo</strong> está pensada solo para un miembro que compra servicios no vinculados a los locales: se aplica a todas las líneas.</li>
 <li>El mismo grupo ofrece <strong>Condición del cliente</strong> (<strong>Empresa</strong>, <strong>Consumidor</strong> o <strong>Sin indicar</strong>), que decide qué cláusulas de pago imprime una factura. Requiere el permiso de emitir facturas.</li>
 <li><strong>Inversión del sujeto pasivo</strong>, <strong>Fuera de la UE</strong> y <strong>Comprador exento</strong> se registran, pero las facturas de esos miembros aún no se pueden emitir en la aplicación: se emiten fuera de la aplicación con su gestor.</li>
 <li>La función <strong>IVA según el cliente</strong> debe estar activada para que aparezca la fila de tratamiento del IVA, que ven los administradores y los propietarios; los tipos se definen en <a href="#user.money.vat.rates">Tipos de IVA</a>.</li>
@@ -2985,6 +2986,8 @@
 <p>Lo que dice la línea de la factura. Si lo renombra, solo cambian los documentos nuevos.</p>
 <h4>Precio del servicio</h4>
 <p>El precio de una unidad, bruto: el miembro paga exactamente esto, y el IVA forma parte de ello. El <strong>Tipo de IVA</strong> solo decide qué parte es impuesto.</p>
+<h4>Lugar de prestación de un servicio</h4>
+<p>Dónde se debe el IVA de este servicio. <strong>Vinculado a los locales</strong>, el valor por defecto, mantiene su IVA para cualquier cliente: un puesto, una oficina, una sala y lo que se usa en el lugar tributan donde se encuentra el inmueble. Elija <strong>Servicio general (no vinculado a los locales)</strong> solo para lo que no está ligado al edificio, como la gestión del correo o una oficina virtual: para una empresa de otro país de la UE esa línea aplica entonces la inversión del sujeto pasivo, y para una empresa fuera de la UE queda fuera del ámbito; un consumidor sigue pagando su IVA. Cada cargo registrado conserva la elección vigente en ese momento. El campo aparece cuando usted cobra IVA y la función <strong>Lugar de prestación por servicio</strong> está activada.</p>
 <h4>Activo</h4>
 <p>Al editar un servicio, el interruptor <strong>Activo</strong> decide si todavía se puede vender. Desactívelo para algo que ya no se ofrece; la lista lo atenúa y escribe <strong>Inactivo</strong>.</p>
 </div><div class="media"><figure class="shot"><div class="screen" tabindex="0"><img loading="lazy" src="../assets/assets/help/images/user-money-services-overview.es.b8fa17aa9.jpg" alt="Un servicio"></div></figure></div></article><article class="section" id="user.money.accessories" data-roles="admin owner"><header><h3>Accesorios <a class="permalink" href="#user.money.accessories" aria-label="link">#</a></h3><div class="roles"><span class="role role-admin">Administrador/a</span><span class="role role-owner">Propietario</span></div></header><div class="body"><p>Alquila equipamiento junto con un puesto, como un monitor o una silla, y cobra un suplemento por cada media jornada.</p>
@@ -3265,7 +3268,7 @@
 </ol>
 <h4 class="lbl lbl-know">Conviene saber</h4>
 <ul>
-<li>Activado: la aplicación reconoce a una empresa con número de IVA en otro Estado miembro. Hoy la aplicación no emite esas facturas por sí misma: usted las emite fuera de la aplicación con su gestor.</li>
+<li>Activado: un servicio general (no vinculado a los locales) a una empresa de otro país de la UE aplica la inversión del sujeto pasivo. Un puesto, una oficina o una sala nunca: lleva su IVA, sea cual sea el número de IVA del cliente. Hoy la aplicación no emite por sí misma las facturas con inversión del sujeto pasivo: usted las emite fuera de la aplicación con su gestor.</li>
 <li>Desactivado: desactívelo si nunca factura a empresas del extranjero.</li>
 <li>La opción solo aparece con el régimen de sujeto a IVA.</li>
 </ul>
@@ -3633,7 +3636,7 @@
 <li>Las facturas se derivan de datos registrados y no se pueden componer a mano. La línea final es el <strong>Saldo</strong>.</li>
 <li>Un mes solo se puede facturar una vez por miembro, y un mes aún en curso le avisa de que las partidas pueden cambiar.</li>
 <li>Si falta un dato obligatorio, <strong>Complete estos datos antes de emitir</strong> lo enumera (dirección, número de IVA, fundamento de la exención, tipo de IVA; también el país del espacio, que debe ser Francia o Alemania).</li>
-<li>En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, para clientes nacionales. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor.</li>
+<li>En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, también para clientes en el extranjero: un puesto, una oficina o una sala lleva su IVA viva donde viva el cliente. Las facturas con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor, y un servicio general a un cliente en el extranjero requiere antes su condición (empresa o consumidor).</li>
 <li>Una factura emitida está firmada y es inmutable.</li>
 </ul>
 <p class="see-also"><strong>Véase también:</strong> <a href="#user.invoicing.wizard">Asistente de cierre mensual</a></p>

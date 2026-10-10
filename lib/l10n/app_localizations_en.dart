@@ -5581,6 +5581,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Subscription invoices';
 
   @override
+  String get featureSupplyClassificationDesc =>
+      'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.';
+
+  @override
+  String get featureSupplyClassificationTitle => 'Place of supply per service';
+
+  @override
   String get featureSupplyExpensesDesc =>
       'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.';
 
@@ -8096,6 +8103,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The member\'s postal address (a business customer needs one)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Whether the member is a business or a consumer — a general service to a customer abroad depends on it';
+
+  @override
   String get invoiceMissingBuyerName => 'The member\'s name or company';
 
   @override
@@ -8131,7 +8142,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.';
+      'Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -10919,7 +10930,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.';
+      'Who this member is for VAT. Automatic: a desk, an office or a room is taxed where the building stands, so it carries your VAT for every customer; only a general service (one not connected with the premises) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. The other choices apply to every line.';
 
   @override
   String get memberVatTreatmentLabel => 'VAT treatment';
@@ -16225,6 +16236,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Maintain VAT groups, rates and declarations.';
 
   @override
+  String get supplyClassGeneral =>
+      'General service (not connected with the premises)';
+
+  @override
+  String get supplyClassHelper =>
+      'A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.';
+
+  @override
+  String get supplyClassLabel => 'Place of supply';
+
+  @override
+  String get supplyClassProperty => 'Connected with the premises';
+
+  @override
   String get supportChanged => 'The context changed. Prepare a new preview.';
 
   @override
@@ -18843,6 +18868,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatTreatmentDomestic => 'Domestic VAT';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'General services: $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Desk, office, room: $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'For a business in another EU country:';
+
+  @override
   String get vatTreatmentExempt => 'Exempt buyer';
 
   @override
@@ -18854,6 +18893,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatTreatmentReverseCharge => 'Reverse charge';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'The customer self-assesses the VAT — only for services not connected with the premises.';
 
   @override
   String get vatUntil => 'until';

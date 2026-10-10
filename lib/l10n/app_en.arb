@@ -6490,6 +6490,14 @@
   },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "featureSubscriptionInvoicesTitle": "Subscription invoices",
+  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.",
+  "@featureSupplyClassificationDesc": {
+    "description": "#2354 place of supply: featureSupplyClassificationDesc"
+  },
+  "featureSupplyClassificationTitle": "Place of supply per service",
+  "@featureSupplyClassificationTitle": {
+    "description": "#2354 place of supply: featureSupplyClassificationTitle"
+  },
   "featureSupplyExpensesDesc": "An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.",
   "featureSupplyExpensesTitle": "Supplies from expenses",
   "featureSurfaceCalendarHint": "What is happening, by day and by month.",
@@ -9346,6 +9354,10 @@
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
+  "invoiceMissingBuyerCapacity": "Whether the member is a business or a consumer — a general service to a customer abroad depends on it",
+  "@invoiceMissingBuyerCapacity": {
+    "description": "#2354 place of supply: invoiceMissingBuyerCapacity"
+  },
   "invoiceMissingBuyerName": "The member's name or company",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
@@ -9376,7 +9388,7 @@
     "description": "#1917 essentials key vat_charged_not_registered (0393)"
   },
   "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
-  "invoiceMissingVatTreatment": "Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
+  "invoiceMissingVatTreatment": "Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "@invoiceMissingVatZeroLine": {
     "description": "#1917 essentials key vat_line_zero_unexplained (0393)"
@@ -12690,7 +12702,7 @@
   "@memberUnmakeKiosk": {
     "description": "Owner action reverting a kiosk account to a regular member"
   },
-  "memberVatTreatmentExplainer": "Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.",
+  "memberVatTreatmentExplainer": "Who this member is for VAT. Automatic: a desk, an office or a room is taxed where the building stands, so it carries your VAT for every customer; only a general service (one not connected with the premises) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. The other choices apply to every line.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },
@@ -18404,6 +18416,22 @@
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
   "subprocessTax": "VAT management",
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "supplyClassGeneral": "General service (not connected with the premises)",
+  "@supplyClassGeneral": {
+    "description": "#2354 place of supply: supplyClassGeneral"
+  },
+  "supplyClassHelper": "A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.",
+  "@supplyClassHelper": {
+    "description": "#2354 place of supply: supplyClassHelper"
+  },
+  "supplyClassLabel": "Place of supply",
+  "@supplyClassLabel": {
+    "description": "#2354 place of supply: supplyClassLabel"
+  },
+  "supplyClassProperty": "Connected with the premises",
+  "@supplyClassProperty": {
+    "description": "#2354 place of supply: supplyClassProperty"
+  },
   "supportChanged": "The context changed. Prepare a new preview.",
   "supportDay": "Last 24 hours",
   "supportDemo": "Demo: simulated local context",
@@ -21492,6 +21520,28 @@
   "@vatTreatmentDomestic": {
     "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
   },
+  "vatTreatmentExampleGeneral": "General services: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "description": "#2354 place of supply: vatTreatmentExampleGeneral",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExamplePremises": "Desk, office, room: {category}",
+  "@vatTreatmentExamplePremises": {
+    "description": "#2354 place of supply: vatTreatmentExamplePremises",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleTitle": "For a business in another EU country:",
+  "@vatTreatmentExampleTitle": {
+    "description": "#2354 place of supply: vatTreatmentExampleTitle"
+  },
   "vatTreatmentExempt": "Exempt buyer",
   "@vatTreatmentExempt": {
     "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
@@ -21507,6 +21557,10 @@
   "vatTreatmentReverseCharge": "Reverse charge",
   "@vatTreatmentReverseCharge": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
+  },
+  "vatTreatmentReverseChargeHint": "The customer self-assesses the VAT — only for services not connected with the premises.",
+  "@vatTreatmentReverseChargeHint": {
+    "description": "#2354 place of supply: vatTreatmentReverseChargeHint"
   },
   "vatUntil": "until",
   "@vatUntil": {

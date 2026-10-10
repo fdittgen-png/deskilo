@@ -360,7 +360,14 @@ enum WorkspaceFeature {
   /// people who are in the conversation, and the person mentioned is
   /// notified even when they muted it. Core, default ON, under
   /// memberNotifications; OFF writes a plain `@Name` that notifies nobody.
-  messageMentions;
+  messageMentions,
+
+  /// #2354 — the place of supply per catalogue service: property-connected
+  /// (the default: taxed where the building stands) or a general service
+  /// (mail handling, a virtual office) that a business elsewhere
+  /// self-assesses. Platform, default ON, under vatManagement; OFF hides
+  /// the choice and every new charge is property-connected.
+  supplyClassification;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1483,6 +1490,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.messages,
     tier: FeatureTier.core,
     requires: WorkspaceFeature.memberNotifications,
+  ),
+  // #2354 — a classification is VAT configuration: under VAT management.
+  WorkspaceFeature.supplyClassification: FeatureManifestEntry(
+    feature: WorkspaceFeature.supplyClassification,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.vatManagement,
   ),
 };
 

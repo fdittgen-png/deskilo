@@ -347,6 +347,15 @@ void main() {
     expect(_subtitle(tester, 'member-page-vat-treatment'), 'Automatic');
     await tester.tap(find.byKey(const ValueKey('member-page-vat-treatment')));
     await tester.pumpAndSettle();
+    // #2354 — the dialog says what the treatment does to each kind of
+    // line, from the same rule the server applies.
+    expect(find.text('Desk, office, room: Domestic VAT'), findsOneWidget);
+    expect(find.text('General services: Reverse charge'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('vat-treatment-reverse_charge')));
+    await tester.pumpAndSettle();
+    expect(find.text('Desk, office, room: Reverse charge'), findsOneWidget);
+    expect(find.byKey(const Key('vat-treatment-reverse-charge-hint')),
+        findsOneWidget);
     await tester.tap(find.byKey(const Key('vat-treatment-exempt')));
     await tester.pumpAndSettle();
     await tester.enterText(

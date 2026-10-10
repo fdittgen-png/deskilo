@@ -5630,6 +5630,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Factures d\'abonnement';
 
   @override
+  String get featureSupplyClassificationDesc =>
+      'Chaque service du catalogue indique s\'il est rattaché aux locaux (par défaut : imposé là où se trouve l\'immeuble, pour tout client) ou s\'il s\'agit d\'une prestation générale, comme le traitement du courrier ou la domiciliation, qu\'une entreprise d\'un autre État de l\'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.';
+
+  @override
+  String get featureSupplyClassificationTitle =>
+      'Lieu de prestation par service';
+
+  @override
   String get featureSupplyExpensesDesc =>
       'Une dépense peut être une fourniture pour l\'espace (capsules, sacs d\'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.';
 
@@ -8169,6 +8177,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'adresse postale du membre (obligatoire pour un client professionnel)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Si le membre est une entreprise ou un consommateur — une prestation générale à un client à l\'étranger en dépend';
+
+  @override
   String get invoiceMissingBuyerName => 'Le nom ou la société du membre';
 
   @override
@@ -8205,7 +8217,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.';
+      'Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -11025,7 +11037,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d\'un autre État de l\'UE), la TVA nationale quoi qu\'il arrive, l\'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.';
+      'Qui est ce membre pour la TVA. Automatique : un poste, un bureau ou une salle est imposé là où se trouve l\'immeuble, avec votre TVA pour tout client ; seule une prestation générale (non rattachée aux locaux) est autoliquidée par une entreprise d\'un autre pays de l\'UE, ou hors champ pour une entreprise hors de l\'UE. Les autres choix s\'appliquent à toutes les lignes.';
 
   @override
   String get memberVatTreatmentLabel => 'Traitement TVA';
@@ -16396,6 +16408,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les groupes, taux et déclarations de TVA.';
 
   @override
+  String get supplyClassGeneral =>
+      'Prestation générale (non rattachée aux locaux)';
+
+  @override
+  String get supplyClassHelper =>
+      'Un poste, un bureau ou une salle est imposé là où se trouve l\'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n\'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d\'un autre pays de l\'UE autoliquide alors la TVA.';
+
+  @override
+  String get supplyClassLabel => 'Lieu de prestation';
+
+  @override
+  String get supplyClassProperty => 'Rattaché aux locaux';
+
+  @override
   String get supportChanged =>
       'Le contexte a changé. Préparez un nouvel aperçu.';
 
@@ -19050,6 +19076,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatTreatmentDomestic => 'TVA nationale';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Prestations générales : $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Poste, bureau, salle : $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Pour une entreprise d\'un autre pays de l\'UE :';
+
+  @override
   String get vatTreatmentExempt => 'Acheteur exonéré';
 
   @override
@@ -19061,6 +19101,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatTreatmentReverseCharge => 'Autoliquidation';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'Le client autoliquide la TVA — uniquement pour des services non rattachés aux locaux.';
 
   @override
   String get vatUntil => 'jusqu\'au';

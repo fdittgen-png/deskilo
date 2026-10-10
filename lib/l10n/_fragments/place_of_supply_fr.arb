@@ -1,0 +1,28 @@
+{
+  "@@locale": "fr",
+  "featureSupplyClassificationTitle": "Lieu de prestation par service",
+  "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.",
+  "supplyClassLabel": "Lieu de prestation",
+  "supplyClassProperty": "Rattaché aux locaux",
+  "supplyClassGeneral": "Prestation générale (non rattachée aux locaux)",
+  "supplyClassHelper": "Un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d'un autre pays de l'UE autoliquide alors la TVA.",
+  "invoiceMissingBuyerCapacity": "Si le membre est une entreprise ou un consommateur — une prestation générale à un client à l'étranger en dépend",
+  "vatTreatmentReverseChargeHint": "Le client autoliquide la TVA — uniquement pour des services non rattachés aux locaux.",
+  "vatTreatmentExampleTitle": "Pour une entreprise d'un autre pays de l'UE :",
+  "vatTreatmentExamplePremises": "Poste, bureau, salle : {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleGeneral": "Prestations générales : {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -2,11 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/help/help_anchors.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/member.dart';
 import '../providers/workspace_providers.dart';
+import '../../../core/vat/place_of_supply.dart';
+import '../../../core/vat/supply_class.dart';
 import '../../../core/vat/vat_treatment.dart';
 
 /// #985 — the counterparty dimension of VAT: who [member] is for tax.
@@ -64,6 +67,22 @@ Future<void> pickMemberVatTreatment(
                   ),
               ],
             ),
+            // #2354 — what the chosen treatment does to each kind of line,
+            // read from the one rule the server applies (its SQL twin is
+            // public.supply_vat_category), for a business elsewhere in the EU.
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.md),
+              child: _TreatmentExample(treatment: chosen),
+            ),
+            if (chosen == VatTreatment.reverseCharge) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                (l10n ?? lookupAppLocalizations(const Locale('en')))
+                    .vatTreatmentReverseChargeHint,
+                key: const Key('vat-treatment-reverse-charge-hint'),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
             if (chosen == VatTreatment.exempt) ...[
               const SizedBox(height: 12),
               TextField(
@@ -112,4 +131,49 @@ Future<void> pickMemberVatTreatment(
     return;
   }
   ref.invalidate(workspaceMembersProvider);
+}
+
+/// #2354 — the two kinds of line under [treatment], for a business
+/// customer in another EU country of a French seller that charges VAT.
+class _TreatmentExample extends StatelessWidget {
+  const _TreatmentExample({required this.treatment});
+
+  final VatTreatment treatment;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n =
+        AppLocalizations.of(context) ?? lookupAppLocalizations(const Locale('en'));
+    String outcome(SupplyClass supply) => switch (supplyVatCategory(
+          treatment: treatment,
+          supply: supply,
+          sellerVatRegistered: true,
+          sellerCountry: 'FR',
+          buyerCountry: 'DE',
+          buyerCapacity: 'business',
+        )) {
+          'AE' => l10n.vatTreatmentReverseCharge,
+          'G' => l10n.vatTreatmentExport,
+          'E' => l10n.vatTreatmentExempt,
+          _ => l10n.vatTreatmentDomestic,
+        };
+    final style = Theme.of(context).textTheme.bodySmall;
+    return Column(
+      key: const Key('vat-treatment-example'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.vatTreatmentExampleTitle, style: style),
+        Text(
+          l10n.vatTreatmentExamplePremises(outcome(SupplyClass.property)),
+          key: const Key('vat-treatment-example-premises'),
+          style: style,
+        ),
+        Text(
+          l10n.vatTreatmentExampleGeneral(outcome(SupplyClass.general)),
+          key: const Key('vat-treatment-example-general'),
+          style: style,
+        ),
+      ],
+    );
+  }
 }

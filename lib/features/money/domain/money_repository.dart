@@ -20,6 +20,7 @@ import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
 import 'expense_schedule.dart';
+import '../../../core/vat/supply_class.dart';
 import 'service_item.dart';
 import 'statement.dart';
 import 'subscription_levels.dart';
@@ -390,6 +391,7 @@ abstract class MoneyRepository {
     required String name,
     required int priceCents,
     String? vatRateId,
+    SupplyClass supplyClass = SupplyClass.property,
   });
 
   /// Owner-only: partial update of name, price, VAT rate and active flag.
@@ -401,6 +403,7 @@ abstract class MoneyRepository {
     int? priceCents,
     bool? active,
     String? vatRateId,
+    SupplyClass? supplyClass,
   });
 
   /// The VAT rates the workspace charges (0072), member-readable: they

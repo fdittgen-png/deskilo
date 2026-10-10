@@ -66,12 +66,23 @@ out of scope. A service, a tariff, an accessory and a package each
 carry a group, not a percentage, so a country's rate table can change
 underneath them without touching the catalogue.
 
-**Treatments** are what the counterparty makes of it: domestic,
-intra-EU business (reverse charge, the customer self-assesses under
-art. 196), intra-EU consumer, export. A customer's country and VAT
-number decide which applies, and the e-invoice check refuses to send a
-reverse-charge document until that VAT number is present, because it is
-what proves the tax is theirs.
+**Where a supply is taxed** comes first (#2354). A desk, an office or a
+room is a service connected with the building: it carries your VAT
+wherever the customer lives, business or consumer (art. 47 of the VAT
+Directive). A catalogue service says whether it is **Connected with the
+premises** (the default) or a **General service (not connected with the
+premises)**, such as mail handling or a virtual office, and each charge
+keeps that choice.
+
+**Treatments** are what the counterparty makes of a general service:
+domestic VAT, reverse charge for a business in another EU country (the
+customer self-assesses under art. 196), or outside the scope for a
+business outside the EU. The customer's stated capacity (business or
+consumer) and country decide which applies, never the mere presence of a
+VAT number; a consumer, at home or abroad, pays your VAT, so there is no
+separate intra-EU consumer treatment. The e-invoice check refuses to send
+a reverse-charge document until the customer's VAT number is present,
+because it is what proves the tax is theirs.
 
 **When VAT falls due** is a workspace setting: *on invoices* (due when
 you issue) or *on receipts* (due the day the customer pays). France

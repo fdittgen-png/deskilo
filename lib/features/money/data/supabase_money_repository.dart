@@ -23,6 +23,7 @@ import '../../../core/data/paged_fetch.dart';
 import '../domain/package.dart';
 import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
+import '../../../core/vat/supply_class.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/vat_rate.dart';
@@ -1049,6 +1050,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
         active: row['active'] as bool,
         vatRateId: row['vat_rate_id'] as String? ?? '',
         stock: row['stock'] as int?,
+        supplyClass: SupplyClass.fromWire(row['supply_class'] as String?),
       );
 
   // ── VAT rates (0072) ────────────────────────────────────────────────
@@ -1096,10 +1098,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String name,
     required int priceCents,
     String? vatRateId,
+    SupplyClass supplyClass = SupplyClass.property,
   }) async {
     final row = await _client
         .from('services')
         .insert({
+          'supply_class': supplyClass.wire,
           'workspace_id': workspaceId,
           'name': name,
           'price_cents': priceCents,
@@ -1119,10 +1123,12 @@ class SupabaseMoneyRepository implements MoneyRepository {
     int? priceCents,
     bool? active,
     String? vatRateId,
+    SupplyClass? supplyClass,
   }) async {
     final row = await _client
         .from('services')
         .update({
+          'supply_class': ?supplyClass?.wire,
           'name': ?name,
           'price_cents': ?priceCents,
           'active': ?active,

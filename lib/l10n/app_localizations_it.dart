@@ -5617,6 +5617,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureSubscriptionInvoicesTitle => 'Fatture di abbonamento';
 
   @override
+  String get featureSupplyClassificationDesc =>
+      'Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l\'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un\'impresa di un altro Stato UE applica l\'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali.';
+
+  @override
+  String get featureSupplyClassificationTitle =>
+      'Luogo della prestazione per servizio';
+
+  @override
   String get featureSupplyExpensesDesc =>
       'Una spesa può essere una scorta per lo spazio (capsule di caffè, sacchetti per aspirapolvere…): convalidata, rifornisce o crea un servizio consumabile con prezzo unitario, e i consumi scalano la scorta.';
 
@@ -8151,6 +8159,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'indirizzo postale del socio (obbligatorio per un\'azienda)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Se il membro è un\'impresa o un consumatore: ne dipende un servizio generico a un cliente estero';
+
+  @override
   String get invoiceMissingBuyerName =>
       'Il nome o la ragione sociale del socio';
 
@@ -8188,7 +8200,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Le fatture transfrontaliere, con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.';
+      'Le fatture con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -11007,7 +11019,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Chi è questo membro ai fini IVA: la regola automatica (inversione contabile per un\'impresa di un altro Stato UE), IVA nazionale in ogni caso, inversione contabile, fuori UE o un acquirente esente con il motivo stampato sulla fattura.';
+      'Chi è questo membro ai fini IVA. Automatico: una postazione, un ufficio o una sala è tassato dove si trova l\'immobile, con la Sua IVA per qualsiasi cliente; solo un servizio generico (non connesso ai locali) va in inversione contabile per un\'impresa di un altro Paese UE, o è fuori campo per un\'impresa fuori dall\'UE. Le altre scelte valgono per tutte le righe.';
 
   @override
   String get memberVatTreatmentLabel => 'Trattamento IVA';
@@ -16363,6 +16375,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Gestire gruppi, aliquote e dichiarazioni IVA.';
 
   @override
+  String get supplyClassGeneral => 'Servizio generico (non connesso ai locali)';
+
+  @override
+  String get supplyClassHelper =>
+      'Una postazione, un ufficio o una sala è tassato dove si trova l\'immobile, per qualsiasi cliente. Scelga «servizio generico» solo per ciò che non è legato ai locali, come la gestione della posta o un ufficio virtuale: un\'impresa di un altro Paese UE assolve allora l\'IVA con l\'inversione contabile.';
+
+  @override
+  String get supplyClassLabel => 'Luogo della prestazione';
+
+  @override
+  String get supplyClassProperty => 'Connesso ai locali';
+
+  @override
   String get supportChanged =>
       'Il contesto è cambiato. Prepari una nuova anteprima.';
 
@@ -19020,6 +19045,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatTreatmentDomestic => 'IVA nazionale';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Servizi generici: $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Postazione, ufficio, sala: $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Per un\'impresa di un altro Paese UE:';
+
+  @override
   String get vatTreatmentExempt => 'Acquirente esente';
 
   @override
@@ -19031,6 +19070,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatTreatmentReverseCharge => 'Inversione contabile';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'Il cliente assolve l\'IVA: solo per servizi non connessi ai locali.';
 
   @override
   String get vatUntil => 'fino al';

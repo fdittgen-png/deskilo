@@ -3737,6 +3737,8 @@
   "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureSubscriptionInvoicesTitle": "Factures d'abonnement",
+  "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.",
+  "featureSupplyClassificationTitle": "Lieu de prestation par service",
   "featureSupplyExpensesDesc": "Une dépense peut être une fourniture pour l'espace (capsules, sacs d'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.",
   "featureSupplyExpensesTitle": "Fournitures via les dépenses",
   "featureSurfaceCalendarHint": "Ce qui se passe, par jour et par mois.",
@@ -5274,6 +5276,7 @@
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
+  "invoiceMissingBuyerCapacity": "Si le membre est une entreprise ou un consommateur — une prestation générale à un client à l'étranger en dépend",
   "invoiceMissingBuyerName": "Le nom ou la société du membre",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
@@ -5301,7 +5304,7 @@
   },
   "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'espace ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire",
   "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
-  "invoiceMissingVatTreatment": "Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
+  "invoiceMissingVatTreatment": "Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
   "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
@@ -6831,7 +6834,7 @@
   "memberSubscriptionCustom": "Personnalisé (1–100)",
   "memberSubscriptionLabel": "Abonnement",
   "memberUnmakeKiosk": "Rétablir comme membre",
-  "memberVatTreatmentExplainer": "Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d'un autre État de l'UE), la TVA nationale quoi qu'il arrive, l'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.",
+  "memberVatTreatmentExplainer": "Qui est ce membre pour la TVA. Automatique : un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, avec votre TVA pour tout client ; seule une prestation générale (non rattachée aux locaux) est autoliquidée par une entreprise d'un autre pays de l'UE, ou hors champ pour une entreprise hors de l'UE. Les autres choix s'appliquent à toutes les lignes.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },
@@ -10573,6 +10576,10 @@
   "subprocessStructureDesc": "Gérer les sites et la disponibilité des objets du plan.",
   "subprocessTax": "Gestion de la TVA",
   "subprocessTaxDesc": "Gérer les groupes, taux et déclarations de TVA.",
+  "supplyClassGeneral": "Prestation générale (non rattachée aux locaux)",
+  "supplyClassHelper": "Un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d'un autre pays de l'UE autoliquide alors la TVA.",
+  "supplyClassLabel": "Lieu de prestation",
+  "supplyClassProperty": "Rattaché aux locaux",
   "supportChanged": "Le contexte a changé. Préparez un nouvel aperçu.",
   "supportDay": "Dernières 24 heures",
   "supportDemo": "Démo : contexte local simulé",
@@ -11688,6 +11695,23 @@
   "@vatTreatmentDomestic": {
     "description": "#985 VAT versions and counterparty: vatTreatmentDomestic"
   },
+  "vatTreatmentExampleGeneral": "Prestations générales : {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExamplePremises": "Poste, bureau, salle : {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleTitle": "Pour une entreprise d'un autre pays de l'UE :",
   "vatTreatmentExempt": "Acheteur exonéré",
   "@vatTreatmentExempt": {
     "description": "#985 VAT versions and counterparty: vatTreatmentExempt"
@@ -11704,6 +11728,7 @@
   "@vatTreatmentReverseCharge": {
     "description": "#985 VAT versions and counterparty: vatTreatmentReverseCharge"
   },
+  "vatTreatmentReverseChargeHint": "Le client autoliquide la TVA — uniquement pour des services non rattachés aux locaux.",
   "vatUntil": "jusqu'au",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
