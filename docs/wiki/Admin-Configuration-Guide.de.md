@@ -100,6 +100,19 @@ der Eingangsbestätigung des Finanzamts, und eine abgegebene ändert sich
 nie mehr. Die App übermittelt keine Meldung: Deutschland gibt über
 ELSTER ab, Frankreich über EDI-TVA oder impots.gouv.
 
+**Gesperrte Zeiträume** (#2357, ADR 0039). Jede Abgabe hält fest, was
+die Meldung erklärt hat, je Rechnung, Steuerzeitpunkt und Satz
+(`vat_return_entries`). Ein abgegebener Zeitraum ist gesperrt: Ändert
+sich darin später etwas — eine Stornierung, eine verspätet erfasste
+Zahlung —, bleibt die abgegebene Zeile Byte für Byte gleich, und die
+nächste Meldung trägt den Unterschied als Berichtigungszeilen, die die
+berichtigte Meldung nennen (§ 17 UStG; in den Kennzahlen des Satzes, auf
+der CA3 in den Zeilen 15/21). Ein Zeitraum, der sich mit einem
+abgegebenen überschneidet, kann nicht vorbereitet werden. Wie oft
+gemeldet wird — monatlich, vierteljährlich oder jährlich — wird mit der
+rechtlichen Identität gespeichert (`invoice_legal.vat_declaration_period`)
+und reist mit der Konfiguration und dem Einrichtungsfragebogen.
+
 Der vollständige Satzkatalog eines Landes wird mit der App ausgeliefert
 (EU27, CH, NO, CA); ihn aktuell zu halten, wenn eine Regierung einen Satz
 ändert, liegt bei Ihnen.

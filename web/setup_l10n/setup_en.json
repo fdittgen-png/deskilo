@@ -34,6 +34,7 @@
  "optHoursDefaultMax": "{n} hours (default max.)",
  "vatPeriodMonth": "Monthly",
  "vatPeriodQuarter": "Quarterly",
+ "vatPeriodAnnual": "Annual",
  "envDev": "Development — for trying things out: the app says so everywhere and watermarks every document",
  "envProd": "Production — the invoices it issues are really owed",
  "numDateNone": "None",
@@ -525,6 +526,7 @@
  "cfgNotRegistered": "Not applicable while the workspace is not VAT-registered.",
  "cfgVatDeclMonthly": "Monthly declaration.",
  "cfgVatDeclQuarterly": "Quarterly declaration.",
+ "cfgVatDeclAnnual": "Annual declaration.",
  "cfgCustomerService": "Customer service: {url}",
  "cfgCustomerServiceTodo": "Customer delivery service to configure in the app.",
  "cfgPlanObjectDelete": "Deletion of plan objects still referenced (audit substitution).",
@@ -602,7 +604,6 @@
  "todoInviteMembers": "Invite the {n} people listed in the Members step from the app (Members → Invite a member): the file keeps the list for your records only.",
  "todoInviteNobody": "Invite your first members from the app (Members → Invite a member).",
  "todoOnlineProvider": "Connect the online payment provider in the app: its keys never go into the file.",
- "todoVatPeriod": "Choose the VAT declaration period ({period}) in the app when you prepare the first declaration.",
  "todoEinvoice": "Enter the e-invoicing platform address and credentials in the app: the file never applies them.",
  "todoInvoiceOutside": "Invoices for a space in {country} are issued outside the app.",
  "todoImportFile": "Import the file into that space: Workspace → Import workspace (XML). If the space has “Configuration in the space file” off, the app asks before applying the configuration."

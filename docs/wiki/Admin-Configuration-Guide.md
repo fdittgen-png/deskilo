@@ -90,6 +90,17 @@ owner with the tax authority's receipt reference, and a filed one never
 changes. The app transmits no return: France files through EDI-TVA or
 impots.gouv, Germany through ELSTER.
 
+**Period locks** (#2357, ADR 0039). Each filing records what the return
+declared, per invoice, tax point and rate (`vat_return_entries`). A
+filed period is locked: when something in it changes later — a void, a
+payment recorded late — the filed row stays byte-identical, and the next
+return carries the difference as correction lines naming the return
+they correct (CA3 lines 15/21; the rate boxes elsewhere). A period that
+overlaps a filed one cannot be prepared. How often the return is filed —
+monthly, quarterly or annual — is stored with the legal identity
+(`invoice_legal.vat_declaration_period`) and travels with the
+configuration and the setup questionnaire.
+
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.
 

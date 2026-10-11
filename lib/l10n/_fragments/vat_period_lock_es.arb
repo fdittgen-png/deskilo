@@ -1,0 +1,45 @@
+{
+  "@@locale": "es",
+  "vatDeclPeriodField": "Periodo de declaración del IVA",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodMonth": "Mensual",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodQuarter": "Trimestral",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
+  },
+  "vatDeclPeriodAnnual": "Anual",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodHint": "Con qué frecuencia presenta usted la declaración. La pantalla de la declaración del IVA solo ofrece periodos de esta duración.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodNote": "Periodo de declaración: {period}. Puede cambiarlo en Identidad legal y facturación electrónica.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionOf": "Corrección de {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Una declaración presentada nunca cambia. Lo que cambió después en un periodo presentado — una factura anulada, un pago registrado tarde — se declara aquí como corrección de esa declaración.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  }
+}

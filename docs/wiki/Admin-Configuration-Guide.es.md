@@ -96,6 +96,18 @@ justificante de la administración tributaria, y una presentada ya no
 cambia. La app no transmite ninguna declaración: Francia presenta por
 EDI-TVA o impots.gouv, Alemania por ELSTER.
 
+**Periodos bloqueados** (#2357, ADR 0039). Cada presentación registra lo
+que la declaración declaró, por factura, devengo y tipo
+(`vat_return_entries`). Un periodo presentado queda bloqueado: cuando
+algo cambia en él después — una anulación, un cobro registrado tarde —
+la fila presentada sigue idéntica byte a byte, y la declaración
+siguiente lleva la diferencia en líneas de corrección que nombran la
+declaración corregida (líneas 15/21 de la CA3; las casillas del tipo en
+los demás países). Un periodo que se solapa con uno presentado no puede
+prepararse. La periodicidad — mensual, trimestral o anual — se guarda
+con la identidad legal (`invoice_legal.vat_declaration_period`) y viaja
+con la configuración y el cuestionario de puesta en marcha.
+
 El catálogo completo de tipos de un país viene con la app (UE27, CH, NO,
 CA); mantenerlo al día cuando un gobierno cambia un tipo le corresponde a
 usted.

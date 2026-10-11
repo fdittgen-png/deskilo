@@ -99,6 +99,19 @@ déclaration déposée ne change plus. L'app ne télétransmet aucune
 déclaration : la France dépose par EDI-TVA ou impots.gouv, l'Allemagne
 par ELSTER.
 
+**Verrouillage des périodes** (#2357, ADR 0039). Chaque dépôt enregistre
+ce que la déclaration a déclaré, par facture, exigibilité et taux
+(`vat_return_entries`). Une période déposée est verrouillée : quand
+quelque chose y change plus tard — une annulation, un encaissement
+enregistré tardivement — la ligne déposée reste identique à l'octet près,
+et la déclaration suivante porte la différence en lignes de
+régularisation qui nomment la déclaration régularisée (lignes 15/21 de
+la CA3 ; les cases du taux ailleurs). Une période qui chevauche une
+période déposée ne peut pas être préparée. La périodicité — mensuelle,
+trimestrielle ou annuelle — est enregistrée avec l'identité légale
+(`invoice_legal.vat_declaration_period`) et voyage avec la configuration
+et le questionnaire de démarrage.
+
 Le catalogue complet des taux d'un pays est livré avec l'app (UE27, CH,
 NO, CA) ; le tenir à jour quand un gouvernement change un taux vous
 revient.

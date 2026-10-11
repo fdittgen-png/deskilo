@@ -15,6 +15,9 @@ class VatDeclarationLine {
     required this.vatCents,
     required this.invoiceCount,
     this.category = '',
+    this.corrects = '',
+    this.correctsStart,
+    this.correctsEnd,
   });
 
   final double percent;
@@ -27,6 +30,16 @@ class VatDeclarationLine {
   final int vatCents;
   final int invoiceCount;
 
+  /// #2357 (0403) — a CORRECTION line: what changed, after it was filed,
+  /// in the return [corrects] names (its period [correctsStart] ..
+  /// [correctsEnd]). '' on the period's own lines.
+  final String corrects;
+  final DateTime? correctsStart;
+  final DateTime? correctsEnd;
+
+  /// Whether this line corrects an earlier, filed return.
+  bool get isCorrection => corrects.isNotEmpty;
+
   Map<String, dynamic> toJson() => {
         'percent': percent,
         if (category.isNotEmpty) 'category': category,
@@ -34,6 +47,12 @@ class VatDeclarationLine {
         'net_cents': netCents,
         'vat_cents': vatCents,
         'invoice_count': invoiceCount,
+        if (isCorrection) ...{
+          'correction': true,
+          'corrects': corrects,
+          'corrects_start': ?_day(correctsStart),
+          'corrects_end': ?_day(correctsEnd),
+        },
       };
 
   factory VatDeclarationLine.fromJson(Map<String, dynamic> json) =>
@@ -44,8 +63,16 @@ class VatDeclarationLine {
         netCents: (json['net_cents'] as num).toInt(),
         vatCents: (json['vat_cents'] as num).toInt(),
         invoiceCount: (json['invoice_count'] as num?)?.toInt() ?? 0,
+        corrects: json['correction'] == true
+            ? (json['corrects'] as String? ?? '')
+            : '',
+        correctsStart: DateTime.tryParse(
+            json['corrects_start'] as String? ?? ''),
+        correctsEnd: DateTime.tryParse(json['corrects_end'] as String? ?? ''),
       );
 }
+
+String? _day(DateTime? day) => day?.toIso8601String().substring(0, 10);
 
 /// A periodic VAT declaration (0107): the per-rate output-VAT summary of
 /// one filing period. #2357 (0402): the server computes the figures
@@ -179,7 +206,9 @@ List<VatFormBox> vatFormBoxes(
   // #2357 — the server keeps the categories of one rate apart (0 % AE, E
   // and Z are three lines); the boxes still sum them per rate until the
   // form mappings read the category.
-  final byRate = _perRate(lines);
+  final byRate = _perRate(code == 'FR'
+      ? [for (final l in lines) if (!l.isCorrection) l]
+      : lines);
   VatDeclarationLine? at(double percent) =>
       byRate.where((l) => l.percent == percent).firstOrNull;
   List<VatDeclarationLine> others(Set<double> named) =>
@@ -228,6 +257,7 @@ List<VatFormBox> vatFormBoxes(
               label: 'Opérations non imposées / taux 0',
               netCents: l.netCents,
               vatCents: 0),
+        ..._frenchRegularisations(lines),
       ];
     case 'DE':
       final named = {19.0, 7.0, 0.0};
@@ -270,6 +300,39 @@ List<VatFormBox> vatFormBoxes(
               vatCents: l.vatCents),
       ];
   }
+}
+
+/// #2357 — CA3 régularisations: VAT a correction adds goes to line 15,
+/// VAT it takes back (a void, a reduction declared too high) to line 21
+/// as a deduction. In Germany (§ 17 UStG), the United Kingdom (error
+/// correction on the next return) and elsewhere, corrections fold into
+/// the period's rate boxes.
+List<VatFormBox> _frenchRegularisations(List<VatDeclarationLine> lines) {
+  var dueNet = 0, dueVat = 0, backNet = 0, backVat = 0;
+  for (final l in lines) {
+    if (!l.isCorrection) continue;
+    if (l.vatCents >= 0) {
+      dueNet += l.netCents;
+      dueVat += l.vatCents;
+    } else {
+      backNet -= l.netCents;
+      backVat -= l.vatCents;
+    }
+  }
+  return [
+    if (dueVat != 0 || dueNet != 0)
+      VatFormBox(
+          code: '15',
+          label: 'Régularisation — TVA à reverser',
+          netCents: dueNet,
+          vatCents: dueVat),
+    if (backVat != 0 || backNet != 0)
+      VatFormBox(
+          code: '21',
+          label: 'Régularisation — autre TVA à déduire',
+          netCents: backNet,
+          vatCents: backVat),
+  ];
 }
 
 /// [lines] summed per rate, in their first appearance's order.
@@ -337,6 +400,16 @@ String vatDeclarationXml({
           if (line.category.isNotEmpty) {
             builder.attribute('category', line.category);
           }
+          if (line.isCorrection) {
+            builder.attribute('correction', 'true');
+            builder.attribute('corrects', line.corrects);
+            if (_day(line.correctsStart) case final start?) {
+              builder.attribute('corrects-start', start);
+            }
+            if (_day(line.correctsEnd) case final end?) {
+              builder.attribute('corrects-end', end);
+            }
+          }
           builder.element('net-cents', nest: line.netCents.toString());
           builder.element('vat-cents', nest: line.vatCents.toString());
           builder.element('invoice-count',
@@ -362,33 +435,4 @@ String vatDeclarationXml({
     });
   });
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
-}
-
-/// Filing periods (#534): month or quarter, walked backwards from [now].
-/// (France: réel normal files monthly, réel simplifié yearly with
-/// acomptes; Germany: monthly or quarterly by tax volume — the owner
-/// picks what their regime requires.)
-List<({DateTime start, DateTime end, bool isQuarter})> vatFilingPeriods(
-  DateTime now, {
-  int monthsBack = 12,
-}) {
-  final periods = <({DateTime start, DateTime end, bool isQuarter})>[];
-  for (var i = 0; i < monthsBack; i++) {
-    final start = DateTime(now.year, now.month - i);
-    periods.add((
-      start: start,
-      end: DateTime(start.year, start.month + 1, 0),
-      isQuarter: false,
-    ));
-  }
-  final quarterStartMonth = ((now.month - 1) ~/ 3) * 3 + 1;
-  for (var i = 0; i < 4; i++) {
-    final start = DateTime(now.year, quarterStartMonth - 3 * i);
-    periods.add((
-      start: start,
-      end: DateTime(start.year, start.month + 3, 0),
-      isQuarter: true,
-    ));
-  }
-  return periods;
 }

@@ -18770,6 +18770,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclBoxes => 'Righe del modulo ufficiale';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Rettifica di $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Una dichiarazione presentata non cambia mai. Ciò che è cambiato in seguito in un periodo dichiarato — una fattura annullata, un pagamento registrato in ritardo — è dichiarato qui come rettifica di quella dichiarazione.';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generata dalle fatture emesse del periodo. Verificare con la contabilità prima dell’invio — un aiuto alla dichiarazione, non consulenza fiscale.';
 
@@ -18804,6 +18813,27 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclPeriod => 'Periodo';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Annuale';
+
+  @override
+  String get vatDeclPeriodField => 'Periodicità della dichiarazione IVA';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'Con quale frequenza Lei presenta la dichiarazione. La schermata della dichiarazione IVA offre solo periodi di questa durata.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Mensile';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Periodicità: $period. Può modificarla in Identità legale e fatturazione elettronica.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Trimestrale';
 
   @override
   String get vatDeclPrepared => 'Preparata';

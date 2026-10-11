@@ -51,6 +51,17 @@ Invoice _invoice(
       voidedAt: voidedAt,
     );
 
+// #2357 — a correction of a filed return, on its own line.
+const _correction = VatDeclarationLine(
+  percent: 20,
+  category: 'S',
+  grossCents: -2400,
+  netCents: -2000,
+  vatCents: -400,
+  invoiceCount: 1,
+  corrects: 'sep',
+);
+
 void main() {
   group('vat catalogue (#534)', () {
     test('covers every EU member state, CH, NO and CA', () {
@@ -200,12 +211,106 @@ void main() {
       expect(xml, contains('<vat-cents>2000</vat-cents>'));
     });
 
+    test('a correction line survives the stored JSON', () {
+      final line = VatDeclarationLine.fromJson({
+        ..._correction.toJson(),
+        'corrects_start': '2026-09-01',
+        'corrects_end': '2026-09-30',
+      });
+      expect(line.isCorrection, isTrue);
+      expect(line.corrects, 'sep');
+      expect(line.correctsStart, DateTime(2026, 9));
+      expect(line.toJson()['corrects_end'], '2026-09-30');
+      expect(
+        VatDeclarationLine.fromJson(const {
+          'percent': 20,
+          'net_cents': 1,
+          'vat_cents': 0,
+        }).isCorrection,
+        isFalse,
+        reason: 'a period\'s own line, as 0402 stored it',
+      );
+    });
+
+    test('France: corrections go to CA3 lines 15 and 21, not the rate', () {
+      const due = VatDeclarationLine(
+        percent: 20,
+        grossCents: 1200,
+        netCents: 1000,
+        vatCents: 200,
+        invoiceCount: 1,
+        corrects: 'aug',
+      );
+      const own = VatDeclarationLine(
+        percent: 20,
+        grossCents: 12000,
+        netCents: 10000,
+        vatCents: 2000,
+        invoiceCount: 1,
+      );
+      final boxes = vatFormBoxes('FR', const [own, _correction, due]);
+      expect(boxes.singleWhere((b) => b.code == '08').vatCents, 2000,
+          reason: 'the rate box holds the period\'s own sales only');
+      expect(boxes.singleWhere((b) => b.code == '15').vatCents, 200);
+      expect(boxes.singleWhere((b) => b.code == '21').vatCents, 400);
+
+      // Germany (§ 17 UStG): the correction lowers the rate's box.
+      final de = vatFormBoxes('DE', const [
+        VatDeclarationLine(
+            percent: 19,
+            grossCents: 11900,
+            netCents: 10000,
+            vatCents: 1900,
+            invoiceCount: 1),
+        VatDeclarationLine(
+            percent: 19,
+            grossCents: -5950,
+            netCents: -5000,
+            vatCents: -950,
+            invoiceCount: 1,
+            corrects: 'sep'),
+      ]);
+      expect(de.single.code, 'Kz 81');
+      expect(de.single.vatCents, 950);
+    });
+
+    test('the XML names what a correction corrects', () {
+      final xml = vatDeclarationXml(
+        declaration: VatDeclaration(
+          id: 'oct',
+          workspaceId: 'ws-1',
+          periodStart: DateTime(2026, 10),
+          periodEnd: DateTime(2026, 10, 31),
+          status: 'prepared',
+          lines: [
+            VatDeclarationLine.fromJson({
+              ..._correction.toJson(),
+              'corrects_start': '2026-09-01',
+            }),
+          ],
+          totalNetCents: -2000,
+          totalVatCents: -400,
+          currency: 'EUR',
+          invoiceCount: 1,
+          createdAt: DateTime.utc(2026, 10, 2),
+        ),
+        workspaceName: 'pezenas1',
+        vatId: 'FR123',
+        countryCode: 'FR',
+      );
+      expect(xml, contains('correction="true"'));
+      expect(xml, contains('corrects="sep"'));
+      expect(xml, contains('corrects-start="2026-09-01"'));
+      expect(xml, contains('code="21"'));
+    });
+
   });
 
   group('declarations screen (#534)', () {
     Future<FakeMoneyRepository> pump(
       WidgetTester tester, {
       String regime = 'vat_registered',
+      List<VatDeclaration> declarations = const [],
     }) async {
       final workspace = FakeWorkspaceRepository.withWorkspace();
       workspace.workspaces[0] =
@@ -215,6 +320,7 @@ void main() {
         // VAT return (#2357).
         ..einvoiceGateway =
             const EInvoiceGatewayConfig(configured: true);
+      money.vatDeclarations.addAll(declarations);
       money.invoices.add(_invoice(
         'a',
         DateTime(kTestNow.year, kTestNow.month, 3),
@@ -367,6 +473,67 @@ void main() {
       // Filed → no action changes it any more.
       expect(find.byKey(ValueKey('vat-decl-filed-$id')), findsNothing);
       expect(find.textContaining('EFI-0042'), findsOneWidget);
+    });
+
+    testWidgets('the period list follows the stored filing period (#2357)',
+        (tester) async {
+      final workspace = FakeWorkspaceRepository.withWorkspace();
+      workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+        vatRegime: 'vat_registered',
+        invoiceLegal: const {'vat_declaration_period': 'annual'},
+      );
+      final money = FakeMoneyRepository();
+      await tester.binding.setSurfaceSize(const Size(900, 1600));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides:
+              standardTestOverrides(money: money, workspace: workspace),
+          child: const DeskiloApp(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final context = tester.element(find.byType(Scaffold).first);
+      unawaited(GoRouter.of(context).push('/vat-declarations'));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('Annual'), findsOneWidget,
+          reason: 'the note names the stored period');
+      await tester.tap(find.byKey(const ValueKey('vat-decl-generate')));
+      await tester.pumpAndSettle();
+      final declaration = money.vatDeclarations.single;
+      expect(declaration.periodStart, DateTime(kTestNow.year));
+      expect(declaration.periodEnd, DateTime(kTestNow.year, 12, 31));
+    });
+
+    testWidgets('a correction line names the return it corrects (#2357)',
+        (tester) async {
+      await pump(tester, declarations: [VatDeclaration(
+        id: 'oct',
+        workspaceId: 'ws-1',
+        periodStart: DateTime(2026, 10),
+        periodEnd: DateTime(2026, 10, 31),
+        status: 'prepared',
+        lines: [
+          VatDeclarationLine.fromJson({
+            ..._correction.toJson(),
+            'corrects_start': '2026-09-01',
+            'corrects_end': '2026-09-30',
+          }),
+        ],
+        totalNetCents: -2000,
+        totalVatCents: -400,
+        currency: 'EUR',
+        invoiceCount: 1,
+        createdAt: DateTime.utc(2026, 10, 2),
+      )]);
+
+      expect(find.byKey(const ValueKey('vat-decl-correction-oct-sep')),
+          findsOneWidget);
+      expect(find.textContaining('Correction of September 2026'),
+          findsOneWidget);
+      expect(find.textContaining('A filed return never changes'),
+          findsOneWidget);
     });
 
     testWidgets('an exempt workspace hits the regime gate', (tester) async {

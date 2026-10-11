@@ -18792,6 +18792,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclBoxes => 'Kennzahlen des amtlichen Formulars';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Berichtigung für $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Eine abgegebene Erklärung ändert sich nie. Was sich danach in einem abgegebenen Zeitraum geändert hat — eine stornierte Rechnung, eine verspätet erfasste Zahlung — wird hier als Berichtigung dieser Erklärung erklärt.';
+
+  @override
   String get vatDeclDisclaimer =>
       'Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.';
 
@@ -18826,6 +18835,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatDeclPeriod => 'Zeitraum';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Jährlich';
+
+  @override
+  String get vatDeclPeriodField => 'Voranmeldungszeitraum';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'Wie oft Sie die Erklärung abgeben. Der Bildschirm der Umsatzsteuererklärung bietet nur Zeiträume dieser Länge an.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Monatlich';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Erklärungszeitraum: $period. Änderbar unter Rechtliche Identität & E-Rechnung.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Vierteljährlich';
 
   @override
   String get vatDeclPrepared => 'Vorbereitet';
