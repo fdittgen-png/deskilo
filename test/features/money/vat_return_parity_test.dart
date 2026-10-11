@@ -19,7 +19,7 @@
 // the difference as a correction of the September return, and once
 // October is filed November corrects nothing again.
 //
-// And input VAT (0407, `170_input_vat.sql`): the base and the deductible
+// And input VAT (0408, `170_input_vat.sql`): the base and the deductible
 // share of an expense, rounded as the server rounds them.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';

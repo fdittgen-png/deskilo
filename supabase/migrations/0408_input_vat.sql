@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 0407 (#2357) — input VAT: an expense states the VAT it carried and the
+-- 0408 (#2357) — input VAT: an expense states the VAT it carried and the
 -- share the space may deduct; the VAT return subtracts it.
 --
 -- 1. `submit_expense` takes `p_vat` ({percent, deductible_pct}) and keeps
@@ -500,7 +500,7 @@ begin
   loop
     v_def := pg_temp.anchor_replace(v_def, v_step.old_text, v_step.new_text);
     if v_def is null then
-      raise exception '0407: mark_vat_declaration_submitted anchor % (%) missing', v_step.n, v_step.what;
+      raise exception '0408: mark_vat_declaration_submitted anchor % (%) missing', v_step.n, v_step.what;
     end if;
   end loop;
   execute v_def;
@@ -512,7 +512,7 @@ begin
     $a$when 'vat_output' then 'liability' when 'expenses' then 'expense'
     when 'vat_input' then 'asset' end;$a$);
   if v_def is null then
-    raise exception '0407: save_book_mapping anchor missing';
+    raise exception '0408: save_book_mapping anchor missing';
   end if;
   execute v_def;
 end
@@ -1390,4 +1390,4 @@ on conflict (key) where owner_workspace_id is null do update
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(407);
+select public.set_deskilo_schema_version(408);

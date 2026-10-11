@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2357 — input VAT (0407). An expense states the VAT it carried and the
+-- #2357 — input VAT (0408). An expense states the VAT it carried and the
 -- share the space may deduct; submit_expense keeps both under the
 -- inputVat flag and refuses a rate or a share outside 0..100. The VAT
 -- return of a French September holds the sales line and, apart, the

@@ -8,7 +8,7 @@
 // from the VAT collected. Its tax point is the day the expense was
 // approved.
 //
-// The SQL twin is `vat_input_split` (0407), read by `vat_input_amounts`;
+// The SQL twin is `vat_input_split` (0408), read by `vat_input_amounts`;
 // `vat_return_parity_test.dart` pins both to the figures of pgTAP 170.
 import 'vat_rate.dart';
 
