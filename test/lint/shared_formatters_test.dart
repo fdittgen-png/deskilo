@@ -17,9 +17,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// Date-component paddings still outside date_text.dart, with the reason
-/// they wait: the demo money repository and the task recorder have work
-/// in progress on other branches.
-const _datePaddingBudget = 8;
+/// they wait: the task recorder (booking_observation.dart) has work in
+/// progress on another branch.
+const _datePaddingBudget = 2;
 
 void main() {
   final outsideCore = handWrittenDartFiles('lib')
