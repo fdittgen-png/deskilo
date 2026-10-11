@@ -28,6 +28,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 
+import 'package:deskilo/core/navigation/navigation_style.dart';
 import '../helpers/demo_journey.dart';
 import '../features/reservations/reserve_hub_test.dart' show seatCenter;
 
@@ -48,6 +49,9 @@ Future<DemoJourney> pumpDemo(
 
   final journey = DemoJourney.start(persona: persona);
   addTearDown(journey.dispose);
+  // #2414 — at this size the device default is the menu; these journeys
+  // enter through the bar's round button, so the visitor has chosen it.
+  journey.fixture.prefs.navigationStyle.style = NavigationStyle.classic.wire;
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: journey.root,

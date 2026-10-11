@@ -256,6 +256,12 @@ bool showsMemberAccountMenu({
     features.contains(WorkspaceFeature.memberAccountMenu) &&
     // The everyday permissions are the member's own side of the app; only
     // an administration permission makes it Settings.
+    holdsOnlyEverydayPermissions(permissions);
+
+/// Whether [permissions] are the member's own side of the app at most —
+/// no administration of any kind (#1598; #2414 reads it for the default
+/// navigation).
+bool holdsOnlyEverydayPermissions(Set<WorkspacePermission> permissions) =>
     !permissions.any((p) => !_everydayPermissionNames.contains(p.wireName));
 
 /// The everyday permissions, as the matrix stores them.

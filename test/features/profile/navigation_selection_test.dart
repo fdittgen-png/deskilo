@@ -50,7 +50,7 @@ void main() {
 
     final tile = find.byKey(const ValueKey('settings-navigation'));
     await _reveal(tester, tile);
-    expect(find.text('Default for this device'), findsOneWidget);
+    expect(find.textContaining('Default for this device'), findsOneWidget);
 
     await tester.tap(tile);
     await tester.pumpAndSettle();

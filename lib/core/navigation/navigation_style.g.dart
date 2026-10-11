@@ -111,22 +111,70 @@ final class PlatformIsWebProvider extends $FunctionalProvider<bool, bool, bool>
 
 String _$platformIsWebHash() => r'bf1d5b48bcda84a482d4e54900fa3b94f9a9e377';
 
-/// The user's navigation choice. A device that never chose gets the menu
-/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
-/// Settings. Applied instantly — the shell watches it.
+/// #2414 — whether this device is a phone: Android or iOS with a screen
+/// whose shorter side is under 600 logical pixels (a tablet is not).
+
+@ProviderFor(deviceIsPhone)
+final deviceIsPhoneProvider = DeviceIsPhoneProvider._();
+
+/// #2414 — whether this device is a phone: Android or iOS with a screen
+/// whose shorter side is under 600 logical pixels (a tablet is not).
+
+final class DeviceIsPhoneProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// #2414 — whether this device is a phone: Android or iOS with a screen
+  /// whose shorter side is under 600 logical pixels (a tablet is not).
+  DeviceIsPhoneProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deviceIsPhoneProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$deviceIsPhoneHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return deviceIsPhone(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$deviceIsPhoneHash() => r'cebff9934019ba8741e364bee5f5c1ec79ee569b';
+
+/// The user's navigation choice, or null for the default
+/// ([defaultNavigationStyle]); changed in Me and in a space's Settings.
+/// Applied instantly — the shell watches it.
 
 @ProviderFor(NavigationStyleController)
 final navigationStyleControllerProvider = NavigationStyleControllerProvider._();
 
-/// The user's navigation choice. A device that never chose gets the menu
-/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
-/// Settings. Applied instantly — the shell watches it.
+/// The user's navigation choice, or null for the default
+/// ([defaultNavigationStyle]); changed in Me and in a space's Settings.
+/// Applied instantly — the shell watches it.
 final class NavigationStyleControllerProvider
     extends
         $AsyncNotifierProvider<NavigationStyleController, NavigationStyle?> {
-  /// The user's navigation choice. A device that never chose gets the menu
-  /// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
-  /// Settings. Applied instantly — the shell watches it.
+  /// The user's navigation choice, or null for the default
+  /// ([defaultNavigationStyle]); changed in Me and in a space's Settings.
+  /// Applied instantly — the shell watches it.
   NavigationStyleControllerProvider._()
     : super(
         from: null,
@@ -149,9 +197,9 @@ final class NavigationStyleControllerProvider
 String _$navigationStyleControllerHash() =>
     r'44be200d46c47a77570614bbe47e0aa10b85ff49';
 
-/// The user's navigation choice. A device that never chose gets the menu
-/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
-/// Settings. Applied instantly — the shell watches it.
+/// The user's navigation choice, or null for the default
+/// ([defaultNavigationStyle]); changed in Me and in a space's Settings.
+/// Applied instantly — the shell watches it.
 
 abstract class _$NavigationStyleController
     extends $AsyncNotifier<NavigationStyle?> {
