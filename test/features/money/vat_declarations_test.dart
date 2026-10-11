@@ -60,13 +60,13 @@ void main() {
         'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
       ];
       for (final code in [...eu, 'CH', 'NO', 'CA']) {
-        expect(hasVatCatalogue(code), isTrue, reason: code);
+        expect(vatCatalogueFor(code), isNotEmpty, reason: code);
         expect(vatCatalogueFor(code).first.isDefault, isTrue,
             reason: code);
       }
       // The US deliberately has NO preset (no federal VAT) — a note
       // explains instead.
-      expect(hasVatCatalogue('US'), isFalse);
+      expect(vatCatalogueFor('US'), isEmpty);
       expect(vatCatalogueNote('US'), isNotNull);
       expect(vatCatalogueNote('CA'), isNotNull);
     });

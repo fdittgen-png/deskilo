@@ -92,7 +92,3 @@ Map<String, Object?>? jwtClaims(String segment) {
     return null;
   }
 }
-
-/// A public client key that may be sent, stored and shared.
-bool isPublicBackendKey(BackendKeyKind kind) =>
-    kind == BackendKeyKind.publishable || kind == BackendKeyKind.legacyAnon;

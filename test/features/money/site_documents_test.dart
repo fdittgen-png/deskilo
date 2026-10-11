@@ -42,13 +42,13 @@ void main() {
       header: '{{ workspace }}\n{% if site_name != "" %}> {{ site_name }} — {{ site_address }}{% endif %}',
       body: '{% if usage_sites != "" %}Also at {{ usage_sites }}{% endif %}',
     );
-    final at = renderInvoiceReport(template: withBands(InvoicePdfTemplate.empty, fixedReportKinds.first, bands), data: const {
+    final at = _renderInvoice(template: withBands(InvoicePdfTemplate.empty, fixedReportKinds.first, bands), data: const {
       'workspace': 'COWORKONTI', 'site_name': 'Annexe Agde', 'site_address': '12 quai du Port, 34300 Agde',
       'usage_sites': 'Siège', 'lines': <Object?>[], 'vat': <Object?>[],
     });
     expect(_flat(at!.header), contains('Annexe Agde — 12 quai du Port, 34300 Agde'));
     expect(_flat(at.body), contains('Also at Siège'));
-    final home = renderInvoiceReport(template: withBands(InvoicePdfTemplate.empty, fixedReportKinds.first, bands), data: const {
+    final home = _renderInvoice(template: withBands(InvoicePdfTemplate.empty, fixedReportKinds.first, bands), data: const {
       'workspace': 'COWORKONTI', 'site_name': '', 'site_address': '', 'usage_sites': '',
       'lines': <Object?>[], 'vat': <Object?>[],
     });
@@ -57,3 +57,10 @@ void main() {
   });
 
 }
+
+/// The invoice bands of [template], rendered against [data].
+InvoiceReport? _renderInvoice({
+  required InvoicePdfTemplate template,
+  required Map<String, Object?> data,
+}) =>
+    renderReportBands(bands: template.invoiceBands, data: data);

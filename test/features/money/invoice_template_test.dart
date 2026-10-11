@@ -38,7 +38,7 @@ void main() {
   group('invoice report engine (#470)', () {
     test('Liquid loops render the detail band — one table row per line',
         () {
-      final report = renderInvoiceReport(
+      final report = _renderInvoice(
         template: const InvoicePdfTemplate(
           body: '{% for line in lines %}{{ line.label }} | '
               '{{ line.amount }}\n{% endfor %}= Total | {{ total }}',
@@ -54,7 +54,7 @@ void main() {
     });
 
     test('Liquid conditions branch on the invoice flags', () {
-      final report = renderInvoiceReport(
+      final report = _renderInvoice(
         template: const InvoicePdfTemplate(
           header: '# {% if proforma %}Proforma{% else %}Invoice '
               '{{ number }}{% endif %}',
@@ -63,7 +63,7 @@ void main() {
       );
       expect((report!.header.single as ReportHeading).text, 'Invoice INV-1');
 
-      final proforma = renderInvoiceReport(
+      final proforma = _renderInvoice(
         template: const InvoicePdfTemplate(
           header: '# {% if proforma %}Proforma{% else %}Invoice '
               '{{ number }}{% endif %}',
@@ -88,14 +88,14 @@ void main() {
     test('a BROKEN template falls back (null) — an invoice must never '
         'fail on a template', () {
       expect(
-        renderInvoiceReport(
+        _renderInvoice(
           template: const InvoicePdfTemplate(body: '{% if %}broken'),
           data: Map.of(_data),
         ),
         isNull,
       );
       expect(
-        renderInvoiceReport(
+        _renderInvoice(
             template: InvoicePdfTemplate.empty, data: Map.of(_data)),
         isNull,
         reason: 'no bands = built-in layout',
@@ -109,7 +109,7 @@ void main() {
       expect(legacy.header, 'Dear {{member}},');
       expect(legacy.footer, 'Pay in 30 days.');
       final report =
-          renderInvoiceReport(template: legacy, data: Map.of(_data));
+          _renderInvoice(template: legacy, data: Map.of(_data));
       expect((report!.header.single as ReportText).text, 'Dear Ada,');
     });
 
@@ -159,7 +159,7 @@ void main() {
     });
 
     test('the default template renders the full built-in shape', () {
-      final report = renderInvoiceReport(
+      final report = _renderInvoice(
         template: defaultInvoiceTemplate(null),
         data: {
           ..._data,
@@ -376,3 +376,10 @@ void main() {
     expect(FakeMoneyRepository().pdfTemplate.isEmpty, isTrue);
   });
 }
+
+/// The invoice bands of [template], rendered against [data].
+InvoiceReport? _renderInvoice({
+  required InvoicePdfTemplate template,
+  required Map<String, Object?> data,
+}) =>
+    renderReportBands(bands: template.invoiceBands, data: data);

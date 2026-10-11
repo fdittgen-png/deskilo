@@ -250,13 +250,6 @@ String quoteToken(String id, String preview) {
 /// Builds a mention token (#2216) for the person with [id].
 String mentionToken(String id, String name) => '[at:$id|${_safeLabel(name)}]';
 
-/// The ids [body] mentions — whom a message is addressed to beyond the
-/// whole group.
-Set<String> mentionedIds(String body) => {
-      for (final segment in parseNoteBody(body))
-        if (segment is NoteMention) segment.id,
-    };
-
 /// Builds a space token for the composer.
 String spaceToken(SpaceKind kind, String id, String label) =>
     '[space:${kind.name}:$id|${_safeLabel(label)}]';

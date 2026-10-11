@@ -202,7 +202,7 @@ void main() {
     });
 
     test('the Ist option dates each payment', () {
-      final amounts = taxPointOf(
+      final amounts = _taxPointOf(
         september,
         [_paid(_on(2026, 10, 9), 12000)],
         country: 'DE',
@@ -221,7 +221,7 @@ void main() {
 
     test('issued in August, paid half in September and half in October: '
         'half in each month', () {
-      final amounts = taxPointOf(august, [
+      final amounts = _taxPointOf(august, [
         _paid(_on(2026, 9, 5), 6000),
         _paid(_on(2026, 10, 7), 6000),
       ], country: 'FR');
@@ -242,11 +242,11 @@ void main() {
     });
 
     test('an unpaid invoice is not due yet', () {
-      expect(taxPointOf(august, const [], country: 'FR'), isEmpty);
+      expect(_taxPointOf(august, const [], country: 'FR'), isEmpty);
     });
 
     test('the option for the debits dates it on the invoice', () {
-      final amounts = taxPointOf(
+      final amounts = _taxPointOf(
         august,
         [_paid(_on(2026, 9, 5), 12000)],
         country: 'FR',
@@ -257,7 +257,7 @@ void main() {
 
     test('the payment day is read on the workspace clock: 22:30 UTC on '
         '31 August is 1 September in Paris', () {
-      final amounts = taxPointOf(august, [
+      final amounts = _taxPointOf(august, [
         _paid(DateTime.utc(2026, 8, 31, 22, 30), 12000),
       ], country: 'FR');
       expect(amounts.single.on, DateTime(2026, 9, 1));
@@ -273,7 +273,7 @@ void main() {
           InvoiceLine(label: 'Coffee', amountCents: 3999, vatPercent: 10),
         ],
       );
-      final amounts = taxPointOf(mixed, [
+      final amounts = _taxPointOf(mixed, [
         _paid(_on(2026, 8, 11), 3333),
         _paid(_on(2026, 9, 11), 3333),
         _paid(_on(2026, 10, 11), 3334),
@@ -304,7 +304,7 @@ void main() {
 
     test('a deposit before the invoice is due when paid, the rest on the '
         'invoice', () {
-      final amounts = taxPointOf(invoice, [
+      final amounts = _taxPointOf(invoice, [
         _paid(_on(2026, 8, 28), 3000),
         _paid(_on(2026, 10, 2), 9000),
       ], country: 'GB');
@@ -318,7 +318,7 @@ void main() {
     });
 
     test('cash accounting waits for the money', () {
-      final amounts = taxPointOf(
+      final amounts = _taxPointOf(
         invoice,
         [_paid(_on(2026, 10, 2), 12000)],
         country: 'GB',
@@ -331,13 +331,13 @@ void main() {
   test('Switzerland and Canada date it on the invoice', () {
     final invoice = _invoice('ch', issuedAt: _on(2026, 9, 15));
     expect(
-      taxPointOf(invoice, [
+      _taxPointOf(invoice, [
         _paid(_on(2026, 11, 1), 12000),
       ], country: 'CH').single.on,
       DateTime(2026, 9, 15),
     );
     expect(
-      taxPointOf(invoice, [
+      _taxPointOf(invoice, [
         _paid(_on(2026, 11, 1), 12000),
       ], country: 'CA').single.on,
       DateTime(2026, 9, 15),
@@ -353,7 +353,7 @@ void main() {
 
     test('Spain\'s criterio de caja: an unpaid part is due on 31 December '
         'of the following year', () {
-      final amounts = taxPointOf(
+      final amounts = _taxPointOf(
         invoice,
         [_paid(_on(2026, 4, 1), 2000)],
         country: 'ES',
@@ -367,7 +367,7 @@ void main() {
     });
 
     test('Italy\'s IVA per cassa: one year after the operation', () {
-      final amounts = taxPointOf(
+      final amounts = _taxPointOf(
         invoice,
         const [],
         country: 'IT',
@@ -457,3 +457,16 @@ void main() {
     );
   });
 }
+
+/// [invoice]'s dated amounts under [country]'s tax point, or the [option]
+/// the workspace chose.
+List<VatTaxPointAmount> _taxPointOf(
+  Invoice invoice,
+  List<TaxPointPayment> payments, {
+  required String country,
+  VatTaxPointOption? option,
+}) => taxPointsOf(
+  invoice,
+  payments,
+  basis: vatTaxPointBasis(country, option),
+);

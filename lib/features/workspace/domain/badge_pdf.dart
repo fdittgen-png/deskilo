@@ -13,13 +13,12 @@ const double badgeCardHeight = 53.98 * PdfPageFormat.mm;
 /// layout (fits 2×85.6 mm + gutters across, 5×53.98 mm + gutters down).
 const int badgeSheetColumns = 2;
 const int badgeSheetRows = 5;
-const int badgeSheetCount = badgeSheetColumns * badgeSheetRows;
 
 /// Printable badge sheet (0043 UX pass, A4 revision): the one-time badge
-/// QR repeated [badgeSheetCount] times at CREDIT-CARD size on one A4
-/// page — print once, cut along the borders, and keep spares. The QR
-/// dialog is the only moment the raw token exists, so this is the moment
-/// to keep it.
+/// QR repeated [badgeSheetColumns] × [badgeSheetRows] times at CREDIT-CARD
+/// size on one A4 page — print once, cut along the borders, and keep
+/// spares. The QR dialog is the only moment the raw token exists, so this
+/// is the moment to keep it.
 ///
 /// l10n-free like the bill PDF (ADR 0007): the call site resolves the
 /// strings. [baseFont]/[boldFont] must be real TTFs so accented member

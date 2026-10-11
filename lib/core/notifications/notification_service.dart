@@ -38,25 +38,3 @@ abstract class NotificationService {
   /// resolved ones vanish.
   Future<void> syncPendingNotifications(List<PendingNotice> notices);
 }
-
-/// Fallback when platform notification init fails (#86): the app must boot
-/// and work fully without reminders rather than not boot at all.
-class NoopNotificationService implements NotificationService {
-  const NoopNotificationService();
-
-  @override
-  Future<void> rescheduleCheckInReminders(
-    List<ReminderRequest> reminders,
-  ) async {}
-
-  @override
-  Future<void> showNow({required String title, required String body}) async {}
-
-  @override
-  Future<void> syncPendingNotifications(List<PendingNotice> notices) async {}
-
-  // #442: the Noop fallback means notifications are DEAD this session —
-  // report false so the Settings warning tile fires instead of silence.
-  @override
-  Future<bool?> notificationsEnabled() async => false;
-}

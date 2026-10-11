@@ -88,7 +88,7 @@ void main() {
   });
 
   // #1330 — `REQUIRES` mirrors featureManifest so `on()` / `enableWith()`
-  // agree with the app's effectiveFeatures / featureFlagsAfterToggle. It
+  // agree with the app's effectiveFeatures / featureFlagsToggleDelta. It
   // matched by discipline only (59/59 when audited); now it is pinned.
   group('dependencies', () {
     test('REQUIRES equals featureManifest.requires, entry for entry', () {

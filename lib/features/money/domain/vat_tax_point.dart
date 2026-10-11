@@ -220,20 +220,6 @@ class VatTaxPointAmount {
       !on.isAfter(DateTime(end.year, end.month, end.day));
 }
 
-/// The issue's `taxPointOf(invoice, payments, country, option)`.
-List<VatTaxPointAmount> taxPointOf(
-  Invoice invoice,
-  List<TaxPointPayment> payments, {
-  required String country,
-  VatTaxPointOption? option,
-  DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
-}) => taxPointsOf(
-  invoice,
-  payments,
-  basis: vatTaxPointBasis(country, option),
-  dayOf: dayOf,
-);
-
 /// The dated amounts [invoice] declares under [basis], given the
 /// [payments] it received (or, for a credit note, the refunds paid).
 ///

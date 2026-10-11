@@ -1359,50 +1359,6 @@ final class VatRatesProvider
 
 String _$vatRatesHash() => r'93e83a384d2a000a9e21cfcdff18b285ebe61fbf';
 
-/// The percentage an item with no rate of its own is taxed at — the mirror
-/// of `workspace_default_vat_percent`, for previews only. The server is
-/// still what stamps the ledger.
-
-@ProviderFor(defaultVatPercent)
-final defaultVatPercentProvider = DefaultVatPercentProvider._();
-
-/// The percentage an item with no rate of its own is taxed at — the mirror
-/// of `workspace_default_vat_percent`, for previews only. The server is
-/// still what stamps the ledger.
-
-final class DefaultVatPercentProvider
-    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
-    with $FutureModifier<double>, $FutureProvider<double> {
-  /// The percentage an item with no rate of its own is taxed at — the mirror
-  /// of `workspace_default_vat_percent`, for previews only. The server is
-  /// still what stamps the ledger.
-  DefaultVatPercentProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'defaultVatPercentProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$defaultVatPercentHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<double> create(Ref ref) {
-    return defaultVatPercent(ref);
-  }
-}
-
-String _$defaultVatPercentHash() => r'03c79715bfe2c78330ab759b724dd15d5a707005';
-
 /// The invoice archive (0060): RLS scopes rows — members their own,
 /// admins the whole workspace.
 

@@ -13,7 +13,6 @@ const PdfColor reportAccent = PdfColor.fromInt(0xFFD32F2F);
 const PdfColor reportInk = PdfColors.blueGrey900;
 const PdfColor reportMuted = PdfColors.blueGrey600;
 const PdfColor reportHairline = PdfColors.blueGrey200;
-const PdfColor reportZebra = PdfColor.fromInt(0xFFF6F7F9);
 
 /// Point sizes of the four typographic roles.
 const double reportHeadingSize = 20;

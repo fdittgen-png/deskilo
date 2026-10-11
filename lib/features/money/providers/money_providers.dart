@@ -278,18 +278,6 @@ Future<List<VatRate>> vatRates(Ref ref) async {
   return repository.fetchVatRates(workspace.id);
 }
 
-/// The percentage an item with no rate of its own is taxed at — the mirror
-/// of `workspace_default_vat_percent`, for previews only. The server is
-/// still what stamps the ledger.
-@riverpod
-Future<double> defaultVatPercent(Ref ref) async {
-  final rates = await ref.watch(vatRatesProvider.future);
-  for (final rate in rates) {
-    if (rate.isDefault) return rate.percent;
-  }
-  return 0;
-}
-
 /// The invoice archive (0060): RLS scopes rows — members their own,
 /// admins the whole workspace.
 @Riverpod(keepAlive: true)

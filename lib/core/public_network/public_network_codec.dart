@@ -217,10 +217,3 @@ Map<String, String> encodePublicInput(
   }
   return Map.unmodifiable(input);
 }
-
-/// The operation [id], for a caller holding only its stable identifier.
-/// Code uses the generated `PublicNetworkOperations` constants instead, so
-/// a renamed or removed operation is a compile error at every caller.
-PublicOperationSpec publicOperation(String id) =>
-    publicNetworkOperations[id] ??
-    (throw ArgumentError.value(id, 'operation', 'not in the contract'));

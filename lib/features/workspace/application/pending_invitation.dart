@@ -37,17 +37,6 @@ class SecurePendingInvitationStore implements PendingInvitationStore {
       value == null ? _secrets.delete(_key) : _secrets.write(_key, value);
 }
 
-class InMemoryPendingInvitationStore implements PendingInvitationStore {
-  InMemoryPendingInvitationStore([this.value]);
-  String? value;
-
-  @override
-  Future<String?> read() async => value;
-
-  @override
-  Future<void> write(String? value) async => this.value = value;
-}
-
 @Riverpod(keepAlive: true)
 PendingInvitationStore pendingInvitationStore(Ref ref) =>
     const SecurePendingInvitationStore();

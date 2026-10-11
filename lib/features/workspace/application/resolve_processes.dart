@@ -119,14 +119,6 @@ List<WorkspaceFeature> capabilitiesOf(
   return const [];
 }
 
-/// Every subprocess key the registry knows, in registry order.
-List<String> allSubprocessKeys({
-  List<WorkspaceProcess> processes = workspaceProcesses,
-}) => [
-      for (final process in processes)
-        for (final subprocess in process.subprocesses) subprocess.key,
-    ];
-
 /// What switching [subprocessKeys] ON would change, given [active].
 ///
 /// [active] is the RAW stored set, not the effective one: a capability

@@ -35,6 +35,6 @@ void main() {
   test('the wall clock of an instant is read on the workspace clock', () {
     // A UTC instant that is 15:00 in Paris (CEST, UTC+2) in August.
     final instant = DateTime.utc(2026, 8, 3, 13, 0);
-    expect(workspaceWallMinutes(instant), 15 * 60);
+    expect(WorkspaceTime.minutesOfDay(instant), 15 * 60);
   });
 }
