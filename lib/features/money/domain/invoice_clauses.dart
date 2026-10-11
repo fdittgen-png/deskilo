@@ -35,11 +35,12 @@
 // statutory references, not an authoritative legal review. A profile
 // becomes reviewed only when someone with that authority says so.
 import 'package:meta/meta.dart';
+
+import '../../../core/data/json_reader.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
 import 'vat_compliance.dart';
-import '../../../core/data/json_reader.dart';
 
 /// Whether the customer acts as a business or as a consumer. Stated by
 /// the seller (`members.customer_capacity`, the workspace default in

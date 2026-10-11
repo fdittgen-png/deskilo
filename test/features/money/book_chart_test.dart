@@ -105,9 +105,9 @@ void main() {
 
     test('the mapping in force is the latest by the day, per issuer', () {
       final versions = [
-        mapping(BookRole.revenue, 'rev', DateTime(2026, 1, 1)),
-        mapping(BookRole.revenue, 'rev2', DateTime(2026, 7, 1)),
-        mapping(BookRole.revenue, 'x', DateTime(2025, 1, 1), issuer: 's2'),
+        mapping(BookRole.revenue, 'rev', DateTime(2026)),
+        mapping(BookRole.revenue, 'rev2', DateTime(2026, 7)),
+        mapping(BookRole.revenue, 'x', DateTime(2025), issuer: 's2'),
       ];
       expect(
         mappingOn(
@@ -123,27 +123,27 @@ void main() {
           versions,
           's1',
           BookRole.revenue,
-          DateTime(2026, 7, 1),
+          DateTime(2026, 7),
         )?.accountId,
         'rev2',
       );
       expect(
-        mappingOn(versions, 's1', BookRole.revenue, DateTime(2025, 6, 1)),
+        mappingOn(versions, 's1', BookRole.revenue, DateTime(2025, 6)),
         isNull,
       );
     });
 
     test('a local book needs customers, revenue and bank mapped', () {
-      final day = DateTime(2026, 7, 1);
+      final day = DateTime(2026, 7);
       expect(missingForLocalBook(const [], 's1', day), [
         BookRole.customers,
         BookRole.revenue,
         BookRole.bank,
       ]);
       final mapped = [
-        mapping(BookRole.customers, 'cust', DateTime(2026, 1, 1)),
-        mapping(BookRole.revenue, 'rev', DateTime(2026, 1, 1)),
-        mapping(BookRole.bank, 'bank', DateTime(2026, 8, 1)),
+        mapping(BookRole.customers, 'cust', DateTime(2026)),
+        mapping(BookRole.revenue, 'rev', DateTime(2026)),
+        mapping(BookRole.bank, 'bank', DateTime(2026, 8)),
       ];
       expect(missingForLocalBook(mapped, 's1', day), [
         BookRole.bank,

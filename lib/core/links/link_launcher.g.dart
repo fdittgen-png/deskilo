@@ -64,4 +64,4 @@ final class LinkLauncherProvider
   }
 }
 
-String _$linkLauncherHash() => r'e7b65ae5f10c539efdd8e8de40810847e4eebb0c';
+String _$linkLauncherHash() => r'641df3af7f423f8ab645cf7e2983ad912ecd191c';

@@ -36,7 +36,7 @@ void main() {
           },
         }),
       );
-      expect(invoice.dueOn, DateTime(2026, 10, 1));
+      expect(invoice.dueOn, DateTime(2026, 10));
       expect(invoice.maturityBasis, 'document_term');
     });
 
@@ -77,11 +77,11 @@ void main() {
 
     test('issued 1 September, due 1 October: 20 September is not overdue', () {
       expect(
-        level(DateTime(2026, 9, 20, 12), dueOn: DateTime(2026, 10, 1)),
+        level(DateTime(2026, 9, 20, 12), dueOn: DateTime(2026, 10)),
         isNull,
       );
       expect(
-        level(DateTime(2026, 10, 1, 0, 30), dueOn: DateTime(2026, 10, 1)),
+        level(DateTime(2026, 10, 1, 0, 30), dueOn: DateTime(2026, 10)),
         1,
       );
     });
@@ -90,7 +90,7 @@ void main() {
       // Three days after issue the CURRENT rule says "due"; the frozen
       // date says not yet.
       expect(level(DateTime(2026, 9, 5)), 1);
-      expect(level(DateTime(2026, 9, 5), dueOn: DateTime(2026, 10, 1)), isNull);
+      expect(level(DateTime(2026, 9, 5), dueOn: DateTime(2026, 10)), isNull);
     });
   });
 

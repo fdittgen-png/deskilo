@@ -2614,6 +2614,7 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 - Vous voyez « Dépense soumise — en attente d'approbation ». La dépense ne compte qu'une fois confirmée.
 - Une fourniture confirmée est mise en rayon comme un service : les membres qui l'utilisent la paient.
+- Dans un espace assujetti à la TVA où **TVA déductible** est activée, choisissez la **TVA sur cette dépense** et la **Part déductible (%)** — 100 % sauf si une partie de la dépense est privée ou sert une activité exonérée. Une fois la dépense approuvée, sa TVA déductible est retranchée sur la déclaration de TVA du mois de l'approbation.
 - Les coûts récurrents ont leur propre entrée, **Dépenses programmées**, à côté de ce bouton.
 
 **Voir aussi:** [Approuver ou refuser une dépense](#approuver-ou-refuser-une-dépense)
@@ -5113,6 +5114,7 @@ Vous voulez la TVA d'une période calculée à partir de vos factures et de vos 
 - Une déclaration passe de **Brouillon** à **Préparée** puis **Déposée**. La préparer à nouveau remplace les montants ; une fois déposée, plus rien ne la modifie. Si une facture ou un encaissement de la période a changé depuis la préparation, l'application refuse de la marquer déposée tant qu'elle n'a pas été préparée à nouveau.
 - La liste **Période** ne propose que des périodes de la durée choisie sous **Périodicité de la déclaration de TVA** dans [Identité légale et facturation électronique](https://fdittgen-png.github.io/deskilo/#/legal-identity) — mensuelle, trimestrielle ou annuelle ; trimestrielle tant que vous n'avez pas choisi. Une période qui chevauche une déclaration déposée ne peut pas être préparée.
 - Une période déposée est verrouillée. Si quelque chose y change ensuite — une facture annulée, un encaissement enregistré tardivement à une date antérieure — la déclaration déposée reste telle quelle, et la prochaine déclaration que vous préparez porte la différence comme **Régularisation de** cette période, sur une ligne à part. Déposer cette déclaration enregistre la régularisation : elle n'est déclarée qu'une fois. Sur la CA3, les régularisations vont aux lignes 15 (TVA à reverser) et 21 (autre TVA à déduire) ; ailleurs, elles s'ajoutent aux cases du taux de la période en cours.
+- Avec **TVA déductible** activée, la déclaration liste aussi la **TVA déductible** des dépenses approuvées dans la période, par taux, à part des ventes, et les totaux indiquent la **TVA à payer** ou le **Crédit de TVA**. Sur les formulaires, elle va à la ligne 20 de la CA3, à la Kz 66 de l'UStVA, à la case 4 britannique, au chiffre 400 suisse et à la ligne 108 canadienne.
 - L'application ne télétransmet pas de déclaration : la France dépose par EDI-TVA ou l'espace professionnel d'impots.gouv, l'Allemagne par ELSTER. La plateforme de facturation électronique ne transporte que les factures.
 - C'est une aide au dépôt, pas un conseil fiscal. Vérifiez-la avec votre comptabilité avant de la déposer.
 

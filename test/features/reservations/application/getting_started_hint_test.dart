@@ -381,7 +381,6 @@ void main() {
         installation: 'a',
         accountId: 'u',
         workspaceId: 'w',
-        version: 1,
       );
       final v2 = gettingStartedSeenKey(
         installation: 'a',

@@ -138,4 +138,5 @@ const Set<String> workspaceFeatureKeys = {
   'supplyClassification',
   'viesVerification',
   'recapitulativeStatement',
+  'inputVat',
 };

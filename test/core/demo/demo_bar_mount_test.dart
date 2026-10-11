@@ -15,9 +15,9 @@
 // class of mistake produces. Mounting it inside `home` instead would
 // give it an Overlay and prove nothing.
 import 'package:deskilo/core/demo/demo_persona.dart';
-import 'package:deskilo/core/motion/motion.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/motion/motion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

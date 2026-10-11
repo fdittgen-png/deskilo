@@ -111,7 +111,6 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
                     child: InlineBanner(
                       key: const ValueKey('mcp-policy-unavailable'),
                       icon: Icons.cloud_off_outlined,
-                      severity: InlineBannerSeverity.error,
                       text:
                           l10n?.mcpPolicyUnavailable ??
                           'The assistant settings could not be loaded. Try again later.',

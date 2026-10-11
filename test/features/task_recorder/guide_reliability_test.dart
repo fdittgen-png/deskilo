@@ -135,8 +135,9 @@ void main() {
     () {
       final run = GuideRun(_guide(target));
       final old = run.onAction(RecorderActions.uiCommand, target: target);
-      run.pause();
-      run.resume();
+      run
+        ..pause()
+        ..resume();
       expect(run.uncertain, isTrue);
       final current = run.onAction(RecorderActions.uiCommand, target: target);
       expect(run.onAction(RecorderActions.uiCommand, target: target), isNull);

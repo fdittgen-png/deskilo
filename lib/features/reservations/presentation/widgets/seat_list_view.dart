@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/place_feedback.dart';
-import 'place_feedback_bar.dart';
+import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -12,13 +12,13 @@ import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/place_feedback.dart';
 import '../../domain/reservation.dart';
 import '../../domain/seat_state_logic.dart';
-import 'list_space_tap.dart';
 import '../../domain/space_code.dart';
 import '../../domain/whole_space_blocking.dart';
-import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/format_controller.dart';
+import 'list_space_tap.dart';
+import 'place_feedback_bar.dart';
 
 /// The plan's SEAT LIST (#687), ported out of the deleted Plan tab.
 ///

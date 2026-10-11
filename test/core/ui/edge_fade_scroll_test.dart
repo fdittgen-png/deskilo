@@ -23,7 +23,6 @@ Future<void> pumpRow(WidgetTester tester, int chips) async {
                     padding: const EdgeInsets.only(right: 6),
                     child: FilterChip(
                       label: Text('Filter number $i'),
-                      selected: false,
                       onSelected: (_) {},
                     ),
                   ),
@@ -85,7 +84,6 @@ void main() {
                   for (var i = 0; i < 8; i++)
                     FilterChip(
                       label: Text('Chip $i'),
-                      selected: false,
                       onSelected: (_) => tapped = i,
                     ),
                 ],

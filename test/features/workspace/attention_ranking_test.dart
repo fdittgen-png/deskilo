@@ -55,7 +55,7 @@ void main() {
 
   test('within a rank the oldest is first', () {
     final ranked = rankAttention([
-      _item(AttentionKind.person, daysWaiting: 0),
+      _item(AttentionKind.person),
       _item(AttentionKind.person, daysWaiting: 3),
       _item(AttentionKind.person, daysWaiting: 1),
     ]);
@@ -73,7 +73,7 @@ void main() {
       'configuration warning', () {
     final ranked = rankAttention([
       _item(AttentionKind.configuration, daysWaiting: 7),
-      _item(AttentionKind.money, daysWaiting: 0),
+      _item(AttentionKind.money),
     ]);
 
     expect(ranked.first.kind, AttentionKind.money,
@@ -83,7 +83,7 @@ void main() {
 
   test('the order is stable, so equal lines do not shuffle', () {
     final ranked = rankAttention([
-      _item(AttentionKind.money, count: 1),
+      _item(AttentionKind.money),
       _item(AttentionKind.money, count: 2),
       _item(AttentionKind.money, count: 3),
     ]);

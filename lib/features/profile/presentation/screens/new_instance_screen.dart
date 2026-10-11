@@ -4,21 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/instance_builder.dart';
 import '../../../../core/instance/instance_bundle.dart';
 import '../../../../core/instance/instance_bundle_asset.dart';
+import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/instance_readiness.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
-import '../../../../core/ui/wizard_scaffold.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/instance/instance_doctor.dart';
 import '../widgets/instance_done_step.dart';
 import '../widgets/instance_owner_claim_field.dart';
 import '../widgets/instance_readiness_card.dart';
@@ -120,7 +120,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
                     'Tokens and paste it whole.')
             : e.message);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('instance', '$what failed', error: e, stackTrace: st);
       if (mounted) setState(() => _error = '$e');
     } finally {

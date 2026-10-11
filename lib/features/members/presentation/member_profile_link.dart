@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/links/link_launcher.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
-import '../../workspace/domain/member.dart';
-import '../../workspace/domain/workspace_feature.dart';
-import 'screens/member_page.dart';
-import '../../../core/links/link_launcher.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/domain/reservation.dart';
+import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/domain/member.dart';
+import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_status.dart';
 import '../providers/directory_providers.dart';
 import 'screens/directory_screen.dart';
+import 'screens/member_page.dart';
 
 /// Opens a member's profile from ANYWHERE, resolving what the sheet
 /// needs from providers (#695).
@@ -108,7 +108,7 @@ Future<void> _launchLink(
   try {
     final handled = await ref.read(linkLauncherProvider)(uri);
     if (!handled) throw StateError('no handler for $uri');
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.error(
       'members',
       'whatsapp launch failed',

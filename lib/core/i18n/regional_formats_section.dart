@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/profile/domain/personal_preferences.dart';
+import '../../features/profile/presentation/widgets/preference_scope_controls.dart';
+import '../../features/profile/providers/personal_preferences_providers.dart';
 import '../../features/profile/providers/profile_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../help/help_anchors.dart';
@@ -14,9 +17,6 @@ import 'app_format.dart';
 import 'format_controller.dart';
 import 'format_prefs.dart';
 import 'locale_names.dart';
-import '../../features/profile/domain/personal_preferences.dart';
-import '../../features/profile/providers/personal_preferences_providers.dart';
-import '../../features/profile/presentation/widgets/preference_scope_controls.dart';
 
 /// Settings → Region & formats (#711): the member's own numbers, dates,
 /// clock and time zone. The tile previews what the choices add up to;

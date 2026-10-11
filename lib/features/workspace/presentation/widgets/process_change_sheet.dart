@@ -86,7 +86,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
       ref.invalidate(myWorkspacesProvider);
       try {
         await ref.read(myWorkspacesProvider.future);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn('workspace',
             'refetch after a process-change conflict failed',
             error: e, stackTrace: st);
@@ -96,7 +96,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
       TraceLogger.instance.warn('workspace', 'process change unconfirmed',
           error: e, stackTrace: st);
       if (mounted) setState(() => _unconfirmed = true);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('workspace', 'process change failed',
           error: e, stackTrace: st);
       if (mounted) {

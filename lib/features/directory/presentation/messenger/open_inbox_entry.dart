@@ -73,7 +73,7 @@ Future<String?> _peerOf(WidgetRef ref, InboxEntry entry) async {
         .where((r) => r['id'] == entry.contextId)
         .map((r) => r['recipient'] as String?)
         .firstOrNull;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // Without a peer the thread still reads; only a reply is refused.
     TraceLogger.instance.warn(
       'messages',

@@ -6,18 +6,18 @@
 // client affordances and the wire call.
 import 'dart:io';
 
-import 'package:deskilo/features/workspace/domain/member_note.dart';
-import 'package:flutter/material.dart';
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_note.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
-import 'package:deskilo/core/storage/note_seen_store.dart';
-import '../../helpers/fake_notification_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_notification_service.dart';
+import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart';
 import 'co_owner_test.dart' show pumpMembersWithAna;
 
 void main() {

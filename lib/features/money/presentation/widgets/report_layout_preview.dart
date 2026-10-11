@@ -101,9 +101,7 @@ class LayoutPageView extends StatelessWidget {
                 box.zone(document.continuation,
                     height: document.continuation.height?.resolve(contentH))
               else ...[
-                headerH == null
-                    ? box.zone(document.header)
-                    : SizedBox(
+                if (headerH == null) box.zone(document.header) else SizedBox(
                         height: headerH,
                         child: box.zone(document.header, height: headerH)),
                 if (reserve > 0) SizedBox(height: reserve),

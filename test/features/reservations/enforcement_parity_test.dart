@@ -14,10 +14,10 @@
 // whose kiosk path now goes through the same mirrored rule set.
 import 'dart:io';
 
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/walk_up_window.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
-import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'

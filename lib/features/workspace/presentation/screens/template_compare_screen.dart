@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
-import '../workbook_labels.dart';
-import '../widgets/workbook_export_dialog.dart';
 import '../../domain/template_capabilities.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
+import '../widgets/workbook_export_dialog.dart';
+import '../workbook_labels.dart';
 
 /// #1660 — up to four shortlisted templates, side by side, from their
 /// inspected settings (#1655/#1659): every field, not only what is on.
@@ -85,7 +85,6 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
           child: InlineBanner(
             key: const ValueKey('compare-unavailable'),
             icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.error,
             text: l10n?.compareUnavailable ?? 'These templates could not be read to compare them. Nothing is claimed either way.',
           ),
         ),

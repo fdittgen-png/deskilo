@@ -55,7 +55,7 @@ void main() {
   });
 
   testWidgets('a refused leave says so and changes nothing', (tester) async {
-    final me = FakeMeRepository()..failure = StateError('server says no');
+    final me = FakeMeRepository()..failure = Exception('server says no');
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');
     await _openMenu(tester, 'ws-2');

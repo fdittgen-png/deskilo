@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -14,12 +18,10 @@ import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
+import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
-import '../../domain/invoice_line_text.dart';
 import '../report_strings_l10n.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/time/date_text.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -99,7 +101,7 @@ Future<void> showInvoiceIssueSheet(
           buyerReference: result.buyerReference,
           purchaseOrder: result.purchaseOrder,
         );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('money', 'invoice issue failed', error: e, stackTrace: st);
     if (!context.mounted) return;
@@ -187,7 +189,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   DateTime get _month {
@@ -205,7 +207,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       var missing = const <String>[];
       try {
         missing = await widget.readiness(memberId, period);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // Advisory: the server still refuses an incomplete issue.
         TraceLogger.instance.error('money', 'invoice readiness failed',
             error: e, stackTrace: st);
@@ -216,7 +218,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         _missing = missing;
         _loading = false;
       });
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The preview is advisory (issuing re-derives server-side), but a
       // failing fetch still leaves a breadcrumb.
       TraceLogger.instance
@@ -242,7 +244,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       _preview = null;
       _missing = const [];
     });
-    _load();
+    unawaited(_load());
   }
 
   @override
@@ -289,7 +291,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               _preview = null;
               _missing = const [];
             });
-            _load();
+            unawaited(_load());
           },
           decoration: InputDecoration(
             labelText: l10n?.invoiceMemberLabel ?? 'Member',
@@ -479,7 +481,6 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                 ? l10n?.invoiceExternalIssuingTitle ?? AppLocalizationsEn().invoiceExternalIssuingTitle
                 : l10n?.invoiceMissingTitle ?? 'Complete these details before issuing'}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
-            severity: InlineBannerSeverity.error,
           ),
         const SizedBox(height: 4),
         FilledButton(

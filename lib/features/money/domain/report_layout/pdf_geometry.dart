@@ -44,7 +44,7 @@ List<String> pageStreams(Uint8List bytes) {
           zlib.decode(bytes.sublist(match.end, end)));
       // Content streams draw; font and metadata streams do not.
       if (text.contains('Td') || text.contains(' cm')) out.add(text);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: a font program or an embedded file is not deflate
       // — an expected miss while walking every stream, not a failure.
       assert(st.toString().isNotEmpty, 'a caught error has a stack');

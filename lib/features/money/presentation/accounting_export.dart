@@ -10,15 +10,18 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
 import '../domain/accounting_view.dart';
+import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
 import '../domain/fec.dart';
 import '../domain/invoice.dart';
+import '../domain/invoice_line_text.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/vat_tax_point.dart';
@@ -26,15 +29,12 @@ import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
-import '../domain/invoice_line_text.dart';
 import 'report_strings_l10n.dart';
 import 'vat_report_actions.dart';
 import 'vat_tax_point_labels.dart';
-import 'widgets/accounting_export_sheet.dart';
 import 'widgets/accountant_handoff_preflight.dart';
+import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
-import '../../reservations/providers/reservation_providers.dart';
-import '../domain/archive_bundle.dart';
 
 /// THE ACCOUNTING EXPORT (0074, extended by #669).
 ///
@@ -201,7 +201,7 @@ Future<void> exportAccountingFile(
             invoices: exported,
             matches: matches,
             accounts: datev.accounts,
-            from: DateTime(year, 1, 1),
+            from: DateTime(year),
             to: DateTime(year, 12, 31),
             generatedAt: now,
             consultantNumber: datev.consultantNumber,

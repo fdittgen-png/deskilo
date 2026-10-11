@@ -139,7 +139,7 @@ class CaptureProtection {
         error: e,
         stackTrace: st,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'capture',
         'capture $method failed',

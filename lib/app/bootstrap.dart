@@ -23,13 +23,13 @@ const kEssentialBootDeadline = Duration(seconds: 15);
 /// The one essential start-up attempt, observed to the end.
 class EssentialBoot {
   EssentialBoot(Future<void> attempt) {
-    attempt.then(
+    unawaited(attempt.then(
       (_) => _set(BootState.ready),
       onError: (Object e, StackTrace st) {
         error = e;
         _set(BootState.failed);
       },
-    );
+    ));
   }
 
   final state = ValueNotifier(BootState.starting);

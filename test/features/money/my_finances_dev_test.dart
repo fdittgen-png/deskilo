@@ -27,7 +27,7 @@ void main() {
   test('production and development split, reminders follow their invoice', () {
     final o = FinanceOverview(
       invoices: [
-        invoice('p', ws: 'Office A'),
+        invoice('p'),
         invoice('d', ws: 'Lab'),
       ],
       reminders: [
@@ -55,7 +55,7 @@ void main() {
       tester,
       FinanceOverview(
         invoices: [
-          invoice('p', ws: 'Office A', total: 10000),
+          invoice('p'),
           invoice('d', ws: 'Lab', total: 99900),
         ],
       ),

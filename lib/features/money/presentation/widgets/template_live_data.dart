@@ -3,15 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/report_data.dart';
+import '../../domain/report_data_letters.dart';
 import '../../providers/money_providers.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
-import '../../domain/report_data.dart';
-import '../../domain/report_data_letters.dart';
-import '../../../../core/time/date_text.dart';
 
 /// #1061 — the live data for the designer's SELECTED document, or null
 /// when the app has none yet (→ simulated sample data). Moved out of

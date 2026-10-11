@@ -80,7 +80,7 @@ void main() {
   testWidgets('an open invoice inside the term is due, not overdue',
       (tester) async {
     final money = FakeMoneyRepository()
-      ..dunningRules = const DunningRules(firstAfterDays: 14);
+      ..dunningRules = const DunningRules();
     final id = await openInvoice(money, ageDays: 3);
     await pumpFaces(tester, money: money);
     await face(tester, MoneyFace.invoices);
@@ -99,7 +99,7 @@ void main() {
   testWidgets('overdue detail is retained without a duplicate invoice banner',
       (tester) async {
     final money = FakeMoneyRepository()
-      ..dunningRules = const DunningRules(firstAfterDays: 14);
+      ..dunningRules = const DunningRules();
     await openInvoice(money, ageDays: 20);
     await pumpFaces(tester, money: money);
     await face(tester, MoneyFace.invoices);

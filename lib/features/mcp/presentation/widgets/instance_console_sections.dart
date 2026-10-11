@@ -192,6 +192,7 @@ class InstanceAccessSection extends StatelessWidget {
     final people = {
       for (final p in [...o.administrators, ...o.candidates]) p.userId: p,
     }.values.where((p) => !granted.contains(p.userId)).toList();
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     String who(String name, bool me) =>
         me ? '$name (${l10n?.instanceYou ?? 'you'})' : name;
     return Column(

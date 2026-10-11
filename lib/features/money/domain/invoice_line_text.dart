@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../domain/invoice.dart';
-import 'report_strings.dart';
 import 'period_label.dart';
+import 'report_strings.dart';
 
 /// Localized wording for one DERIVED invoice position (0062): the kind
 /// names the tracked source, the label carries its data. Reuses the

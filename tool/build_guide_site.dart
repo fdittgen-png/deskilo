@@ -17,7 +17,7 @@ import 'dart:io';
 
 import 'package:markdown/markdown.dart' as md;
 
-import 'build_user_guide.dart' show families, Family;
+import 'build_user_guide.dart' show Family, families;
 import 'guide_links.dart';
 
 const outDir = 'web/guide';

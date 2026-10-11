@@ -8,6 +8,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_pdf.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
@@ -21,11 +22,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'package:deskilo/core/realtime/realtime_providers.dart';
-
 import '../../helpers/fake_event_repository.dart';
-import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/fake_money_repository.dart';
+import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 

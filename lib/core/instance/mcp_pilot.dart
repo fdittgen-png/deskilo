@@ -25,6 +25,7 @@ List<ReadinessCheck> evaluateMcpPilot({
   const area = ReadinessArea.mcpRuntime;
   ReadinessCheck check(
     String code,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     bool ok,
     String failDetail, [
     String passDetail = '',
@@ -110,14 +111,15 @@ List<ReadinessCheck> evaluateMcpPilot({
     );
     return checks;
   }
-  checks.add(
+  checks
+    ..add(
     check(
       'pilot_answered',
       envelope['status'] == 'completed',
       'the read-only call answered ${envelope['status']}',
     ),
-  );
-  checks.add(
+  )
+    ..add(
     check(
       'pilot_provenance',
       envelope['operation'] == mcpPilotOperation &&

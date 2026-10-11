@@ -6,17 +6,18 @@
 // credentials — this is not the operational Excel export and never calls
 // it. Every cell is data (inline strings or numbers); nothing becomes a
 // formula, link or macro.
-import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+
+import 'package:meta/meta.dart';
 
 import '../../../core/files/file_types.dart';
 import '../../../core/files/xlsx.dart';
 import '../../../core/time/date_text.dart';
 import '../domain/template_capabilities.dart';
 import '../domain/template_inspection.dart';
-import '../domain/workspace_repository.dart';
 import '../domain/workbook_origin.dart';
+import '../domain/workspace_repository.dart';
 
 /// The largest named batch one workbook carries; more is refused, never
 /// cut short.
@@ -26,11 +27,11 @@ const maxTemplates = 50;
 /// never confused with "not in this template".
 Object? _value(Object? v) => switch (v) {
   null => null,
-  num n when n.isFinite => n,
+  final num n when n.isFinite => n,
   num _ => '$v',
-  bool b => b ? 'true' : 'false',
-  String s => s,
-  List<Object?> l =>
+  final bool b => b ? 'true' : 'false',
+  final String s => s,
+  final List<Object?> l =>
     l.map((e) => e is Map || e is List ? jsonEncode(e) : '$e').join(', '),
   _ => jsonEncode(v),
 };

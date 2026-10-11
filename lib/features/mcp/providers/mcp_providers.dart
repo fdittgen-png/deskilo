@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,15 +18,15 @@ import '../application/mcp_client_registry.dart';
 import '../application/mcp_commands.dart';
 import '../application/mcp_policy_editor.dart';
 import '../data/connected_target_client.dart';
-import '../data/supabase_mcp_admin_repository.dart';
 import '../data/supabase_action_confirmation_repository.dart';
+import '../data/supabase_mcp_admin_repository.dart';
 import '../data/supabase_mcp_connection_repository.dart';
 import '../domain/action_confirmation.dart';
 import '../domain/mcp_access_status.dart';
 import '../domain/mcp_admin.dart';
 import '../domain/mcp_client.dart';
-import '../domain/mcp_context.dart';
 import '../domain/mcp_connection.dart';
+import '../domain/mcp_context.dart';
 import '../domain/mcp_usage.dart';
 
 part 'mcp_providers.g.dart';
@@ -71,15 +73,16 @@ McpClientRegistry mcpClientRegistry(Ref ref) {
   }
 
   // A sign-out or account change — not the first sign-in answer.
-  ref.listen(authStateProvider, (previous, next) {
+  ref
+    ..listen(authStateProvider, (previous, next) {
     if (previous != null &&
         previous.hasValue &&
         !next.isLoading &&
         previous.value != next.value) {
-      registry.disposeAll().then(report);
+      unawaited(registry.disposeAll().then(report));
     }
-  });
-  ref.onDispose(() => registry.close().then(report));
+  })
+    ..onDispose(() => registry.close().then(report));
   return registry;
 }
 

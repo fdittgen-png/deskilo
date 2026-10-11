@@ -19,8 +19,8 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../auth/providers/auth_providers.dart';
 import '../../auth/domain/database_capabilities.dart';
+import '../../auth/providers/auth_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/instance_providers.dart';
@@ -144,7 +144,6 @@ class _ConnectAssistantScreenState
   Widget _unavailable(AppLocalizations? l10n) => InlineBanner(
     key: const ValueKey('mcp-connect-unavailable'),
     icon: Icons.cloud_off_outlined,
-    severity: InlineBannerSeverity.error,
     text:
         l10n?.mcpNextUnavailable ??
         'The server could not answer. Nothing is assumed; try again later.',

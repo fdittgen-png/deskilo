@@ -255,6 +255,7 @@ void main() {
     test('a note is left out unless notes are included, and then labelled', () {
       final r = _fixture(BookingJourney.cancelledReview);
       final l = _l('en');
+      // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
       String text(bool notes) => _paragraphs(
         _unzip(
           exportDocx(r, l, options: TaskDocumentOptions(includeNotes: notes)),

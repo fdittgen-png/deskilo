@@ -12,7 +12,6 @@
 // pending with its undo.
 import 'dart:async';
 import 'dart:convert';
-import '../../helpers/settings_sections.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_config.dart';
@@ -20,21 +19,22 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/backend/instance_facts.dart';
 import 'package:deskilo/core/backend/schema_version.dart';
-import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/instance/instance_bundle_asset.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
+import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deskilo/features/profile/presentation/widgets/server_facts_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/fake_supabase_management.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 const publishable = 'sb_publishable_0123456789abcdefghij';
 

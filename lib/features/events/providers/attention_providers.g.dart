@@ -178,7 +178,7 @@ final class UpdatesSeenProvider
   }
 }
 
-String _$updatesSeenHash() => r'b0df7a244be2d58c3d61447c503f7384e0085b56';
+String _$updatesSeenHash() => r'cbfeb72b576f8a53c33f1df7795381921e2d30b7';
 
 /// Badges clear immediately; the currently visible feed retains its new rows.
 

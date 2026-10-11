@@ -1,40 +1,41 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/validation/pending_validation.dart';
 import 'dart:convert' show base64Encode;
 import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../domain/invoice.dart';
-import '../domain/vat_declaration.dart';
-import '../domain/vat_tax_point.dart';
-import '../domain/member_account.dart';
+import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/system_columns.dart';
+import '../../../core/time/date_text.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/validation/pending_validation.dart';
+import '../../../core/vat/supply_class.dart';
 import '../domain/billing_rules.dart';
-import '../domain/expense_repartition.dart';
-import '../domain/usage_record.dart';
 import '../domain/dunning.dart';
-import '../domain/price_negotiation.dart';
-import '../domain/invoice_pdf_template.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/expense_repartition.dart';
 import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_pdf_template.dart';
 import '../domain/ledger_entry.dart';
+import '../domain/member_account.dart';
 import '../domain/money_repository.dart';
-import '../../../core/data/paged_fetch.dart';
+import '../domain/number_sequence.dart';
 import '../domain/package.dart';
+import '../domain/payment_intent.dart';
 import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
-import '../../../core/vat/supply_class.dart';
+import '../domain/price_negotiation.dart';
+import '../domain/reminder_evidence.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
-import '../domain/vat_rate.dart';
 import '../domain/subscription_levels.dart';
-import '../domain/payment_intent.dart';
-import '../domain/number_sequence.dart';
+import '../domain/usage_record.dart';
+import '../domain/vat_declaration.dart';
+import '../domain/vat_rate.dart';
+import '../domain/vat_tax_point.dart';
 import '../domain/workspace_status.dart';
-import '../../../core/data/system_columns.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../domain/reminder_evidence.dart';
-import '../../../core/time/date_text.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -560,7 +561,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   Future<void> voidInvoice(String invoiceId) async {
     await _client
         .rpc<dynamic>('request_invoice_void', params: {'p_invoice_id': invoiceId})
-        .then((answer) => applyOrPending(answer as Map, idKey: 'invoice_id'));
+        .then((answer) => applyOrPending(answer as Map));
   }
 
   @override
@@ -920,6 +921,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String category,
     String description = '',
     Map<String, Object?>? supply,
+    Map<String, Object?>? vat,
   }) async {
     final result = await _client.rpc<dynamic>('submit_expense', params: {
       'p_workspace_id': workspaceId,
@@ -928,6 +930,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_description': description,
       // #731 — a supply: {name | service_id, quantity, unit_price_cents}.
       'p_supply': supply,
+      // #2357 — sent only with VAT, so an older server still answers.
+      'p_vat': ?vat,
     });
     return result as String;
   }

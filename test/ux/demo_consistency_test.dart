@@ -4,14 +4,14 @@
 // first visitor see, so its pages must agree with each other and settle.
 // One test per finding, each against the real Demo composition or the
 // fixture it is built from.
+import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
-import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
-import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ bool _shows(String text) => find.text(text).evaluate().isNotEmpty;
 
 void main() {
   testWidgets('Documents lists the seeded library', (tester) async {
-    await pumpDemo(tester, persona: DemoPersona.owner);
+    await pumpDemo(tester);
     await _go(tester, '/documents');
 
     expect(_shows('House rules'), isTrue);
@@ -78,7 +78,7 @@ void main() {
   testWidgets('Workspace status reads the demo\'s own invoices', (
     tester,
   ) async {
-    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    final journey = await pumpDemo(tester);
     await _go(tester, '/money/status');
 
     final status = await journey.fixture.money.fetchWorkspaceStatus(
@@ -150,7 +150,7 @@ void main() {
     tester,
   ) async {
     Future<int> primaryOnMoney() async {
-      await pumpDemo(tester, persona: DemoPersona.owner);
+      await pumpDemo(tester);
       await _go(tester, '/money');
       return Theme.of(tester.element(find.byType(Scaffold).last))
           .colorScheme
@@ -168,7 +168,7 @@ void main() {
   testWidgets('the public directory lists the space and its neighbours', (
     tester,
   ) async {
-    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    final journey = await pumpDemo(tester);
     await _go(tester, '/discover');
 
     expect(journey.fixture.directory.cards, hasLength(3));
@@ -181,7 +181,7 @@ void main() {
   testWidgets('Me › Home shows the guest visits, in listed spaces', (
     tester,
   ) async {
-    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    final journey = await pumpDemo(tester);
     await _go(tester, '/me');
 
     final listed = {for (final c in journey.fixture.directory.cards) c.id};
@@ -199,7 +199,7 @@ void main() {
   testWidgets('Business analytics offers the team\'s saved views', (
     tester,
   ) async {
-    await pumpDemo(tester, persona: DemoPersona.owner);
+    await pumpDemo(tester);
     await _go(tester, '/bi');
     expect(find.byType(LoadingView), findsNothing);
 
@@ -276,7 +276,7 @@ void main() {
   testWidgets('the space\'s own card offers to enter it, not to join it', (
     tester,
   ) async {
-    await pumpDemo(tester, persona: DemoPersona.owner);
+    await pumpDemo(tester);
     await openListed(tester, 'ws-1');
 
     expect(find.byKey(const ValueKey('portal-enter')), findsOneWidget);
@@ -305,7 +305,7 @@ void main() {
   testWidgets('Me › Messages holds a message request from the applicant', (
     tester,
   ) async {
-    await pumpDemo(tester, persona: DemoPersona.owner);
+    await pumpDemo(tester);
     await _go(tester, '/me?tab=messages');
 
     expect(find.byKey(const ValueKey('message-requests')), findsOneWidget);
@@ -338,7 +338,7 @@ void main() {
   testWidgets('the development twin: deployable, with its journal', (
     tester,
   ) async {
-    final journey = await pumpDemo(tester, persona: DemoPersona.owner);
+    final journey = await pumpDemo(tester);
     await _go(tester, '/deployment');
 
     expect(find.byKey(const ValueKey('deploy-list')), findsOneWidget);

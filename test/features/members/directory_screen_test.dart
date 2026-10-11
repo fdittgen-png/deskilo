@@ -8,18 +8,18 @@
 // never seen = no chip) — and the WhatsApp button appears only for
 // members who shared a number, launching wa.me through the injectable
 // link seam.
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
-import 'package:deskilo/core/theme/status_colors.dart';
 import 'dart:typed_data';
 
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/theme/status_colors.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 

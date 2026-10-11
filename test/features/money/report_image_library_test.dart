@@ -9,7 +9,6 @@ import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:deskilo/features/money/presentation/widgets/report_image_picker.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -17,9 +16,10 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pdf/widgets.dart' as pw;
 
-import '../../helpers/mock_providers.dart';
 import '../../helpers/fake_money_repository.dart';
+import '../../helpers/mock_providers.dart';
 
 final _png = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==',

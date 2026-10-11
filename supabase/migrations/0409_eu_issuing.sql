@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0408 (#2356) — DesKilo issues for a seller in any EU member state.
+-- 0409 (#2356) — DesKilo issues for a seller in any EU member state.
 --
 -- Until now `seller_country_unsupported` refused every seller outside
 -- France and Germany (0385). The four things a member state needed are in:
@@ -164,4 +164,4 @@ $fn$;
 revoke execute on function public.invoice_essentials_missing(uuid, uuid, jsonb, jsonb)
   from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(408);
+select public.set_deskilo_schema_version(409);

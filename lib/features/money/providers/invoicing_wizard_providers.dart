@@ -31,7 +31,7 @@ Future<Map<String, ({List<InvoiceLine> lines, int totalCents})>>
               memberId: m.id,
               period: period,
             );
-          } catch (e, st) {
+          } on Object catch (e, st) {
             TraceLogger.instance.warn('money', 'wizard preview failed',
                 error: e, stackTrace: st);
           }

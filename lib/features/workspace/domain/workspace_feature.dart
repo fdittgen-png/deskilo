@@ -380,7 +380,13 @@ enum WorkspaceFeature {
   /// the reverse-charged services per customer VAT number and month, as
   /// a CSV beside the VAT declarations, and a notice on Invoicing while
   /// one is due. Platform, default ON, under vatDeclarations.
-  recapitulativeStatement;
+  recapitulativeStatement,
+
+  /// #2357 — input VAT: an expense states its VAT rate and deductible
+  /// share, and the VAT return subtracts the deductible VAT from the VAT
+  /// collected. Platform, default ON, under vatDeclarations; OFF hides the
+  /// fields and the return declares output VAT only.
+  inputVat;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1148,7 +1154,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.environmentPairs,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
-    defaultOn: true,
   ),
   // #988/#990 — entities deployed between the two sides of a pair, with
   // a preview and a journal. Off: the twins stay separate hands.
@@ -1156,7 +1161,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.deployments,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
-    defaultOn: true,
     requires: WorkspaceFeature.environmentPairs,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
@@ -1296,7 +1300,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.singleRoomLevelNames,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
-    defaultOn: true,
   ),
   // #1274 — generating closure days changes what a subscription
   // includes, so it is asked for rather than assumed: Platform, off.
@@ -1521,6 +1524,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   // #2354 — a list filed beside the VAT return: under the declarations.
   WorkspaceFeature.recapitulativeStatement: FeatureManifestEntry(
     feature: WorkspaceFeature.recapitulativeStatement,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.vatDeclarations,
+  ),
+  // #2357 — deductible VAT only matters to a space that files returns.
+  WorkspaceFeature.inputVat: FeatureManifestEntry(
+    feature: WorkspaceFeature.inputVat,
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatDeclarations,

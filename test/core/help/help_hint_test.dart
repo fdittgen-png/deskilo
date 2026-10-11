@@ -11,15 +11,14 @@
 // tip's Learn more lands on its own guide section.
 import 'dart:async';
 import 'dart:convert';
-
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/help/help_hint.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';

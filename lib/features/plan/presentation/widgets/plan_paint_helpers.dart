@@ -67,8 +67,9 @@ void drawSoftShadow(Canvas canvas, RRect rrect, {required double alpha}) {
 /// at a glance, and it survives dark mode, a background photo, and
 /// colour-blindness — none of which a hue can promise.
 void drawHatch(Canvas canvas, Rect rect, Color accent) {
-  canvas.save();
-  canvas.clipRect(rect);
+  canvas
+    ..save()
+    ..clipRect(rect);
   final paint = Paint()
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.5
@@ -131,11 +132,12 @@ void drawReservedChip(
     Rect.fromCenter(center: center, width: w, height: h),
     Radius.circular(h / 2),
   );
-  canvas.drawRRect(
+  canvas
+    ..drawRRect(
     chip.inflate(1.2),
     Paint()..color = Colors.white.withValues(alpha: 0.9),
-  );
-  canvas.drawRRect(chip, Paint()..color = accent);
+  )
+    ..drawRRect(chip, Paint()..color = accent);
   var x = center.dx - (w - 16) / 2;
   iconPainter.paint(
       canvas, Offset(x, center.dy - iconPainter.height / 2));

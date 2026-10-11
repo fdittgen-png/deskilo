@@ -33,10 +33,10 @@
 // the reservation's is (`coversInstant`) and as `DTEND` is in the RFC.
 //
 // Pure Dart: the CLI and the tests import it without Flutter.
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/time/date_text.dart';
 import 'reservation.dart';

@@ -10,7 +10,7 @@ void main() {
   test('no palette: the product colours, unchanged', () {
     for (var i = 0; i < OfficeColors.palette.length + 3; i++) {
       expect(OfficeColors.of(i), OfficeColors.palette[i % 8]);
-      expect(OfficeColors.of(i, from: const []), OfficeColors.palette[i % 8]);
+      expect(OfficeColors.of(i), OfficeColors.palette[i % 8]);
     }
   });
 

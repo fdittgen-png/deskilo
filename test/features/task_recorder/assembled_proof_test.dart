@@ -144,8 +144,9 @@ void main() {
       }
       var token = run.onAction(s.action!);
       if (s.isCommand) {
-        run.onOutcome(RecorderOutcomes.bookingRefused, token: token);
-        run.acknowledge(); // the recovery instruction
+        run
+          ..onOutcome(RecorderOutcomes.bookingRefused, token: token)
+          ..acknowledge(); // the recovery instruction
         token = run.onAction(s.action!);
         run.onOutcome(RecorderOutcomes.bookingConfirmed, token: token);
       }

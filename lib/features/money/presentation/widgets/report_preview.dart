@@ -4,11 +4,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
-import '../../../../core/theme/app_radius.dart';
 
 /// The report blocks rendered as Flutter widgets with PRINT FIDELITY
 /// (#474, refit in #548): every style, padding, color and the font
@@ -86,12 +86,10 @@ class ReportBlocksView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var i = 0; i < cells.length; i++)
-                    i == 0
-                        ? Expanded(
+                    if (i == 0) Expanded(
                             child: Text(cells[i],
                                 style: ReportPage.row(bold: bold)),
-                          )
-                        : Padding(
+                          ) else Padding(
                             padding: const EdgeInsets.only(left: 12),
                             child: Text(cells[i],
                                 textAlign: TextAlign.right,

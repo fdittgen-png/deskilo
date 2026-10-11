@@ -19,27 +19,27 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:184` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:190` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:206` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:138` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:146` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:154` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:163` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:175` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:182` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:189` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:278` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:11` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:12` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:13` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:14` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:15` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:16` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:17` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:18` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:19` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:20` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:21` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:22` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:23` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:137` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:145` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:153` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:162` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:174` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:181` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:188` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:276` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:12` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:13` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:14` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:15` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:16` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:17` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:18` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:19` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:20` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:21` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:22` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:23` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:24` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:122` | label | Clients | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:126` | label | Prestations de services | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:128` | label | Banques | features/money | KEEP_NON_UI_LITERAL |
@@ -171,18 +171,18 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:169` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:170` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:171` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:226` | label | Taux normal 20 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:234` | label | Taux réduit 5,5 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:240` | label | Taux réduit 10 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:246` | label | Taux particulier 2,1 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:252` | label | Autre taux ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:258` | label | Opérations non imposées / taux 0 | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:270` | label | Umsätze 19 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:276` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:282` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:288` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:327` | label | Régularisation — TVA à reverser | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:333` | label | Régularisation — autre TVA à déduire | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:268` | label | Taux normal 20 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:276` | label | Taux réduit 5,5 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:282` | label | Taux réduit 10 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:288` | label | Taux particulier 2,1 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:294` | label | Autre taux ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:300` | label | Opérations non imposées / taux 0 | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:312` | label | Umsätze 19 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:318` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:324` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:330` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:369` | label | Régularisation — TVA à reverser | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/domain/vat_declaration.dart:375` | label | Régularisation — autre TVA à déduire | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:191` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals

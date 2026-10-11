@@ -166,9 +166,7 @@ void main() {
     test('an RPC executable by anon', () {
       final anonymous = [
         for (final l in routines())
-          l.startsWith('routine public.save_workspace_public_page(')
-              ? l.replaceFirst('exec:authenticated', 'exec:anon,authenticated')
-              : l,
+          if (l.startsWith('routine public.save_workspace_public_page(')) l.replaceFirst('exec:authenticated', 'exec:anon,authenticated') else l,
       ];
       expect(
         publicNetworkBindingProblems(

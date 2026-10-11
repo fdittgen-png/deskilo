@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../auth/providers/auth_providers.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../domain/member.dart';
-import '../../../auth/providers/auth_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'badge_manager_dialog.dart';
 
@@ -37,7 +39,7 @@ class MyBadgeTile extends ConsumerWidget {
             final workspace =
                 ref.read(currentWorkspaceProvider).value;
             if (workspace == null) return;
-            showDialog<void>(
+            unawaited(showDialog<void>(
               context: context,
               builder: (_) => BadgeManagerDialog(
                 workspaceId: workspace.id,
@@ -70,7 +72,7 @@ class MyBadgeTile extends ConsumerWidget {
                       enabled: enabled,
                     ),
               ),
-            );
+            ));
           },
         ),
     ]);

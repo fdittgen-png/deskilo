@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../core/backend/auth_callback_guard.dart';
 
+import '../../../core/backend/auth_callback_guard.dart';
 import '../data/supabase_auth_repository.dart';
 import '../data/supabase_identity_binding_repository.dart';
 import '../data/supabase_second_factor_repository.dart';
-import '../domain/auth_repository.dart';
 import '../domain/auth_outcome.dart';
+import '../domain/auth_repository.dart';
 import '../domain/identity_binding.dart';
 import '../domain/second_factor.dart';
 import '../domain/social_provider.dart';

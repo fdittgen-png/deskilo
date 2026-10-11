@@ -6,18 +6,18 @@
 // is shown as locked, never as an empty day.
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
+import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/money/providers/money_focus_controller.dart';
+import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/mock_providers.dart';
-import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
-import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
-import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
-import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/mock_providers.dart';
 import '../../helpers/open_my_account.dart';
 import '../../helpers/screens/calendar_hub.dart';
 
@@ -39,8 +39,9 @@ void main() {
       CalendarItem(kind: CalendarKind.reservation, id: 'gone', at: kTestNow,
           memberId: 'member-1', title: '', link: const ReservationLink('missing')),
     ]);
-    container.invalidate(reservationsForMonthProvider);
-    container.invalidate(calendarItemsProvider);
+    container
+      ..invalidate(reservationsForMonthProvider)
+      ..invalidate(calendarItemsProvider);
     await tester.pumpAndSettle();
     for (final (id, name) in [('r1', 'A1'), ('r2', 'A2')]) {
       final row = find.byKey(ValueKey('calendar-item-$id'));

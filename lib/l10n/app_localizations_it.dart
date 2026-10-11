@@ -2106,6 +2106,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleRevenue => 'Ricavi';
 
   @override
+  String get bookRoleVatInput => 'IVA a credito';
+
+  @override
   String get bookRoleVatOutput => 'IVA a debito';
 
   @override
@@ -4692,6 +4695,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseInvalidAmount => 'Inserisca un importo maggiore di zero.';
 
   @override
+  String get expenseInvalidDeductible => 'Inserisca una quota tra 0 e 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Inserisca almeno un\'unità.';
 
   @override
@@ -4724,6 +4730,24 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Precompilato con importo ÷ quantità; arrotondi se vuole.';
+
+  @override
+  String get expenseVatDeductible => 'Quota detraibile (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'IVA detraibile: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % salvo che una parte della spesa sia privata o serva un\'attività esente.';
+
+  @override
+  String get expenseVatNone => 'Senza IVA';
+
+  @override
+  String get expenseVatRate => 'IVA su questa spesa';
 
   @override
   String get exportClaimExchange =>
@@ -5086,6 +5110,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Importa i giorni festivi';
+
+  @override
+  String get featureInputVatDesc =>
+      'Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l\'IVA detraibile dall\'IVA a debito. Disattivato: la dichiarazione riporta solo l\'IVA a debito.';
+
+  @override
+  String get featureInputVatTitle => 'IVA a credito';
 
   @override
   String get featureInstanceWizard => 'Assistente istanza';
@@ -18875,6 +18906,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una dichiarazione presentata non cambia mai. Ciò che è cambiato in seguito in un periodo dichiarato — una fattura annullata, un pagamento registrato in ritardo — è dichiarato qui come rettifica di quella dichiarazione.';
 
   @override
+  String get vatDeclCredit => 'Credito IVA';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generata dalle fatture emesse del periodo. Verificare con la contabilità prima dell’invio — un aiuto alla dichiarazione, non consulenza fiscale.';
 
@@ -18892,6 +18926,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclGenerate => 'Prepara';
 
   @override
+  String get vatDeclInputVat => 'IVA detraibile';
+
+  @override
   String get vatDeclInvoices => 'Fatture';
 
   @override
@@ -18903,6 +18940,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Imponibile';
+
+  @override
+  String get vatDeclPayable => 'IVA a debito netta';
 
   @override
   String get vatDeclPdf => 'PDF';

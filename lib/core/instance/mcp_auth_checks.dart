@@ -94,7 +94,8 @@ List<ReadinessCheck> nativeAccessChecks(
     if (!allow.contains('deskilo://**')) 'deskilo://**',
     if (siteOk && !allow.contains(sitePrefix)) sitePrefix,
   ];
-  checks.add(
+  checks
+    ..add(
     ReadinessCheck(
       area,
       'native_redirect_allow_list',
@@ -103,8 +104,8 @@ List<ReadinessCheck> nativeAccessChecks(
           ? ''
           : 'missing: ${missing.join(', ')} (an unlisted return falls back to the Site URL)',
     ),
-  );
-  checks.addAll(_emailChecks(auth));
+  )
+    ..addAll(_emailChecks(auth));
   return checks;
 }
 

@@ -141,7 +141,7 @@ class TaskDocxExporter {
       return outcome is SaveFailed
           ? const TaskDocxSaveFailed()
           : TaskDocxSaved(outcome, name);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'task export save failed',

@@ -2,10 +2,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import '../../../../core/ui/app_frame.dart';
-
-import '../../../workspace/presentation/widgets/note_record_open.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -16,35 +12,37 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/app_frame.dart';
 import '../../../../core/ui/controls_feed_body.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../events/presentation/widgets/calendar_decisions.dart';
 import '../../../money/domain/invoice_ubl.dart';
-import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/domain/money_face.dart';
+import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/presentation/screens/inbox_screen.dart' show InboxFace;
-import '../../../workspace/presentation/widgets/conversation_avatar.dart';
-import '../../../workspace/presentation/widgets/conversation_thread.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../providers/calendar_providers.dart';
-import '../../providers/calendar_view_request.dart';
-import '../../../events/presentation/widgets/calendar_decisions.dart';
 import '../../../task_recorder/application/booking_observation.dart'
     show dateRelation;
 import '../../../task_recorder/application/calendar_observation.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/domain/workspace_permission.dart';
+import '../../../workspace/presentation/screens/inbox_screen.dart' show InboxFace;
+import '../../../workspace/presentation/widgets/conversation_avatar.dart';
+import '../../../workspace/presentation/widgets/conversation_thread.dart';
+import '../../../workspace/presentation/widgets/note_record_open.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/calendar_providers.dart';
+import '../../providers/calendar_view_request.dart';
 import '../calendar_view.dart';
 import '../widgets/calendar_feed.dart';
-import '../widgets/calendar_view_bar.dart';
 import '../widgets/calendar_kind_chips.dart';
 import '../widgets/calendar_month_grid.dart';
+import '../widgets/calendar_view_bar.dart';
 import '../widgets/calendar_week_strip.dart';
 
 /// THE CALENDAR HUB (#718): the dated view of everything.
@@ -356,7 +354,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
         _picker(page.value),
-        const CalendarLegend(showClosed: true),
+        const CalendarLegend(),
       ],
     ]);
     if (_alerts && alertsOffered) {

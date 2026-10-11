@@ -24,17 +24,17 @@ void main() {
   test('a picked wall-clock time lands on the WORKSPACE clock', () {
     final picked = pickedInstantAt(day, 10, 0);
 
-    expect(picked, WorkspaceTime.at(2026, 8, 3, 10, 0));
+    expect(picked, WorkspaceTime.at(2026, 8, 3, 10));
     // The workspace reads it back as the hour the member chose, whatever
     // zone the device is in.
     expect(WorkspaceTime.wall(picked).hour, 10);
     // And it is NOT the bare device-local instant that used to be built.
-    expect(picked, isNot(DateTime(2026, 8, 3, 10, 0)));
+    expect(picked, isNot(DateTime(2026, 8, 3, 10)));
   });
 
   test('the wall clock of an instant is read on the workspace clock', () {
     // A UTC instant that is 15:00 in Paris (CEST, UTC+2) in August.
-    final instant = DateTime.utc(2026, 8, 3, 13, 0);
+    final instant = DateTime.utc(2026, 8, 3, 13);
     expect(WorkspaceTime.minutesOfDay(instant), 15 * 60);
   });
 }

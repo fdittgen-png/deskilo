@@ -12,7 +12,7 @@ import 'report_defaults.dart';
 import 'report_kind_labels.dart';
 
 export '../domain/report_letter_layouts.dart'
-    show isPersonFacingKind, defaultLetterLayoutXml, resolveLayoutXml, LetterStrings;
+    show LetterStrings, defaultLetterLayoutXml, isPersonFacingKind, resolveLayoutXml;
 
 LetterStrings _letterStringsOf(AppLocalizations? l10n) => LetterStrings(
       creditNote: l10n?.invoicePdfCreditNote ?? 'Credit note',

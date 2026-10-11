@@ -48,7 +48,7 @@ class SupabaseDeploymentRepository implements DeploymentRepository {
       if (from.isEmpty || to.isEmpty) continue;
       try {
         await _client.storage.from('floor-plans').copy(from, to);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn(
             'workspace', 'plan image copy $from -> $to failed',
             error: e, stackTrace: st);

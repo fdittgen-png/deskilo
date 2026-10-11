@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
-import '../../../core/i18n/money_format.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,43 +9,44 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/files/file_names.dart';
 import '../../../core/files/file_saver.dart';
+import '../../../core/i18n/money_format.dart';
 import '../../../core/share/file_sharer.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import '../application/send_reminder.dart';
+import '../domain/dunning.dart';
 import '../domain/e_invoice_routing.dart';
-import '../domain/invoice.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_line_text.dart';
+import '../domain/invoice_pdf_template.dart';
+import '../domain/invoice_report.dart';
 import '../domain/invoice_ubl.dart';
 import '../domain/invoice_ubl_check.dart';
 import '../domain/ledger_entry.dart';
-import '../domain/invoice_pdf_template.dart';
-import '../application/send_reminder.dart';
-import '../domain/dunning.dart';
-import '../domain/invoice_report.dart';
-import 'report_layout_actions.dart';
+import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import 'dunning_hold_actions.dart';
-import 'invoice_journey.dart' show invoiceRemainingCents;
-import 'report_defaults.dart';
-import 'widgets/report_preview.dart';
 import 'e_invoice_identity.dart';
-import 'widgets/einvoice_environment_picker.dart';
-import '../domain/invoice_line_text.dart';
-import '../domain/report_data.dart';
 import 'invoice_documents.dart';
-import 'report_strings_l10n.dart';
+import 'invoice_journey.dart' show invoiceRemainingCents;
 import 'period_label.dart';
+import 'report_defaults.dart';
+import 'report_layout_actions.dart';
+import 'report_strings_l10n.dart';
 import 'widgets/e_invoice_sheet.dart';
+import 'widgets/einvoice_environment_picker.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoicing_dashboard.dart';
-import '../../../core/theme/app_spacing.dart';
+import 'widgets/report_preview.dart';
 
 /// Everything an issued invoice can be PUT THROUGH, extracted out of the
 /// screen (0069): the archive rows, the open cards and the detail sheet all
@@ -126,9 +126,10 @@ Future<void> settleCreditInvoiceDialog(
   )) {
     return;
   }
-  ref.invalidate(invoiceMatchesProvider);
-  ref.invalidate(myAccountProvider);
-  ref.invalidate(invoicesProvider);
+  ref
+    ..invalidate(invoiceMatchesProvider)
+    ..invalidate(myAccountProvider)
+    ..invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
   AppSnack.success(context, l10n?.invoiceRefunded ?? 'Refund recorded.');
@@ -631,7 +632,7 @@ Future<void> _exportEInvoice(
   EInvoiceGatewayConfig gateway;
   try {
     gateway = await ref.read(eInvoiceGatewayProvider.future);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'money',
       'e-invoice gateway probe failed',
@@ -856,9 +857,10 @@ Future<void> matchInvoiceToPayment(
   )) {
     return;
   }
-  ref.invalidate(invoiceMatchesProvider);
-  ref.invalidate(myAccountProvider);
-  ref.invalidate(invoicesProvider);
+  ref
+    ..invalidate(invoiceMatchesProvider)
+    ..invalidate(myAccountProvider)
+    ..invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
   AppSnack.success(context, l10n?.invoiceMatched ?? 'Invoice matched.');
@@ -921,7 +923,7 @@ Future<void> issueInvoicesForAll(
             period: period,
           );
       issued++;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'money',
         'invoice sweep entry failed',

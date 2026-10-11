@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../workspace/presentation/widgets/workspace_reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +8,7 @@ import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/widgets/environment_tile.dart';
+import '../../../workspace/presentation/widgets/workspace_reports.dart';
 import 'settings_task_section.dart';
 
 /// #1307 S3 — what used to be one Administration block, split by the

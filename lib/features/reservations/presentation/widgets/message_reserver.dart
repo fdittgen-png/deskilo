@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/reference_locale.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
-import '../../../workspace/presentation/reference_locale.dart';
 
 /// #622 — "message the reserver": when ANOTHER member's reservation
 /// blocks a check-in or booking (scan sheet, Plan tab), the surface

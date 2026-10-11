@@ -4,8 +4,8 @@
 // how far the second capture of a form slides up over the first.
 import 'dart:math' as math;
 
-import 'package:image/image.dart' as img;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as img;
 
 import '../../tool/media.dart';
 

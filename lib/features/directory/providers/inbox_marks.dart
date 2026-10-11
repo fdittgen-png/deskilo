@@ -3,6 +3,8 @@
 // Pin and archive for the Me messenger: a person's own marks on their
 // conversations, kept on this device (like the help hints). Muting needs the
 // server (it silences pushes) and is not offered here.
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +30,7 @@ class InboxMarks extends Notifier<InboxMarksState> {
 
   @override
   InboxMarksState build() {
-    _load();
+    unawaited(_load());
     return const InboxMarksState();
   }
 
@@ -40,7 +42,7 @@ class InboxMarks extends Notifier<InboxMarksState> {
         archived:
             (prefs.getStringList(_archivedKey) ?? const <String>[]).toSet(),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('messenger', 'inbox marks unreadable',
           error: e, stackTrace: st);
     }
@@ -51,7 +53,7 @@ class InboxMarks extends Notifier<InboxMarksState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setStringList(_pinnedKey, state.pinned.toList()..sort());
       await prefs.setStringList(_archivedKey, state.archived.toList()..sort());
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('messenger', 'inbox marks not saved',
           error: e, stackTrace: st);
     }
@@ -61,14 +63,14 @@ class InboxMarks extends Notifier<InboxMarksState> {
     final next = {...state.pinned};
     if (!next.remove(key)) next.add(key);
     state = state.copyWith(pinned: next);
-    _save();
+    unawaited(_save());
   }
 
   void toggleArchive(String key) {
     final next = {...state.archived};
     if (!next.remove(key)) next.add(key);
     state = state.copyWith(archived: next);
-    _save();
+    unawaited(_save());
   }
 }
 

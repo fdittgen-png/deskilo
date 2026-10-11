@@ -302,9 +302,10 @@ String _innerText(XmlElement e) => e.innerText
 String layoutToXml(LayoutDocument document) {
   final b = XmlBuilder();
   b.element(LayoutXml.root, nest: () {
-    b.attribute(LayoutXml.attrVersion, LayoutXml.version);
-    b.attribute(LayoutXml.attrPage, document.page);
-    b.attribute(LayoutXml.attrMargin, document.margin.toString());
+    b
+      ..attribute(LayoutXml.attrVersion, LayoutXml.version)
+      ..attribute(LayoutXml.attrPage, document.page)
+      ..attribute(LayoutXml.attrMargin, document.margin.toString());
     if (document.marginTop != null) {
       b.attribute(LayoutXml.attrMarginTop, document.marginTop.toString());
     }

@@ -6,11 +6,10 @@
 // reservation, a space link opens the space's booking sheet. Deleting
 // (swipe OR button) always asks for confirmation first. The composer
 // attaches references from pickers.
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +19,7 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/settings_sections.dart';
 
 /// Tomorrow 9–11 relative to the standard FixedClock — upcoming, so it
 /// lists in the composer picker and shows Cancel in its detail sheet.

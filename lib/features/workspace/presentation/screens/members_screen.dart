@@ -2,10 +2,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../directory/presentation/member_employment_tile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../money/presentation/widgets/negotiation_card.dart';
+
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
@@ -13,18 +12,20 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
+import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
 import '../../domain/overage_policy.dart';
-import '../member_admin_actions.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
+import '../member_admin_actions.dart';
+import '../widgets/member_note_dialog.dart';
 import '../widgets/member_roles_card.dart';
 import '../widgets/open_conversation.dart';
-import '../widgets/member_note_dialog.dart';
 
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).

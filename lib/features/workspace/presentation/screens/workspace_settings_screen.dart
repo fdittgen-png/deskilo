@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
-import '../../../../core/l10n/lexicon.dart';
 
 import 'package:file_selector/file_selector.dart';
-import '../member_labels.dart';
 import 'package:flutter/material.dart';
-import '../../../directory/presentation/admin_visibility_tile.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,72 +10,75 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../../app/theme.dart';
 import '../../../../core/country/country_catalog.dart';
-import '../../../../core/i18n/workspace_locale_fields.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/files/file_names.dart';
+import '../../../../core/files/file_picker.dart';
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
-import '../../../../core/files/file_picker.dart';
-import '../../../../core/files/file_saver.dart';
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/workspace_locale_fields.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/locale/report_language.dart';
 import '../../../../core/share/file_sharer.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
+import '../../../directory/presentation/admin_visibility_tile.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../money/domain/report_data_letters.dart';
+import '../../../money/presentation/batch_cover.dart';
+import '../../../money/presentation/invoice_documents.dart';
+import '../../../money/presentation/report_facts_of.dart';
+import '../../../money/presentation/report_layout_actions.dart';
+import '../../../money/presentation/report_strings_l10n.dart';
+import '../../../money/presentation/widgets/billing_rules_dialog.dart';
+import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
+import '../../../money/providers/money_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
-import '../../../../core/files/file_names.dart';
-import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
-import '../../domain/booking_granularity.dart';
-import '../../domain/workspace_settings_save.dart';
-import '../../domain/space_code_entries.dart';
-import '../widgets/local_setup_views.dart';
-import '../widgets/configuration_transfer_prompt.dart';
+import '../../application/apply_brand_seed.dart';
 import '../../application/toggle_workspace_feature.dart';
-import '../widgets/space_codes_options_dialog.dart';
+import '../../domain/booking_granularity.dart';
+import '../../domain/invitation_message.dart';
 import '../../domain/member.dart';
+import '../../domain/new_member_defaults.dart';
 import '../../domain/overage_policy.dart';
 import '../../domain/payment_instructions.dart';
-import '../../domain/invitation_message.dart';
+import '../../domain/space_code_entries.dart';
 import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_config_report.dart';
-import '../workspace_configuration_report_strings.dart';
 import '../../domain/workspace_feature.dart';
-import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_import.dart';
-import '../../domain/workspace_xml_configuration.dart';
-import '../../../../app/theme.dart';
-import '../../application/apply_brand_seed.dart';
-import '../widgets/workspace_own_screens.dart';
+import '../../domain/workspace_permission.dart';
+import '../../domain/workspace_settings_save.dart';
 import '../../domain/workspace_xml.dart';
-import '../../../money/providers/money_providers.dart';
+import '../../domain/workspace_xml_configuration.dart';
 import '../../providers/workspace_import_providers.dart';
-import '../../../money/presentation/widgets/billing_rules_dialog.dart';
-import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/new_member_defaults_tiles.dart';
-import '../../domain/new_member_defaults.dart';
-import '../excel_export.dart';
 import '../country_names.dart';
+import '../excel_export.dart';
 import '../feature_names.dart';
-import '../../../../core/time/clock.dart';
-import '../../../money/presentation/invoice_documents.dart';
-import '../../../money/presentation/report_facts_of.dart';
-import '../../../money/presentation/report_strings_l10n.dart';
-import '../../../money/presentation/report_layout_actions.dart';
-import '../../../money/presentation/batch_cover.dart';
-import '../../../../core/locale/report_language.dart';
-import '../../../money/domain/report_data_letters.dart';
+import '../member_labels.dart';
+import '../widgets/configuration_transfer_prompt.dart';
+import '../widgets/local_setup_views.dart';
+import '../widgets/new_member_defaults_tiles.dart';
 import '../widgets/reset_confirm_dialog.dart';
+import '../widgets/space_codes_options_dialog.dart';
 import '../widgets/workspace_form_group.dart';
+import '../widgets/workspace_own_screens.dart';
 import '../widgets/workspace_reports.dart';
-import '../../../../l10n/app_localizations_en.dart';
+import '../workspace_configuration_report_strings.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -216,10 +216,11 @@ class _WorkspaceSettingsScreenState
             }
             return;
           }
-          ref.invalidate(newMemberDefaultsProvider);
+          ref
+            ..invalidate(newMemberDefaultsProvider)
           // Every money surface watches the workspace chain — invalidating it
           // re-renders all amounts in the new currency immediately.
-          ref.invalidate(myWorkspacesProvider);
+            ..invalidate(myWorkspacesProvider);
           if (!mounted) return;
           AppSnack.success(
             context,
@@ -448,9 +449,7 @@ class _WorkspaceSettingsScreenState
               dateFormat.format(ref.read(clockProvider).now());
           final closureLabels = [
             for (final closure in closures)
-              closure.reason.trim().isEmpty
-                  ? dateFormat.format(closure.day.toLocal())
-                  : '${dateFormat.format(closure.day.toLocal())} — '
+              if (closure.reason.trim().isEmpty) dateFormat.format(closure.day.toLocal()) else '${dateFormat.format(closure.day.toLocal())} — '
                       '${closure.reason}',
           ];
 
@@ -919,17 +918,19 @@ class _WorkspaceSettingsScreenState
             [for (final f in DeskiloTheme.refusals(Color(argb))) f.pair],
       );
 
-      ref.invalidate(myWorkspacesProvider);
-      ref.invalidate(levelsProvider);
-      ref.invalidate(floorPlanProvider);
-      ref.invalidate(targetNamesProvider);
+      ref
+        ..invalidate(myWorkspacesProvider)
+        ..invalidate(levelsProvider)
+        ..invalidate(floorPlanProvider)
+        ..invalidate(targetNamesProvider)
       // #180 — the import may have upserted the catalog and re-created
       // every seat assignment.
-      ref.invalidate(accessoriesProvider);
-      ref.invalidate(seatAccessoriesProvider);
+        ..invalidate(accessoriesProvider)
+        ..invalidate(seatAccessoriesProvider);
       if (applyConfiguration) {
-        ref.invalidate(sitesProvider);
-        ref.invalidate(vatRatesProvider);
+        ref
+          ..invalidate(sitesProvider)
+          ..invalidate(vatRatesProvider);
       }
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
@@ -972,7 +973,7 @@ class _WorkspaceSettingsScreenState
                 'Something went wrong. Please try again.'),
       );
       if (anythingApplied) _sayPartial(context, l10n);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('workspace XML import failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'workspace XML import failed',
           error: e, stackTrace: st);
@@ -1087,7 +1088,6 @@ class _WorkspaceSettingsScreenState
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsCountry'),
                       isExpanded: true,
-                      itemHeight: null,
                       initialValue: _countryCode,
                       decoration: InputDecoration(
                         labelText: l10n?.workspaceCountryLabel ?? 'Country',
@@ -1126,7 +1126,6 @@ class _WorkspaceSettingsScreenState
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsLanguage'),
                       isExpanded: true,
-                      itemHeight: null,
                       initialValue: _defaultLocale,
                       decoration: InputDecoration(
                         labelText: l10n?.workspaceLanguageLabel ??

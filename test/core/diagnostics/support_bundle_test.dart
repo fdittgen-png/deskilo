@@ -2,8 +2,8 @@
 // Projection prevents sensitive source values from reaching exact export bytes.
 import 'dart:convert';
 
-import 'package:deskilo/core/diagnostics/support_bundle.dart';
 import 'package:deskilo/core/diagnostics/doctor_support.dart';
+import 'package:deskilo/core/diagnostics/support_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:flutter_test/flutter_test.dart';
 

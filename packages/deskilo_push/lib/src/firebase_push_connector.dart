@@ -47,7 +47,7 @@ class FirebasePushConnector implements PushConnector {
       });
       FirebaseMessaging.instance.onTokenRefresh.listen(publishToken);
       return true;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Best-effort (#86 boot doctrine): a broken Firebase setup must
       // never disturb the app.
       debugPrint('Firebase init failed: $e\n$st');

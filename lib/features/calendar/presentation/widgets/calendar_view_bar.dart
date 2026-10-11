@@ -107,7 +107,7 @@ class CalendarViewBar extends StatelessWidget {
                         tooltip: l10n?.calendarViewAlerts ?? 'Alerts',
                       ),
                   ],
-                  selected: {alertsSelected ? _alerts : view},
+                  selected: {if (alertsSelected) _alerts else view},
                   onSelectionChanged: (s) {
                     final next = s.first;
                     if (next == _alerts) {

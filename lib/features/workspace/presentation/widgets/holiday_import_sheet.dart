@@ -7,6 +7,8 @@
 // month) or already there; the owner unticks the days the space stays
 // open. The apply sends exactly the ticked days, and the server applies
 // its rules to them again.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -113,7 +115,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
       if (_region != null && !holidayRegions(all).contains(_region)) {
         _region = null;
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // HolidaySourceUnavailable, or anything else the source threw: the
       // owner is told the source is unreachable, never shown an empty
       // year.
@@ -211,7 +213,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
       _all = null;
       _verdict = null;
     });
-    _load();
+    unawaited(_load());
   }
 
   @override

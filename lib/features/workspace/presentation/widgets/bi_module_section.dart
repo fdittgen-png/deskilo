@@ -24,8 +24,8 @@ import '../../providers/workspace_providers.dart';
 import 'bi_dashboard.dart';
 import 'bi_result_views.dart';
 import 'bi_toolbar.dart';
-import 'capacity_kpi_card.dart';
 import 'capacity_evidence.dart';
+import 'capacity_kpi_card.dart';
 
 /// How a module's figures read. One per registered module.
 class BiModuleView {
@@ -99,9 +99,7 @@ List<String> _financeNotes(
     l10n?.biFinancePartial ??
         'The period is not over: these figures will still change.',
   if (m.quality.contains(KpiQuality.knownZero))
-    invoiced
-        ? l10n?.biFinanceInvoicedZero ?? 'Measured: nothing was invoiced.'
-        : l10n?.biFinanceCollectedZero ?? 'Measured: nothing was collected.',
+    if (invoiced) l10n?.biFinanceInvoicedZero ?? 'Measured: nothing was invoiced.' else l10n?.biFinanceCollectedZero ?? 'Measured: nothing was collected.',
 ];
 
 List<String> _financeDetails(
@@ -440,15 +438,13 @@ class _Result extends ConsumerWidget {
           ],
         ),
         if (drill != null)
-          mayDrill
-              ? TextButton.icon(
+          if (mayDrill) TextButton.icon(
                   key: const ValueKey('bi-drill'),
                   icon: const Icon(Icons.open_in_new),
                   label: Text(l10n?.biOpenSource ?? 'Open the source'),
                   // push: Back returns to this page and its address.
                   onPressed: () => context.push(drill.route),
-                )
-              : Text(
+                ) else Text(
                   l10n?.biSourceRestricted ??
                       'The source records are shown only to those who '
                           'manage them.',

@@ -15,6 +15,7 @@ class PublicationActions {
   Future<Map<String, dynamic>> savePage(
     String workspace,
     Map<String, String> document,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     bool published, {
     Set<String> following = const {},
   }) {
@@ -77,6 +78,7 @@ class DirectoryActions {
 class AccountContactActions {
   const AccountContactActions(this.repository);
   final AccountContactRepository repository;
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> setAvailability(bool value) => repository.setAvailability(value);
   Future<bool> adminVisibility(String workspace, {bool? visible}) =>
       repository.adminVisibility(workspace, visible: visible);

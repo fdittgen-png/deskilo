@@ -34,7 +34,7 @@ class FakeAuthRepository implements AuthRepository {
   ];
 
   /// When set, social calls throw (models a provider not enabled).
-  Object? socialError;
+  Exception? socialError;
 
   @override
   Future<void> signInWithSocial(SocialProvider provider) async {

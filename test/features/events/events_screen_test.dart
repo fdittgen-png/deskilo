@@ -29,8 +29,6 @@ void main() {
           id: 'evt-exp',
           type: EventType.expense,
           action: EventAction.submitted,
-          actor: 'member-1',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       );
@@ -71,8 +69,6 @@ void main() {
           id: 'evt-exp',
           type: EventType.expense,
           action: EventAction.submitted,
-          actor: 'member-1',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       );
@@ -101,7 +97,7 @@ void main() {
     await pumpEvents(
       tester,
       seed: [
-        event(actor: 'member-2', subject: 'member-1', status: EventStatus.confirmed),
+        event(actor: 'member-2', status: EventStatus.confirmed),
       ],
     );
 
@@ -115,7 +111,6 @@ void main() {
       seed: [
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       ],
@@ -135,7 +130,6 @@ void main() {
       seed: [
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       ],
@@ -152,7 +146,7 @@ void main() {
       'subject with name, quantity and amount (#129)', (tester) async {
     final repo = await pumpEvents(
       tester,
-      seed: [serviceChargeEvent(actor: 'member-2', subject: 'member-1')],
+      seed: [serviceChargeEvent(actor: 'member-2')],
     );
 
     expect(find.text('Waiting for your confirmation'), findsOneWidget);
@@ -292,7 +286,6 @@ void main() {
       seed: [
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.confirmed,
         ),
       ],
@@ -308,7 +301,6 @@ void main() {
         EventDecision(
           id: 'dec-2',
           eventId: 'evt-1',
-          memberId: null,
           accept: true,
           decidedBySystem: true,
           decidedAt: DateTime.utc(2026, 7, 9, 3),
@@ -379,7 +371,6 @@ void main() {
         seed: [
           event(
             actor: 'member-2',
-            subject: 'member-1',
             status: EventStatus.rejected,
           ),
         ],
@@ -426,7 +417,6 @@ void main() {
         seed: [
           event(
             actor: 'member-2',
-            subject: 'member-1',
             status: EventStatus.pending,
           ),
         ],
@@ -476,7 +466,6 @@ void main() {
         seed: [
           event(
             actor: 'member-2',
-            subject: 'member-1',
             status: EventStatus.pending,
           ),
           event(id: 'evt-2', status: EventStatus.confirmed),

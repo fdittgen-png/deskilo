@@ -65,7 +65,6 @@ InvoiceMatch _paid(String id, int minor, {String status = 'confirmed'}) =>
       resolution: 'paid',
       status: status,
       matchedAt: DateTime.utc(2026, 4, 2),
-      note: '',
     );
 
 /// This test's own reader: a regular expression over each line, not the

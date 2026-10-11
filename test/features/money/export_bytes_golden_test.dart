@@ -152,7 +152,6 @@ final _matches = {
     invoiceId: 'i1',
     paidCents: 13055,
     resolution: 'exact',
-    status: 'confirmed',
     matchedAt: DateTime.utc(2026, 4, 2, 11),
   ),
 };
@@ -191,7 +190,7 @@ Map<String, String Function()> _files() => {
     invoices: _invoices,
     matches: _matches,
     accounts: const DatevAccounts(),
-    from: DateTime.utc(2026, 1, 1),
+    from: DateTime.utc(2026),
     to: DateTime.utc(2026, 12, 31),
     generatedAt: DateTime.utc(2026, 5, 1, 9, 7, 3),
     consultantNumber: '1234567',
@@ -241,8 +240,8 @@ Map<String, String Function()> _files() => {
   'vat_report.csv': () => vatReportCsv(
     buildVatReport(
       _invoices,
-      start: DateTime.utc(2026, 3, 1),
-      end: DateTime.utc(2026, 4, 1),
+      start: DateTime.utc(2026, 3),
+      end: DateTime.utc(2026, 4),
       zeroCategory: 'O',
     ),
     currency: 'EUR',

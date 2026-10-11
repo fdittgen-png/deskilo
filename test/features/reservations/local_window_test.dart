@@ -40,7 +40,7 @@ void main() {
   // #119: the July calendar in a UTC+2 zone queried June because the keys
   // and windows went through UTC. Keys and windows are LOCAL wall-clock.
   test('month key comes from local date components', () {
-    expect(monthKeyOf(DateTime(2026, 7, 1)), '2026-07');
+    expect(monthKeyOf(DateTime(2026, 7)), '2026-07');
     expect(monthKeyOf(DateTime(2026, 12, 31, 23, 59)), '2026-12');
   });
 
@@ -61,8 +61,8 @@ void main() {
 
     await container.read(reservationsForMonthProvider('2026-07').future);
 
-    expect(repo.from, DateTime(2026, 7, 1));
-    expect(repo.to, DateTime(2026, 8, 1));
+    expect(repo.from, DateTime(2026, 7));
+    expect(repo.to, DateTime(2026, 8));
   });
 
   test('the day window is the local day', () async {

@@ -18,8 +18,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/stored_recording.dart';
 import '../../domain/recording_edit.dart';
+import '../../domain/stored_recording.dart';
 import '../../domain/task_recording.dart';
 import '../../domain/task_recording_codec.dart';
 import '../../export/docx_export.dart';
@@ -126,7 +126,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
     if (ok != true) return;
     try {
       await ref.read(recorderStoreProvider)?.delete(widget.stored.id);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'recording not deleted',

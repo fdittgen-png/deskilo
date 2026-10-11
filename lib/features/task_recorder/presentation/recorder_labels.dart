@@ -14,9 +14,9 @@ import '../../events/domain/workspace_event.dart';
 import '../../events/presentation/event_labels.dart' show eventTypeLabel;
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/presentation/feature_names.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart'
     show permissionLabel;
-import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_registry.dart';
 import '../domain/step_values.dart';
 import '../domain/task_recording.dart';
@@ -352,8 +352,9 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
       out.writeln('   ${e.key}: $shown');
     }
   }
-  out.writeln();
-  out.writeln(
+  out
+    ..writeln()
+    ..writeln(
     '${completenessLabel(l10n, recording.completeness)} · '
     '${endReasonLabel(l10n, recording.endReason)}',
   );

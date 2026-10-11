@@ -2111,6 +2111,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookRoleRevenue => 'Produits';
 
   @override
+  String get bookRoleVatInput => 'TVA déductible';
+
+  @override
   String get bookRoleVatOutput => 'TVA collectée';
 
   @override
@@ -4700,6 +4703,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get expenseInvalidAmount => 'Saisissez un montant supérieur à zéro.';
 
   @override
+  String get expenseInvalidDeductible => 'Saisissez une part entre 0 et 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Saisissez au moins une unité.';
 
   @override
@@ -4732,6 +4738,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.';
+
+  @override
+  String get expenseVatDeductible => 'Part déductible (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'TVA déductible : $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.';
+
+  @override
+  String get expenseVatNone => 'Sans TVA';
+
+  @override
+  String get expenseVatRate => 'TVA sur cette dépense';
 
   @override
   String get exportClaimExchange =>
@@ -5097,6 +5121,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Importer les jours fériés';
+
+  @override
+  String get featureInputVatDesc =>
+      'Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée.';
+
+  @override
+  String get featureInputVatTitle => 'TVA déductible';
 
   @override
   String get featureInstanceWizard => 'Assistant d\'instance';
@@ -18906,6 +18937,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une déclaration déposée ne change jamais. Ce qui a changé ensuite dans une période déposée — une facture annulée, un paiement enregistré tardivement — est déclaré ici comme régularisation de cette déclaration.';
 
   @override
+  String get vatDeclCredit => 'Crédit de TVA';
+
+  @override
   String get vatDeclDisclaimer =>
       'Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.';
 
@@ -18923,6 +18957,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclGenerate => 'Préparer';
 
   @override
+  String get vatDeclInputVat => 'TVA déductible';
+
+  @override
   String get vatDeclInvoices => 'Factures';
 
   @override
@@ -18934,6 +18971,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Base HT';
+
+  @override
+  String get vatDeclPayable => 'TVA à payer';
 
   @override
   String get vatDeclPdf => 'PDF';

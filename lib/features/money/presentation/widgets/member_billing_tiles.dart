@@ -2,8 +2,6 @@
 //
 // #2354 — the money tiles a member's page shows in its billing group:
 // the member page imports this one file.
-export 'member_carnet_tile.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +10,8 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vies_check.dart';
 import '../../providers/vies_providers.dart';
+
+export 'member_carnet_tile.dart';
 
 /// #2354 — on a member's page, for whoever issues invoices: the last
 /// check of the member's VAT number against VIES, and checking it again.

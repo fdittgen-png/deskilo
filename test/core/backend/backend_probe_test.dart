@@ -44,9 +44,9 @@ const publishable = 'sb_publishable_0123456789abcdefghij';
 /// A transport scripted per call.
 class ScriptedTransport implements BackendProbeTransport {
   ScriptedTransport({this.onWorkspace, this.version, this.versionError});
-  final Object? onWorkspace;
+  final Exception? onWorkspace;
   final int? version;
-  final Object? versionError;
+  final Exception? versionError;
   bool disposed = false;
 
   @override
@@ -203,7 +203,7 @@ void main() {
       final behind = await probe(ScriptedTransport(version: requiredSchemaVersion - 1));
       expect(behind.result, BackendProbeResult.behind);
       expect(behind.usable, isFalse);
-      final none = await probe(ScriptedTransport(version: null));
+      final none = await probe(ScriptedTransport());
       expect(none.result, BackendProbeResult.behind,
           reason: 'no marker = predates 0226');
     });

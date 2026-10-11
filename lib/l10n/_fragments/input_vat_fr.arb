@@ -1,0 +1,56 @@
+{
+  "@@locale": "fr",
+  "featureInputVatTitle": "TVA déductible",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
+  },
+  "featureInputVatDesc": "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "expenseVatRate": "TVA sur cette dépense",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatNone": "Sans TVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatDeductible": "Part déductible (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseInvalidDeductible": "Saisissez une part entre 0 et 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
+  "vatDeclInputVat": "TVA déductible",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
+  "vatDeclPayable": "TVA à payer",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
+  "vatDeclCredit": "Crédit de TVA",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
+  "bookRoleVatInput": "TVA déductible",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
+  "expenseVatDeductibleAmount": "TVA déductible : {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
+}

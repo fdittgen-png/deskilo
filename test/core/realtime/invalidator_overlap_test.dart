@@ -71,8 +71,9 @@ void main() {
     // Build 2 starts before build 1 has resolved.
     final firstGate = gate;
     gate = Completer<Workspace?>();
-    container.invalidate(currentWorkspaceProvider);
-    container.invalidate(realtimeInvalidatorProvider);
+    container
+      ..invalidate(currentWorkspaceProvider)
+      ..invalidate(realtimeInvalidatorProvider);
     final second = container.read(realtimeInvalidatorProvider.future);
     await Future<void>.delayed(Duration.zero);
 

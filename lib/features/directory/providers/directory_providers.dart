@@ -5,12 +5,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../auth/providers/auth_providers.dart';
-import '../domain/public_workspace.dart';
+import '../application/directory_actions.dart';
+import '../data/supabase_account_contact_repository.dart';
 import '../data/supabase_directory_participant_repository.dart';
 import '../data/supabase_public_discovery_repository.dart';
 import '../data/supabase_publication_repository.dart';
-import '../data/supabase_account_contact_repository.dart';
-import '../application/directory_actions.dart';
+import '../domain/public_workspace.dart';
+
 part 'directory_providers.g.dart';
 
 /// #1847 — participant actions: register an installation, ask to join.

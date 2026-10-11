@@ -51,7 +51,7 @@ Future<int> _deskCentreAlpha(double opacity) async {
   final canvas = Canvas(recorder);
   _painter(opacity).paint(canvas, const Size(280, 280));
   final image = await recorder.endRecording().toImage(280, 280);
-  final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  final data = await image.toByteData();
   // Desk centre: cell (8, 7) → px (112, 98); RGBA, 4 bytes per pixel.
   const int x = 112, y = 98;
   const offset = (y * 280 + x) * 4;

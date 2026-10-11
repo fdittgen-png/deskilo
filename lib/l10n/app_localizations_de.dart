@@ -2114,6 +2114,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookRoleRevenue => 'Erlöse';
 
   @override
+  String get bookRoleVatInput => 'Vorsteuer';
+
+  @override
   String get bookRoleVatOutput => 'Umsatzsteuer';
 
   @override
@@ -4703,6 +4706,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get expenseInvalidAmount => 'Geben Sie einen Betrag über null ein.';
 
   @override
+  String get expenseInvalidDeductible =>
+      'Geben Sie einen Anteil zwischen 0 und 100 ein.';
+
+  @override
   String get expenseInvalidSupplyQuantity =>
       'Geben Sie mindestens eine Einheit ein.';
 
@@ -4735,6 +4742,24 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.';
+
+  @override
+  String get expenseVatDeductible => 'Abziehbarer Anteil (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'Abziehbare Vorsteuer: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.';
+
+  @override
+  String get expenseVatNone => 'Ohne Umsatzsteuer';
+
+  @override
+  String get expenseVatRate => 'Umsatzsteuer auf diese Ausgabe';
 
   @override
   String get exportClaimExchange =>
@@ -5092,6 +5117,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Feiertage importieren';
+
+  @override
+  String get featureInputVatDesc =>
+      'Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer.';
+
+  @override
+  String get featureInputVatTitle => 'Vorsteuer';
 
   @override
   String get featureInstanceWizard => 'Instanz-Assistent';
@@ -18896,6 +18928,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine abgegebene Erklärung ändert sich nie. Was sich danach in einem abgegebenen Zeitraum geändert hat — eine stornierte Rechnung, eine verspätet erfasste Zahlung — wird hier als Berichtigung dieser Erklärung erklärt.';
 
   @override
+  String get vatDeclCredit => 'Erstattungsanspruch';
+
+  @override
   String get vatDeclDisclaimer =>
       'Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.';
 
@@ -18913,6 +18948,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclGenerate => 'Vorbereiten';
 
   @override
+  String get vatDeclInputVat => 'Abziehbare Vorsteuer';
+
+  @override
   String get vatDeclInvoices => 'Rechnungen';
 
   @override
@@ -18924,6 +18962,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Bemessungsgrundlage';
+
+  @override
+  String get vatDeclPayable => 'Zahllast';
 
   @override
   String get vatDeclPdf => 'PDF';

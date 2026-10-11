@@ -560,9 +560,7 @@ List<ComparisonRow> compareTemplates(List<TemplateInspection> inspections) {
       () {
         final cells = [
           for (var i = 0; i < inspections.length; i++)
-            byPath[path]![i] == null
-                ? ComparisonCell.none
-                : ComparisonCell(
+            if (byPath[path]![i] == null) ComparisonCell.none else ComparisonCell(
                     value: byPath[path]![i]!.value,
                     disposition: byPath[path]![i]!.disposition,
                     absent: byPath[path]![i]!.absent,

@@ -19,8 +19,9 @@
 // output. `howToEdit` is regenerated rather than read back, so editing
 // it changes nothing and cannot corrupt a design; the only fields import
 // consumes are `kind`, `language` and `design`.
-import 'package:meta/meta.dart';
 import 'dart:convert';
+
+import 'package:meta/meta.dart';
 
 import 'invoice_pdf_template.dart';
 import 'invoice_report.dart';

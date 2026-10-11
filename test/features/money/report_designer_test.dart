@@ -92,11 +92,11 @@ void main() {
     test('typing coalesces into one step, a structural change is its own, '
         'undo and redo walk the stack, a redo tail dies on a new push', () {
       final t0 = DateTime.utc(2026, 9, 2, 10);
-      final h = ReportEditHistory(const ReportBands());
-      h.push(const ReportBands(header: 'a'), at: t0);
-      h.push(const ReportBands(header: 'ab'),
-          at: t0.add(const Duration(milliseconds: 200)));
-      h.push(const ReportBands(header: 'abc'),
+      final h = ReportEditHistory(const ReportBands())
+        ..push(const ReportBands(header: 'a'), at: t0)
+        ..push(const ReportBands(header: 'ab'),
+          at: t0.add(const Duration(milliseconds: 200)))
+        ..push(const ReportBands(header: 'abc'),
           at: t0.add(const Duration(milliseconds: 400)));
       expect(h.length, 2, reason: 'three keystrokes, one step');
       h.push(const ReportBands(header: 'PRESET'),

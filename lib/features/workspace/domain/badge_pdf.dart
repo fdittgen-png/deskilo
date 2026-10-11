@@ -64,7 +64,6 @@ Future<Uint8List> buildBadgePdf({
         ),
         padding: const pw.EdgeInsets.all(8),
         child: pw.Row(
-          crossAxisAlignment: pw.CrossAxisAlignment.center,
           children: [
             pw.BarcodeWidget(
               barcode: pw.Barcode.qrCode(),

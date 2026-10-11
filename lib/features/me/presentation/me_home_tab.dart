@@ -6,25 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/money_format.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../money/presentation/my_finances_route.dart';
+import '../../money/providers/finance_overview_provider.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../../../core/i18n/money_format.dart';
-import '../../../core/time/clock.dart';
-import '../../money/presentation/my_finances_route.dart';
-import '../../money/providers/finance_overview_provider.dart';
 import '../providers/me_providers.dart';
+import '../providers/space_prefs_provider.dart';
 import 'linked_spaces_section.dart';
 import 'me_spaces_list.dart';
-import '../providers/space_prefs_provider.dart';
 
 class MeHomeTab extends ConsumerWidget {
   const MeHomeTab({super.key});

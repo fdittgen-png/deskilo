@@ -129,6 +129,7 @@ class JsonReader {
   }
 
   /// A boolean the wire may omit: [fallback] then.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   bool boolOr(String key, bool fallback) {
     final value = json[key];
     if (value == null) return fallback;

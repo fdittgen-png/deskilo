@@ -83,7 +83,7 @@ final class WizardPreviewsProvider
   }
 }
 
-String _$wizardPreviewsHash() => r'99a0de28d72d7ef7809594d83a13b011dea6fddb';
+String _$wizardPreviewsHash() => r'3381842a2e31b9b370baff138c66f6092d8a25bf';
 
 /// #827 — what every active member would be invoiced for [period], ALL
 /// kinds (the wizard narrows to its run's kind). A member whose preview

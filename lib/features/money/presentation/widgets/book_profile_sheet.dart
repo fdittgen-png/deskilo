@@ -10,9 +10,9 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/save_book_profile.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
-import '../../application/save_book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
 

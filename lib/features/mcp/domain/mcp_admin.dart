@@ -3,12 +3,13 @@
 // #1626 — a workspace owner's MCP exposure policy; #1627 — a database
 // administrator's eligibility queue. Both are read and written through
 // the server's own RPCs (0270/0271): the app never decides who may.
-export 'instance_operator.dart';
-import 'instance_operator.dart';
+import '../../../core/data/json_reader.dart';
 import '../../../core/mcp/mcp_operations.dart';
+import 'instance_operator.dart';
 import 'mcp_context.dart';
 import 'mcp_usage.dart';
-import '../../../core/data/json_reader.dart';
+
+export 'instance_operator.dart';
 
 /// #1809 — a server list of optional fields, kept to the ones the
 /// contract defines ([mcpOptionalFields]) and in the contract's order.

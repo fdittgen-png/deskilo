@@ -42,6 +42,7 @@ class ManagedAccess {
       ? roles.contains(role)
       : (role == roleOwner || role == roleAdmin);
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   ManagedAccess withRole(String role, bool on) => ManagedAccess(
         roles: {
           ...narrowed ? roles : const {roleOwner, roleAdmin},
@@ -51,6 +52,7 @@ class ManagedAccess {
         narrowed: true,
       );
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   ManagedAccess withMember(String memberId, bool on) => ManagedAccess(
         roles: narrowed ? roles : const {roleOwner, roleAdmin},
         memberIds: {...memberIds, if (on) memberId}

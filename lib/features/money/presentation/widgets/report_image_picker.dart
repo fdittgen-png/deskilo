@@ -72,8 +72,9 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
           },
         );
         if (!context.mounted) return;
-        ref.invalidate(reportImageBytesProvider(name));
-        ref.invalidate(reportImagesProvider);
+        ref
+          ..invalidate(reportImageBytesProvider(name))
+          ..invalidate(reportImagesProvider);
       },
     );
     if (!context.mounted) return;

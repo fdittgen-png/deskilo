@@ -1219,6 +1219,10 @@
   "bookRoleCustomers": "Clients (créances)",
   "bookRoleExpenses": "Charges",
   "bookRoleRevenue": "Produits",
+  "bookRoleVatInput": "TVA déductible",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "TVA collectée",
   "bookSaveFailed": "Le livre n’a pas été enregistré. Vérifiez la connexion et réessayez.",
   "bookSaved": "Livre enregistré",
@@ -3158,6 +3162,10 @@
   "expenseCategoryOther": "Autre",
   "expenseCategorySupplies": "Fournitures",
   "expenseInvalidAmount": "Saisissez un montant supérieur à zéro.",
+  "expenseInvalidDeductible": "Saisissez une part entre 0 et 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Saisissez au moins une unité.",
   "expenseInvalidUnitPrice": "Saisissez un prix unitaire valide, ou laissez-le vide.",
   "expenseMissingSupplyName": "Nommez le nouvel article.",
@@ -3168,6 +3176,31 @@
   "expenseSupplyToggle": "C'est une fourniture pour l'espace",
   "expenseSupplyUnitPrice": "Prix unitaire (ce que coûte une consommation)",
   "expenseSupplyUnitPriceHint": "Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.",
+  "expenseVatDeductible": "Part déductible (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleAmount": "TVA déductible : {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatDeductibleHint": "100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "Sans TVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "TVA sur cette dépense",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "Pour que votre comptable l’importe et le vérifie — ce n’est pas une déclaration.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3402,6 +3435,14 @@
   "featureHolidayImportTitle": "Importer les jours fériés",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "TVA déductible",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Assistant d'instance",
   "@featureInstanceWizard": {
@@ -11487,6 +11528,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "Crédit de TVA",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11507,6 +11552,10 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
+  "vatDeclInputVat": "TVA déductible",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
   "vatDeclInvoices": "Factures",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
@@ -11522,6 +11571,10 @@
   "vatDeclNet": "Base HT",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "TVA à payer",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {

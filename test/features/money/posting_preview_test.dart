@@ -46,7 +46,7 @@ final mappings = [
   map(BookRole.bank, 'a3', '2026-01-01'),
   map(BookRole.vatOutput, 'a4', '2026-01-01'),
 ];
-final day = DateTime.utc(2026, 6, 1);
+final day = DateTime.utc(2026, 6);
 
 AccountingAmount cad(String v) => AccountingAmount.parse('CAD', v);
 AccountingAmount eur(String v) => AccountingAmount.parse('EUR', v);

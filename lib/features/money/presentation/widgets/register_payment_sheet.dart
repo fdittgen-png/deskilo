@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -15,7 +16,6 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_method.dart';
 import '../../providers/money_providers.dart';
-import '../../../../core/format/cents.dart';
 
 /// #827 — an admin registers a payment that came in FOR a member (a
 /// bank line, cash at the desk): the same `record_payment` RPC members

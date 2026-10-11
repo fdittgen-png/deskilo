@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
-import '../../helpers/test_clock.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/test_clock.dart';
 import 'money_screen_test.dart' show pumpMoney, workspaceWithInstructions;
 
 Invoice _invoice(
@@ -86,7 +86,7 @@ void main() {
 
     test('voided and replaced documents do not count; the latest '
         'covering invoice wins', () {
-      final old = _invoice('old', issuedAt: DateTime(2026, 5, 1));
+      final old = _invoice('old', issuedAt: DateTime(2026, 5));
       final replacement =
           _invoice('new', replaces: 'old', issuedAt: DateTime(2026, 5, 2));
       final s = settlementOfPeriod(

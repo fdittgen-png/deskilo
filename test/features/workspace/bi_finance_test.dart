@@ -58,7 +58,7 @@ Map<String, dynamic> _row({
 class _Finance implements FinanceKpiRepository {
   final calls = <(String, String)>[];
   String comparedCurrency = 'EUR';
-  Object? failure;
+  Exception? failure;
 
   @override
   Future<FinanceSummaryKpi> summary(

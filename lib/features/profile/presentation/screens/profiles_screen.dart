@@ -2,8 +2,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../directory/presentation/account_portal_entry.dart';
-import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,20 +9,22 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../workspace/domain/member.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/theme/status_colors.dart';
-import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/site.dart';
+import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/domain/workspace_overview.dart';
+import '../../../workspace/presentation/member_admin_actions.dart';
+import '../../../workspace/presentation/member_labels.dart';
+import '../../../workspace/presentation/widgets/application_requests_entry.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/pair_card.dart';
 import '../widgets/workspace_owners_sheet.dart';
-import '../../../workspace/presentation/widgets/application_requests_entry.dart';
 
 /// Profile switcher à la tankstellen (#89): each membership is a profile —
 /// a workspace plus the role held there. The active profile shapes the

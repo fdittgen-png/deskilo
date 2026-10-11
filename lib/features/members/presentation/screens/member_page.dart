@@ -1,56 +1,56 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../../core/vat/vat_treatment.dart';
-import '../../../../core/motion/motion.dart';
-import '../../../../l10n/app_localizations_en.dart';
-import '../../../../core/ui/form_kit.dart';
-import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/vat/vat_treatment.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
+import '../../../money/presentation/widgets/member_billing_tiles.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
+import '../../../money/presentation/widgets/payment_terms_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../profile/domain/personal_info.dart';
+import '../../../profile/presentation/courtesy_words.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_policies.dart';
+import '../../../workspace/domain/invite_uri.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/overage_policy.dart';
+import '../../../workspace/domain/site.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/presentation/member_admin_actions.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import '../../../workspace/presentation/member_vat_treatment.dart';
+import '../../../workspace/presentation/widgets/invite_sheet.dart';
 import '../../../workspace/presentation/widgets/member_roles_card.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
-import '../../../workspace/presentation/widgets/invite_sheet.dart';
-import '../../../workspace/domain/invite_uri.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../money/presentation/widgets/payment_terms_card.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
 import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
-import '../../../profile/presentation/courtesy_words.dart';
-import '../../../profile/domain/personal_info.dart';
-import '../../../workspace/domain/site.dart';
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../money/presentation/widgets/member_billing_tiles.dart';
 
 part '../widgets/member_page_cards.dart';
 
@@ -99,7 +99,7 @@ class _MemberPageBody extends ConsumerWidget {
     try {
       final handled = await ref.read(linkLauncherProvider)(uri);
       if (!handled) throw StateError('no handler for $uri');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('members', 'link launch failed',
           error: e, stackTrace: st);
       if (!context.mounted) return;

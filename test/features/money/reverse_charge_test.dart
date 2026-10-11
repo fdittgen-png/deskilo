@@ -6,19 +6,19 @@
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
 // #2354 — only for a general service: a desk is taxed where it stands.
 
-import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo/core/vat/supply_class.dart';
+import 'package:deskilo/core/vat/vat_treatment.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart' show buildInvoiceUbl;
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
-import 'package:deskilo/core/vat/supply_class.dart';
-import 'package:deskilo/core/vat/vat_treatment.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
 
 const _seller = InvoiceParty(
   name: 'Demo SARL',

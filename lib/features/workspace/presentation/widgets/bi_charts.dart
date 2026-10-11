@@ -252,7 +252,7 @@ class _EvolutionPainter extends CustomPainter {
       for (final f in forecast?.points ?? const <BiForecastPoint>[]) ...[f.low, f.high],
     ];
     if (values.isEmpty || points.length < 2) return;
-    var lo = math.min(0.0, values.reduce(math.min));
+    final lo = math.min(0.0, values.reduce(math.min));
     var hi = values.reduce(math.max);
     if (hi <= lo) hi = lo + 1;
     final pad = (hi - lo) * 0.08;
@@ -442,7 +442,7 @@ class BiCompareBars extends StatelessWidget {
               label: [
                 kindLabel(bar.kind),
                 periodLabel(bar.period),
-                bar.value == null ? noDataLabel : format(bar.value!),
+                if (bar.value == null) noDataLabel else format(bar.value!),
                 if (bar.partial) partialLabel,
                 ?changeLabel(bar),
               ].join(', '),

@@ -90,8 +90,9 @@ class WorkspaceEnvironmentTile extends ConsumerWidget {
     )) {
       return;
     }
-    ref.invalidate(myWorkspacesProvider);
-    ref.invalidate(currentWorkspaceProvider);
+    ref
+      ..invalidate(myWorkspacesProvider)
+      ..invalidate(currentWorkspaceProvider);
     if (!context.mounted) return;
     AppSnack.success(
         context, l10n?.environmentPairsTwinCreated ?? 'The twin is created.');

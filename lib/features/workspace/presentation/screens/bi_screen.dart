@@ -12,11 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../domain/bi_modules.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../providers/bi_providers.dart';

@@ -14,8 +14,8 @@
 // agreement. An English-speaking workspace was shown "31 août" because
 // the person who happened to send the message held a French phone.
 import 'package:deskilo/features/workspace/domain/workspace.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/features/workspace/presentation/reference_locale.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

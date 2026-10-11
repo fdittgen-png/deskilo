@@ -3,9 +3,9 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 
+import '../../time/date_text.dart';
 import 'money_repository.dart';
 import 'workspace_repository.dart';
-import '../../time/date_text.dart';
 
 /// The finance KPIs over the demo's own invoices and matches, with the
 /// predicates of `kpi_finance_summary` (0351): invoiced = non-void,

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';

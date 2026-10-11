@@ -7,10 +7,10 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/application/template_workbook.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
-import 'package:deskilo/core/demo/data/workbook_origin_repository.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
@@ -36,7 +36,6 @@ TemplateInspection _inspection(String id) => TemplateInspection(
     compatibility: TemplateCompatibility.supported,
     groups: [],
   ),
-  fields: const [],
 );
 
 /// Holds every inspection until [gate] completes, or fails it.
@@ -89,7 +88,6 @@ Future<List<({String name, Uint8List bytes})>> _pump(
             sections: [
               TemplateGallerySection(title: 'All', templates: templates),
             ],
-            selectedId: null,
             onSelected: picker ? (_) {} : null,
           ),
         ),

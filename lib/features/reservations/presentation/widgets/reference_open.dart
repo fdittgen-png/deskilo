@@ -6,14 +6,14 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
-import '../../../plan/domain/office.dart';
 import '../../../plan/domain/level.dart';
+import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/space_code.dart';
 import '../../providers/reservation_providers.dart';
-import 'reservation_detail_sheet.dart';
 import '../space_subjects.dart';
+import 'reservation_detail_sheet.dart';
 import 'space_scan.dart';
 
 /// A space fully resolved against the live floor plan — what

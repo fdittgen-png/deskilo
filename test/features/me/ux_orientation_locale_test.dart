@@ -2,13 +2,13 @@
 //
 // Invariant: translated workspace entries and account shortcuts remain
 // readable and actionable at narrow widths with doubled text size.
+import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
 import 'package:deskilo/features/profile/domain/personal_preferences.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'me_app.dart';
 
 void main() {

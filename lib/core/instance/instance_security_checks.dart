@@ -153,12 +153,10 @@ List<DoctorFinding> checkStorageScoping(
       if (!policy.contains('foldername')) policy.split(' :: ').first,
   ];
   return [
-    unscoped.isEmpty
-        ? DoctorFinding(DoctorLevel.ok, 'Storage reads are scoped',
+    if (unscoped.isEmpty) DoctorFinding(DoctorLevel.ok, 'Storage reads are scoped',
             '${policies.length} read policies, each naming the folder that '
                 'owns the file',
-            count: policies.length)
-        : DoctorFinding(
+            count: policies.length) else DoctorFinding(
             DoctorLevel.alarm,
             'A storage read is not scoped to its folder',
             '${unscoped.join(', ')}\n'

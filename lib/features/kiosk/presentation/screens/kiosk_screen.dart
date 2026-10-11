@@ -8,47 +8,47 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/realtime/realtime_providers.dart';
+import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/work_hours.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../reservations/domain/booking_error_text.dart';
-import '../../../reservations/presentation/booking_gate_scope.dart';
-import '../../../reservations/domain/space_act.dart';
-import '../../../workspace/domain/workspace_availability.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/nfc/nfc_uid_reader.dart';
-import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/level.dart';
-import '../../../plan/presentation/widgets/seat_photos.dart';
-import '../../../profile/domain/profile.dart';
-import '../../../workspace/domain/member.dart';
-import '../../../profile/presentation/widgets/member_avatar.dart';
-import '../../../reservations/domain/reservation.dart';
-import '../../../reservations/domain/reservation_repository.dart'
-    show KioskIdentity;
-import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
+import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../profile/domain/profile.dart';
+import '../../../profile/presentation/widgets/member_avatar.dart';
+import '../../../reservations/domain/booking_error_text.dart';
+import '../../../reservations/domain/reservation.dart';
+import '../../../reservations/domain/reservation_repository.dart'
+    show KioskIdentity;
+import '../../../reservations/domain/space_act.dart';
+import '../../../reservations/presentation/booking_gate_scope.dart';
+import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_availability.dart';
 import '../../../workspace/domain/workspace_feature.dart';
-import '../../../../core/time/work_hours.dart';
-import '../../../../core/l10n/lexicon.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../widgets/kiosk_act_sheet.dart';
 import '../../device_pin.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/i18n/format_controller.dart';
+import '../widgets/kiosk_act_sheet.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
@@ -223,7 +223,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             startsAt: booksWindow ? request.start : null,
             endsAt: booksWindow ? request.end : null,
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('kiosk act failed: $e\n$st');
       TraceLogger.instance
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
@@ -332,14 +332,15 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // kiosk that calls a seat «une place» must say so on its own route.
     Lexicon.install(ref.watch(lexiconProvider).value);
     // #814 — the gate reads the policies synchronously at badge time.
-    ref.watch(bookingPoliciesProvider);
+    ref
+      ..watch(bookingPoliciesProvider)
     // #519 — keep the granularity warm: the period step reads it
     // synchronously when a seat is tapped.
-    ref.watch(bookingGranularityProvider);
+      ..watch(bookingGranularityProvider)
     // Closed-day inputs: WATCH so the banner appears once they load
     // (and flips at midnight with the minute tick).
-    ref.watch(openWeekdaysProvider);
-    ref.watch(closureDaysProvider);
+      ..watch(openWeekdaysProvider)
+      ..watch(closureDaysProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {

@@ -7,17 +7,17 @@
 // complètes du vendeur, N° TVA, détail des lignes, totaux par taux,
 // modalités de règlement, mentions particulières).
 
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice_clauses.dart';
-import 'package:deskilo/features/money/domain/payment_terms.dart';
-import 'package:deskilo/features/money/domain/vat_compliance.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/domain/payment_terms.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo/features/money/domain/vat_compliance.dart';
+import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
 
 Workspace _workspace(Map<String, dynamic> invoiceLegal) => Workspace(
       id: 'ws-1',
@@ -61,7 +61,7 @@ void main() {
     }
   });
 
-  // #2356 — the gate (0408) opens for every member state: each has its
+  // #2356 — the gate (0409) opens for every member state: each has its
   // statutory mentions and a payment-clause profile here; the zero
   // category, the currency rule and a real create_invoice run per country
   // are pgTAP 170.

@@ -12,6 +12,7 @@ abstract class FrontCameraStore {
   /// `fallback: true` swallowed "unset" and pointed every fresh install's
   /// invite scan at the joiner's face.
   Future<bool?> read();
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> write(bool enabled);
 }
 
@@ -41,6 +42,7 @@ class FrontCameraScan extends _$FrontCameraScan {
   @override
   Future<bool?> build() => ref.watch(frontCameraStoreProvider).read();
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> setEnabled(bool enabled) async {
     state = AsyncData(enabled);
     await ref.read(frontCameraStoreProvider).write(enabled);

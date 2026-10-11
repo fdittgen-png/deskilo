@@ -110,7 +110,6 @@ void main() {
       final g = _gate(
         policies: const BookingPolicies(
           advanceHorizonDays: 7,
-          minDurationMinutes: 30,
           maxDurationMinutes: 240,
         ),
       );
@@ -171,7 +170,7 @@ void main() {
       );
       // Midnight itself is the day's own end.
       expect(
-        _gate(policies: const BookingPolicies(maxDurationMinutes: 1440))
+        _gate()
             .refusalFor(start: _at(20), end: _dayOffset(1, 0), walkUp: true),
         isNull,
       );
@@ -298,7 +297,7 @@ void main() {
             endsAt: end,
             checkIn: walkUp,
           );
-        } catch (e) {
+        } on Object catch (e) {
           thrown = e;
         }
         final refusal =

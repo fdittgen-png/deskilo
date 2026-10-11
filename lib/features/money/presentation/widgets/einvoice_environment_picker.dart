@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 
 /// Which platform environment an e-invoice send should target (#393).

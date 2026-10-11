@@ -97,7 +97,7 @@ Future<void> saveAndTell(
       bytes: bytes,
       fileName: fileName,
     );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'export not saved', stackTrace: st);
     if (context.mounted) AppSnack.error(context, failed);
     return;

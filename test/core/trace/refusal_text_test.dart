@@ -23,7 +23,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 const _generic = 'Something went wrong. Please try again.';
 
-Future<void> _pumpGuarded(WidgetTester tester, Object thrown) async {
+Future<void> _pumpGuarded(WidgetTester tester, Exception thrown) async {
   await tester.pumpWidget(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

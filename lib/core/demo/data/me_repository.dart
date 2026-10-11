@@ -52,7 +52,7 @@ class FakeMeRepository implements MeRepository {
   final List<String> left = [];
 
   /// When set, [leaveSpace] and [setVisibility] throw it.
-  Object? failure;
+  Exception? failure;
 
   /// Linked servers' spaces, by source; a source in [unavailable] throws.
   final Map<String, List<LinkedSpace>> linkedSpaces = {};

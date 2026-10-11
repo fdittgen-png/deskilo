@@ -411,6 +411,7 @@ class RecipeProbe {
   /// The recipe's authorized screen or domain result. Must be called
   /// before a run can be a success; a false answer leaves the run
   /// incomplete and names [what].
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void authorize(String what, bool holds) {
     run.authorized = (run.authorized ?? true) && holds;
     if (!holds) run.missing.add(what);
@@ -418,6 +419,7 @@ class RecipeProbe {
 
   /// A wrong result on screen — another scope's answer, a second effect.
   /// Present, it makes the run incorrect however fast it was.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   void forbid(String what, bool happened) {
     if (happened) run.violations.add(what);
   }

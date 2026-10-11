@@ -29,8 +29,8 @@ void main() {
     calls = [];
     installed = true;
     ignorePatch = false;
-    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
-    server.listen((request) async {
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0)
+      ..listen((request) async {
       final body = await utf8.decoder.bind(request).join();
       calls.add(request.method);
       expect(request.uri.path, startsWith('/v1/projects/$ref/'));

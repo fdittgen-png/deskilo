@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/theme/app_radius.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
-import '../../../../core/ui/app_tab_bar.dart';
 
 /// The label of a face, as the tab and the help hint call it.
 String _moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {

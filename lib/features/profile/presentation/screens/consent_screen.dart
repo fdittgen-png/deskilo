@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/entry_intents.dart';
 import '../../../../app/route_classes.dart';
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/privacy_notice_view.dart';
-import '../../../../core/help/guide_site.dart';
 
 /// #751 — the GDPR consent. Shown by the router before anything else
 /// while the account has not accepted [kPrivacyPolicyVersion]; shown

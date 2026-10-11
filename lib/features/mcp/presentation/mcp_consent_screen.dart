@@ -9,14 +9,14 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/domain/identity_binding.dart';
+import '../../workspace/providers/instance_providers.dart';
 import '../application/connect_assistant.dart';
+import '../domain/mcp_access_status.dart';
 import '../domain/mcp_connection.dart';
 import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
-import '../domain/mcp_access_status.dart';
-import '../../auth/domain/identity_binding.dart';
-import '../../workspace/providers/instance_providers.dart';
 import 'mcp_consent_refusal.dart';
 import 'mcp_operation_labels.dart';
 

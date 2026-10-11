@@ -475,18 +475,19 @@ String buildWorkspaceXml({
       return bySortOrder != 0 ? bySortOrder : a.name.compareTo(b.name);
     });
 
-  final builder = XmlBuilder();
-  builder.declaration(encoding: 'UTF-8');
+  final builder = XmlBuilder()
+    ..declaration(encoding: 'UTF-8');
   builder.element(WorkspaceXmlSchema.rootElement, nest: () {
     builder.attribute(
         WorkspaceXmlSchema.versionAttr, '${WorkspaceXmlSchema.version}');
     builder.element(WorkspaceXmlSchema.settingsElement, nest: () {
-      builder.attribute(WorkspaceXmlSchema.nameAttr, workspace.name);
-      builder.attribute(
-          WorkspaceXmlSchema.countryAttr, workspace.countryCode);
-      builder.attribute(
-          WorkspaceXmlSchema.currencyAttr, workspace.currencyCode);
-      builder.attribute(WorkspaceXmlSchema.timezoneAttr, workspace.timezone);
+      builder
+        ..attribute(WorkspaceXmlSchema.nameAttr, workspace.name)
+        ..attribute(
+          WorkspaceXmlSchema.countryAttr, workspace.countryCode)
+        ..attribute(
+          WorkspaceXmlSchema.currencyAttr, workspace.currencyCode)
+        ..attribute(WorkspaceXmlSchema.timezoneAttr, workspace.timezone);
       // #1289 — the brand seed, when the space chose one.
       if (WorkspaceBranding.fromJson(workspace.branding).seedArgb
           case final argb?) {
@@ -497,8 +498,9 @@ String buildWorkspaceXml({
         final value = workspace.featureFlags[key];
         if (value is! bool) continue; // defensive: only bools are flags
         builder.element(WorkspaceXmlSchema.featureElement, nest: () {
-          builder.attribute(WorkspaceXmlSchema.keyAttr, key);
-          builder.attribute(WorkspaceXmlSchema.enabledAttr, '$value');
+          builder
+            ..attribute(WorkspaceXmlSchema.keyAttr, key)
+            ..attribute(WorkspaceXmlSchema.enabledAttr, '$value');
         });
       }
       for (final key in paymentKeys) {
@@ -506,20 +508,22 @@ String buildWorkspaceXml({
         if (value is! String || value.trim().isEmpty) continue;
         builder.element(WorkspaceXmlSchema.paymentInstructionElement,
             nest: () {
-          builder.attribute(WorkspaceXmlSchema.keyAttr, key);
-          builder.attribute(WorkspaceXmlSchema.valueAttr, value);
+          builder
+            ..attribute(WorkspaceXmlSchema.keyAttr, key)
+            ..attribute(WorkspaceXmlSchema.valueAttr, value);
         });
       }
     });
     builder.element(WorkspaceXmlSchema.accessoriesElement, nest: () {
       for (final accessory in sortedAccessories) {
         builder.element(WorkspaceXmlSchema.accessoryElement, nest: () {
-          builder.attribute(WorkspaceXmlSchema.nameAttr, accessory.name);
-          builder.attribute(WorkspaceXmlSchema.supplementCentsAttr,
-              '${accessory.supplementCents}');
-          builder.attribute(
-              WorkspaceXmlSchema.activeAttr, '${accessory.active}');
-          builder.attribute(
+          builder
+            ..attribute(WorkspaceXmlSchema.nameAttr, accessory.name)
+            ..attribute(WorkspaceXmlSchema.supplementCentsAttr,
+              '${accessory.supplementCents}')
+            ..attribute(
+              WorkspaceXmlSchema.activeAttr, '${accessory.active}')
+            ..attribute(
               WorkspaceXmlSchema.sortOrderAttr, '${accessory.sortOrder}');
           final vatRate = vatRateLabels[accessory.vatRateId];
           if (vatRate != null && vatRate.isNotEmpty) {
@@ -531,8 +535,9 @@ String buildWorkspaceXml({
     builder.element(WorkspaceXmlSchema.floorPlanElement, nest: () {
       for (final entry in sortedLevels) {
         builder.element(WorkspaceXmlSchema.levelElement, nest: () {
-          builder.attribute(WorkspaceXmlSchema.nameAttr, entry.level.name);
-          builder.attribute(
+          builder
+            ..attribute(WorkspaceXmlSchema.nameAttr, entry.level.name)
+            ..attribute(
               WorkspaceXmlSchema.sortOrderAttr, '${entry.level.sortOrder}');
           _priceAttributes(builder, entry.level.priceCents,
               bookableAsWhole: entry.level.bookableAsWhole);
@@ -542,10 +547,11 @@ String buildWorkspaceXml({
           }
           for (final office in entry.plan.offices) {
             builder.element(WorkspaceXmlSchema.officeElement, nest: () {
-              builder.attribute(WorkspaceXmlSchema.nameAttr, office.name);
-              builder.attribute(
-                  WorkspaceXmlSchema.colorAttr, '${office.color}');
-              builder.attribute(WorkspaceXmlSchema.bookableAsWholeAttr,
+              builder
+                ..attribute(WorkspaceXmlSchema.nameAttr, office.name)
+                ..attribute(
+                  WorkspaceXmlSchema.colorAttr, '${office.color}')
+                ..attribute(WorkspaceXmlSchema.bookableAsWholeAttr,
                   '${office.bookableAsWhole}');
               _rectAttributes(builder, office.rect);
               _priceAttributes(builder, office.priceCents);
@@ -600,21 +606,23 @@ String workspaceXmlFileName(String workspaceName) {
 }
 
 void _rectAttributes(XmlBuilder builder, GridRect rect) {
-  builder.attribute(WorkspaceXmlSchema.xAttr, '${rect.x}');
-  builder.attribute(WorkspaceXmlSchema.yAttr, '${rect.y}');
-  builder.attribute(WorkspaceXmlSchema.wAttr, '${rect.w}');
-  builder.attribute(WorkspaceXmlSchema.hAttr, '${rect.h}');
+  builder
+    ..attribute(WorkspaceXmlSchema.xAttr, '${rect.x}')
+    ..attribute(WorkspaceXmlSchema.yAttr, '${rect.y}')
+    ..attribute(WorkspaceXmlSchema.wAttr, '${rect.w}')
+    ..attribute(WorkspaceXmlSchema.hAttr, '${rect.h}');
 }
 
 void _seatElement(
     XmlBuilder builder, Seat seat, List<String> accessoryNames) {
   builder.element(WorkspaceXmlSchema.seatElement, nest: () {
-    builder.attribute(WorkspaceXmlSchema.nameAttr, seat.name);
-    builder.attribute(WorkspaceXmlSchema.xAttr, '${seat.x}');
-    builder.attribute(WorkspaceXmlSchema.yAttr, '${seat.y}');
-    builder.attribute(
-        WorkspaceXmlSchema.orientationAttr, seat.orientation.name);
-    builder.attribute(WorkspaceXmlSchema.chairAttr, seat.chair);
+    builder
+      ..attribute(WorkspaceXmlSchema.nameAttr, seat.name)
+      ..attribute(WorkspaceXmlSchema.xAttr, '${seat.x}')
+      ..attribute(WorkspaceXmlSchema.yAttr, '${seat.y}')
+      ..attribute(
+        WorkspaceXmlSchema.orientationAttr, seat.orientation.name)
+      ..attribute(WorkspaceXmlSchema.chairAttr, seat.chair);
     final nfcUid = seat.nfcUid;
     if (nfcUid != null && nfcUid.isNotEmpty) {
       builder.attribute(WorkspaceXmlSchema.nfcUidAttr, nfcUid);
@@ -866,7 +874,7 @@ int _optionalInt(XmlElement element, String name) =>
         : _requireInt(element, name, min: 0);
 
 bool _optionalBool(XmlElement element, String name) =>
-    element.getAttribute(name) == null ? false : _requireBool(element, name);
+    !(element.getAttribute(name) == null) && _requireBool(element, name);
 
 GridRect _parseRect(XmlElement element) => GridRect(
       x: _requireInt(element, WorkspaceXmlSchema.xAttr, min: 0),

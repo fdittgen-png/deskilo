@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
+
+import '../../../core/time/date_text.dart';
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
 import 'invoice.dart';
-import '../../../core/time/date_text.dart';
 
 /// #827 — the invoicing wizard's pure side: which RUN the calendar
 /// calls for, which PERIOD and invoice KIND it works on, and the plan of
@@ -32,14 +33,14 @@ enum WizardStep {
 /// 'YYYY-MM' of the month after [now].
 @visibleForTesting
 String wizardNextPeriod(DateTime now) {
-  final next = DateTime(now.year, now.month + 1, 1);
+  final next = DateTime(now.year, now.month + 1);
   return yearMonth(next.year, next.month);
 }
 
 /// 'YYYY-MM' of the month before [now].
 @visibleForTesting
 String wizardPreviousPeriod(DateTime now) {
-  final prev = DateTime(now.year, now.month - 1, 1);
+  final prev = DateTime(now.year, now.month - 1);
   return yearMonth(prev.year, prev.month);
 }
 

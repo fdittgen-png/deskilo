@@ -12,12 +12,12 @@ import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'bi_analysis.dart';
-import 'bi_report_content.dart';
 import '../../money/domain/invoice_pdf.dart' show watermarkForeground;
 import '../../money/domain/invoice_report.dart';
 import '../../money/domain/report_block_widgets.dart';
 import '../../money/domain/report_flow_page.dart';
+import 'bi_analysis.dart';
+import 'bi_report_content.dart';
 
 /// The report: a header, one section per analysis, a closing note.
 Future<Uint8List> buildBiReportPdf({
@@ -195,8 +195,7 @@ pw.Widget _evolution(BiDashboardContent c) {
                   }
                   canvas
                     ..closePath()
-                    ..fillPath();
-                  canvas
+                    ..fillPath()
                     ..setStrokeColor(_projection)
                     ..setLineWidth(1.6)
                     ..setLineDashPattern([4, 3])

@@ -6,8 +6,8 @@
 // physically at the seat — gated like booking for others, inside the
 // window only.
 
-import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

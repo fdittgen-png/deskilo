@@ -25,9 +25,9 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/validation/pending_validation.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
-import '../guide/guide_session.dart';
 import '../domain/action_registry.dart';
 import '../domain/step_values.dart';
+import '../guide/guide_session.dart';
 import '../providers/recorder_providers.dart';
 
 RecorderController? _live(WidgetRef ref) =>
@@ -50,12 +50,12 @@ void recordTaskStep(
       payload: payload,
       values: values,
     );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'step not recorded', stackTrace: st);
   }
   try {
     GuideEvents.sink?.action(actionId, target: target);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
   }
 }
@@ -83,12 +83,12 @@ class TaskAttempt {
       if (guide != null && identical(GuideEvents.sink, guide)) {
         guide.outcome(outcomeId, token: _guideToken);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
     }
     try {
       _controller?.outcome(_token, outcomeId, payload: payload);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'outcome not recorded',
@@ -116,7 +116,7 @@ TaskAttempt? recordTaskAttempt(
   try {
     guide = GuideEvents.sink;
     guideToken = guide?.action(actionId, target: target);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'guide not told', stackTrace: st);
   }
   try {
@@ -129,7 +129,7 @@ TaskAttempt? recordTaskAttempt(
     );
     if (token == null && guide == null) return null;
     return TaskAttempt._(token == null ? null : controller, token, guide, guideToken);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'recorder',
       'attempt not recorded',

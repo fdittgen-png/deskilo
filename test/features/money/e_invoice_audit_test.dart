@@ -12,8 +12,7 @@ import 'package:xml/xml.dart';
 
 const _seller = InvoiceParty(
   name: 'COWORKONTI', street: '4 avenue de Castelnau', city: 'Pézenas',
-  postalCode: '34120', country: 'FR', legalId: '10825191900016',
-  vatRegime: 'not_subject', taxExemptionReason: 'TVA non applicable, article 293 B du CGI',
+  postalCode: '34120', country: 'FR', legalId: '10825191900016', taxExemptionReason: 'TVA non applicable, article 293 B du CGI',
 );
 const _kaloa = InvoiceParty(
   name: 'SASU KaloA', company: 'SASU KaloA', street: '209 rue Jean Bart',

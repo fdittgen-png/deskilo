@@ -1,47 +1,46 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../core/trace/traced.dart';
-
-import '../application/book_repartition.dart';
-import '../application/declare_vat.dart';
-import '../application/record_consumption.dart';
-import '../application/record_payment.dart';
-import '../application/settle_invoices.dart';
-import '../application/save_legal_identity.dart';
-import '../application/schedule_expense.dart';
-import '../application/submit_expense.dart';
-import '../domain/invoice.dart';
-import '../domain/billing_rules.dart';
-import '../domain/dunning.dart';
-import '../domain/price_negotiation.dart';
-import '../domain/invoice_legal.dart';
-import '../domain/invoice_pdf_template.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/clock.dart';
+import '../../../core/time/date_text.dart';
+import '../../../core/trace/traced.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/book_repartition.dart';
+import '../application/declare_vat.dart';
+import '../application/record_consumption.dart';
+import '../application/record_payment.dart';
+import '../application/save_legal_identity.dart';
+import '../application/schedule_expense.dart';
+import '../application/settle_invoices.dart';
+import '../application/submit_expense.dart';
 import '../data/supabase_money_repository.dart';
-export '../domain/bill_sections.dart' show currentPeriod;
-
+import '../domain/billing_rules.dart';
+import '../domain/dunning.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_legal.dart';
+import '../domain/invoice_pdf_template.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
 import '../domain/money_repository.dart';
+import '../domain/number_sequence.dart';
 import '../domain/package.dart';
 import '../domain/payment_intent.dart';
+import '../domain/price_negotiation.dart';
 import '../domain/service_item.dart';
 import '../domain/statement.dart';
 import '../domain/subscription_levels.dart';
 import '../domain/vat_rate.dart';
-import '../../../core/time/clock.dart';
-import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
-import '../../../core/time/date_text.dart';
+
+export '../domain/bill_sections.dart' show currentPeriod;
 
 part 'money_providers.g.dart';
 

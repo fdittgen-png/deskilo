@@ -21,14 +21,14 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_destination.dart';
-import '../../domain/action_registry.dart' show uiRoutes;
-import '../guide_host/guide_step_text.dart'
-    show guideStepText, guideDestinationLabel;
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
+import '../guide_host/guide_step_text.dart'
+    show guideDestinationLabel, guideStepText;
 import '../recorder_labels.dart';
 import '../recording_export.dart';
 
@@ -70,7 +70,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   );
 
   void _replace(GuideStep step) => setState(() {
-    _steps = [for (final s in _steps) s.id == step.id ? step : s];
+    _steps = [for (final s in _steps) if (s.id == step.id) step else s];
   });
 
   Future<void> _editText(GuideStep step) async {

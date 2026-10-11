@@ -64,7 +64,7 @@ Future<void> runAdminSeatActions(
         // member and every admin (0007 trigger).
         await repo.cancel(other.id);
     }
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('admin $action on other failed: $e\n$st');
     TraceLogger.instance.error('plan', 'admin $action on other failed',
         error: e, stackTrace: st);

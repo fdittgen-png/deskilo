@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../directory/domain/message_marks.dart';
-import '../../../directory/presentation/messenger/reaction_strip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../directory/domain/message_marks.dart';
+import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/presentation/messenger/reaction_strip.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
@@ -16,8 +18,6 @@ import '../../providers/workspace_providers.dart';
 import 'member_note_actions.dart';
 import 'member_note_body.dart';
 import 'note_check.dart';
-import '../../../directory/presentation/messenger/message_marks.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// One chat bubble (#687), lifted out of conversation_sheet.dart so the
 /// group thread renders messages exactly as the 1:1 sheet always has.
