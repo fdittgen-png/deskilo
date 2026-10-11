@@ -1,0 +1,45 @@
+{
+  "@@locale": "de",
+  "vatDeclPeriodField": "Voranmeldungszeitraum",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodMonth": "Monatlich",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodQuarter": "Vierteljährlich",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
+  },
+  "vatDeclPeriodAnnual": "Jährlich",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodHint": "Wie oft Sie die Erklärung abgeben. Der Bildschirm der Umsatzsteuererklärung bietet nur Zeiträume dieser Länge an.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodNote": "Erklärungszeitraum: {period}. Änderbar unter Rechtliche Identität & E-Rechnung.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionOf": "Berichtigung für {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Eine abgegebene Erklärung ändert sich nie. Was sich danach in einem abgegebenen Zeitraum geändert hat — eine stornierte Rechnung, eine verspätet erfasste Zahlung — wird hier als Berichtigung dieser Erklärung erklärt.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  }
+}

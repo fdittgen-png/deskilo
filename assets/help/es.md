@@ -4873,6 +4873,8 @@ Quiere el IVA de un periodo calculado a partir de sus facturas y cobros, listo p
 - Solo existe con el régimen de sujeto a IVA. La nota de arriba indica cuándo se devenga el IVA del periodo.
 - El servidor calcula los importes a partir de las facturas, de los cobros registrados uno a uno y del devengo de cada factura. Cada tipo se desglosa por categoría: tipo general, inversión del sujeto pasivo, exenta y tipo cero quedan separadas. Las facturas de agrupación se excluyen; su cobro cuenta para las facturas que agrupan.
 - Una declaración pasa de **Borrador** a **Preparada** y luego a **Presentada**. Prepararla de nuevo sustituye los importes; una vez presentada, nada la modifica. Si una factura o un cobro del periodo ha cambiado desde la preparación, la aplicación se niega a marcarla como presentada hasta que la prepare de nuevo.
+- La lista **Periodo** solo ofrece periodos de la duración elegida en **Periodo de declaración del IVA** en [Identidad legal y facturación electrónica](app:/legal-identity) — mensual, trimestral o anual; trimestral mientras usted no elija. Un periodo que se solapa con una declaración presentada no puede prepararse.
+- Un periodo presentado queda bloqueado. Si después cambia algo en él — una factura anulada, un cobro registrado tarde con una fecha anterior — la declaración presentada se queda como estaba, y la siguiente declaración que usted prepare lleva la diferencia como **Corrección de** ese periodo, en una línea propia. Presentar esa declaración registra la corrección, de modo que se declara una sola vez. En el formulario francés las correcciones van a las líneas 15 (IVA a reintegrar) y 21 (otro IVA deducible); en los demás países se suman a las casillas del tipo del periodo en curso.
 - La aplicación no transmite declaraciones: Francia presenta por EDI-TVA o el espacio profesional de impots.gouv, Alemania por ELSTER. La plataforma de facturación electrónica solo transporta facturas.
 - Es una ayuda para la presentación, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
 
@@ -7518,6 +7520,7 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
 - Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
 - El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
+- Elija con qué frecuencia declara en **Periodo de declaración del IVA**, en la identidad legal. Un periodo presentado queda bloqueado: lo que cambie en él después se declara como corrección en la declaración siguiente.
 - El diario de declaraciones tiene su propia serie de numeración.
 
 **Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)

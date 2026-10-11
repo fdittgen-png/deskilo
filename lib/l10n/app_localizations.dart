@@ -32240,6 +32240,18 @@ abstract class AppLocalizations {
   /// **'Official form lines'**
   String get vatDeclBoxes;
 
+  /// #2357 VAT period locks: vatDeclCorrectionOf
+  ///
+  /// In en, this message translates to:
+  /// **'Correction of {period}'**
+  String vatDeclCorrectionOf(String period);
+
+  /// #2357 VAT period locks: vatDeclCorrectionsNote
+  ///
+  /// In en, this message translates to:
+  /// **'A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.'**
+  String get vatDeclCorrectionsNote;
+
   /// Disclaimer at the bottom of the declaration PDF
   ///
   /// In en, this message translates to:
@@ -32305,6 +32317,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Period'**
   String get vatDeclPeriod;
+
+  /// #2357 VAT period locks: vatDeclPeriodAnnual
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get vatDeclPeriodAnnual;
+
+  /// #2357 VAT period locks: vatDeclPeriodField
+  ///
+  /// In en, this message translates to:
+  /// **'VAT return period'**
+  String get vatDeclPeriodField;
+
+  /// #2357 VAT period locks: vatDeclPeriodHint
+  ///
+  /// In en, this message translates to:
+  /// **'How often you file the return. The VAT return screen offers only periods of this length.'**
+  String get vatDeclPeriodHint;
+
+  /// #2357 VAT period locks: vatDeclPeriodMonth
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get vatDeclPeriodMonth;
+
+  /// #2357 VAT period locks: vatDeclPeriodNote
+  ///
+  /// In en, this message translates to:
+  /// **'Filing period: {period}. Change it under Legal identity & e-invoicing.'**
+  String vatDeclPeriodNote(String period);
+
+  /// #2357 VAT period locks: vatDeclPeriodQuarter
+  ///
+  /// In en, this message translates to:
+  /// **'Quarterly'**
+  String get vatDeclPeriodQuarter;
 
   /// Status chip: the server computed the return, ready to file (#2357)
   ///

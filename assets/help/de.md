@@ -4873,6 +4873,8 @@ Sie möchten die Umsatzsteuer eines Zeitraums aus Ihren Rechnungen und Zahlungse
 - Es gibt sie nur beim Regime „umsatzsteuerpflichtig“. Der Hinweis oben sagt, wann die Umsatzsteuer des Zeitraums entsteht.
 - Der Server berechnet die Beträge aus den Rechnungen, den einzeln erfassten Zahlungseingängen und dem Steuerzeitpunkt jeder Rechnung. Jeder Steuersatz wird nach Kategorie aufgeteilt: Regelsatz, Reverse Charge, steuerfrei und Nullsatz bleiben getrennt. Sammelrechnungen bleiben außen vor; ihre Zahlung zählt für die zusammengefassten Rechnungen.
 - Eine Voranmeldung geht von **Entwurf** über **Vorbereitet** zu **Abgegeben**. Erneutes Vorbereiten ersetzt die Beträge; abgegeben ändert sie nichts mehr. Hat sich seit der Vorbereitung eine Rechnung oder Zahlung des Zeitraums geändert, verweigert die App das Markieren als abgegeben, bis Sie sie erneut vorbereiten.
+- Die Liste **Zeitraum** bietet nur Zeiträume der Länge an, die unter **Voranmeldungszeitraum** in [Rechtliche Identität & E-Rechnung](app:/legal-identity) gewählt ist — monatlich, vierteljährlich oder jährlich; vierteljährlich, solange Sie nichts gewählt haben. Ein Zeitraum, der sich mit einer abgegebenen Voranmeldung überschneidet, kann nicht vorbereitet werden.
+- Ein abgegebener Zeitraum ist gesperrt. Ändert sich darin später etwas — eine stornierte Rechnung, eine verspätet mit früherem Datum erfasste Zahlung —, bleibt die abgegebene Voranmeldung, wie sie war, und die nächste Voranmeldung, die Sie vorbereiten, trägt den Unterschied als **Berichtigung für** diesen Zeitraum in einer eigenen Zeile (§ 17 UStG). Mit der Abgabe dieser Voranmeldung wird die Berichtigung festgehalten, sie wird also nur einmal erklärt. Auf dem deutschen Formular fließt sie in die Kennzahlen des Steuersatzes im laufenden Zeitraum ein; auf der französischen CA3 in die Zeilen 15 und 21.
 - Die App übermittelt keine Voranmeldung: Deutschland gibt über ELSTER ab, Frankreich über EDI-TVA oder den Unternehmensbereich von impots.gouv. Die E-Rechnungsplattform transportiert nur Rechnungen.
 - Sie ist eine Hilfe zur Abgabe, keine Steuerberatung. Prüfen Sie sie vor der Abgabe anhand Ihrer Buchhaltung.
 
@@ -7518,6 +7520,7 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
 - Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
 - Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
+- Wählen Sie unter **Voranmeldungszeitraum** in der rechtlichen Identität, wie oft Sie melden. Ein abgegebener Zeitraum ist gesperrt: Was sich darin später ändert, wird in der nächsten Meldung als Berichtigung erklärt.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
 **Siehe auch:** [Steuerregime](help:user.money.vat.regime) · [Wann die Umsatzsteuer fällig wird](help:user.money.vat.due)
