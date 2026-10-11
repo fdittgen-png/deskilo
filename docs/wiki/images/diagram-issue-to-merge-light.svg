@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 390" width="1200" height="390" role="img" aria-label="The issue-to-merge flow: claim the issue, open a worktree, add the feature flag, pass the local gates, open a pull request, wait for the three required checks, merge, then ship with one release train dispatch." font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0f766e"/></marker></defs>
+<rect width="1200" height="390" fill="#fdfcf9"/>
+<text x="40" y="44" font-size="20" font-weight="700" fill="#1b2236">From issue to a shipped build</text>
+<rect x="60" y="80" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="175.0" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">1 Claim</text>
+<text x="175.0" y="128" text-anchor="middle" font-size="13" fill="#5a6277">issue, handoff, claim file</text>
+<line x1="290" y1="122" x2="340" y2="122" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="340" y="80" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="455.0" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">2 Worktree</text>
+<text x="455.0" y="128" text-anchor="middle" font-size="13" fill="#5a6277">own folder, pub get</text>
+<line x1="570" y1="122" x2="620" y2="122" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="620" y="80" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="735.0" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">3 Flags</text>
+<text x="735.0" y="128" text-anchor="middle" font-size="13" fill="#5a6277">one commit, ten places</text>
+<line x1="850" y1="122" x2="900" y2="122" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="900" y="80" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="1015.0" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">4 Local gates</text>
+<text x="1015.0" y="128" text-anchor="middle" font-size="13" fill="#5a6277">analyze, lint, folders</text>
+<rect x="900" y="230" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="1015.0" y="256" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">5 Pull request</text>
+<text x="1015.0" y="278" text-anchor="middle" font-size="13" fill="#5a6277">Refs or Closes</text>
+<line x1="900" y1="272" x2="850" y2="272" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="620" y="230" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="735.0" y="256" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">6 Required checks</text>
+<text x="735.0" y="278" text-anchor="middle" font-size="13" fill="#5a6277">three, all green</text>
+<line x1="620" y1="272" x2="570" y2="272" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="340" y="230" width="230" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="455.0" y="256" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">7 Merge</text>
+<text x="455.0" y="278" text-anchor="middle" font-size="13" fill="#5a6277">auto, squash, verified</text>
+<line x1="340" y1="272" x2="290" y2="272" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<rect x="60" y="230" width="230" height="84" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="1.8"/>
+<text x="175.0" y="256" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">8 Release train</text>
+<text x="175.0" y="278" text-anchor="middle" font-size="13" fill="#5a6277">one dispatch, one SHA</text>
+<line x1="1015.0" y1="164" x2="1015.0" y2="230" stroke="#0f766e" stroke-width="2" marker-end="url(#a)"/>
+<text x="60" y="360" font-size="14" fill="#5a6277">Steps 1 to 4 run on your machine. Steps 5 to 7 run in CI. Merge master into your branch once if it moves; never rebase.</text>
+</svg>

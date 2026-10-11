@@ -37,10 +37,10 @@ for f in docs/wiki/*.md; do
 done
 # a [x](User-Guide#slug) link -> the site's page + the slug's anchor id (tool/guide_links.dart anchorSlugs)
 grep -nE "\]\(($guides)(#[^)]*)?\)" <scratchpad>/wiki/*.md   # rewrite every hit by hand, then re-run: no hit
-mkdir -p <scratchpad>/wiki/images && for i in $(grep -ho 'images/[^")]*\.jpg' <scratchpad>/wiki/*.md | sort -u); do cp "docs/wiki/$i" <scratchpad>/wiki/images/; done
+mkdir -p <scratchpad>/wiki/images && for i in $(grep -hoE 'images/[^") ]*\.(jpg|svg)' <scratchpad>/wiki/*.md | sort -u); do cp "docs/wiki/$i" <scratchpad>/wiki/images/; done
 cd <scratchpad>/wiki && git add -A && git commit -m "…" && git push
 ```
-**The images matter**: the pages reference them relatively, and the old
+**The images matter** (screenshots `.jpg` and the diagrams `.svg`, light and dark): the pages reference them relatively, and the old
 mirror routine copied only `*.md` — every new image rendered broken on
 the wiki until it was pushed by hand.
 
