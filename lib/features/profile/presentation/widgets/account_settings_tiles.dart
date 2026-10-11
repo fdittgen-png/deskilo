@@ -295,28 +295,7 @@ List<Widget> accountSettingsTiles(
     if (installations) const InstanceOwnerTile(),
     // #969 — how the app navigates: the classic bar or the menu. Never on
     // the web, which has the menu and only the menu.
-    if (account && !ref.watch(platformIsWebProvider) &&
-        features.contains(WorkspaceFeature.navigationStyle))
-      ListTile(
-        key: const ValueKey('settings-navigation'),
-        leading: const Icon(Icons.menu_open_outlined),
-        title: HelpDotTitle(
-          l10n?.navigationTitle ?? 'Navigation',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
-          anchor: HelpAnchor.profileNavigation,
-        ),
-        subtitle: Text(switch (ref.watch(navigationStyleControllerProvider).value) {
-          NavigationStyle.classic =>
-            l10n?.navigationClassic ?? 'Classic: the bottom bar and the round button',
-          NavigationStyle.menu =>
-            l10n?.navigationMenu ?? 'Menu: the hamburger, like the web',
-          _ => l10n?.navigationDefault ?? 'Default for this device',
-        }),
-        onTap: () => showDialog<void>(
-          context: context,
-          builder: (_) => const _NavigationDialog(),
-        ),
-      ),
+    if (account) ?_navigationTile(context, ref),
     // #606 — bring every dismissed contextual hint back. Rides the same
     // flag as the hints themselves: no hints, no row.
     if (account && features.contains(WorkspaceFeature.formHelpHints))
@@ -338,6 +317,44 @@ List<Widget> accountSettingsTiles(
         },
       ),
   ];
+}
+
+/// #969/#2414 — the Navigation row: the stored choice, or the default and
+/// what it resolves to on this device. In Me and in a space's Settings;
+/// never on the web.
+Widget? _navigationTile(BuildContext context, WidgetRef ref) {
+  if (ref.watch(platformIsWebProvider) ||
+      !ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.navigationStyle)) {
+    return null;
+  }
+  final l10n = AppLocalizations.of(context);
+  final classic =
+      l10n?.navigationClassic ?? 'Classic: the bottom bar and the round button';
+  final menu = l10n?.navigationMenu ?? 'Menu: the hamburger, like the web';
+  final byDefault = switch (ref.watch(navigationDefaultProvider)) {
+    NavigationStyle.classic => classic,
+    NavigationStyle.menu => menu,
+  };
+  return ListTile(
+    key: const ValueKey('settings-navigation'),
+    leading: const Icon(Icons.menu_open_outlined),
+    title: HelpDotTitle(
+      l10n?.navigationTitle ?? 'Navigation',
+      l10n?.helpTopicSettings ?? 'Settings & profile',
+      anchor: HelpAnchor.profileNavigation,
+    ),
+    subtitle: Text(switch (ref.watch(navigationStyleControllerProvider).value) {
+      NavigationStyle.classic => classic,
+      NavigationStyle.menu => menu,
+      _ => '${l10n?.navigationDefault ?? 'Default for this device'} · $byDefault',
+    }),
+    onTap: () => showDialog<void>(
+      context: context,
+      builder: (_) => const _NavigationDialog(),
+    ),
+  );
 }
 
 /// #1823 — what a space's Settings keep of My account: the way to Me,
@@ -383,6 +400,9 @@ List<Widget> spaceAccountTiles(BuildContext context, WidgetRef ref) {
         title: Text(l10n?.meSpaceException ?? 'In this space'),
         subtitle: Text(exception),
       ),
+    // #2414 — the navigation is changed where the person stands, in the
+    // space too, not only in Me.
+    ?_navigationTile(context, ref),
     const PreferenceScopeControls(),
     if (scoped) ...[
       _languageTile(context, ref, defaultsOnly: false),

@@ -42,4 +42,16 @@ void main() {
     expect(find.text('Language'), findsOneWidget);
     expect(find.text('Theme'), findsOneWidget);
   });
+
+  // #2414 — the navigation is changed in the space too, not only in Me.
+  testWidgets('the space\'s Settings carry the Navigation row', (tester) async {
+    final router = await pumpMeApp(tester);
+    await pushTo(tester, router, '/settings');
+    final row = find.byKey(const ValueKey('settings-navigation'));
+    await tester.scrollUntilVisible(row, 80,
+        scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(row, findsOneWidget);
+    expect(find.textContaining('Default for this device'), findsOneWidget);
+  });
 }
