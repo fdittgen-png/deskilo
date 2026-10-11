@@ -24,5 +24,40 @@
         "type": "String"
       }
     }
-  }
+  },
+  "featureViesVerificationTitle": "USt-IdNr.-Prüfung (VIES)",
+  "featureViesVerificationDesc": "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt.",
+  "viesTileTitle": "USt-IdNr.-Prüfung (VIES)",
+  "viesStatusNone": "Nicht geprüft",
+  "viesStatusValid": "Gültig · Abfrage {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusInvalid": "In VIES nicht gültig · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusUnavailable": "VIES hat nicht geantwortet · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesCheckNow": "Jetzt prüfen",
+  "viesCheckExplainer": "VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.",
+  "invoiceMissingVies": "Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)",
+  "viesCheckFailed": "VIES konnte nicht abgefragt werden. Versuchen Sie es später erneut."
 }

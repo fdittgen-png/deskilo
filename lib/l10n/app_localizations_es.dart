@@ -5806,6 +5806,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada posición gravable de un mes o periodo — documento, cliente, base, tipo, IVA, total, categoría — con subtotales por tipo, como carta y como CSV para el contable.';
 
   @override
+  String get featureViesVerificationDesc =>
+      'El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.';
+
+  @override
+  String get featureViesVerificationTitle =>
+      'Comprobación del número de IVA (VIES)';
+
+  @override
   String get featureWhatsappIntegration => 'Integración con WhatsApp';
 
   @override
@@ -8216,6 +8224,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoiceMissingVatZeroLine =>
       'Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique';
+
+  @override
+  String get invoiceMissingVies =>
+      'Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)';
 
   @override
   String get invoiceNoOpen => 'No hay facturas abiertas.';
@@ -19064,6 +19076,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatUntil => 'hasta el';
+
+  @override
+  String get viesCheckExplainer =>
+      'VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.';
+
+  @override
+  String get viesCheckFailed =>
+      'No se pudo consultar VIES. Inténtelo más tarde.';
+
+  @override
+  String get viesCheckNow => 'Comprobar ahora';
+
+  @override
+  String viesStatusInvalid(String date) {
+    return 'No válido en VIES · $date';
+  }
+
+  @override
+  String get viesStatusNone => 'Sin comprobar';
+
+  @override
+  String viesStatusUnavailable(String date) {
+    return 'VIES no respondió · $date';
+  }
+
+  @override
+  String viesStatusValid(String consultation, String date) {
+    return 'Válido · consulta $consultation · $date';
+  }
+
+  @override
+  String get viesTileTitle => 'Comprobación del número de IVA (VIES)';
 
   @override
   String get visibilityAbout => 'Profesión y biografía';

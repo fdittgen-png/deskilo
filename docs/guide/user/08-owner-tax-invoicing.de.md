@@ -323,11 +323,33 @@ Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in 
 
 **Gut zu wissen**
 
-- Ein: Eine allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden) an ein Unternehmen in einem anderen EU-Land fällt unter die Steuerschuldnerschaft des Empfängers. Ein Arbeitsplatz, ein Büro oder ein Raum nie: Er trägt Ihre Umsatzsteuer, gleich welche Umsatzsteuer-ID der Kunde hat. Heute stellt die App solche Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
+- Ein: Eine allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden) an ein Unternehmen in einem anderen EU-Land fällt unter die Steuerschuldnerschaft des Empfängers. Ein Arbeitsplatz, ein Büro oder ein Raum nie: Er trägt Ihre Umsatzsteuer, gleich welche Umsatzsteuer-ID der Kunde hat. Die App stellt eine solche Rechnung aus, sobald die Umsatzsteuer-ID des Kunden in [VIES](#ust-idnr-prüfung-vies) als gültig bestätigt wurde; sonst, oder wenn diese Funktion ausgeschaltet ist, stellen Sie sie außerhalb der App mit Ihrer Buchhaltung aus.
 - Aus: Schalten Sie es aus, wenn Sie nie Unternehmen im Ausland in Rechnung stellen.
 - Die Option erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
 **Siehe auch:** [USt-Behandlung eines Mitglieds](help:user.members.vat-treatment)
+
+<!-- anchor: user.money.vat.vies -->
+### USt-IdNr.-Prüfung (VIES)
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Bevor eine allgemeine Dienstleistung an ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Empfängers fällt, braucht die App einen Nachweis, dass der Kunde ein Unternehmen ist: seine Umsatzsteuer-ID, in VIES, dem EU-Verzeichnis der Umsatzsteuer-IDs, als gültig bestätigt.
+
+**Schritte**
+
+1. Öffnen Sie die Mitgliedsseite und tippen Sie auf **USt-IdNr.-Prüfung (VIES)**.
+2. Tippen Sie auf **Jetzt prüfen**.
+3. Die Zeile zeigt dann **Gültig** mit Abfragenummer und Datum, **In VIES nicht gültig** oder **VIES hat nicht geantwortet**.
+
+**Gut zu wissen**
+
+- Die Abfragenummer wird beim Mitglied festgehalten und auf jeder Rechnung mit Steuerschuldnerschaft des Empfängers als Nachweis eingefroren.
+- Das Ausstellen verweigert eine Steuerschuldnerschaft des Empfängers ohne gültige Prüfung genau dieser Nummer aus den letzten 90 Tagen und sagt es: **Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds**. Antwortet VIES nicht, versuchen Sie es später erneut; die Rechnung fällt nie von selbst auf Ihre Umsatzsteuer zurück.
+- Ein Arbeitsplatz, ein Büro oder ein Raum fällt nie unter die Steuerschuldnerschaft des Empfängers und braucht keine Prüfung.
+- Die Zeile erscheint für alle, die Rechnungen ausstellen dürfen, wenn die Funktion **USt-IdNr.-Prüfung (VIES)** eingeschaltet ist.
+
+**Siehe auch:** [Reverse-Charge für EU-Unternehmen](#reverse-charge-für-eu-unternehmen) · [Leistungsort einer Leistung](#leistungsort-einer-leistung)
 
 <!-- anchor: user.money.vat.due -->
 ### Wann die Umsatzsteuer entsteht
@@ -893,7 +915,7 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 - Rechnungen werden aus erfassten Daten abgeleitet und lassen sich nicht von Hand zusammenstellen. Die letzte Zeile ist der **Saldo**.
 - Ein Monat kann pro Mitglied nur einmal abgerechnet werden, und bei einem laufenden Monat werden Sie gewarnt, dass sich Positionen ändern können.
 - Fehlt eine erforderliche Angabe, listet **Vor der Ausstellung bitte ergänzen** sie auf (Adresse, Umsatzsteuer-ID, Befreiungsgrundlage, Steuersatz; auch das Land des Space, das Frankreich oder Deutschland sein muss).
-- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, auch für Kunden im Ausland: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer, wo immer der Kunde lebt. Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt, und eine allgemeine Dienstleistung an einen Kunden im Ausland braucht zuerst dessen Kundeneigenschaft (Unternehmer oder Verbraucher).
+- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, auch für Kunden im Ausland: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer, wo immer der Kunde lebt. Ausfuhrrechnungen, Rechnungen an befreite Käufer und eine Steuerschuldnerschaft des Empfängers ohne gültige VIES-Prüfung werden außerhalb der App mit Ihrer Buchhaltung ausgestellt, und eine allgemeine Dienstleistung an einen Kunden im Ausland braucht zuerst dessen Kundeneigenschaft (Unternehmer oder Verbraucher).
 - Eine ausgestellte Rechnung ist signiert und unveränderlich.
 
 **Siehe auch:** [Monatsabschluss-Assistent](help:user.invoicing.wizard)

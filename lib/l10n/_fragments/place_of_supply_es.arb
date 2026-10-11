@@ -24,5 +24,40 @@
         "type": "String"
       }
     }
-  }
+  },
+  "featureViesVerificationTitle": "Comprobación del número de IVA (VIES)",
+  "featureViesVerificationDesc": "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.",
+  "viesTileTitle": "Comprobación del número de IVA (VIES)",
+  "viesStatusNone": "Sin comprobar",
+  "viesStatusValid": "Válido · consulta {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusInvalid": "No válido en VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusUnavailable": "VIES no respondió · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesCheckNow": "Comprobar ahora",
+  "viesCheckExplainer": "VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.",
+  "invoiceMissingVies": "Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)",
+  "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde."
 }

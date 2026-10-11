@@ -367,7 +367,14 @@ enum WorkspaceFeature {
   /// (mail handling, a virtual office) that a business elsewhere
   /// self-assesses. Platform, default ON, under vatManagement; OFF hides
   /// the choice and every new charge is property-connected.
-  supplyClassification;
+  supplyClassification,
+
+  /// #2354 — a customer's VAT number checked against VIES, the consultation
+  /// number kept as evidence: a general service reverse-charged to a
+  /// business abroad is issued only once its number was found valid.
+  /// Platform, default ON, under supplyClassification; OFF keeps those
+  /// invoices outside the app.
+  viesVerification;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1497,6 +1504,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatManagement,
+  ),
+  // #2354 — evidence for the reverse charge a general service allows.
+  WorkspaceFeature.viesVerification: FeatureManifestEntry(
+    feature: WorkspaceFeature.viesVerification,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.supplyClassification,
   ),
 };
 

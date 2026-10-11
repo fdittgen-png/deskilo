@@ -29,6 +29,7 @@ const Map<String, bool> functionVerifyJwt = {
   'send-e-invoice': true,
   'send-push': true,
   'stripe-webhook': false,
+  'vies-check': true,
 };
 
 /// The bundle, built from the repository at [root].

@@ -530,6 +530,8 @@ String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
       'vat_treatment_unreviewed' => l10n?.invoiceMissingVatTreatment ??
           AppLocalizationsEn().invoiceMissingVatTreatment,
       // #2354 — a general service to a customer abroad: business or not.
+      'vies_unverified' =>
+        (l10n ?? lookupAppLocalizations(const Locale('en'))).invoiceMissingVies,
       'buyer_capacity_unknown' =>
         (l10n ?? lookupAppLocalizations(const Locale('en')))
             .invoiceMissingBuyerCapacity,

@@ -3837,6 +3837,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "Le numéro de TVA d'un client professionnel est vérifié auprès du service VIES de l'UE, et le numéro de consultation est conservé sur le membre et sur chaque facture. Une prestation générale autoliquidée par une entreprise d'un autre pays de l'UE n'est émise qu'après une vérification valide ; quand VIES ne répond pas, l'émission attend. Désactivé : ces factures sont émises hors de l'app.",
+  "featureViesVerificationTitle": "Vérification du numéro de TVA (VIES)",
   "featureWhatsappIntegration": "Intégration WhatsApp",
   "featureWhatsappIntegrationDesc": "Les membres partagent leur numéro WhatsApp sur leur profil ; un geste sur un membre ouvre la discussion ; le lien du groupe dans l'annuaire. Aucune intégration WhatsApp côté serveur.",
   "featureWorkingHours": "Horaires de travail",
@@ -5310,6 +5312,7 @@
   "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
   "invoiceMissingVatTreatment": "Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
   "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
+  "invoiceMissingVies": "Une vérification VIES valide du numéro de TVA du membre (requise pour l'autoliquidation ; si VIES n'a pas répondu, réessayez plus tard)",
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
   "invoiceOpenAge": "{days} jours",
@@ -11737,6 +11740,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n'est émise qu'après une telle réponse.",
+  "viesCheckFailed": "VIES n'a pas pu être interrogé. Réessayez plus tard.",
+  "viesCheckNow": "Vérifier maintenant",
+  "viesStatusInvalid": "Non valide dans VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Non vérifié",
+  "viesStatusUnavailable": "VIES n'a pas répondu · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Valide · consultation {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "Vérification du numéro de TVA (VIES)",
   "visibilityAbout": "Métier et présentation",
   "visibilityAboutEmpty": "Ajoutez votre métier et quelques mots",
   "visibilityAboutMe": "À propos de moi",

@@ -50,7 +50,7 @@ import '../../../profile/domain/personal_info.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../money/presentation/widgets/member_carnet_tile.dart';
+import '../../../money/presentation/widgets/member_billing_tiles.dart';
 
 part '../widgets/member_page_cards.dart';
 
@@ -442,6 +442,9 @@ class _MemberPageBody extends ConsumerWidget {
       if (features.contains(WorkspaceFeature.carnets) && !member.isKiosk)
         MemberCarnetTile(memberId: member.id,
             canSell: perms.contains(WorkspacePermission.issueInvoices)), // #1279
+      if (features.contains(WorkspaceFeature.viesVerification) && !member.isKiosk &&
+          perms.contains(WorkspacePermission.issueInvoices))
+        ViesCheckTile(workspaceId: member.workspaceId, memberId: member.id), // #2354
       if (isOwner && !member.isKiosk)
         _ManageTile(
           tileKey: const ValueKey('member-page-subscription'),

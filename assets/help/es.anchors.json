@@ -226,6 +226,7 @@
   "user.money.legal.special-mentions": "Menciones particulares",
   "user.money.vat.regime": "Régimen de IVA",
   "user.money.vat.reverse-charge": "Inversión del sujeto pasivo para empresas de la UE",
+  "user.money.vat.vies": "Comprobación del número de IVA (VIES)",
   "user.money.vat.due": "Cuándo se devenga el IVA",
   "user.money.vat.account": "Cuenta de IVA",
   "user.money.vat.number": "Número de IVA",

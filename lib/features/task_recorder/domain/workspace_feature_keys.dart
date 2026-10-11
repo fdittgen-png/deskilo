@@ -136,4 +136,5 @@ const Set<String> workspaceFeatureKeys = {
   'taskRecorder',
   'messageMentions',
   'supplyClassification',
+  'viesVerification',
 };
