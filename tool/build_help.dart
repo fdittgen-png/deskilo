@@ -35,37 +35,22 @@ const guides = <String, List<String>>{
   'en': [
     'User-Guide.md',
     'Setup-Guide.md',
-    'Admin-Configuration-Guide.md',
-    'Admin-Technical-Guide.md',
-    'Environments-Guide.md',
   ],
   'fr': [
     'Guide-utilisateur.md',
     'Guide-de-demarrage.md',
-    'Admin-Configuration-Guide.fr.md',
-    'Admin-Technical-Guide.fr.md',
-    'Environments-Guide.fr.md',
   ],
   'de': [
     'Benutzerhandbuch.md',
     'Einrichtungsanleitung.md',
-    'Admin-Configuration-Guide.de.md',
-    'Admin-Technical-Guide.de.md',
-    'Environments-Guide.de.md',
   ],
   'es': [
     'Guia-de-usuario.md',
     'Guia-de-puesta-en-marcha.md',
-    'Admin-Configuration-Guide.es.md',
-    'Admin-Technical-Guide.es.md',
-    'Environments-Guide.es.md',
   ],
   'it': [
     'Guida-utente.md',
     'Guida-di-avvio.md',
-    'Admin-Configuration-Guide.it.md',
-    'Admin-Technical-Guide.it.md',
-    'Environments-Guide.it.md',
   ],
 };
 const wikiDir = 'docs/wiki';

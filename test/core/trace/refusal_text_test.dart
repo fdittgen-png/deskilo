@@ -80,6 +80,19 @@ void main() {
       expect(knownRefusalText(null, e), contains('currency and the country'));
     });
 
+    test('a rate on issued invoices changes by law (#2356, DKV01)', () {
+      final e = _pg('vat_rate_versioned: Standard 20 % is on issued invoices; '
+          'change it by law from a date', code: 'DKV01');
+      expect(knownRefusalOf(e), KnownRefusal.vatRateVersioned);
+      expect(knownRefusalText(null, e), contains('Change by law'));
+      // The code is the server's: some migration still raises it.
+      final raised = Directory('supabase/migrations')
+          .listSync()
+          .whereType<File>()
+          .any((f) => f.readAsStringSync().contains("errcode = 'DKV01'"));
+      expect(raised, isTrue);
+    });
+
     test('already decided, and changed meanwhile', () {
       expect(knownRefusalOf(_pg('already decided')), KnownRefusal.alreadyDecided);
       expect(knownRefusalOf(_pg('you already decided this event')),

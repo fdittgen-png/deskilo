@@ -16,6 +16,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/number_sequence.dart';
 import '../../providers/money_providers.dart';
@@ -160,6 +161,17 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
+            // #2356 — a credit note draws from its own series only once
+            // the series was saved; until then it takes an invoice number.
+            if (_draft.journal == 'credit_note' && !widget.sequence.stored)
+              Padding(
+                key: const ValueKey('number-sequence-credit-note-unsaved'),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                child: Text(
+                  (l10n ?? AppLocalizationsEn()).numberSequenceCreditNoteUnsaved,
+                  style: theme.textTheme.bodySmall,
+                ),
+              ),
             const SizedBox(height: AppSpacing.md),
             Row(
               children: [

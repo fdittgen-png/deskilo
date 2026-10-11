@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="520" viewBox="0 0 1240 520" role="img" aria-label="The CI and release pipeline from push to store: pull request, the three required checks, auto-merge to master, then a manual release train that resolves one commit and fans out to Play, TestFlight, web, macOS and Windows.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker></defs>
+<g font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect width="1240" height="520" rx="22" fill="#0f1420"/>
+<text x="40" y="48" font-size="22" fill="#eef1f8" text-anchor="start" font-weight="700">From push to store</text>
+<text x="40" y="72" font-size="14" fill="#a2abc0" text-anchor="start">One commit is resolved once; every store leg builds exactly that commit.</text>
+<rect x="40" y="110" width="200" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="140.0" y="150.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Push</text>
+<text x="140.0" y="170.0" font-size="13" fill="#a2abc0" text-anchor="middle">branch, one issue</text>
+<line x1="242" y1="152" x2="258" y2="152" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="260" y="110" width="200" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="360.0" y="150.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Pull request</text>
+<text x="360.0" y="170.0" font-size="13" fill="#a2abc0" text-anchor="middle">quality.yml</text>
+<line x1="462" y1="152" x2="478" y2="152" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="480" y="110" width="220" height="84" rx="14" fill="#2dd4bf" fill-opacity="0.14" stroke="#2dd4bf" stroke-width="2"/>
+<text x="590.0" y="150.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Three required checks</text>
+<text x="590.0" y="170.0" font-size="13" fill="#a2abc0" text-anchor="middle">code · database · report</text>
+<line x1="702" y1="152" x2="718" y2="152" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="720" y="110" width="200" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="820.0" y="150.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Auto-merge</text>
+<text x="820.0" y="170.0" font-size="13" fill="#a2abc0" text-anchor="middle">squash into master</text>
+<line x1="922" y1="152" x2="938" y2="152" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="940" y="110" width="200" height="84" rx="14" fill="#2dd4bf" fill-opacity="0.14" stroke="#2dd4bf" stroke-width="2"/>
+<text x="1040.0" y="150.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Release train</text>
+<text x="1040.0" y="170.0" font-size="13" fill="#a2abc0" text-anchor="middle">manual dispatch</text>
+<text x="1054" y="232" font-size="13" fill="#a2abc0" text-anchor="start">resolve: ref to one SHA</text>
+<line x1="1040" y1="196" x2="1040" y2="262" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="300" width="216" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="148.0" y="340.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Play</text>
+<text x="148.0" y="360.0" font-size="13" fill="#a2abc0" text-anchor="middle">alpha: closed test</text>
+<rect x="276" y="300" width="216" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="384.0" y="340.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">TestFlight</text>
+<text x="384.0" y="360.0" font-size="13" fill="#a2abc0" text-anchor="middle">external group</text>
+<rect x="512" y="300" width="216" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="620.0" y="340.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Web</text>
+<text x="620.0" y="360.0" font-size="13" fill="#a2abc0" text-anchor="middle">Pages on production</text>
+<rect x="748" y="300" width="216" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="856.0" y="340.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">macOS DMG</text>
+<text x="856.0" y="360.0" font-size="13" fill="#a2abc0" text-anchor="middle">notarised</text>
+<rect x="984" y="300" width="216" height="84" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="1092.0" y="340.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Windows MSI</text>
+<text x="1092.0" y="360.0" font-size="13" fill="#a2abc0" text-anchor="middle">installer</text>
+<line x1="148" y1="262" x2="1092" y2="262" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="148.0" y1="262" x2="148.0" y2="298" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="384.0" y1="262" x2="384.0" y2="298" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="620.0" y1="262" x2="620.0" y2="298" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="856.0" y1="262" x2="856.0" y2="298" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="1092.0" y1="262" x2="1092.0" y2="298" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="430" width="1160" height="56" rx="14" fill="#1b2434" stroke="#2f3d52" stroke-width="1.5"/>
+<text x="620.0" y="463.0" font-size="15" fill="#eef1f8" text-anchor="middle" font-weight="700">Report job: one summary of every leg, with the store's own words for a refusal</text>
+<line x1="148.0" y1="384" x2="148.0" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="384.0" y1="384" x2="384.0" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="620.0" y1="384" x2="620.0" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="856.0" y1="384" x2="856.0" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="1092.0" y1="384" x2="1092.0" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="148" y1="408" x2="1092" y2="408" stroke="#2dd4bf" stroke-width="2"/>
+<line x1="620" y1="408" x2="620" y2="428" stroke="#2dd4bf" stroke-width="2" marker-end="url(#ar)"/>
+</g></svg>

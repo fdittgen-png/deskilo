@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-label="The standards map: which export or invoice format sits on which module of the app.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/></marker></defs>
+<g font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect width="1200" height="640" rx="22" fill="#fdfcf9"/>
+<text x="40" y="48" font-size="22" fill="#1b2236" text-anchor="start" font-weight="700">Which standard sits on which module</text>
+<text x="40" y="72" font-size="14" fill="#5a6277" text-anchor="start">Only formats the code writes. Each box names the file in lib/features/money/domain/ (or the module).</text>
+<rect x="40" y="104" width="640" height="88" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="60" y="134" font-size="16" fill="#1b2236" text-anchor="start" font-weight="700">E-invoice</text>
+<text x="60" y="160" font-size="14" fill="#1b2236" text-anchor="start">EN 16931: UBL 2.1, CII (Factur-X)</text>
+<text x="60" y="180" font-size="12" fill="#5a6277" text-anchor="start">invoice_ubl.dart · invoice_cii.dart</text>
+<line x1="682" y1="148" x2="758" y2="148" stroke="#0f766e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="204" width="640" height="88" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="60" y="234" font-size="16" fill="#1b2236" text-anchor="start" font-weight="700">Validation</text>
+<text x="60" y="260" font-size="14" fill="#1b2236" text-anchor="start">EN 16931 business rules, VIES VAT id</text>
+<text x="60" y="280" font-size="12" fill="#5a6277" text-anchor="start">invoice_ubl_check.dart · vies-check</text>
+<line x1="682" y1="248" x2="758" y2="248" stroke="#0f766e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="304" width="640" height="88" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="60" y="334" font-size="16" fill="#1b2236" text-anchor="start" font-weight="700">Accounting exports</text>
+<text x="60" y="360" font-size="14" fill="#1b2236" text-anchor="start">FEC · DATEV EXTF · SAF-T · Sage</text>
+<text x="60" y="380" font-size="12" fill="#5a6277" text-anchor="start">fec.dart · datev.dart · saf_t.dart · sage.dart</text>
+<line x1="682" y1="348" x2="758" y2="348" stroke="#0f766e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="404" width="640" height="88" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="60" y="434" font-size="16" fill="#1b2236" text-anchor="start" font-weight="700">VAT returns</text>
+<text x="60" y="460" font-size="14" fill="#1b2236" text-anchor="start">Directive 2006/112/EC, EU sales list</text>
+<text x="60" y="480" font-size="12" fill="#5a6277" text-anchor="start">vat_declaration.dart · recapitulative_statement.dart</text>
+<line x1="682" y1="448" x2="758" y2="448" stroke="#0f766e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="40" y="504" width="640" height="88" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="60" y="534" font-size="16" fill="#1b2236" text-anchor="start" font-weight="700">Post and calendar</text>
+<text x="60" y="560" font-size="14" fill="#1b2236" text-anchor="start">NF Z 10-011 address block, iCalendar</text>
+<text x="60" y="580" font-size="12" fill="#5a6277" text-anchor="start">personal_info.dart · reservation_calendar_file.dart</text>
+<line x1="682" y1="548" x2="758" y2="548" stroke="#0f766e" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="760" y="104" width="400" height="488" rx="18" fill="#0f766e" fill-opacity="0.12" stroke="#0f766e" stroke-width="2"/>
+<text x="960" y="150" font-size="18" fill="#1b2236" text-anchor="middle" font-weight="700">The money module</text>
+<rect x="784" y="172" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="198" font-size="14" fill="#1b2236" text-anchor="start">Ledger and statements</text>
+<rect x="784" y="224" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="250" font-size="14" fill="#1b2236" text-anchor="start">Invoices, snapshots, corrections</text>
+<rect x="784" y="276" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="302" font-size="14" fill="#1b2236" text-anchor="start">VAT: rates, regimes, tax point</text>
+<rect x="784" y="328" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="354" font-size="14" fill="#1b2236" text-anchor="start">Place of supply (lib/core/vat)</text>
+<rect x="784" y="380" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="406" font-size="14" fill="#1b2236" text-anchor="start">Period locks (ADR 0039)</text>
+<rect x="784" y="432" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="458" font-size="14" fill="#1b2236" text-anchor="start">Routing: how an invoice travels</text>
+<rect x="784" y="484" width="352" height="40" rx="10" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<text x="800" y="510" font-size="14" fill="#1b2236" text-anchor="start">Server computes the VAT return</text>
+</g></svg>

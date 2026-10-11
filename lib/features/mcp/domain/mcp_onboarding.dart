@@ -7,6 +7,8 @@
 // operator receives. Every parser is fail-safe: a value this build does
 // not know reads as unknown, never as approved.
 
+import '../../../core/data/json_reader.dart';
+
 /// The operator's decision on an assistant's OAuth client.
 enum McpClientApproval {
   approved,
@@ -99,12 +101,12 @@ class ConsentStatus {
 
   factory ConsentStatus.fromJson(Object? json) {
     if (json is! Map) return const ConsentStatus(eligibility: 'unknown');
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'consent_status');
     return ConsentStatus(
-      eligibility: json['eligibility'] is String
-          ? json['eligibility'] as String
-          : 'unknown',
-      client: ConsentClient.fromJson(json['client']),
-      decider: ConsentDecider.fromJson(json['decider']),
+      eligibility: r.textOrAbsent('eligibility') ?? 'unknown',
+      client: ConsentClient.fromJson(r.json['client']),
+      decider: ConsentDecider.fromJson(r.json['decider']),
     );
   }
 }
@@ -127,13 +129,15 @@ class McpEndpointInfo {
     if (json is! Map) {
       return const McpEndpointInfo(source: McpEndpointSource.unknown);
     }
-    final resource = json['resource'];
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'mcp_endpoint');
+    final resource = r.textOrAbsent('resource');
     return McpEndpointInfo(
-      resource: resource is String && resource.startsWith('https://')
+      resource: resource != null && resource.startsWith('https://')
           ? resource
           : null,
-      metadataUrl: json['metadata_url'] as String?,
-      source: switch (json['source']) {
+      metadataUrl: r.textOrAbsent('metadata_url'),
+      source: switch (r.textOrAbsent('source')) {
         'published' => McpEndpointSource.published,
         'configured' => McpEndpointSource.configured,
         'derived' => McpEndpointSource.derived,
@@ -193,13 +197,15 @@ class EndpointProbe {
     if (json is! Map) {
       return const EndpointProbe(state: EndpointProbeState.unknown);
     }
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'endpoint_probe');
     return EndpointProbe(
-      state: EndpointProbeState.parse(json['state']),
-      reason: json['reason'] as String?,
-      endpointUrl: json['endpoint_url'] as String?,
-      publishedResource: json['published_resource'] as String?,
-      requestedAt: DateTime.tryParse('${json['requested_at'] ?? ''}'),
-      fresh: json['fresh'] == true,
+      state: EndpointProbeState.parse(r.json['state']),
+      reason: r.textOrAbsent('reason'),
+      endpointUrl: r.textOrAbsent('endpoint_url'),
+      publishedResource: r.textOrAbsent('published_resource'),
+      requestedAt: DateTime.tryParse(r.textOrAbsent('requested_at') ?? ''),
+      fresh: r.isTrue('fresh'),
     );
   }
 }
@@ -254,12 +260,12 @@ class InstanceNotices {
 
   factory InstanceNotices.fromJson(Object? json) {
     if (json is! Map) return empty;
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'instance_notices');
     return InstanceNotices(
-      unread: json['unread'] is int ? json['unread'] as int : 0,
+      unread: r.intOrAbsent('unread') ?? 0,
       notices: [
-        for (final n
-            in json['notices'] is List ? json['notices'] as List : const [])
-          ?InstanceNotice.fromJson(n),
+        for (final n in r.listOrAbsent('notices')) ?InstanceNotice.fromJson(n),
       ],
     );
   }

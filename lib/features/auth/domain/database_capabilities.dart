@@ -5,6 +5,8 @@
 // administrators, and whether MCP eligibility was approved for them. None
 // of it is a workspace role, a membership or a consent.
 
+import '../../../core/data/json_reader.dart';
+
 enum McpEligibility {
   eligible,
   requested,
@@ -40,7 +42,9 @@ class DatabaseCapabilities {
   /// is not literally `true` is false.
   factory DatabaseCapabilities.fromJson(Object? json) {
     if (json is! Map) return unavailable;
-    final eligibility = switch (json['mcp_eligibility']) {
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'database_capabilities');
+    final eligibility = switch (r.textOrAbsent('mcp_eligibility')) {
       'eligible' => McpEligibility.eligible,
       'requested' => McpEligibility.requested,
       'not_requested' => McpEligibility.notRequested,
@@ -49,13 +53,14 @@ class DatabaseCapabilities {
       _ => McpEligibility.unavailable,
     };
     if (eligibility == McpEligibility.unavailable) return unavailable;
-    final until = DateTime.tryParse('${json['eligible_until']}');
+    final until = DateTime.tryParse(r.textOrAbsent('eligible_until') ?? '');
     if (eligibility == McpEligibility.eligible && until == null) return unavailable;
+    final administrator = r.isTrue('database_administrator');
     return DatabaseCapabilities(
       eligibility: eligibility,
-      databaseAdministrator: json['database_administrator'] == true,
-      canProvision: json['database_administrator'] == true && json['can_provision'] == true,
-      runtimeEnabled: json['runtime_enabled'] == true,
+      databaseAdministrator: administrator,
+      canProvision: administrator && r.isTrue('can_provision'),
+      runtimeEnabled: r.isTrue('runtime_enabled'),
       eligibleUntil: until?.toUtc(),
     );
   }

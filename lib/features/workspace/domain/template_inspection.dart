@@ -8,6 +8,7 @@
 import 'package:meta/meta.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
+import '../../../core/data/json_reader.dart';
 
 enum TemplateInspectionStatus {
   ok, unsupportedVersion, rejected, unknown;
@@ -79,16 +80,19 @@ class TemplateFieldRecord {
   final TemplateAbsentMeaning absent;
   final String? reason;
 
-  factory TemplateFieldRecord.fromJson(Map<String, dynamic> json) =>
-      TemplateFieldRecord(
-        path: '${json['path']}',
-        id: '${json['id']}',
-        disposition: TemplateFieldDisposition.fromWire(json['disposition'] as String?),
-        value: scalarOnly(json['value']),
-        shape: json['shape'] as String?,
-        absent: TemplateAbsentMeaning.fromWire(json['absent'] as String?),
-        reason: json['reason'] as String?,
-      );
+  factory TemplateFieldRecord.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_field');
+    return TemplateFieldRecord(
+      path: r.string('path'),
+      id: r.string('id'),
+      disposition:
+          TemplateFieldDisposition.fromWire(r.stringOrNull('disposition')),
+      value: scalarOnly(r.json['value']),
+      shape: r.stringOrNull('shape'),
+      absent: TemplateAbsentMeaning.fromWire(r.stringOrNull('absent')),
+      reason: r.stringOrNull('reason'),
+    );
+  }
 }
 
 class TemplateProblem {
@@ -101,12 +105,15 @@ class TemplateProblem {
   final Object? value;
   final String? reason;
 
-  factory TemplateProblem.fromJson(Map<String, dynamic> json) => TemplateProblem(
-        path: '${json['path']}',
-        problem: '${json['problem']}',
-        value: scalarOnly(json['value']),
-        reason: json['reason'] as String?,
-      );
+  factory TemplateProblem.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_problem');
+    return TemplateProblem(
+      path: r.string('path'),
+      problem: r.string('problem'),
+      value: scalarOnly(r.json['value']),
+      reason: r.stringOrNull('reason'),
+    );
+  }
 }
 
 class TemplateRequiredInput {
@@ -119,13 +126,16 @@ class TemplateRequiredInput {
   final Object? value;
   final String? reason;
 
-  factory TemplateRequiredInput.fromJson(Map<String, dynamic> json) => TemplateRequiredInput(
-        path: '${json['path']}',
-        id: '${json['id']}',
-        binding: '${json['binding']}',
-        value: scalarOnly(json['value']),
-        reason: json['reason'] as String?,
-      );
+  factory TemplateRequiredInput.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_required_input');
+    return TemplateRequiredInput(
+      path: r.string('path'),
+      id: r.string('id'),
+      binding: r.string('binding'),
+      value: scalarOnly(r.json['value']),
+      reason: r.stringOrNull('reason'),
+    );
+  }
 }
 
 class TemplateExclusion {
@@ -133,24 +143,30 @@ class TemplateExclusion {
   final String id, portability;
   final String? reason;
 
-  factory TemplateExclusion.fromJson(Map<String, dynamic> json) => TemplateExclusion(
-        id: '${json['id']}',
-        portability: '${json['portability']}',
-        reason: json['reason'] as String?,
-      );
+  factory TemplateExclusion.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_exclusion');
+    return TemplateExclusion(
+      id: r.string('id'),
+      portability: r.string('portability'),
+      reason: r.stringOrNull('reason'),
+    );
+  }
 }
 
 class TemplateCoverage {
   const TemplateCoverage({this.registered = 0, this.present = 0, this.absent = 0, this.unknown = 0, this.requiredInputs = 0});
   final int registered, present, absent, unknown, requiredInputs;
 
-  factory TemplateCoverage.fromJson(Map<String, dynamic> json) => TemplateCoverage(
-        registered: (json['registered'] as num?)?.toInt() ?? 0,
-        present: (json['present'] as num?)?.toInt() ?? 0,
-        absent: (json['absent'] as num?)?.toInt() ?? 0,
-        unknown: (json['unknown'] as num?)?.toInt() ?? 0,
-        requiredInputs: (json['required_inputs'] as num?)?.toInt() ?? 0,
-      );
+  factory TemplateCoverage.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'template_coverage');
+    return TemplateCoverage(
+      registered: r.intOrNull('registered') ?? 0,
+      present: r.intOrNull('present') ?? 0,
+      absent: r.intOrNull('absent') ?? 0,
+      unknown: r.intOrNull('unknown') ?? 0,
+      requiredInputs: r.intOrNull('required_inputs') ?? 0,
+    );
+  }
 }
 
 class TemplateInspection {
@@ -206,39 +222,46 @@ class TemplateInspection {
   bool get usable => status == TemplateInspectionStatus.ok && !outline.refused;
 
   factory TemplateInspection.fromJson(Map<String, dynamic> json) {
-    final tpl = Map<String, dynamic>.from(json['template'] as Map? ?? const <String, dynamic>{});
-    List<Map<String, dynamic>> rows(String key) => [
-          for (final r in json[key] as List? ?? const <Object?>[])
-            if (r is Map) Map<String, dynamic>.from(r),
-        ];
+    final r = JsonReader(json, context: 'inspect_workspace_template');
+    final tpl = r.objectOrNull('template') ?? JsonReader(const {});
+    List<JsonReader> rows(String key) => [
+      for (final row in r.list(key))
+        if (row is Map) JsonReader.of(row, context: '${r.context}.$key'),
+    ];
     return TemplateInspection(
-      templateId: '${tpl['id']}',
-      key: '${tpl['key'] ?? ''}',
-      name: '${tpl['name'] ?? ''}',
-      description: '${tpl['description'] ?? ''}',
-      entities: [for (final e in tpl['entities'] as List? ?? const <Object?>[]) '$e'],
-      schemaVersion: (tpl['schema_version'] as num?)?.toInt() ?? 1,
-      templateVersion: (tpl['template_version'] as num?)?.toInt() ?? 1,
+      templateId: tpl.stringOr('id'),
+      key: tpl.stringOr('key'),
+      name: tpl.stringOr('name'),
+      description: tpl.stringOr('description'),
+      entities: [for (final e in tpl.list('entities')) '$e'],
+      schemaVersion: tpl.intOrNull('schema_version') ?? 1,
+      templateVersion: tpl.intOrNull('template_version') ?? 1,
       supportedSchemaVersions: [
-        for (final v in json['supported_schema_versions'] as List? ?? const <Object?>[]) (v as num).toInt(),
+        for (final v in r.list('supported_schema_versions'))
+          if (v is num) v.toInt(),
       ],
-      registryRevision: '${json['registry_revision'] ?? ''}',
-      schemaRevision: (json['schema_revision'] as num?)?.toInt() ?? 0,
-      status: TemplateInspectionStatus.fromWire(json['status'] as String?),
-      profile: TemplateProfile.fromWire(json['profile'] as String?),
-      compatibility: TemplateCompatibility.fromWire(json['compatibility'] as String?),
+      registryRevision: r.stringOr('registry_revision'),
+      schemaRevision: r.intOrNull('schema_revision') ?? 0,
+      status: TemplateInspectionStatus.fromWire(r.stringOrNull('status')),
+      profile: TemplateProfile.fromWire(r.stringOrNull('profile')),
+      compatibility:
+          TemplateCompatibility.fromWire(r.stringOrNull('compatibility')),
       outline: TemplateOutline.fromJson({
-        'compatibility': json['compatibility'],
-        'reason': json['compatibility_reason'],
-        'groups': json['outline'],
+        'compatibility': r.json['compatibility'],
+        'reason': r.json['compatibility_reason'],
+        'groups': r.json['outline'],
       }),
-      digest: json['digest'] as String?,
-      fields: [for (final r in rows('fields')) TemplateFieldRecord.fromJson(r)],
-      problems: [for (final r in rows('problems')) TemplateProblem.fromJson(r)],
-      requiredInputs: [for (final r in rows('required_inputs')) TemplateRequiredInput.fromJson(r)],
-      exclusions: [for (final r in rows('exclusions')) TemplateExclusion.fromJson(r)],
-      coverage: TemplateCoverage.fromJson(
-          Map<String, dynamic>.from(json['coverage'] as Map? ?? const <String, dynamic>{})),
+      digest: r.stringOrNull('digest'),
+      fields: [for (final row in rows('fields')) TemplateFieldRecord.fromJson(row.json)],
+      problems: [for (final row in rows('problems')) TemplateProblem.fromJson(row.json)],
+      requiredInputs: [
+        for (final row in rows('required_inputs'))
+          TemplateRequiredInput.fromJson(row.json),
+      ],
+      exclusions: [
+        for (final row in rows('exclusions')) TemplateExclusion.fromJson(row.json),
+      ],
+      coverage: TemplateCoverage.fromJson(r.objectOrEmpty('coverage')),
     );
   }
 }

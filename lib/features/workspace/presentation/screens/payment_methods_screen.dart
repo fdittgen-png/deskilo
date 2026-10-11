@@ -130,10 +130,6 @@ class _PaymentMethodsScreenState
             enabled: !_busy,
             decoration: InputDecoration(
               labelText: label,
-              suffixIcon: HelpDot(
-                l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
-                anchor: HelpAnchor.paymentsMethods,
-              ),
             ),
           ),
         );
@@ -141,6 +137,12 @@ class _PaymentMethodsScreenState
       appBar: AppBar(
         title:
             Text(l10n?.paymentInstructionsTitle ?? 'Payment instructions'),
+        actions: [
+          HelpDot(
+            l10n?.helpHintMoneyPaymentsTopic ?? 'The Payments face',
+            anchor: HelpAnchor.paymentsMethods,
+          ),
+        ],
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,

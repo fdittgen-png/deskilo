@@ -206,7 +206,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
         actions: [
           HelpDot(
             l10n?.helpTopicDeployment ?? 'Deploying',
-            anchor: HelpAnchor.envDeployScreen,
+            anchor: HelpAnchor.advancedDeploy,
           ),
         ],
       ),
@@ -261,12 +261,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                     Padding(
                       key: ValueKey('deploy-group-$kind'),
                       padding: const EdgeInsets.only(top: AppSpacing.md),
-                      child: HelpDotTitle(
-                        label,
-                        l10n?.helpTopicDeployment ?? 'Deploying',
-                        anchor: HelpAnchor.envDeployEntities,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                      child: Text(label, style: theme.textTheme.titleSmall),
                     ),
                     for (final entity in registry.where((e) => e.kind == kind))
                       CheckboxListTile(
@@ -298,10 +293,8 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                       : (l10n?.deploymentPullFromDev ?? 'Pull from DEV…')),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                HelpDotTitle(
+                Text(
                   l10n?.deploymentJournal ?? 'Journal',
-                  l10n?.helpTopicDeployment ?? 'Deploying',
-                  anchor: HelpAnchor.envDeployJournal,
                   style: theme.textTheme.titleSmall,
                 ),
                 if (_journal.isEmpty)

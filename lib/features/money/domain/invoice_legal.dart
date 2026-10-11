@@ -118,32 +118,35 @@ class InvoiceLegal {
   /// Client-side cap per field — these are printed lines, not essays.
   static const int maxFieldLength = 300;
 
-  factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) => InvoiceLegal(
-        sellerKind: json['seller_kind'] as String? ?? '',
-        customerCapacity: switch (json['customer_capacity']) {
-          final String c when c == 'business' || c == 'consumer' => c,
-          _ => '',
-        },
-        reverseChargeOptIn: json['reverse_charge'] as bool? ?? true,
-        vatTaxPoint:
-            VatTaxPointOption.fromWire(json['vat_tax_point'] as String?) ??
-                switch (json['vat_exigibility']) {
-                  'invoice' => VatTaxPointOption.invoice,
-                  'payment' => VatTaxPointOption.cash,
-                  _ => null,
-                },
-        declarationPeriod:
-            VatDeclarationPeriod.fromWire(JsonReader.of(json)
-                .stringOrNull('vat_declaration_period')),
-        legalForm: json['legal_form'] as String? ?? '',
-        registration: json['registration'] as String? ?? '',
-        paymentTerms: json['payment_terms'] as String? ?? '',
-        latePenalty: json['late_penalty'] as String? ?? '',
-        recoveryIndemnity: json['recovery_indemnity'] as String? ?? '',
-        escompte: json['escompte'] as String? ?? '',
-        insurance: json['insurance'] as String? ?? '',
-        specialMentions: json['special_mentions'] as String? ?? '',
-      );
+  factory InvoiceLegal.fromJson(Map<dynamic, dynamic> json) {
+    final r = JsonReader.of(json, context: 'invoice_legal');
+    return InvoiceLegal(
+      sellerKind: r.stringOr('seller_kind'),
+      customerCapacity: switch (r.stringOrNull('customer_capacity')) {
+        final String c when c == 'business' || c == 'consumer' => c,
+        _ => '',
+      },
+      reverseChargeOptIn: r.boolOr('reverse_charge', true),
+      vatTaxPoint:
+          VatTaxPointOption.fromWire(r.stringOrNull('vat_tax_point')) ??
+              switch (r.stringOrNull('vat_exigibility')) {
+                'invoice' => VatTaxPointOption.invoice,
+                'payment' => VatTaxPointOption.cash,
+                _ => null,
+              },
+      declarationPeriod: VatDeclarationPeriod.fromWire(
+        r.stringOrNull('vat_declaration_period'),
+      ),
+      legalForm: r.stringOr('legal_form'),
+      registration: r.stringOr('registration'),
+      paymentTerms: r.stringOr('payment_terms'),
+      latePenalty: r.stringOr('late_penalty'),
+      recoveryIndemnity: r.stringOr('recovery_indemnity'),
+      escompte: r.stringOr('escompte'),
+      insurance: r.stringOr('insurance'),
+      specialMentions: r.stringOr('special_mentions'),
+    );
+  }
 
   Map<String, Object?> toJson() => {
         'seller_kind': sellerKind,

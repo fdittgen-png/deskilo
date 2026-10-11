@@ -7296,6 +7296,7 @@
   "notifUngroup": "Dégrouper",
   "notificationsSystemOff": "Android bloque les notifications de DesKilo",
   "notificationsSystemOffHint": "Autorisez-les dans Paramètres système → Applications → DesKilo → Notifications — le badge de l'icône en a besoin.",
+  "numberSequenceCreditNoteUnsaved": "Pas encore enregistrée : tant que cette série ne l’est pas, les avoirs prennent des numéros de facture.",
   "numberSequenceDateNone": "Aucune",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -8755,6 +8756,10 @@
   },
   "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
+  "refusalVatRateVersioned": "Ce taux figure déjà sur des factures émises : son pourcentage reste tel quel. Utilisez « Changement par la loi » pour fixer la nouvelle valeur à partir d’une date. Rien n’a été enregistré.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
+  },
   "regionalClock": "Horloge",
   "@regionalClock": {
     "description": "#711 - globalization"

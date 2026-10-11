@@ -8,6 +8,8 @@
 // defaults; this is its vocabulary, pure Dart, with the defaults the
 // server applies to an account that never chose.
 
+import '../../../core/data/json_reader.dart';
+
 /// A part of my account someone else might see.
 enum VisibilityField {
   /// Name and photo.
@@ -119,10 +121,12 @@ class FieldAudience {
 
   factory FieldAudience.fromJson(Object? raw, VisibilityField field) {
     if (raw is! Map) return FieldAudience(field.defaultAudience);
+    // Fail-closed (#2387): a malformed field reads as the default.
+    final r = JsonReader.of(raw, context: 'field_audience');
     return FieldAudience(
-      VisibilityAudience.fromWire(raw['audience']) ?? field.defaultAudience,
+      VisibilityAudience.fromWire(r.json['audience']) ?? field.defaultAudience,
       [
-        for (final id in (raw['workspaces'] as List<dynamic>? ?? const []))
+        for (final id in r.listOrAbsent('workspaces'))
           if (id is String) id,
       ],
     );
@@ -155,18 +159,23 @@ class MyVisibility {
   static const MyVisibility defaults = MyVisibility({});
 
   factory MyVisibility.fromJson(Map<String, dynamic> json) {
-    final raw = json['fields'] is Map ? json['fields'] as Map : const <String, dynamic>{};
-    final about = json['about'] is Map ? json['about'] as Map : const <String, dynamic>{};
-    return MyVisibility(profession: about['profession'] as String? ?? '',
-        bio: about['bio'] as String? ?? '', {
-      for (final field in VisibilityField.values)
-        field: FieldAudience.fromJson(
-          field == VisibilityField.reachability
-              ? (json['reachability'] ?? raw['reachability'])
-              : raw[field.wire],
-          field,
-        ),
-    });
+    // Fail-closed (#2387): a malformed field reads as the default.
+    final r = JsonReader(json, context: 'my_visibility');
+    final fields = r.objectOrAbsent('fields');
+    final about = r.objectOrAbsent('about');
+    return MyVisibility(
+      profession: about.textOrAbsent('profession') ?? '',
+      bio: about.textOrAbsent('bio') ?? '',
+      {
+        for (final field in VisibilityField.values)
+          field: FieldAudience.fromJson(
+            field == VisibilityField.reachability
+                ? (r.json['reachability'] ?? fields.json['reachability'])
+                : fields.json[field.wire],
+            field,
+          ),
+      },
+    );
   }
 
   MyVisibility withField(VisibilityField field, FieldAudience audience) =>
@@ -218,10 +227,11 @@ class AccountView {
       !presenceShared;
 
   factory AccountView.fromJson(Map<String, dynamic> json) {
+    // Fail-closed (#2387): a malformed or blank field reads as absent.
+    final r = JsonReader(json, context: 'account_view');
     String? text(String part, String key) {
-      final group = json[part];
-      final value = group is Map ? group[key] : null;
-      return value is String && value.trim().isNotEmpty ? value : null;
+      final value = r.objectOrAbsent(part).textOrAbsent(key);
+      return value != null && value.trim().isNotEmpty ? value : null;
     }
 
     return AccountView(
@@ -232,8 +242,8 @@ class AccountView {
       whatsapp: text('contact_channels', 'whatsapp'),
       email: text('contact_channels', 'email'),
       presence: text('presence', 'status_text'),
-      presenceShared: json['presence'] is Map,
-      canMessage: json['can_message'] == true,
+      presenceShared: r.json['presence'] is Map,
+      canMessage: r.isTrue('can_message'),
     );
   }
 }

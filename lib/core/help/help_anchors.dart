@@ -77,38 +77,14 @@ abstract final class HelpAnchor {
   /// The price ladder behind percentage subscriptions.
   static const billingFeeBands = 'user.money.billing.fee-bands';
 
-  /// The top of a band; the next one starts where it ends.
-  static const billingBandTo = 'user.money.billing.band-to';
-
-  /// What a month in the band costs, used or not.
-  static const billingBandFee = 'user.money.billing.band-fee';
-
-  /// The price of one half-day past the allowance.
-  static const billingBandOverage = 'user.money.billing.band-overage';
-
   /// Which percentages a member may pick.
   static const billingLevels = 'user.money.billing.levels';
-
-  /// One percentage: a share of the month's working half-days.
-  static const billingLevelValue = 'user.money.billing.level-value';
-
-  /// A percentage off the list, for one member.
-  static const billingCustomLevel = 'user.money.billing.custom-level';
 
   /// Days sold for a price, bought rather than subscribed.
   static const billingPackages = 'user.money.billing.packages';
 
   /// Name, days and price, then add.
   static const billingPackageNew = 'user.money.billing.package-new';
-
-  /// What the shop and the invoice line call it.
-  static const billingPackageName = 'user.money.billing.package-name';
-
-  /// How many days the package grants.
-  static const billingPackageDays = 'user.money.billing.package-days';
-
-  /// The price of the whole package, with its VAT group.
-  static const billingPackagePrice = 'user.money.billing.package-price';
 
   /// Which design an invoice prints with, per kind and per language.
   static const reportsInvoiceTemplate = 'user.money.reports.invoice-template';
@@ -128,9 +104,6 @@ abstract final class HelpAnchor {
 
   /// Which service takes the money, and what is still missing.
   static const paymentsProvider = 'user.money.payments.provider';
-
-  /// Write-only keys that never leave the workspace.
-  static const paymentsCredentials = 'user.money.payments.credentials';
 
   /// What a document calls each way of paying.
   static const paymentsMethods = 'user.money.payments.methods';
@@ -201,6 +174,9 @@ abstract final class HelpAnchor {
 
   /// One function asks it, so revoking a cell revokes it everywhere.
   static const rolesMatrix = 'user.roles.matrix';
+
+  /// The roles a space defines for itself.
+  static const rolesSpace = 'user.roles.space';
 
   /// All of a feature or none — but never the arithmetic already applied.
   static const featuresSwitch = 'user.features.switch';
@@ -345,40 +321,9 @@ abstract final class HelpAnchor {
   /// A cost that comes back, raised on its own due days.
   static const expenseSchedule = 'user.money.expenses.schedule';
 
-  /// The name every occurrence carries.
-  static const expenseWhat = 'user.money.expenses.what';
-
-  /// What one occurrence costs, and what changing it does not touch.
-  static const expenseAmount = 'user.money.expenses.amount';
-
-  /// The longer text, for whoever validates it.
-  static const expenseDescription = 'user.money.expenses.description';
-
-  /// The date the first one falls due; the series counts from here.
-  static const expenseStartsOn = 'user.money.expenses.starts-on';
-
-  /// The interval between occurrences.
-  static const expenseEvery = 'user.money.expenses.every';
-
-  /// How many occurrences to raise.
-  static const expenseTimes = 'user.money.expenses.times';
-
-  /// The date after which nothing more is raised.
-  static const expenseEndsOn = 'user.money.expenses.ends-on';
-
   // ── money · services ───────────────────────────────────────────────
   /// Anything sold that is not a seat.
   static const serviceOverview = 'user.money.services.overview';
-
-  /// What the invoice line says.
-  static const serviceName = 'user.money.services.name';
-
-  /// One unit's price, with its VAT group.
-  static const servicePrice = 'user.money.services.price';
-
-  /// Whether it can still be sold.
-  static const serviceActive = 'user.money.services.active';
-  static const serviceSupply = 'user.money.services.supply'; // #2354 where its VAT is due
 
   // ── money · electronic invoicing ───────────────────────────────────
   /// Where a structured invoice goes, and with which credentials.
@@ -436,67 +381,20 @@ abstract final class HelpAnchor {
   /// Horizon, minimum and maximum duration, simultaneous bookings.
   static const availabilityLimits = 'user.workspace.availability.limits';
 
-  // ── environments · the pair and the deployment ─────────────────────
-  /// Why a development twin exists at all.
-  static const envPairWhy = 'env.pair.why';
+  /// Deploying between the two sides of a space.
+  static const advancedDeploy = 'user.advanced.deploy';
 
-  /// Creating the pair, and the twin a lone workspace gets on demand.
-  static const envPairCreate = 'env.pair.create';
+  /// The trace, the developer screen and what to do when something fails.
+  static const advancedTroubleshooting = 'user.advanced.troubleshooting';
 
-  /// The three permissions, and the two rules that follow from them.
-  static const envPairPermissions = 'env.pair.permissions';
-
-  /// The deployment screen: a deployment writes the side you stand on.
-  static const envDeployScreen = 'env.deploy.screen';
-
-  /// The entity table — what travels, grouped and with its needs.
-  static const envDeployEntities = 'env.deploy.entities';
-
-  /// The floor plan is merged, never replaced.
-  static const envDeployPlan = 'env.deploy.plan';
-
-  /// The preview and the confirmation that name the side being written.
-  static const envDeployPreview = 'env.deploy.preview';
-
-  /// The journal, and the rollback that must be undone in order.
-  static const envDeployJournal = 'env.deploy.journal';
-
-  /// What never travels: members, money, credentials, counters.
-  static const envDeployNever = 'env.deploy.never';
-
-  // ── the technical guide · what the app explains nowhere ────────────
-  //
-  // #1393 — possible only since #1259 translated Admin-Technical-Guide
-  // into all five languages: `help_anchor_test` refuses a symbol whose
-  // guide a language is missing. These four name objects the app itself
-  // documents nowhere.
-  /// The XML layout: the root, its zones, the elements, frame
-  /// attributes and units.
-  static const adminReportLayouts = 'admin.reports.layouts';
-
-  /// The window-envelope geometry, and the check that measures the
-  /// rendered PDF rather than trusting the eye.
-  static const adminReportWindow = 'admin.reports.window';
-
-  /// The trace: a ring buffer per device, its three shapes, and what an
-  /// export does and does not carry.
-  static const adminTrace = 'admin.trace.overview';
-
-  /// An instance is a whole DesKilo on its own database; the bundle is
-  /// its build material.
-  static const adminInstances = 'admin.instances.overview';
-
-  /// What each accounting format may CLAIM — a regulatory export, an
-  /// exchange format, or a subset — so nobody hands their accountant a
-  /// file that says less than they think.
-  static const adminExportsAccounting = 'admin.exports.accounting';
-
-  /// The readiness gate: what EN 16931 refuses, and which missing item
-  /// is refusing this invoice right now.
-  static const adminEinvoiceReadiness = 'admin.einvoice.readiness';
+  /// The accountant exports and what each format may claim.
+  static const invoicingAccountingExport = 'user.invoicing.accounting-export';
 
   /// Every anchor the app points at — the lint's left-hand side.
   static const all = <String>{
+    advancedDeploy,
+    advancedTroubleshooting,
+    invoicingAccountingExport,
     moneyVatRates,
     moneyVatGroups,
     moneyVatDeclaration,
@@ -515,33 +413,10 @@ abstract final class HelpAnchor {
     legalLegalId,
     legalAddress,
     legalSpecialMentions,
-    envPairWhy,
-    envPairCreate,
-    envPairPermissions,
-    envDeployScreen,
-    envDeployEntities,
-    envDeployPlan,
-    envDeployPreview,
-    envDeployJournal,
-    envDeployNever,
-    adminReportLayouts,
-    adminReportWindow,
-    adminTrace,
-    adminInstances,
-    adminExportsAccounting,
-    adminEinvoiceReadiness,
     billingFeeBands,
-    billingBandTo,
-    billingBandFee,
-    billingBandOverage,
     billingLevels,
-    billingLevelValue,
-    billingCustomLevel,
     billingPackages,
     billingPackageNew,
-    billingPackageName,
-    billingPackageDays,
-    billingPackagePrice,
     availabilityOpenWeekdays,
     availabilityGranularity,
     availabilityWorkingHours,
@@ -559,18 +434,7 @@ abstract final class HelpAnchor {
     einvoiceUat,
     einvoiceDev,
     expenseSchedule,
-    expenseWhat,
-    expenseAmount,
-    expenseDescription,
-    expenseStartsOn,
-    expenseEvery,
-    expenseTimes,
-    expenseEndsOn,
     serviceOverview,
-    serviceName,
-    servicePrice,
-    serviceActive,
-    serviceSupply,
     workspaceCountry,
     workspaceCurrencyTimezone,
     workspaceLanguage,
@@ -625,11 +489,11 @@ abstract final class HelpAnchor {
     membersCoOwnership,
     membersActions,
     rolesMatrix,
+    rolesSpace,
     featuresSwitch,
     reservationsBookingSheet,
     workspaceCode,
     paymentsProvider,
-    paymentsCredentials,
     paymentsMethods,
     badgesNfc,
     profileProfiles,

@@ -11,6 +11,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/help/presentation/screens/help_screen.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +38,22 @@ void main() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
   });
 
-  testWidgets('help opens from settings and renders the bundled guide',
+  testWidgets('help opens from settings on the guide site, in the app language',
       (tester) async {
+    final opened = <Uri>[];
     tester.view.physicalSize = const Size(800, 1600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [...standardTestOverrides(), _helpOverride()],
+        overrides: [
+          ...standardTestOverrides(),
+          _helpOverride(),
+          linkLauncherProvider.overrideWithValue((uri) async {
+            opened.add(uri);
+            return true;
+          }),
+        ],
         child: const DeskiloApp(),
       ),
     );
@@ -61,15 +70,8 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('settings-help')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(HelpScreen), findsOneWidget);
-    expect(find.textContaining('Getting started', findRichText: true),
-        findsWidgets);
-
-    // The table of contents opens from the app bar and lists the sections.
-    await tester.tap(find.byKey(const ValueKey('help-toc-button')));
-    await tester.pumpAndSettle();
-    expect(find.byType(Drawer), findsOneWidget);
-    expect(find.textContaining('Booking', findRichText: true), findsWidgets);
+    expect(opened.single.toString(),
+        startsWith('https://fdittgen-png.github.io/deskilo/guide/'));
   });
 
   testWidgets('a plain member reaches /help directly (no guard)',

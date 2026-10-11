@@ -1,4 +1,5 @@
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/json_reader.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 // #828 — distributing ONE shared amount over the members: the key that
@@ -129,29 +130,29 @@ class ExpenseRepartition implements SystemStamped {
   @override
   final SystemColumns system;
 
-  factory ExpenseRepartition.fromJson(Map<String, dynamic> json) =>
-      ExpenseRepartition(
-        system: SystemColumns.fromRow(json),
-        id: json['id'] as String,
-        title: json['title'] as String? ?? '',
-        amountCents: (json['amount_cents'] as num?)?.toInt() ?? 0,
-        method: RepartitionMethod.fromWire(json['method'] as String?),
-        period: json['period'] as String? ?? '',
-        shares: [
-          for (final s in json['shares'] as List<dynamic>? ?? const [])
-            RepartitionShare(
-              memberId: (s as Map)['member_id'] as String,
-              memberName: s['member_name'] as String? ?? '',
-              weight: (s['weight'] as num?) ?? 0,
-              amountCents: (s['amount_cents'] as num?)?.toInt() ?? 0,
-            ),
-        ],
-        status: json['status'] as String? ?? 'pending',
-        createdAt: DateTime.parse(json['created_at'] as String),
-        appliedAt: json['applied_at'] == null
-            ? null
-            : DateTime.parse(json['applied_at'] as String),
-      );
+  factory ExpenseRepartition.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'expense_repartitions');
+    return ExpenseRepartition(
+      system: SystemColumns.fromRow(json),
+      id: r.string('id'),
+      title: r.stringOr('title'),
+      amountCents: r.intOrNull('amount_cents') ?? 0,
+      method: RepartitionMethod.fromWire(r.stringOrNull('method')),
+      period: r.stringOr('period'),
+      shares: r.objects(
+        'shares',
+        (s) => RepartitionShare(
+          memberId: s.string('member_id'),
+          memberName: s.stringOr('member_name'),
+          weight: s.numOrNull('weight') ?? 0,
+          amountCents: s.intOrNull('amount_cents') ?? 0,
+        ),
+      ),
+      status: r.stringOr('status', 'pending'),
+      createdAt: r.dateTime('created_at'),
+      appliedAt: r.dateTimeOrNull('applied_at'),
+    );
+  }
 
   final String id;
   final String title;
