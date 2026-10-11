@@ -5,6 +5,8 @@
 // range, and a button that says how many results the choices give.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/workspace_currency.dart';
+import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'ref_picker_filter.dart';
@@ -66,7 +68,8 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
     final theme = Theme.of(context);
     final shown = applyRefFilter(widget.all, _filter).length;
     final bounds = refAmountBounds(widget.all);
-    final fmt = widget.formatAmount ?? (int c) => (c / 100).toStringAsFixed(2);
+    final fmt = widget.formatAmount ??
+        (int c) => minorToText(c, WorkspaceCurrency.code); // #2385
 
     return SafeArea(
       child: Padding(

@@ -5,7 +5,10 @@
 // accountant's view beside the declaration. Nothing is re-aggregated
 // from lines: a pre-0072 invoice derives its single zero-rated entry
 // exactly as the documents do (vatBreakdown).
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
+import '../../../core/text/number_text.dart';
+import '../../../core/time/date_text.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';
 
@@ -172,38 +175,23 @@ String vatReportCsv(VatReport report, {required String currency}) {
   // #1077 — the declared currency's grain, not the euro's. A comma is
   // still the separator: that is what French and German spreadsheets
   // read without an import dialog, whatever the currency.
-  final per = Currencies.minorPerMajor(currency);
-  final digits = Currencies.minorDigits(currency);
-  String money(int minor) {
-    final sign = minor < 0 ? '-' : '';
-    final abs = minor.abs();
-    if (digits == 0) return '$sign${abs ~/ per}';
-    return '$sign${abs ~/ per},'
-        '${(abs % per).toString().padLeft(digits, '0')}';
-  }
-  String date(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  String cell(String s) => '"${s.replaceAll('"', '""')}"';
   final rows = <String>[
     ['number', 'date', 'customer', 'rate', 'category', 'net', 'vat', 'gross',
       'currency', 'reverses'].join(';'),
     for (final p in report.positions)
       [
-        cell(p.number),
-        date(p.issuedAt),
-        cell(p.customer),
-        _percent(p.percent),
+        csvCell(p.number, quoteEmpty: true),
+        isoDay(p.issuedAt),
+        csvCell(p.customer, quoteEmpty: true),
+        // One decimal, comma: '20', '5,5'.
+        percentText(p.percent, decimalSeparator: ',', fractionDigits: 1),
         p.category,
-        money(p.netCents),
-        money(p.vatCents),
-        money(p.grossCents),
+        minorToText(p.netCents, currency, decimalSeparator: ','),
+        minorToText(p.vatCents, currency, decimalSeparator: ','),
+        minorToText(p.grossCents, currency, decimalSeparator: ','),
         currency,
-        cell(p.reversesNumber),
+        csvCell(p.reversesNumber, quoteEmpty: true),
       ].join(';'),
   ];
   return '${rows.join('\n')}\n';
 }
-
-String _percent(double percent) => percent == percent.roundToDouble()
-    ? '${percent.round()}'
-    : percent.toStringAsFixed(1).replaceAll('.', ',');

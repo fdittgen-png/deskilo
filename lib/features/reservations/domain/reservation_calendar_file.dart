@@ -38,6 +38,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 
+import '../../../core/time/date_text.dart';
 import 'reservation.dart';
 
 /// The two statuses a booking can export as. There is no `TENTATIVE`:
@@ -179,9 +180,7 @@ String serializeCalendarFile(CalendarSnapshot snapshot) {
 /// converted, so a caller passing a local instant still gets `Z`.
 String formatCalendarInstant(DateTime instant) {
   final utc = instant.toUtc();
-  String two(int n) => n.toString().padLeft(2, '0');
-  return '${utc.year.toString().padLeft(4, '0')}${two(utc.month)}${two(utc.day)}'
-      'T${two(utc.hour)}${two(utc.minute)}${two(utc.second)}Z';
+  return '${ymd(utc)}T${hhmmss(utc, separator: '')}Z';
 }
 
 /// `TEXT` escaping (§3.3.11): backslash, semicolon and comma are

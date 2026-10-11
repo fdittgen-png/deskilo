@@ -14,8 +14,9 @@ import '../../../features/reservations/domain/reservation.dart';
 import '../data/money_repository.dart';
 import 'demo_history_seed.dart';
 import 'demo_people_seed.dart';
+import '../../time/date_text.dart';
 
-String _period(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
+String _period(DateTime d) => yearMonth(d.year, d.month);
 
 /// Completes the money of the session; [seedDemoMoney] already issued
 /// last month's two invoices (Ada's and Bruno's).

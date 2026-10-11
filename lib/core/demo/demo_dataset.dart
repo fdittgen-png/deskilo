@@ -28,6 +28,7 @@ import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
+import '../time/date_text.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
 /// and in the guides.
@@ -369,7 +370,7 @@ void seedDemoEvents(FakeEventRepository events, DateTime now) {
 void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
   final lastMonth = DateTime(now.year, now.month - 1, 28);
   final period =
-      '${lastMonth.year}-${lastMonth.month.toString().padLeft(2, '0')}';
+      yearMonth(lastMonth.year, lastMonth.month);
   money.invoices
     ..clear()
     ..addAll([

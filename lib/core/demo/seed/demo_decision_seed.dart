@@ -8,9 +8,10 @@ import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/validation_policy.dart';
 import '../../../features/events/domain/workspace_event.dart';
 import '../data/event_repository.dart';
+import '../../time/date_text.dart';
 
 void seedDemoDecisions(FakeEventRepository events, DateTime now) {
-  final period = '${now.year}-${now.month.toString().padLeft(2, '0')}';
+  final period = yearMonth(now.year, now.month);
   WorkspaceEvent event(
     String id,
     EventType type,

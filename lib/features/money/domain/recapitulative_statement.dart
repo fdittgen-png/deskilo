@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invoice.dart';
 import '../../../core/vat/place_of_supply.dart';
+import '../../../core/time/date_text.dart';
 
 /// #2354 — one line of the recapitulative statement (EU sales list):
 /// the services a seller reverse-charged (category AE, Directive art. 196)
@@ -69,9 +70,7 @@ List<RecapitulativeLine> recapitulativeStatement(
     if (ae == 0) continue;
     final buyer = invoice.buyerParty;
     final parts = _vatNumberParts(buyer?.vatId ?? '', buyer?.country ?? '');
-    final period =
-        '${invoice.issuedAt.year.toString().padLeft(4, '0')}-'
-        '${invoice.issuedAt.month.toString().padLeft(2, '0')}';
+    final period = yearMonth(invoice.issuedAt.year, invoice.issuedAt.month);
     final key = '$period|${parts.country}|${parts.number}';
     final before = sums[key];
     final customer = buyer == null

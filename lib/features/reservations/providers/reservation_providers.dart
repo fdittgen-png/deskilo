@@ -20,6 +20,7 @@ import '../domain/reservation_repository.dart';
 import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/date_text.dart';
 
 part 'reservation_providers.g.dart';
 
@@ -138,15 +139,12 @@ Future<List<Reservation>> reservationsForMonth(Ref ref, String monthKey) async {
 /// month of [at], never UTC (#119).
 String monthKeyOf(DateTime at) {
   final local = at.toLocal();
-  return '${local.year}-${local.month.toString().padLeft(2, '0')}';
+  return yearMonth(local.year, local.month);
 }
 
 /// Canonical family key for [reservationsForDay] — LOCAL wall-clock day.
 String dayKeyOf(DateTime at) {
-  final local = at.toLocal();
-  final m = local.month.toString().padLeft(2, '0');
-  final d = local.day.toString().padLeft(2, '0');
-  return '${local.year}-$m-$d';
+  return isoDay(at.toLocal());
 }
 
 /// The [reservationsForDay] keys a half-open window `[start, end)` touches —

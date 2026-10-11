@@ -8,6 +8,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 
 import 'money_repository.dart';
+import '../../time/date_text.dart';
 
 WorkspaceStatus demoWorkspaceStatus(
   FakeMoneyRepository money,
@@ -39,8 +40,7 @@ WorkspaceStatus demoWorkspaceStatus(
             inRange(l.period),
       )
       .fold(0, (sum, l) => sum + l.amountCents);
-  String month(DateTime d) =>
-      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}';
+  String month(DateTime d) => yearMonth(d.year, d.month);
   final names = <String, String>{
     for (final i in invoices) i.memberId: i.memberName,
   };

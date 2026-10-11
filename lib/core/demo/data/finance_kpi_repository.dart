@@ -5,6 +5,7 @@ import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 
 import 'money_repository.dart';
 import 'workspace_repository.dart';
+import '../../time/date_text.dart';
 
 /// The finance KPIs over the demo's own invoices and matches, with the
 /// predicates of `kpi_finance_summary` (0351): invoiced = non-void,
@@ -24,7 +25,7 @@ class DemoFinanceKpiRepository implements FinanceKpiRepository {
   final DateTime now;
 
   static String _month(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}';
+      yearMonth(d.year, d.month);
 
   @override
   Future<FinanceSummaryKpi> summary(

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
+import '../../../core/time/date_text.dart';
 
 /// THE booking-success → user-message mapper (#663), the counterpart of
 /// `bookingErrorText`.
@@ -86,9 +87,7 @@ String _hm(String locale, DateTime at) {
     // and this runs on the SUCCESS path where a logged error would read
     // as the booking having gone wrong. domain/ is pure Dart besides —
     // it has no logger to reach for (AGENT_RULES layering).
-    final h = at.hour.toString().padLeft(2, '0');
-    final m = at.minute.toString().padLeft(2, '0');
-    return '$h:$m';
+    return hhmm(at);
   }
 }
 
@@ -99,8 +98,7 @@ String _md(String locale, DateTime at) {
     // ignore: catch_no_st
   } catch (_) {
     // trace-exempt: same reasoning as _hm above.
-    return '${at.year}-${at.month.toString().padLeft(2, '0')}-'
-        '${at.day.toString().padLeft(2, '0')}';
+    return isoDay(at);
   }
 }
 
