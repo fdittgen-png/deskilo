@@ -28,6 +28,10 @@ enum KnownRefusal {
   /// #2332 (0399, DK423) — the currency or country of a space that has
   /// already issued a document or recorded money.
   moneyLocaleLocked,
+
+  /// #2356 (DKV01) — a new percent on a VAT rate already on issued
+  /// invoices: the change is a new version from a date.
+  vatRateVersioned,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -75,6 +79,7 @@ KnownRefusal? knownRefusalOf(Object error) {
   // revoked grant, which never carries one of our sentences.
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
   if (serverErrorCode(error) == 'DK423') return KnownRefusal.moneyLocaleLocked;
+  if (serverErrorCode(error) == 'DKV01') return KnownRefusal.vatRateVersioned;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -104,5 +109,7 @@ String? knownRefusalText(AppLocalizations? l10n, Object error) =>
           'This changed in the meantime. Reopen it to see where it stands.',
       KnownRefusal.moneyLocaleLocked =>
         (l10n ?? AppLocalizationsEn()).refusalMoneyLocaleLocked,
+      KnownRefusal.vatRateVersioned =>
+        (l10n ?? AppLocalizationsEn()).refusalVatRateVersioned,
       null => null,
     };

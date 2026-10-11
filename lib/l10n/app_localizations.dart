@@ -20130,6 +20130,12 @@ abstract class AppLocalizations {
   /// **'Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.'**
   String get notificationsSystemOffHint;
 
+  /// #2356 number sequences: numberSequenceCreditNoteUnsaved
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved yet: until this series is saved, credit notes take invoice numbers.'**
+  String get numberSequenceCreditNoteUnsaved;
+
   /// #925 number sequences: numberSequenceDateNone
   ///
   /// In en, this message translates to:
@@ -24091,6 +24097,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your session has ended. Sign in again, then retry.'**
   String get refusalSession;
+
+  /// #2356: refusalVatRateVersioned
+  ///
+  /// In en, this message translates to:
+  /// **'This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.'**
+  String get refusalVatRateVersioned;
 
   /// #711 - globalization
   ///

@@ -66,7 +66,7 @@ void main() {
       expect(defaultExemptionMention('FR', VatRegime.exempt),
           contains('293 B'));
       expect(defaultExemptionMention('de', VatRegime.exempt),
-          contains('§ 19 UStG'));
+          'Steuerbefreiung für Kleinunternehmer, § 19 UStG.');
       expect(defaultExemptionMention('IT', VatRegime.exempt),
           contains('190/2014'));
       expect(defaultExemptionMention('PL', VatRegime.exempt),

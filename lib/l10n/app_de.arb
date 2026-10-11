@@ -7255,6 +7255,7 @@
   "notifUngroup": "Gruppierung aufheben",
   "notificationsSystemOff": "Android blockiert DesKilo-Benachrichtigungen",
   "notificationsSystemOffHint": "Erlauben Sie sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.",
+  "numberSequenceCreditNoteUnsaved": "Noch nicht gespeichert: Bis diese Serie gespeichert ist, erhalten Gutschriften Rechnungsnummern.",
   "numberSequenceDateNone": "Keins",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -8714,6 +8715,10 @@
   },
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
+  "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
+  },
   "regionalClock": "Uhr",
   "@regionalClock": {
     "description": "#711 - globalization"

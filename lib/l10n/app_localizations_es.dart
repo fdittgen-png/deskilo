@@ -11803,6 +11803,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Permítalas en Ajustes del sistema → Aplicaciones → DesKilo → Notificaciones — la insignia del icono las necesita.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Aún sin guardar: mientras esta serie no se guarde, los abonos toman números de factura.';
+
+  @override
   String get numberSequenceDateNone => 'Ninguna';
 
   @override
@@ -14119,6 +14123,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalSession =>
       'Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.';
+
+  @override
+  String get refusalVatRateVersioned =>
+      'Este tipo ya figura en facturas emitidas, así que su porcentaje se mantiene. Use «Cambio por ley» para fijar el nuevo valor a partir de una fecha. No se ha guardado nada.';
 
   @override
   String get regionalClock => 'Reloj';
