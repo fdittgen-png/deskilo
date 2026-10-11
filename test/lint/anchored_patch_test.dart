@@ -36,6 +36,12 @@ const _reviewed = {
   // prepared-only rule, the recompute check and the writer token.
   // pgTAP 166 files a return and asserts its DECL- number.
   'mark_vat_declaration_submitted@0402',
+  // #2357/0406 restates it again from 0402's body (the LIVE dev
+  // definition, md5-checked before the apply): 0165's DECL- draw is still
+  // carried verbatim; the additions are the overlap refusal and the
+  // vat_return_entries insert. pgTAP 166 and 168 file returns and assert
+  // the number and the recorded entries.
+  'mark_vat_declaration_submitted@0406',
   // #2145/0358 restates mcp_read_v1 whole. The LIVE dev body is 0275's
   // with 0345's one anchored change (free = mcp_seat_bookable(...) is
   // null), comments and blank lines aside; the new body keeps that verdict

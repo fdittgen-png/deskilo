@@ -326,18 +326,14 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 onChanged: (v) => setState(() => _taxPoint = v),
               ),
             ),
-          // #2357 — the length of the filing period the declarations
-          // screen offers.
+          // #2357 — how often the return is filed.
           if (_regime == VatRegime.vatRegistered &&
-              ref
-                  .watch(enabledFeaturesSyncProvider)
+              ref.watch(enabledFeaturesSyncProvider)
                   .contains(WorkspaceFeature.vatDeclarations))
-            Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.sm),
-              child: VatDeclarationPeriodField(
-                value: _declarationPeriod ?? VatDeclarationPeriod.fallback,
-                onChanged: (v) => setState(() => _declarationPeriod = v),
-              ),
+            VatDeclarationPeriodField(
+              key: const ValueKey('legal-identity-period-field'),
+              value: _declarationPeriod ?? VatDeclarationPeriod.fallback,
+              onChanged: (v) => setState(() => _declarationPeriod = v),
             ),
           // #919 — an ASSOCIATION that charges no VAT is out of the
           // SCOPE of it, not exempt within the scope. The two look

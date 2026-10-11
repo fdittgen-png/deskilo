@@ -54,36 +54,19 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
   final List<VatDeclaredAmount> vatDeclared = [];
 
-  /// The return of [start]..[end] with the filed periods locked, as
-  /// `vat_return_lines` computes it.
+  /// The return of [start]..[end], filed periods locked (`vat_return_lines`).
   List<VatReturnAmount> _vatReturn(DateTime start, DateTime end) {
     final view = accountingView(invoices, invoiceMatchesStore);
-    return vatReturnAmountsOf(
-      vatTaxPointLedger(
-        view.invoices,
-        matches: view.matches,
-        instalments: invoiceInstalmentsStore,
-        basis: vatReturnBasis,
-      ),
-      start: start,
-      end: end,
-      locks: [
-        for (final d in vatDeclarations)
-          if (d.isFiled)
-            VatPeriodLock(
-              declarationId: d.id,
-              start: d.periodStart,
-              end: d.periodEnd,
-              filedAt: d.submittedAt ?? d.createdAt,
-            ),
-      ],
-      declared: vatDeclared,
-    );
+    return vatReturnAmountsOf(vatTaxPointLedger(view.invoices,
+            matches: view.matches,
+            instalments: invoiceInstalmentsStore,
+            basis: vatReturnBasis),
+        start: start, end: end,
+        locks: vatPeriodLocksOf(vatDeclarations), declared: vatDeclared);
   }
 
-  /// Prepares the period like `save_vat_declaration` (0402/0406): the
-  /// figures are computed here from the fake's own invoices, matches and
-  /// instalments with the Dart engine the SQL is the twin of.
+  /// Prepares the period like `save_vat_declaration` (0402/0406) with
+  /// the Dart engine the SQL is the twin of.
   @override
   Future<String> saveVatDeclaration({
     required String workspaceId,
@@ -95,39 +78,12 @@ class FakeMoneyRepository implements MoneyRepository {
     if (existing != -1 && vatDeclarations[existing].isFiled) {
       throw StateError('declaration already filed for this period');
     }
-    if (vatDeclarations.any((d) =>
-        d.isFiled &&
-        !d.periodStart.isAfter(periodEnd) &&
-        !d.periodEnd.isBefore(periodStart))) {
+    if (vatPeriodLocksOf(vatDeclarations).any((l) =>
+        !l.start.isAfter(periodEnd) && !l.end.isBefore(periodStart))) {
       throw StateError('this period overlaps a filed return');
     }
     final amounts = _vatReturn(periodStart, periodEnd);
-    final lines = <VatDeclarationLine>[];
-    for (final corrects in {for (final a in amounts) a.corrects}) {
-      final part = [
-        for (final a in amounts)
-          if (a.corrects == corrects) a,
-      ];
-      final corrected =
-          vatDeclarations.where((d) => d.id == corrects).firstOrNull;
-      for (final percent in {for (final a in part) a.percent}.toList()
-        ..sort((a, b) => b.compareTo(a))) {
-        final at = [
-          for (final a in part)
-            if (a.percent == percent) a,
-        ];
-        lines.add(VatDeclarationLine(
-          percent: percent,
-          grossCents: at.fold(0, (s, a) => s + a.grossCents),
-          netCents: at.fold(0, (s, a) => s + a.netCents),
-          vatCents: at.fold(0, (s, a) => s + a.vatCents),
-          invoiceCount: {for (final a in at) a.invoiceId}.length,
-          corrects: corrects,
-          correctsStart: corrected?.periodStart,
-          correctsEnd: corrected?.periodEnd,
-        ));
-      }
-    }
+    final lines = vatReturnLinesOf(amounts, declarations: vatDeclarations);
     final documents = {for (final a in amounts) a.invoiceId};
     final declaration = VatDeclaration(
       id: existing != -1

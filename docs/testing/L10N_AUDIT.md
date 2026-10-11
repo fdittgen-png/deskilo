@@ -192,6 +192,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/features/money/domain/vat_catalogue.dart`** (86) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
 - **`lib/features/money/domain/coa_preview.dart`** (45) — the French chart of accounts (PCG): «Clients», «TVA collectée» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
-- **`lib/features/money/domain/vat_declaration.dart`** (10) — CA3 and UStVA box names, in French and German, as the forms print them.
+- **`lib/features/money/domain/vat_declaration.dart`** (12) — CA3 and UStVA box names, in French and German, as the forms print them (#2357: the CA3 régularisation lines 15 and 21).
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

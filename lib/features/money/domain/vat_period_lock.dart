@@ -15,6 +15,7 @@
 // (`vat_return_entries`, written by each filing — including the
 // corrections it carried, so a change is corrected once).
 // `vat_return_parity_test.dart` pins both to one fixture.
+import 'vat_declaration.dart';
 import 'vat_tax_point.dart';
 
 /// A filed return's period: the tax points inside it are locked.
@@ -92,15 +93,16 @@ List<VatReturnAmount> vatReturnAmountsOf(
 }) {
   final from = DateTime(start.year, start.month, start.day);
   final to = DateTime(end.year, end.month, end.day);
-  final earlier = [
-    for (final l in locks)
-      if (l.end.isBefore(from)) l,
-  ]..sort((a, b) {
-      final byFiling = a.filedAt.compareTo(b.filedAt);
-      return byFiling != 0
-          ? byFiling
-          : a.declarationId.compareTo(b.declarationId);
-    });
+  final earlier =
+      [
+        for (final l in locks)
+          if (l.end.isBefore(from)) l,
+      ]..sort((a, b) {
+        final byFiling = a.filedAt.compareTo(b.filedAt);
+        return byFiling != 0
+            ? byFiling
+            : a.declarationId.compareTo(b.declarationId);
+      });
   bool lockedElsewhere(DateTime day) =>
       locks.any((l) => l.covers(day) && !l._is(from, to));
   VatPeriodLock? correcting(DateTime day) =>
@@ -116,13 +118,15 @@ List<VatReturnAmount> vatReturnAmountsOf(
 
   for (final a in ledger) {
     if (a.within(from, to) && !lockedElsewhere(a.on)) {
-      out.add(VatReturnAmount(
-        invoiceId: a.invoiceId,
-        on: a.on,
-        percent: a.percent,
-        grossCents: a.grossCents,
-        netCents: a.netCents,
-      ));
+      out.add(
+        VatReturnAmount(
+          invoiceId: a.invoiceId,
+          on: a.on,
+          percent: a.percent,
+          grossCents: a.grossCents,
+          netCents: a.netCents,
+        ),
+      );
     }
     if (correcting(a.on) != null) {
       add(a.invoiceId, a.on, a.percent, a.grossCents, a.netCents);
@@ -135,14 +139,16 @@ List<VatReturnAmount> vatReturnAmountsOf(
   }
   for (final MapEntry(key: k, value: v) in delta.entries) {
     if (v.$1 == 0 && v.$2 == 0) continue;
-    out.add(VatReturnAmount(
-      invoiceId: k.$1,
-      on: k.$2,
-      percent: k.$3,
-      grossCents: v.$1,
-      netCents: v.$2,
-      corrects: correcting(k.$2)!.declarationId,
-    ));
+    out.add(
+      VatReturnAmount(
+        invoiceId: k.$1,
+        on: k.$2,
+        percent: k.$3,
+        grossCents: v.$1,
+        netCents: v.$2,
+        corrects: correcting(k.$2)!.declarationId,
+      ),
+    );
   }
   return out;
 }
@@ -166,4 +172,54 @@ List<VatDeclaredAmount> vatDeclaredBy(Iterable<VatReturnAmount> amounts) {
         netCents: v.$2,
       ),
   ];
+}
+
+/// The locks of the filed returns among [declarations].
+List<VatPeriodLock> vatPeriodLocksOf(Iterable<VatDeclaration> declarations) => [
+  for (final d in declarations)
+    if (d.isFiled)
+      VatPeriodLock(
+        declarationId: d.id,
+        start: d.periodStart,
+        end: d.periodEnd,
+        filedAt: d.submittedAt ?? d.createdAt,
+      ),
+];
+
+/// The lines a return of [amounts] stores, as `vat_return_summary` does:
+/// the period's own per rate, then the corrections per corrected return
+/// (found in [declarations]) and rate.
+List<VatDeclarationLine> vatReturnLinesOf(
+  List<VatReturnAmount> amounts, {
+  Iterable<VatDeclaration> declarations = const [],
+}) {
+  final lines = <VatDeclarationLine>[];
+  for (final corrects in {for (final a in amounts) a.corrects}) {
+    final part = [
+      for (final a in amounts)
+        if (a.corrects == corrects) a,
+    ];
+    final corrected = declarations.where((d) => d.id == corrects).firstOrNull;
+    final percents = {for (final a in part) a.percent}.toList()
+      ..sort((a, b) => b.compareTo(a));
+    for (final percent in percents) {
+      final at = [
+        for (final a in part)
+          if (a.percent == percent) a,
+      ];
+      lines.add(
+        VatDeclarationLine(
+          percent: percent,
+          grossCents: at.fold(0, (s, a) => s + a.grossCents),
+          netCents: at.fold(0, (s, a) => s + a.netCents),
+          vatCents: at.fold(0, (s, a) => s + a.vatCents),
+          invoiceCount: {for (final a in at) a.invoiceId}.length,
+          corrects: corrects,
+          correctsStart: corrected?.periodStart,
+          correctsEnd: corrected?.periodEnd,
+        ),
+      );
+    }
+  }
+  return lines;
 }
