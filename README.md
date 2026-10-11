@@ -180,32 +180,22 @@ Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Ai
 <tr>
 <td width="33%" valign="top">
 <b><a href="https://fdittgen-png.github.io/deskilo/guide/en.html">User guide</a></b><br>
-Every screen by audience, illustrated, in five languages.
+Every screen by audience, illustrated, in five languages — members, administrators, owners, operators.
 </td>
 <td width="33%" valign="top">
 <b><a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html">Setup guide</a></b><br>
 What is possible, what is necessary, in which order — for a future owner.
 </td>
 <td width="33%" valign="top">
-<b><a href="docs/wiki/Admin-Configuration-Guide.md">Configuration guide</a></b><br>
-Booking rules, memberships, roles and workspace settings.
-</td>
-</tr>
-<tr>
-<td valign="top">
-<b><a href="docs/wiki/Admin-Technical-Guide.md">Technical admin guide</a></b><br>
-Reports, integrations and instances.
-</td>
-<td valign="top">
 <b><a href="docs/guides/OPERATIONS.md">Operations</a></b><br>
 Instance health, backup, restore and recovery.
 </td>
+</tr>
+<tr>
 <td valign="top">
 <b><a href="docs/product/CAPABILITIES.md">Capabilities and evidence</a></b><br>
 What ships, what is tested at which scope, what is roadmap.
 </td>
-</tr>
-<tr>
 <td valign="top">
 <b><a href="docs/wiki/Architecture.md">Architecture</a></b><br>
 Client structure, backend model and platform choices.
@@ -214,9 +204,19 @@ Client structure, backend model and platform choices.
 <b><a href="docs/wiki/Implementation.md">Implementation</a></b><br>
 Development setup, builds, testing and contribution patterns.
 </td>
+</tr>
+<tr>
+<td valign="top">
+<b><a href="docs/wiki/Technical-Reference.md">Technical reference</a></b><br>
+Versions, dependencies, quality gates, release trains, standards and the ADR index.
+</td>
 <td valign="top">
 <b><a href="docs/SPECIFICATION.md">Product specification</a></b><br>
-Product intent and scope; issues and code tell the delivery status. See also the <a href="https://github.com/fdittgen-png/deskilo/wiki">project wiki</a>.
+Product intent and scope; issues and code tell the delivery status.
+</td>
+<td valign="top">
+<b><a href="https://github.com/fdittgen-png/deskilo/wiki">Project wiki</a></b><br>
+The developer pages, with the guides one click away.
 </td>
 </tr>
 </table>
@@ -225,7 +225,7 @@ Product intent and scope; issues and code tell the delivery status. See also the
 
 A working deployment needs the **full Supabase backend**: PostgreSQL and migrations, Auth, Storage, Realtime and the required Edge Functions. Authentication redirects, service credentials and backups also need configuration.
 
-1. Read the [instance guide](docs/wiki/Admin-Technical-Guide.md#instances) for the in-app wizard and command-line tooling. The reference deployment uses hosted Supabase; operating the Supabase platform itself is a separate infrastructure task.
+1. Read [How to run your own server](https://fdittgen-png.github.io/deskilo/guide/en.html#user.backend.how) in the user guide for the in-app wizard and how to point the app at your instance, and the [setup guide](https://fdittgen-png.github.io/deskilo/guide/setup-en.html) for what to decide first. The reference deployment uses hosted Supabase; operating the Supabase platform itself is a separate infrastructure task.
 2. Follow [Building & running](docs/wiki/Implementation.md#building--running) for the pinned Flutter setup, localization/code generation and platform build instructions.
 3. Connect the client to your instance, configure the workspace, and follow the [operations guide](docs/guides/OPERATIONS.md) for health checks, backup, restore and upgrades.
 
