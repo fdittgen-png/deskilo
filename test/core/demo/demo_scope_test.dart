@@ -322,6 +322,7 @@ const Set<String> demoOverriddenProviders = {
   'eventRepositoryProvider',
   'calendarRepositoryProvider',
   'moneyRepositoryProvider',
+  'viesRepositoryProvider', // #2354
   'creditRepositoryProvider',
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
