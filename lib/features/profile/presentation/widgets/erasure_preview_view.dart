@@ -9,7 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/rights_request.dart';
 
-String erasureStoreLabel(AppLocalizations? l10n, String store) =>
+String _erasureStoreLabel(AppLocalizations? l10n, String store) =>
     switch (store) {
       'messages_sent' => l10n?.erasureStoreMessages ?? 'Messages you sent',
       'custom_answers' =>
@@ -74,11 +74,11 @@ class ErasurePreviewView extends StatelessWidget {
           children: [
             Text(title, style: theme.textTheme.titleSmall),
             for (final s in shown)
-              if (seen.add(erasureStoreLabel(l10n, s.store)))
+              if (seen.add(_erasureStoreLabel(l10n, s.store)))
                 Text(
                   count && s.count != null
-                      ? '• ${erasureStoreLabel(l10n, s.store)} (${s.count})'
-                      : '• ${erasureStoreLabel(l10n, s.store)}',
+                      ? '• ${_erasureStoreLabel(l10n, s.store)} (${s.count})'
+                      : '• ${_erasureStoreLabel(l10n, s.store)}',
                   style: theme.textTheme.bodySmall,
                 ),
           ],

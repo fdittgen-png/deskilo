@@ -302,6 +302,7 @@ Workspace? _pairedTwin(List<Workspace> all, Workspace workspace) {
 /// A pair is keyed by `pairId`; anything without one stands alone. The
 /// server already orders by name then pair then environment, so a group
 /// is a run of adjacent rows and the order inside it is dev first.
+@visibleForTesting
 List<List<WorkspaceOverview>> groupedOverviews(List<WorkspaceOverview> all) {
   final groups = <List<WorkspaceOverview>>[];
   final byPair = <String, List<WorkspaceOverview>>{};

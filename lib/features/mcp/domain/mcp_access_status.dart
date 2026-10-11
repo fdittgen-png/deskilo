@@ -100,7 +100,7 @@ McpEligibilityState mcpEligibilityState(DatabaseCapabilities? capabilities) =>
       _ => McpEligibilityState.unavailable,
     };
 
-McpBackendState mcpBackendState(
+McpBackendState _mcpBackendState(
   IdentityBindingStatus? identity,
   DatabaseCapabilities? capabilities,
 ) => identity == null || capabilities == null
@@ -171,7 +171,7 @@ class McpAccessStatus {
       exposure: exposure,
       role: role,
       consent: consent,
-      backend: mcpBackendState(identity, capabilities),
+      backend: _mcpBackendState(identity, capabilities),
     );
   }
 
@@ -233,7 +233,7 @@ class McpInstanceStatus {
     source: source,
     identity: mcpIdentityState(identity),
     eligibility: mcpEligibilityState(capabilities),
-    backend: mcpBackendState(identity, capabilities),
+    backend: _mcpBackendState(identity, capabilities),
   );
 
   /// The connected origin — a label, never a key.

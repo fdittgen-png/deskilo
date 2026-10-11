@@ -19,16 +19,16 @@ abstract class ActiveWorkspaceStore {
 
 /// The device-global key every build before #1823 wrote. Never read
 /// again: a write for any account removes it, and so does a sign-out.
-const String legacyActiveWorkspaceKey = 'active_workspace_id';
+const String _legacyActiveWorkspaceKey = 'active_workspace_id';
 
 /// The device-global default-profile cache before #1823.
-const String legacyDefaultWorkspaceKey = 'default_workspace_id';
+const String _legacyDefaultWorkspaceKey = 'default_workspace_id';
 
-class PrefsActiveWorkspaceStore implements ActiveWorkspaceStore {
-  const PrefsActiveWorkspaceStore();
+class _PrefsActiveWorkspaceStore implements ActiveWorkspaceStore {
+  const _PrefsActiveWorkspaceStore();
 
   PrefsStringStore _of(String account) =>
-      PrefsStringStore('$legacyActiveWorkspaceKey.$account');
+      PrefsStringStore('$_legacyActiveWorkspaceKey.$account');
 
   @override
   Future<String?> read(String account) => _of(account).read();
@@ -36,13 +36,13 @@ class PrefsActiveWorkspaceStore implements ActiveWorkspaceStore {
   @override
   Future<void> write(String account, String? workspaceId) async {
     await _of(account).write(workspaceId);
-    await const PrefsStringStore(legacyActiveWorkspaceKey).write(null);
+    await const PrefsStringStore(_legacyActiveWorkspaceKey).write(null);
   }
 }
 
 @Riverpod(keepAlive: true)
 ActiveWorkspaceStore activeWorkspaceStore(Ref ref) =>
-    const PrefsActiveWorkspaceStore();
+    const _PrefsActiveWorkspaceStore();
 
 /// Persists the user-chosen DEFAULT profile (#322): the workspace the
 /// app opens on at every start, regardless of what was active last.
@@ -56,11 +56,11 @@ abstract class DefaultWorkspaceStore {
   Future<void> write(String account, String? workspaceId);
 }
 
-class PrefsDefaultWorkspaceStore implements DefaultWorkspaceStore {
-  const PrefsDefaultWorkspaceStore();
+class _PrefsDefaultWorkspaceStore implements DefaultWorkspaceStore {
+  const _PrefsDefaultWorkspaceStore();
 
   PrefsStringStore _of(String account) =>
-      PrefsStringStore('$legacyDefaultWorkspaceKey.$account');
+      PrefsStringStore('$_legacyDefaultWorkspaceKey.$account');
 
   @override
   Future<String?> read(String account) => _of(account).read();
@@ -68,10 +68,10 @@ class PrefsDefaultWorkspaceStore implements DefaultWorkspaceStore {
   @override
   Future<void> write(String account, String? workspaceId) async {
     await _of(account).write(workspaceId);
-    await const PrefsStringStore(legacyDefaultWorkspaceKey).write(null);
+    await const PrefsStringStore(_legacyDefaultWorkspaceKey).write(null);
   }
 }
 
 @Riverpod(keepAlive: true)
 DefaultWorkspaceStore defaultWorkspaceStore(Ref ref) =>
-    const PrefsDefaultWorkspaceStore();
+    const _PrefsDefaultWorkspaceStore();

@@ -18,6 +18,7 @@ import 'widgets/mcp_disclosure_preview.dart';
 import 'widgets/mcp_usage_cards.dart';
 
 /// #1801 — the self-hosted Swagger UI (#1799), served with the web app.
+@visibleForTesting
 const kMcpApiReferenceUrl = 'https://fdittgen-png.github.io/deskilo/api/';
 
 /// #1626 — the owner decides which assistant services this workspace

@@ -5,6 +5,7 @@
 // both become [FeedItem]s filtered by CATEGORY × READ STATE and sorted
 // chronologically. All of it is pure so the exact mixing/filter rules
 // are unit-testable without a widget tree.
+import 'package:meta/meta.dart';
 import '../../workspace/domain/member_note.dart';
 import 'workspace_event.dart';
 
@@ -260,6 +261,7 @@ class FeedGroup {
 }
 
 /// The acting member of a row: who sent the note / who did the thing.
+@visibleForTesting
 String feedItemActor(FeedItem item) => switch (item) {
       NoteFeedItem(:final note) => note.fromMemberId,
       EventFeedItem(:final event) => event.actorMemberId,

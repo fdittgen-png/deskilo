@@ -159,7 +159,7 @@ Future<void> showSpaceSheet(
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => SpaceSheet(
+      builder: (context) => _SpaceSheet(
         kind: kind,
         level: level,
         office: office,
@@ -174,9 +174,8 @@ Future<void> showSpaceSheet(
 /// The scanner: camera (injectable seam) plus a typed field — wedge
 /// scanners and tests type the payload. Foreign QR contents show an
 /// inline error and keep the sheet open.
-class SpaceSheet extends ConsumerStatefulWidget {
-  const SpaceSheet({
-    super.key,
+class _SpaceSheet extends ConsumerStatefulWidget {
+  const _SpaceSheet({
     required this.kind,
     this.level,
     this.office,
@@ -209,10 +208,10 @@ class SpaceSheet extends ConsumerStatefulWidget {
   final List<({String id, String name})> members;
 
   @override
-  ConsumerState<SpaceSheet> createState() => _SpaceSheetState();
+  ConsumerState<_SpaceSheet> createState() => _SpaceSheetState();
 }
 
-class _SpaceSheetState extends ConsumerState<SpaceSheet> {
+class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
   bool _busy = false;
 
   ({DateTime start, DateTime end}) get _window => walkUpWindow(

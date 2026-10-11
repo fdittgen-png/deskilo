@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'personal_info.dart';
 import 'profile.dart';
 
@@ -7,6 +8,7 @@ import 'profile.dart';
 /// The server (`member_profiles`, migration 0319) decides which purposes
 /// the caller holds for each person and sends one group per purpose. The
 /// field matrix is docs/security/IDENTITY_PROJECTIONS.md.
+@visibleForTesting
 enum ProfilePurpose {
   /// What a space mate sees: name, photo, WhatsApp, status, presence.
   community('community'),
@@ -26,6 +28,7 @@ enum ProfilePurpose {
 /// The fields each purpose's group may carry, by wire key. A key outside
 /// its group is never read, so a field the server put in the wrong place
 /// (or a new column nobody classified) does not reach the app.
+@visibleForTesting
 const Map<ProfilePurpose, List<String>> profilePurposeFields = {
   ProfilePurpose.community: [
     'display_name',
@@ -54,6 +57,7 @@ const Map<ProfilePurpose, List<String>> profilePurposeFields = {
 
 /// The purposes one projection row was granted: listed in `purposes` AND
 /// carried as a group. Either alone grants nothing.
+@visibleForTesting
 Set<ProfilePurpose> projectionPurposes(Map<String, dynamic> row) {
   final listed = {
     for (final p in (row['purposes'] as List<dynamic>? ?? const <dynamic>[]))

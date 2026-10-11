@@ -27,6 +27,7 @@
 // hops to the fixed point, and the table in test/app/route_policy_test.dart
 // proves that every row settles in one — a redirect that lands on a
 // location the policy would redirect again is a loop by another name.
+import 'package:meta/meta.dart';
 import '../core/instance/schema_compatibility.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import 'route_classes.dart';
@@ -194,6 +195,7 @@ class RouteDecision {
 
 /// The policy: one hop for [request] under [facts]. Pure — reads its
 /// arguments and nothing else, writes nothing.
+@visibleForTesting
 RouteDecision resolveDestination(RouteRequest request, RouteFacts facts) {
   final path = request.location;
   // #1312 — a server older than the app gates every route but the way

@@ -24,6 +24,7 @@ import '../../../reservations/providers/browsed_level.dart';
 
 /// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
 /// as part of the visual contract, not free-floating magic numbers.
+@visibleForTesting
 abstract final class TimelineAxis {
   /// Horizontal pixels per hour on the track.
   static const double hourWidth = 48;

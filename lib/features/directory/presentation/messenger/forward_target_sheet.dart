@@ -21,16 +21,15 @@ Future<InboxEntry?> pickForwardTarget(
 }) => showModalBottomSheet<InboxEntry>(
   context: context,
   isScrollControlled: true,
-  builder: (_) => ForwardTargetSheet(
+  builder: (_) => _ForwardTargetSheet(
     source: source,
     fromKind: fromKind,
     fromContextId: fromContextId,
   ),
 );
 
-class ForwardTargetSheet extends ConsumerWidget {
-  const ForwardTargetSheet({
-    super.key,
+class _ForwardTargetSheet extends ConsumerWidget {
+  const _ForwardTargetSheet({
     required this.source,
     required this.fromKind,
     required this.fromContextId,

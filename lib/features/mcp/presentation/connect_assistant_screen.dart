@@ -351,9 +351,9 @@ class _ConnectAssistantScreenState
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Icon(icon, color: color),
-          title: Text(connectStepTitle(l10n, item.step)),
+          title: Text(_connectStepTitle(l10n, item.step)),
           subtitle: Text(
-            connectStepDetail(
+            _connectStepDetail(
               l10n,
               item,
               operators: operators,
@@ -428,7 +428,7 @@ class _ConnectAssistantScreenState
   }
 }
 
-String connectStepTitle(AppLocalizations? l10n, ConnectStep step) =>
+String _connectStepTitle(AppLocalizations? l10n, ConnectStep step) =>
     switch (step) {
       ConnectStep.google => l10n?.mcpConnectStepGoogle ?? 'Google sign-in',
       ConnectStep.identity =>
@@ -444,7 +444,7 @@ String connectStepTitle(AppLocalizations? l10n, ConnectStep step) =>
     };
 
 /// The state of [item] in words, and who acts when it is someone else.
-String connectStepDetail(
+String _connectStepDetail(
   AppLocalizations? l10n,
   ConnectItem item, {
   List<String> operators = const [],

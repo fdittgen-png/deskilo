@@ -27,10 +27,10 @@ import 'demo_space_seed.dart';
 import 'demo_people_seed.dart';
 
 /// The first day the demo's history covers.
-DateTime demoHistoryStart(DateTime now) => DateTime(now.year - 3, 1, 1);
+DateTime _demoHistoryStart(DateTime now) => DateTime(now.year - 3, 1, 1);
 
 /// The last day it covers: the end of the seeded year.
-DateTime demoHistoryEnd(DateTime now) => DateTime(now.year, 12, 31);
+DateTime _demoHistoryEnd(DateTime now) => DateTime(now.year, 12, 31);
 
 /// One member's place in the history: when they joined, what they book
 /// and what they pay.
@@ -57,7 +57,7 @@ List<_Regular> _regulars(DateTime now, String windowSeat) => [
   _Regular(
     'member-1',
     'Ada Lindqvist',
-    demoHistoryStart(now),
+    _demoHistoryStart(now),
     {DateTime.monday, DateTime.wednesday, DateTime.friday},
     9,
     18,
@@ -134,7 +134,7 @@ void seedDemoHistoryBookings(
     for (final r in reservations.reservations)
       (r.memberId, demoDateOf(r.startsAt)),
   };
-  final end = demoHistoryEnd(now);
+  final end = _demoHistoryEnd(now);
   final added = <Reservation>[];
   for (final regular in _regulars(now, window)) {
     for (
@@ -173,7 +173,7 @@ void seedDemoHistoryBookings(
 
 /// [base] after the 4 % the price rises every January of the history.
 int demoMonthlyCents(int base, int year, DateTime now) =>
-    (base * (1 + 0.04 * (year - demoHistoryStart(now).year))).round();
+    (base * (1 + 0.04 * (year - _demoHistoryStart(now).year))).round();
 
 String _period(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
 

@@ -20,6 +20,7 @@ part 'cache_store.g.dart';
 /// code (the tankstellen #3219 lesson, keyed on a manual version rather
 /// than the app build since rows — unlike parsed output — only break on
 /// deliberate shape changes). Bump when a cached row shape changes.
+@visibleForTesting
 const int cacheSchemaVersion = 2; // #2008: exact key in the envelope
 
 /// One cached payload with its freshness envelope (the tankstellen
@@ -65,6 +66,7 @@ abstract class CacheStore {
 /// File-per-key JSON cache under the app-support directory. Every IO
 /// failure degrades to a cache miss / no-op — the cache may never break
 /// a fetch it exists to accelerate.
+@visibleForTesting
 class FileCacheStore implements CacheStore {
   /// [directory] pins the cache dir (tests); production resolves the
   /// app-support directory lazily.

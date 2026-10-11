@@ -14,7 +14,7 @@ import '../domain/floor_plan.dart';
 import '../domain/seat.dart';
 
 /// First word of a member's display name — the seat-label shorthand.
-String firstNameOf(String name) => name.split(' ').firstOrNull ?? name;
+String _firstNameOf(String name) => name.split(' ').firstOrNull ?? name;
 
 /// The reservation holding [seat] over the browsed window: at the instant
 /// [from] when [to] is null (walk-up "now" browsing), else anywhere within
@@ -58,7 +58,7 @@ String occupantLabelFor({
     to: to,
   );
   if (r == null) return '';
-  return firstNameOf(names[r.memberId] ?? '');
+  return _firstNameOf(names[r.memberId] ?? '');
 }
 
 /// Whole-space paint overlays (#462): office/desk id → the reserved
@@ -84,7 +84,7 @@ Map<String, ({SeatState state, String label})> spaceOverlaysFor({
             : r.status == ReservationStatus.checkedIn
                 ? SeatState.occupied
                 : SeatState.reserved,
-        label: firstNameOf(names[r.memberId] ?? ''),
+        label: _firstNameOf(names[r.memberId] ?? ''),
       );
   final officeIds = {for (final o in plan.offices) o.id};
   final deskIds = {for (final d in plan.desks) d.id};

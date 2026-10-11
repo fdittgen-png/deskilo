@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -234,6 +235,7 @@ abstract class SpacePrefsStore {
   Future<void> write(SpacePrefs prefs);
 }
 
+@visibleForTesting
 class PrefsSpacePrefsStore implements SpacePrefsStore {
   const PrefsSpacePrefsStore();
   static const _key = 'space_prefs';

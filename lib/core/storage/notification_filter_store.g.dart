@@ -55,4 +55,4 @@ final class NotificationFilterStoreProvider
 }
 
 String _$notificationFilterStoreHash() =>
-    r'8848e61d916882346a3174fd9b10d2b08401281a';
+    r'ec7c79a0af06cd528cc49278b5f428ad3e39196f';

@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 /// The widest the app draws itself. On a desktop or tablet window every
 /// screen sits in one centred column with calm margins instead of
 /// stretching rows, tabs and cards across 1500 px; phones are untouched.
+@visibleForTesting
 const double kAppFrameMaxWidth = 1200;
 
 /// Reading screens (lists, forms, cards) are narrower still: a row that
 /// spans 1200 px cannot be scanned. Canvas screens keep the wide frame.
+@visibleForTesting
 const double kReadingColumnMaxWidth = 960;
 
 /// Routes drawn on a canvas (map, editors): they want the width. The Reserve
 /// hub is NOT one of them: it sits in the same column as the Calendar and
 /// the Alerts, so moving between the destinations never changes the width.
-const List<String> kWideRoutePrefixes = [
+const List<String> _kWideRoutePrefixes = [
   '/discover', '/kiosk', '/report-editor', '/editor',
   '/settings/sites', '/me', '/invoicing/wizard',
 ];
@@ -24,7 +26,7 @@ bool _under(String path, String prefix) =>
     path == prefix || path.startsWith('$prefix/');
 
 double frameWidthFor(String path) =>
-    kWideRoutePrefixes.any((prefix) => _under(path, prefix))
+    _kWideRoutePrefixes.any((prefix) => _under(path, prefix))
         ? kAppFrameMaxWidth
         : kReadingColumnMaxWidth;
 

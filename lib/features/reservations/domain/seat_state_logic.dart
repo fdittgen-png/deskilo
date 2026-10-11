@@ -2,6 +2,7 @@
 //
 // Pure seat-state computation (spec §4.1) — drives the live floor plan AND
 // the time scroller: pass any instant, get the plan at that moment.
+import 'package:meta/meta.dart';
 import '../../../core/theme/seat_state_colors.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/seat.dart';
@@ -337,6 +338,7 @@ bool seatDayIsSplit(List<SeatDaySegment> segments) =>
 
 /// Whether [segments] leave the day partly free — what makes a seat read
 /// as PART-booked instead of taken.
+@visibleForTesting
 bool seatDayIsPartial(List<SeatDaySegment> segments) {
   if (segments.isEmpty) return false;
   var covered = 0.0;

@@ -16,7 +16,7 @@ part 'boot.g.dart';
 /// Overall cap on the warm-up: a slow or broken backend may only ever
 /// DELAY the app by this much — the screens keep their own loading and
 /// error states as the fallback.
-const Duration bootBudget = Duration(seconds: 6);
+const Duration _bootBudget = Duration(seconds: 6);
 
 /// Warm-up of everything the first screen needs (field request: the
 /// user must never watch the form being constructed). The boot splash
@@ -26,7 +26,7 @@ const Duration bootBudget = Duration(seconds: 6);
 Future<void> bootReady(Ref ref) async {
   final started = DateTime.now();
   try {
-    await _warm(ref).timeout(bootBudget);
+    await _warm(ref).timeout(_bootBudget);
   } catch (e, st) {
     // Purely a warm-up — the app opens regardless and the screens
     // surface their own errors; still traced for diagnosis.

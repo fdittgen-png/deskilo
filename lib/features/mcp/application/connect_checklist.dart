@@ -65,7 +65,7 @@ class ConnectItem {
 }
 
 /// An approval this close to its end is announced on its row.
-const accessExpiryWarningDays = 14;
+const _accessExpiryWarningDays = 14;
 
 class ConnectChecklist {
   const ConnectChecklist(this.items);
@@ -81,7 +81,7 @@ class ConnectChecklist {
   /// Whether the approval is close enough to its end to say so.
   bool get accessExpiresSoon {
     final days = item(ConnectStep.access).expiresInDays;
-    return days != null && days <= accessExpiryWarningDays;
+    return days != null && days <= _accessExpiryWarningDays;
   }
 
   factory ConnectChecklist.derive({

@@ -32,12 +32,12 @@ Future<void> showBadgeSignInSheet(
       isScrollControlled: true,
       builder: (_) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-        child: BadgeSignInSheet(scannedUid: scannedUid),
+        child: _BadgeSignInSheet(scannedUid: scannedUid),
       ),
     );
 
-class BadgeSignInSheet extends ConsumerStatefulWidget {
-  const BadgeSignInSheet({super.key, this.scannedUid});
+class _BadgeSignInSheet extends ConsumerStatefulWidget {
+  const _BadgeSignInSheet({this.scannedUid});
 
   /// A tag this sheet does not have to read itself, because the caller
   /// already did — a kiosk whose reader is always live, or a test, which
@@ -46,10 +46,10 @@ class BadgeSignInSheet extends ConsumerStatefulWidget {
   final String? scannedUid;
 
   @override
-  ConsumerState<BadgeSignInSheet> createState() => _BadgeSignInSheetState();
+  ConsumerState<_BadgeSignInSheet> createState() => _BadgeSignInSheetState();
 }
 
-class _BadgeSignInSheetState extends ConsumerState<BadgeSignInSheet> {
+class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
   final _reader = NfcUidReader();
   final _pin = TextEditingController();
   final _pinFocus = FocusNode();

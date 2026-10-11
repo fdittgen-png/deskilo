@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -48,6 +49,7 @@ Future<int?> readSchemaVersion(SupabaseClient client) async {
   }
 }
 
+@visibleForTesting
 class SupabaseSchemaVersionSource implements SchemaVersionSource {
   const SupabaseSchemaVersionSource();
 

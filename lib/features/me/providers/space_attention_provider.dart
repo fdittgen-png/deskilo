@@ -3,6 +3,7 @@
 // #2313 — the app icon says "1", but not WHERE. Each of my spaces on
 // Me › Home carries its own count, so the person sees which space and
 // which side (production or development) the notifications belong to.
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../directory/domain/messenger.dart';
@@ -18,6 +19,7 @@ part 'space_attention_provider.g.dart';
 /// waiting for me + unread messages), so its number is the icon's. Every
 /// other space counts its unread conversations, muted and archived ones
 /// staying quiet as they do on the Messages badge.
+@visibleForTesting
 Map<String, int> spaceAttention({
   required UnifiedInbox? inbox,
   String? activeId,

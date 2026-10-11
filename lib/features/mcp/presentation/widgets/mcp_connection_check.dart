@@ -23,7 +23,7 @@ import 'mcp_client_tabs.dart';
 enum _Phase { idle, waiting, reached, timedOut }
 
 /// The most recent call among [usage], or null when none was made.
-McpClientUsage? latestMcpCall(List<McpClientUsage> usage) {
+McpClientUsage? _latestMcpCall(List<McpClientUsage> usage) {
   McpClientUsage? latest;
   for (final u in usage) {
     final at = u.lastUsedAt;
@@ -65,7 +65,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
     final now = await _read();
     if (!mounted) return;
     setState(() {
-      _baseline = now == null ? null : latestMcpCall(now)?.lastUsedAt;
+      _baseline = now == null ? null : _latestMcpCall(now)?.lastUsedAt;
       _phase = _Phase.waiting;
       _polls = 0;
       _reached = null;
@@ -93,7 +93,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
     _polls++;
     final usage = await _read();
     if (!mounted || _phase != _Phase.waiting) return;
-    final latest = usage == null ? null : latestMcpCall(usage);
+    final latest = usage == null ? null : _latestMcpCall(usage);
     final at = latest?.lastUsedAt;
     if (at != null && (_baseline == null || at.isAfter(_baseline!))) {
       _timer?.cancel();
@@ -111,7 +111,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final format = ref.watch(appFormatProvider);
-    final last = latestMcpCall(ref.watch(myMcpUsageProvider).value ?? const []);
+    final last = _latestMcpCall(ref.watch(myMcpUsageProvider).value ?? const []);
     String when(McpClientUsage u) => format.dateTime(u.lastUsedAt!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -32,6 +32,7 @@
 //
 // Pure Dart on purpose: the substitution is a property of the data, so
 // it is testable without a widget and readable without a frame.
+import 'package:meta/meta.dart';
 import '../../features/profile/domain/personal_info.dart';
 import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/member.dart';
@@ -127,6 +128,7 @@ String _slug(String name) {
 /// one screen, their member id on another) would show two different
 /// pseudonyms, so each provider passes the key its data is keyed BY and
 /// the ADR records which.
+@visibleForTesting
 RecordingPerson recordingPersonFor(String key) {
   final locality = _localities[_fnv1a(key, 3) % _localities.length];
   return RecordingPerson(

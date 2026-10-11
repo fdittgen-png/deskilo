@@ -15,8 +15,8 @@ abstract class FrontCameraStore {
   Future<void> write(bool enabled);
 }
 
-class PrefsFrontCameraStore implements FrontCameraStore {
-  const PrefsFrontCameraStore();
+class _PrefsFrontCameraStore implements FrontCameraStore {
+  const _PrefsFrontCameraStore();
 
   static const _key = 'scan_front_camera';
 
@@ -30,7 +30,7 @@ class PrefsFrontCameraStore implements FrontCameraStore {
 }
 
 @Riverpod(keepAlive: true)
-FrontCameraStore frontCameraStore(Ref ref) => const PrefsFrontCameraStore();
+FrontCameraStore frontCameraStore(Ref ref) => const _PrefsFrontCameraStore();
 
 /// Whether badge scanning uses the FRONT (screen-side) camera — the
 /// default: a wall-mounted kiosk tablet has its back camera against the

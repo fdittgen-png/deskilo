@@ -23,7 +23,7 @@ Uri? mcpConnectorUri(String backendUrl) {
 
 /// #2145 — the name every snippet gives the server in the assistant's own
 /// configuration: one word, so a command line needs no quoting.
-const mcpServerName = 'deskilo';
+const _mcpServerName = 'deskilo';
 
 /// #2145 — Claude's connector settings, where a custom connector is added
 /// by URL (claude.ai on the web; Desktop and mobile share the same list).
@@ -32,7 +32,7 @@ final claudeConnectorsUri = Uri.parse('https://claude.ai/settings/connectors');
 /// #2145 — Claude Code adds a remote server over Streamable HTTP; the
 /// sign-in starts from `/mcp` in the session.
 String claudeCodeAddCommand(Uri connector) =>
-    'claude mcp add --transport http $mcpServerName $connector';
+    'claude mcp add --transport http $_mcpServerName $connector';
 
 /// #2145 — Cursor's one-click install: the server configuration as
 /// base64 JSON in `config`, percent-encoded so `+`, `/` and `=` survive
@@ -49,14 +49,14 @@ Uri cursorInstallUri(Uri connector) {
 /// #2145 — VS Code's install link: the whole server entry as URL-encoded
 /// JSON after `vscode:mcp/install?`.
 Uri vscodeInstallUri(Uri connector) => Uri.parse(
-  'vscode:mcp/install?${Uri.encodeComponent(jsonEncode({'name': mcpServerName, 'type': 'http', 'url': '$connector'}))}',
+  'vscode:mcp/install?${Uri.encodeComponent(jsonEncode({'name': _mcpServerName, 'type': 'http', 'url': '$connector'}))}',
 );
 
 /// #2145 — the `mcpServers` entry most other clients read from a JSON file.
 String genericMcpConfig(Uri connector) =>
     const JsonEncoder.withIndent('  ').convert({
       'mcpServers': {
-        mcpServerName: {'type': 'http', 'url': '$connector'},
+        _mcpServerName: {'type': 'http', 'url': '$connector'},
       },
     });
 

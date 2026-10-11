@@ -49,7 +49,7 @@ class ForwardOriginLine extends StatelessWidget {
 }
 
 /// The sentence a system line says, in the reader's language.
-String noticeText(AppLocalizations? l10n, MessageNotice notice) =>
+String _noticeText(AppLocalizations? l10n, MessageNotice notice) =>
     switch (notice.kind) {
       // A personal conversation is never named to the source (0316).
       NoticeKind.forwarded when notice.targetLabel.isEmpty =>
@@ -74,7 +74,7 @@ class MessageNoticeLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final text = noticeText(AppLocalizations.of(context), notice);
+    final text = _noticeText(AppLocalizations.of(context), notice);
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),

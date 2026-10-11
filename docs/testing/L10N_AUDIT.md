@@ -27,19 +27,19 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:182` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:189` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:278` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:10` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:11` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:12` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:13` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:14` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:15` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:16` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:17` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:18` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:19` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:20` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:21` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:22` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:11` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:12` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:13` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:14` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:15` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:16` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:17` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:18` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:19` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:20` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:21` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:22` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:23` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:122` | label | Clients | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:126` | label | Prestations de services | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/coa_preview.dart:128` | label | Banques | features/money | KEEP_NON_UI_LITERAL |

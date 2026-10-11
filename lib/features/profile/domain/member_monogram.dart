@@ -19,6 +19,8 @@
 /// grows through itself: `F`, `FL`, `FLO`.
 library;
 
+import 'package:meta/meta.dart';
+
 /// Longest monogram this will letter its way up to. Past this the
 /// numbers take over: four glyphs in a small circle stop being readable,
 /// and the ladder must terminate somewhere.
@@ -44,6 +46,7 @@ List<String> _tokens(String name) => name
 /// Deliberately finite: the caller falls back to numbering when a whole
 /// ladder is taken, which is what guarantees the result is unique no
 /// matter how many people share a name.
+@visibleForTesting
 List<String> monogramLadder(String name) {
   final tokens = _tokens(name);
   if (tokens.isEmpty) return const ['?'];

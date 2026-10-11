@@ -24,7 +24,7 @@ VoidCallback? gettingStartedReopen(WidgetRef ref, String? key) {
 /// The hint the Get started card would show now, or null when it shows
 /// nothing (flag off, dismissed, still loading, or no card for these
 /// facts). The card and [ReserveHelpHost] ask the same question.
-GettingStartedHint? visibleGettingStartedHint(
+GettingStartedHint? _visibleGettingStartedHint(
   WidgetRef ref, {
   required GettingStartedFacts facts,
   required String? seenKey,
@@ -67,7 +67,7 @@ class ReserveHelpHost extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final next = visibleGettingStartedHint(ref,
+    final next = _visibleGettingStartedHint(ref,
         facts: facts, seenKey: seenKey, workspaceId: workspaceId);
     if (next == null) return const HelpHint(HelpHintId.reserve);
     return GettingStartedCard(
@@ -100,7 +100,7 @@ class GettingStartedCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final seenKey = this.seenKey;
-    final hint = visibleGettingStartedHint(ref,
+    final hint = _visibleGettingStartedHint(ref,
         facts: facts, seenKey: seenKey, workspaceId: workspaceId);
     if (hint == null) return const SizedBox.shrink();
     // #1867 — a guide step or a blocker outranks the next-step advice.

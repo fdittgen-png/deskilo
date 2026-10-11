@@ -18,6 +18,8 @@ dependencies:
 
   # Models
   freezed_annotation: ^3.0.0
+  # #2384 — @visibleForTesting in pure-Dart domain code; the SDK pins it.
+  meta: any
   json_annotation: ^4.9.0
 
   # Routing
