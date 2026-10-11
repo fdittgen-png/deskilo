@@ -2414,6 +2414,7 @@ const List<String> uiKeyPatterns = [
   'cal-pay-{}',
   'cal-res-{}',
   'cal-sched-{}',
+  'calendar-cell-{}',
   'calendar-circle-{}',
   'calendar-closed-{}-{}-{}',
   'calendar-day-{}-{}-{}',
