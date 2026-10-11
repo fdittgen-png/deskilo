@@ -74,6 +74,12 @@ class JsonReader {
     return _shape(key, 'String?');
   }
 
+  /// A required integer (Postgres numbers arrive as int or double).
+  int integer(String key) {
+    final value = json[key];
+    return value is num ? value.toInt() : _shape(key, 'int');
+  }
+
   /// A nullable integer (Postgres numbers arrive as int or double).
   int? intOrNull(String key) {
     final value = json[key];

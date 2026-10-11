@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 import 'finance_overview.dart';
 
 /// Account RPC projection. It contains neither operator stamps nor other
@@ -31,18 +32,22 @@ class AccountActivity {
   final int? amountCents, minutes;
   ActivityCursor get cursor => (at: occurredAt, id: id);
 
-  factory AccountActivity.fromJson(Map<String, dynamic> row) => AccountActivity(
-    id: row['id'] as String,
-    workspaceId: row['workspace_id'] as String,
-    workspaceName: row['workspace_name'] as String,
-    occurredAt: DateTime.parse(row['occurred_at'] as String),
-    reference: row['reference'] as String? ?? '',
-    description: row['description'] as String? ?? '',
-    currency: row['currency'] as String,
-    status: row['status'] as String,
-    amountCents: row['amount_cents'] as int?,
-    minutes: row['minutes'] as int?,
-  );
+  /// #2387 — read through [JsonReader]; the context names the RPC.
+  factory AccountActivity.fromJson(Map<String, dynamic> row) {
+    final r = JsonReader(row, context: 'my_financial_activity');
+    return AccountActivity(
+      id: r.string('id'),
+      workspaceId: r.string('workspace_id'),
+      workspaceName: r.string('workspace_name'),
+      occurredAt: r.dateTime('occurred_at'),
+      reference: r.stringOr('reference'),
+      description: r.stringOr('description'),
+      currency: r.string('currency'),
+      status: r.string('status'),
+      amountCents: r.intOrNull('amount_cents'),
+      minutes: r.intOrNull('minutes'),
+    );
+  }
 }
 
 abstract interface class AccountActivityRepository {
