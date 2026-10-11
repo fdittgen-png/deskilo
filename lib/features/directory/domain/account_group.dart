@@ -2,6 +2,8 @@
 //
 // Groups of people (0384): members of one workspace, several, or none.
 
+import '../../../core/data/json_reader.dart';
+
 class AccountGroupInfo {
   const AccountGroupInfo({
     required this.id,
@@ -16,14 +18,17 @@ class AccountGroupInfo {
   final bool announceOnly, iAmAdmin;
   final int memberCount;
 
-  factory AccountGroupInfo.fromJson(Map<String, dynamic> j) => AccountGroupInfo(
-        id: j['id'] as String,
-        title: j['title'] as String? ?? '',
-        description: j['description'] as String? ?? '',
-        announceOnly: j['announce_only'] == true,
-        memberCount: (j['member_count'] as num?)?.toInt() ?? 0,
-        iAmAdmin: j['i_am_admin'] == true,
-      );
+  factory AccountGroupInfo.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'account_group');
+    return AccountGroupInfo(
+      id: r.string('id'),
+      title: r.stringOr('title'),
+      description: r.stringOr('description'),
+      announceOnly: r.boolOr('announce_only', false),
+      memberCount: r.intOrNull('member_count') ?? 0,
+      iAmAdmin: r.boolOr('i_am_admin', false),
+    );
+  }
 }
 
 class GroupMember {
@@ -31,11 +36,14 @@ class GroupMember {
   final String userId, name;
   final bool isAdmin;
 
-  factory GroupMember.fromJson(Map<String, dynamic> j) => GroupMember(
-        userId: j['user_id'] as String,
-        name: j['name'] as String? ?? '',
-        isAdmin: j['is_admin'] == true,
-      );
+  factory GroupMember.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'group_member');
+    return GroupMember(
+      userId: r.string('user_id'),
+      name: r.stringOr('name'),
+      isAdmin: r.boolOr('is_admin', false),
+    );
+  }
 }
 
 /// Who a message of mine in a group reached, by name.
@@ -44,17 +52,17 @@ class GroupReach {
   final List<({String name, DateTime readAt})> readers;
   final List<String> pending;
 
-  factory GroupReach.fromJson(Map<String, dynamic> j) => GroupReach(
-        readers: [
-          for (final r in (j['readers'] as List<dynamic>? ?? const []))
-            (
-              name: (r as Map)['name'] as String? ?? '',
-              readAt: DateTime.parse(r['read_at'] as String).toUtc(),
-            ),
-        ],
-        pending: [
-          for (final r in (j['pending'] as List<dynamic>? ?? const []))
-            (r as Map)['name'] as String? ?? '',
-        ],
-      );
+  factory GroupReach.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'group_reach');
+    return GroupReach(
+      readers: r.objects(
+        'readers',
+        (row) => (
+          name: row.stringOr('name'),
+          readAt: row.dateTime('read_at').toUtc(),
+        ),
+      ),
+      pending: r.objects('pending', (row) => row.stringOr('name')),
+    );
+  }
 }

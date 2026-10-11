@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/i18n/format_prefs.dart';
+import '../../../core/data/json_reader.dart';
 
 /// Only presentation preferences: never role, price or workspace policy keys.
 abstract final class PersonalPreference {
@@ -26,10 +27,20 @@ class PersonalPreferences {
   });
 
   factory PersonalPreferences.fromJson(Map<String, dynamic> data) {
-    Map<String, String> values(Object? raw) => raw is Map
-        ? {for (final key in PersonalPreference.keys) if (raw[key] is String) key: raw[key] as String}
-        : {};
-    return PersonalPreferences(defaults: values(data['defaults']), overrides: values(data['overrides']));
+    // Fail-closed (#2387): an unknown key or a non-text value is dropped.
+    final r = JsonReader(data, context: 'personal_preferences');
+    Map<String, String> values(String part) {
+      final group = r.objectOrAbsent(part);
+      return {
+        for (final key in PersonalPreference.keys)
+          if (group.textOrAbsent(key) case final String value) key: value,
+      };
+    }
+
+    return PersonalPreferences(
+      defaults: values('defaults'),
+      overrides: values('overrides'),
+    );
   }
 }
 

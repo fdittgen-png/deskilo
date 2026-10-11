@@ -5,6 +5,8 @@
 // a workspace process and lives there. Amounts are minor units, each in its
 // own currency — pages and currencies are never summed together.
 
+import '../../../core/data/json_reader.dart';
+
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
 /// derives it).
 enum FinanceState {
@@ -58,22 +60,23 @@ class FinanceInvoice {
   bool overdueAt(DateTime now) =>
       state.owed && dueOn != null && dueOn!.isBefore(DateTime(now.year, now.month, now.day));
 
-  factory FinanceInvoice.fromJson(Map<String, dynamic> j) => FinanceInvoice(
-        id: j['id'] as String,
-        workspaceId: j['workspace_id'] as String,
-        workspaceName: j['workspace_name'] as String? ?? '',
-        number: j['number'] as String? ?? '',
-        issuedAt: DateTime.parse(j['issued_at'] as String),
-        dueOn: j['due_on'] == null ? null : DateTime.parse(j['due_on'] as String),
-        totalCents: j['total_cents'] as int? ?? 0,
-        paidCents: j['paid_cents'] as int? ?? 0,
-        currency: j['currency'] as String? ?? 'EUR',
-        state: FinanceState.fromWire(j['state']),
-        reminderCount: (j['reminder_count'] as num?)?.toInt() ?? 0,
-        lastReminderAt: j['last_reminder_at'] == null
-            ? null
-            : DateTime.parse(j['last_reminder_at'] as String),
-      );
+  factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'finance_invoice');
+    return FinanceInvoice(
+      id: r.string('id'),
+      workspaceId: r.string('workspace_id'),
+      workspaceName: r.stringOr('workspace_name'),
+      number: r.stringOr('number'),
+      issuedAt: r.dateTime('issued_at'),
+      dueOn: r.dateTimeOrNull('due_on'),
+      totalCents: r.intOrNull('total_cents') ?? 0,
+      paidCents: r.intOrNull('paid_cents') ?? 0,
+      currency: r.stringOr('currency', 'EUR'),
+      state: FinanceState.fromWire(r.json['state']),
+      reminderCount: r.intOrNull('reminder_count') ?? 0,
+      lastReminderAt: r.dateTimeOrNull('last_reminder_at'),
+    );
+  }
 }
 
 class FinanceReminder {
@@ -92,15 +95,18 @@ class FinanceReminder {
   final int level;
   final bool automatic;
 
-  factory FinanceReminder.fromJson(Map<String, dynamic> j) => FinanceReminder(
-        id: j['id'] as String,
-        invoiceId: j['invoice_id'] as String,
-        invoiceNumber: j['invoice_number'] as String? ?? '',
-        workspaceName: j['workspace_name'] as String? ?? '',
-        sentAt: DateTime.parse(j['sent_at'] as String),
-        level: (j['level'] as num?)?.toInt() ?? 1,
-        automatic: j['automatic'] as bool? ?? false,
-      );
+  factory FinanceReminder.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'finance_reminder');
+    return FinanceReminder(
+      id: r.string('id'),
+      invoiceId: r.string('invoice_id'),
+      invoiceNumber: r.stringOr('invoice_number'),
+      workspaceName: r.stringOr('workspace_name'),
+      sentAt: r.dateTime('sent_at'),
+      level: r.intOrNull('level') ?? 1,
+      automatic: r.boolOr('automatic', false),
+    );
+  }
 }
 
 class FinanceOverview {
@@ -163,14 +169,12 @@ class FinanceOverview {
     return out;
   }
 
-  factory FinanceOverview.fromJson(Map<String, dynamic> j) => FinanceOverview(
-        invoices: [
-          for (final r in (j['invoices'] as List<dynamic>? ?? const []))
-            FinanceInvoice.fromJson(r as Map<String, dynamic>),
-        ],
-        reminders: [
-          for (final r in (j['reminders'] as List<dynamic>? ?? const []))
-            FinanceReminder.fromJson(r as Map<String, dynamic>),
-        ],
-      );
+  factory FinanceOverview.fromJson(Map<String, dynamic> j) {
+    final r = JsonReader(j, context: 'my_finances');
+    return FinanceOverview(
+      invoices: r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json)),
+      reminders:
+          r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)),
+    );
+  }
 }

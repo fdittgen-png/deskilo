@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../core/data/json_reader.dart';
+
 /// #739 — one deal: what was negotiated (each part optional — the
 /// tariff where absent), from when, in which state.
 class NegotiationDeal {
@@ -15,25 +17,28 @@ class NegotiationDeal {
     this.items = const {},
   });
 
-  factory NegotiationDeal.fromJson(Map<String, dynamic> json) => NegotiationDeal(
-        feeCents: (json['fee_cents'] as num?)?.toInt(),
-        overageFeeCents: (json['overage_fee_cents'] as num?)?.toInt(),
-        discountPercent: (json['discount_percent'] as num?)?.toDouble(),
-        note: json['note'] as String? ?? '',
-        validFrom: DateTime.tryParse(json['valid_from'] as String? ?? '') ??
-            DateTime(1970),
-        status: json['status'] as String? ?? 'pending',
-        subscriptionPct: (json['subscription_pct'] as num?)?.toInt(),
-        previousSubscriptionPct:
-            (json['previous_subscription_pct'] as num?)?.toInt(),
-        items: {
-          for (final kind in (json['items'] as Map? ?? const {}).entries)
-            kind.key as String: {
-              for (final e in (kind.value as Map).entries)
-                e.key as String: int.tryParse('${e.value}') ?? 0,
-            },
-        },
-      );
+  factory NegotiationDeal.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'negotiation_deal');
+    return NegotiationDeal(
+      feeCents: r.intOrNull('fee_cents'),
+      overageFeeCents: r.intOrNull('overage_fee_cents'),
+      discountPercent: r.doubleOrNull('discount_percent'),
+      note: r.stringOr('note'),
+      validFrom: r.dateTimeOrNull('valid_from') ?? DateTime(1970),
+      status: r.stringOr('status', 'pending'),
+      subscriptionPct: r.intOrNull('subscription_pct'),
+      previousSubscriptionPct: r.intOrNull('previous_subscription_pct'),
+      items: {
+        for (final kind in r.objectOrEmpty('items').entries)
+          kind.key: {
+            for (final e in JsonReader.of(kind.value, context: r.context)
+                .json
+                .entries)
+              e.key: int.tryParse('${e.value}') ?? 0,
+          },
+      },
+    );
+  }
 
   final int? feeCents;
   final int? overageFeeCents;
@@ -67,14 +72,17 @@ class PriceNegotiation {
   });
 
   factory PriceNegotiation.fromJson(Map<String, dynamic> json) {
-    final def = (json['default'] as Map?)?.cast<String, dynamic>() ?? const {};
-    NegotiationDeal? deal(Object? v) =>
-        v is Map ? NegotiationDeal.fromJson(v.cast<String, dynamic>()) : null;
+    final r = JsonReader(json, context: 'price_negotiation');
+    final def = r.objectOrNull('default');
+    NegotiationDeal? deal(String key) => switch (r.objectOrNull(key)) {
+      final JsonReader d => NegotiationDeal.fromJson(d.json),
+      null => null,
+    };
     return PriceNegotiation(
-      defaultFeeCents: (def['fee_cents'] as num?)?.toInt() ?? 0,
-      defaultOverageFeeCents: (def['overage_fee_cents'] as num?)?.toInt() ?? 0,
-      active: deal(json['active']),
-      pending: deal(json['pending']),
+      defaultFeeCents: def?.intOrNull('fee_cents') ?? 0,
+      defaultOverageFeeCents: def?.intOrNull('overage_fee_cents') ?? 0,
+      active: deal('active'),
+      pending: deal('pending'),
     );
   }
 

@@ -3,6 +3,7 @@
 // #1659 — a page of the server's template search (0283): compact cards
 // the caller may read, and the cursor for the next page.
 import 'workspace_template.dart';
+import '../../../core/data/json_reader.dart';
 
 class TemplateSearchPage {
   const TemplateSearchPage({this.templates = const [], this.nextCursor});
@@ -10,16 +11,19 @@ class TemplateSearchPage {
   final String? nextCursor;
 
   factory TemplateSearchPage.fromJson(Object? json) {
-    final m = json is Map ? json : const <String, Object?>{};
+    // Fail-closed (#2387): a malformed field reads as absent, and a row
+    // without an id is left out.
+    final r = JsonReader.of(
+      json is Map ? json : const <String, Object?>{},
+      context: 'template_search_page',
+    );
     return TemplateSearchPage(
       templates: [
-        for (final row in m['items'] is List ? m['items'] as List : const [])
+        for (final row in r.listOrAbsent('items'))
           if (row is Map && row['id'] is String)
             WorkspaceTemplate.fromRow(Map<String, dynamic>.from(row)),
       ],
-      nextCursor: m['next_cursor'] is String
-          ? m['next_cursor'] as String
-          : null,
+      nextCursor: r.textOrAbsent('next_cursor'),
     );
   }
 }

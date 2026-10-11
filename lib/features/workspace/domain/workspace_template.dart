@@ -8,6 +8,7 @@
 // shared for them plus the addresses the owner invited. The client never
 // decides who may see a template; it shows what the server returned.
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/json_reader.dart';
 
 /// Who may see a template. Wire values by name.
 enum TemplateVisibility {
@@ -157,9 +158,11 @@ class RegionalSuggestion {
 
   factory RegionalSuggestion.fromJson(Object? json) {
     if (json is! Map) return const RegionalSuggestion();
+    // Fail-closed (#2387): a value of the wrong shape reads as absent.
+    final r = JsonReader.of(json, context: 'regional_suggestion');
     String? text(String key, RegExp shape) {
-      final v = json[key];
-      return v is String && shape.hasMatch(v) ? v : null;
+      final v = r.textOrAbsent(key);
+      return v != null && shape.hasMatch(v) ? v : null;
     }
 
     return RegionalSuggestion(

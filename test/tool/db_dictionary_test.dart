@@ -132,7 +132,7 @@ void main() {
       final lines = columnsCsv(d).trim().split('\n');
       expect(
         lines.length - 1,
-        (d['meta'] as Map)['counts']['columns'],
+        ((d['meta'] as Map)['counts'] as Map)['columns'],
         reason: 'one row per catalogue column',
       );
       expect(
@@ -208,8 +208,8 @@ void main() {
       const evil = '<script>alert(1)</script>"><img src=x onerror=alert(2)>';
       final o = _object(d, 'workspaces');
       o['comment'] = evil;
-      (o['columns'] as List).first['name'] = evil;
-      (o['columns'] as List).first['default'] = evil;
+      ((o['columns'] as List).first as Map)['name'] = evil;
+      ((o['columns'] as List).first as Map)['default'] = evil;
       d['objects'] = [
         ...(d['objects'] as List),
         {

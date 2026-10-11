@@ -50,7 +50,7 @@ void main() {
     final text = encodeRecordingText(r);
     expect(text.contains('values'), isFalse);
     expect(text.contains('2026-10-06'), isFalse);
-    expect(jsonDecode(text)['schema_version'], 3);
+    expect((jsonDecode(text) as Map)['schema_version'], 3);
     // The stored log never held it either.
     expect(backend.logs.values.join().contains('2026-10-06'), isFalse);
   });

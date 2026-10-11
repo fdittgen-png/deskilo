@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/time/calendar_days.dart';
+import '../../../core/data/json_reader.dart';
 
 /// What an invoice CHARGES FOR (#802, migration 0142).
 ///
@@ -45,14 +46,16 @@ class BillingRules {
     this.usageWhenZero = false,
   });
 
-  factory BillingRules.fromJson(Map<String, dynamic> json) => BillingRules(
-        subscriptionAuto: json[keySubscriptionAuto] != false,
-        subscriptionAdvanceDays:
-            ((json[keySubscriptionAdvanceDays] as num?)?.toInt() ?? 3)
-                .clamp(minAdvanceDays, maxAdvanceDays),
-        usageAuto: json[keyUsageAuto] != false,
-        usageWhenZero: json[keyUsageWhenZero] == true,
-      );
+  factory BillingRules.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'billing_rules');
+    return BillingRules(
+      subscriptionAuto: r.boolOr(keySubscriptionAuto, true),
+      subscriptionAdvanceDays: (r.intOrNull(keySubscriptionAdvanceDays) ?? 3)
+          .clamp(minAdvanceDays, maxAdvanceDays),
+      usageAuto: r.boolOr(keyUsageAuto, true),
+      usageWhenZero: r.boolOr(keyUsageWhenZero, false),
+    );
+  }
 
   /// Whether the nightly run issues subscription invoices at all. Off,
   /// the owner issues them by hand like any other invoice.

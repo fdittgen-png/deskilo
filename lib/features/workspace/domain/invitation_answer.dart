@@ -5,6 +5,7 @@
 // this build does not know is `unknown`, never a success.
 import 'invite_uri.dart';
 import 'member.dart';
+import '../../../core/data/json_reader.dart';
 
 enum InvitationState {
   /// Usable: the preview's workspace, role and approval are real.
@@ -50,13 +51,17 @@ class InvitationAnswer {
   });
 
   factory InvitationAnswer.fromJson(Object? raw) {
-    final json = raw is Map ? raw : const <String, Object?>{};
+    // Fail-closed (#2387): a malformed or blank field reads as absent.
+    final r = JsonReader.of(
+      raw is Map ? raw : const <String, Object?>{},
+      context: 'invitation_answer',
+    );
     String? text(String key) {
-      final value = json[key];
-      return value is String && value.trim().isNotEmpty ? value : null;
+      final value = r.textOrAbsent(key);
+      return value != null && value.trim().isNotEmpty ? value : null;
     }
 
-    final state = switch (json['state']) {
+    final state = switch (r.textOrAbsent('state')) {
       'valid' => InvitationState.valid,
       'joined_active' => InvitationState.joinedActive,
       'joined_pending' => InvitationState.joinedPending,
@@ -68,20 +73,19 @@ class InvitationAnswer {
       'invalid' => InvitationState.invalid,
       _ => InvitationState.unknown,
     };
+    final approval = r.json['requires_approval'];
     return InvitationAnswer(
       state,
       workspaceId: text('workspace_id'),
       workspaceName: text('workspace_name'),
       environment: text('environment'),
-      offeredRole: switch (json['offered_role']) {
+      offeredRole: switch (r.textOrAbsent('offered_role')) {
         'admin' => InviteRole.admin,
         'member' => InviteRole.user,
         _ => null,
       },
-      requiresApproval: json['requires_approval'] is bool
-          ? json['requires_approval'] as bool
-          : null,
-      memberStatus: switch (json['member_status']) {
+      requiresApproval: approval is bool ? approval : null,
+      memberStatus: switch (r.textOrAbsent('member_status')) {
         'active' => MemberStatus.active,
         'pending' => MemberStatus.pending,
         'paused' => MemberStatus.paused,

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
+
 /// A request is an account record, even when workspace admission was refused.
 typedef ApplicationCursor = ({DateTime at, String id});
 
@@ -15,15 +17,17 @@ class WorkspaceApplication {
   final DateTime createdAt;
   final bool isApplicant;
   ApplicationCursor get cursor => (at: createdAt, id: id);
-  factory WorkspaceApplication.fromJson(Map<String, dynamic> json) =>
-      WorkspaceApplication(
-        id: json['id'] as String,
-        workspaceName: json['workspace_name'] as String,
-        applicantName: json['applicant_name'] as String? ?? '',
-        status: json['status'] as String,
-        createdAt: DateTime.parse(json['created_at'] as String),
-        isApplicant: json['is_applicant'] == true,
-      );
+  factory WorkspaceApplication.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'workspace_application');
+    return WorkspaceApplication(
+      id: r.string('id'),
+      workspaceName: r.string('workspace_name'),
+      applicantName: r.stringOr('applicant_name'),
+      status: r.string('status'),
+      createdAt: r.dateTime('created_at'),
+      isApplicant: r.boolOr('is_applicant', false),
+    );
+  }
 }
 
 class ApplicationMessage {
@@ -39,15 +43,17 @@ class ApplicationMessage {
   final DateTime createdAt;
   final bool isMine;
   ApplicationCursor get cursor => (at: createdAt, id: id);
-  factory ApplicationMessage.fromJson(Map<String, dynamic> json) =>
-      ApplicationMessage(
-        id: json['id'] as String,
-        authorName: json['author_name'] as String? ?? '',
-        kind: json['kind'] as String,
-        body: json['body'] as String,
-        createdAt: DateTime.parse(json['created_at'] as String),
-        isMine: json['is_mine'] == true,
-      );
+  factory ApplicationMessage.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'application_message');
+    return ApplicationMessage(
+      id: r.string('id'),
+      authorName: r.stringOr('author_name'),
+      kind: r.string('kind'),
+      body: r.string('body'),
+      createdAt: r.dateTime('created_at'),
+      isMine: r.boolOr('is_mine', false),
+    );
+  }
 }
 
 abstract interface class WorkspaceApplicationRepository {

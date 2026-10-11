@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/calendar/calendar_item.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/data/json_reader.dart';
 
 /// One entry in the access log (#719): who read what about whom, when.
 class DataAccessEntry implements SystemStamped {
@@ -56,18 +57,15 @@ class AccessMap {
   /// Empty once it is mine: nobody administers it but me.
   final List<String> profile;
 
-  factory AccessMap.fromJson(Map<String, dynamic> json) => AccessMap(
-        finances: [for (final id in (json['finances'] as List? ?? const [])) id as String],
-        membersAdmin: [
-          for (final id in (json['members_admin'] as List? ?? const [])) id as String
-        ],
-        negotiations: [
-          for (final id in (json['negotiations'] as List? ?? const [])) id as String
-        ],
-        profile: [
-          for (final id in (json['profile'] as List? ?? const [])) id as String
-        ],
-      );
+  factory AccessMap.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'calendar_access_map');
+    return AccessMap(
+      finances: r.strings('finances'),
+      membersAdmin: r.strings('members_admin'),
+      negotiations: r.strings('negotiations'),
+      profile: r.strings('profile'),
+    );
+  }
 
   static const empty = AccessMap(finances: [], membersAdmin: []);
 }
