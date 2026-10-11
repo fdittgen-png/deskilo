@@ -2,29 +2,29 @@
 import 'dart:typed_data';
 
 import '../../../core/time/work_hours.dart';
+import '../../profile/domain/personal_info.dart';
 import 'booking_granularity.dart';
 import 'booking_policies.dart';
-import 'invitation_answer.dart';
-import 'new_member_defaults.dart';
 import 'closure_day.dart';
-import 'public_holidays.dart';
+import 'conversation.dart';
+import 'invitation_answer.dart';
+import 'managed_access.dart';
 import 'member.dart';
 import 'member_badge.dart';
-import 'conversation.dart';
 import 'member_note.dart';
+import 'new_member_defaults.dart';
 import 'overage_policy.dart';
 import 'payment_instructions.dart';
-import 'workspace.dart';
-import 'workspace_document.dart';
-import '../../profile/domain/personal_info.dart';
-import 'managed_access.dart';
-import 'workspace_overview.dart';
+import 'public_holidays.dart';
 import 'site.dart';
 import 'template_inspection.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 import 'template_publication.dart';
 import 'work_hours_provenance.dart';
+import 'workspace.dart';
+import 'workspace_document.dart';
+import 'workspace_overview.dart';
 import 'workspace_settings_save.dart';
 import 'workspace_template.dart';
 
@@ -419,6 +419,7 @@ abstract class WorkspaceRepository {
 
   /// Workspace-wide developer mode (#419, 0081): admin/owner only —
   /// the server enforces via set_dev_mode.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> setDevMode(String workspaceId, bool enabled);
 
   /// #917 — declares the workspace real, or back to a development one.

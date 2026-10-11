@@ -6,17 +6,16 @@
 // part is genuinely taken); being early on your own reservation's day is
 // presence, not a violation; a RUNNING booking may grow its end to a
 // later canonical edge — from the seat, without cancelling anything.
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
-
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/time/clock.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';

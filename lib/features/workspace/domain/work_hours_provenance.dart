@@ -2,8 +2,8 @@
 //
 // #1307 S4 — where the working day came from (`work_hours_provenance`,
 // 0244): the product's defaults, a template, or this workspace.
-import '../../../core/time/work_hours.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/time/work_hours.dart';
 
 enum WorkHoursOrigin {
   productDefault,

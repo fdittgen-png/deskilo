@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../core/backend/connected_installation_providers.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/backend/connected_installation_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_account_activity_repository.dart';
 import '../domain/account_activity.dart';
+
 part 'account_activity_providers.g.dart';
 
 @Riverpod(keepAlive: true)

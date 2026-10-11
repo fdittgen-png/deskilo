@@ -2,23 +2,23 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../core/trace/trace_logger.dart';
 import '../../../core/backend/auth_callback_guard.dart';
 import '../../../core/backend/auth_secret_store.dart';
 import '../../../core/backend/federation_authority.dart';
 import '../../../core/backend/native_federation_flow.dart';
 import '../../../core/backend/schema_version.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/auth_outcome.dart';
 import '../domain/auth_repository.dart';
 import '../domain/badge_sign_in.dart';
 import '../domain/federation_port.dart';
-import 'guard_federation_port.dart';
 import '../domain/social_provider.dart';
+import 'guard_federation_port.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
   SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow});
@@ -256,8 +256,8 @@ class SupabaseAuthRepository implements AuthRepository {
     try {
       // Local scope: this device's recovery session and nothing else —
       // the person's other sessions were never part of this.
-      await _client.auth.signOut(scope: SignOutScope.local);
-    } catch (e, st) {
+      await _client.auth.signOut();
+    } on Object catch (e, st) {
       // The local session is already dropped before the server is told;
       // a server that could not be told is a trace line, not a state.
       TraceLogger.instance.warn(
@@ -287,7 +287,7 @@ class SupabaseAuthRepository implements AuthRepository {
   }) async {
     try {
       return await call();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       var result = _resultOf(e, unnamedRefusal);
       if (afterSpentCode &&
           e is! AuthSessionMissingException &&
@@ -486,7 +486,7 @@ class SupabaseAuthRepository implements AuthRepository {
       );
       final data = response.data;
       return data is Map ? Map<String, dynamic>.from(data) : null;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // A refusal comes back as 200 with ok:false, so ANY failure here is
       // infrastructure, not judgement — #1086. This used to rethrow
       // everything but a 404, which contradicted the contract above and
@@ -543,7 +543,7 @@ class SupabaseAuthRepository implements AuthRepository {
     try {
       await _client.auth
           .verifyOTP(type: OtpType.magiclink, tokenHash: tokenHash);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // #1086 — the badge was judged and accepted; only the exchange
       // failed. That is infrastructure too, and must not read as a bad
       // PIN.

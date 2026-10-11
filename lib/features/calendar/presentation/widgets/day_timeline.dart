@@ -2,25 +2,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/ui/height_probe.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/height_probe.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
-import '../../../reservations/providers/reservation_providers.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../reservations/providers/browsed_level.dart';
+import '../../../reservations/providers/reservation_providers.dart';
 
 /// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
 /// as part of the visual contract, not free-floating magic numbers.
@@ -726,7 +726,6 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         ),
       ),
       child: Stack(
-        clipBehavior: Clip.hardEdge,
         children: [
           // Free-area tap books this seat (hub); the blocks above keep
           // their own handlers and win hit-testing.

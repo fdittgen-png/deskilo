@@ -181,8 +181,7 @@ class FakeWorkspaceFields implements WorkspaceFieldsRepository {
       if (problem != null) throw StateError('${entry.key}: ${problem.name}');
     }
 
-    final stored = this.answers[memberId] ??= {};
-    stored.addAll(answers);
+    final stored = (this.answers[memberId] ??= {})..addAll(answers);
 
     // 0248 refuses to leave a required question of the context
     // unanswered, and judges that AFTER the writes, over everything the

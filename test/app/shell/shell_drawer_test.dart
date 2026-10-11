@@ -5,14 +5,13 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_role.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 

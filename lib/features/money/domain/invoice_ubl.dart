@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:xml/xml.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/number_text.dart';
 import '../../../core/time/date_text.dart';
-import 'package:xml/xml.dart';
-
 import 'e_invoice_totals.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
@@ -81,16 +81,17 @@ String buildInvoiceUbl({
   final issueDate = invoice.issuedAt.toIso8601String().split('T').first;
   final currency = invoice.currency;
 
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element(docName, nest: () {
-    builder.namespace(
-        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2');
-    builder.namespace(
+    builder
+      ..namespace(
+        'urn:oasis:names:specification:ubl:schema:xsd:$docName-2')
+      ..namespace(
         'urn:oasis:names:specification:ubl:schema:xsd:'
         'CommonBasicComponents-2',
-        'cbc');
-    builder.namespace(
+        'cbc')
+      ..namespace(
         'urn:oasis:names:specification:ubl:schema:xsd:'
         'CommonAggregateComponents-2',
         'cac');

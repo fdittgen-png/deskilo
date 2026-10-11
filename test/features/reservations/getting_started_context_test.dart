@@ -13,9 +13,9 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
-import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/help/help_hint_providers.dart';
 import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/reservations/application/getting_started_hint.dart';

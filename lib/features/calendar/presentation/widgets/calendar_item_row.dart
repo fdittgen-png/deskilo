@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import 'calendar_booking_title.dart';
-import '../../../../l10n/app_localizations_en.dart';
 
 IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
       CalendarKind.reservation => Icons.event_seat_outlined,

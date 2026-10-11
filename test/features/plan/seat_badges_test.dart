@@ -69,7 +69,7 @@ Future<int> _greenPixels(FloorPlanPainter painter) async {
   final recorder = ui.PictureRecorder();
   painter.paint(Canvas(recorder), const Size(280, 280));
   final image = await recorder.endRecording().toImage(280, 280);
-  final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  final data = await image.toByteData();
   var green = 0;
   for (var i = 0; i < data!.lengthInBytes; i += 4) {
     final r = data.getUint8(i);

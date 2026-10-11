@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_code.dart';
-import '../../../../core/nfc/nfc_uid_reader.dart';
 
 class SpaceScanSheet extends StatefulWidget {
   const SpaceScanSheet({
@@ -48,7 +50,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
     super.initState();
     final nfc = widget.nfc;
     if (nfc != null) {
-      nfc.startRead(onUid: _onTag);
+      unawaited(nfc.startRead(onUid: _onTag));
     }
   }
 
@@ -87,7 +89,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
 
   @override
   void dispose() {
-    widget.nfc?.stop();
+    unawaited(widget.nfc?.stop());
     _controller.dispose();
     super.dispose();
   }

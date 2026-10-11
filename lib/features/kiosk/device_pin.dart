@@ -14,7 +14,7 @@ abstract final class KioskDevicePin {
   static Future<void> pin() async {
     try {
       await _channel.invokeMethod<bool>('lock');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: pinning is an extra hardening layer, not a
       // requirement — absent channel (tests/desktop) is expected.
       debugPrint('kiosk pin unavailable: $e\n$st');
@@ -24,7 +24,7 @@ abstract final class KioskDevicePin {
   static Future<void> unpin() async {
     try {
       await _channel.invokeMethod<bool>('unlock');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: see pin().
       debugPrint('kiosk unpin unavailable: $e\n$st');
     }

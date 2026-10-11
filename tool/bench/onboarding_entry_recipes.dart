@@ -17,9 +17,9 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/backend_uri.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:deskilo/core/ui/inline_banner.dart';
-import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/auth/domain/auth_outcome.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/pending_approval_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -154,8 +154,9 @@ Future<RecipeRun> firstSignup(
     );
     await probe.settle();
     if (b.done == null) {
-      probe.refused('the sign-up was not accepted: ${answer.outcome.name}');
-      probe.authorize('a pending sign-up', false);
+      probe
+        ..refused('the sign-up was not accepted: ${answer.outcome.name}')
+        ..authorize('a pending sign-up', false);
       return run;
     }
     // The e-mail: sent by the server, opened by the person. Its duration
@@ -181,11 +182,12 @@ Future<RecipeRun> firstSignup(
       'Me, the personal home of a new account',
       probe.location == '/me',
     );
-    probe.authorize(
+    probe
+      ..authorize(
       'exactly one sign-up for one press',
       auth.signUps.length == 1,
-    );
-    probe.authorize(
+    )
+      ..authorize(
       'consent recorded',
       profile.acceptedPolicyVersions.length == 1,
     );
@@ -302,19 +304,21 @@ Future<RecipeRun> byoSignIn(
     );
     await probe.settle();
     if (b.done == null) {
-      probe.refused('the server could not be verified');
-      probe.authorize('a verified server', false);
+      probe
+        ..refused('the server could not be verified')
+        ..authorize('a verified server', false);
       return run;
     }
     await probe.confirm(save, what: 'save the verified server');
     await probe.settle();
-    probe.authorize(
+    probe
+      ..authorize(
       'the verified server is what was saved',
       store.value?.url == kRecipeServer.url,
-    );
+    )
     // The restart is the person's: the saved server takes effect on the
     // next start, which is simulated by a fresh mount booted onto it.
-    probe.wait(WaitKind.human);
+      ..wait(WaitKind.human);
     final auth = MeteredAuth(meter);
     await probe.enter(
       recipeApp([
@@ -407,9 +411,10 @@ Future<RecipeRun> invitationJoin(WidgetTester tester) async {
       semantic: () => probe.semanticallyDisabled(join),
       done: () => probe.shows(find.byType(PendingApprovalScreen)),
     );
-    probe.authorize('one Join for one press', ws.joinByInvitationCalls == 1);
+    probe
+      ..authorize('one Join for one press', ws.joinByInvitationCalls == 1)
     // The space's validators decide; the person checks again.
-    probe.wait(WaitKind.human);
+      ..wait(WaitKind.human);
     ws.myMember = ws.myMember.copyWith(status: MemberStatus.active);
     await probe.choose(find.byKey(const ValueKey('pending-refresh')));
     await probe.arrive(

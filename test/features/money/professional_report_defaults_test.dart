@@ -84,7 +84,6 @@ void main() {
           template: const InvoicePdfTemplate(addressWindow: AddressWindow.left),
           kindId: 'invoice',
           letterStandard: true,
-          countryCode: 'FR',
         ),
         contains('<recipient window="din"/>'),
       );

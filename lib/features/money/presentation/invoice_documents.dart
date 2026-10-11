@@ -7,45 +7,47 @@
 // one.
 import 'dart:async';
 import 'dart:typed_data';
-import '../../../core/i18n/money_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 import '../../../core/files/file_names.dart';
+import '../../../core/i18n/money_format.dart';
+import '../../../core/locale/report_language.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
+import '../../plan/providers/accessory_providers.dart';
+import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
-import '../domain/payment_terms.dart';
+import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/invoice_legal.dart';
-import '../domain/invoice.dart';
-import '../domain/invoice_pdf.dart';
-import '../domain/invoice_cii.dart';
 import '../domain/address_window.dart';
-import '../domain/invoice_pdf_template.dart';
 import '../domain/dunning.dart';
-import '../domain/invoice_report.dart';
-import 'report_layout_actions.dart';
-import 'report_layout_defaults.dart';
-import '../providers/money_providers.dart';
-import 'invoice_status.dart';
-import 'report_defaults.dart';
+import '../domain/invoice.dart';
+import '../domain/invoice_cii.dart';
+import '../domain/invoice_legal.dart';
 import '../domain/invoice_line_text.dart';
+import '../domain/invoice_pdf.dart';
+import '../domain/invoice_pdf_template.dart';
+import '../domain/invoice_report.dart';
+import '../domain/payment_terms.dart';
 import '../domain/report_data.dart';
 import '../domain/report_data_letters.dart';
-import 'report_facts_of.dart';
-import 'report_strings_l10n.dart';
+import '../providers/money_providers.dart';
+import 'invoice_status.dart';
 import 'period_label.dart';
-import '../../plan/providers/accessory_providers.dart';
-import '../../plan/providers/floor_plan_providers.dart';
-import '../../workspace/domain/member.dart';
-import '../../../core/locale/report_language.dart';
+import 'report_defaults.dart';
+import 'report_facts_of.dart';
+import 'report_layout_actions.dart';
+import 'report_layout_defaults.dart';
+import 'report_strings_l10n.dart';
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
@@ -61,7 +63,7 @@ Future<Map<String, Uint8List>> resolveReportImages(
     try {
       final bytes = await ref.read(reportImageBytesProvider(name).future);
       if (bytes != null) images[name] = bytes;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
         'report image fetch failed',
@@ -126,7 +128,7 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
   Future<void> quiet(Future<void> Function() load) async {
     try {
       await load();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
         'letter-doc provider warm failed',

@@ -111,7 +111,7 @@ void main() {
         'the day is full, but it is not one person\'s', () {
       final segments = _segments([
         _booking('morning', fromHour: 8, toHour: 12, member: 'member-1'),
-        _booking('afternoon', fromHour: 12, toHour: 17, member: 'member-2'),
+        _booking('afternoon', fromHour: 12, toHour: 17),
       ]);
       expect(segments, hasLength(2));
       expect(seatDayIsPartial(segments), isFalse,
@@ -281,7 +281,7 @@ void main() {
     testWidgets('names who is on the seat, when, and how the day stands',
         (tester) async {
       await open(tester, reservations: [
-        _booking('morning', fromHour: 8, toHour: 12, member: 'member-2'),
+        _booking('morning', fromHour: 8, toHour: 12),
         _booking('mine', fromHour: 15, toHour: 17, member: 'member-1'),
       ]);
       expect(find.byKey(const ValueKey('seat-day-booking-morning')),
@@ -298,7 +298,7 @@ void main() {
         'morning reads 08:00, whatever clock the device keeps',
         (tester) async {
       await open(tester, reservations: [
-        _booking('morning', fromHour: 8, toHour: 12, member: 'member-2'),
+        _booking('morning', fromHour: 8, toHour: 12),
       ]);
       expect(find.text('08:00 – 12:00'), findsOneWidget);
       // The stored instant is 06:00 UTC in summer; printing it raw is

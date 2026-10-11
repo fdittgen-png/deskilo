@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +16,8 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invite_uri.dart';
-import '../qr_png.dart';
 import '../../providers/workspace_providers.dart';
+import '../qr_png.dart';
 import '../widgets/invite_sheet.dart';
 
 /// Owner surface (#88): role-scoped invites. Every invite is bound to a
@@ -224,7 +226,7 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
                           setState(() => _role = selection.first);
                           if (selection.first == InviteRole.admin &&
                               _adminCode == null) {
-                            _mintAdminCode();
+                            unawaited(_mintAdminCode());
                           }
                         },
                       ),

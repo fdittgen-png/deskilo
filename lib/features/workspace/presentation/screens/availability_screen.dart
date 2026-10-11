@@ -7,24 +7,24 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/work_hours.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/time/work_hours.dart';
+import '../../application/generate_public_holidays.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/legend_profile_tile.dart';
-import '../widgets/work_hours_provenance_row.dart';
 import '../widgets/availability_tiles.dart';
 import '../widgets/capacity_kpi_card.dart';
-import '../../application/generate_public_holidays.dart';
-import '../widgets/public_holidays_sheet.dart';
 import '../widgets/holiday_import_sheet.dart';
-import '../../../../core/time/clock.dart';
+import '../widgets/legend_profile_tile.dart';
+import '../widgets/public_holidays_sheet.dart';
+import '../widgets/work_hours_provenance_row.dart';
 
 /// Owner-only availability editor (#127): which ISO weekdays (1=Mon..7=Sun,
 /// stored in booking_rules) the workspace is open on, plus one-off closure
@@ -57,7 +57,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setOpenWeekdays(workspace.id, updated.toList()..sort());
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set open weekdays failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set open weekdays failed',
           error: e, stackTrace: st);
@@ -81,7 +81,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setBookingGranularity(workspace.id, granularity);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set booking granularity failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set booking granularity failed',
           error: e, stackTrace: st);
@@ -112,7 +112,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setWorkHours(workspace.id, hours);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set work hours failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set work hours failed',
           error: e, stackTrace: st);
@@ -136,7 +136,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setBookingPolicy(workspace.id, key, enabled: enabled);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set booking policy failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set booking policy failed',
           error: e, stackTrace: st);
@@ -160,7 +160,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setOutsideHoursMode(workspace.id, mode);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set outside-hours mode failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set outside-hours mode failed',
           error: e, stackTrace: st);
@@ -185,7 +185,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setSimultaneousReservations(workspace.id, value);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set simultaneous reservations failed: $e\n$st');
       TraceLogger.instance.error(
           'workspace', 'set simultaneous reservations failed',
@@ -213,7 +213,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .setBookingLimit(workspace.id, key, value);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('set booking limit failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'set booking limit failed',
           error: e, stackTrace: st);
@@ -265,7 +265,7 @@ class AvailabilityScreen extends ConsumerWidget {
       await ref
           .read(workspaceRepositoryProvider)
           .addClosureDay(workspace.id, day, reason.trim());
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('add closure day failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'add closure day failed',
           error: e, stackTrace: st);
@@ -284,7 +284,7 @@ class AvailabilityScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     try {
       await ref.read(workspaceRepositoryProvider).removeClosureDay(closure.id);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('remove closure day failed: $e\n$st');
       TraceLogger.instance.error('workspace', 'remove closure day failed',
           error: e, stackTrace: st);

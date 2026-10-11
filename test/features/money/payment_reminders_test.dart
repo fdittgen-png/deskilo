@@ -43,8 +43,8 @@ void main() {
     test('dueReminderLevel is the sweep\'s clock: first delay from issue, '
         'then between-days from the previous reminder, never past levels',
         () {
-      const rules = DunningRules(levels: 2, firstAfterDays: 14, betweenDays: 7);
-      final issued = DateTime(2026, 8, 1);
+      const rules = DunningRules(levels: 2, betweenDays: 7);
+      final issued = DateTime(2026, 8);
       int? due(DateTime now, {int count = 0, DateTime? last}) =>
           dueReminderLevel(
             issuedAt: issued,

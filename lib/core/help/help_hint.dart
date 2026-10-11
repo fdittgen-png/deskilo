@@ -193,7 +193,6 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                           ),
                         ),
                         layoutBuilder: (current, previous) => Stack(
-                          alignment: AlignmentDirectional.topStart,
                           children: [...previous, ?current],
                         ),
                         child: SizedBox(

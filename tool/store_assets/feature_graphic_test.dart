@@ -26,14 +26,15 @@ const _height = 500.0;
 /// Proportions measured from assets/icon/icon_full.png: bar height 0.34w,
 /// corner radius 0.12w, seat 0.39w square starting at 0.45w.
 void _drawGlyph(Canvas canvas, Offset origin, double w, Paint paint) {
-  canvas.drawRRect(
+  canvas
+    ..drawRRect(
     RRect.fromRectAndRadius(
       Rect.fromLTWH(origin.dx, origin.dy, w, 0.34 * w),
       Radius.circular(0.12 * w),
     ),
     paint,
-  );
-  canvas.drawRRect(
+  )
+    ..drawRRect(
     RRect.fromRectAndRadius(
       Rect.fromLTWH(origin.dx + (w - 0.39 * w) / 2, origin.dy + 0.45 * w,
           0.39 * w, 0.39 * w),
@@ -60,10 +61,10 @@ void main() {
     await loader.load();
 
     final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder);
+    final canvas = Canvas(recorder)
 
     // Background: subtle vertical gradient around the brand red.
-    canvas.drawRect(
+      ..drawRect(
       const Rect.fromLTWH(0, 0, _width, _height),
       Paint()
         ..shader = const LinearGradient(

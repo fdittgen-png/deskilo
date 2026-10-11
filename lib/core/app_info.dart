@@ -16,7 +16,7 @@ Future<String> appVersion(Ref ref) async {
     return info.buildNumber.isEmpty
         ? info.version
         : '${info.version}+${info.buildNumber}';
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .warn('app', 'package info unavailable', error: e, stackTrace: st);
     return '';

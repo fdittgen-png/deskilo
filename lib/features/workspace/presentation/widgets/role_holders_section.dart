@@ -15,14 +15,14 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../application/assign_role.dart';
 import '../../domain/member.dart';
 import '../../domain/role_assignment.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
-import '../../../task_recorder/domain/action_registry.dart';
-import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RoleHoldersSection extends ConsumerWidget {
   const RoleHoldersSection({

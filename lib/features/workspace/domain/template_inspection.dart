@@ -6,9 +6,10 @@
 // scalars (a map is a shape, never copied), and an unknown wire word lands
 // on `unknown`, never on a usable value.
 import 'package:meta/meta.dart';
+
+import '../../../core/data/json_reader.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
-import '../../../core/data/json_reader.dart';
 
 enum TemplateInspectionStatus {
   ok, unsupportedVersion, rejected, unknown;

@@ -25,7 +25,7 @@ Invoice _invoice({
       workspaceId: 'ws-1',
       memberId: memberId,
       number: id.toUpperCase(),
-      issuedAt: DateTime.utc(2026, 9, 1),
+      issuedAt: DateTime.utc(2026, 9),
       period: '2026-09',
       title: 'Invoice',
       lines: const [],

@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
 import 'connection_dialog.dart';
 import 'connection_outcome_text.dart';

@@ -218,7 +218,7 @@ void main() {
       'back, and Retry as sent sends the same request unchanged',
       (tester) async {
     final repo = await pump(tester)
-      ..createFailure = StateError('the response was lost');
+      ..createFailure = Exception('the response was lost');
     await tester.enterText(find.byType(TextFormField).first, 'Kraftwerk');
     await goTo(tester, 'Confirm');
     await pressCreate(tester);

@@ -23,7 +23,7 @@ import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'installation_auth_storage_test.dart' show MemorySecrets;
-import 'native_federation_flow_test.dart' show user, session;
+import 'native_federation_flow_test.dart' show session, user;
 
 Map<String, Object?> _fixture(String name) =>
     jsonDecode(File('test/fixtures/public_network/$name').readAsStringSync())

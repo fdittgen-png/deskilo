@@ -91,6 +91,7 @@ abstract interface class PublicationRepository {
   Future<Map<String, dynamic>> savePage(
     String workspace,
     Map<String, String> document,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     bool published,
   );
 }
@@ -122,6 +123,7 @@ enum DirectoryLinkState {
 
 abstract interface class AccountContactRepository {
   Future<bool> availability();
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> setAvailability(bool value);
   Future<bool> adminVisibility(String workspace, {bool? visible});
   Future<bool> employment(String member, {bool? employed});

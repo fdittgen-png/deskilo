@@ -31,7 +31,7 @@ Future<(int, int, ByteData)> _decode(Uint8List png) async {
   final codec = await ui.instantiateImageCodec(png);
   final frame = await codec.getNextFrame();
   final image = frame.image;
-  final data = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+  final data = (await image.toByteData())!;
   final size = (image.width, image.height, data);
   image.dispose();
   codec.dispose();

@@ -56,7 +56,7 @@ class _BillingDialogState extends ConsumerState<_BillingDialog> {
       await ref
           .read(moneyRepositoryProvider)
           .setBillingRules(workspace.id, _rules);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'set billing rules failed',
           error: e, stackTrace: st);
       if (!mounted) return;

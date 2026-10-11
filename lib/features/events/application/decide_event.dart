@@ -23,7 +23,7 @@ Future<String?> decideEvent(WidgetRef ref, String eventId,
     {required bool accept}) async {
   try {
     await ref.read(eventRepositoryProvider).respond(eventId, accept: accept);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance
         .error('events', 'respond failed', error: e, stackTrace: st);
     return serverErrorMessage(e) ?? '';

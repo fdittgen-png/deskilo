@@ -140,7 +140,7 @@ class WorkspaceReadinessCard extends ConsumerWidget {
       } else {
         await aside.later(workspaceId, section);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'workspace',
         'set readiness section aside failed',
@@ -259,13 +259,18 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                             if (s.acknowledged && s.canSetAside)
                               l10n?.readinessSetAside ?? 'Set aside for later'
                             else if (s.state != ReadinessState.notApplicable)
-                              s.required && s.area == ReadinessArea.legalIdentity
-                                  ? (l10n ?? lookupAppLocalizations(const Locale('en')))
-                                        .readinessNeededInvoicing
-                                  : s.required
-                                  ? (l10n?.readinessNeededFirst ??
-                                        'Needed for a first booking')
-                                  : (l10n?.readinessLater ?? 'Needed later'),
+                              if (s.required &&
+                                  s.area == ReadinessArea.legalIdentity)
+                                (l10n ??
+                                        lookupAppLocalizations(
+                                          const Locale('en'),
+                                        ))
+                                    .readinessNeededInvoicing
+                              else if (s.required)
+                                l10n?.readinessNeededFirst ??
+                                    'Needed for a first booking'
+                              else
+                                l10n?.readinessLater ?? 'Needed later',
                             ?readinessReasonLabel(l10n, s.reason),
                             if (s.state != ReadinessState.ready &&
                                 s.state != ReadinessState.notApplicable)

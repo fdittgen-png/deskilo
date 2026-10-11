@@ -18,7 +18,7 @@ Future<int> sweepPlanMediaOrphans({
     if (paths.isEmpty) return 0;
     await remove(paths);
     return paths.length;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'plan',
       'plan media cleanup deferred',

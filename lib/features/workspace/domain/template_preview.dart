@@ -7,8 +7,9 @@
 // change-set is the one the apply will perform, so a preview drawn from
 // anything else could promise a change that does not happen.
 import 'package:meta/meta.dart';
-import 'workspace_feature.dart';
+
 import '../../../core/data/json_reader.dart';
+import 'workspace_feature.dart';
 
 /// The groups a template is applied by — the only vocabulary the UI shows
 /// (#1276 decision 2). Wire names are `deployable_entities().group`;

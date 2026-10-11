@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import 'seat_accessories_test.dart' show seedSeat, openSeatSheet;
+import 'seat_accessories_test.dart' show openSeatSheet, seedSeat;
 
 Future<void> _pumpSeatSheet(
   WidgetTester tester, {

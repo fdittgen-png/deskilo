@@ -11,10 +11,10 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/test_clock.dart';
 import '../../helpers/fake_event_repository.dart';
+import '../../helpers/test_clock.dart';
 import '../calendar/reservation_detail_sheet_test.dart'
-    show reservationAt, pumpCalendarApp;
+    show pumpCalendarApp, reservationAt;
 
 void main() {
   setUpAll(() => WorkspaceTime.install('Europe/Berlin'));

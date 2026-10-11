@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,9 +82,10 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
       setState(() => _code = true);
     }
     if (ok && !requestCode) {
-      ref.invalidate(connectedSourcesProvider);
-      ref.invalidate(connectionHealthProvider(endpoint.url));
-      ref.invalidate(publicDirectoryProvider);
+      ref
+        ..invalidate(connectedSourcesProvider)
+        ..invalidate(connectionHealthProvider(endpoint.url))
+        ..invalidate(publicDirectoryProvider);
       Navigator.of(context).pop(true);
     }
   }
@@ -139,7 +142,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
   void _leaveFor(String location, {Object? extra}) {
     final router = GoRouter.of(context);
     Navigator.of(context).pop();
-    router.push(location, extra: extra);
+    unawaited(router.push(location, extra: extra));
   }
 
   /// The candidate on the form, when it is a well-formed endpoint.

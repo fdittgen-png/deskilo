@@ -8,14 +8,13 @@
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart' show pumpHub;
-import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
-
-import '../../helpers/test_clock.dart';
 import '../../helpers/reserve_view.dart';
+import '../../helpers/test_clock.dart';
+import 'reserve_hub_test.dart' show pumpHub;
 
 Reservation _mine(
   DateTime day, {

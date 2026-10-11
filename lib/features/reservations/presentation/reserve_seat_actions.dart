@@ -4,51 +4,51 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/work_hours.dart';
 import '../../../core/trace/act_trace.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../events/providers/event_providers.dart';
 import '../../plan/domain/floor_plan.dart';
+import '../../plan/domain/half_day_windows.dart';
 import '../../plan/domain/seat.dart';
+import '../../plan/domain/seat_block_policy.dart';
 import '../../plan/presentation/widgets/admin_seat_actions.dart';
 import '../../plan/presentation/widgets/check_in_sheets.dart';
 import '../../plan/providers/floor_plan_providers.dart';
-import '../../workspace/domain/booking_granularity.dart';
-import '../../workspace/domain/member.dart';
-import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart';
-import '../../plan/domain/seat_block_policy.dart';
-import '../domain/booking_error_text.dart';
-import 'widgets/seat_day_sheet.dart';
-import '../../../core/time/work_hours.dart';
-import 'booking_gate_scope.dart';
-import '../../plan/domain/half_day_windows.dart';
-import '../domain/default_booking_period.dart';
-import '../application/book_seat.dart';
-import '../application/booking_recovery.dart';
-import 'widgets/booking_recovery_sheet.dart';
-import '../domain/own_booking_removal.dart';
-import '../domain/reservation.dart';
-import '../domain/seat_state_logic.dart';
-import '../domain/walk_up_window.dart';
-import '../../events/providers/event_providers.dart';
-import '../providers/default_period_controller.dart';
-import '../providers/reservation_providers.dart';
-import 'booking_feedback.dart';
-import 'booking_trace_points.dart';
-import 'widgets/booking_sheet.dart';
-import 'widgets/message_reserver.dart';
-import 'widgets/reservation_detail_sheet.dart'
-    show ownBookingRemovalOf, requestBookingDeletion;
-import 'widgets/series_result_dialog.dart';
-import '../../../core/i18n/format_controller.dart';
-import '../../../core/trace/guarded.dart';
-import 'widgets/reference_open.dart';
 import '../../task_recorder/application/booking_observation.dart';
 import '../../task_recorder/domain/action_registry.dart'
     show RecorderActions, RecorderOutcomes;
 import '../../task_recorder/presentation/recorder_seam.dart';
+import '../../workspace/domain/booking_granularity.dart';
+import '../../workspace/domain/member.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import '../application/book_seat.dart';
+import '../application/booking_recovery.dart';
+import '../domain/booking_error_text.dart';
+import '../domain/default_booking_period.dart';
+import '../domain/own_booking_removal.dart';
+import '../domain/reservation.dart';
+import '../domain/seat_state_logic.dart';
+import '../domain/walk_up_window.dart';
+import '../providers/default_period_controller.dart';
+import '../providers/reservation_providers.dart';
+import 'booking_feedback.dart';
+import 'booking_gate_scope.dart';
+import 'booking_trace_points.dart';
+import 'widgets/booking_recovery_sheet.dart';
+import 'widgets/booking_sheet.dart';
+import 'widgets/message_reserver.dart';
+import 'widgets/reference_open.dart';
+import 'widgets/reservation_detail_sheet.dart'
+    show ownBookingRemovalOf, requestBookingDeletion;
+import 'widgets/seat_day_sheet.dart';
+import 'widgets/series_result_dialog.dart';
 
 part 'others_booking_tap.dart';
 
@@ -373,7 +373,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         _ => repo.cancel(mine.id),
       };
       if (command != null) recorded?.resolve(command.done);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       recorded?.resolveWith(errorObservation(e,
           refused: RecorderOutcomes.reservationRefused,
           unknown: RecorderOutcomes.reservationUnknown));
@@ -731,7 +731,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       if (!mounted) return;
       await showBookingRecoverySheet(context, ref, e.intent, spaceName: seat.name);
       return;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       recorded?.resolveWith(bookingErrorObservation(e));
       debugPrint('reserve hub booking failed: $e\n$st');
       // #1030 — the seat, the window and the SERVER'S OWN answer, so a

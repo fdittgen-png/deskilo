@@ -5,8 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'instance_bundle.dart';
 import 'instance_doctor.dart';
 import 'instance_policies.dart';
-import 'schema_compatibility.dart';
 import 'management_api.dart';
+import 'schema_compatibility.dart';
 
 part 'instance_bundle_asset.g.dart';
 

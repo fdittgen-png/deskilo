@@ -4,8 +4,8 @@
 // installation, as `my_identity_status` / `finalize_identity_binding`
 // answer it. It never carries the subject or any raw Auth payload, and it
 // confers nothing: no membership, no role, no MCP eligibility.
-import 'database_capabilities.dart';
 import '../../../core/data/json_reader.dart';
+import 'database_capabilities.dart';
 
 export 'database_capabilities.dart';
 

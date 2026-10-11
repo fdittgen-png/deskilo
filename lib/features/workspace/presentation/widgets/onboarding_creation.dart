@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/i18n/time_zones.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/i18n/time_zones.dart';
 import '../../application/creation_intent.dart';
 import '../../application/start_workspace.dart';
 import '../../domain/template_outline.dart';

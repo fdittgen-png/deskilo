@@ -23,6 +23,7 @@ import '../providers/workspace_providers.dart';
 /// Silently does nothing when no workspace is selected: the caller is a
 /// switch that cannot be reached without one, and inventing an error
 /// for an impossible state would be noise.
+// ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
 Future<void> setWorkspaceDevMode(WidgetRef ref, bool enabled) async {
   final ws = ref.read(currentWorkspaceProvider).value;
   if (ws == null) return;

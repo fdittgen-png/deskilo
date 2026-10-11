@@ -118,7 +118,7 @@ void main() {
         ]),
       ];
       final lines = computeVatDeclarationLines(
-          invoices, DateTime(2026, 8, 1), DateTime(2026, 8, 31));
+          invoices, DateTime(2026, 8), DateTime(2026, 8, 31));
       expect(lines, hasLength(2));
       final at20 = lines.singleWhere((l) => l.percent == 20);
       expect(at20.grossCents, 24000);
@@ -181,7 +181,7 @@ void main() {
       final declaration = VatDeclaration(
         id: 'd1',
         workspaceId: 'ws-1',
-        periodStart: DateTime(2026, 8, 1),
+        periodStart: DateTime(2026, 8),
         periodEnd: DateTime(2026, 8, 31),
         status: 'draft',
         lines: const [
@@ -391,17 +391,13 @@ void main() {
             invoiceId: 'a',
             number: 'INV-a',
             period: '2026-08',
-            kind: InvoiceKind.full,
             totalCents: 12000,
-            lines: [],
           ),
           SettledSource(
             invoiceId: 'b',
             number: 'INV-b',
             period: '2026-08',
-            kind: InvoiceKind.full,
             totalCents: 12000,
-            lines: [],
           ),
         ],
       );
@@ -410,7 +406,6 @@ void main() {
         invoiceId: 's',
         paidCents: 24000,
         resolution: 'exact',
-        status: 'confirmed',
         matchedAt: DateTime(kTestNow.year, kTestNow.month, 10),
         byName: 'Flo',
       );

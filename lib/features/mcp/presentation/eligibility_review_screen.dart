@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -107,8 +109,9 @@ class _EligibilityReviewScreenState
     if (!mounted) return;
     setState(() => _busy = false);
     if (verified) {
-      ref.invalidate(mcpDisclosureMaximumProvider);
-      ref.invalidate(eligibilityRequestsProvider);
+      ref
+        ..invalidate(mcpDisclosureMaximumProvider)
+        ..invalidate(eligibilityRequestsProvider);
     }
   }
 
@@ -387,7 +390,7 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   @override
@@ -426,7 +429,7 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
     try {
       await widget.review.verify(id, _code.text.trim(), widget.scope);
       ok = true;
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: a wrong code is the person's to retry, said below.
       debugPrintStack(stackTrace: stack, label: '$error');
     }

@@ -375,7 +375,7 @@ String _document(DocxDocument doc, List<(Uint8List, int, int)> media) {
   var image = 0;
   for (final block in doc.blocks) {
     switch (block) {
-      case DocxParagraph p:
+      case final DocxParagraph p:
         final pPr = StringBuffer('<w:pStyle w:val="${p.style.id}"/>');
         if (p.keepWithNext) pPr.write('<w:keepNext/>');
         body.write('<w:p><w:pPr>$pPr</w:pPr>');
@@ -389,7 +389,7 @@ String _document(DocxDocument doc, List<(Uint8List, int, int)> media) {
         body.write(_runs(p.runs));
         if (mark != null) body.write('<w:bookmarkEnd w:id="${bookmarkId++}"/>');
         body.write('</w:p>');
-      case DocxImage i:
+      case final DocxImage i:
         final (_, width, height) = media[image++];
         body.write(
           '<w:p><w:pPr><w:pStyle w:val="Illustration"/>'

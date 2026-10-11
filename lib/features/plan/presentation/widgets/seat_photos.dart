@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -54,7 +55,7 @@ class _SeatPhotoLoaderState extends ConsumerState<SeatPhotoLoader> {
         return;
       }
       setState(() => _decoded[userId] = frame.image);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // A corrupt photo falls back to the initial marker — the canvas
       // must never fail on someone's upload; remembered so the build
       // never retries a hopeless decode in a loop.
@@ -83,7 +84,7 @@ class _SeatPhotoLoaderState extends ConsumerState<SeatPhotoLoader> {
         continue;
       }
       final bytes = ref.watch(memberAvatarProvider(userId)).value;
-      if (bytes != null) _decode(userId, bytes);
+      if (bytes != null) unawaited(_decode(userId, bytes));
     }
     return widget.builder(context, {
       for (final entry in widget.seatUserIds.entries)

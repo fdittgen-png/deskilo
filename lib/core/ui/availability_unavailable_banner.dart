@@ -20,7 +20,6 @@ class AvailabilityUnavailableBanner extends StatelessWidget {
       child: InlineBanner(
         key: const ValueKey('reserve-availability-unavailable'),
         icon: Icons.cloud_off_outlined,
-        severity: InlineBannerSeverity.error,
         text: l10n?.reserveAvailabilityUnavailable ??
             'Availability could not be loaded completely, so no seat is '
                 'shown as free. Retry to see it.',

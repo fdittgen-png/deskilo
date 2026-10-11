@@ -9,9 +9,9 @@
 // find it in the space's Inquiries view — shown to owners and admins
 // while the workspace has `spaceInquiries` on — and can close it.
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
-import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/inbox_screen.dart';

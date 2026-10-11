@@ -43,12 +43,9 @@ linter:
     # keeps the other half: a public declaration has a reader outside its
     # file, or says @visibleForTesting.
     - library_private_types_in_public_api
-    # #2389 — the stricter rules measured at 0–20 violations on master:
-    # turned on with their fixes so they stay at zero. The staged ones
-    # (directives_ordering, avoid_catches_without_on_clauses, cascade and
-    # redundant-argument rules, discarded_futures, …) follow in their own
-    # slices, and the four with sites in the task recorder wait for the
-    # work in progress there (#2310).
+    # #2389 — the stricter rules of the #2381 review, each turned on with
+    # its sites fixed. What is left out, and why, is ADR 0040
+    # (docs/decisions/0040-project-rules-stay-lint-tests.md).
     - avoid_slow_async_io
     - avoid_unnecessary_containers
     - avoid_void_async
@@ -76,3 +73,17 @@ linter:
     # #2387 — no member is called on a `dynamic`: decode through
     # JsonReader (lib/core/data/json_reader.dart) or cast once.
     - avoid_dynamic_calls
+    # #2389 — the staged rules, on with their fixes; the kept positional
+    # bools carry an ignore naming #2389 (test/lint/ignore_budget_test).
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_catches_without_on_clauses
+    - avoid_positional_boolean_parameters
+    - avoid_redundant_argument_values
+    - avoid_setters_without_getters
+    - cascade_invocations
+    - combinators_ordering
+    - directives_ordering
+    - discarded_futures
+    - only_throw_errors
+    - prefer_final_locals
+    - prefer_if_elements_to_conditional_expressions

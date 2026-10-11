@@ -46,13 +46,13 @@ class _FakeSource implements HolidaySource {
         regions: const ['XX-99', 'DE-BW'],
       ),
       (
-        day: DateTime(year, 5, 1),
+        day: DateTime(year, 5),
         localName: 'Tag der Arbeit',
         name: 'Labour Day',
         regions: const <String>[],
       ),
       (
-        day: DateTime(year, 7, 1),
+        day: DateTime(year, 7),
         localName: 'Sommertag',
         name: 'Summer day',
         regions: const <String>[],

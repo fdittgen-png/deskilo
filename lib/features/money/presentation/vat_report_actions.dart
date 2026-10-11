@@ -12,22 +12,22 @@ import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/date_text.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
 import '../domain/invoice_legal.dart';
+import '../domain/report_data.dart';
 import '../domain/vat_regime.dart';
 import '../domain/vat_report.dart';
 import '../domain/vat_tax_point.dart';
-import 'vat_tax_point_labels.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
-import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
-import '../domain/report_data.dart';
-import '../../../core/time/date_text.dart';
+import 'report_strings_l10n.dart';
+import 'vat_tax_point_labels.dart';
 
 /// #2355 — the basis a space declares on: its [country]'s tax point, or
 /// the option its owner chose in [invoiceLegal].
@@ -162,7 +162,7 @@ Future<void> showVatReport(
   if (!context.mounted) return;
   final data = _vatReportData(context, ref, report);
   final rendered =
-      renderLetterDoc(context, ref, docId: 'vat', data: data, language: '');
+      renderLetterDoc(context, ref, docId: 'vat', data: data);
   final title = l10n?.reportDocVat ?? 'VAT report';
   await runReportActions(
     context,
@@ -174,7 +174,7 @@ Future<void> showVatReport(
       final pdf = await letterDocPdf(context, ref,
           report: rendered,
           title: title,
-          layoutXml: letterLayoutXml(ref, docId: 'vat', language: ''),
+          layoutXml: letterLayoutXml(ref, docId: 'vat'),
           data: data);
       return (bytes: pdf.bytes, fileName: '${_stem(report)}.pdf');
     },

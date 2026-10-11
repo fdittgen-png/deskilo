@@ -2,12 +2,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../../core/ui/app_snack.dart';
 
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/booking_gate.dart';
@@ -222,7 +222,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
   @override
   void initState() {
     super.initState();
-    _startReaders();
+    unawaited(_startReaders());
   }
 
   /// NFC first, camera second: the RFID reader-mode session must be

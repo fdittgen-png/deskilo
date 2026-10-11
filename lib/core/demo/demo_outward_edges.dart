@@ -21,10 +21,10 @@
 import 'dart:typed_data';
 
 import '../backend/schema_version.dart';
+import '../files/file_types.dart';
 import '../instance/schema_compatibility.dart';
 import '../push/push_connector.dart';
 import '../push/push_endpoint_repository.dart';
-import '../files/file_types.dart';
 import '../share/file_sharer.dart';
 
 /// Everything a session was asked to send outwards, in order.

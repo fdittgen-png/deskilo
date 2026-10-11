@@ -14,7 +14,7 @@ void main() {
     expect(periodOfPayment(DateTime(2026, 1, 31)), '2026-01');
     expect(periodOfPayment(DateTime(2026, 2, 3)), '2026-02');
     expect(periodOfPayment(DateTime(2026, 12, 9)), '2026-12');
-    expect(periodOfPayment(DateTime(2027, 9, 1)), '2027-09',
+    expect(periodOfPayment(DateTime(2027, 9)), '2027-09',
         reason: 'a single-digit month is padded, or the server refuses it');
   });
 
@@ -47,7 +47,7 @@ void main() {
           workspaceId: null,
           memberId: 'm-1',
           amountCents: 100,
-          paidOn: DateTime(2026, 1, 1))),
+          paidOn: DateTime(2026))),
       'workspace',
     );
     expect(
@@ -55,7 +55,7 @@ void main() {
           workspaceId: 'ws-1',
           memberId: null,
           amountCents: 100,
-          paidOn: DateTime(2026, 1, 1))),
+          paidOn: DateTime(2026))),
       'member',
     );
     for (final cents in [null, 0, -100]) {
@@ -64,7 +64,7 @@ void main() {
             workspaceId: 'ws-1',
             memberId: 'm-1',
             amountCents: cents,
-            paidOn: DateTime(2026, 1, 1))),
+            paidOn: DateTime(2026))),
         'amount',
         reason: 'amount $cents',
       );

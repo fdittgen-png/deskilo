@@ -5,16 +5,18 @@
 // what still blocks it, the database administrators, and the assistants'
 // OAuth clients. The server decides who may (0340 `instance_*`); this
 // screen only shows what it answered and asks for what the person chose.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
 import '../domain/instance_operator.dart';
 import '../domain/mcp_onboarding.dart';
 import '../providers/assistant_setup_providers.dart';
@@ -40,7 +42,7 @@ class _InstanceAssistantsScreenState
   @override
   void initState() {
     super.initState();
-    _load();
+    unawaited(_load());
   }
 
   Future<void> _load() async {
@@ -83,7 +85,7 @@ class _InstanceAssistantsScreenState
     setState(() => _busy = true);
     try {
       await action();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('mcp', message, error: e, stackTrace: st);
       if (mounted) {
         final l10n = AppLocalizations.of(context);

@@ -270,7 +270,7 @@ void main() {
           _snapshot(_reservation(), spaceName: '  ', workspaceName: 'Venue')));
       expect(props['SUMMARY'], 'Venue');
       final p2 = parseIcs(serializeCalendarFile(
-          _snapshot(_reservation(), spaceName: 'A1', workspaceName: '')));
+          _snapshot(_reservation(), workspaceName: '')));
       expect(p2.containsKey('LOCATION'), isFalse);
     });
   });

@@ -8,8 +8,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
 import '../../providers/workspace_application_providers.dart';
-import '../widgets/workspace_application_thread.dart';
 import '../application_status_label.dart';
+import '../widgets/workspace_application_thread.dart';
 
 /// Account history: reachable with no active membership, including refusals.
 class WorkspaceApplicationsScreen extends ConsumerStatefulWidget {

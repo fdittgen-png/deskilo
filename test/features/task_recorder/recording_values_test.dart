@@ -85,9 +85,10 @@ void main() {
       'value it is a new one', () async {
     await c.start(scope: canaryScope, captureValues: true);
     StepValues v(String s) => StepValues.of({'value': TextValue(s)});
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'));
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'));
-    c.record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('b'));
+    c
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'))
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('a'))
+      ..record(RecorderActions.uiCommitField, target: 'unkeyed', values: v('b'));
     final values = [for (final s in c.snapshot!.steps) s.values];
     expect(values, [v('a'), v('b')]);
   });
@@ -112,12 +113,13 @@ void main() {
   test('the readable transcript carries the values, redacted ones only as '
       'their length', () async {
     await c.start(scope: canaryScope, captureValues: true);
-    c.record(
+    c
+      ..record(
       RecorderActions.selectDate,
       payload: {'date_relation': 'today'},
       values: date('2026-10-06'),
-    );
-    c.record(
+    )
+      ..record(
       RecorderActions.uiCommitField,
       target: 'unkeyed',
       values: StepValues.of({'value': const RedactedValue(7)}),

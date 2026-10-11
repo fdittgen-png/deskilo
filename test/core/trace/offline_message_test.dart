@@ -19,7 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 const _offline = 'No connection — nothing was sent. Try again when you are '
     'back online.';
 
-Future<void> pumpGuarded(WidgetTester tester, Object thrown) async {
+Future<void> pumpGuarded(WidgetTester tester, Exception thrown) async {
   await tester.pumpWidget(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -55,7 +55,7 @@ void main() {
 
   testWidgets('a real failure keeps its own message — a mis-classified '
       'fault is worse than a noisy list', (tester) async {
-    await pumpGuarded(tester, StateError('the server refused'));
+    await pumpGuarded(tester, Exception('the server refused'));
     expect(find.textContaining('Something went wrong'), findsOneWidget);
     expect(find.text(_offline), findsNothing);
   });

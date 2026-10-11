@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/vat/supply_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../../../core/vat/supply_class.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 

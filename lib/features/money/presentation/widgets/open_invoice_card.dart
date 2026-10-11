@@ -2,12 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/accounting_view.dart';
-import '../../domain/billing_rules.dart';
-import '../../domain/invoice.dart';
-import '../invoice_actions.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -15,8 +9,14 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/accounting_view.dart';
+import '../../domain/billing_rules.dart';
 import '../../domain/dunning.dart';
+import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_actions.dart';
 import '../invoice_journey.dart';
 import 'invoice_journey_view.dart';
 

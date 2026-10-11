@@ -27,7 +27,7 @@ class _WebOfflineTool implements OfflineTool {
       final navigator = web.window.navigator;
       if (!(navigator as JSObject).has('serviceWorker')) return null;
       return navigator.serviceWorker;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'no service worker container',
@@ -80,7 +80,7 @@ class _WebOfflineTool implements OfflineTool {
       if (mine == null) return OfflineToolState.off;
       return await _request(mine, 'state')
           ? OfflineToolState.ready : OfflineToolState.failed;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'offline state unknown',
@@ -98,7 +98,7 @@ class _WebOfflineTool implements OfflineTool {
       final mine = await c.register(_script.toJS).toDart;
       return await _request(mine, 'keep')
           ? OfflineToolState.ready : OfflineToolState.failed;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'offline copy refused',
@@ -119,7 +119,7 @@ class _WebOfflineTool implements OfflineTool {
         if (!(await mine.unregister().toDart).toDart) return OfflineToolState.failed;
       }
       return OfflineToolState.off;
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'offline copy not removed',

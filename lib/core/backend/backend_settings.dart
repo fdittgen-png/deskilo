@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -462,7 +462,7 @@ Future<BackendProbeReport> probeBackend(
       stackTrace: st,
     );
     return classifyProbeError(e);
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'backend',
       'probe could not reach the endpoint',

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/system_columns.dart';
 import '../../../core/i18n/format_prefs.dart';
 import 'personal_info.dart';
-import '../../../core/data/system_columns.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
 /// times with this single constant: the editor's `maxLength`, the

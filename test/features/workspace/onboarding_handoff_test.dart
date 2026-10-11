@@ -2,12 +2,12 @@
 // #1654: create/join activate the returned workspace, never the first/default
 // row. A late join cannot select anything after its account or target changes.
 import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
-import '../../helpers/fake_reservation_repository.dart';
 import 'package:deskilo/app/entry_intent.dart';
 import 'package:deskilo/app/entry_intents.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/presentation/screens/onboarding_screen.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 class HeldJoin extends FakeWorkspaceRepository {
@@ -23,7 +25,7 @@ class HeldJoin extends FakeWorkspaceRepository {
     serverDefaultWorkspaceId = 'ws-1';
   }
   Completer<void>? gate;
-  Object? failure;
+  Exception? failure;
   @override
   Future<String> joinWorkspace(String code) async {
     await gate?.future;
@@ -149,7 +151,7 @@ void main() {
 
   testWidgets('a late refusal does not show an error on the replacement context',
       (tester) async {
-    final repo = HeldJoin()..gate = Completer<void>()..failure = StateError('refused');
+    final repo = HeldJoin()..gate = Completer<void>()..failure = Exception('refused');
     final auth = FakeAuthRepository.signedIn();
     await pumpStart(tester, repo, auth: auth);
     await join(tester);

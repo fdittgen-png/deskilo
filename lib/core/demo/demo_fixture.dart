@@ -13,28 +13,28 @@
 //     any real person reaches this file, and none ever may;
 //   * **it is a production-looking workspace**, because a visitor should
 //     see what the product looks like in use, not a development strip.
+import '../../features/workspace/domain/bi_saved_view.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
+import 'data/deployment_repository.dart';
 import 'data/device_prefs.dart';
 import 'data/event_repository.dart';
-import 'demo_clock.dart';
 import 'data/floor_plan_repository.dart';
-import 'data/money_repository.dart';
-import 'data/profile_repository.dart';
-import 'data/deployment_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
-import 'data/public_directory_repository.dart';
-import '../../features/workspace/domain/bi_saved_view.dart';
+import 'data/money_repository.dart';
 import 'data/notification_service.dart';
+import 'data/profile_repository.dart';
+import 'data/public_directory_repository.dart';
 import 'data/realtime_sync.dart';
 import 'data/reservation_repository.dart';
 import 'data/stores.dart';
 import 'data/workspace_fields_repository.dart';
-import 'data/workspace_roles_repository.dart';
 import 'data/workspace_repository.dart';
+import 'data/workspace_roles_repository.dart';
+import 'demo_clock.dart';
 import 'demo_dataset.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
@@ -46,9 +46,9 @@ import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
-import 'seed/demo_twin_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_space_seed.dart';
+import 'seed/demo_twin_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
 /// subject is implicit.

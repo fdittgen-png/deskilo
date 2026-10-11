@@ -125,7 +125,7 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
     });
     try {
       await ref.read(authRepositoryProvider).setBadgePin(_pin.text);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // #1086 — `_busy` was only ever cleared by the pop, so a failure
       // here left the spinner up and the button disabled for good.
       TraceLogger.instance.warn(
@@ -155,7 +155,7 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
     });
     try {
       await ref.read(authRepositoryProvider).clearBadgePin();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // #1086 — see [_save].
       TraceLogger.instance.warn(
         'auth',

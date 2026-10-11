@@ -3,11 +3,11 @@
 // What a person chose inside one workspace — the floor they browse, the plan
 // spot they jumped to, the money period, a wizard in progress — is not
 // carried into another workspace they switch to.
+import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/providers/money_face_controller.dart';
 import 'package:deskilo/features/money/providers/money_focus_controller.dart';
 import 'package:deskilo/features/plan/providers/plan_focus_controller.dart';
 import 'package:deskilo/features/reservations/providers/browsed_level.dart';
-import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
-import '../../domain/space_act.dart';
 import '../../domain/picked_time.dart';
+import '../../domain/space_act.dart';
 import '../../domain/walk_up_window.dart';
 import 'booking_range_text.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/theme/app_typography.dart';
 
 /// THE action + derived-period core of the kiosk one-sheet (#529),
 /// extracted for #622 so the app's scan flow offers the SAME options

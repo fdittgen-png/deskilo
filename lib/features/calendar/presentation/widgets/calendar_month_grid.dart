@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'calendar_item_row.dart';
-import '../../../../core/time/date_text.dart';
 
 /// #818 — the month as a SELECTOR with a glance: one compact cell per
 /// day, up to three markers under the number (one per group that has
@@ -49,7 +49,7 @@ class CalendarMonthGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final daysInMonth = DateUtils.getDaysInMonth(month.year, month.month);
-    final leading = DateTime(month.year, month.month, 1).weekday - 1;
+    final leading = DateTime(month.year, month.month).weekday - 1;
     final rows = ((leading + daysInMonth) / 7).ceil();
     final weekdayFormat = DateFormat.E(locale);
     return Padding(

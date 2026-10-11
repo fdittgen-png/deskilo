@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/seat.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// The check-in bottom sheets of the live plan, extracted from
 /// PlanScreen (#408 grew it past its length budget). Pure UI — the

@@ -8,9 +8,9 @@
 // one reader of that map; nothing else parses a hex string. Pure Dart:
 // colours are ARGB integers here, `Color` is the presentation's.
 
+import '../../../core/data/json_reader.dart';
 import 'workspace.dart';
 import 'workspace_feature.dart';
-import '../../../core/data/json_reader.dart';
 
 /// #2313 — whether [space] itself has branding on: ITS flags, not the
 /// active space's — the Me list and the entry show several at once.

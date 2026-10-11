@@ -24,7 +24,7 @@ void main() {
   });
 
   group('resolvePresence', () {
-    final now = DateTime.utc(2026, 7, 11, 12, 0, 0);
+    final now = DateTime.utc(2026, 7, 11, 12);
 
     test('seen 4:59 ago is online', () {
       expect(

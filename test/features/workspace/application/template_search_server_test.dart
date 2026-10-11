@@ -53,7 +53,7 @@ void main() {
 
   test('no feature requirement: the server is not asked', () async {
     final workspace = _CountingWorkspace()..templates.addAll([_a, _b]);
-    final server = FakeTemplateSearchRepository(templates: const []);
+    final server = FakeTemplateSearchRepository();
     await TemplateSearch(workspace, server).run(
       capabilities: ['policy.twoApprovals'],
       freeWords: const [],

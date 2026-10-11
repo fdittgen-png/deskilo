@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../notifications/notification_providers.dart';
+import 'push_connector.dart';
 import 'push_providers.dart';
 import 'push_service.dart';
-import 'push_connector.dart';
 
 /// Push pipeline status line for Settings (#424/#428): FCM registered,
 /// or not-configured with the owner-facing fix — the field had ZERO

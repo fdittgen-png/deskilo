@@ -18,7 +18,7 @@ void main() {
         from: '2026-07', to: '2026-09', currency: 'EUR',
         invoicedCents: 185000, creditNotesCents: 12000,
         paymentsMatchedCents: 160000, paymentsReceivedCents: 160000,
-        reimbursedCents: 8640, creditsGrantedCents: 0,
+        reimbursedCents: 8640,
         members: [
           StatusMemberRow(memberId: 'm1', name: 'Ma Petite Entreprise', memberNumber: 'M-0001', subscriptionPct: 50, invoicedCents: 30000, paidCents: 30000),
         ],

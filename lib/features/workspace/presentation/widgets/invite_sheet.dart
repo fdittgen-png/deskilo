@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/ui/app_snack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,15 +8,16 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
+import '../../application/assign_role.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/invite_uri.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
-import '../../application/assign_role.dart';
 import 'invite_roles_picker.dart';
 
 /// The five help/app languages, by endonym — the invitee reads the

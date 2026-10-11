@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'confirm_identity.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_spacing.dart';
@@ -23,6 +22,7 @@ import '../domain/mcp_context.dart';
 import '../providers/assistant_setup_providers.dart';
 import '../providers/mcp_providers.dart';
 import 'assistant_setup_labels.dart';
+import 'confirm_identity.dart';
 import 'connect_assistant_screen.dart';
 import 'mcp_operation_labels.dart';
 
@@ -91,7 +91,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
     final McpPolicy policy;
     try {
       policy = await ref.read(mcpPolicyProvider(scope).future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // trace-exempt: the step already reads "could not be asked"; the
       // snack says the same and nothing was sent.
       debugPrintStack(stackTrace: st, label: '$e');
@@ -147,7 +147,6 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
     final unavailable = InlineBanner(
       key: const ValueKey('assistant-setup-unavailable'),
       icon: Icons.cloud_off_outlined,
-      severity: InlineBannerSeverity.error,
       text:
           l10n?.mcpNextUnavailable ??
           'The server could not answer. Nothing is assumed; try again later.',

@@ -18,15 +18,15 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
-import '../../domain/workspace_feature.dart';
 import '../widgets/role_editor_sheet.dart';
 import '../widgets/role_holders_section.dart';
 import 'roles_screen_labels.dart';
-import '../../../task_recorder/domain/action_registry.dart';
-import '../../../task_recorder/presentation/recorder_seam.dart';
 
 class RolesOfSpaceScreen extends ConsumerStatefulWidget {
   const RolesOfSpaceScreen({super.key});

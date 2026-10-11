@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
@@ -13,7 +14,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/local_setup_providers.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
-import '../../../../core/help/guide_site.dart';
 
 /// Restore only the dismissal for the immutable scope rendered by the hub.
 VoidCallback? gettingStartedReopen(WidgetRef ref, String? key) {

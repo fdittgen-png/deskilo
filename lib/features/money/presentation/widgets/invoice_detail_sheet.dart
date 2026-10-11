@@ -1,27 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../events/presentation/widgets/event_validation_trail.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/einvoice_gateway.dart';
+import '../../../events/presentation/widgets/event_validation_trail.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
+import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
-import '../../providers/money_providers.dart';
-import '../invoice_journey.dart';
 import '../../domain/invoice_line_text.dart';
-import '../report_strings_l10n.dart';
-import '../invoice_status.dart';
-import '../period_label.dart';
-import 'invoice_journey_view.dart';
+import '../../providers/money_providers.dart';
 import '../dunning_hold_actions.dart';
 import '../invoice_actions.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../invoice_journey.dart';
+import '../invoice_status.dart';
+import '../period_label.dart';
+import '../report_strings_l10n.dart';
+import 'invoice_journey_view.dart';
 import 'invoice_sheet_actions.dart';
 import 'reminder_evidence_list.dart';
 

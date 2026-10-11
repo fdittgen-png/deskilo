@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/privacy/privacy_policy.dart';
-import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
+import 'package:deskilo/features/profile/domain/privacy_notice.dart';
+import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/domain/profile_repository.dart';
+import 'package:deskilo/features/profile/domain/rights_request.dart';
 
 import 'fixture_clock.dart';
-import 'package:deskilo/features/profile/domain/privacy_notice.dart';
-import 'package:deskilo/features/profile/domain/rights_request.dart';
 
 /// In-memory [ProfileRepository] for widget/unit tests (#223).
 class FakeProfileRepository implements ProfileRepository {

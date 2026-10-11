@@ -4,10 +4,10 @@
 // requires in an audit (art. L47 A-I du LPF, arrêté du 29 juillet 2013).
 // Not XML: a tab-separated flat file of accounting ENTRIES, which is why —
 // unlike SAF-T — it cannot avoid account numbers.
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _company = InvoiceParty(
@@ -220,8 +220,8 @@ void main() {
 
   test('entries are numbered per journal and ordered oldest first', () {
     final rows = _rows(invoices: [
-      _invoice(number: 'INV-LATE', issuedAt: DateTime(2026, 9, 1)),
-      _invoice(number: 'INV-EARLY', issuedAt: DateTime(2026, 6, 1)),
+      _invoice(number: 'INV-LATE', issuedAt: DateTime(2026, 9)),
+      _invoice(number: 'INV-EARLY', issuedAt: DateTime(2026, 6)),
     ]);
 
     expect(rows.first['PieceRef'], 'INV-EARLY');
@@ -232,8 +232,8 @@ void main() {
   test('#927 — two exports of overlapping ranges carry the SAME entry '
       'number for the same entry: it is derived from the document, not '
       'counted per file', () {
-    final early = _invoice(number: 'INV-EARLY', issuedAt: DateTime(2026, 6, 1));
-    final late = _invoice(number: 'INV-LATE', issuedAt: DateTime(2026, 9, 1));
+    final early = _invoice(number: 'INV-EARLY', issuedAt: DateTime(2026, 6));
+    final late = _invoice(number: 'INV-LATE', issuedAt: DateTime(2026, 9));
     final halfYear = _rows(invoices: [early]);
     final fullYear = _rows(invoices: [early, late]);
     expect(halfYear.first['EcritureNum'], fullYear.first['EcritureNum']);

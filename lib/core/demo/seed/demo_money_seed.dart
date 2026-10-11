@@ -11,10 +11,10 @@ import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/usage_record.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../../features/reservations/domain/reservation.dart';
+import '../../time/date_text.dart';
 import '../data/money_repository.dart';
 import 'demo_history_seed.dart';
 import 'demo_people_seed.dart';
-import '../../time/date_text.dart';
 
 String _period(DateTime d) => yearMonth(d.year, d.month);
 
@@ -197,7 +197,7 @@ void seedDemoMoneyStory(
 
   // A recurring expense Chiara advances every month, and this month's
   // occurrence waiting for her confirmation.
-  final firstOfMonth = DateTime(now.year, now.month, 1);
+  final firstOfMonth = DateTime(now.year, now.month);
   money.expenseSchedules.add(
     ExpenseSchedule(
       id: 'demo-schedule-cleaning',
@@ -205,7 +205,7 @@ void seedDemoMoneyStory(
       memberId: 'member-3',
       title: 'Cleaning service',
       amountCents: 12000,
-      startsOn: DateTime(now.year - 1, 1, 1),
+      startsOn: DateTime(now.year - 1),
       unit: ScheduleUnit.month,
       status: ScheduleStatus.active,
       occurrencesDone: 12 + now.month - 1,

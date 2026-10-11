@@ -1,37 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
-import '../../../core/validation/pending_validation.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/enum_wire.dart';
+import '../../../core/data/system_columns.dart';
+import '../../../core/time/date_text.dart';
 import '../../../core/time/work_hours.dart';
-import '../domain/invitation_answer.dart';
-import '../domain/booking_granularity.dart';
-import '../domain/booking_policies.dart';
-import '../domain/new_member_defaults.dart';
-import '../domain/closure_day.dart';
-import '../domain/public_holidays.dart';
+import '../../../core/validation/pending_validation.dart';
 import '../../money/domain/payment_terms.dart';
 import '../../profile/domain/personal_info.dart';
+import '../domain/booking_granularity.dart';
+import '../domain/booking_policies.dart';
+import '../domain/closure_day.dart';
+import '../domain/feature_flags_write.dart';
+import '../domain/invitation_answer.dart';
+import '../domain/managed_access.dart';
 import '../domain/member.dart';
 import '../domain/member_badge.dart';
+import '../domain/new_member_defaults.dart';
 import '../domain/overage_policy.dart';
 import '../domain/payment_instructions.dart';
+import '../domain/public_holidays.dart';
+import '../domain/site.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_branding.dart';
-import '../domain/workspace_feature.dart';
-import '../domain/workspace_repository.dart';
-import '../domain/feature_flags_write.dart';
-import '../domain/workspace_settings_save.dart';
-import 'supabase_workspace_provenance.dart';
-import 'conversation_api.dart';
 import '../domain/workspace_document.dart';
-import '../domain/managed_access.dart';
+import '../domain/workspace_feature.dart';
 import '../domain/workspace_overview.dart';
-import '../domain/site.dart';
-import '../../../core/data/system_columns.dart';
-import '../../../core/data/enum_wire.dart';
+import '../domain/workspace_repository.dart';
+import '../domain/workspace_settings_save.dart';
+import 'conversation_api.dart';
+import 'supabase_workspace_provenance.dart';
 import 'supabase_workspace_templates.dart';
-import '../../../core/time/date_text.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance

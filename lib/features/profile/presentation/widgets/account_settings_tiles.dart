@@ -72,7 +72,7 @@ Future<void> _pickPhoto(
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
     AppSnack.success(context, l10n?.profilePhotoSaved ?? 'Photo updated');
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('profile photo upload failed: $e\n$st');
     TraceLogger.instance.error(
       'profile',
@@ -99,7 +99,7 @@ Future<void> _removePhoto(
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
     AppSnack.success(context, l10n?.profilePhotoRemoved ?? 'Photo removed');
-  } catch (e, st) {
+  } on Object catch (e, st) {
     debugPrint('profile photo removal failed: $e\n$st');
     TraceLogger.instance.error(
       'profile',
@@ -204,7 +204,6 @@ List<Widget> accountSettingsTiles(
           userId: myProfile.id,
           name: myProfile.displayName,
           hasAvatar: myProfile.hasAvatar,
-          radius: 20,
         ),
         title: Text(l10n?.profilePhotoTitle ?? 'Photo'),
         subtitle: Text(

@@ -32,7 +32,7 @@ class GuardFederationPort implements FederationPort {
     final FederationAuthority? current;
     try {
       current = await authority();
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       // trace-exempt: the discovery answer is not shown; its absence is.
       Error.throwWithStackTrace(
         const FederationStartFailure(FederationFailure.network),

@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../providers/local_setup_providers.dart';
 import '../../domain/local_setup.dart';
+import '../../providers/local_setup_providers.dart';
 import 'workspace_readiness_card.dart';
 
 /// #1657 — a validation event type, as its label, from its stored word.

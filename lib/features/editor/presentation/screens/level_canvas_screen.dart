@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/canvas_controls.dart';
@@ -18,11 +20,12 @@ import '../../../plan/domain/floor_plan_rules.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
-import '../delete_confirm_text.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../../plan/presentation/widgets/floor_plan_painter.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../delete_confirm_text.dart';
+import '../plan_media_write.dart';
 import '../widgets/editor_selection_bar.dart';
 import '../widgets/editor_tool_hint.dart';
 import '../widgets/editor_toolbar.dart';
@@ -31,8 +34,6 @@ import '../widgets/seat_properties_sheet.dart';
 import '../widgets/space_properties_sheet.dart';
 import '../widgets/text_prompt_dialog.dart';
 import 'editor_tool.dart';
-import '../plan_media_write.dart';
-import '../../../../core/ids/request_id.dart';
 
 /// Canvas dimensions in grid cells and the logical cell size at scale 1 —
 /// aliases of the shared [PlanCanvasMetrics] so the editor can never drift
@@ -593,9 +594,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                 tooltip: l10n?.editorBackgroundImage ?? 'Background image',
                 onSelected: (v) {
                   if (v == 'set') {
-                    _pickBackground(context);
+                    unawaited(_pickBackground(context));
                   } else {
-                    _removeBackground(context);
+                    unawaited(_removeBackground(context));
                   }
                 },
                 itemBuilder: (context) => [

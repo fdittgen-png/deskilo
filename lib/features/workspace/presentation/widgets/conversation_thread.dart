@@ -1,35 +1,37 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../directory/domain/group_details.dart';
+import '../../../directory/domain/message_marks.dart';
+import '../../../directory/domain/messenger.dart';
+import '../../../directory/presentation/messenger/message_actions_sheet.dart';
+import '../../../directory/presentation/messenger/message_marks.dart';
+import '../../../directory/providers/message_marks_providers.dart';
+import '../../../directory/providers/messenger_providers.dart';
+import '../../../members/presentation/member_profile_link.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
-import '../../../members/presentation/member_profile_link.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'conversation_bubble.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
 import 'message_reach_sheet.dart';
-import '../../../../core/capture/capture_shield.dart';
-import '../../../directory/domain/messenger.dart';
-import '../../../directory/presentation/messenger/message_actions_sheet.dart';
-import '../../../directory/presentation/messenger/message_marks.dart';
-import '../../../directory/domain/group_details.dart';
-import '../../../directory/domain/message_marks.dart';
-import '../../../directory/providers/message_marks_providers.dart';
-import '../../../directory/providers/messenger_providers.dart';
 
 /// A conversation, by id (#687) — the thread behind a row of the
 /// messaging centre, for a direct exchange or a group alike.
@@ -152,7 +154,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
   void _messageActions(MemberNote note, {required bool mine}) {
     final marks =
         ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
-    showMessageActions(
+    unawaited(showMessageActions(
       context,
       ref,
       MessageRef(
@@ -184,7 +186,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           ..invalidate(conversationMessagesProvider(widget.conversationId))
           ..invalidate(messageMarksProvider(_marksKey));
       },
-    );
+    ));
   }
 
   /// A tap on a reaction under a bubble toggles mine.
@@ -214,7 +216,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           .recordScreenCapture(
               MessageContextKind.space, widget.conversationId);
       ref.invalidate(conversationMessagesProvider(widget.conversationId));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('messaging', 'record screen capture failed',
           error: e, stackTrace: st);
     }
@@ -239,7 +241,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         _noMoreEarlier = page.isEmpty;
         _loadingEarlier = false;
       });
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('messaging', 'load earlier failed',
           error: e, stackTrace: st);
       if (mounted) setState(() => _loadingEarlier = false);
@@ -278,14 +280,14 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       final before = prev?.value?.length ?? 0;
       final after = next.value?.length ?? 0;
       if (after > before && before > 0) {
-        ref
+        unawaited(ref
             .read(workspaceRepositoryProvider)
             .markConversationRead(conversationId)
             .then((_) => ref.invalidate(conversationsProvider))
             .catchError((Object e, StackTrace st) {
           TraceLogger.instance.warn('messaging', 're-mark read failed',
               error: e, stackTrace: st);
-        });
+        }));
       }
     });
     final conversation = (ref.watch(conversationsProvider).value ?? const [])

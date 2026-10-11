@@ -5,10 +5,9 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_radius.dart';
 import '../core/theme/contrast.dart';
 import '../core/theme/contrast_audit.dart';
-
-import '../core/theme/app_radius.dart';
 import '../core/theme/shell_metrics.dart';
 
 /// DesKilo brand palette — muted burnt orange (spec §14, decided 2026-07-07).
@@ -264,7 +263,6 @@ abstract final class DeskiloTheme {
         colors: _colorsFor(brand),
         blendLevel: 8,
         subThemesData: _subThemes,
-        useMaterial3: true,
       ),
       animations: animations,
     );
@@ -276,7 +274,6 @@ abstract final class DeskiloTheme {
         colors: _colorsFor(brand).toDark(28),
         blendLevel: 22,
         subThemesData: _subThemes,
-        useMaterial3: true,
       ),
       animations: animations,
     );
@@ -307,7 +304,6 @@ abstract final class DeskiloTheme {
         // custom pulls the scheme's appBarColor (the warm container tint).
         appBarStyle: FlexAppBarStyle.custom,
         subThemesData: _subThemes,
-        useMaterial3: true,
       ),
       animations: animations,
     );

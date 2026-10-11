@@ -67,9 +67,9 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
     super.initState();
     final preset = widget.scannedUid;
     if (preset != null) {
-      _onUid(preset);
+      unawaited(_onUid(preset));
     } else {
-      _scan();
+      unawaited(_scan());
     }
   }
 
@@ -78,7 +78,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
     // Unawaited on purpose: dispose cannot await, and the reader is
     // built to survive a stop that is still in flight when the next
     // sheet starts one.
-    _reader.stop();
+    unawaited(_reader.stop());
     _pin.dispose();
     _pinFocus.dispose();
     super.dispose();

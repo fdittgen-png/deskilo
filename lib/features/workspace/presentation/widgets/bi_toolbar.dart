@@ -60,6 +60,7 @@ class BiToolbar extends StatelessWidget {
         l10n?.biNotOffered ?? 'not offered by the analyses shown';
     final current = query.current(today);
 
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     DropdownMenuItem<T> item<T>(T value, String label, bool supported) =>
         DropdownMenuItem<T>(
           value: value,

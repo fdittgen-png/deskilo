@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../widgets/connected_activity.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
@@ -14,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../providers/account_activity_providers.dart';
+import '../widgets/connected_activity.dart';
 import '../widgets/personal_payment_provider.dart';
 
 /// Personal history is independent of whichever workspace happens to be open.

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_capability.dart';
 import '../../domain/accounting_format.dart';

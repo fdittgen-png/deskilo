@@ -85,7 +85,7 @@ WorkspaceEvent _payment({
       createdAt: createdAt ?? kTestNow.add(const Duration(hours: 1)),
     );
 
-const _rules = DunningRules(levels: 3, firstAfterDays: 14, betweenDays: 14);
+const _rules = DunningRules();
 
 InvoiceJourney _journey(
   Invoice invoice, {

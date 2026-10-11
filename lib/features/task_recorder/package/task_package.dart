@@ -261,7 +261,7 @@ TaskPackageReadResult readTaskPackage(
   final ZipDirectory directory;
   try {
     directory = ZipDirectory()..read(InputMemoryStream(bytes));
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // A malformed archive is a refusal; only the error's type is traced,
     // never its message, which may quote the untrusted file.
     TraceLogger.instance.warn(
@@ -325,7 +325,7 @@ TaskPackageReadResult readTaskPackage(
             ? TaskPackageIssueCode.expandedTooLarge
             : TaskPackageIssueCode.entryTooLarge,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'package refused: bad entry (${e.runtimeType})',

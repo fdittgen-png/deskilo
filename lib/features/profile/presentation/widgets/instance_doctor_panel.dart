@@ -49,7 +49,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
       if (!mounted) return;
       setState(() => _findings = findings);
       widget.onChecked?.call(findings);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('instance', 'doctor could not run', error: e, stackTrace: st);
       if (mounted) {

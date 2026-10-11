@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 //
 // The WEB shell's navigation: a hamburger drawer instead of the bottom
 // bar and its raised Reserve button. A browser window has the width a
@@ -7,27 +6,30 @@ import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 // drawer keeps the whole height for content and puts EVERY destination
 // — the tabs, the Reserve hub, the administration screens, the account
 // — grouped by task. Native platforms keep the bar untouched.
-import 'package:flutter/material.dart';
-import '../../core/l10n/lexicon.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:go_router/go_router.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../core/l10n/lexicon.dart';
 import '../../core/navigation/navigation_style.dart';
-import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_radius.dart';
-import '../../l10n/app_localizations_en.dart';
-import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
-import '../../features/workspace/domain/workspace_feature.dart';
-import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
-import '../../features/workspace/domain/workspace_permission.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
+import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
-import '../../l10n/app_localizations.dart';
-import 'shell_destinations.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
+import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
+import '../../features/workspace/presentation/widgets/workspace_reports.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_en.dart';
+import 'shell_destinations.dart';
 
 part 'shell_drawer.g.dart';
 
@@ -112,7 +114,7 @@ class ShellDrawer extends ConsumerWidget {
     void go(String route, {bool push = true}) {
       if (!permanent) Navigator.of(context).pop();
       if (push) {
-        context.push(route);
+        unawaited(context.push(route));
       } else {
         context.go(route);
       }

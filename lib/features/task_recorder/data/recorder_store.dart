@@ -49,10 +49,10 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/recording_sink.dart';
 import '../domain/stored_recording.dart';
-
-export '../domain/stored_recording.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
+
+export '../domain/stored_recording.dart';
 
 /// Byte-level persistence the store appends to.
 abstract interface class RecorderLogBackend {
@@ -212,7 +212,7 @@ class RecorderStore implements RecordingSink {
     final String? text;
     try {
       text = await _backend.read(key);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'could not read a recording (${e.runtimeType})',

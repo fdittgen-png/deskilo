@@ -188,7 +188,7 @@ void main() {
           invoices: invoices,
           matches: const {},
           accounts: const DatevAccounts(),
-          from: DateTime(2026, 1, 1),
+          from: DateTime(2026),
           to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 10, 1, 9),
           consultantNumber: '1234567',

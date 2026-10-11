@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'invoice.dart';
-import '../../../core/vat/place_of_supply.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/vat/place_of_supply.dart';
+import 'invoice.dart';
 
 /// #2354 — one line of the recapitulative statement (EU sales list):
 /// the services a seller reverse-charged (category AE, Directive art. 196)
@@ -121,7 +121,8 @@ String recapitulativeCsv(
     'period,country,vat_number,customer,amount,documents\r\n',
   );
   for (final l in lines) {
-    b.write(
+    b
+      ..write(
       [
         l.period,
         l.country,
@@ -130,8 +131,8 @@ String recapitulativeCsv(
         amount(l.netCents),
         '${l.invoices}',
       ].join(','),
-    );
-    b.write('\r\n');
+    )
+      ..write('\r\n');
   }
   return b.toString();
 }

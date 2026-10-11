@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/invoice.dart';
@@ -200,7 +200,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
                     title: Text(item.memberName),
                     subtitle: Text([
                       for (final l in item.lines)
-                        l.label.isEmpty ? l.kind : l.label,
+                        if (l.label.isEmpty) l.kind else l.label,
                     ].join(' · ')),
                     secondary: Text(wiz.currency.formatMinor(item.totalCents),
                         style: theme.textTheme.titleSmall),

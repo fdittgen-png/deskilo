@@ -1,26 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../event_labels.dart';
-import '../validation_workflow.dart';
-import '../widgets/policy_editor_sheet.dart';
-import '../widgets/validation_policy_card.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart';
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../../workspace/domain/member.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';
-import '../../../task_recorder/domain/action_registry.dart';
-import '../../../task_recorder/presentation/recorder_seam.dart';
+import '../event_labels.dart';
+import '../validation_workflow.dart';
+import '../widgets/policy_editor_sheet.dart';
+import '../widgets/validation_policy_card.dart';
 
 /// Card order: the workspace default first, then the money-ish types the
 /// quorum protocol was built for, then the rest.
@@ -146,7 +146,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
     try {
       await observeTaskSetting(attempt,
           () => ref.read(eventRepositoryProvider).upsertValidationPolicy(result));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('upsert validation policy failed: $e\n$st');
       TraceLogger.instance.error('events', 'upsert validation policy failed',
           error: e, stackTrace: st);

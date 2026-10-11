@@ -1,6 +1,6 @@
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 import 'accounting_amount.dart';
-import '../../../core/data/json_reader.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 /// One VAT rate a workspace charges (0072). A "reduced" rate is not a
@@ -27,6 +27,7 @@ enum VatGroup {
   /// the standard rate — a group because the accountant books it apart.
   excise('excise', 'S', false);
 
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   const VatGroup(this.wire, this.category, this.outsideBase);
   final String wire;
 

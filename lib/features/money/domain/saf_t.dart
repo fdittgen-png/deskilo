@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/money/money_text.dart';
-import '../../../core/text/number_text.dart';
 import 'package:xml/xml.dart';
 
+import '../../../core/money/money_text.dart';
+import '../../../core/text/number_text.dart';
 import 'invoice.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -140,8 +140,8 @@ String buildSafTFile({
     customers.putIfAbsent(invoice.memberId, () => invoice);
   }
 
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element('AuditFile', nest: () {
     // The PT variant has its own namespace and version; an importer
     // keys on these before it reads a single element.

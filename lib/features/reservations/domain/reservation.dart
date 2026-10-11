@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/data/system_columns.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../workspace/domain/booking_granularity.dart';
-import '../../../core/data/system_columns.dart';
 
 part 'reservation.freezed.dart';
 

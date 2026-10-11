@@ -11,8 +11,8 @@ import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
-import 'directory_link_dialog.dart';
 import 'directory_carousel.dart';
+import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'public_workspace_view.dart';
 

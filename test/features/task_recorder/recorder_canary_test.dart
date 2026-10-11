@@ -34,11 +34,12 @@ void main() {
 
       // Stray events a careless call site might send on the way.
       await c.start(scope: canaryScope);
-      c.record(RecorderActions.selectResource,
-          target: kCanaryReservationId, payload: canaryPayload());
-      c.record('members.open_$kCanaryMemberName', payload: canaryPayload());
-      c.unrecorded(surface: kCanaryUrl);
-      c.outcome(null, RecorderOutcomes.bookingConfirmed,
+      c
+        ..record(RecorderActions.selectResource,
+          target: kCanaryReservationId, payload: canaryPayload())
+        ..record('members.open_$kCanaryMemberName', payload: canaryPayload())
+        ..unrecorded(surface: kCanaryUrl)
+        ..outcome(null, RecorderOutcomes.bookingConfirmed,
           payload: canaryPayload());
       await c.stop();
 

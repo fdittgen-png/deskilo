@@ -3,8 +3,8 @@
 // The three screen-polish findings of the 2026-09-13 screenshot review.
 // Each one is the same kind of defect: the screen said a true thing in
 // a form that contradicted the form the screen next to it used.
-import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/profile/presentation/widgets/pair_card.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -80,5 +80,4 @@ const _workspace = Workspace(
   currencyCode: 'EUR',
   timezone: 'Europe/Paris',
   inviteCode: 'GOODCODE22',
-  environment: 'dev',
 );

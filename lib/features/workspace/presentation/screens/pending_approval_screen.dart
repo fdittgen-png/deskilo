@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../directory/presentation/account_portal_entry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/application_requests_entry.dart';
-import '../../../../core/help/guide_site.dart';
 
 /// The waiting room (0052): a freshly joined member is PENDING until the
 /// workspace's validators approve. They see only the workspace name here
@@ -55,7 +55,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
         ..invalidate(floorPlanProvider)
         ..invalidate(targetNamesProvider);
       await ref.read(myMemberProvider.future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Shown as "not updated"; the request itself is untouched.
       TraceLogger.instance.warn('workspace', 'pending status not updated',
           error: e, stackTrace: st);

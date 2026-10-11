@@ -1,45 +1,44 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/act_trace.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../events/providers/event_providers.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/domain/half_day_windows.dart';
-import '../../application/change_reservation.dart';
-import '../../domain/booking_error_text.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
+import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../plan/providers/seat_context_providers.dart';
+import '../../../task_recorder/domain/action_registry.dart'
+    show RecorderActions;
+import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/change_reservation.dart';
+import '../../domain/booking_error_text.dart';
 import '../../domain/own_booking_removal.dart';
 import '../../domain/picked_time.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
-import 'booking_range_text.dart';
-import 'reservation_status_note.dart';
-import 'calendar_file_button.dart';
-import 'series_result_dialog.dart';
 import '../../providers/reservation_providers.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../task_recorder/domain/action_registry.dart'
-    show RecorderActions;
-import '../../../task_recorder/presentation/recorder_seam.dart';
+import 'booking_range_text.dart';
+import 'calendar_file_button.dart';
+import 'reservation_status_note.dart';
+import 'series_result_dialog.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -353,7 +352,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         r,
         scope: choice,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error(
           'reservations',
@@ -434,7 +433,7 @@ class ReservationDetailSheet extends ConsumerWidget {
             ? null
             : window.start.add(const Duration(days: 28)),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('reservation edit failed: $e\n$st');
       TraceLogger.instance.error(
           'reservations',
@@ -488,7 +487,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     // Grids, hours, flexible: anything later the same day works — the
     // picker decides; the day's midnight bounds it.
     final next = day.add(const Duration(days: 1));
-    final midnight = WorkspaceTime.at(next.year, next.month, next.day, 0, 0);
+    final midnight = WorkspaceTime.at(next.year, next.month, next.day);
     return r.endsAt.isBefore(midnight) ? midnight : null;
   }
 
@@ -528,7 +527,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   ) {
     final minutes =
         granularity.snapMinutesOfDay(picked.hour * 60 + picked.minute);
-    return WorkspaceTime.at(day.year, day.month, day.day, 0, 0)
+    return WorkspaceTime.at(day.year, day.month, day.day)
         .add(Duration(minutes: minutes.clamp(0, 24 * 60)));
   }
 
@@ -631,7 +630,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         r,
         end: newEnd,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
           'reservations',
           'reservation end change failed server=${ActTrace.serverAnswer(e)}',

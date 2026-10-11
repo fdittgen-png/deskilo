@@ -23,7 +23,6 @@ void main() {
   const defaultPolicy = ValidationPolicy(
     id: 'vp-2',
     workspaceId: 'ws-1',
-    eventType: null,
     requiredCount: 2,
     adminsMayValidate: false,
     eligibleAdminIds: [],
@@ -96,7 +95,6 @@ void main() {
       const auto = ValidationPolicy(
         id: 'vp-3',
         workspaceId: 'ws-1',
-        eventType: null,
         requiredCount: 1,
         adminsMayValidate: true,
         eligibleAdminIds: [],

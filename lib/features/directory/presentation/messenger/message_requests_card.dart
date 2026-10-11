@@ -31,8 +31,9 @@ class MessageRequestsCard extends ConsumerWidget {
             .respondToMessageRequest(conversation, accept: accept),
       );
       if (!ok) return;
-      ref.invalidate(messageRequestsProvider);
-      ref.invalidate(unifiedInboxProvider);
+      ref
+        ..invalidate(messageRequestsProvider)
+        ..invalidate(unifiedInboxProvider);
     }
 
     return Card(

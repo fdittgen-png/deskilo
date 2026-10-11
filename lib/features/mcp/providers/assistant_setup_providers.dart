@@ -9,11 +9,11 @@ import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/assistant_setup.dart';
 import '../application/mcp_onboarding_commands.dart';
-import '../domain/mcp_client.dart';
 import '../data/supabase_mcp_onboarding_repository.dart';
+import '../domain/mcp_client.dart';
 import '../domain/mcp_connection.dart';
-import '../domain/mcp_onboarding.dart';
 import '../domain/mcp_context.dart';
+import '../domain/mcp_onboarding.dart';
 import 'mcp_providers.dart';
 
 part 'assistant_setup_providers.g.dart';

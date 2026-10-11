@@ -12,7 +12,7 @@ import 'my_finances_screen_test.dart' show invoice, show;
 
 FinanceOverview _two() => FinanceOverview(
   invoices: [
-    invoice('a', ws: 'Office A'),
+    invoice('a'),
     invoice('b', ws: 'Office B'),
   ],
   reminders: [

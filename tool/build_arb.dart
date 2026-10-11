@@ -73,8 +73,8 @@ void main() {
       }
     }
 
-    final out = File('$outputDir/app_$locale.arb');
-    out.writeAsStringSync(encodeArb(merged));
+    final out = File('$outputDir/app_$locale.arb')
+      ..writeAsStringSync(encodeArb(merged));
     stdout.writeln(
       'Wrote ${out.path} (${merged.keys.where((k) => !k.startsWith('@')).length} keys)',
     );

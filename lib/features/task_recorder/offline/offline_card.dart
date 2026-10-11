@@ -4,6 +4,8 @@
 // it says where the offline copy stands as the browser reports it, and
 // lets the person keep it or stop keeping it.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,9 +27,9 @@ class _OfflineToolCardState extends ConsumerState<OfflineToolCard> {
   @override
   void initState() {
     super.initState();
-    ref.read(offlineToolProvider).state().then((s) {
+    unawaited(ref.read(offlineToolProvider).state().then((s) {
       if (mounted) setState(() => _state = s);
-    });
+    }));
   }
 
   Future<void> _run(Future<OfflineToolState> Function() action) async {

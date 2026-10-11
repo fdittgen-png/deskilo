@@ -25,8 +25,8 @@ void main() {
     status = 200;
     corruptReadback = false;
     malformed = false;
-    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
-    server.listen((request) async {
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0)
+      ..listen((request) async {
       expect(request.headers.value('apikey'), 'operator-secret');
       expect(request.headers.value('authorization'), 'Bearer operator-secret');
       final text = await utf8.decoder.bind(request).join();

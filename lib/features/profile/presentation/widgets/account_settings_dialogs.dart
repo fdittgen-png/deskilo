@@ -279,7 +279,7 @@ class _NavigationDialog extends ConsumerWidget {
           key: const ValueKey('account-settings-dialogs-navigation-default'),
           groupValue: current,
           onChanged: (style) {
-            ref.read(navigationStyleControllerProvider.notifier).set(style);
+            unawaited(ref.read(navigationStyleControllerProvider.notifier).set(style));
             if (context.mounted) Navigator.of(context).pop();
           },
           child: Column(

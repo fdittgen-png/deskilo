@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deskilo/core/diagnostics/doctor_support.dart';
 import 'package:deskilo/core/diagnostics/support_evidence.dart';
@@ -21,7 +21,7 @@ Future<int> runSupportDoctor(
   List<DoctorFinding> findings;
   try {
     findings = await examine();
-  } catch (e) {
+  } on Object {
     // trace-exempt: operator export deliberately suppresses sensitive provider
     // errors and stacks; a stable code plus unavailable checks is the result.
     errors.writeln('support_unavailable');
@@ -48,7 +48,7 @@ Future<SupportEvidence?> loadSupportEvidence() async {
         .fold<List<int>>([], (all, chunk) => all..addAll(chunk));
     if (bytes.length > SupportEvidence.maxSourceBytes) return null;
     return SupportEvidence.parse(utf8.decode(bytes));
-  } catch (e) {
+  } on Object {
     // trace-exempt: local file errors/paths are never exported.
     return null;
   }

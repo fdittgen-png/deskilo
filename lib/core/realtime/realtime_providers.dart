@@ -6,8 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import '../../features/plan/providers/floor_plan_providers.dart';
-import '../trace/trace_logger.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../trace/trace_logger.dart';
 import 'invalidation_map.dart';
 import 'realtime_sync.dart';
 
@@ -90,7 +90,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   /// Releases everything a previous build installed. Idempotent — the
   /// dispose callback and the next build both call it.
   void _teardown() {
-    _sub?.cancel();
+    unawaited(_sub?.cancel());
     _sub = null;
     _debounce?.cancel();
     _debounce = null;
@@ -136,7 +136,7 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     if (entries.any((e) => e.bustsPlanCache)) {
       try {
         await ref.read(floorPlanRepositoryProvider).invalidateCache();
-      } catch (e, st) {
+      } on Object catch (e, st) {
         // A cache that refuses to clear must not stop the repaint — the
         // refetch may still be network-true.
         TraceLogger.instance.warn(

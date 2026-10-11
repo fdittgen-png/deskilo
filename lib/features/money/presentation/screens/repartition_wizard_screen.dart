@@ -10,22 +10,22 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/book_repartition.dart';
 import '../../domain/expense_repartition.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/wizard_scaffold.dart';
-import '../../../reservations/providers/reservation_providers.dart';
-import '../../../workspace/domain/member.dart';
-import '../../../../core/format/cents.dart';
-import '../../../../core/time/date_text.dart';
 
 class RepartitionWizardScreen extends ConsumerStatefulWidget {
   const RepartitionWizardScreen({super.key});
@@ -158,8 +158,9 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     // on an auto-disposed async provider that nothing is subscribed to
     // answers `loading` — an empty member pool, so an empty share list,
     // so a Book button that is offered and does nothing (#1532).
-    ref.watch(workspaceMembersProvider);
-    ref.watch(memberNamesProvider);
+    ref
+      ..watch(workspaceMembersProvider)
+      ..watch(memberNamesProvider);
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
     final rule = _effectiveRule();
     final shares = _shares();
@@ -167,7 +168,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     final costComplete = _title.text.trim().isNotEmpty && _cents != null;
 
     final summary = '${currency.formatMinor(_cents ?? 0)} · $_period · ${rule.method.name}';
-    Widget body = switch (_step) {
+    final Widget body = switch (_step) {
       0 => ListView(
           padding: AppSpacing.lgAll,
           children: [
@@ -316,7 +317,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
   static String _shift(String ym, int months) {
     final y = int.parse(ym.substring(0, 4));
     final m = int.parse(ym.substring(5, 7));
-    final d = DateTime(y, m + months, 1);
+    final d = DateTime(y, m + months);
     return yearMonth(d.year, d.month);
   }
 }

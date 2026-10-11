@@ -9,24 +9,24 @@ import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/providers/auth_providers.dart';
 import '../../events/providers/event_providers.dart';
 import '../../members/providers/directory_providers.dart';
+import '../../money/domain/report_data_letters.dart';
 import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
-import '../../money/presentation/report_strings_l10n.dart';
 import '../../money/presentation/report_layout_actions.dart';
+import '../../money/presentation/report_strings_l10n.dart';
 import '../domain/member.dart';
-import '../domain/site.dart';
 import '../domain/overage_policy.dart';
-import '../providers/workspace_providers.dart';
-import 'widgets/badge_manager_dialog.dart';
-import 'widgets/application_comment_dialog.dart';
-import '../../auth/providers/auth_providers.dart';
+import '../domain/site.dart';
 import '../providers/workspace_application_providers.dart';
+import '../providers/workspace_providers.dart';
+import 'widgets/application_comment_dialog.dart';
+import 'widgets/badge_manager_dialog.dart';
 
 export 'member_subscription_action.dart';
 export 'subscription_text.dart';
-import '../../money/domain/report_data_letters.dart';
 
 /// The admin actions on ONE member (#825) — subscription, overage
 /// policy, limits, roles, co-ownership, kiosk, pause, join decisions,
@@ -569,8 +569,9 @@ Future<void> decideMemberJoin(
     return;
   }
   if (!context.mounted || ref.read(authStateProvider).value != account) return;
-  ref.invalidate(workspaceMembersProvider);
-  ref.invalidate(workspaceApplicationsProvider);
+  ref
+    ..invalidate(workspaceMembersProvider)
+    ..invalidate(workspaceApplicationsProvider);
 }
 
 /// Badge manager of one member (0043): the active/revoked badge list
@@ -673,8 +674,9 @@ Future<void> pickOwnHomeSite(
   final sites = await ref.read(sitesOfProvider(member.workspaceId).future);
   if (!context.mounted) return;
   await _pickHomeSiteAmong(context, ref, member, sites);
-  ref.invalidate(myMembershipsProvider);
-  ref.invalidate(myMemberProvider);
+  ref
+    ..invalidate(myMembershipsProvider)
+    ..invalidate(myMemberProvider);
 }
 
 /// The dialog and the write, over a given list of sites.

@@ -109,7 +109,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
         // trace-exempt: shown in the sheet; any other failure rethrows.
         if (!isInvitationTextRefusal(e)) Error.throwWithStackTrace(e, st);
         if (mounted) setState(() => _wordingRefused = true);
-        throw e;
+        Error.throwWithStackTrace(e, st);
       }),
     );
     if (ok && mounted) Navigator.of(context).pop(true);

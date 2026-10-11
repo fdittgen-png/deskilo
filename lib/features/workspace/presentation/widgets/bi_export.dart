@@ -5,28 +5,29 @@
 // and lays it out as a report. A section whose analysis cannot be read is
 // left out of the report and said — never printed with a made-up figure.
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../../../core/files/file_saver.dart';
 import '../../../../core/files/file_names.dart';
+import '../../../../core/files/file_saver.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/domain/invoice_pdf_template.dart';
+import '../../../money/presentation/invoice_documents.dart';
+import '../../../money/presentation/report_layout_actions.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_report_pdf.dart';
 import '../../domain/bi_result.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../../../money/domain/invoice_pdf_template.dart';
-import '../../../money/presentation/invoice_documents.dart';
-import '../../../money/presentation/report_layout_actions.dart';
 import 'bi_dashboard_content.dart';
 import 'bi_module_section.dart' show biModuleViews;
 import 'bi_toolbar.dart' show biPeriodLabel;

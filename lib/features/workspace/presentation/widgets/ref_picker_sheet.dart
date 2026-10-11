@@ -202,7 +202,6 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                     Expanded(
                       child: TextField(
                         key: Key('${widget.keyPrefix}-filter'),
-                        autofocus: false,
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.search),
                           isDense: true,

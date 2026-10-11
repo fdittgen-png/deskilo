@@ -252,9 +252,7 @@ void main() {
         'offered', (tester) async {
       await _pumpDefaults(tester,
           defaults: const NewMemberDefaults(
-              subscriptionPct: 100,
-              overagePolicy: OveragePolicy.blocked,
-              configured: false));
+              ));
 
       expect(find.textContaining('Nothing chosen'), findsOneWidget);
       expect(_controls, findsOneWidget,

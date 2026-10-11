@@ -11,9 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
+import '../application/dunning_hold.dart';
 import '../domain/invoice.dart';
 import '../providers/money_providers.dart';
-import '../application/dunning_hold.dart';
 
 /// #1913 — the reasons a reminder may be held, as the server knows them.
 const _dunningHoldReasons = ['dispute', 'identity_error', 'insolvency', 'other'];

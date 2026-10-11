@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
@@ -8,9 +9,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/social_provider.dart';
-import '../../domain/auth_outcome.dart';
 import '../../application/federation_handoff_controller.dart';
+import '../../domain/auth_outcome.dart';
+import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../widgets/federation_handoff_panel.dart';
 
@@ -57,7 +58,7 @@ class _LinkedAccountsScreenState
           identical(ref.read(authRepositoryProvider), repository)) {
         setState(() => _identities = identities);
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('auth', 'identities load failed',
           error: e, stackTrace: st);
       if (mounted && repository.currentUserId == account &&
@@ -115,7 +116,7 @@ class _LinkedAccountsScreenState
     try {
       await ref.read(authRepositoryProvider).unlinkIdentity(identity);
       await _load();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('auth', 'unlink failed', error: e, stackTrace: st);
       if (!mounted) return;

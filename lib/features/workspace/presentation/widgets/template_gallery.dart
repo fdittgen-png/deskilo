@@ -1,32 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-export 'template_card.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../application/template_compare.dart';
-import '../../application/template_workbook.dart';
-import '../workbook_labels.dart';
-import 'workbook_export_dialog.dart';
-import '../screens/template_compare_screen.dart';
-import '../screens/template_detail_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../application/template_search.dart';
-import '../../domain/template_capabilities.dart';
-import '../../../../core/ui/inline_banner.dart';
-import '../capability_labels.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'template_card.dart';
-import 'template_requirements.dart';
-import 'template_capability_browser.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/empty_state.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
+import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/template_compare.dart';
+import '../../application/template_search.dart';
+import '../../application/template_workbook.dart';
+import '../../domain/template_capabilities.dart';
 import '../../domain/workspace_template.dart';
+import '../capability_labels.dart';
+import '../screens/template_compare_screen.dart';
+import '../screens/template_detail_screen.dart';
+import '../workbook_labels.dart';
+import 'template_capability_browser.dart';
+import 'template_card.dart';
+import 'template_requirements.dart';
+import 'workbook_export_dialog.dart';
+
+export 'template_card.dart';
 
 /// One titled group of templates in a [TemplateGallery].
 class TemplateGallerySection {
@@ -218,7 +218,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
 
   void _setRequired(void Function() change) {
     setState(change);
-    _searchCapabilities(_search.text);
+    unawaited(_searchCapabilities(_search.text));
   }
 
   void _onQuery(String value) {
@@ -226,7 +226,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
     _debounce = Timer(TemplateGallery.debounce, () {
       if (!mounted) return;
       setState(() => _query = value);
-      _searchCapabilities(value);
+      unawaited(_searchCapabilities(value));
     });
   }
 

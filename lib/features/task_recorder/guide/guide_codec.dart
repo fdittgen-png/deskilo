@@ -22,8 +22,8 @@ import 'dart:convert';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/action_registry.dart';
-import 'task_guide.dart';
 import 'guide_destination.dart';
+import 'task_guide.dart';
 
 enum GuideIssueCode {
   tooLarge,

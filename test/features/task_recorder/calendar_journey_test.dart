@@ -314,7 +314,6 @@ void main() {
       ..events.add(
         event(
           actor: 'member-2',
-          subject: 'member-1',
           status: EventStatus.pending,
         ),
       );

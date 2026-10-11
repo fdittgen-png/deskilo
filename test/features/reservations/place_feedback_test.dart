@@ -3,9 +3,9 @@
 // #2185 — a member favourites a place and rates it from 0 to 5 stars; the
 // bar is absent where the feature is off or the permission is not held.
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
-import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/workspace_feedback.dart';
+import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/place_feedback_bar.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:flutter/material.dart';

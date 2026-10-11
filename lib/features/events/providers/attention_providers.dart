@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/storage/prefs_stores.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/notification_feed.dart';
 import 'event_providers.dart';
 
@@ -85,7 +87,7 @@ class UpdatesSeen extends _$UpdatesSeen {
           await _categoryStore(category).write(now.toUtc().toIso8601String());
         }
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('events', 'update acknowledgement unavailable',
           error: e, stackTrace: st);
     }

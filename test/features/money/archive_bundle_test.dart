@@ -25,7 +25,7 @@ void main() {
 
   test('the register lists every document in issue order with its status and integrity word', () {
     final csv = buildInvoiceRegisterCsv(
-      [_inv('INV-2', DateTime(2026, 9, 2), -1000, replaces: 'INV-1'), _inv('INV-1', DateTime(2026, 9, 1), 10000)],
+      [_inv('INV-2', DateTime(2026, 9, 2), -1000, replaces: 'INV-1'), _inv('INV-1', DateTime(2026, 9), 10000)],
       integrity: {'i-INV-1': 'verified'},
     );
     final lines = const LineSplitter().convert(csv);

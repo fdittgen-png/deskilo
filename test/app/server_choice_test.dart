@@ -82,7 +82,11 @@ void main() {
   group('whether the first start asks', () {
     test('a build with a default never asks', () async {
       expect(
-        await needsServerChoice(hasDefault: true, readStored: () async => null),
+        await needsServerChoice(
+          // ignore: avoid_redundant_argument_values — #2389, the default depends on the build's server
+          hasDefault: true,
+          readStored: () async => null,
+        ),
         isFalse,
       );
     });
@@ -90,6 +94,7 @@ void main() {
     test('a build without one asks until a server is stored', () async {
       expect(
         await needsServerChoice(
+          // ignore: avoid_redundant_argument_values — #2389, the default depends on the build's server
           hasDefault: false,
           readStored: () async => null,
         ),
@@ -97,6 +102,7 @@ void main() {
       );
       expect(
         await needsServerChoice(
+          // ignore: avoid_redundant_argument_values — #2389, the default depends on the build's server
           hasDefault: false,
           readStored: () async => referenceEndpoint,
         ),

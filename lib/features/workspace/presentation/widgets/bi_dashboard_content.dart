@@ -9,10 +9,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_analysis.dart';
-import '../../domain/bi_report_content.dart';
 import '../../domain/bi_composition.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
+import '../../domain/bi_report_content.dart';
 import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import 'bi_module_section.dart' show BiModuleView, biChangeLabel;

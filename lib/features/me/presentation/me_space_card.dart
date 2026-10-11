@@ -3,14 +3,18 @@
 // #1823 — one of my spaces on Me › Home: tap to enter it, the menu to
 // leave it. Leaving is ordinary and reversible by rejoining; leaving AND
 // erasing my data stays the stronger action under Privacy.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/demo/presentation/demo_workspace.dart';
 
-import '../../../core/theme/app_spacing.dart';
+import '../../../app/shell/space_entry.dart';
+import '../../../core/demo/presentation/demo_workspace.dart';
 import '../../../core/theme/app_radius.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/status_colors.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -22,8 +26,6 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../providers/me_providers.dart';
 import '../providers/space_attention_provider.dart';
 import '../providers/space_prefs_provider.dart';
-import '../../../core/time/clock.dart';
-import '../../../app/shell/space_entry.dart';
 
 class MeSpaceCard extends ConsumerWidget {
   const MeSpaceCard({
@@ -82,7 +84,7 @@ class MeSpaceCard extends ConsumerWidget {
             message: [
               space.name,
               environment,
-              demo ? words.demoSessionBadgeHint : space.isDevelopment ? words.uxTestSpaceHint : words.uxRealSpaceHint,
+              if (demo) words.demoSessionBadgeHint else if (space.isDevelopment) words.uxTestSpaceHint else words.uxRealSpaceHint,
               ?status,
               if (lastUsed) l10n?.meSpaceLastUsed ?? 'Last used',
               if (waiting > 0) words.meSpaceNotifications(waiting),
@@ -113,14 +115,14 @@ class MeSpaceCard extends ConsumerWidget {
                 // disabled and does nothing.
                 onPressed: !_hasAccess ? null : () {
                   // The "recently used" sort remembers when I went in.
-                  ref
+                  unawaited(ref
                       .read(spacePrefsProvider.notifier)
-                      .touch(spaceRowKeyOf(space), ref.read(clockProvider).now());
+                      .touch(spaceRowKeyOf(space), ref.read(clockProvider).now()));
                   final box = buttonContext.findRenderObject() as RenderBox?;
                   final from = box == null
                       ? null
                       : box.localToGlobal(Offset.zero) & box.size;
-                  enterSpace(context, ref, space, from: from);
+                  unawaited(enterSpace(context, ref, space, from: from));
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
