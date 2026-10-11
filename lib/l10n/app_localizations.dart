@@ -8202,6 +8202,12 @@ abstract class AppLocalizations {
   /// **'Deductible share (%)'**
   String get expenseVatDeductible;
 
+  /// #2357 input VAT: the deductible VAT an expense makes
+  ///
+  /// In en, this message translates to:
+  /// **'Deductible VAT: {amount}'**
+  String expenseVatDeductibleAmount(String amount);
+
   /// #2357 input VAT: expenseVatDeductibleHint
   ///
   /// In en, this message translates to:

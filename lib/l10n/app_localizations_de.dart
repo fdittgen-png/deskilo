@@ -4747,6 +4747,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get expenseVatDeductible => 'Abziehbarer Anteil (%)';
 
   @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'Abziehbare Vorsteuer: $amount';
+  }
+
+  @override
   String get expenseVatDeductibleHint =>
       '100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.';
 

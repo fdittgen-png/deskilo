@@ -3180,6 +3180,15 @@
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
   },
+  "expenseVatDeductibleAmount": "Abziehbare Vorsteuer: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "expenseVatDeductibleHint": "100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.",
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"

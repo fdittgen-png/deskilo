@@ -43,5 +43,14 @@
   "bookRoleVatInput": "TVA déductible",
   "@bookRoleVatInput": {
     "description": "#2357 input VAT: bookRoleVatInput"
+  },
+  "expenseVatDeductibleAmount": "TVA déductible : {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

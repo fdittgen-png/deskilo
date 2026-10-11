@@ -4735,6 +4735,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get expenseVatDeductible => 'Quota detraibile (%)';
 
   @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'IVA detraibile: $amount';
+  }
+
+  @override
   String get expenseVatDeductibleHint =>
       '100 % salvo che una parte della spesa sia privata o serva un\'attività esente.';
 

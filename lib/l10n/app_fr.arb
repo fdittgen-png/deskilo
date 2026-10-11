@@ -3180,6 +3180,15 @@
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
   },
+  "expenseVatDeductibleAmount": "TVA déductible : {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "expenseVatDeductibleHint": "100 % sauf si une partie de la dépense est privée ou sert une activité exonérée.",
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"

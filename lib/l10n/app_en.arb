@@ -5613,6 +5613,15 @@
   "@expenseVatDeductible": {
     "description": "#2357 input VAT: expenseVatDeductible"
   },
+  "expenseVatDeductibleAmount": "Deductible VAT: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "expenseVatDeductibleHint": "100 % unless part of the expense is private or serves an exempt activity.",
   "@expenseVatDeductibleHint": {
     "description": "#2357 input VAT: expenseVatDeductibleHint"

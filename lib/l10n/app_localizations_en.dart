@@ -4708,6 +4708,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expenseVatDeductible => 'Deductible share (%)';
 
   @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'Deductible VAT: $amount';
+  }
+
+  @override
   String get expenseVatDeductibleHint =>
       '100 % unless part of the expense is private or serves an exempt activity.';
 

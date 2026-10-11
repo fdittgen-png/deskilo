@@ -43,5 +43,14 @@
   "bookRoleVatInput": "Vorsteuer",
   "@bookRoleVatInput": {
     "description": "#2357 input VAT: bookRoleVatInput"
+  },
+  "expenseVatDeductibleAmount": "Abziehbare Vorsteuer: {amount}",
+  "@expenseVatDeductibleAmount": {
+    "description": "#2357 input VAT: the deductible VAT an expense makes",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

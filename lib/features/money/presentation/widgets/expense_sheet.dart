@@ -15,9 +15,11 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/format/cents.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
+import '../../domain/vat_input.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
+import '../vat_tax_point_labels.dart';
 
 Future<void> showExpenseSheet(
   BuildContext context,
@@ -103,7 +105,7 @@ Future<void> showExpenseSheet(
       l10n?.expenseInvalidUnitPrice ??
           'Enter a valid unit price, or leave it empty.',
     ExpenseOutcome.invalidDeductible =>
-      l10n?.expenseInvalidDeductible ?? 'Enter a share between 0 and 100.',
+      vatWords(l10n).expenseInvalidDeductible,
   };
   // The field each refusal is about, so its words sit under that field.
   String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
@@ -183,12 +185,12 @@ Future<void> showExpenseSheet(
             key: const ValueKey('expense-vat-rate'),
             initialValue: vatPercent,
             decoration: InputDecoration(
-              labelText: l10n?.expenseVatRate ?? 'VAT on this expense',
+              labelText: vatWords(l10n).expenseVatRate,
             ),
             items: [
               DropdownMenuItem<double?>(
                 value: null,
-                child: Text(l10n?.expenseVatNone ?? 'No VAT'),
+                child: Text(vatWords(l10n).expenseVatNone),
               ),
               for (final p in vatPercents)
                 DropdownMenuItem<double?>(
@@ -210,11 +212,15 @@ Future<void> showExpenseSheet(
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
-              label: l10n?.expenseVatDeductible ?? 'Deductible share (%)',
-              helper:
-                  l10n?.expenseVatDeductibleHint ??
-                  '100 % unless part of the expense is private or serves '
-                      'an exempt activity.',
+              label: vatWords(l10n).expenseVatDeductible,
+              helper: _deductibleHelper(
+                l10n,
+                currency,
+                fields['amount'].text,
+                vatPercent!,
+                fields['deductible'].text,
+              ),
+              onChanged: (_) => refresh(),
             ),
           ],
         ],
@@ -323,3 +329,24 @@ Future<void> showExpenseSheet(
 /// « 20 % », in the reader's number format.
 String _percentLabel(AppLocalizations? l10n, double percent) =>
     '${NumberFormat.decimalPattern(l10n?.localeName).format(percent)} %';
+
+/// #2357 — the hint, and once amount and share are typed, the deductible
+/// VAT they make (`vatInputSplit`, the server's rounding).
+String _deductibleHelper(
+  AppLocalizations? l10n,
+  MoneyFormat currency,
+  String amount,
+  double percent,
+  String share,
+) {
+  final words = vatWords(l10n);
+  final gross = parseCentsInput(amount);
+  final pct = double.tryParse(share.trim().replaceAll(',', '.'));
+  if (gross == null || gross <= 0 || pct == null || pct < 0 || pct > 100) {
+    return words.expenseVatDeductibleHint;
+  }
+  final split = vatInputSplit(gross, percent, pct);
+  return words.expenseVatDeductibleAmount(
+    currency.formatMinor(split.deductibleCents),
+  );
+}

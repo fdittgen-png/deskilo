@@ -10,6 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
+import '../vat_tax_point_labels.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/book_profile_providers.dart';
@@ -19,7 +20,7 @@ String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
   BookRole.revenue => l10n?.bookRoleRevenue ?? 'Revenue',
   BookRole.bank => l10n?.bookRoleBank ?? 'Bank',
   BookRole.vatOutput => l10n?.bookRoleVatOutput ?? 'Output VAT',
-  BookRole.vatInput => l10n?.bookRoleVatInput ?? 'Input VAT',
+  BookRole.vatInput => vatWords(l10n).bookRoleVatInput,
   BookRole.expenses => l10n?.bookRoleExpenses ?? 'Expenses',
 };
 
