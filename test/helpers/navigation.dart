@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
-import 'workspace_chat_list.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -110,17 +113,33 @@ Future<void> tapInvoicingTool(WidgetTester tester, String key) async {
   await tester.pumpAndSettle();
 }
 
-/// Opens the workspace's conversation list (a test-only harness; the app
-/// has no such screen — #2210). Discussions live in the Me messenger now and the workspace
-/// inbox only carries alerts, so tests of the conversation machinery reach
-/// the list directly.
-Future<void> openWorkspaceChats(WidgetTester tester) async {
-  final context = tester.element(find.byType(Scaffold).first);
-  Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => const WorkspaceChatList()),
+/// Opens one workspace conversation through [showConversationThread], the
+/// entry point every surface uses (#702): a member sheet, the directory,
+/// an event row, a blocked booking. Discussions are listed in the Me
+/// messenger now; the old workspace conversation list is gone (#2383), so
+/// tests of the thread open it the way the app does — by id.
+Future<void> openWorkspaceConversation(
+  WidgetTester tester,
+  String conversationId,
+) async {
+  // Any consumer under the router's navigator: its context reaches the
+  // router and the sheets, and it is a WidgetRef.
+  final element = tester.element(
+    find
+        .descendant(
+          of: find.byType(Navigator).first,
+          matching: find.byElementPredicate((e) => e is WidgetRef),
+        )
+        .first,
   );
+  unawaited(showConversationThread(
+    element,
+    element as WidgetRef,
+    conversationId: conversationId,
+  ));
   await tester.pumpAndSettle();
 }
+
 Future<void> openMoneyWorkspaceTools(WidgetTester tester) async {
   final tools = find.byKey(const ValueKey('money-workspace-tools'));
   final body = find.byKey(const ValueKey('money-face-body-invoices'));

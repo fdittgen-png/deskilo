@@ -26,17 +26,6 @@ const Map<String, String> _allowed = {
   'lib/features/task_recorder/storyboard/png_safety.dart::pngChunkTypes':
       '#2383 — task recorder, after the work in progress there lands',
 
-  // The old conversation list renders only in
-  // test/helpers/workspace_chat_list.dart; its tests come first.
-  'lib/features/workspace/presentation/widgets/conversation_row.dart::ConversationRow':
-      '#2383 — rendered only by a test helper',
-  'lib/features/workspace/presentation/widgets/new_conversation_sheet.dart::showNewConversationSheet':
-      '#2383 — opened only by a test helper',
-  'lib/features/workspace/providers/conversation_providers.dart::archivedConversations':
-      '#2383 — read only by a test helper',
-  'lib/features/workspace/providers/conversation_providers.dart::conversationNow':
-      '#2383 — read only by a test helper',
-
   // MCP, app side: wired in by the server issue or deleted there.
   'lib/core/instance/mcp_readiness.dart::verifyMcpReadinessReport':
       '#2394 — the readiness report verifier',
