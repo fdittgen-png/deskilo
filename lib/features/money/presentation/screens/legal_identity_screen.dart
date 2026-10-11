@@ -15,7 +15,9 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_legal.dart';
+import '../../domain/vat_declaration_period.dart';
 import '../../domain/vat_tax_point.dart';
+import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_field.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../domain/invoice_pdf_template.dart';
@@ -69,6 +71,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // Saving the screen records the choice, so a space that never chose
   // stops being one.
   VatTaxPointOption _taxPoint = VatTaxPointOption.standard;
+  // #2357 — how often the return is filed; null until the owner chooses.
+  VatDeclarationPeriod? _declarationPeriod;
 
   /// #869 — null means follow the country.
   AddressWindow? _addressWindow;
@@ -133,6 +137,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 specialMentions: _special.text,
                 reverseChargeOptIn: _reverseCharge,
                 vatTaxPoint: _taxPoint,
+                declarationPeriod: _declarationPeriod,
               ).toJson(),
               addressWindow: _addressWindow,
             ),
@@ -218,6 +223,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _reverseCharge = legal.reverseCharge;
       _taxPoint = vatTaxPointPolicy(workspace.countryCode)
           .effective(legal.vatTaxPoint);
+      _declarationPeriod = legal.declarationPeriod;
       _legalForm.text = legal.legalForm;
       _registration.text = legal.registration;
       _paymentTerms.text = legal.paymentTerms;
@@ -319,6 +325,15 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 value: _taxPoint,
                 onChanged: (v) => setState(() => _taxPoint = v),
               ),
+            ),
+          // #2357 — how often the return is filed.
+          if (_regime == VatRegime.vatRegistered &&
+              ref.watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.vatDeclarations))
+            VatDeclarationPeriodField(
+              key: const ValueKey('legal-identity-period-field'),
+              value: _declarationPeriod ?? VatDeclarationPeriod.fallback,
+              onChanged: (v) => setState(() => _declarationPeriod = v),
             ),
           // #919 — an ASSOCIATION that charges no VAT is out of the
           // SCOPE of it, not exempt within the scope. The two look

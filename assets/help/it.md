@@ -4873,6 +4873,8 @@ Vuole l'IVA di un periodo calcolata dalle Sue fatture e dagli incassi, pronta da
 - Esiste solo con il regime di soggetto IVA. La nota in alto indica quando l'IVA del periodo diventa esigibile.
 - Il server calcola gli importi dalle fatture, dagli incassi registrati uno per uno e dall'esigibilità di ogni fattura. Ogni aliquota è suddivisa per categoria: aliquota ordinaria, inversione contabile, esente e aliquota zero restano separate. Le fatture di raggruppamento sono escluse; il loro pagamento conta per le fatture che raggruppano.
 - Una dichiarazione passa da **Bozza** a **Preparata** e poi a **Presentata**. Prepararla di nuovo sostituisce gli importi; una volta presentata, nulla la modifica. Se una fattura o un incasso del periodo è cambiato dopo la preparazione, l'app si rifiuta di segnarla come presentata finché non la prepara di nuovo.
+- L'elenco **Periodo** offre solo periodi della durata scelta in **Periodicità della dichiarazione IVA** in [Identità legale e fatturazione elettronica](app:/legal-identity) — mensile, trimestrale o annuale; trimestrale finché Lei non sceglie. Un periodo che si sovrappone a una dichiarazione presentata non può essere preparato.
+- Un periodo dichiarato è bloccato. Se in seguito vi cambia qualcosa — una fattura annullata, un incasso registrato in ritardo con una data anteriore — la dichiarazione presentata resta com'era, e la prossima dichiarazione che Lei prepara riporta la differenza come **Rettifica di** quel periodo, su una riga propria. Presentare quella dichiarazione registra la rettifica, così è dichiarata una sola volta. Sul modulo francese le rettifiche vanno alle righe 15 (IVA da riversare) e 21 (altra IVA da detrarre); altrove si sommano ai riquadri dell'aliquota del periodo in corso.
 - L'app non trasmette dichiarazioni: la Francia presenta tramite EDI-TVA o lo spazio professionale di impots.gouv, la Germania tramite ELSTER. La piattaforma di fatturazione elettronica trasporta solo fatture.
 - È un ausilio alla presentazione, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
 
@@ -7518,6 +7520,7 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
 - Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
 - Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
+- Scelga la periodicità in **Periodicità della dichiarazione IVA** nell'identità legale. Un periodo presentato è bloccato: ciò che vi cambia in seguito è dichiarato come rettifica nella dichiarazione successiva.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
 **Vedi anche:** [Regime IVA](help:user.money.vat.regime) · [Quando l'IVA diventa esigibile](help:user.money.vat.due)
@@ -8588,6 +8591,19 @@ a presentata, presentata dal proprietario con il riferimento della
 ricevuta dell'amministrazione finanziaria, e una presentata non cambia
 più. L'app non trasmette alcuna dichiarazione: la Francia presenta
 tramite EDI-TVA o impots.gouv, la Germania tramite ELSTER.
+
+**Periodi bloccati** (#2357, ADR 0039). Ogni presentazione registra ciò
+che la dichiarazione ha dichiarato, per fattura, esigibilità e aliquota
+(`vat_return_entries`). Un periodo presentato è bloccato: quando in
+seguito vi cambia qualcosa — un annullamento, un incasso registrato in
+ritardo — la riga presentata resta identica byte per byte, e la
+dichiarazione successiva riporta la differenza in righe di rettifica che
+nominano la dichiarazione rettificata (righe 15/21 della CA3; i riquadri
+dell'aliquota altrove). Un periodo che si sovrappone a uno presentato
+non può essere preparato. La periodicità — mensile, trimestrale o
+annuale — è salvata con l'identità legale
+(`invoice_legal.vat_declaration_period`) e viaggia con la configurazione
+e il questionario di avvio.
 
 Il catalogo completo delle aliquote di un paese è fornito con l'app
 (UE27, CH, NO, CA); tenerlo aggiornato quando un governo cambia

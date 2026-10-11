@@ -1,0 +1,45 @@
+{
+  "@@locale": "en",
+  "vatDeclPeriodField": "VAT return period",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodMonth": "Monthly",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodQuarter": "Quarterly",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
+  },
+  "vatDeclPeriodAnnual": "Annual",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodHint": "How often you file the return. The VAT return screen offers only periods of this length.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodNote": "Filing period: {period}. Change it under Legal identity & e-invoicing.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionOf": "Correction of {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  }
+}

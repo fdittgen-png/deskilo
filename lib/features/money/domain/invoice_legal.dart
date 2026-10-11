@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'vat_tax_point.dart';
 import '../../../core/data/json_reader.dart';
+import 'vat_declaration_period.dart';
+import 'vat_tax_point.dart';
 
 /// The workspace's LEGAL INVOICE MENTIONS (#480) — the free-text lines a
 /// compliant professional invoice must (or may) print beyond the 0069
@@ -16,6 +17,7 @@ class InvoiceLegal {
     this.customerCapacity = '',
     this.reverseChargeOptIn = true,
     this.vatTaxPoint,
+    this.declarationPeriod,
     this.legalForm = '',
     this.registration = '',
     this.paymentTerms = '',
@@ -52,6 +54,15 @@ class InvoiceLegal {
   /// still written beside it for a non-default choice, because the SQL
   /// snapshot freezes that key on every issued invoice (0349, 0401).
   final VatTaxPointOption? vatTaxPoint;
+
+  /// #2357 — how often the VAT return is filed; null when the workspace
+  /// never chose ([VatDeclarationPeriod.fallback] then applies). Stored
+  /// as `vat_declaration_period`.
+  final VatDeclarationPeriod? declarationPeriod;
+
+  /// The period the declarations screen offers.
+  VatDeclarationPeriod get filingPeriod =>
+      declarationPeriod ?? VatDeclarationPeriod.fallback;
 
   /// The basis a seller in [country] declares on.
   VatTaxPointBasis taxPointBasis(String country) =>
@@ -123,6 +134,9 @@ class InvoiceLegal {
                 'payment' => VatTaxPointOption.cash,
                 _ => null,
               },
+      declarationPeriod: VatDeclarationPeriod.fromWire(
+        r.stringOrNull('vat_declaration_period'),
+      ),
       legalForm: r.stringOr('legal_form'),
       registration: r.stringOr('registration'),
       paymentTerms: r.stringOr('payment_terms'),
@@ -140,6 +154,7 @@ class InvoiceLegal {
         'reverse_charge': reverseChargeOptIn,
         'vat_tax_point': ?vatTaxPoint?.name,
         'vat_exigibility': ?_legacyExigibility(vatTaxPoint),
+        'vat_declaration_period': ?declarationPeriod?.name,
         'legal_form': legalForm.trim(),
         'registration': registration.trim(),
         'payment_terms': paymentTerms.trim(),
@@ -157,6 +172,7 @@ class InvoiceLegal {
       other.customerCapacity == customerCapacity &&
       other.reverseChargeOptIn == reverseChargeOptIn &&
       other.vatTaxPoint == vatTaxPoint &&
+      other.declarationPeriod == declarationPeriod &&
       other.legalForm == legalForm &&
       other.registration == registration &&
       other.paymentTerms == paymentTerms &&
@@ -167,7 +183,7 @@ class InvoiceLegal {
       other.specialMentions == specialMentions;
 
   @override
-  int get hashCode => Object.hash(vatTaxPoint, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
+  int get hashCode => Object.hash(vatTaxPoint, declarationPeriod, reverseChargeOptIn, sellerKind, customerCapacity, legalForm, registration,
       paymentTerms, latePenalty, recoveryIndemnity, escompte, insurance,
       specialMentions);
 }

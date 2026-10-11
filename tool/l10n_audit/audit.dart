@@ -122,9 +122,9 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'reads. A translated account name is the wrong account.',
   ),
   'lib/features/money/domain/vat_declaration.dart': (
-    allowed: 10,
+    allowed: 12,
     reason: 'CA3 and UStVA box names, in French and German, as the forms '
-        'print them.',
+        'print them (#2357: the CA3 régularisation lines 15 and 21).',
   ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,

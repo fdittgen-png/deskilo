@@ -4873,6 +4873,8 @@ Vous voulez la TVA d'une période calculée à partir de vos factures et de vos 
 - Elle n'existe que sous le régime des assujettis à la TVA. La note en haut indique quand la TVA de la période devient exigible.
 - Le serveur calcule les montants, à partir des factures, des encaissements enregistrés un à un et de l'exigibilité de chaque facture. Chaque taux est ventilé par catégorie : taux normal, autoliquidation, exonération et taux zéro restent séparés. Les factures de regroupement sont écartées ; leur paiement compte pour les factures qu'elles regroupent.
 - Une déclaration passe de **Brouillon** à **Préparée** puis **Déposée**. La préparer à nouveau remplace les montants ; une fois déposée, plus rien ne la modifie. Si une facture ou un encaissement de la période a changé depuis la préparation, l'application refuse de la marquer déposée tant qu'elle n'a pas été préparée à nouveau.
+- La liste **Période** ne propose que des périodes de la durée choisie sous **Périodicité de la déclaration de TVA** dans [Identité légale et facturation électronique](app:/legal-identity) — mensuelle, trimestrielle ou annuelle ; trimestrielle tant que vous n'avez pas choisi. Une période qui chevauche une déclaration déposée ne peut pas être préparée.
+- Une période déposée est verrouillée. Si quelque chose y change ensuite — une facture annulée, un encaissement enregistré tardivement à une date antérieure — la déclaration déposée reste telle quelle, et la prochaine déclaration que vous préparez porte la différence comme **Régularisation de** cette période, sur une ligne à part. Déposer cette déclaration enregistre la régularisation : elle n'est déclarée qu'une fois. Sur la CA3, les régularisations vont aux lignes 15 (TVA à reverser) et 21 (autre TVA à déduire) ; ailleurs, elles s'ajoutent aux cases du taux de la période en cours.
 - L'application ne télétransmet pas de déclaration : la France dépose par EDI-TVA ou l'espace professionnel d'impots.gouv, l'Allemagne par ELSTER. La plateforme de facturation électronique ne transporte que les factures.
 - C'est une aide au dépôt, pas un conseil fiscal. Vérifiez-la avec votre comptabilité avant de la déposer.
 
@@ -7518,6 +7520,7 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 - Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.
 - Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent.
 - Le serveur calcule chaque déclaration à partir de vos factures, de vos encaissements et de l'exigibilité. Déposez-la vous-même auprès de l'administration fiscale, puis marquez-la déposée avec la référence de l'accusé de réception : l'application ne transmet rien.
+- Choisissez la périodicité sous **Périodicité de la déclaration de TVA** dans l'identité légale. Une période déposée est verrouillée : ce qui y change ensuite est déclaré en régularisation dans la déclaration suivante.
 - Le journal des déclarations a sa propre série de numéros.
 
 **Voir aussi:** [Régime de TVA](help:user.money.vat.regime) · [Quand la TVA devient exigible](help:user.money.vat.due)
@@ -8586,6 +8589,19 @@ référence de l'accusé de réception de l'administration, et une
 déclaration déposée ne change plus. L'app ne télétransmet aucune
 déclaration : la France dépose par EDI-TVA ou impots.gouv, l'Allemagne
 par ELSTER.
+
+**Verrouillage des périodes** (#2357, ADR 0039). Chaque dépôt enregistre
+ce que la déclaration a déclaré, par facture, exigibilité et taux
+(`vat_return_entries`). Une période déposée est verrouillée : quand
+quelque chose y change plus tard — une annulation, un encaissement
+enregistré tardivement — la ligne déposée reste identique à l'octet près,
+et la déclaration suivante porte la différence en lignes de
+régularisation qui nomment la déclaration régularisée (lignes 15/21 de
+la CA3 ; les cases du taux ailleurs). Une période qui chevauche une
+période déposée ne peut pas être préparée. La périodicité — mensuelle,
+trimestrielle ou annuelle — est enregistrée avec l'identité légale
+(`invoice_legal.vat_declaration_period`) et voyage avec la configuration
+et le questionnaire de démarrage.
 
 Le catalogue complet des taux d'un pays est livré avec l'app (UE27, CH,
 NO, CA) ; le tenir à jour quand un gouvernement change un taux vous

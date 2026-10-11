@@ -13,10 +13,16 @@
 // debits option, reverse-charged, exempt and zero-rated sales, a voided
 // and an unpaid invoice. Germany on the service period: September
 // services paid on 2 September, on 20 August, and unpaid.
+//
+// And the period lock (0406, `169_vat_period_locks.sql`): a filed
+// September whose unpaid invoice is voided in October — October carries
+// the difference as a correction of the September return, and once
+// October is filed November corrects nothing again.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -307,6 +313,127 @@ void main() {
             (a.on, a.grossCents, a.vatCents),
       ];
       expect(august, [(DateTime(2026, 8, 20), 12000, 1916)]);
+    });
+  });
+
+  group('a filed period is locked — the 169_vat_period_locks.sql fixture', () {
+    setUp(() => WorkspaceTime.install('Europe/Berlin'));
+
+    List<Invoice> invoices({bool voided = false}) => [
+      _invoice('D-1', _at(8, 25), [(12000, 19, 'S')],
+          legal: _german, period: '2026-09'),
+      _invoice('D-3', _at(8, 25), [(5950, 19, 'S')],
+          legal: _german,
+          period: '2026-09',
+          voidedAt: voided ? _at(10, 5) : null),
+      _invoice('D-5', _at(9, 25), [(2380, 19, 'S')],
+          legal: _german, period: '2026-10'),
+    ];
+    List<VatTaxPointAmount> ledger({bool voided = false}) => vatTaxPointLedger(
+      invoices(voided: voided),
+      matches: {'D-1': _paid('D-1', 12000, _at(9, 2))},
+      basis: vatTaxPointBasis('DE', null),
+    );
+    final september = VatPeriodLock(
+      declarationId: 'SEP',
+      start: DateTime(2026, 9),
+      end: DateTime(2026, 9, 30),
+      filedAt: _at(10, 1),
+    );
+    final october = VatPeriodLock(
+      declarationId: 'OCT',
+      start: DateTime(2026, 10),
+      end: DateTime(2026, 10, 31),
+      filedAt: _at(11, 1),
+    );
+    (DateTime, int, int, int, String) row(VatReturnAmount a) =>
+        (a.on, a.grossCents, a.netCents, a.vatCents, a.corrects);
+
+    test('filing September records what it declared, per invoice', () {
+      final filed = vatReturnAmountsOf(
+        ledger(),
+        start: september.start,
+        end: september.end,
+      );
+      expect(
+        vatDeclaredBy(filed).map((d) => d.grossCents).toList()..sort(),
+        [5950, 12000],
+      );
+      expect(
+        vatReturnAmountsOf(
+          ledger(),
+          start: october.start,
+          end: october.end,
+          locks: [september],
+          declared: vatDeclaredBy(filed),
+        ).where((a) => a.isCorrection),
+        isEmpty,
+        reason: 'nothing changed in September: October corrects nothing',
+      );
+    });
+
+    test('a void after filing is a correction of September in October', () {
+      final declared = vatDeclaredBy(
+        vatReturnAmountsOf(
+          ledger(),
+          start: september.start,
+          end: september.end,
+        ),
+      );
+      final octoberReturn = vatReturnAmountsOf(
+        ledger(voided: true),
+        start: october.start,
+        end: october.end,
+        locks: [september],
+        declared: declared,
+      );
+      expect(octoberReturn.map(row), [
+        (DateTime(2026, 10, 31), 2380, 2000, 380, ''),
+        (DateTime(2026, 9, 30), -5950, -5000, -950, 'SEP'),
+      ]);
+      expect(
+        vatReturnAmountsOf(
+          ledger(voided: true),
+          start: september.start,
+          end: september.end,
+          locks: [september],
+          declared: declared,
+        ).map(row),
+        [(DateTime(2026, 9, 2), 12000, 10084, 1916, '')],
+        reason: 'recomputed, September no longer holds the voided invoice',
+      );
+
+      // October filed: November corrects nothing again.
+      expect(
+        vatReturnAmountsOf(
+          ledger(voided: true),
+          start: DateTime(2026, 11),
+          end: DateTime(2026, 11, 30),
+          locks: [september, october],
+          declared: [...declared, ...vatDeclaredBy(octoberReturn)],
+        ),
+        isEmpty,
+      );
+    });
+
+    test('the stored lines net the correction off October', () {
+      final declared = vatDeclaredBy(
+        vatReturnAmountsOf(
+          ledger(),
+          start: september.start,
+          end: september.end,
+        ),
+      );
+      final amounts = vatReturnAmountsOf(
+        ledger(voided: true),
+        start: october.start,
+        end: october.end,
+        locks: [september],
+        declared: declared,
+      );
+      expect(amounts.fold(0, (s, a) => s + a.netCents), -3000);
+      expect(amounts.fold(0, (s, a) => s + a.vatCents), -570);
+      expect({for (final a in amounts) a.invoiceId}, {'D-5', 'D-3'});
     });
   });
 

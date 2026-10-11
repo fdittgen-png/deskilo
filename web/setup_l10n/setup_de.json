@@ -34,6 +34,7 @@
  "optHoursDefaultMax": "{n} Stunden (Standard-Maximum)",
  "vatPeriodMonth": "Monatlich",
  "vatPeriodQuarter": "Vierteljährlich",
+ "vatPeriodAnnual": "Jährlich",
  "envDev": "Entwicklung — zum Ausprobieren: Die App weist überall darauf hin und versieht jedes Dokument mit einem Wasserzeichen",
  "envProd": "Produktion — die ausgestellten Rechnungen sind tatsächlich geschuldet",
  "numDateNone": "Keins",
@@ -528,6 +529,7 @@
  "cfgNotRegistered": "Entfällt, solange der Workspace nicht umsatzsteuerpflichtig ist.",
  "cfgVatDeclMonthly": "Monatliche Voranmeldung.",
  "cfgVatDeclQuarterly": "Vierteljährliche Voranmeldung.",
+ "cfgVatDeclAnnual": "Jährliche Erklärung.",
  "cfgCustomerService": "Kundendienst: {url}",
  "cfgCustomerServiceTodo": "Zustelldienst an den Kunden in der App zu konfigurieren.",
  "cfgPlanObjectDelete": "Löschen von Planobjekten, auf die noch verwiesen wird (Audit-Ersatztext).",
@@ -605,7 +607,6 @@
  "todoInviteMembers": "Laden Sie die {n} im Schritt Mitglieder aufgeführten Personen aus der App ein (Mitglieder → Mitglied einladen): Die Datei bewahrt die Liste nur zur Erinnerung auf.",
  "todoInviteNobody": "Laden Sie Ihre ersten Mitglieder aus der App ein (Mitglieder → Mitglied einladen).",
  "todoOnlineProvider": "Verbinden Sie den Anbieter für Online-Zahlungen in der App: Seine Schlüssel gehören nie in die Datei.",
- "todoVatPeriod": "Wählen Sie den Zeitraum der USt-Voranmeldung ({period}) in der App, wenn Sie die erste Voranmeldung vorbereiten.",
  "todoEinvoice": "Tragen Sie Adresse und Zugangsdaten der E-Rechnungs-Plattform in der App ein: Die Datei überträgt sie nie.",
  "todoInvoiceOutside": "Rechnungen eines Raums in {country} werden außerhalb der App ausgestellt.",
  "todoImportFile": "Importieren Sie die Datei in diesen Raum: Workspace → Workspace importieren (XML). Ist „Konfiguration in der Raumdatei“ in diesem Raum deaktiviert, fragt die App vor dem Übernehmen der Konfiguration."

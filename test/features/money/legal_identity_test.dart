@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
+import 'package:deskilo/features/money/domain/vat_declaration_period.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -227,6 +228,35 @@ void main() {
     expect(legal.taxPointBasis('DE').onReceipts, isTrue);
     expect(workspace.workspaces.single.invoiceLegal['vat_exigibility'],
         'payment');
+  });
+
+  testWidgets(
+      'a VAT-registered workspace stores how often it files its return '
+      '(#2357)', (tester) async {
+    final workspace = await pumpIdentity(tester);
+
+    await tester.tap(find.byKey(const ValueKey('legal-identity-regime')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('VAT-registered (charges VAT)').last);
+    await tester.pumpAndSettle();
+
+    const field = ValueKey('legal-identity-declaration-period');
+    await reveal(tester, field);
+    await tester.tap(find.byKey(field));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Monthly').last);
+    await tester.pumpAndSettle();
+
+    await reveal(tester, const ValueKey('legal-identity-save'));
+    await tester.tap(find.byKey(const ValueKey('legal-identity-save')));
+    await tester.pumpAndSettle();
+
+    expect(workspace.workspaces.single.invoiceLegal['vat_declaration_period'],
+        'month');
+    expect(
+        InvoiceLegal.fromJson(workspace.workspaces.single.invoiceLegal)
+            .declarationPeriod,
+        VatDeclarationPeriod.month);
   });
 
   testWidgets(
