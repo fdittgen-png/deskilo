@@ -52,8 +52,6 @@ void main() {
   });
 
   test('the EX number of the EU small-enterprise scheme', () {
-    expect(isExNumber('ATU12345678EX'), isTrue);
-    expect(isExNumber('ATU12345678'), isFalse);
     expect(looksLikeEuVatId('ATU12345678EX'), isTrue);
     expect(looksLikeEuVatId('ATU1234EX'), isFalse);
     final mention = defaultExemptionMention(

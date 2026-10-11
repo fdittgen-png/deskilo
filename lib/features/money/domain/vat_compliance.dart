@@ -26,7 +26,7 @@ String defaultExemptionMention(
   String vatId = '',
 }) {
   final country = countryCode.trim().toUpperCase();
-  if (regime == VatRegime.exempt && isExNumber(vatId)) {
+  if (regime == VatRegime.exempt && _isExNumber(vatId)) {
     return 'VAT exempt — small enterprise scheme for a supplier established '
         'in another member state (art. 284 of Council Directive 2006/112/EC), '
         'identification number ${vatId.trim()}.';
@@ -65,7 +65,7 @@ String defaultExemptionMention(
 
 /// #2356 — whether [vatId] is an identification number of the EU
 /// small-enterprise scheme (the `EX` suffix).
-bool isExNumber(String vatId) {
+bool _isExNumber(String vatId) {
   final id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
   return id.length > 6 && id.endsWith('EX');
 }
@@ -79,7 +79,7 @@ bool looksLikeEuVatId(String vatId) {
   var id = vatId.toUpperCase().replaceAll(RegExp(r'[\s.\-]'), '');
   // #2356 — the EU small-enterprise scheme's number is the national one
   // with an `EX` suffix (art. 284(3) of the Directive).
-  if (isExNumber(id)) id = id.substring(0, id.length - 2);
+  if (_isExNumber(id)) id = id.substring(0, id.length - 2);
   if (id.length < 4) return false;
   final prefix = id.substring(0, 2);
   final body = id.substring(2);
