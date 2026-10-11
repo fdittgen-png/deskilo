@@ -15,6 +15,7 @@ import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_proforma.dart';
 import '../invoice_status.dart';
+import '../widgets/recapitulative_notice.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/settlement_sheet.dart';
 import '../widgets/expense_repartition_sheet.dart';
@@ -288,6 +289,9 @@ class InvoicesScreen extends ConsumerWidget {
                 'You are issuing and chasing invoices for the whole workspace. '
                     'Your own invoices and payments are in Me › Finances.',
           ),
+          RecapitulativeNotice(
+              enabled: features
+                  .contains(WorkspaceFeature.recapitulativeStatement)), // #2354
           if (journeyOn)
             Builder(
               builder: (context) => InvoiceStageStrip(

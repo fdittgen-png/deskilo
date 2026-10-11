@@ -8,6 +8,8 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
+import 'package:deskilo/core/demo/data/vies_repository.dart';
+import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
@@ -64,6 +66,7 @@ import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 export 'package:deskilo/core/demo/data/stores.dart';
 export 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvider;
 import 'dart:async';
 import 'package:flutter/foundation.dart' show ValueChanged;
 import 'package:flutter/widgets.dart' show Widget, ColoredBox, Color, Center, Text;
@@ -268,6 +271,10 @@ List<Override> standardTestOverrides({
     // #969/#970 — the per-device preferences, in memory by default.
     navigationStyleStoreProvider.overrideWithValue(
         navigationStyle ?? InMemoryNavigationStyleStore()),
+    // #2414 — the device default depends on the screen and the role; the
+    // suite was written against the bar, so a test that is about the
+    // default overrides this or tests defaultNavigationStyle directly.
+    navigationDefaultProvider.overrideWithValue(NavigationStyle.classic),
     // No-op realtime by default: the real impl touches Supabase.instance,
     // which does not exist under flutter_test (#413).
     realtimeSyncProvider.overrideWithValue(realtime ?? FakeRealtimeSync()),
@@ -341,6 +348,7 @@ List<Override> standardTestOverrides({
     // #2185 — favourites and ratings in memory.
     placeFeedbackRepositoryProvider
         .overrideWithValue(placeFeedback ?? FakePlaceFeedbackRepository()),
+    viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
     // #1855 — the booking-intent ledger and its scope: one fixed account
     // on one fixed server, so a test's intents never meet the device's.
     bookingIntentStoreProvider

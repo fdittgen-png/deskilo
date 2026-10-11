@@ -47,6 +47,7 @@ Future<int?> showTemplateApplySheet(BuildContext context, WidgetRef ref,
   );
 }
 
+@visibleForTesting
 class TemplateApplySheet extends ConsumerStatefulWidget {
   const TemplateApplySheet({
     super.key,

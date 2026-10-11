@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Entregar las confirmaciones pendientes en los dispositivos de los miembros.",
   "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID.",
   "featureQrBadgesTitle": "Credenciales QR",
+  "featureRecapitulativeStatementDesc": "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso.",
+  "featureRecapitulativeStatementTitle": "Declaración recapitulativa (modelo 349)",
   "featureRecordingPrivacyDesc": "Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -3837,6 +3839,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación.",
+  "featureViesVerificationTitle": "Comprobación del número de IVA (VIES)",
   "featureWhatsappIntegration": "Integración con WhatsApp",
   "featureWhatsappIntegrationDesc": "Los miembros comparten su número de WhatsApp en su perfil; un toque en un miembro abre el chat; el enlace del grupo en el directorio. Sin integración de WhatsApp en el servidor.",
   "featureWorkingHours": "Horario laboral",
@@ -5310,6 +5314,7 @@
   "invoiceMissingVatRate": "Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)",
   "invoiceMissingVatTreatment": "Las facturas con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.",
   "invoiceMissingVatZeroLine": "Un tipo de IVA para cada cargo: un cargo se factura al 0 % sin exportación, exención ni inversión del sujeto pasivo que lo explique",
+  "invoiceMissingVies": "Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)",
   "invoiceNoOpen": "No hay facturas abiertas.",
   "invoiceNothingToInvoice": "Nada registrado este mes — nada que facturar.",
   "invoiceOpenAge": "{days} días",
@@ -8637,6 +8642,19 @@
   "readinessStateUnavailable": "No se pudo leer",
   "readinessStateUnverified": "Aún no verificado",
   "readinessTitle": "Configuración de este espacio",
+  "recapCsv": "Declaración recapitulativa (CSV)",
+  "recapDue": "Hay una declaración recapitulativa pendiente para {month}: {count, plural, =1{1 factura con inversión del sujeto pasivo} other{{count} facturas con inversión del sujeto pasivo}}. Expórtela desde las declaraciones de IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
   "recordingPrivacyBadge": "Modo grabación — personas inventadas",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -11779,6 +11797,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.",
+  "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde.",
+  "viesCheckNow": "Comprobar ahora",
+  "viesStatusInvalid": "No válido en VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Sin comprobar",
+  "viesStatusUnavailable": "VIES no respondió · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Válido · consulta {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "Comprobación del número de IVA (VIES)",
   "visibilityAbout": "Profesión y biografía",
   "visibilityAboutEmpty": "Añada su profesión y unas palabras",
   "visibilityAboutMe": "Sobre mí",

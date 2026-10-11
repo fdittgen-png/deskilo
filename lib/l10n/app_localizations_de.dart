@@ -5499,6 +5499,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR-Badges';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.';
+
+  @override
+  String get featureRecapitulativeStatementTitle => 'Zusammenfassende Meldung';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.';
 
@@ -5809,6 +5816,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureVatReportDesc =>
       'Jede steuerbare Position eines Monats oder Zeitraums — Beleg, Kunde, netto, Satz, MwSt, brutto, Kategorie — mit Zwischensummen je Satz, als Brief und als CSV für die Buchhaltung.';
+
+  @override
+  String get featureViesVerificationDesc =>
+      'Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt.';
+
+  @override
+  String get featureViesVerificationTitle => 'USt-IdNr.-Prüfung (VIES)';
 
   @override
   String get featureWhatsappIntegration => 'WhatsApp-Integration';
@@ -8232,6 +8246,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceMissingVatZeroLine =>
       'Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund';
+
+  @override
+  String get invoiceMissingVies =>
+      'Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)';
 
   @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';
@@ -14006,6 +14024,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readinessTitle => 'Einrichtung dieses Workspace';
 
   @override
+  String get recapCsv => 'Zusammenfassende Meldung (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen mit Steuerschuldnerschaft des Empfängers',
+      one: '1 Rechnung mit Steuerschuldnerschaft des Empfängers',
+    );
+    return 'Für $month ist eine Zusammenfassende Meldung fällig: $_temp0. Exportieren Sie sie unter Umsatzsteuer-Voranmeldungen.';
+  }
+
+  @override
+  String get recapEmpty =>
+      'In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.';
+
+  @override
   String get recordingPrivacyBadge => 'Aufnahmemodus — erfundene Personen';
 
   @override
@@ -19145,6 +19181,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatUntil => 'bis';
+
+  @override
+  String get viesCheckExplainer =>
+      'VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.';
+
+  @override
+  String get viesCheckFailed =>
+      'VIES konnte nicht abgefragt werden. Versuchen Sie es später erneut.';
+
+  @override
+  String get viesCheckNow => 'Jetzt prüfen';
+
+  @override
+  String viesStatusInvalid(String date) {
+    return 'In VIES nicht gültig · $date';
+  }
+
+  @override
+  String get viesStatusNone => 'Nicht geprüft';
+
+  @override
+  String viesStatusUnavailable(String date) {
+    return 'VIES hat nicht geantwortet · $date';
+  }
+
+  @override
+  String viesStatusValid(String consultation, String date) {
+    return 'Gültig · Abfrage $consultation · $date';
+  }
+
+  @override
+  String get viesTileTitle => 'USt-IdNr.-Prüfung (VIES)';
 
   @override
   String get visibilityAbout => 'Beruf und Kurzprofil';

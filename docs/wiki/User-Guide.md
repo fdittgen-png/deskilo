@@ -4834,11 +4834,55 @@ When you charge VAT and invoice a business in another EU country, the tax can be
 
 **Good to know**
 
-- On: a general service (not connected with the premises) to a business in another EU country is reverse-charged. A desk, an office or a room never is: it carries your VAT, whatever the customer's VAT number. Today the app does not issue reverse-charged invoices itself: you issue them outside the app with your accountant.
+- On: a general service (not connected with the premises) to a business in another EU country is reverse-charged. A desk, an office or a room never is: it carries your VAT, whatever the customer's VAT number. The app issues such an invoice once the customer's VAT number was found valid in [VIES](#vat-number-check-vies); otherwise, or with that feature off, you issue it outside the app with your accountant.
 - Off: turn it off if you never invoice businesses abroad.
 - The option appears only for the VAT-registered regime.
 
 **See also:** [VAT treatment of a member](#vat-treatment)
+
+<!-- anchor: user.money.vat.vies -->
+### VAT number check (VIES)
+
+**Audience:** Owner · Billing administrator
+
+Before a general service is reverse-charged to a business in another EU country, the app needs evidence that the customer is a business: its VAT number found valid in VIES, the EU's register of VAT numbers.
+
+**Steps**
+
+1. Open the member page and tap **VAT number check (VIES)**.
+2. Tap **Check now**.
+3. The row then reads **Valid** with the consultation number and the date, **Not valid in VIES**, or **VIES did not answer**.
+
+**Good to know**
+
+- The consultation number is kept on the member and frozen on every reverse-charged invoice as evidence.
+- Issuing refuses a reverse charge without a valid check of this very number made in the last 90 days, and says so: **A valid VIES check of the member's VAT number**. When VIES does not answer, try again later; the invoice never falls back to your VAT on its own.
+- A desk, an office or a room is never reverse-charged, so it needs no check.
+- The row appears for whoever may issue invoices, when the **VAT number check (VIES)** feature is on.
+
+**See also:** [Reverse charge for EU businesses](#reverse-charge-for-eu-businesses) · [Place of supply of a service](#place-of-supply-of-a-service)
+
+<!-- anchor: user.money.vat.recap -->
+### EU sales list
+
+**Audience:** Owner
+
+Each month in which you reverse-charge services to businesses in other EU countries, your tax office expects a list of them: the DES in France, the Zusammenfassende Meldung in Germany, modelo 349 in Spain.
+
+**Steps**
+
+1. Open [VAT declarations](https://fdittgen-png.github.io/deskilo/#/vat-declarations) and pick the period.
+2. Tap **EU sales list (CSV)**.
+3. File it on your tax office's portal, or hand it to your accountant.
+
+**Good to know**
+
+- The list sums, per month and per customer VAT number, what your issued invoices reverse-charged; a desk at your own VAT never appears.
+- While one is due, **Invoicing** shows a notice: **An EU sales list is due for** the month.
+- The file has fixed columns: period, country, VAT number, customer, amount, documents.
+- It needs the **EU sales list** feature.
+
+**See also:** [VAT number check (VIES)](#vat-number-check-vies) · [Reverse charge for EU businesses](#reverse-charge-for-eu-businesses)
 
 <!-- anchor: user.money.vat.due -->
 ### When VAT falls due
@@ -5406,7 +5450,7 @@ You invoice a member for a month.
 - Invoices are derived from tracked data and cannot be composed by hand. The bottom line is the **Balance due**.
 - A month can only be invoiced once per member, and a month still running warns you that positions may change.
 - If a required detail is missing, **Complete these details before issuing** lists it (address, VAT number, exemption basis, VAT rate; also the workspace country, which must be France or Germany).
-- In this version, issuing in the app is available for workspaces in France or Germany, including for customers abroad: a desk, an office or a room carries your VAT wherever the customer lives. Reverse-charge, export and exempt-buyer invoices are issued outside the app with your accountant, and a general service to a customer abroad needs the customer's capacity (business or consumer) first.
+- In this version, issuing in the app is available for workspaces in France or Germany, including for customers abroad: a desk, an office or a room carries your VAT wherever the customer lives. Export and exempt-buyer invoices, and a reverse charge without a valid VIES check, are issued outside the app with your accountant, and a general service to a customer abroad needs the customer's capacity (business or consumer) first.
 - An issued invoice is signed and immutable.
 
 **See also:** [Month-close wizard](#the-month-close-wizard)

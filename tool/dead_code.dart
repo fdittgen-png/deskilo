@@ -4,6 +4,7 @@
 // `lib/` that nothing references, or that only tests reference.
 //
 //   dart run tool/dead_code.dart
+//   dart run tool/dead_code.dart --surface   # #2384: own-file-only symbols
 //
 // The gate is `test/lint/dead_code_test.dart`, which holds the reviewed
 // exceptions; this tool lists everything the scan sees, so a reviewer can
@@ -13,6 +14,17 @@ import 'dart:io';
 import 'dead_code/scan.dart';
 
 void main(List<String> args) {
+  if (args.contains('--surface')) {
+    final surface = scanPublicSurface(Directory.current.path);
+    for (final kind in SurfaceKind.values) {
+      final some = surface.where((f) => f.kind == kind).toList();
+      stdout.writeln('${kind.name}: ${some.length}');
+      for (final f in some) {
+        stdout.writeln('  ${f.path}:${f.line}  ${f.name}');
+      }
+    }
+    return;
+  }
   final findings = scanDeadCode(Directory.current.path);
   for (final kind in DeadCodeKind.values) {
     final some = findings.where((f) => f.kind == kind).toList();

@@ -5456,6 +5456,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR badges';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.';
+
+  @override
+  String get featureRecapitulativeStatementTitle => 'EU sales list';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.';
 
@@ -5764,6 +5771,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureVatReportDesc =>
       'Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.';
+
+  @override
+  String get featureViesVerificationDesc =>
+      'A business customer\'s VAT number is checked against the EU\'s VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app.';
+
+  @override
+  String get featureViesVerificationTitle => 'VAT number check (VIES)';
 
   @override
   String get featureWhatsappIntegration => 'WhatsApp integration';
@@ -8161,6 +8175,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceMissingVatZeroLine =>
       'A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it';
+
+  @override
+  String get invoiceMissingVies =>
+      'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)';
 
   @override
   String get invoiceNoOpen => 'No open invoices.';
@@ -13866,6 +13884,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readinessTitle => 'Setting up this space';
 
   @override
+  String get recapCsv => 'EU sales list (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reverse-charged invoices',
+      one: '1 reverse-charged invoice',
+    );
+    return 'An EU sales list is due for $month: $_temp0. Export it from VAT declarations.';
+  }
+
+  @override
+  String get recapEmpty => 'Nothing was reverse-charged in this period.';
+
+  @override
   String get recordingPrivacyBadge => 'Filming mode — invented people';
 
   @override
@@ -18944,6 +18979,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatUntil => 'until';
+
+  @override
+  String get viesCheckExplainer =>
+      'VIES is the EU\'s register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.';
+
+  @override
+  String get viesCheckFailed => 'VIES could not be asked. Try again later.';
+
+  @override
+  String get viesCheckNow => 'Check now';
+
+  @override
+  String viesStatusInvalid(String date) {
+    return 'Not valid in VIES · $date';
+  }
+
+  @override
+  String get viesStatusNone => 'Not checked';
+
+  @override
+  String viesStatusUnavailable(String date) {
+    return 'VIES did not answer · $date';
+  }
+
+  @override
+  String viesStatusValid(String consultation, String date) {
+    return 'Valid · consultation $consultation · $date';
+  }
+
+  @override
+  String get viesTileTitle => 'VAT number check (VIES)';
 
   @override
   String get visibilityAbout => 'Profession and bio';

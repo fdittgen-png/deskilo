@@ -657,7 +657,7 @@ Future<void> pickMemberHomeSite(
 ) async {
   final sites = await ref.read(sitesProvider.future);
   if (!context.mounted) return;
-  await pickHomeSiteAmong(context, ref, member, sites);
+  await _pickHomeSiteAmong(context, ref, member, sites);
   ref.invalidate(workspaceMembersProvider);
 }
 
@@ -672,13 +672,13 @@ Future<void> pickOwnHomeSite(
 ) async {
   final sites = await ref.read(sitesOfProvider(member.workspaceId).future);
   if (!context.mounted) return;
-  await pickHomeSiteAmong(context, ref, member, sites);
+  await _pickHomeSiteAmong(context, ref, member, sites);
   ref.invalidate(myMembershipsProvider);
   ref.invalidate(myMemberProvider);
 }
 
 /// The dialog and the write, over a given list of sites.
-Future<void> pickHomeSiteAmong(
+Future<void> _pickHomeSiteAmong(
   BuildContext context,
   WidgetRef ref,
   Member member,

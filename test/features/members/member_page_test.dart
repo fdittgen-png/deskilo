@@ -365,6 +365,25 @@ void main() {
     expect(_subtitle(tester, 'member-page-vat-treatment'), 'Exempt buyer');
   });
 
+  testWidgets('#2354 — the VIES check rides its flag and says what VIES '
+      'answered', (tester) async {
+    await _pumpPage(tester, 'member-3',
+        flags: const {'invoicing': true, 'viesVerification': false});
+    expect(find.byKey(const ValueKey('member-page-vies-check')), findsNothing);
+
+    await _pumpPage(tester, 'member-3', flags: const {'invoicing': true});
+    final tile = find.byKey(const ValueKey('member-page-vies-check'));
+    await tester.ensureVisible(tile);
+    expect(_subtitle(tester, 'member-page-vies-check'), 'Not checked');
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('vies-check-now')));
+    await tester.pumpAndSettle();
+    // The demo never reaches VIES: an outage, never a silent "valid".
+    expect(_subtitle(tester, 'member-page-vies-check'),
+        startsWith('VIES did not answer'));
+  });
+
   testWidgets('#1916 — the customer capacity is stated per member, by '
       'whoever issues invoices, and lands on the member at once',
       (tester) async {

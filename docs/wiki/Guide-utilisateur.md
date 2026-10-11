@@ -4834,11 +4834,55 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Bon à savoir**
 
-- Activée : une prestation générale (non rattachée aux locaux) à une entreprise d'un autre pays de l'UE est autoliquidée. Un poste, un bureau ou une salle ne l'est jamais : il porte votre TVA, quel que soit le numéro de TVA du client. Aujourd'hui, l'app n'émet pas elle-même les factures autoliquidées : vous les émettez hors de l'app avec votre comptable.
+- Activée : une prestation générale (non rattachée aux locaux) à une entreprise d'un autre pays de l'UE est autoliquidée. Un poste, un bureau ou une salle ne l'est jamais : il porte votre TVA, quel que soit le numéro de TVA du client. L'app émet une telle facture une fois le numéro de TVA du client trouvé valide dans [VIES](#vérification-du-numéro-de-tva-vies) ; sinon, ou si cette fonctionnalité est désactivée, vous l'émettez hors de l'app avec votre comptable.
 - Désactivée : désactivez-la si vous ne facturez jamais d'entreprises à l'étranger.
 - L'option n'apparaît que pour le régime des assujettis à la TVA.
 
 **Voir aussi:** [Traitement TVA d'un membre](#traitement-tva)
+
+<!-- anchor: user.money.vat.vies -->
+### Vérification du numéro de TVA (VIES)
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Avant d'autoliquider une prestation générale vendue à une entreprise d'un autre pays de l'UE, l'app a besoin d'une preuve que le client est une entreprise : son numéro de TVA trouvé valide dans VIES, le registre européen des numéros de TVA.
+
+**Étapes**
+
+1. Ouvrez la page du membre et touchez **Vérification du numéro de TVA (VIES)**.
+2. Touchez **Vérifier maintenant**.
+3. La ligne indique alors **Valide** avec le numéro de consultation et la date, **Non valide dans VIES** ou **VIES n'a pas répondu**.
+
+**Bon à savoir**
+
+- Le numéro de consultation est conservé sur le membre et figé sur chaque facture autoliquidée, comme preuve.
+- L'émission refuse une autoliquidation sans vérification valide de ce numéro précis datant de moins de 90 jours, et le dit : **Une vérification VIES valide du numéro de TVA du membre**. Quand VIES ne répond pas, réessayez plus tard ; la facture ne repasse jamais d'elle-même à votre TVA.
+- Un poste, un bureau ou une salle n'est jamais autoliquidé : aucune vérification n'est nécessaire.
+- La ligne apparaît pour qui peut émettre des factures, quand la fonctionnalité **Vérification du numéro de TVA (VIES)** est activée.
+
+**Voir aussi:** [Autoliquidation pour les entreprises de l'UE](#autoliquidation-pour-les-entreprises-de-lue) · [Lieu de prestation d'un service](#lieu-de-prestation-dun-service)
+
+<!-- anchor: user.money.vat.recap -->
+### Déclaration européenne de services
+
+**Public:** Propriétaire
+
+Chaque mois où vous autoliquidez des services vendus à des entreprises d'autres pays de l'UE, l'administration attend leur liste : la DES en France, la Zusammenfassende Meldung en Allemagne, le modelo 349 en Espagne.
+
+**Étapes**
+
+1. Ouvrez [Déclarations de TVA](https://fdittgen-png.github.io/deskilo/#/vat-declarations) et choisissez la période.
+2. Touchez **Déclaration européenne de services (CSV)**.
+3. Déposez-la sur le portail de l'administration, ou confiez-la à votre comptable.
+
+**Bon à savoir**
+
+- La liste totalise, par mois et par numéro de TVA du client, ce que vos factures émises ont autoliquidé ; un poste facturé avec votre TVA n'y figure jamais.
+- Tant qu'une déclaration est due, la **Facturation** affiche un avis : **Une déclaration européenne de services est due pour** le mois.
+- Le fichier a des colonnes fixes : période, pays, numéro de TVA, client, montant, documents.
+- Il faut la fonctionnalité **Déclaration européenne de services**.
+
+**Voir aussi:** [Vérification du numéro de TVA (VIES)](#vérification-du-numéro-de-tva-vies) · [Autoliquidation pour les entreprises de l'UE](#autoliquidation-pour-les-entreprises-de-lue)
 
 <!-- anchor: user.money.vat.due -->
 ### Exigibilité de la TVA
@@ -5406,7 +5450,7 @@ Vous facturez un membre pour un mois.
 - Les factures sont dérivées des données suivies et ne se composent pas à la main. La dernière ligne est le **Solde**.
 - Un mois ne peut être facturé qu'une fois par membre, et un mois encore en cours vous avertit que les positions peuvent changer.
 - Si une information obligatoire manque, **Complétez ces informations avant d'émettre** la liste (adresse, numéro de TVA, fondement de l'exonération, taux de TVA ; aussi le pays de l'espace, qui doit être la France ou l'Allemagne).
-- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, y compris pour des clients à l'étranger : un poste, un bureau ou une salle porte votre TVA où que vive le client. Les factures en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable, et une prestation générale à un client à l'étranger demande d'abord sa qualité (professionnel ou consommateur).
+- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, y compris pour des clients à l'étranger : un poste, un bureau ou une salle porte votre TVA où que vive le client. Les factures à l'export ou à un acheteur exonéré, et une autoliquidation sans vérification VIES valide, sont émises hors de l'app avec votre comptable, et une prestation générale à un client à l'étranger demande d'abord sa qualité (professionnel ou consommateur).
 - Une facture émise est signée et immuable.
 
 **Voir aussi:** [Assistant de clôture](#lassistant-de-clôture)

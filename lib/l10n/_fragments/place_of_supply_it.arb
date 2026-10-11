@@ -24,5 +24,55 @@
         "type": "String"
       }
     }
+  },
+  "featureViesVerificationTitle": "Verifica della partita IVA (VIES)",
+  "featureViesVerificationDesc": "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app.",
+  "viesTileTitle": "Verifica della partita IVA (VIES)",
+  "viesStatusNone": "Non verificata",
+  "viesStatusValid": "Valida · consultazione {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusInvalid": "Non valida in VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusUnavailable": "VIES non ha risposto · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesCheckNow": "Verifica ora",
+  "viesCheckExplainer": "VIES è il registro europeo delle partite IVA. Una risposta valida, con il suo numero di consultazione, prova che questo cliente è un'impresa; una fattura in inversione contabile viene emessa solo dopo.",
+  "invoiceMissingVies": "Una verifica VIES valida della partita IVA del membro (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
+  "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi.",
+  "featureRecapitulativeStatementTitle": "Elenchi riepilogativi (Intrastat servizi)",
+  "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
+  "recapCsv": "Elenco riepilogativo (CSV)",
+  "recapEmpty": "Nessuna inversione contabile in questo periodo.",
+  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, =1{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

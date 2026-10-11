@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/vies_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
+import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -168,6 +170,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       eventRepositoryProvider.overrideWithValue(fixture.events),
       calendarRepositoryProvider.overrideWithValue(fixture.calendar),
       moneyRepositoryProvider.overrideWithValue(fixture.money),
+      viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       // #1869 — book profiles in memory.
       bookProfileRepositoryProvider.overrideWithValue(FakeBookProfileRepository()),
       creditRepositoryProvider.overrideWithValue(fixture.credits),

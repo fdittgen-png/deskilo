@@ -11,7 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../domain/bi_analysis.dart';
 
 /// A distinguishable colour for part [index], drawn from the theme.
-Color biPartColor(ColorScheme scheme, int index) {
+Color _biPartColor(ColorScheme scheme, int index) {
   final base = HSLColor.fromColor(scheme.primary);
   final hue = (base.hue + index * 47) % 360;
   return base
@@ -50,7 +50,7 @@ class BiShareBreakdown extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final colors = [
       for (var i = 0; i < shares.length; i++)
-        shares[i].isOther ? scheme.outline : biPartColor(scheme, i),
+        shares[i].isOther ? scheme.outline : _biPartColor(scheme, i),
     ];
     final ring = SizedBox(
       width: 150,

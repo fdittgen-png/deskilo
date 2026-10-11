@@ -23,6 +23,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 - Dates, numbers, currency: locale-aware formatting only (`intl`), never raw string formatting. Currency follows the workspace country.
 - All timestamps stored UTC; recurring series recur in workspace-local time.
 - No third-party tracking, no GPL dependencies (ADR 0009). FCM is the push transport (ADR 0011).
+- A public top-level declaration in `lib/` has a reader outside its file; otherwise it is `_private`, or `@visibleForTesting` when tests read it (`test/lint/public_surface_test.dart`, #2384). Nothing in `lib/` is dead or read only by tests (`test/lint/dead_code_test.dart`, #2383). `dart run tool/dead_code.dart [--surface]` lists the findings.
 
 ## Feature management (lifetime rule, #502)
 

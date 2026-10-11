@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
   "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
   "featureQrBadgesTitle": "Badge QR",
+  "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
+  "featureRecapitulativeStatementTitle": "Elenchi riepilogativi (Intrastat servizi)",
   "featureRecordingPrivacyDesc": "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -3837,6 +3839,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app.",
+  "featureViesVerificationTitle": "Verifica della partita IVA (VIES)",
   "featureWhatsappIntegration": "Integrazione WhatsApp",
   "featureWhatsappIntegrationDesc": "I membri condividono il loro numero WhatsApp nel profilo; un tocco su un membro apre la chat; il link del gruppo nella rubrica. Nessuna integrazione WhatsApp lato server.",
   "featureWorkingHours": "Orario di lavoro",
@@ -5310,6 +5314,7 @@
   "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
   "invoiceMissingVatTreatment": "Le fatture con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.",
   "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
+  "invoiceMissingVies": "Una verifica VIES valida della partita IVA del membro (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
   "invoiceNoOpen": "Nessuna fattura aperta.",
   "invoiceNothingToInvoice": "Nessun dato registrato per questo mese — niente da fatturare.",
   "invoiceOpenAge": "{days} giorni",
@@ -8637,6 +8642,19 @@
   "readinessStateUnavailable": "Impossibile leggere",
   "readinessStateUnverified": "Non ancora verificato",
   "readinessTitle": "Configurazione di questo spazio",
+  "recapCsv": "Elenco riepilogativo (CSV)",
+  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, =1{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "Nessuna inversione contabile in questo periodo.",
   "recordingPrivacyBadge": "Modalità ripresa — persone inventate",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -11779,6 +11797,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES è il registro europeo delle partite IVA. Una risposta valida, con il suo numero di consultazione, prova che questo cliente è un'impresa; una fattura in inversione contabile viene emessa solo dopo.",
+  "viesCheckFailed": "Non è stato possibile interrogare VIES. Riprovi più tardi.",
+  "viesCheckNow": "Verifica ora",
+  "viesStatusInvalid": "Non valida in VIES · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Non verificata",
+  "viesStatusUnavailable": "VIES non ha risposto · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Valida · consultazione {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "Verifica della partita IVA (VIES)",
   "visibilityAbout": "Professione e biografia",
   "visibilityAboutEmpty": "Aggiunga la sua professione e qualche parola",
   "visibilityAboutMe": "Su di me",

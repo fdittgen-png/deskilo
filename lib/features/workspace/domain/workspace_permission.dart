@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'member.dart';
 import 'workspace.dart';
 import 'workspace_feature.dart';
@@ -137,6 +138,7 @@ extension PermissionRoleWire on PermissionRole {
 /// The defaults an UNCONFIGURED matrix row grants — exactly today's
 /// behavior, so a workspace that never opens the matrix changes
 /// nothing.
+@visibleForTesting
 Set<WorkspacePermission> defaultPermissionsFor(PermissionRole role) =>
     switch (role) {
       PermissionRole.owner => WorkspacePermission.values.toSet(),
@@ -254,10 +256,16 @@ bool showsMemberAccountMenu({
     features.contains(WorkspaceFeature.memberAccountMenu) &&
     // The everyday permissions are the member's own side of the app; only
     // an administration permission makes it Settings.
-    !permissions.any((p) => !everydayPermissionNames.contains(p.wireName));
+    holdsOnlyEverydayPermissions(permissions);
+
+/// Whether [permissions] are the member's own side of the app at most —
+/// no administration of any kind (#1598; #2414 reads it for the default
+/// navigation).
+bool holdsOnlyEverydayPermissions(Set<WorkspacePermission> permissions) =>
+    !permissions.any((p) => !_everydayPermissionNames.contains(p.wireName));
 
 /// The everyday permissions, as the matrix stores them.
-const everydayPermissionNames = [
+const _everydayPermissionNames = [
   'useMessages',
   'makeReservations',
   'viewCalendar',
@@ -270,9 +278,9 @@ const everydayPermissionNames = [
 /// explicitly — what the demonstration workspace and the test fixture start
 /// from. A real workspace starts with nothing: its owner grants them.
 Map<String, dynamic> everydayMatrix() => {
-      'member': [...everydayPermissionNames],
+      'member': [..._everydayPermissionNames],
       'admin': [
         for (final p in defaultPermissionsFor(PermissionRole.admin)) p.wireName,
-        ...everydayPermissionNames,
+        ..._everydayPermissionNames,
       ],
     };

@@ -6357,6 +6357,14 @@
   },
   "featureQrBadgesDesc": "Printable QR badge cards for the kiosk, beside the NFC/RFID cards.",
   "featureQrBadgesTitle": "QR badges",
+  "featureRecapitulativeStatementDesc": "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.",
+  "@featureRecapitulativeStatementDesc": {
+    "description": "#2354 recapitulative statement: featureRecapitulativeStatementDesc"
+  },
+  "featureRecapitulativeStatementTitle": "EU sales list",
+  "@featureRecapitulativeStatementTitle": {
+    "description": "#2354 recapitulative statement: featureRecapitulativeStatementTitle"
+  },
   "featureRecordingPrivacyDesc": "For filming or photographing this workspace. Every name, e-mail, telephone number, address and photograph is replaced by an invented person before it reaches the screen, while the plan, the bookings and the figures stay the real ones. A banner says so on every screen, and the identity forms refuse to save until it is off.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -6643,6 +6651,14 @@
   "featureVatReportDesc": "Every taxable position of a month or period — document, customer, net, rate, VAT, gross, category — with subtotals per rate, as a letter and as a CSV for the accountant.",
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
+  },
+  "featureViesVerificationDesc": "A business customer's VAT number is checked against the EU's VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app.",
+  "@featureViesVerificationDesc": {
+    "description": "#2354 VIES evidence: featureViesVerificationDesc"
+  },
+  "featureViesVerificationTitle": "VAT number check (VIES)",
+  "@featureViesVerificationTitle": {
+    "description": "#2354 VIES evidence: featureViesVerificationTitle"
   },
   "featureWhatsappIntegration": "WhatsApp integration",
   "@featureWhatsappIntegration": {
@@ -9396,6 +9412,10 @@
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "@invoiceMissingVatZeroLine": {
     "description": "#1917 essentials key vat_line_zero_unexplained (0393)"
+  },
+  "invoiceMissingVies": "A valid VIES check of the member's VAT number (needed for reverse charge; if VIES did not answer, try again later)",
+  "@invoiceMissingVies": {
+    "description": "#2354 VIES evidence: invoiceMissingVies"
   },
   "invoiceNoOpen": "No open invoices.",
   "@invoiceNoOpen": {
@@ -16086,6 +16106,26 @@
   "@readinessTitle": {
     "description": "#1636 workspace_readiness"
   },
+  "recapCsv": "EU sales list (CSV)",
+  "@recapCsv": {
+    "description": "#2354 recapitulative statement: recapCsv"
+  },
+  "recapDue": "An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
+  "@recapDue": {
+    "description": "#2354 recapitulative statement: recapDue",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "Nothing was reverse-charged in this period.",
+  "@recapEmpty": {
+    "description": "#2354 recapitulative statement: recapEmpty"
+  },
   "recordingPrivacyBadge": "Filming mode — invented people",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -21611,6 +21651,56 @@
   "vatUntil": "until",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "viesCheckExplainer": "VIES is the EU's register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.",
+  "@viesCheckExplainer": {
+    "description": "#2354 VIES evidence: viesCheckExplainer"
+  },
+  "viesCheckFailed": "VIES could not be asked. Try again later.",
+  "@viesCheckFailed": {
+    "description": "#2354 VIES evidence: viesCheckFailed"
+  },
+  "viesCheckNow": "Check now",
+  "@viesCheckNow": {
+    "description": "#2354 VIES evidence: viesCheckNow"
+  },
+  "viesStatusInvalid": "Not valid in VIES · {date}",
+  "@viesStatusInvalid": {
+    "description": "#2354 VIES evidence: viesStatusInvalid",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Not checked",
+  "@viesStatusNone": {
+    "description": "#2354 VIES evidence: viesStatusNone"
+  },
+  "viesStatusUnavailable": "VIES did not answer · {date}",
+  "@viesStatusUnavailable": {
+    "description": "#2354 VIES evidence: viesStatusUnavailable",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Valid · consultation {consultation} · {date}",
+  "@viesStatusValid": {
+    "description": "#2354 VIES evidence: viesStatusValid",
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "VAT number check (VIES)",
+  "@viesTileTitle": {
+    "description": "#2354 VIES evidence: viesTileTitle"
   },
   "visibilityAbout": "Profession and bio",
   "@visibilityAbout": {

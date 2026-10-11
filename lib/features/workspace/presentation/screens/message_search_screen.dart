@@ -28,15 +28,15 @@ import '../widgets/conversation_thread.dart';
 ///
 /// The message half runs on the 0125 full-text index with a PREFIX
 /// query — nobody finishes a word before expecting results.
-class MessageSearchScreen extends ConsumerStatefulWidget {
-  const MessageSearchScreen({super.key});
+class _MessageSearchScreen extends ConsumerStatefulWidget {
+  const _MessageSearchScreen();
 
   @override
-  ConsumerState<MessageSearchScreen> createState() =>
+  ConsumerState<_MessageSearchScreen> createState() =>
       _MessageSearchScreenState();
 }
 
-class _MessageSearchScreenState extends ConsumerState<MessageSearchScreen> {
+class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
   final _controller = TextEditingController();
   Timer? _debounce;
 

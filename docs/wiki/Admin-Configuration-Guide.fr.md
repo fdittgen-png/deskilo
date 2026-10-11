@@ -87,7 +87,11 @@ jamais la seule présence d'un numéro de TVA ; un consommateur, en France
 ou ailleurs, paie votre TVA, il n'y a donc pas de traitement distinct pour
 un particulier intracommunautaire. Le contrôle de facturation électronique
 refuse d'envoyer un document en autoliquidation tant que le numéro de TVA
-du client est absent : c'est lui qui prouve que la taxe est la sienne.
+du client est absent : c'est lui qui prouve que la taxe est la sienne. L'émettre demande aussi
+la preuve que le client est une entreprise : son numéro de TVA trouvé
+valide dans VIES (la fonctionnalité **Vérification du numéro de TVA
+(VIES)**), dont la facture garde le numéro de consultation ; quand VIES ne
+répond pas, l'émission attend.
 
 **Le moment où la TVA devient exigible** est un réglage de l'espace :
 *sur les débits* (exigible à l'émission) ou *sur les encaissements*

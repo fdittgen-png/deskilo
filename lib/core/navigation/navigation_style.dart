@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform, kIsWeb, visibleForTesting;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../storage/prefs_stores.dart';
@@ -34,15 +37,12 @@ abstract class NavigationStyleStore {
   Future<void> write(String? style);
 }
 
-/// The hamburger menu is the default everywhere: a device that never chose
-/// reads [NavigationStyle.menu]; a stored choice (classic or menu) wins.
+/// The device's stored choice, or null when it never chose — the default
+/// then depends on who uses it and on what ([defaultNavigationStyle]).
 @visibleForTesting
 class PrefsNavigationStyleStore extends PrefsStringStore
     implements NavigationStyleStore {
   const PrefsNavigationStyleStore() : super('navigation_style');
-
-  @override
-  Future<String?> read() async => await super.read() ?? NavigationStyle.menu.wire;
 }
 
 @Riverpod(keepAlive: true)
@@ -56,16 +56,40 @@ NavigationStyleStore navigationStyleStore(Ref ref) =>
 @Riverpod(keepAlive: true)
 bool platformIsWeb(Ref ref) => kIsWeb;
 
-/// The user's navigation choice. A device that never chose gets the menu
-/// (see [PrefsNavigationStyleStore]); the classic bar is one tap away in
-/// Settings. Applied instantly — the shell watches it.
+/// #2414 — whether this device is a phone: Android or iOS with a screen
+/// whose shorter side is under 600 logical pixels (a tablet is not).
+@Riverpod(keepAlive: true)
+bool deviceIsPhone(Ref ref) {
+  if (kIsWeb) return false;
+  if (defaultTargetPlatform != TargetPlatform.android &&
+      defaultTargetPlatform != TargetPlatform.iOS) {
+    return false;
+  }
+  final views = PlatformDispatcher.instance.views;
+  if (views.isEmpty) return true;
+  final view = views.first;
+  return (view.physicalSize / view.devicePixelRatio).shortestSide < 600;
+}
+
+/// #2414 — what a device that never chose gets: the menu, except for a
+/// member who holds only the everyday permissions on a phone, who gets
+/// the bar and its thumb-reach.
+NavigationStyle defaultNavigationStyle({
+  required bool isPhone,
+  required bool everydayOnly,
+}) =>
+    isPhone && everydayOnly ? NavigationStyle.classic : NavigationStyle.menu;
+
+/// The user's navigation choice, or null for the default
+/// ([defaultNavigationStyle]); changed in Me and in a space's Settings.
+/// Applied instantly — the shell watches it.
 @Riverpod(keepAlive: true)
 class NavigationStyleController extends _$NavigationStyleController {
   @override
   Future<NavigationStyle?> build() async =>
       NavigationStyle.fromWire(await ref.watch(navigationStyleStoreProvider).read());
 
-  /// [style] null removes the stored choice: back to the default, the menu.
+  /// [style] null removes the stored choice: back to the default.
   Future<void> set(NavigationStyle? style) async {
     await ref.read(navigationStyleStoreProvider).write(style?.wire);
     state = AsyncData(
@@ -75,6 +99,10 @@ class NavigationStyleController extends _$NavigationStyleController {
 }
 
 /// What the shell actually shows: the menu on the web, always; on native
-/// the bar unless the user asked for the menu.
-bool shellUsesMenu({required bool platformIsWeb, NavigationStyle? override}) =>
-    platformIsWeb || override == NavigationStyle.menu;
+/// the stored choice, else [fallback] (the device's default).
+bool shellUsesMenu({
+  required bool platformIsWeb,
+  NavigationStyle? override,
+  NavigationStyle fallback = NavigationStyle.classic,
+}) =>
+    platformIsWeb || (override ?? fallback) == NavigationStyle.menu;

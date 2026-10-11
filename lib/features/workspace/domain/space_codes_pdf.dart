@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:typed_data';
 
 import 'package:pdf/pdf.dart';
@@ -38,6 +39,7 @@ double _qrShareOf(SpaceQrSize size) => switch (size) {
 /// The QR edge, in PDF points, for a card/code size combination — the
 /// chosen share of the card's height inside its padding. Pure so the
 /// nine combinations are testable without rendering a document.
+@visibleForTesting
 double spaceQrEdge(SpaceCardSize card, SpaceQrSize qr) {
   final g = _geometryOf(card);
   return (g.height - 2 * _cardPadding) * _qrShareOf(qr);

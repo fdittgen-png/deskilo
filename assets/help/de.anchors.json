@@ -226,6 +226,8 @@
   "user.money.legal.special-mentions": "Besondere Angaben",
   "user.money.vat.regime": "Steuerregime",
   "user.money.vat.reverse-charge": "Reverse-Charge für EU-Unternehmen",
+  "user.money.vat.vies": "USt-IdNr.-Prüfung (VIES)",
+  "user.money.vat.recap": "Zusammenfassende Meldung",
   "user.money.vat.due": "Wann die Umsatzsteuer entsteht",
   "user.money.vat.account": "Steuerkonto",
   "user.money.vat.number": "Umsatzsteuer-ID",

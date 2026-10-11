@@ -15,7 +15,7 @@ import 'workspace_feature.dart';
 
 /// Every flag, from a base plus explicit [on] and [off] lists of feature
 /// keys. Unknown keys throw — a typo must not silently mean "off".
-Map<String, bool> expandFeatureProfile({
+Map<String, bool> _expandFeatureProfile({
   String base = 'core',
   Iterable<String> on = const [],
   Iterable<String> off = const [],
@@ -43,7 +43,7 @@ Map<String, bool> expandFeatureProfile({
 Map<String, bool>? expandTemplateProfile(Map<String, dynamic> template) {
   final profile = template['feature_profile'];
   if (profile is! Map) return null;
-  return expandFeatureProfile(
+  return _expandFeatureProfile(
     base: '${profile['base'] ?? 'core'}',
     on: [for (final k in profile['on'] as List? ?? const <Object?>[]) '$k'],
     off: [for (final k in profile['off'] as List? ?? const <Object?>[]) '$k'],

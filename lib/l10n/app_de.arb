@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.",
   "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.",
   "featureQrBadgesTitle": "QR-Badges",
+  "featureRecapitulativeStatementDesc": "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.",
+  "featureRecapitulativeStatementTitle": "Zusammenfassende Meldung",
   "featureRecordingPrivacyDesc": "Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -3837,6 +3839,8 @@
   "@featureVatReportDesc": {
     "description": "#878 VAT review / report: featureVatReportDesc"
   },
+  "featureViesVerificationDesc": "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt.",
+  "featureViesVerificationTitle": "USt-IdNr.-Prüfung (VIES)",
   "featureWhatsappIntegration": "WhatsApp-Integration",
   "featureWhatsappIntegrationDesc": "Mitglieder teilen ihre WhatsApp-Nummer im Profil; ein Tipp auf ein Mitglied öffnet den Chat; der Gruppenlink im Verzeichnis. Keine serverseitige WhatsApp-Integration.",
   "featureWorkingHours": "Arbeitszeiten",
@@ -5310,6 +5314,7 @@
   "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)",
   "invoiceMissingVatTreatment": "Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.",
   "invoiceMissingVatZeroLine": "Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund",
+  "invoiceMissingVies": "Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)",
   "invoiceNoOpen": "Keine offenen Rechnungen.",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
   "invoiceOpenAge": "{days} Tage",
@@ -8637,6 +8642,19 @@
   "readinessStateUnavailable": "Konnte nicht gelesen werden",
   "readinessStateUnverified": "Noch nicht geprüft",
   "readinessTitle": "Einrichtung dieses Workspace",
+  "recapCsv": "Zusammenfassende Meldung (CSV)",
+  "recapDue": "Für {month} ist eine Zusammenfassende Meldung fällig: {count, plural, =1{1 Rechnung mit Steuerschuldnerschaft des Empfängers} other{{count} Rechnungen mit Steuerschuldnerschaft des Empfängers}}. Exportieren Sie sie unter Umsatzsteuer-Voranmeldungen.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.",
   "recordingPrivacyBadge": "Aufnahmemodus — erfundene Personen",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -11779,6 +11797,38 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "viesCheckExplainer": "VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.",
+  "viesCheckFailed": "VIES konnte nicht abgefragt werden. Versuchen Sie es später erneut.",
+  "viesCheckNow": "Jetzt prüfen",
+  "viesStatusInvalid": "In VIES nicht gültig · {date}",
+  "@viesStatusInvalid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusNone": "Nicht geprüft",
+  "viesStatusUnavailable": "VIES hat nicht geantwortet · {date}",
+  "@viesStatusUnavailable": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesStatusValid": "Gültig · Abfrage {consultation} · {date}",
+  "@viesStatusValid": {
+    "placeholders": {
+      "consultation": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "viesTileTitle": "USt-IdNr.-Prüfung (VIES)",
   "visibilityAbout": "Beruf und Kurzprofil",
   "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
   "visibilityAboutMe": "Über mich",

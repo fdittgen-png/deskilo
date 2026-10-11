@@ -37,16 +37,15 @@ Future<int?> showProcessChangeSheet(
     showModalBottomSheet<int>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => ProcessChangeSheet(
+      builder: (_) => _ProcessChangeSheet(
         processKey: processKey,
         subprocessKeys: subprocessKeys,
         activate: activate,
       ),
     );
 
-class ProcessChangeSheet extends ConsumerStatefulWidget {
-  const ProcessChangeSheet({
-    super.key,
+class _ProcessChangeSheet extends ConsumerStatefulWidget {
+  const _ProcessChangeSheet({
     required this.processKey,
     required this.subprocessKeys,
     required this.activate,
@@ -57,10 +56,10 @@ class ProcessChangeSheet extends ConsumerStatefulWidget {
   final bool activate;
 
   @override
-  ConsumerState<ProcessChangeSheet> createState() => _ProcessChangeSheetState();
+  ConsumerState<_ProcessChangeSheet> createState() => _ProcessChangeSheetState();
 }
 
-class _ProcessChangeSheetState extends ConsumerState<ProcessChangeSheet> {
+class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
   DeactivationMode _mode = DeactivationMode.refuse;
   bool _busy = false;
   bool _conflict = false;

@@ -1263,6 +1263,12 @@
       "capabilities": []
     },
     {
+      "key": "recapitulativeStatement",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "recordingPrivacy",
       "maturity": "unreviewed",
       "lifecycle": "active",
@@ -1481,6 +1487,12 @@
     },
     {
       "key": "vatReport",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
+      "key": "viesVerification",
       "maturity": "unreviewed",
       "lifecycle": "active",
       "capabilities": []

@@ -24,7 +24,7 @@ import 'bi_toolbar.dart';
 /// null, the product standard.
 typedef BiOpenView = void Function(BiSavedView? view, BiQueryContext query);
 
-String biViewFailureText(AppLocalizations? l10n, BiViewFailure f) =>
+String _biViewFailureText(AppLocalizations? l10n, BiViewFailure f) =>
     switch (f) {
       BiViewFailure.stale =>
         l10n?.biViewStale ??
@@ -93,7 +93,7 @@ class BiViewsBar extends ConsumerWidget {
           stackTrace: st,
         );
         messenger.showSnackBar(
-          SnackBar(content: Text(biViewFailureText(l10n, e.failure))),
+          SnackBar(content: Text(_biViewFailureText(l10n, e.failure))),
         );
       }
     }

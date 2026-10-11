@@ -38,6 +38,7 @@ const _inviteLanguages = <String, String>{
 /// (#318) so it renders as a visually distinct code; [InviteUriCodec.
 /// extractCode] strips the markers back out when the whole message is
 /// pasted into the join field.
+@visibleForTesting
 String buildInvitationMessage({
   required Workspace workspace,
   required String code,

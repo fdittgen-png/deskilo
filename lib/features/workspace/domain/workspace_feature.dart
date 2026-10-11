@@ -367,7 +367,20 @@ enum WorkspaceFeature {
   /// (mail handling, a virtual office) that a business elsewhere
   /// self-assesses. Platform, default ON, under vatManagement; OFF hides
   /// the choice and every new charge is property-connected.
-  supplyClassification;
+  supplyClassification,
+
+  /// #2354 — a customer's VAT number checked against VIES, the consultation
+  /// number kept as evidence: a general service reverse-charged to a
+  /// business abroad is issued only once its number was found valid.
+  /// Platform, default ON, under supplyClassification; OFF keeps those
+  /// invoices outside the app.
+  viesVerification,
+
+  /// #2354 — the recapitulative statement (EU sales list: DES, ZM, 349):
+  /// the reverse-charged services per customer VAT number and month, as
+  /// a CSV beside the VAT declarations, and a notice on Invoicing while
+  /// one is due. Platform, default ON, under vatDeclarations.
+  recapitulativeStatement;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1497,6 +1510,20 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatManagement,
+  ),
+  // #2354 — evidence for the reverse charge a general service allows.
+  WorkspaceFeature.viesVerification: FeatureManifestEntry(
+    feature: WorkspaceFeature.viesVerification,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.supplyClassification,
+  ),
+  // #2354 — a list filed beside the VAT return: under the declarations.
+  WorkspaceFeature.recapitulativeStatement: FeatureManifestEntry(
+    feature: WorkspaceFeature.recapitulativeStatement,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.vatDeclarations,
   ),
 };
 

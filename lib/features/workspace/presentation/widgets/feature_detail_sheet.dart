@@ -30,7 +30,7 @@ Future<void> showFeatureDetailSheet(
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (sheetContext) => FeatureDetailSheet(
+      builder: (sheetContext) => _FeatureDetailSheet(
         feature: feature,
         raw: raw,
         onChange: (f) {
@@ -40,9 +40,8 @@ Future<void> showFeatureDetailSheet(
       ),
     );
 
-class FeatureDetailSheet extends StatelessWidget {
-  const FeatureDetailSheet({
-    super.key,
+class _FeatureDetailSheet extends StatelessWidget {
+  const _FeatureDetailSheet({
     required this.feature,
     required this.raw,
     required this.onChange,
