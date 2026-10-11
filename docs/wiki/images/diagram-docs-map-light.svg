@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Documentation map: use it through the guide site, understand it through the architecture, technical reference, specification and decision records, build it through implementation, contributing, migrations and the release guide.">
+<g font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<rect width="1200" height="420" rx="24" fill="#fdfcf9"/>
+<rect x="40" y="40" width="350" height="340" rx="18" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="40" y="40" width="350" height="6" rx="3" fill="#0f766e"/>
+<text x="68" y="92" font-size="26" font-weight="800" fill="#1b2236">Use it</text>
+<text x="68" y="118" font-size="14" fill="#5a6277">Guide site · 5 languages</text>
+<rect x="64" y="146" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="86" cy="167" r="5" fill="#0f766e"/>
+<text x="102" y="173" font-size="16" font-weight="600" fill="#1b2236">User guide</text>
+<rect x="64" y="200" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="86" cy="221" r="5" fill="#0f766e"/>
+<text x="102" y="227" font-size="16" font-weight="600" fill="#1b2236">Setup guide</text>
+<rect x="64" y="254" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="86" cy="275" r="5" fill="#0f766e"/>
+<text x="102" y="281" font-size="16" font-weight="600" fill="#1b2236">Demo workspace</text>
+<rect x="64" y="308" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="86" cy="329" r="5" fill="#0f766e"/>
+<text x="102" y="335" font-size="16" font-weight="600" fill="#1b2236">Setup questionnaire</text>
+<rect x="425" y="40" width="350" height="340" rx="18" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="425" y="40" width="350" height="6" rx="3" fill="#0f766e"/>
+<text x="453" y="92" font-size="26" font-weight="800" fill="#1b2236">Understand it</text>
+<text x="453" y="118" font-size="14" fill="#5a6277">This wiki</text>
+<rect x="449" y="146" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="471" cy="167" r="5" fill="#0f766e"/>
+<text x="487" y="173" font-size="16" font-weight="600" fill="#1b2236">Architecture</text>
+<rect x="449" y="200" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="471" cy="221" r="5" fill="#0f766e"/>
+<text x="487" y="227" font-size="16" font-weight="600" fill="#1b2236">Technical reference</text>
+<rect x="449" y="254" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="471" cy="275" r="5" fill="#0f766e"/>
+<text x="487" y="281" font-size="16" font-weight="600" fill="#1b2236">Product specification</text>
+<rect x="449" y="308" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="471" cy="329" r="5" fill="#0f766e"/>
+<text x="487" y="335" font-size="16" font-weight="600" fill="#1b2236">Decision records</text>
+<rect x="810" y="40" width="350" height="340" rx="18" fill="#ffffff" stroke="#d8e0de" stroke-width="1.5"/>
+<rect x="810" y="40" width="350" height="6" rx="3" fill="#0f766e"/>
+<text x="838" y="92" font-size="26" font-weight="800" fill="#1b2236">Build it</text>
+<text x="838" y="118" font-size="14" fill="#5a6277">This wiki + repository</text>
+<rect x="834" y="146" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="856" cy="167" r="5" fill="#0f766e"/>
+<text x="872" y="173" font-size="16" font-weight="600" fill="#1b2236">Implementation</text>
+<rect x="834" y="200" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="856" cy="221" r="5" fill="#0f766e"/>
+<text x="872" y="227" font-size="16" font-weight="600" fill="#1b2236">Contributing</text>
+<rect x="834" y="254" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="856" cy="275" r="5" fill="#0f766e"/>
+<text x="872" y="281" font-size="16" font-weight="600" fill="#1b2236">Migrations and tests</text>
+<rect x="834" y="308" width="302" height="42" rx="12" fill="#0f766e" fill-opacity="0.12"/>
+<circle cx="856" cy="329" r="5" fill="#0f766e"/>
+<text x="872" y="335" font-size="16" font-weight="600" fill="#1b2236">Release guide</text>
+</g></svg>
