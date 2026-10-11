@@ -28,6 +28,12 @@ const _allowed = {
   'lib/features/auth/data/supabase_auth_repository.dart',
   'lib/features/auth/domain/auth_repository.dart',
   'lib/features/auth/providers/sign_out.dart',
+  // #2389 — the federation flows sign a SECONDARY client out of its own
+  // installation (the local scope, the default); the person's session
+  // here is untouched, so there is no cache of theirs to drop. They
+  // passed this check only while they spelled the default scope out.
+  'lib/core/backend/native_federation_flow.dart',
+  'lib/core/backend/secondary_federation.dart',
 };
 
 void main() {

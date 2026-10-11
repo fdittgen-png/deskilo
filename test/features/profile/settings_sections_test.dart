@@ -13,8 +13,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import '../../helpers/settings_sections.dart';
 import '../../helpers/section_jump.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<void> pumpSettingsAs(
   WidgetTester tester, {
@@ -148,8 +148,8 @@ void main() {
     tester.view.physicalSize = const Size(800, 3600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    final workspace = FakeWorkspaceRepository.withWorkspace();
-    workspace.myMember = const Member(
+    final workspace = FakeWorkspaceRepository.withWorkspace()
+      ..myMember = const Member(
       id: 'member-1',
       workspaceId: 'ws-1',
       userId: 'user-1',

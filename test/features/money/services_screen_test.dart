@@ -159,8 +159,7 @@ void main() {
           workspaceId: 'ws-1',
           name: 'Locker',
           priceCents: 1000,
-          active: true,
-          vatRateId: ''),
+          active: true),
     ]);
     await pumpServices(tester, money: money, workspace: workspace);
 

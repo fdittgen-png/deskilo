@@ -5,15 +5,15 @@
 // but grew separate layouts. One implementation each, composed inline
 // into a single compact header row by both screens.
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../workspace/domain/booking_granularity.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// Granularity-aware window picker, inline-compact: Morning/Afternoon/
 /// Full-day chips under day-based rules (#201), from→to clock buttons on
@@ -314,6 +314,7 @@ class DayHalvesGlyph extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = IconTheme.of(context).color ??
         Theme.of(context).colorScheme.onSurfaceVariant;
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     Widget half(bool filled) => Container(
           width: (_width - _gap) / 2,
           height: _height,

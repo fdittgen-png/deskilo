@@ -1,21 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-
-import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/record_consumption.dart';
-import '../../domain/service_item.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/price_negotiation.dart';
+import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 
 /// Bottom sheet recording consumed services onto the monthly bill (#129,

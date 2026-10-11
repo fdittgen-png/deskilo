@@ -11,6 +11,7 @@
 // stale picture is never shown for a newer revision, and a render that
 // finishes after its frame changed is dropped. A failed render shows
 // the step as text and says so.
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _StoryboardPreviewState extends State<StoryboardPreview> {
     final scene = f.scene;
     if (scene == null) return;
     _cache[key] = null;
-    IllustrationRenderer(colors)
+    unawaited(IllustrationRenderer(colors)
         .renderScene(
           scene,
           provenance: provenance,
@@ -79,7 +80,7 @@ class _StoryboardPreviewState extends State<StoryboardPreview> {
               _failed.add(key);
             });
           },
-        );
+        ));
   }
 
   @override

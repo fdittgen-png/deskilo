@@ -116,9 +116,6 @@ void main() {
         type: WorkspaceFieldType.text,
         labels: {'en': 'Committee'},
       ),
-      // null, not []: an empty list asks for every existing choice to be
-      // removed, which the server refuses once one has been made.
-      options: null,
     );
 
     expect(repo.fields.single.key, 'committee');

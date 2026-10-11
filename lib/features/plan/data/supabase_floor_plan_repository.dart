@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/trace/trace_logger.dart';
-import '../../../core/ids/request_id.dart';
-import 'plan_media_steps.dart';
-import 'plan_media_sweep.dart';
 import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/cached_fetch.dart';
+import '../../../core/data/enum_wire.dart';
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/system_columns.dart';
+import '../../../core/ids/request_id.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../domain/desk.dart';
 import '../domain/floor_plan.dart';
 import '../domain/floor_plan_repository.dart';
@@ -19,8 +19,8 @@ import '../domain/office.dart';
 import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
-import '../../../core/data/system_columns.dart';
-import '../../../core/data/enum_wire.dart';
+import 'plan_media_steps.dart';
+import 'plan_media_sweep.dart';
 
 class SupabaseFloorPlanRepository implements FloorPlanRepository {
   SupabaseFloorPlanRepository(this._client, this._cache);
@@ -449,7 +449,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     if (path != null && path != 'pending') {
       try {
         await _client.storage.from('floor-plans').remove([path]);
-      } catch (e, st) {
+      } on Object catch (e, st) {
         TraceLogger.instance.warn('plan', 'plan image object left for cleanup',
             error: e, stackTrace: st);
       }

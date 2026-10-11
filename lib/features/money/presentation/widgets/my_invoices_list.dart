@@ -7,11 +7,10 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice.dart';
-import 'open_invoice_card.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../domain/invoice_ubl.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
@@ -21,6 +20,7 @@ import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
 import 'invoice_journey_view.dart';
 import 'invoice_overview.dart';
+import 'open_invoice_card.dart';
 
 /// #720 — the Invoices face lists MY documents right there, newest
 /// first, each opening the same detail sheet the register uses. An OPEN

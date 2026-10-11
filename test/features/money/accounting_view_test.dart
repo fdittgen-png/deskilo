@@ -21,7 +21,7 @@ Invoice _inv(String id, int total,
       workspaceId: 'ws-1',
       memberId: 'member-1',
       number: id.toUpperCase(),
-      issuedAt: DateTime.utc(2026, 8, 1),
+      issuedAt: DateTime.utc(2026, 8),
       period: '2026-08',
       title: '2026-08',
       lines: [InvoiceLine(kind: 'subscription', label: '', amountCents: total)],
@@ -42,9 +42,7 @@ SettledSource _src(String id, int total) => SettledSource(
       invoiceId: id,
       number: id.toUpperCase(),
       period: '2026-08',
-      kind: InvoiceKind.full,
       totalCents: total,
-      lines: const [],
     );
 
 InvoiceMatch _match(String id, int paid,
@@ -54,7 +52,7 @@ InvoiceMatch _match(String id, int paid,
       paidCents: paid,
       resolution: resolution,
       status: status,
-      matchedAt: DateTime.utc(2026, 9, 1),
+      matchedAt: DateTime.utc(2026, 9),
       byName: 'Flo',
     );
 

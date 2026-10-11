@@ -14,12 +14,12 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_field.dart';
+import '../../../workspace/presentation/widgets/workspace_fields_section.dart';
 import '../../../workspace/providers/workspace_fields_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/personal_info.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/personal_info_form.dart';
-import '../../../workspace/presentation/widgets/workspace_fields_section.dart';
 
 class PersonalInfoScreen extends ConsumerStatefulWidget {
   const PersonalInfoScreen({super.key});

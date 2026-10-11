@@ -26,7 +26,6 @@ class PendingBookingBanner extends ConsumerWidget {
       child: InlineBanner(
         key: const ValueKey('pending-booking-banner'),
         icon: Icons.help_outline,
-        severity: InlineBannerSeverity.error,
         text:
             l10n?.bookingRecoveryBanner ??
             'A booking request of yours is still unanswered.',

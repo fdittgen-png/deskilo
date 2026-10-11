@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-
-import '../../../../core/ui/app_frame.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_frame.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
@@ -20,17 +22,14 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
-import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../widgets/day_timeline.dart';
 import '../../../task_recorder/application/booking_observation.dart';
 import '../../../task_recorder/application/calendar_observation.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
-import '../../../../core/time/workspace_time.dart';
-import '../../../../core/i18n/format_controller.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../widgets/day_timeline.dart';
 
 /// Reservations calendar (spec §6): month grid with markers + day list.
 /// Every member can switch between their own bookings and everyone's: the
@@ -145,7 +144,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           from: reservation.startsAt,
         );
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       attempt?.resolveWith(errorObservation(e,
           refused: RecorderOutcomes.reservationRefused,
           unknown: RecorderOutcomes.reservationUnknown));
@@ -600,7 +599,7 @@ class _MonthGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final daysInMonth = DateUtils.getDaysInMonth(month.year, month.month);
-    final leading = DateTime(month.year, month.month, 1).weekday - 1;
+    final leading = DateTime(month.year, month.month).weekday - 1;
     final cells = leading + daysInMonth;
     final rows = (cells / 7).ceil();
     final weekdayFormat = DateFormat.E();

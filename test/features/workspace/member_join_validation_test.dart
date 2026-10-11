@@ -4,7 +4,6 @@
 // on the approval screen (workspace name only) until owner/admins
 // confirm through the members sheet or the events quorum; single-use
 // invitation codes are refused on a second redeem (0051).
-import '../../helpers/settings_sections.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 void main() {
   testWidgets(

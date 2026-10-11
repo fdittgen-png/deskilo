@@ -12,8 +12,8 @@ import 'test_inventory/inventory.dart';
 
 void main() {
   final entries = classify();
-  final file = File(inventoryPath)..parent.createSync(recursive: true);
-  file.writeAsStringSync(render(entries));
+  File(inventoryPath)..parent.createSync(recursive: true)
+    ..writeAsStringSync(render(entries));
   final flagged = entries.where((e) => e.action == 'KEEP+REFACTOR').length;
   stdout
     ..writeln(

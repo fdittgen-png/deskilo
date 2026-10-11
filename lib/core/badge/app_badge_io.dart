@@ -20,7 +20,7 @@ class _AppBadgePlusBadge implements AppBadge {
     try {
       if (!await AppBadgePlus.isSupported()) return;
       await AppBadgePlus.updateBadge(count);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Best-effort: a launcher without badge support must never
       // disturb the app.
       debugPrint('app badge update failed: $e\n$st');
@@ -45,7 +45,7 @@ class _WindowsTaskbarBadge implements AppBadge {
         ThumbnailToolbarAssetIcon(asset),
         tooltip: '$count',
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('taskbar badge update failed: $e\n$st');
       TraceLogger.instance.warn('badge', 'taskbar badge update failed',
           error: e, stackTrace: st);

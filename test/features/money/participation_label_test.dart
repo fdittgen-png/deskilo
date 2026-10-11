@@ -6,10 +6,10 @@
 // association into the VAT-liable trading sector; a non-profit collects
 // a "participation". The owner of the pilot association asked for this
 // in as many words, and the risk is real, so the choice is pinned here.
-import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/presentation/period_label.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,14 +28,14 @@ void main() {
         kind: 'subscription', label: '100', amountCents: 10000);
     expect(invoiceLineText(const ReportStrings(), line, association: true),
         'Participation 100%');
-    expect(invoiceLineText(const ReportStrings(), line, association: false),
+    expect(invoiceLineText(const ReportStrings(), line),
         'Subscription 100%');
 
     // A position that is not the recurring one is untouched by the rule.
     const overage = InvoiceLine(
         kind: 'overage', label: '', quantity: 2, amountCents: 500);
     expect(invoiceLineText(const ReportStrings(), overage, association: true),
-        invoiceLineText(const ReportStrings(), overage, association: false));
+        invoiceLineText(const ReportStrings(), overage));
   });
 
   test('the seller kind is what decides it', () {

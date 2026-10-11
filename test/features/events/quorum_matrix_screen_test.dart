@@ -197,7 +197,6 @@ void main() {
       seed: [
         expenseEvent(
           id: 'evt-svc',
-          actor: 'member-2',
           type: EventType.serviceCharge,
         ).copyWith(
           subjectMemberId: 'member-1',
@@ -208,7 +207,7 @@ void main() {
             'period': '2026-07',
           },
         ),
-        expenseEvent(id: 'evt-exp', actor: 'member-2'),
+        expenseEvent(),
       ],
       policies: [policy(eventType: 'service_charge')],
       otherMembers: [adminMember('member-2'), adminMember('member-3')],

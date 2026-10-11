@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/save_template_sheet.dart';
@@ -24,7 +25,6 @@ import '../widgets/template_apply_sheet.dart';
 import '../widgets/template_gallery.dart';
 import '../widgets/template_share_sheet.dart';
 import '../widgets/template_widen_dialog.dart';
-import '../../domain/template_inspection.dart';
 
 class WorkspaceLibraryScreen extends ConsumerWidget {
   const WorkspaceLibraryScreen({super.key});

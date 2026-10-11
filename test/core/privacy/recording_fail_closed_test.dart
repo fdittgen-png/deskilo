@@ -17,10 +17,10 @@
 // And it is capable of failing: the last case is the same walk with the
 // flag OFF, where every one of those values IS found. If the seam ever
 // stops substituting, the first test goes red for the right reason.
-import 'package:deskilo/core/privacy/recording_banner.dart';
-import 'package:deskilo/core/privacy/recording_privacy.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/privacy/recording_banner.dart';
+import 'package:deskilo/core/privacy/recording_privacy.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';

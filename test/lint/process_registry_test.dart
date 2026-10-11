@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Every capability has one business home, or an explicit internal reason.
 import 'dart:io';
-import '../../tool/build_process_catalogue.dart';
-import 'package:flutter_test/flutter_test.dart';
+
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../tool/build_process_catalogue.dart';
 
 void main() {
   test('generated catalogue matches registry and manifest', () {

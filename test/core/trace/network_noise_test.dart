@@ -56,10 +56,10 @@ void main() {
   });
 
   test('error() files a dropped connection as a warning, and keeps it', () {
-    final log = TraceLogger.instance;
-    log.error('messaging', 'conversations failed',
-        error: 'ClientException: Software caused connection abort');
-    log.error('booking', 'reserve failed',
+    final log = TraceLogger.instance
+      ..error('messaging', 'conversations failed',
+        error: 'ClientException: Software caused connection abort')
+      ..error('booking', 'reserve failed',
         error: 'PostgrestException(message: refused, code: P0001)');
 
     final entries = log.entries;
@@ -92,8 +92,9 @@ void main() {
     expect(by('run 5').level, TraceLevel.error,
         reason: 'the fifth is a pattern, and the pattern is the finding');
     // A real error in between resets the run: it was answered.
-    log.error('sync', 'refused', error: 'PostgrestException(message: no)');
-    log.error('sync', 'run again',
+    log
+      ..error('sync', 'refused', error: 'PostgrestException(message: no)')
+      ..error('sync', 'run again',
         error: 'ClientException: Software caused connection abort');
     expect(by('run again').level, TraceLevel.warn);
   });

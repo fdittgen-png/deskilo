@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -26,7 +27,6 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/usage_record.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// One month of usage, newest first.
 class UsageFace extends ConsumerWidget {
@@ -254,7 +254,7 @@ class UsageRecordCard extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.success(context,
           l10n?.usageAskSubmitted ?? 'Asked. Somebody else decides it.');
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       TraceLogger.instance.error('money', 'usage correction request failed',
           error: error, stackTrace: stack);
       if (!context.mounted) return;
@@ -271,7 +271,7 @@ class UsageRecordCard extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.success(
           context, l10n?.usageDeleteSubmitted ?? 'Removal requested.');
-    } catch (error, stack) {
+    } on Object catch (error, stack) {
       TraceLogger.instance.error('money', 'usage record delete failed',
           error: error, stackTrace: stack);
       if (!context.mounted) return;

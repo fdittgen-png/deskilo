@@ -37,7 +37,7 @@ Invoice _invoice(
       workspaceId: 'ws-1',
       memberId: member,
       number: id.toUpperCase(),
-      issuedAt: issuedAt ?? DateTime.utc(2026, 8, 1),
+      issuedAt: issuedAt ?? DateTime.utc(2026, 8),
       period: period,
       title: period,
       lines: const [],
@@ -74,7 +74,7 @@ WorkspaceEvent _payment(String id, {String actor = 'member-2'}) =>
       subjectMemberId: actor,
       payload: const {'amount_cents': 4200, 'method': 'bank_transfer'},
       status: EventStatus.pending,
-      createdAt: DateTime.utc(2026, 9, 1),
+      createdAt: DateTime.utc(2026, 9),
     );
 
 Future<
@@ -222,7 +222,7 @@ void main() {
 
     test('the remind plan follows the dunning rules, skips a pending match, '
         'and keeps chasing a remainder', () {
-      final now = DateTime.utc(2026, 9, 1);
+      final now = DateTime.utc(2026, 9);
       final invoices = [
         _invoice('old', issuedAt: now.subtract(const Duration(days: 20))),
         _invoice('fresh', issuedAt: now.subtract(const Duration(days: 3))),

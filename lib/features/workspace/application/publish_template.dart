@@ -2,8 +2,8 @@
 //
 // #1280 S3 — publishing this workspace as a template (ADR 0024: the sheet
 // says what was chosen; this decides the request and what it makes stale).
-import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meta/meta.dart';
 
 import '../domain/template_publication.dart';
 import '../domain/workspace_template.dart';

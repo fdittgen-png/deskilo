@@ -42,10 +42,11 @@ void main() {
         child: MaterialApp(
           home: Consumer(
             builder: (c, r, _) {
-              r.watch(currentWorkspaceProvider);
-              r.watch(enabledFeaturesProvider);
-              r.watch(invoicePdfTemplateProvider);
-              r.watch(reportImageBytesProvider('shared-logo'));
+              r
+                ..watch(currentWorkspaceProvider)
+                ..watch(enabledFeaturesProvider)
+                ..watch(invoicePdfTemplateProvider)
+                ..watch(reportImageBytesProvider('shared-logo'));
               ref = r;
               context = c;
               return const SizedBox();

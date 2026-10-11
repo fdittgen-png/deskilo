@@ -51,7 +51,7 @@ class WhatsappDialogState extends ConsumerState<WhatsappDialog> {
         context,
         l10n?.whatsappSaved ?? 'WhatsApp number saved',
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('WhatsApp save failed: $e\n$st');
       TraceLogger.instance.error('profile', 'WhatsApp save failed',
           error: e, stackTrace: st);

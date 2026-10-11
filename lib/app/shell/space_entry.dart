@@ -14,13 +14,13 @@
 // and its logo above the name, held a moment so it can be read. The
 // logo is the one already loaded for its avatar; the entry never waits
 // for a download.
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../route_classes.dart';
 import '../../core/motion/motion.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
@@ -28,6 +28,7 @@ import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/domain/workspace_branding.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 
 /// Enter [space]: it becomes this person's space (and their next start),
 /// the curtain plays from [from] when motion is on, and the space opens.
@@ -107,7 +108,7 @@ class _SpaceCurtainState extends State<_SpaceCurtain>
   @override
   void initState() {
     super.initState();
-    _run();
+    unawaited(_run());
   }
 
   Future<void> _run() async {

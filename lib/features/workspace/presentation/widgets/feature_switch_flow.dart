@@ -127,7 +127,7 @@ Future<void> switchWorkspaceFeature(
       );
     }
     return;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     recorded?.resolveWith(
       errorObservation(
         e,

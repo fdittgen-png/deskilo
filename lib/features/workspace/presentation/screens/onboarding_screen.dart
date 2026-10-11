@@ -1,38 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/material.dart';
-import '../../../directory/presentation/account_portal_entry.dart';
-import '../widgets/application_requests_entry.dart';
+import 'dart:async';
 
-import '../../../../core/ids/request_id.dart';
-import '../../../../core/locale/device_locale.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/country/country_catalog.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../onboarding_handoff.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../auth/providers/sign_out.dart';
-import '../../../../core/ui/inline_banner.dart';
-import '../../application/creation_intent.dart';
-import '../../application/start_workspace.dart';
-import '../widgets/local_setup_views.dart';
-import '../widgets/template_region_notice.dart';
-import '../widgets/onboarding_creation.dart';
-import '../widgets/invitation_join_panel.dart';
-import '../../application/pending_invitation.dart';
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/country/country_catalog.dart';
+import '../../../../core/ids/request_id.dart';
+import '../../../../core/locale/device_locale.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/wizard_form_layout.dart';
 import '../../../../core/ui/wizard_navigation.dart';
-import '../../domain/workspace_template.dart';
+import '../../../../core/ui/wizard_progress.dart';
+import '../../../../core/ui/wizard_scaffold.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../auth/providers/sign_out.dart';
+import '../../../directory/presentation/account_portal_entry.dart';
+import '../../application/creation_intent.dart';
+import '../../application/pending_invitation.dart';
+import '../../application/start_workspace.dart';
 import '../../domain/template_outline.dart';
+import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_names.dart';
+import '../onboarding_handoff.dart';
+import '../widgets/application_requests_entry.dart';
+import '../widgets/invitation_join_panel.dart';
+import '../widgets/local_setup_views.dart';
+import '../widgets/onboarding_creation.dart';
 import '../widgets/template_picker.dart';
-import '../../../../core/ui/wizard_scaffold.dart';
-import '../../../../core/ui/wizard_form_layout.dart';
-import '../../../../core/ui/wizard_progress.dart';
+import '../widgets/template_region_notice.dart';
 
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
@@ -123,9 +124,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // #1652 — the person came to join: Join is selected, not Create.
     _joinMode = widget.joinFirst ||
         ref.read(entryIntentsProvider)?.purpose == EntryPurpose.join;
-    _resume();
+    unawaited(_resume());
     _takeArrivedInvitation();
-    _offerKeptInvitation();
+    unawaited(_offerKeptInvitation());
   }
 
   /// #1652 — the link the app was opened with fills the field; the
@@ -152,7 +153,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     try {
       final active = await ref.read(activeBackendProvider.future);
       text = await ref.read(pendingInvitationsProvider).offeredOn(active);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Storage unavailable: the field stays empty.
       TraceLogger.instance.warn('workspace', 'kept invitation unreadable',
           error: e, stackTrace: st);
@@ -339,7 +340,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final sent = _sent;
     if (sent == null || _busy) return;
     setState(() => _restore(sent));
-    _create();
+    unawaited(_create());
   }
 
   @override
@@ -482,7 +483,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           DropdownButtonFormField<String>(
             key: const ValueKey('onboarding-workspace-country-label'),
             isExpanded: true,
-            itemHeight: null,
             initialValue: _countryCode,
             decoration: InputDecoration(
               labelText: l10n?.workspaceCountryLabel ?? 'Country',
@@ -626,7 +626,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           _templateResolved = true;
                           _failedWithTemplate = false;
                         });
-                        _create();
+                        unawaited(_create());
                       },
                 child: Text(l10n?.onboardingCreateWithoutTemplate ??
                     'Create without a template'),

@@ -17,18 +17,18 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../profile/domain/personal_info.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
+import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
-import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
-import '../domain/report_data.dart';
+import 'report_strings_l10n.dart';
 
 /// Renders the month as a PROFORMA and hands it to the share sheet — the
 /// quote an issuer sends before invoicing, and the payment request they

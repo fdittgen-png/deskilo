@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // The editable VAT preparation report retains the persisted declaration's
 // exact amounts and status; rendering neither files nor recalculates it.
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_declaration_report.dart';
-import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,7 +16,7 @@ void main() {
       periodStart: DateTime.utc(2026, 9),
       periodEnd: DateTime.utc(2026, 9, 30),
       status: 'draft',
-      createdAt: DateTime.utc(2026, 10, 1),
+      createdAt: DateTime.utc(2026, 10),
       currency: 'EUR',
       totalNetCents: 10000,
       totalVatCents: 2000,

@@ -123,7 +123,7 @@ class BookingRecovery {
   Future<void> _settle(String what, Future<void> Function() change) async {
     try {
       await change();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'reservations',
         'booking intent ledger: $what failed; the server\'s answer stands',
@@ -226,7 +226,7 @@ class BookingRecovery {
     final BookingIntentLedger ledger;
     try {
       ledger = await _ledger();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // An unreadable store at start-up is not a crash and not an answer:
       // nothing is owed that this device can see, and a booking made now
       // still refuses to send without saving its intent first.
@@ -241,8 +241,8 @@ class BookingRecovery {
     final open = ledger.unresolvedFor(
       _scope,
       workspaceId: workspaceId,
-    );
-    open.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    )
+      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
     return [
       for (final i in open)
         if (i.status == BookingIntentStatus.pending &&
@@ -262,7 +262,7 @@ class BookingRecovery {
         intent.workspaceId,
         intent.requestId,
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'reservations',
         'booking intent ${intent.requestId}: outcome lookup failed',

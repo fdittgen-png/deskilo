@@ -53,7 +53,7 @@ class PlanMediaSteps {
   Future<void> _bestEffort(String path) async {
     try {
       await remove(path);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'plan',
         'media object left for cleanup',

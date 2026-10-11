@@ -1,26 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
-import 'booking_review_summary.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
-import '../../domain/place_feedback.dart';
-import 'place_feedback_bar.dart';
 import '../../domain/picked_time.dart';
+import '../../domain/place_feedback.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
+import 'booking_review_summary.dart';
 import 'booking_sheet_parts.dart';
-import '../../../../core/i18n/format_controller.dart';
+import 'place_feedback_bar.dart';
 
 /// What the booking sheet returns: the chosen window (start + end), an
 /// optional recurrence and who the booking is for (null/self = caller).
@@ -166,6 +166,7 @@ class BookingSheet extends StatefulWidget {
   /// #814 — the booking gate, asked for every window the member picks:
   /// a refusal disables the confirm button and names its reason. Null
   /// (feature off) keeps the server as the only judge.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final BookingRefusal? Function(DateTime start, DateTime end, bool walkUp)?
       refusalOf;
   final String Function(BookingRefusal refusal)? refusalTextOf;
@@ -380,7 +381,7 @@ class _BookingSheetState extends State<BookingSheet> {
                 label: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
                 value: _start,
                 onPicked: (t) {
-                  var start = _snap(pickedInstantAt(_day, t.hour, t.minute));
+                  final start = _snap(pickedInstantAt(_day, t.hour, t.minute));
                   var end = _end;
                   if (!end.isAfter(start)) end = start.add(_slot);
                   setState(() {

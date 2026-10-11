@@ -9,16 +9,16 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
-import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

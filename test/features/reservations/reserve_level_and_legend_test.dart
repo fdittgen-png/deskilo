@@ -16,8 +16,8 @@ import 'package:deskilo/features/reservations/presentation/widgets/seat_legend.d
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'reserve_hub_test.dart' show pumpHub;
 import '../../helpers/reserve_view.dart';
+import 'reserve_hub_test.dart' show pumpHub;
 
 /// The hub's plan-view level rail (a column of 48dp pills).
 Finder _planLevel(String id) =>

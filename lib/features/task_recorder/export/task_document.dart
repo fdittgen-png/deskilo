@@ -19,9 +19,9 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/action_registry.dart';
 import '../domain/task_recording.dart';
 import '../domain/task_recording_codec.dart';
-import 'docx/docx_writer.dart';
 import '../storyboard/storyboard.dart';
 import '../storyboard/storyboard_pictures.dart';
+import 'docx/docx_writer.dart';
 import 'step_narrative.dart';
 import 'task_export_labels.dart';
 
@@ -200,9 +200,7 @@ List<String> _about(
   final seconds = end ~/ 1000;
   final platform = TaskExportLabels.platformName(r.platform);
   return [
-    r.kind == RecordingKind.edited
-        ? l.taskExportKindEdited
-        : l.taskExportKindSource,
+    if (r.kind == RecordingKind.edited) l.taskExportKindEdited else l.taskExportKindSource,
     labels.completeness(r.completeness),
     ?labels.endReason(r.endReason),
     if (platform != null) l.taskExportPlatform(platform),
@@ -219,7 +217,7 @@ List<String> _limitations(
   required bool pictured,
 }) => [
   l.taskExportLimitValues,
-  pictured ? l.taskExportLimitRecreated : l.taskExportLimitNoIllustrations,
+  if (pictured) l.taskExportLimitRecreated else l.taskExportLimitNoIllustrations,
   if (r.steps.any((s) => s.kind == StepKind.unrecorded))
     l.taskExportLimitNotRunnable,
   if (r.completeness != Completeness.complete) l.taskExportLimitIncomplete,

@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/files/file_saver.dart';
+import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
+import '../../../core/storage/booking_intent_store.dart';
+import '../../../core/time/clock.dart';
+import '../../../core/time/date_text.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';
@@ -17,10 +21,6 @@ import '../data/supabase_reservation_repository.dart';
 import '../domain/booking_intent.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
-import '../../../core/instance/schema_compatibility.dart';
-import '../../../core/storage/booking_intent_store.dart';
-import '../../../core/time/clock.dart';
-import '../../../core/time/date_text.dart';
 
 part 'reservation_providers.g.dart';
 

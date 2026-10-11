@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/i18n/format_prefs.dart';
-import 'personal_info.dart';
 import 'dart:typed_data';
 
-import 'profile.dart';
+import '../../../core/i18n/format_prefs.dart';
+import 'personal_info.dart';
 import 'privacy_notice.dart';
+import 'profile.dart';
 import 'rights_request.dart';
 
 /// Pure-Dart profile boundary (#223). Implemented by Supabase in data/,

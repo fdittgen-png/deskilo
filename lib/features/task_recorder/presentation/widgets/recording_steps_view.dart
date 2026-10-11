@@ -15,8 +15,8 @@ import '../../domain/task_recording.dart';
 import '../../guide/guide_compiler.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
-import '../recorder_labels.dart';
 import '../guide_host/guide_step_text.dart' show guideDestinationLabel;
+import '../recorder_labels.dart';
 
 class RecordingStepsView extends StatelessWidget {
   const RecordingStepsView({

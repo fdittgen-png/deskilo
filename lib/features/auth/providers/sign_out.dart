@@ -47,7 +47,7 @@ Future<void> signOutAndForget(WidgetRef ref) async {
     try {
       await ref.read(activeWorkspaceStoreProvider).write(account, null);
       await ref.read(defaultWorkspaceStoreProvider).write(account, null);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('workspace',
           'sign-out could not forget the last space', error: e, stackTrace: st);
     }
@@ -56,7 +56,7 @@ Future<void> signOutAndForget(WidgetRef ref) async {
   if (cache is ScopedCacheStore) {
     try {
       await cache.wipeScope();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .warn('cache', 'sign-out sweep failed', error: e, stackTrace: st);
     }

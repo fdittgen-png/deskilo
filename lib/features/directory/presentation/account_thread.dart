@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,7 +44,7 @@ class _ThreadState extends ConsumerState<AccountThread> {
   void initState() {
     super.initState();
     _conversation = widget.conversation;
-    Future.microtask(_lookup);
+    unawaited(Future.microtask(_lookup));
   }
 
   Future<void> _lookup() async {

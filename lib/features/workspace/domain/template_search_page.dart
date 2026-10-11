@@ -2,8 +2,8 @@
 //
 // #1659 — a page of the server's template search (0283): compact cards
 // the caller may read, and the cursor for the next page.
-import 'workspace_template.dart';
 import '../../../core/data/json_reader.dart';
+import 'workspace_template.dart';
 
 class TemplateSearchPage {
   const TemplateSearchPage({this.templates = const [], this.nextCursor});

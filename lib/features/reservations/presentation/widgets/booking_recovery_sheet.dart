@@ -89,7 +89,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
       // Lost again: the intent is still open, the sheet still says so.
       if (!mounted) return;
       setState(() => _check = null);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'reservations',
         'resume of booking intent ${_intent.requestId} refused',

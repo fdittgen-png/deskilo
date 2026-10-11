@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
-
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
@@ -13,6 +10,8 @@ import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/domain/seat_context.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show PostgrestException;
 
 /// In-memory [FloorPlanRepository] (fakes over mocks).
 class FakeFloorPlanRepository implements FloorPlanRepository {

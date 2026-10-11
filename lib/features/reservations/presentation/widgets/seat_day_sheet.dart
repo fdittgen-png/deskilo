@@ -10,6 +10,7 @@
 // sheet one booking on its own seat would.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -17,7 +18,6 @@ import '../../../plan/domain/seat.dart';
 import '../../domain/place_feedback.dart';
 import '../../domain/seat_state_logic.dart';
 import 'place_feedback_bar.dart';
-import '../../../../core/i18n/format_controller.dart';
 
 /// What was picked in the day sheet: a free stretch, or one booking.
 sealed class SeatDayPick {

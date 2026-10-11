@@ -7,8 +7,8 @@
 // identification block resuming at 90 mm, a footer on every page, a
 // continuation strip on pages 2+. Pure Dart: the CLI prints them too;
 // the app passes its localized [LetterStrings].
-import 'invoice_pdf_template.dart';
 import 'address_window.dart';
+import 'invoice_pdf_template.dart';
 import 'report_kind.dart';
 
 /// The words a default layout needs, in the reader's language.

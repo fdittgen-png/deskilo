@@ -49,7 +49,7 @@ class _DunningDialogState extends ConsumerState<_DunningDialog> {
       await ref
           .read(moneyRepositoryProvider)
           .setDunningRules(workspace.id, _rules);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('money', 'set dunning rules failed',
           error: e, stackTrace: st);
       if (!mounted) return;

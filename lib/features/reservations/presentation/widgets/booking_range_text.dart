@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import '../../../../core/time/workspace_time.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_window_label.dart';
-import '../../../../core/i18n/app_format.dart';
 
 /// One booking range as humans read it (field report: a full-day booking
 /// showed as "00:00 – 00:00"): canonical day windows get their names —

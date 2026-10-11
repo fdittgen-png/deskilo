@@ -213,8 +213,9 @@ class SitesScreen extends ConsumerWidget {
       },
     );
     if (!context.mounted) return;
-    ref.invalidate(sitesProvider);
-    ref.invalidate(levelsProvider);
+    ref
+      ..invalidate(sitesProvider)
+      ..invalidate(levelsProvider);
     if (ok && result == 'save') {
       AppSnack.success(context, l10n?.siteSaved ?? 'Site saved.');
     }

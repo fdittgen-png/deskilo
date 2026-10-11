@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/privacy/privacy_policy.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -14,10 +15,9 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/my_profile_edits.dart';
 import '../data/supabase_profile_repository.dart';
 import '../domain/member_monogram.dart';
+import '../domain/privacy_notice.dart';
 import '../domain/profile.dart';
 import '../domain/profile_repository.dart';
-import '../domain/privacy_notice.dart';
-import '../../../core/privacy/privacy_policy.dart';
 import '../domain/rights_request.dart';
 
 part 'profile_providers.g.dart';
@@ -124,7 +124,8 @@ Map<String, String> memberMonograms(Ref ref) {
 );
 
 void invalidatePersonalPreferenceConsumers(Ref ref) {
-  ref.invalidate(myProfileProvider);
-  ref.invalidate(workspaceMembersProvider);
-  ref.invalidate(myMemberProvider);
+  ref
+    ..invalidate(myProfileProvider)
+    ..invalidate(workspaceMembersProvider)
+    ..invalidate(myMemberProvider);
 }

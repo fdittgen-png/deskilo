@@ -15,12 +15,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/report_data.dart';
 
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 
@@ -57,7 +57,7 @@ final _invoice = Invoice(
   detailed: true,
   detailLedger: const [
     InvoiceDetailEntry(
-        on: '2026-07-02', category: 'subscription', label: '', amountCents: 20000),
+        on: '2026-07-02', category: 'subscription', amountCents: 20000),
     InvoiceDetailEntry(
         on: '2026-07-05', category: 'overage', label: 'Fri', amountCents: 1500),
     InvoiceDetailEntry(
@@ -65,7 +65,7 @@ final _invoice = Invoice(
     InvoiceDetailEntry(
         on: '2026-07-12', category: 'payment', label: 'PayPal', amountCents: -10000),
     InvoiceDetailEntry(
-        on: '2026-07-15', category: 'adjustment', label: '', amountCents: -500),
+        on: '2026-07-15', category: 'adjustment', amountCents: -500),
     InvoiceDetailEntry(
         on: '2026-07-20', category: 'service', label: 'Coffee', amountCents: 450),
     InvoiceDetailEntry(

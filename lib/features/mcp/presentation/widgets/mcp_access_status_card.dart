@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/trace/guarded.dart';
 import 'package:go_router/go_router.dart';
 
-import '../confirm_identity.dart';
-
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/mcp_access_status.dart';
 import '../../providers/mcp_providers.dart';
+import '../confirm_identity.dart';
 
 /// #1625 — where the person stands with assistants on the selected
 /// workspace, as the six facts the server answers (identity, database

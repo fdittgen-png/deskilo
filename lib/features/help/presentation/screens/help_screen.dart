@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -178,7 +180,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
                     return;
                   }
                   final uri = Uri.tryParse(url);
-                  if (uri != null) ref.read(linkLauncherProvider)(uri);
+                  if (uri != null) unawaited(ref.read(linkLauncherProvider)(uri));
                 },
               ),
             ]),

@@ -10,8 +10,8 @@
 // self-grant), whether the operator may grant, the Google session and the
 // latest endpoint probe.
 
-import 'mcp_onboarding.dart';
 import '../../../core/data/json_reader.dart';
+import 'mcp_onboarding.dart';
 
 class InstanceMember {
   const InstanceMember({

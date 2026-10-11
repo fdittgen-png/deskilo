@@ -4,26 +4,27 @@
 // plan view; seat taps offer check-in / reserve / check-out, each
 // completed by a badge code (wedge scanners type it) sent to the
 // stateless kiosk_act RPC — nothing is retained on the device.
+import 'dart:ui' as ui;
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/plan/presentation/widgets/seat_photos.dart';
+import 'package:deskilo/features/profile/domain/profile.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/features/profile/domain/profile.dart';
-import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
-import 'dart:ui' as ui;
 import '../../helpers/fake_floor_plan_repository.dart';
-import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
+import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/real_async.dart';
 

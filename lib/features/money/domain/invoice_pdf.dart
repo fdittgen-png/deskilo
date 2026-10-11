@@ -5,12 +5,12 @@ import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'invoice.dart';
 import 'address_window.dart';
+import 'invoice.dart';
 import 'invoice_report.dart';
 import 'report_block_widgets.dart';
-import 'report_page_footer.dart';
 import 'report_flow_page.dart';
+import 'report_page_footer.dart';
 
 /// Localized strings the invoice PDF prints.
 class InvoicePdfStrings {
@@ -216,7 +216,6 @@ Future<Uint8List> buildInvoicePdf({
       PdfaAttachedFile(
         name: 'factur-x.xml',
         data: facturXml,
-        AFRelationship: '/Alternative',
       ),
     ]);
   }
@@ -528,7 +527,7 @@ Future<Uint8List> buildInvoicePdf({
               padding:
                   const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: pw.BoxDecoration(
-                border: pw.Border.all(color: _accent, width: 1),
+                border: pw.Border.all(color: _accent),
                 borderRadius: const pw.BorderRadius.all(pw.Radius.circular(3)),
               ),
               child: pw.Text(strings.voided,
@@ -850,7 +849,7 @@ Future<Uint8List> buildInvoicePdf({
                 columnWidths: const {
                   0: pw.FlexColumnWidth(1.2),
                   1: pw.FlexColumnWidth(2.8),
-                  2: pw.FlexColumnWidth(1),
+                  2: pw.FlexColumnWidth(),
                 },
                 children: [
                   for (final entry in invoice.detailLedger)
@@ -951,8 +950,8 @@ Future<Uint8List> buildBandedLetterPdf({
   /// the invoices are.
   String watermark = '',
 }) {
-  final doc = pw.Document(title: documentTitle, producer: _producer);
-  doc.addPage(
+  final doc = pw.Document(title: documentTitle, producer: _producer)
+    ..addPage(
     reportFlowPage(
       pageTheme: pw.PageTheme(
         pageFormat: PdfPageFormat.a4,

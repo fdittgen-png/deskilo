@@ -15,6 +15,7 @@
 // Starting a guide needs the task recorder in this workspace and a
 // signed-in account, as it always did; the screen says so when it cannot.
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:file_selector/file_selector.dart';
@@ -33,8 +34,8 @@ import '../../domain/stored_guide.dart';
 import '../../domain/stored_recording.dart';
 import '../../guide/builtin_guides.dart';
 import '../../guide/guide_codec.dart';
-import '../../guide/guide_destination.dart';
 import '../../guide/guide_compiler.dart';
+import '../../guide/guide_destination.dart';
 import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
@@ -356,7 +357,7 @@ Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
         extensions: workbenchExtensions,
       ),
     );
-  } catch (e, st) {
+  } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'picker failed', stackTrace: st);
     return;
   }
@@ -469,8 +470,8 @@ class _GuideTile extends ConsumerWidget {
           PopupMenuButton<String>(
             key: ValueKey('task-wizard-menu-${stored.id}'),
             onSelected: (v) {
-              if (v == 'edit') _edit(context, ref);
-              if (v == 'delete') _delete(context, ref);
+              if (v == 'edit') unawaited(_edit(context, ref));
+              if (v == 'delete') unawaited(_delete(context, ref));
             },
             itemBuilder: (_) => [
               PopupMenuItem(

@@ -10,28 +10,28 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
+import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../domain/finance_overview.dart';
+import '../../domain/money_face.dart';
 import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
-import '../widgets/dev_label.dart';
-import '../widgets/my_finances_parts.dart';
-import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
+import '../widgets/dev_label.dart';
+import '../widgets/my_finances_parts.dart';
 import '../widgets/personal_payment_provider.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/status_colors.dart';
 import 'account_activity_screen.dart';
-import '../../../../core/ui/app_tab_bar.dart';
-import '../../../../core/time/date_text.dart';
 
 class MyFinancesScreen extends ConsumerStatefulWidget {
   /// [workspaceId] narrows every list to one workspace — what a workspace's

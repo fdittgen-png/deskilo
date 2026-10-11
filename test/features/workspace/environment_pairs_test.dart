@@ -5,7 +5,6 @@
 // environment tile, the onboarding form creates both, and the three
 // deploy permissions sit in the matrix with their implication.
 import 'dart:async';
-import '../../helpers/settings_sections.dart';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<FakeWorkspaceRepository> _pump(WidgetTester tester,
     {required FakeWorkspaceRepository workspace, String route = '/profiles',

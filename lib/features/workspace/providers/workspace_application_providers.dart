@@ -3,9 +3,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../auth/providers/auth_providers.dart';
-import '../domain/workspace_application.dart';
-import '../data/supabase_workspace_application_repository.dart';
 import '../application/application_replies.dart';
+import '../data/supabase_workspace_application_repository.dart';
+import '../domain/workspace_application.dart';
 
 part 'workspace_application_providers.g.dart';
 

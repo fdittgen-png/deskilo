@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,7 +82,7 @@ class _WizardNavigationState extends State<WizardNavigation> {
   @override
   Widget build(BuildContext context) => PopScope<Object?>(
     canPop: !widget.busy && widget.onStepBack == null && !widget.hasDraft,
-    onPopInvokedWithResult: (didPop, _) { if (!didPop) _back(); },
+    onPopInvokedWithResult: (didPop, _) { if (!didPop) unawaited(_back()); },
     child: CallbackShortcuts(bindings: {
       const SingleActivator(LogicalKeyboardKey.escape): _back,
     }, child: widget.builder(_back)),

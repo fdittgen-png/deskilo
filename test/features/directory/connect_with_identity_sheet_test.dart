@@ -82,8 +82,7 @@ Future<FakeDirectoryRepository> _open(
     directory: directory,
     identityConnector: connector,
   );
-  final navigator = Navigator.of(tester.element(find.byType(Scaffold).first));
-  navigator.push(
+  Navigator.of(tester.element(find.byType(Scaffold).first)).push(
     MaterialPageRoute<void>(
       builder: (_) => PublicWorkspaceView(workspace: _page()),
     ),

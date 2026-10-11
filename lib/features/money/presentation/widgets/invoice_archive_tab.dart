@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/invoice.dart';
-import 'open_invoice_card.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
 import 'invoice_journey_view.dart';
+import 'open_invoice_card.dart';
 
 /// Archive sort orders (field request: sort and filter by member and
 /// period).
@@ -289,7 +289,6 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   isExpanded: true,
                   items: [
                     DropdownMenuItem(
-                      value: null,
                       child: Text(
                         l10n?.invoiceFilterAllMembers ?? 'All members',
                       ),
@@ -317,7 +316,6 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 isExpanded: true,
                 items: [
                   DropdownMenuItem(
-                    value: null,
                     child: Text(
                       l10n?.invoiceFilterAllMonths ?? 'All months',
                     ),

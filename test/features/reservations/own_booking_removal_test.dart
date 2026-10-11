@@ -4,8 +4,8 @@
 // booking while the booking's detail sheet offered Request deletion. One
 // rule now decides both, and both sheets are opened here for the same
 // checked-in booking.
-import 'package:deskilo/core/demo/data/calendar_repository.dart';
 import 'package:deskilo/core/calendar/calendar_item.dart';
+import 'package:deskilo/core/demo/data/calendar_repository.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/presentation/widgets/check_in_sheets.dart';
 import 'package:deskilo/features/reservations/domain/own_booking_removal.dart';

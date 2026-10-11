@@ -3,15 +3,14 @@
 // Members & plans. Since the UX pass, every per-member action lives in
 // the row's MANAGEMENT SHEET (tap the row → labeled tiles) instead of a
 // pile of icon buttons — tests open the sheet first.
-import '../../helpers/settings_sections.dart';
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
-import 'package:deskilo/features/workspace/presentation/screens/members_screen.dart';
-import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
+import 'package:deskilo/features/workspace/domain/overage_policy.dart';
+import 'package:deskilo/features/workspace/presentation/screens/members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +19,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/settings_sections.dart';
 
 Future<FakeWorkspaceRepository> pumpMembers(
   WidgetTester tester, {

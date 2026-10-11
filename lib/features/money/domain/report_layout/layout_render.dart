@@ -20,8 +20,8 @@ import '../address_window.dart';
 import '../invoice_pdf_template.dart';
 import '../invoice_report.dart';
 import '../report_block_widgets.dart';
-import '../report_style.dart';
 import '../report_page_footer.dart';
+import '../report_style.dart';
 import 'layout_model.dart';
 import 'layout_units.dart';
 import 'layout_xml.dart';
@@ -56,14 +56,14 @@ Map<String, Object?> _xmlEscaped(Map<String, Object?> data) =>
 
 Object? _escapeValue(Object? v) => switch (v) {
       // #880 — the owner's texts are values too.
-      OwnerTexts t => t.mapValues((s) => _escapeValue(s)! as String),
-      String s => s
+      final OwnerTexts t => t.mapValues((s) => _escapeValue(s)! as String),
+      final String s => s
           .replaceAll('&', '&amp;')
           .replaceAll('<', '&lt;')
           .replaceAll('>', '&gt;')
           .replaceAll('"', '&quot;'),
-      List<dynamic> l => [for (final x in l) _escapeValue(x)],
-      Map<dynamic, dynamic> m => {
+      final List<dynamic> l => [for (final x in l) _escapeValue(x)],
+      final Map<dynamic, dynamic> m => {
           for (final e in m.entries) '${e.key}': _escapeValue(e.value),
         },
       _ => v,
@@ -178,9 +178,7 @@ Future<Uint8List> buildLayoutPdf({
           ? pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.stretch,
               children: [
-                headerH == null
-                    ? ctx.zone(document.header)
-                    : ctx.zone(document.header,
+                if (headerH == null) ctx.zone(document.header) else ctx.zone(document.header,
                         height: headerH, clip: true, context: context),
                 if (reserve > 0) pw.SizedBox(height: reserve),
               ],

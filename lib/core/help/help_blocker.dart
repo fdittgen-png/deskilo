@@ -7,6 +7,8 @@
 // arbiter's slot is [HelpSlot.blocker], so tips stay silent and a guided
 // task shrinks to a "resolve this first" notice. Unmounting clears it.
 
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,15 +34,15 @@ class _HelpBlockerState extends ConsumerState<HelpBlocker> {
   void initState() {
     super.initState();
     // Provider state may not change while the tree is building.
-    Future.microtask(() {
+    unawaited(Future.microtask(() {
       if (_mounted) _arbiter.blockerShown(_id);
-    });
+    }));
   }
 
   @override
   void dispose() {
     _mounted = false;
-    Future.microtask(() => _arbiter.blockerCleared(_id));
+    unawaited(Future.microtask(() => _arbiter.blockerCleared(_id)));
     super.dispose();
   }
 

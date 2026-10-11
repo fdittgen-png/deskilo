@@ -2,9 +2,9 @@
 import 'package:xml/xml.dart';
 
 import '../../../core/data/json_reader.dart';
+import '../../../core/data/system_columns.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';
-import '../../../core/data/system_columns.dart';
 
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
@@ -420,19 +420,21 @@ String vatDeclarationXml({
   required String vatId,
   required String countryCode,
 }) {
-  final builder = XmlBuilder();
-  builder.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final builder = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   builder.element('vat-declaration', nest: () {
     builder.attribute('schema', 'deskilo-vat-1');
     builder.element('seller', nest: () {
-      builder.element('name', nest: workspaceName);
-      builder.element('vat-id', nest: vatId);
-      builder.element('country', nest: countryCode.toUpperCase());
+      builder
+        ..element('name', nest: workspaceName)
+        ..element('vat-id', nest: vatId)
+        ..element('country', nest: countryCode.toUpperCase());
     });
     builder.element('period', nest: () {
-      builder.element('start',
-          nest: declaration.periodStart.toIso8601String().substring(0, 10));
-      builder.element('end',
+      builder
+        ..element('start',
+          nest: declaration.periodStart.toIso8601String().substring(0, 10))
+        ..element('end',
           nest: declaration.periodEnd.toIso8601String().substring(0, 10));
     });
     builder.element('currency', nest: declaration.currency);
@@ -445,8 +447,9 @@ String vatDeclarationXml({
           }
           if (line.isInput) builder.attribute('direction', 'input');
           if (line.isCorrection) {
-            builder.attribute('correction', 'true');
-            builder.attribute('corrects', line.corrects);
+            builder
+              ..attribute('correction', 'true')
+              ..attribute('corrects', line.corrects);
             if (_day(line.correctsStart) case final start?) {
               builder.attribute('corrects-start', start);
             }
@@ -454,9 +457,10 @@ String vatDeclarationXml({
               builder.attribute('corrects-end', end);
             }
           }
-          builder.element('net-cents', nest: line.netCents.toString());
-          builder.element('vat-cents', nest: line.vatCents.toString());
-          builder.element('invoice-count',
+          builder
+            ..element('net-cents', nest: line.netCents.toString())
+            ..element('vat-cents', nest: line.vatCents.toString())
+            ..element('invoice-count',
               nest: line.invoiceCount.toString());
         });
       }
@@ -464,17 +468,19 @@ String vatDeclarationXml({
     builder.element('boxes', nest: () {
       for (final box in vatFormBoxes(countryCode, declaration.lines)) {
         builder.element('box', nest: () {
-          builder.attribute('code', box.code);
-          builder.attribute('label', box.label);
-          builder.element('net-cents', nest: box.netCents.toString());
-          builder.element('vat-cents', nest: box.vatCents.toString());
+          builder
+            ..attribute('code', box.code)
+            ..attribute('label', box.label)
+            ..element('net-cents', nest: box.netCents.toString())
+            ..element('vat-cents', nest: box.vatCents.toString());
         });
       }
     });
     builder.element('totals', nest: () {
-      builder.element('net-cents',
-          nest: declaration.totalNetCents.toString());
-      builder.element('vat-cents',
+      builder
+        ..element('net-cents',
+          nest: declaration.totalNetCents.toString())
+        ..element('vat-cents',
           nest: declaration.totalVatCents.toString());
     });
   });

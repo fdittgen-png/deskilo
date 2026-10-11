@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../theme/app_spacing.dart';
-import 'wizard_scaffold.dart';
 import 'wizard_form_layout.dart';
+import 'wizard_scaffold.dart';
 
 enum WizardStepState { available, completed, skipped, unavailable }
 

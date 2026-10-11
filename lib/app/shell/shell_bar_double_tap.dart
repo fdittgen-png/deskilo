@@ -73,9 +73,6 @@ class _ShellBarDoubleTapState extends State<ShellBarDoubleTap> {
 
   @override
   Widget build(BuildContext context) => Listener(
-        // Only taps that actually land on the bar count; the transparent
-        // gap around it belongs to whatever is behind.
-        behavior: HitTestBehavior.deferToChild,
         onPointerDown: _onPointerDown,
         child: widget.child,
       );

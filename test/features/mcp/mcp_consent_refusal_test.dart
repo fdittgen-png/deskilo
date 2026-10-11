@@ -43,8 +43,8 @@ class _Refusing extends FakeMcpConnectionRepository {
         ),
       );
 
-  final Object? onPrepare;
-  final Object? onLoad;
+  final Exception? onPrepare;
+  final Exception? onLoad;
 
   @override
   Future<AuthorizationRequest> authorization(String authorizationId) async {
@@ -180,7 +180,7 @@ void main() {
     });
 
     testWidgets('an unexplained failure still says something', (tester) async {
-      final repo = _Refusing(onPrepare: StateError('boom'));
+      final repo = _Refusing(onPrepare: Exception('boom'));
       await _pump(tester, repo);
       await tester.tap(_key('mcp-consent-ws-toggle-$_ws'));
       await tester.pumpAndSettle();

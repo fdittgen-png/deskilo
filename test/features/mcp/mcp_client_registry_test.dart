@@ -8,8 +8,8 @@
 // of the test, not a timing hope.
 import 'dart:async';
 
-import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
+import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
@@ -56,7 +56,7 @@ class _GatedAdmin extends FakeMcpAdminRepository {
   final String name;
   final reads = <Completer<McpPolicy>>[];
   final queueReads = <Completer<List<EligibilityRequest>>>[];
-  Object? failNextSave;
+  Exception? failNextSave;
   Completer<void>? saveGate;
 
   @override
@@ -448,8 +448,8 @@ void main() {
       final draft = McpPolicyDraft.from(scoped(w, w.a))
         ..operations.add('create_reservation');
       final adminA = w.targets[_instA]!.admin
-        ..failNextSave = StateError('lost');
-      await expectLater(editor.save(draft), throwsStateError);
+        ..failNextSave = Exception('lost');
+      await expectLater(editor.save(draft), throwsException);
 
       // The UI now shows B; its own new intent is a different request.
       final draftB = McpPolicyDraft.from(scoped(w, w.b));
@@ -482,9 +482,9 @@ void main() {
       expect(admin.saves, hasLength(1));
 
       final before = draft.mutationId;
-      admin.failNextSave = StateError('lost');
+      admin.failNextSave = Exception('lost');
       draft.targetCeiling = 'workspace';
-      await expectLater(editor.save(draft), throwsStateError);
+      await expectLater(editor.save(draft), throwsException);
       draft.enabled = false;
       await editor.save(draft);
       expect(admin.saves[1].mutationId, isNot(before));

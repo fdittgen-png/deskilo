@@ -73,8 +73,7 @@ pw.Widget _reportBlockWidget(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               for (var i = 0; i < cells.length; i++)
-                i == 0
-                    ? pw.Expanded(
+                if (i == 0) pw.Expanded(
                         child: pw.Text(cells[i],
                             style: pw.TextStyle(
                                 fontSize: reportBodySize,
@@ -82,8 +81,7 @@ pw.Widget _reportBlockWidget(
                                 fontWeight: bold
                                     ? pw.FontWeight.bold
                                     : pw.FontWeight.normal)),
-                      )
-                    : pw.Padding(
+                      ) else pw.Padding(
                         padding: const pw.EdgeInsets.only(left: 12),
                         child: pw.Text(cells[i],
                             textAlign: pw.TextAlign.right,
@@ -130,7 +128,6 @@ pw.Widget _reportBlockWidget(
                   height: maxImageHeight == null
                       ? size.height
                       : math.min(size.height, maxImageHeight),
-                  fit: pw.BoxFit.contain,
                   alignment: switch (align) {
                     ReportImageAlign.left => pw.Alignment.centerLeft,
                     ReportImageAlign.center => pw.Alignment.center,

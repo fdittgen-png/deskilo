@@ -8,6 +8,7 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/domain/report_facts.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
@@ -19,7 +20,6 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:deskilo/features/money/domain/report_data_letters.dart';
 
 const _workspace = Workspace(
   id: 'ws-1',
@@ -146,7 +146,7 @@ void main() {
   group('reminderReportData', () {
     final invoice = Invoice(
       id: 'inv-1', workspaceId: 'ws-1', memberId: 'm1',
-      number: 'INV-2026-0007', issuedAt: DateTime(2026, 7, 1),
+      number: 'INV-2026-0007', issuedAt: DateTime(2026, 7),
       title: '2026-07', lines: const [], totalCents: 12000,
       currency: 'EUR', memberName: 'Ana Martin', memberAddress: '',
       workspaceName: 'Test Space', workspaceAddress: '', issuerName: 'Flo',

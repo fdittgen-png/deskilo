@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../l10n/app_localizations.dart';
-import '../validation/pending_validation.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../ui/app_snack.dart';
+import '../validation/pending_validation.dart';
 import 'refusal_text.dart';
 import 'trace_logger.dart';
 
@@ -70,7 +70,7 @@ Future<bool> runGuarded(
       );
     }
     return false;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     if (watched != null) watcher?.ended(watched, error: e);
     debugPrint('$message: $e\n$st');
     TraceLogger.instance.error(domain, message, error: e, stackTrace: st);

@@ -416,7 +416,7 @@ String _renderDart(Map<String, dynamic> contract) {
     ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
     ..writeln('//')
     ..writeln('// $_header')
-    ..writeln('// ignore_for_file: lines_longer_than_80_chars')
+    ..writeln('// ignore_for_file: lines_longer_than_80_chars, avoid_redundant_argument_values')
     ..writeln()
     ..writeln("import 'public_network_spec.dart';")
     ..writeln()
@@ -432,9 +432,10 @@ String _renderDart(Map<String, dynamic> contract) {
   for (final e in schemas.entries) {
     final s = Map<String, dynamic>.from(e.value as Map);
     final fields = Map<String, dynamic>.from(s['fields'] as Map);
-    out.writeln("  '${e.key}': PublicSchema(");
-    out.writeln("    '${e.key}',");
-    out.writeln('    {');
+    out
+      ..writeln("  '${e.key}': PublicSchema(")
+      ..writeln("    '${e.key}',")
+      ..writeln('    {');
     for (final f in fields.entries) {
       out.writeln(
         "      '${f.key}': ${_dartField(Map<String, dynamic>.from(f.value as Map))},",
@@ -500,11 +501,12 @@ String _renderDart(Map<String, dynamic> contract) {
     if (output['schema'] != null) {
       out.writeln("    output: '${output['schema']}',");
     }
-    out.writeln('    cardinality: PublicCardinality.$cardinality,');
-    out.writeln(
+    out
+      ..writeln('    cardinality: PublicCardinality.$cardinality,')
+      ..writeln(
       '    versions: [${(op['versions'] as List? ?? const []).join(', ')}],',
-    );
-    out.writeln(
+    )
+      ..writeln(
       '    requires: ${_dartList(op['requires'] as List? ?? const [])},',
     );
     if (op['baseline'] == true) out.writeln('    baseline: true,');

@@ -21,10 +21,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
-import '../widgets/pattern_picker.dart';
-import '../widgets/office_palette_editor.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/emblem_editor.dart';
+import '../widgets/office_palette_editor.dart';
+import '../widgets/pattern_picker.dart';
 import '../widgets/symbol_editor.dart';
 
 /// Colours an owner can reach in one tap. Not a restriction — the field

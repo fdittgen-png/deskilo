@@ -87,6 +87,7 @@ final class NumberValue extends RecordedValue {
 }
 
 final class FlagValue extends RecordedValue {
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   const FlagValue(this.on);
 
   final bool on;

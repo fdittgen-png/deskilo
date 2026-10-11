@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/i18n/money_format.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -178,7 +178,6 @@ class _InvoiceRegisterScreenState
             isExpanded: true,
             items: [
               DropdownMenuItem(
-                value: null,
                 child: Text(l10n?.invoiceRegisterAllYears ?? 'All years'),
               ),
               for (final year in years)

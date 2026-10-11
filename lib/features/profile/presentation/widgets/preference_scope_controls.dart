@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../providers/profile_providers.dart';
 import '../../domain/personal_preferences.dart';
 import '../../providers/personal_preferences_providers.dart';
+import '../../providers/profile_providers.dart';
 
 /// Optional scope in the existing settings pages; defaults remain the initial
 /// editing scope so an upgrade changes neither appearance nor ordinary tasks.

@@ -7,8 +7,8 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_pdf.dart';
-import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -179,7 +179,7 @@ void main() {
   });
 
   test('more service entries grow the document', () async {
-    final small = await _build(serviceCount: 1);
+    final small = await _build();
     final large = await _build(serviceCount: 12);
 
     expect(large.length, greaterThan(small.length));

@@ -24,7 +24,6 @@ class SupabaseSecondFactorRepository implements SecondFactorRepository {
   @override
   Future<TotpEnrollment> enrollTotp() async {
     final r = await _client.auth.mfa.enroll(
-      factorType: FactorType.totp,
       issuer: 'Deskilo',
     );
     final totp = r.totp;

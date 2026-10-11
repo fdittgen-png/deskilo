@@ -1154,7 +1154,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.environmentPairs,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
-    defaultOn: true,
   ),
   // #988/#990 — entities deployed between the two sides of a pair, with
   // a preview and a journal. Off: the twins stay separate hands.
@@ -1162,7 +1161,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.deployments,
     surface: FeatureSurface.settings,
     tier: FeatureTier.platform,
-    defaultOn: true,
     requires: WorkspaceFeature.environmentPairs,
   ),
   WorkspaceFeature.managedProfileAccess: FeatureManifestEntry(
@@ -1302,7 +1300,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     feature: WorkspaceFeature.singleRoomLevelNames,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
-    defaultOn: true,
   ),
   // #1274 — generating closure days changes what a subscription
   // includes, so it is asked for rather than assumed: Platform, off.

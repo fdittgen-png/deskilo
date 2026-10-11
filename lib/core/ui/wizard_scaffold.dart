@@ -8,13 +8,13 @@
 // learns the shape once. Steps own their content; this owns the chrome.
 import 'package:flutter/material.dart';
 
-import '../theme/app_spacing.dart';
 import '../../l10n/app_localizations.dart';
+import '../motion/motion.dart';
+import '../theme/app_spacing.dart';
 import 'edge_fade_scroll.dart';
+import 'motion.dart';
 import 'wizard_form_layout.dart';
 import 'wizard_progress.dart';
-import '../motion/motion.dart';
-import 'motion.dart';
 
 /// One step: a stable [name] (keys `wizard-step-<name>`) and its label.
 typedef WizardStepSpec = ({String name, String label});

@@ -1,28 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../period_label.dart';
-import '../../domain/invoice_line_text.dart';
-import '../report_strings_l10n.dart';
-import '../../../../core/i18n/money_format.dart';
-import 'how_to_pay_tiles.dart';
 import 'package:flutter/material.dart';
-
-import '../../../events/presentation/widgets/event_validation_trail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
+import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
-import '../../domain/money_face.dart';
+import '../../domain/invoice_line_text.dart';
 import '../../domain/ledger_entry.dart';
+import '../../domain/money_face.dart';
 import '../../domain/statement.dart';
 import '../invoice_status.dart';
+import '../period_label.dart';
+import '../report_strings_l10n.dart';
+import 'how_to_pay_tiles.dart';
 
 /// The structured monthly bill (#132, ADR 0008): subscription, consumed
 /// services, open positions awaiting validation, payments & credits, and

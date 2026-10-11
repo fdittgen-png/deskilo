@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/time/workspace_time.dart';
 import '../../plan/domain/half_day_windows.dart';
 import '../../workspace/domain/booking_granularity.dart';
-import '../../../core/time/workspace_time.dart';
 
 /// The window an on-the-spot action books (kiosk badge flow and the
 /// space-QR scan flow share it): the canonical full working day under

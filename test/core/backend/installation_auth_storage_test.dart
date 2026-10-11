@@ -101,7 +101,6 @@ void main() {
         a.origin,
         'public-a',
         authOptions: AuthClientOptions(
-          authFlowType: AuthFlowType.pkce,
           autoRefreshToken: false,
           pkceAsyncStorage: InstallationPkceStorage(secrets, a),
         ),
@@ -110,7 +109,6 @@ void main() {
         b.origin,
         'public-b',
         authOptions: AuthClientOptions(
-          authFlowType: AuthFlowType.pkce,
           autoRefreshToken: false,
           pkceAsyncStorage: InstallationPkceStorage(secrets, b),
         ),

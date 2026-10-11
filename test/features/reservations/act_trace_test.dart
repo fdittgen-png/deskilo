@@ -19,7 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import 'reserve_hub_test.dart' show pumpHub, pickHubDate, seatCenter;
+import 'reserve_hub_test.dart' show pickHubDate, pumpHub, seatCenter;
 
 /// The trace lines this test session produced, oldest first.
 List<String> _lines() =>
@@ -151,8 +151,8 @@ void main() {
   });
 
   test('an exported trace is stamped with where it came from', () async {
-    final logger = TraceLogger();
-    logger.log(TraceLevel.info, 'booking', 'check-in requested');
+    final logger = TraceLogger()
+      ..log(TraceLevel.info, 'booking', 'check-in requested');
     final content = await logger.exportContent(header: [
       'DesKilo trace',
       'workspace: ws-1',

@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -22,24 +24,22 @@ import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/reservation.dart';
-import '../space_subjects.dart';
-import '../../domain/reservation_repository.dart';
 import '../../domain/booking_error_text.dart';
-import 'booking_sheet.dart';
-import 'space_scan_sheet.dart';
-import 'space_conflict_actions.dart';
-import 'series_result_dialog.dart';
-import '../booking_gate_scope.dart';
-import 'space_act_sheet.dart';
+import '../../domain/reservation.dart';
+import '../../domain/reservation_repository.dart';
 import '../../domain/space_code.dart';
-import '../../domain/whole_space_blocking.dart';
-import 'reference_open.dart';
 import '../../domain/walk_up_window.dart';
+import '../../domain/whole_space_blocking.dart';
 import '../../providers/reservation_providers.dart';
+import '../booking_gate_scope.dart';
+import '../space_subjects.dart';
 import 'booking_range_text.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/i18n/format_controller.dart';
+import 'booking_sheet.dart';
+import 'reference_open.dart';
+import 'series_result_dialog.dart';
+import 'space_act_sheet.dart';
+import 'space_conflict_actions.dart';
+import 'space_scan_sheet.dart';
 
 /// The scan-to-book entry (field request): scan a desk/office/level QR
 /// card → the space sheet shows exactly the actions this member is
@@ -248,7 +248,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             endsAt: endsAt ?? window.end,
             checkIn: checkIn,
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('space booking failed: $e\n$st');
       TraceLogger.instance
           .error('reservations', 'space booking failed',
@@ -304,7 +304,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             startsAt: startsAt,
             endsAt: endsAt,
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('space booking for member failed: $e\n$st');
       TraceLogger.instance.error(
           'reservations', 'space booking for member failed',
@@ -352,7 +352,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     setState(() => _busy = true);
     try {
       await act(reservation.id);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('reservations', 'space $what failed', error: e, stackTrace: st);
       if (!mounted) return;
@@ -466,7 +466,6 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         members: subjects,
         myMemberId: me?.id,
         allowSeries: allowSeries,
-        allowBlocking: false,
       ),
     );
     if (choice == null || !mounted) return;
@@ -508,7 +507,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             pattern: choice.pattern!,
             until: choice.until!,
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('reservations', 'space series failed',
           error: e, stackTrace: st);
       if (!mounted) return;

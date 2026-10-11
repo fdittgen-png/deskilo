@@ -67,7 +67,7 @@ class _InvitationJoinPanelState extends ConsumerState<InvitationJoinPanel> {
           .check(widget.code.text, active: _active);
       if (!mounted) return;
       setState(() => _check = check);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Shown inline; nothing was written.
       TraceLogger.instance.warn('workspace', 'invitation check failed',
           error: e, stackTrace: st);

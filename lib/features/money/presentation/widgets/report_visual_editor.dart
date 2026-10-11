@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import 'report_field_picker.dart';
 import 'report_page_style.dart';
-import '../../../../core/ui/edge_fade_scroll.dart';
 
 /// The kinds a visual line can be (#488) — one per markup prefix. The
 /// visual editor is WYSIWYG over the SAME markup the text mode edits:
@@ -448,11 +448,9 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (var c = 0; c < cells.length; c++)
-                c == 0
-                    ? Expanded(
+                if (c == 0) Expanded(
                         child:
-                            Text.rich(_tokenized(cells[c].trim(), style)))
-                    : Flexible(
+                            Text.rich(_tokenized(cells[c].trim(), style))) else Flexible(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12),
                           child: Text.rich(
@@ -632,7 +630,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       decoration: BoxDecoration(
         color: ReportPage.backdrop.withValues(alpha: .6),
         borderRadius: const BorderRadius.all(Radius.circular(6)),
-        border: Border.all(color: theme.colorScheme.primary, width: 1),
+        border: Border.all(color: theme.colorScheme.primary),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       child: Column(

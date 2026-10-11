@@ -7,8 +7,8 @@
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/validation_policy.dart';
 import '../../../features/events/domain/workspace_event.dart';
-import '../data/event_repository.dart';
 import '../../time/date_text.dart';
+import '../data/event_repository.dart';
 
 void seedDemoDecisions(FakeEventRepository events, DateTime now) {
   final period = yearMonth(now.year, now.month);
@@ -98,6 +98,7 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
     String id,
     String event,
     String member,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     bool ok,
     int hoursAgo,
   ) => EventDecision(

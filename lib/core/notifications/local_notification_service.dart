@@ -75,7 +75,7 @@ class LocalNotificationService implements NotificationService {
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.requestNotificationsPermission();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('notification permission request failed: $e\n$st');
       TraceLogger.instance.warn(
           'notifications', 'permission request failed (non-fatal)',
@@ -115,7 +115,7 @@ class LocalNotificationService implements NotificationService {
           androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         );
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // Notifications are best-effort: booking flows must never fail on
       // notification-permission or platform errors.
       debugPrint('reminder scheduling failed: $e\n$st');
@@ -131,7 +131,7 @@ class LocalNotificationService implements NotificationService {
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.areNotificationsEnabled();
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('notifications-enabled probe failed: $e\n$st');
       TraceLogger.instance.warn(
           'notifications', 'notifications-enabled probe failed',
@@ -187,7 +187,7 @@ class LocalNotificationService implements NotificationService {
       TraceLogger.instance.log(TraceLevel.info, 'notifications',
           'pending mirror: ${wanted.length} active, '
           'enabled=${await notificationsEnabled()}');
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('pending notification sync failed: $e\n$st');
       TraceLogger.instance.error(
           'notifications', 'pending notification sync failed',
@@ -204,7 +204,7 @@ class LocalNotificationService implements NotificationService {
         body: body,
         notificationDetails: const NotificationDetails(android: _pushChannel),
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       debugPrint('push notification display failed: $e\n$st');
       TraceLogger.instance.error(
           'notifications', 'push notification display failed',

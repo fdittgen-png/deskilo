@@ -11,15 +11,15 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_documents.dart';
 import '../report_actions.dart';
-import '../status_report_data.dart';
 import '../report_layout_actions.dart';
-import '../../../../core/time/date_text.dart';
+import '../status_report_data.dart';
 
 class WorkspaceStatusScreen extends ConsumerStatefulWidget {
   const WorkspaceStatusScreen({super.key});
@@ -40,7 +40,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
     super.initState();
     final now = ref.read(clockProvider).now();
     _months = [
-      for (var i = 0; i < 24; i++) _ym(DateTime(now.year, now.month - i, 1)),
+      for (var i = 0; i < 24; i++) _ym(DateTime(now.year, now.month - i)),
     ];
     _to = _months.first;
     _from = _months[2];
@@ -63,7 +63,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
           ref,
           report: report,
           title: title,
-          layoutXml: letterLayoutXml(ref, docId: 'status', language: ''),
+          layoutXml: letterLayoutXml(ref, docId: 'status'),
           data: data,
         );
         return (bytes: pdf.bytes, fileName: pdf.fileName);

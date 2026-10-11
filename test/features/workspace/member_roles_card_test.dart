@@ -14,20 +14,20 @@
 //   * with the flag off, the page keeps its single Administrator row.
 import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/members/presentation/screens/member_page.dart';
 import 'package:deskilo/features/workspace/domain/access_summary.dart';
+import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:deskilo/features/workspace/presentation/screens/roles_of_space_screen.dart';
 import 'package:deskilo/features/workspace/presentation/screens/roles_screen.dart';
-import 'package:deskilo/features/workspace/presentation/widgets/role_editor_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/screens/what_you_can_do_screen.dart';
-import 'package:deskilo/core/links/link_launcher.dart';
-import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/invite_roles_picker.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/invite_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/member_roles_card.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/role_editor_sheet.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/role_holders_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -377,7 +377,7 @@ void main() {
   // manageServices through a role, as record_service_charge now accepts.
   testWidgets('a role holding manageServices finds "Add a service" on '
       "another member's page; a plain member does not", (tester) async {
-    final s = _seed(viewerOwner: false, flags: const {'customRoles': true});
+    final s = _seed(viewerOwner: false);
     s.roles.roles.add(const WorkspaceRole(
       id: 'role-c',
       key: 'catalogue',

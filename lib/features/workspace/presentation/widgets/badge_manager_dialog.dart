@@ -2,14 +2,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import 'nfc_tap_dialog.dart';
-import 'package:intl/intl.dart';
-
-import '../../../../core/time/clock.dart';
-import '../../../money/presentation/batch_cover.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -17,15 +12,18 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../money/presentation/batch_cover.dart';
 import '../../domain/badge_pdf.dart';
 import '../../domain/member_badge.dart';
 import '../../domain/workspace_feature.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../providers/workspace_providers.dart';
+import 'nfc_tap_dialog.dart';
 
 /// One member's badge manager (0043/0046, extracted for the 0053
 /// self-service pass): the badge list with revoke, the one-time QR with
@@ -72,6 +70,7 @@ class BadgeManagerDialog extends ConsumerStatefulWidget {
   /// server refuses it too ('not your badge'), because an admin who
   /// could arm a member's badge could sign in as them, and every
   /// check-in after would carry that member's name.
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   final Future<void> Function(String badgeId, bool enabled)? setAuthEnabled;
 
   @override
@@ -97,8 +96,8 @@ class _BadgeManagerDialogState
   @override
   void initState() {
     super.initState();
-    _load();
-    _checkNfc();
+    unawaited(_load());
+    unawaited(_checkNfc());
   }
 
   Future<void> _checkNfc() async {
@@ -327,6 +326,7 @@ class _BadgeManagerDialogState
   Future<void> _setAuth(
     MemberBadge badge,
     bool enabled,
+    // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     Future<void> Function(String badgeId, bool enabled) arm,
   ) async {
     if (_busy) return;

@@ -3,9 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show listEquals, mapEquals, setEquals;
 import 'package:flutter/material.dart';
-
-import 'plan_paint_helpers.dart';
-import 'seat_identifier_paint.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../../core/theme/office_colors.dart';
@@ -16,6 +13,8 @@ import '../../domain/floor_plan.dart';
 import '../../domain/grid_geometry.dart';
 import '../../domain/seat.dart';
 import 'drop_target_paint.dart';
+import 'plan_paint_helpers.dart';
+import 'seat_identifier_paint.dart';
 
 /// Paints a level's grid, offices, desks and seats. Shared by the editor
 /// canvas (#34/#35) and the live floor plan (Epic #4): passing [seatStates]
@@ -303,17 +302,19 @@ class FloorPlanPainter extends CustomPainter {
       if (overlay != null) {
         final accent =
             SeatStateColors.of(overlay.state, brightness: brightness);
-        canvas.drawRRect(
-            rrect, Paint()..color = accent.withValues(alpha: 0.18));
+        canvas
+          ..drawRRect(
+            rrect, Paint()..color = accent.withValues(alpha: 0.18))
         // #670 — the same hatch as a booked room, clipped to the desk's
         // rounded rect. A whole-TABLE booking is the case the field
         // report named first: six tinted seats look identical to six
         // individual bookings without it.
-        canvas.save();
-        canvas.clipRRect(rrect);
+          ..save()
+          ..clipRRect(rrect);
         drawHatch(canvas, rect, accent);
-        canvas.restore();
-        canvas.drawRRect(
+        canvas
+          ..restore()
+          ..drawRRect(
           rrect,
           Paint()
             ..style = PaintingStyle.stroke
@@ -375,21 +376,23 @@ class FloorPlanPainter extends CustomPainter {
         // keeps two neighbouring bookings from reading as one.
         final freeAccent =
             SeatStateColors.of(SeatState.free, brightness: brightness);
-        canvas.drawRRect(rrect,
-            Paint()..color = freeAccent.withValues(alpha: overPhoto ? 0.20 : 0.14));
-        canvas.save();
-        canvas.clipRRect(rrect);
+        canvas
+          ..drawRRect(rrect,
+            Paint()..color = freeAccent.withValues(alpha: overPhoto ? 0.20 : 0.14))
+          ..save()
+          ..clipRRect(rrect);
         for (final segment in segments) {
           final left = rect.left + rect.width * segment.from;
           final right = rect.left + rect.width * segment.to;
           if (right - left < 0.5) continue;
-          canvas.drawRect(
+          canvas
+            ..drawRect(
             Rect.fromLTRB(left, rect.top, right, rect.bottom),
             Paint()
               ..color = SeatStateColors.of(segment.state, brightness: brightness)
                   .withValues(alpha: overPhoto ? 0.40 : 0.22),
-          );
-          canvas.drawLine(
+          )
+            ..drawLine(
             Offset(left, rect.top),
             Offset(left, rect.bottom),
             Paint()
@@ -556,8 +559,9 @@ class FloorPlanPainter extends CustomPainter {
     if (m != null) {
       final rect = _toPx(m);
       final color = marqueeValid ? colorScheme.primary : colorScheme.error;
-      canvas.drawRect(rect, Paint()..color = color.withValues(alpha: 0.2));
-      canvas.drawRect(
+      canvas
+        ..drawRect(rect, Paint()..color = color.withValues(alpha: 0.2))
+        ..drawRect(
         rect,
         Paint()
           ..style = PaintingStyle.stroke
@@ -640,8 +644,9 @@ class FloorPlanPainter extends CustomPainter {
     // language as the member directory.
     if (online) {
       final at = center + Offset(diag, -diag);
-      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
-      canvas.drawCircle(
+      canvas
+        ..drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white)
+        ..drawCircle(
         at,
         badgeR,
         Paint()..color = AppStatusColors.successOf(brightness),
@@ -654,8 +659,9 @@ class FloorPlanPainter extends CustomPainter {
     // rest. Placed opposite the presence dot so neither hides the other.
     if (shareCount > 1) {
       final at = center + Offset(-diag, -diag);
-      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
-      canvas.drawCircle(at, badgeR, Paint()..color = accent);
+      canvas
+        ..drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white)
+        ..drawCircle(at, badgeR, Paint()..color = accent);
       final count = TextPainter(
         text: TextSpan(
           text: '$shareCount',
@@ -675,8 +681,9 @@ class FloorPlanPainter extends CustomPainter {
     // "physically here", distinct from a mere reservation.
     if (checkedIn) {
       final at = center + Offset(diag, diag);
-      canvas.drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white);
-      canvas.drawCircle(at, badgeR, Paint()..color = accent);
+      canvas
+        ..drawCircle(at, badgeR + 1.4, Paint()..color = Colors.white)
+        ..drawCircle(at, badgeR, Paint()..color = accent);
       final check = Path()
         ..moveTo(at.dx - badgeR * 0.45, at.dy)
         ..lineTo(at.dx - badgeR * 0.1, at.dy + badgeR * 0.4)
@@ -702,14 +709,15 @@ class FloorPlanPainter extends CustomPainter {
       SeatOrientation.e => center + const Offset(len, 0),
       SeatOrientation.w => center - const Offset(len, 0),
     };
-    canvas.drawLine(
+    canvas
+      ..drawLine(
       center,
       tip,
       Paint()
         ..strokeWidth = 2
         ..color = color,
-    );
-    canvas.drawCircle(tip, 2, Paint()..color = color);
+    )
+      ..drawCircle(tip, 2, Paint()..color = color);
   }
 
   @override

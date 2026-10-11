@@ -10,8 +10,8 @@
 //   * anything else: a visible "the recorder cannot describe this" step,
 //     so an uninstrumented screen never passes for covered.
 
-import '../domain/coverage_manifest.dart';
 import '../domain/action_registry.dart';
+import '../domain/coverage_manifest.dart';
 
 /// How the recorder treats a route.
 sealed class RouteTreatment {

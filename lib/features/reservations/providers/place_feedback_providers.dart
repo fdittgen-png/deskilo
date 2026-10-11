@@ -31,7 +31,7 @@ bool Function(String source) directorySourceIsLocal(Ref ref) {
   String? origin;
   try {
     origin = Uri.parse(Supabase.instance.client.rest.url).host;
-  } catch (e, st) {
+  } on Object catch (e, st) {
     // Not initialised: nothing is local (tests override it).
     TraceLogger.instance.warn('directory', 'no backend to compare a workspace source with',
         error: e, stackTrace: st);

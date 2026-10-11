@@ -13,9 +13,9 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/settle_invoices.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoice.dart';
-import '../../application/settle_invoices.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_status.dart';
 import '../period_label.dart';
@@ -67,7 +67,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
             memberId: memberId,
             invoiceIds: chosen.map((i) => i.id).toList(),
           );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('money', 'settle invoices failed', error: e, stackTrace: st);
       if (!mounted) return;

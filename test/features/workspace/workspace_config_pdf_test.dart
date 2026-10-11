@@ -5,6 +5,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/money/domain/configuration_report_bands.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -13,9 +16,6 @@ import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/workspace/domain/workspace_config_report.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deskilo/features/money/domain/invoice_pdf.dart';
-import 'package:deskilo/features/money/domain/invoice_report.dart';
-import 'package:deskilo/features/money/domain/configuration_report_bands.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 final _strings = WorkspaceConfigPdfStrings(

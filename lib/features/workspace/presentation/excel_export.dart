@@ -129,7 +129,7 @@ Future<void> exportWorkspaceExcel(
             sha256: evidence.sha256,
             rowCount: evidence.rowCount,
           );
-        } catch (e, st) {
+        } on Object catch (e, st) {
           TraceLogger.instance.warn('workspace',
               'export: saved, but its recovery evidence was not recorded',
               error: e, stackTrace: st);

@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
+import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -14,11 +14,11 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/federation_handoff_controller.dart';
 import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
 import '../../providers/auth_providers.dart';
 import '../auth_outcome_text.dart';
-import '../../application/federation_handoff_controller.dart';
 import '../widgets/badge_sign_in_sheet.dart';
 import '../widgets/federation_handoff_panel.dart';
 import '../widgets/password_recovery_sheet.dart';
@@ -114,7 +114,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               email: email,
               password: _password.text,
             );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // The repository answers refusals as values; anything that still
       // throws is a bug or a fake, and nothing was judged.
       TraceLogger.instance.error(
@@ -182,7 +182,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             '${provider.label} sign-in is not available yet — the server '
                 'has not enabled it.',
       );
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance
           .error('auth', 'social sign-in failed', error: e, stackTrace: st);
       if (!mounted) return;
@@ -301,9 +301,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               // an existing one; telling it which is which is the
               // hint.
               autofillHints: [
-                _isSignUp
-                    ? AutofillHints.newPassword
-                    : AutofillHints.password,
+                if (_isSignUp) AutofillHints.newPassword else AutofillHints.password,
               ],
               onFieldSubmitted: (_) => _submit(),
               // The eight characters are a CREATION policy. An

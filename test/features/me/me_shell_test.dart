@@ -3,17 +3,17 @@
 // #1823 — Me is the account's own home: with ZERO workspaces the app
 // opens there, and every one of its four tabs opens. Each affordance on
 // Home and on the Me tab is tapped and lands where it says.
+import 'package:deskilo/app/shell/shell_drawer.dart';
+import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
+import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/app/shell/shell_drawer.dart';
-import 'package:deskilo/core/navigation/navigation_style.dart';
-import 'package:deskilo/features/workspace/domain/member.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';

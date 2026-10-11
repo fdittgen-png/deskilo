@@ -2,15 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import '../../../workspace/presentation/widgets/member_note_composer.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/message_marks.dart';
-import '../../providers/inbox_marks.dart';
-import '../../providers/message_marks_providers.dart';
-import 'account_group_reach_sheet.dart';
-import 'account_group_sheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -18,13 +11,20 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import 'environment_pill.dart';
+import '../../../workspace/presentation/widgets/member_note_composer.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/message_marks.dart';
 import '../../domain/messenger.dart';
+import '../../providers/inbox_marks.dart';
+import '../../providers/message_marks_providers.dart';
 import '../../providers/messenger_providers.dart';
+import 'account_group_reach_sheet.dart';
+import 'account_group_sheet.dart';
 import 'block_person.dart';
 import 'context_bubble.dart';
-import 'refusal_text.dart';
+import 'environment_pill.dart';
 import 'message_actions_sheet.dart';
+import 'refusal_text.dart';
 
 /// #1824 — one conversation of the unified inbox that is not a space
 /// thread of the space I am in: an account conversation, an inquiry, or
@@ -84,7 +84,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   void initState() {
     super.initState();
     _activeNotifier;
-    Future.microtask(_markRead);
+    unawaited(Future.microtask(_markRead));
     _refresh = Timer.periodic(_poll, (_) {
       if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
         ref
@@ -102,7 +102,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     final previous = _previousWorkspace;
     if (_switchedWorkspace && previous != null) {
       final notifier = _activeNotifier;
-      Future.microtask(() => notifier.select(previous));
+      unawaited(Future.microtask(() => notifier.select(previous)));
     }
     super.dispose();
   }
@@ -127,7 +127,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           .read(messengerActionsProvider(source: widget.source))
           .markRead(widget.kind, _contextId);
       if (mounted) ref.invalidate(unifiedInboxProvider);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       // A receipt that does not move must never block reading.
       TraceLogger.instance.warn(
         'messages',
@@ -185,7 +185,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           .read(messengerActionsProvider(source: widget.source))
           .messages(widget.kind, _contextId, before: oldest);
       if (mounted) setState(() => _earlier.addAll(page));
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'messages',
         'load earlier messages failed',
@@ -204,7 +204,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           .read(messengerActionsProvider(source: widget.source))
           .recordScreenCapture(widget.kind, _contextId);
       if (mounted) ref.invalidate(_provider);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error(
         'messages',
         'record screen capture failed',
@@ -302,7 +302,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   void _actions(ContextMessage message) {
     final marks =
         ref.read(messageMarksProvider(_marksKey)).value ?? MessageMarks.none;
-    showMessageActions(
+    unawaited(showMessageActions(
       context,
       ref,
       MessageRef(
@@ -333,7 +333,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           ..invalidate(_provider)
           ..invalidate(messageMarksProvider(_marksKey));
       },
-    );
+    ));
   }
 
   Future<void> _react(ContextMessage message, String emoji) async {
@@ -367,7 +367,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       ref.listen(_provider, (previous, next) {
         final before = previous?.value?.length ?? 0;
         final after = next.value?.length ?? 0;
-        if (after > before && before > 0) _markRead();
+        if (after > before && before > 0) unawaited(_markRead());
       });
     }
     return Scaffold(
@@ -528,7 +528,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     if (canRef && !workspaces.any((w) => w.id == active) && !_autoChosen) {
       _autoChosen = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _chooseWorkspace(workspaces.first.id);
+        if (mounted) unawaited(_chooseWorkspace(workspaces.first.id));
       });
     }
     return SafeArea(
@@ -565,7 +565,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                           ),
                       ],
                       onChanged: (id) {
-                        if (id != null) _chooseWorkspace(id);
+                        if (id != null) unawaited(_chooseWorkspace(id));
                       },
                     ),
                   ),

@@ -2,10 +2,10 @@
 //
 // Every guide step retains a safe destination through compilation, editing and import; visiting steps preserves unfinished work.
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
-import 'package:deskilo/features/task_recorder/guide/guide_codec.dart';
-import 'package:deskilo/features/task_recorder/guide/guide_compiler.dart';
 import 'package:deskilo/features/task_recorder/domain/safe_payload.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording.dart';
+import 'package:deskilo/features/task_recorder/guide/guide_codec.dart';
+import 'package:deskilo/features/task_recorder/guide/guide_compiler.dart';
 import 'package:deskilo/features/task_recorder/guide/guide_runner.dart';
 import 'package:deskilo/features/task_recorder/guide/task_guide.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -138,14 +138,14 @@ void main() {
         for (var i = 1; i <= 3; i++)
           GuideStep(id: 'g$i', kind: GuideStepKind.instruction),
       ]),
-    );
-    run.visit('g3');
+    )..visit('g3');
     expect(run.statusOf('g1'), GuideStepStatus.pending);
     run.acknowledge();
     expect(run.state, GuideRunState.running);
     expect(run.current!.id, 'g1');
-    run.acknowledge();
-    run.acknowledge();
+    run
+      ..acknowledge()
+      ..acknowledge();
     expect(run.state, GuideRunState.completed);
   });
 
@@ -160,9 +160,9 @@ void main() {
         ),
         const GuideStep(id: 'g2', kind: GuideStepKind.manual),
       ]),
-    );
-    run.onAction(RecorderActions.confirmBooking);
-    run.visit('g2');
+    )
+      ..onAction(RecorderActions.confirmBooking)
+      ..visit('g2');
     expect(run.current!.id, 'g1');
     expect(run.statusOf('g1'), GuideStepStatus.waiting);
   });

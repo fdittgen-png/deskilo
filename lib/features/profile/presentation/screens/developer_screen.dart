@@ -10,10 +10,10 @@ import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/time/clock.dart';
 import '../../../reservations/domain/reservation_export.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -80,7 +80,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
           l10n?.commonSavedTo(path) ?? 'Saved to $path',
         );
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       logger.error('developer', 'trace export failed',
           error: e, stackTrace: st);
       if (!mounted) return;
@@ -143,7 +143,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
           l10n?.commonSavedTo(path) ?? 'Saved to $path',
         );
       }
-    } catch (e, st) {
+    } on Object catch (e, st) {
       logger.error('developer', 'reservation export failed',
           error: e, stackTrace: st);
       if (!mounted) return;

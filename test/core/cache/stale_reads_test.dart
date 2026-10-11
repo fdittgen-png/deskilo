@@ -16,9 +16,10 @@ void main() {
     final reads = StaleReads();
     final early = DateTime.utc(2026, 9, 17, 8);
     final late = DateTime.utc(2026, 9, 17, 9);
-    reads.served('resv:ws:a', late);
-    reads.served('resv:ws:b', early);
-    reads.served('plan:level', DateTime.utc(2026, 9, 1));
+    reads
+      ..served('resv:ws:a', late)
+      ..served('resv:ws:b', early)
+      ..served('plan:level', DateTime.utc(2026, 9));
     expect(reads.oldestSavedAt(['resv:']), early);
     expect(reads.oldestSavedAt(['nothing:']), isNull);
   });
@@ -26,11 +27,12 @@ void main() {
   test('one success clears its whole family, not other families', () {
     final reads = StaleReads();
     var notified = 0;
-    reads.addListener(() => notified++);
-    reads.served('resv:ws:a', DateTime.utc(2026));
-    reads.served('resv:ws:b', DateTime.utc(2026));
-    reads.served('plan:level', DateTime.utc(2026));
-    reads.fresh('resv:ws:c');
+    reads
+      ..addListener(() => notified++)
+      ..served('resv:ws:a', DateTime.utc(2026))
+      ..served('resv:ws:b', DateTime.utc(2026))
+      ..served('plan:level', DateTime.utc(2026))
+      ..fresh('resv:ws:c');
     expect(reads.oldestSavedAt(['resv:']), isNull);
     expect(reads.oldestSavedAt(['plan:']), isNotNull);
     expect(notified, 4);

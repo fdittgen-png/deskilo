@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-
-import '../../../workspace/presentation/widgets/member_note_body.dart';
-import '../../domain/message_marks.dart';
-import 'reaction_strip.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/messenger.dart';
+import '../../../workspace/presentation/widgets/member_note_body.dart';
 import '../../../workspace/presentation/widgets/note_check.dart';
+import '../../domain/message_marks.dart';
+import '../../domain/messenger.dart';
 import 'message_marks.dart';
+import 'reaction_strip.dart';
 
 /// #1824 — one message of an account conversation, an inquiry or a
 /// space conversation opened from the unified inbox: its origin line when

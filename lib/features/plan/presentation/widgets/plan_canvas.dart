@@ -3,12 +3,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
-
 import '../../../../core/motion/motion.dart';
 import '../../../../core/ui/canvas_controls.dart';
-import '../../domain/desk.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/seat_state_logic.dart';
+import '../../domain/desk.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/office.dart';
 import '../../domain/seat.dart';

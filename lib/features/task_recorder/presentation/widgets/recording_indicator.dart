@@ -28,11 +28,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/recorder_controller.dart';
+import '../../domain/action_registry.dart' show uiRoutes;
+import '../../domain/recording_reference.dart';
 import '../../domain/task_recording.dart' show RecordingEndReason;
 import '../../guide/guide_session.dart';
 import '../../providers/recorder_providers.dart';
-import '../../domain/action_registry.dart' show uiRoutes;
-import '../../domain/recording_reference.dart';
 import '../guide_host/guide_host.dart';
 import '../route_classification.dart';
 import '../ui_capture.dart';
@@ -168,7 +168,7 @@ class _LiveIndicatorState extends ConsumerState<_LiveIndicator> {
             controller.unrecorded();
         }
       });
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',
         'route not classified',

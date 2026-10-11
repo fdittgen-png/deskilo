@@ -12,15 +12,15 @@
 // off marks nothing.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/demo/presentation/demo_workspace.dart';
 
+import '../../core/demo/presentation/demo_workspace.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/theme/app_typography.dart';
 import '../../core/theme/status_colors.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/app_localizations_en.dart';
-import '../../core/theme/app_typography.dart';
 
 /// Keeps the active workspace's environment visible. Demo has its own
 /// persistent strip; Me and the unloaded state have no workspace context.

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../workspace/presentation/member_labels.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../providers/directory_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
+import '../../../workspace/presentation/member_labels.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/directory_providers.dart';
 
 /// HOW TO REACH THIS PERSON, and what the workspace knows about them —
 /// as much of it as the viewer is allowed to see (#704).

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/work_hours.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/app_localizations_en.dart';
-import '../../../../core/time/work_hours.dart';
 
 /// An always-visible review of the actual window, including at narrow widths.
 /// The workspace clock is explicit even when personal formatting uses another zone.

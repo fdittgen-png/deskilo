@@ -115,7 +115,7 @@ class SupabaseMessengerRepository implements MessengerRepository {
         for (final f in flagged.values)
           if (f['archived'] == true) f,
       ];
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('messages', 'conversation flags unavailable',
           error: e, stackTrace: st);
     }
@@ -123,7 +123,7 @@ class SupabaseMessengerRepository implements MessengerRepository {
     // without them rather than failing the whole inbox.
     try {
       return [...rows, ...await _rows('my_group_inbox')];
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('messages', 'group inbox unavailable',
           error: e, stackTrace: st);
       return rows;

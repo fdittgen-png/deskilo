@@ -63,6 +63,7 @@ class MeActions {
   }
 
   /// Publish ([publish] true) or withdraw my public profile (0389).
+  // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
   Future<void> publishProfile(bool publish) =>
       _repository.setPublicProfile(publish);
 

@@ -52,7 +52,6 @@ void main() {
       plan: plan,
       cellSize: 14,
       colorScheme: const ColorScheme.light(),
-      background: null,
     );
     // Same inputs → no repaint; a background presence flips it.
     expect(withBg.shouldRepaint(noBg), isFalse);

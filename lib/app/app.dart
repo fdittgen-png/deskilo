@@ -1,24 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../core/ui/app_frame.dart';
-import '../core/ui/system_insets_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/demo/demo_entry.dart';
 import '../core/demo/presentation/demo_workspace.dart';
-import '../features/profile/providers/personal_appearance_providers.dart';
 import '../core/motion/motion.dart';
 import '../core/presence/presence_providers.dart';
 import '../core/privacy/recording_banner.dart';
+import '../core/ui/app_frame.dart';
+import '../core/ui/system_insets_guard.dart';
+import '../features/profile/providers/personal_appearance_providers.dart';
+import '../features/task_recorder/presentation/widgets/recording_indicator.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
 import 'router.dart';
-import 'theme.dart';
 import 'shell/layer_chrome.dart';
-import '../features/task_recorder/presentation/widgets/recording_indicator.dart';
+import 'theme.dart';
 
 /// The composition root: the real app, or the demonstration space
 /// wrapped around it (#1379).

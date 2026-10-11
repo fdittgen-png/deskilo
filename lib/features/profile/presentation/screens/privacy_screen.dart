@@ -21,10 +21,10 @@ import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../calendar/providers/calendar_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/rights_requests.dart';
+import '../widgets/erasure_preview_view.dart';
 import '../widgets/privacy_choice_tiles.dart';
 import '../widgets/rights_requests_tile.dart';
-import '../widgets/erasure_preview_view.dart';
-import '../../application/rights_requests.dart';
 
 /// The policy the store listings, the README and the help all point at.
 const _kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';

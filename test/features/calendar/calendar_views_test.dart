@@ -94,7 +94,7 @@ void main() {
         'and the day of month survives a step where it can', () {
       final s = CalendarSelection(view: CalendarView.month, anchor: DateTime(2026, 8, 31));
       expect(s.from, DateTime(2026, 8, 31));
-      expect(s.to, DateTime(2026, 9, 1));
+      expect(s.to, DateTime(2026, 9));
       expect(s.monthStart, DateTime(2026, 8));
       expect(s.monthEnd, DateTime(2026, 9));
       expect(s.shifted(1).anchor, DateTime(2026, 9, 30));
@@ -103,7 +103,7 @@ void main() {
     test('relative days', () {
       expect(relativeDayOf(wed, wed), RelativeDay.today);
       expect(relativeDayOf(DateTime(2026, 9, 3), wed), RelativeDay.tomorrow);
-      expect(relativeDayOf(DateTime(2026, 9, 1), wed), RelativeDay.yesterday);
+      expect(relativeDayOf(DateTime(2026, 9), wed), RelativeDay.yesterday);
       expect(relativeDayOf(DateTime(2026, 9, 5), wed), isNull);
     });
     test('the groups: every kind belongs to exactly one', () {

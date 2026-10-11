@@ -68,7 +68,7 @@ Future<void> _pump(
 }
 
 FakeReservationRepository _repo() =>
-    FakeReservationRepository(myMemberId: 'member-1')..allowPastBookings = true;
+    FakeReservationRepository()..allowPastBookings = true;
 
 InMemoryBookingIntentStore _store(BookingIntent intent) =>
     InMemoryBookingIntentStore(

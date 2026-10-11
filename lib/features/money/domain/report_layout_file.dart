@@ -128,23 +128,25 @@ String buildReportLayoutFile({
   // Re-serialise through the model so the export is canonical — a bare
   // "12" comes back as "12mm" — and provably readable.
   final document = parseLayoutXml(layoutXml);
-  final b = XmlBuilder();
-  b.processing('xml', 'version="1.0" encoding="UTF-8"');
+  final b = XmlBuilder()
+    ..processing('xml', 'version="1.0" encoding="UTF-8"');
   b.element(_ReportLayoutSchema.root, nest: () {
-    b.attribute(_ReportLayoutSchema.attrSchema, _ReportLayoutSchema.id);
-    b.attribute(_ReportLayoutSchema.attrVersion, '${_ReportLayoutSchema.version}');
-    b.attribute(_ReportLayoutSchema.attrKind, kind.id);
-    b.attribute(_ReportLayoutSchema.attrLanguage, language);
-    b.attribute(_ReportLayoutSchema.attrWorkspace, workspaceName);
-    b.attribute(_ReportLayoutSchema.attrExportedAt,
-        exportedAt.toUtc().toIso8601String());
-    b.comment('\n${_layoutHowToEdit()}');
+    b
+      ..attribute(_ReportLayoutSchema.attrSchema, _ReportLayoutSchema.id)
+      ..attribute(_ReportLayoutSchema.attrVersion, '${_ReportLayoutSchema.version}')
+      ..attribute(_ReportLayoutSchema.attrKind, kind.id)
+      ..attribute(_ReportLayoutSchema.attrLanguage, language)
+      ..attribute(_ReportLayoutSchema.attrWorkspace, workspaceName)
+      ..attribute(_ReportLayoutSchema.attrExportedAt,
+        exportedAt.toUtc().toIso8601String())
+      ..comment('\n${_layoutHowToEdit()}');
     if (texts.isNotEmpty) {
       b.element(_ReportLayoutSchema.texts, nest: () {
         for (final entry in texts.entries) {
           b.element(_ReportLayoutSchema.text, nest: () {
-            b.attribute(_ReportLayoutSchema.attrKey, entry.key);
-            b.text(entry.value);
+            b
+              ..attribute(_ReportLayoutSchema.attrKey, entry.key)
+              ..text(entry.value);
           });
         }
       });

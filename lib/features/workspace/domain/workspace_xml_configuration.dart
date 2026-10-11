@@ -80,23 +80,26 @@ void _writeValue(XmlBuilder builder, String? name, Object? value) {
       case null:
         builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
             WorkspaceXmlConfigurationSchema.typeNull);
-      case bool v:
-        builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
-            WorkspaceXmlConfigurationSchema.typeBoolean);
-        builder.text('$v');
-      case num v:
-        builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
-            WorkspaceXmlConfigurationSchema.typeNumber);
-        builder.text(canonicalConfigurationNumber(v));
-      case String v:
-        builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
-            WorkspaceXmlConfigurationSchema.typeString);
-        builder.attribute(WorkspaceXmlConfigurationSchema.valueAttr, v);
-      case Map<dynamic, dynamic> m:
+      case final bool v:
+        builder
+          ..attribute(WorkspaceXmlConfigurationSchema.typeAttr,
+            WorkspaceXmlConfigurationSchema.typeBoolean)
+          ..text('$v');
+      case final num v:
+        builder
+          ..attribute(WorkspaceXmlConfigurationSchema.typeAttr,
+            WorkspaceXmlConfigurationSchema.typeNumber)
+          ..text(canonicalConfigurationNumber(v));
+      case final String v:
+        builder
+          ..attribute(WorkspaceXmlConfigurationSchema.typeAttr,
+            WorkspaceXmlConfigurationSchema.typeString)
+          ..attribute(WorkspaceXmlConfigurationSchema.valueAttr, v);
+      case final Map<dynamic, dynamic> m:
         builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
             WorkspaceXmlConfigurationSchema.typeObject);
         _writeMembers(builder, m.cast<String, Object?>());
-      case List<dynamic> l:
+      case final List<dynamic> l:
         builder.attribute(WorkspaceXmlConfigurationSchema.typeAttr,
             WorkspaceXmlConfigurationSchema.typeArray);
         for (final item in l) {

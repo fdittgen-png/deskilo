@@ -12,19 +12,19 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/address_window.dart';
 import '../../domain/invoice_legal.dart';
+import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_declaration_period.dart';
+import '../../domain/vat_regime.dart';
 import '../../domain/vat_tax_point.dart';
+import '../../providers/money_providers.dart';
+import '../widgets/address_window_field.dart';
+import '../widgets/book_profile_sheet.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_field.dart';
-import '../../../workspace/presentation/member_customer_capacity.dart';
-import '../../domain/invoice_pdf_template.dart';
-import '../../domain/vat_regime.dart';
-import '../../providers/money_providers.dart';
-import '../widgets/book_profile_sheet.dart';
-import '../widgets/address_window_field.dart';
 
 /// The workspace's LEGAL IDENTITY (0069) — owner-only, and the reason the
 /// e-invoice export can be valid at all.

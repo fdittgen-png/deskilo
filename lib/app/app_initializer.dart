@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../core/backend/backend_config.dart';
-import '../core/backend/backend_settings.dart';
-import '../core/backend/auth_secret_store.dart';
-import '../core/backend/installation_auth_storage.dart';
 import '../core/backend/auth_callback_dispatch.dart';
 import '../core/backend/auth_callback_guard.dart';
-import '../core/backend/native_federation_flow.dart';
+import '../core/backend/auth_secret_store.dart';
+import '../core/backend/backend_config.dart';
+import '../core/backend/backend_settings.dart';
 import '../core/backend/callback_history.dart';
+import '../core/backend/installation_auth_storage.dart';
+import '../core/backend/native_federation_flow.dart';
 import '../core/cache/cache_scope.dart';
 
 /// One-time async bootstrap before runApp (Sparkilo pattern).

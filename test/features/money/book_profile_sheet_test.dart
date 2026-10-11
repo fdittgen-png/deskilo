@@ -32,7 +32,7 @@ BookProfile _profile(String ws, int revision) => BookProfile(
   fiscalYearStartMonth: 1,
   fiscalYearStartDay: 1,
   basis: AccountingBasis.accrual,
-  effectiveFrom: DateTime(2026, 1, 1),
+  effectiveFrom: DateTime(2026),
   revision: revision,
 );
 

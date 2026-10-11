@@ -1,10 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-
-import 'ref_picker_sheet.dart';
-import 'note_record_choices.dart';
-import 'note_record_open.dart';
-import '../../domain/workspace_feature.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -20,8 +15,12 @@ import '../../../reservations/domain/space_code.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../reference_locale.dart';
+import 'note_record_choices.dart';
+import 'note_record_open.dart';
+import 'ref_picker_sheet.dart';
 
 /// The ONE message composer (#523/refactor): text field, the two
 /// reference chips (any participant's reservation/check-in, any

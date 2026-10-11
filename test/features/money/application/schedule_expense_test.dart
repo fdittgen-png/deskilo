@@ -16,7 +16,7 @@ ExpenseOccurrence _occurrence({
       scheduleId: 's-1',
       workspaceId: 'ws-1',
       memberId: 'm-1',
-      dueOn: DateTime.utc(2026, 9, 1),
+      dueOn: DateTime.utc(2026, 9),
       amountCents: 5000,
       scheduledAmountCents: 5000,
       status: status,
@@ -28,7 +28,7 @@ ExpenseSchedule _schedule(ScheduleStatus status) => ExpenseSchedule(
       memberId: 'm-1',
       title: 'Internet',
       amountCents: 5000,
-      startsOn: DateTime.utc(2026, 9, 1),
+      startsOn: DateTime.utc(2026, 9),
       unit: ScheduleUnit.month,
       status: status,
     );
@@ -152,6 +152,6 @@ Future<bool> _schedules(
       workspaceId: 'ws-1',
       title: title,
       amountCents: cents,
-      startsOn: DateTime.utc(2026, 9, 1),
+      startsOn: DateTime.utc(2026, 9),
       unit: ScheduleUnit.month,
     );

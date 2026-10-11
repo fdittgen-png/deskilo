@@ -39,7 +39,7 @@ abstract final class WorkspaceTime {
     }
     try {
       _location = tz.getLocation(timezoneName);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'time',
         'unknown workspace timezone $timezoneName — using device-local',

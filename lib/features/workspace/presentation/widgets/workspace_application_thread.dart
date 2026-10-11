@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
@@ -37,10 +37,11 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
     _refresh = Timer.periodic(const Duration(seconds: 15), (_) {
       if (_pages.isEmpty &&
           ref.read(authStateProvider).value == widget.account) {
-        ref.invalidate(
+        ref
+          ..invalidate(
           workspaceApplicationThreadProvider(widget.application.id),
-        );
-        ref.invalidate(workspaceApplicationsProvider);
+        )
+          ..invalidate(workspaceApplicationsProvider);
       }
     });
   }

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -68,7 +70,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     try {
       result = await ref.read(decideOAuthConsentProvider).answer(
           widget.authorizationId, context, approve: approve);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.error('auth', 'OAuth consent could not continue',
           error: e.runtimeType, stackTrace: st);
     }
@@ -106,7 +108,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
             final generation = _generation;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted && generation == _generation) {
-                _go(request.returnUri!, request.context, automatic: true);
+                unawaited(_go(request.returnUri!, request.context, automatic: true));
               }
             });
           }
@@ -160,7 +162,6 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
   Widget _unavailable(AppLocalizations? l10n) => InlineBanner(
     key: const ValueKey('identity-consent-unavailable'),
     icon: Icons.info_outline,
-    severity: InlineBannerSeverity.error,
     text: l10n?.identityConsentUnavailable ??
         'This sign-in request is unavailable. Return to the destination and start again.',
   );

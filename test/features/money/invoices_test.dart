@@ -31,7 +31,7 @@ bool _isWatermarked(Uint8List bytes) {
       final ops =
           String.fromCharCodes(zlib.decode(bytes.sublist(match.end, end)));
       if (RegExp(r'0\.707\d* 0\.707\d* -0\.707').hasMatch(ops)) return true;
-    } catch (_) {
+    } on Object catch (_) {
       // Not a deflated stream (fonts, metadata).
     }
   }

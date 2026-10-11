@@ -3,17 +3,19 @@
 // Shipped localized report templates. Legal facts come from the qualified
 // data projection; a layout alone is not evidence of country compliance.
 import 'package:meta/meta.dart';
+
 import '../../../l10n/app_localizations.dart';
+import '../domain/analytics_report_bands.dart';
+import '../domain/configuration_report_bands.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/report_kind.dart';
+import 'professional_report_bands.dart';
 // The three #671 documents (CoA preview, badge sheet, space codes) live
 // in their own file; they are re-exported so every caller keeps
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
-import 'professional_report_bands.dart';
 import 'vat_declaration_report_defaults.dart';
-import '../domain/analytics_report_bands.dart';
-import '../domain/configuration_report_bands.dart';
-import '../domain/report_kind.dart';
+
 export 'report_defaults_batch.dart';
 // The preview fixture is a different concern from the shipped templates
 // — sample text, never live data — and lives on its own.

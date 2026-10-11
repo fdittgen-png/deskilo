@@ -5,6 +5,7 @@
 // the admin controls grouped with their current values, and the
 // directory row leading there when the flag is on.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/features/members/presentation/screens/member_page.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -12,7 +13,6 @@ import 'package:deskilo/features/reservations/presentation/widgets/reservation_d
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/system_columns.dart';
 import '../domain/accessory.dart';
 import '../domain/accessory_repository.dart';
-import '../../../core/data/system_columns.dart';
 
 class SupabaseAccessoryRepository implements AccessoryRepository {
   SupabaseAccessoryRepository(this._client);

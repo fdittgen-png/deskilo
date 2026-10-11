@@ -182,9 +182,7 @@ EInvoiceReadiness checkEInvoiceReadiness({
         buyer.country.trim().toUpperCase() == 'FR' &&
         buyer.company.trim().isNotEmpty &&
         buyer.legalId.trim().isEmpty)
-      regime == VatRegime.vatRegistered
-          ? EInvoiceGap.missingBuyerLegalId
-          : EInvoiceGap.buyerLegalIdAdvisable,
+      if (regime == VatRegime.vatRegistered) EInvoiceGap.missingBuyerLegalId else EInvoiceGap.buyerLegalIdAdvisable,
     if (invoice.vatTotals.any((t) => t.category == 'O') &&
         invoice.vatTotals.any((t) => t.category != 'O'))
       EInvoiceGap.mixedNotSubjectLines,

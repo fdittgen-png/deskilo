@@ -26,7 +26,7 @@ import '../../helpers/mock_providers.dart';
 
 class GatedRepository extends FakeWorkspaceRepository {
   GatedRepository() : super.withWorkspace(featureFlags: {'workspaceLibrary': true});
-  Object? failure;
+  Exception? failure;
   Completer<void>? gate;
   final asked = <String>[];
 

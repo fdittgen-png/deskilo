@@ -11,10 +11,10 @@
 // whether every surface knows about it.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/report_kind.dart';
-import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_design_file.dart';
+import 'package:deskilo/features/money/domain/report_kind.dart';
+import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Two levels is enough to prove the reminder family is covered without
@@ -41,7 +41,7 @@ void main() {
   });
 
   test('every kind round-trips through the exchange format, exactly', () {
-    final at = DateTime.utc(2026, 1, 1);
+    final at = DateTime.utc(2026);
     for (final kind in kinds) {
       final bands = ReportBands(
         header: '# ${kind.id}',

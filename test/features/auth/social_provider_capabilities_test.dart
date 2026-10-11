@@ -2,8 +2,8 @@
 // #1791: provider availability belongs to the target installation; vendor
 // identities are login methods, not new directory people or memberships.
 import 'package:deskilo/features/auth/data/supabase_auth_repository.dart';
-import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:deskilo/features/auth/domain/auth_outcome.dart';
+import 'package:deskilo/features/auth/domain/social_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';

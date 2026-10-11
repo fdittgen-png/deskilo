@@ -7,8 +7,8 @@
 //
 // Pure Dart: the CLI, the exports and the handoff import it.
 
-import '../../../core/i18n/currencies.dart';
 import '../../../core/data/json_reader.dart';
+import '../../../core/i18n/currencies.dart';
 
 /// Why an amount, a rate or a conversion was refused. Typed, so a
 /// consumer can block one document instead of guessing.

@@ -114,8 +114,8 @@ RunTimings readTimings(String jsonLines) {
     if (time != null && time > wall) wall = time;
     FileTiming? touch(String? path) {
       if (path == null || time == null) return null;
-      final f = files.putIfAbsent(path, () => FileTiming(path));
-      f.firstEvent ??= time;
+      final f = files.putIfAbsent(path, () => FileTiming(path))
+        ..firstEvent ??= time;
       if (f.lastEvent == null || time > f.lastEvent!) f.lastEvent = time;
       return f;
     }

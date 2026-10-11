@@ -2,20 +2,19 @@
 //
 // Booking ranges as humans read them (field report: a full-day booking
 // showed as '00:00 – 00:00') and the repetition modality (0034).
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_range_text.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/reservation_detail_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:deskilo/core/i18n/app_format.dart';
-import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/test_clock.dart';
-
-import 'reserve_hub_test.dart' show pumpHub;
 import '../../helpers/reserve_view.dart';
+import '../../helpers/test_clock.dart';
+import 'reserve_hub_test.dart' show pumpHub;
 
 void main() {
   tearDown(WorkspaceTime.reset);

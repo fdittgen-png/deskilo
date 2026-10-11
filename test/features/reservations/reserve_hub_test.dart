@@ -11,7 +11,10 @@
 // (#186) gate booking with the banner.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/ui/canvas_controls.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
@@ -29,13 +32,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
-import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reserve_view.dart';
 import '../calendar/day_timeline_test.dart' show addSecondLevel;
 import '../plan/time_scroller_test.dart' show pickChipTime;
-import '../../helpers/reserve_view.dart';
 
 const _amChip = ValueKey('reserve-am-chip');
 const _pmChip = ValueKey('reserve-pm-chip');
@@ -185,7 +185,7 @@ class _LoggingReservationRepository extends FakeReservationRepository {
     if (from.day == 1 &&
         from.hour == 0 &&
         from.minute == 0 &&
-        to == DateTime(from.year, from.month + 1, 1)) {
+        to == DateTime(from.year, from.month + 1)) {
       monthFetches.add(from);
     }
     return super.fetchWindow(workspaceId, from: from, to: to);
@@ -860,7 +860,7 @@ void main() {
     } else {
       // Month-end runs: the 1st of the next month keeps the pick valid
       // (firstDate is today).
-      target = DateTime(now.year, now.month + 1, 1);
+      target = DateTime(now.year, now.month + 1);
       await tester.tap(find.descendant(
         of: find.byType(DatePickerDialog),
         matching: find.byTooltip('Next month'),
@@ -968,7 +968,7 @@ void main() {
     // Pick an in-month day that is not today.
     final other = today.day == 1
         ? DateTime(today.year, today.month, 2)
-        : DateTime(today.year, today.month, 1);
+        : DateTime(today.year, today.month);
     await pumpHub(tester);
 
     await pickReserveView(tester, 'month');

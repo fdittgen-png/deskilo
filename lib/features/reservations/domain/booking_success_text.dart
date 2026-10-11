@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:intl/intl.dart';
 
+import '../../../core/time/date_text.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/app_localizations_en.dart';
-import '../../../core/time/date_text.dart';
 
 /// THE booking-success → user-message mapper (#663), the counterpart of
 /// `bookingErrorText`.
@@ -82,7 +82,7 @@ String _hm(String locale, DateTime at) {
   try {
     return DateFormat.Hm(locale).format(at);
     // ignore: catch_no_st
-  } catch (_) {
+  } on Object catch (_) {
     // trace-exempt: a formatting fallback is not a failure to report,
     // and this runs on the SUCCESS path where a logged error would read
     // as the booking having gone wrong. domain/ is pure Dart besides —
@@ -96,7 +96,7 @@ String _md(String locale, DateTime at) {
   try {
     return DateFormat.MMMEd(locale).format(at);
     // ignore: catch_no_st
-  } catch (_) {
+  } on Object catch (_) {
     // trace-exempt: same reasoning as _hm above.
     return isoDay(at);
   }

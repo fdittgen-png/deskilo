@@ -33,7 +33,7 @@ Invoice _invoice({
       workspaceAddress: '',
       issuerName: '',
       signature: '',
-      voidedAt: voided ? DateTime.utc(2026, 10, 1) : null,
+      voidedAt: voided ? DateTime.utc(2026, 10) : null,
     );
 
 InvoiceMatch _paidOn(String invoiceId, DateTime day) => InvoiceMatch(
