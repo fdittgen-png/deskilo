@@ -8,6 +8,7 @@ import 'package:markdown_widget/markdown_widget.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/help_providers.dart';
 import 'support_bundle_screen.dart';
@@ -107,9 +108,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
             key: const ValueKey('help-support-title'),
             tooltip: l10n.supportTitle,
             icon: const Icon(Icons.support_agent),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-              builder: (_) => const SupportBundleScreen(),
-            )),
+            onPressed: () => supportBundlePage.open<void>(context, null),
           ),
           Builder(
             builder: (context) => IconButton(
@@ -190,3 +189,10 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
     );
   }
 }
+
+/// #2388 — the support bundle as a page with a path.
+final supportBundlePage = PageSpec<Null>(
+  '/help/support-bundle',
+  (_) => const SupportBundleScreen(),
+  fallback: '/help',
+);

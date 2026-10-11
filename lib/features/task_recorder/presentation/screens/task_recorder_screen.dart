@@ -23,6 +23,7 @@ import '../../domain/stored_recording.dart';
 import '../../domain/task_recording.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
+import '../recorder_pages.dart';
 import 'recording_review_screen.dart';
 
 class TaskRecorderScreen extends ConsumerStatefulWidget {
@@ -343,10 +344,9 @@ class _RecordingTile extends ConsumerWidget {
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => RecordingReviewScreen(stored: stored),
-          ),
+        await recordingReviewPage.open<void>(
+          context,
+          RecordingReviewScreen(stored: stored),
         );
         ref.invalidate(myRecordingsProvider);
       },

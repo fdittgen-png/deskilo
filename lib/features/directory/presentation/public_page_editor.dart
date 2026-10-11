@@ -13,6 +13,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import 'directory_pages.dart';
 import 'public_workspace_view.dart';
 
 class PublicPageEditor extends ConsumerStatefulWidget {
@@ -120,12 +121,11 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       ref
         ..invalidate(publicDirectoryProvider)
         ..invalidate(currentWorkspaceProvider);
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => PublicWorkspaceView(
-            workspace: PublicWorkspace(workspace, '', '', preview!),
-            preview: true,
-          ),
+      await publicWorkspacePage.open<void>(
+        context,
+        PublicWorkspaceView(
+          workspace: PublicWorkspace(workspace, '', '', preview!),
+          preview: true,
         ),
       );
     }

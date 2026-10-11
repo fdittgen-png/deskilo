@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +16,7 @@ import '../providers/directory_providers.dart';
 import 'directory_carousel.dart';
 import 'directory_link_dialog.dart';
 import 'directory_map.dart';
+import 'directory_pages.dart';
 import 'public_workspace_view.dart';
 
 class DirectoryScreen extends ConsumerStatefulWidget {
@@ -66,9 +69,10 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         ),
         onTap: () {
           select(w);
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => PublicWorkspaceView(workspace: w),
+          unawaited(
+            publicWorkspacePage.open<void>(
+              context,
+              PublicWorkspaceView(workspace: w),
             ),
           );
         },
@@ -76,8 +80,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     );
     void open(PublicWorkspace w) {
       select(w);
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => PublicWorkspaceView(workspace: w)),
+      unawaited(
+        publicWorkspacePage.open<void>(
+          context,
+          PublicWorkspaceView(workspace: w),
+        ),
       );
     }
 

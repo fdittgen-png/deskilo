@@ -40,6 +40,7 @@ import '../../guide/guide_session.dart';
 import '../../guide/task_guide.dart';
 import '../../providers/recorder_providers.dart';
 import '../recorder_labels.dart';
+import '../recorder_pages.dart';
 import '../route_classification.dart';
 import 'guide_draft_screen.dart';
 import 'recording_review_screen.dart';
@@ -308,10 +309,9 @@ Future<void> _makeGuide(
         action: SnackBarAction(
           key: const ValueKey('task-wizard-guide-added-edit'),
           label: l10n.taskWizardEdit,
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => GuideDraftScreen(guide: guide, libraryId: id),
-            ),
+          onPressed: () => guideDraftPage.open<void>(
+            context,
+            GuideDraftScreen(guide: guide, libraryId: id),
           ),
         ),
       ),
@@ -383,9 +383,7 @@ Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
     return;
   }
   // Opened as a draft first: the person names it and keeps it.
-  await Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => GuideDraftScreen(guide: guide!)),
-  );
+  await guideDraftPage.open<void>(context, GuideDraftScreen(guide: guide));
   ref.invalidate(myGuidesProvider);
 }
 
@@ -475,11 +473,9 @@ class _GuideTile extends ConsumerWidget {
   }
 
   Future<void> _edit(BuildContext context, WidgetRef ref) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) =>
-            GuideDraftScreen(guide: stored.guide, libraryId: stored.id),
-      ),
+    await guideDraftPage.open<void>(
+      context,
+      GuideDraftScreen(guide: stored.guide, libraryId: stored.id),
     );
     ref.invalidate(myGuidesProvider);
   }
@@ -550,10 +546,9 @@ class _Recordings extends ConsumerWidget {
                         ' · ${completenessLabel(l10n, stored.recording!.completeness)}',
             ),
             onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => RecordingReviewScreen(stored: stored),
-                ),
+              await recordingReviewPage.open<void>(
+                context,
+                RecordingReviewScreen(stored: stored),
               );
               ref.invalidate(myRecordingsProvider);
             },

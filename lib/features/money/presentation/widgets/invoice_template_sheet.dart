@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -63,15 +63,13 @@ Future<void> showInvoiceTemplateSheet(
   if (ref
       .read(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.reportDesigner)) {
-    // The route when a router is there (deep-linkable); a plain page
-    // push where the editor is hosted without one.
-    if (GoRouter.maybeOf(context) != null) {
-      await context.push('/report-editor');
-    } else {
-      await Navigator.of(context).push(MaterialPageRoute<void>(
-        builder: (_) => const ReportEditorScreen(),
-      ));
-    }
+    // The route when a router is there (deep-linkable); the same page
+    // where the editor is hosted without one.
+    await openLocation<void>(
+      context,
+      '/report-editor',
+      orBuild: (_) => const ReportEditorScreen(),
+    );
     return;
   }
   final template = await ref.read(invoicePdfTemplateProvider.future);

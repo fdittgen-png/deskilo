@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -35,7 +36,9 @@ import '../../storyboard/storyboard_builder.dart';
 import '../../storyboard/storyboard_pictures.dart';
 import '../../storyboard/storyboard_preview.dart';
 import '../recorder_labels.dart';
+import '../recorder_pages.dart';
 import '../recording_export.dart';
+import '../route_classification.dart' show taskWorkbenchRoute;
 import '../widgets/recording_steps_view.dart';
 import '../widgets/task_outputs_section.dart';
 import 'guide_draft_screen.dart';
@@ -135,16 +138,15 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
       return;
     }
     setState(() => _storyboard = board);
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => _StoryboardPage(
+    await _storyboardPage.open<void>(
+      context,
+      _StoryboardPage(
           key: const ValueKey('task-workbench-storyboard-page'),
           initial: board,
           onChanged: (next) {
             if (mounted) setState(() => _storyboard = next);
           },
         ),
-      ),
     );
   }
 
@@ -286,10 +288,9 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
             const SizedBox(height: AppSpacing.md),
             OutlinedButton.icon(
               key: const ValueKey('workbench-create-guide'),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => GuideDraftScreen(guide: compileGuide(copy)),
-                ),
+              onPressed: () => guideDraftPage.open<void>(
+                context,
+                GuideDraftScreen(guide: compileGuide(copy)),
               ),
               icon: const Icon(Icons.route_outlined),
               label: Text(l10n.taskGuideCreate),
@@ -358,6 +359,17 @@ String refusalText(AppLocalizations l10n, WorkbenchRefusal reason) =>
     };
 
 /// The storyboard review on its own page: it scrolls by itself.
+/// #2388 — the storyboard as a page with a path; a link without the
+/// storyboard lands on the workbench.
+final _storyboardPage = PageSpec<_StoryboardPage>(
+  '$taskWorkbenchRoute/storyboard',
+  (page) => page,
+  fallback: taskWorkbenchRoute,
+);
+
+/// The workbench's own pages, for the router.
+final List<PageSpec<Object?>> workbenchPages = [_storyboardPage];
+
 class _StoryboardPage extends StatefulWidget {
   const _StoryboardPage({super.key, required this.initial, required this.onChanged});
 

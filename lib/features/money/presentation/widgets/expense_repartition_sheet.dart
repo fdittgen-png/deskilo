@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
@@ -32,10 +33,15 @@ Future<void> showExpenseRepartitionSheet(
   BuildContext context,
   WidgetRef ref,
 ) =>
-    Navigator.of(context).push<void>(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => const _RepartitionWizard(),
-    ));
+    expenseRepartitionPage.open<void>(context, null);
+
+/// #2388 — the repartition wizard as a page with a path.
+final expenseRepartitionPage = PageSpec<Null>(
+  '/money/repartition',
+  (_) => const _RepartitionWizard(),
+  fallback: '/money',
+  fullscreenDialog: true,
+);
 
 class _RepartitionWizard extends ConsumerStatefulWidget {
   const _RepartitionWizard();

@@ -11,6 +11,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../providers/directory_providers.dart';
 import 'account_messenger_sections.dart';
 import 'account_thread.dart';
+import 'directory_pages.dart';
 
 /// Person-to-person messages, on this server and every connected one.
 ///
@@ -70,16 +71,15 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
       String recipient,
       String name, {
       String? conversation,
-    }) => Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => AccountThread(
-          key: ValueKey((account, source, recipient)),
-          source: source,
-          recipient: recipient,
-          name: name,
-          account: account,
-          conversation: conversation,
-        ),
+    }) => accountThreadPage.open<void>(
+      context,
+      AccountThread(
+        key: ValueKey((account, source, recipient)),
+        source: source,
+        recipient: recipient,
+        name: name,
+        account: account,
+        conversation: conversation,
       ),
     );
     void submit(String value) => setState(() => _query = value.trim());

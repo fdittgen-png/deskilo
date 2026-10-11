@@ -16,10 +16,9 @@ import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_labels.dart';
-import 'create_group_screen.dart';
 import 'open_inbox_entry.dart';
-import 'starred_messages_screen.dart';
 
 /// #1824 — Me › Messages: every conversation I take part in, on every
 /// server I connected, in ONE list — each labelled with its context, the
@@ -113,11 +112,8 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                   key: const ValueKey('unified-inbox-starred'),
                   icon: const Icon(Icons.star_outline, size: 18),
                   label: Text(l10n.messengerStarred),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const StarredMessagesScreen(),
-                    ),
-                  ),
+                  onPressed: () =>
+                      starredMessagesPage.open<void>(context, null),
                 ),
                 IconButton(
                   key: const ValueKey('unified-inbox-search'),
@@ -130,11 +126,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 ),
                 TextButton.icon(
                   key: const ValueKey('unified-inbox-new-group'),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const CreateGroupScreen(),
-                    ),
-                  ),
+                  onPressed: () => createGroupPage.open<void>(context, null),
                   icon: const Icon(Icons.group_add_outlined, size: 18),
                   label: Text(l10n.groupNew),
                 ),

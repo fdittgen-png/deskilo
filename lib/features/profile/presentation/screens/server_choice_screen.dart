@@ -5,6 +5,7 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../widgets/backend_candidate_form.dart';
 import 'new_instance_screen.dart';
@@ -96,10 +97,9 @@ class ServerChoiceScreen extends StatelessWidget {
                 const SizedBox(height: AppSpacing.sm),
                 FilledButton.tonalIcon(
                   key: const ValueKey('server-choice-new-instance'),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => NewInstanceScreen(onFinish: onChosen),
-                    ),
+                  onPressed: () => newInstanceFromChoicePage.open<void>(
+                    context,
+                    NewInstanceScreen(onFinish: onChosen),
                   ),
                   icon: const Icon(Icons.auto_fix_high_outlined),
                   label: Text(l10n.instanceCreateButton),
@@ -112,3 +112,12 @@ class ServerChoiceScreen extends StatelessWidget {
     );
   }
 }
+
+/// #2388 — a new instance started from the first-start choice, as a page
+/// with a path; a link without the choice's callback lands on the server
+/// screen.
+final newInstanceFromChoicePage = PageSpec<NewInstanceScreen>(
+  '/server/new-instance/first-start',
+  (page) => page,
+  fallback: '/server',
+);

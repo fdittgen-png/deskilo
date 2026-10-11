@@ -8,6 +8,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
 import '../../domain/public_workspace.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 import 'refusal_text.dart';
 
@@ -29,16 +30,14 @@ Future<void> showInquirySheet(
   );
   if (inquiry == null || !context.mounted) return;
   final l10n = context.l10n;
-  await Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (_) => ContextThreadScreen(
-        kind: MessageContextKind.inquiryOut,
-        contextId: inquiry,
-        title: workspace.name,
-        subtitle:
-            l10n.messengerContextInquiryOut(workspace.name),
-        source: workspace.source,
-      ),
+  await contextThreadPage.open<void>(
+    context,
+    ContextThreadScreen(
+      kind: MessageContextKind.inquiryOut,
+      contextId: inquiry,
+      title: workspace.name,
+      subtitle: l10n.messengerContextInquiryOut(workspace.name),
+      source: workspace.source,
     ),
   );
 }

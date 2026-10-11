@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -557,12 +558,17 @@ class _Payments extends ConsumerWidget {
             key: const ValueKey('finances-full-history'),
             icon: const Icon(Icons.history),
             label: Text(l10n.financesFullHistory),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => const AccountActivityScreen()),
-            ),
+            onPressed: () => accountActivityPage.open<void>(context, null),
           ),
         ),
       ],
     );
   }
 }
+
+/// #2388 — the full account history as a page with a path.
+final accountActivityPage = PageSpec<Null>(
+  '/account-activity/history',
+  (_) => const AccountActivityScreen(),
+  fallback: '/account-activity',
+);

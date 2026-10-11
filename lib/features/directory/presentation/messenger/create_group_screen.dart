@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 import 'refusal_text.dart';
 
@@ -51,13 +52,12 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     final created = id;
     if (!ok || created == null) return;
     ref.invalidate(unifiedInboxProvider);
-    await Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => ContextThreadScreen(
-          kind: MessageContextKind.accountGroup,
-          contextId: created,
-          title: _title.text.trim(),
-        ),
+    await contextThreadPage.replace<void>(
+      context,
+      ContextThreadScreen(
+        kind: MessageContextKind.accountGroup,
+        contextId: created,
+        title: _title.text.trim(),
       ),
     );
   }

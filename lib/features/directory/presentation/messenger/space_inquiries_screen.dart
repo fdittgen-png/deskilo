@@ -10,6 +10,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 
 /// #1824 — the way into the space's Inquiries view, in the space's own
@@ -33,12 +34,11 @@ class SpaceInquiriesEntry extends ConsumerWidget {
     final l10n = context.l10n;
     return TextButton.icon(
       key: const ValueKey('space-inquiries-entry'),
-      onPressed: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => SpaceInquiriesScreen(
-            workspaceId: workspace.id,
-            workspaceName: workspace.name,
-          ),
+      onPressed: () => spaceInquiriesPage.open<void>(
+        context,
+        SpaceInquiriesScreen(
+          workspaceId: workspace.id,
+          workspaceName: workspace.name,
         ),
       ),
       icon: const Icon(Icons.support_agent_outlined),
@@ -106,15 +106,13 @@ class SpaceInquiriesScreen extends ConsumerWidget {
                     ],
                   ),
                   onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => ContextThreadScreen(
-                          kind: MessageContextKind.inquiryIn,
-                          contextId: inquiry.id,
-                          title: inquiry.requesterName,
-                          subtitle:
-                              l10n.messengerContextInquiryIn(workspaceName),
-                        ),
+                    await contextThreadPage.open<void>(
+                      context,
+                      ContextThreadScreen(
+                        kind: MessageContextKind.inquiryIn,
+                        contextId: inquiry.id,
+                        title: inquiry.requesterName,
+                        subtitle: l10n.messengerContextInquiryIn(workspaceName),
                       ),
                     );
                     ref.invalidate(provider);

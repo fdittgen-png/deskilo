@@ -22,6 +22,7 @@ import '../capability_labels.dart';
 import '../screens/template_compare_screen.dart';
 import '../screens/template_detail_screen.dart';
 import '../workbook_labels.dart';
+import '../workspace_pages.dart';
 import 'template_capability_browser.dart';
 import 'template_card.dart';
 import 'template_requirements.dart';
@@ -394,8 +395,10 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
             label: Text(l10n.compareOpen('${_shortlist.length}')),
             onPressed: _shortlist.length < 2
                 ? null
-                : () => Navigator.of(context).push(MaterialPageRoute<void>(
-                      builder: (_) => TemplateCompareScreen(templates: List.of(_shortlist)))),
+                : () => templateComparePage.open<void>(
+                      context,
+                      TemplateCompareScreen(templates: List.of(_shortlist)),
+                    ),
           ),
         ],
         // Browsing the library only: a picker is for choosing one.
@@ -465,11 +468,9 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                         onShortlist: () => _toggleShortlist(t),
                         onDetails: widget.onSelected != null
                             ? null
-                            : () => Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) =>
-                                      TemplateDetailScreen(template: t),
-                                ),
+                            : () => templateDetailPage.open<void>(
+                                context,
+                                TemplateDetailScreen(template: t),
                               ),
                       ),
                     _ => _EmptySpaceCard(

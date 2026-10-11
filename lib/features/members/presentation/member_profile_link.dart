@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
+import '../../../core/navigation/page_spec.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -85,13 +85,11 @@ Future<void> openMemberProfile(
 /// #825 — pushes the member page: the route when a router hosts the
 /// caller (deep-linkable), a plain page push otherwise.
 Future<void> openMemberPage(BuildContext context, String memberId) async {
-  if (GoRouter.maybeOf(context) != null) {
-    await context.push('/member/$memberId');
-  } else {
-    await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => MemberPage(memberId: memberId),
-    ));
-  }
+  await openLocation<void>(
+    context,
+    '/member/$memberId',
+    orBuild: (_) => MemberPage(memberId: memberId),
+  );
 }
 
 /// Opens [uri], reporting a failure rather than dying quietly.

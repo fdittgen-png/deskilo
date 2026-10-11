@@ -9,6 +9,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
+import '../directory_pages.dart';
 import 'context_labels.dart';
 import 'context_thread_screen.dart';
 
@@ -45,16 +46,15 @@ Future<void> openInboxEntry(
     final servers = ref.read(serverLabelsProvider).value ?? const {};
     final peer = entry.peerId ?? await _peerOf(ref, entry);
     if (!context.mounted) return;
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => ContextThreadScreen(
-          kind: entry.kind,
-          contextId: entry.contextId,
-          title: entry.title,
-          subtitle: contextSubtitle(l10n, entry, servers),
-          source: entry.source,
-          peer: peer,
-        ),
+    await contextThreadPage.open<void>(
+      context,
+      ContextThreadScreen(
+        kind: entry.kind,
+        contextId: entry.contextId,
+        title: entry.title,
+        subtitle: contextSubtitle(l10n, entry, servers),
+        source: entry.source,
+        peer: peer,
       ),
     );
   }

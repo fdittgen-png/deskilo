@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -24,10 +25,15 @@ import 'wizard_scaffold.dart';
 
 /// Opens the settlement assistant (kept under its historical name).
 Future<void> showSettlementSheet(BuildContext context, WidgetRef ref) =>
-    Navigator.of(context).push<void>(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => const _SettlementWizard(),
-    ));
+    settlementPage.open<void>(context, null);
+
+/// #2388 — the settlement assistant as a page with a path.
+final settlementPage = PageSpec<Null>(
+  '/money/settlement',
+  (_) => const _SettlementWizard(),
+  fallback: '/money',
+  fullscreenDialog: true,
+);
 
 class _SettlementWizard extends ConsumerStatefulWidget {
   const _SettlementWizard();

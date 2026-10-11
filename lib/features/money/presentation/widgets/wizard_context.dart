@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -239,12 +239,9 @@ class WizardEntryCard extends ConsumerWidget {
 /// #827 — opens the wizard: the route where a router hosts the caller,
 /// a plain page push otherwise.
 Future<void> _openInvoicingWizard(BuildContext context, {WizardRun? run}) async {
-  if (GoRouter.maybeOf(context) != null) {
-    await context.push(
-        run == null ? '/invoicing/wizard' : '/invoicing/wizard?run=${run.name}');
-  } else {
-    await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => InvoicingWizardScreen(initialRun: run),
-    ));
-  }
+  await openLocation<void>(
+    context,
+    run == null ? '/invoicing/wizard' : '/invoicing/wizard?run=${run.name}',
+    orBuild: (_) => InvoicingWizardScreen(initialRun: run),
+  );
 }
