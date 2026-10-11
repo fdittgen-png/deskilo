@@ -11,6 +11,7 @@
 
 import 'dart:async';
 
+import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart' show isTransientNetworkFailure;
 import '../../reservations/application/book_seat.dart';
 import '../domain/action_registry.dart';
@@ -47,11 +48,7 @@ StepValues bookingAttemptValues({
 
 /// A day chosen, as a date.
 StepValues dayValues(DateTime day) => StepValues.of({
-  'date': TextValue(
-    '${day.year.toString().padLeft(4, '0')}-'
-    '${day.month.toString().padLeft(2, '0')}-'
-    '${day.day.toString().padLeft(2, '0')}',
-  ),
+  'date': TextValue(isoDay(day)),
 });
 
 /// A period chosen, as its two instants (UTC, exact).

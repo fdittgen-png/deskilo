@@ -18674,6 +18674,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclBoxes => 'Official form lines';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Correction of $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'A filed return never changes. What changed in a filed period afterwards — a voided invoice, a payment recorded late — is declared here as a correction of that return.';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
 
@@ -18708,6 +18717,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclPeriod => 'Period';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Annual';
+
+  @override
+  String get vatDeclPeriodField => 'VAT return period';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'How often you file the return. The VAT return screen offers only periods of this length.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Monthly';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Filing period: $period. Change it under Legal identity & e-invoicing.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Quarterly';
 
   @override
   String get vatDeclPrepared => 'Prepared';

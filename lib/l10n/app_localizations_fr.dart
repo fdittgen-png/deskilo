@@ -18883,6 +18883,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatDeclBoxes => 'Lignes du formulaire officiel (CA3)';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Régularisation de $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Une déclaration déposée ne change jamais. Ce qui a changé ensuite dans une période déposée — une facture annulée, un paiement enregistré tardivement — est déclaré ici comme régularisation de cette déclaration.';
+
+  @override
   String get vatDeclDisclaimer =>
       'Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.';
 
@@ -18917,6 +18926,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatDeclPeriod => 'Période';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Annuelle';
+
+  @override
+  String get vatDeclPeriodField => 'Périodicité de la déclaration de TVA';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'La fréquence à laquelle vous déposez la déclaration. L’écran de la déclaration de TVA ne propose que des périodes de cette durée.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Mensuelle';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Périodicité : $period. Modifiable sous Identité légale et facturation électronique.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Trimestrielle';
 
   @override
   String get vatDeclPrepared => 'Préparée';

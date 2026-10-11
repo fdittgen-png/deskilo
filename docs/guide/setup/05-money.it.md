@@ -287,6 +287,7 @@ Vuole sapere che cosa l'IVA Le chiederà prima di attivarla.
 - Viene fornito un catalogo di aliquote per gli Stati membri dell'UE, la Svizzera, la Norvegia e il Canada. Tenerlo aggiornato quando un governo cambia un'aliquota spetta a Lei.
 - Se è registrato senza un'aliquota predefinita in vigore, il server rifiuta di emettere. La descrizione di **Gestione IVA** e l'avviso nella schermata dell'identità legale lo dicono.
 - Il server calcola ogni dichiarazione dalle Sue fatture, dagli incassi e dall'esigibilità. La presenti Lei stesso all'amministrazione finanziaria, poi la segni come presentata con il riferimento della ricevuta: l'app non trasmette nulla.
+- Scelga la periodicità in **Periodicità della dichiarazione IVA** nell'identità legale. Un periodo presentato è bloccato: ciò che vi cambia in seguito è dichiarato come rettifica nella dichiarazione successiva.
 - Il giornale delle dichiarazioni ha una propria serie di numerazione.
 
 **Vedi anche:** [Regime IVA](help:user.money.vat.regime) · [Quando l'IVA diventa esigibile](help:user.money.vat.due)
