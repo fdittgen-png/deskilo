@@ -13,6 +13,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/privacy_notice_view.dart';
+import '../../../../core/help/guide_site.dart';
 
 /// #751 — the GDPR consent. Shown by the router before anything else
 /// while the account has not accepted [kPrivacyPolicyVersion]; shown
@@ -112,7 +113,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   ),
                   TextButton.icon(
                     key: const ValueKey('consent-help'),
-                    onPressed: () => context.push('/help?topic=Privacy'),
+                    onPressed: () => openGuide(ref, context, anchor: 'user.privacy.consent'),
                     icon: const Icon(Icons.help_outline, size: 18),
                     label: Text(l10n?.consentReadInHelp ?? 'Read in the help'),
                   ),

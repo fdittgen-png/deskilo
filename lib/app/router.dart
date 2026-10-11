@@ -163,7 +163,7 @@ GoRouter router(Ref ref) {
   /// Defaults (everything ON) while the workspace is still loading, so
   /// deep links are never bounced during startup.
   bool featureEnabled(WorkspaceFeature feature) =>
-      ref.read(enabledFeaturesSyncProvider).contains(feature);
+      !ref.mounted || ref.read(enabledFeaturesSyncProvider).contains(feature);
 
   /// #1085 — a permission-gated route. The door asks EXACTLY what the
   /// entry point's tile asks: `myPermissions` is the one client-side
@@ -176,8 +176,8 @@ GoRouter router(Ref ref) {
     WorkspaceFeature? feature,
     String to = '/messages',
   }) =>
-      (context, state) =>
-          ref.read(myPermissionsProvider).contains(permission) &&
+      (context, state) => !ref.mounted ||
+                  ref.read(myPermissionsProvider).contains(permission) &&
                   (feature == null || featureEnabled(feature))
               ? null
               : to;
@@ -195,6 +195,7 @@ GoRouter router(Ref ref) {
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.
     redirect: (context, state) {
+      if (!ref.mounted) return null; // a rebuilt router may be asked once more
       // #1652 — an invitation link opened from outside: the link (and the
       // code in it) leaves the location at once, is held in memory for
       // the join field, and Join is selected. Nothing is joined here.

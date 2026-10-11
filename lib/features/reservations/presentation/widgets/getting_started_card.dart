@@ -13,6 +13,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/local_setup_providers.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
+import '../../../../core/help/guide_site.dart';
 
 /// Restore only the dismissal for the immutable scope rendered by the hub.
 VoidCallback? gettingStartedReopen(WidgetRef ref, String? key) {
@@ -141,12 +142,7 @@ class GettingStartedCard extends ConsumerWidget {
       ),
       GettingStartedAction.openHelp => (
         l10n?.gettingStartedActionHelp ?? 'Help for this workspace',
-        () => context.push(
-          Uri(
-            path: '/help',
-            queryParameters: {'topic': helpHintTopic(l10n, HelpHintId.reserve)},
-          ).toString(),
-        ),
+        () => openGuide(ref, context, anchor: 'user.start.get-started'),
       ),
     };
 

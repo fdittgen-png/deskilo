@@ -7,6 +7,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../theme/app_spacing.dart';
+import 'guide_site.dart';
 import 'help_arbiter.dart';
 import 'help_hint_providers.dart';
 import 'help_tips.dart';
@@ -224,15 +225,8 @@ class _HelpHintState extends ConsumerState<HelpHint> {
                         ),
                       TextButton(
                         key: ValueKey('help-hint-learn-more-${id.name}'),
-                        onPressed: () => context.push(
-                          Uri(
-                            path: '/help',
-                            queryParameters: {
-                              'topic':
-                                  tips[_page].topic ?? HelpHint.topic(l10n, id),
-                            },
-                          ).toString(),
-                        ),
+                        onPressed: () =>
+                            openGuide(ref, context, anchor: helpHintAnchor(id)),
                         child: Text(
                           l10n?.helpHintLearnMore ?? 'Learn more',
                           overflow: TextOverflow.ellipsis,

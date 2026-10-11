@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/schema_version.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -152,11 +150,7 @@ class FeatureTile extends ConsumerWidget {
         title: Row(
           children: [
             Flexible(
-              child: HelpDotTitle(
-                name,
-                l10n?.helpHintFeaturesTopic ?? 'Features',
-                anchor: HelpAnchor.featuresSwitch,
-              ),
+              child: Text(name),
             ),
             // The tier the grouping used to be: a space that wants only
             // the basics can still see at a glance which rows are the

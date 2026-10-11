@@ -389,8 +389,6 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       ],
                       decoration: InputDecoration(
                         labelText: l10n?.vatRatePercentField ?? 'Rate %',
-                        suffixIcon: HelpDot(l10n?.helpTopicVat ?? 'VAT',
-                            anchor: HelpAnchor.moneyVatRates),
                       ),
                     ),
                   ),

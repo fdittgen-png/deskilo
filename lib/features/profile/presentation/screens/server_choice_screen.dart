@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../widgets/backend_candidate_form.dart';
@@ -46,7 +48,10 @@ class ServerChoiceScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.serverChoiceTitle)),
+      appBar: AppBar(
+        title: Text(l10n.serverChoiceTitle),
+        actions: [HelpDot(l10n.helpTopicServer, anchor: HelpAnchor.backendServer)],
+      ),
       body: SafeArea(
         child: ListView(
           padding: AppSpacing.gutterAll,
