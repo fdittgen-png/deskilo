@@ -60,7 +60,7 @@ Future<void> deleteMemberNoteGuarded(
   MemberNote note,
 ) async {
   final l10n = AppLocalizations.of(context);
-  if (!await confirmMemberNoteDelete(context)) return;
+  if (!await _confirmMemberNoteDelete(context)) return;
   if (!context.mounted) return;
   try {
     await ref.read(workspaceRepositoryProvider).deleteMemberNote(note.id);
@@ -86,7 +86,7 @@ Future<void> deleteMemberNoteGuarded(
 }
 
 /// Deleting is destructive: every path asks first.
-Future<bool> confirmMemberNoteDelete(BuildContext context) async {
+Future<bool> _confirmMemberNoteDelete(BuildContext context) async {
   final l10n = AppLocalizations.of(context);
   final confirmed = await showDialog<bool>(
     context: context,

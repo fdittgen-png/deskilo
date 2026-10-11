@@ -6,6 +6,7 @@
 // question lands in a provider nobody watches any more and is never
 // shown under the new one. Groups are bounded; past the budget the
 // grouping is refused with its reason rather than fanned out.
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -32,7 +33,7 @@ Duration? biRetry(int retryCount, Object error) =>
     error is BiRefused ? null : kpiRetry(retryCount, error);
 
 /// The workspace date the relative periods resolve against.
-DateTime biToday(Ref ref) =>
+DateTime _biToday(Ref ref) =>
     WorkspaceTime.dateOf(ref.read(clockProvider).now());
 
 /// `[from, to)` of [p] on the workspace clock: local midnight of its
@@ -52,7 +53,7 @@ Future<BiResult> biModuleResult(
   final module = biModules.firstWhere((m) => m.id == moduleId);
   final unsupported = module.unsupported(context);
   if (unsupported.isNotEmpty) throw BiRefused(unsupported);
-  final today = biToday(ref);
+  final today = _biToday(ref);
   final period = context.current(today);
   final compared = context.compared(today);
   return switch (moduleId) {
@@ -131,12 +132,14 @@ Future<BiSeries> biModuleSeries(
 }
 
 /// The whole months of [p], `YYYY-MM` first and last (#1924).
+@visibleForTesting
 ({String from, String to}) biMonths(BiPeriod p) {
   String m(int month) => '${p.year}-${month.toString().padLeft(2, '0')}';
   return (from: m(p.startMonth), to: m(p.startMonth + p.grain.months - 1));
 }
 
 /// One finance figure of [k]; a missing amount is unknown, never 0.
+@visibleForTesting
 BiMeasure financeMeasure(
   FinanceSummaryKpi k,
   String moduleId, {

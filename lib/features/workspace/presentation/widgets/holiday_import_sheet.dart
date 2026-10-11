@@ -45,7 +45,7 @@ class HolidayImportTile extends ConsumerWidget {
         l10n?.holidayImportAction ?? 'Import public holidays (open data)',
       ),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => showHolidayImportSheet(
+      onTap: () => _showHolidayImportSheet(
         context,
         ref.read(publicHolidayImportProvider),
       ),
@@ -53,27 +53,27 @@ class HolidayImportTile extends ConsumerWidget {
   }
 }
 
-Future<void> showHolidayImportSheet(
+Future<void> _showHolidayImportSheet(
   BuildContext context,
   PublicHolidayImport command,
 ) => showModalBottomSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (_) => HolidayImportSheet(command: command),
+  builder: (_) => _HolidayImportSheet(command: command),
 );
 
-class HolidayImportSheet extends ConsumerStatefulWidget {
-  const HolidayImportSheet({super.key, required this.command});
+class _HolidayImportSheet extends ConsumerStatefulWidget {
+  const _HolidayImportSheet({required this.command});
 
   final PublicHolidayImport command;
 
   @override
-  ConsumerState<HolidayImportSheet> createState() => _HolidayImportSheetState();
+  ConsumerState<_HolidayImportSheet> createState() => _HolidayImportSheetState();
 }
 
 String _dayKey(DateTime d) => DateFormat('yyyy-MM-dd').format(d);
 
-class _HolidayImportSheetState extends ConsumerState<HolidayImportSheet> {
+class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
   late int _year = ref.read(clockProvider).now().year;
   List<ImportedHoliday>? _all;
   String? _region;

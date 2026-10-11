@@ -79,6 +79,7 @@ class TemplateLocalNeedsView extends ConsumerWidget {
 
 /// #1656 — in settings: what this space still lacks for the features it
 /// has on, each with where to fill it in. Nothing when complete.
+@visibleForTesting
 class LocalReadinessCard extends ConsumerWidget {
   const LocalReadinessCard({super.key, required this.workspaceId});
   final String workspaceId;

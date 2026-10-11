@@ -20,6 +20,8 @@
 // not mistaken for a Dart function.
 import 'dart:io';
 
+part 'surface.dart';
+
 /// Why a declaration is listed.
 enum DeadCodeKind {
   /// Nothing anywhere names it.
@@ -51,28 +53,9 @@ const productionRoots = ['lib', 'tool', 'integration_test', 'packages', 'bin'];
 /// Scans the repository at [root] (the directory holding `lib/` and
 /// `test/`) and returns the findings sorted by path and line.
 List<DeadCodeFinding> scanDeadCode(String root) {
-  final sources = <String, _Source>{};
-  for (final top in [...productionRoots, 'test']) {
-    final dir = Directory('$root/$top');
-    if (!dir.existsSync()) continue;
-    for (final f in dir.listSync(recursive: true).whereType<File>()) {
-      if (!f.path.endsWith('.dart')) continue;
-      final rel = f.path.substring(root.length + 1).replaceAll(r'\', '/');
-      sources[rel] = _Source(rel, f.readAsStringSync());
-    }
-  }
-
-  // name -> files (with the lines) that mention it.
-  final index = <String, Map<String, List<int>>>{};
-  for (final s in sources.values) {
-    if (s.isGeneratedPart) continue;
-    final lines = s.referenceText.split('\n');
-    for (var i = 0; i < lines.length; i++) {
-      for (final m in _identifier.allMatches(lines[i])) {
-        ((index[m.group(1)!] ??= {})[s.path] ??= []).add(i);
-      }
-    }
-  }
+  final corpus = _Corpus(root);
+  final sources = corpus.sources;
+  final index = corpus.index;
 
   final findings = <DeadCodeFinding>[];
   for (final s in sources.values) {
@@ -112,6 +95,36 @@ List<DeadCodeFinding> scanDeadCode(String root) {
   return findings;
 }
 
+/// Every Dart file of the production roots and `test/`, and the index of
+/// the names they mention (both modes read it).
+class _Corpus {
+  _Corpus(String root) {
+    for (final top in [...productionRoots, 'test']) {
+      final dir = Directory('$root/$top');
+      if (!dir.existsSync()) continue;
+      for (final f in dir.listSync(recursive: true).whereType<File>()) {
+        if (!f.path.endsWith('.dart')) continue;
+        final rel = f.path.substring(root.length + 1).replaceAll(r'\', '/');
+        sources[rel] = _Source(rel, f.readAsStringSync());
+      }
+    }
+    for (final s in sources.values) {
+      if (s.isGeneratedPart) continue;
+      final lines = s.referenceText.split('\n');
+      for (var i = 0; i < lines.length; i++) {
+        for (final m in _identifier.allMatches(lines[i])) {
+          ((index[m.group(1)!] ??= {})[s.path] ??= []).add(i);
+        }
+      }
+    }
+  }
+
+  final sources = <String, _Source>{};
+
+  /// name -> files (with the lines) that mention it.
+  final index = <String, Map<String, List<int>>>{};
+}
+
 final _identifier = RegExp(r'\$?([A-Za-z_][A-Za-z0-9_$]*)');
 
 /// The tokens that reference a declaration called [name].
@@ -121,9 +134,15 @@ List<String> _referenceNames(String name) {
 }
 
 class _Declaration {
-  _Declaration(this.name, this.start);
+  _Declaration(this.name, this.start, this.annotations, {this.isType = false});
 
   final String name;
+
+  /// The annotation lines directly above it (`@visibleForTesting`, ...).
+  final List<String> annotations;
+
+  /// A class, enum, mixin, typedef or extension type.
+  final bool isType;
 
   /// 0-based first and last line of the declaration's span.
   final int start;
@@ -136,12 +155,16 @@ class _Source {
         isGenerated && RegExp(r'^part of\b', multiLine: true).hasMatch(text);
     final lexed = _lex(text);
     referenceText = lexed.withStrings;
+    codeLines = lexed.codeOnly.split('\n');
     declarations = _declarations(lexed.codeOnly, text);
   }
 
   final String path;
   late final bool isGeneratedPart;
   late final String referenceText;
+
+  /// Comments and string contents blanked, by line.
+  late final List<String> codeLines;
   late final List<_Declaration> declarations;
 
   bool get isGenerated =>
@@ -187,6 +210,7 @@ List<_Declaration> _declarations(String code, String raw) {
   final rawLines = raw.split('\n');
   final out = <_Declaration>[];
   var entryPoint = false;
+  var annotations = <String>[];
   for (var i = 0; i < lines.length; i++) {
     final line = lines[i];
     if (line.isEmpty || line.startsWith(' ') || line.startsWith('\t')) {
@@ -194,6 +218,7 @@ List<_Declaration> _declarations(String code, String raw) {
     }
     if (line.startsWith('@')) {
       if (rawLines[i].contains('vm:entry-point')) entryPoint = true;
+      annotations.add(rawLines[i].trim());
       continue;
     }
     final m =
@@ -203,17 +228,23 @@ List<_Declaration> _declarations(String code, String raw) {
     if (starts && out.isNotEmpty && out.last.end == 0) out.last.end = i - 1;
     if (m == null) {
       entryPoint = false;
+      // A header split over lines (`const Map<…>`, then the name) keeps
+      // the annotations above it.
+      if (RegExp(r'[;}]\s*$').hasMatch(line)) annotations = <String>[];
       continue;
     }
     final name = m.group(1)!;
     if (!entryPoint &&
         !name.startsWith('_') &&
         !_notDeclarations.contains(name)) {
-      out.add(_Declaration(name, i));
+      out.add(
+        _Declaration(name, i, annotations, isType: _typeDecl.hasMatch(line)),
+      );
     } else if (out.isNotEmpty && out.last.end == 0) {
       out.last.end = i - 1;
     }
     entryPoint = false;
+    annotations = <String>[];
   }
   if (out.isNotEmpty && out.last.end == 0) out.last.end = lines.length - 1;
   return out;

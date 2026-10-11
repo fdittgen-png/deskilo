@@ -37,3 +37,9 @@ linter:
     # deliberately does not — instead of leaving the reader to guess
     # from a missing keyword.
     - unawaited_futures
+    # #2384 — a private type never leaks into a public signature. On
+    # through flutter_lints' recommended set already; named here so it
+    # cannot be dropped with a lint-set upgrade. test/lint/public_surface_test
+    # keeps the other half: a public declaration has a reader outside its
+    # file, or says @visibleForTesting.
+    - library_private_types_in_public_api

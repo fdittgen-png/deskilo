@@ -6,6 +6,7 @@
 // credentials — this is not the operational Excel export and never calls
 // it. Every cell is data (inline strings or numbers); nothing becomes a
 // formula, link or macro.
+import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -96,6 +97,7 @@ class WorkbookLabels {
 }
 
 /// The workbook's sheets for [inspections], captured at [capturedAt].
+@visibleForTesting
 List<XlsxSheet> templateWorkbook(
   List<TemplateInspection> inspections, {
   required DateTime capturedAt,
@@ -391,6 +393,7 @@ const _fieldColumns = [
 ];
 
 /// The file name: no template name, no person, just the date.
+@visibleForTesting
 String templateWorkbookName(DateTime capturedAt) {
   final d = capturedAt.toUtc();
   String two(int n) => n.toString().padLeft(2, '0');

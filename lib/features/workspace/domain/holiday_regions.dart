@@ -13,7 +13,10 @@
 // Pure Dart: no Flutter, no l10n.
 library;
 
+import 'package:meta/meta.dart';
+
 /// ISO 3166-2 code → region name.
+@visibleForTesting
 const holidayRegionNames = <String, String>{
   // Austria
   'AT-1': 'Burgenland',

@@ -5,6 +5,7 @@
 // the client never re-derives any of it: values are scalars or lists of
 // scalars (a map is a shape, never copied), and an unknown wire word lands
 // on `unknown`, never on a usable value.
+import 'package:meta/meta.dart';
 import 'template_outline.dart';
 import 'template_preview.dart';
 
@@ -49,6 +50,7 @@ enum TemplateAbsentMeaning {
 }
 
 /// A scalar or a list of scalars; anything else is dropped.
+@visibleForTesting
 Object? scalarOnly(Object? raw) {
   if (raw is String || raw is num || raw is bool || raw == null) return raw;
   if (raw is List && raw.every((e) => e is String || e is num || e is bool)) {
