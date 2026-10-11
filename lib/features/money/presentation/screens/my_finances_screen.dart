@@ -31,6 +31,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/status_colors.dart';
 import 'account_activity_screen.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/time/date_text.dart';
 
 class MyFinancesScreen extends ConsumerStatefulWidget {
   /// [workspaceId] narrows every list to one workspace — what a workspace's
@@ -170,7 +171,7 @@ Future<void> _openMyPayment(
   final local = at.toLocal();
   ref
       .read(moneyFocusControllerProvider.notifier)
-      .setPeriod('${local.year}-${local.month.toString().padLeft(2, '0')}');
+      .setPeriod(yearMonth(local.year, local.month));
   router.go('/money');
 }
 

@@ -17,6 +17,7 @@
 
 import 'package:meta/meta.dart';
 import 'accounting_amount.dart';
+import '../../../core/time/date_text.dart';
 
 /// Who keeps the official books.
 enum BookAuthority {
@@ -110,9 +111,7 @@ class BookProfile {
 }
 
 /// A calendar date on the wire: `2026-07-01`.
-String bookDate(DateTime d) =>
-    '${d.year.toString().padLeft(4, '0')}-'
-    '${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+String bookDate(DateTime d) => isoDay(d);
 
 enum BookProfileProblem {
   externalSystemMissing,

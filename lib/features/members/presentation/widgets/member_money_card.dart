@@ -61,7 +61,6 @@ class MemberMoneyCard extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currencyCode = workspace?.currencyCode ?? 'EUR';
     final currency = moneyFormat(currencyCode);
-    String money(int cents) => currency.formatMinor(cents);
 
     final accountAsync = ref.watch(memberAccountProvider(memberId));
     final invoicesAsync = ref.watch(memberInvoicesProvider(memberId));
@@ -150,7 +149,7 @@ class MemberMoneyCard extends ConsumerWidget {
             _InvoiceRow(
               invoice: invoice,
               remainingCents: remaining[invoice.id]?.remainingCents,
-              money: money,
+              money: currency.formatMinor,
             ),
           if (invoices.length > 5)
             Padding(
@@ -179,7 +178,7 @@ class MemberMoneyCard extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  money(payment.amountCents.abs()),
+                  currency.formatMinor(payment.amountCents.abs()),
                   style: theme.textTheme.bodyMedium,
                 ),
               ]),
@@ -192,7 +191,7 @@ class MemberMoneyCard extends ConsumerWidget {
           Text(
             '${statement.usedHalfDays}/'
             '${statement.includedHalfDays + statement.grantedHalfDays}'
-            ' · ${money(statement.balanceCents)}',
+            ' · ${currency.formatMinor(statement.balanceCents)}',
             key: const ValueKey('member-money-statement'),
             style: theme.textTheme.bodyMedium,
           ),

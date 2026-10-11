@@ -4,6 +4,7 @@ import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
 import 'invoice.dart';
+import '../../../core/time/date_text.dart';
 
 /// #827 — the invoicing wizard's pure side: which RUN the calendar
 /// calls for, which PERIOD and invoice KIND it works on, and the plan of
@@ -32,14 +33,14 @@ enum WizardStep {
 @visibleForTesting
 String wizardNextPeriod(DateTime now) {
   final next = DateTime(now.year, now.month + 1, 1);
-  return '${next.year}-${next.month.toString().padLeft(2, '0')}';
+  return yearMonth(next.year, next.month);
 }
 
 /// 'YYYY-MM' of the month before [now].
 @visibleForTesting
 String wizardPreviousPeriod(DateTime now) {
   final prev = DateTime(now.year, now.month - 1, 1);
-  return '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
+  return yearMonth(prev.year, prev.month);
 }
 
 /// The period a run works on: the coming month for subscriptions, the

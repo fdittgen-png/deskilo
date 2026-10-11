@@ -24,6 +24,7 @@ import '../../providers/money_providers.dart';
 import '../period_label.dart';
 import 'wizard_scaffold.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/time/date_text.dart';
 
 /// Opens the repartition assistant (kept under its historical name).
 Future<void> showExpenseRepartitionSheet(
@@ -54,7 +55,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
   bool _busy = false;
 
   static String _current(DateTime now) =>
-      '${now.year}-${now.month.toString().padLeft(2, '0')}';
+      yearMonth(now.year, now.month);
 
   static String _shift(String period, int months) {
     final parts = period.split('-');

@@ -20,6 +20,7 @@ import 'report_data.dart';
 import 'report_facts.dart';
 import 'report_strings.dart';
 import 'statement.dart';
+import '../../../core/time/date_text.dart';
 
 /// The statement data model (#476): the member's monthly summary as
 /// report lines — subscription, overage, supplements, services,
@@ -35,7 +36,6 @@ Map<String, Object?> statementReportData(
   Workspace? workspace,
 }) {
   final currency = moneyFormat(currencyCode);
-  String money(int cents) => currency.formatMinor(cents);
   // #870 — the seller kind decides what the recurring position is
   // called; it must read the same here as on the invoice itself.
   final association = InvoiceLegal.fromJson(
@@ -49,43 +49,43 @@ Map<String, Object?> statementReportData(
           statement.subscriptionPct,
           association: association,
         ),
-        'amount': money(statement.feeCents),
+        'amount': currency.formatMinor(statement.feeCents),
         'negative': false,
       },
     if (statement.overageCents > 0)
       {
         'label': strings.overage(statement.extraHalfDays),
-        'amount': money(statement.overageCents),
+        'amount': currency.formatMinor(statement.overageCents),
         'negative': false,
       },
     if (statement.accessorySupplementCents > 0)
       {
         'label': strings.accessorySupplements,
-        'amount': money(statement.accessorySupplementCents),
+        'amount': currency.formatMinor(statement.accessorySupplementCents),
         'negative': false,
       },
     if (statement.levelSupplementCents > 0)
       {
         'label': strings.levelReservations,
-        'amount': money(statement.levelSupplementCents),
+        'amount': currency.formatMinor(statement.levelSupplementCents),
         'negative': false,
       },
     if (statement.officeSupplementCents > 0)
       {
         'label': strings.officeReservations,
-        'amount': money(statement.officeSupplementCents),
+        'amount': currency.formatMinor(statement.officeSupplementCents),
         'negative': false,
       },
     if (statement.deskSupplementCents > 0)
       {
         'label': strings.deskReservations,
-        'amount': money(statement.deskSupplementCents),
+        'amount': currency.formatMinor(statement.deskSupplementCents),
         'negative': false,
       },
     if (statement.creditsCents != 0)
       {
         'label': strings.paymentsCredits,
-        'amount': money(statement.creditsCents),
+        'amount': currency.formatMinor(statement.creditsCents),
         'negative': statement.creditsCents > 0,
       },
   ];
@@ -98,11 +98,11 @@ Map<String, Object?> statementReportData(
     'issued': periodLabel,
     'issued_by': workspaceName,
     'replaces': '',
-    'total': money(statement.balanceCents.abs()),
-    'net_total': money(statement.feeCents + statement.overageCents),
-    'vat_total': money(0),
-    'charges': money(statement.feeCents + statement.overageCents),
-    'payments': money(statement.creditsCents),
+    'total': currency.formatMinor(statement.balanceCents.abs()),
+    'net_total': currency.formatMinor(statement.feeCents + statement.overageCents),
+    'vat_total': currency.formatMinor(0),
+    'charges': currency.formatMinor(statement.feeCents + statement.overageCents),
+    'payments': currency.formatMinor(statement.creditsCents),
     'voided': false,
     'proforma': false,
     'copy': false,
@@ -126,7 +126,6 @@ Map<String, Object?> agreementReportData(
 }) {
   final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.formatMinor(cents);
   final band = facts.bands
       .where((b) => b.fromPct < subscriptionPct && subscriptionPct <= b.toPct)
       .firstOrNull;
@@ -138,41 +137,41 @@ Map<String, Object?> agreementReportData(
           subscriptionPct,
           association: facts.association,
         ),
-        'amount': money(band.feeCents),
+        'amount': currency.formatMinor(band.feeCents),
       },
       {
         'label': strings.agreementExtraHalfDay,
-        'amount': money(band.overageFeeCents),
+        'amount': currency.formatMinor(band.overageFeeCents),
       },
     ],
     for (final service in facts.services)
-      {'label': service.name, 'amount': money(service.priceCents)},
+      {'label': service.name, 'amount': currency.formatMinor(service.priceCents)},
     for (final package in facts.packages)
       {
         'label': '${package.name} (${package.days}d)',
-        'amount': money(package.priceCents),
+        'amount': currency.formatMinor(package.priceCents),
       },
     for (final level in facts.levels)
       if (level.bookableAsWhole && level.priceCents > 0)
         {
           'label': '${level.name} — ${strings.levelReservations}',
-          'amount': money(level.priceCents),
+          'amount': currency.formatMinor(level.priceCents),
         },
     for (final office in facts.offices)
       if (office.bookableAsWhole && office.priceCents > 0)
         {
           'label': '${office.name} — ${strings.officeReservations}',
-          'amount': money(office.priceCents),
+          'amount': currency.formatMinor(office.priceCents),
         },
     for (final desk in facts.desks)
       if (desk.bookableAsWhole && desk.priceCents > 0)
         {
           'label': '${desk.name} — ${strings.deskReservations}',
-          'amount': money(desk.priceCents),
+          'amount': currency.formatMinor(desk.priceCents),
         },
     for (final accessory in facts.accessories)
       if (accessory.supplementCents > 0)
-        {'label': accessory.name, 'amount': money(accessory.supplementCents)},
+        {'label': accessory.name, 'amount': currency.formatMinor(accessory.supplementCents)},
   ];
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -184,7 +183,7 @@ Map<String, Object?> agreementReportData(
     'issued': DateFormat.yMMMd(strings.dateLocale).format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
-    'total': band == null ? '' : money(band.feeCents),
+    'total': band == null ? '' : currency.formatMinor(band.feeCents),
     'charges': '',
     'payments': '',
     'net_total': '',
@@ -211,7 +210,6 @@ Map<String, Object?> paymentsReportData(
   final workspace = facts.workspace;
   final me = facts.me;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.formatMinor(cents);
   final dateFormat = DateFormat.yMMMd(strings.dateLocale);
   final ledger = facts.ledger
       .where(
@@ -247,18 +245,18 @@ Map<String, Object?> paymentsReportData(
     'issued': dateFormat.format(facts.now),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
-    'total': money(statement?.balanceCents ?? 0),
+    'total': currency.formatMinor(statement?.balanceCents ?? 0),
     'charges': '',
-    'payments': money(validatedCents),
+    'payments': currency.formatMinor(validatedCents),
     'net_total': '',
     'vat_total': '',
-    'validated_total': money(validatedCents),
-    'pending_total': money(pendingCents),
+    'validated_total': currency.formatMinor(validatedCents),
+    'pending_total': currency.formatMinor(pendingCents),
     // #955 — pending payments and pending expense submissions apart.
-    'pending_payments_total': money(pending
+    'pending_payments_total': currency.formatMinor(pending
         .where((e) => e.type == EventType.payment)
         .fold<int>(0, (s, e) => s + ((e.payload['amount_cents'] as num?)?.toInt() ?? 0))),
-    'pending_expenses_total': money(pending
+    'pending_expenses_total': currency.formatMinor(pending
         .where((e) => e.type == EventType.expense)
         .fold<int>(0, (s, e) => s + ((e.payload['amount_cents'] as num?)?.toInt() ?? 0))),
     'voided': false,
@@ -270,13 +268,13 @@ Map<String, Object?> paymentsReportData(
         {
           'label':
               '${dateFormat.format(WorkspaceTime.dateOf(entry.occurredOn ?? entry.createdAt))} · ${entry.description.isEmpty ? strings.paymentsCredits : entry.description}',
-          'amount': money(entry.amountCents),
+          'amount': currency.formatMinor(entry.amountCents),
         },
       for (final event in pending)
         {
           'label':
               '${event.payload['note'] as String? ?? strings.eventTypePayment} — ${strings.paymentsPendingTag}',
-          'amount': money(
+          'amount': currency.formatMinor(
             (event.payload['amount_cents'] as num?)?.toInt() ?? 0,
           ),
         },
@@ -294,12 +292,9 @@ Map<String, Object?> workspaceReportData(
 ) {
   final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.formatMinor(cents);
   final levels = facts.levels;
   final plans = facts.plans;
   final hours = facts.hours;
-  String clock(int minutes) =>
-      '${(minutes ~/ 60).toString().padLeft(2, '0')}:${(minutes % 60).toString().padLeft(2, '0')}';
   final dayNames = DateFormat.E(strings.dateLocale);
   final monday = DateTime(2024, 1, 1); // a Monday — weekday names only.
   return <String, Object?>{
@@ -335,7 +330,7 @@ Map<String, Object?> workspaceReportData(
         .map((d) => dayNames.format(monday.add(Duration(days: d - 1))))
         .join(', '),
     'work_hours':
-        '${clock(hours.startMinutes)}–${clock(hours.halfBoundaryMinutes)}–${clock(hours.endMinutes)}',
+        '${clockFromMinutes(hours.startMinutes)}–${clockFromMinutes(hours.halfBoundaryMinutes)}–${clockFromMinutes(hours.endMinutes)}',
     'features': [
       for (final label in facts.featureLabels) {'label': label},
     ],
@@ -345,10 +340,10 @@ Map<String, Object?> workspaceReportData(
           'label':
               '${subscriptionLabel(strings, band.toPct, association: facts.association)}'
               ' (${band.fromPct + 1}–${band.toPct}%)',
-          'amount': money(band.feeCents),
+          'amount': currency.formatMinor(band.feeCents),
         },
       for (final service in facts.services)
-        {'label': service.name, 'amount': money(service.priceCents)},
+        {'label': service.name, 'amount': currency.formatMinor(service.priceCents)},
     ],
     'vat': const <Map<String, Object?>>[],
     ...legalMentionData(strings, workspace),

@@ -31,6 +31,7 @@ import '../domain/site.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/data/enum_wire.dart';
 import 'supabase_workspace_templates.dart';
+import '../../../core/time/date_text.dart';
 
 class SupabaseWorkspaceRepository
     with ConversationApi, SupabaseWorkspaceTemplates, SupabaseWorkspaceProvenance
@@ -1288,9 +1289,7 @@ Future<void> setWhatsappGroup(String workspaceId, String link) async {
   }
 
   /// Postgres `date` wire format for [day]'s date part.
-  String _isoDate(DateTime day) => '${day.year.toString().padLeft(4, '0')}-'
-      '${day.month.toString().padLeft(2, '0')}-'
-      '${day.day.toString().padLeft(2, '0')}';
+  String _isoDate(DateTime day) => isoDay(day);
 
   ClosureDay _closureDayFromRow(Map<String, dynamic> row) => ClosureDay(
         system: SystemColumns.fromRow(row),

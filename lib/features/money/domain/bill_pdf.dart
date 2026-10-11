@@ -134,9 +134,8 @@ InvoiceReport buildBillReport({
   // #711 — the DOCUMENT locale, passed explicitly: a PDF is rendered
   // for its reader, not for whoever pressed the button.
   final currency = moneyFormat(currencyCode, locale: locale);
-  String money(int cents) => currency.formatMinor(cents);
-  String charge(int cents) => '−${money(cents)}';
-  String credit(int cents) => '+${money(cents)}';
+  String charge(int cents) => '−${currency.formatMinor(cents)}';
+  String credit(int cents) => '+${currency.formatMinor(cents)}';
   final dateFormat = DateFormat.yMMMd(locale);
 
   return InvoiceReport(
@@ -181,7 +180,7 @@ InvoiceReport buildBillReport({
       const ReportDivider(),
       ReportTableRow([strings.balance,
         statement.isSettled ? strings.settled : strings.outstanding,
-        money(statement.balanceCents)], bold: true),
+        currency.formatMinor(statement.balanceCents)], bold: true),
     ],
     footer: const [],
   );

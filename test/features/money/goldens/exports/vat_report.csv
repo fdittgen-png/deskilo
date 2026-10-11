@@ -1,0 +1,4 @@
+number;date;customer;rate;category;net;vat;gross;currency;reverses
+"INV-2026-0001";2026-03-04;"Müller, Ana ""AM""";20;S;100,00;20,00;120,00;EUR;""
+"INV-2026-0001";2026-03-04;"Müller, Ana ""AM""";5,5;S;10,00;0,55;10,55;EUR;""
+"INV-2026-0002";2026-03-20;"Müller, Ana ""AM""";20;S;-25,00;-5,00;-30,00;EUR;"INV-2026-0001"

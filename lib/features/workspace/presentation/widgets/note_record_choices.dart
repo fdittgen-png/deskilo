@@ -17,6 +17,7 @@ import '../../providers/workspace_providers.dart';
 import '../reference_locale.dart';
 import 'note_record_open.dart';
 import 'ref_picker_sheet.dart';
+import '../../../../core/time/date_text.dart';
 
 /// What a record reference of one kind can point at.
 ///
@@ -60,7 +61,7 @@ Future<NoteRecordChoices> noteRecordChoices(
   RefFacet facet(String key, String label, {bool quick = false}) =>
       RefFacet(key: key, label: label, quick: quick);
   RefFacetValue month(DateTime at) {
-    final id = '${at.year}-${at.month.toString().padLeft(2, '0')}';
+    final id = yearMonth(at.year, at.month);
     return (id: id, label: id);
   }
 

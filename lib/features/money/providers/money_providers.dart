@@ -41,6 +41,7 @@ import '../domain/vat_rate.dart';
 import '../../../core/time/clock.dart';
 import '../domain/number_sequence.dart';
 import '../domain/workspace_status.dart';
+import '../../../core/time/date_text.dart';
 
 part 'money_providers.g.dart';
 
@@ -446,7 +447,7 @@ typedef InvoicingOverview = ({
 /// completed month whose positions no longer move.
 String previousPeriodOf(DateTime now) {
   final prev = DateTime(now.year, now.month - 1);
-  return '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
+  return yearMonth(prev.year, prev.month);
 }
 
 /// The invoicing overview (issuers only — callers gate on canIssue).
