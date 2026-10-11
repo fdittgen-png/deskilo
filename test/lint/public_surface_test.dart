@@ -113,8 +113,6 @@ const Map<String, String> _allowed = {
       '#2384 — on an open VAT branch, after it merges',
   'lib/core/backend/backend_key.dart::backendKeyMaxLength':
       '#2384 — on an open VAT branch, after it merges',
-  'lib/core/vat/place_of_supply.dart::euCountryCode':
-      '#2384 — on an open VAT branch, after it merges',
   'lib/features/events/providers/attention_providers.dart::PrefsUpdateSeenStore':
       '#2384 — on an open VAT branch, after it merges',
   'lib/features/money/domain/report_kind.dart::fixedReportKinds':

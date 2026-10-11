@@ -37,7 +37,7 @@ class RecapitulativeLine {
 /// The customer's VAT number as the list wants it: the prefix (Greece
 /// `EL`) and the number, letters and digits only — the twin of
 /// `public.vies_vat_parts`.
-({String country, String number}) vatNumberParts(String vatId, String country) {
+({String country, String number}) _vatNumberParts(String vatId, String country) {
   var v = vatId.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
   String prefix;
   if (RegExp('^[A-Z]{2}').hasMatch(v)) {
@@ -68,7 +68,7 @@ List<RecapitulativeLine> recapitulativeStatement(
         .fold(0, (sum, t) => sum + t.netCents);
     if (ae == 0) continue;
     final buyer = invoice.buyerParty;
-    final parts = vatNumberParts(buyer?.vatId ?? '', buyer?.country ?? '');
+    final parts = _vatNumberParts(buyer?.vatId ?? '', buyer?.country ?? '');
     final period =
         '${invoice.issuedAt.year.toString().padLeft(4, '0')}-'
         '${invoice.issuedAt.month.toString().padLeft(2, '0')}';
