@@ -97,10 +97,10 @@ select pg_temp.seed();
 
 -- ------------------------------------------------------- the expense form
 select pg_temp.act_as('owner');
+select set_config('iv.e1', public.submit_expense(current_setting('iv.ws')::uuid, 6000, 'supplies',
+  'Paper', null, '{"percent": 5.5, "deductible_pct": 80}')::text, false);
 select is(
-  (select payload -> 'vat' from public.events
-    where id = public.submit_expense(current_setting('iv.ws')::uuid, 6000, 'supplies', 'Paper',
-                                     null, '{"percent": 5.5, "deductible_pct": 80}')),
+  (select payload -> 'vat' from public.events where id = current_setting('iv.e1')::uuid),
   '{"percent": 5.5, "deductible_pct": 80}'::jsonb,
   'an expense keeps the VAT it carried and the deductible share');
 select throws_like(
@@ -111,9 +111,9 @@ select throws_like(
   $$ select public.submit_expense(current_setting('iv.ws')::uuid, 6000, 'supplies', '', null,
                                   '{"percent": 20, "deductible_pct": 150}') $$,
   '%deductible share%', 'a share above 100 % is refused');
+select set_config('iv.e2', public.submit_expense(current_setting('iv.ws')::uuid, 6000, 'supplies', '')::text, false);
 select is(
-  (select payload ? 'vat' from public.events
-    where id = public.submit_expense(current_setting('iv.ws')::uuid, 6000, 'supplies', '')),
+  (select payload ? 'vat' from public.events where id = current_setting('iv.e2')::uuid),
   false, 'an expense without VAT carries none');
 select pg_temp.flag(false);
 select throws_like(
