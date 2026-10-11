@@ -231,11 +231,13 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
               SwitchListTile(
                 key: const ValueKey('policy-editor-sheet-validation-admins-may'),
                 contentPadding: EdgeInsets.zero,
-                title: HelpDotTitle(
-                  l10n?.validationAdminsMay ?? 'Admins may validate',
-                  l10n?.helpHintValidationTopic ?? 'confirmations',
-                  anchor: HelpAnchor.validationWhoMay,
-                ),
+                title: widget.scopesOn
+                    ? Text(l10n?.validationAdminsMay ?? 'Admins may validate')
+                    : HelpDotTitle(
+                        l10n?.validationAdminsMay ?? 'Admins may validate',
+                        l10n?.helpHintValidationTopic ?? 'confirmations',
+                        anchor: HelpAnchor.validationWhoMay,
+                      ),
                 subtitle: _adminsMayValidate
                     ? null
                     : Text(l10n?.validationOwnerOnly ?? 'Owner only'),
@@ -273,10 +275,6 @@ class PolicyEditorSheetState extends State<PolicyEditorSheet> {
                             _notEnough = false;
                           }),
                         ),
-                      HelpDot(
-                        l10n?.helpHintValidationTopic ?? 'confirmations',
-                        anchor: HelpAnchor.validationWhoMay,
-                      ),
                     ],
                   ),
                 ),

@@ -29,6 +29,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #2356/0407 restates set_vat_rates from the LIVE dev definition
+  // (pg_get_functiondef): 0170's anchored group_key / outside_base /
+  // exemption_reason columns and 0180's has_permission('manageBilling')
+  // are carried verbatim; the change is the DKV01 refusal of a new percent
+  // on a rate in force while an invoice was issued. pgTAP 169 saves rates.
+  'set_vat_rates@0407',
   // #2357/0402 restates mark_vat_declaration_submitted from the LIVE dev
   // definition (pg_get_functiondef): 0165's anchored DECL- number draw
   // (next_document_number when number = '') is carried verbatim; the

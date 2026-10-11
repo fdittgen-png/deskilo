@@ -121,7 +121,11 @@ String buildInvoiceCii({
             ? line.quantity
             : 1;
         final unitCents = lineNet ~/ quantity;
-        final lineCategory = line.vatPercent > 0 ? 'S' : category;
+        // #2356 — the category the server froze on the line wins (a Z
+        // zero-rated line of a VAT-registered seller); an older line derives it.
+        final lineCategory = line.vatCategory.isNotEmpty
+            ? line.vatCategory
+            : line.vatPercent > 0 ? 'S' : category;
         builder.element('ram:IncludedSupplyChainTradeLineItem', nest: () {
           builder.element('ram:AssociatedDocumentLineDocument', nest: () {
             ram('LineID', '${i + 1}');

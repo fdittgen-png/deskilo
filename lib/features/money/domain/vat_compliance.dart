@@ -21,7 +21,9 @@ String defaultExemptionMention(String countryCode, VatRegime regime) {
     VatRegime.vatRegistered => '',
     VatRegime.exempt => switch (country) {
         'FR' => 'TVA non applicable, art. 293 B du CGI',
-        'DE' => 'Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.',
+        // #2356 — the wording since the 2025 reform (§ 34a UStDV): the
+        // small-business turnover is exempt, and the invoice says so.
+        'DE' => 'Steuerbefreiung für Kleinunternehmer, § 19 UStG.',
         'AT' => 'Umsatzsteuerbefreit gemäß § 6 Abs. 1 Z 27 UStG '
             '(Kleinunternehmer).',
         'ES' => 'Operación exenta de IVA (régimen de franquicia, '

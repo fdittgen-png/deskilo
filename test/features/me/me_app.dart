@@ -12,6 +12,7 @@ import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,6 +62,7 @@ Future<GoRouter> pumpMeApp(
   IdentityConnector? identityConnector,
   FakeMessengerRepository? messenger,
   Size size = const Size(800, 1600),
+  LinkLauncher? launcher,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -77,7 +79,7 @@ Future<GoRouter> pumpMeApp(
         connectedSources: connectedSources,
         identityConnector: identityConnector,
         messenger: messenger,
-      ),
+      )..addAll([if (launcher != null) linkLauncherProvider.overrideWithValue(launcher)]),
       child: const DeskiloApp(),
     ),
   );

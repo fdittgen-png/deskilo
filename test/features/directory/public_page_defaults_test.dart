@@ -133,7 +133,10 @@ void main() {
     expect(_stored(repo).containsKey('address'), isFalse);
     expect(_stored(repo).containsKey('host_type'), isFalse);
     repo.local['address'] = '2 New Street';
-    expect((await repo.ownPage(_ws))['document']['address'], '2 New Street');
+    expect(
+      ((await repo.ownPage(_ws))['document'] as Map)['address'],
+      '2 New Street',
+    );
   });
 
   testWidgets('override: editing an inherited field marks it customised and '
@@ -148,7 +151,7 @@ void main() {
     expect(_stored(repo)['address'], 'Desk 9, Public Row');
     repo.local['address'] = '2 New Street';
     expect(
-      (await repo.ownPage(_ws))['document']['address'],
+      ((await repo.ownPage(_ws))['document'] as Map)['address'],
       'Desk 9, Public Row',
     );
   });

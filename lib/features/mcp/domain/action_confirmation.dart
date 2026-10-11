@@ -4,6 +4,7 @@
 // human in the Deskilo app. The id in a link is not an authorisation: the
 // server answers only the bound human, only from a native session.
 import 'mcp_context.dart';
+import '../../../core/data/json_reader.dart';
 
 enum ConfirmationStatus {
   pending,
@@ -83,21 +84,19 @@ class ActionConfirmation {
     if (json is! Map) {
       return ActionConfirmation(id: id, status: ConfirmationStatus.unavailable);
     }
-    final status = ConfirmationStatus.fromWire(json['status']);
-    final preview = json['preview'] is Map
-        ? json['preview'] as Map
-        : const <Object?, Object?>{};
-    Map<String, Object?> map(Object? v) =>
-        v is Map ? {for (final e in v.entries) '${e.key}': e.value} : const {};
+    // Fail-closed (#2387): a malformed field reads as absent.
+    final r = JsonReader.of(json, context: 'action_confirmation');
+    final preview = r.objectOrAbsent('preview');
     return ActionConfirmation(
       id: id,
-      status: status,
-      operation: '${json['operation'] ?? ''}',
-      workspaceName: '${json['workspace_name'] ?? ''}',
-      clientName: '${json['client_name'] ?? ''}',
-      arguments: map(preview['arguments']),
-      target: map(preview['target']),
-      expiresAt: DateTime.tryParse('${json['expires_at']}')?.toUtc(),
+      status: ConfirmationStatus.fromWire(r.json['status']),
+      operation: r.textOrAbsent('operation') ?? '',
+      workspaceName: r.textOrAbsent('workspace_name') ?? '',
+      clientName: r.textOrAbsent('client_name') ?? '',
+      arguments: preview.objectOrAbsent('arguments').json,
+      target: preview.objectOrAbsent('target').json,
+      expiresAt:
+          DateTime.tryParse(r.textOrAbsent('expires_at') ?? '')?.toUtc(),
     );
   }
 }

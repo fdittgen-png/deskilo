@@ -303,7 +303,7 @@ class FakeMoneyRepository implements MoneyRepository {
       throw StateError('a sequence never goes backwards');
     }
     lastNumberSequence = sequence.copyWith(
-      nextValue: raiseNextValueTo ?? current?.nextValue,
+      nextValue: raiseNextValueTo ?? current?.nextValue, stored: true,
     );
     numberSequences[sequence.journal] = lastNumberSequence!;
   }

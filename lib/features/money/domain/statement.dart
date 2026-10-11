@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../workspace/domain/overage_policy.dart';
+import '../../../core/data/json_reader.dart';
 
 part 'statement.freezed.dart';
 
@@ -120,19 +121,18 @@ class NegotiatedTariff {
     this.active = false,
   });
 
-  factory NegotiatedTariff.fromJson(Map<String, dynamic> json) =>
-      NegotiatedTariff(
-        defaultFeeCents: (json['default_fee_cents'] as num?)?.toInt() ?? 0,
-        defaultOverageFeeCents:
-            (json['default_overage_fee_cents'] as num?)?.toInt() ?? 0,
-        feeCents: (json['fee_cents'] as num?)?.toInt(),
-        overageFeeCents: (json['overage_fee_cents'] as num?)?.toInt(),
-        discountPercent: (json['discount_percent'] as num?)?.toDouble(),
-        validFrom: json['valid_from'] == null
-            ? null
-            : DateTime.tryParse(json['valid_from'] as String),
-        active: json['active'] == true,
-      );
+  factory NegotiatedTariff.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'negotiated_tariff');
+    return NegotiatedTariff(
+      defaultFeeCents: r.intOrNull('default_fee_cents') ?? 0,
+      defaultOverageFeeCents: r.intOrNull('default_overage_fee_cents') ?? 0,
+      feeCents: r.intOrNull('fee_cents'),
+      overageFeeCents: r.intOrNull('overage_fee_cents'),
+      discountPercent: r.doubleOrNull('discount_percent'),
+      validFrom: r.dateTimeOrNull('valid_from'),
+      active: r.boolOr('active', false),
+    );
+  }
 
   final int defaultFeeCents;
   final int defaultOverageFeeCents;

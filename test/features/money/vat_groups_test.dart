@@ -6,6 +6,8 @@
 // country; a not-subject line beside taxed lines is refused (BR-O-11).
 
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/invoice_cii.dart';
+import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -75,6 +77,46 @@ void main() {
       seller: seller.copyWith(vatRegime: 'not_subject', vatId: '', taxExemptionReason: 'art. 293 B'), buyer: buyer,
     );
     expect(association.gaps, isNot(contains(EInvoiceGap.mixedNotSubjectLines)));
+  });
+
+  test('#2356: Z and E from the seller\'s own 0 % rates reach vat_totals, '
+      'and every line and subtotal of the e-invoice says the same', () {
+    // The server's row (0407): a VAT-registered seller, a line at 20 %, a
+    // zero-rated line and an exempt one, each with the category frozen.
+    final invoice = Invoice.fromRow({
+      'id': 'i', 'workspace_id': 'w', 'member_id': 'm', 'number': 'INV-2026-0001',
+      'issued_at': '2026-10-01T09:00:00Z', 'period': '2026-09', 'title': '2026-09',
+      'lines': [
+        {'kind': 'subscription', 'label': '', 'amount_cents': 1200, 'vat_percent': 20, 'vat_category': 'S'},
+        {'kind': 'adjustment', 'label': 'Export', 'amount_cents': 1000, 'vat_percent': 0, 'vat_category': 'Z'},
+        {'kind': 'adjustment', 'label': 'Training', 'amount_cents': 500, 'vat_percent': 0, 'vat_category': 'E'},
+      ],
+      'total_cents': 2700, 'currency': 'EUR', 'member_name': 'B', 'member_address': '',
+      'workspace_name': 'W', 'workspace_address': '', 'issuer_name': 'F', 'signature': 'f' * 64,
+      'vat_totals': [
+        {'percent': 20, 'category': 'S', 'gross_cents': 1200, 'net_cents': 1000, 'vat_cents': 200},
+        {'percent': 0, 'category': 'E', 'gross_cents': 500, 'net_cents': 500, 'vat_cents': 0},
+        {'percent': 0, 'category': 'Z', 'gross_cents': 1000, 'net_cents': 1000, 'vat_cents': 0},
+      ],
+    });
+    expect(invoice.lines.map((l) => l.vatCategory), ['S', 'Z', 'E']);
+    expect(invoice.vatBreakdown(zeroCategory: 'O').map((t) => t.category), ['S', 'E', 'Z']);
+    const seller = InvoiceParty(name: 'W', country: 'FR', legalId: '123456789', vatId: 'FR12123456789', vatRegime: 'vat_registered', street: '1 rue', city: 'Pézenas', postalCode: '34120');
+    const buyer = InvoiceParty(name: 'B', country: 'FR', street: '2 rue', city: 'Pézenas', postalCode: '34120');
+    final ubl = buildInvoiceUbl(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label);
+    final lineIds = RegExp(r'<cac:ClassifiedTaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
+        .allMatches(ubl).map((m) => m.group(1)).toList();
+    expect(lineIds, ['S', 'Z', 'E']);
+    final subtotalIds = RegExp(r'<cac:TaxSubtotal>[\s\S]*?<cac:TaxCategory>\s*<cbc:ID>(\w+)</cbc:ID>')
+        .allMatches(ubl).map((m) => m.group(1)).toList();
+    expect(subtotalIds, ['S', 'E', 'Z']);
+    final cii = buildInvoiceCii(invoice: invoice, seller: seller, buyer: buyer, lineText: (l) => l.label);
+    final ciiLines = RegExp(r'<ram:IncludedSupplyChainTradeLineItem>[\s\S]*?<ram:CategoryCode>(\w+)</ram:CategoryCode>')
+        .allMatches(cii).map((m) => m.group(1)).toList();
+    expect(ciiLines, ['S', 'Z', 'E']);
+    // A line issued before 0403 carries no category: derived as before.
+    const old = InvoiceLine(label: 'x', amountCents: 100);
+    expect(old.vatCategory, isEmpty);
   });
 
 }

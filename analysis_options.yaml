@@ -73,3 +73,6 @@ linter:
     - use_decorated_box
     - use_enums
     - use_super_parameters
+    # #2387 — no member is called on a `dynamic`: decode through
+    # JsonReader (lib/core/data/json_reader.dart) or cast once.
+    - avoid_dynamic_calls

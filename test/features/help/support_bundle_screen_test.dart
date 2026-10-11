@@ -181,9 +181,10 @@ void main() {
       expect(find.byKey(const ValueKey('support-preview')), findsNothing);
       await tap(tester, 'support-prepare');
       final json = jsonDecode(preview(tester)) as Map<String, dynamic>;
+      final window = json['window'] as Map;
       expect(
-        DateTime.parse(json['window']['until'] as String)
-            .difference(DateTime.parse(json['window']['from'] as String)),
+        DateTime.parse(window['until'] as String)
+            .difference(DateTime.parse(window['from'] as String)),
         const Duration(hours: 24),
       );
     },

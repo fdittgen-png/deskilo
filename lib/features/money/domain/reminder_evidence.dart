@@ -5,6 +5,8 @@
 // sweep, for what amount) and its append-only attempts. A status is a
 // statement about delivery, never about payment.
 
+import '../../../core/data/json_reader.dart';
+
 /// One delivery attempt of a reminder, as appended on the server.
 class ReminderAttempt {
   const ReminderAttempt({
@@ -14,13 +16,15 @@ class ReminderAttempt {
     required this.at,
   });
 
-  factory ReminderAttempt.fromJson(Map<String, dynamic> json) =>
-      ReminderAttempt(
-        channel: json['channel'] as String? ?? '',
-        outcome: json['outcome'] as String? ?? '',
-        detail: json['detail'] as String? ?? '',
-        at: DateTime.parse(json['at'] as String).toLocal(),
-      );
+  factory ReminderAttempt.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'reminder_attempt');
+    return ReminderAttempt(
+      channel: r.stringOr('channel'),
+      outcome: r.stringOr('outcome'),
+      detail: r.stringOr('detail'),
+      at: r.dateTime('at').toLocal(),
+    );
+  }
 
   final String channel;
   final String outcome;
@@ -41,20 +45,20 @@ class ReminderEvidence {
     this.attempts = const [],
   });
 
-  factory ReminderEvidence.fromJson(Map<String, dynamic> json) =>
-      ReminderEvidence(
-        intentId: json['intent_id'] as String,
-        level: (json['level'] as num).toInt(),
-        origin: json['origin'] as String? ?? 'legacy',
-        status: json['status'] as String? ?? 'legacy_unknown',
-        preparedAt: DateTime.parse(json['prepared_at'] as String).toLocal(),
-        collectibleCents: (json['collectible_cents'] as num?)?.toInt(),
-        currency: json['currency'] as String?,
-        attempts: [
-          for (final attempt in (json['attempts'] as List? ?? const []))
-            ReminderAttempt.fromJson(Map<String, dynamic>.from(attempt as Map)),
-        ],
-      );
+  factory ReminderEvidence.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'invoice_reminder_evidence');
+    return ReminderEvidence(
+      intentId: r.string('intent_id'),
+      level: r.integer('level'),
+      origin: r.stringOr('origin', 'legacy'),
+      status: r.stringOr('status', 'legacy_unknown'),
+      preparedAt: r.dateTime('prepared_at').toLocal(),
+      collectibleCents: r.intOrNull('collectible_cents'),
+      currency: r.stringOrNull('currency'),
+      attempts:
+          r.objects('attempts', (row) => ReminderAttempt.fromJson(row.json)),
+    );
+  }
 
   final String intentId;
   final int level;

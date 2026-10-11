@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import '../../../core/data/json_reader.dart';
+
 /// Mahnwesen (#472): the parameterizable dunning policy of a workspace,
 /// stored in `workspaces.dunning_rules` (migration 0093) — and the pure
 /// suggestion rule derived from it. A human sends reminders unless the
@@ -16,10 +18,9 @@ class DunningRules {
   });
 
   factory DunningRules.fromJson(Map<String, dynamic> json) {
-    int read(String key, int fallback, {int min = 1, int max = 365}) {
-      final v = (json[key] as num?)?.toInt() ?? fallback;
-      return v.clamp(min, max);
-    }
+    final r = JsonReader(json, context: 'dunning_rules');
+    int read(String key, int fallback, {int min = 1, int max = 365}) =>
+        (r.intOrNull(key) ?? fallback).clamp(min, max);
 
     return DunningRules(
       levels: read(keyLevels, 3, max: 9),
@@ -27,7 +28,7 @@ class DunningRules {
       betweenDays: read(keyBetweenDays, 14),
       // #1913: automation is an explicit owner choice; a missing key
       // means off, never on.
-      automatic: json[keyAutomatic] == true,
+      automatic: r.boolOr(keyAutomatic, false),
     );
   }
 

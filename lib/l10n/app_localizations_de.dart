@@ -11835,6 +11835,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Erlauben Sie sie unter System-Einstellungen → Apps → DesKilo → Benachrichtigungen — das Icon-Badge braucht sie.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Noch nicht gespeichert: Bis diese Serie gespeichert ist, erhalten Gutschriften Rechnungsnummern.';
+
+  @override
   String get numberSequenceDateNone => 'Keins';
 
   @override
@@ -14156,6 +14160,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalSession =>
       'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
+
+  @override
+  String get refusalVatRateVersioned =>
+      'Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.';
 
   @override
   String get regionalClock => 'Uhr';

@@ -102,5 +102,6 @@
   },
   "numberSequenceResetLimited": "Un número se reinicia como mucho tan a menudo como muestra su fecha; si no, volvería a emitir un número anterior.",
   "numberSequenceResetWasInvalid": "Esta serie se reiniciaba más a menudo de lo que muestra su fecha. Guarde para mantener un reinicio que no repita ningún número.",
-  "numberSequenceDateRemovalBlocked": "Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambie también el prefijo o el sufijo."
+  "numberSequenceDateRemovalBlocked": "Ya se emitieron números con la fecha. Quitarla podría repetir uno: cambie también el prefijo o el sufijo.",
+  "numberSequenceCreditNoteUnsaved": "Aún sin guardar: mientras esta serie no se guarde, los abonos toman números de factura."
 }

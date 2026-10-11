@@ -20,6 +20,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import 'blocked_people_card.dart';
 import 'linked_visibility_card.dart';
 import 'visibility_card.dart';
+import '../../../core/help/guide_site.dart';
 
 class MeAccountTab extends ConsumerStatefulWidget {
   const MeAccountTab({super.key});
@@ -112,7 +113,13 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
           ...accountSettingsTiles(context, ref,
               only: AccountTileGroup.installations),
           const Divider(),
-          door('me-help', Icons.help_outline, l10n?.helpTitle ?? 'Help', '/help'),
+          ListTile(
+            key: const ValueKey('me-help'),
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n?.helpTitle ?? 'Help'),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => openGuide(ref, context),
+          ),
           _header(words.uxPrivacySection, 1),
           const VisibilityCard(),
           const LinkedVisibilityCard(),

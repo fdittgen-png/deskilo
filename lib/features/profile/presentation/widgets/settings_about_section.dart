@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/app_info.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -9,6 +8,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import 'settings_section_header.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/help/guide_site.dart';
 
 // About-section facts (#560): proper nouns and URLs, identical in every
 // UI language — consts like the endonyms, not l10n keys.
@@ -35,13 +35,12 @@ List<Widget> aboutSettingsTiles(
       [
           const Divider(),
           SettingsSectionHeader(l10n?.settingsSectionHelpAbout ?? 'Help & about'),
-          // In-app help: the wiki user guide bundled as an offline asset,
-          // in the app's language. Available to every member.
+          // The guide site, in the app's language. Available to every member.
           ListTile(
             key: const ValueKey('settings-help'),
             leading: const Icon(Icons.help_outline),
             title: Text(l10n?.helpTitle ?? 'Help'),
-            onTap: () => context.push('/help'),
+            onTap: () => openGuide(ref, context),
           ),
           ListTile(
             key: const ValueKey('about-version'),

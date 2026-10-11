@@ -7257,6 +7257,7 @@
   "notifUngroup": "Rimuovi raggruppamento",
   "notificationsSystemOff": "Android sta bloccando le notifiche di DesKilo",
   "notificationsSystemOffHint": "Le consenta in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell'icona ne ha bisogno.",
+  "numberSequenceCreditNoteUnsaved": "Non ancora salvata: finché questa serie non viene salvata, le note di credito prendono numeri di fattura.",
   "numberSequenceDateNone": "Nessuna",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -8716,6 +8717,10 @@
   },
   "refusalPermission": "Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
+  "refusalVatRateVersioned": "Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
+  },
   "regionalClock": "Orologio",
   "@regionalClock": {
     "description": "#711 - globalization"

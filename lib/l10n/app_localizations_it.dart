@@ -11825,6 +11825,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le consenta in Impostazioni di sistema → App → DesKilo → Notifiche — il badge dell\'icona ne ha bisogno.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Non ancora salvata: finché questa serie non viene salvata, le note di credito prendono numeri di fattura.';
+
+  @override
   String get numberSequenceDateNone => 'Nessuna';
 
   @override
@@ -14135,6 +14139,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalSession =>
       'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
+
+  @override
+  String get refusalVatRateVersioned =>
+      'Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.';
 
   @override
   String get regionalClock => 'Orologio';

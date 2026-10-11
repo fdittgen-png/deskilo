@@ -32,6 +32,11 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// #831 — on a settlement, the number of the source invoice this
     /// position was carried over from; '' on every other document.
     @Default('') String sourceNumber,
+
+    /// #2356 — the EN 16931 category the server froze on this line (S, Z,
+    /// E, O, AE, G; 0403); '' on a line issued before it, where readers
+    /// derive the category from the rate and the regime as they always did.
+    @Default('') String vatCategory,
   }) = _InvoiceLine;
 }
 
@@ -224,6 +229,7 @@ sealed class SettledSource with _$SettledSource {
               amountCents: (line['amount_cents'] as num?)?.toInt() ?? 0,
               vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
               sourceNumber: line['source_number'] as String? ?? '',
+              vatCategory: line['vat_category'] as String? ?? '',
             ),
         ],
       );
@@ -405,6 +411,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
           amountCents: (line['amount_cents'] as num).toInt(),
           vatPercent: (line['vat_percent'] as num?)?.toDouble() ?? 0,
           sourceNumber: line['source_number'] as String? ?? '',
+          vatCategory: line['vat_category'] as String? ?? '',
         ),
     ],
     kind: InvoiceKind.fromWire(row['kind'] as String?),

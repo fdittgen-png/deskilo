@@ -43,7 +43,10 @@ void main() {
         final source = SupabaseWorkbookOriginRepository(client);
         final origin = await source.read();
         expect(origin.installationId, row['installation']);
-        expect(origin.accountId, (row['session'] as Map)['user']['id']);
+        expect(
+          origin.accountId,
+          ((row['session'] as Map)['user'] as Map)['id'],
+        );
         await client.auth.refreshSession();
         expect(origin.sameContext(await source.read()), true,
           reason: 'refresh retains the same target, account and Auth session');

@@ -8,6 +8,7 @@
 // Pure Dart: the CLI, the exports and the handoff import it.
 
 import '../../../core/i18n/currencies.dart';
+import '../../../core/data/json_reader.dart';
 
 /// Why an amount, a rate or a conversion was refused. Typed, so a
 /// consumer can block one document instead of guessing.
@@ -180,15 +181,21 @@ class AccountingAmount {
   /// The wire form: the minor units travel as a STRING, so no JSON
   /// reader can round them, beside the currency and its exponent.
   factory AccountingAmount.fromJson(Map<String, Object?> json) {
-    final code = '${json['currency']}';
+    final r = JsonReader(json, context: 'accounting_amount');
+    final code = r.string('currency');
+    final minor = r.json['minor'];
     final amount = AccountingAmount(
       code,
-      _parseMinor('${json['minor']}', code),
+      _parseMinor(
+        minor is String || minor is int ? '$minor' : r.string('minor'),
+        code,
+      ),
     );
-    if (json['exponent'] != amount.exponent) {
+    final exponent = r.intOrNull('exponent');
+    if (exponent != amount.exponent) {
       throw AccountingException(
         AccountingError.unsupportedCurrency,
-        '$code with exponent ${json['exponent']}',
+        '$code with exponent $exponent',
       );
     }
     return amount;

@@ -111,5 +111,9 @@
   "numberSequenceDateRemovalBlocked": "Numbers were already issued with the date. Removing it could repeat one — change the prefix or suffix too.",
   "@numberSequenceDateRemovalBlocked": {
     "description": "Error under the date picker when removing the date could repeat an issued number (#1320)"
+  },
+  "numberSequenceCreditNoteUnsaved": "Not saved yet: until this series is saved, credit notes take invoice numbers.",
+  "@numberSequenceCreditNoteUnsaved": {
+    "description": "#2356 number sequences: numberSequenceCreditNoteUnsaved"
   }
 }

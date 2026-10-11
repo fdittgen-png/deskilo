@@ -67,7 +67,10 @@ void main() {
     const s = PublicServerProfile.baseline();
     expect(negotiatePublicOperation(s, apply).version, 1);
     expect(negotiatePublicOperation(s, register).version, 1);
-    expect(fixture('legacy_server_no_descriptor')['body']['code'], 'PGRST202');
+    expect(
+      (fixture('legacy_server_no_descriptor')['body'] as Map)['code'],
+      'PGRST202',
+    );
   });
 
   group('a synthetic newer server', () {

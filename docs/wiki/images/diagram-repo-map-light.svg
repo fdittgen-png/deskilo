@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 494" width="1200" height="494" role="img" aria-label="Map of the repository: lib holds the app, supabase holds migrations and edge functions, test holds the suite, tool and scripts hold generators, docs holds guides and decisions, web holds the browser target, and the platform runners, packages, assets, workflows, skills and store metadata each have their own folder." font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0f766e"/></marker></defs>
+<rect width="1200" height="494" fill="#fdfcf9"/>
+<text x="40" y="44" font-size="20" font-weight="700" fill="#1b2236">The repository, folder by folder</text>
+<rect x="40" y="76" width="350" height="84" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="1.8"/>
+<text x="215.0" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">lib/</text>
+<text x="215.0" y="124" text-anchor="middle" font-size="13" fill="#5a6277">the app: app, core, l10n and one folder per feature</text>
+<rect x="420" y="76" width="350" height="84" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="1.8"/>
+<text x="595.0" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">supabase/</text>
+<text x="595.0" y="124" text-anchor="middle" font-size="13" fill="#5a6277">migrations, edge functions, pgTAP tests, templates</text>
+<rect x="800" y="76" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="975.0" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">test/</text>
+<text x="975.0" y="124" text-anchor="middle" font-size="13" fill="#5a6277">unit, widget, lint ratchets, helpers and fakes</text>
+<rect x="40" y="178" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="215.0" y="204" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">tool/ and scripts/</text>
+<text x="215.0" y="226" text-anchor="middle" font-size="13" fill="#5a6277">generators, checkers, CI shell steps</text>
+<rect x="420" y="178" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="595.0" y="204" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">docs/</text>
+<text x="595.0" y="226" text-anchor="middle" font-size="13" fill="#5a6277">guides, ADRs, wiki sources, design notes</text>
+<rect x="800" y="178" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="975.0" y="204" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">web/</text>
+<text x="975.0" y="226" text-anchor="middle" font-size="13" fill="#5a6277">browser target, setup.html and its l10n</text>
+<rect x="40" y="280" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="215.0" y="306" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">android/ ios/ macos/ windows/</text>
+<text x="215.0" y="328" text-anchor="middle" font-size="13" fill="#5a6277">platform runners and installers</text>
+<rect x="420" y="280" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="595.0" y="306" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">packages/</text>
+<text x="595.0" y="328" text-anchor="middle" font-size="13" fill="#5a6277">deskilo_push and deskilo_push_foss</text>
+<rect x="800" y="280" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="975.0" y="306" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">assets/</text>
+<text x="975.0" y="328" text-anchor="middle" font-size="13" fill="#5a6277">instance bundle, help, fonts, contracts</text>
+<rect x="40" y="382" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="215.0" y="408" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">.github/</text>
+<text x="215.0" y="430" text-anchor="middle" font-size="13" fill="#5a6277">workflows, classifier, quality manifest</text>
+<rect x="420" y="382" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="595.0" y="408" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">.claude/skills/</text>
+<text x="595.0" y="430" text-anchor="middle" font-size="13" fill="#5a6277">the how-to behind each rule</text>
+<rect x="800" y="382" width="350" height="84" rx="14" fill="#ffffff" stroke="#d8e0de" stroke-width="1.8"/>
+<text x="975.0" y="408" text-anchor="middle" font-size="16" font-weight="700" fill="#1b2236">fastlane/ fdroid/ distribution/</text>
+<text x="975.0" y="430" text-anchor="middle" font-size="13" fill="#5a6277">store metadata and recipes</text>
+</svg>

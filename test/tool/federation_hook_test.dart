@@ -36,7 +36,10 @@ void main() {
       expect(request.uri.path, startsWith('/v1/projects/$ref/'));
       request.response.headers.contentType = ContentType.json;
       if (request.uri.path.endsWith('/database/query')) {
-        expect(jsonDecode(body)['query'], contains('has_function_privilege'));
+        expect(
+          (jsonDecode(body) as Map)['query'],
+          contains('has_function_privilege'),
+        );
         request.response.write(jsonEncode([{'installed': installed}]));
       } else {
         if (request.method == 'PATCH') {
