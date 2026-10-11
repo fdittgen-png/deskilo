@@ -14,6 +14,7 @@
 // Pure Dart: the catalog, the evaluator, the ranking and the comparison
 // rows are argued with in unit tests, and the gallery, the comparison
 // screen and the XLSX export (#1660/#1661) consume the same results.
+import 'package:meta/meta.dart';
 import 'template_inspection.dart';
 import 'template_preview.dart';
 import 'workspace_feature.dart';
@@ -72,6 +73,7 @@ class TemplateCapability {
 }
 
 /// The inspection's fields, indexed for the rules.
+@visibleForTesting
 class TemplateFacts {
   TemplateFacts(this.inspection)
       : _byId = {
@@ -101,12 +103,13 @@ class TemplateFacts {
   bool get unreadable => inspection.status == TemplateInspectionStatus.unknown;
 }
 
+@visibleForTesting
 String featureFieldId(WorkspaceFeature f) => 'workspace.feature_flags.${f.name}';
 
 /// A feature flag's state in a template: the explicit value, its parent
 /// chain (a child on under a parent off is conditional), and absence
 /// meaning "the target's own value", never false.
-CapabilityEvidence featureState(TemplateFacts facts, WorkspaceFeature feature) {
+CapabilityEvidence _featureState(TemplateFacts facts, WorkspaceFeature feature) {
   if (facts.unusable) return const CapabilityEvidence(CapabilityState.incompatible);
   if (facts.unreadable) return const CapabilityEvidence(CapabilityState.unknown);
   final id = featureFieldId(feature);
@@ -122,7 +125,7 @@ CapabilityEvidence featureState(TemplateFacts facts, WorkspaceFeature feature) {
   }
   final parent = featureManifest[feature]?.requires;
   if (parent != null) {
-    final up = featureState(facts, parent);
+    final up = _featureState(facts, parent);
     if (up.state == CapabilityState.disabled ||
         up.state == CapabilityState.conditional) {
       return CapabilityEvidence(CapabilityState.conditional,
@@ -183,7 +186,7 @@ CapabilityEvidence _activeRows(TemplateFacts facts, String table,
         {WorkspaceFeature? feature}) =>
     _guard(facts, () {
       if (feature != null) {
-        final f = featureState(facts, feature);
+        final f = _featureState(facts, feature);
         if (f.state == CapabilityState.disabled || f.state == CapabilityState.conditional) {
           return f;
         }
@@ -215,8 +218,8 @@ CapabilityEvidence _defined(TemplateFacts facts, List<String> ids) => _guard(fac
     });
 
 /// The curated capabilities: outcomes people search for that no single
-/// flag names. Every feature flag is a capability too (see [capabilityCatalog]).
-final List<TemplateCapability> curatedCapabilities = [
+/// flag names. Every feature flag is a capability too (see [_capabilityCatalog]).
+final List<TemplateCapability> _curatedCapabilities = [
   TemplateCapability(
     id: 'policy.multi_approval',
     synonyms: const {
@@ -302,17 +305,18 @@ final List<TemplateCapability> curatedCapabilities = [
 ];
 
 /// Every capability: the curated outcomes, then one per feature flag.
-final List<TemplateCapability> capabilityCatalog = [
-  ...curatedCapabilities,
+final List<TemplateCapability> _capabilityCatalog = [
+  ..._curatedCapabilities,
   for (final feature in WorkspaceFeature.values)
     TemplateCapability(
       id: 'feature.${feature.name}',
-      evaluate: (f) => featureState(f, feature),
+      evaluate: (f) => _featureState(f, feature),
     ),
 ];
 
+@visibleForTesting
 final Map<String, TemplateCapability> capabilityById = {
-  for (final c in capabilityCatalog) c.id: c,
+  for (final c in _capabilityCatalog) c.id: c,
 };
 
 // ── words → capabilities ─────────────────────────────────────────────
@@ -348,7 +352,7 @@ class CapabilityVocabulary {
       final n = normalizeSearch(phrase);
       if (n.isNotEmpty) _phrases.add((id: id, phrase: n));
     }
-    for (final c in capabilityCatalog) {
+    for (final c in _capabilityCatalog) {
       add(c.id, c.id);
       for (final list in c.synonyms.values) {
         for (final p in list) {

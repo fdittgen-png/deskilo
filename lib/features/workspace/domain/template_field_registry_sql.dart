@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'template_field_registry.dart';
@@ -18,6 +19,7 @@ import 'template_field_registry.dart';
 /// One record per line, keys in a fixed order, empty lists and nulls
 /// left out: the literal is diffable by a person, and its md5 is the
 /// registry revision the inspection reports.
+@visibleForTesting
 String templateFieldRegistryJson() {
   final lines = <String>[];
   for (final s in templateFieldRegistry()) {

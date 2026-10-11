@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:meta/meta.dart';
 import '../../../core/instance/schema_compatibility.dart';
 import 'feature_lifecycle.dart';
 import 'workspace_feature.dart';
@@ -15,6 +16,7 @@ import 'workspace_feature.dart';
 /// answer the matrix pinned in feature_operation_test.dart and pgTAP 110.
 /// The class never decides WHO may act — that stays with the permission
 /// checks of each operation.
+@visibleForTesting
 enum FeatureOperation {
   acceptNew('accept_new'),
   serviceExisting('service_existing'),
@@ -56,6 +58,7 @@ bool featureOperationAllowed({
 ///
 /// Settlement callbacks (payment webhooks, refunds) carry no feature
 /// gate at all: money already committed is always settled.
+@visibleForTesting
 const Map<WorkspaceFeature, Map<String, FeatureOperation>>
 featureOperationClasses = {
   // 0324
@@ -81,6 +84,7 @@ featureOperationClasses = {
 /// The server schema from which [feature]'s classes hold: an older server
 /// still stops existing work with the switch, so nothing may claim
 /// otherwise against it.
+@visibleForTesting
 const Map<WorkspaceFeature, int> featureOperationSince = {
   WorkspaceFeature.spaceInquiries: 324,
   WorkspaceFeature.customRoles: 356,

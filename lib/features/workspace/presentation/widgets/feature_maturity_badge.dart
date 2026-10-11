@@ -31,7 +31,7 @@ String featureMaturityLabel(AppLocalizations? l10n, FeatureMaturity m) =>
       FeatureMaturity.stable => l10n?.featureMaturityStable ?? 'Stable',
     };
 
-String featureLifecycleLabel(AppLocalizations? l10n, FeatureLifecycle l) =>
+String _featureLifecycleLabel(AppLocalizations? l10n, FeatureLifecycle l) =>
     switch (l) {
       FeatureLifecycle.active => l10n?.featureLifecycleActive ?? 'Active',
       FeatureLifecycle.deprecated =>
@@ -44,7 +44,7 @@ String featureMaturityFilterLabel(
   FeatureMaturityFilter f,
 ) => switch (f) {
   FeatureMaturityFilter.all => l10n?.featureMaturityFilterAll ?? 'All stages',
-  FeatureMaturityFilter.deprecated => featureLifecycleLabel(
+  FeatureMaturityFilter.deprecated => _featureLifecycleLabel(
     l10n,
     FeatureLifecycle.deprecated,
   ),
@@ -64,7 +64,7 @@ class FeatureMaturityBadge extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final maturity = featureMaturityLabel(l10n, assessment.maturity);
-    final lifecycle = featureLifecycleLabel(l10n, assessment.lifecycle);
+    final lifecycle = _featureLifecycleLabel(l10n, assessment.lifecycle);
     final reviewed = assessment.maturity != FeatureMaturity.unreviewed;
     final semantics =
         l10n?.featureMaturitySemantics(maturity, lifecycle) ??

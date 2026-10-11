@@ -2,6 +2,7 @@
 //
 // #1280 S3 — publishing this workspace as a template (ADR 0024: the sheet
 // says what was chosen; this decides the request and what it makes stale).
+import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/template_publication.dart';
@@ -15,6 +16,7 @@ Future<TemplatePublication> publicationPreview(
     ref.read(workspaceRepositoryProvider).templatePublicationPreview(workspaceId);
 
 /// The save's explicit opt-in for invitation texts (0279).
+@visibleForTesting
 const invitationTextsChoice = 'invitation_texts';
 
 /// Whether [error] is the server refusing an invitation text that still

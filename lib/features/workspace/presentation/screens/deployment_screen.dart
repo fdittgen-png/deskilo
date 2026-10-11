@@ -122,7 +122,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
             : (l10n?.deploymentConfirmTitleProd ?? 'Deploy into this PROD?')),
         content: Text(
           '${l10n?.deploymentConfirmBody ?? 'What this workspace holds for the ticked entities is replaced by the twin\'s. The journal keeps the way back.'}\n\n'
-          '${entities.map((e) => deploymentEntityName(l10n, e)).join(', ')}',
+          '${entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
         ),
         actions: [
           TextButton(
@@ -272,12 +272,12 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                       CheckboxListTile(
                         key: ValueKey('deploy-entity-${entity.key}'),
                         value: _selected.contains(entity.key),
-                        title: Text(deploymentEntityName(l10n, entity.key)),
+                        title: Text(_deploymentEntityName(l10n, entity.key)),
                         subtitle: entity.requires.isEmpty
                             ? null
                             : Text(
                                 '${l10n?.deploymentRequires ?? 'needs'} '
-                                '${entity.requires.map((r) => deploymentEntityName(l10n, r)).join(', ')}'),
+                                '${entity.requires.map((r) => _deploymentEntityName(l10n, r)).join(', ')}'),
                         onChanged: _busy || twin == null || !allowed
                             ? null
                             : (v) => _toggle(entity.key, v ?? false),
@@ -320,7 +320,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
                         : Icons.arrow_downward),
                     title: Text(
                       '${d.direction == DeploymentDirection.devToProd ? (l10n?.deploymentDirectionToProd ?? 'To production') : (l10n?.deploymentDirectionToDev ?? 'To development')}'
-                      ' · ${d.entities.map((e) => deploymentEntityName(l10n, e)).join(', ')}',
+                      ' · ${d.entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
                     ),
                     subtitle: Text([
                       if (d.actorName.isNotEmpty) d.actorName,
@@ -381,7 +381,7 @@ class _PreviewSheet extends StatelessWidget {
                     ListTile(
                       key: ValueKey('deploy-preview-${e.key}'),
                       dense: true,
-                      title: Text(deploymentEntityName(l10n, e.key)),
+                      title: Text(_deploymentEntityName(l10n, e.key)),
                       subtitle: Text(e.isNoop
                           ? (l10n?.deploymentNoChange ?? 'No change')
                           : '+${e.added} · ~${e.changed} · −${e.removed}'),
@@ -425,7 +425,7 @@ class _PreviewSheet extends StatelessWidget {
 }
 
 /// #988 — the entity's name in the reader's language.
-String deploymentEntityName(AppLocalizations? l10n, String key) =>
+String _deploymentEntityName(AppLocalizations? l10n, String key) =>
     switch (key) {
       'identity' => l10n?.deployEntityIdentity ?? 'Identity & legal',
       'vat' => l10n?.deployEntityVat ?? 'VAT',

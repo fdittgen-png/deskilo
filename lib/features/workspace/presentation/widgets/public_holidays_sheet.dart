@@ -21,7 +21,7 @@ import '../../providers/workspace_providers.dart';
 
 /// The localized name of a holiday the SERVER named. The key travels
 /// between the two sides; the word never does.
-String holidayName(AppLocalizations? l10n, String key) => switch (key) {
+String _holidayName(AppLocalizations? l10n, String key) => switch (key) {
       'newYear' => l10n?.holidayNewYear ?? 'New Year',
       'easterMonday' => l10n?.holidayEasterMonday ?? 'Easter Monday',
       'labourDay' => l10n?.holidayLabourDay ?? 'Labour Day',
@@ -48,22 +48,22 @@ Future<void> showPublicHolidaysSheet(
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => PublicHolidaysSheet(command: command),
+      builder: (_) => _PublicHolidaysSheet(command: command),
     );
 
-class PublicHolidaysSheet extends ConsumerStatefulWidget {
-  const PublicHolidaysSheet({super.key, required this.command});
+class _PublicHolidaysSheet extends ConsumerStatefulWidget {
+  const _PublicHolidaysSheet({required this.command});
 
   /// The decision, handed in. This widget renders an answer and asks for
   /// a confirmation; it does not know what a repository is (#1234).
   final PublicHolidayGeneration command;
 
   @override
-  ConsumerState<PublicHolidaysSheet> createState() =>
+  ConsumerState<_PublicHolidaysSheet> createState() =>
       _PublicHolidaysSheetState();
 }
 
-class _PublicHolidaysSheetState extends ConsumerState<PublicHolidaysSheet> {
+class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
   late int _year = ref.read(clockProvider).now().year;
   HolidayGeneration? _preview;
   bool _busy = false;
@@ -218,7 +218,7 @@ class _PublicHolidaysSheetState extends ConsumerState<PublicHolidaysSheet> {
                               : d.present
                                   ? Icons.check
                                   : Icons.event_busy_outlined),
-                          title: Text(holidayName(l10n, d.key)),
+                          title: Text(_holidayName(l10n, d.key)),
                           subtitle: Text(DateFormat.yMMMMd(locale).format(d.day)),
                           trailing: d.locked
                               ? Text(l10n?.publicHolidaysLocked ??

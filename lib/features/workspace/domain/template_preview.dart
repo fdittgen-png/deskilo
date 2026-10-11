@@ -6,6 +6,7 @@
 // The client never compares configurations itself: the server's
 // change-set is the one the apply will perform, so a preview drawn from
 // anything else could promise a change that does not happen.
+import 'package:meta/meta.dart';
 import 'workspace_feature.dart';
 
 /// The groups a template is applied by — the only vocabulary the UI shows
@@ -172,6 +173,7 @@ class TemplatePreview {
 /// A `workspace` item carries the whole map before and after; the delta
 /// is computed here, once, from the server's own two maps — never from a
 /// copy of the row the client holds (#1329 decision 2).
+@visibleForTesting
 Map<String, bool> featureChangesOf(List<dynamic>? items) {
   final out = <String, bool>{};
   for (final item in items ?? const <Object?>[]) {

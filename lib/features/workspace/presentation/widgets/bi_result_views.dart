@@ -13,7 +13,7 @@ import '../../domain/bi_result.dart';
 import '../../domain/kpi_contract.dart';
 import 'capacity_evidence.dart';
 
-String biRowLabel(BiRow row, AppLocalizations? l10n) => row.isTotal
+String _biRowLabel(BiRow row, AppLocalizations? l10n) => row.isTotal
     ? l10n?.biTotal ?? 'Total'
     : row.isRemainder
     ? l10n?.biRemainder ?? 'Not in a current group'
@@ -78,7 +78,7 @@ class BiRows extends StatelessWidget {
           for (final row in rows)
             TableRow(
               children: [
-                cell([biRowLabel(row, l10n),
+                cell([_biRowLabel(row, l10n),
                   biQualityLabel(row.current.quality, l10n)]
                   .where((s) => s.isNotEmpty).join(' · '),
                   style: row.isTotal ? bold : null),
@@ -126,7 +126,7 @@ class BiRows extends StatelessWidget {
           Semantics(
             container: true,
             label: [
-              biRowLabel(row, l10n),
+              _biRowLabel(row, l10n),
               biQualityLabel(row.current.quality, l10n),
               format(row.current.value(aggregation)),
               if (comparedLabel != null) ...[
@@ -142,7 +142,7 @@ class BiRows extends StatelessWidget {
                 children: [
                   // Text first: the value never depends on colour alone.
                   Text(
-                    '${biRowLabel(row, l10n)}: '
+                    '${_biRowLabel(row, l10n)}: '
                     '${format(row.current.value(aggregation))}'
                     '${comparedLabel == null ? '' : ' · $comparedLabel '
                               '${format(row.compared?.value(aggregation))} '

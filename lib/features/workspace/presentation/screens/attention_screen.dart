@@ -106,7 +106,7 @@ class _Row extends StatelessWidget {
       key: const ValueKey('attention-chevron-right'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(_iconFor(item.kind)),
-      title: Text(attentionTitle(l10n, item), style: theme.textTheme.bodyLarge),
+      title: Text(_attentionTitle(l10n, item), style: theme.textTheme.bodyLarge),
       subtitle: Text(l10n.attentionWaitingSince(since)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => context.push(attentionRoute(item)),
@@ -123,7 +123,7 @@ class _Row extends StatelessWidget {
 }
 
 /// The sentence a line reads, in the reader's language.
-String attentionTitle(AppLocalizations l10n, Attention item) =>
+String _attentionTitle(AppLocalizations l10n, Attention item) =>
     switch (item.action) {
       AttentionAction.decide =>
         l10n.attentionDecide(eventTypeWord(l10n, item.subject)),
@@ -144,6 +144,7 @@ String attentionTitle(AppLocalizations l10n, Attention item) =>
 
 /// Where a tap takes the person: the screen where that decision is made.
 /// Each route's own redirect handles a feature or permission that is off.
+@visibleForTesting
 String attentionRoute(Attention item) =>
     item.route ??
     switch (item.action) {

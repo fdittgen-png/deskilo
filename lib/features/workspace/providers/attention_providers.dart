@@ -40,7 +40,7 @@ part 'attention_providers.g.dart';
 /// A payment awaiting confirmation delays cash; a join request delays a
 /// person. Both are decisions, and the design ranks them differently
 /// because what the delay costs is different.
-bool isMoneyEvent(EventType type) => const {
+bool _isMoneyEvent(EventType type) => const {
       EventType.payment,
       EventType.invoicePayment,
       EventType.expense,
@@ -69,7 +69,7 @@ Future<List<Attention>> attention(Ref ref) async {
     items.add(
       Attention(
         kind:
-            isMoneyEvent(event.type) ? AttentionKind.money : AttentionKind.person,
+            _isMoneyEvent(event.type) ? AttentionKind.money : AttentionKind.person,
         subject: event.type.dbName,
         action: AttentionAction.decide,
         waitingSince: event.createdAt,

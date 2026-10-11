@@ -55,7 +55,7 @@ final class CreationDraftStoreProvider
 }
 
 String _$creationDraftStoreHash() =>
-    r'9bc16bed57a9ac2e5b5db94be1a325150194ddf5';
+    r'bfc102863ae9d3e8028fd94391109ee343835002';
 
 @ProviderFor(creationDrafts)
 final creationDraftsProvider = CreationDraftsProvider._();
