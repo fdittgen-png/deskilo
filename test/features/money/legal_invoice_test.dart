@@ -8,6 +8,10 @@
 // modalités de règlement, mentions particulières).
 
 import 'package:deskilo/features/money/domain/report_strings.dart';
+import 'package:deskilo/features/money/domain/invoice_clauses.dart';
+import 'package:deskilo/features/money/domain/payment_terms.dart';
+import 'package:deskilo/features/money/domain/vat_compliance.dart';
+import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
@@ -55,6 +59,55 @@ void main() {
             defaultBandsForDoc(doc, null).header);
       });
     }
+  });
+
+  // #2356 — the gate (0408) opens for every member state: each has its
+  // statutory mentions and a payment-clause profile here; the zero
+  // category, the currency rule and a real create_invoice run per country
+  // are pgTAP 170.
+  group('every EU member state issues with its mentions and clauses (#2356)', () {
+    const owner = PaymentTerms(
+      paymentTerms: 'Payment within 30 days.',
+      latePenalty: 'Late interest at the statutory rate.',
+      recoveryIndemnity: 'Fixed recovery indemnity: €40.',
+    );
+    for (final country in euMemberStates) {
+      test(country, () {
+        LegalClauseSnapshot snap(CustomerCapacity capacity) =>
+            LegalClauseSnapshot(
+              sellerCountry: country,
+              buyerCapacity: capacity,
+              clauses: owner,
+            );
+        final business =
+            qualifyClauses(snap(CustomerCapacity.business), const ReportStrings());
+        expect(business.profile, isNot(LegalProfile.unsupported));
+        expect(business.deficiencies, isNot(contains('profile_unsupported')));
+        // Directive 2011/7/EU: the indemnity is a business debtor's.
+        expect(business.recoveryIndemnity.text, isNotEmpty);
+        final consumer =
+            qualifyClauses(snap(CustomerCapacity.consumer), const ReportStrings());
+        expect(consumer.recoveryIndemnity.text, isEmpty);
+        // The statutory mentions: the small-business exemption, outside
+        // the scope, and the reverse charge (art. 226(11) and (11a)).
+        expect(defaultExemptionMention(country, VatRegime.exempt), isNotEmpty);
+        expect(defaultExemptionMention(country, VatRegime.notSubject), isNotEmpty);
+        expect(defaultExemptionMention(country, VatRegime.vatRegistered), isEmpty);
+        expect(reverseChargeMention(country), contains('196'));
+      });
+    }
+    test('outside the Union nothing is automatic', () {
+      for (final country in ['CH', 'NO', 'GB', 'US']) {
+        expect(
+          legalProfileOf(LegalClauseSnapshot(
+            sellerCountry: country,
+            buyerCapacity: CustomerCapacity.business,
+          )),
+          LegalProfile.unsupported,
+          reason: country,
+        );
+      }
+    });
   });
 
   group('the shipped invoice presets are legally complete (#480)', () {

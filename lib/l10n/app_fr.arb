@@ -5289,6 +5289,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "L'identifiant fiscal du membre : le NIF d'un client professionnel en Espagne, le codice fiscale ou la partita IVA d'un client en Italie, le SIREN d'un client professionnel en France",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "Le numéro de TVA du membre (requis pour l'autoliquidation)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -5297,11 +5301,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "La TVA dans la monnaie nationale : un vendeur d'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "L'adresse postale de l'espace (rue ou ville)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Le pays de l'espace doit être la France ou l'Allemagne pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'espace (le champ d'immatriculation porte la Steuernummer ou le NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

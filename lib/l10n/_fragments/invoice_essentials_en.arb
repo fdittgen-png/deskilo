@@ -32,7 +32,7 @@
   "@invoiceEssentialsRefused": {
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
-  "invoiceMissingSellerCountry": "The workspace country must be France or Germany for issuing here — other countries are issued outside the app",
+  "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app",
   "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "invoiceMissingVatNotRegistered": "No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory",
@@ -43,5 +43,17 @@
     "description": "#1917 essentials key vat_charged_not_registered (0393)"
   },
   "invoiceMissingVatTreatment": "Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
-  "invoiceExternalIssuingTitle": "Issue this invoice outside the app"
+  "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
+  "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
+  "invoiceMissingBuyerTaxId": "The member's tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
+  "invoiceMissingNationalCurrency": "The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  }
 }

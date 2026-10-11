@@ -23,9 +23,13 @@
 //     needs review: it may not override consumer protection.
 //   * Capacity not stated — no automatic clause; the owner's texts print
 //     and are flagged for review.
-//   * Any other seller country — no reviewed profile: nothing automatic,
-//     the owner's texts print flagged, and the EU recovery indemnity is
-//     not printed outside the EU.
+//   * Any other EU member state (#2356) — Directive 2011/7/EU gives every
+//     member state the €40 recovery indemnity and statutory interest
+//     between businesses, by law, without making them an invoice mention:
+//     the owner's texts print, as for Germany; a consumer never gets the
+//     indemnity.
+//   * Outside the EU — no reviewed profile: nothing automatic, the owner's
+//     texts print flagged, and no EU recovery indemnity.
 //
 // Every profile is `requiresReview`: these rules are the documented
 // statutory references, not an authoritative legal review. A profile
@@ -63,10 +67,14 @@ enum LegalProfile {
   deBusiness,
   deConsumer,
 
+  /// #2356 — any other EU member state, under Directive 2011/7/EU.
+  euBusiness,
+  euConsumer,
+
   /// The seller's country has no profile here; nothing is automatic.
   unsupported,
 
-  /// FR or DE with the capacity not stated.
+  /// An EU seller with the capacity not stated.
   capacityUnknown,
 }
 
@@ -245,12 +253,14 @@ class LegalClauseSnapshot {
 @visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
-  if (country != 'FR' && country != 'DE') return LegalProfile.unsupported;
+  if (!isEuCountry(country)) return LegalProfile.unsupported;
   return switch ((country, snapshot.buyerCapacity)) {
     ('FR', CustomerCapacity.business) => LegalProfile.frBusiness,
     ('FR', CustomerCapacity.consumer) => LegalProfile.frConsumer,
     ('DE', CustomerCapacity.business) => LegalProfile.deBusiness,
     ('DE', CustomerCapacity.consumer) => LegalProfile.deConsumer,
+    (_, CustomerCapacity.business) => LegalProfile.euBusiness,
+    (_, CustomerCapacity.consumer) => LegalProfile.euConsumer,
     _ => LegalProfile.capacityUnknown,
   };
 }
@@ -300,14 +310,16 @@ QualifiedClauses qualifyClauses(
       ),
       escompte: owned(own.escompte, orDefault: strings.escompteDefault),
     ),
-    LegalProfile.deBusiness => QualifiedClauses(
+    LegalProfile.deBusiness || LegalProfile.euBusiness => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: owned(own.latePenalty, orDefault: ''),
       recoveryIndemnity: owned(own.recoveryIndemnity, orDefault: ''),
       escompte: owned(own.escompte, orDefault: ''),
     ),
-    LegalProfile.frConsumer || LegalProfile.deConsumer => QualifiedClauses(
+    LegalProfile.frConsumer ||
+    LegalProfile.deConsumer ||
+    LegalProfile.euConsumer => QualifiedClauses(
       profile: profile,
       paymentTerms: terms,
       latePenalty: review(own.latePenalty),

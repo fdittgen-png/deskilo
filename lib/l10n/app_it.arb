@@ -5289,6 +5289,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerTaxId": "L'identificativo fiscale del membro: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia",
+  "@invoiceMissingBuyerTaxId": {
+    "description": "#2356: invoiceMissingBuyerTaxId"
+  },
   "invoiceMissingBuyerVatId": "La partita IVA del socio (necessaria per il reverse charge)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
@@ -5297,11 +5301,19 @@
   "@invoiceMissingExemptionReason": {
     "description": "#1916 invoice essentials: invoiceMissingExemptionReason"
   },
+  "invoiceMissingNationalCurrency": "L'IVA nella valuta nazionale: un venditore di uno Stato membro fuori dall'euro fattura qui l'IVA nella propria valuta (art. 230 della direttiva IVA)",
+  "@invoiceMissingNationalCurrency": {
+    "description": "#2356: invoiceMissingNationalCurrency"
+  },
   "invoiceMissingSellerAddress": "L'indirizzo postale dello spazio (via o città)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere Francia o Germania per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingSellerTaxNumber": "La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)",
+  "@invoiceMissingSellerTaxNumber": {
+    "description": "#2356: invoiceMissingSellerTaxNumber"
+  },
   "invoiceMissingSellerVatId": "Il numero di partita IVA dello spazio",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"

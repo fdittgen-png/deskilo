@@ -8138,6 +8138,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMissingBuyerName => 'The member\'s name or company';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'The member\'s VAT number (needed for reverse charge)';
 
@@ -8146,12 +8150,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'The legal basis for the VAT exemption';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'The workspace\'s postal address (street or city)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'The workspace country must be France or Germany for issuing here — other countries are issued outside the app';
+      'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)';
 
   @override
   String get invoiceMissingSellerVatId =>

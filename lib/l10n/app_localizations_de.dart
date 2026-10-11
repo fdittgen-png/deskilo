@@ -8209,6 +8209,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
 
   @override
+  String get invoiceMissingBuyerTaxId =>
+      'Die Steuerkennung des Mitglieds: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich';
+
+  @override
   String get invoiceMissingBuyerVatId =>
       'Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)';
 
@@ -8217,12 +8221,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Rechtsgrundlage der Umsatzsteuerbefreiung';
 
   @override
+  String get invoiceMissingNationalCurrency =>
+      'Die Mehrwertsteuer in Landeswährung: ein Verkäufer aus einem Mitgliedstaat außerhalb des Euro stellt die Steuer hier in seiner eigenen Währung in Rechnung (Art. 230 MwStSystRL)';
+
+  @override
   String get invoiceMissingSellerAddress =>
       'Die Postanschrift des Arbeitsbereichs (Straße oder Ort)';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'Das Land des Arbeitsbereichs muss Frankreich oder Deutschland sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+      'Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt';
+
+  @override
+  String get invoiceMissingSellerTaxNumber =>
+      'Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)';
 
   @override
   String get invoiceMissingSellerVatId =>

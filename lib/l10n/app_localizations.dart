@@ -13998,6 +13998,12 @@ abstract class AppLocalizations {
   /// **'The member\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #2356: invoiceMissingBuyerTaxId
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
+  String get invoiceMissingBuyerTaxId;
+
   /// #1916 invoice essentials: invoiceMissingBuyerVatId
   ///
   /// In en, this message translates to:
@@ -14010,6 +14016,12 @@ abstract class AppLocalizations {
   /// **'The legal basis for the VAT exemption'**
   String get invoiceMissingExemptionReason;
 
+  /// #2356: invoiceMissingNationalCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT in the national currency: a seller in a member state outside the euro invoices VAT in its own currency here (art. 230 of the VAT Directive)'**
+  String get invoiceMissingNationalCurrency;
+
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
   /// In en, this message translates to:
@@ -14019,8 +14031,14 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingSellerCountry.
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be France or Germany for issuing here — other countries are issued outside the app'**
+  /// **'The workspace country must be a member state of the European Union for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
+
+  /// #2356: invoiceMissingSellerTaxNumber
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
+  String get invoiceMissingSellerTaxNumber;
 
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
