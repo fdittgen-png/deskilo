@@ -51,16 +51,6 @@ const setupFamily = Family('setup', 'docs/guide/setup', {
 
 const families = [userFamily, setupFamily];
 
-/// Kept for the user family's callers.
-const chaptersDir = 'docs/guide/user';
-const guideFiles = <String, String>{
-  'en': 'User-Guide.md',
-  'fr': 'Guide-utilisateur.md',
-  'de': 'Benutzerhandbuch.md',
-  'es': 'Guia-de-usuario.md',
-  'it': 'Guida-utente.md',
-};
-
 /// Words of the skeleton's audience line, per language.
 const audienceWord = {'en': 'Audience', 'fr': 'Public', 'de': 'Zielgruppe', 'es': 'Público', 'it': 'Destinatari'};
 

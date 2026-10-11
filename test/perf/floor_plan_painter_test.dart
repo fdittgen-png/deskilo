@@ -120,7 +120,7 @@ Size sizeOf(FloorPlan plan) {
 /// `flutter_test`'s own `paints` matcher uses. Every call the painter
 /// makes lands here and nothing is drawn, so the count is exactly the
 /// work and nothing else.
-class CountingCanvas implements Canvas {
+class _CountingCanvas implements Canvas {
   final Map<String, int> calls = {};
 
   int get total => calls.values.fold(0, (a, b) => a + b);
@@ -139,7 +139,7 @@ class CountingCanvas implements Canvas {
 }
 
 Map<String, int> countFor(FloorPlan plan, ColorScheme scheme) {
-  final canvas = CountingCanvas();
+  final canvas = _CountingCanvas();
   painterFor(plan, scheme).paint(canvas, sizeOf(plan));
   return canvas.calls;
 }
