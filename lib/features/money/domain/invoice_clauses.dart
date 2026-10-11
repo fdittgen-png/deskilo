@@ -30,6 +30,7 @@
 // Every profile is `requiresReview`: these rules are the documented
 // statutory references, not an authoritative legal review. A profile
 // becomes reviewed only when someone with that authority says so.
+import 'package:meta/meta.dart';
 import 'invoice_legal.dart';
 import 'payment_terms.dart';
 import 'report_strings.dart';
@@ -241,6 +242,7 @@ class LegalClauseSnapshot {
 /// The profile [snapshot] falls under: the seller's country (where the
 /// supply is made from — the transaction law this bounded set knows) and
 /// the buyer's stated capacity.
+@visibleForTesting
 LegalProfile legalProfileOf(LegalClauseSnapshot snapshot) {
   final country = snapshot.sellerCountry.trim().toUpperCase();
   if (country != 'FR' && country != 'DE') return LegalProfile.unsupported;

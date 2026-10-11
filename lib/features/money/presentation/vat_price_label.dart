@@ -16,10 +16,10 @@ String? vatRateSuffix({
       ? rates.where((r) => r.isDefault && r.active).firstOrNull
       : rates.where((r) => r.id == vatRateId).firstOrNull;
   if (rate == null || rate.percent <= 0) return null;
-  return vatPercentText(rate.percent);
+  return _vatPercentText(rate.percent);
 }
 
 /// "20 %" / "5,5 %"-style rate text (decimal only when needed).
-String vatPercentText(double percent) => percent == percent.roundToDouble()
+String _vatPercentText(double percent) => percent == percent.roundToDouble()
     ? '${percent.toStringAsFixed(0)} %'
     : '$percent %';

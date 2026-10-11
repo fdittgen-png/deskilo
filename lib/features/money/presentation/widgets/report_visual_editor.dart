@@ -108,7 +108,7 @@ class ReportVisualLine {
   ReportImage get image => ReportImage.parse(content);
 }
 
-IconData reportLineIcon(ReportLineKind kind) => switch (kind) {
+IconData _reportLineIcon(ReportLineKind kind) => switch (kind) {
       ReportLineKind.title => Icons.title,
       ReportLineKind.section => Icons.short_text,
       ReportLineKind.text => Icons.notes,
@@ -123,7 +123,7 @@ IconData reportLineIcon(ReportLineKind kind) => switch (kind) {
       ReportLineKind.logic => Icons.code,
     };
 
-String reportLineName(ReportLineKind kind, AppLocalizations? l10n) =>
+String _reportLineName(ReportLineKind kind, AppLocalizations? l10n) =>
     switch (kind) {
       ReportLineKind.title => l10n?.reportLineTitle ?? 'Title',
       ReportLineKind.section => l10n?.reportLineSection ?? 'Section',
@@ -144,7 +144,7 @@ String reportLineName(ReportLineKind kind, AppLocalizations? l10n) =>
 /// #822 — the text style an element is EDITED in: the same one it
 /// prints in, so the in-place field is the element, not a form about
 /// it. Logic keeps the designer's monospace — it never prints.
-TextStyle reportLineEditStyle(ReportLineKind kind) => switch (kind) {
+TextStyle _reportLineEditStyle(ReportLineKind kind) => switch (kind) {
       ReportLineKind.title => ReportPage.heading,
       ReportLineKind.section => ReportPage.subheading,
       ReportLineKind.small => ReportPage.small,
@@ -519,7 +519,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       case ReportLineKind.columnsSplit:
         // Boundaries render as part of the group chrome; standalone
         // (orphaned) markers show as their name.
-        return Text(reportLineName(line.kind, AppLocalizations.of(context)),
+        return Text(_reportLineName(line.kind, AppLocalizations.of(context)),
             style: const TextStyle(
                 fontSize: 10, color: ReportPage.chrome));
     }
@@ -608,10 +608,10 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
             key: ValueKey('${(key as ValueKey).value}-${kind.name}'),
             value: kind,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(reportLineIcon(kind), size: 18),
+              Icon(_reportLineIcon(kind), size: 18),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(reportLineName(kind, l10n),
+                child: Text(_reportLineName(kind, l10n),
                     overflow: TextOverflow.ellipsis),
               ),
             ]),
@@ -648,12 +648,12 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
               maxLines: null,
               onChanged: (_) => _commitEditing(),
               // #822 — edited in the element's OWN typography.
-              style: reportLineEditStyle(line.kind),
+              style: _reportLineEditStyle(line.kind),
               decoration: const InputDecoration(
                   isDense: true, border: InputBorder.none),
             )
           else
-            Text(reportLineName(line.kind, l10n),
+            Text(_reportLineName(line.kind, l10n),
                 style: const TextStyle(
                     fontSize: 11, color: ReportPage.chrome)),
           // A Wrap, not a Row: inside a column the toolbar is narrower
@@ -661,9 +661,9 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
             _kindMenu(
               key: ValueKey('${widget.bandKey}-type-$index'),
-              tooltip: reportLineName(line.kind, l10n),
+              tooltip: _reportLineName(line.kind, l10n),
               onSelected: (kind) => _mutate(() => line.kind = kind),
-              child: Icon(reportLineIcon(line.kind),
+              child: Icon(_reportLineIcon(line.kind),
                   size: 20, color: theme.colorScheme.primary),
             ),
             IconButton(

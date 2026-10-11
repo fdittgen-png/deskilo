@@ -14,6 +14,7 @@
 // Here the command refuses, and says which refusal it was. A tracked
 // supply may not go negative: the member would be billed for units
 // nobody handed them, and the shelf would claim stock it does not have.
+import 'package:meta/meta.dart';
 import '../domain/money_repository.dart';
 import '../domain/service_item.dart';
 
@@ -53,6 +54,7 @@ bool servesQuantity(ServiceItem service, int quantity) {
 /// Whether [period] names a billing month ('yyyy-MM', month 01 to 12).
 ///
 /// The shape alone accepted `2026-00` and `2026-13`, which name no bill.
+@visibleForTesting
 bool isBillingMonth(String period) =>
     RegExp(r'^\d{4}-(0[1-9]|1[0-2])$').hasMatch(period.trim());
 

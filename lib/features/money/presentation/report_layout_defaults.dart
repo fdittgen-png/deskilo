@@ -14,7 +14,7 @@ import 'report_kind_labels.dart';
 export '../domain/report_letter_layouts.dart'
     show isPersonFacingKind, defaultLetterLayoutXml, resolveLayoutXml, LetterStrings;
 
-LetterStrings letterStringsOf(AppLocalizations? l10n) => LetterStrings(
+LetterStrings _letterStringsOf(AppLocalizations? l10n) => LetterStrings(
       creditNote: l10n?.invoicePdfCreditNote ?? 'Credit note',
       replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
       net: l10n?.vatPdfNet ?? 'Net',
@@ -63,7 +63,7 @@ String? resolveLayoutXmlFor({
     kindId: kindId,
     letterStandard: letterStandard,
     bandsDesigned: bandsDesigned,
-    strings: letterStringsOf(l10n),
+    strings: _letterStringsOf(l10n),
     countryCode: countryCode,
   );
   if (resolved == null || template.layoutFor(kindId) != null ||

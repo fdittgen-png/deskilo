@@ -145,7 +145,7 @@ class _Column extends StatelessWidget {
 
 /// Opens [invoiceId] itself, in the Money screen of the space it belongs to
 /// — a development space's invoice opens in that development space.
-Future<void> openMyInvoice(
+Future<void> _openMyInvoice(
   BuildContext context,
   WidgetRef ref,
   String workspaceId,
@@ -158,7 +158,7 @@ Future<void> openMyInvoice(
 }
 
 /// Opens the Payments face of [workspaceId] on the month of [at].
-Future<void> openMyPayment(
+Future<void> _openMyPayment(
   BuildContext context,
   WidgetRef ref,
   String workspaceId,
@@ -324,7 +324,7 @@ class _InvoiceCard extends ConsumerWidget {
       child: InkWell(
         key: ValueKey('finances-open-${invoice.id}'),
         onTap: () =>
-            openMyInvoice(context, ref, invoice.workspaceId, invoice.id),
+            _openMyInvoice(context, ref, invoice.workspaceId, invoice.id),
         child: Padding(
           padding: AppSpacing.mdAll,
           child: Row(
@@ -455,7 +455,7 @@ class _Reminders extends ConsumerWidget {
           // A reminder opens the invoice it is about, in its own space.
           onTap: workspaceId == null
               ? null
-              : () => openMyInvoice(context, ref, workspaceId, r.invoiceId),
+              : () => _openMyInvoice(context, ref, workspaceId, r.invoiceId),
         ),
       );
     }
@@ -529,7 +529,7 @@ class _Payments extends ConsumerWidget {
                       title: devIds.contains(e.workspaceId)
                           ? DevLabel(name: e.workspaceName)
                           : Text(e.workspaceName),
-                      onTap: () => openMyPayment(
+                      onTap: () => _openMyPayment(
                         context,
                         ref,
                         e.workspaceId,

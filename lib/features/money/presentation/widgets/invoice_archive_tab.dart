@@ -21,7 +21,7 @@ import 'invoice_journey_view.dart';
 
 /// Archive sort orders (field request: sort and filter by member and
 /// period).
-enum InvoiceSort { newest, member, period }
+enum _InvoiceSort { newest, member, period }
 
 /// The invoice ARCHIVE (0060): every member sees their own invoices, admins
 /// the workspace's. For issuers the archive holds CLOSED invoices only
@@ -60,7 +60,7 @@ class InvoiceArchiveTab extends ConsumerStatefulWidget {
 class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
   String? _filterMemberId;
   String? _filterPeriod;
-  InvoiceSort _sort = InvoiceSort.newest;
+  _InvoiceSort _sort = _InvoiceSort.newest;
 
   /// Cancelled (voided) invoices are hidden BY DEFAULT (#452, field
   /// request) — the chip lets issuers pull the correction trail back in.
@@ -192,8 +192,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
             (_filterPeriod == null || invoice.period == _filterPeriod))
           invoice,
     ]..sort((a, b) => switch (_sort) {
-        InvoiceSort.newest => b.issuedAt.compareTo(a.issuedAt),
-        InvoiceSort.member => a.memberName
+        _InvoiceSort.newest => b.issuedAt.compareTo(a.issuedAt),
+        _InvoiceSort.member => a.memberName
                     .toLowerCase()
                     .compareTo(b.memberName.toLowerCase()) !=
                 0
@@ -201,7 +201,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 .toLowerCase()
                 .compareTo(b.memberName.toLowerCase())
             : b.issuedAt.compareTo(a.issuedAt),
-        InvoiceSort.period =>
+        _InvoiceSort.period =>
           (b.period ?? '').compareTo(a.period ?? '') != 0
               ? (b.period ?? '').compareTo(a.period ?? '')
               : b.issuedAt.compareTo(a.issuedAt),
@@ -337,7 +337,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 ),
               ),
             ),
-            PopupMenuButton<InvoiceSort>(
+            PopupMenuButton<_InvoiceSort>(
               key: const ValueKey('invoice-sort'),
               tooltip: l10n?.invoiceSortTooltip ?? 'Sort',
               icon: const Icon(Icons.sort),
@@ -346,18 +346,18 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   key: const ValueKey('invoice-sort-newest'),
-                  value: InvoiceSort.newest,
+                  value: _InvoiceSort.newest,
                   child: Text(l10n?.invoiceSortNewest ?? 'Newest first'),
                 ),
                 if (widget.showMemberNames)
                   PopupMenuItem(
                     key: const ValueKey('invoice-sort-member'),
-                    value: InvoiceSort.member,
+                    value: _InvoiceSort.member,
                     child: Text(l10n?.invoiceSortByMember ?? 'By member'),
                   ),
                 PopupMenuItem(
                   key: const ValueKey('invoice-sort-period'),
-                  value: InvoiceSort.period,
+                  value: _InvoiceSort.period,
                   child: Text(l10n?.invoiceSortByMonth ?? 'By month'),
                 ),
               ],

@@ -20,7 +20,7 @@ import '../../domain/vat_regime.dart';
 import '../vat_tax_point_labels.dart';
 
 /// The id the dismissal is stored under.
-const String vatTaxPointNoticeId = 'vat-tax-point-fr-receipts';
+const String _vatTaxPointNoticeId = 'vat-tax-point-fr-receipts';
 
 /// Whether a space in [country] under [vatRegime] with these
 /// [invoiceLegal] settings is a French VAT-registered space that never
@@ -46,7 +46,7 @@ class VatTaxPointNotice extends ConsumerWidget {
     // Unknown until the store answers: never flash a notice already
     // dismissed.
     if (dismissed == null ||
-        dismissed.contains(vatTaxPointNoticeId) ||
+        dismissed.contains(_vatTaxPointNoticeId) ||
         !eligible) {
       return const SizedBox.shrink();
     }
@@ -60,7 +60,7 @@ class VatTaxPointNotice extends ConsumerWidget {
         actionLabel: MaterialLocalizations.of(context).okButtonLabel,
         onAction: () => ref
             .read(dismissedHelpHintsProvider.notifier)
-            .dismiss(vatTaxPointNoticeId),
+            .dismiss(_vatTaxPointNoticeId),
       ),
     );
   }

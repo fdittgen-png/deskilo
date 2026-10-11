@@ -34,6 +34,8 @@
 /// which is not public.
 library;
 
+import 'package:meta/meta.dart';
+
 /// What a produced file claims about itself. Never widen one of these
 /// without the authority's own spec in hand.
 enum FormatClaim { regulatory, exchange, subset }
@@ -94,6 +96,7 @@ class AccountingFormat {
 }
 
 /// SAF-T, invoicing subset — the OECD tree, ledger omitted on purpose.
+@visibleForTesting
 const safTFormat = AccountingFormat(
   id: 'saft',
   claim: FormatClaim.subset,
@@ -109,6 +112,7 @@ const safTFormat = AccountingFormat(
 /// partial 'C' — it is a different, complete declaration, and omitting
 /// `GeneralLedgerEntries` is what 'F' requires rather than something it
 /// tolerates.
+@visibleForTesting
 const safTPtFormat = AccountingFormat(
   id: 'saft_pt',
   claim: FormatClaim.regulatory,
@@ -121,6 +125,7 @@ const safTPtFormat = AccountingFormat(
 );
 
 /// France's flat file, the one an audit demands.
+@visibleForTesting
 const fecFormat = AccountingFormat(
   id: 'fec',
   claim: FormatClaim.regulatory,
@@ -133,7 +138,7 @@ const fecFormat = AccountingFormat(
 /// DATEV EXTF Buchungsstapel — what a German or Austrian Steuerberater
 /// imports. Switzerland is NOT here: DATEV is a German-market product
 /// and a Swiss fiduciary does not run it.
-const datevFormat = AccountingFormat(
+const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
   countries: {'DE', 'AT'},
@@ -142,7 +147,7 @@ const datevFormat = AccountingFormat(
 );
 
 /// Sage 50's audit-trail CSV — the British and Irish import shape.
-const sageFormat = AccountingFormat(
+const _sageFormat = AccountingFormat(
   id: 'sage50',
   claim: FormatClaim.exchange,
   countries: {'GB', 'IE'},
@@ -163,7 +168,7 @@ const sageFormat = AccountingFormat(
 /// Offered EVERYWHERE rather than only where nothing is mandated: an
 /// accountant in France may still prefer a readable file to an FEC, and
 /// the format claims nothing that could mislead them.
-const accountantCsvFormat = AccountingFormat(
+const _accountantCsvFormat = AccountingFormat(
   id: 'accountant_csv',
   claim: FormatClaim.exchange,
   countries: {},
@@ -178,6 +183,7 @@ const accountantCsvFormat = AccountingFormat(
 /// schema and a validator, and this is not one. It is the evidence
 /// behind the numbers, which is what an accountant or an inspector
 /// actually asks for first.
+@visibleForTesting
 const auditTrailFormat = AccountingFormat(
   id: 'audit_trail',
   claim: FormatClaim.exchange,
@@ -193,6 +199,7 @@ const auditTrailFormat = AccountingFormat(
 /// #957 — one download per fiscal year: every invoice as PDF/A-3 with its
 /// embedded e-invoice, the register, the FEC and the audit trail. Not a
 /// filing — an archive an auditor opens; offered everywhere.
+@visibleForTesting
 const archiveBundleFormat = AccountingFormat(
   id: 'bundle',
   claim: FormatClaim.exchange,
@@ -201,13 +208,14 @@ const archiveBundleFormat = AccountingFormat(
   needsLegalId: true,
 );
 
+@visibleForTesting
 const List<AccountingFormat> accountingFormats = [
   fecFormat,
   safTPtFormat,
-  datevFormat,
-  sageFormat,
+  _datevFormat,
+  _sageFormat,
   safTFormat,
-  accountantCsvFormat,
+  _accountantCsvFormat,
   auditTrailFormat,
   archiveBundleFormat,
 ];

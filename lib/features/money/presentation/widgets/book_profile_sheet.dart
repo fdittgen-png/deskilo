@@ -16,7 +16,7 @@ import '../../application/save_book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
 
-String bookAuthorityLabel(AppLocalizations? l10n, BookAuthority a) =>
+String _bookAuthorityLabel(AppLocalizations? l10n, BookAuthority a) =>
     switch (a) {
       BookAuthority.preAccounting => l10n?.bookAuthorityPre ?? 'Pre-accounting',
       BookAuthority.localBook =>
@@ -25,7 +25,7 @@ String bookAuthorityLabel(AppLocalizations? l10n, BookAuthority a) =>
         l10n?.bookAuthorityExternal ?? 'External system',
     };
 
-String bookProblemLabel(AppLocalizations? l10n, BookProfileProblem p) =>
+String _bookProblemLabel(AppLocalizations? l10n, BookProfileProblem p) =>
     switch (p) {
       BookProfileProblem.externalSystemMissing =>
         l10n?.bookProblemExternal ??
@@ -41,7 +41,7 @@ String bookProblemLabel(AppLocalizations? l10n, BookProfileProblem p) =>
 /// #1869 — set who keeps the official books of one issuer: preview the
 /// fiscal year the choice gives, then save it as a version from a date.
 /// True when something was saved.
-Future<bool> showBookProfileSheet(
+Future<bool> _showBookProfileSheet(
   BuildContext context, {
   BookProfile? editing,
 }) async {
@@ -236,7 +236,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                       key: ValueKey('book-authority-${a.wire}'),
                       contentPadding: EdgeInsets.zero,
                       value: a,
-                      title: Text(bookAuthorityLabel(l10n, a)),
+                      title: Text(_bookAuthorityLabel(l10n, a)),
                     ),
                 ],
               ),
@@ -332,7 +332,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               Text(yearText, key: const ValueKey('book-preview')),
             for (final p in problems)
               Text(
-                bookProblemLabel(l10n, p),
+                _bookProblemLabel(l10n, p),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             if (unmapped.isNotEmpty)
@@ -396,7 +396,7 @@ class BookProfileSection extends ConsumerWidget {
                 )
               : null,
           trailing: const Icon(Icons.add),
-          onTap: () => showBookProfileSheet(context),
+          onTap: () => _showBookProfileSheet(context),
         ),
         for (final site in sites.values)
           ListTile(
@@ -419,7 +419,7 @@ class BookProfileSection extends ConsumerWidget {
             contentPadding: const EdgeInsets.only(left: AppSpacing.lg),
             title: Text(
               '${sites[p.issuerSiteId]?.name ?? p.issuerSiteId} · '
-              '${bookAuthorityLabel(l10n, p.authority)}'
+              '${_bookAuthorityLabel(l10n, p.authority)}'
               '${p.authority == BookAuthority.externalBook ? ' (${p.externalSystem})' : ''}',
             ),
             subtitle: Text(
@@ -428,7 +428,7 @@ class BookProfileSection extends ConsumerWidget {
               '${fiscalYearOf(p, p.effectiveFrom).label}',
             ),
             trailing: const Icon(Icons.edit_outlined),
-            onTap: () => showBookProfileSheet(context, editing: p),
+            onTap: () => _showBookProfileSheet(context, editing: p),
           ),
       ],
     );

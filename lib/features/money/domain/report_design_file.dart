@@ -19,6 +19,7 @@
 // output. `howToEdit` is regenerated rather than read back, so editing
 // it changes nothing and cannot corrupt a design; the only fields import
 // consumes are `kind`, `language` and `design`.
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'invoice_pdf_template.dart';
@@ -27,7 +28,7 @@ import 'report_kind.dart';
 
 /// The names in the file, written once so the writer and the reader can
 /// never disagree about them.
-abstract final class ReportDesignSchema {
+abstract final class _ReportDesignSchema {
   /// Bumped when the SHAPE changes in a way an older reader would
   /// misread. A file from the future is refused rather than guessed at.
   static const int version = 1;
@@ -99,6 +100,7 @@ class ReportDesignFile {
 /// Generated, never stored: every list here is read from the constant
 /// the renderer itself uses, so the file cannot promise a placeholder or
 /// a markup line the app would not understand.
+@visibleForTesting
 Map<String, Object> reportDesignInstructions() => {
       'summary':
           'This file is one report design from DesKilo. Edit the three '
@@ -182,19 +184,19 @@ String buildReportDesignFile({
   required DateTime exportedAt,
 }) {
   final content = <String, Object>{
-    ReportDesignSchema.keySchema: ReportDesignSchema.id,
-    ReportDesignSchema.keyVersion: ReportDesignSchema.version,
-    ReportDesignSchema.keyKind: kind.id,
-    ReportDesignSchema.keyLanguage: language,
-    ReportDesignSchema.keyWorkspace: workspaceName,
-    ReportDesignSchema.keyExportedAt: exportedAt.toUtc().toIso8601String(),
-    ReportDesignSchema.keyDesign: {
-      ReportDesignSchema.keyHeader: bands.header,
-      ReportDesignSchema.keyBody: bands.body,
-      ReportDesignSchema.keyFooter: bands.footer,
-      ReportDesignSchema.keyContinuation: bands.continuation,
+    _ReportDesignSchema.keySchema: _ReportDesignSchema.id,
+    _ReportDesignSchema.keyVersion: _ReportDesignSchema.version,
+    _ReportDesignSchema.keyKind: kind.id,
+    _ReportDesignSchema.keyLanguage: language,
+    _ReportDesignSchema.keyWorkspace: workspaceName,
+    _ReportDesignSchema.keyExportedAt: exportedAt.toUtc().toIso8601String(),
+    _ReportDesignSchema.keyDesign: {
+      _ReportDesignSchema.keyHeader: bands.header,
+      _ReportDesignSchema.keyBody: bands.body,
+      _ReportDesignSchema.keyFooter: bands.footer,
+      _ReportDesignSchema.keyContinuation: bands.continuation,
     },
-    ReportDesignSchema.keyHowToEdit: reportDesignInstructions(),
+    _ReportDesignSchema.keyHowToEdit: reportDesignInstructions(),
   };
   return '${const JsonEncoder.withIndent('  ').convert(content)}\n';
 }
@@ -222,17 +224,17 @@ ReportDesignFile parseReportDesignFile(
     throw ReportDesignException(
         ReportDesignError.malformed, 'the file is not a JSON object');
   }
-  if (decoded[ReportDesignSchema.keySchema] != ReportDesignSchema.id) {
+  if (decoded[_ReportDesignSchema.keySchema] != _ReportDesignSchema.id) {
     throw ReportDesignException(ReportDesignError.notADesignFile,
-        'schema is ${decoded[ReportDesignSchema.keySchema]}');
+        'schema is ${decoded[_ReportDesignSchema.keySchema]}');
   }
-  final version = decoded[ReportDesignSchema.keyVersion];
-  if (version is! int || version > ReportDesignSchema.version) {
+  final version = decoded[_ReportDesignSchema.keyVersion];
+  if (version is! int || version > _ReportDesignSchema.version) {
     throw ReportDesignException(
         ReportDesignError.unsupportedVersion, 'version $version');
   }
 
-  final kindId = decoded[ReportDesignSchema.keyKind];
+  final kindId = decoded[_ReportDesignSchema.keyKind];
   if (kindId is! String || kindId.isEmpty) {
     throw ReportDesignException(
         ReportDesignError.unknownKind, 'kind is $kindId');
@@ -246,7 +248,7 @@ ReportDesignFile parseReportDesignFile(
         '${kind.id} into ${expectedKind.id}');
   }
 
-  final design = decoded[ReportDesignSchema.keyDesign];
+  final design = decoded[_ReportDesignSchema.keyDesign];
   if (design is! Map) {
     throw ReportDesignException(
         ReportDesignError.invalidDesign, 'design is not an object');
@@ -261,17 +263,17 @@ ReportDesignFile parseReportDesignFile(
     return value;
   }
 
-  final language = decoded[ReportDesignSchema.keyLanguage];
+  final language = decoded[_ReportDesignSchema.keyLanguage];
   return ReportDesignFile(
     kindId: kind.id,
     language: language is String ? language : '',
     bands: ReportBands(
-      header: band(ReportDesignSchema.keyHeader),
-      body: band(ReportDesignSchema.keyBody),
-      footer: band(ReportDesignSchema.keyFooter),
+      header: band(_ReportDesignSchema.keyHeader),
+      body: band(_ReportDesignSchema.keyBody),
+      footer: band(_ReportDesignSchema.keyFooter),
       // Absent in a pre-#872 file: empty means the built-in strip, so
       // an older design imports unchanged and still behaves.
-      continuation: band(ReportDesignSchema.keyContinuation),
+      continuation: band(_ReportDesignSchema.keyContinuation),
     ),
   );
 }

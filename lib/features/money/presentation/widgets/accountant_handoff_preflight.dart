@@ -9,7 +9,7 @@ import '../../domain/accountant_handoff.dart';
 String _amount(int minor, String currency) =>
     '${Currencies.toMajor(minor, currency).toStringAsFixed(Currencies.minorDigits(currency))} $currency';
 
-String handoffFindingLabel(AppLocalizations? l10n, HandoffFinding f) =>
+String _handoffFindingLabel(AppLocalizations? l10n, HandoffFinding f) =>
     switch (f.kind) {
       HandoffFindingKind.missingCurrency =>
         l10n?.handoffMissingCurrency(f.subject) ?? '${f.subject}: no currency',
@@ -83,7 +83,7 @@ Future<bool> showAccountantHandoffPreflight(
           dense: true,
           contentPadding: EdgeInsets.zero,
           leading: Icon(f.blocking ? Icons.block : Icons.info_outline),
-          title: Text(handoffFindingLabel(l10n, f)),
+          title: Text(_handoffFindingLabel(l10n, f)),
         ),
     ],
     if (!report.clean)

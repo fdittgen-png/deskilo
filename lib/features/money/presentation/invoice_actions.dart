@@ -318,7 +318,7 @@ Future<void> downloadInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,
@@ -356,14 +356,14 @@ Future<void> downloadInvoicePdf(
 /// #514 — see the rendered invoice ON SCREEN before any PDF exists.
 /// Renders through the workspace template; an uncustomized template
 /// falls back to the default bands so the quick view always works.
-Future<void> quickViewInvoice(
+Future<void> _quickViewInvoice(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
   bool proforma = false,
 }) async {
   final l10n = AppLocalizations.of(context);
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(
@@ -431,7 +431,7 @@ Future<void> shareInvoicePdf(
   Invoice invoice,
 ) async {
   final l10n = AppLocalizations.of(context);
-  final annexes = await askRegroupedAnnexes(context, ref, invoice);
+  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
     context,
@@ -592,7 +592,7 @@ Future<void> remindInvoice(
 /// EN 16931 e-invoice (0066/0069): the sheet first — WHERE the file has to
 /// go in this country, and whether it would be ACCEPTED at all — then the
 /// UBL 2.1 XML to Downloads or the share sheet.
-Future<void> exportEInvoice(
+Future<void> _exportEInvoice(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -972,10 +972,10 @@ Future<void> runInvoiceAction(
     return Future.value();
   }
   return switch (action) {
-    InvoiceAction.quickView => quickViewInvoice(context, ref, invoice),
+    InvoiceAction.quickView => _quickViewInvoice(context, ref, invoice),
     InvoiceAction.downloadPdf => downloadInvoicePdf(context, ref, invoice),
     InvoiceAction.sharePdf => shareInvoicePdf(context, ref, invoice),
-    InvoiceAction.eInvoice => exportEInvoice(
+    InvoiceAction.eInvoice => _exportEInvoice(
       context,
       ref,
       invoice,
@@ -1005,7 +1005,7 @@ Future<void> runInvoiceAction(
 ///
 /// Returns the invoices to append, empty for "this one alone", and null
 /// when the question was dismissed — nothing should be exported then.
-Future<List<Invoice>?> askRegroupedAnnexes(
+Future<List<Invoice>?> _askRegroupedAnnexes(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,

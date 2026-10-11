@@ -6,7 +6,7 @@ import 'report_style.dart';
 /// Space for the continuation page number is identical on every sheet.
 /// MultiPage measures this entire band before flowing the body, then
 /// anchors its bottom to the page margin. Extra footer lines grow upward.
-const double reportPageNumberBandHeight = 18;
+const double _reportPageNumberBandHeight = 18;
 
 pw.Widget reportPageFooter(
   pw.Context context, {
@@ -18,7 +18,7 @@ pw.Widget reportPageFooter(
   children: [
     ...content,
     pw.SizedBox(
-      height: reportPageNumberBandHeight,
+      height: _reportPageNumberBandHeight,
       child: context.pageNumber > 1
           ? pw.Align(
               alignment: pw.Alignment.bottomRight,

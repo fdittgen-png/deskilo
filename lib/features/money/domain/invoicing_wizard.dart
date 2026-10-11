@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
@@ -28,12 +29,14 @@ enum WizardStep {
 }
 
 /// 'YYYY-MM' of the month after [now].
+@visibleForTesting
 String wizardNextPeriod(DateTime now) {
   final next = DateTime(now.year, now.month + 1, 1);
   return '${next.year}-${next.month.toString().padLeft(2, '0')}';
 }
 
 /// 'YYYY-MM' of the month before [now].
+@visibleForTesting
 String wizardPreviousPeriod(DateTime now) {
   final prev = DateTime(now.year, now.month - 1, 1);
   return '${prev.year}-${prev.month.toString().padLeft(2, '0')}';

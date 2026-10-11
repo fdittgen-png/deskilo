@@ -21,6 +21,7 @@
 // ADR 0024's shape, like `record_payment.dart`: pure Dart with the
 // repository handed in, because the order is the whole behaviour and a
 // rule that only a widget can exercise is a rule nothing checks.
+import 'package:meta/meta.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/money_repository.dart';
 import '../domain/workspace_status.dart';
@@ -32,6 +33,7 @@ sealed class BookRepartitionOutcome {
 
 /// Distributed. [id] is the repartition; [ruleRemembered] says whether
 /// the rule was also saved for next time.
+@visibleForTesting
 class RepartitionBooked extends BookRepartitionOutcome {
   const RepartitionBooked({required this.id, required this.ruleRemembered});
   final String id;
@@ -132,6 +134,7 @@ class DistributedExpense {
   final bool pending;
 }
 
+@visibleForTesting
 Future<BookRepartitionOutcome> bookRepartition(
   MoneyRepository repository, {
   required String workspaceId,
