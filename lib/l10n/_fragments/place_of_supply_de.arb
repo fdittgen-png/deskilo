@@ -1,0 +1,28 @@
+{
+  "@@locale": "de",
+  "featureSupplyClassificationTitle": "Leistungsort je Leistung",
+  "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.",
+  "supplyClassLabel": "Leistungsort",
+  "supplyClassProperty": "Mit den Räumlichkeiten verbunden",
+  "supplyClassGeneral": "Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)",
+  "supplyClassHelper": "Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.",
+  "invoiceMissingBuyerCapacity": "Ob das Mitglied Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab",
+  "vatTreatmentReverseChargeHint": "Der Kunde schuldet die Umsatzsteuer – nur für Leistungen, die nicht mit den Räumlichkeiten verbunden sind.",
+  "vatTreatmentExampleTitle": "Für ein Unternehmen in einem anderen EU-Land:",
+  "vatTreatmentExamplePremises": "Arbeitsplatz, Büro, Raum: {category}",
+  "@vatTreatmentExamplePremises": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleGeneral": "Allgemeine Dienstleistungen: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  }
+}

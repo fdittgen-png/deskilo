@@ -335,59 +335,6 @@ final class CurrentWorkspaceProvider
 
 String _$currentWorkspaceHash() => r'e6a8c0bd37a3bab95967196d4286dfc44dc132a6';
 
-/// #1449 — the decisions behind starting a conversation: whether picking
-/// a second person makes it a group, and that a name already taken is a
-/// correction rather than a failure.
-
-@ProviderFor(startConversationCommand)
-final startConversationCommandProvider = StartConversationCommandProvider._();
-
-/// #1449 — the decisions behind starting a conversation: whether picking
-/// a second person makes it a group, and that a name already taken is a
-/// correction rather than a failure.
-
-final class StartConversationCommandProvider
-    extends $FunctionalProvider<Conversations, Conversations, Conversations>
-    with $Provider<Conversations> {
-  /// #1449 — the decisions behind starting a conversation: whether picking
-  /// a second person makes it a group, and that a name already taken is a
-  /// correction rather than a failure.
-  StartConversationCommandProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'startConversationCommandProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$startConversationCommandHash();
-
-  @$internal
-  @override
-  $ProviderElement<Conversations> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  Conversations create(Ref ref) {
-    return startConversationCommand(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Conversations value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Conversations>(value),
-    );
-  }
-}
-
-String _$startConversationCommandHash() =>
-    r'942ce4132b6a5f45e51a1913773daa96b0ed5467';
-
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
 

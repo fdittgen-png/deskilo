@@ -152,6 +152,9 @@ String featureName(AppLocalizations? l10n, WorkspaceFeature feature) =>
         l10n?.featureVatRateHistory ?? 'VAT rate versions',
       WorkspaceFeature.vatCounterparty =>
         l10n?.featureVatCounterparty ?? 'VAT by counterparty',
+      WorkspaceFeature.supplyClassification =>
+        l10n?.featureSupplyClassificationTitle ??
+            AppLocalizationsEn().featureSupplyClassificationTitle,
       WorkspaceFeature.environmentPairs =>
         l10n?.featureEnvironmentPairs ?? 'Environment pairs',
       WorkspaceFeature.deployments =>

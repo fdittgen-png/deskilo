@@ -356,6 +356,7 @@ Sie möchten alle Ihre Unterhaltungen in einer Liste, gleich zu welchem Space od
 **Gut zu wissen**
 
 - Unterhaltungen von Ihren anderen verbundenen Servern erscheinen in derselben Liste, mit dem Namen des Servers.
+- Nur die Personen einer Unterhaltung können sie öffnen; Inhaber und Administratoren eines Space können sie nicht lesen. Nachrichten sind nicht Ende-zu-Ende-verschlüsselt: Wer den Server betreibt, auf dem eine Unterhaltung liegt, kann technisch darauf zugreifen. Siehe [Ihre Daten, Ihre Rechte](help:user.privacy.consent).
 - Eine Nachricht, die Sie geschrieben haben, zeigt einen Haken, wenn sie zugestellt ist, und einen blauen Doppelhaken, sobald sie gelesen wurde.
 - Eine archivierte Unterhaltung behält ihren Verlauf. Eine stummgeschaltete bleibt still, wird aber weiter mitgezählt.
 - Aus dem Workspace führt **Meine Nachrichten öffnen** (in den Hinweisen) hierher.

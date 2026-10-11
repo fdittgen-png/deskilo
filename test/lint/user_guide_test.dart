@@ -54,6 +54,51 @@ void main() {
       }
     }
   });
+
+  group('audiences', () {
+    test('a gendered word is one role, not two (#2400)', () {
+      expect(site.audienceRoles('fr', 'Administrateur·rice · Propriétaire').map((r) => r.key), ['admin', 'owner']);
+      expect(site.audienceRoles('fr', 'Opérateur·rice').map((r) => r.key), ['operator']);
+      expect(site.audienceRoles('fr', 'Propriétaire · Administrateur·rice facturation').map((r) => r.key), ['owner', 'billing']);
+      expect(site.audienceRoles('fr', "Propriétaire · Administrateur·rice avec l'autorisation").map((r) => r.key), ['owner', 'admin']);
+    });
+
+    test('every language names the same roles', () {
+      const lines = {
+        'en': 'Member · Administrator · Owner · Co-owner · Billing administrator · Operator · Everyone',
+        'fr': 'Membre · Administrateur·rice · Propriétaire · Copropriétaire · Administrateur·rice facturation · Opérateur·rice · Tout le monde',
+        'de': 'Mitglied · Administrator:in · Inhaber · Mitinhaber · Abrechnungsadministrator:in · Betreiber:in · Alle',
+        'es': 'Miembro · Administrador/a · Propietario · Copropietario · Administrador/a de facturación · Operador/a · Todos',
+        'it': 'Membro · Amministratore · Proprietario · Comproprietario · Amministratore fatturazione · Operatore · Tutti',
+      };
+      for (final e in lines.entries) {
+        expect(site.audienceRoles(e.key, e.value).map((r) => r.key),
+            ['member', 'admin', 'owner', 'coowner', 'billing', 'operator', 'all'], reason: e.key);
+      }
+    });
+
+    test('an unknown audience fails the build instead of becoming everyone', () {
+      expect(() => site.audienceRoles('fr', 'Propriétaire · rice'), throwsStateError);
+      expect(() => site.audienceRoles('en', 'Janitor'), throwsStateError);
+    });
+
+    test('every language filters its sections exactly like English', () {
+      String rolesOf(String lang, String md, String book) => RegExp(r'data-roles="([^"]*)"')
+          .allMatches(site.renderPage(lang, md, book: book))
+          .map((m) => m[1])
+          .join('|');
+      for (final family in families) {
+        final english = File('docs/wiki/${family.files['en']}');
+        if (!english.existsSync()) continue;
+        final expected = rolesOf('en', english.readAsStringSync(), family.name);
+        for (final e in family.files.entries) {
+          final source = File('docs/wiki/${e.value}');
+          if (!source.existsSync()) continue;
+          expect(rolesOf(e.key, source.readAsStringSync(), family.name), expected, reason: e.value);
+        }
+      }
+    });
+  });
 }
 
 void _familyTests(Family family) {

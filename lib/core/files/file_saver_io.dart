@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -57,6 +58,7 @@ Future<String?> saveToDownloads({
 /// temporary file, are flushed and size-checked, and only then take the
 /// final name. A failure at any point removes the temporary file and leaves
 /// what was there before (a previous valid export) untouched.
+@visibleForTesting
 Future<String> writeFileAtomically(File target, List<int> bytes) async {
   final part = File('${target.path}.part');
   try {

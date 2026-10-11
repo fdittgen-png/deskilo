@@ -152,16 +152,6 @@ class InvoiceReport {
   final List<ReportBlock> continuation;
 }
 
-/// Renders [template]'s bands against [data]. Returns null when the
-/// template defines no bands OR any band fails — the invoice then
-/// renders with the built-in layout (a broken template must never block
-/// a legal document).
-InvoiceReport? renderInvoiceReport({
-  required InvoicePdfTemplate template,
-  required Map<String, Object?> data,
-}) =>
-    renderReportBands(bands: template.invoiceBands, data: data);
-
 /// Renders ONE band set (#472: the invoice's own, or a reminder
 /// level's). Same contract: null on empty or broken bands.
 InvoiceReport? renderReportBands({

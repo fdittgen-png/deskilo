@@ -41,6 +41,17 @@ class DemoEntryButton extends ConsumerWidget {
   }
 }
 
+/// #2400 — opens the explanation without the tap, for a link that asked
+/// for the demo (`/auth?demo=1`); only where the button would be offered.
+Future<void> offerDemoEntry(BuildContext context, WidgetRef ref) async {
+  if (!ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.demoMode)) {
+    return;
+  }
+  await showDemoEntrySheet(context, ref);
+}
+
 /// Explains the demonstration space, and enters it if the visitor agrees.
 Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);

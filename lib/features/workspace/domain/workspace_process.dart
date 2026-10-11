@@ -165,6 +165,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.vatGroups,
       WorkspaceFeature.vatRateHistory,
       WorkspaceFeature.vatCounterparty,
+      WorkspaceFeature.supplyClassification,
     ]),
   ]),
   WorkspaceProcess('documentsInformation', [

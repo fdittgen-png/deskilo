@@ -16,6 +16,7 @@
 // ADR 0024's shape (`WordingTerms`, `WorkspaceColours`): pure Dart, the
 // repository handed in, so the rules below are exercised without a
 // screen.
+import 'package:meta/meta.dart';
 import '../domain/money_repository.dart';
 import '../domain/payment_method.dart';
 
@@ -41,6 +42,7 @@ class PaymentIncomplete extends RecordPaymentOutcome {
 }
 
 /// The month a payment paid on [day] belongs to, `YYYY-MM`.
+@visibleForTesting
 String periodOfPayment(DateTime day) =>
     '${day.year}-${day.month.toString().padLeft(2, '0')}';
 

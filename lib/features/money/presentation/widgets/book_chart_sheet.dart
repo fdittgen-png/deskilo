@@ -22,7 +22,7 @@ String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
   BookRole.expenses => l10n?.bookRoleExpenses ?? 'Expenses',
 };
 
-String accountTypeLabel(AppLocalizations? l10n, AccountType t) => switch (t) {
+String _accountTypeLabel(AppLocalizations? l10n, AccountType t) => switch (t) {
   AccountType.asset => l10n?.bookTypeAsset ?? 'Asset',
   AccountType.liability => l10n?.bookTypeLiability ?? 'Liability',
   AccountType.equity => l10n?.bookTypeEquity ?? 'Equity',
@@ -181,7 +181,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                 dense: true,
                 contentPadding: EdgeInsets.zero,
                 title: Text('${a.code} · ${a.name}'),
-                subtitle: Text(accountTypeLabel(l10n, a.type)),
+                subtitle: Text(_accountTypeLabel(l10n, a.type)),
                 trailing: const Icon(Icons.edit_outlined),
                 onTap: () => _edit(a),
               ),
@@ -210,7 +210,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
                 for (final t in AccountType.values)
                   DropdownMenuItem(
                     value: t,
-                    child: Text(accountTypeLabel(l10n, t)),
+                    child: Text(_accountTypeLabel(l10n, t)),
                   ),
               ],
               onChanged: (v) => setState(() => _type = v!),

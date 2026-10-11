@@ -16,7 +16,7 @@ import '../../application/rights_requests.dart';
 import '../../domain/rights_request.dart';
 import '../../providers/profile_providers.dart';
 
-String rightsKindLabel(AppLocalizations? l10n, String kind) => switch (kind) {
+String _rightsKindLabel(AppLocalizations? l10n, String kind) => switch (kind) {
   'access' => l10n?.rightsKindAccess ?? 'See a copy of my data',
   'portability' =>
     l10n?.rightsKindPortability ?? 'Take my data elsewhere (machine-readable)',
@@ -27,7 +27,7 @@ String rightsKindLabel(AppLocalizations? l10n, String kind) => switch (kind) {
   _ => l10n?.rightsKindErasure ?? 'Erase my data',
 };
 
-String rightsStatusLabel(
+String _rightsStatusLabel(
   AppLocalizations? l10n,
   RightsRequest request,
   DateFormat date,
@@ -108,8 +108,8 @@ class _RightsRequestsSheet extends ConsumerWidget {
               ListTile(
                 key: ValueKey('rights-request-${r.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(rightsKindLabel(l10n, r.kind)),
-                subtitle: Text(rightsStatusLabel(l10n, r, date)),
+                title: Text(_rightsKindLabel(l10n, r.kind)),
+                subtitle: Text(_rightsStatusLabel(l10n, r, date)),
               ),
             const SizedBox(height: AppSpacing.md),
             if (workspaceId != null)
@@ -208,7 +208,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
                       key: ValueKey('rights-kind-$kind'),
                       contentPadding: EdgeInsets.zero,
                       value: kind,
-                      title: Text(rightsKindLabel(l10n, kind)),
+                      title: Text(_rightsKindLabel(l10n, kind)),
                     ),
                 ],
               ),

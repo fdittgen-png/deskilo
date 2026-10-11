@@ -106,11 +106,30 @@ Dans un espace, ce que vous pouvez faire dépend de votre rôle. Les rôles s'ad
 
 **Voir aussi:** [La matrice des rôles](help:user.roles.matrix) · [Rejoindre un espace](help:user.start.join)
 
+### Trois parcours dans ce guide
+
+**Public:** Tout le monde
+
+Inutile de tout lire d'abord. Choisissez le parcours qui correspond à ce que vous voulez faire maintenant : chaque étape est une section de ce guide, dans l'ordre où vous en avez besoin.
+
+| Parcours | Étapes, dans l'ordre | Terminé quand |
+|---|---|---|
+| Première utilisation comme membre | [Créer un compte ou se connecter](help:user.start.account) → [Rejoindre un espace](help:user.start.join) → [Réserver une place](help:user.reserve.book) → [Lire votre relevé](help:user.money.statement) → [Check-in et check-out](help:user.reserve.check-in) | Vous avez réservé, vous savez ce que cela coûte, et vous avez signalé votre arrivée puis votre départ. |
+| Mettre un espace en service | [Quelques places partagées](help:setup.features.profile-tiny) → [Dessiner pièces, tables et places](help:user.space.editor.rooms) → [Horaires de travail](help:user.workspace.availability.working-hours) → [Limites de réservation](help:user.workspace.availability.limits) → [Inviter un membre](help:user.members.invite) → [L'onglet Calendrier](help:user.reserve.calendar) | Un membre que vous avez invité a réservé, et vous voyez sa réservation. |
+| Première fin de mois | [La facturation en un coup d'œil](help:user.money.invoicing) → [Ce que l'application émet, et ce qui reste chez votre comptable](help:user.invoicing.scope) → [L'assistant de clôture](help:user.invoicing.wizard) → [Relancer et solder les factures en cours](help:user.invoicing.open) → [Exports comptables](help:user.invoicing.accounting-export) | Le mois est facturé dans le périmètre de l'application, les paiements sont rapprochés et le fichier est chez votre comptable. |
+
+**Bon à savoir**
+
+- Un petit espace n'a besoin que des deux premiers parcours. La facturation, la TVA et les fonctions avancées peuvent attendre que l'espace en ait besoin, et désactiver une fonction ne supprime rien.
+- Le guide de démarrage explique le pourquoi et l'ordre pour un nouvel espace ; ce guide explique les gestes.
+
+**Voir aussi:** [Ce qu'est DesKilo et qui fait quoi](help:user.start.what-is) · [L’ordre d’activation](help:setup.features.order)
+
 ### Créer un compte ou se connecter
 
 **Public:** Tout le monde
 
-Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul compte fonctionne dans tous les espaces que vous rejoignez.
+Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul compte fonctionne dans tous les espaces que vous rejoignez sur le même serveur.
 
 ![](assets/help/images/user-start-account.fr.b8fa17aa9.jpg)
 
@@ -132,6 +151,27 @@ Vous voulez entrer, que ce soit pour la première ou la centième fois. Un seul 
 - **Rejoindre sur invitation** sur l'écran de connexion garde votre démarche en mémoire : vous créez votre compte, puis vous collez votre invitation.
 
 **Voir aussi:** [Réinitialiser un mot de passe oublié](help:user.start.forgot-password) · [Rejoindre un espace](help:user.start.join) · [Vos données, vos droits](help:user.privacy.consent)
+
+### Votre compte, vos espaces et votre serveur
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce qui vous suit d'un espace à l'autre, et pourquoi l'application vous demande parfois de vous reconnecter. Ce guide emploie quatre mots, toujours dans le même sens :
+
+| Mot | La question à laquelle il répond | Ce que c'est |
+|---|---|---|
+| Compte | Qui suis-je ? | Votre e-mail, votre mot de passe, votre nom et vos réglages personnels. Il réside sur un serveur. |
+| Adhésion | Que puis-je faire dans cet espace ? | Votre rôle, votre formule, vos réservations et votre argent dans un espace. Chaque espace fixe ses propres règles. |
+| Serveur | Où cet espace est-il conservé ? | L'installation qui stocke l'espace : le serveur de référence partagé, ou celui qu'une organisation exploite elle-même. |
+| Session | Suis-je connecté ici ? | Votre connexion sur cet appareil, à un seul serveur à la fois. |
+
+**Bon à savoir**
+
+- Un compte couvre tous les espaces du même serveur : rejoindre un autre espace sur ce serveur ajoute une adhésion, pas un compte.
+- Un espace conservé sur un autre serveur demande un compte sur ce serveur. L'ouvrir change de serveur et vous demande de vous y connecter ; votre compte sur le premier serveur reste tel quel.
+- Changer de serveur vous déconnecte, parce que votre compte réside sur le serveur que vous quittez.
+
+**Voir aussi:** [Créer un compte ou se connecter](help:user.start.account) · [Moi : votre accueil et vos espaces](help:user.me.home) · [Votre propre serveur](help:user.backend.server)
 
 ### Réinitialiser un mot de passe oublié
 
@@ -179,6 +219,7 @@ Vous voulez jeter un coup d'œil avant de vous engager. La démo est un espace f
 - La bande porte la mention **Démo** et reste au-dessus de chaque écran : vous ne pouvez donc pas la confondre avec un espace réel.
 - Voir le même écran en tant que propriétaire, administrateur et membre est le moyen le plus rapide de comprendre ce que chaque rôle peut faire.
 - La démo reste sur cet appareil. La quitter ne crée pas de compte.
+- **Découvrir** dans Moi liste l'espace de démonstration et deux voisins inventés, Le Quai Numérique et La Fabrique des Halles. Lisez une page et ses **Formules et tarifs**, demandez à rejoindre ou **Écrire aux hôtes** : c'est la démo qui répond, et personne de réel ne reçoit quoi que ce soit. En propriétaire ou en administrateur, **Messages** contient une demande de visite d'une inconnue, à laquelle répondre.
 
 **Voir aussi:** [Ce qu'est DesKilo et qui fait quoi](help:user.start.what-is) · [Créer un compte ou se connecter](help:user.start.account)
 
@@ -253,7 +294,7 @@ Vous n'avez pas de code mais aimeriez trouver un espace près de chez vous. Les 
 
 **Bon à savoir**
 
-- Seuls les espaces qui ont choisi d'être visibles sont listés. Cette démo n'en a aucun : la carte est donc vide ici.
+- Seuls les espaces qui ont choisi d'être visibles sont listés. Dans la démo, la carte montre l'espace de démonstration et deux voisins inventés ; leur page, une demande pour les rejoindre et un message à leurs hôtes restent dans la démo.
 - Vous pouvez regarder sans compte ; pour rejoindre un espace, il en faut un.
 
 **Voir aussi:** [Rejoindre un espace](help:user.start.join)
@@ -1357,6 +1398,7 @@ Vous voulez toutes vos conversations dans une seule liste, quel que soit l'espac
 **Bon à savoir**
 
 - Les conversations de vos autres serveurs connectés apparaissent dans la même liste, avec le serveur nommé.
+- Seules les personnes d'une conversation peuvent l'ouvrir ; les propriétaires et les administrateurs d'un espace ne peuvent pas la lire. Les messages ne sont pas chiffrés de bout en bout : la personne qui fait tourner le serveur où vit une conversation peut techniquement y accéder. Voir [Vos données, vos droits](help:user.privacy.consent).
 - Un message que vous avez écrit affiche une coche lorsqu'il est remis et une double coche bleue une fois lu.
 - Une conversation archivée garde son historique. Une conversation en sourdine reste silencieuse mais est toujours comptée.
 - Depuis l'espace, **Ouvrir ma messagerie** (dans Alertes) mène ici.
@@ -2140,7 +2182,7 @@ Vous voulez relire ce que vous avez accepté au sujet de vos données.
 
 1. Ouvrez [Confidentialité et données](app:/privacy).
 2. Touchez **Vos données, vos droits**.
-3. Lisez le texte : ce qui est traité, ce qui n'est jamais fait, qui voit quoi, qui est responsable, pendant combien de temps, et vos droits.
+3. Lisez le texte : ce qui est traité et où, ce qui n'est jamais fait, qui voit quoi, les messages, les notifications push, qui est responsable, pendant combien de temps, et vos droits.
 
 **Bon à savoir**
 
@@ -3890,7 +3932,8 @@ Vous voulez indiquer à l'app qui est ce membre au regard de la TVA, pour que se
 
 **Bon à savoir**
 
-- **Automatique** applique la règle habituelle : autoliquidation pour une entreprise établie dans un autre État de l'UE.
+- **Automatique** applique le lieu de prestation : un poste, un bureau ou une salle porte votre TVA pour tout client ; seule une prestation générale (voir [Lieu de prestation d'un service](help:user.money.services.supply)) est autoliquidée par une entreprise d'un autre pays de l'UE, ou hors champ pour une entreprise hors de l'UE. Un consommateur paie votre TVA où qu'il vive. La boîte de dialogue montre ce que le traitement choisi fait de chaque type de ligne.
+- **Autoliquidation** ne convient qu'à un membre qui achète des services non rattachés aux locaux : elle s'applique à toutes les lignes.
 - Le même groupe propose **Qualité du client** (**Professionnel**, **Consommateur** ou **Non précisée**), qui détermine les clauses de paiement qu'une facture imprime. Elle demande le droit d'émettre des factures.
 - **Autoliquidation**, **Hors UE** et **Acheteur exonéré** sont enregistrés, mais les factures de ces membres ne peuvent pas encore être émises dans l'app : elles sont émises hors de l'app avec votre comptable.
 - La fonctionnalité **TVA selon le client** doit être activée pour que la ligne Traitement de la TVA apparaisse, pour les administrateurs et les propriétaires ; les taux se règlent dans [Taux de TVA](help:user.money.vat.rates).
@@ -4115,6 +4158,10 @@ Ce que dit la ligne de facture. Renommez-le et seuls les nouveaux documents chan
 
 Le prix d'une unité, TTC : le membre paie exactement cette somme, TVA comprise. Le **Taux de TVA** décide seulement quelle part en est de la taxe.
 
+#### Lieu de prestation d'un service
+
+Où la TVA de ce service est due. **Rattaché aux locaux**, la valeur par défaut, garde votre TVA pour tout client : un poste, un bureau, une salle et ce qui s'utilise sur place sont imposés là où se trouve l'immeuble. Choisissez **Prestation générale (non rattachée aux locaux)** uniquement pour ce qui n'est pas lié à l'immeuble, comme le traitement du courrier ou la domiciliation : pour une entreprise d'un autre pays de l'UE, cette ligne est alors autoliquidée, et pour une entreprise hors de l'UE elle est hors champ ; un consommateur paie toujours votre TVA. Chaque prestation enregistrée garde le choix en vigueur à ce moment. Le champ apparaît quand vous facturez la TVA et que la fonctionnalité **Lieu de prestation par service** est activée.
+
 #### Actif
 
 Quand vous modifiez un service, l'interrupteur **Actif** décide s'il peut encore être vendu. Désactivez-le pour ce qui est arrêté ; la liste le grise et écrit **Inactif**.
@@ -4258,6 +4305,7 @@ Pour les propriétaires et les administrateurs facturation : qui vous êtes en t
 > **Attention** DesKilo imprime ce que vous déclarez et vérifie que les informations obligatoires sont présentes. Il ne certifie ni vos factures, ni votre traitement de la TVA, ni votre comptabilité. Chaque fois qu'une section ci-dessous dit « à confirmer avec votre comptable », faites-le.
 
 Dans ce chapitre :
+- Ce que l'application émet elle-même, et ce qui reste chez votre comptable
 - Votre identité légale et les mentions imprimées sur chaque facture
 - La TVA : régime, numéro, taux, groupes et déclaration périodique
 - La facturation électronique : où part la facture lisible par une machine
@@ -4265,6 +4313,32 @@ Dans ce chapitre :
 - Émettre et clôturer un mois : l'écran Facturation, l'assistant de clôture, le regroupement, les dépenses partagées
 - Les relances de paiement
 - Le registre des factures, les exports comptables et l'analyse d'activité
+
+### Ce que l'application émet, et ce qui reste chez votre comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez savoir, avant de vous y fier, quelles factures DesKilo émet lui-même et lesquelles vous émettez encore avec votre comptable. Voici le périmètre de cette version.
+
+| Situation | Dans l'application | Hors de l'application |
+|---|---|---|
+| Un espace en France ou en Allemagne, assujetti à la TVA ou hors du champ de la TVA | Factures émises, numérotées, envoyées et suivies | — |
+| Un poste, un bureau ou une salle, quel que soit le client, même à l'étranger | Émis avec votre TVA : le lieu de la prestation est le bâtiment | — |
+| Un espace dans un autre pays | Réservations, relevés et paiements | Les factures, avec votre comptable |
+| Le régime d'exonération de TVA | — | Les factures, avec votre comptable |
+| Autoliquidation, export, acheteur exonéré | Enregistré sur le membre | Les factures, avec votre comptable |
+| Facturation électronique | Le fichier EN 16931, déposé sur la plateforme que vous configurez | Le choix de la plateforme et ce que le dispositif national vous demande |
+| Comptabilité | Des exports reconstruits à partir des factures et des paiements | Le grand livre, la clôture et les comptes |
+| Déclaration de TVA | Les montants, calculés à partir des factures et des paiements | Son dépôt auprès de l'administration fiscale |
+
+**Bon à savoir**
+
+- La facturation électronique tient en trois étapes : DesKilo produit la facture structurée ; le connecteur la dépose sur votre plateforme ; la plateforme la transmet au client et à l'administration selon le dispositif national. Un fichier valide n'est que la première étape.
+- En France, seule une plateforme agréée peut transmettre les factures dans le cadre de la réforme, et DesKilo n'en est pas une : configurez la plateforme que vous choisissez. Toutes les entreprises concernées doivent pouvoir recevoir des factures électroniques à partir du 1er septembre 2026 ; les PME et les microentreprises doivent les émettre à partir du 1er septembre 2027.
+- DesKilo ne tient pas de grand livre en partie double : votre comptable complète les fichiers exportés.
+- Ce tableau évolue avec l'application. Quand une ligne passe dans l'application, cette section le dit.
+
+**Voir aussi:** [Émettre une facture](help:user.invoicing.new-invoice) · [La plateforme de facturation électronique](help:user.money.einvoice.overview) · [Exports comptables](help:user.invoicing.accounting-export) · [Régime de TVA](help:user.money.vat.regime)
 
 ### Votre identité légale
 
@@ -4534,7 +4608,7 @@ Quand vous facturez la TVA et que vous facturez une entreprise établie dans un 
 
 **Bon à savoir**
 
-- Activée : l'app reconnaît une entreprise dotée d'un numéro de TVA dans un autre État membre. Aujourd'hui, l'app n'émet pas elle-même ces factures : vous les émettez hors de l'app avec votre comptable.
+- Activée : une prestation générale (non rattachée aux locaux) à une entreprise d'un autre pays de l'UE est autoliquidée. Un poste, un bureau ou une salle ne l'est jamais : il porte votre TVA, quel que soit le numéro de TVA du client. Aujourd'hui, l'app n'émet pas elle-même les factures autoliquidées : vous les émettez hors de l'app avec votre comptable.
 - Désactivée : désactivez-la si vous ne facturez jamais d'entreprises à l'étranger.
 - L'option n'apparaît que pour le régime des assujettis à la TVA.
 
@@ -4781,6 +4855,7 @@ Vous indiquez à DesKilo où déposer vos factures sous forme de fichiers lisibl
 - Toute plateforme qui accepte un envoi avec un jeton fonctionne : une plateforme agréée, un point d'accès Peppol, une plateforme nationale.
 - Le jeton est stocké sur le serveur et n'est plus jamais affiché.
 - Le fichier valide est une facture EN 16931. Savoir si votre pays impose une plateforme, et laquelle, est à confirmer avec votre comptable.
+- Déposer le fichier est la deuxième de trois étapes : voir [Ce que l'application émet, et ce qui reste chez votre comptable](help:user.invoicing.scope).
 
 **Voir aussi:** [Envoyer une facture électronique](help:user.money.einvoice.send) · [Identité légale](help:user.money.legal.identity)
 
@@ -5078,7 +5153,7 @@ Vous facturez un membre pour un mois.
 - Les factures sont dérivées des données suivies et ne se composent pas à la main. La dernière ligne est le **Solde**.
 - Un mois ne peut être facturé qu'une fois par membre, et un mois encore en cours vous avertit que les positions peuvent changer.
 - Si une information obligatoire manque, **Complétez ces informations avant d'émettre** la liste (adresse, numéro de TVA, fondement de l'exonération, taux de TVA ; aussi le pays de l'espace, qui doit être la France ou l'Allemagne).
-- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, pour des clients nationaux. Les factures transfrontalières, en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable.
+- Dans cette version, l'émission dans l'app est disponible pour les espaces établis en France ou en Allemagne, y compris pour des clients à l'étranger : un poste, un bureau ou une salle porte votre TVA où que vive le client. Les factures en autoliquidation, à l'export ou à un acheteur exonéré sont émises hors de l'app avec votre comptable, et une prestation générale à un client à l'étranger demande d'abord sa qualité (professionnel ou consommateur).
 - Une facture émise est signée et immuable.
 
 **Voir aussi:** [Assistant de clôture](help:user.invoicing.wizard)
@@ -8398,7 +8473,7 @@ adresse d'une seule ligne de façon fiable ; et les huit mentions de
 facture.
 
 Chacun de ces champs est documenté, champ par champ, dans le
-guide utilisateur au § 11a — le symbole d'aide
+[guide utilisateur](help:user.money.legal.identity) — le symbole d'aide
 placé à côté ouvre exactement son paragraphe.
 
 Les **instructions de paiement** (le bloc bancaire qu'imprime un
@@ -8426,13 +8501,24 @@ zéro, exonéré, hors champ. Un service, un tarif, un accessoire et un
 forfait portent un groupe, pas un pourcentage : la table des taux d'un
 pays peut donc changer sous eux sans toucher au catalogue.
 
-Les **traitements** sont ce que la contrepartie en fait : national,
-entreprise intracommunautaire (autoliquidation, le client s'impose
-lui-même au titre de l'art. 196), particulier intracommunautaire,
-export. Le pays et le numéro de TVA du client décident lequel
-s'applique, et le contrôle de facturation électronique refuse d'envoyer
-un document en autoliquidation tant que ce numéro de TVA est absent :
-c'est lui qui prouve que la taxe est la leur.
+**Le lieu d'imposition** vient d'abord (#2354). Un poste, un bureau ou une
+salle est un service rattaché à l'immeuble : il porte votre TVA où que
+vive le client, professionnel ou consommateur (art. 47 de la directive
+TVA). Un service du catalogue indique s'il est **Rattaché aux locaux**
+(par défaut) ou une **Prestation générale (non rattachée aux locaux)**,
+comme le traitement du courrier ou la domiciliation, et chaque prestation
+enregistrée garde ce choix.
+
+Les **traitements** sont ce que la contrepartie fait d'une prestation
+générale : TVA nationale, autoliquidation pour une entreprise d'un autre
+pays de l'UE (le client s'impose lui-même au titre de l'art. 196), ou hors
+champ pour une entreprise hors de l'UE. La qualité déclarée du client
+(professionnel ou consommateur) et son pays décident lequel s'applique,
+jamais la seule présence d'un numéro de TVA ; un consommateur, en France
+ou ailleurs, paie votre TVA, il n'y a donc pas de traitement distinct pour
+un particulier intracommunautaire. Le contrôle de facturation électronique
+refuse d'envoyer un document en autoliquidation tant que le numéro de TVA
+du client est absent : c'est lui qui prouve que la taxe est la sienne.
 
 **Le moment où la TVA devient exigible** est un réglage de l'espace :
 *sur les débits* (exigible à l'émission) ou *sur les encaissements*

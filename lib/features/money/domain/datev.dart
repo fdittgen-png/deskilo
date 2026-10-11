@@ -35,7 +35,7 @@ import 'vat_tax_point.dart';
 ///     books rather than ours: without the three-byte mark, "Bürogemein-
 ///     schaft München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in every
 ///     Buchungstext and every customer name, and nothing anywhere
-///     errors. [datevBom] is prepended for that reason — and UTF-8 with
+///     errors. [_datevBom] is prepended for that reason — and UTF-8 with
 ///     the mark rather than transcoding to Windows-1252, because a
 ///     coworking in Munich bills members called Kowalczyk and Škoda, and
 ///     Windows-1252 cannot spell either.
@@ -96,7 +96,7 @@ class DatevAccounts {
 /// DATEV's importer treats an unmarked file as Windows-1252. Declaring
 /// format version 700 in the header — as this exporter does — is what
 /// makes the marked UTF-8 form recognised, so the two belong together.
-const String datevBom = '\u{FEFF}';
+const String _datevBom = '\u{FEFF}';
 
 /// DATEV expects `EXTF_<something>.csv`; the name is free-form after the
 /// prefix, and DATEV keys on the header, not the filename.
@@ -352,7 +352,7 @@ String buildDatevFile({
       text: r.title,
     );
   }
-  return '$datevBom$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
+  return '$_datevBom$header\r\n$columns\r\n${rows.join('\r\n')}\r\n';
 }
 
 /// Fields 21 to 116 of the EXTF Buchungsstapel (format 700, category 21),

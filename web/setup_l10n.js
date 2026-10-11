@@ -8,7 +8,7 @@ window.SETUP_L10N={
    "setupLanguage": "Language",
    "setupIntroHtml": "A step-by-step assistant: each step only asks the questions your earlier answers make possible (features you don't switch on, a VAT regime you don't have, a country that doesn't apply — nothing is asked for nothing). Every question says <b>where it is set in the app</b> and links to the guide. Your answers are <b>saved automatically in this browser</b>. The last step checks that everything fits together, then <b>Export XML</b> produces the file: the app imports it into a space you created (Workspace → Import workspace (XML)). Each answer says whether the import applies it, whether it is typed in the app, or whether it stays in the file only; the last step lists what remains to do in the app.",
    "setupGuideHtml": "The complete user guide — with a screenshot of every screen, long forms merged into one image — is {link} (English · Français · Deutsch · Español · Italiano) and in the app (Settings → Help).",
-   "setupGuideLink": "on the wiki ↗",
+   "setupGuideLink": "online ↗",
    "setupSecretsHtml": "<b>Only put a token or credential here if you are filling in this document privately.</b> The exported file is plain text: for e-invoicing and online payments you can leave the fields empty and enter the secrets directly in the app, where they go to the server and never come back.",
    "setupExpertMode": "Show everything on one page (expert mode)",
    "setupExportXml": "Export XML",
@@ -369,6 +369,9 @@ window.SETUP_L10N={
    "servicesWhy": "What members consume on top of their seat: services by the unit (lockers, printing…) and accessory supplements per half day.",
    "servicesServices": "Services (lockers, printing…)",
    "servicesVatCol": "VAT % (empty = default)",
+   "servicesSupplyCol": "Place of supply",
+   "servicesSupplyProperty": "Connected with the premises",
+   "servicesSupplyGeneral": "General service",
    "servicesAdd": "Add a service",
    "servicesAccessories": "Seat accessories (screen, standing desk…)",
    "servicesAccessoriesHint": "The supplement is charged per booked half day. 0 = free.",
@@ -1117,6 +1120,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Mentions in groups",
     "In a group, a person can be mentioned by name. Only people in the conversation can be mentioned, and the person mentioned is notified even when they have muted it. Off, a name typed after @ is plain text and notifies nobody."
+   ],
+   "supplyClassification": [
+    "Place of supply per service",
+    "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises."
    ]
   },
   "process": {
@@ -1344,7 +1351,7 @@ window.SETUP_L10N={
    "setupLanguage": "Langue",
    "setupIntroHtml": "Un assistant pas à pas : chaque étape ne pose que les questions que vos réponses précédentes rendent possibles (les fonctionnalités que vous n'activez pas, le régime de TVA que vous n'avez pas, le pays qui ne s'applique pas — rien ne vous est demandé pour rien). Chaque question dit <b>où elle se règle dans l'app</b> et renvoie vers le guide. Vos réponses sont <b>enregistrées automatiquement dans ce navigateur</b>. La dernière étape vérifie la cohérence de l'ensemble, puis <b>Exporter le XML</b> produit le fichier : l'app l'importe dans un espace que vous avez créé (Espace de coworking → Importer l'espace (XML)). Chaque réponse indique si l'import l'applique, si elle se saisit dans l'app ou si elle reste dans le fichier seulement ; la dernière étape liste ce qui reste à faire dans l'app.",
    "setupGuideHtml": "Le guide utilisateur complet — avec une capture de chaque écran, formulaires longs fusionnés en une image — est {link} (English · Français · Deutsch · Español · Italiano) et dans l'app (Réglages → Aide).",
-   "setupGuideLink": "sur le wiki ↗",
+   "setupGuideLink": "en ligne ↗",
    "setupSecretsHtml": "<b>Ne mettez un jeton ou un identifiant ici que si vous remplissez ce document en privé.</b> Le fichier exporté est du texte clair : pour la facturation électronique et les paiements en ligne, vous pouvez laisser les champs vides et saisir les secrets directement dans l'app, où ils partent côté serveur sans jamais en revenir.",
    "setupExpertMode": "Tout afficher sur une page (mode expert)",
    "setupExportXml": "Exporter le XML",
@@ -1705,6 +1712,9 @@ window.SETUP_L10N={
    "servicesWhy": "Ce que les membres consomment en plus de leur place : services à l'unité (casiers, impression…) et suppléments d'accessoires par demi-journée.",
    "servicesServices": "Services (casiers, impression…)",
    "servicesVatCol": "TVA % (vide = défaut)",
+   "servicesSupplyCol": "Lieu de prestation",
+   "servicesSupplyProperty": "Rattaché aux locaux",
+   "servicesSupplyGeneral": "Prestation générale",
    "servicesAdd": "Ajouter un service",
    "servicesAccessories": "Accessoires de place (écran, bureau debout…)",
    "servicesAccessoriesHint": "Le supplément se facture par demi-journée réservée. 0 = gratuit.",
@@ -2453,6 +2463,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Mentions dans les groupes",
     "Dans un groupe, on peut mentionner une personne par son nom. Seules les personnes de la conversation peuvent être mentionnées, et la personne mentionnée est notifiée même si elle a mis la conversation en sourdine. Désactivé, un nom écrit après @ reste du texte et ne notifie personne."
+   ],
+   "supplyClassification": [
+    "Lieu de prestation par service",
+    "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux."
    ]
   },
   "process": {
@@ -2680,7 +2694,7 @@ window.SETUP_L10N={
    "setupLanguage": "Sprache",
    "setupIntroHtml": "Ein Schritt-für-Schritt-Assistent: Jeder Schritt stellt nur die Fragen, die Ihre bisherigen Antworten möglich machen (Funktionen, die Sie nicht aktivieren, ein Umsatzsteuer-Regime, das Sie nicht haben, ein Land, das nicht zutrifft — nichts wird umsonst gefragt). Jede Frage sagt, <b>wo sie in der App eingestellt wird</b>, und verweist auf das Handbuch. Ihre Antworten werden <b>automatisch in diesem Browser gespeichert</b>. Der letzte Schritt prüft, ob alles zusammenpasst, dann erzeugt <b>XML exportieren</b> die Datei: Die App importiert sie in einen Raum, den Sie angelegt haben (Workspace → Workspace importieren (XML)). Jede Antwort sagt, ob der Import sie übernimmt, ob sie in der App eingetragen wird oder ob sie nur in der Datei bleibt; der letzte Schritt listet, was in der App noch zu tun ist.",
    "setupGuideHtml": "Das vollständige Benutzerhandbuch — mit einem Screenshot jedes Bildschirms, lange Formulare zu einem Bild zusammengefügt — finden Sie {link} (English · Français · Deutsch · Español · Italiano) und in der App (Einstellungen → Hilfe).",
-   "setupGuideLink": "im Wiki ↗",
+   "setupGuideLink": "online ↗",
    "setupSecretsHtml": "<b>Tragen Sie hier nur dann ein Token oder Zugangsdaten ein, wenn Sie dieses Dokument privat ausfüllen.</b> Die exportierte Datei ist Klartext: Für E-Rechnungen und Online-Zahlungen können Sie die Felder leer lassen und die Geheimnisse direkt in der App eingeben, von wo sie an den Server gehen und nie zurückkommen.",
    "setupExpertMode": "Alles auf einer Seite anzeigen (Expertenmodus)",
    "setupExportXml": "XML exportieren",
@@ -3041,6 +3055,9 @@ window.SETUP_L10N={
    "servicesWhy": "Was Mitglieder zusätzlich zu ihrem Platz verbrauchen: Services pro Einheit (Schließfächer, Drucken…) und Zubehör-Aufpreise pro halbem Tag.",
    "servicesServices": "Services (Schließfächer, Drucken…)",
    "servicesVatCol": "USt. % (leer = Standard)",
+   "servicesSupplyCol": "Leistungsort",
+   "servicesSupplyProperty": "Mit den Räumlichkeiten verbunden",
+   "servicesSupplyGeneral": "Allgemeine Dienstleistung",
    "servicesAdd": "Service hinzufügen",
    "servicesAccessories": "Platz-Zubehör (Bildschirm, Stehpult…)",
    "servicesAccessoriesHint": "Der Aufpreis wird pro gebuchtem halben Tag berechnet. 0 = kostenlos.",
@@ -3789,6 +3806,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Erwähnungen in Gruppen",
     "In einer Gruppe kann eine Person mit Namen erwähnt werden. Erwähnt werden können nur Personen aus der Unterhaltung, und die erwähnte Person wird benachrichtigt, auch wenn sie die Unterhaltung stummgeschaltet hat. Aus bleibt ein Name nach @ einfacher Text und benachrichtigt niemanden."
+   ],
+   "supplyClassification": [
+    "Leistungsort je Leistung",
+    "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden."
    ]
   },
   "process": {
@@ -4016,7 +4037,7 @@ window.SETUP_L10N={
    "setupLanguage": "Idioma",
    "setupIntroHtml": "Un asistente paso a paso: cada paso solo hace las preguntas que sus respuestas anteriores hacen posibles (las funciones que no activa, el régimen de IVA que no tiene, el país que no aplica — no se le pide nada en vano). Cada pregunta indica <b>dónde se configura en la app</b> y enlaza a la guía. Sus respuestas se <b>guardan automáticamente en este navegador</b>. El último paso comprueba la coherencia del conjunto y después <b>Exportar XML</b> genera el archivo: la app lo importa en un espacio ya creado (Espacio de coworking → Importar el espacio (XML)). Cada respuesta indica si la importación la aplica, si se introduce en la app o si queda solo en el archivo; el último paso enumera lo que queda por hacer en la app.",
    "setupGuideHtml": "La guía de usuario completa — con una captura de cada pantalla, los formularios largos fusionados en una imagen — está {link} (English · Français · Deutsch · Español · Italiano) y en la app (Ajustes → Ayuda).",
-   "setupGuideLink": "en la wiki ↗",
+   "setupGuideLink": "en línea ↗",
    "setupSecretsHtml": "<b>Ponga aquí un token o una credencial solo si rellena este documento en privado.</b> El archivo exportado es texto plano: para la facturación electrónica y los pagos en línea puede dejar los campos vacíos e introducir los secretos directamente en la app, donde van al servidor y nunca vuelven.",
    "setupExpertMode": "Mostrar todo en una página (modo experto)",
    "setupExportXml": "Exportar XML",
@@ -4377,6 +4398,9 @@ window.SETUP_L10N={
    "servicesWhy": "Lo que los miembros consumen además de su asiento: servicios por unidad (taquillas, impresión…) y suplementos de accesorios por media jornada.",
    "servicesServices": "Servicios (taquillas, impresión…)",
    "servicesVatCol": "IVA % (vacío = predeterminado)",
+   "servicesSupplyCol": "Lugar de prestación",
+   "servicesSupplyProperty": "Vinculado a los locales",
+   "servicesSupplyGeneral": "Servicio general",
    "servicesAdd": "Añadir un servicio",
    "servicesAccessories": "Accesorios del asiento (pantalla, escritorio elevable…)",
    "servicesAccessoriesHint": "El suplemento se factura por media jornada reservada. 0 = gratis.",
@@ -5125,6 +5149,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Menciones en grupos",
     "En un grupo se puede mencionar a una persona por su nombre. Solo se puede mencionar a personas de la conversación, y la persona mencionada recibe un aviso aunque haya silenciado la conversación. Desactivado, un nombre escrito tras @ es texto normal y no avisa a nadie."
+   ],
+   "supplyClassification": [
+    "Lugar de prestación por servicio",
+    "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales."
    ]
   },
   "process": {
@@ -5352,7 +5380,7 @@ window.SETUP_L10N={
    "setupLanguage": "Lingua",
    "setupIntroHtml": "Un assistente passo dopo passo: ogni passaggio pone solo le domande che le Sue risposte precedenti rendono possibili (le funzionalità che non attiva, il regime IVA che non ha, il paese che non si applica — non Le viene chiesto nulla per niente). Ogni domanda indica <b>dove si imposta nell'app</b> e rimanda alla guida. Le Sue risposte sono <b>salvate automaticamente in questo browser</b>. L'ultimo passaggio verifica la coerenza dell'insieme, poi <b>Esporta XML</b> produce il file: l'app lo importa in uno spazio già creato (Spazio di coworking → Importa lo spazio (XML)). Ogni risposta indica se l'importazione la applica, se va inserita nell'app o se resta solo nel file; l'ultimo passaggio elenca ciò che resta da fare nell'app.",
    "setupGuideHtml": "La guida utente completa — con una schermata di ogni pagina, moduli lunghi uniti in un'unica immagine — è {link} (English · Français · Deutsch · Español · Italiano) e nell'app (Impostazioni → Aiuto).",
-   "setupGuideLink": "sul wiki ↗",
+   "setupGuideLink": "online ↗",
    "setupSecretsHtml": "<b>Inserisca un token o una credenziale qui solo se compila questo documento in privato.</b> Il file esportato è testo in chiaro: per la fatturazione elettronica e i pagamenti online può lasciare vuoti i campi e inserire i segreti direttamente nell'app, dove vanno al server senza mai tornare indietro.",
    "setupExpertMode": "Mostra tutto su una pagina (modalità esperto)",
    "setupExportXml": "Esporta XML",
@@ -5713,6 +5741,9 @@ window.SETUP_L10N={
    "servicesWhy": "Ciò che i membri consumano oltre al proprio posto: servizi a unità (armadietti, stampa…) e supplementi accessori per mezza giornata.",
    "servicesServices": "Servizi (armadietti, stampa…)",
    "servicesVatCol": "IVA % (vuoto = predefinita)",
+   "servicesSupplyCol": "Luogo della prestazione",
+   "servicesSupplyProperty": "Connesso ai locali",
+   "servicesSupplyGeneral": "Servizio generico",
    "servicesAdd": "Aggiungi un servizio",
    "servicesAccessories": "Accessori del posto (schermo, scrivania in piedi…)",
    "servicesAccessoriesHint": "Il supplemento si addebita per mezza giornata prenotata. 0 = gratuito.",
@@ -6461,6 +6492,10 @@ window.SETUP_L10N={
    "messageMentions": [
     "Menzioni nei gruppi",
     "In un gruppo si può menzionare una persona per nome. Si possono menzionare solo le persone della conversazione, e la persona menzionata riceve una notifica anche se ha silenziato la conversazione. Disattivato, un nome scritto dopo @ è testo semplice e non avvisa nessuno."
+   ],
+   "supplyClassification": [
+    "Luogo della prestazione per servizio",
+    "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali."
    ]
   },
   "process": {

@@ -258,7 +258,8 @@ Quiere indicar a la aplicación qué es este miembro a efectos de IVA, para que 
 
 **Conviene saber**
 
-- **Automático** aplica la regla habitual: inversión del sujeto pasivo para una empresa de otro Estado de la UE.
+- **Automático** aplica el lugar de prestación: un puesto, una oficina o una sala lleva su IVA para cualquier cliente; solo un servicio general (véase [Lugar de prestación de un servicio](#lugar-de-prestación-de-un-servicio)) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Un consumidor paga su IVA viva donde viva. El diálogo muestra lo que el tratamiento elegido hace con cada tipo de línea.
+- **Inversión del sujeto pasivo** está pensada solo para un miembro que compra servicios no vinculados a los locales: se aplica a todas las líneas.
 - El mismo grupo ofrece **Condición del cliente** (**Empresa**, **Consumidor** o **Sin indicar**), que decide qué cláusulas de pago imprime una factura. Requiere el permiso de emitir facturas.
 - **Inversión del sujeto pasivo**, **Fuera de la UE** y **Comprador exento** se registran, pero las facturas de esos miembros aún no se pueden emitir en la aplicación: se emiten fuera de la aplicación con su gestor.
 - La función **IVA según el cliente** debe estar activada para que aparezca la fila de tratamiento del IVA, que ven los administradores y los propietarios; los tipos se definen en [Tipos de IVA](help:user.money.vat.rates).
@@ -501,6 +502,11 @@ Lo que dice la línea de la factura. Si lo renombra, solo cambian los documentos
 #### Precio del servicio
 
 El precio de una unidad, bruto: el miembro paga exactamente esto, y el IVA forma parte de ello. El **Tipo de IVA** solo decide qué parte es impuesto.
+
+<!-- anchor: user.money.services.supply -->
+#### Lugar de prestación de un servicio
+
+Dónde se debe el IVA de este servicio. **Vinculado a los locales**, el valor por defecto, mantiene su IVA para cualquier cliente: un puesto, una oficina, una sala y lo que se usa en el lugar tributan donde se encuentra el inmueble. Elija **Servicio general (no vinculado a los locales)** solo para lo que no está ligado al edificio, como la gestión del correo o una oficina virtual: para una empresa de otro país de la UE esa línea aplica entonces la inversión del sujeto pasivo, y para una empresa fuera de la UE queda fuera del ámbito; un consumidor sigue pagando su IVA. Cada cargo registrado conserva la elección vigente en ese momento. El campo aparece cuando usted cobra IVA y la función **Lugar de prestación por servicio** está activada.
 
 <!-- anchor: user.money.services.active -->
 #### Activo

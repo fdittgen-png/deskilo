@@ -11,6 +11,7 @@ import '../../providers/help_providers.dart';
 import 'support_bundle_screen.dart';
 
 /// Locales the bundled help exists in; anything else falls back to English.
+@visibleForTesting
 const helpLocales = {'en', 'fr', 'de', 'es', 'it'};
 
 /// The asset holding the compiled help for [languageCode]. The files are

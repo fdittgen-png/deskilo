@@ -5,6 +5,8 @@
 // pinned by a content hash to kPrivacyPolicyVersion. Changing the text
 // fails this test until kPrivacyPolicyVersion is bumped (and the pin
 // re-recorded) — so re-acceptance can never be forgotten.
+import 'dart:io';
+
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,6 +32,13 @@ const _pins = <String, int>{
   // the right call: a privacy policy that misstates the licence it tells
   // people to verify the code under is a policy that cannot be verified.
   '2026-09-20': 592690133,
+  // 2026-10-10 (#2405) — checked against what the guide documents: where
+  // the data is depends on the server, messages are open to their
+  // participants only and are not end-to-end encrypted, the public
+  // profile is voluntary, and push is an outbound flow to the push
+  // service. Two sections were added (Messages, Push notifications), so
+  // everybody is asked again.
+  '2026-10-10': 196460937,
 };
 
 void main() {
@@ -46,14 +55,18 @@ void main() {
           'kPrivacyPolicyVersion is still $kPrivacyPolicyVersion. Bump the '
           'version (today\'s date) in lib/core/privacy/privacy_policy.dart, '
           'add "<version>: $hash" to _pins, and mirror the text in the '
-          'help ×5, the wiki ×5 and web/privacy.html.',
+          'help ×5, the user guide ×5 and web/privacy.html.',
     );
   });
 
-  test('the version is a date and the wiki link points at the privacy '
+  test('the version is a date and the guide link points at the privacy '
       'section', () {
     expect(RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(kPrivacyPolicyVersion),
         isTrue);
-    expect(kPrivacyWikiUrl, contains('#14-privacy'));
+    expect(kPrivacyGuideUrl, endsWith('#user.privacy.consent'));
+    // The anchor is a section of the user guide, so the site has it.
+    expect(
+        File('docs/guide/user/04-me-settings.en.md').readAsStringSync(),
+        contains('<!-- anchor: user.privacy.consent -->'));
   });
 }

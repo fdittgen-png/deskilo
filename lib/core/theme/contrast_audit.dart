@@ -33,8 +33,9 @@ class ContrastFailure {
 }
 
 /// WCAG AA text is 4.5:1; a UI component (outline, fill, icon) is 3:1.
+@visibleForTesting
 const double contrastTextFloor = 4.5;
-const double contrastComponentFloor = 3.0;
+const double _contrastComponentFloor = 3.0;
 
 /// Every pair the app reads, measured on [theme]; empty when it passes.
 ///
@@ -68,8 +69,8 @@ List<ContrastFailure> auditThemeContrast(ThemeData theme) {
     check('success text on ${s.key}', AppStatusColors.successTextOf(b), s.value,
         contrastTextFloor);
     check('success fill on ${s.key}', AppStatusColors.successOf(b), s.value,
-        contrastComponentFloor);
-    check('outline on ${s.key}', cs.outline, s.value, contrastComponentFloor);
+        _contrastComponentFloor);
+    check('outline on ${s.key}', cs.outline, s.value, _contrastComponentFloor);
   }
   check('onPrimary on primary', cs.onPrimary, cs.primary, contrastTextFloor);
   check('onSecondaryContainer on secondaryContainer', cs.onSecondaryContainer,

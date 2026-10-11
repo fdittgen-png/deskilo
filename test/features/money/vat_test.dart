@@ -256,8 +256,7 @@ void main() {
     });
 
     test('says nothing about a country it does not know', () {
-      expect(hasVatCatalogue('FR'), isTrue);
-      expect(hasVatCatalogue('JP'), isFalse);
+      expect(vatCatalogueFor('FR'), isNotEmpty);
       expect(vatCatalogueFor('JP'), isEmpty);
     });
   });

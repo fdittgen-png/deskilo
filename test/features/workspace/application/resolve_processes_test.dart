@@ -12,6 +12,7 @@
 // rather than in a screen.
 import 'package:deskilo/features/workspace/application/resolve_processes.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -250,3 +251,9 @@ void main() {
     });
   });
 }
+
+/// Every subprocess key the registry knows, in registry order.
+List<String> allSubprocessKeys() => [
+      for (final process in workspaceProcesses)
+        for (final subprocess in process.subprocesses) subprocess.key,
+    ];

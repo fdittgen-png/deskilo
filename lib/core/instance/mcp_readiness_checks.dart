@@ -103,16 +103,16 @@ class McpReleaseExpectation {
 }
 
 /// The routines whose contract lines readiness compares.
-bool isMcpContractRoutine(String line) => RegExp(
+bool _isMcpContractRoutine(String line) => RegExp(
   r'^routine public\.(mcp_|operator_|identity_|decide_mcp|finalize_identity|database_admin)',
 ).hasMatch(line);
 
-String sha256Hex(String value) => sha256.convert(utf8.encode(value)).toString();
+String _sha256Hex(String value) => sha256.convert(utf8.encode(value)).toString();
 
 /// A digest the Management API lists, or the digest of a raw value if an
 /// API version answers the value itself (it is hashed here, never kept).
-String secretDigest(String listed) =>
-    RegExp(r'^[0-9a-f]{64}$').hasMatch(listed) ? listed : sha256Hex(listed);
+String _secretDigest(String listed) =>
+    RegExp(r'^[0-9a-f]{64}$').hasMatch(listed) ? listed : _sha256Hex(listed);
 
 McpReadinessReport evaluateMcpReadiness(
   McpTargetEvidence e,
@@ -351,7 +351,7 @@ List<ReadinessCheck> _runtime(
       unknown('contract_routines', 'the routine contract could not be read'),
     );
   } else {
-    final expected = release.contractLines.where(isMcpContractRoutine).toSet();
+    final expected = release.contractLines.where(_isMcpContractRoutine).toSet();
     final missing = expected.difference(lines).length;
     final extra = lines.difference(expected).length;
     checks.add(
@@ -496,7 +496,7 @@ ReadinessCheck _secret(
       'the database value could not be read',
     );
   }
-  return secretDigest(listed) == sha256Hex(expected)
+  return _secretDigest(listed) == _sha256Hex(expected)
       ? ReadinessCheck(
           area,
           code,

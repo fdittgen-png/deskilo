@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../storage/prefs_stores.dart';
@@ -36,6 +36,7 @@ abstract class NavigationStyleStore {
 
 /// The hamburger menu is the default everywhere: a device that never chose
 /// reads [NavigationStyle.menu]; a stored choice (classic or menu) wins.
+@visibleForTesting
 class PrefsNavigationStyleStore extends PrefsStringStore
     implements NavigationStyleStore {
   const PrefsNavigationStyleStore() : super('navigation_style');

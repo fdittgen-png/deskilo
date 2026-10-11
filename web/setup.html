@@ -172,14 +172,17 @@ const countryName=c=>cat('country',c)||c;
 const quoted=x=>T('quoted',{x});
 const quotedList=a=>a.map(quoted).join(T('listSep'));
 const opts=list=>list.map(([v,k,p])=>[v,T(k,p)]);
-const GUIDE_URL='https://github.com/fdittgen-png/deskilo/wiki/User-Guide#the-setup-questionnaire--prepare-a-new-space-before-you-open-the-app';
+// The published guide site: <lang>.html is the user guide, setup-<lang>.html
+// the setup guide; every section's id is its anchor (user.x.y / setup.x.y).
+const GUIDE_BASE='https://fdittgen-png.github.io/deskilo/guide/';
+const guideUrl=anchor=>GUIDE_BASE+(anchor.startsWith('setup.')?'setup-':'')+LANG+'.html#'+anchor;
 function setLang(l){if(!LOCALES.includes(l))return;LANG=l;try{localStorage.setItem(LANG_KEY,l)}catch(e){LANG=l}applyChrome();render()}
 // The static chrome: <html lang>, the title, and every element carrying a
 // data-t (text) or data-th (trusted markup from the resource) key.
 function applyChrome(){
  document.documentElement.lang=LANG;
  document.title=T('setupTitle');
- const link='<a href="'+GUIDE_URL+'" target="_blank" rel="noopener">'+T('setupGuideLink')+'</a>';
+ const link='<a href="'+guideUrl('user.start.questionnaire')+'" target="_blank" rel="noopener">'+T('setupGuideLink')+'</a>';
  document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=T(e.getAttribute('data-t'))});
  document.querySelectorAll('[data-th]').forEach(e=>{e.innerHTML=T(e.getAttribute('data-th'),{link})});
  const sel=document.getElementById('lang');sel.textContent='';
@@ -278,6 +281,7 @@ const FEATURES=[
  ['vatGroups',0],
  ['vatRateHistory',0],
  ['vatCounterparty',0],
+ ['supplyClassification',0],
  ['environmentPairs',0],
  ['deployments',0],
  ['siteDocuments',0],
@@ -468,7 +472,7 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // The feature tree as the app declares it (featureManifest `requires`):
 // a child is only offered while its parent is on, and switching a parent
 // off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',messageMentions:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement'};
+const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',supplyClassification:'vatManagement',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',messageMentions:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement'};
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const on=k=>{let f=k;while(f){if(!S.features[f])return false;f=REQUIRES[f]}return true};
 const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
@@ -482,47 +486,48 @@ const scheme=()=>country()[3];
 const isEU=()=>EU.has(S.country);
 const registered=()=>S.vatRegime==='registered';
 
-// Where each answer lives in the app, and the guide section that explains it.
-const WIKI='https://github.com/fdittgen-png/deskilo/wiki/User-Guide#';
+// Where each answer lives in the app, and the guide section that explains it
+// (an anchor id of docs/guide, which is the section's id on the guide site).
 const HELP={
- identity:['helpAppIdentity','workspace-settings-coworking-space'],
- region:['helpAppRegion','12-settings--profile'],
- language:['helpAppLanguage','2-roles--invitations'],
- features:['helpAppFeatures','features'],
- availability:['helpAppAvailability','availability'],
- hours:['helpAppHours','working-hours'],
- booking:['helpAppBooking','booking-policies'],
- limits:['helpAppLimits','booking-limits'],
- plan:['helpAppPlan','the-space-editor'],
- whole:['helpAppWhole','space-qr-codes--whole-space-reservations'],
- tags:['helpAppTags','setting-up-rfid--nfc-badges'],
- billing:['helpAppBilling','billing'],
- packages:['helpAppPackages','9d-the-payments-face'],
- services:['helpAppServices','services-and-accessories'],
- pay:['helpAppPay','9d-the-payments-face'],
- online:['helpAppOnline','setting-up-online-payments'],
- legal:['helpAppLegal','11a-legal-identity-vat--mentions'],
- vat:['helpAppVat','11a-legal-identity-vat--mentions'],
- einvoice:['helpAppEinvoice','11b-where-the-e-invoice-has-to-go-eu'],
- dunning:['helpAppDunning','11-invoicing-owners--billing-admins'],
- roles:['helpAppRoles','role-management'],
- validation:['helpAppValidation','7-events--confirmations-messages--events'],
- members:['helpAppMembers','members--plans'],
- invites:['helpAppInvites','2-roles--invitations'],
- whatsapp:['helpAppWhatsapp','6-members-directory-members-tab'],
- kiosk:['helpAppKiosk','10-kiosk-mode-wall-tablet'],
- privacy:['helpAppPrivacy','14-privacy'],
- consent:['helpAppConsent','14-privacy'],
- negotiations:['helpAppNegotiations','9g-price-negotiations'],
- supplies:['helpAppSupplies','9d-the-payments-face'],
- scheduled:['helpAppScheduled','9h-scheduled-expenses'],
- faces:['helpAppFaces','9-money-finances-tab'],
- reminders_auto:['helpAppRemindersAuto','11e-automatic-payment-reminders'],
- documents:['helpAppDocuments','11d-the-report-suite--the-document-library'],
- messages:['helpAppMessages','16-messages'],
- calendar:['helpAppCalendar','5-calendar-calendar-tab'],
- scopes:['helpAppScopes','role-management'],
- template:['helpAppTemplate','11c-the-report-editor--every-document-four-presets-five-languages'],
+ identity:['helpAppIdentity','user.space.overview'],
+ region:['helpAppRegion','user.workspace.settings.currency-timezone'],
+ language:['helpAppLanguage','user.workspace.settings.language'],
+ features:['helpAppFeatures','user.features.processes'],
+ availability:['helpAppAvailability','user.workspace.availability.open-weekdays'],
+ hours:['helpAppHours','user.workspace.availability.working-hours'],
+ booking:['helpAppBooking','user.workspace.availability.policies'],
+ limits:['helpAppLimits','user.workspace.availability.limits'],
+ plan:['helpAppPlan','user.space.editor.rooms'],
+ whole:['helpAppWhole','user.reserve.whole-space'],
+ tags:['helpAppTags','user.badges.nfc'],
+ billing:['helpAppBilling','user.money.billing.fee-bands'],
+ packages:['helpAppPackages','user.money.billing.packages'],
+ services:['helpAppServices','user.money.services.overview'],
+ supplyClass:['helpAppServices','user.money.services.supply'],
+ pay:['helpAppPay','user.money.payments.methods'],
+ online:['helpAppOnline','user.money.payments.provider'],
+ legal:['helpAppLegal','user.money.legal.identity'],
+ vat:['helpAppVat','user.money.vat.regime'],
+ einvoice:['helpAppEinvoice','user.money.einvoice.overview'],
+ dunning:['helpAppDunning','user.money.reminders.rules'],
+ roles:['helpAppRoles','user.roles.matrix'],
+ validation:['helpAppValidation','user.validation.overview'],
+ members:['helpAppMembers','user.members.list'],
+ invites:['helpAppInvites','user.members.invite'],
+ whatsapp:['helpAppWhatsapp','user.workspace.settings.whatsapp-group'],
+ kiosk:['helpAppKiosk','user.kiosk.mode'],
+ privacy:['helpAppPrivacy','user.privacy.visibility'],
+ consent:['helpAppConsent','user.privacy.consent'],
+ negotiations:['helpAppNegotiations','user.members.negotiation'],
+ supplies:['helpAppSupplies','user.money.expense'],
+ scheduled:['helpAppScheduled','user.money.expenses.schedule'],
+ faces:['helpAppFaces','user.money.overview'],
+ reminders_auto:['helpAppRemindersAuto','user.money.reminders.automatic'],
+ documents:['helpAppDocuments','user.documents.add'],
+ messages:['helpAppMessages','user.collaborate.messages'],
+ calendar:['helpAppCalendar','user.reserve.calendar'],
+ scopes:['helpAppScopes','user.validation.who-may'],
+ template:['helpAppTemplate','user.money.reports.invoice-template'],
 };
 // A feature's own guide section, shown right on its row (features step + summary).
 const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'validation',moneyTab:'faces',financeFaces:'faces',
@@ -538,7 +543,7 @@ let BUILDING='';
 const STEP_HELP={identity:'identity',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
 // The little ? beside every field: straight to the guide section, the app
 // location in the tooltip. Falls back to the step's own section.
-function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:WIKI+anchor,target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
+function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:guideUrl(anchor),target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
 // #2331 — where each answer lands. 'import': the app applies it when the
 // file is imported. 'app': the import cannot carry it, so it is typed in the
 // app. 'file': written into the file for your records and for this page,
@@ -550,7 +555,7 @@ const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppH
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 function destBadge(path){if(path==null)return null;const d=destOf(path);return h('span',{class:'dest '+d,title:T(DEST_TEXT[d][1])},T(DEST_TEXT[d][0]))}
 const lbl=(t,hk,path)=>h('label',{},t,helpIcon(hk),destBadge(path));
-function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:WIKI+anchor,target:'_blank',rel:'noopener'},'ⓘ '+T('helpLink',{app:T(app)}))}
+function help(key){if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'help',href:guideUrl(anchor),target:'_blank',rel:'noopener'},'ⓘ '+T('helpLink',{app:T(app)}))}
 // "This question is hidden because…" — the guide's way of saying why,
 // with a jump to the step that would change the answer.
 function dep(text,stepId){const d=h('div',{class:'dep'},text+' ');if(stepId!=null){const a=h('a',{href:'#'},'→ '+T('depStepLink',{n:STEPS.findIndex(s=>s.id===stepId)+1}));a.onclick=e=>{e.preventDefault();go(stepId)};d.append(a)}return d}
@@ -795,8 +800,8 @@ const STEPS=[
   return f}},
 
 {id:'services',get title(){return T('servicesTitle')},get why(){return T('servicesWhy')},applies(){return on('services')||on('accessorySupplements')},
- build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');
-  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[])],()=>({name:'',price:'',vat:''}),'+ '+T('servicesAdd')));else k.push(needs('services'));
+ build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');const supplyCol=vatCol&&on('supplyClassification');
+  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[]),...(supplyCol?[(()=>{const sel=h('select');[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]].forEach(([v,l])=>sel.append(h('option',{value:v},l)));sel.value=s.supply==='general'?'general':'property';sel.onchange=()=>{s.supply=sel.value;save()};return sel})()]:[])],()=>({name:'',price:'',vat:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
   if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
@@ -1138,7 +1143,7 @@ function configurationTree(){
   const dp=['none','year','year_month'].includes(nb.datePart)?nb.datePart:'year',ok=RESETS_FOR[dp];
   t.number_sequences=[{journal:'invoice',prefix:pre(nb.prefix),suffix:'',date_part:dp,digits:dig(nb.digits),reset:ok.includes(nb.reset)?nb.reset:ok[ok.length-1],gapless:true},
    {journal:'member',prefix:pre(mb.prefix),suffix:'',date_part:'none',digits:dig(mb.digits),reset:'never',gapless:true}]}
- if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vat)}));
+ if(on('services'))t.services=S.services.filter(x=>x.name.trim()).map(x=>({name:x.name.trim(),price_cents:cents(x.price),active:true,stock:null,vat_rate:vatLabel(x.vat),...(registered()&&on('vatManagement')&&on('supplyClassification')?{supply_class:x.supply==='general'?'general':'property'}:{})}));
  // #2331 — group and exemption are NOT NULL columns (defaults 'standard'
  // and ''): a null made the import refuse the whole configuration.
  if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
@@ -1207,7 +1212,7 @@ function exportXml(){
  S.packages.filter(p=>p.name.trim()).forEach(p=>push(`      <package name="${esc(p.name)}" days="${p.days||0}" price-cents="${Math.round((parseFloat(p.price)||0)*100)}"/>`));
  push('    </billing>');
  push('    <services>');
- if(on('services'))S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}/>`));
+ if(on('services'))S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}${s.supply==='general'?' supply="general"':''}/>`));
  push('    </services>');
  push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-tax-point="${taxPointOf(S.vatExigibility)}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
  if(on('vatManagement')&&registered())S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"${on('vatGroups')&&r.group?` group="${r.group}"`:``}${on('vatRateHistory')&&r.validFrom?` valid-from="${r.validFrom}"`:``}/>`));
@@ -1260,7 +1265,7 @@ function parseBack(text){
  const id=su.querySelector('identity');if(id){S.language=id.getAttribute('language')||'';S.address=id.getAttribute('address')||'';S.whatsapp=id.getAttribute('whatsapp-group')||'';S.deskOpacity=id.getAttribute('desk-opacity')||S.deskOpacity;
   Object.keys(S.invites).forEach(k=>S.invites[k]='');id.querySelectorAll('invitation').forEach(iv=>{const k=iv.getAttribute('lang');if(k in S.invites)S.invites[k]=iv.getAttribute('text')||''})}
  const bi=su.querySelector('billing');if(bi){S.tiers=[...bi.querySelectorAll('tier')].map(t=>({from:t.getAttribute('from-pct'),to:t.getAttribute('to-pct'),fee:String((parseInt(t.getAttribute('fee-cents'))||0)/100),over:String((parseInt(t.getAttribute('overage-cents'))||0)/100)}));const sl=bi.querySelector('subscription-levels');if(sl){S.subLevels=(sl.getAttribute('values')||'').split(',').filter(Boolean);S.freeLevel=sl.getAttribute('free-value')==='true'}S.packages=[...bi.querySelectorAll('package')].map(p=>({name:p.getAttribute('name'),days:p.getAttribute('days'),price:String((parseInt(p.getAttribute('price-cents'))||0)/100)}))}
- S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??''}));
+ S.services=[...su.querySelectorAll('services > service')].map(s=>({name:s.getAttribute('name'),price:String((parseInt(s.getAttribute('price-cents'))||0)/100),vat:s.getAttribute('vat-percent')??'',supply:s.getAttribute('supply')==='general'?'general':'property'}));
  const le=su.querySelector('legal');if(le){S.org=le.getAttribute('organization')||S.org;S.vatRegime=le.getAttribute('vat-regime')||S.vatRegime;S.vatExigibility=taxPointOf(le.getAttribute('vat-tax-point')||le.getAttribute('vat-exigibility')||S.vatExigibility);le.querySelectorAll('numbering').forEach(nu=>{const j=nu.getAttribute('journal')||'invoice';if(j==='member'){S.memberNumbering={prefix:nu.getAttribute('prefix')||'M-',digits:nu.getAttribute('digits')||'4'}}else if(j==='invoice'){S.numbering={prefix:nu.getAttribute('prefix')||'INV-',datePart:nu.getAttribute('date-part')||'year',digits:nu.getAttribute('digits')||'4',reset:nu.getAttribute('reset')||'yearly'}}});S.regNumber=le.getAttribute('registration')||'';S.vatId=le.getAttribute('vat-id')||'';S.exemption=le.getAttribute('exemption-reason')||'';S.street=le.getAttribute('street')||'';S.postal=le.getAttribute('postal-code')||'';S.city=le.getAttribute('city')||'';S.vatRates=[...le.querySelectorAll('vat-rate')].map(r=>({group:r.getAttribute('group')||'standard',label:r.getAttribute('label')||'',percent:r.getAttribute('percent')||''}));le.querySelectorAll('mention').forEach(m=>S.mentions[m.getAttribute('key')]=m.getAttribute('value')||'');const rm=le.querySelector('reminders');if(rm){S.reminders={levels:rm.getAttribute('levels'),firstDays:rm.getAttribute('first-days'),betweenDays:rm.getAttribute('between-days'),automatic:rm.getAttribute('automatic')==='true'}}
 S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')||'',street:st.getAttribute('street')||'',postal:st.getAttribute('postal-code')||'',city:st.getAttribute('city')||'',legalId:st.getAttribute('legal-id')||''}));
   const vd=le.querySelector('vat-declaration');if(vd)S.vatPeriod=vd.getAttribute('period')||S.vatPeriod;

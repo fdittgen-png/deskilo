@@ -52,7 +52,7 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "memberVatTreatmentExplainer": "Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d'un autre État de l'UE), la TVA nationale quoi qu'il arrive, l'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.",
+  "memberVatTreatmentExplainer": "Qui est ce membre pour la TVA. Automatique : un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, avec votre TVA pour tout client ; seule une prestation générale (non rattachée aux locaux) est autoliquidée par une entreprise d'un autre pays de l'UE, ou hors champ pour une entreprise hors de l'UE. Les autres choix s'appliquent à toutes les lignes.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },

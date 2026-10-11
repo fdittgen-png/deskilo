@@ -17,6 +17,7 @@ import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
 import '../widgets/vat_rate_field.dart';
+import '../../../../core/vat/supply_class.dart';
 
 /// Owner-only consumable-service catalog editor (#123): name and price
 /// are configurable; services are deactivated, never deleted (bill lines
@@ -65,6 +66,7 @@ class ServicesScreen extends ConsumerWidget {
             name: result.name,
             priceCents: result.priceCents,
             vatRateId: result.vatRateId,
+            supplyClass: result.supplyClass,
           );
         } else {
           await repo.updateService(
@@ -73,6 +75,7 @@ class ServicesScreen extends ConsumerWidget {
             priceCents: result.priceCents,
             active: result.active,
             vatRateId: result.vatRateId,
+            supplyClass: result.supplyClass,
           );
         }
       },
@@ -181,6 +184,7 @@ class _ServiceDraft {
     required this.priceCents,
     required this.active,
     required this.vatRateId,
+    required this.supplyClass,
   });
 
   final String name;
@@ -189,6 +193,9 @@ class _ServiceDraft {
 
   /// '' = the workspace's default rate.
   final String vatRateId;
+
+  /// #2354 — where the service is supplied for VAT.
+  final SupplyClass supplyClass;
 }
 
 class _ServiceSheet extends StatefulWidget {
@@ -206,6 +213,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
   late final TextEditingController _price;
   late bool _active;
   late String _vatRateId;
+  late SupplyClass _supplyClass;
 
   @override
   void initState() {
@@ -217,6 +225,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
     );
     _active = service?.active ?? true;
     _vatRateId = service?.vatRateId ?? '';
+    _supplyClass = service?.supplyClass ?? SupplyClass.property;
   }
 
   @override
@@ -236,6 +245,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
         priceCents: price,
         active: _active,
         vatRateId: _vatRateId,
+        supplyClass: _supplyClass,
       ),
     );
   }
@@ -305,6 +315,12 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             rates: widget.rates,
             value: _vatRateId,
             onChanged: (id) => setState(() => _vatRateId = id),
+          ),
+          // #2354 — the place of supply: a desk is taxed where it stands.
+          SupplyClassField(
+            key: const ValueKey('services-supply-class-field'),
+            value: _supplyClass,
+            onChanged: (supply) => setState(() => _supplyClass = supply),
           ),
           if (widget.service != null)
             SwitchListTile(

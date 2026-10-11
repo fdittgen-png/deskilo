@@ -46,6 +46,7 @@
 // outcome is a value and rendering it is presentation's job. And it does
 // not catch: a refusal carries the server's own words, which is what
 // `bookingErrorText` needs to map (#1030).
+import 'package:meta/meta.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 
@@ -68,6 +69,7 @@ sealed class CancelOutcome {
 }
 
 /// One booking is cancelled.
+@visibleForTesting
 final class CancelledOne extends CancelOutcome {
   const CancelledOne(this.reservationId);
 
@@ -75,6 +77,7 @@ final class CancelledOne extends CancelOutcome {
 }
 
 /// [count] occurrences of the series were cancelled, from this one on.
+@visibleForTesting
 final class CancelledFollowing extends CancelOutcome {
   const CancelledFollowing({required this.seriesId, required this.count});
 

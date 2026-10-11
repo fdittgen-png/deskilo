@@ -243,6 +243,7 @@ begin
       "spaceInquiries": true,
       "spaceQrCodes": true,
       "subscriptionInvoices": false,
+      "supplyClassification": false,
       "supplyExpenses": false,
       "taskRecorder": false,
       "uiAnimations": true,

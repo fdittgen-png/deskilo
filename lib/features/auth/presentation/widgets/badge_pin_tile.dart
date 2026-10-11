@@ -13,7 +13,7 @@ import '../../providers/auth_providers.dart';
 /// what actually makes a short PIN survivable — a PIN alone is not a
 /// password, it is the second half of a credential whose first half is a
 /// physical card.
-const int kBadgePinMinLength = 4;
+const int _kBadgePinMinLength = 4;
 
 /// Settings → "Sign-in PIN" (#662): the member's own half of badge
 /// sign-in.
@@ -109,9 +109,9 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
     // Both checks are client-side ONLY because they are about typing,
     // not about security: the server enforces the length too, and a PIN
     // that reached it from anywhere else would still be refused.
-    if (_pin.text.length < kBadgePinMinLength) {
-      setState(() => _error = l10n?.badgePinTooShort(kBadgePinMinLength) ??
-          'Use at least $kBadgePinMinLength digits.');
+    if (_pin.text.length < _kBadgePinMinLength) {
+      setState(() => _error = l10n?.badgePinTooShort(_kBadgePinMinLength) ??
+          'Use at least $_kBadgePinMinLength digits.');
       return;
     }
     if (_pin.text != _confirm.text) {

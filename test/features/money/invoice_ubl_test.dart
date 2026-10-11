@@ -83,7 +83,7 @@ extension on XmlDocument {
 
 void main() {
   test('the EU set has all 27 member states and nothing else', () {
-    expect(euCountryCodes, hasLength(27));
+    expect(euMemberStates, hasLength(27));
     expect(isEuCountry('fr'), isTrue);
     expect(isEuCountry('DE'), isTrue);
     expect(isEuCountry('CH'), isFalse);

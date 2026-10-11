@@ -83,7 +83,8 @@ docs/
   guides/               RELEASING.md
   security/             SUPABASE_RLS_MATRIX.md
   wiki/                 source of the GitHub wiki (Architecture, Implementation,
-                        Home, _Sidebar + user guides in EN/FR/DE/ES/IT + images)
+                        Home, _Sidebar, admin guides) + the generated user and
+                        setup guides, published as the guide site, not the wiki
 fastlane/metadata/
   android/<locale>/     Play listing text + images (en-US, de-DE, fr-FR, es-ES, it-IT)
   ios/<locale>/         App Store listing text + review information

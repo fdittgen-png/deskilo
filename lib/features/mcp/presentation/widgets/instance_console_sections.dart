@@ -17,7 +17,7 @@ import '../../domain/instance_operator.dart';
 import '../../domain/mcp_onboarding.dart';
 
 /// The probe in words.
-String endpointProbeText(AppLocalizations? l10n, EndpointProbe p) =>
+String _endpointProbeText(AppLocalizations? l10n, EndpointProbe p) =>
     switch (p.state) {
       EndpointProbeState.deployed when p.fresh =>
         l10n?.instanceProbeDeployed ??
@@ -155,7 +155,7 @@ class InstanceEndpointSection extends StatelessWidget {
           SelectableText(key: const ValueKey('instance-endpoint'), resource),
         Text(
           key: ValueKey('instance-probe-${probe.state.name}'),
-          endpointProbeText(l10n, probe),
+          _endpointProbeText(l10n, probe),
         ),
         Align(
           alignment: Alignment.centerRight,

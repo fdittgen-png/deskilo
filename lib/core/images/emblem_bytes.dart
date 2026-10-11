@@ -12,6 +12,7 @@
 // bounds the bytes and the dimensions, and it strips every metadata
 // block by construction: the output is pixels this code drew, not a file
 // somebody handed over with an EXIF block travelling inside it.
+import 'package:meta/meta.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -22,12 +23,13 @@ export 'emblem_refusal.dart';
 /// The longest edge an emblem is stored at. It is shown beside the app
 /// logo — a drawer header, a switcher row — so anything larger is bytes
 /// nobody sees.
+@visibleForTesting
 const int maxEmblemEdge = 512;
 
 /// The most an emblem may weigh once re-encoded. A 512-pixel PNG of a
 /// logo is a few tens of kilobytes; a quarter of a megabyte is room for
 /// a photographic one and still a refusal for the pathological.
-const int maxEmblemBytes = 256 * 1024;
+const int _maxEmblemBytes = 256 * 1024;
 
 /// The PNG to store for [bytes]: at most [maxEmblemEdge] on its longest
 /// side, aspect kept, metadata gone.
@@ -67,7 +69,7 @@ Future<Uint8List> emblemPngOf(Uint8List bytes) async {
   drawn.dispose();
   if (png == null) throw const EmblemException(EmblemRefusal.notAnImage);
   final out = png.buffer.asUint8List();
-  if (out.lengthInBytes > maxEmblemBytes) {
+  if (out.lengthInBytes > _maxEmblemBytes) {
     throw const EmblemException(EmblemRefusal.tooHeavy);
   }
   return out;

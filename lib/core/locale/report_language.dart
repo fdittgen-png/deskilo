@@ -19,18 +19,18 @@
 library;
 
 /// The languages the app ships documents in.
-const Set<String> supportedReportLanguages = {'en', 'fr', 'de', 'es', 'it'};
+const Set<String> _supportedReportLanguages = {'en', 'fr', 'de', 'es', 'it'};
 
 /// Countries whose national language is ambiguous — the workspace must
 /// declare its own language before language-resolved documents render.
-const Set<String> multiLanguageCountries = {'BE', 'CH', 'LU', 'CA'};
+const Set<String> _multiLanguageCountries = {'BE', 'CH', 'LU', 'CA'};
 
 /// The single app-supported language of [countryCode], null when the
 /// country is multi-language, 'en' when its language is one the app
 /// does not ship (an English document beats a guessed one).
-String? countryLanguage(String countryCode) {
+String? _countryLanguage(String countryCode) {
   final code = countryCode.toUpperCase();
-  if (multiLanguageCountries.contains(code)) return null;
+  if (_multiLanguageCountries.contains(code)) return null;
   const byCountry = {
     'FR': 'fr', 'MC': 'fr',
     'DE': 'de', 'AT': 'de', 'LI': 'de',
@@ -64,11 +64,11 @@ String resolveReportLanguage({
   String workspaceLocale = '',
   required String countryCode,
 }) {
-  if (supportedReportLanguages.contains(memberLocale)) return memberLocale;
-  if (supportedReportLanguages.contains(workspaceLocale)) {
+  if (_supportedReportLanguages.contains(memberLocale)) return memberLocale;
+  if (_supportedReportLanguages.contains(workspaceLocale)) {
     return workspaceLocale;
   }
-  final country = countryLanguage(countryCode);
+  final country = _countryLanguage(countryCode);
   if (country == null) throw AmbiguousReportLanguage(countryCode);
   return country;
 }

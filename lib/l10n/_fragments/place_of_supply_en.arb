@@ -1,0 +1,57 @@
+{
+  "@@locale": "en",
+  "featureSupplyClassificationTitle": "Place of supply per service",
+  "@featureSupplyClassificationTitle": {
+    "description": "#2354 place of supply: featureSupplyClassificationTitle"
+  },
+  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.",
+  "@featureSupplyClassificationDesc": {
+    "description": "#2354 place of supply: featureSupplyClassificationDesc"
+  },
+  "supplyClassLabel": "Place of supply",
+  "@supplyClassLabel": {
+    "description": "#2354 place of supply: supplyClassLabel"
+  },
+  "supplyClassProperty": "Connected with the premises",
+  "@supplyClassProperty": {
+    "description": "#2354 place of supply: supplyClassProperty"
+  },
+  "supplyClassGeneral": "General service (not connected with the premises)",
+  "@supplyClassGeneral": {
+    "description": "#2354 place of supply: supplyClassGeneral"
+  },
+  "supplyClassHelper": "A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.",
+  "@supplyClassHelper": {
+    "description": "#2354 place of supply: supplyClassHelper"
+  },
+  "invoiceMissingBuyerCapacity": "Whether the member is a business or a consumer — a general service to a customer abroad depends on it",
+  "@invoiceMissingBuyerCapacity": {
+    "description": "#2354 place of supply: invoiceMissingBuyerCapacity"
+  },
+  "vatTreatmentReverseChargeHint": "The customer self-assesses the VAT — only for services not connected with the premises.",
+  "@vatTreatmentReverseChargeHint": {
+    "description": "#2354 place of supply: vatTreatmentReverseChargeHint"
+  },
+  "vatTreatmentExampleTitle": "For a business in another EU country:",
+  "@vatTreatmentExampleTitle": {
+    "description": "#2354 place of supply: vatTreatmentExampleTitle"
+  },
+  "vatTreatmentExamplePremises": "Desk, office, room: {category}",
+  "@vatTreatmentExamplePremises": {
+    "description": "#2354 place of supply: vatTreatmentExamplePremises",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "vatTreatmentExampleGeneral": "General services: {category}",
+  "@vatTreatmentExampleGeneral": {
+    "description": "#2354 place of supply: vatTreatmentExampleGeneral",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  }
+}

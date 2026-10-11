@@ -36,6 +36,6 @@
   "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
   "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
   "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'espace ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire",
-  "invoiceMissingVatTreatment": "Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
+  "invoiceMissingVatTreatment": "Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
   "invoiceExternalIssuingTitle": "Émettez cette facture hors de l’application"
 }

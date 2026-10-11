@@ -18,12 +18,12 @@ abstract class LocaleStore {
   Future<void> write(String? languageCode);
 }
 
-class PrefsLocaleStore extends PrefsStringStore implements LocaleStore {
-  const PrefsLocaleStore() : super('locale_override');
+class _PrefsLocaleStore extends PrefsStringStore implements LocaleStore {
+  const _PrefsLocaleStore() : super('locale_override');
 }
 
 @Riverpod(keepAlive: true)
-LocaleStore localeStore(Ref ref) => const PrefsLocaleStore();
+LocaleStore localeStore(Ref ref) => const _PrefsLocaleStore();
 
 /// The user's language override; null means "follow the system locale".
 /// Feeding this into `MaterialApp.locale` applies a change instantly,

@@ -31,10 +31,10 @@ List<pw.Widget> reportBlockWidgets(
 }) =>
     [
       for (final block in blocks)
-        reportBlockWidget(block, images, maxImageHeight: maxImageHeight),
+        _reportBlockWidget(block, images, maxImageHeight: maxImageHeight),
     ];
 
-pw.Widget reportBlockWidget(
+pw.Widget _reportBlockWidget(
   ReportBlock block,
   Map<String, Uint8List> images, {
   double? maxImageHeight,

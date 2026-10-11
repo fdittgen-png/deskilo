@@ -6,6 +6,7 @@ Für Inhaber und Abrechnungsadministratoren: wer Sie als Verkäufer sind, wie di
 > **Achtung** DesKilo druckt, was Sie angeben, und prüft, ob die erforderlichen Angaben vorhanden sind. Es bescheinigt weder Ihre Rechnungen noch Ihre Umsatzsteuerbehandlung noch Ihre Buchführung. Wo ein Abschnitt unten „mit Ihrer Buchhaltung klären“ sagt, tun Sie das bitte.
 
 In diesem Kapitel:
+- Was die App selbst ausstellt und was bei Ihrer Steuerberatung bleibt
 - Ihre rechtliche Identität und die Angaben, die auf jeder Rechnung stehen
 - Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
 - E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
@@ -13,6 +14,33 @@ In diesem Kapitel:
 - Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
 - Zahlungserinnerungen
 - Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
+
+<!-- anchor: user.invoicing.scope -->
+### Was die App ausstellt und was bei Ihrer Steuerberatung bleibt
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten wissen, bevor Sie sich darauf verlassen, welche Rechnungen DesKilo selbst ausstellt und welche Sie weiterhin mit Ihrer Steuerberatung ausstellen. Das ist der Umfang dieser Version.
+
+| Situation | In der App | Außerhalb der App |
+|---|---|---|
+| Ein Space in Frankreich oder Deutschland, umsatzsteuerpflichtig oder außerhalb des Anwendungsbereichs der Umsatzsteuer | Rechnungen ausgestellt, nummeriert, versendet und verfolgt | — |
+| Ein Platz, ein Büro oder ein Raum, für jeden Kunden, auch im Ausland | Mit Ihrer Umsatzsteuer ausgestellt: Ort der Leistung ist das Gebäude | — |
+| Ein Space in einem anderen Land | Buchungen, Abrechnungen und Zahlungen | Die Rechnungen, mit Ihrer Steuerberatung |
+| Das steuerbefreite Regime | — | Die Rechnungen, mit Ihrer Steuerberatung |
+| Reverse-Charge, Ausfuhr, befreiter Käufer | Beim Mitglied erfasst | Die Rechnungen, mit Ihrer Steuerberatung |
+| E-Rechnung | Die Datei nach EN 16931, an die von Ihnen eingerichtete Plattform übermittelt | Die Wahl der Plattform und was das nationale Verfahren von Ihnen verlangt |
+| Buchhaltung | Exporte, aus Rechnungen und Zahlungen neu aufgebaut | Das Hauptbuch, der Abschluss und die Bücher |
+| Umsatzsteuer-Voranmeldung | Die Beträge, aus Rechnungen und Zahlungen berechnet | Die Abgabe beim Finanzamt |
+
+**Gut zu wissen**
+
+- Die E-Rechnung hat drei Schritte: DesKilo erzeugt die strukturierte Rechnung; der Connector übermittelt sie an Ihre Plattform; die Plattform stellt sie dem Kunden und der Behörde nach dem nationalen Verfahren zu. Eine gültige Datei ist nur der erste Schritt.
+- In Frankreich darf nur eine zugelassene Plattform (plateforme agréée) Rechnungen im Rahmen der Reform übermitteln, und DesKilo ist keine: Richten Sie die Plattform Ihrer Wahl ein. Alle betroffenen Unternehmen müssen ab dem 1. September 2026 E-Rechnungen empfangen können; kleine und mittlere Unternehmen und Kleinstunternehmen müssen sie ab dem 1. September 2027 ausstellen.
+- DesKilo führt keine doppelte Buchführung: Ihre Steuerberatung ergänzt die exportierten Dateien.
+- Diese Tabelle ändert sich mit der App. Wenn eine Zeile in die App wandert, sagt dieser Abschnitt es.
+
+**Siehe auch:** [Eine Rechnung ausstellen](help:user.invoicing.new-invoice) · [Die E-Rechnungs-Plattform](help:user.money.einvoice.overview) · [Buchhaltungsexporte](help:user.invoicing.accounting-export) · [Steuerregime](help:user.money.vat.regime)
 
 <!-- anchor: user.money.legal.identity -->
 ### Ihre rechtliche Identität
@@ -295,7 +323,7 @@ Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in 
 
 **Gut zu wissen**
 
-- Ein: Die App erkennt ein Unternehmen mit Umsatzsteuer-ID in einem anderen Mitgliedstaat. Heute stellt die App diese Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
+- Ein: Eine allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden) an ein Unternehmen in einem anderen EU-Land fällt unter die Steuerschuldnerschaft des Empfängers. Ein Arbeitsplatz, ein Büro oder ein Raum nie: Er trägt Ihre Umsatzsteuer, gleich welche Umsatzsteuer-ID der Kunde hat. Heute stellt die App solche Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
 - Aus: Schalten Sie es aus, wenn Sie nie Unternehmen im Ausland in Rechnung stellen.
 - Die Option erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
@@ -555,6 +583,7 @@ Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden 
 - Jede Plattform, die einen Upload mit einem Token annimmt, funktioniert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform.
 - Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
 - Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
+- Die Datei zu übermitteln ist der zweite von drei Schritten: siehe [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope).
 
 **Siehe auch:** [Eine E-Rechnung senden](help:user.money.einvoice.send) · [Rechtliche Identität](help:user.money.legal.identity)
 
@@ -866,7 +895,7 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 - Rechnungen werden aus erfassten Daten abgeleitet und lassen sich nicht von Hand zusammenstellen. Die letzte Zeile ist der **Saldo**.
 - Ein Monat kann pro Mitglied nur einmal abgerechnet werden, und bei einem laufenden Monat werden Sie gewarnt, dass sich Positionen ändern können.
 - Fehlt eine erforderliche Angabe, listet **Vor der Ausstellung bitte ergänzen** sie auf (Adresse, Umsatzsteuer-ID, Befreiungsgrundlage, Steuersatz; auch das Land des Space, das Frankreich oder Deutschland sein muss).
-- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, für inländische Kunden. Grenzüberschreitende Rechnungen, Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, auch für Kunden im Ausland: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer, wo immer der Kunde lebt. Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt, und eine allgemeine Dienstleistung an einen Kunden im Ausland braucht zuerst dessen Kundeneigenschaft (Unternehmer oder Verbraucher).
 - Eine ausgestellte Rechnung ist signiert und unveränderlich.
 
 **Siehe auch:** [Monatsabschluss-Assistent](help:user.invoicing.wizard)

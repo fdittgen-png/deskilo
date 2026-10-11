@@ -5326,7 +5326,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentControllerBody.
   ///
   /// In en, this message translates to:
-  /// **'Each workspace is operated by its owner — your community — who decides members, prices and payment providers. The app is free software (AGPL-3.0-or-later) and published by Florian Dittgen (Germany); the backend is Supabase in the EU. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
+  /// **'Each space is run by its owner — your community — who decides members, prices and payment providers. Each server is run by its operator: the shared reference server by Florian Dittgen (Germany), a community\'s own server by whoever runs it. The app is free software (AGPL-3.0-or-later), published by Florian Dittgen. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
   String get consentControllerBody;
 
   /// No description provided for @consentControllerTitle.
@@ -5341,10 +5341,22 @@ abstract class AppLocalizations {
   /// **'Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.'**
   String get consentIntro;
 
+  /// No description provided for @consentMessagesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space\'s owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server\'s, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.'**
+  String get consentMessagesBody;
+
+  /// No description provided for @consentMessagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get consentMessagesTitle;
+
   /// No description provided for @consentNotBody.
   ///
   /// In en, this message translates to:
-  /// **'No tracking, no analytics, no advertising, no sale or sharing of data. Push notifications carry no content — only \"you have a new message\"; the app itself writes the text. The F-Droid build has no Google services at all.'**
+  /// **'No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server\'s notice. The F-Droid build has no Google services at all.'**
   String get consentNotBody;
 
   /// No description provided for @consentNotTitle.
@@ -5352,6 +5364,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What DesKilo never does'**
   String get consentNotTitle;
+
+  /// No description provided for @consentPushBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional, and outbound. When the server\'s operator has set push up, your space uses it and it is on for this device, this device\'s address and each notification go to the push service (Firebase Cloud Messaging, which hands notifications for Apple devices on to Apple). A notification only says something generic, such as \"You have a new message\": no names, no times, no message text. Switch it off in Settings → Privacy & data; the app keeps working and nothing more is sent to this device.'**
+  String get consentPushBody;
+
+  /// No description provided for @consentPushTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get consentPushTitle;
 
   /// No description provided for @consentReadInHelp.
   ///
@@ -5362,13 +5386,13 @@ abstract class AppLocalizations {
   /// No description provided for @consentReadOnWiki.
   ///
   /// In en, this message translates to:
-  /// **'Read on the wiki'**
+  /// **'Read in the online guide'**
   String get consentReadOnWiki;
 
   /// No description provided for @consentRetentionBody.
   ///
   /// In en, this message translates to:
-  /// **'As long as you are a member. When you leave and erase, your profile and messages go; accounting records (invoices, payments) stay for the legal retention period, by identifier and not by name.'**
+  /// **'As long as you are a member. When you leave a space and erase, your messages in that space go, and your profile goes with your last space. Accounting records stay for the legal retention period: the ledger by identifier, invoices as they were issued.'**
   String get consentRetentionBody;
 
   /// No description provided for @consentRetentionTitle.
@@ -5380,7 +5404,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentReviewBody.
   ///
   /// In en, this message translates to:
-  /// **'This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the project wiki. A change of the text asks for your acceptance again.'**
+  /// **'This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the online user guide. A change of the text asks for your acceptance again.'**
   String get consentReviewBody;
 
   /// No description provided for @consentReviewHint.
@@ -5428,7 +5452,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentWhatBody.
   ///
   /// In en, this message translates to:
-  /// **'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a workspace: reservations and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. Everything is stored in the EU (Supabase, eu-central-1).'**
+  /// **'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server\'s notice: who runs it, where the data is and who receives it.'**
   String get consentWhatBody;
 
   /// No description provided for @consentWhatTitle.
@@ -5440,7 +5464,7 @@ abstract class AppLocalizations {
   /// No description provided for @consentWhoBody.
   ///
   /// In en, this message translates to:
-  /// **'Access follows roles and is enforced on the server: bookings are visible to the workspace (the floor plan shows occupancy); messages only to the people in the conversation, whatever their role; your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Settings → Privacy & data names the people and lists who actually looked.'**
+  /// **'Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it. A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.'**
   String get consentWhoBody;
 
   /// No description provided for @consentWhoTitle.
@@ -9671,6 +9695,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subscription invoices'**
   String get featureSubscriptionInvoicesTitle;
+
+  /// #2354 place of supply: featureSupplyClassificationDesc
+  ///
+  /// In en, this message translates to:
+  /// **'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.'**
+  String get featureSupplyClassificationDesc;
+
+  /// #2354 place of supply: featureSupplyClassificationTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Place of supply per service'**
+  String get featureSupplyClassificationTitle;
 
   /// No description provided for @featureSupplyExpensesDesc.
   ///
@@ -13926,6 +13962,12 @@ abstract class AppLocalizations {
   /// **'The member\'s postal address (a business customer needs one)'**
   String get invoiceMissingBuyerAddress;
 
+  /// #2354 place of supply: invoiceMissingBuyerCapacity
+  ///
+  /// In en, this message translates to:
+  /// **'Whether the member is a business or a consumer — a general service to a customer abroad depends on it'**
+  String get invoiceMissingBuyerCapacity;
+
   /// #1916 invoice essentials: invoiceMissingBuyerName
   ///
   /// In en, this message translates to:
@@ -13983,7 +14025,7 @@ abstract class AppLocalizations {
   /// No description provided for @invoiceMissingVatTreatment.
   ///
   /// In en, this message translates to:
-  /// **'Cross-border, reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.'**
+  /// **'Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.'**
   String get invoiceMissingVatTreatment;
 
   /// #1917 essentials key vat_line_zero_unexplained (0393)
@@ -18735,7 +18777,7 @@ abstract class AppLocalizations {
   /// #985 VAT versions and counterparty: memberVatTreatmentExplainer
   ///
   /// In en, this message translates to:
-  /// **'Who this member is for VAT: the automatic rule (reverse charge for a business in another EU state), domestic VAT regardless, reverse charge, outside the EU, or an exempt buyer with the reason printed on the invoice.'**
+  /// **'Who this member is for VAT. Automatic: a desk, an office or a room is taxed where the building stands, so it carries your VAT for every customer; only a general service (one not connected with the premises) is reverse-charged for a business in another EU country, or outside the scope for a business outside the EU. The other choices apply to every line.'**
   String get memberVatTreatmentExplainer;
 
   /// #985 VAT versions and counterparty: memberVatTreatmentLabel
@@ -28046,6 +28088,30 @@ abstract class AppLocalizations {
   /// **'Maintain VAT groups, rates and declarations.'**
   String get subprocessTaxDesc;
 
+  /// #2354 place of supply: supplyClassGeneral
+  ///
+  /// In en, this message translates to:
+  /// **'General service (not connected with the premises)'**
+  String get supplyClassGeneral;
+
+  /// #2354 place of supply: supplyClassHelper
+  ///
+  /// In en, this message translates to:
+  /// **'A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.'**
+  String get supplyClassHelper;
+
+  /// #2354 place of supply: supplyClassLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Place of supply'**
+  String get supplyClassLabel;
+
+  /// #2354 place of supply: supplyClassProperty
+  ///
+  /// In en, this message translates to:
+  /// **'Connected with the premises'**
+  String get supplyClassProperty;
+
   /// No description provided for @supportChanged.
   ///
   /// In en, this message translates to:
@@ -32630,6 +32696,24 @@ abstract class AppLocalizations {
   /// **'Domestic VAT'**
   String get vatTreatmentDomestic;
 
+  /// #2354 place of supply: vatTreatmentExampleGeneral
+  ///
+  /// In en, this message translates to:
+  /// **'General services: {category}'**
+  String vatTreatmentExampleGeneral(String category);
+
+  /// #2354 place of supply: vatTreatmentExamplePremises
+  ///
+  /// In en, this message translates to:
+  /// **'Desk, office, room: {category}'**
+  String vatTreatmentExamplePremises(String category);
+
+  /// #2354 place of supply: vatTreatmentExampleTitle
+  ///
+  /// In en, this message translates to:
+  /// **'For a business in another EU country:'**
+  String get vatTreatmentExampleTitle;
+
   /// #985 VAT versions and counterparty: vatTreatmentExempt
   ///
   /// In en, this message translates to:
@@ -32653,6 +32737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reverse charge'**
   String get vatTreatmentReverseCharge;
+
+  /// #2354 place of supply: vatTreatmentReverseChargeHint
+  ///
+  /// In en, this message translates to:
+  /// **'The customer self-assesses the VAT — only for services not connected with the premises.'**
+  String get vatTreatmentReverseChargeHint;
 
   /// #985 VAT versions and counterparty: vatUntil
   ///

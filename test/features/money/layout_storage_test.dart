@@ -20,11 +20,11 @@ void main() {
     final kinds = reportKinds(reminderLevels: 2);
     for (final kind in kinds) {
       final t = withLayout(InvoicePdfTemplate.empty, kind, '<!-- ${kind.id} -->');
-      expect(layoutOf(t, kind), '<!-- ${kind.id} -->',
+      expect(t.layoutFor(kind.id), '<!-- ${kind.id} -->',
           reason: '${kind.id} did not survive a write/read round trip');
       for (final other in kinds) {
         if (other.id == kind.id) continue;
-        expect(layoutOf(t, other), isNull,
+        expect(t.layoutFor(other.id), isNull,
             reason: '${kind.id} wrote into ${other.id}');
       }
     }
@@ -34,9 +34,9 @@ void main() {
       () {
     final invoice = reportKindById('invoice')!;
     var t = withLayout(InvoicePdfTemplate.empty, invoice, _xml);
-    expect(layoutOf(t, invoice), isNotNull);
+    expect(t.layoutFor(invoice.id), isNotNull);
     t = withLayout(t, invoice, '   ');
-    expect(layoutOf(t, invoice), isNull);
+    expect(t.layoutFor(invoice.id), isNull);
     expect(t.layouts, isEmpty, reason: 'nothing left to store');
   });
 

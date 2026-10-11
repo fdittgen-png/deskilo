@@ -173,6 +173,14 @@ main { min-width: 0; padding-top: 28px; }
 
 /* ── screenshots: a phone you can scroll ─────────────────────────────── */
 figure.shot { margin: 0; width: 100%; max-width: 300px; }
+figure.shot { position: relative; }
+figure.shot .zoom {
+  position: absolute; right: 10px; bottom: 10px; width: 36px; height: 36px; border-radius: 50%; border: 0;
+  background: var(--navy); color: var(--bg); font-size: 18px; cursor: zoom-in; box-shadow: var(--shadow);
+  opacity: .82; transition: opacity .15s;
+}
+figure.shot .zoom:hover, figure.shot .zoom:focus-visible { opacity: 1; }
+figure.shot .screen:focus-visible, figure.shot .zoom:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 figure.shot .screen {
   border-radius: 26px; border: 7px solid var(--navy); background: var(--surface); overflow: hidden auto; max-height: 560px;
   box-shadow: var(--shadow); cursor: zoom-in; scrollbar-width: none;
@@ -186,6 +194,7 @@ dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: 96v
 dialog.lightbox::backdrop { background: rgb(8 12 22 / .78); backdrop-filter: blur(4px); }
 dialog.lightbox img { max-width: 96vw; max-height: 92vh; border-radius: 14px; background: var(--surface); display: block; }
 dialog.lightbox form { position: absolute; top: 8px; right: 8px; }
+dialog.lightbox form .icon-btn { background: var(--surface); color: var(--ink); border-radius: 50%; box-shadow: var(--shadow); }
 .empty { display: none; margin: 40px 0; text-align: center; color: var(--muted); }
 .empty.on { display: block; }
 footer.site { border-top: 1px solid var(--line); margin-top: 64px; padding: 24px 0; color: var(--muted); font-size: 14px; }
@@ -214,9 +223,10 @@ mark { background: color-mix(in srgb, var(--accent) 28%, transparent); color: in
   .bar { gap: 8px; }
   .chip-btn { padding: 6px 11px; font-size: 13.5px; }
   .count { width: 100%; margin: 4px 0 0; }
+  .app-link { white-space: normal; overflow-wrap: anywhere; }
 }
 @media print {
-  .bar, nav.toc, .filters, .to-top { display: none !important; }
+  .bar, nav.toc, .filters, .to-top, figure.shot .zoom { display: none !important; }
   .layout { display: block; padding: 0; }
   .section { box-shadow: none; break-inside: avoid; display: block; }
   figure.shot .screen { max-height: none; overflow: visible; }

@@ -42,48 +42,58 @@ class Ui {
     required this.seeAlso,
     required this.careful,
     required this.audience,
+    required this.enlarge,
+    required this.close,
+    required this.describes,
   });
   final String search, iAm, sections, menu, theme, empty, top, openApp, footer, title, chapter;
   final Map<String, String> levels;
   final Map<String, String> structure; // lower-case skeleton word -> label key
   final String seeAlso, careful, audience;
+  final String enlarge, close;
+  final String describes; // '{v}' is the app version the guide was built with
 }
 
 const ui = <String, Ui>{
   'en': Ui(
     search: 'Search the guide  ( / )', iAm: 'I am', sections: '{n} sections', menu: 'Contents', theme: 'Light or dark', empty: 'Nothing matches. Try another word, or show everything.',
     top: 'Back to top', openApp: 'Open DesKilo', footer: 'DesKilo user guide — the screenshots show the demo workspace; every person and figure is invented.', title: 'DesKilo User Guide', chapter: 'Chapter',
-    levels: {'member': 'Member', 'admin': 'Administrator', 'owner': 'Owner', 'everything': 'Everything'},
+    levels: {'member': 'Member', 'admin': 'Administrator', 'owner': 'Owner', 'operator': 'Server operator', 'everything': 'Everything'},
     structure: {'steps': 'steps', 'good to know': 'know', 'before you start': 'before', 'result': 'result'},
     seeAlso: 'see also', careful: 'careful', audience: 'audience',
+    enlarge: 'Enlarge the screenshot', close: 'Close', describes: 'This guide describes DesKilo {v}.',
   ),
   'fr': Ui(
     search: 'Rechercher dans le guide  ( / )', iAm: 'Je suis', sections: '{n} sections', menu: 'Sommaire', theme: 'Clair ou sombre', empty: 'Rien ne correspond. Essayez un autre mot ou affichez tout.',
     top: 'Haut de page', openApp: 'Ouvrir DesKilo', footer: 'Guide utilisateur DesKilo — les captures montrent l’espace de démonstration ; toutes les personnes et tous les chiffres sont inventés.', title: 'Guide utilisateur DesKilo', chapter: 'Chapitre',
-    levels: {'member': 'Membre', 'admin': 'Administrateur·rice', 'owner': 'Propriétaire', 'everything': 'Tout'},
+    levels: {'member': 'Membre', 'admin': 'Administrateur·rice', 'owner': 'Propriétaire', 'operator': 'Opérateur·rice du serveur', 'everything': 'Tout'},
     structure: {'étapes': 'steps', 'bon à savoir': 'know', 'avant de commencer': 'before', 'résultat': 'result'},
     seeAlso: 'voir aussi', careful: 'attention', audience: 'public',
+    enlarge: 'Agrandir la capture', close: 'Fermer', describes: 'Ce guide décrit DesKilo {v}.',
   ),
   'de': Ui(
     search: 'Im Handbuch suchen  ( / )', iAm: 'Ich bin', sections: '{n} Abschnitte', menu: 'Inhalt', theme: 'Hell oder dunkel', empty: 'Nichts gefunden. Anderes Wort versuchen oder alles anzeigen.',
     top: 'Nach oben', openApp: 'DesKilo öffnen', footer: 'DesKilo Benutzerhandbuch — die Screenshots zeigen den Demo-Arbeitsbereich; alle Personen und Zahlen sind erfunden.', title: 'DesKilo Benutzerhandbuch', chapter: 'Kapitel',
-    levels: {'member': 'Mitglied', 'admin': 'Administrator:in', 'owner': 'Inhaber', 'everything': 'Alles'},
+    levels: {'member': 'Mitglied', 'admin': 'Administrator:in', 'owner': 'Inhaber', 'operator': 'Server-Betreiber:in', 'everything': 'Alles'},
     structure: {'schritte': 'steps', 'gut zu wissen': 'know', 'bevor sie beginnen': 'before', 'ergebnis': 'result'},
     seeAlso: 'siehe auch', careful: 'achtung', audience: 'zielgruppe',
+    enlarge: 'Screenshot vergrößern', close: 'Schließen', describes: 'Dieses Handbuch beschreibt DesKilo {v}.',
   ),
   'es': Ui(
     search: 'Buscar en la guía  ( / )', iAm: 'Soy', sections: '{n} secciones', menu: 'Contenido', theme: 'Claro u oscuro', empty: 'Sin resultados. Pruebe otra palabra o muestre todo.',
     top: 'Ir arriba', openApp: 'Abrir DesKilo', footer: 'Guía de usuario de DesKilo — las capturas muestran el espacio de demostración; todas las personas y cifras son inventadas.', title: 'Guía de usuario de DesKilo', chapter: 'Capítulo',
-    levels: {'member': 'Miembro', 'admin': 'Administrador/a', 'owner': 'Propietario', 'everything': 'Todo'},
+    levels: {'member': 'Miembro', 'admin': 'Administrador/a', 'owner': 'Propietario', 'operator': 'Operador/a del servidor', 'everything': 'Todo'},
     structure: {'pasos': 'steps', 'conviene saber': 'know', 'antes de empezar': 'before', 'resultado': 'result'},
     seeAlso: 'véase también', careful: 'atención', audience: 'público',
+    enlarge: 'Ampliar la captura', close: 'Cerrar', describes: 'Esta guía describe DesKilo {v}.',
   ),
   'it': Ui(
     search: 'Cerca nella guida  ( / )', iAm: 'Sono', sections: '{n} sezioni', menu: 'Indice', theme: 'Chiaro o scuro', empty: 'Nessun risultato. Prova un’altra parola o mostra tutto.',
     top: 'Torna su', openApp: 'Apri DesKilo', footer: 'Guida utente DesKilo — gli screenshot mostrano lo spazio dimostrativo; tutte le persone e le cifre sono inventate.', title: 'Guida utente DesKilo', chapter: 'Capitolo',
-    levels: {'member': 'Membro', 'admin': 'Amministratore', 'owner': 'Proprietario', 'everything': 'Tutto'},
+    levels: {'member': 'Membro', 'admin': 'Amministratore', 'owner': 'Proprietario', 'operator': 'Operatore del server', 'everything': 'Tutto'},
     structure: {'passaggi': 'steps', 'da sapere': 'know', 'prima di iniziare': 'before', 'risultato': 'result'},
     seeAlso: 'vedi anche', careful: 'attenzione', audience: 'destinatari',
+    enlarge: 'Ingrandisci lo screenshot', close: 'Chiudi', describes: 'Questa guida descrive DesKilo {v}.',
   ),
 };
 
@@ -118,18 +128,35 @@ Map<String, ({String page, Map<String, String> idBySlug})> crossPages(String lan
   return out;
 }
 
-/// A role word of any language -> the role key the stylesheet and the
-/// filter know.
-String roleKey(String word) {
-  final w = word.toLowerCase().trim();
-  if (RegExp(r'billing|facturation|abrechnung|facturación|fatturazione').hasMatch(w)) return 'billing';
-  if (RegExp(r'^(co-?owner|copropri|mitinhaber|copropietario|comproprietario)').hasMatch(w)) return 'coowner';
-  if (RegExp(r'^(owner|propri|inhaber|propiet)').hasMatch(w)) return 'owner';
-  if (RegExp(r'^(administrat|amministrat|administrador)').hasMatch(w)) return 'admin';
-  if (RegExp(r'^(member|membre|mitglied|miembro|membro)').hasMatch(w)) return 'member';
-  if (RegExp(r'^(operat|betreiber|operador)').hasMatch(w)) return 'operator';
-  return 'all';
+/// A section's audience line -> its roles, in the order written: the key the
+/// stylesheet and the filter know, and the guide's own word for the chip.
+///
+/// The words are a closed vocabulary per language. `·` also sits inside the
+/// French gendered words (`Administrateur·rice`), so only ` · ` separates two
+/// roles, and a word outside the vocabulary fails the build: it must never
+/// quietly become "everyone" and slip through the member filter.
+List<({String key, String label})> audienceRoles(String lang, String line, {String where = ''}) {
+  final known = {
+    for (final e in _wordsFor(lang).entries) e.value.toLowerCase(): e.key,
+    for (final w in _permissionWords[lang] ?? const <String>[]) w.toLowerCase(): 'admin',
+  };
+  final roles = <({String key, String label})>[];
+  for (final word in line.split(RegExp(r'\s+·\s+')).map((w) => w.trim()).where((w) => w.isNotEmpty)) {
+    final key = known[word.toLowerCase()];
+    if (key == null) throw StateError('$where: unknown audience "$word" ($lang) — use a word of _wordsFor');
+    roles.add((key: key, label: word));
+  }
+  return roles;
 }
+
+/// "Administrator with the permission": an administrator, named as such.
+const _permissionWords = <String, List<String>>{
+  'en': ['Administrator with the permission'],
+  'fr': ["Administrateur·rice avec l'autorisation"],
+  'de': ['Administrator:in mit Berechtigung'],
+  'es': ['Administrador/a con el permiso'],
+  'it': ['Amministratore con il permesso'],
+};
 
 String esc(String s) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
@@ -192,7 +219,9 @@ final _anchor = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9]*(?:\.[a-z0-9-]+)+)\s*--
 String _html(String markdown) => md.markdownToHtml(markdown, extensionSet: md.ExtensionSet.gitHubFlavored);
 
 /// One section's body: html, its screenshots and its roles.
-({String body, List<String> figures, List<String> roles}) renderBody(
+typedef Rendered = ({String body, List<String> figures, List<({String key, String label})> roles});
+
+Rendered renderBody(
   String lang,
   List<String> lines,
   String title,
@@ -200,14 +229,14 @@ String _html(String markdown) => md.markdownToHtml(markdown, extensionSet: md.Ex
   Map<String, ({String page, Map<String, String> idBySlug})> cross,
 ) {
   final u = ui[lang]!;
-  var roles = <String>[];
+  var roles = <({String key, String label})>[];
   final cleaned = <String>[];
   var seenAudience = false;
   for (final line in lines) {
     final m = RegExp(r'^\*\*([^*:]+):\*\*\s*(.*)$').firstMatch(line);
     if (!seenAudience && m != null && m[1]!.toLowerCase() == u.audience) {
       seenAudience = true;
-      roles = m[2]!.split('·').map(roleKey).toSet().toList();
+      roles = audienceRoles(lang, m[2]!, where: title);
       continue;
     }
     cleaned.add(line);
@@ -221,7 +250,9 @@ String _html(String markdown) => md.markdownToHtml(markdown, extensionSet: md.Ex
     if (src == null) return m[0]!;
     final wide = RegExp(r'width="(\d+)"').firstMatch(tag);
     final isWide = wide != null && int.parse(wide[1]!) > 400;
-    figures.add('<figure class="shot${isWide ? ' wide' : ''}"><div class="screen" tabindex="0"><img loading="lazy" src="$imageBase$src" alt="${esc(title)}"></div></figure>');
+    // The phone scrolls (focus it, then the arrow keys); the button opens it large.
+    figures.add('<figure class="shot${isWide ? ' wide' : ''}"><div class="screen" tabindex="0"><img loading="lazy" src="$imageBase$src" alt="${esc(title)}"></div>'
+        '<button class="zoom" type="button" aria-label="${esc(u.enlarge)}: ${esc(title)}">⤢</button></figure>');
     return '';
   });
 
@@ -241,12 +272,11 @@ String _html(String markdown) => md.markdownToHtml(markdown, extensionSet: md.Ex
     return 'href="${other.page}${id == null ? '' : '#$id'}"';
   });
   html = html.replaceAllMapped(RegExp('<a href="(${RegExp.escape(webAppBase)}[^"]*)"'), (m) => '<a class="app-link" target="_blank" rel="noopener" href="${m[1]}"');
-  return (body: html, figures: figures, roles: roles.isEmpty ? ['all'] : roles);
+  return (body: html, figures: figures, roles: roles.isEmpty ? [(key: 'all', label: _wordsFor(lang)['all']!)] : roles);
 }
 
 String renderPage(String lang, String markdown, {String book = 'user'}) {
   final u = ui[lang]!;
-  _roleWords = _wordsFor(lang);
   final slugs = anchorSlugs(markdown);
   final idBySlug = {for (final e in slugs.entries) e.value: e.key};
   final cross = crossPages(lang);
@@ -291,7 +321,7 @@ String renderPage(String lang, String markdown, {String book = 'user'}) {
   }
   toc.write('</ol>');
 
-  final levels = ['member', 'admin', 'owner', 'everything']
+  final levels = ['member', 'admin', 'owner', 'operator', 'everything']
       .map((k) => '<button class="chip-btn" type="button" data-level="$k" aria-pressed="false">${esc(u.levels[k]!)}</button>')
       .join();
   final langs = ui.keys
@@ -336,28 +366,30 @@ String renderPage(String lang, String markdown, {String book = 'user'}) {
     </div>
     $main
     <p class="empty">${esc(u.empty)}</p>
-    <footer class="site">${esc(u.footer)}</footer>
+    <footer class="site">${esc(u.footer)} ${esc(u.describes.replaceAll('{v}', appVersion()))}</footer>
   </main>
 </div>
 <button class="to-top" type="button" aria-label="${esc(u.top)}">↑</button>
-<dialog class="lightbox"><img alt=""></dialog>
+<dialog class="lightbox" aria-label="${esc(u.enlarge)}"><form method="dialog"><button class="icon-btn" type="submit" aria-label="${esc(u.close)}">✕</button></form><img alt=""></dialog>
 <script src="guide.js"></script>
 </body>
 </html>
 ''';
 }
 
-String _card(String id, String title, ({String body, List<String> figures, List<String> roles}) r, String tag) {
-  final roles = r.roles.map((k) => '<span class="role role-$k">${esc(_roleLabel(k))}</span>').join();
+/// The app version this guide was built with (`pubspec.yaml`, without the
+/// build number): a release bump regenerates the site, so the published guide
+/// always names the build it ships in.
+String appVersion() =>
+    RegExp(r'^version:\s*([^+\s]+)', multiLine: true).firstMatch(File('pubspec.yaml').readAsStringSync())![1]!;
+
+String _card(String id, String title, Rendered r, String tag) {
+  final roles = r.roles.map((k) => '<span class="role role-${k.key}">${esc(k.label)}</span>').join();
   final media = r.figures.isEmpty ? '' : '<div class="media">${r.figures.join()}</div>';
-  return '<article class="section${r.figures.isEmpty ? ' no-media' : ''}" id="$id" data-roles="${r.roles.join(' ')}">'
+  return '<article class="section${r.figures.isEmpty ? ' no-media' : ''}" id="$id" data-roles="${r.roles.map((k) => k.key).toSet().join(' ')}">'
       '<header><$tag>${esc(title)} <a class="permalink" href="#$id" aria-label="link">#</a></$tag><div class="roles">$roles</div></header>'
       '<div class="body">${r.body}</div>$media</article>';
 }
-
-// The chip text is the language's own role word, set by the caller's table.
-String _roleLabel(String key) => _roleWords[key] ?? key;
-Map<String, String> _roleWords = const {};
 
 void main(List<String> args) {
   final check = args.contains('--check');

@@ -22,7 +22,7 @@ Future<bool> showPasswordRecoverySheet(
   final completed = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => PasswordRecoverySheet(initialEmail: email),
+    builder: (_) => _PasswordRecoverySheet(initialEmail: email),
   );
   return completed ?? false;
 }
@@ -32,17 +32,17 @@ Future<bool> showPasswordRecoverySheet(
 /// (code-based on purpose — no Site-URL/deep-link fragility). The
 /// decisions live in [PasswordRecovery]; this holds the fields, the busy
 /// flag, and the words.
-class PasswordRecoverySheet extends ConsumerStatefulWidget {
-  const PasswordRecoverySheet({super.key, required this.initialEmail});
+class _PasswordRecoverySheet extends ConsumerStatefulWidget {
+  const _PasswordRecoverySheet({required this.initialEmail});
 
   final String initialEmail;
 
   @override
-  ConsumerState<PasswordRecoverySheet> createState() =>
+  ConsumerState<_PasswordRecoverySheet> createState() =>
       _PasswordRecoverySheetState();
 }
 
-class _PasswordRecoverySheetState extends ConsumerState<PasswordRecoverySheet> {
+class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> {
   late final TextEditingController _email;
   final _code = TextEditingController();
   final _newPassword = TextEditingController();

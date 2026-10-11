@@ -104,12 +104,12 @@ List<ReadinessCheck> nativeAccessChecks(
           : 'missing: ${missing.join(', ')} (an unlisted return falls back to the Site URL)',
     ),
   );
-  checks.addAll(emailChecks(auth));
+  checks.addAll(_emailChecks(auth));
   return checks;
 }
 
 /// Confirmation, recovery and delivery, from configuration only.
-List<ReadinessCheck> emailChecks(Map<String, Object?> auth) {
+List<ReadinessCheck> _emailChecks(Map<String, Object?> auth) {
   const area = ReadinessArea.nativeAccess;
   final checks = <ReadinessCheck>[];
   String? text(String key) =>

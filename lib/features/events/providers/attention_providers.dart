@@ -21,14 +21,6 @@ class PrefsUpdateSeenStore extends PrefsStringStore implements UpdateSeenStore {
   const PrefsUpdateSeenStore(super.key);
 }
 
-class InMemoryUpdateSeenStore implements UpdateSeenStore {
-  String? value;
-  @override
-  Future<String?> read() async => value;
-  @override
-  Future<void> write(String? next) async => value = next;
-}
-
 @Riverpod(keepAlive: true)
 UpdateSeenStore updateSeenStore(Ref ref, String key) => PrefsUpdateSeenStore(key);
 

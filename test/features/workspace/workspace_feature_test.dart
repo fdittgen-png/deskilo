@@ -275,8 +275,7 @@ void main() {
     });
 
     test('switching a deep child ON brings its whole chain', () {
-      final flags = featureFlagsAfterToggle(
-        raw: const <WorkspaceFeature>{},
+      final flags = featureFlagsToggleDelta(
         feature: WorkspaceFeature.badgeSignIn,
         value: true,
       );
@@ -284,21 +283,25 @@ void main() {
       expect(flags[WorkspaceFeature.nfcBadges], isTrue);
       expect(flags[WorkspaceFeature.kioskMode], isTrue);
       // Nothing ELSE is touched: a cascade goes up, never sideways.
-      expect(flags[WorkspaceFeature.moneyTab], isFalse);
+      expect(flags.containsKey(WorkspaceFeature.moneyTab), isFalse);
     });
 
     test('switching a parent OFF keeps its dependants stored', () {
       // They are already ineffective; erasing the choices would make the
       // owner rebuild the subtree by hand after switching the parent on.
-      final flags = featureFlagsAfterToggle(
-        raw: const {
-          WorkspaceFeature.kioskMode,
-          WorkspaceFeature.nfcBadges,
-          WorkspaceFeature.badgeSignIn,
-        },
-        feature: WorkspaceFeature.kioskMode,
-        value: false,
-      );
+      const raw = {
+        WorkspaceFeature.kioskMode,
+        WorkspaceFeature.nfcBadges,
+        WorkspaceFeature.badgeSignIn,
+      };
+      // The server merges the delta onto the stored row.
+      final flags = {
+        for (final f in raw) f: true,
+        ...featureFlagsToggleDelta(
+          feature: WorkspaceFeature.kioskMode,
+          value: false,
+        ),
+      };
       expect(flags[WorkspaceFeature.kioskMode], isFalse);
       expect(flags[WorkspaceFeature.nfcBadges], isTrue);
       expect(effectiveFeatures(

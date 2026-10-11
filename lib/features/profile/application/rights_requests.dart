@@ -43,7 +43,7 @@ Future<RightsRequest> submitRightsRequest(
   return request;
 }
 
-Future<ErasurePreview> previewErasure(WidgetRef ref, String workspaceId) =>
+Future<ErasurePreview> _previewErasure(WidgetRef ref, String workspaceId) =>
     ref.read(profileRepositoryProvider).previewMyErasure(workspaceId);
 
 /// The preview, or null when the server cannot give one (an older
@@ -53,7 +53,7 @@ Future<ErasurePreview?> previewErasureOrNull(
   String workspaceId,
 ) async {
   try {
-    return await previewErasure(ref, workspaceId);
+    return await _previewErasure(ref, workspaceId);
   } catch (e, st) {
     TraceLogger.instance.warn('privacy', 'erasure preview unavailable',
         error: e, stackTrace: st);

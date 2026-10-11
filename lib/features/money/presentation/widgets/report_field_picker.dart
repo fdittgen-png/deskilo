@@ -25,6 +25,7 @@ Future<String?> showReportFieldPicker(
 /// #966 — by TOPIC, in the order an owner reads a document: what the
 /// document is, who it is for, who issues it, the amounts, then the
 /// specialised reports and the loops.
+@visibleForTesting
 enum ReportFieldGroup {
   document,
   member,
@@ -40,6 +41,7 @@ enum ReportFieldGroup {
   texts,
 }
 
+@visibleForTesting
 ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       // #880 — the owner's own texts.
       String f when f.startsWith('text.') => ReportFieldGroup.texts,
@@ -128,6 +130,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
 /// #966 — what a field IS, in one line, in the reader's language. Every
 /// registry placeholder has one (pinned by test); an unknown field (a
 /// text key) reads as itself.
+@visibleForTesting
 String reportFieldMeaning(String field, AppLocalizations? l10n) =>
     switch (field) {
       'number' => l10n?.reportFieldMeaningNumber ?? 'The document\'s number',
@@ -224,6 +227,7 @@ String reportFieldMeaning(String field, AppLocalizations? l10n) =>
       _ => field,
     };
 
+@visibleForTesting
 String reportFieldGroupName(ReportFieldGroup group, AppLocalizations? l10n) =>
     switch (group) {
       ReportFieldGroup.document =>
@@ -247,6 +251,7 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations? l10n) =>
 
 /// What a field inserts: a token, or for the two loops the scaffold
 /// that iterates them — one table row per item, ready to edit.
+@visibleForTesting
 String reportFieldMarkup(String field) => switch (field) {
       // #1002 — a subscription row composes its own wording from the
       // month and the percentage; every other kind keeps its label.

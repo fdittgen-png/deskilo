@@ -647,7 +647,7 @@ Sie möchten noch einmal nachlesen, was Sie zu Ihren Daten akzeptiert haben.
 
 1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
 2. Tippen Sie auf **Ihre Daten, Ihre Rechte**.
-3. Lesen Sie den Text: was verarbeitet wird, was nie geschieht, wer was sieht, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
+3. Lesen Sie den Text: was verarbeitet wird und wo, was nie geschieht, wer was sieht, Nachrichten, Push-Benachrichtigungen, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
 
 **Gut zu wissen**
 

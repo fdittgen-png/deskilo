@@ -18,7 +18,7 @@ import 'report_layout/layout_units.dart';
 import 'report_layout/layout_xml.dart';
 
 /// The envelope around a `<report-layout>`.
-abstract final class ReportLayoutSchema {
+abstract final class _ReportLayoutSchema {
   /// #880 — `<texts><text key="…">…</text></texts>`: the owner's texts
   /// of the exported language, beside the layout.
   static const String texts = 'texts';
@@ -63,7 +63,7 @@ class ReportLayoutFile {
 
 /// The editing reference that travels with every export, as text for a
 /// comment block. Built from the same constants `describe` prints.
-String layoutHowToEdit() => '''
+String _layoutHowToEdit() => '''
 HOW TO EDIT THIS FILE
 
 Only the <report-layout> element and the optional <texts> element are
@@ -130,20 +130,20 @@ String buildReportLayoutFile({
   final document = parseLayoutXml(layoutXml);
   final b = XmlBuilder();
   b.processing('xml', 'version="1.0" encoding="UTF-8"');
-  b.element(ReportLayoutSchema.root, nest: () {
-    b.attribute(ReportLayoutSchema.attrSchema, ReportLayoutSchema.id);
-    b.attribute(ReportLayoutSchema.attrVersion, '${ReportLayoutSchema.version}');
-    b.attribute(ReportLayoutSchema.attrKind, kind.id);
-    b.attribute(ReportLayoutSchema.attrLanguage, language);
-    b.attribute(ReportLayoutSchema.attrWorkspace, workspaceName);
-    b.attribute(ReportLayoutSchema.attrExportedAt,
+  b.element(_ReportLayoutSchema.root, nest: () {
+    b.attribute(_ReportLayoutSchema.attrSchema, _ReportLayoutSchema.id);
+    b.attribute(_ReportLayoutSchema.attrVersion, '${_ReportLayoutSchema.version}');
+    b.attribute(_ReportLayoutSchema.attrKind, kind.id);
+    b.attribute(_ReportLayoutSchema.attrLanguage, language);
+    b.attribute(_ReportLayoutSchema.attrWorkspace, workspaceName);
+    b.attribute(_ReportLayoutSchema.attrExportedAt,
         exportedAt.toUtc().toIso8601String());
-    b.comment('\n${layoutHowToEdit()}');
+    b.comment('\n${_layoutHowToEdit()}');
     if (texts.isNotEmpty) {
-      b.element(ReportLayoutSchema.texts, nest: () {
+      b.element(_ReportLayoutSchema.texts, nest: () {
         for (final entry in texts.entries) {
-          b.element(ReportLayoutSchema.text, nest: () {
-            b.attribute(ReportLayoutSchema.attrKey, entry.key);
+          b.element(_ReportLayoutSchema.text, nest: () {
+            b.attribute(_ReportLayoutSchema.attrKey, entry.key);
             b.text(entry.value);
           });
         }
@@ -174,19 +174,19 @@ ReportLayoutFile parseReportLayoutFile(
         ReportDesignException(ReportDesignError.malformed, e.message), st);
   }
   final root = doc.rootElement;
-  if (root.name.local != ReportLayoutSchema.root ||
-      root.getAttribute(ReportLayoutSchema.attrSchema) !=
-          ReportLayoutSchema.id) {
+  if (root.name.local != _ReportLayoutSchema.root ||
+      root.getAttribute(_ReportLayoutSchema.attrSchema) !=
+          _ReportLayoutSchema.id) {
     throw ReportDesignException(
         ReportDesignError.notADesignFile, '<${root.name.local}>');
   }
   final version =
-      int.tryParse(root.getAttribute(ReportLayoutSchema.attrVersion) ?? '');
-  if (version == null || version > ReportLayoutSchema.version) {
+      int.tryParse(root.getAttribute(_ReportLayoutSchema.attrVersion) ?? '');
+  if (version == null || version > _ReportLayoutSchema.version) {
     throw ReportDesignException(
         ReportDesignError.unsupportedVersion, 'version $version');
   }
-  final kindId = root.getAttribute(ReportLayoutSchema.attrKind) ?? '';
+  final kindId = root.getAttribute(_ReportLayoutSchema.attrKind) ?? '';
   final kind = reportKindById(kindId, reminderLevels: reminderLevels);
   if (kind == null) {
     throw ReportDesignException(ReportDesignError.unknownKind, kindId);
@@ -215,19 +215,19 @@ ReportLayoutFile parseReportLayoutFile(
         e.stackTrace ?? st);
   }
   final textsElement = root.childElements
-      .where((e) => e.name.local == ReportLayoutSchema.texts)
+      .where((e) => e.name.local == _ReportLayoutSchema.texts)
       .firstOrNull;
   return ReportLayoutFile(
     kindId: kind.id,
-    language: root.getAttribute(ReportLayoutSchema.attrLanguage) ?? '',
+    language: root.getAttribute(_ReportLayoutSchema.attrLanguage) ?? '',
     layoutXml: layoutXml,
     document: document,
     texts: {
       if (textsElement != null)
         for (final t in textsElement.childElements)
-          if (t.name.local == ReportLayoutSchema.text &&
-              (t.getAttribute(ReportLayoutSchema.attrKey) ?? '').isNotEmpty)
-            t.getAttribute(ReportLayoutSchema.attrKey)!: t.innerText,
+          if (t.name.local == _ReportLayoutSchema.text &&
+              (t.getAttribute(_ReportLayoutSchema.attrKey) ?? '').isNotEmpty)
+            t.getAttribute(_ReportLayoutSchema.attrKey)!: t.innerText,
     },
   );
 }

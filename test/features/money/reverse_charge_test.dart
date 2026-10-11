@@ -4,6 +4,7 @@
 // invoicing a business in ANOTHER member state charges nothing: the
 // document states category AE, carries the reverse-charge mention and
 // names the customer's VAT identifier. Mirrors create_invoice (0157).
+// #2354 — only for a general service: a desk is taxed where it stands.
 
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -11,9 +12,10 @@ import 'package:deskilo/features/money/domain/invoice_cii.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart' show buildInvoiceUbl;
 import 'package:deskilo/features/money/domain/invoice_ubl_check.dart';
+import 'package:deskilo/core/vat/supply_class.dart';
+import 'package:deskilo/core/vat/vat_treatment.dart';
 import 'package:deskilo/features/money/domain/vat_compliance.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
-import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -62,35 +64,62 @@ const _s20 = InvoiceVatTotal(
 
 void main() {
   group('the rule', () {
-    bool applies({
-      VatRegime regime = VatRegime.vatRegistered,
+    // #2354 — the place of supply decides, line by line; the cases the
+    // SQL twin runs are pinned by place_of_supply_test.
+    String category({
+      VatTreatment treatment = VatTreatment.auto,
+      SupplyClass supply = SupplyClass.general,
+      bool registered = true,
       String seller = 'FR',
       String buyer = 'DE',
-      String buyerVat = 'DE123456789',
-      bool optedOut = false,
+      String capacity = 'business',
+      bool reverseChargeOn = true,
     }) =>
-        reverseChargeApplies(
-          sellerRegime: regime,
+        supplyVatCategory(
+          treatment: treatment,
+          supply: supply,
+          sellerVatRegistered: registered,
           sellerCountry: seller,
           buyerCountry: buyer,
-          buyerVatId: buyerVat,
-          optedOut: optedOut,
+          buyerCapacity: capacity,
+          reverseChargeOn: reverseChargeOn,
         );
 
-    test('a VAT-registered seller, an EU business abroad, a VAT id', () {
-      expect(applies(), isTrue);
-      expect(applies(buyer: 'fr'), isFalse, reason: 'at home the tax is ours');
-      expect(applies(buyerVat: ''), isFalse,
-          reason: 'no VAT id means a consumer, who pays the tax');
-      expect(applies(buyer: 'CH'), isFalse, reason: 'outside the Union');
-      expect(applies(regime: VatRegime.exempt), isFalse,
+    test('a desk is taxed where the building stands, for every customer',
+        () {
+      expect(category(supply: SupplyClass.property), '');
+      expect(category(supply: SupplyClass.property, buyer: 'US'), '');
+      expect(category(supply: SupplyClass.property, capacity: 'consumer'), '');
+    });
+
+    test('a general service: AE for an EU business abroad, G outside', () {
+      expect(category(), 'AE');
+      expect(category(buyer: 'fr'), '', reason: 'at home the tax is ours');
+      expect(category(capacity: 'consumer'), '',
+          reason: 'a consumer pays the seller\'s VAT (art. 45)');
+      expect(category(capacity: 'unknown'), '',
+          reason: 'a VAT number alone is not a business');
+      expect(category(buyer: 'CH'), 'G');
+      expect(category(registered: false), '',
           reason: 'a seller who charges no VAT reverses nothing');
-      expect(applies(optedOut: true), isFalse);
+      expect(category(reverseChargeOn: false), '');
+    });
+
+    test('an explicit treatment decides every line', () {
+      for (final supply in SupplyClass.values) {
+        expect(category(treatment: VatTreatment.domestic, supply: supply), '');
+        expect(category(treatment: VatTreatment.reverseCharge, supply: supply),
+            'AE');
+        expect(category(treatment: VatTreatment.export, supply: supply), 'G');
+        expect(category(treatment: VatTreatment.exempt, supply: supply), 'E');
+      }
     });
 
     test('the member states, Greece under both its codes', () {
       expect(isEuCountry('el'), isTrue);
       expect(isEuCountry('GR'), isTrue);
+      expect(euCountryCode(' el '), 'GR');
+      expect(euMemberStates, isNot(contains('EL')));
       expect(isEuCountry('NO'), isFalse);
     });
 
@@ -134,6 +163,22 @@ void main() {
       expect(ordinary['exemption_reason'], '');
       expect(legalMentionData(const ReportStrings(), workspace)['exemption_reason'],
           'Ma mention à moi');
+    });
+
+    test('a desk for a German business prints no reverse-charge text', () {
+      // #2354 — the server issues it at the French rate, category S; the
+      // document then states no mention at all.
+      final invoice = _invoice(vat: const [_s20]);
+      const workspace = Workspace(
+        id: 'ws-1', name: 'Demo SARL', countryCode: 'FR', currencyCode: 'EUR',
+        timezone: 'Europe/Paris', inviteCode: 'CODE',
+        vatRegime: 'vat_registered',
+      );
+      final data = invoiceReportData(const ReportStrings(), invoice,
+          proforma: false, copy: false, workspace: workspace);
+      expect(data['exemption_reason'], '');
+      expect('$data', isNot(contains('Autoliquidation')));
+      expect('$data', isNot(contains('196')));
     });
 
     test('exports as category AE with VATEX-EU-AE, in CII and UBL', () {

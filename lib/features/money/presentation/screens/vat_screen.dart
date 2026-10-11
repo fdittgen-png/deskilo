@@ -413,7 +413,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                           for (final g in VatGroup.values)
                             DropdownMenuItem(
                               value: g,
-                              child: Text(vatGroupName(l10n, g)),
+                              child: Text(_vatGroupName(l10n, g)),
                             ),
                         ],
                         onChanged: (g) =>
@@ -503,7 +503,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
                       style: Theme.of(context).textTheme.titleSmall),
                   for (final line in [
                     for (final e in vatGroupExamples(workspace.countryCode))
-                      '${vatGroupName(l10n, e.group)} — ${e.example}',
+                      '${_vatGroupName(l10n, e.group)} — ${e.example}',
                   ])
                     Text(line, style: Theme.of(context).textTheme.bodySmall),
                 ],
@@ -575,7 +575,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
 }
 
 /// #947 — the group's name in the reader's language.
-String vatGroupName(AppLocalizations? l10n, VatGroup g) => switch (g) {
+String _vatGroupName(AppLocalizations? l10n, VatGroup g) => switch (g) {
       VatGroup.standard => l10n?.vatGroupStandard ?? 'Standard',
       VatGroup.intermediate => l10n?.vatGroupIntermediate ?? 'Intermediate',
       VatGroup.reduced => l10n?.vatGroupReduced ?? 'Reduced',

@@ -88,7 +88,7 @@ void main() {
   });
 
   // #1330 — `REQUIRES` mirrors featureManifest so `on()` / `enableWith()`
-  // agree with the app's effectiveFeatures / featureFlagsAfterToggle. It
+  // agree with the app's effectiveFeatures / featureFlagsToggleDelta. It
   // matched by discipline only (59/59 when audited); now it is pinned.
   group('dependencies', () {
     test('REQUIRES equals featureManifest.requires, entry for entry', () {
@@ -201,6 +201,43 @@ void main() {
         expect(gran, contains("'$value'"),
             reason: '$value must be selectable in the questionnaire');
       }
+    });
+  });
+
+  group('help links', () {
+    /// Every anchor id the chapter files declare, user and setup guide.
+    Set<String> guideAnchors() {
+      final comment = RegExp(r'<!--\s*anchor:\s*([a-z][a-z0-9.-]*)\s*-->');
+      return {
+        for (final dir in ['docs/guide/user', 'docs/guide/setup'])
+          for (final file in Directory(dir).listSync().whereType<File>())
+            if (file.path.endsWith('.en.md'))
+              for (final m in comment.allMatches(file.readAsStringSync()))
+                m.group(1)!,
+      };
+    }
+
+    test('every help link lands on a section of the guide site', () {
+      // The guide site gives each section its anchor as the element id, so
+      // a key that names no anchor opens the page at the top.
+      final start = html.indexOf('const HELP={');
+      expect(start, isNot(-1), reason: 'the HELP table must exist');
+      final block = html.substring(start, html.indexOf('\n};', start));
+      final anchors = RegExp(r"^ [A-Za-z_]+:\['[A-Za-z]+','([^']+)'\],$",
+              multiLine: true)
+          .allMatches(block)
+          .map((m) => m.group(1)!)
+          .toList();
+      expect(anchors, hasLength(greaterThan(30)));
+      final known = guideAnchors();
+      for (final anchor in anchors) {
+        expect(known, contains(anchor),
+            reason: 'HELP links to #$anchor, which no guide chapter declares');
+      }
+      expect(html, contains("guideUrl('user.start.questionnaire')"));
+      expect(known, contains('user.start.questionnaire'));
+      expect(html, isNot(contains('github.com/fdittgen-png/deskilo/wiki')),
+          reason: 'the user and setup guides live on the guide site');
     });
   });
 }

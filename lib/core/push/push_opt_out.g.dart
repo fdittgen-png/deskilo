@@ -49,7 +49,7 @@ final class PushOptOutStoreProvider
   }
 }
 
-String _$pushOptOutStoreHash() => r'b672670bba2cebd60ad695aea948b29d4a31650d';
+String _$pushOptOutStoreHash() => r'939d55cb86233c08138359afd34ca86041ce7629';
 
 /// True when the person turned push delivery off on this device.
 

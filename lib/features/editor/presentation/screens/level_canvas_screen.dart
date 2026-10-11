@@ -37,6 +37,7 @@ import '../../../../core/ids/request_id.dart';
 /// Canvas dimensions in grid cells and the logical cell size at scale 1 —
 /// aliases of the shared [PlanCanvasMetrics] so the editor can never drift
 /// from the live plan / Reserve hub geometry.
+@visibleForTesting
 abstract final class GridCanvas {
   static const int widthCells = PlanCanvasMetrics.cells;
   static const int heightCells = PlanCanvasMetrics.cells;

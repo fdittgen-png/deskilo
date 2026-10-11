@@ -14,9 +14,9 @@ abstract class EntryIntentStore {
   Future<void> write(String? draft);
 }
 
-class PrefsEntryIntentStore extends PrefsStringStore
+class _PrefsEntryIntentStore extends PrefsStringStore
     implements EntryIntentStore {
-  const PrefsEntryIntentStore() : super('entry_intent_draft');
+  const _PrefsEntryIntentStore() : super('entry_intent_draft');
 }
 
 /// Test double and Demo copy. [writes] counts every write, so a test can
@@ -38,4 +38,4 @@ class InMemoryEntryIntentStore implements EntryIntentStore {
 }
 
 @Riverpod(keepAlive: true)
-EntryIntentStore entryIntentStore(Ref ref) => const PrefsEntryIntentStore();
+EntryIntentStore entryIntentStore(Ref ref) => const _PrefsEntryIntentStore();

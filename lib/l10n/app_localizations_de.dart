@@ -3107,7 +3107,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
+      'Jeder Space wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Jeder Server wird von seinem Betreiber betrieben: der gemeinsame Referenzserver von Florian Dittgen (Deutschland), der eigene Server einer Gemeinschaft von dem, der ihn betreibt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen veröffentlicht. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
 
   @override
   String get consentControllerTitle => 'Wer verantwortlich ist';
@@ -3117,28 +3117,42 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bevor Sie DesKilo nutzen: was die App mit Ihren Daten tut, wer sie sehen kann und was Sie tun können. Zwei Minuten; mehr ist es nicht.';
 
   @override
+  String get consentMessagesBody =>
+      'Nur die Personen einer Unterhaltung können sie öffnen: Sie beide, die Mitglieder einer Gruppe oder, wenn Sie einem Space schreiben, die Gastgeber, die die App vor dem Senden nennt. Inhaber und Admins eines Space können Ihre Unterhaltungen nicht lesen. Nachrichten sind nicht Ende-zu-Ende-verschlüsselt: Sie liegen auf dem Server, auf dem die Unterhaltung lebt — auf einem anderen Server, nach Ihrer Bestätigung, wenn Sie jemandem dort schreiben —, und wer diesen Server betreibt, kann technisch auf sie zugreifen.';
+
+  @override
+  String get consentMessagesTitle => 'Nachrichten';
+
+  @override
   String get consentNotBody =>
-      'Kein Tracking, keine Analytik, keine Werbung, kein Verkauf oder Teilen von Daten. Push-Nachrichten tragen keinen Inhalt — nur „Sie haben eine neue Nachricht“; die App selbst schreibt den Text. Die F-Droid-Version hat gar keine Google-Dienste.';
+      'Kein Tracking, keine Analytik, keine Werbung, kein Verkauf von Daten. Ihre Daten gehen an niemanden außer an die Empfänger, die hier und im Hinweis des Servers genannt sind. Die F-Droid-Version hat gar keine Google-Dienste.';
 
   @override
   String get consentNotTitle => 'Was DesKilo nie tut';
 
   @override
+  String get consentPushBody =>
+      'Optional, und ausgehend. Wenn der Betreiber des Servers Push eingerichtet hat, Ihr Space es nutzt und es für dieses Gerät an ist, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst (Firebase Cloud Messaging, das Benachrichtigungen für Apple-Geräte an Apple weitergibt). Eine Benachrichtigung sagt nur etwas Allgemeines, etwa „Sie haben eine neue Nachricht“: keine Namen, keine Uhrzeiten, kein Nachrichtentext. Schalten Sie es unter Einstellungen → Datenschutz & Daten aus; die App funktioniert weiter, und an dieses Gerät wird nichts mehr gesendet.';
+
+  @override
+  String get consentPushTitle => 'Push-Benachrichtigungen';
+
+  @override
   String get consentReadInHelp => 'In der Hilfe lesen';
 
   @override
-  String get consentReadOnWiki => 'Im Wiki lesen';
+  String get consentReadOnWiki => 'Im Online-Handbuch lesen';
 
   @override
   String get consentRetentionBody =>
-      'Solange Sie Mitglied sind. Wenn Sie gehen und löschen, verschwinden Profil und Nachrichten; Buchhaltungsbelege (Rechnungen, Zahlungen) bleiben für die gesetzliche Aufbewahrungsfrist, nach Kennung und nicht nach Name.';
+      'Solange Sie Mitglied sind. Wenn Sie einen Space verlassen und löschen, verschwinden Ihre Nachrichten in diesem Space, und Ihr Profil geht mit Ihrem letzten Space. Buchhaltungsbelege bleiben für die gesetzliche Aufbewahrungsfrist: das Kontobuch nach Kennung, Rechnungen so, wie sie ausgestellt wurden.';
 
   @override
   String get consentRetentionTitle => 'Wie lange';
 
   @override
   String get consentReviewBody =>
-      'Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Projekt-Wiki verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.';
+      'Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Online-Benutzerhandbuch verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.';
 
   @override
   String get consentReviewHint =>
@@ -3166,14 +3180,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentWhatBody =>
-      'Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Workspace tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt in der EU (Supabase, eu-central-1).';
+      'Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Space tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt auf dem Server, auf dem Ihr Space läuft: auf dem gemeinsamen Referenzserver in der EU (Supabase, eu-central-1); auf einem Server, den eine Gemeinschaft selbst betreibt, dort, wo ihr Betreiber es gewählt hat. Einstellungen → Datenschutz & Daten zeigt den Hinweis dieses Servers: wer ihn betreibt, wo die Daten liegen und wer sie erhält.';
 
   @override
   String get consentWhatTitle => 'Was DesKilo verarbeitet';
 
   @override
   String get consentWhoBody =>
-      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Workspace (der Plan zeigt die Belegung); Nachrichten nur die Personen der Unterhaltung, gleich welcher Rolle; Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
+      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Space (der Plan zeigt die Belegung); Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Jede Angabe Ihres Profils sieht nur das Publikum, das Sie unter Wer mich sieht wählen; nichts ist öffentlich, wenn Sie es nicht wählen. Ein öffentliches Profil bleibt aus, bis Sie es veröffentlichen: Dann liest jeder mit dem Link Ihren Namen, Beruf und Ihre Kurzbiografie — nie Ihre Kontaktdaten, Ihre Anwesenheit oder Ihre Spaces —, bis Sie es zurückziehen. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
 
   @override
   String get consentWhoTitle => 'Wer was sehen kann';
@@ -5623,6 +5637,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureSubscriptionInvoicesTitle => 'Abo-Rechnungen';
+
+  @override
+  String get featureSupplyClassificationDesc =>
+      'Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.';
+
+  @override
+  String get featureSupplyClassificationTitle => 'Leistungsort je Leistung';
 
   @override
   String get featureSupplyExpensesDesc =>
@@ -8167,6 +8188,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Ob das Mitglied Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab';
+
+  @override
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Mitglieds';
 
   @override
@@ -8202,7 +8227,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Grenzüberschreitende Rechnungen sowie Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.';
+      'Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -11017,7 +11042,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.';
+      'Wer dieses Mitglied für die Umsatzsteuer ist. Automatisch: Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt, also mit Ihrer Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (ohne Bezug zu den Räumlichkeiten) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Leistungsempfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Die anderen Auswahlmöglichkeiten gelten für alle Positionen.';
 
   @override
   String get memberVatTreatmentLabel => 'USt-Behandlung';
@@ -16388,6 +16413,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
 
   @override
+  String get supplyClassGeneral =>
+      'Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)';
+
+  @override
+  String get supplyClassHelper =>
+      'Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.';
+
+  @override
+  String get supplyClassLabel => 'Leistungsort';
+
+  @override
+  String get supplyClassProperty => 'Mit den Räumlichkeiten verbunden';
+
+  @override
   String get supportChanged =>
       'Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.';
 
@@ -19073,6 +19112,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatTreatmentDomestic => 'Inlands-USt';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Allgemeine Dienstleistungen: $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Arbeitsplatz, Büro, Raum: $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Für ein Unternehmen in einem anderen EU-Land:';
+
+  @override
   String get vatTreatmentExempt => 'Befreiter Käufer';
 
   @override
@@ -19085,6 +19138,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatTreatmentReverseCharge =>
       'Steuerschuldnerschaft des Empfängers';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'Der Kunde schuldet die Umsatzsteuer – nur für Leistungen, die nicht mit den Räumlichkeiten verbunden sind.';
 
   @override
   String get vatUntil => 'bis';

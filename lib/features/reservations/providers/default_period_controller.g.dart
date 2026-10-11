@@ -55,7 +55,7 @@ final class DefaultPeriodStoreProvider
 }
 
 String _$defaultPeriodStoreHash() =>
-    r'c406fb55e4da72268abac651819c19e9a697198f';
+    r'80f5d6e781ede78a187eca1b5cfccd071eea4c95';
 
 /// The active workspace's stored default period, validated against what
 /// the CURRENT booking configuration still offers — a preference saved

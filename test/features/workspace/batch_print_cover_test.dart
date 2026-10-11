@@ -89,7 +89,6 @@ void main() {
       // sheet unusable in the guillotine.
       expect(badgeCardWidth, closeTo(85.6 * 72 / 25.4, 0.01));
       expect(badgeCardHeight, closeTo(53.98 * 72 / 25.4, 0.01));
-      expect(badgeSheetColumns * badgeSheetRows, badgeSheetCount);
     });
   });
 }

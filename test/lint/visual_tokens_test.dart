@@ -92,7 +92,6 @@ const Map<String, int> _fontWeightBaseline = {
   'lib/features/profile/presentation/widgets/member_avatar.dart': 1,
   'lib/features/workspace/presentation/screens/members_screen.dart': 1,
   'lib/features/workspace/presentation/screens/roles_screen.dart': 1,
-  'lib/features/workspace/presentation/widgets/conversation_row.dart': 1,
   'lib/features/workspace/presentation/widgets/member_note_body.dart': 1,
 };
 

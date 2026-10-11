@@ -30,7 +30,7 @@ enum EInvoiceExport {
 }
 
 /// Localized wording of one readiness gap (0069).
-String eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
+String _eInvoiceGapText(AppLocalizations? l10n, EInvoiceGap gap) =>
     switch (gap) {
       EInvoiceGap.vatNotSupported => l10n?.invoiceGapVatNotSupported ??
           'The workspace charges VAT but this invoice carries no rate — '
@@ -264,7 +264,7 @@ class _EInvoiceBody extends StatelessWidget {
                     l10n?.invoiceEInvoiceBlockedTitle ??
                         'A validator would reject this file:',
                     for (final gap in readiness.blocking)
-                      '• ${eInvoiceGapText(l10n, gap)}',
+                      '• ${_eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
               // Why a complete identity still leaves a rejected file: the
@@ -288,7 +288,7 @@ class _EInvoiceBody extends StatelessWidget {
                     l10n?.invoiceEInvoiceIncompleteTitle ??
                         'Valid, but the strict national profiles also want:',
                     for (final gap in readiness.warnings)
-                      '• ${eInvoiceGapText(l10n, gap)}',
+                      '• ${_eInvoiceGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
               const SizedBox(height: AppSpacing.lg),

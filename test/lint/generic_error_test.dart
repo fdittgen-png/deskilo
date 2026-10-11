@@ -101,7 +101,6 @@ const Map<String, int> _baseline = {
   'lib/features/workspace/presentation/widgets/environment_tile.dart': 2,
   'lib/features/workspace/presentation/widgets/group_info_sheet.dart': 3,
   'lib/features/workspace/presentation/widgets/member_note_actions.dart': 2,
-  'lib/features/workspace/presentation/widgets/new_conversation_sheet.dart': 1,
   'lib/features/workspace/presentation/widgets/open_conversation.dart': 1,
   'lib/features/workspace/presentation/widgets/public_holidays_sheet.dart': 2,
 };

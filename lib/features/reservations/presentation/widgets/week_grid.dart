@@ -25,6 +25,7 @@ import '../../../../core/theme/app_typography.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
+@visibleForTesting
 abstract final class WeekGridMetrics {
   /// Columns of the grid: the ISO week, Monday through Sunday.
   static const int daysPerWeek = 7;

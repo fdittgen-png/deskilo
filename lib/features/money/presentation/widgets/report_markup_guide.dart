@@ -69,7 +69,7 @@ class ReportMarkupGuide extends StatelessWidget {
         Text(l10n?.reportGuideMarkupTitle ?? 'Line markup',
             style: theme.textTheme.labelLarge),
         const SizedBox(height: AppSpacing.xs),
-        for (final row in reportMarkupRows(l10n))
+        for (final row in _reportMarkupRows(l10n))
           InkWell(
             key: ValueKey('report-markup-${row.id}'),
             onTap: () => onInsert(row.example),
@@ -97,7 +97,7 @@ class ReportMarkupGuide extends StatelessWidget {
           spacing: AppSpacing.xs,
           runSpacing: AppSpacing.xs,
           children: [
-            for (final snippet in reportLiquidSnippets(l10n))
+            for (final snippet in _reportLiquidSnippets(l10n))
               ActionChip(
                 key: ValueKey('report-snippet-${snippet.id}'),
                 label: Text(snippet.label),
@@ -111,12 +111,12 @@ class ReportMarkupGuide extends StatelessWidget {
 }
 
 /// One line-markup rule: the sign as an example line, and what it does.
-typedef ReportMarkupRow = ({String id, String example, String meaning});
+typedef _ReportMarkupRow = ({String id, String example, String meaning});
 
 /// The line markup the renderer accepts, one row each, in reading order.
 /// The examples are syntax (identical everywhere); the meanings are
 /// translated.
-List<ReportMarkupRow> reportMarkupRows(AppLocalizations? l10n) => [
+List<_ReportMarkupRow> _reportMarkupRows(AppLocalizations? l10n) => [
       (
         id: 'heading',
         example: '# Title',
@@ -162,11 +162,11 @@ List<ReportMarkupRow> reportMarkupRows(AppLocalizations? l10n) => [
     ];
 
 /// One ready-made Liquid piece: what it is for, and the markup.
-typedef ReportLiquidSnippet = ({String id, String label, String markup});
+typedef _ReportLiquidSnippet = ({String id, String label, String markup});
 
 /// The three Liquid patterns a band actually needs; anything else is
 /// the same three combined.
-List<ReportLiquidSnippet> reportLiquidSnippets(AppLocalizations? l10n) => [
+List<_ReportLiquidSnippet> _reportLiquidSnippets(AppLocalizations? l10n) => [
       (
         id: 'if',
         label: l10n?.reportGuideSnippetIf ??

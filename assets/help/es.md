@@ -106,11 +106,30 @@ Dentro de un espacio, lo que puede hacer depende de su rol. Los roles se suman: 
 
 **Véase también:** [La matriz de roles](help:user.roles.matrix) · [Unirse a un espacio](help:user.start.join)
 
+### Tres recorridos por esta guía
+
+**Público:** Todos
+
+No necesita leerlo todo primero. Elija el recorrido que corresponde a lo que quiere hacer ahora: cada paso es una sección de esta guía, en el orden en que la necesita.
+
+| Recorrido | Pasos, en orden | Terminado cuando |
+|---|---|---|
+| Primera vez como miembro | [Crear una cuenta o iniciar sesión](help:user.start.account) → [Unirse a un espacio](help:user.start.join) → [Reservar una plaza](help:user.reserve.book) → [Consulte su extracto](help:user.money.statement) → [Registrar la llegada y la salida](help:user.reserve.check-in) | Ha reservado, sabe lo que cuesta y ha registrado su entrada y su salida. |
+| Poner un espacio en servicio | [Unos pocos lugares compartidos](help:setup.features.profile-tiny) → [Dibujar salas, mesas y asientos](help:user.space.editor.rooms) → [Horario de trabajo](help:user.workspace.availability.working-hours) → [Límites de reserva](help:user.workspace.availability.limits) → [Invite a un miembro](help:user.members.invite) → [La pestaña Calendario](help:user.reserve.calendar) | Un miembro al que invitó ha reservado y usted ve la reserva. |
+| El primer cierre de mes | [La facturación de un vistazo](help:user.money.invoicing) → [Lo que emite la aplicación y lo que queda en manos de su gestor](help:user.invoicing.scope) → [El asistente de cierre mensual](help:user.invoicing.wizard) → [Reclamar y saldar facturas abiertas](help:user.invoicing.open) → [Exportaciones contables](help:user.invoicing.accounting-export) | El mes está facturado dentro de lo que admite la aplicación, los pagos están conciliados y el archivo está en manos de su gestor. |
+
+**Conviene saber**
+
+- Un espacio pequeño solo necesita los dos primeros recorridos. La facturación, el IVA y las funciones avanzadas pueden esperar a que el espacio las necesite, y desactivar una función no borra nada.
+- La guía de puesta en marcha explica el porqué y el orden para un espacio nuevo; esta guía explica los gestos.
+
+**Véase también:** [Qué es DesKilo y quién hace qué](help:user.start.what-is) · [El orden para activar las cosas](help:setup.features.order)
+
 ### Crear una cuenta o iniciar sesión
 
 **Público:** Todos
 
-Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirve en todos los espacios a los que se una.
+Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirve en todos los espacios a los que se una en el mismo servidor.
 
 ![](assets/help/images/user-start-account.es.b8fa17aa9.jpg)
 
@@ -132,6 +151,27 @@ Usted quiere entrar, ya sea la primera vez o la centésima. Una sola cuenta sirv
 - **Unirse con invitación** en la pantalla de inicio de sesión recuerda el motivo de su visita: usted crea su cuenta y después pega su invitación.
 
 **Véase también:** [Restablecer una contraseña olvidada](help:user.start.forgot-password) · [Unirse a un espacio](help:user.start.join) · [Tus datos, tus derechos](help:user.privacy.consent)
+
+### Su cuenta, sus espacios y su servidor
+
+**Público:** Todos
+
+Quiere saber qué le acompaña de un espacio a otro y por qué la aplicación a veces le pide que vuelva a iniciar sesión. Esta guía usa cuatro palabras, siempre en el mismo sentido:
+
+| Palabra | La pregunta que responde | Qué es |
+|---|---|---|
+| Cuenta | ¿Quién soy? | Su correo, su contraseña, su nombre y sus ajustes personales. Reside en un servidor. |
+| Membresía | ¿Qué puedo hacer en este espacio? | Su rol, su plan, sus reservas y su dinero en un espacio. Cada espacio fija sus propias reglas. |
+| Servidor | ¿Dónde se guarda este espacio? | La instalación que almacena el espacio: el servidor de referencia compartido, o uno que una organización gestiona por su cuenta. |
+| Sesión | ¿He iniciado sesión aquí? | Su inicio de sesión en este dispositivo, en un solo servidor a la vez. |
+
+**Conviene saber**
+
+- Una cuenta cubre todos los espacios del mismo servidor: unirse a otro espacio allí añade una membresía, no una cuenta.
+- Un espacio guardado en otro servidor necesita una cuenta en ese servidor. Abrirlo cambia de servidor y le pide que inicie sesión allí; su cuenta en el primer servidor queda como está.
+- Cambiar de servidor cierra su sesión, porque su cuenta reside en el servidor que deja.
+
+**Véase también:** [Crear una cuenta o iniciar sesión](help:user.start.account) · [Yo: su inicio y sus espacios](help:user.me.home) · [Su propio servidor](help:user.backend.server)
 
 ### Restablecer una contraseña olvidada
 
@@ -179,6 +219,7 @@ Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espac
 - La franja lleva la marca **Demo** y permanece encima de todas las pantallas, de modo que no se puede confundir con un espacio real.
 - Ver la misma pantalla como propietario, como administrador y como miembro es la forma más rápida de aprender lo que puede hacer cada rol.
 - La demo se queda en este dispositivo. Salir de ella no crea ninguna cuenta.
+- **Descubrir** en Yo muestra el espacio de demostración y dos vecinos inventados, Le Quai Numérique y La Fabrique des Halles. Lea una página y sus **Planes y precios**, pida unirse o use **Escribir a los anfitriones**: responde la demo y nadie real recibe nada. Como propietario o administrador, **Mensajes** contiene la solicitud de visita de una desconocida para contestar.
 
 **Véase también:** [Qué es DesKilo y quién hace qué](help:user.start.what-is) · [Crear una cuenta o iniciar sesión](help:user.start.account)
 
@@ -253,7 +294,7 @@ Usted no tiene ningún código pero quisiera encontrar un espacio cercano. Los e
 
 **Conviene saber**
 
-- Solo se muestran los espacios que han decidido ser visibles. Esta demo no tiene ninguno, así que el mapa aparece vacío.
+- Solo se muestran los espacios que han decidido ser visibles. En la demo, el mapa muestra el espacio de demostración y dos vecinos inventados; sus páginas, una solicitud para unirse y un mensaje a sus anfitriones se quedan dentro de la demo.
 - Puede mirar sin una cuenta; para unirse hace falta una.
 
 **Véase también:** [Unirse a un espacio](help:user.start.join)
@@ -1357,6 +1398,7 @@ Usted quiere todas sus conversaciones en una sola lista, sea cual sea el espacio
 **Conviene saber**
 
 - Las conversaciones de sus otros servidores conectados aparecen en la misma lista, con el servidor indicado.
+- Solo las personas de una conversación pueden abrirla; los propietarios y administradores de un espacio no pueden leerla. Los mensajes no están cifrados de extremo a extremo: quien gestiona el servidor donde vive una conversación puede acceder a ella técnicamente. Vea [Sus datos, sus derechos](help:user.privacy.consent).
 - Un mensaje que ha escrito muestra una marca cuando se entrega y una doble marca azul cuando se lee.
 - Una conversación archivada conserva su historial. Una silenciada permanece callada, pero se sigue contando.
 - Desde el espacio, **Abrir mi mensajería** (en Alertas) conduce hasta aquí.
@@ -2140,7 +2182,7 @@ Usted quiere volver a leer lo que aceptó sobre sus datos.
 
 1. Abra [Privacidad y datos](app:/privacy).
 2. Toque **Sus datos, sus derechos**.
-3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
+3. Lea el texto: qué se trata y dónde, qué no se hace nunca, quién ve qué, los mensajes, las notificaciones push, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
 **Conviene saber**
 
@@ -3890,7 +3932,8 @@ Quiere indicar a la aplicación qué es este miembro a efectos de IVA, para que 
 
 **Conviene saber**
 
-- **Automático** aplica la regla habitual: inversión del sujeto pasivo para una empresa de otro Estado de la UE.
+- **Automático** aplica el lugar de prestación: un puesto, una oficina o una sala lleva su IVA para cualquier cliente; solo un servicio general (véase [Lugar de prestación de un servicio](help:user.money.services.supply)) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Un consumidor paga su IVA viva donde viva. El diálogo muestra lo que el tratamiento elegido hace con cada tipo de línea.
+- **Inversión del sujeto pasivo** está pensada solo para un miembro que compra servicios no vinculados a los locales: se aplica a todas las líneas.
 - El mismo grupo ofrece **Condición del cliente** (**Empresa**, **Consumidor** o **Sin indicar**), que decide qué cláusulas de pago imprime una factura. Requiere el permiso de emitir facturas.
 - **Inversión del sujeto pasivo**, **Fuera de la UE** y **Comprador exento** se registran, pero las facturas de esos miembros aún no se pueden emitir en la aplicación: se emiten fuera de la aplicación con su gestor.
 - La función **IVA según el cliente** debe estar activada para que aparezca la fila de tratamiento del IVA, que ven los administradores y los propietarios; los tipos se definen en [Tipos de IVA](help:user.money.vat.rates).
@@ -4115,6 +4158,10 @@ Lo que dice la línea de la factura. Si lo renombra, solo cambian los documentos
 
 El precio de una unidad, bruto: el miembro paga exactamente esto, y el IVA forma parte de ello. El **Tipo de IVA** solo decide qué parte es impuesto.
 
+#### Lugar de prestación de un servicio
+
+Dónde se debe el IVA de este servicio. **Vinculado a los locales**, el valor por defecto, mantiene su IVA para cualquier cliente: un puesto, una oficina, una sala y lo que se usa en el lugar tributan donde se encuentra el inmueble. Elija **Servicio general (no vinculado a los locales)** solo para lo que no está ligado al edificio, como la gestión del correo o una oficina virtual: para una empresa de otro país de la UE esa línea aplica entonces la inversión del sujeto pasivo, y para una empresa fuera de la UE queda fuera del ámbito; un consumidor sigue pagando su IVA. Cada cargo registrado conserva la elección vigente en ese momento. El campo aparece cuando usted cobra IVA y la función **Lugar de prestación por servicio** está activada.
+
 #### Activo
 
 Al editar un servicio, el interruptor **Activo** decide si todavía se puede vender. Desactívelo para algo que ya no se ofrece; la lista lo atenúa y escribe **Inactivo**.
@@ -4258,6 +4305,7 @@ Para propietarios y administradores de facturación: quién es usted como vended
 > **Atención** DesKilo imprime lo que usted declara y comprueba que estén presentes los datos obligatorios. No certifica sus facturas, su tratamiento del IVA ni su contabilidad. Cada vez que una sección siguiente diga «consúltelo con su gestor», hágalo.
 
 En este capítulo:
+- Lo que emite la aplicación por sí misma y lo que queda en manos de su gestor
 - Su identidad legal y las menciones que se imprimen en cada factura
 - IVA: régimen, número, tipos, grupos y la declaración periódica
 - Facturación electrónica: adónde se envía la factura legible por máquina
@@ -4265,6 +4313,32 @@ En este capítulo:
 - Emitir y cerrar un mes: la pantalla de Facturación, el asistente de cierre mensual, la reagrupación, los gastos compartidos
 - Recordatorios de pago
 - El registro de facturas, las exportaciones contables y el análisis de negocio
+
+### Lo que emite la aplicación y lo que queda en manos de su gestor
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere saber, antes de confiar en ella, qué facturas emite DesKilo por sí mismo y cuáles sigue emitiendo con su gestor. Este es el alcance de esta versión.
+
+| Situación | En la aplicación | Fuera de la aplicación |
+|---|---|---|
+| Un espacio en Francia o Alemania, sujeto al IVA o fuera del ámbito del IVA | Facturas emitidas, numeradas, enviadas y seguidas | — |
+| Un puesto, una oficina o una sala, sea quien sea el cliente, también en el extranjero | Emitidas con su IVA: el lugar de la prestación es el edificio | — |
+| Un espacio en otro país | Reservas, extractos y pagos | Las facturas, con su gestor |
+| El régimen exento de IVA | — | Las facturas, con su gestor |
+| Inversión del sujeto pasivo, exportación, comprador exento | Registrado en el miembro | Las facturas, con su gestor |
+| Factura electrónica | El archivo EN 16931, enviado a la plataforma que usted configura | La elección de la plataforma y lo que le exige el sistema nacional |
+| Contabilidad | Exportaciones reconstruidas a partir de facturas y pagos | El libro mayor, el cierre y las cuentas |
+| Declaración de IVA | Los importes, calculados a partir de facturas y pagos | Su presentación ante la administración tributaria |
+
+**Conviene saber**
+
+- La factura electrónica tiene tres pasos: DesKilo produce la factura estructurada; el conector la envía a su plataforma; la plataforma la hace llegar al cliente y a la administración según el sistema nacional. Un archivo válido es solo el primer paso.
+- En Francia, solo una plataforma autorizada (plateforme agréée) puede transmitir facturas dentro de la reforma, y DesKilo no lo es: configure la plataforma que elija. Todas las empresas afectadas deben poder recibir facturas electrónicas a partir del 1 de septiembre de 2026; las pymes y las microempresas deben emitirlas a partir del 1 de septiembre de 2027.
+- DesKilo no lleva una contabilidad por partida doble: su gestor completa los archivos exportados.
+- Esta tabla cambia con la aplicación. Cuando una fila pasa a la aplicación, esta sección lo dice.
+
+**Véase también:** [Emitir una factura](help:user.invoicing.new-invoice) · [La plataforma de facturación electrónica](help:user.money.einvoice.overview) · [Exportaciones contables](help:user.invoicing.accounting-export) · [Régimen de IVA](help:user.money.vat.regime)
 
 ### Su identidad legal
 
@@ -4534,7 +4608,7 @@ Cuando cobra IVA y factura a una empresa de otro país de la UE, el impuesto pue
 
 **Conviene saber**
 
-- Activado: la aplicación reconoce a una empresa con número de IVA en otro Estado miembro. Hoy la aplicación no emite esas facturas por sí misma: usted las emite fuera de la aplicación con su gestor.
+- Activado: un servicio general (no vinculado a los locales) a una empresa de otro país de la UE aplica la inversión del sujeto pasivo. Un puesto, una oficina o una sala nunca: lleva su IVA, sea cual sea el número de IVA del cliente. Hoy la aplicación no emite por sí misma las facturas con inversión del sujeto pasivo: usted las emite fuera de la aplicación con su gestor.
 - Desactivado: desactívelo si nunca factura a empresas del extranjero.
 - La opción solo aparece con el régimen de sujeto a IVA.
 
@@ -4781,6 +4855,7 @@ Indica a DesKilo dónde enviar sus facturas como archivos legibles por máquina.
 - Sirve cualquier plataforma que acepte una subida con un token: una plataforma homologada, un punto de acceso Peppol, una plataforma nacional.
 - El token se guarda en el servidor y no vuelve a mostrarse.
 - El archivo válido es una factura EN 16931. Si su país exige una plataforma, y cuál, es algo que debe confirmar con su gestor.
+- Enviar el archivo es el segundo de tres pasos: véase [Lo que emite la aplicación y lo que queda en manos de su gestor](help:user.invoicing.scope).
 
 **Véase también:** [Enviar una factura electrónica](help:user.money.einvoice.send) · [Identidad legal](help:user.money.legal.identity)
 
@@ -5078,7 +5153,7 @@ Factura un mes a un miembro.
 - Las facturas se derivan de datos registrados y no se pueden componer a mano. La línea final es el **Saldo**.
 - Un mes solo se puede facturar una vez por miembro, y un mes aún en curso le avisa de que las partidas pueden cambiar.
 - Si falta un dato obligatorio, **Complete estos datos antes de emitir** lo enumera (dirección, número de IVA, fundamento de la exención, tipo de IVA; también el país del espacio, que debe ser Francia o Alemania).
-- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, para clientes nacionales. Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor.
+- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, también para clientes en el extranjero: un puesto, una oficina o una sala lleva su IVA viva donde viva el cliente. Las facturas con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor, y un servicio general a un cliente en el extranjero requiere antes su condición (empresa o consumidor).
 - Una factura emitida está firmada y es inmutable.
 
 **Véase también:** [Asistente de cierre mensual](help:user.invoicing.wizard)
@@ -8398,7 +8473,7 @@ máquina no sabe partir con fiabilidad una dirección de una sola línea; y
 las ocho menciones de factura.
 
 Cada uno de esos campos está documentado, campo por campo, en la
-guía de usuario, § 11a — el símbolo de ayuda que hay
+[guía de usuario](help:user.money.legal.identity) — el símbolo de ayuda que hay
 al lado abre exactamente su párrafo.
 
 Las **instrucciones de pago** (el bloque bancario que imprime un
@@ -8425,13 +8500,25 @@ cero, exento, no sujeto. Un servicio, una cuota, un accesorio y un
 paquete llevan un grupo, no un porcentaje: la tabla de tipos de un país
 puede cambiar bajo ellos sin tocar el catálogo.
 
-Los **tratamientos** son lo que la contraparte hace con ello: interior,
-intracomunitario a empresas (inversión del sujeto pasivo, el cliente se
-autoliquida según el art. 196), intracomunitario a consumidores,
-exportación. El país y el número de IVA del cliente deciden cuál se
-aplica, y la comprobación de facturación electrónica se niega a enviar un
-documento con inversión del sujeto pasivo mientras falte ese número de
-IVA, porque es lo que prueba que el impuesto es suyo.
+**El lugar de tributación** va primero (#2354). Un puesto, una oficina o
+una sala es un servicio vinculado al inmueble: lleva su IVA viva donde
+viva el cliente, empresa o consumidor (art. 47 de la Directiva del IVA).
+Un servicio del catálogo indica si está **Vinculado a los locales** (por
+defecto) o es un **Servicio general (no vinculado a los locales)**, como
+la gestión del correo o una oficina virtual, y cada cargo registrado
+conserva esa elección.
+
+Los **tratamientos** son lo que la contraparte hace con un servicio
+general: IVA interior, inversión del sujeto pasivo para una empresa de
+otro país de la UE (el cliente se autoliquida según el art. 196), o fuera
+del ámbito para una empresa fuera de la UE. La condición declarada del
+cliente (empresa o consumidor) y su país deciden cuál se aplica, nunca la
+mera presencia de un número de IVA; un consumidor, en España o fuera,
+paga su IVA, por lo que no existe un tratamiento aparte para consumidores
+intracomunitarios. La comprobación de facturación electrónica se niega a
+enviar un documento con inversión del sujeto pasivo mientras falte el
+número de IVA del cliente, porque es lo que prueba que el impuesto es
+suyo.
 
 **Cuándo se devenga el IVA** es un ajuste del espacio: *por facturas*
 (devengado al emitir) o *por cobros* (devengado el día en que el cliente

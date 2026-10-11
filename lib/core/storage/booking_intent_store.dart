@@ -15,9 +15,9 @@ abstract class BookingIntentStore {
   Future<void> write(String? ledger);
 }
 
-class PrefsBookingIntentStore extends PrefsStringStore
+class _PrefsBookingIntentStore extends PrefsStringStore
     implements BookingIntentStore {
-  const PrefsBookingIntentStore() : super('booking_intents_v1');
+  const _PrefsBookingIntentStore() : super('booking_intents_v1');
 }
 
 /// Test double and Demo copy. [writes] counts every write; [failWrites]
@@ -52,4 +52,4 @@ class InMemoryBookingIntentStore implements BookingIntentStore {
 
 @Riverpod(keepAlive: true)
 BookingIntentStore bookingIntentStore(Ref ref) =>
-    const PrefsBookingIntentStore();
+    const _PrefsBookingIntentStore();

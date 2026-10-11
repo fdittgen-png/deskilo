@@ -15,11 +15,13 @@
 // everyday features — the messenger, the reservations, the calendar, the
 // directory, one's own account, the shared documents — are listed: a
 // member holds them only through a role, and never by default.
+import 'package:meta/meta.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 
 typedef _P = WorkspacePermission;
 
 /// Route pattern → the permissions of which holding ANY opens it.
+@visibleForTesting
 const Map<String, Set<WorkspacePermission>> routePermissions = {
   // The everyday features: held through a role like everything else.
   '/messages': {_P.useMessages},
@@ -88,7 +90,7 @@ bool _matches(String pattern, String path) {
 }
 
 /// The permissions [path] asks for, or null for a screen every member has.
-Set<WorkspacePermission>? permissionsFor(String path) {
+Set<WorkspacePermission>? _permissionsFor(String path) {
   for (final entry in routePermissions.entries) {
     if (_matches(entry.key, path)) return entry.value;
   }
@@ -97,7 +99,7 @@ Set<WorkspacePermission>? permissionsFor(String path) {
 
 /// Whether someone holding [held] may open [path].
 bool mayOpen(String path, Set<WorkspacePermission> held) {
-  final needed = permissionsFor(path);
+  final needed = _permissionsFor(path);
   return needed == null || needed.any(held.contains);
 }
 

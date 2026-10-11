@@ -23,8 +23,8 @@ abstract class NoteSeenStore {
   Future<void> writeSeen(DateTime value);
 }
 
-class PrefsNoteSeenStore implements NoteSeenStore {
-  const PrefsNoteSeenStore();
+class _PrefsNoteSeenStore implements NoteSeenStore {
+  const _PrefsNoteSeenStore();
 
   static const _notified = PrefsStringStore('member_notes_notified_until');
   static const _seen = PrefsStringStore('member_notes_seen_until');
@@ -62,4 +62,4 @@ class InMemoryNoteSeenStore implements NoteSeenStore {
 }
 
 @Riverpod(keepAlive: true)
-NoteSeenStore noteSeenStore(Ref ref) => const PrefsNoteSeenStore();
+NoteSeenStore noteSeenStore(Ref ref) => const _PrefsNoteSeenStore();

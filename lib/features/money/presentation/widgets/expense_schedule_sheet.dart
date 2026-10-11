@@ -22,7 +22,7 @@ import '../../providers/money_providers.dart';
 
 /// #767 — the localized wording of one recurrence rule: "every 2 weeks,
 /// 12 times", "monthly until 31.12.2026", "every 10 days".
-String scheduleRuleText(
+String _scheduleRuleText(
   AppLocalizations? l10n,
   ExpenseSchedule s,
   DateFormat dates,
@@ -118,7 +118,7 @@ Future<void> showExpenseSchedulesSheet(
                 title: Text(s.title),
                 subtitle: Text(
                   '${currency.formatMinor(s.amountCents)} · '
-                  '${scheduleRuleText(l10n, s, dates)}\n'
+                  '${_scheduleRuleText(l10n, s, dates)}\n'
                   '${_statusText(l10n, s.status)}'
                   '${s.nextDue != null ? ' · ${l10n?.scheduleNextDue(dates.format(s.nextDue!)) ?? 'next: ${dates.format(s.nextDue!)}'}' : ''}',
                 ),
@@ -154,7 +154,7 @@ Future<void> showExpenseSchedulesSheet(
                   l10n?.scheduleNew ?? 'Schedule a recurring expense'),
               onPressed: () async {
                 final created =
-                    await showCreateExpenseScheduleSheet(context, ref, currency);
+                    await _showCreateExpenseScheduleSheet(context, ref, currency);
                 if (created && context.mounted) {
                   ref.invalidate(expenseSchedulesProvider(workspace.id));
                 }
@@ -179,7 +179,7 @@ Future<void> showExpenseSchedulesSheet(
                       title: Text(s.title),
                       subtitle: Text(
                         '${currency.formatMinor(s.amountCents)} · '
-                        '${scheduleRuleText(l10n, s, dates)}\n'
+                        '${_scheduleRuleText(l10n, s, dates)}\n'
                         '${_statusText(l10n, s.status)}',
                       ),
                       isThreeLine: true,
@@ -211,7 +211,7 @@ String _statusText(AppLocalizations? l10n, ScheduleStatus status) =>
     };
 
 /// The creation form: what, how much, from when, how often, how long.
-Future<bool> showCreateExpenseScheduleSheet(
+Future<bool> _showCreateExpenseScheduleSheet(
   BuildContext context,
   WidgetRef ref,
   MoneyFormat currency,

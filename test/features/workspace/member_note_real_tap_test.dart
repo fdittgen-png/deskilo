@@ -81,10 +81,7 @@ void main() {
       child: const DeskiloApp(),
     ));
     await tester.pumpAndSettle();
-    await openWorkspaceChats(tester);
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('conversation-conv-ana')));
-    await tester.pumpAndSettle();
+    await openWorkspaceConversation(tester, 'conv-ana');
 
     // The pixel tap: hit the rendered link itself.
     await tester.tap(find.text('A1 · tomorrow', findRichText: true));

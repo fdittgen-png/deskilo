@@ -7,11 +7,11 @@ import '../../workspace/domain/workspace.dart';
 
 /// The person's own layout of Me › Home (order, favourites, stars).
 final spacePrefsProvider =
-    AsyncNotifierProvider<SpacePrefsNotifier, SpacePrefs>(
-      SpacePrefsNotifier.new,
+    AsyncNotifierProvider<_SpacePrefsNotifier, SpacePrefs>(
+      _SpacePrefsNotifier.new,
     );
 
-class SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
+class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
   @override
   Future<SpacePrefs> build() => ref.watch(spacePrefsStoreProvider).read();
 

@@ -433,18 +433,6 @@ abstract interface class FinanceKpiRepository {
   });
 }
 
-/// The demonstration has no server to sum invoices on.
-class UnavailableFinanceKpiRepository implements FinanceKpiRepository {
-  const UnavailableFinanceKpiRepository();
-
-  @override
-  Future<FinanceSummaryKpi> summary(
-    String workspaceId, {
-    required String fromMonth,
-    required String toMonth,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}
-
 /// The server refused: the reader may not see this KPI here.
 class KpiForbidden implements Exception {
   const KpiForbidden();

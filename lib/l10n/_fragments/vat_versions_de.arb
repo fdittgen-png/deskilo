@@ -52,7 +52,7 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "memberVatTreatmentExplainer": "Wer dieses Mitglied für die USt ist: die automatische Regel (Steuerschuldnerschaft des Empfängers für ein Unternehmen in einem anderen EU-Staat), Inlands-USt in jedem Fall, Steuerschuldnerschaft des Empfängers, außerhalb der EU oder ein befreiter Käufer mit dem auf der Rechnung gedruckten Grund.",
+  "memberVatTreatmentExplainer": "Wer dieses Mitglied für die Umsatzsteuer ist. Automatisch: Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt, also mit Ihrer Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (ohne Bezug zu den Räumlichkeiten) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Leistungsempfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Die anderen Auswahlmöglichkeiten gelten für alle Positionen.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },

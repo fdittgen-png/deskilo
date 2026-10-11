@@ -6,6 +6,7 @@ Per i proprietari e gli amministratori di fatturazione: chi è Lei come venditor
 > **Attenzione** DesKilo stampa ciò che Lei dichiara e verifica che i dati richiesti siano presenti. Non certifica le Sue fatture, il Suo trattamento IVA né la Sua contabilità. Ogni volta che una sezione qui sotto dice «confermi con il Suo commercialista», lo faccia.
 
 In questo capitolo:
+- Che cosa emette l'app da sé e che cosa resta al Suo commercialista
 - La Sua identità legale e le menzioni stampate su ogni fattura
 - IVA: regime, numero, aliquote, gruppi e dichiarazione periodica
 - Fatturazione elettronica: dove viene inviata la fattura leggibile dalle macchine
@@ -13,6 +14,33 @@ In questo capitolo:
 - Emettere e chiudere un mese: la schermata Fatturazione, l'assistente di chiusura mensile, il raggruppamento, le spese condivise
 - I solleciti di pagamento
 - Il registro fatture, le esportazioni contabili e l'analisi aziendale
+
+<!-- anchor: user.invoicing.scope -->
+### Che cosa emette l'app e che cosa resta al Suo commercialista
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole sapere, prima di affidarsi, quali fatture DesKilo emette da sé e quali continua a emettere con il Suo commercialista. Questo è il perimetro di questa versione.
+
+| Situazione | Nell'app | Fuori dall'app |
+|---|---|---|
+| Uno spazio in Francia o in Germania, soggetto a IVA o fuori dal campo dell'IVA | Fatture emesse, numerate, inviate e seguite | — |
+| Una postazione, un ufficio o una sala, qualunque sia il cliente, anche all'estero | Emesse con la Sua IVA: il luogo della prestazione è l'edificio | — |
+| Uno spazio in un altro paese | Prenotazioni, estratti e pagamenti | Le fatture, con il Suo commercialista |
+| Il regime esente da IVA | — | Le fatture, con il Suo commercialista |
+| Inversione contabile, esportazione, acquirente esente | Registrato sul membro | Le fatture, con il Suo commercialista |
+| Fattura elettronica | Il file EN 16931, inviato alla piattaforma che configura | La scelta della piattaforma e ciò che il sistema nazionale Le chiede |
+| Contabilità | Esportazioni ricostruite da fatture e pagamenti | Il libro mastro, la chiusura e i conti |
+| Dichiarazione IVA | Gli importi, calcolati da fatture e pagamenti | La presentazione all'amministrazione fiscale |
+
+**Da sapere**
+
+- La fattura elettronica ha tre passi: DesKilo produce la fattura strutturata; il connettore la invia alla Sua piattaforma; la piattaforma la recapita al cliente e all'amministrazione secondo il sistema nazionale. Un file valido è solo il primo passo.
+- In Francia solo una piattaforma autorizzata (plateforme agréée) può trasmettere fatture nell'ambito della riforma, e DesKilo non lo è: configuri la piattaforma che sceglie. Tutte le imprese interessate devono poter ricevere fatture elettroniche dal 1° settembre 2026; le PMI e le microimprese devono emetterle dal 1° settembre 2027.
+- DesKilo non tiene una contabilità in partita doppia: il Suo commercialista completa i file esportati.
+- Questa tabella cambia con l'app. Quando una riga passa nell'app, questa sezione lo dice.
+
+**Vedi anche:** [Emettere una fattura](help:user.invoicing.new-invoice) · [La piattaforma di fatturazione elettronica](help:user.money.einvoice.overview) · [Esportazioni contabili](help:user.invoicing.accounting-export) · [Regime IVA](help:user.money.vat.regime)
 
 <!-- anchor: user.money.legal.identity -->
 ### La Sua identità legale
@@ -295,7 +323,7 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Da sapere**
 
-- Attivata: l'app riconosce un'impresa con una partita IVA in un altro Stato membro. Oggi l'app non emette direttamente queste fatture: Lei le emette fuori dall'app con il Suo commercialista.
+- Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. Oggi l'app non emette direttamente le fatture in inversione contabile: Lei le emette fuori dall'app con il Suo commercialista.
 - Disattivata: la disattivi se non fattura mai a imprese all'estero.
 - L'opzione compare solo per il regime di soggetto IVA.
 
@@ -555,6 +583,7 @@ Indica a DesKilo dove inviare le Sue fatture come file leggibili dalle macchine.
 - Funziona qualsiasi piattaforma che accetti un caricamento con un token: una piattaforma accreditata, un punto di accesso Peppol, una piattaforma nazionale.
 - Il token è conservato sul server e non viene mai più mostrato.
 - Il file valido è una fattura EN 16931. Se il Suo Paese richieda una piattaforma, e quale, lo confermi con il Suo commercialista.
+- Inviare il file è il secondo di tre passi: veda [Che cosa emette l'app e che cosa resta al Suo commercialista](help:user.invoicing.scope).
 
 **Vedi anche:** [Inviare una fattura elettronica](help:user.money.einvoice.send) · [Identità legale](help:user.money.legal.identity)
 
@@ -866,7 +895,7 @@ Fattura un mese a un membro.
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
 - Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
-- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.
+- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).
 - Una fattura emessa è firmata e immutabile.
 
 **Vedi anche:** [L'assistente di chiusura mensile](help:user.invoicing.wizard)

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/vat/supply_class.dart';
 
 part 'service_item.freezed.dart';
 
@@ -21,6 +22,9 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
     /// #731 — units on the shelf; null = not tracked (a service, not a
     /// supply).
     int? stock,
+    /// #2354 — where the service is supplied for VAT: connected with the
+    /// premises (the default) or a general service.
+    @Default(SupplyClass.property) SupplyClass supplyClass,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _ServiceItem;

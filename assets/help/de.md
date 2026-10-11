@@ -106,11 +106,30 @@ Innerhalb eines Spaces hängt es von Ihrer Rolle ab, was Sie tun dürfen. Rollen
 
 **Siehe auch:** [Die Rollenmatrix](help:user.roles.matrix) · [Einem Workspace beitreten](help:user.start.join)
 
+### Drei Wege durch dieses Handbuch
+
+**Zielgruppe:** Alle
+
+Sie müssen nicht erst alles lesen. Wählen Sie den Weg, der zu dem passt, was Sie jetzt tun möchten: Jeder Schritt ist ein Abschnitt dieses Handbuchs, in der Reihenfolge, in der Sie ihn brauchen.
+
+| Weg | Schritte, der Reihe nach | Fertig, wenn |
+|---|---|---|
+| Zum ersten Mal als Mitglied | [Konto erstellen oder anmelden](help:user.start.account) → [Einem Workspace beitreten](help:user.start.join) → [Einen Platz buchen](help:user.reserve.book) → [Ihre Abrechnung lesen](help:user.money.statement) → [Ein- und Auschecken](help:user.reserve.check-in) | Sie haben gebucht, wissen, was es kostet, und haben sich an- und abgemeldet. |
+| Einen Space in Betrieb nehmen | [Ein paar gemeinsame Plätze](help:setup.features.profile-tiny) → [Räume, Tische und Plätze zeichnen](help:user.space.editor.rooms) → [Arbeitszeiten](help:user.workspace.availability.working-hours) → [Buchungsgrenzen](help:user.workspace.availability.limits) → [Ein Mitglied einladen](help:user.members.invite) → [Der Kalender-Tab](help:user.reserve.calendar) | Ein Mitglied, das Sie eingeladen haben, hat gebucht, und Sie sehen die Buchung. |
+| Der erste Monatsabschluss | [Rechnungsstellung im Überblick](help:user.money.invoicing) → [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope) → [Der Monatsabschluss-Assistent](help:user.invoicing.wizard) → [Offene Rechnungen nachverfolgen und begleichen](help:user.invoicing.open) → [Buchhaltungsexporte](help:user.invoicing.accounting-export) | Der Monat ist im Umfang der App abgerechnet, die Zahlungen sind zugeordnet und die Datei liegt bei Ihrer Steuerberatung. |
+
+**Gut zu wissen**
+
+- Ein kleiner Space braucht nur die ersten beiden Wege. Rechnungen, Umsatzsteuer und die erweiterten Funktionen können warten, bis der Space sie braucht, und das Ausschalten einer Funktion löscht nichts.
+- Die Einrichtungsanleitung erklärt das Warum und die Reihenfolge für einen neuen Space; dieses Handbuch erklärt die Handgriffe.
+
+**Siehe auch:** [Was DesKilo ist und wer was tut](help:user.start.what-is) · [Die Reihenfolge beim Einschalten](help:setup.features.order)
+
 ### Konto erstellen oder anmelden
 
 **Zielgruppe:** Alle
 
-Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie beitreten.
+Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in jedem Space, dem Sie auf demselben Server beitreten.
 
 ![](assets/help/images/user-start-account.de.b8fa17aa9.jpg)
 
@@ -132,6 +151,27 @@ Sie möchten hinein, ob zum ersten oder zum hundertsten Mal. Ein Konto gilt in j
 - **Mit Einladung beitreten** auf dem Anmeldebildschirm merkt sich Ihr Vorhaben: Sie legen Ihr Konto an und fügen dann Ihre Einladung ein.
 
 **Siehe auch:** [Vergessenes Passwort zurücksetzen](help:user.start.forgot-password) · [Einem Workspace beitreten](help:user.start.join) · [Ihre Daten, Ihre Rechte](help:user.privacy.consent)
+
+### Ihr Konto, Ihre Spaces und Ihr Server
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was Sie von einem Space zum nächsten begleitet und warum die App Sie manchmal erneut anmelden lässt. Dieses Handbuch verwendet vier Wörter, immer im selben Sinn:
+
+| Wort | Die Frage, die es beantwortet | Was es ist |
+|---|---|---|
+| Konto | Wer bin ich? | Ihre E-Mail, Ihr Passwort, Ihr Name und Ihre persönlichen Einstellungen. Es liegt auf einem Server. |
+| Mitgliedschaft | Was darf ich in diesem Space? | Ihre Rolle, Ihr Tarif, Ihre Buchungen und Ihr Geld in einem Space. Jeder Space legt seine eigenen Regeln fest. |
+| Server | Wo wird dieser Space aufbewahrt? | Die Installation, die den Space speichert: der gemeinsame Referenzserver oder einer, den eine Organisation selbst betreibt. |
+| Sitzung | Bin ich hier angemeldet? | Ihre Anmeldung auf diesem Gerät, bei jeweils einem Server. |
+
+**Gut zu wissen**
+
+- Ein Konto gilt für alle Spaces auf demselben Server: Wer dort einem weiteren Space beitritt, erhält eine Mitgliedschaft, kein neues Konto.
+- Ein Space auf einem anderen Server braucht ein Konto auf diesem Server. Ihn zu öffnen wechselt den Server und bittet Sie, sich dort anzumelden; Ihr Konto auf dem ersten Server bleibt, wie es ist.
+- Ein Serverwechsel meldet Sie ab, weil Ihr Konto auf dem Server liegt, den Sie verlassen.
+
+**Siehe auch:** [Konto erstellen oder anmelden](help:user.start.account) · [Ich: Ihr Zuhause und Ihre Spaces](help:user.me.home) · [Ihr eigener Server](help:user.backend.server)
 
 ### Vergessenes Passwort zurücksetzen
 
@@ -179,6 +219,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 - Die Leiste trägt die Aufschrift **Demo** und bleibt über jedem Bildschirm, damit Sie sie nicht mit einem echten Space verwechseln.
 - Denselben Bildschirm als Inhaber, als Administratorin und als Mitglied zu sehen, ist der schnellste Weg zu lernen, was jede Rolle kann.
 - Die Demo bleibt auf diesem Gerät. Wenn Sie sie verlassen, entsteht kein Konto.
+- **Entdecken** unter Ich listet den Demo-Space und zwei erfundene Nachbarn, Le Quai Numérique und La Fabrique des Halles. Lesen Sie eine Seite und ihre **Angebote und Preise**, bitten Sie um Aufnahme oder **An die Gastgeber schreiben**: Die Demo antwortet, und niemand Echtes erhält etwas. Als Inhaber oder Administrator finden Sie unter **Nachrichten** die Besuchsanfrage einer Unbekannten, die Sie beantworten können.
 
 **Siehe auch:** [Was DesKilo ist und wer was tut](help:user.start.what-is) · [Konto erstellen oder anmelden](help:user.start.account)
 
@@ -253,7 +294,7 @@ Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, 
 
 **Gut zu wissen**
 
-- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. Diese Demo hat keinen, deshalb ist die Karte hier leer.
+- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. In der Demo zeigt die Karte den Demo-Space und zwei erfundene Nachbarn; ihre Seiten, eine Aufnahmeanfrage und eine Nachricht an ihre Gastgeber bleiben in der Demo.
 - Sie können ohne Konto stöbern; zum Beitreten brauchen Sie eines.
 
 **Siehe auch:** [Einem Workspace beitreten](help:user.start.join)
@@ -1357,6 +1398,7 @@ Sie möchten alle Ihre Unterhaltungen in einer Liste, gleich zu welchem Space od
 **Gut zu wissen**
 
 - Unterhaltungen von Ihren anderen verbundenen Servern erscheinen in derselben Liste, mit dem Namen des Servers.
+- Nur die Personen einer Unterhaltung können sie öffnen; Inhaber und Administratoren eines Space können sie nicht lesen. Nachrichten sind nicht Ende-zu-Ende-verschlüsselt: Wer den Server betreibt, auf dem eine Unterhaltung liegt, kann technisch darauf zugreifen. Siehe [Ihre Daten, Ihre Rechte](help:user.privacy.consent).
 - Eine Nachricht, die Sie geschrieben haben, zeigt einen Haken, wenn sie zugestellt ist, und einen blauen Doppelhaken, sobald sie gelesen wurde.
 - Eine archivierte Unterhaltung behält ihren Verlauf. Eine stummgeschaltete bleibt still, wird aber weiter mitgezählt.
 - Aus dem Workspace führt **Meine Nachrichten öffnen** (in den Hinweisen) hierher.
@@ -2140,7 +2182,7 @@ Sie möchten noch einmal nachlesen, was Sie zu Ihren Daten akzeptiert haben.
 
 1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
 2. Tippen Sie auf **Ihre Daten, Ihre Rechte**.
-3. Lesen Sie den Text: was verarbeitet wird, was nie geschieht, wer was sieht, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
+3. Lesen Sie den Text: was verarbeitet wird und wo, was nie geschieht, wer was sieht, Nachrichten, Push-Benachrichtigungen, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
 
 **Gut zu wissen**
 
@@ -3890,7 +3932,8 @@ Sie möchten der App sagen, wer dieses Mitglied umsatzsteuerlich ist, damit sein
 
 **Gut zu wissen**
 
-- **Automatisch** wendet die übliche Regel an: Steuerschuldnerschaft des Empfängers bei einem Unternehmen in einem anderen EU-Staat.
+- **Automatisch** wendet den Leistungsort an: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer für jeden Kunden; nur eine allgemeine Dienstleistung (siehe [Leistungsort einer Leistung](help:user.money.services.supply)) fällt für ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Empfängers oder ist für ein Unternehmen außerhalb der EU nicht steuerbar. Ein Verbraucher zahlt Ihre Umsatzsteuer, wo immer er lebt. Der Dialog zeigt, was die gewählte Behandlung mit jeder Art von Position macht.
+- **Steuerschuldnerschaft des Empfängers** ist nur für ein Mitglied gedacht, das Leistungen ohne Bezug zu den Räumlichkeiten kauft: Sie gilt für alle Positionen.
 - Dieselbe Gruppe bietet die **Kundeneigenschaft** (**Unternehmer**, **Verbraucher** oder **Nicht angegeben**), die bestimmt, welche Zahlungsklauseln eine Rechnung druckt. Dafür brauchen Sie das Recht, Rechnungen auszustellen.
 - **Steuerschuldnerschaft des Empfängers**, **Außerhalb der EU** und **Befreiter Käufer** werden erfasst, aber die Rechnungen solcher Mitglieder lassen sich in der App noch nicht ausstellen: Sie werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
 - Die Funktion **USt nach Kunde** muss eingeschaltet sein, damit die Zeile USt-Behandlung erscheint, und zwar für Administratoren und Inhaber; die Sätze legen Sie unter [Steuersätze](help:user.money.vat.rates) fest.
@@ -4115,6 +4158,10 @@ Was die Rechnungszeile sagt. Wenn Sie sie umbenennen, ändern sich nur neue Doku
 
 Der Preis einer Einheit, brutto: Das Mitglied zahlt genau diesen Betrag, und die Umsatzsteuer ist darin enthalten. Der **Steuersatz** bestimmt nur, wie viel davon Steuer ist.
 
+#### Leistungsort einer Leistung
+
+Wo die Umsatzsteuer auf diese Leistung geschuldet wird. **Mit den Räumlichkeiten verbunden**, die Voreinstellung, behält Ihre Umsatzsteuer für jeden Kunden: Ein Arbeitsplatz, ein Büro, ein Raum und alles, was vor Ort genutzt wird, werden dort besteuert, wo das Gebäude liegt. Wählen Sie **Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)** nur für das, was nicht an das Gebäude gebunden ist, etwa Postbearbeitung oder ein virtuelles Büro: Für ein Unternehmen in einem anderen EU-Land fällt diese Position dann unter die Steuerschuldnerschaft des Empfängers, für ein Unternehmen außerhalb der EU ist sie nicht steuerbar; ein Verbraucher zahlt weiterhin Ihre Umsatzsteuer. Jede erfasste Leistung behält die Wahl, die bei ihrer Erfassung galt. Das Feld erscheint, wenn Sie Umsatzsteuer berechnen und die Funktion **Leistungsort je Leistung** eingeschaltet ist.
+
 #### Aktiv
 
 Beim Bearbeiten einer Leistung entscheidet der Schalter **Aktiv**, ob sie noch verkauft werden kann. Schalten Sie ihn bei einer eingestellten Leistung aus; die Liste graut sie aus und schreibt **Inaktiv**.
@@ -4258,6 +4305,7 @@ Für Inhaber und Abrechnungsadministratoren: wer Sie als Verkäufer sind, wie di
 > **Achtung** DesKilo druckt, was Sie angeben, und prüft, ob die erforderlichen Angaben vorhanden sind. Es bescheinigt weder Ihre Rechnungen noch Ihre Umsatzsteuerbehandlung noch Ihre Buchführung. Wo ein Abschnitt unten „mit Ihrer Buchhaltung klären“ sagt, tun Sie das bitte.
 
 In diesem Kapitel:
+- Was die App selbst ausstellt und was bei Ihrer Steuerberatung bleibt
 - Ihre rechtliche Identität und die Angaben, die auf jeder Rechnung stehen
 - Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
 - E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
@@ -4265,6 +4313,32 @@ In diesem Kapitel:
 - Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
 - Zahlungserinnerungen
 - Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
+
+### Was die App ausstellt und was bei Ihrer Steuerberatung bleibt
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten wissen, bevor Sie sich darauf verlassen, welche Rechnungen DesKilo selbst ausstellt und welche Sie weiterhin mit Ihrer Steuerberatung ausstellen. Das ist der Umfang dieser Version.
+
+| Situation | In der App | Außerhalb der App |
+|---|---|---|
+| Ein Space in Frankreich oder Deutschland, umsatzsteuerpflichtig oder außerhalb des Anwendungsbereichs der Umsatzsteuer | Rechnungen ausgestellt, nummeriert, versendet und verfolgt | — |
+| Ein Platz, ein Büro oder ein Raum, für jeden Kunden, auch im Ausland | Mit Ihrer Umsatzsteuer ausgestellt: Ort der Leistung ist das Gebäude | — |
+| Ein Space in einem anderen Land | Buchungen, Abrechnungen und Zahlungen | Die Rechnungen, mit Ihrer Steuerberatung |
+| Das steuerbefreite Regime | — | Die Rechnungen, mit Ihrer Steuerberatung |
+| Reverse-Charge, Ausfuhr, befreiter Käufer | Beim Mitglied erfasst | Die Rechnungen, mit Ihrer Steuerberatung |
+| E-Rechnung | Die Datei nach EN 16931, an die von Ihnen eingerichtete Plattform übermittelt | Die Wahl der Plattform und was das nationale Verfahren von Ihnen verlangt |
+| Buchhaltung | Exporte, aus Rechnungen und Zahlungen neu aufgebaut | Das Hauptbuch, der Abschluss und die Bücher |
+| Umsatzsteuer-Voranmeldung | Die Beträge, aus Rechnungen und Zahlungen berechnet | Die Abgabe beim Finanzamt |
+
+**Gut zu wissen**
+
+- Die E-Rechnung hat drei Schritte: DesKilo erzeugt die strukturierte Rechnung; der Connector übermittelt sie an Ihre Plattform; die Plattform stellt sie dem Kunden und der Behörde nach dem nationalen Verfahren zu. Eine gültige Datei ist nur der erste Schritt.
+- In Frankreich darf nur eine zugelassene Plattform (plateforme agréée) Rechnungen im Rahmen der Reform übermitteln, und DesKilo ist keine: Richten Sie die Plattform Ihrer Wahl ein. Alle betroffenen Unternehmen müssen ab dem 1. September 2026 E-Rechnungen empfangen können; kleine und mittlere Unternehmen und Kleinstunternehmen müssen sie ab dem 1. September 2027 ausstellen.
+- DesKilo führt keine doppelte Buchführung: Ihre Steuerberatung ergänzt die exportierten Dateien.
+- Diese Tabelle ändert sich mit der App. Wenn eine Zeile in die App wandert, sagt dieser Abschnitt es.
+
+**Siehe auch:** [Eine Rechnung ausstellen](help:user.invoicing.new-invoice) · [Die E-Rechnungs-Plattform](help:user.money.einvoice.overview) · [Buchhaltungsexporte](help:user.invoicing.accounting-export) · [Steuerregime](help:user.money.vat.regime)
 
 ### Ihre rechtliche Identität
 
@@ -4534,7 +4608,7 @@ Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in 
 
 **Gut zu wissen**
 
-- Ein: Die App erkennt ein Unternehmen mit Umsatzsteuer-ID in einem anderen Mitgliedstaat. Heute stellt die App diese Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
+- Ein: Eine allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden) an ein Unternehmen in einem anderen EU-Land fällt unter die Steuerschuldnerschaft des Empfängers. Ein Arbeitsplatz, ein Büro oder ein Raum nie: Er trägt Ihre Umsatzsteuer, gleich welche Umsatzsteuer-ID der Kunde hat. Heute stellt die App solche Rechnungen nicht selbst aus: Sie stellen sie außerhalb der App mit Ihrer Buchhaltung aus.
 - Aus: Schalten Sie es aus, wenn Sie nie Unternehmen im Ausland in Rechnung stellen.
 - Die Option erscheint nur beim Regime „umsatzsteuerpflichtig“.
 
@@ -4781,6 +4855,7 @@ Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden 
 - Jede Plattform, die einen Upload mit einem Token annimmt, funktioniert: eine zugelassene Plattform, ein Peppol-Zugangspunkt, eine nationale Plattform.
 - Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
 - Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
+- Die Datei zu übermitteln ist der zweite von drei Schritten: siehe [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope).
 
 **Siehe auch:** [Eine E-Rechnung senden](help:user.money.einvoice.send) · [Rechtliche Identität](help:user.money.legal.identity)
 
@@ -5078,7 +5153,7 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 - Rechnungen werden aus erfassten Daten abgeleitet und lassen sich nicht von Hand zusammenstellen. Die letzte Zeile ist der **Saldo**.
 - Ein Monat kann pro Mitglied nur einmal abgerechnet werden, und bei einem laufenden Monat werden Sie gewarnt, dass sich Positionen ändern können.
 - Fehlt eine erforderliche Angabe, listet **Vor der Ausstellung bitte ergänzen** sie auf (Adresse, Umsatzsteuer-ID, Befreiungsgrundlage, Steuersatz; auch das Land des Space, das Frankreich oder Deutschland sein muss).
-- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, für inländische Kunden. Grenzüberschreitende Rechnungen, Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt.
+- In dieser Version ist das Ausstellen in der App für Spaces in Frankreich oder Deutschland möglich, auch für Kunden im Ausland: Ein Arbeitsplatz, ein Büro oder ein Raum trägt Ihre Umsatzsteuer, wo immer der Kunde lebt. Rechnungen mit Steuerschuldnerschaft des Empfängers, Ausfuhrrechnungen und Rechnungen an befreite Käufer werden außerhalb der App mit Ihrer Buchhaltung ausgestellt, und eine allgemeine Dienstleistung an einen Kunden im Ausland braucht zuerst dessen Kundeneigenschaft (Unternehmer oder Verbraucher).
 - Eine ausgestellte Rechnung ist signiert und unveränderlich.
 
 **Siehe auch:** [Monatsabschluss-Assistent](help:user.invoicing.wizard)
@@ -8398,7 +8473,7 @@ Maschine eine einzeilige Adresse nicht zuverlässig zerlegen kann; und die
 acht Rechnungsangaben.
 
 Jedes dieser Felder ist Feld für Feld im
-Benutzerhandbuch unter § 11a dokumentiert — das
+[Benutzerhandbuch](help:user.money.legal.identity) dokumentiert — das
 Hilfesymbol daneben öffnet genau seinen Absatz.
 
 **Zahlungshinweise** (der Bankblock, den ein Dokument druckt) sind eine
@@ -8427,14 +8502,27 @@ ein Zubehör und ein Paket tragen eine Gruppe, keinen Prozentwert: Die
 Satztabelle eines Landes kann sich also unter ihnen ändern, ohne den
 Katalog anzufassen.
 
-**Behandlungen** sind, was die Gegenseite daraus macht: Inland,
-innergemeinschaftlich an Unternehmen (Steuerschuldnerschaft des
-Empfängers, die Kundin versteuert selbst nach Art. 196),
-innergemeinschaftlich an Verbraucher, Ausfuhr. Land und
-Umsatzsteuer-ID der Kundin entscheiden, was gilt, und die
-E-Rechnungsprüfung verweigert den Versand eines Dokuments mit
-Steuerschuldnerschaft des Empfängers, solange diese Umsatzsteuer-ID
-fehlt — sie ist der Nachweis, dass die Steuer die ihre ist.
+**Der Ort der Besteuerung** kommt zuerst (#2354). Ein Arbeitsplatz, ein
+Büro oder ein Raum ist eine Leistung, die mit dem Gebäude verbunden ist:
+Er trägt Ihre Umsatzsteuer, wo immer die Kundin lebt, ob Unternehmerin
+oder Verbraucherin (Art. 47 der Mehrwertsteuerrichtlinie). Eine Leistung
+des Katalogs gibt an, ob sie **Mit den Räumlichkeiten verbunden** ist
+(Voreinstellung) oder eine **Allgemeine Dienstleistung (nicht mit den
+Räumlichkeiten verbunden)**, etwa Postbearbeitung oder ein virtuelles
+Büro, und jede erfasste Leistung behält diese Wahl.
+
+**Behandlungen** sind, was die Gegenseite aus einer allgemeinen
+Dienstleistung macht: Inlands-Umsatzsteuer, Steuerschuldnerschaft des
+Empfängers für ein Unternehmen in einem anderen EU-Land (die Kundin
+versteuert selbst nach Art. 196) oder nicht steuerbar für ein Unternehmen
+außerhalb der EU. Die angegebene Kundeneigenschaft (Unternehmer oder
+Verbraucher) und das Land entscheiden, was gilt, nie die bloße
+Umsatzsteuer-ID; eine Verbraucherin zahlt im In- wie im Ausland Ihre
+Umsatzsteuer, eine eigene Behandlung für innergemeinschaftliche
+Verbraucher gibt es daher nicht. Die E-Rechnungsprüfung verweigert den
+Versand eines Dokuments mit Steuerschuldnerschaft des Empfängers, solange
+die Umsatzsteuer-ID der Kundin fehlt — sie ist der Nachweis, dass die
+Steuer die ihre ist.
 
 **Wann die MwSt. fällig wird**, ist eine Einstellung des Bereichs:
 *nach vereinbarten Entgelten* (fällig bei Ausstellung) oder *nach

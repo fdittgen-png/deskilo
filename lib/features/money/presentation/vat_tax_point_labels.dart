@@ -14,7 +14,7 @@ AppLocalizations vatWords(AppLocalizations? l10n) =>
     l10n ?? lookupAppLocalizations(const Locale('en'));
 
 /// The rule, as an owner reads it.
-String vatTaxPointRuleLabel(AppLocalizations? l10n, VatTaxPointRule rule) {
+String _vatTaxPointRuleLabel(AppLocalizations? l10n, VatTaxPointRule rule) {
   final words = vatWords(l10n);
   return switch (rule) {
     VatTaxPointRule.invoiceDate => words.vatExigibilityInvoice,
@@ -30,7 +30,7 @@ String vatTaxPointOptionLabel(
   VatTaxPointPolicy policy,
   VatTaxPointOption option,
 ) {
-  final rule = vatTaxPointRuleLabel(l10n, policy.ruleOf(option));
+  final rule = _vatTaxPointRuleLabel(l10n, policy.ruleOf(option));
   if (option != VatTaxPointOption.standard) return rule;
   return vatWords(l10n).vatTaxPointLegalDefault(rule);
 }

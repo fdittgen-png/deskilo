@@ -103,7 +103,7 @@ typedef InvoiceJourneyFacts = ({
   bool writeoffPending,
 });
 
-const InvoiceJourneyFacts noJourneyFacts = (
+const InvoiceJourneyFacts _noJourneyFacts = (
   declaredCents: 0,
   recordedForMemberCents: 0,
   registeredCents: 0,
@@ -255,7 +255,7 @@ class InvoiceJourney {
     required ({int count, DateTime last})? reminder,
     required DunningRules rules,
     required DateTime now,
-    InvoiceJourneyFacts facts = noJourneyFacts,
+    InvoiceJourneyFacts facts = _noJourneyFacts,
     String replacedByNumber = '',
   }) {
     final lifecycle = invoiceLifecycleOf(invoice, match);

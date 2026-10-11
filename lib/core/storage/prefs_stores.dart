@@ -24,18 +24,3 @@ class PrefsStringStore {
     }
   }
 }
-
-class PrefsBoolStore {
-  const PrefsBoolStore(this.key, {this.fallback = false});
-
-  final String key;
-
-  /// Value reported while the preference was never written.
-  final bool fallback;
-
-  Future<bool> read() async =>
-      (await SharedPreferences.getInstance()).getBool(key) ?? fallback;
-
-  Future<void> write(bool value) async =>
-      (await SharedPreferences.getInstance()).setBool(key, value);
-}

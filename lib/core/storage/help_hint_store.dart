@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ abstract class HelpHintStore {
   Future<void> writePositions(Map<String, int> positions);
 }
 
+@visibleForTesting
 class PrefsHelpHintStore implements HelpHintStore {
   const PrefsHelpHintStore();
 

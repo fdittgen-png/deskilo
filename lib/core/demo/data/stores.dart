@@ -83,18 +83,18 @@ class InMemoryFrontCameraStore implements FrontCameraStore {
 /// The account [InMemoryActiveWorkspaceStore.value] and
 /// [InMemoryDefaultWorkspaceStore.value] read and write: the suite's
 /// signed-in person (`FakeAuthRepository.signedIn`).
-const String kInMemoryStoreAccount = 'user-1';
+const String _kInMemoryStoreAccount = 'user-1';
 
 /// In-memory [ActiveWorkspaceStore] so widget tests never touch
 /// SharedPreferences platform channels. Per account since #1823.
 class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
   final Map<String, String> byAccount = {};
 
-  /// The entry of [kInMemoryStoreAccount].
-  String? get value => byAccount[kInMemoryStoreAccount];
+  /// The entry of [_kInMemoryStoreAccount].
+  String? get value => byAccount[_kInMemoryStoreAccount];
   set value(String? id) => id == null
-      ? byAccount.remove(kInMemoryStoreAccount)
-      : byAccount[kInMemoryStoreAccount] = id;
+      ? byAccount.remove(_kInMemoryStoreAccount)
+      : byAccount[_kInMemoryStoreAccount] = id;
 
   @override
   Future<String?> read(String account) async => byAccount[account];
@@ -111,11 +111,11 @@ class InMemoryActiveWorkspaceStore implements ActiveWorkspaceStore {
 class InMemoryDefaultWorkspaceStore implements DefaultWorkspaceStore {
   final Map<String, String> byAccount = {};
 
-  /// The entry of [kInMemoryStoreAccount].
-  String? get value => byAccount[kInMemoryStoreAccount];
+  /// The entry of [_kInMemoryStoreAccount].
+  String? get value => byAccount[_kInMemoryStoreAccount];
   set value(String? id) => id == null
-      ? byAccount.remove(kInMemoryStoreAccount)
-      : byAccount[kInMemoryStoreAccount] = id;
+      ? byAccount.remove(_kInMemoryStoreAccount)
+      : byAccount[_kInMemoryStoreAccount] = id;
 
   @override
   Future<String?> read(String account) async => byAccount[account];

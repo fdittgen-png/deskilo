@@ -17,12 +17,3 @@ import '../../../core/time/workspace_time.dart';
 /// `TimeOfDay` carries rather than the widget type itself.
 DateTime pickedInstantAt(DateTime day, int hour, int minute) =>
     WorkspaceTime.at(day.year, day.month, day.day, hour, minute);
-
-/// Minutes after midnight of [instant] ON THE WORKSPACE CLOCK.
-///
-/// The counterpart trap: reading `.hour`/`.minute` off a device-local
-/// "now" and treating those numbers as the space's wall clock. At 09:00
-/// in New York it is 15:00 in Paris, and a probe that mixes them judges
-/// the wrong half of the day.
-int workspaceWallMinutes(DateTime instant) =>
-    WorkspaceTime.minutesOfDay(instant);

@@ -106,11 +106,30 @@ All'interno di uno spazio, ciò che può fare dipende dal suo ruolo. I ruoli si 
 
 **Vedi anche:** [La matrice dei ruoli](help:user.roles.matrix) · [Aderire a uno spazio](help:user.start.join)
 
+### Tre percorsi in questa guida
+
+**Destinatari:** Tutti
+
+Non deve leggere tutto prima. Scelga il percorso che corrisponde a ciò che vuole fare ora: ogni passo è una sezione di questa guida, nell'ordine in cui Le serve.
+
+| Percorso | Passi, in ordine | Fatto quando |
+|---|---|---|
+| Prima volta come membro | [Creare un account o accedere](help:user.start.account) → [Aderire a uno spazio](help:user.start.join) → [Prenotare un posto](help:user.reserve.book) → [Leggere il proprio estratto](help:user.money.statement) → [Check-in e check-out](help:user.reserve.check-in) | Ha prenotato, sa quanto costa e ha registrato l'arrivo e l'uscita. |
+| Mettere in servizio uno spazio | [Pochi posti condivisi](help:setup.features.profile-tiny) → [Disegnare stanze, scrivanie e posti](help:user.space.editor.rooms) → [Orari di lavoro](help:user.workspace.availability.working-hours) → [Limiti di prenotazione](help:user.workspace.availability.limits) → [Invitare un membro](help:user.members.invite) → [La scheda Calendario](help:user.reserve.calendar) | Un membro che ha invitato ha prenotato e Lei vede la prenotazione. |
+| La prima chiusura del mese | [La fatturazione in sintesi](help:user.money.invoicing) → [Che cosa emette l'app e che cosa resta al Suo commercialista](help:user.invoicing.scope) → [L'assistente di chiusura mensile](help:user.invoicing.wizard) → [Sollecitare e saldare le fatture aperte](help:user.invoicing.open) → [Esportazioni contabili](help:user.invoicing.accounting-export) | Il mese è fatturato nei limiti dell'app, i pagamenti sono abbinati e il file è dal Suo commercialista. |
+
+**Da sapere**
+
+- Uno spazio piccolo ha bisogno solo dei primi due percorsi. Fatturazione, IVA e funzioni avanzate possono aspettare finché lo spazio non ne ha bisogno, e disattivare una funzione non cancella nulla.
+- La guida di avvio spiega il perché e l'ordine per un nuovo spazio; questa guida spiega i gesti.
+
+**Vedi anche:** [Che cos'è DesKilo e chi fa cosa](help:user.start.what-is) · [L’ordine in cui attivare le cose](help:setup.features.order)
+
 ### Creare un account o accedere
 
 **Destinatari:** Tutti
 
-Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce.
+Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tutti gli spazi a cui aderisce sullo stesso server.
 
 ![](assets/help/images/user-start-account.it.b8fa17aa9.jpg)
 
@@ -132,6 +151,27 @@ Vuole entrare, che sia la prima volta o la centesima. Un solo account vale in tu
 - **Entra con un invito** nella schermata di accesso tiene a mente lo scopo: crea il suo account, poi incolla il suo invito.
 
 **Vedi anche:** [Reimpostare una password dimenticata](help:user.start.forgot-password) · [Aderire a uno spazio](help:user.start.join) · [I suoi dati, i suoi diritti](help:user.privacy.consent)
+
+### Il Suo account, i Suoi spazi e il Suo server
+
+**Destinatari:** Tutti
+
+Vuole sapere che cosa La segue da uno spazio all'altro e perché l'app a volte Le chiede di accedere di nuovo. Questa guida usa quattro parole, sempre nello stesso senso:
+
+| Parola | La domanda a cui risponde | Che cos'è |
+|---|---|---|
+| Account | Chi sono? | La Sua e-mail, la password, il nome e le impostazioni personali. Risiede su un server. |
+| Adesione | Che cosa posso fare in questo spazio? | Il Suo ruolo, il Suo piano, le Sue prenotazioni e il Suo denaro in uno spazio. Ogni spazio fissa le proprie regole. |
+| Server | Dove è conservato questo spazio? | L'installazione che memorizza lo spazio: il server di riferimento condiviso, o uno che un'organizzazione gestisce da sé. |
+| Sessione | Ho effettuato l'accesso qui? | Il Suo accesso su questo dispositivo, a un solo server alla volta. |
+
+**Da sapere**
+
+- Un account vale per tutti gli spazi dello stesso server: aderire a un altro spazio lì aggiunge un'adesione, non un account.
+- Uno spazio conservato su un altro server richiede un account su quel server. Aprirlo cambia server e Le chiede di accedere lì; il Suo account sul primo server resta com'è.
+- Cambiare server La disconnette, perché il Suo account risiede sul server che lascia.
+
+**Vedi anche:** [Creare un account o accedere](help:user.start.account) · [Io: la sua casa e i suoi spazi](help:user.me.home) · [Il suo server](help:user.backend.server)
 
 ### Reimpostare una password dimenticata
 
@@ -179,6 +219,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 - La barra è contrassegnata da **Demo** e resta sopra ogni schermata, così non può scambiarla per uno spazio reale.
 - Vedere la stessa schermata come proprietario, amministratore e membro è il modo più rapido per capire che cosa può fare ciascun ruolo.
 - La demo resta su questo dispositivo. Uscirne non crea un account.
+- **Scopri** in Io elenca lo spazio dimostrativo e due vicini inventati, Le Quai Numérique e La Fabrique des Halles. Legga una pagina e i suoi **Piani e prezzi**, chieda di aderire o usi **Scrivi ai gestori**: risponde la demo e nessuna persona reale riceve nulla. Come proprietario o amministratore, in **Messaggi** trova la richiesta di visita di una sconosciuta a cui rispondere.
 
 **Vedi anche:** [Che cos'è DesKilo e chi fa cosa](help:user.start.what-is) · [Creare un account o accedere](help:user.start.account)
 
@@ -253,7 +294,7 @@ Non ha un codice ma vorrebbe trovare uno spazio vicino a Lei. Gli spazi che pubb
 
 **Da sapere**
 
-- Sono elencati solo gli spazi che hanno scelto di essere visibili. Questa demo non ne ha, quindi qui la mappa è vuota.
+- Sono elencati solo gli spazi che hanno scelto di essere visibili. Nella demo la mappa mostra lo spazio dimostrativo e due vicini inventati; le loro pagine, una richiesta di adesione e un messaggio ai loro gestori restano nella demo.
 - Può guardare senza un account; per aderire ne serve uno.
 
 **Vedi anche:** [Aderire a uno spazio](help:user.start.join)
@@ -1357,6 +1398,7 @@ Vuole tutte le sue conversazioni in un unico elenco, a qualunque spazio o server
 **Da sapere**
 
 - Le conversazioni dei suoi altri server collegati compaiono nello stesso elenco, con il nome del server.
+- Solo le persone di una conversazione possono aprirla; i proprietari e gli amministratori di uno spazio non possono leggerla. I messaggi non sono cifrati end-to-end: chi gestisce il server su cui vive una conversazione può tecnicamente accedervi. Veda [I suoi dati, i suoi diritti](help:user.privacy.consent).
 - Un messaggio che ha scritto mostra una spunta quando è consegnato e una doppia spunta blu una volta letto.
 - Una conversazione archiviata conserva la sua cronologia. Una silenziata resta muta ma viene comunque conteggiata.
 - Dallo spazio di lavoro, **Apri i miei messaggi** (in Avvisi) porta qui.
@@ -2140,7 +2182,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 
 1. Apra [Privacy e dati](app:/privacy).
 2. Tocchi **I suoi dati, i suoi diritti**.
-3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
+3. Legga il testo: che cosa viene trattato e dove, che cosa non viene mai fatto, chi vede che cosa, i messaggi, le notifiche push, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
 
@@ -3890,7 +3932,8 @@ Vuole indicare all'app che cos'è questo membro ai fini dell'IVA, così le sue f
 
 **Da sapere**
 
-- **Automatico** applica la regola abituale: inversione contabile per un'impresa di un altro Stato dell'UE.
+- **Automatico** applica il luogo della prestazione: una postazione, un ufficio o una sala porta la Sua IVA per qualsiasi cliente; solo un servizio generico (vedi [Luogo della prestazione di un servizio](help:user.money.services.supply)) va in inversione contabile per un'impresa di un altro Paese UE, o è fuori campo per un'impresa fuori dall'UE. Un consumatore paga la Sua IVA ovunque viva. La finestra mostra cosa fa il trattamento scelto di ogni tipo di riga.
+- **Inversione contabile** è pensata solo per un membro che acquista servizi non connessi ai locali: vale per tutte le righe.
 - Lo stesso gruppo offre **Qualità del cliente** (**Professionista**, **Consumatore** o **Non indicata**), che stabilisce quali clausole di pagamento stampa una fattura. Richiede il permesso di emettere fatture.
 - **Inversione contabile**, **Fuori UE** e **Acquirente esente** vengono registrati, ma le fatture di questi membri non si possono ancora emettere nell'app: si emettono fuori dall'app con il Suo commercialista.
 - La funzione **IVA secondo il cliente** deve essere attiva perché compaia la riga del trattamento IVA, visibile ad amministratori e proprietari; le aliquote si impostano in [Aliquote IVA](help:user.money.vat.rates).
@@ -4115,6 +4158,10 @@ Ciò che dice la riga della fattura. Se lo rinomina, cambiano solo i nuovi docum
 
 Il prezzo di un'unità, lordo: il membro paga esattamente questo importo e l'IVA ne fa parte. L'**Aliquota IVA** decide soltanto quanta parte è imposta.
 
+#### Luogo della prestazione di un servizio
+
+Dove è dovuta l'IVA su questo servizio. **Connesso ai locali**, il valore predefinito, mantiene la Sua IVA per qualsiasi cliente: una postazione, un ufficio, una sala e ciò che si usa sul posto sono tassati dove si trova l'immobile. Scelga **Servizio generico (non connesso ai locali)** solo per ciò che non è legato all'edificio, come la gestione della posta o un ufficio virtuale: per un'impresa di un altro Paese UE quella riga va allora in inversione contabile, e per un'impresa fuori dall'UE è fuori campo; un consumatore paga sempre la Sua IVA. Ogni addebito registrato conserva la scelta valida in quel momento. Il campo compare quando Lei applica l'IVA e la funzione **Luogo della prestazione per servizio** è attiva.
+
 #### Attivo
 
 Quando modifica un servizio, l'interruttore **Attivo** decide se può ancora essere venduto. Lo disattivi per qualcosa di dismesso; l'elenco lo mostra in grigio e scrive **Inattivo**.
@@ -4258,6 +4305,7 @@ Per i proprietari e gli amministratori di fatturazione: chi è Lei come venditor
 > **Attenzione** DesKilo stampa ciò che Lei dichiara e verifica che i dati richiesti siano presenti. Non certifica le Sue fatture, il Suo trattamento IVA né la Sua contabilità. Ogni volta che una sezione qui sotto dice «confermi con il Suo commercialista», lo faccia.
 
 In questo capitolo:
+- Che cosa emette l'app da sé e che cosa resta al Suo commercialista
 - La Sua identità legale e le menzioni stampate su ogni fattura
 - IVA: regime, numero, aliquote, gruppi e dichiarazione periodica
 - Fatturazione elettronica: dove viene inviata la fattura leggibile dalle macchine
@@ -4265,6 +4313,32 @@ In questo capitolo:
 - Emettere e chiudere un mese: la schermata Fatturazione, l'assistente di chiusura mensile, il raggruppamento, le spese condivise
 - I solleciti di pagamento
 - Il registro fatture, le esportazioni contabili e l'analisi aziendale
+
+### Che cosa emette l'app e che cosa resta al Suo commercialista
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole sapere, prima di affidarsi, quali fatture DesKilo emette da sé e quali continua a emettere con il Suo commercialista. Questo è il perimetro di questa versione.
+
+| Situazione | Nell'app | Fuori dall'app |
+|---|---|---|
+| Uno spazio in Francia o in Germania, soggetto a IVA o fuori dal campo dell'IVA | Fatture emesse, numerate, inviate e seguite | — |
+| Una postazione, un ufficio o una sala, qualunque sia il cliente, anche all'estero | Emesse con la Sua IVA: il luogo della prestazione è l'edificio | — |
+| Uno spazio in un altro paese | Prenotazioni, estratti e pagamenti | Le fatture, con il Suo commercialista |
+| Il regime esente da IVA | — | Le fatture, con il Suo commercialista |
+| Inversione contabile, esportazione, acquirente esente | Registrato sul membro | Le fatture, con il Suo commercialista |
+| Fattura elettronica | Il file EN 16931, inviato alla piattaforma che configura | La scelta della piattaforma e ciò che il sistema nazionale Le chiede |
+| Contabilità | Esportazioni ricostruite da fatture e pagamenti | Il libro mastro, la chiusura e i conti |
+| Dichiarazione IVA | Gli importi, calcolati da fatture e pagamenti | La presentazione all'amministrazione fiscale |
+
+**Da sapere**
+
+- La fattura elettronica ha tre passi: DesKilo produce la fattura strutturata; il connettore la invia alla Sua piattaforma; la piattaforma la recapita al cliente e all'amministrazione secondo il sistema nazionale. Un file valido è solo il primo passo.
+- In Francia solo una piattaforma autorizzata (plateforme agréée) può trasmettere fatture nell'ambito della riforma, e DesKilo non lo è: configuri la piattaforma che sceglie. Tutte le imprese interessate devono poter ricevere fatture elettroniche dal 1° settembre 2026; le PMI e le microimprese devono emetterle dal 1° settembre 2027.
+- DesKilo non tiene una contabilità in partita doppia: il Suo commercialista completa i file esportati.
+- Questa tabella cambia con l'app. Quando una riga passa nell'app, questa sezione lo dice.
+
+**Vedi anche:** [Emettere una fattura](help:user.invoicing.new-invoice) · [La piattaforma di fatturazione elettronica](help:user.money.einvoice.overview) · [Esportazioni contabili](help:user.invoicing.accounting-export) · [Regime IVA](help:user.money.vat.regime)
 
 ### La Sua identità legale
 
@@ -4534,7 +4608,7 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Da sapere**
 
-- Attivata: l'app riconosce un'impresa con una partita IVA in un altro Stato membro. Oggi l'app non emette direttamente queste fatture: Lei le emette fuori dall'app con il Suo commercialista.
+- Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. Oggi l'app non emette direttamente le fatture in inversione contabile: Lei le emette fuori dall'app con il Suo commercialista.
 - Disattivata: la disattivi se non fattura mai a imprese all'estero.
 - L'opzione compare solo per il regime di soggetto IVA.
 
@@ -4781,6 +4855,7 @@ Indica a DesKilo dove inviare le Sue fatture come file leggibili dalle macchine.
 - Funziona qualsiasi piattaforma che accetti un caricamento con un token: una piattaforma accreditata, un punto di accesso Peppol, una piattaforma nazionale.
 - Il token è conservato sul server e non viene mai più mostrato.
 - Il file valido è una fattura EN 16931. Se il Suo Paese richieda una piattaforma, e quale, lo confermi con il Suo commercialista.
+- Inviare il file è il secondo di tre passi: veda [Che cosa emette l'app e che cosa resta al Suo commercialista](help:user.invoicing.scope).
 
 **Vedi anche:** [Inviare una fattura elettronica](help:user.money.einvoice.send) · [Identità legale](help:user.money.legal.identity)
 
@@ -5078,7 +5153,7 @@ Fattura un mese a un membro.
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
 - Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
-- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, per clienti nazionali. Le fatture transfrontaliere, con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista.
+- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).
 - Una fattura emessa è firmata e immutabile.
 
 **Vedi anche:** [L'assistente di chiusura mensile](help:user.invoicing.wizard)
@@ -8400,7 +8475,7 @@ macchina non sa spezzare in modo affidabile un indirizzo su una sola
 riga; e le otto menzioni di fattura.
 
 Ognuno di quei campi è documentato, campo per campo, nella
-guida utente, § 11a — il simbolo di aiuto accanto apre
+[guida utente](help:user.money.legal.identity) — il simbolo di aiuto accanto apre
 esattamente il suo paragrafo.
 
 Le **istruzioni di pagamento** (il blocco bancario che un documento
@@ -8429,13 +8504,24 @@ accessorio e un pacchetto portano un gruppo, non una percentuale: la
 tabella delle aliquote di un paese può quindi cambiare sotto di loro
 senza toccare il catalogo.
 
-I **trattamenti** sono ciò che la controparte ne fa: interno,
-intracomunitario verso imprese (inversione contabile, il cliente assolve
-l'imposta secondo l'art. 196), intracomunitario verso consumatori,
-esportazione. Il paese e la partita IVA del cliente decidono quale si
-applica, e il controllo della fatturazione elettronica rifiuta di inviare
-un documento in inversione contabile finché quella partita IVA manca:
-è ciò che prova che l'imposta è sua.
+**Il luogo di imposizione** viene prima (#2354). Una postazione, un
+ufficio o una sala è un servizio connesso all'immobile: porta la Sua IVA
+ovunque viva il cliente, impresa o consumatore (art. 47 della direttiva
+IVA). Un servizio del catalogo indica se è **Connesso ai locali**
+(predefinito) o un **Servizio generico (non connesso ai locali)**, come la
+gestione della posta o un ufficio virtuale, e ogni addebito registrato
+conserva questa scelta.
+
+I **trattamenti** sono ciò che la controparte fa di un servizio generico:
+IVA interna, inversione contabile per un'impresa di un altro Paese UE (il
+cliente assolve l'imposta secondo l'art. 196), o fuori campo per
+un'impresa fuori dall'UE. La qualità dichiarata del cliente (impresa o
+consumatore) e il suo paese decidono quale si applica, mai la sola
+presenza di una partita IVA; un consumatore, in Italia o altrove, paga la
+Sua IVA, quindi non esiste un trattamento a parte per i consumatori
+intracomunitari. Il controllo della fatturazione elettronica rifiuta di
+inviare un documento in inversione contabile finché manca la partita IVA
+del cliente: è ciò che prova che l'imposta è sua.
 
 **Quando l'IVA diventa esigibile** è un'impostazione dello spazio: *sulle
 fatture* (esigibile all'emissione) oppure *sugli incassi* (esigibile il

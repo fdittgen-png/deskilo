@@ -15,23 +15,26 @@
 // cap is — we never have to know the number.
 library;
 
+import 'package:meta/meta.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Rows per request. Under Supabase's default `max_rows` of 1000; a
 /// lower cap only means more, shorter pages (#1848).
-const int kExportPageSize = 500;
+const int _kExportPageSize = 500;
 
 /// A hard ceiling on total rows, so a bug in the termination condition
 /// cannot spin for ever against a live project. Well above any real
 /// workspace: 200 pages of 500.
-const int kExportMaxRows = 100000;
+const int _kExportMaxRows = 100000;
 
-/// Thrown when an export read hits [kExportMaxRows].
+/// Thrown when an export read hits [_kExportMaxRows].
 ///
 /// #1310's rule: *if a page limit is ever reached unexpectedly, the
 /// export fails with a message rather than returning less.* Silence is
 /// the failure mode being fixed here, so this must never be swallowed
 /// into a shorter list.
+@visibleForTesting
 class ExportTooLargeException implements Exception {
   const ExportTooLargeException(this.table, this.rows);
 
@@ -65,8 +68,8 @@ class ExportTooLargeException implements Exception {
 Future<List<Map<String, dynamic>>> fetchAllPages({
   required String table,
   required PostgrestTransformBuilder<PostgrestList> Function() build,
-  int pageSize = kExportPageSize,
-  int maxRows = kExportMaxRows,
+  int pageSize = _kExportPageSize,
+  int maxRows = _kExportMaxRows,
   Future<int> Function()? count,
 }) =>
     fetchPages(
@@ -88,11 +91,12 @@ Future<List<Map<String, dynamic>>> fetchAllPages({
 /// page starts after the rows actually returned, and only an EMPTY page
 /// ends the read. The caller's order must be total (add a unique
 /// tie-breaker such as `id`), or rows can repeat or vanish between pages.
+@visibleForTesting
 Future<List<Map<String, dynamic>>> fetchPages({
   required String table,
   required Future<List<Map<String, dynamic>>> Function(int from, int to) page,
-  int pageSize = kExportPageSize,
-  int maxRows = kExportMaxRows,
+  int pageSize = _kExportPageSize,
+  int maxRows = _kExportMaxRows,
   Future<int> Function()? count,
   int attempts = 3,
 }) async {
@@ -119,6 +123,7 @@ Future<List<Map<String, dynamic>>> fetchPages({
 
 /// A paged read whose rows changed under it on every attempt: what it
 /// would return can be neither proven complete nor shown as free capacity.
+@visibleForTesting
 class IncompleteReadException implements Exception {
   const IncompleteReadException(this.table);
   final String table;
@@ -130,10 +135,11 @@ class IncompleteReadException implements Exception {
 
 /// #2011 — ids per `in.(…)` request: bounded, so a large plan never builds
 /// an unbounded URL.
-const int kInChunk = 100;
+const int _kInChunk = 100;
 
 /// [ids] in consecutive chunks of at most [size].
-List<List<String>> chunked(List<String> ids, [int size = kInChunk]) => [
+@visibleForTesting
+List<List<String>> chunked(List<String> ids, [int size = _kInChunk]) => [
   for (var i = 0; i < ids.length; i += size)
     ids.sublist(i, i + size > ids.length ? ids.length : i + size),
 ];

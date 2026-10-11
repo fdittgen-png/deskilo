@@ -14,8 +14,7 @@ import 'dart:typed_data';
 /// PostScript points per millimetre.
 const double mmPt = 72 / 25.4;
 
-/// A4, in points.
-const double a4WidthPt = 595.27559;
+/// The height of A4, in points.
 const double a4HeightPt = 841.88976;
 
 /// One piece of ink, positioned from the TOP-LEFT of the sheet in mm —
@@ -96,15 +95,6 @@ List<InkAt> textPositions(Uint8List bytes) {
     }
   }
   return found;
-}
-
-/// Writes [bytes] beside the test run so a failure can be OPENED rather
-/// than argued about, and returns the path.
-String saveForInspection(Uint8List bytes, String name) {
-  final dir = Directory('build/pdf-conformance')..createSync(recursive: true);
-  final file = File('${dir.path}/$name');
-  file.writeAsBytesSync(bytes);
-  return file.path;
 }
 
 /// The pages on which the address field itself is painted.

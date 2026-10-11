@@ -208,7 +208,7 @@ class WizardEntryCard extends ConsumerWidget {
           AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
       child: InkWell(
         key: const ValueKey('wizard-context-invoice-wizard-action'),
-        onTap: () => openInvoicingWizard(context, run: run),
+        onTap: () => _openInvoicingWizard(context, run: run),
         child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.md, vertical: AppSpacing.sm),
@@ -237,7 +237,7 @@ class WizardEntryCard extends ConsumerWidget {
 
 /// #827 — opens the wizard: the route where a router hosts the caller,
 /// a plain page push otherwise.
-Future<void> openInvoicingWizard(BuildContext context, {WizardRun? run}) async {
+Future<void> _openInvoicingWizard(BuildContext context, {WizardRun? run}) async {
   if (GoRouter.maybeOf(context) != null) {
     await context.push(
         run == null ? '/invoicing/wizard' : '/invoicing/wizard?run=${run.name}');

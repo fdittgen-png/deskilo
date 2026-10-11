@@ -353,7 +353,7 @@ const Map<String, int> _pairBudget = {
   'workspace -> money': 45, // 2026-10-06 the reference picker derives an invoice's standing (open / paid / cancelled) from the one lifecycle the archive and the open cards use; #2003 badge/QR covers and BI exports reuse report pagination, designs and image resolution.
   'workspace -> plan': 26, // 2026-10-02 #1923 B 25→26: the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
   'workspace -> profile': 11, // 2026-09-28 #1652 10→11: the invitation review names who is joining (my profile's e-mail).
-  'workspace -> reservations': 18, // 2026-10-06 #2210 19→18: the legacy conversation list left lib/; // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
+  'workspace -> reservations': 17, // 2026-10-10 #2383 18→17: the legacy new-conversation sheet left lib/; // 2026-10-06 #2210 19→18: the legacy conversation list left lib/; // 2026-10-02 #2085 17→19: the role's holders and "What they can do here" print member names through memberNamesProvider, the one name seam (recording privacy, #1514).
 };
 
 Iterable<File> _featureFiles() => handWrittenDartFiles('lib/features');
@@ -372,7 +372,7 @@ Iterable<File> _allSourceFiles() =>
 /// to map it to something a person can read — which is an infrastructure
 /// detail with a one-line answer, and the answer now lives in
 /// `lib/core/data/server_error.dart`. Route a file through
-/// `serverErrorMessage` / `isDatabaseError` / `isAuthError` and delete
+/// `serverErrorMessage` / `serverErrorCode` / `isAuthError` and delete
 /// its line here.
 /// Where the backend legitimately lives: the client itself, the realtime
 /// subscription, the push endpoint registry and the boot sequence that
@@ -555,7 +555,7 @@ void main() {
     }
     expect(violations, isEmpty,
         reason: 'these name a Supabase type outside data/. Use '
-            'serverErrorMessage / isDatabaseError / isAuthError from '
+            'serverErrorMessage / serverErrorCode / isAuthError from '
             'lib/core/data/server_error.dart:\n${violations.join('\n')}');
 
     final gone = _backendTypeOutsideData

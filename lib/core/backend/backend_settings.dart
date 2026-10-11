@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
@@ -78,6 +79,7 @@ enum BackendEndpointError {
 }
 
 /// The maximum length of a project URL; longer is refused unparsed.
+@visibleForTesting
 const int backendUrlMaxLength = 512;
 
 /// #1651 — the canonical `https://host[:port]` origin of [url], or null
@@ -475,6 +477,7 @@ Future<BackendProbeReport> probeBackend(
 
 /// #1651 — what a PostgREST error says about the candidate. Pure, so the
 /// table of answers is testable without a transport.
+@visibleForTesting
 BackendProbeReport classifyProbeError(PostgrestException e) {
   final code = e.code ?? '';
   final message = e.message.toLowerCase();

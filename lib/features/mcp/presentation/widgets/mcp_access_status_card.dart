@@ -109,7 +109,7 @@ class _StatusCard extends ConsumerWidget {
                 trailing: Text(state.name == 'unavailable' &&
                         next != McpNextStep.unavailable
                     ? (l10n?.mcpStateAfterPrevious ?? 'After the step above')
-                    : mcpStateLabel(l10n, state)),
+                    : _mcpStateLabel(l10n, state)),
               ),
             _Banner(
               'mcp-status-next-${next.name}',
@@ -177,9 +177,9 @@ class _OverviewTile extends StatelessWidget {
     final reachable = s.backend != McpBackendState.unavailable;
     final detail = reachable
         ? '${l10n?.mcpStatusIdentity ?? 'Identity'}: '
-              '${mcpStateLabel(l10n, s.identity)} · '
+              '${_mcpStateLabel(l10n, s.identity)} · '
               '${l10n?.mcpStatusEligibility ?? 'Database approval'}: '
-              '${mcpStateLabel(l10n, s.eligibility)}'
+              '${_mcpStateLabel(l10n, s.eligibility)}'
         : (l10n?.mcpOverviewUnavailable ?? 'Could not be asked right now.');
     return ListTile(
       key: ValueKey(
@@ -248,7 +248,7 @@ String _nextText(AppLocalizations? l10n, McpNextStep step) => switch (step) {
 };
 
 /// One label per state value, whichever dimension it belongs to.
-String mcpStateLabel(AppLocalizations? l10n, Enum state) =>
+String _mcpStateLabel(AppLocalizations? l10n, Enum state) =>
     switch (state.name) {
       'verified' => l10n?.mcpStateVerified ?? 'Verified',
       'unlinked' => l10n?.mcpStateUnlinked ?? 'Not linked',

@@ -52,7 +52,7 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "memberVatTreatmentExplainer": "Quién es este miembro a efectos de IVA: la regla automática (inversión del sujeto pasivo para una empresa de otro Estado de la UE), IVA nacional en todo caso, inversión del sujeto pasivo, fuera de la UE o un comprador exento con el motivo impreso en la factura.",
+  "memberVatTreatmentExplainer": "Quién es este miembro a efectos de IVA. Automático: un puesto, una oficina o una sala tributa donde se encuentra el inmueble, con su IVA para cualquier cliente; solo un servicio general (no vinculado a los locales) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Las demás opciones se aplican a todas las líneas.",
   "@memberVatTreatmentExplainer": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentExplainer"
   },

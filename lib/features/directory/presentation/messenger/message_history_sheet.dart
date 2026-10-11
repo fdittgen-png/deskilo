@@ -22,12 +22,11 @@ Future<void> showMessageHistory(
   context: context,
   isScrollControlled: true,
   builder: (_) =>
-      MessageHistorySheet(kind: kind, messageId: messageId, source: source),
+      _MessageHistorySheet(kind: kind, messageId: messageId, source: source),
 );
 
-class MessageHistorySheet extends ConsumerWidget {
-  const MessageHistorySheet({
-    super.key,
+class _MessageHistorySheet extends ConsumerWidget {
+  const _MessageHistorySheet({
     required this.kind,
     required this.messageId,
     this.source = '',

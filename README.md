@@ -7,11 +7,11 @@
 
 <br>
 
-**[Try the demo](https://fdittgen-png.github.io/deskilo/)** &nbsp;·&nbsp; **[User guide](docs/wiki/User-Guide.md)** &nbsp;·&nbsp; **[Build your own space](docs/wiki/Setup-Guide.md)** &nbsp;·&nbsp; [Releases](https://github.com/fdittgen-png/deskilo/releases) &nbsp;·&nbsp; [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
+**[Discover DesKilo](https://fdittgen-png.github.io/deskilo/welcome/)** &nbsp;·&nbsp; **[Try the demo](https://fdittgen-png.github.io/deskilo/)** &nbsp;·&nbsp; **[User guide](https://fdittgen-png.github.io/deskilo/guide/en.html)** &nbsp;·&nbsp; **[Build your own space](https://fdittgen-png.github.io/deskilo/guide/setup-en.html)** &nbsp;·&nbsp; [Releases](https://github.com/fdittgen-png/deskilo/releases) &nbsp;·&nbsp; [Roadmap](https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen+label%3Aepic)
 
 [![Quality checks](https://img.shields.io/github/actions/workflow/status/fdittgen-png/deskilo/quality.yml?branch=master&label=quality&style=flat-square)](https://github.com/fdittgen-png/deskilo/actions/workflows/quality.yml) [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--or--later-0f766e?style=flat-square)](LICENSE) [![Flutter](https://img.shields.io/badge/Flutter-3.47.5-2e3d5c?style=flat-square&logo=flutter&logoColor=white)](https://flutter.dev) [![Dart](https://img.shields.io/badge/Dart-3.12.2-2e3d5c?style=flat-square&logo=dart&logoColor=white)](https://dart.dev) ![Languages](https://img.shields.io/badge/EN_·_FR_·_DE_·_ES_·_IT-d32f2f?style=flat-square) ![Status](https://img.shields.io/badge/status-beta-e0902c?style=flat-square)
 
-<a href="https://fdittgen-png.github.io/deskilo/"><img alt="Open the web app" src="https://img.shields.io/badge/Web%20app-1b2236?style=for-the-badge&logo=googlechrome&logoColor=white"></a> <a href="https://play.google.com/apps/testing/de.deskilo.app"><img alt="Join the Android closed test" src="https://img.shields.io/badge/Android%20closed%20test-1b2236?style=for-the-badge&logo=googleplay&logoColor=white"></a> <a href="https://testflight.apple.com/join/RgFX9zBe"><img alt="Join the iPhone beta on TestFlight" src="https://img.shields.io/badge/TestFlight%20beta-1b2236?style=for-the-badge&logo=apple&logoColor=white"></a>
+<a href="https://fdittgen-png.github.io/deskilo/welcome/"><img alt="Discover DesKilo — the project's home page" src="https://img.shields.io/badge/Home%20page-0f766e?style=for-the-badge&logo=googlechrome&logoColor=white"></a> <a href="https://fdittgen-png.github.io/deskilo/"><img alt="Open the web app" src="https://img.shields.io/badge/Web%20app-1b2236?style=for-the-badge&logo=googlechrome&logoColor=white"></a> <a href="https://play.google.com/apps/testing/de.deskilo.app"><img alt="Join the Android closed test" src="https://img.shields.io/badge/Android%20closed%20test-1b2236?style=for-the-badge&logo=googleplay&logoColor=white"></a> <a href="https://testflight.apple.com/join/RgFX9zBe"><img alt="Join the iPhone beta on TestFlight" src="https://img.shields.io/badge/TestFlight%20beta-1b2236?style=for-the-badge&logo=apple&logoColor=white"></a>
 
 </div>
 
@@ -100,11 +100,11 @@ Open the <a href="https://fdittgen-png.github.io/deskilo/">web app</a> and choos
 </td>
 <td width="33%" valign="top">
 <h3>2 · Build your space</h3>
-Follow the <a href="docs/wiki/Setup-Guide.md">Setup Guide</a>: a name, a plan, opening times and someone to say yes — about twenty minutes. Money, invoices and a look of your own come later.
+Follow the <a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html">Setup Guide</a>: a name, a plan, opening times and someone to say yes — about twenty minutes. Money, invoices and a look of your own come later.
 </td>
 <td width="33%" valign="top">
 <h3>3 · Invite people</h3>
-Share the workspace ID or a QR code. Members join, you approve, the first booking appears on the plan. The <a href="docs/wiki/User-Guide.md">User Guide</a> covers every screen, by audience.
+Share the workspace ID or a QR code. Members join, you approve, the first booking appears on the plan. The <a href="https://fdittgen-png.github.io/deskilo/guide/en.html">User Guide</a> covers every screen, by audience.
 </td>
 </tr>
 </table>
@@ -150,7 +150,7 @@ The code includes workspace-scoped server permissions, personal-data export and 
 
 Store builds use Firebase Cloud Messaging for push notifications. A separate build without Google services is prepared for F-Droid; whether it is published there yet is stated in one place, the [F-Droid status](docs/guides/fdroid.md#status). See the [privacy policy](https://fdittgen-png.github.io/deskilo/privacy.html) for the project's published data-handling information.
 
-There is no software license fee. Hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
+The software is free and stays free: there is no software license fee. Hosting by the author, the reference deployment included, is free for every workspace registered by 31 December 2027; workspaces registered from 1 January 2028 pay for hosting. Customisations, including exclusive features, can be commissioned from the author. Your own hosting, payment processing and other external services may have their own costs. The shared directory on the reference deployment is run by one person on a best-effort basis: if you need guarantees about availability or data location, run your own instance.
 
 </details>
 
@@ -179,11 +179,11 @@ Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Ai
 <table>
 <tr>
 <td width="33%" valign="top">
-<b><a href="docs/wiki/User-Guide.md">User guide</a></b><br>
+<b><a href="https://fdittgen-png.github.io/deskilo/guide/en.html">User guide</a></b><br>
 Every screen by audience, illustrated, in five languages.
 </td>
 <td width="33%" valign="top">
-<b><a href="docs/wiki/Setup-Guide.md">Setup guide</a></b><br>
+<b><a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html">Setup guide</a></b><br>
 What is possible, what is necessary, in which order — for a future owner.
 </td>
 <td width="33%" valign="top">
@@ -268,7 +268,7 @@ Useful bug reports include the app version, platform, relevant workspace rules, 
 </table>
 
 <p align="center">
-<a href="https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen"><img alt="Browse the open issues" src="https://img.shields.io/badge/Browse%20open%20issues-0f766e?style=for-the-badge&logo=github&logoColor=white"></a> <a href="CONTRIBUTING.md"><img alt="Read the contributing guide" src="https://img.shields.io/badge/Contributing%20guide-1b2236?style=for-the-badge"></a> <a href="docs/wiki/Setup-Guide.md"><img alt="Start your own space" src="https://img.shields.io/badge/Start%20your%20own%20space-d32f2f?style=for-the-badge"></a>
+<a href="https://github.com/fdittgen-png/deskilo/issues?q=is%3Aissue+is%3Aopen"><img alt="Browse the open issues" src="https://img.shields.io/badge/Browse%20open%20issues-0f766e?style=for-the-badge&logo=github&logoColor=white"></a> <a href="CONTRIBUTING.md"><img alt="Read the contributing guide" src="https://img.shields.io/badge/Contributing%20guide-1b2236?style=for-the-badge"></a> <a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html"><img alt="Start your own space" src="https://img.shields.io/badge/Start%20your%20own%20space-d32f2f?style=for-the-badge"></a>
 </p>
 
 DesKilo is a sibling project of [Sparkilo](https://github.com/fdittgen-png/tankstellen).

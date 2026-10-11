@@ -3099,7 +3099,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Cada espacio lo opera su propietario — su comunidad —, que decide miembros, precios y proveedores de pago. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen (Alemania); el backend es Supabase en la UE. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.';
+      'Cada espacio lo gestiona su propietario — su comunidad —, que decide miembros, precios y proveedores de pago. Cada servidor lo gestiona su operador: el servidor de referencia compartido, Florian Dittgen (Alemania); el servidor propio de una comunidad, quien lo gestione. La app es software libre (AGPL-3.0-or-later) y la publica Florian Dittgen. Los pagos en línea pasan por el proveedor que activó el propietario (PayPal, Stripe, Mollie, Wero) según sus condiciones.';
 
   @override
   String get consentControllerTitle => 'Quién es responsable';
@@ -3109,28 +3109,42 @@ class AppLocalizationsEs extends AppLocalizations {
       'Antes de usar DesKilo, esto es lo que la app hace con sus datos, quién puede verlos y qué puede hacer al respecto. Dos minutos; no hay más.';
 
   @override
+  String get consentMessagesBody =>
+      'Solo las personas de una conversación pueden abrirla: ustedes dos, los miembros de un grupo o, cuando escribe a un espacio, los anfitriones que la app nombra antes del envío. Los propietarios y los admins de un espacio no pueden leer sus conversaciones. Los mensajes no están cifrados de extremo a extremo: se guardan en el servidor donde vive la conversación — el de otro servidor, tras su confirmación, cuando escribe a alguien de allí — y quien gestiona ese servidor puede acceder a ellos técnicamente.';
+
+  @override
+  String get consentMessagesTitle => 'Mensajes';
+
+  @override
   String get consentNotBody =>
-      'Sin rastreo, sin analítica, sin publicidad, sin venta ni cesión de datos. Las notificaciones push no llevan contenido — solo «tiene un mensaje nuevo»; la propia app escribe el texto. La versión F-Droid no tiene ningún servicio de Google.';
+      'Sin rastreo, sin analítica, sin publicidad, sin venta de datos. Sus datos no van a nadie salvo a los destinatarios nombrados aquí y en el aviso del servidor. La versión F-Droid no tiene ningún servicio de Google.';
 
   @override
   String get consentNotTitle => 'Lo que DesKilo nunca hace';
 
   @override
+  String get consentPushBody =>
+      'Opcionales, y salientes. Cuando el operador del servidor ha configurado el push, su espacio lo usa y está activado en este dispositivo, la dirección de este dispositivo y cada notificación van al servicio de push (Firebase Cloud Messaging, que pasa a Apple las notificaciones para dispositivos Apple). Una notificación solo dice algo genérico, como «Tiene un mensaje nuevo»: ni nombres, ni horas, ni texto de mensajes. Desactívelas en Ajustes → Privacidad y datos; la app sigue funcionando y ya no se envía nada a este dispositivo.';
+
+  @override
+  String get consentPushTitle => 'Notificaciones push';
+
+  @override
   String get consentReadInHelp => 'Leer en la ayuda';
 
   @override
-  String get consentReadOnWiki => 'Leer en el wiki';
+  String get consentReadOnWiki => 'Leer en la guía en línea';
 
   @override
   String get consentRetentionBody =>
-      'Mientras sea miembro. Cuando se va y borra, su perfil y sus mensajes desaparecen; los registros contables (facturas, pagos) se conservan el plazo legal, por identificador y no por nombre.';
+      'Mientras sea miembro. Cuando sale de un espacio y borra, sus mensajes en ese espacio desaparecen, y su perfil se va con su último espacio. Los registros contables se conservan el plazo legal: el libro por identificador, las facturas tal como se emitieron.';
 
   @override
   String get consentRetentionTitle => 'Cuánto tiempo';
 
   @override
   String get consentReviewBody =>
-      'Este texto sigue disponible en Ajustes → Privacidad y datos, en la ayuda de la app (Privacidad) y en el wiki del proyecto. Un cambio del texto vuelve a pedir su aceptación.';
+      'Este texto sigue disponible en Ajustes → Privacidad y datos, en la ayuda de la app (Privacidad) y en la guía de usuario en línea. Un cambio del texto vuelve a pedir su aceptación.';
 
   @override
   String get consentReviewHint =>
@@ -3158,14 +3172,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentWhatBody =>
-      'Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en la UE (Supabase, eu-central-1).';
+      'Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en el servidor donde funciona su espacio: en el servidor de referencia compartido, en la UE (Supabase, eu-central-1); en un servidor que una comunidad gestiona por su cuenta, donde su operador haya elegido. Ajustes → Privacidad y datos muestra el aviso de ese servidor: quién lo gestiona, dónde están los datos y quién los recibe.';
 
   @override
   String get consentWhatTitle => 'Qué procesa DesKilo';
 
   @override
   String get consentWhoBody =>
-      'El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); los mensajes solo las personas de la conversación, sea cual sea su rol; sus finanzas y su acuerdo comercial solo usted, los propietarios y los admins con el permiso correspondiente. Ajustes → Privacidad y datos nombra a las personas y lista quién miró realmente.';
+      'El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); sus finanzas y su acuerdo comercial solo usted, los propietarios y los admins con el permiso correspondiente. Cada dato de su perfil solo lo ve el público que elige en Quién me ve; nada es público si usted no lo elige. Un perfil público está desactivado hasta que lo publica: entonces cualquiera con el enlace lee su nombre, su profesión y su biografía — nunca sus datos de contacto, su presencia ni sus espacios — hasta que lo retire. Ajustes → Privacidad y datos nombra a las personas y lista quién miró realmente.';
 
   @override
   String get consentWhoTitle => 'Quién puede ver qué';
@@ -5619,6 +5633,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureSubscriptionInvoicesTitle => 'Facturas de suscripción';
+
+  @override
+  String get featureSupplyClassificationDesc =>
+      'Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.';
+
+  @override
+  String get featureSupplyClassificationTitle =>
+      'Lugar de prestación por servicio';
 
   @override
   String get featureSupplyExpensesDesc =>
@@ -8150,6 +8172,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'La dirección postal del miembro (obligatoria para una empresa)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Si el miembro es una empresa o un consumidor: de ello depende un servicio general a un cliente en el extranjero';
+
+  @override
   String get invoiceMissingBuyerName => 'El nombre o la empresa del miembro';
 
   @override
@@ -8185,7 +8211,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Las facturas transfronterizas, con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.';
+      'Las facturas con inversión del sujeto pasivo, de exportación o exentas deben revisarse y emitirse fuera de la aplicación con su contable. Los extractos siguen disponibles.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -10995,7 +11021,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Quién es este miembro a efectos de IVA: la regla automática (inversión del sujeto pasivo para una empresa de otro Estado de la UE), IVA nacional en todo caso, inversión del sujeto pasivo, fuera de la UE o un comprador exento con el motivo impreso en la factura.';
+      'Quién es este miembro a efectos de IVA. Automático: un puesto, una oficina o una sala tributa donde se encuentra el inmueble, con su IVA para cualquier cliente; solo un servicio general (no vinculado a los locales) aplica la inversión del sujeto pasivo para una empresa de otro país de la UE, o queda fuera del ámbito para una empresa fuera de la UE. Las demás opciones se aplican a todas las líneas.';
 
   @override
   String get memberVatTreatmentLabel => 'Tratamiento del IVA';
@@ -16352,6 +16378,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Gestionar grupos, tipos y declaraciones de IVA.';
 
   @override
+  String get supplyClassGeneral =>
+      'Servicio general (no vinculado a los locales)';
+
+  @override
+  String get supplyClassHelper =>
+      'Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.';
+
+  @override
+  String get supplyClassLabel => 'Lugar de prestación';
+
+  @override
+  String get supplyClassProperty => 'Vinculado a los locales';
+
+  @override
   String get supportChanged =>
       'El contexto cambió. Prepare una nueva vista previa.';
 
@@ -19022,6 +19062,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatTreatmentDomestic => 'IVA nacional';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Servicios generales: $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Puesto, oficina, sala: $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Para una empresa de otro país de la UE:';
+
+  @override
   String get vatTreatmentExempt => 'Comprador exento';
 
   @override
@@ -19033,6 +19087,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatTreatmentReverseCharge => 'Inversión del sujeto pasivo';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'El cliente autoliquida el IVA: solo para servicios no vinculados a los locales.';
 
   @override
   String get vatUntil => 'hasta el';

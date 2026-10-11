@@ -157,7 +157,7 @@ ones" (l.582).
 - 126 enum values; manifest `featureManifest` (l.459+) with `tier` (core 30 / platform 63 per the manifest
   entries parsed; the exact split of the 126 in the wizard is 45 default-on), `surface`, `defaultOn`,
   optional `requires` (single parent). 59 child links. Parent chain resolved by `effectiveFeatures`,
-  `requirementChain`, `dependentFeatures`, `featureFlagsAfterToggle` (turning a child on turns its chain on).
+  `requirementChain`, `dependentFeatures`, `featureFlagsToggleDelta` (turning a child on turns its chain on).
 - New workspace flags: `defaultFeatureFlagsForNewWorkspace()` (l.1629): every key written explicitly;
   `core && defaultOn` true, everything else false; `environmentPairs` forced on when a twin is created.
   Existing workspaces never change (#1063).
@@ -285,7 +285,7 @@ subscription_change, matrix_change. The wizard's `DOMAINS` offers 21 of them.
 
 | Guard | What it catches | Where the owner sees it | Code |
 |---|---|---|---|
-| Feature dependencies | A child cannot be effective without its parent chain; turning a child on turns the chain on, naming what comes on; turning a parent off drops the subtree without erasing child choices | Features screen switch flow (consent/preview), wizard step 2 notes | `workspace_feature.dart` (`effectiveFeatures`, `featureFlagsAfterToggle`, `alsoEnabledWith`), `feature_switch_flow.dart` |
+| Feature dependencies | A child cannot be effective without its parent chain; turning a child on turns the chain on, naming what comes on; turning a parent off drops the subtree without erasing child choices | Features screen switch flow (consent/preview), wizard step 2 notes | `workspace_feature.dart` (`effectiveFeatures`, `featureFlagsToggleDelta`, `alsoEnabledWith`), `feature_switch_flow.dart` |
 | Features screen, processes view | A capability switched on but held back by a missing prerequisite ("needsAttention" state/filter, `heldBack`, outside-prerequisite notices); states active/partial/available/needsAttention | Features -> process cards (default view), "Needs attention" filter | `lib/features/workspace/application/process_status.dart`, `presentation/widgets/process_overview.dart` |
 | Setup readiness | Per section: region_rules, resources, pricing, invitations, payments, roles_validation, recovery, local_setup, assistant (only if `mcpAccess`), first_booking; states ready/needs_configuration/needs_operator/not_applicable/unverified; `required` flag | `WorkspaceReadinessCard` + `LocalReadinessCard` at top of workspace settings; the "Before anyone can book here: {step}." line of the Get-started card on Reserve | server `workspace_readiness` (0285 -> 0307 body), client `workspace_readiness.dart`, `local_setup_views.dart` (`setupReadinessCards`), `getting_started_hint.dart`, `getting_started_copy.dart` |
 | What "Before anyone can book" really means | It speaks only when the server names a REQUIRED + needs section: `region_rules` (time zone, currency, >=1 open weekday), `resources` (>=1 seat), `roles_validation` when a `reservation` or `space_reservation` policy has fewer possible validators than required_count (0294), and the app's own backend section (schema behind -> operator). Pricing, invitations, payments, recovery, first booking, local setup are optional (`required:false`), can be "set aside for later" (0307) | Reserve hub | `workspace_readiness.dart` `blocking`, `nextReadinessStep` |

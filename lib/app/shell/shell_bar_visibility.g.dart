@@ -49,7 +49,7 @@ final class ShellBarHiddenStoreProvider
 }
 
 String _$shellBarHiddenStoreHash() =>
-    r'1071436bcb1ea3567965962ed7174206ddb12fcf';
+    r'5664c5d5ee64202c69404c11402d1ba7dd88a390';
 
 @ProviderFor(shellSwipeCoachStore)
 final shellSwipeCoachStoreProvider = ShellSwipeCoachStoreProvider._();
@@ -91,7 +91,7 @@ final class ShellSwipeCoachStoreProvider
 }
 
 String _$shellSwipeCoachStoreHash() =>
-    r'cbdf62c0f9172a79b02b92a082d2cb5e052661eb';
+    r'442e2160e00d71304e62b9f4f5c23b2fe08dc0c3';
 
 /// The swiped-away state. Loading reads as SHOWN: the safe state, since
 /// it is the one that carries its own way out.

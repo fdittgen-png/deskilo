@@ -114,7 +114,7 @@ class _VisitCardState extends ConsumerState<_VisitCard> {
                 ),
                 Chip(
                   key: ValueKey('me-visit-status-${visit.status.name}'),
-                  label: Text(guestVisitStatusLabel(l10n, visit.status)),
+                  label: Text(_guestVisitStatusLabel(l10n, visit.status)),
                   visualDensity: VisualDensity.compact,
                 ),
               ],
@@ -139,7 +139,7 @@ class _VisitCardState extends ConsumerState<_VisitCard> {
 
 /// One word per status, in the reader's language; an unknown status is
 /// shown as the server sent it, never as something it is not.
-String guestVisitStatusLabel(AppLocalizations? l10n, GuestVisitStatus status) =>
+String _guestVisitStatusLabel(AppLocalizations? l10n, GuestVisitStatus status) =>
     switch (status) {
       GuestVisitStatus.requested => l10n?.visitStatusRequested ?? 'Requested',
       GuestVisitStatus.confirmed => l10n?.visitStatusConfirmed ?? 'Confirmed',

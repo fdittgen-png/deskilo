@@ -19,6 +19,7 @@ RealtimeSync realtimeSync(Ref ref) =>
 
 /// How long changes are coalesced before invalidating (#413): a burst
 /// (a series booking writes dozens of rows) becomes one refetch.
+@visibleForTesting
 const kRealtimeDebounce = Duration(milliseconds: 300);
 
 /// Watches app lifecycle for the invalidator: while the app was

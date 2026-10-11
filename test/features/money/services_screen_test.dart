@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/vat/supply_class.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -170,5 +171,52 @@ void main() {
   testWidgets('no VAT regime → prices stay bare (#537)', (tester) async {
     await pumpServices(tester);
     expect(find.textContaining('incl. VAT'), findsNothing);
+  });
+
+  // #2354 — where a service is supplied for VAT: the owner marks mail
+  // handling a general service; a desk-like service stays with the
+  // premises. Only a VAT-charging workspace with the flag on is asked.
+  Future<FakeMoneyRepository> pumpVatServices(WidgetTester tester,
+      {Map<String, dynamic> flags = const {}}) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
+    workspace.workspaces[0] =
+        workspace.workspaces[0].copyWith(vatRegime: 'vat_registered');
+    final money = FakeMoneyRepository()
+      ..vatRates = [
+        const VatRate(
+            id: 'vat-1', label: 'Standard', percent: 20, isDefault: true),
+      ];
+    return pumpServices(tester, money: money, workspace: workspace);
+  }
+
+  testWidgets('#2354 — a service is marked a general service and keeps it',
+      (tester) async {
+    final money = await pumpVatServices(tester);
+
+    await tester.tap(find.text('Coffee'));
+    await tester.pumpAndSettle();
+    final field = find.byKey(const ValueKey('supply-class-field'));
+    await tester.ensureVisible(field);
+    expect(find.text('Connected with the premises'), findsOneWidget,
+        reason: 'the default: taxed where the building stands');
+    await tester.tap(field);
+    await tester.pumpAndSettle();
+    await tester.tap(
+        find.text('General service (not connected with the premises)').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('services-save')));
+    await tester.pumpAndSettle();
+
+    expect(money.services.singleWhere((s) => s.name == 'Coffee').supplyClass,
+        SupplyClass.general);
+  });
+
+  testWidgets('#2354 — the flag off: no place of supply to choose',
+      (tester) async {
+    await pumpVatServices(tester, flags: const {'supplyClassification': false});
+
+    await tester.tap(find.text('Coffee'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('supply-class-field')), findsNothing);
   });
 }

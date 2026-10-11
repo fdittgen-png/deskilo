@@ -3106,38 +3106,52 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Chaque espace est exploité par son propriétaire — votre communauté — qui décide des membres, des prix et des prestataires de paiement. L\'app est un logiciel libre (AGPL-3.0-or-later) et publiée par Florian Dittgen (Allemagne) ; le backend est Supabase dans l\'UE. Les paiements en ligne passent par le prestataire activé par le propriétaire (PayPal, Stripe, Mollie, Wero) selon ses conditions.';
+      'Chaque espace est géré par son propriétaire — votre communauté — qui décide des membres, des prix et des prestataires de paiement. Chaque serveur est géré par son opérateur : le serveur de référence partagé par Florian Dittgen (Allemagne), le serveur propre d\'une communauté par la personne qui le fait tourner. L\'app est un logiciel libre (AGPL-3.0-or-later), publié par Florian Dittgen. Les paiements en ligne passent par le prestataire activé par le propriétaire (PayPal, Stripe, Mollie, Wero) selon ses conditions.';
 
   @override
   String get consentControllerTitle => 'Qui est responsable';
 
   @override
   String get consentIntro =>
-      'Avant d\'utiliser DesKilo, voici ce que l\'app fait de vos données, qui peut les voir et ce que vous pouvez en faire. Deux minutes ; il n\'y a rien de plus.';
+      'Avant d\'utiliser DesKilo, voici ce que l\'app fait de vos données, qui peut les voir et ce que vous pouvez en faire. Deux minutes ; il n\'y a rien de plus.';
+
+  @override
+  String get consentMessagesBody =>
+      'Seules les personnes d\'une conversation peuvent l\'ouvrir : vous deux, les membres d\'un groupe ou, quand vous écrivez à un espace, les hôtes que l\'app nomme avant l\'envoi. Les propriétaires et les admins d\'un espace ne peuvent pas lire vos conversations. Les messages ne sont pas chiffrés de bout en bout : ils sont stockés sur le serveur où vit la conversation — celui d\'un autre serveur, après votre confirmation, quand vous écrivez à quelqu\'un qui s\'y trouve — et la personne qui fait tourner ce serveur peut techniquement y accéder.';
+
+  @override
+  String get consentMessagesTitle => 'Messages';
 
   @override
   String get consentNotBody =>
-      'Ni traçage, ni analytique, ni publicité, ni vente ou partage de données. Les notifications push ne portent aucun contenu — seulement « vous avez un nouveau message » ; l\'app elle-même écrit le texte. La version F-Droid n\'a aucun service Google.';
+      'Ni traçage, ni analytique, ni publicité, ni vente de données. Vos données ne vont à personne d\'autre qu\'aux destinataires nommés ici et dans la notice du serveur. La version F-Droid n\'a aucun service Google.';
 
   @override
   String get consentNotTitle => 'Ce que DesKilo ne fait jamais';
 
   @override
+  String get consentPushBody =>
+      'Facultatives, et sortantes. Quand l\'opérateur du serveur a configuré le push, que votre espace l\'utilise et qu\'il est activé sur cet appareil, l\'adresse de cet appareil et chaque notification partent vers le service de push (Firebase Cloud Messaging, qui transmet à Apple les notifications destinées aux appareils Apple). Une notification ne dit que quelque chose de générique, comme « Vous avez un nouveau message » : ni nom, ni horaire, ni texte de message. Désactivez-les dans Réglages → Confidentialité et données ; l\'app continue de fonctionner et plus rien n\'est envoyé à cet appareil.';
+
+  @override
+  String get consentPushTitle => 'Notifications push';
+
+  @override
   String get consentReadInHelp => 'Lire dans l\'aide';
 
   @override
-  String get consentReadOnWiki => 'Lire sur le wiki';
+  String get consentReadOnWiki => 'Lire dans le guide en ligne';
 
   @override
   String get consentRetentionBody =>
-      'Tant que vous êtes membre. Quand vous partez et effacez, votre profil et vos messages disparaissent ; les pièces comptables (factures, paiements) restent la durée légale de conservation, par identifiant et non par nom.';
+      'Tant que vous êtes membre. Quand vous quittez un espace et effacez, vos messages dans cet espace disparaissent, et votre profil part avec votre dernier espace. Les pièces comptables restent la durée légale de conservation : le registre par identifiant, les factures telles qu\'elles ont été émises.';
 
   @override
   String get consentRetentionTitle => 'Combien de temps';
 
   @override
   String get consentReviewBody =>
-      'Ce texte reste disponible dans Réglages → Confidentialité et données, dans l\'aide de l\'app (Confidentialité) et dans le wiki du projet. Un changement du texte redemande votre acceptation.';
+      'Ce texte reste disponible dans Réglages → Confidentialité et données, dans l\'aide de l\'app (Confidentialité) et dans le guide utilisateur en ligne. Un changement du texte redemande votre acceptation.';
 
   @override
   String get consentReviewHint =>
@@ -3148,7 +3162,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get consentRightsBody =>
-      'Accès, rectification, export (art. 20), effacement (art. 17) et opposition — chacun est un bouton dans Réglages → Confidentialité et données. Pour le reste : fdittgen@gmail.com. Vous pouvez retirer ce consentement à tout moment en quittant l\'espace et en effaçant vos données.';
+      'Accès, rectification, export (art. 20), effacement (art. 17) et opposition — chacun est un bouton dans Réglages → Confidentialité et données. Pour le reste : fdittgen@gmail.com. Vous pouvez retirer ce consentement à tout moment en quittant l\'espace et en effaçant vos données.';
 
   @override
   String get consentRightsTitle => 'Vos droits';
@@ -3165,14 +3179,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get consentWhatBody =>
-      'Votre compte (e-mail, nom affiché, mot de passe haché), votre profil tel que vous le remplissez (photo, statut, adresse, numéro WhatsApp — chacun facultatif), et ce que vous faites dans un espace : réservations et pointages, messages, dépenses et consommations, votre abonnement, factures et paiements. Tout est stocké dans l\'UE (Supabase, eu-central-1).';
+      'Votre compte (e-mail, nom affiché, mot de passe haché), votre profil tel que vous le remplissez (photo, statut, adresse, numéro WhatsApp — chacun facultatif), et ce que vous faites dans un espace : réservations et pointages, messages, dépenses et consommations, votre abonnement, factures et paiements. Tout est stocké sur le serveur où vit votre espace : sur le serveur de référence partagé, dans l\'UE (Supabase, eu-central-1) ; sur un serveur qu\'une communauté fait tourner elle-même, là où son opérateur l\'a choisi. Réglages → Confidentialité et données affiche la notice de ce serveur : qui le fait tourner, où sont les données et qui les reçoit.';
 
   @override
   String get consentWhatTitle => 'Ce que DesKilo traite';
 
   @override
   String get consentWhoBody =>
-      'L\'accès suit les rôles et est appliqué côté serveur : les réservations sont visibles de l\'espace (le plan montre l\'occupation) ; les messages seulement des personnes de la conversation, quel que soit leur rôle ; vos finances et votre accord commercial seulement de vous, des propriétaires et des admins qui détiennent la permission correspondante. Réglages → Confidentialité et données nomme les personnes et liste qui a réellement consulté.';
+      'L\'accès suit les rôles et est appliqué côté serveur : les réservations sont visibles de l\'espace (le plan montre l\'occupation) ; vos finances et votre accord commercial seulement de vous, des propriétaires et des admins qui détiennent la permission correspondante. Chaque élément de votre profil n\'est montré qu\'au public que vous choisissez sous Qui me voit ; rien n\'est public sans votre choix. Un profil public reste éteint tant que vous ne le publiez pas : ensuite, toute personne qui a le lien lit votre nom, votre profession et votre bio — jamais vos coordonnées, votre présence ni vos espaces — jusqu\'à ce que vous le retiriez. Réglages → Confidentialité et données nomme les personnes et liste qui a réellement consulté.';
 
   @override
   String get consentWhoTitle => 'Qui peut voir quoi';
@@ -5628,6 +5642,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureSubscriptionInvoicesTitle => 'Factures d\'abonnement';
+
+  @override
+  String get featureSupplyClassificationDesc =>
+      'Chaque service du catalogue indique s\'il est rattaché aux locaux (par défaut : imposé là où se trouve l\'immeuble, pour tout client) ou s\'il s\'agit d\'une prestation générale, comme le traitement du courrier ou la domiciliation, qu\'une entreprise d\'un autre État de l\'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.';
+
+  @override
+  String get featureSupplyClassificationTitle =>
+      'Lieu de prestation par service';
 
   @override
   String get featureSupplyExpensesDesc =>
@@ -8169,6 +8191,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'adresse postale du membre (obligatoire pour un client professionnel)';
 
   @override
+  String get invoiceMissingBuyerCapacity =>
+      'Si le membre est une entreprise ou un consommateur — une prestation générale à un client à l\'étranger en dépend';
+
+  @override
   String get invoiceMissingBuyerName => 'Le nom ou la société du membre';
 
   @override
@@ -8205,7 +8231,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMissingVatTreatment =>
-      'Les factures transfrontalières, en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.';
+      'Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.';
 
   @override
   String get invoiceMissingVatZeroLine =>
@@ -11025,7 +11051,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberVatTreatmentExplainer =>
-      'Qui est ce membre pour la TVA : la règle automatique (autoliquidation pour une entreprise d\'un autre État de l\'UE), la TVA nationale quoi qu\'il arrive, l\'autoliquidation, hors UE, ou un acheteur exonéré avec le motif imprimé sur la facture.';
+      'Qui est ce membre pour la TVA. Automatique : un poste, un bureau ou une salle est imposé là où se trouve l\'immeuble, avec votre TVA pour tout client ; seule une prestation générale (non rattachée aux locaux) est autoliquidée par une entreprise d\'un autre pays de l\'UE, ou hors champ pour une entreprise hors de l\'UE. Les autres choix s\'appliquent à toutes les lignes.';
 
   @override
   String get memberVatTreatmentLabel => 'Traitement TVA';
@@ -16396,6 +16422,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les groupes, taux et déclarations de TVA.';
 
   @override
+  String get supplyClassGeneral =>
+      'Prestation générale (non rattachée aux locaux)';
+
+  @override
+  String get supplyClassHelper =>
+      'Un poste, un bureau ou une salle est imposé là où se trouve l\'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n\'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d\'un autre pays de l\'UE autoliquide alors la TVA.';
+
+  @override
+  String get supplyClassLabel => 'Lieu de prestation';
+
+  @override
+  String get supplyClassProperty => 'Rattaché aux locaux';
+
+  @override
   String get supportChanged =>
       'Le contexte a changé. Préparez un nouvel aperçu.';
 
@@ -19081,6 +19121,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatTreatmentDomestic => 'TVA nationale';
 
   @override
+  String vatTreatmentExampleGeneral(String category) {
+    return 'Prestations générales : $category';
+  }
+
+  @override
+  String vatTreatmentExamplePremises(String category) {
+    return 'Poste, bureau, salle : $category';
+  }
+
+  @override
+  String get vatTreatmentExampleTitle =>
+      'Pour une entreprise d\'un autre pays de l\'UE :';
+
+  @override
   String get vatTreatmentExempt => 'Acheteur exonéré';
 
   @override
@@ -19092,6 +19146,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatTreatmentReverseCharge => 'Autoliquidation';
+
+  @override
+  String get vatTreatmentReverseChargeHint =>
+      'Le client autoliquide la TVA — uniquement pour des services non rattachés aux locaux.';
 
   @override
   String get vatUntil => 'jusqu\'au';

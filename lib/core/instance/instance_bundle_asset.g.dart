@@ -61,7 +61,7 @@ final class InstanceBundleLoaderProvider
 }
 
 String _$instanceBundleLoaderHash() =>
-    r'b4bbd5e9471ff8c5b8347def4a57147ecf899107';
+    r'0ee69dbe40bd552e88c25132b159caf53c68026e';
 
 /// How the wizard talks to Supabase for a given access token — the real
 /// API, or a fake in tests. The token lives in the wizard's state only.

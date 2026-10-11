@@ -25,7 +25,7 @@ Future<void> showInquirySheet(
   final inquiry = await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => InquirySheet(workspace: workspace),
+    builder: (_) => _InquirySheet(workspace: workspace),
   );
   if (inquiry == null || !context.mounted) return;
   final l10n = AppLocalizations.of(context);
@@ -44,16 +44,16 @@ Future<void> showInquirySheet(
   );
 }
 
-class InquirySheet extends ConsumerStatefulWidget {
-  const InquirySheet({super.key, required this.workspace});
+class _InquirySheet extends ConsumerStatefulWidget {
+  const _InquirySheet({required this.workspace});
 
   final PublicWorkspace workspace;
 
   @override
-  ConsumerState<InquirySheet> createState() => _InquirySheetState();
+  ConsumerState<_InquirySheet> createState() => _InquirySheetState();
 }
 
-class _InquirySheetState extends ConsumerState<InquirySheet> {
+class _InquirySheetState extends ConsumerState<_InquirySheet> {
   final _body = TextEditingController();
   bool _busy = false;
 

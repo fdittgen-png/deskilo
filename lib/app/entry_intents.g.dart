@@ -47,7 +47,7 @@ final class EntryIntentsProvider
   }
 }
 
-String _$entryIntentsHash() => r'b751ab42f7747824e087f36fe0089618c6a32f59';
+String _$entryIntentsHash() => r'1925c08634660bf4e0709b6c27d029788ee2697b';
 
 /// The current continuation, or null. Kept alive: the router reads it on
 /// every redirect and the value must not vanish between two.

@@ -72,6 +72,7 @@ import '../widgets/pending_booking_banner.dart';
 /// Geometry and ranges of the Reserve hub (#208). Pinned by test — treat
 /// these as part of the visual/behavioural contract, not free-floating
 /// magic numbers.
+@visibleForTesting
 abstract final class ReserveHubMetrics {
   /// Day pills on the date strip, starting today.
   static const int stripDayCount = 14;

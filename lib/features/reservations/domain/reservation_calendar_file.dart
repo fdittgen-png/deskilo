@@ -33,6 +33,7 @@
 // the reservation's is (`coversInstant`) and as `DTEND` is in the RFC.
 //
 // Pure Dart: the CLI and the tests import it without Flutter.
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -91,6 +92,7 @@ final class CalendarSnapshot {
 /// [installation] scopes it — the same reservation id on two backends
 /// must not collide in a calendar that imported both — and a digest
 /// keeps both the backend host and the row id out of the file.
+@visibleForTesting
 String calendarUidFor({
   required String installation,
   required String reservationId,
@@ -136,6 +138,7 @@ CalendarSnapshot calendarSnapshotOf(
 }
 
 /// The product identifier every file carries (RFC 5545 §3.7.3).
+@visibleForTesting
 const calendarProdId = '-//DesKilo//Reservation//EN';
 
 /// The file: one `VCALENDAR`, one `VEVENT`, CRLF line endings, every
@@ -185,6 +188,7 @@ String formatCalendarInstant(DateTime instant) {
 /// escaped, any line break becomes `\n`, and the remaining control
 /// characters — which no importer needs and which would otherwise
 /// smuggle a second content line into the file — are dropped.
+@visibleForTesting
 String escapeCalendarText(String value) {
   final out = StringBuffer();
   final runes = value.replaceAll('\r\n', '\n').replaceAll('\r', '\n').runes;
@@ -207,6 +211,7 @@ String escapeCalendarText(String value) {
 }
 
 /// Maximum octets of a content line before its CRLF (§3.1).
+@visibleForTesting
 const calendarLineOctets = 75;
 
 /// Folds one logical line into physical lines of at most 75 octets,
@@ -215,6 +220,7 @@ const calendarLineOctets = 75;
 /// multi-byte sequence: a continuation byte (`10xxxxxx`) is pushed to
 /// the next line with its lead byte, so «é» or an emoji in a seat name
 /// arrives whole.
+@visibleForTesting
 List<String> foldCalendarLine(String line) {
   final bytes = utf8.encode(line);
   if (bytes.length <= calendarLineOctets) return [line];

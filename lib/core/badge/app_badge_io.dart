@@ -9,12 +9,12 @@ import '../trace/trace_logger.dart';
 import 'app_badge.dart';
 
 AppBadge createAppBadge() => Platform.isWindows
-    ? WindowsTaskbarBadge()
+    ? _WindowsTaskbarBadge()
     : Platform.isLinux
-        ? NoopAppBadge()
-        : AppBadgePlusBadge(); // Android launchers, iOS, macOS dock
+        ? _NoopAppBadge()
+        : _AppBadgePlusBadge(); // Android launchers, iOS, macOS dock
 
-class AppBadgePlusBadge implements AppBadge {
+class _AppBadgePlusBadge implements AppBadge {
   @override
   Future<void> update(int count) async {
     try {
@@ -32,7 +32,7 @@ class AppBadgePlusBadge implements AppBadge {
 
 /// Windows taskbar overlay (#444): numbered committed .ico overlays,
 /// 9+ past nine, cleared at zero.
-class WindowsTaskbarBadge implements AppBadge {
+class _WindowsTaskbarBadge implements AppBadge {
   @override
   Future<void> update(int count) async {
     try {
@@ -53,7 +53,7 @@ class WindowsTaskbarBadge implements AppBadge {
   }
 }
 
-class NoopAppBadge implements AppBadge {
+class _NoopAppBadge implements AppBadge {
   @override
   Future<void> update(int count) async {}
 }

@@ -11,6 +11,7 @@
 // Everything is placed relative to [DemoFixture.seededAt], never to a
 // literal date, so a demo opened next year still shows a booking for
 // today (ADR 0028).
+import 'package:meta/meta.dart';
 import '../../features/plan/domain/grid_geometry.dart';
 import '../../features/plan/domain/seat.dart';
 import '../../features/events/domain/workspace_event.dart';
@@ -145,15 +146,16 @@ const demoKioskDevice = DemoPerson(
 );
 
 /// Every membership the space has: the cast and its tablet.
+@visibleForTesting
 const demoMemberships = [...demoCast, demoKioskDevice];
 
 void seedDemoPeople(FakeWorkspaceRepository workspaces) =>
-    seedDemoPeopleAs(workspaces, demoCast.first);
+    _seedDemoPeopleAs(workspaces, demoCast.first);
 
 /// Moves the "mine" pointer to [me] over the cast the session ALREADY
 /// has (#1565).
 ///
-/// [seedDemoPeopleAs] rebuilds the membership rows from [demoCast], which
+/// [_seedDemoPeopleAs] rebuilds the membership rows from [demoCast], which
 /// is right at session creation and on Reset and wrong everywhere else:
 /// a persona switch went through it, so an owner who had just changed
 /// Bruno's subscription percentage, paused somebody, or added a managed
@@ -199,7 +201,7 @@ Member _memberOf(DemoPerson person) => Member(
 /// CANONICAL seeding, so session creation and Reset only (#1565): it
 /// clears and rebuilds the membership rows, which discards whatever the
 /// session did to them. A persona switch calls [viewDemoPeopleAs].
-void seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
+void _seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
   workspaces.myMember = _memberOf(me);
   workspaces.otherMembers
     ..clear()

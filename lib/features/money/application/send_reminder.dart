@@ -24,8 +24,8 @@ sealed class SendReminderOutcome {
 }
 
 /// The letter went out and the level is on the record.
-class ReminderSent extends SendReminderOutcome {
-  const ReminderSent(this.level);
+class _ReminderSent extends SendReminderOutcome {
+  const _ReminderSent(this.level);
 
   /// The level THIS letter carried.
   final int level;
@@ -62,5 +62,5 @@ Future<SendReminderOutcome> sendReminder({
   );
   if (outcome == FileShareOutcome.dismissed) return const ReminderNotSent();
   await repository.remindInvoice(invoiceId);
-  return ReminderSent(level);
+  return _ReminderSent(level);
 }

@@ -31,7 +31,7 @@ import 'invoice.dart';
       if (invoice.isVoided) continue;
       final match = matches[invoice.id];
       if (match == null || match.status == 'pending') continue;
-      effective.addAll(allocateSettlementPayment(invoice, match));
+      effective.addAll(_allocateSettlementPayment(invoice, match));
       continue;
     }
     kept.add(invoice);
@@ -44,7 +44,7 @@ import 'invoice.dart';
 /// paid amount runs out. A fully covered source gets the settlement's
 /// own resolution; a partly covered one reads as a partial payment; an
 /// uncovered one gets nothing and stays open.
-Map<String, InvoiceMatch> allocateSettlementPayment(
+Map<String, InvoiceMatch> _allocateSettlementPayment(
   Invoice settlement,
   InvoiceMatch match,
 ) {
@@ -82,5 +82,5 @@ InvoiceMatch? effectiveMatchOf(
   if (settlementMatch == null || settlementMatch.status == 'pending') {
     return null;
   }
-  return allocateSettlementPayment(settlement, settlementMatch)[source.id];
+  return _allocateSettlementPayment(settlement, settlementMatch)[source.id];
 }

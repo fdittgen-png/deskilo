@@ -10,6 +10,7 @@
 // This projects; it does not determine. Which treatment applies to a
 // supply is #1917's question, answered elsewhere and handed in.
 
+import 'package:meta/meta.dart';
 import 'accounting_amount.dart';
 
 enum TaxTreatment {
@@ -33,6 +34,7 @@ enum TaxTreatment {
 }
 
 /// When the tax becomes due.
+@visibleForTesting
 enum TaxPointBasis {
   /// On the invoice date (debit/accrual basis).
   invoice,
@@ -73,6 +75,7 @@ class TaxComponent {
 }
 
 /// Why a component could not be projected.
+@visibleForTesting
 class TaxBlocker implements Exception {
   const TaxBlocker(this.reason);
   final String reason;

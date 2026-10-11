@@ -25,15 +25,6 @@ String? serverErrorMessage(Object error) => switch (error) {
       _ => null,
     };
 
-/// True for an error raised by the DATABASE — a constraint, a policy, or
-/// a `raise exception` inside a function — as opposed to authentication
-/// or transport.
-///
-/// The distinction matters where the two want different wording: a
-/// refused login is the reader's problem to fix, a refused insert is
-/// usually a rule they did not know about.
-bool isDatabaseError(Object error) => error is PostgrestException;
-
 /// True for an authentication failure: wrong credentials, an expired
 /// session, a provider that declined.
 bool isAuthError(Object error) => error is AuthException;

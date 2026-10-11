@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import '../../../core/time/workspace_time.dart';
@@ -60,6 +61,7 @@ const _miscJournalLabel = 'Opérations diverses';
 /// The 18 columns of the FEC, in the order the arrêté du 29 juillet 2013
 /// fixes them (BIC/IS variant). Order is not negotiable: the DGFiP's own
 /// reader positions by column.
+@visibleForTesting
 const List<String> fecColumns = [
   'JournalCode',
   'JournalLib',
