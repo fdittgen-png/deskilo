@@ -120,6 +120,14 @@ prepararse. La periodicidad — mensual, trimestral o anual — se guarda
 con la identidad legal (`invoice_legal.vat_declaration_period`) y viaja
 con la configuración y el cuestionario de puesta en marcha.
 
+**IVA soportado** (#2357, función `inputVat` bajo las declaraciones del
+IVA). Un gasto indica su tipo de IVA y la parte deducible; una vez
+aprobado, su IVA deducible (`vat_input_amounts`, fechado el día de la
+aprobación) es una línea propia de la declaración, marcada
+`direction: input`, y los totales pasan a ser la base imponible de las
+ventas y el resultado a ingresar (negativo: a compensar). El plan de
+cuentas gana el rol `vat_input`, una cuenta de activo (472).
+
 El catálogo completo de tipos de un país viene con la app (UE27, CH, NO,
 CA); mantenerlo al día cuando un gobierno cambia un tipo le corresponde a
 usted.

@@ -920,6 +920,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
     required String category,
     String description = '',
     Map<String, Object?>? supply,
+    Map<String, Object?>? vat,
   }) async {
     final result = await _client.rpc<dynamic>('submit_expense', params: {
       'p_workspace_id': workspaceId,
@@ -928,6 +929,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
       'p_description': description,
       // #731 — a supply: {name | service_id, quantity, unit_price_cents}.
       'p_supply': supply,
+      // #2357 — sent only with VAT, so an older server still answers.
+      'p_vat': ?vat,
     });
     return result as String;
   }

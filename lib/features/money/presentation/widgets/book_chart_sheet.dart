@@ -19,6 +19,7 @@ String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
   BookRole.revenue => l10n?.bookRoleRevenue ?? 'Revenue',
   BookRole.bank => l10n?.bookRoleBank ?? 'Bank',
   BookRole.vatOutput => l10n?.bookRoleVatOutput ?? 'Output VAT',
+  BookRole.vatInput => l10n?.bookRoleVatInput ?? 'Input VAT',
   BookRole.expenses => l10n?.bookRoleExpenses ?? 'Expenses',
 };
 

@@ -18,6 +18,7 @@ class VatDeclarationLine {
     this.corrects = '',
     this.correctsStart,
     this.correctsEnd,
+    this.direction = 'output',
   });
 
   final double percent;
@@ -40,6 +41,12 @@ class VatDeclarationLine {
   /// Whether this line corrects an earlier, filed return.
   bool get isCorrection => corrects.isNotEmpty;
 
+  /// #2357 — 'output' (VAT collected on sales) or 'input' (deductible VAT
+  /// on expenses: [vatCents] is the deductible share, [netCents] the
+  /// expense's base).
+  final String direction;
+  bool get isInput => direction == 'input';
+
   Map<String, dynamic> toJson() => {
         'percent': percent,
         if (category.isNotEmpty) 'category': category,
@@ -47,6 +54,7 @@ class VatDeclarationLine {
         'net_cents': netCents,
         'vat_cents': vatCents,
         'invoice_count': invoiceCount,
+        if (isInput) 'direction': 'input',
         if (isCorrection) ...{
           'correction': true,
           'corrects': corrects,
@@ -69,6 +77,7 @@ class VatDeclarationLine {
         correctsStart: DateTime.tryParse(
             json['corrects_start'] as String? ?? ''),
         correctsEnd: DateTime.tryParse(json['corrects_end'] as String? ?? ''),
+        direction: json['direction'] == 'input' ? 'input' : 'output',
       );
 }
 
@@ -199,6 +208,39 @@ class VatFormBox {
 ///    base, the tax computes on the form; other rates on Kz 35/36.
 ///  * Anywhere else — a generic per-rate listing, one box per rate.
 List<VatFormBox> vatFormBoxes(
+  String countryCode,
+  List<VatDeclarationLine> lines,
+) => [
+      ..._outputBoxes(countryCode, [
+        for (final l in lines)
+          if (!l.isInput) l,
+      ]),
+      ..._inputBoxes(countryCode, [
+        for (final l in lines)
+          if (l.isInput) l,
+      ]),
+    ];
+
+/// #2357 — the deductible VAT of the period's expenses, on the box each
+/// form reserves for it: CA3 line 20 (other goods and services), UStVA
+/// Kz 66, the UK's box 4, the Swiss 400, the Canadian line 108. Only the
+/// tax is reported; corrections of it fold in.
+List<VatFormBox> _inputBoxes(String countryCode, List<VatDeclarationLine> lines) {
+  if (lines.isEmpty) return const [];
+  final net = lines.fold(0, (s, l) => s + l.netCents);
+  final vat = lines.fold(0, (s, l) => s + l.vatCents);
+  final (code, label) = switch (countryCode.toUpperCase()) {
+    'FR' => ('20', 'Autres biens et services — TVA déductible'),
+    'DE' => ('Kz 66', 'Vorsteuerbeträge'),
+    'GB' || 'UK' => ('Box 4', 'VAT reclaimed on purchases'),
+    'CH' => ('400', 'Vorsteuer auf Material- und Dienstleistungsaufwand'),
+    'CA' => ('108', 'Input tax credits (ITCs)'),
+    _ => ('Input', 'Input VAT'),
+  };
+  return [VatFormBox(code: code, label: label, netCents: net, vatCents: vat)];
+}
+
+List<VatFormBox> _outputBoxes(
   String countryCode,
   List<VatDeclarationLine> lines,
 ) {
@@ -400,6 +442,7 @@ String vatDeclarationXml({
           if (line.category.isNotEmpty) {
             builder.attribute('category', line.category);
           }
+          if (line.isInput) builder.attribute('direction', 'input');
           if (line.isCorrection) {
             builder.attribute('correction', 'true');
             builder.attribute('corrects', line.corrects);

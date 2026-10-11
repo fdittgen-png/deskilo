@@ -317,6 +317,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'value per rate.',
         WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ??
             AppLocalizationsEn().featureSupplyClassificationDesc,
+        WorkspaceFeature.inputVat => l10n?.featureInputVatDesc ??
+            AppLocalizationsEn().featureInputVatDesc,
         WorkspaceFeature.vatCounterparty =>
           l10n?.featureVatCounterpartyDesc ??
               'Who the buyer is for VAT, set on each member: domestic VAT, '

@@ -278,6 +278,7 @@ Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
 
 - Verá «Gasto enviado — a la espera de aprobación». El gasto solo cuenta una vez confirmado.
 - Un suministro confirmado pasa al catálogo como servicio: los miembros que lo usan lo pagan.
+- En un espacio sujeto a IVA con **IVA soportado** activado, elija el **IVA de este gasto** y la **Parte deducible (%)** — 100 % salvo que parte del gasto sea privada o sirva a una actividad exenta. Una vez aprobado el gasto, su IVA deducible se resta en la declaración del IVA del mes de la aprobación.
 - Los costes recurrentes tienen su propia puerta, **Gastos programados**, junto a este botón.
 
 **Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)

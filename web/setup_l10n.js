@@ -1124,6 +1124,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Place of supply per service",
     "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises."
+   ],
+   "inputVat": [
+    "Input VAT",
+    "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only."
    ]
   },
   "process": {
@@ -2467,6 +2471,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Lieu de prestation par service",
     "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux."
+   ],
+   "inputVat": [
+    "TVA déductible",
+    "Une dépense indique son taux de TVA et la part déductible ; la déclaration de TVA retranche la TVA déductible de la TVA collectée. Désactivé : la déclaration ne porte que la TVA collectée."
    ]
   },
   "process": {
@@ -3810,6 +3818,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Leistungsort je Leistung",
     "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden."
+   ],
+   "inputVat": [
+    "Vorsteuer",
+    "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer."
    ]
   },
   "process": {
@@ -5153,6 +5165,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Lugar de prestación por servicio",
     "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales."
+   ],
+   "inputVat": [
+    "IVA soportado",
+    "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido."
    ]
   },
   "process": {
@@ -6496,6 +6512,10 @@ window.SETUP_L10N={
    "supplyClassification": [
     "Luogo della prestazione per servizio",
     "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali."
+   ],
+   "inputVat": [
+    "IVA a credito",
+    "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito."
    ]
   },
   "process": {

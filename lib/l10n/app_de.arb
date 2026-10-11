@@ -1219,6 +1219,10 @@
   "bookRoleCustomers": "Kunden (Forderungen)",
   "bookRoleExpenses": "Aufwand",
   "bookRoleRevenue": "Erlöse",
+  "bookRoleVatInput": "Vorsteuer",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "Umsatzsteuer",
   "bookSaveFailed": "Die Buchführung wurde nicht gespeichert. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
   "bookSaved": "Buchführung gespeichert",
@@ -3158,6 +3162,10 @@
   "expenseCategoryOther": "Sonstiges",
   "expenseCategorySupplies": "Verbrauchsmaterial",
   "expenseInvalidAmount": "Geben Sie einen Betrag über null ein.",
+  "expenseInvalidDeductible": "Geben Sie einen Anteil zwischen 0 und 100 ein.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Geben Sie mindestens eine Einheit ein.",
   "expenseInvalidUnitPrice": "Geben Sie einen gültigen Stückpreis ein oder lassen Sie ihn leer.",
   "expenseMissingSupplyName": "Benennen Sie den neuen Artikel.",
@@ -3168,6 +3176,22 @@
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "expenseVatDeductible": "Abziehbarer Anteil (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "Ohne Umsatzsteuer",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "Umsatzsteuer auf diese Ausgabe",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "Für Ihre Steuerberatung zum Importieren und Prüfen — keine Meldung an eine Behörde.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3402,6 +3426,14 @@
   "featureHolidayImportTitle": "Feiertage importieren",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "Vorsteuer",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Instanz-Assistent",
   "@featureInstanceWizard": {
@@ -11452,6 +11484,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "Erstattungsanspruch",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11472,6 +11508,10 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
+  "vatDeclInputVat": "Abziehbare Vorsteuer",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
   "vatDeclInvoices": "Rechnungen",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
@@ -11487,6 +11527,10 @@
   "vatDeclNet": "Bemessungsgrundlage",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "Zahllast",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {

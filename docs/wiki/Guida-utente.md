@@ -2614,6 +2614,7 @@ Ha pagato qualcosa per lo spazio e vuole che lo spazio Le rimborsi la somma.
 
 - Vede «Spesa inviata — in attesa di approvazione». La spesa conta solo dopo la conferma.
 - Una scorta confermata va a scaffale come servizio: i membri che la usano la pagano.
+- In uno spazio soggetto IVA con **IVA a credito** attivata, scelga l'**IVA su questa spesa** e la **Quota detraibile (%)** — 100 % salvo che una parte della spesa sia privata o serva un'attività esente. Una volta approvata la spesa, la sua IVA detraibile è sottratta nella dichiarazione IVA del mese dell'approvazione.
 - Le spese ricorrenti hanno una porta a parte, **Spese programmate**, accanto a questo pulsante.
 
 **Vedi anche:** [Approvare o rifiutare una spesa](#approvare-o-rifiutare-una-spesa)
@@ -5069,6 +5070,7 @@ Vuole l'IVA di un periodo calcolata dalle Sue fatture e dagli incassi, pronta da
 - Una dichiarazione passa da **Bozza** a **Preparata** e poi a **Presentata**. Prepararla di nuovo sostituisce gli importi; una volta presentata, nulla la modifica. Se una fattura o un incasso del periodo è cambiato dopo la preparazione, l'app si rifiuta di segnarla come presentata finché non la prepara di nuovo.
 - L'elenco **Periodo** offre solo periodi della durata scelta in **Periodicità della dichiarazione IVA** in [Identità legale e fatturazione elettronica](https://fdittgen-png.github.io/deskilo/#/legal-identity) — mensile, trimestrale o annuale; trimestrale finché Lei non sceglie. Un periodo che si sovrappone a una dichiarazione presentata non può essere preparato.
 - Un periodo dichiarato è bloccato. Se in seguito vi cambia qualcosa — una fattura annullata, un incasso registrato in ritardo con una data anteriore — la dichiarazione presentata resta com'era, e la prossima dichiarazione che Lei prepara riporta la differenza come **Rettifica di** quel periodo, su una riga propria. Presentare quella dichiarazione registra la rettifica, così è dichiarata una sola volta. Sul modulo francese le rettifiche vanno alle righe 15 (IVA da riversare) e 21 (altra IVA da detrarre); altrove si sommano ai riquadri dell'aliquota del periodo in corso.
+- Con **IVA a credito** attivata, la dichiarazione elenca anche l'**IVA detraibile** delle spese approvate nel periodo, per aliquota e separata dalle vendite, e i totali mostrano l'**IVA a debito netta** o il **Credito IVA**. Sui moduli va alla riga 20 della CA3, alla Kz 66 dell'UStVA, al riquadro 4 britannico, alla cifra 400 svizzera e alla riga 108 canadese.
 - L'app non trasmette dichiarazioni: la Francia presenta tramite EDI-TVA o lo spazio professionale di impots.gouv, la Germania tramite ELSTER. La piattaforma di fatturazione elettronica trasporta solo fatture.
 - È un ausilio alla presentazione, non una consulenza fiscale. La verifichi sulla Sua contabilità prima di presentarla.
 

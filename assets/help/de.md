@@ -2504,6 +2504,7 @@ Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen 
 
 - Sie sehen „Ausgabe eingereicht – wartet auf Genehmigung“. Die Ausgabe zählt erst, wenn sie bestätigt ist.
 - Ein bestätigter Vorrat kommt als Service ins Regal: Mitglieder, die ihn nutzen, bezahlen dafür.
+- In einem umsatzsteuerpflichtigen Bereich mit eingeschalteter **Vorsteuer** wählen Sie **Umsatzsteuer auf diese Ausgabe** und den **Abziehbaren Anteil (%)** — 100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit. Sobald die Ausgabe genehmigt ist, wird ihre abziehbare Vorsteuer in der Umsatzsteuererklärung des Genehmigungsmonats abgezogen.
 - Wiederkehrende Kosten haben einen eigenen Zugang, **Geplante Ausgaben**, neben dieser Schaltfläche.
 
 **Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](help:user.money.expense.approve)
@@ -4833,6 +4834,7 @@ Sie möchten die Umsatzsteuer eines Zeitraums aus Ihren Rechnungen und Zahlungse
 - Eine Voranmeldung geht von **Entwurf** über **Vorbereitet** zu **Abgegeben**. Erneutes Vorbereiten ersetzt die Beträge; abgegeben ändert sie nichts mehr. Hat sich seit der Vorbereitung eine Rechnung oder Zahlung des Zeitraums geändert, verweigert die App das Markieren als abgegeben, bis Sie sie erneut vorbereiten.
 - Die Liste **Zeitraum** bietet nur Zeiträume der Länge an, die unter **Voranmeldungszeitraum** in [Rechtliche Identität & E-Rechnung](app:/legal-identity) gewählt ist — monatlich, vierteljährlich oder jährlich; vierteljährlich, solange Sie nichts gewählt haben. Ein Zeitraum, der sich mit einer abgegebenen Voranmeldung überschneidet, kann nicht vorbereitet werden.
 - Ein abgegebener Zeitraum ist gesperrt. Ändert sich darin später etwas — eine stornierte Rechnung, eine verspätet mit früherem Datum erfasste Zahlung —, bleibt die abgegebene Voranmeldung, wie sie war, und die nächste Voranmeldung, die Sie vorbereiten, trägt den Unterschied als **Berichtigung für** diesen Zeitraum in einer eigenen Zeile (§ 17 UStG). Mit der Abgabe dieser Voranmeldung wird die Berichtigung festgehalten, sie wird also nur einmal erklärt. Auf dem deutschen Formular fließt sie in die Kennzahlen des Steuersatzes im laufenden Zeitraum ein; auf der französischen CA3 in die Zeilen 15 und 21.
+- Mit eingeschalteter **Vorsteuer** listet die Erklärung auch die **Abziehbare Vorsteuer** der im Zeitraum genehmigten Ausgaben auf, je Steuersatz und getrennt von den Umsätzen, und die Summen zeigen die **Zahllast** oder den **Erstattungsanspruch**. Auf den Formularen geht sie in Kz 66 der UStVA, Zeile 20 der CA3, Box 4 im Vereinigten Königreich, Ziffer 400 in der Schweiz und Zeile 108 in Kanada.
 - Die App übermittelt keine Voranmeldung: Deutschland gibt über ELSTER ab, Frankreich über EDI-TVA oder den Unternehmensbereich von impots.gouv. Die E-Rechnungsplattform transportiert nur Rechnungen.
 - Sie ist eine Hilfe zur Abgabe, keine Steuerberatung. Prüfen Sie sie vor der Abgabe anhand Ihrer Buchhaltung.
 
@@ -8559,6 +8561,15 @@ abgegebenen überschneidet, kann nicht vorbereitet werden. Wie oft
 gemeldet wird — monatlich, vierteljährlich oder jährlich — wird mit der
 rechtlichen Identität gespeichert (`invoice_legal.vat_declaration_period`)
 und reist mit der Konfiguration und dem Einrichtungsfragebogen.
+
+**Vorsteuer** (#2357, Funktion `inputVat` unter den
+Umsatzsteuererklärungen). Eine Ausgabe nennt ihren Steuersatz und den
+abziehbaren Anteil; nach der Genehmigung ist ihre abziehbare Vorsteuer
+(`vat_input_amounts`, datiert auf den Genehmigungstag) eine eigene Zeile
+der Erklärung, markiert `direction: input`, und die Summen werden zur
+Bemessungsgrundlage der Umsätze und zur Zahllast (negativ: ein
+Erstattungsanspruch). Der Kontenplan erhält die Rolle `vat_input`, ein
+Aktivkonto (SKR03 1576).
 
 Der vollständige Satzkatalog eines Landes wird mit der App ausgeliefert
 (EU27, CH, NO, CA); ihn aktuell zu halten, wenn eine Regierung einen Satz

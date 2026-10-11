@@ -177,6 +177,7 @@ begin
       "formHelpHints": true,
       "guestParticipation": false,
       "holidayImport": false,
+      "inputVat": false,
       "instanceWizard": false,
       "invoiceAddressWindow": false,
       "invoiceJourney": false,

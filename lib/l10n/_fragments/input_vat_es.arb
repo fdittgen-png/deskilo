@@ -1,0 +1,47 @@
+{
+  "@@locale": "es",
+  "featureInputVatTitle": "IVA soportado",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
+  },
+  "featureInputVatDesc": "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "expenseVatRate": "IVA de este gasto",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatNone": "Sin IVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatDeductible": "Parte deducible (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 % salvo que parte del gasto sea privada o sirva a una actividad exenta.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseInvalidDeductible": "Introduzca una parte entre 0 y 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
+  "vatDeclInputVat": "IVA deducible",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
+  "vatDeclPayable": "IVA a ingresar",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
+  "vatDeclCredit": "IVA a compensar",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
+  "bookRoleVatInput": "IVA soportado",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  }
+}

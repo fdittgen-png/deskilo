@@ -104,7 +104,7 @@ class _VatDeclarationsScreenState
           '${l10n?.vatDeclDisclaimer ?? "Verify against your accounting before filing."}',
       statusLabel: _statusLabel(l10n, declaration),
       rate: (value) => '${NumberFormat.decimalPattern(l10n?.localeName).format(value)} %',
-      correctionOf: (line) => _correctionLabel(l10n, line),
+      lineNote: (line) => _lineNote(l10n, line),
       money: moneyFormat(declaration.currency, locale: l10n?.localeName).formatMinor,
       date: dateFormat.format,
     );
@@ -157,15 +157,22 @@ class _VatDeclarationsScreenState
     );
   }
 
-  /// #2357 — « Correction of September 2026 »: the filed return a
-  /// correction line corrects, by its period.
-  String _correctionLabel(AppLocalizations? l10n, VatDeclarationLine line) {
+  /// #2357 — what a line is beside its rate: « Deductible VAT » for an
+  /// expense's VAT, « Correction of September 2026 » for a correction of
+  /// a filed return; '' for the period's own sales.
+  String _lineNote(AppLocalizations? l10n, VatDeclarationLine line) {
+    final words = vatWords(l10n);
     final start = line.correctsStart;
     final end = line.correctsEnd;
-    final period = start == null || end == null
-        ? line.corrects
-        : vatFilingPeriodLabel(l10n, (start: start, end: end));
-    return vatWords(l10n).vatDeclCorrectionOf(period);
+    final correction = !line.isCorrection
+        ? ''
+        : words.vatDeclCorrectionOf(start == null || end == null
+            ? line.corrects
+            : vatFilingPeriodLabel(l10n, (start: start, end: end)));
+    return [
+      if (line.isInput) words.vatDeclInputVat,
+      if (correction.isNotEmpty) correction,
+    ].join(' · ');
   }
 
   String _statusLabel(AppLocalizations? l10n, VatDeclaration declaration) =>
@@ -366,7 +373,7 @@ class _VatDeclarationsScreenState
                                           ? ValueKey(
                                               'vat-decl-correction-${declaration.id}-${line.corrects}')
                                           : null,
-                                      '${line.isCorrection ? '${_correctionLabel(l10n, line)} · ' : ''}'
+                                      '${line.isCorrection || line.isInput ? '${_lineNote(l10n, line)} · ' : ''}'
                                       '${_pctLabel(line.percent)}'
                                       '${line.category.isEmpty ? '' : ' ${line.category}'} · '
                                       '${l10n?.vatDeclNet ?? 'Net base'} '
@@ -395,6 +402,16 @@ class _VatDeclarationsScreenState
                                             fontWeight:
                                                 FontWeight.w600),
                                   ),
+                                  // #2357 — with deductible VAT, what is
+                                  // left to pay, or to claim back.
+                                  if (declaration.lines.any((l) => l.isInput))
+                                    Text(
+                                      key: ValueKey(
+                                          'vat-decl-balance-${declaration.id}'),
+                                      '${declaration.totalVatCents >= 0 ? vatWords(l10n).vatDeclPayable : vatWords(l10n).vatDeclCredit}: '
+                                      '${centsToMajor(declaration.totalVatCents.abs())} ${declaration.currency}',
+                                      style: theme.textTheme.bodyMedium,
+                                    ),
                                   if (declaration.isFiled)
                                     Text(
                                       '${declaration.number.isEmpty ? '' : '${declaration.number} · '}'

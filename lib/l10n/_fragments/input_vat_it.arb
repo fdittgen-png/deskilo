@@ -1,0 +1,47 @@
+{
+  "@@locale": "it",
+  "featureInputVatTitle": "IVA a credito",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
+  },
+  "featureInputVatDesc": "Una spesa indica la sua aliquota IVA e la quota detraibile; la dichiarazione IVA sottrae l'IVA detraibile dall'IVA a debito. Disattivato: la dichiarazione riporta solo l'IVA a debito.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "expenseVatRate": "IVA su questa spesa",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatNone": "Senza IVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatDeductible": "Quota detraibile (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 % salvo che una parte della spesa sia privata o serva un'attività esente.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseInvalidDeductible": "Inserisca una quota tra 0 e 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
+  "vatDeclInputVat": "IVA detraibile",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
+  "vatDeclPayable": "IVA a debito netta",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
+  "vatDeclCredit": "Credito IVA",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
+  "bookRoleVatInput": "IVA a credito",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  }
+}

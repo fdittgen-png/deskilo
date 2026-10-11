@@ -2504,6 +2504,7 @@ Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
 
 - Verá «Gasto enviado — a la espera de aprobación». El gasto solo cuenta una vez confirmado.
 - Un suministro confirmado pasa al catálogo como servicio: los miembros que lo usan lo pagan.
+- En un espacio sujeto a IVA con **IVA soportado** activado, elija el **IVA de este gasto** y la **Parte deducible (%)** — 100 % salvo que parte del gasto sea privada o sirva a una actividad exenta. Una vez aprobado el gasto, su IVA deducible se resta en la declaración del IVA del mes de la aprobación.
 - Los costes recurrentes tienen su propia puerta, **Gastos programados**, junto a este botón.
 
 **Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)
@@ -4833,6 +4834,7 @@ Quiere el IVA de un periodo calculado a partir de sus facturas y cobros, listo p
 - Una declaración pasa de **Borrador** a **Preparada** y luego a **Presentada**. Prepararla de nuevo sustituye los importes; una vez presentada, nada la modifica. Si una factura o un cobro del periodo ha cambiado desde la preparación, la aplicación se niega a marcarla como presentada hasta que la prepare de nuevo.
 - La lista **Periodo** solo ofrece periodos de la duración elegida en **Periodo de declaración del IVA** en [Identidad legal y facturación electrónica](app:/legal-identity) — mensual, trimestral o anual; trimestral mientras usted no elija. Un periodo que se solapa con una declaración presentada no puede prepararse.
 - Un periodo presentado queda bloqueado. Si después cambia algo en él — una factura anulada, un cobro registrado tarde con una fecha anterior — la declaración presentada se queda como estaba, y la siguiente declaración que usted prepare lleva la diferencia como **Corrección de** ese periodo, en una línea propia. Presentar esa declaración registra la corrección, de modo que se declara una sola vez. En el formulario francés las correcciones van a las líneas 15 (IVA a reintegrar) y 21 (otro IVA deducible); en los demás países se suman a las casillas del tipo del periodo en curso.
+- Con **IVA soportado** activado, la declaración también lista el **IVA deducible** de los gastos aprobados en el periodo, por tipo y aparte de las ventas, y los totales muestran el **IVA a ingresar** o el **IVA a compensar**. En los formularios va a la línea 20 de la CA3, a la Kz 66 de la UStVA, a la casilla 4 británica, a la cifra 400 suiza y a la línea 108 canadiense.
 - La aplicación no transmite declaraciones: Francia presenta por EDI-TVA o el espacio profesional de impots.gouv, Alemania por ELSTER. La plataforma de facturación electrónica solo transporta facturas.
 - Es una ayuda para la presentación, no un asesoramiento fiscal. Verifíquela con su contabilidad antes de presentarla.
 
@@ -8553,6 +8555,14 @@ los demás países). Un periodo que se solapa con uno presentado no puede
 prepararse. La periodicidad — mensual, trimestral o anual — se guarda
 con la identidad legal (`invoice_legal.vat_declaration_period`) y viaja
 con la configuración y el cuestionario de puesta en marcha.
+
+**IVA soportado** (#2357, función `inputVat` bajo las declaraciones del
+IVA). Un gasto indica su tipo de IVA y la parte deducible; una vez
+aprobado, su IVA deducible (`vat_input_amounts`, fechado el día de la
+aprobación) es una línea propia de la declaración, marcada
+`direction: input`, y los totales pasan a ser la base imponible de las
+ventas y el resultado a ingresar (negativo: a compensar). El plan de
+cuentas gana el rol `vat_input`, una cuenta de activo (472).
 
 El catálogo completo de tipos de un país viene con la app (UE27, CH, NO,
 CA); mantenerlo al día cuando un gobierno cambia un tipo le corresponde a

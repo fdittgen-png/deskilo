@@ -1,0 +1,47 @@
+{
+  "@@locale": "en",
+  "featureInputVatTitle": "Input VAT",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
+  },
+  "featureInputVatDesc": "An expense states its VAT rate and the share you may deduct; the VAT return subtracts the deductible VAT from the VAT collected. Off: the return declares the VAT collected only.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "expenseVatRate": "VAT on this expense",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatNone": "No VAT",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatDeductible": "Deductible share (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 % unless part of the expense is private or serves an exempt activity.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseInvalidDeductible": "Enter a share between 0 and 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
+  "vatDeclInputVat": "Deductible VAT",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
+  "vatDeclPayable": "VAT payable",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
+  "vatDeclCredit": "VAT credit",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
+  "bookRoleVatInput": "Input VAT",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  }
+}

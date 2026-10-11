@@ -1,0 +1,47 @@
+{
+  "@@locale": "de",
+  "featureInputVatTitle": "Vorsteuer",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
+  },
+  "featureInputVatDesc": "Eine Ausgabe nennt ihren Steuersatz und den abziehbaren Anteil; die Umsatzsteuererklärung zieht die abziehbare Vorsteuer von der Umsatzsteuer ab. Aus: Die Erklärung enthält nur die Umsatzsteuer.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "expenseVatRate": "Umsatzsteuer auf diese Ausgabe",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
+  "expenseVatNone": "Ohne Umsatzsteuer",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatDeductible": "Abziehbarer Anteil (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 %, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseInvalidDeductible": "Geben Sie einen Anteil zwischen 0 und 100 ein.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
+  "vatDeclInputVat": "Abziehbare Vorsteuer",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
+  "vatDeclPayable": "Zahllast",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
+  },
+  "vatDeclCredit": "Erstattungsanspruch",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
+  "bookRoleVatInput": "Vorsteuer",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  }
+}

@@ -426,6 +426,8 @@ abstract class MoneyRepository {
     /// #731 — when the expense is a SUPPLY for the space: name (or
     /// service_id of an existing item), quantity, unit_price_cents.
     Map<String, Object?>? supply,
+    /// #2357 — input VAT: {percent, deductible_pct}; null without VAT.
+    Map<String, Object?>? vat,
   });
 
   /// #767 — my recurring expense schedules (admins with the expense or

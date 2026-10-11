@@ -112,6 +112,14 @@ monthly, quarterly or annual — is stored with the legal identity
 (`invoice_legal.vat_declaration_period`) and travels with the
 configuration and the setup questionnaire.
 
+**Input VAT** (#2357, flag `inputVat` under VAT declarations). An expense
+states the VAT rate it carried and the deductible share; once approved,
+its deductible VAT (`vat_input_amounts`, dated the day of approval) is a
+line of its own on the return, marked `direction: input`, and the totals
+become the taxable base of the sales and the net payable (negative: a
+credit). The book chart gains the `vat_input` role, an asset account
+(FR 44566).
+
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.
 

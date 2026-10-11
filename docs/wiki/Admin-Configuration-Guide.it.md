@@ -125,6 +125,14 @@ annuale — è salvata con l'identità legale
 (`invoice_legal.vat_declaration_period`) e viaggia con la configurazione
 e il questionario di avvio.
 
+**IVA a credito** (#2357, funzione `inputVat` sotto le dichiarazioni
+IVA). Una spesa indica la sua aliquota IVA e la quota detraibile; una
+volta approvata, la sua IVA detraibile (`vat_input_amounts`, datata il
+giorno dell'approvazione) è una riga a sé della dichiarazione, marcata
+`direction: input`, e i totali diventano la base imponibile delle
+vendite e l'IVA netta da versare (negativa: un credito). Il piano dei
+conti acquisisce il ruolo `vat_input`, un conto dell'attivo.
+
 Il catalogo completo delle aliquote di un paese è fornito con l'app
 (UE27, CH, NO, CA); tenerlo aggiornato quando un governo cambia
 un'aliquota spetta a te.

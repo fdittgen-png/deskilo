@@ -1219,6 +1219,10 @@
   "bookRoleCustomers": "Clientes (cuentas por cobrar)",
   "bookRoleExpenses": "Gastos",
   "bookRoleRevenue": "Ingresos",
+  "bookRoleVatInput": "IVA soportado",
+  "@bookRoleVatInput": {
+    "description": "#2357 input VAT: bookRoleVatInput"
+  },
   "bookRoleVatOutput": "IVA repercutido",
   "bookSaveFailed": "El libro no se guardó. Compruebe la conexión e inténtelo de nuevo.",
   "bookSaved": "Libro guardado",
@@ -3158,6 +3162,10 @@
   "expenseCategoryOther": "Otro",
   "expenseCategorySupplies": "Material",
   "expenseInvalidAmount": "Introduzca un importe mayor que cero.",
+  "expenseInvalidDeductible": "Introduzca una parte entre 0 y 100.",
+  "@expenseInvalidDeductible": {
+    "description": "#2357 input VAT: expenseInvalidDeductible"
+  },
   "expenseInvalidSupplyQuantity": "Introduzca al menos una unidad.",
   "expenseInvalidUnitPrice": "Introduzca un precio unitario válido o déjelo vacío.",
   "expenseMissingSupplyName": "Ponga nombre al nuevo artículo.",
@@ -3168,6 +3176,22 @@
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
+  "expenseVatDeductible": "Parte deducible (%)",
+  "@expenseVatDeductible": {
+    "description": "#2357 input VAT: expenseVatDeductible"
+  },
+  "expenseVatDeductibleHint": "100 % salvo que parte del gasto sea privada o sirva a una actividad exenta.",
+  "@expenseVatDeductibleHint": {
+    "description": "#2357 input VAT: expenseVatDeductibleHint"
+  },
+  "expenseVatNone": "Sin IVA",
+  "@expenseVatNone": {
+    "description": "#2357 input VAT: expenseVatNone"
+  },
+  "expenseVatRate": "IVA de este gasto",
+  "@expenseVatRate": {
+    "description": "#2357 input VAT: expenseVatRate"
+  },
   "exportClaimExchange": "Para que su asesor lo importe y lo revise — no es una declaración.",
   "@exportClaimExchange": {
     "description": "#669 - accounting export formats"
@@ -3402,6 +3426,14 @@
   "featureHolidayImportTitle": "Importar días festivos",
   "@featureHolidayImportTitle": {
     "description": "#2051 open-data holiday import"
+  },
+  "featureInputVatDesc": "Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido.",
+  "@featureInputVatDesc": {
+    "description": "#2357 input VAT: featureInputVatDesc"
+  },
+  "featureInputVatTitle": "IVA soportado",
+  "@featureInputVatTitle": {
+    "description": "#2357 input VAT: featureInputVatTitle"
   },
   "featureInstanceWizard": "Asistente de instancia",
   "@featureInstanceWizard": {
@@ -11452,6 +11484,10 @@
   "@vatDeclCorrectionsNote": {
     "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
   },
+  "vatDeclCredit": "IVA a compensar",
+  "@vatDeclCredit": {
+    "description": "#2357 input VAT: vatDeclCredit"
+  },
   "vatDeclDisclaimer": "Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11472,6 +11508,10 @@
   "@vatDeclGenerate": {
     "description": "Generate-declaration button"
   },
+  "vatDeclInputVat": "IVA deducible",
+  "@vatDeclInputVat": {
+    "description": "#2357 input VAT: vatDeclInputVat"
+  },
   "vatDeclInvoices": "Facturas",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
@@ -11487,6 +11527,10 @@
   "vatDeclNet": "Base imponible",
   "@vatDeclNet": {
     "description": "Net taxable base column"
+  },
+  "vatDeclPayable": "IVA a ingresar",
+  "@vatDeclPayable": {
+    "description": "#2357 input VAT: vatDeclPayable"
   },
   "vatDeclPdf": "PDF",
   "@vatDeclPdf": {

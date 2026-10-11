@@ -123,6 +123,14 @@ trimestrielle ou annuelle — est enregistrée avec l'identité légale
 (`invoice_legal.vat_declaration_period`) et voyage avec la configuration
 et le questionnaire de démarrage.
 
+**TVA déductible** (#2357, fonctionnalité `inputVat` sous les
+déclarations de TVA). Une dépense indique son taux de TVA et la part
+déductible ; une fois approuvée, sa TVA déductible (`vat_input_amounts`,
+datée du jour de l'approbation) forme une ligne à part de la
+déclaration, marquée `direction: input`, et les totaux deviennent la
+base imposable des ventes et le net à payer (négatif : un crédit). Le
+plan comptable gagne le rôle `vat_input`, un compte d'actif (44566).
+
 Le catalogue complet des taux d'un pays est livré avec l'app (UE27, CH,
 NO, CA) ; le tenir à jour quand un gouvernement change un taux vous
 revient.

@@ -2504,6 +2504,7 @@ You paid something for the space and you want the workspace to reimburse you.
 
 - You see "Expense submitted — waiting for approval". The expense counts only once it is confirmed.
 - A confirmed supply goes on the shelf as a service: members who use it pay for it.
+- In a VAT-registered space with **Input VAT** switched on, choose the **VAT on this expense** and the **Deductible share (%)** — 100 % unless part of the expense is private or serves an exempt activity. Once the expense is approved, its deductible VAT is subtracted on the VAT return of the month it was approved.
 - Recurring costs have their own door, **Scheduled expenses**, next to this button.
 
 **See also:** [Approve or decline an expense](help:user.money.expense.approve)
@@ -4833,6 +4834,7 @@ You want the VAT of a period computed from your invoices and payments, ready to 
 - A return goes **Draft** → **Prepared** → **Filed**. Preparing again replaces the figures; once filed, nothing changes it. If an invoice or a payment of the period changed since you prepared it, the app refuses to mark it filed until you prepare it again.
 - The **Period** list offers only periods of the length chosen under **VAT return period** in [Legal identity & e-invoicing](app:/legal-identity) — monthly, quarterly or annual; quarterly until you choose. A period that overlaps a filed return cannot be prepared.
 - A filed period is locked. If something in it changes afterwards — an invoice voided, a payment recorded late with an earlier date — the filed return stays as it was, and the next return you prepare carries the difference as a **Correction of** that period, on its own line. Filing that return records the correction, so it is declared once. On the French form the corrections go to lines 15 (VAT to pay back) and 21 (other VAT to deduct); elsewhere they add to the rate's boxes of the current period.
+- With **Input VAT** on, the return also lists the **Deductible VAT** of the expenses approved in the period, per rate, apart from the sales, and the totals show the **VAT payable** or the **VAT credit**. On the forms it goes to CA3 line 20, UStVA Kz 66, the UK's box 4, the Swiss 400 and the Canadian line 108.
 - The app does not transmit a return: France files through EDI-TVA or the professional space on impots.gouv, Germany through ELSTER. The e-invoicing platform carries invoices only.
 - It is a filing aid, not tax advice. Verify it against your accounting before filing.
 
@@ -8545,6 +8547,14 @@ overlaps a filed one cannot be prepared. How often the return is filed —
 monthly, quarterly or annual — is stored with the legal identity
 (`invoice_legal.vat_declaration_period`) and travels with the
 configuration and the setup questionnaire.
+
+**Input VAT** (#2357, flag `inputVat` under VAT declarations). An expense
+states the VAT rate it carried and the deductible share; once approved,
+its deductible VAT (`vat_input_amounts`, dated the day of approval) is a
+line of its own on the return, marked `direction: input`, and the totals
+become the taxable base of the sales and the net payable (negative: a
+credit). The book chart gains the `vat_input` role, an asset account
+(FR 44566).
 
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.

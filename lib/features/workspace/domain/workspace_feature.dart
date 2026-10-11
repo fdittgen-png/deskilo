@@ -367,7 +367,13 @@ enum WorkspaceFeature {
   /// (mail handling, a virtual office) that a business elsewhere
   /// self-assesses. Platform, default ON, under vatManagement; OFF hides
   /// the choice and every new charge is property-connected.
-  supplyClassification;
+  supplyClassification,
+
+  /// #2357 — input VAT: an expense states its VAT rate and deductible
+  /// share, and the VAT return subtracts the deductible VAT from the VAT
+  /// collected. Platform, default ON, under vatDeclarations; OFF hides the
+  /// fields and the return declares output VAT only.
+  inputVat;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -1497,6 +1503,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
     surface: FeatureSurface.money,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.vatManagement,
+  ),
+  // #2357 — deductible VAT only matters to a space that files returns.
+  WorkspaceFeature.inputVat: FeatureManifestEntry(
+    feature: WorkspaceFeature.inputVat,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.vatDeclarations,
   ),
 };
 

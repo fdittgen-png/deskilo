@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -14,6 +15,8 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../../../core/format/cents.dart';
 import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
+import '../../domain/vat_rate.dart';
+import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
 
 Future<void> showExpenseSheet(
@@ -34,7 +37,7 @@ Future<void> showExpenseSheet(
   };
 
   // The form's text, created on demand and disposed with the sheet.
-  final fields = FormControllers({'supplyQuantity': '1'});
+  final fields = FormControllers({'supplyQuantity': '1', 'deductible': '100'});
   var category = categories.first;
   // #731 — a supply for the space: name (or an existing item), how
   // many, what a consumption will cost.
@@ -46,6 +49,25 @@ Future<void> showExpenseSheet(
       : const <ServiceItem>[];
   var isSupply = false;
   ServiceItem? supplyItem;
+  // #2357 — input VAT: the rate the expense carries and the share the
+  // space may deduct, asked only of a VAT-registered space.
+  var rates = const <VatRate>[];
+  if (ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.inputVat) &&
+      vatRegimeFromWire(workspace.vatRegime) == VatRegime.vatRegistered) {
+    try {
+      rates = await ref.read(vatRatesProvider.future);
+    } catch (e, st) {
+      TraceLogger.instance.warn('money', 'expense VAT rates failed',
+          error: e, stackTrace: st);
+    }
+    if (!context.mounted) return;
+  }
+  final vatPercents = {
+    for (final r in rates)
+      if (r.active && r.percent > 0) r.percent,
+  }.toList()
+    ..sort((a, b) => b.compareTo(a));
+  double? vatPercent;
   void prefillUnit() {
     final cents = parseCentsInput(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
@@ -64,6 +86,8 @@ Future<void> showExpenseSheet(
     supplyName: fields['supplyName'].text,
     supplyQuantity: fields['supplyQuantity'].text,
     supplyUnitPrice: fields['supplyUnit'].text,
+    vatPercent: vatPercent,
+    deductible: fields['deductible'].text,
   );
   // #1449 — the reason the typed expense cannot be filed, shown in the
   // sheet; the sheet only closes on a draft the rules accept.
@@ -78,6 +102,8 @@ Future<void> showExpenseSheet(
     ExpenseOutcome.invalidUnitPrice =>
       l10n?.expenseInvalidUnitPrice ??
           'Enter a valid unit price, or leave it empty.',
+    ExpenseOutcome.invalidDeductible =>
+      l10n?.expenseInvalidDeductible ?? 'Enter a share between 0 and 100.',
   };
   // The field each refusal is about, so its words sit under that field.
   String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
@@ -86,6 +112,7 @@ Future<void> showExpenseSheet(
     ExpenseOutcome.missingSupplyName => 'supplyName',
     ExpenseOutcome.invalidSupplyQuantity => 'supplyQuantity',
     ExpenseOutcome.invalidUnitPrice => 'supplyUnit',
+    ExpenseOutcome.invalidDeductible => 'deductible',
   };
   final failed =
       l10n?.workspaceGenericError ??
@@ -150,6 +177,47 @@ Future<void> showExpenseSheet(
           controller: fields['description'],
           label: l10n?.moneyDescriptionLabel ?? 'Description',
         ),
+        if (vatPercents.isNotEmpty) ...[
+          const FormGap(),
+          DropdownButtonFormField<double?>(
+            key: const ValueKey('expense-vat-rate'),
+            initialValue: vatPercent,
+            decoration: InputDecoration(
+              labelText: l10n?.expenseVatRate ?? 'VAT on this expense',
+            ),
+            items: [
+              DropdownMenuItem<double?>(
+                value: null,
+                child: Text(l10n?.expenseVatNone ?? 'No VAT'),
+              ),
+              for (final p in vatPercents)
+                DropdownMenuItem<double?>(
+                  value: p,
+                  child: Text(_percentLabel(l10n, p)),
+                ),
+            ],
+            onChanged: (v) {
+              vatPercent = v;
+              refresh();
+            },
+          ),
+          if (vatPercent != null) ...[
+            const FormGap(),
+            AppTextField(
+              key: const ValueKey('expense-vat-deductible'),
+              controller: fields['deductible'],
+              fieldKey: 'deductible',
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              label: l10n?.expenseVatDeductible ?? 'Deductible share (%)',
+              helper:
+                  l10n?.expenseVatDeductibleHint ??
+                  '100 % unless part of the expense is private or serves '
+                      'an exempt activity.',
+            ),
+          ],
+        ],
         if (suppliesOn) ...[
           SwitchListTile(
             key: const ValueKey('expense-supply-toggle'),
@@ -251,3 +319,7 @@ Future<void> showExpenseSheet(
   );
   ref.invalidate(eventsProvider);
 }
+
+/// « 20 % », in the reader's number format.
+String _percentLabel(AppLocalizations? l10n, double percent) =>
+    '${NumberFormat.decimalPattern(l10n?.localeName).format(percent)} %';

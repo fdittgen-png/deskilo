@@ -126,6 +126,15 @@ gemeldet wird — monatlich, vierteljährlich oder jährlich — wird mit der
 rechtlichen Identität gespeichert (`invoice_legal.vat_declaration_period`)
 und reist mit der Konfiguration und dem Einrichtungsfragebogen.
 
+**Vorsteuer** (#2357, Funktion `inputVat` unter den
+Umsatzsteuererklärungen). Eine Ausgabe nennt ihren Steuersatz und den
+abziehbaren Anteil; nach der Genehmigung ist ihre abziehbare Vorsteuer
+(`vat_input_amounts`, datiert auf den Genehmigungstag) eine eigene Zeile
+der Erklärung, markiert `direction: input`, und die Summen werden zur
+Bemessungsgrundlage der Umsätze und zur Zahllast (negativ: ein
+Erstattungsanspruch). Der Kontenplan erhält die Rolle `vat_input`, ein
+Aktivkonto (SKR03 1576).
+
 Der vollständige Satzkatalog eines Landes wird mit der App ausgeliefert
 (EU27, CH, NO, CA); ihn aktuell zu halten, wenn eine Regierung einen Satz
 ändert, liegt bei Ihnen.

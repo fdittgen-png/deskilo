@@ -29,6 +29,9 @@ enum BookRole {
   revenue('revenue', AccountType.income),
   bank('bank', AccountType.asset),
   vatOutput('vat_output', AccountType.liability),
+
+  /// #2357 — deductible VAT on expenses (FR 44566, DE 1576/1406).
+  vatInput('vat_input', AccountType.asset),
   expenses('expenses', AccountType.expense);
 
   const BookRole(this.wire, this.type);

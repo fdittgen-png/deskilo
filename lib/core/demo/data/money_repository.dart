@@ -1633,6 +1633,9 @@ class FakeMoneyRepository implements MoneyRepository {
     Map<String, Object?>? supply,
   })>[];
 
+  /// #2357 — the VAT each submitted expense carried, in order.
+  final submittedExpenseVat = <Map<String, Object?>?>[];
+
   /// #767 — seeded schedules/occurrences; the fake mirrors the server's
   /// two-lane rule: matching amount → added, deviation → needs a reason
   /// and goes pending; a rejected one resends the same way.
@@ -1739,7 +1742,9 @@ class FakeMoneyRepository implements MoneyRepository {
     required String category,
     String description = '',
     Map<String, Object?>? supply,
+    Map<String, Object?>? vat,
   }) async {
+    submittedExpenseVat.add(vat);
     submittedExpenses.add(
       (
         amountCents: amountCents,
