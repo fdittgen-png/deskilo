@@ -14,7 +14,7 @@
 // and an unpaid invoice. Germany on the service period: September
 // services paid on 2 September, on 20 August, and unpaid.
 //
-// And the period lock (0406, `168_vat_period_locks.sql`): a filed
+// And the period lock (0406, `169_vat_period_locks.sql`): a filed
 // September whose unpaid invoice is voided in October — October carries
 // the difference as a correction of the September return, and once
 // October is filed November corrects nothing again.
@@ -316,7 +316,7 @@ void main() {
     });
   });
 
-  group('a filed period is locked — the 168_vat_period_locks.sql fixture', () {
+  group('a filed period is locked — the 169_vat_period_locks.sql fixture', () {
     setUp(() => WorkspaceTime.install('Europe/Berlin'));
 
     List<Invoice> invoices({bool voided = false}) => [
