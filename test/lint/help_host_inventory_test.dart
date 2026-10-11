@@ -19,6 +19,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// file → help-card mounts it may hold (measured 2026-10-02).
 const Map<String, int> _inventory = {
@@ -73,7 +74,8 @@ Map<String, ({int all, int gettingStarted})> scan(Directory root) => {
           .whereType<File>()
           .where((f) => f.path.endsWith('.dart'))
           .where((f) => !f.path.endsWith('core/help/help_hint.dart')))
-    if (countMounts(f.readAsStringSync()) case final c when c.all > 0)
+    if (!isPartFile(f)) // #2386 — a part is read with its library
+    if (countMounts(readLibrary(f)) case final c when c.all > 0)
       f.path.replaceAll(r'\', '/'): c,
 };
 

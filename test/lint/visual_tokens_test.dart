@@ -122,8 +122,8 @@ List<String> ratchet(Map<String, int> live, Map<String, int> baseline) {
 Map<String, int> _count(String needle) {
   final out = <String, int>{};
   for (final file in handWrittenDartFiles('lib')) {
-    if (!_inScope(file.path)) continue;
-    final n = needle.allMatches(file.readAsStringSync()).length;
+    if (!_inScope(file.path) || isPartFile(file)) continue;
+    final n = needle.allMatches(readLibrary(file)).length; // #2386
     if (n > 0) out[file.path] = n;
   }
   return out;

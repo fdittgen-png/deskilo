@@ -13,10 +13,14 @@
 // lower or remove its entry when it moves.
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/layering/analysis.dart' show libraryPathOf;
 import 'lint_sources.dart';
 
 /// Files over 5 `setState` calls on 2026-10-11, with their count then.
 const Map<String, int> _overBudget = {
+  // A library whose parts were each within 5 before #2386 counted them
+  // together.
+  'lib/features/profile/presentation/screens/settings_screen.dart': 6,
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart':
       29,
   'lib/features/profile/presentation/screens/new_instance_screen.dart': 22,
@@ -77,16 +81,27 @@ const Map<String, int> _overBudget = {
 
 void main() {
   test('setState: no new screen over 5, no listed screen grows', () {
-    final call = RegExp(r'\bsetState\(');
+    // #2386 — counted per library: a screen split across part files is
+    // one screen, and `_update(` is its setState seen from a part.
+    final call = RegExp(r'\b(setState|_update)\(');
+    final counts = <String, int>{};
+    for (final file in handWrittenDartFiles('lib')) {
+      final count = scanLines(
+        [file],
+        (l) => call.hasMatch(l) && !l.contains('void _update('),
+      ).length;
+      if (count == 0) continue;
+      final library = libraryPathOf(file);
+      counts[library] = (counts[library] ?? 0) + count;
+    }
     final grown = <String>[];
     final shrunk = <String>[];
-    for (final file in handWrittenDartFiles('lib')) {
-      final count = scanLines([file], call.hasMatch).length;
-      final allowed = _overBudget[file.path] ?? 5;
-      if (count > allowed) grown.add('${file.path}: $count (allowed $allowed)');
-      final listed = _overBudget[file.path];
+    for (final MapEntry(key: path, value: count) in counts.entries) {
+      final allowed = _overBudget[path] ?? 5;
+      if (count > allowed) grown.add('$path: $count (allowed $allowed)');
+      final listed = _overBudget[path];
       if (listed != null && count < listed) {
-        shrunk.add('${file.path}: $count (listed $listed)');
+        shrunk.add('$path: $count (listed $listed)');
       }
     }
     expect(

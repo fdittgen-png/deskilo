@@ -17,6 +17,7 @@ import 'package:deskilo/features/money/domain/report_design_file.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/presentation/report_kind_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'lint_sources.dart';
 
 /// Two levels is enough to prove the reminder family is covered without
 /// pinning a workspace's dunning configuration.
@@ -99,9 +100,8 @@ void main() {
   });
 
   test('the editor no longer keeps its own list of kinds', () {
-    final editor = File(
-            'lib/features/money/presentation/widgets/invoice_template_sheet.dart')
-        .readAsStringSync();
+    final editor = readLibrary(File( // #2386 — with its parts
+        'lib/features/money/presentation/widgets/invoice_template_sheet.dart'));
     // The five hand-maintained switches this registry replaced.
     expect(editor, isNot(contains('_extraDocs')),
         reason: 'the extras constant is back');
