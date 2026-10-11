@@ -59,7 +59,7 @@ final class BiModuleResultProvider
   }
 }
 
-String _$biModuleResultHash() => r'a3829148dea4c39c0d49b51bcfd1bbdc716582ec';
+String _$biModuleResultHash() => r'816bfa30c76ff8d2b77618538606bee9fe9c2275';
 
 final class BiModuleResultFamily extends $Family
     with

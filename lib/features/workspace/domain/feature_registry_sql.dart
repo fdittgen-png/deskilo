@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'workspace_feature.dart';
 
 /// #1333 — the feature registry as the database reads it.
@@ -16,6 +17,7 @@ import 'workspace_feature.dart';
 /// requires the latest migration defining the function to contain exactly
 /// this text, so adding or re-parenting a feature without a migration that
 /// regenerates it fails the build and names the feature.
+@visibleForTesting
 String featureRegistryJson() {
   final lines = <String>[];
   for (final entry in featureManifest.values) {

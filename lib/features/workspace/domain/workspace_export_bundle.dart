@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -27,13 +28,14 @@ import '../../../core/files/xlsx.dart';
 ///     path they have in the bucket minus the workspace prefix.
 ///
 /// Pure Dart: no Flutter, no Supabase. The caller fetches, this packs.
+@visibleForTesting
 const int workspaceExportFormatVersion = 1;
 
 /// One stored file of the workspace, as it will sit under `files/`.
 typedef ExportedFile = ({String path, Uint8List bytes});
 
 /// What `manifest.json` says, built from exactly what goes in the ZIP.
-Map<String, Object?> workspaceExportManifest({
+Map<String, Object?> _workspaceExportManifest({
   required String workspaceId,
   required int? schemaVersion,
   required DateTime createdAt,
@@ -88,7 +90,7 @@ Uint8List buildWorkspaceExportZip({
       archive.addFile(ArchiveFile(path, bytes.length, bytes));
 
   add('workspace.xlsx', buildXlsx(sheets));
-  final manifest = workspaceExportManifest(
+  final manifest = _workspaceExportManifest(
     workspaceId: workspaceId,
     schemaVersion: schemaVersion,
     createdAt: createdAt,

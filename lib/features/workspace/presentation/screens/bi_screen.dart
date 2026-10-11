@@ -26,7 +26,7 @@ import '../widgets/bi_module_section.dart';
 import '../widgets/bi_toolbar.dart';
 import '../widgets/bi_views_bar.dart';
 
-String biAreaName(AppLocalizations? l10n, BiArea area) => switch (area) {
+String _biAreaName(AppLocalizations? l10n, BiArea area) => switch (area) {
   BiArea.overview => l10n?.biAreaOverview ?? 'Overview',
   BiArea.capacity => l10n?.biAreaCapacity ?? 'Space and capacity',
   BiArea.people => l10n?.biAreaPeople ?? 'People and business',
@@ -188,7 +188,7 @@ class BiScreen extends ConsumerWidget {
                     0,
                   ),
                   child: Text(
-                    biAreaName(l10n, m.area),
+                    _biAreaName(l10n, m.area),
                     key: ValueKey('bi-area-${m.area.name}'),
                     style: theme.textTheme.titleMedium,
                   ),

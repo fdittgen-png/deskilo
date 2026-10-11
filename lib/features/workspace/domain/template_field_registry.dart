@@ -21,6 +21,7 @@
 // Pure Dart with no Flutter reach (`dart run` compiles it for the SQL
 // generator): enum wire values and lexicon terms are literals here, held
 // equal to the compiled sources by `template_coverage_test`, both ways.
+import 'package:meta/meta.dart';
 import 'workspace_feature.dart';
 import 'workspace_process.dart';
 
@@ -84,6 +85,7 @@ class TemplateFieldSpec {
 
 /// The business process each entity is configured in (`workspaceProcesses`);
 /// `workspace` and `template` are the two homes of what no entity carries.
+@visibleForTesting
 const Map<String, String> entityProcesses = {
   'identity': 'operations', 'vat': 'billingPayments', 'tariffs': 'membershipCommerce',
   'services': 'membershipCommerce', 'packages': 'membershipCommerce',
@@ -104,11 +106,11 @@ const _bind = TemplatePortability.localBinding;
 const _product = TemplateAbsent.productDefault;
 
 /// Wire values pinned by the coverage lint against the compiled enums.
-const templateGranularities = ['flexible', 'half_day', 'minutes_5', 'minutes_15',
+const _templateGranularities = ['flexible', 'half_day', 'minutes_5', 'minutes_15',
   'minutes_30', 'minutes_60', 'full_day', 'hours'];
-const templateOutsideHoursModes = ['off', 'free', 'charged', 'walkup_only'];
-const templateLegendProfiles = ['full', 'simple'];
-const templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation',
+const _templateOutsideHoursModes = ['off', 'free', 'charged', 'walkup_only'];
+const _templateLegendProfiles = ['full', 'simple'];
+const _templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation',
   'workspaceSettings', 'issueInvoices', 'viewFinances', 'manageDocuments', 'manageServices',
   'approveExpenses', 'viewNegotiations', 'manageNegotiations', 'paymentTermsEdit',
   'manageSites', 'manageBilling', 'manageReservations', 'operateKiosk', 'exportData',
@@ -118,7 +120,7 @@ const templatePermissions = ['manageRoles', 'manageMembers', 'manageValidation',
   'viewMyMoney', 'viewDocuments'];
 
 /// The overridable terms of `lexiconAllowList`, pinned by the same lint.
-const templateLexiconTerms = ['legendFree', 'legendReserved', 'legendOccupied', 'legendMine',
+const _templateLexiconTerms = ['legendFree', 'legendReserved', 'legendOccupied', 'legendMine',
   'legendBlocked', 'legendClosed', 'legendUnavailable', 'reserveClosedShort', 'spaceKindSeat',
   'spaceKindDesk', 'spaceKindOffice', 'spaceKindLevel', 'levelDetail', 'deskDetail', 'tabPlan',
   'tabCalendar', 'tabEvents', 'tabMoney', 'directoryTitle', 'messagesTitle',
@@ -177,13 +179,13 @@ List<TemplateFieldSpec> _workspaceColumns() => [
       _f('workspace.role_permissions', 'roles', TemplateFieldType.map, absent: TemplateAbsent.registryDefault),
       for (final role in ['co_owner', 'admin', 'member'])
         _f('workspace.role_permissions.$role', 'roles', TemplateFieldType.list,
-            absent: TemplateAbsent.registryDefault, values: templatePermissions),
+            absent: TemplateAbsent.registryDefault, values: _templatePermissions),
     ];
 
 List<TemplateFieldSpec> _bookingRules() => [
       _f('workspace.booking_rules', 'booking_rules', TemplateFieldType.map),
       _f('workspace.booking_rules.granularity', 'booking_rules', TemplateFieldType.enumeration,
-          absent: _product, values: templateGranularities),
+          absent: _product, values: _templateGranularities),
       _f('workspace.booking_rules.open_weekdays', 'booking_rules', TemplateFieldType.list, absent: _product, min: 1, max: 7),
       for (final k in ['work_start_minutes', 'half_boundary_minutes', 'work_end_minutes'])
         _f('workspace.booking_rules.$k', 'booking_rules', TemplateFieldType.minutes, absent: _product, min: 0, max: 1440),
@@ -193,12 +195,12 @@ List<TemplateFieldSpec> _bookingRules() => [
       for (final k in ['min_duration_minutes', 'max_duration_minutes'])
         _f('workspace.booking_rules.$k', 'booking_rules', TemplateFieldType.minutes, absent: _product, min: 5, max: 1440),
       _f('workspace.booking_rules.outside_hours_mode', 'booking_rules', TemplateFieldType.enumeration,
-          absent: _product, values: templateOutsideHoursModes),
+          absent: _product, values: _templateOutsideHoursModes),
       for (final k in ['allow_past_bookings', 'admin_check_out'])
         _f('workspace.booking_rules.$k', 'booking_rules', _bool, absent: _product),
       _f('workspace.booking_rules.simultaneous_reservations', 'booking_rules', _int, absent: _product, min: 1, max: 20),
       _f('workspace.booking_rules.legend_profile', 'booking_rules', TemplateFieldType.enumeration,
-          absent: _product, values: templateLegendProfiles),
+          absent: _product, values: _templateLegendProfiles),
       _f('workspace.booking_rules.grid_within_hours', 'booking_rules', _bool,
           p: TemplatePortability.unsupported, reason: 'retired by #634; read as outside_hours_mode, never written'),
     ];
@@ -231,7 +233,7 @@ List<TemplateFieldSpec> _wordingAndLooks() => [
             absent: TemplateAbsent.registryDefault,
             dependsOn: [if (e.requires != null) 'workspace.feature_flags.${e.requires!.dbKey}']),
       _f('workspace.lexicon', 'lexicon', TemplateFieldType.map),
-      for (final term in templateLexiconTerms)
+      for (final term in _templateLexiconTerms)
         _f('workspace.lexicon.{locale}.$term', 'lexicon', _text),
       _f('workspace.branding', 'branding', TemplateFieldType.map),
       _f('workspace.branding.seed_color', 'branding', TemplateFieldType.color, absent: _product),
@@ -309,7 +311,7 @@ List<TemplateFieldSpec> _tables() => [
       ..._row('workspace_roles', 'workspace_roles', 'key', {
         'key': _text, 'permissions': TemplateFieldType.list, 'names': TemplateFieldType.map,
         'sort_order': _int, 'active': _bool,
-      }, values: {'permissions': templatePermissions}),
+      }, values: {'permissions': _templatePermissions}),
       _f('tables.workspace_roles[].names.{locale}', 'workspace_roles', _text, key: 'key'),
       ..._row('workspace_field_definitions', 'field_definitions', 'key', {
         'key': _text, 'type': TemplateFieldType.enumeration, 'required': _bool, 'personal_data': _bool,

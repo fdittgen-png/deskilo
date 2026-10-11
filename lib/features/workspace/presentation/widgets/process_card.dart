@@ -22,7 +22,7 @@ String processStateLabel(AppLocalizations? l10n, ProcessState state) =>
         l10n?.processStateNeedsAttention ?? 'Needs attention',
     };
 
-IconData processStateIcon(ProcessState state) => switch (state) {
+IconData _processStateIcon(ProcessState state) => switch (state) {
   ProcessState.active => Icons.check_circle_outline,
   ProcessState.partial => Icons.incomplete_circle_outlined,
   ProcessState.available => Icons.radio_button_unchecked,
@@ -189,7 +189,7 @@ class _StateLine extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          processStateIcon(state),
+          _processStateIcon(state),
           size: 18,
           color: _stateColor(theme, state),
         ),

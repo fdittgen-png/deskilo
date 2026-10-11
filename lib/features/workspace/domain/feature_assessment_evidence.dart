@@ -6,12 +6,14 @@
 // that evidence. Pure: the tests and the evidence tool hand in what they
 // read from the ledger and the release artifact.
 
+import 'package:meta/meta.dart';
 import 'feature_lifecycle.dart';
 import 'workspace_feature.dart';
 
 /// #1850 B — one capability of the evidence ledger
 /// (docs/product/capabilities.json, #1634), as far as an assessment reads
 /// it.
+@visibleForTesting
 class LedgerCapability {
   const LedgerCapability({
     required this.id,
@@ -107,6 +109,7 @@ List<String> validateAssessmentsAgainstLedger({
 /// evidence tool computes it (tool/capability_evidence/render.dart):
 /// gated scopes run on every change, recorded ones were run once against
 /// the component's current fingerprint, stale ones against an older one.
+@visibleForTesting
 enum EvidenceStanding { unverified, stale, gated, recorded }
 
 /// A standing name from the release artifact; anything unknown is
@@ -121,7 +124,7 @@ EvidenceStanding evidenceStandingFromName(String? name) {
 /// The scopes whose evidence is recorded, not gated: a provider's
 /// sandbox, a named runtime or build, an operator's pilot. Stable needs
 /// one of them, current.
-const Set<String> promotionScopes = {
+const Set<String> _promotionScopes = {
   'provider_sandbox',
   'named_runtime',
   'operator_pilot',
@@ -133,7 +136,7 @@ const Set<String> promotionScopes = {
 ///
 /// * beta: at least one cited capability holds evidence that is gated or
 ///   recorded — stale or unverified evidence certifies nothing;
-/// * stable: at least one cited capability holds a [promotionScopes]
+/// * stable: at least one cited capability holds a [_promotionScopes]
 ///   record against its current component, and none of the cited
 ///   capabilities' records at those scopes has gone stale.
 ///
@@ -165,7 +168,7 @@ List<String> validatePromotions({
     }
     if (a.maturity != FeatureMaturity.stable) continue;
     final recorded = cited.any(
-      (c) => promotionScopes.any(
+      (c) => _promotionScopes.any(
         (scope) => c.$2[scope] == EvidenceStanding.recorded,
       ),
     );
@@ -176,7 +179,7 @@ List<String> validatePromotions({
       );
     }
     for (final (id, byScope) in cited) {
-      for (final scope in promotionScopes) {
+      for (final scope in _promotionScopes) {
         if (byScope[scope] == EvidenceStanding.stale) {
           problems.add('$key: stable on a stale $scope record of "$id"');
         }

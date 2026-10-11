@@ -189,9 +189,9 @@ abstract class CreationDraftStore {
   Future<void> write(String? draft);
 }
 
-class PrefsCreationDraftStore extends PrefsStringStore
+class _PrefsCreationDraftStore extends PrefsStringStore
     implements CreationDraftStore {
-  const PrefsCreationDraftStore() : super('workspace_creation_draft');
+  const _PrefsCreationDraftStore() : super('workspace_creation_draft');
 }
 
 class InMemoryCreationDraftStore implements CreationDraftStore {
@@ -207,7 +207,7 @@ class InMemoryCreationDraftStore implements CreationDraftStore {
 
 @Riverpod(keepAlive: true)
 CreationDraftStore creationDraftStore(Ref ref) =>
-    const PrefsCreationDraftStore();
+    const _PrefsCreationDraftStore();
 
 /// #1636 — the pending creation, for the account signed in now. The
 /// wizard asks this; it never reads the store or the account itself.
