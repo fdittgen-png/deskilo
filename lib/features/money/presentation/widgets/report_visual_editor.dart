@@ -747,9 +747,9 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor> {
       key: ValueKey('${widget.bandKey}-drop-$index'),
       onWillAcceptWithDetails: (d) => d.data != index,
       onAcceptWithDetails: (d) => _moveBefore(d.data, index),
-      builder: (context, candidates, _) => Container(
+      builder: (context, candidates, _) => DecoratedBox(
         decoration: candidates.isEmpty
-            ? null
+            ? const BoxDecoration()
             : BoxDecoration(
                 border: Border(
                     top: BorderSide(

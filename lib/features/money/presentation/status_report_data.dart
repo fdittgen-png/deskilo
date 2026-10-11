@@ -24,18 +24,17 @@ Map<String, Object?> workspaceStatusReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(status.currency);
-  String money(int cents) => currency.formatMinor(cents);
   final issued = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   ).format(ref.read(clockProvider).now());
   final lines = <Map<String, Object?>>[
-    {'label': l10n?.statusInvoiced ?? 'Invoiced', 'amount': money(status.invoicedCents)},
-    {'label': l10n?.statusCreditNotes ?? 'Credit notes', 'amount': money(-status.creditNotesCents), 'negative': true},
-    {'label': l10n?.statusPaymentsMatched ?? 'Payments matched', 'amount': money(status.paymentsMatchedCents)},
-    {'label': l10n?.statusPaymentsReceived ?? 'Payments received', 'amount': money(status.paymentsReceivedCents)},
-    {'label': l10n?.statusReimbursed ?? 'Expenses reimbursed', 'amount': money(-status.reimbursedCents), 'negative': true},
-    {'label': l10n?.statusRepartitioned ?? 'Expenses shared out', 'amount': money(status.repartitionedCents)},
-    {'label': l10n?.statusCredits ?? 'Credits granted', 'amount': money(-status.creditsGrantedCents), 'negative': true},
+    {'label': l10n?.statusInvoiced ?? 'Invoiced', 'amount': currency.formatMinor(status.invoicedCents)},
+    {'label': l10n?.statusCreditNotes ?? 'Credit notes', 'amount': currency.formatMinor(-status.creditNotesCents), 'negative': true},
+    {'label': l10n?.statusPaymentsMatched ?? 'Payments matched', 'amount': currency.formatMinor(status.paymentsMatchedCents)},
+    {'label': l10n?.statusPaymentsReceived ?? 'Payments received', 'amount': currency.formatMinor(status.paymentsReceivedCents)},
+    {'label': l10n?.statusReimbursed ?? 'Expenses reimbursed', 'amount': currency.formatMinor(-status.reimbursedCents), 'negative': true},
+    {'label': l10n?.statusRepartitioned ?? 'Expenses shared out', 'amount': currency.formatMinor(status.repartitionedCents)},
+    {'label': l10n?.statusCredits ?? 'Credits granted', 'amount': currency.formatMinor(-status.creditsGrantedCents), 'negative': true},
   ];
   return <String, Object?>{
     'workspace': workspace?.name ?? '',
@@ -46,9 +45,9 @@ Map<String, Object?> workspaceStatusReportData(
     'issued': issued,
     'issued_by': workspace?.name ?? '',
     'replaces': '',
-    'total': money(status.netCents),
+    'total': currency.formatMinor(status.netCents),
     'charges': '',
-    'payments': money(status.paymentsMatchedCents),
+    'payments': currency.formatMinor(status.paymentsMatchedCents),
     'net_total': '',
     'vat_total': '',
     'voided': false,
@@ -59,21 +58,21 @@ Map<String, Object?> workspaceStatusReportData(
     'vat': const <Map<String, Object?>>[],
     'status_from': status.from,
     'status_to': status.to,
-    'status_invoiced': money(status.invoicedCents),
-    'status_credit_notes': money(status.creditNotesCents),
-    'status_payments': money(status.paymentsMatchedCents),
-    'status_reimbursed': money(status.reimbursedCents),
-    'status_repartitioned': money(status.repartitionedCents),
-    'status_credits': money(status.creditsGrantedCents),
-    'status_net': money(status.netCents),
+    'status_invoiced': currency.formatMinor(status.invoicedCents),
+    'status_credit_notes': currency.formatMinor(status.creditNotesCents),
+    'status_payments': currency.formatMinor(status.paymentsMatchedCents),
+    'status_reimbursed': currency.formatMinor(status.reimbursedCents),
+    'status_repartitioned': currency.formatMinor(status.repartitionedCents),
+    'status_credits': currency.formatMinor(status.creditsGrantedCents),
+    'status_net': currency.formatMinor(status.netCents),
     'status_members': [
       for (final m in status.members)
         {
           'number': m.memberNumber,
           'name': m.name,
           'pct': m.subscriptionPct,
-          'invoiced': money(m.invoicedCents),
-          'paid': money(m.paidCents),
+          'invoiced': currency.formatMinor(m.invoicedCents),
+          'paid': currency.formatMinor(m.paidCents),
         },
     ],
     ...legalMentionData(reportStringsOf(l10n), workspace),

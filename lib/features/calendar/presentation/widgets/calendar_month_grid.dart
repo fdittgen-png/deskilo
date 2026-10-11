@@ -7,6 +7,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'calendar_item_row.dart';
+import '../../../../core/time/date_text.dart';
 
 /// #818 — the month as a SELECTOR with a glance: one compact cell per
 /// day, up to three markers under the number (one per group that has
@@ -41,8 +42,8 @@ class CalendarMonthGrid extends StatelessWidget {
   final bool Function(DateTime day)? isDayOpen;
   final String? locale;
 
-  static Key cellKey(DateTime day) => ValueKey(
-      'calendar-cell-${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}');
+  static Key cellKey(DateTime day) =>
+      ValueKey('calendar-cell-${isoDay(day)}');
 
   @override
   Widget build(BuildContext context) {

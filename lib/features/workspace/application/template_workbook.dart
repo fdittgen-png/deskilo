@@ -12,6 +12,7 @@ import 'dart:typed_data';
 
 import '../../../core/files/file_types.dart';
 import '../../../core/files/xlsx.dart';
+import '../../../core/time/date_text.dart';
 import '../domain/template_capabilities.dart';
 import '../domain/template_inspection.dart';
 import '../domain/workspace_repository.dart';
@@ -396,8 +397,7 @@ const _fieldColumns = [
 @visibleForTesting
 String templateWorkbookName(DateTime capturedAt) {
   final d = capturedAt.toUtc();
-  String two(int n) => n.toString().padLeft(2, '0');
-  return 'deskilo-templates-${d.year}${two(d.month)}${two(d.day)}.xlsx';
+  return 'deskilo-templates-${ymd(d)}.xlsx';
 }
 
 /// #1661 — where an export stands: reading template [done] of [total],

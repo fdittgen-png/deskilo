@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/number_text.dart';
+import '../../../core/time/date_text.dart';
 import 'package:xml/xml.dart';
 
 import 'e_invoice_totals.dart';
@@ -37,12 +39,7 @@ String buildInvoiceCii({
   String paymentTerms = '',
 }) {
   // #1077 — the currency's own grain, not the euro's.
-  String amount(int minor) => Currencies.toMajor(minor, invoice.currency)
-      .toStringAsFixed(Currencies.minorDigits(invoice.currency));
-  /// CII dates are `format="102"` — YYYYMMDD, no separators.
-  String stamp(DateTime date) =>
-      '${date.year}${date.month.toString().padLeft(2, '0')}'
-      '${date.day.toString().padLeft(2, '0')}';
+  String amount(int minor) => minorToText(minor, invoice.currency);
 
   // #1154 — the totals rule lives once, in e_invoice_totals.dart.
   final EInvoiceTotals(
@@ -86,8 +83,9 @@ String buildInvoiceCii({
     void date(String name, DateTime value) {
       builder.element('ram:$name', nest: () {
         builder.element('udt:DateTimeString', nest: () {
+          // CII dates are `format="102"` — YYYYMMDD, no separators.
           builder.attribute('format', '102');
-          builder.text(stamp(value));
+          builder.text(ymd(value));
         });
       });
     }
@@ -146,7 +144,7 @@ String buildInvoiceCii({
               // BR-S-05 wants the real rate, BR-E-05 the zero spelled
               // out; BR-O-05 forbids any rate at all.
               if (lineCategory != 'O') {
-                ram('RateApplicablePercent', _percent(line.vatPercent));
+                ram('RateApplicablePercent', percentText(line.vatPercent));
               }
             });
             builder.element(
@@ -236,7 +234,7 @@ String buildInvoiceCii({
               ram('ExemptionReasonCode', exemptionCode);
             }
             if (total.category != 'O') {
-              ram('RateApplicablePercent', _percent(total.percent));
+              ram('RateApplicablePercent', percentText(total.percent));
             }
           });
         }
@@ -277,10 +275,6 @@ String buildInvoiceCii({
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
 
-/// '20' or '5.5' — never '20.0'; see the UBL builder's note.
-String _percent(double percent) => percent == percent.roundToDouble()
-    ? percent.toStringAsFixed(0)
-    : percent.toString();
 
 /// 'yyyy-MM' → the month's first and last day.
 ({DateTime start, DateTime end})? _periodDates(String? period) {

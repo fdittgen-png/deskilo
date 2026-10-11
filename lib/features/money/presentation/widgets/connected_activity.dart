@@ -111,7 +111,7 @@ class _SourceState extends ConsumerState<_SourceActivity> {
                           .previousPageTooltip,
                       onPressed: _pages.isEmpty
                           ? null
-                          : () => setState(() => _pages.removeLast()),
+                          : () => setState(_pages.removeLast),
                       icon: const Icon(Icons.chevron_left),
                     ),
                     IconButton(

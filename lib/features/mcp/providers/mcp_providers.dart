@@ -164,7 +164,7 @@ ConnectAssistant connectAssistant(Ref ref) {
   final trace = ref.watch(traceLoggerProvider);
   return ConnectAssistant(
     ref.watch(mcpConnectionRepositoryProvider),
-    () => identity.requestMcpEligibility(),
+    identity.requestMcpEligibility,
     onFinalizeFailed: (error, stack) => trace.error(
         'mcp', 'connection approved but not finalised',
         error: error, stackTrace: stack),

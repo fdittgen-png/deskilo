@@ -71,7 +71,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsNothing,
         reason: 'the tap reached the button, not a badge row');
-    expect(switches.every((v) => v == false), isTrue,
+    expect(switches.every((v) => !v), isTrue,
         reason: 'and it flipped nothing on the way');
   });
 

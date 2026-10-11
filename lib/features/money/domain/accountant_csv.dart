@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 
@@ -34,25 +35,12 @@ const int accountantCsvFormatVersion = 2;
 @visibleForTesting
 const int accountantCsvMaxText = 1000;
 
-/// #1640 — the spreadsheet-safe text policy (OWASP "CSV injection").
-///
-/// Quoting alone does not stop a spreadsheet from evaluating `=…`, so a
-/// TEXT cell whose first character could start a formula (`=`, `+`, `-`,
-/// `@`) gets a leading apostrophe, which every major spreadsheet reads as
-/// "this is text". Control characters (tabs, carriage returns, line
-/// feeds, the rest of C0 and DEL) become a space first, so none of them
-/// can open a cell either. Numbers never pass through here: a credit
-/// note's `-12.00` stays a number. The stored value is untouched; only
-/// this export's text changes.
-String _accountantCsvText(String? value) {
-  if (value == null || value.isEmpty) return '';
-  var text = value.replaceAll(RegExp(r'[\x00-\x1F\x7F]+'), ' ');
-  if (text.length > accountantCsvMaxText) {
-    text = '${text.substring(0, accountantCsvMaxText - 1)}…';
-  }
-  if (RegExp(r'^[=+\-@]').hasMatch(text)) text = "'$text";
-  return '"${text.replaceAll('"', '""')}"';
-}
+/// #1640 — the spreadsheet-safe text policy (OWASP "CSV injection"),
+/// shared by every CSV writer since #2385: see [csvCell]. Numbers never
+/// pass through here: a credit note's `-12.00` stays a number. The
+/// stored value is untouched; only this export's text changes.
+String _accountantCsvText(String? value) =>
+    csvCell(value, maxLength: accountantCsvMaxText);
 
 /// #1640 — a preamble line is ONE cell starting with `#`: nothing in the
 /// workspace name may end it (a delimiter, a quote, a line break) and so
@@ -104,11 +92,6 @@ String buildAccountantCsv({
   required String workspaceName,
   String currencyFallback = 'EUR',
 }) {
-  const q = _accountantCsvText;
-
-  // #1077 — the document's own currency decides the grain.
-  String money(int minor, String code) => Currencies.toMajor(minor, code)
-      .toStringAsFixed(Currencies.minorDigits(code));
   String day(DateTime? d) =>
       d == null ? '' : d.toIso8601String().split('T').first;
 
@@ -144,35 +127,36 @@ String buildAccountantCsv({
     // #831 — a settlement regroups invoices already on this list, so
     // [rows] leaves it out.
     buffer.writeln([
-      q(invoice.number),
+      _accountantCsvText(invoice.number),
       day(invoice.issuedAt),
-      q(invoice.period),
-      q(invoice.memberName),
-      q(invoice.memberId),
-      q(invoice.title),
-      q(invoice.currency.isEmpty ? currencyFallback : invoice.currency),
-      money(invoice.netCents, invoice.currency),
-      money(invoice.vatCents, invoice.currency),
-      money(accountantGrossCents(invoice), invoice.currency),
+      _accountantCsvText(invoice.period),
+      _accountantCsvText(invoice.memberName),
+      _accountantCsvText(invoice.memberId),
+      _accountantCsvText(invoice.title),
+      _accountantCsvText(invoice.currency.isEmpty ? currencyFallback : invoice.currency),
+      // #1077 — the document's own currency decides the grain.
+      minorToText(invoice.netCents, invoice.currency),
+      minorToText(invoice.vatCents, invoice.currency),
+      minorToText(accountantGrossCents(invoice), invoice.currency),
       // Which rates, so a reader can see at a glance that a period mixes
       // them — the single most common surprise in a coworking ledger.
-      q([
+      _accountantCsvText([
         for (final total in invoice.vatTotals)
           '${total.percent.toStringAsFixed(2)}%',
       ].join(' ')),
       invoice.isVoided ? 'voided' : 'issued',
       day(invoice.voidedAt),
-      q(invoice.voidedByName),
-      q(invoice.replacesNumber),
-      match == null ? '' : money(match.paidCents, invoice.currency),
+      _accountantCsvText(invoice.voidedByName),
+      _accountantCsvText(invoice.replacesNumber),
+      match == null ? '' : minorToText(match.paidCents, invoice.currency),
       match == null ? '' : day(match.matchedAt),
       // The pending/confirmed distinction is exported rather than
       // filtered. The mapped formats drop pending settlements because
       // posting them would put unagreed money in a ledger; here there is
       // no ledger to protect, and hiding them would leave an invoice
       // looking unpaid when someone is mid-validation on it.
-      q(match?.status),
-      q(match?.note),
+      _accountantCsvText(match?.status),
+      _accountantCsvText(match?.note),
     ].join(','));
   }
   return buffer.toString();

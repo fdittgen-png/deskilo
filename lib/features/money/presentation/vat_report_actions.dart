@@ -27,6 +27,7 @@ import 'report_strings_l10n.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
 import '../domain/report_data.dart';
+import '../../../core/time/date_text.dart';
 
 /// #2355 — the basis a space declares on: its [country]'s tax point, or
 /// the option its owner chose in [invoiceLegal].
@@ -78,7 +79,6 @@ Map<String, Object?> _vatReportData(
   final l10n = AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.formatMinor(cents);
   final locale = Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
   String rate(double percent) => percent == percent.roundToDouble()
@@ -95,11 +95,11 @@ Map<String, Object?> _vatReportData(
     'issued': dateFormat.format(ref.read(clockProvider).now()),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
-    'total': money(report.grossCents),
+    'total': currency.formatMinor(report.grossCents),
     'charges': '',
     'payments': '',
-    'net_total': money(report.netCents),
-    'vat_total': money(report.vatCents),
+    'net_total': currency.formatMinor(report.netCents),
+    'vat_total': currency.formatMinor(report.vatCents),
     'voided': false,
     'proforma': false,
     'copy': false,
@@ -114,9 +114,9 @@ Map<String, Object?> _vatReportData(
             l10n,
             workspaceTaxPointBasis(workspace?.invoiceLegal ?? const {},
                 workspace?.countryCode ?? '')),
-    'vat_period_net': money(report.netCents),
-    'vat_period_vat': money(report.vatCents),
-    'vat_period_gross': money(report.grossCents),
+    'vat_period_net': currency.formatMinor(report.netCents),
+    'vat_period_vat': currency.formatMinor(report.vatCents),
+    'vat_period_gross': currency.formatMinor(report.grossCents),
     'vat_positions': [
       for (final p in report.positions)
         {
@@ -125,9 +125,9 @@ Map<String, Object?> _vatReportData(
           'customer': p.customer,
           'rate': rate(p.percent),
           'category': p.category,
-          'net': money(p.netCents),
-          'vat': money(p.vatCents),
-          'gross': money(p.grossCents),
+          'net': currency.formatMinor(p.netCents),
+          'vat': currency.formatMinor(p.vatCents),
+          'gross': currency.formatMinor(p.grossCents),
           'reverses': p.reversesNumber,
         },
     ],
@@ -137,9 +137,9 @@ Map<String, Object?> _vatReportData(
           'rate': rate(t.percent),
           'category': t.category,
           'count': '${t.documentCount}',
-          'net': money(t.netCents),
-          'vat': money(t.vatCents),
-          'gross': money(t.grossCents),
+          'net': currency.formatMinor(t.netCents),
+          'vat': currency.formatMinor(t.vatCents),
+          'gross': currency.formatMinor(t.grossCents),
         },
     ],
     ...legalMentionData(reportStringsOf(l10n), workspace),
@@ -147,10 +147,7 @@ Map<String, Object?> _vatReportData(
 }
 
 String _stem(VatReport report) {
-  String d(DateTime x) =>
-      '${x.year}${x.month.toString().padLeft(2, '0')}'
-      '${x.day.toString().padLeft(2, '0')}';
-  return 'vat-report-${d(report.periodStart)}-${d(report.periodEnd)}';
+  return 'vat-report-${ymd(report.periodStart)}-${ymd(report.periodEnd)}';
 }
 
 /// The letter: quick view / save / share.

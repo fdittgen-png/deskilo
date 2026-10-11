@@ -27,7 +27,6 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final currency = moneyFormat(currencyCode);
-    String money(int cents) => currency.formatMinor(cents);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final net = account.netPositionCents;
@@ -80,30 +79,30 @@ class AccountCard extends StatelessWidget {
             if (account.creditCents != 0)
               row(
                 l10n?.accountCredit ?? 'Credit on account',
-                '+${money(account.creditCents)}',
+                '+${currency.formatMinor(account.creditCents)}',
                 color: scheme.primary,
               ),
             if (account.refundsDueCents != 0)
               row(
                 l10n?.accountRefundDue ?? 'Refund due from the workspace',
-                '+${money(account.refundsDueCents)}',
+                '+${currency.formatMinor(account.refundsDueCents)}',
                 color: scheme.primary,
               ),
             for (final open in account.openInvoices)
               row(
                 open.number,
-                '-${money(open.remainingCents)}',
+                '-${currency.formatMinor(open.remainingCents)}',
                 detail: open.paidCents > 0
                     ? (l10n?.accountOpenPartial(
-                            open.period, money(open.paidCents)) ??
-                        '${open.period} · ${money(open.paidCents)} paid')
+                            open.period, currency.formatMinor(open.paidCents)) ??
+                        '${open.period} · ${currency.formatMinor(open.paidCents)} paid')
                     : open.period,
                 color: scheme.error,
               ),
             const Divider(height: 12),
             row(
               l10n?.accountNet ?? 'Net position',
-              money(net),
+              currency.formatMinor(net),
               color: netColor,
               bold: true,
             ),
@@ -128,7 +127,7 @@ class AccountCard extends StatelessWidget {
         title: Text(labels.accountCardTitle),
         subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(labels.uxMoneyAllPeriods),
-          Text(money(net), style: theme.textTheme.titleMedium?.copyWith(color: netColor)),
+          Text(currency.formatMinor(net), style: theme.textTheme.titleMedium?.copyWith(color: netColor)),
         ]),
         children: [detail],
       ) : detail,

@@ -78,6 +78,7 @@ import '../../../profile/providers/profile_providers.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../workspace/domain/workspace.dart';
 import '../../domain/report_data_letters.dart';
+import '../../../../core/time/date_text.dart';
 
 /// Money tab (spec §7.3, #132): a structured monthly bill per period —
 /// subscription, consumed services, open positions awaiting validation,
@@ -253,7 +254,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           association: ref.watch(sellerIsAssociationProvider),
           // #1000 — the bill's position names its month too.
           month: monthNameOf(locale,
-              '${_month.year}-${_month.month.toString().padLeft(2, '0')}')),
+              yearMonth(_month.year, _month.month))),
       entitlement: l10n?.billEntitlement(
             statement.usedHalfDays,
             statement.includedHalfDays,
@@ -391,8 +392,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     void shiftPeriod(void Function(void Function()) setSheetState, int delta) {
       final next = DateTime(monthOf(period).year, monthOf(period).month + delta);
       if (next.isAfter(periodCeiling)) return;
-      setSheetState(() => period =
-          '${next.year}-${next.month.toString().padLeft(2, '0')}');
+      setSheetState(() => period = yearMonth(next.year, next.month));
     }
     final submitted = await showModalBottomSheet<bool>(
       context: context,

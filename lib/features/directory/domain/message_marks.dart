@@ -2,6 +2,7 @@
 //
 // What a thread draws besides the words (0382): the reactions on each
 // message, my own stars, and which messages were corrected after sending.
+import '../../../core/data/json_reader.dart';
 
 /// One emoji on one message: how many people chose it, and whether I did.
 class ReactionCount {
@@ -31,16 +32,20 @@ class MessageMarks {
           if (r.mine) r.emoji,
       ].firstOrNull;
 
-  factory MessageMarks.fromJson(Map<String, dynamic> json) {
+  /// #2387 — read through [JsonReader]; [context] names the RPC.
+  factory MessageMarks.fromJson(
+    Map<String, dynamic> json, {
+    String context = 'message_marks_in',
+  }) {
+    final r = JsonReader(json, context: context);
     final byMessage = <String, List<ReactionCount>>{};
-    for (final raw in (json['reactions'] as List<dynamic>? ?? const [])) {
-      final row = raw as Map<String, dynamic>;
+    for (final row in r.objects('reactions', (row) => row)) {
       byMessage
-          .putIfAbsent(row['message_id'] as String, () => [])
+          .putIfAbsent(row.string('message_id'), () => [])
           .add(ReactionCount(
-            row['emoji'] as String,
-            (row['count'] as num?)?.toInt() ?? 1,
-            mine: row['mine'] == true,
+            row.string('emoji'),
+            row.intOrNull('count') ?? 1,
+            mine: row.boolOr('mine', false),
           ));
     }
     for (final list in byMessage.values) {
@@ -48,14 +53,8 @@ class MessageMarks {
     }
     return MessageMarks(
       reactions: byMessage,
-      starred: {
-        for (final id in (json['starred'] as List<dynamic>? ?? const []))
-          id as String,
-      },
-      edited: {
-        for (final id in (json['edited'] as List<dynamic>? ?? const []))
-          id as String,
-      },
+      starred: r.strings('starred').toSet(),
+      edited: r.strings('edited').toSet(),
     );
   }
 }
@@ -80,13 +79,19 @@ class StarredMessage {
   final String kind, messageId, body, authorName, contextLabel;
   final DateTime sentAt;
 
-  factory StarredMessage.fromJson(Map<String, dynamic> j) => StarredMessage(
-        kind: j['message_kind'] as String? ?? '',
-        messageId: j['message_id'] as String? ?? '',
-        body: j['body'] as String? ?? '',
-        authorName: j['author_name'] as String? ?? '',
-        contextLabel: j['context_label'] as String? ?? '',
-        sentAt: DateTime.tryParse(j['sent_at'] as String? ?? '')?.toUtc() ??
-            DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-      );
+  factory StarredMessage.fromJson(
+    Map<String, dynamic> json, {
+    String context = 'my_starred_messages',
+  }) {
+    final r = JsonReader(json, context: context);
+    return StarredMessage(
+      kind: r.stringOr('message_kind'),
+      messageId: r.stringOr('message_id'),
+      body: r.stringOr('body'),
+      authorName: r.stringOr('author_name'),
+      contextLabel: r.stringOr('context_label'),
+      sentAt: r.dateTimeOrNull('sent_at')?.toUtc() ??
+          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
+    );
+  }
 }

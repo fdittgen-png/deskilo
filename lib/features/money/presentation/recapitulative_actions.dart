@@ -11,6 +11,7 @@ import '../../../l10n/app_localizations.dart';
 import '../domain/recapitulative_statement.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart';
+import '../../../core/time/date_text.dart';
 
 /// #2354 — the recapitulative statement (EU sales list) of `[start,
 /// end)` as a CSV file, from the issued invoices: what was reverse-charged
@@ -37,7 +38,7 @@ Future<void> saveRecapitulativeCsv(
     minorDigits: Currencies.minorDigits(currency),
   );
   String day(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+      isoDay(d);
   await savePdfToDownloads(
     context,
     ref,

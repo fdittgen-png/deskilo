@@ -1,0 +1,8 @@
+# DesKilo accounting export — Pézenas  Lab
+# generated 2026-05-01T09:00:00.000Z
+# 3 invoice(s); amounts in the invoice currency, VAT-exclusive net and tax shown separately
+# NOT a journal: no account numbers, no double entry. These are the documents as issued.
+invoice_number,issued_on,period,customer,customer_id,title,currency,net,vat,gross,vat_rates,status,voided_on,voided_by,replaces,paid,paid_on,payment_status,payment_note
+"INV-2026-0001",2026-03-04,"2026-03","Müller, Ana ""AM""","m-i1","Coworking ""March"" second line; part","EUR",110.00,20.55,130.55,"20.00% 5.50%",issued,,,,130.55,2026-04-02,"confirmed",
+"INV-2026-0002",2026-03-20,"2026-03","Müller, Ana ""AM""","m-i2","Credit note","EUR",-25.00,-5.00,-30.00,"20.00%",issued,,,"INV-2026-0001",,,,
+"INV-2026-0003",2026-03-28,"2026-03","Bob","m-i3","Press","EUR",48.97,1.03,50.00,"2.10%",voided,2026-03-29,"Auditor",,,,,

@@ -25,6 +25,7 @@ import '../widgets/wizard_scaffold.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../../core/format/cents.dart';
+import '../../../../core/time/date_text.dart';
 
 class RepartitionWizardScreen extends ConsumerStatefulWidget {
   const RepartitionWizardScreen({super.key});
@@ -46,7 +47,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
   void initState() {
     super.initState();
     final now = ref.read(clockProvider).now();
-    _period = '${now.year}-${now.month.toString().padLeft(2, '0')}';
+    _period = yearMonth(now.year, now.month);
   }
 
   @override
@@ -160,13 +161,12 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     ref.watch(workspaceMembersProvider);
     ref.watch(memberNamesProvider);
     final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-    String money(int c) => currency.formatMinor(c);
     final rule = _effectiveRule();
     final shares = _shares();
     final total = shares.fold<int>(0, (s, x) => s + x.amountCents);
     final costComplete = _title.text.trim().isNotEmpty && _cents != null;
 
-    final summary = '${money(_cents ?? 0)} · $_period · ${rule.method.name}';
+    final summary = '${currency.formatMinor(_cents ?? 0)} · $_period · ${rule.method.name}';
     Widget body = switch (_step) {
       0 => ListView(
           padding: AppSpacing.lgAll,
@@ -265,7 +265,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
                     ],
                   ),
                   secondary: Text(
-                    share == null ? '—' : money(share.amountCents),
+                    share == null ? '—' : currency.formatMinor(share.amountCents),
                     key: ValueKey('wizard-share-${m.id}'),
                     style: theme.textTheme.bodyLarge?.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
                   ),
@@ -276,7 +276,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
               key: const ValueKey('wizard-shares-total'),
               contentPadding: EdgeInsets.zero,
               title: Text(l10n?.repartitionSharesTotal ?? 'Total of the shares'),
-              trailing: Text(money(total)),
+              trailing: Text(currency.formatMinor(total)),
             ),
           ],
         ),
@@ -287,7 +287,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
             Text(summary),
             const SizedBox(height: AppSpacing.md),
             for (final s in shares)
-              ListTile(dense: true, contentPadding: EdgeInsets.zero, title: Text(s.memberName), trailing: Text(money(s.amountCents))),
+              ListTile(dense: true, contentPadding: EdgeInsets.zero, title: Text(s.memberName), trailing: Text(currency.formatMinor(s.amountCents))),
             const Divider(),
             SwitchListTile(
               key: const ValueKey('wizard-remember'),
@@ -317,6 +317,6 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     final y = int.parse(ym.substring(0, 4));
     final m = int.parse(ym.substring(5, 7));
     final d = DateTime(y, m + months, 1);
-    return '${d.year}-${d.month.toString().padLeft(2, '0')}';
+    return yearMonth(d.year, d.month);
   }
 }

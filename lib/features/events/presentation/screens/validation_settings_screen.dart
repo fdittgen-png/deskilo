@@ -301,4 +301,3 @@ class _WorkflowHeading extends StatelessWidget {
     );
   }
 }
-

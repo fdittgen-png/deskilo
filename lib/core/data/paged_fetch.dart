@@ -156,4 +156,3 @@ Future<List<Map<String, dynamic>>> fetchAllIn({
   for (final chunk in chunked(ids))
     ...await fetchAllPages(table: table, build: () => build(chunk)),
 ];
-

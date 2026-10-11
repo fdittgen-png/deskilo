@@ -333,7 +333,7 @@ void main() {
         reason: 'empty proforma bands = the invoice template, as before');
     // Round-trip keeps both documents.
     final back = InvoicePdfTemplate.fromJson(
-        t.toJson().map((k, v) => MapEntry(k, v)));
+        t.toJson().map(MapEntry.new));
     expect(back.proforma.header, 'P');
   });
 

@@ -6,7 +6,8 @@
 // easier to demonstrate as one bundle named after the entity and the
 // year — and marked DEV for a development workspace, which is never the
 // real books.
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -27,24 +28,21 @@ String buildInvoiceRegisterCsv(
   List<Invoice> invoices, {
   Map<String, String> integrity = const {},
 }) {
-  String q(String v) => '"${v.replaceAll('"', '""')}"';
-  // #1077 — the document's own currency decides the grain.
-  String money(int minor, String code) => Currencies.toMajor(minor, code)
-      .toStringAsFixed(Currencies.minorDigits(code));
   final rows = <String>[
     ['number', 'issued', 'period', 'kind', 'member', 'member_number', 'total', 'currency', 'status', 'replaces', 'integrity'].join(';'),
     for (final i in [...invoices]..sort((a, b) => a.issuedAt.compareTo(b.issuedAt)))
       [
-        q(i.number),
+        csvCell(i.number, quoteEmpty: true),
         i.issuedAt.toIso8601String().substring(0, 10),
-        q(i.period ?? ''),
+        csvCell(i.period ?? '', quoteEmpty: true),
         i.kind.name,
-        q(i.memberName),
-        q(i.buyerParty?.memberNumber ?? ''),
-        money(i.totalCents, i.currency),
+        csvCell(i.memberName, quoteEmpty: true),
+        csvCell(i.buyerParty?.memberNumber ?? '', quoteEmpty: true),
+        // #1077 — the document's own currency decides the grain.
+        minorToText(i.totalCents, i.currency),
         i.currency,
         i.isVoided ? 'voided' : (i.isCreditNote ? 'credit_note' : 'issued'),
-        q(i.replacesNumber),
+        csvCell(i.replacesNumber, quoteEmpty: true),
         integrity[i.id] ?? '',
       ].join(';'),
   ];

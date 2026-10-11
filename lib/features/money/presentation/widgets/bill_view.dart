@@ -90,7 +90,6 @@ class BillView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currency = moneyFormat(currencyCode);
-    String money(int cents) => currency.formatMinor(cents);
 
     final sections = buildBillSections(
       period: statement.period,
@@ -106,27 +105,27 @@ class BillView extends StatelessWidget {
     final showStatement = face == null || face == MoneyFace.statement;
     final showPayments = face == null || face == MoneyFace.payments;
     final balance = _BalanceFooter(statement: statement, settlement: settlement,
-        money: money, prominent: face != null);
+        money: currency.formatMinor, prominent: face != null);
     final cards = <Widget>[
       if (face != null && (showStatement || showPayments)) balance,
       if (showStatement) ...[
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
-        _EntitlementCard(statement: statement, money: money),
+        _EntitlementCard(statement: statement, money: currency.formatMinor),
         _SubscriptionCard(
             statement: statement,
-            money: money,
+            money: currency.formatMinor,
             association: association),
         if (sections.serviceEntries.isNotEmpty)
-          _ServicesCard(sections: sections, money: money),
+          _ServicesCard(sections: sections, money: currency.formatMinor),
         if (sections.packageEntries.isNotEmpty)
-          _PackagesCard(entries: sections.packageEntries, money: money),
+          _PackagesCard(entries: sections.packageEntries, money: currency.formatMinor),
         if (sections.openPositions.isNotEmpty)
-          _OpenPositionsCard(positions: sections.openPositions, money: money),
+          _OpenPositionsCard(positions: sections.openPositions, money: currency.formatMinor),
         if (sections.creditEntries.isNotEmpty)
-          _CreditsCard(entries: sections.creditEntries, money: money),
+          _CreditsCard(entries: sections.creditEntries, money: currency.formatMinor),
         if (settlement != null)
-          _InvoiceCard(settlement: settlement!, money: money),
+          _InvoiceCard(settlement: settlement!, money: currency.formatMinor),
       ],
       if (face == null) balance,
       if (showPayments &&

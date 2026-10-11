@@ -14,11 +14,11 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_calendar_seed.dart:53` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:65` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:138` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:174` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:177` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:183` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:189` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:205` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:175` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:178` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:184` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:190` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:206` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:138` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:146` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:154` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
