@@ -18826,6 +18826,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclBoxes => 'Casillas del formulario oficial';
 
   @override
+  String vatDeclCorrectionOf(String period) {
+    return 'Corrección de $period';
+  }
+
+  @override
+  String get vatDeclCorrectionsNote =>
+      'Una declaración presentada nunca cambia. Lo que cambió después en un periodo presentado — una factura anulada, un pago registrado tarde — se declara aquí como corrección de esa declaración.';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.';
 
@@ -18860,6 +18869,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclPeriod => 'Periodo';
+
+  @override
+  String get vatDeclPeriodAnnual => 'Anual';
+
+  @override
+  String get vatDeclPeriodField => 'Periodo de declaración del IVA';
+
+  @override
+  String get vatDeclPeriodHint =>
+      'Con qué frecuencia presenta usted la declaración. La pantalla de la declaración del IVA solo ofrece periodos de esta duración.';
+
+  @override
+  String get vatDeclPeriodMonth => 'Mensual';
+
+  @override
+  String vatDeclPeriodNote(String period) {
+    return 'Periodo de declaración: $period. Puede cambiarlo en Identidad legal y facturación electrónica.';
+  }
+
+  @override
+  String get vatDeclPeriodQuarter => 'Trimestral';
 
   @override
   String get vatDeclPrepared => 'Preparada';

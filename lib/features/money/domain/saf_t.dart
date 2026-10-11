@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/number_text.dart';
 import 'package:xml/xml.dart';
 
 import 'invoice.dart';
@@ -107,8 +108,7 @@ String buildSafTFile({
   SafTLedgerAccounts? ledgerAccounts,
 }) {
   // #1077 — the currency's own grain, not the euro's.
-  String amount(int minor) => Currencies.toMajor(minor, currency)
-      .toStringAsFixed(Currencies.minorDigits(currency));
+  String amount(int minor) => minorToText(minor, currency);
   String day(DateTime date) => date.toIso8601String().split('T').first;
 
   final regime = vatRegimeFromWire(company.vatRegime);
@@ -116,7 +116,7 @@ String buildSafTFile({
   /// A TaxTable code has to be unique per rate, so a taxed rate carries
   /// its percentage: 'S20', 'S5.5'. A zero rate is just its category.
   String taxCode(double percent) =>
-      percent > 0 ? 'S${_percent(percent)}' : zeroCategory;
+      percent > 0 ? 'S${percentText(percent)}' : zeroCategory;
   String percentage(double percent) => percent.toStringAsFixed(2);
   // Oldest first: an audit file reads like a journal.
   final ordered = [...invoices]
@@ -291,7 +291,7 @@ String buildSafTFile({
             tag(
               'Description',
               percent > 0
-                  ? 'VAT ${_percent(percent)}%'
+                  ? 'VAT ${percentText(percent)}%'
                   : company.taxExemptionReason.isEmpty
                       ? 'No VAT charged'
                       : company.taxExemptionReason,
@@ -504,11 +504,6 @@ String buildSafTFile({
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
 
-/// '20' or '5.5' — a percentage without a pointless trailing zero, used
-/// where it becomes part of a CODE rather than an amount.
-String _percent(double percent) => percent == percent.roundToDouble()
-    ? percent.toStringAsFixed(0)
-    : percent.toString();
 
 /// Digits only. Portuguese identifiers are numeric in the schema, and a
 /// space or a country prefix that a user typed into the field is a

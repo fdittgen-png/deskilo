@@ -1556,6 +1556,7 @@ You want to know what VAT will ask of you before you switch it on.
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
 - Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
 - The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
+- Choose how often you file under **VAT return period** on the legal identity. A filed period is locked: what changes in it later is declared as a correction in the next return.
 - The declaration journal has its own number series.
 
 **See also:** [VAT regime](User-Guide#vat-regime) · [When VAT falls due](User-Guide#when-vat-falls-due)

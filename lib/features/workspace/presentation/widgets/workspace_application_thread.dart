@@ -141,7 +141,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                               .nextPageTooltip,
                           onPressed: _pages.isEmpty
                               ? null
-                              : () => setState(() => _pages.removeLast()),
+                              : () => setState(_pages.removeLast),
                           icon: const Icon(Icons.chevron_right),
                         ),
                       ],

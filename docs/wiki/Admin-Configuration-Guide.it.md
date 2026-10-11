@@ -116,6 +116,19 @@ ricevuta dell'amministrazione finanziaria, e una presentata non cambia
 più. L'app non trasmette alcuna dichiarazione: la Francia presenta
 tramite EDI-TVA o impots.gouv, la Germania tramite ELSTER.
 
+**Periodi bloccati** (#2357, ADR 0039). Ogni presentazione registra ciò
+che la dichiarazione ha dichiarato, per fattura, esigibilità e aliquota
+(`vat_return_entries`). Un periodo presentato è bloccato: quando in
+seguito vi cambia qualcosa — un annullamento, un incasso registrato in
+ritardo — la riga presentata resta identica byte per byte, e la
+dichiarazione successiva riporta la differenza in righe di rettifica che
+nominano la dichiarazione rettificata (righe 15/21 della CA3; i riquadri
+dell'aliquota altrove). Un periodo che si sovrappone a uno presentato
+non può essere preparato. La periodicità — mensile, trimestrale o
+annuale — è salvata con l'identità legale
+(`invoice_legal.vat_declaration_period`) e viaggia con la configurazione
+e il questionario di avvio.
+
 Il catalogo completo delle aliquote di un paese è fornito con l'app
 (UE27, CH, NO, CA); tenerlo aggiornato quando un governo cambia
 un'aliquota spetta a te.

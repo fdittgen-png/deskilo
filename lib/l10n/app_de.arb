@@ -11462,6 +11462,19 @@
   "@vatDeclBoxes": {
     "description": "Header of the official-box mapping (CA3/UStVA)"
   },
+  "vatDeclCorrectionOf": "Berichtigung für {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Eine abgegebene Erklärung ändert sich nie. Was sich danach in einem abgegebenen Zeitraum geändert hat — eine stornierte Rechnung, eine verspätet erfasste Zahlung — wird hier als Berichtigung dieser Erklärung erklärt.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  },
   "vatDeclDisclaimer": "Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11505,6 +11518,35 @@
   "vatDeclPeriod": "Zeitraum",
   "@vatDeclPeriod": {
     "description": "Filing-period label"
+  },
+  "vatDeclPeriodAnnual": "Jährlich",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodField": "Voranmeldungszeitraum",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodHint": "Wie oft Sie die Erklärung abgeben. Der Bildschirm der Umsatzsteuererklärung bietet nur Zeiträume dieser Länge an.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodMonth": "Monatlich",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodNote": "Erklärungszeitraum: {period}. Änderbar unter Rechtliche Identität & E-Rechnung.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclPeriodQuarter": "Vierteljährlich",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
   },
   "vatDeclPrepared": "Vorbereitet",
   "@vatDeclPrepared": {

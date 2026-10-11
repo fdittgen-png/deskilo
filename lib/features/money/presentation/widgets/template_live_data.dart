@@ -11,6 +11,7 @@ import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
 import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';
+import '../../../../core/time/date_text.dart';
 
 /// #1061 — the live data for the designer's SELECTED document, or null
 /// when the app has none yet (→ simulated sample data). Moved out of
@@ -32,7 +33,7 @@ Map<String, Object?>? liveReportData(
     case 'statement':
       final now = ref.read(clockProvider).now();
       final period =
-          '${now.year}-${now.month.toString().padLeft(2, '0')}';
+          yearMonth(now.year, now.month);
       final statement =
           ref.read(myStatementProvider(period)).value;
       final workspace = ref.read(currentWorkspaceProvider).value;
@@ -61,7 +62,7 @@ Map<String, Object?>? liveReportData(
       final names = ref.read(memberNamesProvider).value ?? const {};
       final now = ref.read(clockProvider).now();
       final period =
-          '${now.year}-${now.month.toString().padLeft(2, '0')}';
+          yearMonth(now.year, now.month);
       if (me == null) return null;
       return paymentsReportData(
           reportStringsFor(context), paymentsFactsOf(ref, period),

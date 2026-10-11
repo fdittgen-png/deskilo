@@ -106,7 +106,7 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
             controller: _controller,
             scrollDirection: Axis.horizontal,
             padding: widget.padding,
-            child: widget.child!,
+            child: widget.child,
           ),
     );
     if (!_more && !_before) return scroll;

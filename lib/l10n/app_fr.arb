@@ -11462,6 +11462,19 @@
   "@vatDeclBoxes": {
     "description": "Header of the official-box mapping (CA3/UStVA)"
   },
+  "vatDeclCorrectionOf": "Régularisation de {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Une déclaration déposée ne change jamais. Ce qui a changé ensuite dans une période déposée — une facture annulée, un paiement enregistré tardivement — est déclaré ici comme régularisation de cette déclaration.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  },
   "vatDeclDisclaimer": "Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
@@ -11505,6 +11518,35 @@
   "vatDeclPeriod": "Période",
   "@vatDeclPeriod": {
     "description": "Filing-period label"
+  },
+  "vatDeclPeriodAnnual": "Annuelle",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodField": "Périodicité de la déclaration de TVA",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodHint": "La fréquence à laquelle vous déposez la déclaration. L’écran de la déclaration de TVA ne propose que des périodes de cette durée.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodMonth": "Mensuelle",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodNote": "Périodicité : {period}. Modifiable sous Identité légale et facturation électronique.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclPeriodQuarter": "Trimestrielle",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
   },
   "vatDeclPrepared": "Préparée",
   "@vatDeclPrepared": {

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
+import '../../../core/time/date_text.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
 
@@ -58,7 +61,7 @@ class SageAccounts {
 }
 
 String sageFileName(int year, int month) =>
-    'Sage_Audit_$year${month.toString().padLeft(2, '0')}.csv';
+    'Sage_Audit_${yearMonth(year, month, separator: '')}.csv';
 
 /// Builds the Sage 50 audit-trail CSV for one period.
 ///
@@ -75,16 +78,10 @@ String buildSageFile({
   const header = 'Type,Account Reference,Nominal A/C Ref,Department Code,'
       'Date,Reference,Details,Net Amount,Tax Code,Tax Amount';
 
-  String q(String value) =>
-      '"${value.replaceAll(RegExp(r'[\r\n]+'), ' ').replaceAll('"', "'")}"';
-  // #1077 — two decimals is CORRECT here: Sage 50's audit-trail CSV is
-  // the British and Irish shape, and both GBP and EUR carry two.
-  String money(int cents) => (cents / 100).toStringAsFixed(2);
-  // Sage 50 is a UK product and reads DD/MM/YYYY. An ISO date imports as
-  // a different day for the first twelve of every month, which is the
-  // kind of error nobody notices until a VAT quarter is wrong.
-  String date(DateTime d) => '${d.day.toString().padLeft(2, '0')}/'
-      '${d.month.toString().padLeft(2, '0')}/${d.year}';
+  // Sage 50 is a UK product and reads DD/MM/YYYY (`dmy`). An ISO date
+  // imports as a different day for the first twelve of every month,
+  // which is the kind of error nobody notices until a VAT quarter is
+  // wrong.
 
   final rows = <String>[header];
 
@@ -101,15 +98,17 @@ String buildSageFile({
   }) =>
       rows.add([
         type,
-        q(customer),
+        csvCell(customer, dialect: CsvDialect.sage, quoteEmpty: true),
         nominal,
         '0', // no departmental analysis; Sage requires the column
-        date(on),
-        q(reference),
-        q(details),
-        money(netCents),
+        dmy(on),
+        csvCell(reference, dialect: CsvDialect.sage, quoteEmpty: true),
+        csvCell(details, dialect: CsvDialect.sage, quoteEmpty: true),
+        // #1077 — two decimals is CORRECT here: Sage 50's audit-trail CSV
+        // is the British and Irish shape, and both GBP and EUR carry two.
+        minorToText(netCents, 'EUR'),
         taxCode,
-        money(taxCents),
+        minorToText(taxCents, 'EUR'),
       ].join(','));
 
   for (final invoice in invoices) {

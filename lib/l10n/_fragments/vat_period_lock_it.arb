@@ -1,0 +1,45 @@
+{
+  "@@locale": "it",
+  "vatDeclPeriodField": "Periodicità della dichiarazione IVA",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodMonth": "Mensile",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodQuarter": "Trimestrale",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
+  },
+  "vatDeclPeriodAnnual": "Annuale",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodHint": "Con quale frequenza Lei presenta la dichiarazione. La schermata della dichiarazione IVA offre solo periodi di questa durata.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodNote": "Periodicità: {period}. Può modificarla in Identità legale e fatturazione elettronica.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionOf": "Rettifica di {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Una dichiarazione presentata non cambia mai. Ciò che è cambiato in seguito in un periodo dichiarato — una fattura annullata, un pagamento registrato in ritardo — è dichiarato qui come rettifica di quella dichiarazione.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  }
+}

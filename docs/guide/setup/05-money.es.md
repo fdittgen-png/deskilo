@@ -287,6 +287,7 @@ Quiere saber qué le pedirá el IVA antes de activarlo.
 - Se incluye un catálogo de tipos para los Estados miembros de la UE, Suiza, Noruega y Canadá. Mantenerlo al día cuando un gobierno cambia un tipo es cosa suya.
 - Si está registrado y no hay un tipo predeterminado en vigor, el servidor se niega a emitir. La descripción de **Gestión del IVA** y el aviso de la pantalla de identidad legal lo dicen.
 - El servidor calcula cada declaración a partir de sus facturas, cobros y devengos. Preséntela usted mismo ante la administración tributaria y márquela como presentada con la referencia del justificante: la aplicación no transmite nada.
+- Elija con qué frecuencia declara en **Periodo de declaración del IVA**, en la identidad legal. Un periodo presentado queda bloqueado: lo que cambie en él después se declara como corrección en la declaración siguiente.
 - El diario de declaraciones tiene su propia serie de numeración.
 
 **Véase también:** [Régimen de IVA](help:user.money.vat.regime) · [Cuándo se devenga el IVA](help:user.money.vat.due)

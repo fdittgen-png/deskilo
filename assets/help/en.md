@@ -4873,6 +4873,8 @@ You want the VAT of a period computed from your invoices and payments, ready to 
 - It exists only under the VAT-registered regime. The note at the top says when the period's VAT falls due.
 - The server computes the figures, from the invoices, the payments recorded one by one and each invoice's tax point. Each rate is split by category: standard, reverse charge, exempt and zero-rated stay apart. Settlements are left out; their payment counts for the invoices they regroup.
 - A return goes **Draft** → **Prepared** → **Filed**. Preparing again replaces the figures; once filed, nothing changes it. If an invoice or a payment of the period changed since you prepared it, the app refuses to mark it filed until you prepare it again.
+- The **Period** list offers only periods of the length chosen under **VAT return period** in [Legal identity & e-invoicing](app:/legal-identity) — monthly, quarterly or annual; quarterly until you choose. A period that overlaps a filed return cannot be prepared.
+- A filed period is locked. If something in it changes afterwards — an invoice voided, a payment recorded late with an earlier date — the filed return stays as it was, and the next return you prepare carries the difference as a **Correction of** that period, on its own line. Filing that return records the correction, so it is declared once. On the French form the corrections go to lines 15 (VAT to pay back) and 21 (other VAT to deduct); elsewhere they add to the rate's boxes of the current period.
 - The app does not transmit a return: France files through EDI-TVA or the professional space on impots.gouv, Germany through ELSTER. The e-invoicing platform carries invoices only.
 - It is a filing aid, not tax advice. Verify it against your accounting before filing.
 
@@ -7518,6 +7520,7 @@ You want to know what VAT will ask of you before you switch it on.
 - A catalogue of rates ships for the EU member states, Switzerland, Norway and Canada. Keeping it current when a government changes a rate is your job.
 - Registered without a default rate in force, the server refuses to issue. The description of **VAT management** and the warning on the legal identity screen say so.
 - The server computes each return from your invoices, payments and tax points. File it yourself with the tax authority, then mark it filed with the receipt reference it gave you: the app transmits nothing.
+- Choose how often you file under **VAT return period** on the legal identity. A filed period is locked: what changes in it later is declared as a correction in the next return.
 - The declaration journal has its own number series.
 
 **See also:** [VAT regime](help:user.money.vat.regime) · [When VAT falls due](help:user.money.vat.due)
@@ -8576,6 +8579,17 @@ declaration's figures are computed by the server (`compute_vat_return`,
 owner with the tax authority's receipt reference, and a filed one never
 changes. The app transmits no return: France files through EDI-TVA or
 impots.gouv, Germany through ELSTER.
+
+**Period locks** (#2357, ADR 0039). Each filing records what the return
+declared, per invoice, tax point and rate (`vat_return_entries`). A
+filed period is locked: when something in it changes later — a void, a
+payment recorded late — the filed row stays byte-identical, and the next
+return carries the difference as correction lines naming the return
+they correct (CA3 lines 15/21; the rate boxes elsewhere). A period that
+overlaps a filed one cannot be prepared. How often the return is filed —
+monthly, quarterly or annual — is stored with the legal identity
+(`invoice_legal.vat_declaration_period`) and travels with the
+configuration and the setup questionnaire.
 
 A country's full rate catalogue ships with the app (EU27, CH, NO, CA);
 keeping it current when a government changes a rate is yours.

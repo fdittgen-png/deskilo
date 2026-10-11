@@ -102,9 +102,9 @@ List<String> publicNetworkBindingProblems(
     for (final e in Map<String, dynamic>.from(
       op['input'] as Map? ?? const {},
     ).entries) {
-      final keys = (Map<String, dynamic>.from(
+      final keys = Map<String, dynamic>.from(
         (schemas[e.value] as Map)['fields'] as Map,
-      )).keys.toSet();
+      ).keys.toSet();
       final body = latest(
         RegExp(
           'function public\\.${b['rpc']}\\([\\s\\S]*?k not in \\(([^)]*)\\)',

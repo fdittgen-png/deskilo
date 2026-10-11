@@ -2,6 +2,7 @@
 //
 // #2185 — a member's favourite mark and 0-5 star rating of a bookable place
 // (a seat, a desk, an office or a level), and the place's average.
+import '../../../core/data/json_reader.dart';
 
 /// What a mark or a rating is about: any resource but a person — a seat, a
 /// desk, an office, a level, a service, an accessory, or a whole workspace.
@@ -27,12 +28,16 @@ class PlaceFeedback {
     this.mine,
   });
 
-  factory PlaceFeedback.fromJson(Map<String, dynamic> json) => PlaceFeedback(
-        favorite: json['favorite'] as bool? ?? false,
-        average: (json['average'] as num?)?.toDouble(),
-        count: (json['count'] as num?)?.toInt() ?? 0,
-        mine: (json['mine'] as num?)?.toInt(),
-      );
+  /// #2387 — read through [JsonReader].
+  factory PlaceFeedback.fromJson(Map<String, dynamic> json) {
+    final r = JsonReader(json, context: 'place_feedback');
+    return PlaceFeedback(
+      favorite: r.boolOr('favorite', false),
+      average: r.doubleOrNull('average'),
+      count: r.intOrNull('count') ?? 0,
+      mine: r.intOrNull('mine'),
+    );
+  }
 
   final bool favorite;
   final double? average;

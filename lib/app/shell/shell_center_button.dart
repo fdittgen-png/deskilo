@@ -117,7 +117,7 @@ class ShellCenterButton extends ConsumerWidget {
         boxShadow: [
           BoxShadow(
             color: theme.colorScheme.primary
-                .withValues(alpha: lerpDouble(0.30, 0.20, t)!),
+                .withValues(alpha: lerpDouble(0.30, 0.20, t)),
             blurRadius: lerpDouble(14, 22, t)!,
             offset: Offset(0, lerpDouble(4, 7, t)!),
           ),
@@ -133,7 +133,7 @@ class ShellCenterButton extends ConsumerWidget {
         ),
         elevation: lerpDouble(4, 7, t)!,
         shadowColor:
-            Colors.black.withValues(alpha: lerpDouble(0.4, 0.28, t)!),
+            Colors.black.withValues(alpha: lerpDouble(0.4, 0.28, t)),
         clipBehavior: Clip.antiAlias,
         child: Ink(
           decoration: BoxDecoration(shape: BoxShape.circle, gradient: gradient),

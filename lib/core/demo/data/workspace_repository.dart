@@ -40,6 +40,7 @@ import 'package:deskilo/features/workspace/domain/template_publication.dart';
 import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
 import 'package:deskilo/features/workspace/domain/workspace_settings_save.dart';
 import 'package:deskilo/features/workspace/domain/workspace_template.dart';
+import '../../time/date_text.dart';
 
 /// In-memory [WorkspaceRepository] for tests.
 class FakeWorkspaceRepository implements WorkspaceRepository {
@@ -1680,8 +1681,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
     bool apply = false,
   }) async {
     holidayImportCalls.add((days: List.of(days), apply: apply));
-    String month(DateTime d) =>
-        '${d.year}-${d.month.toString().padLeft(2, '0')}';
+    String month(DateTime d) => yearMonth(d.year, d.month);
     bool present(DateTime d) => closureDays.any(
         (c) => c.workspaceId == workspaceId && c.day == d);
     final answer = [

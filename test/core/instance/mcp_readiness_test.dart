@@ -114,6 +114,18 @@ void main() {
       'auth_url_mismatch',
     ),
     (
+      '#2393 the authorization server does not advertise S256 PKCE',
+      readyEvidence(
+        authDiscovery: {
+          'issuer': fixtureAuthUrl,
+          'code_challenge_methods_supported': ['plain'],
+        },
+      ),
+      'authorization_server_pkce',
+      CheckOutcome.fail,
+      'S256',
+    ),
+    (
       'the stated native issuer is not this Auth',
       readyEvidence(
         database: _with(
@@ -185,7 +197,10 @@ void main() {
         database: db,
         authUrl: Uri.parse(fixtureAuthUrl),
         authConfig: auth,
-        authDiscovery: const {'issuer': fixtureAuthUrl},
+        authDiscovery: const {
+          'issuer': fixtureAuthUrl,
+          'code_challenge_methods_supported': ['S256'],
+        },
         jwks: const {
           'keys': [
             {'kty': 'EC'},
@@ -325,7 +340,10 @@ void main() {
         database: db,
         authUrl: Uri.parse(fixtureAuthUrl),
         authConfig: auth,
-        authDiscovery: const {'issuer': fixtureAuthUrl},
+        authDiscovery: const {
+          'issuer': fixtureAuthUrl,
+          'code_challenge_methods_supported': ['S256'],
+        },
       ),
       'endpoint_epoch',
       CheckOutcome.unknown,
@@ -448,7 +466,10 @@ void main() {
       database: oidc,
       authUrl: Uri.parse(fixtureAuthUrl),
       authConfig: auth,
-      authDiscovery: const {'issuer': fixtureAuthUrl},
+      authDiscovery: const {
+          'issuer': fixtureAuthUrl,
+          'code_challenge_methods_supported': ['S256'],
+        },
       canonicalDiscovery: const {'issuer': canonical},
       federationProvider: provider,
       canonicalClient: client,
@@ -693,7 +714,10 @@ void main() {
         schemaMarker: 312,
         database: measured,
         authUrl: Uri.parse(fixtureAuthUrl),
-        authDiscovery: const {'issuer': fixtureAuthUrl},
+        authDiscovery: const {
+          'issuer': fixtureAuthUrl,
+          'code_challenge_methods_supported': ['S256'],
+        },
         jwks: const {
           'keys': [
             {'kty': 'EC', 'alg': 'ES256'},

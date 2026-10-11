@@ -99,7 +99,7 @@ class PsqlSupabaseManagement implements SupabaseManagement {
     this.functionSlugs = const [],
     this.status = 'ACTIVE_HEALTHY',
     PsqlRunner? runner,
-  }) : assert(psql.isNotEmpty),
+  }) : assert(psql.isNotEmpty, 'the psql executable path is required'),
        _run = runner ?? _runProcess;
 
   /// The command that starts `psql`, e.g.

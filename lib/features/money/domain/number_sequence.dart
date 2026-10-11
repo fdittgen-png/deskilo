@@ -5,6 +5,8 @@
 // 0164) inside the transaction that issues the document — gapless, O(1),
 // and serialised only against writers of the same series. This is the
 // owner's view of the format and the counter, never a way to take one.
+import '../../../core/time/date_text.dart';
+
 enum NumberDatePart { none, year, yearMonth }
 
 enum NumberReset { never, yearly, monthly }
@@ -150,7 +152,7 @@ class NumberSequence {
   /// preview is the truth once saved.
   String format(int value, DateTime at) {
     final y = at.year.toString().padLeft(4, '0');
-    final m = at.month.toString().padLeft(2, '0');
+    final m = twoDigits(at.month);
     final date = switch (datePart) {
       NumberDatePart.none => '',
       NumberDatePart.year => '$y-',

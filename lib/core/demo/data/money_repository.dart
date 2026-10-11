@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoicing_wizard.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -35,6 +36,7 @@ import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'workspace_status_computation.dart';
 import '../../../features/money/domain/reminder_evidence.dart';
+import '../../time/date_text.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -50,9 +52,22 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 — the basis the fake prepares on (the server reads the space's).
   VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
 
-  /// Prepares the period like `save_vat_declaration` (0402): the figures
-  /// are computed here from the fake's own invoices, matches and
-  /// instalments with the Dart engine the SQL is the twin of.
+  /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
+  final List<VatDeclaredAmount> vatDeclared = [];
+
+  /// The return of [start]..[end], filed periods locked (`vat_return_lines`).
+  List<VatReturnAmount> _vatReturn(DateTime start, DateTime end) {
+    final view = accountingView(invoices, invoiceMatchesStore);
+    return vatReturnAmountsOf(vatTaxPointLedger(view.invoices,
+            matches: view.matches,
+            instalments: invoiceInstalmentsStore,
+            basis: vatReturnBasis),
+        start: start, end: end,
+        locks: vatPeriodLocksOf(vatDeclarations), declared: vatDeclared);
+  }
+
+  /// Prepares the period like `save_vat_declaration` (0402/0406) with
+  /// the Dart engine the SQL is the twin of.
   @override
   Future<String> saveVatDeclaration({
     required String workspaceId,
@@ -64,18 +79,13 @@ class FakeMoneyRepository implements MoneyRepository {
     if (existing != -1 && vatDeclarations[existing].isFiled) {
       throw StateError('declaration already filed for this period');
     }
-    final view = accountingView(invoices, invoiceMatchesStore);
-    final amounts = vatTaxPointLedger(
-      view.invoices,
-      matches: view.matches,
-      instalments: invoiceInstalmentsStore,
-      basis: vatReturnBasis,
-    );
-    final lines = vatDeclarationLinesOf(amounts, periodStart, periodEnd);
-    final documents = {
-      for (final a in amounts)
-        if (a.within(periodStart, periodEnd)) a.invoiceId,
-    };
+    if (vatPeriodLocksOf(vatDeclarations).any((l) =>
+        !l.start.isAfter(periodEnd) && !l.end.isBefore(periodStart))) {
+      throw StateError('this period overlaps a filed return');
+    }
+    final amounts = _vatReturn(periodStart, periodEnd);
+    final lines = vatReturnLinesOf(amounts, declarations: vatDeclarations);
+    final documents = {for (final a in amounts) a.invoiceId};
     final declaration = VatDeclaration(
       id: existing != -1
           ? vatDeclarations[existing].id
@@ -117,6 +127,7 @@ class FakeMoneyRepository implements MoneyRepository {
       throw StateError('the receipt reference is required');
     }
     if (!d.isPrepared) throw StateError('prepare the return before filing it');
+    vatDeclared.addAll(vatDeclaredBy(_vatReturn(d.periodStart, d.periodEnd)));
     vatDeclarations[index] = VatDeclaration(
       id: d.id,
       workspaceId: d.workspaceId,
@@ -704,8 +715,7 @@ class FakeMoneyRepository implements MoneyRepository {
       amountCents: -invoice.totalCents,
       description: 'Refund ${invoice.number}'
           '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-      period:
-          '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+      period: yearMonth(kTestNow.year, kTestNow.month),
       createdAt: kTestNow,
     ));
     invoiceMatchesStore[invoiceId] = InvoiceMatch(
@@ -755,8 +765,7 @@ class FakeMoneyRepository implements MoneyRepository {
       category: LedgerCategory.payment,
       amountCents: amountCents,
       description: description,
-      period: period ??
-          '${now.year}-${now.month.toString().padLeft(2, '0')}',
+      period: period ?? yearMonth(now.year, now.month),
       createdAt: now,
     ));
     return id;
@@ -775,8 +784,7 @@ class FakeMoneyRepository implements MoneyRepository {
       category: LedgerCategory.adjustment,
       amountCents: amountCents,
       description: description,
-      period: period ??
-          '${now.year}-${now.month.toString().padLeft(2, '0')}',
+      period: period ?? yearMonth(now.year, now.month),
       createdAt: now,
     ));
     return id;
@@ -854,7 +862,7 @@ class FakeMoneyRepository implements MoneyRepository {
         description: 'Credit note ${invoice.number}'
             '${trimmed.isEmpty ? '' : ' — $trimmed'}',
         period:
-            '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+            yearMonth(kTestNow.year, kTestNow.month),
         createdAt: kTestNow,
       ));
     }
@@ -1104,8 +1112,7 @@ class FakeMoneyRepository implements MoneyRepository {
     // Spare credit only: an avoir of any month, or a payment left over
     // from a PAST month — running-month payments offset the upcoming
     // invoice and stay ordinary payments.
-    final nowPeriod =
-        '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}';
+    final nowPeriod = yearMonth(kTestNow.year, kTestNow.month);
     final credit = ledger
         .where((e) =>
             e.memberId == memberId &&
@@ -1607,7 +1614,7 @@ class FakeMoneyRepository implements MoneyRepository {
             'amount_cents': service.priceCents * quantity,
             'vat_percent': _vatPercentOf(service.vatRateId),
             'period': period ??
-                '${now.year}-${now.month.toString().padLeft(2, '0')}',
+                yearMonth(now.year, now.month),
           },
           status: EventStatus.pending,
           createdAt: now,

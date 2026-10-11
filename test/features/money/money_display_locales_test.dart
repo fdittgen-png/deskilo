@@ -10,7 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 String _digits(String s) => s.replaceAll(RegExp(r'[^0-9]'), '');
 
 void main() {
-  setUpAll(() => initializeDateFormatting());
+  setUpAll(initializeDateFormatting);
   const locales = ['en', 'fr', 'de', 'es', 'it'];
   const cases = [
     ('CAD', 114975),

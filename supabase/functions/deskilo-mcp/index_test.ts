@@ -10,7 +10,18 @@
 // keep the JSON-RPC id and the request UUID apart and associated, and a
 // relabelled answer is refused.
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { handle, projectData, LIMITS, REFUSAL_TEXT, summarize } from "./index.ts";
+import { exportJWK, generateKeyPair, type KeyLike, SignJWT } from "npm:jose@5.9.6";
+import { handle, projectData, LIMITS, REFUSAL_TEXT, SDK_VERSION, summarize } from "./index.ts";
+import { MCP_TOOLS } from "../_shared/mcp_contract.ts";
+
+/** #2393 — valid availability arguments, so a test reaches the facade. */
+const AVAILABILITY = {
+  workspace_id: "6b1d3f0e-0000-4000-8000-000000000002",
+  starts_at: "2030-01-01T08:00:00Z",
+  ends_at: "2030-01-01T12:00:00Z",
+};
+/** #2393 — the project's published signing keys, when a test serves them. */
+let jwks: unknown = null;
 
 function jwt(claims: Record<string, unknown>): string {
   const b = (o: unknown) => btoa(JSON.stringify(o)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
@@ -44,6 +55,9 @@ globalThis.fetch = async (input: string | URL | Request, init?: RequestInit) => 
   const token = (headers.get("Authorization") ?? "").replace("Bearer ", "");
   const body = init?.body ? JSON.parse(String(init.body)) : null;
   calls.push({ path: url.pathname, token, body, epoch: headers.get("x-deskilo-mcp-epoch") });
+  if (url.pathname === "/auth/v1/.well-known/jwks.json" && jwks !== null) {
+    return Response.json(jwks);
+  }
   if (url.pathname === "/auth/v1/user") {
     return Response.json({ id: token === ALICE ? "alice" : "bob", aud: "authenticated" });
   }
@@ -85,13 +99,13 @@ async function rpc(token: string | null, method: string, params: unknown = {}, e
 
 const init = { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "test", version: "1" } };
 
-Deno.test("initialize answers the protocol and advertises tools only", async () => {
+Deno.test("initialize answers the protocol and advertises tools, resources and prompts", async () => {
   const r = await rpc(ALICE, "initialize", init);
   assertEquals(r.status, 200);
   assertEquals(r.json.result.protocolVersion, "2025-06-18");
   assert(r.json.result.capabilities.tools);
-  assertEquals(r.json.result.capabilities.resources, undefined);
-  assertEquals(r.json.result.capabilities.prompts, undefined);
+  assert(r.json.result.capabilities.resources);
+  assert(r.json.result.capabilities.prompts);
 });
 
 Deno.test("tools/list is the caller's own, and two callers never share it", async () => {
@@ -251,7 +265,9 @@ Deno.test("browser clients can read the authentication challenge", async () => {
 
 Deno.test("text-only clients receive the same projected data", async () => {
   envelope = { status: "completed", data: { window: { starts_at: "2030-01-01", private_note: "hidden" } } };
-  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: {} });
+  // #2393 — a client before 2025-06-18 reads text only: it gets the envelope as text.
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: AVAILABILITY },
+    { "mcp-protocol-version": "2025-03-26" });
   const json = r.json.result.content.find((c: {text?: string}) => c.text?.startsWith("{"));
   assert(json);
   assertEquals(JSON.parse(json.text), r.json.result.structuredContent);
@@ -261,7 +277,7 @@ Deno.test("text-only clients receive the same projected data", async () => {
 Deno.test("output limits count UTF-8 bytes, including workspace discovery", async () => {
   const large = "界".repeat(100_000);
   envelope = { status: "completed", data: { window: { starts_at: large } } };
-  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: {} });
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: AVAILABILITY });
   assertEquals(r.json.result.isError, true);
   assertEquals(r.json.result.structuredContent, undefined);
   discoveredWorkspaces = [{ workspace_id: "w", name: large }];
@@ -491,8 +507,151 @@ Deno.test("#2145 the statement is always the caller's own: a member id is refuse
     arguments: { workspace_id: "6b1d3f0e-0000-4000-8000-000000000002", member_id: "6b1d3f0e-0000-4000-8000-000000000004", period: "2026-09" },
   });
   assertEquals(r.json.result.isError, true);
-  assert(r.json.result.content[0].text.includes("unknown field member_id"));
+  assertEquals(r.json.result.structuredContent.error.fields, { member_id: "unknown_field" });
+  assert(r.json.result.content[0].text.includes("member_id: unknown_field"));
   assertEquals(calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length, before);
+});
+
+// ── #2393 — the distance to the specification and the SDK ─────────────
+
+Deno.test("#2393 arguments are checked against the schema before the database, each field named", async () => {
+  const before = calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length;
+  const ten = await rpc(ALICE, "tools/call", {
+    name: "deskilo_list_my_reservations",
+    arguments: { workspace_id: AVAILABILITY.workspace_id, from: "2030-01-01T00:00:00Z", to: "2030-01-02T00:00:00Z", limit: "ten" },
+  });
+  assertEquals(ten.json.result.isError, true);
+  assertEquals(ten.json.result.structuredContent.status, "validation_error");
+  assertEquals(ten.json.result.structuredContent.error, { code: "invalid_arguments", fields: { limit: "invalid_integer" } });
+  const offsetless = await rpc(ALICE, "tools/call", {
+    name: "deskilo_create_reservation",
+    arguments: { request_id: "6b1d3f0e-0000-4000-8000-000000000001", workspace_id: AVAILABILITY.workspace_id,
+                 seat_id: "6b1d3f0e-0000-4000-8000-000000000003", starts_at: "2030-01-01T08:00:00", ends_at: "2030-01-01T12:00:00Z" },
+  });
+  assertEquals(offsetless.json.result.structuredContent.error.fields, { starts_at: "invalid_datetime" });
+  const many = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: { limit: 101, kind: "sofa" } });
+  const fields = many.json.result.structuredContent.error.fields;
+  assertEquals(fields.workspace_id, "required");
+  assertEquals(fields.starts_at, "required");
+  assertEquals(fields.limit, "too_large");
+  assertEquals(calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length, before, "no RPC was made");
+});
+
+Deno.test("#2393 an unsigned or wrongly signed bearer is refused without an Auth call; a valid one still asks Auth", async () => {
+  const project = await generateKeyPair("ES256");
+  const stranger = await generateKeyPair("ES256");
+  jwks = { keys: [{ ...(await exportJWK(project.publicKey)), kid: "k1", alg: "ES256", use: "sig" }] };
+  const sign = (key: KeyLike, issuer = "https://stub.supabase.test/auth/v1") =>
+    new SignJWT({ role: "authenticated", client_id: "claude-test" })
+      .setProtectedHeader({ alg: "ES256", kid: "k1" }).setSubject("alice")
+      .setIssuer(issuer).setIssuedAt().setExpirationTime("5m").sign(key);
+  const b = (o: unknown) => btoa(JSON.stringify(o)).replace(/=+$/, "").replace(/\+/g, "-").replace(/\//g, "_");
+  const unsigned = `${b({ alg: "none" })}.${b({ sub: "alice", role: "authenticated", client_id: "claude-test" })}.`;
+  try {
+    for (const forged of [unsigned, await sign(stranger.privateKey), await sign(project.privateKey, "https://evil.test/auth/v1")]) {
+      const before = calls.filter((c) => c.path === "/auth/v1/user").length;
+      const r = await rpc(forged, "tools/list");
+      assertEquals(r.status, 401);
+      assertEquals(calls.filter((c) => c.path === "/auth/v1/user").length, before, "Auth was not asked");
+    }
+    const before = calls.filter((c) => c.path === "/auth/v1/user").length;
+    const genuine = await rpc(await sign(project.privateKey), "tools/list");
+    assertEquals(genuine.status, 200);
+    assertEquals(calls.filter((c) => c.path === "/auth/v1/user").length, before + 1, "a valid token still goes through getUser");
+  } finally { jwks = null; }
+});
+
+Deno.test("#2393 the protected-resource metadata names its scopes and resource, at both paths", async () => {
+  for (const path of ["/functions/v1/deskilo-mcp/.well-known/oauth-protected-resource",
+                      "/functions/v1/deskilo-mcp/.well-known/oauth-protected-resource/functions/v1/deskilo-mcp"]) {
+    const res = await handle(new Request(`https://stub.supabase.test${path}`));
+    assertEquals(res.status, 200, path);
+    const body = await res.json();
+    assertEquals(body.resource_name, "DesKilo");
+    assertEquals(body.scopes_supported, ["openid", "email", "profile"]);
+    assertEquals(body.authorization_servers, ["https://stub.supabase.test/auth/v1"]);
+  }
+  const get = await handle(new Request("https://stub.supabase.test/functions/v1/deskilo-mcp"));
+  assertEquals(get.status, 405);
+  assertEquals(get.headers.get("Allow"), "POST, OPTIONS");
+});
+
+Deno.test("#2393 a rate limit is also an HTTP 429 with Retry-After", async () => {
+  envelope = { schema_version: 1, status: "rate_limited", data: { retry_after: 17 }, error: { code: "rate_limited" } };
+  try {
+    const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_capabilities", arguments: { workspace_id: AVAILABILITY.workspace_id } });
+    assertEquals(r.status, 429);
+    assertEquals(r.headers.get("Retry-After"), "17");
+    assertEquals(r.json.result.structuredContent.status, "rate_limited");
+  } finally { envelope = { schema_version: 1, status: "completed", data: {} }; }
+});
+
+Deno.test("#2393 a structured client's answer counts the envelope once", async () => {
+  envelope = { schema_version: 1, status: "completed", data: {} };
+  const r = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: AVAILABILITY });
+  assertEquals(r.json.result.content.length, 1, "the summary only: the envelope is structuredContent");
+  assert(!r.json.result.content[0].text.startsWith("{"));
+});
+
+Deno.test("#2393 resources and the prompt follow the caller's own operations", async () => {
+  discoveredWorkspaces = [{ workspace_id: AVAILABILITY.workspace_id, name: "Main", operations: ["get_capabilities"] }];
+  const saved = operationsOf[ALICE];
+  try {
+    const listed = await rpc(ALICE, "resources/list");
+    assertEquals(listed.json.result.resources.map((r: { uri: string }) => r.uri), [
+      `deskilo://workspace/${AVAILABILITY.workspace_id}/capabilities`,
+      `deskilo://workspace/${AVAILABILITY.workspace_id}/booking-periods`,
+    ]);
+    assertEquals((await rpc(BOB, "resources/list")).json.result.resources.length, 2,
+      "the same workspaces stub answers Bob; his own operations decide the rest");
+    envelope = { schema_version: 1, status: "completed",
+      data: { time_zone: "Europe/Paris", booking_periods: [{ period: "morning" }], private_note: "hidden" } };
+    const read = await rpc(ALICE, "resources/read", { uri: `deskilo://workspace/${AVAILABILITY.workspace_id}/booking-periods` });
+    const text = JSON.parse(read.json.result.contents[0].text);
+    assertEquals(text.time_zone, "Europe/Paris");
+    assert(!read.json.result.contents[0].text.includes("hidden"));
+    const sent = calls.findLast((c) => c.path === "/rest/v1/rpc/mcp_execute_v1")!.body as Record<string, unknown>;
+    assertEquals([sent.p_operation, sent.p_workspace_id], ["get_capabilities", AVAILABILITY.workspace_id], "through the facade");
+    envelope = { schema_version: 1, status: "denied", error: { code: "no_consent" } };
+    const refused = await rpc(ALICE, "resources/read", { uri: `deskilo://workspace/${AVAILABILITY.workspace_id}/capabilities` });
+    assert(refused.json.error, "a refused read is an error, never data");
+    operationsOf[ALICE] = ["get_capabilities", "list_my_favorites", "create_reservation"];
+    const prompts = await rpc(ALICE, "prompts/list");
+    assertEquals(prompts.json.result.prompts.map((p: { name: string }) => p.name), ["book_usual_seat"]);
+    assertEquals((await rpc(BOB, "prompts/list")).json.result.prompts, []);
+    const prompt = await rpc(ALICE, "prompts/get", { name: "book_usual_seat", arguments: { when: "Friday afternoon" } });
+    assert(prompt.json.result.messages[0].content.text.includes("Friday afternoon"));
+    assert(prompt.json.result.messages[0].content.text.includes("deskilo_create_reservation"));
+  } finally {
+    operationsOf[ALICE] = saved;
+    discoveredWorkspaces = [];
+    envelope = { schema_version: 1, status: "completed", data: {} };
+  }
+});
+
+Deno.test("#2393 the SDK is the version the conformance tests ran against, in every import", async () => {
+  const source = await Deno.readTextFile(new URL("./index.ts", import.meta.url));
+  const versions = [...source.matchAll(/npm:@modelcontextprotocol\/sdk@([0-9.]+)\//g)].map((m) => m[1]);
+  assert(versions.length >= 3);
+  for (const v of versions) assertEquals(v, SDK_VERSION, "bump SDK_VERSION only after the conformance run");
+  assertEquals(SDK_VERSION, "1.30.1");
+});
+
+Deno.test("#2393 tools/list matches the reviewed golden: names, titles, annotations, schema digests", async () => {
+  const digest = async (o: unknown) => Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",
+    new TextEncoder().encode(JSON.stringify(o))))).map((x) => x.toString(16).padStart(2, "0")).join("").slice(0, 16);
+  const current: Record<string, unknown> = {};
+  for (const [id, t] of Object.entries(MCP_TOOLS) as [string, Record<string, unknown>][]) {
+    current[id] = { name: t.name, title: t.title, annotations: t.annotations,
+                    input: await digest(t.inputSchema), output: await digest(t.outputSchema) };
+  }
+  const goldenUrl = new URL("./tools_list.golden.json", import.meta.url);
+  if (Deno.env.get("UPDATE_GOLDEN") === "1") {
+    await Deno.writeTextFile(goldenUrl, JSON.stringify(current, null, 2) + "\n");
+  }
+  const golden = JSON.parse(await Deno.readTextFile(goldenUrl));
+  assertEquals(current, golden,
+    "a contract change reached tools/list: review it, then UPDATE_GOLDEN=1 deno test --allow-all supabase/functions/deskilo-mcp/index_test.ts");
 });
 
 const PLACE_RENDER = JSON.stringify({

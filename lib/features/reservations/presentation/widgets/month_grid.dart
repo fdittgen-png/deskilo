@@ -12,6 +12,7 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 
 /// Fixed geometry of the month availability calendar. Pinned by test.
 abstract final class MonthGridMetrics {
@@ -56,9 +57,7 @@ class MonthGrid extends ConsumerWidget {
   static Key cellKey(DateTime day) =>
       ValueKey('month-cell-${_stamp(day)}');
 
-  static String _stamp(DateTime day) =>
-      '${day.year}-${day.month.toString().padLeft(2, '0')}-'
-      '${day.day.toString().padLeft(2, '0')}';
+  static String _stamp(DateTime day) => isoDay(day);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

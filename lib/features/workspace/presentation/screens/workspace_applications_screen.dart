@@ -99,7 +99,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                             .previousPageTooltip,
                         onPressed: _pages.isEmpty
                             ? null
-                            : () => setState(() => _pages.removeLast()),
+                            : () => setState(_pages.removeLast),
                         icon: const Icon(Icons.chevron_left),
                       ),
                       IconButton(

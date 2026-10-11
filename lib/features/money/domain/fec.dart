@@ -2,6 +2,9 @@
 import 'package:meta/meta.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/number_text.dart';
+import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import 'ledger_entry.dart';
 import 'vat_regime.dart';
@@ -89,9 +92,7 @@ const List<String> fecColumns = [
 String fecFileName(String legalId, DateTime fiscalYearEnd,
     {bool development = false}) {
   final siren = legalId.replaceAll(RegExp('[^0-9]'), '');
-  final stamp = '${fiscalYearEnd.year}'
-      '${fiscalYearEnd.month.toString().padLeft(2, '0')}'
-      '${fiscalYearEnd.day.toString().padLeft(2, '0')}';
+  final stamp = ymd(fiscalYearEnd);
   // #936 — a development workspace's books must never pass for the real
   // ones: the name says so before anyone opens the file.
   return '${development ? 'DEV-' : ''}${siren.isEmpty ? 'FEC' : siren}FEC$stamp.txt';
@@ -150,14 +151,9 @@ String buildFecFile({
   String vatPendingLabel = "TVA collectée en attente d'exigibilité",
   DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
 }) {
-  String money(int cents) =>
-      // #1077 — two decimals is CORRECT here: the FEC is a French tax
-      // filing format and the French tax authority denominates it in
-      // euro. Not a hardcoded-euro bug; do not "fix" it.
-      (cents / 100).toStringAsFixed(2).replaceAll('.', ',');
-  String stamp(DateTime date) => '${date.year}'
-      '${date.month.toString().padLeft(2, '0')}'
-      '${date.day.toString().padLeft(2, '0')}';
+  // #1077 — two decimals is CORRECT here: the FEC is a French tax
+  // filing format and the French tax authority denominates it in euro.
+  // Not a hardcoded-euro bug; do not "fix" it. Dates are YYYYMMDD (`ymd`).
   // A tab is the separator, so a tab inside a label would shift columns.
   String clean(String text) =>
       text.replaceAll(RegExp(r'[\t\r\n]+'), ' ').trim();
@@ -195,21 +191,21 @@ String buildFecFile({
       journal,
       journalLabel,
       number,
-      stamp(date),
+      ymd(date),
       account,
       clean(accountLabel),
       auxNumber,
       clean(auxLabel),
       clean(pieceRef),
-      stamp(pieceDate),
+      ymd(pieceDate),
       clean(label),
-      money(debitCents),
-      money(creditCents),
+      minorToText(debitCents, 'EUR', decimalSeparator: ','),
+      minorToText(creditCents, 'EUR', decimalSeparator: ','),
       letter,
       // No automatic reconciliation date: the lettering is the app's, the
       // date belongs to whoever reconciles the bank.
       '',
-      stamp(validDate),
+      ymd(validDate),
       '',
       '',
     ]);
@@ -366,9 +362,10 @@ String buildFecFile({
     ].fold(0, (a, b) => a + b));
     for (final total in breakdown) {
       // With several rates the entry label says which one, so a human
-      // reading the journal can tell the lines apart.
+      // reading the journal can tell the lines apart: '20' or '5,5', as
+      // a rate reads in a French journal.
       final rateLabel = manyRates || total.percent > 0
-          ? '$label ${_percent(total.percent)} %'
+          ? '$label ${percentText(total.percent, decimalSeparator: ',')} %'
           : label;
       write(
         journal: _salesJournal,
@@ -590,9 +587,3 @@ String buildFecFile({
     for (final row in sorted) row.join('\t'),
   ].join('\r\n');
 }
-
-/// '20' or '5,5' — a rate as it reads in a French journal, where the
-/// comma is the decimal separator.
-String _percent(double percent) => percent == percent.roundToDouble()
-    ? percent.toStringAsFixed(0)
-    : percent.toString().replaceAll('.', ',');

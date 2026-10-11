@@ -435,7 +435,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         association: association, period: invoice.period),
     activityText: (entry) => annexEntryText(words, entry),
     strings: strings,
-    money: (cents) => currency.formatMinor(cents),
+    money: currency.formatMinor,
     dateLabel: dateLabel,
     // The stored title is the raw period ('2026-07'); the document reads
     // the month like a human would.
