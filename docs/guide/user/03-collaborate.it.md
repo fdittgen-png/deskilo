@@ -356,6 +356,7 @@ Vuole tutte le sue conversazioni in un unico elenco, a qualunque spazio o server
 **Da sapere**
 
 - Le conversazioni dei suoi altri server collegati compaiono nello stesso elenco, con il nome del server.
+- Solo le persone di una conversazione possono aprirla; i proprietari e gli amministratori di uno spazio non possono leggerla. I messaggi non sono cifrati end-to-end: chi gestisce il server su cui vive una conversazione può tecnicamente accedervi. Veda [I suoi dati, i suoi diritti](help:user.privacy.consent).
 - Un messaggio che ha scritto mostra una spunta quando è consegnato e una doppia spunta blu una volta letto.
 - Una conversazione archiviata conserva la sua cronologia. Una silenziata resta muta ma viene comunque conteggiata.
 - Dallo spazio di lavoro, **Apri i miei messaggi** (in Avvisi) porta qui.

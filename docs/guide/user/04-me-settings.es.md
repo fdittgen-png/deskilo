@@ -647,7 +647,7 @@ Usted quiere volver a leer lo que aceptó sobre sus datos.
 
 1. Abra [Privacidad y datos](app:/privacy).
 2. Toque **Sus datos, sus derechos**.
-3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
+3. Lea el texto: qué se trata y dónde, qué no se hace nunca, quién ve qué, los mensajes, las notificaciones push, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
 **Conviene saber**
 

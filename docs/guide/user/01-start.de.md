@@ -169,6 +169,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 - Die Leiste trägt die Aufschrift **Demo** und bleibt über jedem Bildschirm, damit Sie sie nicht mit einem echten Space verwechseln.
 - Denselben Bildschirm als Inhaber, als Administratorin und als Mitglied zu sehen, ist der schnellste Weg zu lernen, was jede Rolle kann.
 - Die Demo bleibt auf diesem Gerät. Wenn Sie sie verlassen, entsteht kein Konto.
+- **Entdecken** unter Ich listet den Demo-Space und zwei erfundene Nachbarn, Le Quai Numérique und La Fabrique des Halles. Lesen Sie eine Seite und ihre **Angebote und Preise**, bitten Sie um Aufnahme oder **An die Gastgeber schreiben**: Die Demo antwortet, und niemand Echtes erhält etwas. Als Inhaber oder Administrator finden Sie unter **Nachrichten** die Besuchsanfrage einer Unbekannten, die Sie beantworten können.
 
 **Siehe auch:** [Was DesKilo ist und wer was tut](help:user.start.what-is) · [Konto erstellen oder anmelden](help:user.start.account)
 
@@ -246,7 +247,7 @@ Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, 
 
 **Gut zu wissen**
 
-- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. Diese Demo hat keinen, deshalb ist die Karte hier leer.
+- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. In der Demo zeigt die Karte den Demo-Space und zwei erfundene Nachbarn; ihre Seiten, eine Aufnahmeanfrage und eine Nachricht an ihre Gastgeber bleiben in der Demo.
 - Sie können ohne Konto stöbern; zum Beitreten brauchen Sie eines.
 
 **Siehe auch:** [Einem Workspace beitreten](help:user.start.join)

@@ -356,6 +356,7 @@ Vous voulez toutes vos conversations dans une seule liste, quel que soit l'espac
 **Bon à savoir**
 
 - Les conversations de vos autres serveurs connectés apparaissent dans la même liste, avec le serveur nommé.
+- Seules les personnes d'une conversation peuvent l'ouvrir ; les propriétaires et les administrateurs d'un espace ne peuvent pas la lire. Les messages ne sont pas chiffrés de bout en bout : la personne qui fait tourner le serveur où vit une conversation peut techniquement y accéder. Voir [Vos données, vos droits](help:user.privacy.consent).
 - Un message que vous avez écrit affiche une coche lorsqu'il est remis et une double coche bleue une fois lu.
 - Une conversation archivée garde son historique. Une conversation en sourdine reste silencieuse mais est toujours comptée.
 - Depuis l'espace, **Ouvrir ma messagerie** (dans Alertes) mène ici.

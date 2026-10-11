@@ -230,6 +230,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 - La barra è contrassegnata da **Demo** e resta sopra ogni schermata, così non può scambiarla per uno spazio reale.
 - Vedere la stessa schermata come proprietario, amministratore e membro è il modo più rapido per capire che cosa può fare ciascun ruolo.
 - La demo resta su questo dispositivo. Uscirne non crea un account.
+- **Scopri** in Io elenca lo spazio dimostrativo e due vicini inventati, Le Quai Numérique e La Fabrique des Halles. Legga una pagina e i suoi **Piani e prezzi**, chieda di aderire o usi **Scrivi ai gestori**: risponde la demo e nessuna persona reale riceve nulla. Come proprietario o amministratore, in **Messaggi** trova la richiesta di visita di una sconosciuta a cui rispondere.
 
 **Vedi anche:** [Che cos'è DesKilo e chi fa cosa](#che-cosè-deskilo-e-chi-fa-cosa) · [Creare un account o accedere](#creare-un-account-o-accedere)
 
@@ -307,7 +308,7 @@ Non ha un codice ma vorrebbe trovare uno spazio vicino a Lei. Gli spazi che pubb
 
 **Da sapere**
 
-- Sono elencati solo gli spazi che hanno scelto di essere visibili. Questa demo non ne ha, quindi qui la mappa è vuota.
+- Sono elencati solo gli spazi che hanno scelto di essere visibili. Nella demo la mappa mostra lo spazio dimostrativo e due vicini inventati; le loro pagine, una richiesta di adesione e un messaggio ai loro gestori restano nella demo.
 - Può guardare senza un account; per aderire ne serve uno.
 
 **Vedi anche:** [Aderire a uno spazio](#aderire-a-uno-spazio)
@@ -1458,6 +1459,7 @@ Vuole tutte le sue conversazioni in un unico elenco, a qualunque spazio o server
 **Da sapere**
 
 - Le conversazioni dei suoi altri server collegati compaiono nello stesso elenco, con il nome del server.
+- Solo le persone di una conversazione possono aprirla; i proprietari e gli amministratori di uno spazio non possono leggerla. I messaggi non sono cifrati end-to-end: chi gestisce il server su cui vive una conversazione può tecnicamente accedervi. Veda [I suoi dati, i suoi diritti](#i-suoi-dati-i-suoi-diritti).
 - Un messaggio che ha scritto mostra una spunta quando è consegnato e una doppia spunta blu una volta letto.
 - Una conversazione archiviata conserva la sua cronologia. Una silenziata resta muta ma viene comunque conteggiata.
 - Dallo spazio di lavoro, **Apri i miei messaggi** (in Avvisi) porta qui.
@@ -2276,7 +2278,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 
 1. Apra [Privacy e dati](https://fdittgen-png.github.io/deskilo/#/privacy).
 2. Tocchi **I suoi dati, i suoi diritti**.
-3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
+3. Legga il testo: che cosa viene trattato e dove, che cosa non viene mai fatto, chi vede che cosa, i messaggi, le notifiche push, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
 

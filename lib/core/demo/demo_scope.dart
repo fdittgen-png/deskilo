@@ -189,8 +189,13 @@ List<Override> demoOverrides(DemoFixture fixture) {
       accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
       // #1824 — the messenger of every server, one in-memory one each.
       // #2327 — this server's is the fixture's, seeded; any other is empty.
+      // #2405 — this server named by its origin is this server too, as
+      // `ConnectedInstallations.use` reads it: a listed space's inquiry
+      // lands in the fixture's messenger.
       messengerRepositoryProvider.overrideWith((ref, source) =>
-          source.isEmpty ? fixture.messenger : FakeMessengerRepository()),
+          source.isEmpty || source == kDemoServerOrigin
+              ? fixture.messenger
+              : FakeMessengerRepository()),
       accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),

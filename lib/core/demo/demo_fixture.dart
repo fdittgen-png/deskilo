@@ -192,7 +192,7 @@ class DemoFixture {
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
-      messenger: demoMessenger(today),
+      messenger: demoMessenger(today, actingMember: () => actor.memberId),
       biViews: demoBiViews(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),

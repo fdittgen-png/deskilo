@@ -3107,7 +3107,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentControllerBody =>
-      'Jeder Workspace wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen (Deutschland) veröffentlicht; das Backend ist Supabase in der EU. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
+      'Jeder Space wird von seinem Inhaber betrieben — Ihrer Gemeinschaft —, der Mitglieder, Preise und Zahlungsanbieter bestimmt. Jeder Server wird von seinem Betreiber betrieben: der gemeinsame Referenzserver von Florian Dittgen (Deutschland), der eigene Server einer Gemeinschaft von dem, der ihn betreibt. Die App ist freie Software (AGPL-3.0-or-later) und wird von Florian Dittgen veröffentlicht. Online-Zahlungen laufen über den vom Inhaber aktivierten Anbieter (PayPal, Stripe, Mollie, Wero) zu dessen Bedingungen.';
 
   @override
   String get consentControllerTitle => 'Wer verantwortlich ist';
@@ -3117,11 +3117,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bevor Sie DesKilo nutzen: was die App mit Ihren Daten tut, wer sie sehen kann und was Sie tun können. Zwei Minuten; mehr ist es nicht.';
 
   @override
+  String get consentMessagesBody =>
+      'Nur die Personen einer Unterhaltung können sie öffnen: Sie beide, die Mitglieder einer Gruppe oder, wenn Sie einem Space schreiben, die Gastgeber, die die App vor dem Senden nennt. Inhaber und Admins eines Space können Ihre Unterhaltungen nicht lesen. Nachrichten sind nicht Ende-zu-Ende-verschlüsselt: Sie liegen auf dem Server, auf dem die Unterhaltung lebt — auf einem anderen Server, nach Ihrer Bestätigung, wenn Sie jemandem dort schreiben —, und wer diesen Server betreibt, kann technisch auf sie zugreifen.';
+
+  @override
+  String get consentMessagesTitle => 'Nachrichten';
+
+  @override
   String get consentNotBody =>
-      'Kein Tracking, keine Analytik, keine Werbung, kein Verkauf oder Teilen von Daten. Push-Nachrichten tragen keinen Inhalt — nur „Sie haben eine neue Nachricht“; die App selbst schreibt den Text. Die F-Droid-Version hat gar keine Google-Dienste.';
+      'Kein Tracking, keine Analytik, keine Werbung, kein Verkauf von Daten. Ihre Daten gehen an niemanden außer an die Empfänger, die hier und im Hinweis des Servers genannt sind. Die F-Droid-Version hat gar keine Google-Dienste.';
 
   @override
   String get consentNotTitle => 'Was DesKilo nie tut';
+
+  @override
+  String get consentPushBody =>
+      'Optional, und ausgehend. Wenn der Betreiber des Servers Push eingerichtet hat, Ihr Space es nutzt und es für dieses Gerät an ist, gehen die Adresse dieses Geräts und jede Benachrichtigung an den Push-Dienst (Firebase Cloud Messaging, das Benachrichtigungen für Apple-Geräte an Apple weitergibt). Eine Benachrichtigung sagt nur etwas Allgemeines, etwa „Sie haben eine neue Nachricht“: keine Namen, keine Uhrzeiten, kein Nachrichtentext. Schalten Sie es unter Einstellungen → Datenschutz & Daten aus; die App funktioniert weiter, und an dieses Gerät wird nichts mehr gesendet.';
+
+  @override
+  String get consentPushTitle => 'Push-Benachrichtigungen';
 
   @override
   String get consentReadInHelp => 'In der Hilfe lesen';
@@ -3131,14 +3145,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentRetentionBody =>
-      'Solange Sie Mitglied sind. Wenn Sie gehen und löschen, verschwinden Profil und Nachrichten; Buchhaltungsbelege (Rechnungen, Zahlungen) bleiben für die gesetzliche Aufbewahrungsfrist, nach Kennung und nicht nach Name.';
+      'Solange Sie Mitglied sind. Wenn Sie einen Space verlassen und löschen, verschwinden Ihre Nachrichten in diesem Space, und Ihr Profil geht mit Ihrem letzten Space. Buchhaltungsbelege bleiben für die gesetzliche Aufbewahrungsfrist: das Kontobuch nach Kennung, Rechnungen so, wie sie ausgestellt wurden.';
 
   @override
   String get consentRetentionTitle => 'Wie lange';
 
   @override
   String get consentReviewBody =>
-      'Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Projekt-Wiki verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.';
+      'Dieser Text bleibt in Einstellungen → Datenschutz & Daten, in der App-Hilfe (Datenschutz) und im Online-Benutzerhandbuch verfügbar. Eine Änderung des Textes fragt erneut nach Ihrer Zustimmung.';
 
   @override
   String get consentReviewHint =>
@@ -3166,14 +3180,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get consentWhatBody =>
-      'Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Workspace tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt in der EU (Supabase, eu-central-1).';
+      'Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Space tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt auf dem Server, auf dem Ihr Space läuft: auf dem gemeinsamen Referenzserver in der EU (Supabase, eu-central-1); auf einem Server, den eine Gemeinschaft selbst betreibt, dort, wo ihr Betreiber es gewählt hat. Einstellungen → Datenschutz & Daten zeigt den Hinweis dieses Servers: wer ihn betreibt, wo die Daten liegen und wer sie erhält.';
 
   @override
   String get consentWhatTitle => 'Was DesKilo verarbeitet';
 
   @override
   String get consentWhoBody =>
-      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Workspace (der Plan zeigt die Belegung); Nachrichten nur die Personen der Unterhaltung, gleich welcher Rolle; Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
+      'Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Space (der Plan zeigt die Belegung); Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Jede Angabe Ihres Profils sieht nur das Publikum, das Sie unter Wer mich sieht wählen; nichts ist öffentlich, wenn Sie es nicht wählen. Ein öffentliches Profil bleibt aus, bis Sie es veröffentlichen: Dann liest jeder mit dem Link Ihren Namen, Beruf und Ihre Kurzbiografie — nie Ihre Kontaktdaten, Ihre Anwesenheit oder Ihre Spaces —, bis Sie es zurückziehen. Einstellungen → Datenschutz & Daten nennt die Personen und listet, wer tatsächlich nachgesehen hat.';
 
   @override
   String get consentWhoTitle => 'Wer was sehen kann';

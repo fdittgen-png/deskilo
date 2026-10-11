@@ -8,6 +8,8 @@ import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -207,6 +209,97 @@ void main() {
     }
     expect(_shows('Finance against last year'), isTrue);
     expect(_shows('Quarter by quarter'), isTrue);
+  });
+
+  // ── #2405: a second space a visitor can follow to the end ──────────
+
+  Future<void> openListed(WidgetTester tester, String id) async {
+    await _go(tester, '/discover');
+    await tester.tap(find.byKey(const ValueKey('directory-portal-list')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    final tile = find.byKey(
+      ValueKey('directory-locate-$kDemoServerOrigin-$id'),
+      skipOffstage: false,
+    );
+    await tester.ensureVisible(tile);
+    await tester.tap(tile);
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+  }
+
+  testWidgets('the second space ends inside the demo: its page, its '
+      'conditions, a request to join and a message to its hosts', (
+    tester,
+  ) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.member);
+    await openListed(tester, 'demo-quai');
+
+    expect(_shows('Le Quai Numérique'), isTrue);
+    expect(find.textContaining('Day pass €18'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('portal-request-membership')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    expect(journey.fixture.directory.requests, ['demo-quai']);
+    expect(find.textContaining('Request sent'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('write-to-hosts')));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    expect(_shows('Inès Caradec'), isTrue, reason: 'the hosts are named '
+        'before anything is written');
+    await tester.enterText(
+      find.byKey(const ValueKey('inquiry-body')),
+      'Could I visit on Thursday?',
+    );
+    await tester.tap(find.byKey(const ValueKey('inquiry-send')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    final sent = journey.fixture.messenger.inboxRows.where(
+      (row) => row['workspace_id'] == 'demo-quai',
+    );
+    expect(sent, hasLength(1), reason: 'the inquiry lands in the fixture');
+    expect(sent.single['context_kind'], MessageContextKind.inquiryOut.wire);
+    expect(journey.fixture.outward.nothingLeft, isTrue);
+    // The thread's capture shield asks the platform with a 5 s deadline,
+    // on the way in and on the way out.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 6));
+  });
+
+  testWidgets('the space\'s own card offers to enter it, not to join it', (
+    tester,
+  ) async {
+    await pumpDemo(tester, persona: DemoPersona.owner);
+    await openListed(tester, 'ws-1');
+
+    expect(find.byKey(const ValueKey('portal-enter')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('portal-request-membership')),
+      findsNothing,
+    );
+  });
+
+  test('a stranger\'s visit request reaches the hosts, not the members',
+      () async {
+    final fixture = DemoFixture.build();
+    Future<bool> listed() async => (await fixture.messenger.inbox()).any(
+          (row) => row['context_id'] == 'demo-inquiry-visit',
+        );
+    for (final persona in DemoPersona.values) {
+      fixture.becomePersona(persona);
+      expect(
+        await listed(),
+        persona == DemoPersona.owner || persona == DemoPersona.admin,
+        reason: persona.name,
+      );
+    }
   });
 
   testWidgets('Me › Messages holds a message request from the applicant', (

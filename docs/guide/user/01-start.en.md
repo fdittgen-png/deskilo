@@ -169,6 +169,7 @@ You want to look around before you commit to anything. The demo is a made-up spa
 - The strip is marked **Demo** and stays above every screen, so you cannot mistake it for a real space.
 - Seeing the same screen as the owner, an administrator and a member is the quickest way to learn what each role can do.
 - The demo stays on this device. Leaving it does not create an account.
+- **Discover** in Me lists the demo space and two invented neighbours, Le Quai Numérique and La Fabrique des Halles. Read a page and its **Plans and prices**, ask to join or **Write to the hosts**: the demo answers, and nobody real receives anything. As the owner or an administrator, **Messages** holds a stranger's visit request to answer.
 
 **See also:** [What DesKilo is and who does what](help:user.start.what-is) · [Create an account or sign in](help:user.start.account)
 
@@ -246,7 +247,7 @@ You do not have a code but you would like to find a space near you. Spaces that 
 
 **Good to know**
 
-- Only spaces that chose to be visible are listed. This demo has none, so the map is empty here.
+- Only spaces that chose to be visible are listed. In the demo, the map shows the demo space and two invented neighbours; their pages, a request to join and a message to their hosts all stay inside the demo.
 - You can look without an account; joining needs one.
 
 **See also:** [Join a workspace](help:user.start.join)

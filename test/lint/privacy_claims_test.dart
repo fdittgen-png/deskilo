@@ -36,6 +36,9 @@ const _erasureExtension =
 /// that only knows the file it was written against proves nothing.
 final List<String> _documents = [
   'PRIVACY.md',
+  // #2405 — the published policy the stores link to said the ledger was
+  // anonymised long after PRIVACY.md stopped saying it.
+  'web/privacy.html',
   'docs/SPECIFICATION.md',
   'docs/decisions/0006-quota-overage-billing.md',
   for (final guide in [

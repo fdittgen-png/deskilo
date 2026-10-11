@@ -24,6 +24,10 @@ class FakeMessengerRepository implements MessengerRepository {
   /// `my_inbox` rows.
   final inboxRows = <Map<String, dynamic>>[];
 
+  /// #2405 — which rows the signed-in person's inbox answers with, as the
+  /// server answers `my_inbox` per account; null shows every row.
+  bool Function(Map<String, dynamic> row)? inboxVisible;
+
   // ── groups of people (0384) ─────────────────────────────────────────
   final groups = <String, AccountGroupInfo>{};
   final groupRoster = <String, List<GroupMember>>{};
@@ -348,7 +352,8 @@ class FakeMessengerRepository implements MessengerRepository {
   @override
   Future<List<Map<String, dynamic>>> inbox() async {
     _check();
-    return inboxRows;
+    final visible = inboxVisible;
+    return visible == null ? inboxRows : inboxRows.where(visible).toList();
   }
 
   @override

@@ -219,6 +219,7 @@ Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener
 - Die Leiste trägt die Aufschrift **Demo** und bleibt über jedem Bildschirm, damit Sie sie nicht mit einem echten Space verwechseln.
 - Denselben Bildschirm als Inhaber, als Administratorin und als Mitglied zu sehen, ist der schnellste Weg zu lernen, was jede Rolle kann.
 - Die Demo bleibt auf diesem Gerät. Wenn Sie sie verlassen, entsteht kein Konto.
+- **Entdecken** unter Ich listet den Demo-Space und zwei erfundene Nachbarn, Le Quai Numérique und La Fabrique des Halles. Lesen Sie eine Seite und ihre **Angebote und Preise**, bitten Sie um Aufnahme oder **An die Gastgeber schreiben**: Die Demo antwortet, und niemand Echtes erhält etwas. Als Inhaber oder Administrator finden Sie unter **Nachrichten** die Besuchsanfrage einer Unbekannten, die Sie beantworten können.
 
 **Siehe auch:** [Was DesKilo ist und wer was tut](help:user.start.what-is) · [Konto erstellen oder anmelden](help:user.start.account)
 
@@ -293,7 +294,7 @@ Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, 
 
 **Gut zu wissen**
 
-- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. Diese Demo hat keinen, deshalb ist die Karte hier leer.
+- Nur Spaces, die sichtbar sein wollten, werden aufgelistet. In der Demo zeigt die Karte den Demo-Space und zwei erfundene Nachbarn; ihre Seiten, eine Aufnahmeanfrage und eine Nachricht an ihre Gastgeber bleiben in der Demo.
 - Sie können ohne Konto stöbern; zum Beitreten brauchen Sie eines.
 
 **Siehe auch:** [Einem Workspace beitreten](help:user.start.join)
@@ -1397,6 +1398,7 @@ Sie möchten alle Ihre Unterhaltungen in einer Liste, gleich zu welchem Space od
 **Gut zu wissen**
 
 - Unterhaltungen von Ihren anderen verbundenen Servern erscheinen in derselben Liste, mit dem Namen des Servers.
+- Nur die Personen einer Unterhaltung können sie öffnen; Inhaber und Administratoren eines Space können sie nicht lesen. Nachrichten sind nicht Ende-zu-Ende-verschlüsselt: Wer den Server betreibt, auf dem eine Unterhaltung liegt, kann technisch darauf zugreifen. Siehe [Ihre Daten, Ihre Rechte](help:user.privacy.consent).
 - Eine Nachricht, die Sie geschrieben haben, zeigt einen Haken, wenn sie zugestellt ist, und einen blauen Doppelhaken, sobald sie gelesen wurde.
 - Eine archivierte Unterhaltung behält ihren Verlauf. Eine stummgeschaltete bleibt still, wird aber weiter mitgezählt.
 - Aus dem Workspace führt **Meine Nachrichten öffnen** (in den Hinweisen) hierher.
@@ -2180,7 +2182,7 @@ Sie möchten noch einmal nachlesen, was Sie zu Ihren Daten akzeptiert haben.
 
 1. Öffnen Sie [Datenschutz & Daten](app:/privacy).
 2. Tippen Sie auf **Ihre Daten, Ihre Rechte**.
-3. Lesen Sie den Text: was verarbeitet wird, was nie geschieht, wer was sieht, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
+3. Lesen Sie den Text: was verarbeitet wird und wo, was nie geschieht, wer was sieht, Nachrichten, Push-Benachrichtigungen, wer verantwortlich ist, wie lange und welche Rechte Sie haben.
 
 **Gut zu wissen**
 

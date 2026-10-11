@@ -647,7 +647,7 @@ Vous voulez relire ce que vous avez accepté au sujet de vos données.
 
 1. Ouvrez [Confidentialité et données](app:/privacy).
 2. Touchez **Vos données, vos droits**.
-3. Lisez le texte : ce qui est traité, ce qui n'est jamais fait, qui voit quoi, qui est responsable, pendant combien de temps, et vos droits.
+3. Lisez le texte : ce qui est traité et où, ce qui n'est jamais fait, qui voit quoi, les messages, les notifications push, qui est responsable, pendant combien de temps, et vos droits.
 
 **Bon à savoir**
 

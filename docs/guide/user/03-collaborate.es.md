@@ -356,6 +356,7 @@ Usted quiere todas sus conversaciones en una sola lista, sea cual sea el espacio
 **Conviene saber**
 
 - Las conversaciones de sus otros servidores conectados aparecen en la misma lista, con el servidor indicado.
+- Solo las personas de una conversación pueden abrirla; los propietarios y administradores de un espacio no pueden leerla. Los mensajes no están cifrados de extremo a extremo: quien gestiona el servidor donde vive una conversación puede acceder a ella técnicamente. Vea [Sus datos, sus derechos](help:user.privacy.consent).
 - Un mensaje que ha escrito muestra una marca cuando se entrega y una doble marca azul cuando se lee.
 - Una conversación archivada conserva su historial. Una silenciada permanece callada, pero se sigue contando.
 - Desde el espacio, **Abrir mi mensajería** (en Alertas) conduce hasta aquí.

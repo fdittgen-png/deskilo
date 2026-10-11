@@ -230,6 +230,7 @@ Vous voulez jeter un coup d'œil avant de vous engager. La démo est un espace f
 - La bande porte la mention **Démo** et reste au-dessus de chaque écran : vous ne pouvez donc pas la confondre avec un espace réel.
 - Voir le même écran en tant que propriétaire, administrateur et membre est le moyen le plus rapide de comprendre ce que chaque rôle peut faire.
 - La démo reste sur cet appareil. La quitter ne crée pas de compte.
+- **Découvrir** dans Moi liste l'espace de démonstration et deux voisins inventés, Le Quai Numérique et La Fabrique des Halles. Lisez une page et ses **Formules et tarifs**, demandez à rejoindre ou **Écrire aux hôtes** : c'est la démo qui répond, et personne de réel ne reçoit quoi que ce soit. En propriétaire ou en administrateur, **Messages** contient une demande de visite d'une inconnue, à laquelle répondre.
 
 **Voir aussi:** [Ce qu'est DesKilo et qui fait quoi](#ce-quest-deskilo-et-qui-fait-quoi) · [Créer un compte ou se connecter](#créer-un-compte-ou-se-connecter)
 
@@ -307,7 +308,7 @@ Vous n'avez pas de code mais aimeriez trouver un espace près de chez vous. Les 
 
 **Bon à savoir**
 
-- Seuls les espaces qui ont choisi d'être visibles sont listés. Cette démo n'en a aucun : la carte est donc vide ici.
+- Seuls les espaces qui ont choisi d'être visibles sont listés. Dans la démo, la carte montre l'espace de démonstration et deux voisins inventés ; leur page, une demande pour les rejoindre et un message à leurs hôtes restent dans la démo.
 - Vous pouvez regarder sans compte ; pour rejoindre un espace, il en faut un.
 
 **Voir aussi:** [Rejoindre un espace](#rejoindre-un-espace)
@@ -1458,6 +1459,7 @@ Vous voulez toutes vos conversations dans une seule liste, quel que soit l'espac
 **Bon à savoir**
 
 - Les conversations de vos autres serveurs connectés apparaissent dans la même liste, avec le serveur nommé.
+- Seules les personnes d'une conversation peuvent l'ouvrir ; les propriétaires et les administrateurs d'un espace ne peuvent pas la lire. Les messages ne sont pas chiffrés de bout en bout : la personne qui fait tourner le serveur où vit une conversation peut techniquement y accéder. Voir [Vos données, vos droits](#vos-données-vos-droits).
 - Un message que vous avez écrit affiche une coche lorsqu'il est remis et une double coche bleue une fois lu.
 - Une conversation archivée garde son historique. Une conversation en sourdine reste silencieuse mais est toujours comptée.
 - Depuis l'espace, **Ouvrir ma messagerie** (dans Alertes) mène ici.
@@ -2276,7 +2278,7 @@ Vous voulez relire ce que vous avez accepté au sujet de vos données.
 
 1. Ouvrez [Confidentialité et données](https://fdittgen-png.github.io/deskilo/#/privacy).
 2. Touchez **Vos données, vos droits**.
-3. Lisez le texte : ce qui est traité, ce qui n'est jamais fait, qui voit quoi, qui est responsable, pendant combien de temps, et vos droits.
+3. Lisez le texte : ce qui est traité et où, ce qui n'est jamais fait, qui voit quoi, les messages, les notifications push, qui est responsable, pendant combien de temps, et vos droits.
 
 **Bon à savoir**
 

@@ -29,7 +29,9 @@ Future<FakeProfileRepository> pump(WidgetTester tester,
     ],
     accepted: accepted,
   );
-  tester.view.physicalSize = const Size(800, 1600);
+  // #2405 — nine sections now: tall enough that the lazy list builds the
+  // last one and the acceptance line under it.
+  tester.view.physicalSize = const Size(800, 2600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await tester.pumpWidget(ProviderScope(

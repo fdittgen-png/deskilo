@@ -169,6 +169,7 @@ Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Ate
 - La barra è contrassegnata da **Demo** e resta sopra ogni schermata, così non può scambiarla per uno spazio reale.
 - Vedere la stessa schermata come proprietario, amministratore e membro è il modo più rapido per capire che cosa può fare ciascun ruolo.
 - La demo resta su questo dispositivo. Uscirne non crea un account.
+- **Scopri** in Io elenca lo spazio dimostrativo e due vicini inventati, Le Quai Numérique e La Fabrique des Halles. Legga una pagina e i suoi **Piani e prezzi**, chieda di aderire o usi **Scrivi ai gestori**: risponde la demo e nessuna persona reale riceve nulla. Come proprietario o amministratore, in **Messaggi** trova la richiesta di visita di una sconosciuta a cui rispondere.
 
 **Vedi anche:** [Che cos'è DesKilo e chi fa cosa](help:user.start.what-is) · [Creare un account o accedere](help:user.start.account)
 
@@ -246,7 +247,7 @@ Non ha un codice ma vorrebbe trovare uno spazio vicino a Lei. Gli spazi che pubb
 
 **Da sapere**
 
-- Sono elencati solo gli spazi che hanno scelto di essere visibili. Questa demo non ne ha, quindi qui la mappa è vuota.
+- Sono elencati solo gli spazi che hanno scelto di essere visibili. Nella demo la mappa mostra lo spazio dimostrativo e due vicini inventati; le loro pagine, una richiesta di adesione e un messaggio ai loro gestori restano nella demo.
 - Può guardare senza un account; per aderire ne serve uno.
 
 **Vedi anche:** [Aderire a uno spazio](help:user.start.join)

@@ -5,11 +5,17 @@ import '../../backend/auth_secret_store.dart';
 import '../../backend/backend_settings.dart';
 import '../../backend/connected_installations.dart';
 
+/// #2405 — the demo's one server: the origin every synthetic space in the
+/// demo's directory lives on, so its pages answer from the fixture as a
+/// space on this device's own server would. `.invalid` resolves nowhere
+/// (RFC 2606), and no client built on it is ever asked to connect.
+const kDemoServerOrigin = 'https://demo.invalid';
+
 class FakeConnectedInstallations extends ConnectedInstallations {
   FakeConnectedInstallations()
     : super(
         SupabaseClient(
-          'https://demo.invalid',
+          kDemoServerOrigin,
           'sb_publishable_demo',
           authOptions: const AuthClientOptions(autoRefreshToken: false),
         ),
