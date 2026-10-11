@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0403 (#2357) — a filed VAT period is locked; what changes in it later
+-- 0406 (#2357) — a filed VAT period is locked; what changes in it later
 -- is declared as a correction in the next return (ADR 0039).
 --
 -- A filed return never changes (0402). Until now that was all: an
@@ -61,7 +61,7 @@ create policy vat_return_entries_select on public.vat_return_entries
 create policy mcp_delegated_deny on public.vat_return_entries as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
--- A return filed before 0403: its period is locked with what its tax
+-- A return filed before 0406: its period is locked with what its tax
 -- points amount to today. An earlier filed return keeps the tax points
 -- two filed periods share.
 insert into public.vat_return_entries
@@ -415,4 +415,4 @@ revoke execute on function public.mark_vat_declaration_submitted(
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(403);
+select public.set_deskilo_schema_version(406);

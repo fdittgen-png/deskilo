@@ -31,7 +31,7 @@ the United Kingdom as an error correction on the next return.
 ## Decision
 Option 2.
 
-1. `vat_return_entries` (0403): written once, by
+1. `vat_return_entries` (0406): written once, by
    `mark_vat_declaration_submitted`, under the filing's writer token;
    never updated, never deleted except by the cascade of its return or
    workspace (a trigger refuses the rest). Readable by whoever reads the
@@ -59,7 +59,7 @@ Option 2.
    the totals include them, so the period's net payable is right. The
    form mapping sends them to CA3 lines 15 (VAT due back) and 21 (VAT to
    deduct) in France and folds them into the rate boxes elsewhere.
-7. **Returns filed before 0403** are locked with the ledger as it stood
+7. **Returns filed before 0406** are locked with the ledger as it stood
    when the migration ran. What changed between their filing and that day
    cannot be attributed any more and is not corrected. That is the honest
    limit of a backfill; it is said here rather than guessed.

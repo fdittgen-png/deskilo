@@ -30,7 +30,7 @@ class VatDeclarationLine {
   final int vatCents;
   final int invoiceCount;
 
-  /// #2357 (0403) — a CORRECTION line: what changed, after it was filed,
+  /// #2357 (0406) — a CORRECTION line: what changed, after it was filed,
   /// in the return [corrects] names (its period [correctsStart] ..
   /// [correctsEnd]). '' on the period's own lines.
   final String corrects;

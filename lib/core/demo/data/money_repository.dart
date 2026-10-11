@@ -51,7 +51,7 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 — the basis the fake prepares on (the server reads the space's).
   VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
 
-  /// #2357 (0403) — what each filed return declared (`vat_return_entries`).
+  /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
   final List<VatDeclaredAmount> vatDeclared = [];
 
   /// The return of [start]..[end] with the filed periods locked, as
@@ -81,7 +81,7 @@ class FakeMoneyRepository implements MoneyRepository {
     );
   }
 
-  /// Prepares the period like `save_vat_declaration` (0402/0403): the
+  /// Prepares the period like `save_vat_declaration` (0402/0406): the
   /// figures are computed here from the fake's own invoices, matches and
   /// instalments with the Dart engine the SQL is the twin of.
   @override

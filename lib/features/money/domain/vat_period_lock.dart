@@ -8,7 +8,7 @@
 // UStG in the period of the change, UK error correction on the next
 // return).
 //
-// The SQL twin is `vat_return_lines` (0403): the return of a period is
+// The SQL twin is `vat_return_lines` (0406): the return of a period is
 // its own tax points that no filed return of another period covers,
 // then, for every filed period that ended before it, what those tax
 // points amount to now minus what the filed returns declared for them

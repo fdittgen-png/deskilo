@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2357 — a filed VAT period is locked (0403, ADR 0039). A German space
+-- #2357 — a filed VAT period is locked (0406, ADR 0039). A German space
 -- files September; an invoice of that September is voided in October.
 -- The filed row stays byte-identical, September's recomputation no
 -- longer holds the invoice, and October's return carries the difference
