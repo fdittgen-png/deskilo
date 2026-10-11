@@ -4,6 +4,7 @@
 // received, by when the space answers (one calendar month, or the
 // extended date with its reason), and what happened, store by store.
 // And, before erasing, what goes and what stays.
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
 
 /// The kinds of request the server accepts.
@@ -16,11 +17,8 @@ const rightsRequestKinds = [
   'erasure',
 ];
 
-DateTime? _date(Object? raw) {
-  if (raw is! String) return null;
-  final d = DateTime.parse(raw);
-  return DateTime(d.year, d.month, d.day);
-}
+/// The calendar day of a `date` column, as a local midnight.
+DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 
 class RightsRequest implements SystemStamped {
   const RightsRequest({
@@ -37,21 +35,28 @@ class RightsRequest implements SystemStamped {
     this.outcome = const {},
   });
 
-  factory RightsRequest.fromJson(Map<String, dynamic> json) => RightsRequest(
-    system: SystemColumns.fromRow(json),
-    id: json['id'] as String,
-    kind: json['kind'] as String,
-    status: json['status'] as String? ?? 'received',
-    receivedAt: DateTime.parse(json['received_at'] as String).toLocal(),
-    dueOn: _date(json['due_on'])!,
-    details: json['details'] as String? ?? '',
-    extendedDueOn: _date(json['extended_due_on']),
-    extensionReason: json['extension_reason'] as String?,
-    refusalReason: json['refusal_reason'] as String?,
-    outcome: json['outcome'] is Map
-        ? Map<String, dynamic>.from(json['outcome'] as Map)
-        : const {},
-  );
+  /// #2387 — read through [JsonReader]: a missing or mistyped column
+  /// names [context] (the RPC), the key and the expected type.
+  factory RightsRequest.fromJson(
+    Map<String, dynamic> json, {
+    String context = 'rights_request',
+  }) {
+    final r = JsonReader(json, context: context);
+    final extended = r.dateTimeOrNull('extended_due_on');
+    return RightsRequest(
+      system: SystemColumns.fromRow(json),
+      id: r.string('id'),
+      kind: r.string('kind'),
+      status: r.stringOr('status', 'received'),
+      receivedAt: r.dateTime('received_at').toLocal(),
+      dueOn: _day(r.dateTime('due_on')),
+      details: r.stringOr('details'),
+      extendedDueOn: extended == null ? null : _day(extended),
+      extensionReason: r.stringOrNull('extension_reason'),
+      refusalReason: r.stringOrNull('refusal_reason'),
+      outcome: r.objectOrEmpty('outcome'),
+    );
+  }
 
   /// #992 — the server's stamp on this row.
   @override
@@ -87,12 +92,12 @@ class ErasureStore {
     this.note,
   });
 
-  factory ErasureStore.fromJson(Map<String, dynamic> json) => ErasureStore(
-    store: json['store'] as String? ?? '',
-    count: (json['count'] as num?)?.toInt(),
-    basis: json['basis'] as String?,
-    period: json['period'] as String?,
-    note: json['note'] as String?,
+  factory ErasureStore._read(JsonReader r) => ErasureStore(
+    store: r.stringOr('store'),
+    count: r.intOrNull('count'),
+    basis: r.stringOrNull('basis'),
+    period: r.stringOrNull('period'),
+    note: r.stringOrNull('note'),
   );
 
   final String store;
@@ -112,16 +117,16 @@ class ErasurePreview {
     this.pendingExternal = const [],
   });
 
-  factory ErasurePreview.fromJson(Map<String, dynamic> json) {
-    List<ErasureStore> list(String key) => [
-      for (final e in (json[key] as List? ?? const []))
-        ErasureStore.fromJson(Map<String, dynamic>.from(e as Map)),
-    ];
+  factory ErasurePreview.fromJson(
+    Map<String, dynamic> json, {
+    String context = 'preview_my_erasure',
+  }) {
+    final r = JsonReader(json, context: context);
     return ErasurePreview(
-      removed: list('removed'),
-      restricted: list('restricted'),
-      retained: list('retained'),
-      pendingExternal: list('pending_external'),
+      removed: r.objects('removed', ErasureStore._read),
+      restricted: r.objects('restricted', ErasureStore._read),
+      retained: r.objects('retained', ErasureStore._read),
+      pendingExternal: r.objects('pending_external', ErasureStore._read),
     );
   }
 

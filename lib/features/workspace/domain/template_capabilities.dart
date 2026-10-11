@@ -220,16 +220,16 @@ CapabilityEvidence _defined(TemplateFacts facts, List<String> ids) => _guard(fac
 /// The curated capabilities: outcomes people search for that no single
 /// flag names. Every feature flag is a capability too (see [_capabilityCatalog]).
 final List<TemplateCapability> _curatedCapabilities = [
-  TemplateCapability(
+  const TemplateCapability(
     id: 'policy.multi_approval',
-    synonyms: const {
+    synonyms: {
       'en': ['two approvals', 'two validators', 'four eyes', 'dual approval', 'double validation'],
       'fr': ['deux validations', 'double validation', 'deux validateurs', 'quatre yeux'],
       'de': ['zwei freigaben', 'vier augen', 'doppelte freigabe', 'zwei prufer'],
       'es': ['dos aprobaciones', 'doble validacion', 'cuatro ojos', 'dos validadores'],
       'it': ['due approvazioni', 'doppia validazione', 'quattro occhi', 'due validatori'],
     },
-    evaluate: (f) => _multiApproval(f),
+    evaluate: _multiApproval,
   ),
   TemplateCapability(
     id: 'policy.multi_approval_refunds',

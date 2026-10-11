@@ -205,7 +205,7 @@ abstract final class InvitationReader {
       queryParameters: {
         'url': query['url'] ?? '',
         'key': query['key'] ?? '',
-        if ((query['name'] ?? '').trim().isNotEmpty) 'name': query['name']!,
+        if ((query['name'] ?? '').trim().isNotEmpty) 'name': query['name'],
       },
     ).toString());
     if (target == null) {

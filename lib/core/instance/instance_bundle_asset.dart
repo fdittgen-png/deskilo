@@ -24,7 +24,7 @@ Future<InstanceBundle> Function() instanceBundleLoader(Ref ref) =>
 @Riverpod(keepAlive: true)
 SupabaseManagement Function(String accessToken) supabaseManagementFactory(
         Ref ref) =>
-    (token) => DioSupabaseManagement(token);
+    DioSupabaseManagement.new;
 
 /// #1308 S3 — the in-app doctor: the same `InstanceDoctor.examine` the CLI
 /// runs, judged against the bundle and the policy list this app carries.
