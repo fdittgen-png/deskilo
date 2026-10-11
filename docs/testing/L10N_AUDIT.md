@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-174 literal(s) in 8 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+162 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -171,18 +171,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:169` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:170` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:171` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:268` | label | Taux normal 20 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:276` | label | Taux réduit 5,5 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:282` | label | Taux réduit 10 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:288` | label | Taux particulier 2,1 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:294` | label | Autre taux ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:300` | label | Opérations non imposées / taux 0 | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:312` | label | Umsätze 19 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:318` | label | Umsätze 7 % | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:324` | label | Andere Steuersätze ${_pct(l.percent)} | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:330` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:369` | label | Régularisation — TVA à reverser | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/domain/vat_declaration.dart:375` | label | Régularisation — autre TVA à déduire | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
@@ -192,6 +180,5 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/features/money/domain/vat_catalogue.dart`** (86) — statutory VAT rate names, each in the language its own tax authority uses (Normalsatz, Standaard, Snižena…). Translating «Ermäßigt 10 %» into French would name an Austrian rate in a language no Austrian form uses.
 - **`lib/features/money/domain/coa_preview.dart`** (45) — the French chart of accounts (PCG): «Clients», «TVA collectée» are the legal names of the accounts a bookkeeper reads. A translated account name is the wrong account.
-- **`lib/features/money/domain/vat_declaration.dart`** (12) — CA3 and UStVA box names, in French and German, as the forms print them (#2357: the CA3 régularisation lines 15 and 21).
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.
