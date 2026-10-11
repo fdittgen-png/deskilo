@@ -35,6 +35,7 @@ import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'workspace_status_computation.dart';
 import '../../../features/money/domain/reminder_evidence.dart';
+import '../../time/date_text.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
@@ -704,8 +705,7 @@ class FakeMoneyRepository implements MoneyRepository {
       amountCents: -invoice.totalCents,
       description: 'Refund ${invoice.number}'
           '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-      period:
-          '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+      period: yearMonth(kTestNow.year, kTestNow.month),
       createdAt: kTestNow,
     ));
     invoiceMatchesStore[invoiceId] = InvoiceMatch(
@@ -755,8 +755,7 @@ class FakeMoneyRepository implements MoneyRepository {
       category: LedgerCategory.payment,
       amountCents: amountCents,
       description: description,
-      period: period ??
-          '${now.year}-${now.month.toString().padLeft(2, '0')}',
+      period: period ?? yearMonth(now.year, now.month),
       createdAt: now,
     ));
     return id;
@@ -775,8 +774,7 @@ class FakeMoneyRepository implements MoneyRepository {
       category: LedgerCategory.adjustment,
       amountCents: amountCents,
       description: description,
-      period: period ??
-          '${now.year}-${now.month.toString().padLeft(2, '0')}',
+      period: period ?? yearMonth(now.year, now.month),
       createdAt: now,
     ));
     return id;
@@ -854,7 +852,7 @@ class FakeMoneyRepository implements MoneyRepository {
         description: 'Credit note ${invoice.number}'
             '${trimmed.isEmpty ? '' : ' — $trimmed'}',
         period:
-            '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}',
+            yearMonth(kTestNow.year, kTestNow.month),
         createdAt: kTestNow,
       ));
     }
@@ -1104,8 +1102,7 @@ class FakeMoneyRepository implements MoneyRepository {
     // Spare credit only: an avoir of any month, or a payment left over
     // from a PAST month — running-month payments offset the upcoming
     // invoice and stay ordinary payments.
-    final nowPeriod =
-        '${kTestNow.year}-${kTestNow.month.toString().padLeft(2, '0')}';
+    final nowPeriod = yearMonth(kTestNow.year, kTestNow.month);
     final credit = ledger
         .where((e) =>
             e.memberId == memberId &&
@@ -1607,7 +1604,7 @@ class FakeMoneyRepository implements MoneyRepository {
             'amount_cents': service.priceCents * quantity,
             'vat_percent': _vatPercentOf(service.vatRateId),
             'period': period ??
-                '${now.year}-${now.month.toString().padLeft(2, '0')}',
+                yearMonth(now.year, now.month),
           },
           status: EventStatus.pending,
           createdAt: now,
