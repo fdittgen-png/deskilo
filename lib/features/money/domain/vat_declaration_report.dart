@@ -59,6 +59,7 @@ Map<String, Object?> vatDeclarationReportData({
   required String disclaimer,
   required String statusLabel,
   required String Function(double) rate,
+  String Function(VatDeclarationLine line)? correctionOf,
   required String Function(int) money,
   required String Function(DateTime) date,
 }) => {
@@ -77,7 +78,10 @@ Map<String, Object?> vatDeclarationReportData({
   'vat_rate_totals': [
     for (final line in declaration.lines)
       {
-        'rate': rate(line.percent),
+        // #2357 — a correction line names the return it corrects.
+        'rate': line.isCorrection && correctionOf != null
+            ? '${correctionOf(line)} · ${rate(line.percent)}'
+            : rate(line.percent),
         'net': money(line.netCents),
         'vat': money(line.vatCents),
         'count': '${line.invoiceCount}',

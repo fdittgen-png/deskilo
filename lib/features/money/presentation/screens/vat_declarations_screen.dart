@@ -24,7 +24,9 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/invoice_legal.dart';
 import '../../domain/vat_declaration.dart';
+import '../../domain/vat_declaration_period.dart';
 import '../../domain/vat_declaration_report.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/money_providers.dart';
@@ -35,6 +37,7 @@ import '../report_actions.dart';
 import '../report_layout_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
+import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_tax_point_notice.dart';
 
 /// Preparation of the VAT return (#534/0107, #2357/0402): the owner
@@ -57,17 +60,7 @@ class _VatDeclarationsScreenState
     extends ConsumerState<VatDeclarationsScreen> {
   int _periodIndex = 0;
 
-  String _periodLabel(
-      ({DateTime start, DateTime end, bool isQuarter}) period) {
-    if (period.isQuarter) {
-      final quarter = (period.start.month - 1) ~/ 3 + 1;
-      return 'Q$quarter ${period.start.year}';
-    }
-    return DateFormat.yMMMM().format(period.start);
-  }
-
-  Future<void> _generate(
-      ({DateTime start, DateTime end, bool isQuarter}) period) async {
+  Future<void> _generate(VatFilingPeriod period) async {
     final l10n = AppLocalizations.of(context);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -113,6 +106,7 @@ class _VatDeclarationsScreenState
           '${l10n?.vatDeclDisclaimer ?? "Verify against your accounting before filing."}',
       statusLabel: _statusLabel(l10n, declaration),
       rate: (value) => '${NumberFormat.decimalPattern(l10n?.localeName).format(value)} %',
+      correctionOf: (line) => _correctionLabel(l10n, line),
       money: moneyFormat(declaration.currency, locale: l10n?.localeName).formatMinor,
       date: dateFormat.format,
     );
@@ -165,6 +159,17 @@ class _VatDeclarationsScreenState
     );
   }
 
+  /// #2357 — « Correction of September 2026 »: the filed return a
+  /// correction line corrects, by its period.
+  String _correctionLabel(AppLocalizations? l10n, VatDeclarationLine line) {
+    final start = line.correctsStart;
+    final end = line.correctsEnd;
+    final period = start == null || end == null
+        ? line.corrects
+        : vatFilingPeriodLabel(l10n, (start: start, end: end));
+    return vatWords(l10n).vatDeclCorrectionOf(period);
+  }
+
   String _statusLabel(AppLocalizations? l10n, VatDeclaration declaration) =>
       declaration.isFiled
           ? (l10n?.vatDeclFiled ?? 'Filed')
@@ -201,7 +206,11 @@ class _VatDeclarationsScreenState
     final regime = vatRegimeFromWire(workspace?.vatRegime ?? '');
     final declarationsAsync = ref.watch(vatDeclarationsProvider);
     final now = ref.watch(clockProvider).now();
-    final periods = vatFilingPeriods(now);
+    // #2357 — only periods of the length the workspace files.
+    final filing = InvoiceLegal.fromJson(
+            workspace?.invoiceLegal ?? const <String, dynamic>{})
+        .filingPeriod;
+    final periods = vatFilingPeriodsOf(now, filing);
     final period = periods[_periodIndex.clamp(0, periods.length - 1)];
     final dateFormat = DateFormat.yMMMd();
 
@@ -239,6 +248,12 @@ class _VatDeclarationsScreenState
                         invoiceLegal: workspace.invoiceLegal,
                       ),
                 ),
+                InlineBanner(
+                  key: const ValueKey('vat-decl-period-note'),
+                  icon: Icons.date_range_outlined,
+                  text: vatWords(l10n).vatDeclPeriodNote(
+                      vatDeclarationPeriodName(l10n, filing)),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 // New declaration: period + generate.
                 Row(
@@ -255,7 +270,7 @@ class _VatDeclarationsScreenState
                           for (final (index, p) in periods.indexed)
                             DropdownMenuItem(
                               value: index,
-                              child: Text(_periodLabel(p)),
+                              child: Text(vatFilingPeriodLabel(l10n, p)),
                             ),
                         ],
                         onChanged: (value) => setState(
@@ -373,6 +388,11 @@ class _VatDeclarationsScreenState
                                   const SizedBox(height: 4),
                                   for (final line in declaration.lines)
                                     Text(
+                                      key: line.isCorrection
+                                          ? ValueKey(
+                                              'vat-decl-correction-${declaration.id}-${line.corrects}')
+                                          : null,
+                                      '${line.isCorrection ? '${_correctionLabel(l10n, line)} · ' : ''}'
                                       '${_pctLabel(line.percent)}'
                                       '${line.category.isEmpty ? '' : ' ${line.category}'} · '
                                       '${l10n?.vatDeclNet ?? 'Net base'} '
@@ -381,6 +401,12 @@ class _VatDeclarationsScreenState
                                       '${centsToMajor(line.vatCents)} ${declaration.currency}',
                                       style:
                                           theme.textTheme.bodySmall,
+                                    ),
+                                  if (declaration.lines
+                                      .any((l) => l.isCorrection))
+                                    Text(
+                                      vatWords(l10n).vatDeclCorrectionsNote,
+                                      style: theme.textTheme.bodySmall,
                                     ),
                                   const SizedBox(height: 4),
                                   Text(

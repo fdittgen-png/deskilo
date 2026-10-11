@@ -286,7 +286,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       actions: [
         HelpDot(
           l10n?.helpTopicInstances ?? 'Instances',
-          anchor: HelpAnchor.adminInstances,
+          anchor: HelpAnchor.backendHow,
         ),
       ],
       steps: steps,

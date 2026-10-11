@@ -55,7 +55,7 @@ Future<AccountingFormat?> showAccountingExportSheet(
                 // without room to say it.
                 HelpDot(
                   l10n?.helpTopicAccounting ?? 'Accounting exports',
-                  anchor: HelpAnchor.adminExportsAccounting,
+                  anchor: HelpAnchor.invoicingAccountingExport,
                 ),
               ]),
               const SizedBox(height: AppSpacing.lg),

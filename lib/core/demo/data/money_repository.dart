@@ -27,6 +27,7 @@ import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
+import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
@@ -51,9 +52,22 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 — the basis the fake prepares on (the server reads the space's).
   VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
 
-  /// Prepares the period like `save_vat_declaration` (0402): the figures
-  /// are computed here from the fake's own invoices, matches and
-  /// instalments with the Dart engine the SQL is the twin of.
+  /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
+  final List<VatDeclaredAmount> vatDeclared = [];
+
+  /// The return of [start]..[end], filed periods locked (`vat_return_lines`).
+  List<VatReturnAmount> _vatReturn(DateTime start, DateTime end) {
+    final view = accountingView(invoices, invoiceMatchesStore);
+    return vatReturnAmountsOf(vatTaxPointLedger(view.invoices,
+            matches: view.matches,
+            instalments: invoiceInstalmentsStore,
+            basis: vatReturnBasis),
+        start: start, end: end,
+        locks: vatPeriodLocksOf(vatDeclarations), declared: vatDeclared);
+  }
+
+  /// Prepares the period like `save_vat_declaration` (0402/0406) with
+  /// the Dart engine the SQL is the twin of.
   @override
   Future<String> saveVatDeclaration({
     required String workspaceId,
@@ -65,18 +79,13 @@ class FakeMoneyRepository implements MoneyRepository {
     if (existing != -1 && vatDeclarations[existing].isFiled) {
       throw StateError('declaration already filed for this period');
     }
-    final view = accountingView(invoices, invoiceMatchesStore);
-    final amounts = vatTaxPointLedger(
-      view.invoices,
-      matches: view.matches,
-      instalments: invoiceInstalmentsStore,
-      basis: vatReturnBasis,
-    );
-    final lines = vatDeclarationLinesOf(amounts, periodStart, periodEnd);
-    final documents = {
-      for (final a in amounts)
-        if (a.within(periodStart, periodEnd)) a.invoiceId,
-    };
+    if (vatPeriodLocksOf(vatDeclarations).any((l) =>
+        !l.start.isAfter(periodEnd) && !l.end.isBefore(periodStart))) {
+      throw StateError('this period overlaps a filed return');
+    }
+    final amounts = _vatReturn(periodStart, periodEnd);
+    final lines = vatReturnLinesOf(amounts, declarations: vatDeclarations);
+    final documents = {for (final a in amounts) a.invoiceId};
     final declaration = VatDeclaration(
       id: existing != -1
           ? vatDeclarations[existing].id
@@ -118,6 +127,7 @@ class FakeMoneyRepository implements MoneyRepository {
       throw StateError('the receipt reference is required');
     }
     if (!d.isPrepared) throw StateError('prepare the return before filing it');
+    vatDeclared.addAll(vatDeclaredBy(_vatReturn(d.periodStart, d.periodEnd)));
     vatDeclarations[index] = VatDeclaration(
       id: d.id,
       workspaceId: d.workspaceId,

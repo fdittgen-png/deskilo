@@ -60,7 +60,7 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             rowKey: 'workspaceSettingsRolesOfSpace',
             icon: Icons.badge_outlined,
             title: l10n?.rolesOfSpaceTitle ?? 'Roles this space defines',
-            anchor: HelpAnchor.workspaceWording,
+            anchor: HelpAnchor.rolesSpace,
             subtitle: l10n?.rolesOfSpaceSubtitle ??
                 "Each one adds permissions on top of a member's role.",
             path: '/settings/roles-of-this-space',
@@ -72,7 +72,7 @@ class WorkspaceOwnScreens extends ConsumerWidget {
             rowKey: 'workspaceSettingsQuestions',
             icon: Icons.help_outline,
             title: l10n?.questionsTitle ?? 'Questions this space asks',
-            anchor: HelpAnchor.workspaceWording,
+            anchor: null,
             subtitle: l10n?.questionsSubtitle ??
                 "They appear inside personal information, under your "
                     "space's name.",
@@ -98,7 +98,7 @@ class _Row extends StatelessWidget {
   final String rowKey;
   final IconData icon;
   final String title;
-  final String anchor;
+  final String? anchor;
   final String subtitle;
   final String path;
   final String helpTopic;
@@ -108,7 +108,9 @@ class _Row extends StatelessWidget {
         key: Key(rowKey),
         contentPadding: EdgeInsets.zero,
         leading: Icon(icon),
-        title: HelpDotTitle(title, helpTopic, anchor: anchor),
+        title: anchor == null
+            ? Text(title)
+            : HelpDotTitle(title, helpTopic, anchor: anchor),
         subtitle: Text(subtitle, maxLines: 2, overflow: TextOverflow.ellipsis),
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.push(path),

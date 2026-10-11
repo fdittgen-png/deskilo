@@ -201,7 +201,7 @@ class _EInvoiceBody extends StatelessWidget {
                 // chapter explaining what EN 16931 requires.
                 HelpDot(
                   l10n?.helpTopicReadiness ?? 'readiness gate',
-                  anchor: HelpAnchor.adminEinvoiceReadiness,
+                  anchor: HelpAnchor.einvoiceOverview,
                 ),
               ]),
               const SizedBox(height: AppSpacing.sm),

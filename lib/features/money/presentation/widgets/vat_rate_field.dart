@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/vat/supply_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -129,10 +127,6 @@ class SupplyClassField extends ConsumerWidget {
         labelText: l10n.supplyClassLabel,
         helperText: l10n.supplyClassHelper,
         helperMaxLines: 5,
-        suffixIcon: HelpDot(
-          l10n.helpHintMoneyPaymentsTipSupplyTopic,
-          anchor: HelpAnchor.serviceSupply,
-        ),
       ),
       items: [
         for (final supply in SupplyClass.values)

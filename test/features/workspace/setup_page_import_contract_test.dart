@@ -30,6 +30,7 @@ import 'package:deskilo/features/money/domain/invoice_clauses.dart';
 import 'package:deskilo/features/money/domain/invoice_legal.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo/features/money/domain/vat_declaration_period.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
@@ -237,6 +238,8 @@ void main() {
       expect(legal.vatTaxPoint, VatTaxPointOption.cash);
       expect(legal.taxPointBasis(ws.countryCode).onReceipts, isTrue);
       expect(legal.isAssociation, isFalse);
+      // #2357 — the declaration period is a stored parameter now.
+      expect(legal.declarationPeriod, VatDeclarationPeriod.month);
       final dunning = DunningRules.fromJson(
         Map<String, dynamic>.from(space.row['dunning_rules'] as Map),
       );
@@ -402,7 +405,6 @@ void main() {
       expect(dest, {
         'name': 'app',
         'environment': 'app',
-        'vatPeriod': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

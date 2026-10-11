@@ -90,6 +90,12 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
+        actions: [
+          HelpDot(
+            l10n?.helpHintBadgesTopic ?? 'NFC badges',
+            anchor: HelpAnchor.badgesNfc,
+          ),
+        ],
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,
@@ -105,11 +111,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
           Card(
             child: SwitchListTile(
               key: const ValueKey('nfc-feature-switch'),
-              title: HelpDotTitle(
-                l10n?.nfcConfigEnable ?? 'Enable NFC badge check-in',
-                l10n?.helpHintBadgesTopic ?? 'NFC badges',
-                anchor: HelpAnchor.badgesNfc,
-              ),
+              title: Text(l10n?.nfcConfigEnable ?? 'Enable NFC badge check-in'),
               subtitle: Text(
                 l10n?.nfcConfigEnableDesc ??
                     'Show the card-tap option on kiosks and in the badge '

@@ -139,7 +139,6 @@ class MembersScreen extends ConsumerWidget {
           key: const ValueKey('members-action-subscription-label'),
           icon: Icons.percent,
           label: l10n?.memberSubscriptionLabel ?? 'Subscription',
-          topic: membersTopic,
           onTap: () => pickMemberSubscription(context, ref, member),
         ),
       if (!member.isKiosk && active)
@@ -162,7 +161,6 @@ class MembersScreen extends ConsumerWidget {
               ? Icons.speed_outlined
               : Icons.speed,
           label: l10n?.memberOveragePolicyLabel ?? 'When days run out',
-          topic: membersTopic,
           onTap: () => pickMemberOveragePolicy(context, ref, member),
         ),
       if (staff && !isSelf && !member.isKiosk && active)
@@ -171,7 +169,6 @@ class MembersScreen extends ConsumerWidget {
           key: const ValueKey('members-action-reservation-limit-label'),
           icon: Icons.stacked_bar_chart_outlined,
           label: l10n?.memberReservationLimitLabel ?? 'Reservation limit',
-          topic: membersTopic,
           onTap: () => pickMemberReservationLimit(context, ref, member),
         ),
       // #628 — the explicit permission to hold OVERLAPPING bookings;
@@ -183,7 +180,6 @@ class MembersScreen extends ConsumerWidget {
           icon: Icons.splitscreen_outlined,
           label: l10n?.memberSimultaneousLimitLabel ??
               'Simultaneous reservations',
-          topic: membersTopic,
           onTap: () => pickMemberSimultaneousLimit(context, ref, member),
         ),
       // Whole-level reservations (0050): grant/revoke — owner or admin,
@@ -200,7 +196,6 @@ class MembersScreen extends ConsumerWidget {
                   'May reserve a whole level')
               : (l10n?.levelPermissionDenied ??
                   'May not reserve a whole level'),
-          topic: membersTopic,
           onTap: () => toggleMemberLevelPermission(context, ref, member),
         ),
       if (!member.isKiosk && !member.isOwner && active)
@@ -209,7 +204,6 @@ class MembersScreen extends ConsumerWidget {
           key: const ValueKey('members-action-badges-tooltip'),
           icon: Icons.qr_code_2_outlined,
           label: l10n?.memberBadgesTooltip ?? 'Badges',
-          topic: l10n?.helpHintBadgesTopic ?? 'NFC badges',
           onTap: () => showMemberBadgesDialog(context, ref, member, name),
         ),
       // #2085 — with roleAssignment, "Add a role" offers the
@@ -256,7 +250,6 @@ class MembersScreen extends ConsumerWidget {
             CoOwnerStatus.none => Icons.badge_outlined,
           },
           label: l10n?.coOwnerAction ?? 'Co-ownership',
-          topic: membersTopic,
           onTap: () => pickMemberCoOwner(context, ref, member),
         ),
       if (isOwner &&
@@ -286,7 +279,6 @@ class MembersScreen extends ConsumerWidget {
           label: member.isKiosk
               ? (l10n?.memberUnmakeKiosk ?? 'Revert kiosk to member')
               : (l10n?.memberMakeKiosk ?? 'Make kiosk device'),
-          topic: l10n?.helpTopicKiosk ?? 'Kiosk mode',
           onTap: () => toggleMemberKiosk(context, ref, member),
         ),
       // Kiosk self-revert (0056): the kiosk account manages its OWN row
@@ -312,7 +304,6 @@ class MembersScreen extends ConsumerWidget {
           label: member.status == MemberStatus.paused
               ? (l10n?.memberReactivate ?? 'Reactivate membership')
               : (l10n?.memberPause ?? 'Pause membership'),
-          topic: membersTopic,
           onTap: () => toggleMemberPaused(context, ref, member),
         ),
     ];
@@ -330,6 +321,14 @@ class MembersScreen extends ConsumerWidget {
         ),
       );
     }
+    // One symbol for the whole sheet; the negotiation row keeps its own.
+    actions.insert(
+      0,
+      Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: HelpDot(membersTopic, anchor: HelpAnchor.membersActions),
+      ),
+    );
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -349,7 +348,6 @@ class MembersScreen extends ConsumerWidget {
     required IconData icon,
     required String label,
     required VoidCallback onTap,
-    String? topic,
   }) {
     // Builder: the tile's own context lives under the sheet route, so the
     // pop closes the SHEET — the action then runs on the screen's context.
@@ -357,9 +355,7 @@ class MembersScreen extends ConsumerWidget {
       builder: (tileContext) => ListTile(
         key: key,
         leading: Icon(icon),
-        title: topic == null ? Text(label) : HelpDotTitle(label, topic,
-          anchor: HelpAnchor.membersActions,
-        ),
+        title: Text(label),
         onTap: () {
           Navigator.of(tileContext).pop();
           onTap();

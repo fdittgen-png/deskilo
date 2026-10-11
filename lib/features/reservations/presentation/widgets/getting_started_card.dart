@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/help/help_hint_providers.dart';
@@ -141,12 +142,7 @@ class GettingStartedCard extends ConsumerWidget {
       ),
       GettingStartedAction.openHelp => (
         l10n?.gettingStartedActionHelp ?? 'Help for this workspace',
-        () => context.push(
-          Uri(
-            path: '/help',
-            queryParameters: {'topic': helpHintTopic(l10n, HelpHintId.reserve)},
-          ).toString(),
-        ),
+        () => openGuide(ref, context, anchor: 'user.start.get-started'),
       ),
     };
 

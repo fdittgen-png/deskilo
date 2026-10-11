@@ -153,6 +153,28 @@ String helpHintTopic(AppLocalizations? l10n, HelpHintId id) => switch (id) {
   HelpHintId.privacy => l10n?.helpHintPrivacyTopic ?? 'Privacy',
 };
 
+/// The guide section a surface's "Learn more" opens on the guide site.
+String helpHintAnchor(HelpHintId id) => switch (id) {
+  HelpHintId.reserve => 'user.reserve.hub',
+  HelpHintId.plan => 'user.reserve.plan-levels',
+  HelpHintId.calendar => 'user.reserve.calendar',
+  HelpHintId.events => 'user.collaborate.events',
+  HelpHintId.editor => 'user.space.overview',
+  HelpHintId.availability => 'user.workspace.availability.open-weekdays',
+  HelpHintId.features => 'user.features.switch',
+  HelpHintId.members => 'user.people.overview',
+  HelpHintId.money => 'user.money.overview',
+  HelpHintId.moneyStatement => 'user.money.statement',
+  HelpHintId.moneyPayments => 'user.money.payments',
+  HelpHintId.moneyInvoices => 'user.money.invoices',
+  HelpHintId.moneyDocuments => 'user.money.documents.library',
+  HelpHintId.validation => 'user.validation.overview',
+  HelpHintId.workspaceSettings => 'user.workspace.settings.country',
+  HelpHintId.badges => 'user.badges.nfc',
+  HelpHintId.messages => 'user.collaborate.messages',
+  HelpHintId.privacy => 'user.privacy.visibility',
+};
+
 /// The surface's carousel (#2313): every scenario a person may want from
 /// that screen, each naming the controls by their own labels (built from
 /// the label keys, so all five languages quote the real buttons) and

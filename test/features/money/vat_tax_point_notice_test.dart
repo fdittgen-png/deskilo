@@ -84,6 +84,8 @@ void main() {
     final now = kTestNow;
     final money = await _pump(
       tester,
+      // #2357 — a monthly filer: the screen offers months only.
+      invoiceLegal: const {'vat_declaration_period': 'month'},
       seed: (money) {
         money.invoices.add(
           Invoice(

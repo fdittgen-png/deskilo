@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -158,7 +159,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                     ),
                     TextButton.icon(
                       key: const ValueKey('pending-help'),
-                      onPressed: () => context.push('/help'),
+                      onPressed: () => openGuide(ref, context, anchor: 'user.start.join'),
                       icon: const Icon(Icons.help_outline),
                       label: Text(l10n?.pendingHelp ?? 'Help'),
                     ),

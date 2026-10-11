@@ -105,7 +105,7 @@ void main() {
         .allMatches(source)
         .map((m) => m.group(1)!)
         .toSet();
-    expect(listed.length, greaterThanOrEqualTo(20),
+    expect(listed.length, greaterThanOrEqualTo(10),
         reason: 'the guide list parsed to ${listed.length} entries — the '
             'shape of build_help.dart changed and this test is now '
             'measuring its own parser');

@@ -990,7 +990,7 @@ class _WorkspaceSettingsScreenState
   }
 
   /// #763 — a control with no free suffix slot gets the ? at its side.
-  Widget _withDot(Widget field, String topic, {String? anchor}) => Row(
+  Widget _withDot(Widget field, String topic, {required String anchor}) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(child: field),
@@ -1334,9 +1334,6 @@ class _WorkspaceSettingsScreenState
                           'Invitation message',
                       hintText: l10n?.invitationTemplateHint ??
                           'Custom invitation message using the tags above…',
-                      suffixIcon: HelpDot(helpTopic,
-                        anchor: HelpAnchor.workspaceInvitationMessage,
-                      ),
                     ),
                   ),
                   const SizedBox(height: 24),

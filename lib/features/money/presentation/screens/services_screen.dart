@@ -287,10 +287,6 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             maxLength: 80,
             decoration: InputDecoration(
               labelText: l10n?.servicesName ?? 'Name',
-              suffixIcon: HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
-                anchor: HelpAnchor.serviceName,
-              ),
             ),
           ),
           TextField(
@@ -302,10 +298,6 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               // #537 — kill the net-or-gross ambiguity at the input.
               helperText: l10n?.priceGrossHint ??
                   'Gross price — what the member pays; VAT is part of it.',
-              suffixIcon: HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
-                anchor: HelpAnchor.servicePrice,
-              ),
             ),
           ),
           // The price stays what the member pays; the rate only decides
@@ -326,12 +318,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             SwitchListTile(
               key: const ValueKey('services-active'),
               contentPadding: EdgeInsets.zero,
-              title: HelpDotTitle(
-                l10n?.servicesActive ?? 'Active',
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ??
-                    'Services and Accessories',
-                anchor: HelpAnchor.serviceActive,
-              ),
+              title: Text(l10n?.servicesActive ?? 'Active'),
               value: _active,
               onChanged: (v) => setState(() => _active = v),
             ),

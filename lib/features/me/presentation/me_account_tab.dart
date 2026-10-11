@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/help/guide_site.dart';
 import '../../../core/motion/motion.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/app_localizations.dart';
@@ -112,7 +113,13 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
           ...accountSettingsTiles(context, ref,
               only: AccountTileGroup.installations),
           const Divider(),
-          door('me-help', Icons.help_outline, l10n?.helpTitle ?? 'Help', '/help'),
+          ListTile(
+            key: const ValueKey('me-help'),
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n?.helpTitle ?? 'Help'),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => openGuide(ref, context),
+          ),
           _header(words.uxPrivacySection, 1),
           const VisibilityCard(),
           const LinkedVisibilityCard(),

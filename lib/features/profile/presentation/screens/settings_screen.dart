@@ -281,10 +281,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               onTap: () => showDialog<void>(
                 context: context,
                 builder: (dialogContext) => SimpleDialog(
-                  title: HelpDotTitle(
+                  title: Text(
                     l10n?.defaultPeriodTitle ?? 'Default booking period',
-                    l10n?.helpTopicSettings ?? 'Settings & profile',
-                    anchor: HelpAnchor.profileDefaultPeriod,
                   ),
                   children: [
                     for (final (period, label) in [
@@ -446,9 +444,6 @@ class _StatusDialogState extends ConsumerState<_StatusDialog> {
               'Optional. Visible to members of your workspaces in the '
                   'member directory. Leave empty to clear it.',
           helperMaxLines: 3,
-          suffixIcon: HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile',
-            anchor: HelpAnchor.profileStatus,
-          ),
         ),
       ),
       actions: [

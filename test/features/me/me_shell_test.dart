@@ -384,7 +384,6 @@ void main() {
     ('me-activity', '/account-activity'),
     ('me-privacy', '/privacy'),
     ('me-servers', '/connections'),
-    ('me-help', '/help'),
     ('settings-linked-accounts', '/linked-accounts'),
     ('me-workspaces', '/profiles'), // #1846
   ]) {
@@ -395,6 +394,16 @@ void main() {
       expect(router.state.uri.path, path);
     });
   }
+
+  testWidgets('the Me tab opens the guide site', (tester) async {
+    final opened = <Uri>[];
+    final router = await pumpMeApp(tester,
+        launcher: (uri) async { opened.add(uri); return true; });
+    await goTo(tester, router, '/me?tab=me');
+    await tapIn(tester, 'me-account-list', find.byKey(const ValueKey('me-help')));
+    expect(opened.single.toString(),
+        'https://fdittgen-png.github.io/deskilo/guide/en.html');
+  });
 
   testWidgets('the Me tab signs out', (tester) async {
     final auth = FakeAuthRepository.signedIn();

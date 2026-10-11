@@ -19,7 +19,7 @@ Stitching incidents and the screenshot backlog: [reference.md](reference.md).
 ## The anchor is one identity for four things
 | the id names | where it lives |
 |---|---|
-| a help symbol | `HelpDot(l10n?.helpTopicDeployment ?? 'Deploying', anchor: HelpAnchor.envDeployScreen)` — constants in `lib/core/help/help_anchors.dart` |
+| a help symbol | `HelpDot(l10n?.helpTopicDeployment ?? 'Deploying', anchor: HelpAnchor.advancedDeploy)` — constants in `lib/core/help/help_anchors.dart` |
 | a documented object | `<!-- anchor: env.deploy.screen -->` on the line above its heading, in all five guides of the family |
 | its screenshot | `docs/wiki/images/env-deploy-screen.jpg` |
 | an *Ausschnitt* of one part | `env-deploy-screen--<part>.jpg` |
@@ -29,12 +29,16 @@ invisible comment, never a visible `{#id}`: `build_help` lifts the comments into
 anchor → heading map, so the symbol opens that exact heading.
 
 ## The guides
-Families `user` (en `User-Guide.md`, fr `Guide-utilisateur.md`, de `Benutzerhandbuch.md`,
-es `Guia-de-usuario.md`, it `Guida-utente.md`), `config` (`Admin-Configuration-Guide{,.fr,.de,.es,.it}.md`),
-`admin` (`Admin-Technical-Guide…`), `env` (`Environments-Guide…`), plus
-`Technical-Reference`, `Architecture`, `Implementation`, `Home` and `_Sidebar`.
+Two families, written as chapter files `docs/guide/<user|setup>/NN-<slug>.<lang>.md`
+(contract: `docs/guide/AUTHORING.md`) and assembled into `docs/wiki/User-Guide…` and
+`Setup-Guide…` (+ the four translations), plus `Technical-Reference`, `Architecture`,
+`Implementation`, `Home` and `_Sidebar`. The old Admin-Configuration, Admin-Technical and
+Environments guides no longer exist: their `config.*`, `admin.*` and `env.*` anchors are gone.
 The user and setup families are published as the guide site (`/guide/<lang>.html`,
-`/guide/setup-<lang>.html`) and the in-app help — never as GitHub wiki pages.
+`/guide/setup-<lang>.html`) — never as GitHub wiki pages. A help symbol (`HelpDot`) opens
+`https://fdittgen-png.github.io/deskilo/guide/<lang>.html#<anchor>` (`setup.*` → `setup-<lang>.html`)
+through `openGuide` (`lib/core/help/guide_site.dart`): one "?" at the top of a form the guide
+describes in one section, more only where the guide has a section per part.
 
 ## Writing a guide section (what every /doc-* command does)
 1. **Facts from the app.** For the module: its screens under
@@ -46,9 +50,8 @@ The user and setup families are published as the guide site (`/guide/<lang>.html
 2. **One anchor per documented object** (field, action, group): the comment above a
    heading named exactly as the screen names it. Add the constant to `HelpAnchor`
    (and `HelpAnchor.all`) and point the screen's `HelpDot`/`HelpDotTitle` at it in the
-   same PR. A symbol needs BOTH an anchor into a family all five languages have
-   (`help_anchor_test`, `help_coverage_test`) AND a localized topic needle that is a
-   substring of a heading line in all five (`help_hint_test`). A shared helper that
+   same PR. A symbol needs an anchor that exists in all five languages of its
+   family (`help_anchor_test`, `help_coverage_test`); the topic is only its name. A shared helper that
    embeds one symbol takes an `anchor` parameter per call site — never a copy.
 3. **Write it**: what the object is (one sentence), what it decides, what happens if
    left alone (the default), the rule that is easy to get wrong. Consequences, not

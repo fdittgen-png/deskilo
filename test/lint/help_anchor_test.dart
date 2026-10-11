@@ -19,27 +19,6 @@ const _families = <String, Map<String, String>>{
     'es': 'docs/wiki/Guia-de-usuario.md',
     'it': 'docs/wiki/Guida-utente.md',
   },
-  'config': {
-    'en': 'docs/wiki/Admin-Configuration-Guide.md',
-    'fr': 'docs/wiki/Admin-Configuration-Guide.fr.md',
-    'de': 'docs/wiki/Admin-Configuration-Guide.de.md',
-    'es': 'docs/wiki/Admin-Configuration-Guide.es.md',
-    'it': 'docs/wiki/Admin-Configuration-Guide.it.md',
-  },
-  'admin': {
-    'en': 'docs/wiki/Admin-Technical-Guide.md',
-    'fr': 'docs/wiki/Admin-Technical-Guide.fr.md',
-    'de': 'docs/wiki/Admin-Technical-Guide.de.md',
-    'es': 'docs/wiki/Admin-Technical-Guide.es.md',
-    'it': 'docs/wiki/Admin-Technical-Guide.it.md',
-  },
-  'env': {
-    'en': 'docs/wiki/Environments-Guide.md',
-    'fr': 'docs/wiki/Environments-Guide.fr.md',
-    'de': 'docs/wiki/Environments-Guide.de.md',
-    'es': 'docs/wiki/Environments-Guide.es.md',
-    'it': 'docs/wiki/Environments-Guide.it.md',
-  },
 };
 
 final _comment =

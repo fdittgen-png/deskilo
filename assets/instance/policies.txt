@@ -230,6 +230,8 @@ public.vat_declarations.mcp_delegated_deny
 public.vat_declarations.vat_declarations_select
 public.vat_rates.mcp_delegated_deny
 public.vat_rates.vat_rates_select
+public.vat_return_entries.mcp_delegated_deny
+public.vat_return_entries.vat_return_entries_select
 public.workspace_application_messages.mcp_delegated_deny
 public.workspace_applications.mcp_delegated_deny
 public.workspace_creation_requests.mcp_delegated_deny

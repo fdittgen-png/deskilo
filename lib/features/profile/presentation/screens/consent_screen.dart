@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/entry_intents.dart';
 import '../../../../app/route_classes.dart';
+import '../../../../core/help/guide_site.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -112,7 +113,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   ),
                   TextButton.icon(
                     key: const ValueKey('consent-help'),
-                    onPressed: () => context.push('/help?topic=Privacy'),
+                    onPressed: () => openGuide(ref, context, anchor: 'user.privacy.consent'),
                     icon: const Icon(Icons.help_outline, size: 18),
                     label: Text(l10n?.consentReadInHelp ?? 'Read in the help'),
                   ),

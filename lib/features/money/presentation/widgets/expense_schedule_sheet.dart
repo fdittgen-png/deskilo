@@ -238,17 +238,16 @@ Future<bool> _showCreateExpenseScheduleSheet(
       builder: (context, setSheetState) => SheetShell(
         title: l10n?.scheduleNew ?? 'Schedule a recurring expense',
         children: [
-          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: HelpDot(topic, anchor: HelpAnchor.expenseSchedule),
+          ),
           TextField(
             key: const ValueKey('schedule-title'),
             controller: title,
             autofocus: true,
             decoration: InputDecoration(
               labelText: l10n?.scheduleTitleLabel ?? 'What (e.g. Internet)',
-              suffixIcon: HelpDot(
-                topic,
-                anchor: HelpAnchor.expenseWhat,
-              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -258,10 +257,6 @@ Future<bool> _showCreateExpenseScheduleSheet(
             decoration: InputDecoration(
               labelText: l10n?.moneyAmountLabel ?? 'Amount',
               suffixText: currency.currencyName,
-              suffixIcon: HelpDot(
-                topic,
-                anchor: HelpAnchor.expenseAmount,
-              ),
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
@@ -270,19 +265,13 @@ Future<bool> _showCreateExpenseScheduleSheet(
             controller: description,
             decoration: InputDecoration(
               labelText: l10n?.moneyDescriptionLabel ?? 'Description',
-              suffixIcon: HelpDot(
-                topic,
-                anchor: HelpAnchor.expenseDescription,
-              ),
             ),
           ),
           const SizedBox(height: 12),
           ListTile(
             key: const ValueKey('schedule-starts'),
             contentPadding: EdgeInsets.zero,
-            title: HelpDotTitle(
-                l10n?.scheduleStartsOn ?? 'First occurrence', topic,
-                anchor: HelpAnchor.expenseStartsOn),
+            title: Text(l10n?.scheduleStartsOn ?? 'First occurrence'),
             subtitle: Text(dates.format(startsOn)),
             trailing: const Icon(Icons.edit_calendar_outlined),
             onTap: () async {
@@ -302,10 +291,6 @@ Future<bool> _showCreateExpenseScheduleSheet(
                 controller: every,
                 decoration: InputDecoration(
                   labelText: l10n?.scheduleEveryLabel ?? 'Every',
-                  suffixIcon: HelpDot(
-                    topic,
-                    anchor: HelpAnchor.expenseEvery,
-                  ),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -333,19 +318,13 @@ Future<bool> _showCreateExpenseScheduleSheet(
             decoration: InputDecoration(
               labelText: l10n?.scheduleTimesLabel ??
                   'Repetitions (empty = until the end date)',
-              suffixIcon: HelpDot(
-                topic,
-                anchor: HelpAnchor.expenseTimes,
-              ),
             ),
             keyboardType: TextInputType.number,
           ),
           ListTile(
             key: const ValueKey('schedule-ends'),
             contentPadding: EdgeInsets.zero,
-            title: HelpDotTitle(
-                l10n?.scheduleEndsOn ?? 'Until (optional)', topic,
-                anchor: HelpAnchor.expenseEndsOn),
+            title: Text(l10n?.scheduleEndsOn ?? 'Until (optional)'),
             subtitle: Text(endsOn == null
                 ? (l10n?.scheduleNoEnd ?? 'No end date')
                 : dates.format(endsOn!)),

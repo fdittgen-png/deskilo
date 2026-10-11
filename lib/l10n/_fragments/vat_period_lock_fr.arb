@@ -1,0 +1,45 @@
+{
+  "@@locale": "fr",
+  "vatDeclPeriodField": "Périodicité de la déclaration de TVA",
+  "@vatDeclPeriodField": {
+    "description": "#2357 VAT period locks: vatDeclPeriodField"
+  },
+  "vatDeclPeriodMonth": "Mensuelle",
+  "@vatDeclPeriodMonth": {
+    "description": "#2357 VAT period locks: vatDeclPeriodMonth"
+  },
+  "vatDeclPeriodQuarter": "Trimestrielle",
+  "@vatDeclPeriodQuarter": {
+    "description": "#2357 VAT period locks: vatDeclPeriodQuarter"
+  },
+  "vatDeclPeriodAnnual": "Annuelle",
+  "@vatDeclPeriodAnnual": {
+    "description": "#2357 VAT period locks: vatDeclPeriodAnnual"
+  },
+  "vatDeclPeriodHint": "La fréquence à laquelle vous déposez la déclaration. L’écran de la déclaration de TVA ne propose que des périodes de cette durée.",
+  "@vatDeclPeriodHint": {
+    "description": "#2357 VAT period locks: vatDeclPeriodHint"
+  },
+  "vatDeclPeriodNote": "Périodicité : {period}. Modifiable sous Identité légale et facturation électronique.",
+  "@vatDeclPeriodNote": {
+    "description": "#2357 VAT period locks: vatDeclPeriodNote",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionOf": "Régularisation de {period}",
+  "@vatDeclCorrectionOf": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionOf",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclCorrectionsNote": "Une déclaration déposée ne change jamais. Ce qui a changé ensuite dans une période déposée — une facture annulée, un paiement enregistré tardivement — est déclaré ici comme régularisation de cette déclaration.",
+  "@vatDeclCorrectionsNote": {
+    "description": "#2357 VAT period locks: vatDeclCorrectionsNote"
+  }
+}

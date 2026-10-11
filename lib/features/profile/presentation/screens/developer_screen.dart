@@ -180,7 +180,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
           // device, and what an export deliberately does not carry.
           HelpDot(
             l10n?.helpTopicTrace ?? 'The trace',
-            anchor: HelpAnchor.adminTrace,
+            anchor: HelpAnchor.advancedTroubleshooting,
           ),
         ],
       ),

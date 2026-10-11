@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
@@ -104,7 +106,10 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.featuresTitle ?? 'Features')),
+      appBar: AppBar(
+        title: Text(l10n?.featuresTitle ?? 'Features'),
+        actions: const [HelpDot('Features', anchor: HelpAnchor.featuresSwitch)],
+      ),
       body: workspace == null
           ? const LoadingView()
           : Column(
