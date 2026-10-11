@@ -16,6 +16,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations_en.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/number_sequence.dart';
 import '../../providers/money_providers.dart';
@@ -167,9 +168,7 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
                 key: const ValueKey('number-sequence-credit-note-unsaved'),
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
-                  l10n?.numberSequenceCreditNoteUnsaved ??
-                      'Not saved yet: until this series is saved, credit '
-                          'notes take invoice numbers.',
+                  (l10n ?? AppLocalizationsEn()).numberSequenceCreditNoteUnsaved,
                   style: theme.textTheme.bodySmall,
                 ),
               ),
