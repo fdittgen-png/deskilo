@@ -416,7 +416,7 @@ String _renderDart(Map<String, dynamic> contract) {
     ..writeln('// SPDX-License-Identifier: AGPL-3.0-or-later')
     ..writeln('//')
     ..writeln('// $_header')
-    ..writeln('// ignore_for_file: lines_longer_than_80_chars')
+    ..writeln('// ignore_for_file: lines_longer_than_80_chars, avoid_redundant_argument_values')
     ..writeln()
     ..writeln("import 'public_network_spec.dart';")
     ..writeln()

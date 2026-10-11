@@ -90,6 +90,7 @@ void main() {
     test('a build without one asks until a server is stored', () async {
       expect(
         await needsServerChoice(
+          // ignore: avoid_redundant_argument_values — #2389, the default is false in the libre flavour only
           hasDefault: false,
           readStored: () async => null,
         ),
@@ -97,6 +98,7 @@ void main() {
       );
       expect(
         await needsServerChoice(
+          // ignore: avoid_redundant_argument_values — #2389, the default is false in the libre flavour only
           hasDefault: false,
           readStored: () async => referenceEndpoint,
         ),
