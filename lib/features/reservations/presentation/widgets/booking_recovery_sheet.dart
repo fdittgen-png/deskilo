@@ -38,6 +38,7 @@ Future<void> showBookingRecoverySheet(
   builder: (_) => BookingRecoverySheet(intent: intent, spaceName: spaceName),
 );
 
+@visibleForTesting
 class BookingRecoverySheet extends ConsumerStatefulWidget {
   const BookingRecoverySheet({super.key, required this.intent, this.spaceName});
 

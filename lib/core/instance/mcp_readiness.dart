@@ -159,12 +159,12 @@ class McpReadinessReport {
   /// The sanitized projection a support bundle or a CI artifact may keep.
   Map<String, Object?> toJson() {
     final body = _body();
-    return {...body, 'digest': mcpReportDigest(body)};
+    return {...body, 'digest': _mcpReportDigest(body)};
   }
 }
 
 /// sha256 of [value] as canonical JSON (sorted keys).
-String mcpReportDigest(Object? value) =>
+String _mcpReportDigest(Object? value) =>
     sha256.convert(utf8.encode(canonicalJson(value))).toString();
 
 /// JSON with object keys sorted at every level, so two equal values always
@@ -193,7 +193,7 @@ String? verifyMcpReadinessReport(
 }) {
   final digest = report['digest'];
   final body = Map<String, Object?>.of(report)..remove('digest');
-  if (digest is! String || mcpReportDigest(body) != digest) {
+  if (digest is! String || _mcpReportDigest(body) != digest) {
     return 'report_tampered';
   }
   final binding = body['binding'];

@@ -11,6 +11,7 @@
 // another server, another account or another day is dropped unread. It
 // carries the intent's own fields and nothing else — the intent type
 // refuses credentials at construction, so there is nothing here to leak.
+import 'package:meta/meta.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -27,13 +28,14 @@ part 'entry_intents.g.dart';
 
 /// The draft's shape. Bumped when a field changes meaning; an older
 /// draft is then dropped rather than reinterpreted.
-const int kEntryIntentDraftVersion = 1;
+const int _kEntryIntentDraftVersion = 1;
 
 /// How long a draft may wait. A confirmation e-mail is good for a day
 /// on the default service; a draft that outlives it was not resumed.
-const Duration kEntryIntentLifetime = Duration(hours: 24);
+const Duration _kEntryIntentLifetime = Duration(hours: 24);
 
 /// The installation key when the device talks to the default service.
+@visibleForTesting
 const String kDefaultInstallation = 'default';
 
 /// What is written: the intent, and the keys that say who may resume it.
@@ -51,7 +53,7 @@ class EntryIntentDraft {
   final DateTime expiresAt;
 
   String encode() => jsonEncode({
-        'v': kEntryIntentDraftVersion,
+        'v': _kEntryIntentDraftVersion,
         'id': intent.id,
         'purpose': intent.purpose.name,
         if (intent.target != null) 'target': intent.target,
@@ -73,7 +75,7 @@ class EntryIntentDraft {
     }
     final json = decoded;
     if (json is! Map<String, dynamic>) return null;
-    if (json['v'] != kEntryIntentDraftVersion) return null;
+    if (json['v'] != _kEntryIntentDraftVersion) return null;
     final id = json['id'];
     final purpose = EntryPurpose.values
         .where((p) => p.name == json['purpose'])
@@ -190,7 +192,7 @@ class EntryIntents extends _$EntryIntents {
       intent: intent,
       installation: await _installation(),
       userId: user,
-      expiresAt: ref.read(clockProvider).now().add(kEntryIntentLifetime),
+      expiresAt: ref.read(clockProvider).now().add(_kEntryIntentLifetime),
     );
     await ref.read(entryIntentStoreProvider).write(draft.encode());
   }

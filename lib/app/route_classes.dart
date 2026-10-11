@@ -6,6 +6,7 @@
 // step with router.dart by test/lint/route_policy_registry_test.dart in
 // both directions: a route without a class is refused by the policy, a
 // class without a route is a boundary kept alive for nothing.
+import 'package:meta/meta.dart';
 import 'schema_gate.dart';
 
 /// What a route needs before it may open.
@@ -64,6 +65,7 @@ const String kMeHome = '/me';
 /// Every route the router registers, classified. The lint in
 /// test/lint/route_policy_registry_test.dart keeps this list and
 /// router.dart in step both ways.
+@visibleForTesting
 const List<RouteRule> routeRules = [
   RouteRule(kMeHome, RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),

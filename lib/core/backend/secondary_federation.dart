@@ -162,7 +162,7 @@ abstract interface class IdentityConnector {
 /// The person's identity at the authority, read from this app's server.
 /// Null when this server does not say (an anonymous or federated account
 /// without a provider subject): connecting by identity is then refused.
-Future<CanonicalIdentity?> canonicalIdentityOf(SupabaseClient active) async {
+Future<CanonicalIdentity?> _canonicalIdentityOf(SupabaseClient active) async {
   final user = active.auth.currentUser;
   if (user == null) return null;
   final authority = FederationAuthority.parse(
@@ -170,7 +170,7 @@ Future<CanonicalIdentity?> canonicalIdentityOf(SupabaseClient active) async {
   );
   if (authority != null) {
     // A federated server: the person's subject is their Deskilo identity.
-    final sub = deskiloSubjectOf(user);
+    final sub = _deskiloSubjectOf(user);
     return sub == null ? null : CanonicalIdentity(authority.issuer, sub);
   }
   // This server is its own identity authority: other servers that accept
@@ -182,7 +182,7 @@ Future<CanonicalIdentity?> canonicalIdentityOf(SupabaseClient active) async {
 }
 
 /// The subject [user] holds at the Deskilo provider, if any.
-String? deskiloSubjectOf(User user) {
+String? _deskiloSubjectOf(User user) {
   for (final identity in user.identities ?? const <UserIdentity>[]) {
     if (identity.provider != NativeFederationFlow.provider.name) continue;
     final sub = identity.identityData?['sub'];
@@ -273,7 +273,7 @@ class SecondaryFederation implements IdentityConnector {
     final endpoint = _canonical(target);
     final CanonicalIdentity? identity;
     try {
-      identity = await canonicalIdentityOf(active);
+      identity = await _canonicalIdentityOf(active);
     } catch (e, st) {
       TraceLogger.instance.warn(
         'connections',
@@ -430,7 +430,7 @@ class SecondaryFederation implements IdentityConnector {
         throw const _Refused(FederationFailure.incompatibleServer);
       }
       // The SAME person at the SAME authority — never an e-mail match.
-      if (deskiloSubjectOf(user) != pending.readiness.identity.subject) {
+      if (_deskiloSubjectOf(user) != pending.readiness.identity.subject) {
         throw const _Refused(FederationFailure.wrongAccount);
       }
       final binding = await client.rpc<Object?>('finalize_identity_binding');

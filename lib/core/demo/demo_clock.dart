@@ -14,7 +14,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'data/fixture_clock.dart';
 
 /// The demo space's IANA zone (its workspace row says the same).
-const demoTimezone = 'Europe/Paris';
+const _demoTimezone = 'Europe/Paris';
 
 tz.Location? _zone;
 
@@ -22,7 +22,7 @@ tz.Location get _demoZone {
   final zone = _zone;
   if (zone != null) return zone;
   tzdata.initializeTimeZones();
-  return _zone = tz.getLocation(demoTimezone);
+  return _zone = tz.getLocation(_demoTimezone);
 }
 
 /// [hour]:[minute] on [year]-[month]-[day] in the demo space, as a UTC

@@ -6,6 +6,7 @@
 // owning account), refreshed there, re-checked against the installation
 // id it was connected as, and disposed after the call. No other
 // installation's session or the main app's is read or written.
+import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/connected_installations.dart';
@@ -17,6 +18,7 @@ import 'supabase_action_confirmation_repository.dart';
 import 'supabase_mcp_admin_repository.dart';
 import 'supabase_mcp_connection_repository.dart';
 
+@visibleForTesting
 McpRepositories supabaseMcpRepositories(SupabaseClient client) =>
     McpRepositories(
       admin: SupabaseMcpAdminRepository(client),

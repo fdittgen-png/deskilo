@@ -38,6 +38,7 @@ final class SeatDayBooking extends SeatDayPick {
 }
 
 /// The day's free stretches around [segments], each at least [minMinutes].
+@visibleForTesting
 List<SeatDayGap> seatDayGaps({
   required List<SeatDaySegment> segments,
   required DateTime dayStart,

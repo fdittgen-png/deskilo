@@ -11,13 +11,13 @@ import 'management_api.dart';
 part 'instance_bundle_asset.g.dart';
 
 /// The bundled schema and functions, read from the app's assets (#977).
-Future<InstanceBundle> loadInstanceBundleAsset() async =>
+Future<InstanceBundle> _loadInstanceBundleAsset() async =>
     parseInstanceBundle(await rootBundle.loadString(InstanceBundle.assetPath));
 
 /// How the wizard gets its bundle — the asset, or a small one in tests.
 @Riverpod(keepAlive: true)
 Future<InstanceBundle> Function() instanceBundleLoader(Ref ref) =>
-    loadInstanceBundleAsset;
+    _loadInstanceBundleAsset;
 
 /// How the wizard talks to Supabase for a given access token — the real
 /// API, or a fake in tests. The token lives in the wizard's state only.

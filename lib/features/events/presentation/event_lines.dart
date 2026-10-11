@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/app_format.dart';
@@ -17,6 +18,7 @@ import 'event_labels.dart';
 /// #2085 — a role's name as an event recorded it ([names] is the
 /// `role_names` map of the payload), in [locale], then English, then
 /// [fallback] (the key) when the record carries no name at all.
+@visibleForTesting
 String roleNameIn(Object? names, String locale, String fallback) {
   if (names is Map) {
     final own = names[locale] ?? names['en'];

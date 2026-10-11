@@ -24,6 +24,7 @@ abstract class RealtimeSync {
 
 /// The tables the app renders — one `postgres_changes` binding each.
 /// Must stay a subset of what 0080 publishes.
+@visibleForTesting
 const realtimeTables = [
   'reservations',
   'members',
@@ -57,6 +58,7 @@ const realtimeTables = [
 /// in several workspaces is not woken by the others. Account-wide facts
 /// (profiles, memberships, the messenger, the workspace row itself) stay
 /// unfiltered.
+@visibleForTesting
 const workspaceScopedTables = {
   'reservations', 'levels', 'offices', 'desks', 'seats', 'plan_images',
   'events', 'ledger_entries', 'payment_intents', 'invoices', 'services',
@@ -66,6 +68,7 @@ const workspaceScopedTables = {
 
 /// One `postgres_changes` binding: [workspaceFilter] null means every row
 /// the subscriber may see (RLS still applies).
+@visibleForTesting
 typedef RealtimeBinding = ({
   String table,
   PostgresChangeEvent event,
@@ -75,6 +78,7 @@ typedef RealtimeBinding = ({
 /// #2019 — the bindings for [workspaceId]. A filter cannot match a DELETE
 /// (the old row carries only its key), so each scoped table also keeps an
 /// unfiltered DELETE binding: deletions stay conservatively visible.
+@visibleForTesting
 List<RealtimeBinding> realtimeBindings(String workspaceId) => [
   for (final table in realtimeTables)
     if (workspaceScopedTables.contains(table)) ...[
@@ -88,6 +92,7 @@ List<RealtimeBinding> realtimeBindings(String workspaceId) => [
 /// 2s, 4s, 8s, 16s, then 30s forever — fast enough that a kiosk
 /// recovers from a Wi-Fi blip within seconds, slow enough that a dead
 /// backend is not hammered.
+@visibleForTesting
 Duration reconnectDelay(int attempt) =>
     Duration(seconds: min(30, 2 << min(attempt, 4)));
 

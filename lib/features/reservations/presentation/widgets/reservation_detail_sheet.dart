@@ -51,6 +51,7 @@ import '../../../task_recorder/presentation/recorder_seam.dart';
 ///
 /// Pops with the resolved [SeatContext] when the user wants the jump —
 /// the caller then signals the plan tab and navigates.
+@visibleForTesting
 class ReservationDetailSheet extends ConsumerWidget {
   const ReservationDetailSheet({super.key, required this.reservation});
 

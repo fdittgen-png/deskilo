@@ -23,11 +23,11 @@ Future<void> showAccessSheet(BuildContext context, WidgetRef ref) =>
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => const AccessSheet(),
+      builder: (_) => const _AccessSheet(),
     );
 
-class AccessSheet extends ConsumerWidget {
-  const AccessSheet({super.key});
+class _AccessSheet extends ConsumerWidget {
+  const _AccessSheet();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

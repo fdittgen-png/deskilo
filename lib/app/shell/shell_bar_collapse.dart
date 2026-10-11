@@ -14,7 +14,7 @@ import 'shell_bar_visibility.dart';
 /// oscillating around its midpoint, and a control with no intermediate
 /// resting state cannot oscillate: it always settles at 0 or 1. A second
 /// number here would be a knob nobody could defend.
-const double kShellBarSettleThreshold = 0.45;
+const double _kShellBarSettleThreshold = 0.45;
 
 /// Where a released drag settles: 1 collapsed, 0 expanded.
 ///
@@ -28,6 +28,7 @@ const double kShellBarSettleThreshold = 0.45;
 /// belongs here.
 ///
 /// [velocity] is positive downward, matching [DragEndDetails].
+@visibleForTesting
 double shellBarSettleTarget({
   required double progress,
   required double velocity,
@@ -35,7 +36,7 @@ double shellBarSettleTarget({
   // A decisive flick means what it says even from a standing start,
   // which is the gesture #1173 shipped and people already have.
   if (velocity.abs() >= kShellBarSwipeVelocity) return velocity > 0 ? 1 : 0;
-  return progress >= kShellBarSettleThreshold ? 1 : 0;
+  return progress >= _kShellBarSettleThreshold ? 1 : 0;
 }
 
 /// How legible the chrome still is at progress [t]: labels and titles go

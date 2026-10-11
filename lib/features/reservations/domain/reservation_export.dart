@@ -30,6 +30,8 @@
 /// silently dropped.
 library;
 
+import 'package:meta/meta.dart';
+
 import 'reservation.dart';
 
 /// What a reservation actually booked. The model allows exactly one of
@@ -37,8 +39,10 @@ import 'reservation.dart';
 /// that quietly mislabels a malformed row is worse than one that admits
 /// it found something it did not expect — and a malformed row is
 /// precisely what a bug report is about.
+@visibleForTesting
 enum ReservationScope { seat, desk, office, level, unknown }
 
+@visibleForTesting
 ReservationScope reservationScopeOf(Reservation r) {
   if (r.seatId != null) return ReservationScope.seat;
   if (r.deskId != null) return ReservationScope.desk;

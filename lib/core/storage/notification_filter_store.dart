@@ -17,8 +17,8 @@ abstract class NotificationFilterStore {
   Future<void> writeEventsSeen(DateTime value);
 }
 
-class PrefsNotificationFilterStore implements NotificationFilterStore {
-  const PrefsNotificationFilterStore();
+class _PrefsNotificationFilterStore implements NotificationFilterStore {
+  const _PrefsNotificationFilterStore();
 
   static const _filter = PrefsStringStore('notification_filter');
   static const _seen = PrefsStringStore('events_seen_until');
@@ -55,4 +55,4 @@ class InMemoryNotificationFilterStore implements NotificationFilterStore {
 
 @Riverpod(keepAlive: true)
 NotificationFilterStore notificationFilterStore(Ref ref) =>
-    const PrefsNotificationFilterStore();
+    const _PrefsNotificationFilterStore();

@@ -15,8 +15,8 @@ abstract class PushOptOutStore {
   Future<void> write(bool optedOut);
 }
 
-class PrefsPushOptOutStore implements PushOptOutStore {
-  const PrefsPushOptOutStore();
+class _PrefsPushOptOutStore implements PushOptOutStore {
+  const _PrefsPushOptOutStore();
 
   static const _key = 'push_opted_out';
 
@@ -30,7 +30,7 @@ class PrefsPushOptOutStore implements PushOptOutStore {
 }
 
 @Riverpod(keepAlive: true)
-PushOptOutStore pushOptOutStore(Ref ref) => const PrefsPushOptOutStore();
+PushOptOutStore pushOptOutStore(Ref ref) => const _PrefsPushOptOutStore();
 
 /// True when the person turned push delivery off on this device.
 @Riverpod(keepAlive: true)

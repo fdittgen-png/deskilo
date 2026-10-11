@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../storage/prefs_stores.dart';
@@ -15,6 +16,7 @@ abstract class ThemeStore {
   Future<void> write(String? mode);
 }
 
+@visibleForTesting
 class PrefsThemeStore extends PrefsStringStore implements ThemeStore {
   const PrefsThemeStore() : super('theme_mode_override');
 }

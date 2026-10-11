@@ -11,8 +11,8 @@ import '../data/workspace_repository.dart';
 import '../demo_clock.dart';
 
 /// The pair both sides share, and the development side's id.
-const demoPairId = 'demo-pair';
-const demoTwinId = 'ws-1-dev';
+const _demoPairId = 'demo-pair';
+const _demoTwinId = 'ws-1-dev';
 
 void seedDemoTwin(
   FakeWorkspaceRepository workspaces,
@@ -22,13 +22,13 @@ void seedDemoTwin(
 }) {
   final i = workspaces.workspaces.indexWhere((w) => w.id == 'ws-1');
   if (i < 0) return;
-  final production = workspaces.workspaces[i].copyWith(pairId: demoPairId);
+  final production = workspaces.workspaces[i].copyWith(pairId: _demoPairId);
   workspaces.workspaces[i] = production;
   // The symbol is the one thing a twin never carries (0378): two
   // workspaces never wear the same letters on the same colour.
   workspaces.workspaces.add(
     production.copyWith(
-      id: demoTwinId,
+      id: _demoTwinId,
       environment: 'dev',
       branding: {
         for (final e in production.branding.entries)
@@ -38,7 +38,7 @@ void seedDemoTwin(
   );
 
   deployments
-    ..environments = {'ws-1': 'prod', demoTwinId: 'dev'}
+    ..environments = {'ws-1': 'prod', _demoTwinId: 'dev'}
     // What a preview finds on the development side today.
     ..diffs = {
       'tariffs': (1, 1, 0),
@@ -59,7 +59,7 @@ void seedDemoTwin(
     DateTime? rolledBackAt,
   }) => Deployment(
     id: id,
-    fromWorkspaceId: demoTwinId,
+    fromWorkspaceId: _demoTwinId,
     toWorkspaceId: 'ws-1',
     direction: DeploymentDirection.devToProd,
     entities: entities,

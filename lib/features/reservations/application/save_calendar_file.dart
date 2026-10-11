@@ -188,7 +188,7 @@ class CalendarFiles {
     return CalendarFilePreview(
       reservationId: reservation.id,
       snapshot: snapshot,
-      fileName: calendarFileNameFor(snapshot),
+      fileName: _calendarFileNameFor(snapshot),
       text: serializeCalendarFile(snapshot),
     );
   }
@@ -197,7 +197,7 @@ class CalendarFiles {
 /// `deskilo-20260329-1a2b3c4d.ics`: the start date and the first eight
 /// hex digits of the UID. Nothing in the name says whose booking it is
 /// or where it was booked — the name travels further than the file.
-String calendarFileNameFor(CalendarSnapshot snapshot) {
+String _calendarFileNameFor(CalendarSnapshot snapshot) {
   final date = formatCalendarInstant(snapshot.startUtc).substring(0, 8);
   final tag = snapshot.uid.substring(0, 8);
   return 'deskilo-$date-$tag.ics';

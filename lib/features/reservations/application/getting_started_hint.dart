@@ -28,6 +28,7 @@
 // plugs in [readinessGuidance] (#1636), which speaks only when the
 // server's readiness check names a step that blocks a first booking.
 
+import 'package:meta/meta.dart';
 import '../../workspace/domain/workspace_readiness.dart';
 
 /// How a fact was obtained, which decides what may be said about it.
@@ -211,6 +212,7 @@ typedef OwnerReadinessGuidance =
 /// What is plugged into the seam today: no owner-specific guidance at
 /// all. An owner meets the same permitted task a member does rather
 /// than an invented checklist.
+@visibleForTesting
 GettingStartedHint? noOwnerReadinessGuidance(GettingStartedFacts facts) => null;
 
 /// #1636 — the guidance the readiness check supports: the first section
@@ -239,6 +241,7 @@ OwnerReadinessGuidance readinessGuidance(List<ReadinessSection>? sections) =>
 /// The version of the guidance a dismissal refers to. Bumped only when
 /// the card's MEANING changes enough that a person who dismissed the
 /// old one should see the new one; an app release does not bump it.
+@visibleForTesting
 const int kGettingStartedGuidanceVersion = 1;
 
 /// The key a dismissal is stored under in the device's help-hint store:

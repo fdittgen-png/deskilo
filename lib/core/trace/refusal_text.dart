@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/app_localizations_en.dart';
 import '../data/server_error.dart';
@@ -30,6 +31,7 @@ enum KnownRefusal {
 }
 
 /// Substrings of server refusals that mean "you may not".
+@visibleForTesting
 const List<String> permissionRefusalSubstrings = [
   'not an admin of this workspace',
   'not the owner of this workspace',
@@ -46,17 +48,20 @@ const List<String> permissionRefusalSubstrings = [
 ];
 
 /// Substrings that mean the session is gone.
+@visibleForTesting
 const List<String> sessionRefusalSubstrings = [
   'not authenticated',
   'jwt expired',
 ];
 
 /// Substrings that mean somebody else already acted.
+@visibleForTesting
 const List<String> alreadyDecidedSubstrings = [
   'already decided',
 ];
 
 /// Substrings that mean the record moved under the reader's feet.
+@visibleForTesting
 const List<String> changedMeanwhileSubstrings = [
   'invoice is voided',
   'invoice is matched',

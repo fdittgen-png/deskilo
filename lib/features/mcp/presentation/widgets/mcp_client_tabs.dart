@@ -18,17 +18,17 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The assistants the page explains, in the order the tabs show them.
-enum McpClientKind { claude, claudeCode, chatgpt, cursor, vscode, other }
+enum _McpClientKind { claude, claudeCode, chatgpt, cursor, vscode, other }
 
-String mcpClientLabel(AppLocalizations? l10n, McpClientKind kind) =>
+String _mcpClientLabel(AppLocalizations? l10n, _McpClientKind kind) =>
     switch (kind) {
-      McpClientKind.claude => l10n?.mcpConnectTabClaude ?? 'Claude',
-      McpClientKind.claudeCode =>
+      _McpClientKind.claude => l10n?.mcpConnectTabClaude ?? 'Claude',
+      _McpClientKind.claudeCode =>
         l10n?.mcpConnectTabClaudeCode ?? 'Claude Code',
-      McpClientKind.chatgpt => l10n?.mcpConnectTabChatgpt ?? 'ChatGPT',
-      McpClientKind.cursor => l10n?.mcpConnectTabCursor ?? 'Cursor',
-      McpClientKind.vscode => l10n?.mcpConnectTabVscode ?? 'VS Code',
-      McpClientKind.other => l10n?.mcpConnectTabOther ?? 'Other',
+      _McpClientKind.chatgpt => l10n?.mcpConnectTabChatgpt ?? 'ChatGPT',
+      _McpClientKind.cursor => l10n?.mcpConnectTabCursor ?? 'Cursor',
+      _McpClientKind.vscode => l10n?.mcpConnectTabVscode ?? 'VS Code',
+      _McpClientKind.other => l10n?.mcpConnectTabOther ?? 'Other',
     };
 
 class McpClientTabs extends StatefulWidget {
@@ -42,7 +42,7 @@ class McpClientTabs extends StatefulWidget {
 }
 
 class _McpClientTabsState extends State<McpClientTabs> {
-  McpClientKind _kind = McpClientKind.claude;
+  _McpClientKind _kind = _McpClientKind.claude;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +68,10 @@ class _McpClientTabsState extends State<McpClientTabs> {
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            for (final kind in McpClientKind.values)
+            for (final kind in _McpClientKind.values)
               ChoiceChip(
                 key: ValueKey('mcp-connect-tab-${kind.name}'),
-                label: Text(mcpClientLabel(l10n, kind)),
+                label: Text(_mcpClientLabel(l10n, kind)),
                 selected: _kind == kind,
                 onSelected: (_) => setState(() => _kind = kind),
               ),
@@ -81,12 +81,12 @@ class _McpClientTabsState extends State<McpClientTabs> {
         KeyedSubtree(
           key: ValueKey('mcp-connect-panel-${_kind.name}'),
           child: switch (_kind) {
-            McpClientKind.claude => _claude(l10n),
-            McpClientKind.claudeCode => _claudeCode(l10n, url),
-            McpClientKind.chatgpt => _chatgpt(l10n),
-            McpClientKind.cursor => _cursor(l10n, url),
-            McpClientKind.vscode => _vscode(l10n, url),
-            McpClientKind.other => _other(l10n, url),
+            _McpClientKind.claude => _claude(l10n),
+            _McpClientKind.claudeCode => _claudeCode(l10n, url),
+            _McpClientKind.chatgpt => _chatgpt(l10n),
+            _McpClientKind.cursor => _cursor(l10n, url),
+            _McpClientKind.vscode => _vscode(l10n, url),
+            _McpClientKind.other => _other(l10n, url),
           },
         ),
       ],

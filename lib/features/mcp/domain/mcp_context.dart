@@ -14,6 +14,8 @@
 // account and purpose ([McpTargetKey]). Display names are labels, never
 // keys: the same UUID on two installations is two contexts.
 
+import 'package:meta/meta.dart';
+
 final _uuid = RegExp(
   r'^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$',
 );
@@ -160,6 +162,7 @@ class VerifiedMcpTarget {
 }
 
 /// An answer that names a different [what] than the one asked for.
+@visibleForTesting
 class McpProvenanceMismatch implements Exception {
   const McpProvenanceMismatch(this.what, this.expected, this.answered);
 

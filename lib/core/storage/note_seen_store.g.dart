@@ -48,4 +48,4 @@ final class NoteSeenStoreProvider
   }
 }
 
-String _$noteSeenStoreHash() => r'4504fc5cc90e256e5b1db68b8b2cb2ad5fd06011';
+String _$noteSeenStoreHash() => r'8c49e2faca35546221b74c5f5d2c1c5144a2280f';

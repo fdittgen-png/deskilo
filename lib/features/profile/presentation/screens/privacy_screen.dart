@@ -27,7 +27,7 @@ import '../widgets/erasure_preview_view.dart';
 import '../../application/rights_requests.dart';
 
 /// The policy the store listings, the README and the help all point at.
-const kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
+const _kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html';
 
 /// Settings → Privacy & data (#719): the four GDPR rights a member
 /// exercises themselves, on one screen, with the policy beside them.
@@ -138,9 +138,9 @@ class PrivacyScreen extends ConsumerWidget {
           key: const ValueKey('privacy-policy'),
           leading: const Icon(Icons.policy_outlined),
           title: Text(l10n?.privacyPolicy ?? 'Privacy policy'),
-          subtitle: const Text(kPrivacyPolicyUrl),
+          subtitle: const Text(_kPrivacyPolicyUrl),
           trailing: const Icon(Icons.open_in_new, size: 18),
-          onTap: () => ref.read(linkLauncherProvider)(Uri.parse(kPrivacyPolicyUrl)),
+          onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_kPrivacyPolicyUrl)),
         ),
       ]),
     );

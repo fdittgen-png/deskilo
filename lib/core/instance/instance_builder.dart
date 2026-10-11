@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'dart:math';
 
 import 'instance_bundle.dart';
@@ -70,6 +71,7 @@ typedef InstanceProgress = ({int done, int total, String current});
 
 /// #1829 — [email] as the owner-claim check of 0318 stores it (trimmed,
 /// lower case, `x@y.z`), or null when the database would refuse it.
+@visibleForTesting
 String? normaliseOwnerEmail(String email) {
   final address = email.trim().toLowerCase();
   return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(address)

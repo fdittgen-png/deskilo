@@ -7,12 +7,12 @@ import 'package:flutter/foundation.dart';
 import '../trace/trace_logger.dart';
 import 'app_badge.dart';
 
-AppBadge createAppBadge() => WebAppBadge();
+AppBadge createAppBadge() => _WebAppBadge();
 
 /// The Badging API (#444): live on INSTALLED web apps (Chromium PWAs,
 /// Safari 16.4+ home-screen apps); a plain browser tab has no icon to
 /// badge and the feature detection below turns this into a no-op.
-class WebAppBadge implements AppBadge {
+class _WebAppBadge implements AppBadge {
   @override
   Future<void> update(int count) async {
     try {

@@ -18,7 +18,7 @@ abstract class DefaultPeriodStore {
   Future<void> write(String workspaceId, String? wire);
 }
 
-class PrefsDefaultPeriodStore implements DefaultPeriodStore {
+class _PrefsDefaultPeriodStore implements DefaultPeriodStore {
   static String _key(String workspaceId) => 'default_period_$workspaceId';
 
   @override
@@ -55,7 +55,7 @@ class InMemoryDefaultPeriodStore implements DefaultPeriodStore {
 
 @Riverpod(keepAlive: true)
 DefaultPeriodStore defaultPeriodStore(Ref ref) =>
-    PrefsDefaultPeriodStore();
+    _PrefsDefaultPeriodStore();
 
 /// The active workspace's stored default period, validated against what
 /// the CURRENT booking configuration still offers — a preference saved

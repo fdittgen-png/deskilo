@@ -55,4 +55,4 @@ final class BookingIntentStoreProvider
 }
 
 String _$bookingIntentStoreHash() =>
-    r'f6a6869ba8abad52bd3b1b2618864e19a64c2c6e';
+    r'0881c6f7d5dce15540ab517eae9a136d0de645d8';

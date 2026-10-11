@@ -54,7 +54,7 @@ final class DefaultLevelStoreProvider
   }
 }
 
-String _$defaultLevelStoreHash() => r'f6ada5bd9127ee6078254a31fbcc7de742050baa';
+String _$defaultLevelStoreHash() => r'b574cfbaac04ac8308227143b9e1e7fd488f1365';
 
 /// The level shown on the Plan tab (#159): initially the stored default
 /// of the active workspace when that level still exists, else the first

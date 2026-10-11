@@ -52,7 +52,7 @@ import '../../../../core/i18n/format_controller.dart';
 
 /// Server error substring when a presented badge is unknown/revoked
 /// (kiosk_act, migration 0043) — pinned by test like the other guards.
-abstract final class KioskBadgeError {
+abstract final class _KioskBadgeError {
   static const String serverSubstring = 'badge not recognized';
 }
 
@@ -231,7 +231,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       // #430: bookingErrorText is THE mapper; kiosk cases stay.
       var message = switch (e) {
         PostgrestException(:final message)
-            when message.contains(KioskBadgeError.serverSubstring) =>
+            when message.contains(_KioskBadgeError.serverSubstring) =>
           l10n?.kioskBadgeRejected ?? 'Badge not recognized.',
         PostgrestException(:final message)
             when message.contains('not checked in') =>

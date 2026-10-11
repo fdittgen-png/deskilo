@@ -44,12 +44,11 @@ Future<void> showSpaceActSheet(
 }) => showModalBottomSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (context) => SpaceActSheet(seat: seat, plan: plan, title: title),
+  builder: (context) => _SpaceActSheet(seat: seat, plan: plan, title: title),
 );
 
-class SpaceActSheet extends ConsumerStatefulWidget {
-  const SpaceActSheet({
-    super.key,
+class _SpaceActSheet extends ConsumerStatefulWidget {
+  const _SpaceActSheet({
     required this.seat,
     this.plan,
     required this.title,
@@ -63,10 +62,10 @@ class SpaceActSheet extends ConsumerStatefulWidget {
   final String title;
 
   @override
-  ConsumerState<SpaceActSheet> createState() => _SpaceActSheetState();
+  ConsumerState<_SpaceActSheet> createState() => _SpaceActSheetState();
 }
 
-class _SpaceActSheetState extends ConsumerState<SpaceActSheet> {
+class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
   bool _busy = false;
 
   BookingGranularity get _granularity =>

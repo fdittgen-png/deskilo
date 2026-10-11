@@ -14,6 +14,7 @@
 // a PKCE verifier, a one-time password are not targets and are refused
 // at the door: [EntryIntent.open] rejects a location that carries one,
 // and no constructor takes one.
+import 'package:meta/meta.dart';
 import 'route_classes.dart';
 
 /// What was asked for.
@@ -51,11 +52,12 @@ enum AccountSection { profiles, linkedAccounts, privacy, consentReview }
 /// Query parameters a resumed location may keep: each is a display
 /// choice, none is a credential. Anything else is dropped with the
 /// location.
-const Set<String> kResumableQueryKeys = {'topic', 'anchor', 'review'};
+const Set<String> _kResumableQueryKeys = {'topic', 'anchor', 'review'};
 
 /// Words that mark a credential wherever they appear in a location. A
 /// location carrying one is refused whole rather than cleaned: a URL
 /// with a token in it was not a place the person meant to come back to.
+@visibleForTesting
 const List<String> kCredentialCanaries = [
   'code',
   'token',
@@ -144,7 +146,7 @@ final class EntryIntent {
   /// The path of [raw] when it is a place the app can bring somebody
   /// back to; null otherwise. Accepts a registered route that is not the
   /// sign-in screen itself, with at most the display queries of
-  /// [kResumableQueryKeys]; refuses a scheme, a host, a fragment, a
+  /// [_kResumableQueryKeys]; refuses a scheme, a host, a fragment, a
   /// credential canary anywhere, and every unregistered path.
   static String? validatedLocation(String raw) {
     if (raw.isEmpty || !raw.startsWith('/') || raw.startsWith('//')) {
@@ -157,7 +159,7 @@ final class EntryIntent {
     if (rule == null || rule.kind == RouteClass.unknown || uri.path == '/auth') {
       return null;
     }
-    if (uri.queryParameters.keys.any((k) => !kResumableQueryKeys.contains(k))) {
+    if (uri.queryParameters.keys.any((k) => !_kResumableQueryKeys.contains(k))) {
       return null;
     }
     // The static segments are the registry's own words (`/workspace-code`

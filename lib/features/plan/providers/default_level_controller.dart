@@ -20,7 +20,7 @@ abstract class DefaultLevelStore {
   Future<void> write(String workspaceId, String levelId);
 }
 
-class PrefsDefaultLevelStore implements DefaultLevelStore {
+class _PrefsDefaultLevelStore implements DefaultLevelStore {
   static String _key(String workspaceId) => 'default_level_$workspaceId';
 
   @override
@@ -35,7 +35,7 @@ class PrefsDefaultLevelStore implements DefaultLevelStore {
 }
 
 @Riverpod(keepAlive: true)
-DefaultLevelStore defaultLevelStore(Ref ref) => PrefsDefaultLevelStore();
+DefaultLevelStore defaultLevelStore(Ref ref) => _PrefsDefaultLevelStore();
 
 /// The level shown on the Plan tab (#159): initially the stored default
 /// of the active workspace when that level still exists, else the first

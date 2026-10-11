@@ -15,7 +15,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// #1651 — the three ways a device gets its server, as one choice.
-enum BackendConnectMode {
+enum _BackendConnectMode {
   /// DesKilo's own service: the default, and the way back.
   defaultService,
 
@@ -78,7 +78,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
   final _url = TextEditingController();
   final _key = TextEditingController();
   final _descriptor = TextEditingController();
-  late BackendConnectMode _mode;
+  late _BackendConnectMode _mode;
   String? _label;
   bool _descriptorInvalid = false;
   int _generation = 0;
@@ -91,8 +91,8 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
     super.initState();
     final initial = widget.initial;
     _mode = initial == null
-        ? BackendConnectMode.connect
-        : BackendConnectMode.operator;
+        ? _BackendConnectMode.connect
+        : _BackendConnectMode.operator;
     if (initial != null) {
       _url.text = initial.url;
       _key.text = initial.key;
@@ -138,25 +138,25 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           runSpacing: AppSpacing.xs,
           children: [
             if (widget.offerDefault)
-              _chip(BackendConnectMode.defaultService, 'backend-mode-default',
+              _chip(_BackendConnectMode.defaultService, 'backend-mode-default',
                   l10n?.backendModeDefault ?? "Use DesKilo's service"),
-            _chip(BackendConnectMode.connect, 'backend-mode-connect',
+            _chip(_BackendConnectMode.connect, 'backend-mode-connect',
                 l10n?.backendModeConnect ?? 'Connect an existing organization'),
-            _chip(BackendConnectMode.operator, 'backend-mode-operator',
+            _chip(_BackendConnectMode.operator, 'backend-mode-operator',
                 l10n?.backendModeOperator ?? 'Set up a server (operators)'),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
         switch (_mode) {
-          BackendConnectMode.defaultService => _defaultPanel(l10n),
-          BackendConnectMode.connect => _connectPanel(l10n),
-          BackendConnectMode.operator => _operatorPanel(l10n),
+          _BackendConnectMode.defaultService => _defaultPanel(l10n),
+          _BackendConnectMode.connect => _connectPanel(l10n),
+          _BackendConnectMode.operator => _operatorPanel(l10n),
         },
       ],
     );
   }
 
-  Widget _chip(BackendConnectMode mode, String key, String label) =>
+  Widget _chip(_BackendConnectMode mode, String key, String label) =>
       ChoiceChip(
         key: ValueKey(key),
         label: Text(label),

@@ -18,7 +18,7 @@ import 'development_banner.dart';
 
 /// Whether [path] is the person's own layer rather than a space's: every
 /// registered route that needs no membership.
-bool isMeLayer(String path) => switch (classifyRoute(path)) {
+bool _isMeLayer(String path) => switch (classifyRoute(path)) {
       RouteClass.publicEntry ||
       RouteClass.nativeAccount ||
       RouteClass.operator =>
@@ -48,7 +48,7 @@ class _LayerChromeState extends State<LayerChrome> {
   bool _isMe() {
     final delegate = widget.router.routerDelegate;
     return delegate.currentConfiguration.isNotEmpty &&
-        isMeLayer(widget.router.state.uri.path);
+        _isMeLayer(widget.router.state.uri.path);
   }
 
   /// The delegate announces a route while the Router itself is building,

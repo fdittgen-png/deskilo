@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -155,6 +156,7 @@ String dayKeyOf(DateTime at) {
 /// full-day booking lands under the OTHER key; a surface that reads only
 /// `dayKeyOf(start)` misses it (the bug where a reservation showed on the
 /// Plan tab but not the Reserve hub). Fetch both and merge.
+@visibleForTesting
 List<String> dayKeysForWindow(DateTime start, DateTime end) {
   final startKey = dayKeyOf(start);
   final endKey = dayKeyOf(end.subtract(const Duration(microseconds: 1)));
