@@ -74,8 +74,7 @@ class _WizardNavigationState extends State<WizardNavigation> {
         ],
       ));
     _asking = false;
-    _leaving = mounted && leave == true;
-    return _leaving;
+    return _leaving = mounted && leave == true;
   }
 
   @override

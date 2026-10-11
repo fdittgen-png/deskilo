@@ -348,7 +348,7 @@ RouteDecision settleDestination(RouteRequest request, RouteFacts facts) {
     final target = RouteRequest.parse(hop.redirect!);
     if (!seen.add(target.location)) return const RouteDecision._averted();
     final next = resolveDestination(target, facts);
-    if (next.stays) return RouteDecision.go(hop.redirect!, first.reason!);
+    if (next.stays) return RouteDecision.go(hop.redirect!, first.reason);
     hop = next;
   }
 }

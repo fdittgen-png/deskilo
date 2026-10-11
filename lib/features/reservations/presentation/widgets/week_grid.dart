@@ -704,7 +704,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       fill = scheme.surfaceContainerHighest;
     }
     final free = fill == null;
-    return Container(
+    return DecoratedBox(
       key: WeekGrid.cellKey(seat.id, day, morning: morning),
       decoration: BoxDecoration(
         color: fill,

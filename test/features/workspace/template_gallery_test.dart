@@ -222,4 +222,3 @@ void main() {
     expect(find.byIcon(Icons.check), findsNothing, reason: 'shortlisting never selects');
   });
 }
-

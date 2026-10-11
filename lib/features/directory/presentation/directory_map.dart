@@ -118,7 +118,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         ? ref.watch(directoryAddressLocationProvider(address)) : null;
     final located = [
       for (final w in widget.workspaces)
-        if ((w.location ?? (w == target ? lookup?.value : null)) case final point?)
+        if (w.location ?? (w == target ? lookup?.value : null) case final point?)
           (workspace: w, location: point),
     ];
     final view = '${widget.selected}:${located.map((p) =>

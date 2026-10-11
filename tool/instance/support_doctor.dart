@@ -39,7 +39,7 @@ Future<int> runSupportDoctor(
 Future<SupportEvidence?> loadSupportEvidence() async {
   try {
     final file = File('docs/product/capabilities.release.json');
-    if (!await file.exists() ||
+    if (!file.existsSync() ||
         await file.length() > SupportEvidence.maxSourceBytes) {
       return null;
     }

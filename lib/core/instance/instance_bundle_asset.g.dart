@@ -121,7 +121,7 @@ final class SupabaseManagementFactoryProvider
 }
 
 String _$supabaseManagementFactoryHash() =>
-    r'938ee27ef80d5596031793011599613ea46b6472';
+    r'bcbd0aae5e27d8adacee756e6fe3d06cb5db50ca';
 
 /// #1308 S3 — the in-app doctor: the same `InstanceDoctor.examine` the CLI
 /// runs, judged against the bundle and the policy list this app carries.

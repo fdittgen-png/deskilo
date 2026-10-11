@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  setUpAll(() => initializeDateFormatting());
+  setUpAll(initializeDateFormatting);
 
   test('shortDate already carries the weekday — nothing may prepend it',
       () {

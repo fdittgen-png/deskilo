@@ -47,7 +47,7 @@ List<String> pageStreams(Uint8List bytes) {
     } catch (e, st) {
       // trace-exempt: a font program or an embedded file is not deflate
       // — an expected miss while walking every stream, not a failure.
-      assert(st.toString().isNotEmpty);
+      assert(st.toString().isNotEmpty, 'a caught error has a stack');
       continue;
     }
   }

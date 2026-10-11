@@ -195,12 +195,12 @@ void main() {
   test('the same reservation id on two installations never collides',
       () async {
     final repo = FakeReservationRepository()..reservations.add(_mine());
-    final a = ((await _files(repo, _Writer(), installation: 'a.test')
+    final a = (await _files(repo, _Writer(), installation: 'a.test')
             .prepare(reservationId: 'res-1', memberId: 'member-1'))
-        as CalendarFileReady);
-    final b = ((await _files(repo, _Writer(), installation: 'b.test')
+        as CalendarFileReady;
+    final b = (await _files(repo, _Writer(), installation: 'b.test')
             .prepare(reservationId: 'res-1', memberId: 'member-1'))
-        as CalendarFileReady);
+        as CalendarFileReady;
     expect(a.preview.snapshot.uid, isNot(b.preview.snapshot.uid));
     expect(a.preview.fileName, isNot(b.preview.fileName));
   });

@@ -47,13 +47,12 @@ class FakeMcpOnboardingRepository implements McpOnboardingRepository {
   @override
   Future<McpEndpointInfo> setEndpoint(String? url) async {
     calls.add('setEndpoint:$url');
-    published = McpEndpointInfo(
+    return published = McpEndpointInfo(
       resource: url,
       source: url == null
           ? McpEndpointSource.derived
           : McpEndpointSource.configured,
     );
-    return published;
   }
 
   @override
