@@ -1556,6 +1556,7 @@ Vous voulez savoir ce que la TVA va vous demander avant de l'activer.
 - Un catalogue de taux est fourni pour les États membres de l'UE, la Suisse, la Norvège et le Canada. Le tenir à jour quand un gouvernement modifie un taux relève de vous.
 - Si vous êtes assujetti sans taux par défaut en vigueur, le serveur refuse d'émettre. La description de **Gestion de la TVA** et l'avertissement de l'écran d'identité légale le disent.
 - Le serveur calcule chaque déclaration à partir de vos factures, de vos encaissements et de l'exigibilité. Déposez-la vous-même auprès de l'administration fiscale, puis marquez-la déposée avec la référence de l'accusé de réception : l'application ne transmet rien.
+- Choisissez la périodicité sous **Périodicité de la déclaration de TVA** dans l'identité légale. Une période déposée est verrouillée : ce qui y change ensuite est déclaré en régularisation dans la déclaration suivante.
 - Le journal des déclarations a sa propre série de numéros.
 
 **Voir aussi:** [Régime de TVA](Guide-utilisateur#régime-de-tva) · [Quand la TVA devient exigible](Guide-utilisateur#exigibilité-de-la-tva)

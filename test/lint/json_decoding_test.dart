@@ -13,12 +13,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// Raw `json['…']` read lines left in hand-written lib/ (473 when the
-/// reader landed, 441 after the money rows).
-const _rawReadBudget = 441;
+/// reader landed, 441 after the money rows, 435 with the VAT return lines).
+const _rawReadBudget = 435;
 
 /// `factory X.fromJson` in files that do not read through JsonReader (78
-/// when the reader landed, 73 after the money rows).
-const _handFromJsonBudget = 73;
+/// when the reader landed, 73 after the money rows, 71 with the VAT return
+/// lines).
+const _handFromJsonBudget = 71;
 
 void main() {
   final files = handWrittenDartFiles('lib').toList();

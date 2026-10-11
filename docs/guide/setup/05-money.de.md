@@ -287,6 +287,7 @@ Sie möchten wissen, was die Umsatzsteuer von Ihnen verlangt, bevor Sie sie eins
 - Ein Katalog der Sätze liegt für die EU-Mitgliedstaaten, die Schweiz, Norwegen und Kanada bei. Ihn aktuell zu halten, wenn ein Staat einen Satz ändert, ist Ihre Aufgabe.
 - Wer umsatzsteuerpflichtig ist, aber keinen gültigen Standardsatz hat, dem verweigert der Server die Ausstellung. Die Beschreibung von **USt-Verwaltung** und die Warnung auf dem Bildschirm der rechtlichen Identität sagen es.
 - Der Server berechnet jede Voranmeldung aus Ihren Rechnungen, Zahlungseingängen und Steuerzeitpunkten. Geben Sie sie selbst beim Finanzamt ab und markieren Sie sie dann mit der Referenz der Eingangsbestätigung als abgegeben: Die App übermittelt nichts.
+- Wählen Sie unter **Voranmeldungszeitraum** in der rechtlichen Identität, wie oft Sie melden. Ein abgegebener Zeitraum ist gesperrt: Was sich darin später ändert, wird in der nächsten Meldung als Berichtigung erklärt.
 - Das Journal der Voranmeldungen hat einen eigenen Nummernkreis.
 
 **Siehe auch:** [Steuerregime](help:user.money.vat.regime) · [Wann die Umsatzsteuer fällig wird](help:user.money.vat.due)
