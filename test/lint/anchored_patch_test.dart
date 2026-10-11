@@ -39,7 +39,7 @@ const _reviewed = {
   // #2357/0406 restates it again from 0402's body (the LIVE dev
   // definition, md5-checked before the apply): 0165's DECL- draw is still
   // carried verbatim; the additions are the overlap refusal and the
-  // vat_return_entries insert. pgTAP 166 and 168 file returns and assert
+  // vat_return_entries insert. pgTAP 166 and 169 file returns and assert
   // the number and the recorded entries.
   'mark_vat_declaration_submitted@0406',
   // #2145/0358 restates mcp_read_v1 whole. The LIVE dev body is 0275's

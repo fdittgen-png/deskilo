@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import '../../plan/domain/desk.dart';
 import '../../plan/domain/floor_plan_rules.dart';
 import '../../plan/domain/office.dart';
@@ -18,6 +19,7 @@ const String kWorkspaceHasReservationsError = 'workspace has reservations';
 /// offices[desks[seats[amenities, accessories]]] — no ids, import
 /// regenerates them. A seat's `accessories` are catalog NAMES; the
 /// catalog itself travels as the separate `p_accessories` array.
+@visibleForTesting
 abstract final class WorkspaceImportPlanKeys {
   static const String name = 'name';
   static const String sortOrder = 'sort_order';

@@ -21,7 +21,7 @@ import 'bi_toolbar.dart' show biPeriodLabel;
 export '../../domain/bi_report_content.dart';
 
 /// The short axis label of [p]: "Oct", "Q3", "2026".
-String biShortPeriodLabel(BiPeriod p, String locale) => switch (p.grain) {
+String _biShortPeriodLabel(BiPeriod p, String locale) => switch (p.grain) {
   BiGrain.month => DateFormat.MMM(locale).format(DateTime(p.year, p.index)),
   BiGrain.quarter => 'Q${p.index}',
   BiGrain.year => '${p.year}',
@@ -262,7 +262,7 @@ BiDashboardContent biDashboardContent({
               '(${format(next.low)} – ${format(next.high)}) · ${l10n?.biProjectionLabel ?? 'Estimate'}',
     format: format,
     periodLabel: periodLabel,
-    shortLabel: (p) => biShortPeriodLabel(p, locale),
+    shortLabel: (p) => _biShortPeriodLabel(p, locale),
     kindLabel: kindLabel,
     projectedLabel: l10n?.biProjectionLabel ?? 'Estimate',
     noDataLabel: l10n?.biNoDataLabel ?? 'no data',

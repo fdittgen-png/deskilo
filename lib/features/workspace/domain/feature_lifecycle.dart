@@ -382,6 +382,8 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.guestParticipation: _legacy,
   WorkspaceFeature.messageMentions: _legacy,
   WorkspaceFeature.supplyClassification: _legacy,
+  WorkspaceFeature.viesVerification: _legacy,
+  WorkspaceFeature.recapitulativeStatement: _legacy,
   WorkspaceFeature.inputVat: _legacy,
 };
 

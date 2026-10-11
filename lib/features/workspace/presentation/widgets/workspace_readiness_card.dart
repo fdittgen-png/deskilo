@@ -50,7 +50,7 @@ String readinessAreaLabel(
   ReadinessArea.unknown => '',
 };
 
-String readinessStateLabel(AppLocalizations? l10n, ReadinessState state) =>
+String _readinessStateLabel(AppLocalizations? l10n, ReadinessState state) =>
     switch (state) {
       ReadinessState.ready => l10n?.readinessStateReady ?? 'Ready',
       ReadinessState.needsConfiguration =>
@@ -66,6 +66,7 @@ String readinessStateLabel(AppLocalizations? l10n, ReadinessState state) =>
     };
 
 /// Why, in words, for the reasons the server names; null for the rest.
+@visibleForTesting
 String? readinessReasonLabel(AppLocalizations? l10n, String? reason) =>
     switch (reason) {
       'too_few_validators' =>
@@ -103,7 +104,7 @@ String? readinessReasonLabel(AppLocalizations? l10n, String? reason) =>
       _ => null,
     };
 
-String readinessActorLabel(AppLocalizations? l10n, ReadinessActor actor) =>
+String _readinessActorLabel(AppLocalizations? l10n, ReadinessActor actor) =>
     switch (actor) {
       ReadinessActor.owner => l10n?.readinessActorOwner ?? 'You',
       ReadinessActor.operator =>
@@ -254,7 +255,7 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                       children: [
                         Text(
                           [
-                            readinessStateLabel(l10n, s.state),
+                            _readinessStateLabel(l10n, s.state),
                             if (s.acknowledged && s.canSetAside)
                               l10n?.readinessSetAside ?? 'Set aside for later'
                             else if (s.state != ReadinessState.notApplicable)
@@ -269,9 +270,9 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                             if (s.state != ReadinessState.ready &&
                                 s.state != ReadinessState.notApplicable)
                               l10n?.readinessActor(
-                                    readinessActorLabel(l10n, s.actor),
+                                    _readinessActorLabel(l10n, s.actor),
                                   ) ??
-                                  'Who: ${readinessActorLabel(l10n, s.actor)}',
+                                  'Who: ${_readinessActorLabel(l10n, s.actor)}',
                           ].join(' · '),
                         ),
                         if (s.canSetAside)

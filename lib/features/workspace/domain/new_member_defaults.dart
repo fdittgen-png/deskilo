@@ -27,14 +27,14 @@ const String newMemberDefaultsKey = 'new_member_defaults';
 /// What a member starts with when nothing is configured — the column
 /// defaults, stated here so the UI can show what "unset" actually means
 /// instead of an empty field.
-const int defaultNewMemberSubscriptionPct = 100;
-const OveragePolicy defaultNewMemberOveragePolicy = OveragePolicy.blocked;
+const int _defaultNewMemberSubscriptionPct = 100;
+const OveragePolicy _defaultNewMemberOveragePolicy = OveragePolicy.blocked;
 
 /// The workspace's answer to "how does somebody joining start?".
 class NewMemberDefaults {
   const NewMemberDefaults({
-    this.subscriptionPct = defaultNewMemberSubscriptionPct,
-    this.overagePolicy = defaultNewMemberOveragePolicy,
+    this.subscriptionPct = _defaultNewMemberSubscriptionPct,
+    this.overagePolicy = _defaultNewMemberOveragePolicy,
     this.configured = false,
   });
 
@@ -64,7 +64,7 @@ class NewMemberDefaults {
               int.parse(s) >= 1 &&
               int.parse(s) <= 100 =>
         int.parse(s),
-      _ => defaultNewMemberSubscriptionPct,
+      _ => _defaultNewMemberSubscriptionPct,
     };
     return NewMemberDefaults(
       subscriptionPct: pct,

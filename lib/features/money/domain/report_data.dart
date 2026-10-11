@@ -211,7 +211,6 @@ Map<String, Object?> invoiceReportData(
 }) {
   final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(strings.dateLocale);
-  String money(int cents) => currency.formatMinor(cents);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
   final association = InvoiceLegal.fromJson(
@@ -244,22 +243,22 @@ Map<String, Object?> invoiceReportData(
     'buyer_reference': invoice.buyerParty?.reference ?? '',
     'issued_by': invoice.issuerName,
     'replaces': invoice.replacesNumber,
-    'total': money(invoice.totalCents),
-    'charges': money(invoice.chargesCents),
-    'payments': money(
+    'total': currency.formatMinor(invoice.totalCents),
+    'charges': currency.formatMinor(invoice.chargesCents),
+    'payments': currency.formatMinor(
       invoice.lines
           .where((l) => l.amountCents < 0)
           .fold(0, (sum, l) => sum + l.amountCents),
     ),
     // #480 — total HT / total TVA beside the TTC the bands always had.
-    'net_total': money(invoice.netCents),
-    'vat_total': money(invoice.vatCents),
+    'net_total': currency.formatMinor(invoice.netCents),
+    'vat_total': currency.formatMinor(invoice.vatCents),
     'voided': invoice.isVoided,
     'proforma': proforma,
     'copy': copy,
     // #508 — a negative document is a credit note the workspace pays.
     'credit_note': invoice.totalCents < 0,
-    'refund_total': money(-invoice.totalCents),
+    'refund_total': currency.formatMinor(-invoice.totalCents),
     'has_vat': invoice.vatTotals.any((t) => t.vatCents > 0),
     'lines': [
       for (final line in invoice.lines)
@@ -271,26 +270,26 @@ Map<String, Object?> invoiceReportData(
           'kind': line.kind,
           'pct': line.kind == 'subscription' ? line.label : '',
           'month': monthNameOf(strings.localeName, invoice.period),
-          'amount': money(line.amountCents),
+          'amount': currency.formatMinor(line.amountCents),
           'negative': line.amountCents < 0,
           // #480 — quantity, unit price and per-line VAT so a template
           // can print the statutory line detail.
           'qty': '${line.quantity}',
-          'unit_price': money(
+          'unit_price': currency.formatMinor(
             line.quantity > 1
                 ? line.amountCents ~/ line.quantity
                 : line.amountCents,
           ),
           'vat_rate': line.vatPercent > 0 ? rate(line.vatPercent) : '',
-          'net': money(vatSplit(line.amountCents, line.vatPercent).netCents),
+          'net': currency.formatMinor(vatSplit(line.amountCents, line.vatPercent).netCents),
         },
     ],
     'vat': [
       for (final t in invoice.vatTotals.where((t) => t.vatCents > 0))
         {
           'rate': rate(t.percent),
-          'net': money(t.netCents),
-          'amount': money(t.vatCents),
+          'net': currency.formatMinor(t.netCents),
+          'amount': currency.formatMinor(t.vatCents),
         },
     ],
     ...legalMentionData(

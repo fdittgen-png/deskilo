@@ -4609,11 +4609,53 @@ Quando applica l'IVA e fattura a un'impresa di un altro Paese dell'UE, l'imposta
 
 **Da sapere**
 
-- Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. Oggi l'app non emette direttamente le fatture in inversione contabile: Lei le emette fuori dall'app con il Suo commercialista.
+- Attivata: un servizio generico (non connesso ai locali) a un'impresa di un altro Paese UE va in inversione contabile. Una postazione, un ufficio o una sala mai: porta la Sua IVA, qualunque sia la partita IVA del cliente. L'app emette una fattura del genere una volta che la partita IVA del cliente è risultata valida in [VIES](help:user.money.vat.vies); altrimenti, o con quella funzione disattivata, Lei la emette fuori dall'app con il Suo commercialista.
 - Disattivata: la disattivi se non fattura mai a imprese all'estero.
 - L'opzione compare solo per il regime di soggetto IVA.
 
 **Vedi anche:** [Trattamento IVA di un membro](help:user.members.vat-treatment)
+
+### Verifica della partita IVA (VIES)
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Prima di applicare l'inversione contabile a un servizio generico per un'impresa di un altro Paese UE, l'app ha bisogno di una prova che il cliente sia un'impresa: la sua partita IVA risultata valida in VIES, il registro europeo delle partite IVA.
+
+**Passaggi**
+
+1. Apra la pagina del membro e tocchi **Verifica della partita IVA (VIES)**.
+2. Tocchi **Verifica ora**.
+3. La riga indica allora **Valida** con il numero di consultazione e la data, **Non valida in VIES** o **VIES non ha risposto**.
+
+**Da sapere**
+
+- Il numero di consultazione viene conservato sul membro e fissato su ogni fattura in inversione contabile come prova.
+- L'emissione rifiuta un'inversione contabile senza una verifica valida di quella stessa partita IVA degli ultimi 90 giorni, e lo dice: **Una verifica VIES valida della partita IVA del membro**. Se VIES non risponde, riprovi più tardi; la fattura non torna mai da sola alla Sua IVA.
+- Una postazione, un ufficio o una sala non va mai in inversione contabile: non serve alcuna verifica.
+- La riga compare a chi può emettere fatture, quando la funzione **Verifica della partita IVA (VIES)** è attiva.
+
+**Vedi anche:** [Inversione contabile per imprese UE](help:user.money.vat.reverse-charge) · [Luogo della prestazione di un servizio](help:user.money.services.supply)
+
+### Elenchi riepilogativi (Intrastat servizi)
+
+**Destinatari:** Proprietario
+
+Ogni mese in cui applica l'inversione contabile a servizi per imprese di altri Paesi UE, l'amministrazione si aspetta il loro elenco: gli elenchi Intrastat servizi in Italia, la DES in Francia, la Zusammenfassende Meldung in Germania.
+
+**Passaggi**
+
+1. Apra [Dichiarazioni IVA](app:/vat-declarations) e scelga il periodo.
+2. Tocchi **Elenco riepilogativo (CSV)**.
+3. Lo presenti sul portale dell'amministrazione o lo consegni al Suo commercialista.
+
+**Da sapere**
+
+- L'elenco somma, per mese e per partita IVA del cliente, ciò che le Sue fatture emesse hanno messo in inversione contabile; una postazione con la Sua IVA non compare mai.
+- Finché un elenco è dovuto, la **Fatturazione** mostra un avviso: **È dovuto un elenco riepilogativo per** il mese.
+- Il file ha colonne fisse: periodo, paese, partita IVA, cliente, importo, documenti.
+- Richiede la funzione **Elenchi riepilogativi (Intrastat servizi)**.
+
+**Vedi anche:** [Verifica della partita IVA (VIES)](help:user.money.vat.vies) · [Inversione contabile per imprese UE](help:user.money.vat.reverse-charge)
 
 ### Quando l'IVA diventa esigibile
 
@@ -5157,7 +5199,7 @@ Fattura un mese a un membro.
 - Le fatture derivano dai dati rilevati e non si possono comporre a mano. L'ultima riga è il **Saldo**.
 - Un mese si può fatturare una sola volta per membro e un mese ancora in corso Le segnala che le posizioni potrebbero cambiare.
 - Se manca un dato obbligatorio, **Completi questi dati prima dell'emissione** lo elenca (indirizzo, partita IVA, fondamento dell'esenzione, aliquota IVA; anche il Paese dello spazio, che deve essere la Francia o la Germania).
-- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture con inversione contabile, all'esportazione o a un acquirente esente si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).
+- In questa versione l'emissione nell'app è disponibile per gli spazi in Francia o in Germania, anche per clienti all'estero: una postazione, un ufficio o una sala porta la Sua IVA ovunque viva il cliente. Le fatture all'esportazione o a un acquirente esente, e un'inversione contabile senza verifica VIES valida, si emettono fuori dall'app con il Suo commercialista, e un servizio generico a un cliente estero richiede prima la sua qualità (professionista o consumatore).
 - Una fattura emessa è firmata e immutabile.
 
 **Vedi anche:** [L'assistente di chiusura mensile](help:user.invoicing.wizard)
@@ -8526,7 +8568,11 @@ presenza di una partita IVA; un consumatore, in Italia o altrove, paga la
 Sua IVA, quindi non esiste un trattamento a parte per i consumatori
 intracomunitari. Il controllo della fatturazione elettronica rifiuta di
 inviare un documento in inversione contabile finché manca la partita IVA
-del cliente: è ciò che prova che l'imposta è sua.
+del cliente: è ciò che prova che l'imposta è sua. Emetterlo richiede
+inoltre la prova che il cliente sia un'impresa: la sua partita IVA
+risultata valida in VIES (la funzione **Verifica della partita IVA
+(VIES)**), il cui numero di consultazione resta sulla fattura; se VIES non
+risponde, l'emissione attende.
 
 **Quando l'IVA diventa esigibile** è un'impostazione dello spazio: *sulle
 fatture* (esigibile all'emissione) oppure *sugli incassi* (esigibile il

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
+import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import 'billing_rules.dart';
 import 'expense_repartition.dart';
@@ -101,7 +104,7 @@ const String _datevBom = '\u{FEFF}';
 /// DATEV expects `EXTF_<something>.csv`; the name is free-form after the
 /// prefix, and DATEV keys on the header, not the filename.
 String datevFileName(int year, int month) =>
-    'EXTF_Buchungsstapel_$year${month.toString().padLeft(2, '0')}.csv';
+    'EXTF_Buchungsstapel_${yearMonth(year, month, separator: '')}.csv';
 
 /// Builds the EXTF Buchungsstapel for one period.
 ///
@@ -129,33 +132,21 @@ String buildDatevFile({
   List<VatTaxPointAmount>? taxPoints,
   DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
 }) {
-  // DATEV is CSV with ');' and quoted text. A ';' or a newline inside a
-  // label would shift every following column.
-  String clean(String text) =>
-      text.replaceAll(RegExp(r'[;\r\n]+'), ' ').trim();
-  String q(String text) => '"${clean(text).replaceAll('"', "'")}"';
+  // DATEV is CSV with ';' and quoted text. A ';' or a newline inside a
+  // label would shift every following column: the DATEV dialect of the
+  // shared cell writer (#2385) makes them a space.
+  const datev = CsvDialect.datev;
 
   /// Always positive, comma decimal — see the header note.
-  String money(int cents) =>
+  String amount(int cents) =>
       // #1077 — two decimals is CORRECT here: DATEV EXTF is a German
       // and Austrian format, both eurozone. Not a hardcoded-euro bug.
-      (cents.abs() / 100).toStringAsFixed(2).replaceAll('.', ',');
+      minorToText(cents, 'EUR', decimalSeparator: ',', absolute: true);
 
-  /// DDMM. The year is the header's, not the booking's.
-  String dayMonth(DateTime d) =>
-      '${d.day.toString().padLeft(2, '0')}${d.month.toString().padLeft(2, '0')}';
-
-  String ddmmyyyy(DateTime d) => '${dayMonth(d)}${d.year}';
-
-  String ymd(DateTime d) => '${d.year}'
-      '${d.month.toString().padLeft(2, '0')}'
-      '${d.day.toString().padLeft(2, '0')}';
-
+  // Belegdatum is DDMM (`ddmm`): the year is the header's, not the
+  // booking's. Field 116 is TTMMJJJJ.
   final fiscalYearStart = DateTime(from.year, 1, 1);
-  final stamp = '${ymd(generatedAt)}'
-      '${generatedAt.hour.toString().padLeft(2, '0')}'
-      '${generatedAt.minute.toString().padLeft(2, '0')}'
-      '${generatedAt.second.toString().padLeft(2, '0')}000';
+  final stamp = '${ymd(generatedAt)}${hhmmss(generatedAt, separator: '')}000';
 
   // Field order is fixed by DATEV; positions, not names, are what the
   // importer reads.
@@ -165,7 +156,10 @@ String buildDatevFile({
     consultantNumber, clientNumber,
     ymd(fiscalYearStart), '$accountLength',
     ymd(from), ymd(to),
-    q((development ? 'ENTWICKLUNG ' : '') + batchName), '""', '1', '', '0', q(currency),
+    csvCell((development ? 'ENTWICKLUNG ' : '') + batchName,
+        dialect: datev, quoteEmpty: true),
+    '""', '1', '', '0',
+    csvCell(currency, dialect: datev, quoteEmpty: true),
     '', '', '', '', '', '', '', '', '',
   ].join(';');
 
@@ -196,15 +190,16 @@ String buildDatevFile({
     // pair the other way round with 'H' would post the same booking
     // twice-mirrored, which is the classic DATEV import error.
     rows.add([
-      money(cents), '"S"', q(currency), '', '', '',
+      amount(cents), '"S"',
+      csvCell(currency, dialect: datev, quoteEmpty: true), '', '', '',
       debit, credit, '',
-      dayMonth(date),
-      q(documentRef), '', '',
-      q(text),
+      ddmm(date),
+      csvCell(documentRef, dialect: datev, quoteEmpty: true), '', '',
+      csvCell(text, dialect: datev, quoteEmpty: true),
       '', '', '', '', '', '',
       // Fields 21–115 stay empty; 116 is the tax period's date, TTMMJJJJ.
       for (var i = 21; i <= 115; i++) '',
-      if (taxPeriodDate == null) '' else ddmmyyyy(taxPeriodDate),
+      if (taxPeriodDate == null) '' else '${ddmm(taxPeriodDate)}${taxPeriodDate.year}',
     ].join(';'));
   }
 

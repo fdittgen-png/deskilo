@@ -19,6 +19,7 @@ import '../invoice_documents.dart';
 import '../report_actions.dart';
 import '../status_report_data.dart';
 import '../report_layout_actions.dart';
+import '../../../../core/time/date_text.dart';
 
 class WorkspaceStatusScreen extends ConsumerStatefulWidget {
   const WorkspaceStatusScreen({super.key});
@@ -32,7 +33,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
   late final List<String> _months;
 
   static String _ym(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}';
+      yearMonth(d.year, d.month);
 
   @override
   void initState() {
@@ -153,7 +154,6 @@ class _StatusBody extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final currency = moneyFormat(status.currency);
-    String money(int c) => currency.formatMinor(c);
     Widget row(String label, int cents, {bool negative = false, Key? key}) =>
         ListTile(
           key: key,
@@ -161,7 +161,7 @@ class _StatusBody extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           title: Text(label),
           trailing: Text(
-            money(negative ? -cents : cents),
+            currency.formatMinor(negative ? -cents : cents),
             style: theme.textTheme.bodyLarge?.copyWith(
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
@@ -196,7 +196,7 @@ class _StatusBody extends StatelessWidget {
                       'bank balance. Matched and received payments overlap '
                       'and must not be added together.'),
                   trailing: Text(
-                    money(status.netCents),
+                    currency.formatMinor(status.netCents),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
@@ -211,7 +211,7 @@ class _StatusBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         for (final (m, pct, figures) in [
           for (final m in status.members)
-            (m, '${m.subscriptionPct} %', '${money(m.invoicedCents)} / ${money(m.paidCents)}'),
+            (m, '${m.subscriptionPct} %', '${currency.formatMinor(m.invoicedCents)} / ${currency.formatMinor(m.paidCents)}'),
         ])
           ListTile(
             key: ValueKey('status-member-${m.memberId}'),

@@ -19,6 +19,7 @@ import '../../providers/money_providers.dart';
 import '../../domain/invoice_line_text.dart';
 import '../report_strings_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/date_text.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
 /// [replaces]. Since 0062 nothing is typed here: the issuer picks the
@@ -237,7 +238,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       return;
     }
     setState(() {
-      _period = '${next.year}-${next.month.toString().padLeft(2, '0')}';
+      _period = yearMonth(next.year, next.month);
       _preview = null;
       _missing = const [];
     });
@@ -530,6 +531,8 @@ String invoiceMissingLabel(AppLocalizations? l10n, String key) => switch (key) {
       'vat_treatment_unreviewed' => l10n?.invoiceMissingVatTreatment ??
           AppLocalizationsEn().invoiceMissingVatTreatment,
       // #2354 — a general service to a customer abroad: business or not.
+      'vies_unverified' =>
+        (l10n ?? lookupAppLocalizations(const Locale('en'))).invoiceMissingVies,
       'buyer_capacity_unknown' =>
         (l10n ?? lookupAppLocalizations(const Locale('en')))
             .invoiceMissingBuyerCapacity,

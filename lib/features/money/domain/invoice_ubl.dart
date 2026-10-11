@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/i18n/currencies.dart';
+import '../../../core/money/money_text.dart';
+import '../../../core/text/number_text.dart';
+import '../../../core/time/date_text.dart';
 import 'package:xml/xml.dart';
 
 import 'e_invoice_totals.dart';
@@ -50,8 +52,7 @@ String buildInvoiceUbl({
   String iban = '',
 }) {
   // #1077 — the currency's own grain, not the euro's.
-  String amount(int minor) => Currencies.toMajor(minor, invoice.currency)
-      .toStringAsFixed(Currencies.minorDigits(invoice.currency));
+  String amount(int minor) => minorToText(minor, invoice.currency);
   // #1154 — the totals rule lives once, in e_invoice_totals.dart.
   final EInvoiceTotals(
     :regime,
@@ -203,7 +204,7 @@ String buildInvoiceUbl({
             cbc('ID', total.category);
             // BR-S-05 wants the real rate; BR-E-05 the 0 spelled out;
             // BR-O-05 forbids a rate at all.
-            if (total.category != 'O') cbc('Percent', _percent(total.percent));
+            if (total.category != 'O') cbc('Percent', percentText(total.percent));
             if (total.category != 'S') {
               if (exemptionCode.isNotEmpty) {
                 cbc('TaxExemptionReasonCode', exemptionCode);
@@ -262,7 +263,7 @@ String buildInvoiceUbl({
           cbc('Name', lineText(line));
           builder.element('cac:ClassifiedTaxCategory', nest: () {
             cbc('ID', lineCategory);
-            if (lineCategory != 'O') cbc('Percent', _percent(line.vatPercent));
+            if (lineCategory != 'O') cbc('Percent', percentText(line.vatPercent));
             builder.element('cac:TaxScheme', nest: () {
               cbc('ID', 'VAT');
             });
@@ -277,12 +278,6 @@ String buildInvoiceUbl({
   return builder.buildDocument().toXmlString(pretty: true, indent: '  ');
 }
 
-/// A rate as the norm writes it: '20' or '5.5', never '20.0' — the code
-/// lists compare percentages as decimals, and a trailing zero has tripped
-/// national validators before.
-String _percent(double percent) => percent == percent.roundToDouble()
-    ? percent.toStringAsFixed(0)
-    : percent.toString();
 
 /// 'yyyy-MM' → the month's first and last calendar day.
 ({String start, String end})? _periodDates(String? period) {
@@ -293,9 +288,9 @@ String _percent(double percent) => percent == percent.roundToDouble()
   final month = int.tryParse(parts[1]);
   if (year == null || month == null) return null;
   final last = DateTime(year, month + 1, 0);
-  final mm = month.toString().padLeft(2, '0');
+  final ym = yearMonth(year, month);
   return (
-    start: '$year-$mm-01',
-    end: '$year-$mm-${last.day.toString().padLeft(2, '0')}',
+    start: '$ym-01',
+    end: '$ym-${twoDigits(last.day)}',
   );
 }

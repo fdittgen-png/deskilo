@@ -4609,11 +4609,53 @@ Cuando cobra IVA y factura a una empresa de otro país de la UE, el impuesto pue
 
 **Conviene saber**
 
-- Activado: un servicio general (no vinculado a los locales) a una empresa de otro país de la UE aplica la inversión del sujeto pasivo. Un puesto, una oficina o una sala nunca: lleva su IVA, sea cual sea el número de IVA del cliente. Hoy la aplicación no emite por sí misma las facturas con inversión del sujeto pasivo: usted las emite fuera de la aplicación con su gestor.
+- Activado: un servicio general (no vinculado a los locales) a una empresa de otro país de la UE aplica la inversión del sujeto pasivo. Un puesto, una oficina o una sala nunca: lleva su IVA, sea cual sea el número de IVA del cliente. La aplicación emite una factura así una vez que el número de IVA del cliente resultó válido en [VIES](help:user.money.vat.vies); si no, o con esa función desactivada, usted la emite fuera de la aplicación con su gestor.
 - Desactivado: desactívelo si nunca factura a empresas del extranjero.
 - La opción solo aparece con el régimen de sujeto a IVA.
 
 **Véase también:** [Tratamiento del IVA de un miembro](help:user.members.vat-treatment)
+
+### Comprobación del número de IVA (VIES)
+
+**Público:** Propietario · Administrador/a de facturación
+
+Antes de aplicar la inversión del sujeto pasivo a un servicio general para una empresa de otro país de la UE, la aplicación necesita una prueba de que el cliente es una empresa: su número de IVA, válido en VIES, el registro europeo de números de IVA.
+
+**Pasos**
+
+1. Abra la página del miembro y pulse **Comprobación del número de IVA (VIES)**.
+2. Pulse **Comprobar ahora**.
+3. La fila indica entonces **Válido** con el número de consulta y la fecha, **No válido en VIES** o **VIES no respondió**.
+
+**Conviene saber**
+
+- El número de consulta se conserva en el miembro y se fija en cada factura con inversión del sujeto pasivo como prueba.
+- La emisión rechaza una inversión del sujeto pasivo sin una comprobación válida de ese mismo número de los últimos 90 días, y lo dice: **Una comprobación VIES válida del número de IVA del miembro**. Si VIES no responde, inténtelo más tarde; la factura nunca vuelve por sí sola a su IVA.
+- Un puesto, una oficina o una sala nunca aplica la inversión del sujeto pasivo: no necesita comprobación.
+- La fila aparece para quien puede emitir facturas, cuando la función **Comprobación del número de IVA (VIES)** está activada.
+
+**Véase también:** [Inversión del sujeto pasivo para empresas de la UE](help:user.money.vat.reverse-charge) · [Lugar de prestación de un servicio](help:user.money.services.supply)
+
+### Declaración recapitulativa (modelo 349)
+
+**Público:** Propietario
+
+Cada mes en que aplica la inversión del sujeto pasivo a servicios para empresas de otros países de la UE, la administración espera su lista: el modelo 349 en España, la DES en Francia, la Zusammenfassende Meldung en Alemania.
+
+**Pasos**
+
+1. Abra [Declaraciones de IVA](app:/vat-declarations) y elija el periodo.
+2. Pulse **Declaración recapitulativa (CSV)**.
+3. Preséntela en el portal de la administración o entréguela a su gestor.
+
+**Conviene saber**
+
+- La lista suma, por mes y por número de IVA del cliente, lo que sus facturas emitidas pusieron en inversión del sujeto pasivo; un puesto con su IVA nunca aparece.
+- Mientras haya una pendiente, la **Facturación** muestra un aviso: **Hay una declaración recapitulativa pendiente para** el mes.
+- El archivo tiene columnas fijas: periodo, país, número de IVA, cliente, importe, documentos.
+- Requiere la función **Declaración recapitulativa (modelo 349)**.
+
+**Véase también:** [Comprobación del número de IVA (VIES)](help:user.money.vat.vies) · [Inversión del sujeto pasivo para empresas de la UE](help:user.money.vat.reverse-charge)
 
 ### Cuándo se devenga el IVA
 
@@ -5157,7 +5199,7 @@ Factura un mes a un miembro.
 - Las facturas se derivan de datos registrados y no se pueden componer a mano. La línea final es el **Saldo**.
 - Un mes solo se puede facturar una vez por miembro, y un mes aún en curso le avisa de que las partidas pueden cambiar.
 - Si falta un dato obligatorio, **Complete estos datos antes de emitir** lo enumera (dirección, número de IVA, fundamento de la exención, tipo de IVA; también el país del espacio, que debe ser Francia o Alemania).
-- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, también para clientes en el extranjero: un puesto, una oficina o una sala lleva su IVA viva donde viva el cliente. Las facturas con inversión del sujeto pasivo, de exportación o a un comprador exento se emiten fuera de la aplicación con su gestor, y un servicio general a un cliente en el extranjero requiere antes su condición (empresa o consumidor).
+- En esta versión, la emisión en la aplicación está disponible para espacios en Francia o Alemania, también para clientes en el extranjero: un puesto, una oficina o una sala lleva su IVA viva donde viva el cliente. Las facturas de exportación o a un comprador exento, y una inversión del sujeto pasivo sin comprobación VIES válida, se emiten fuera de la aplicación con su gestor, y un servicio general a un cliente en el extranjero requiere antes su condición (empresa o consumidor).
 - Una factura emitida está firmada y es inmutable.
 
 **Véase también:** [Asistente de cierre mensual](help:user.invoicing.wizard)
@@ -8523,7 +8565,10 @@ paga su IVA, por lo que no existe un tratamiento aparte para consumidores
 intracomunitarios. La comprobación de facturación electrónica se niega a
 enviar un documento con inversión del sujeto pasivo mientras falte el
 número de IVA del cliente, porque es lo que prueba que el impuesto es
-suyo.
+suyo. Emitirlo exige además la prueba de que el cliente es una empresa:
+su número de IVA válido en VIES (la función **Comprobación del número de
+IVA (VIES)**), cuyo número de consulta conserva la factura; si VIES no
+responde, la emisión espera.
 
 **Cuándo se devenga el IVA** es un ajuste del espacio: *por facturas*
 (devengado al emitir) o *por cobros* (devengado el día en que el cliente

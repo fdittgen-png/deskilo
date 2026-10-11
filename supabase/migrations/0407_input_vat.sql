@@ -157,6 +157,8 @@ as $registry$
     "guestParticipation": {"parent": null, "default": false, "core": true},
     "messageMentions": {"parent": "memberNotifications", "default": true, "core": true},
     "supplyClassification": {"parent": "vatManagement", "default": true, "core": false},
+    "viesVerification": {"parent": "supplyClassification", "default": true, "core": false},
+    "recapitulativeStatement": {"parent": "vatDeclarations", "default": true, "core": false},
     "inputVat": {"parent": "vatDeclarations", "default": true, "core": false}
   }'::jsonb
 $registry$;

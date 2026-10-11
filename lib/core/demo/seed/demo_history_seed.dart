@@ -25,6 +25,7 @@ import '../data/workspace_repository.dart';
 import '../demo_clock.dart';
 import 'demo_space_seed.dart';
 import 'demo_people_seed.dart';
+import '../../time/date_text.dart';
 
 /// The first day the demo's history covers.
 DateTime _demoHistoryStart(DateTime now) => DateTime(now.year - 3, 1, 1);
@@ -175,13 +176,12 @@ void seedDemoHistoryBookings(
 int demoMonthlyCents(int base, int year, DateTime now) =>
     (base * (1 + 0.04 * (year - _demoHistoryStart(now).year))).round();
 
-String _period(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
+String _period(DateTime d) => yearMonth(d.year, d.month);
 
 /// The invoice number of [member]'s bill for the month of [issued]:
 /// year, month and the member's place, so the archive reads in order.
 String demoInvoiceNumber(DateTime issued, int memberIndex) =>
-    'F-${issued.year}-${issued.month.toString().padLeft(2, '0')}'
-    '${memberIndex.toString().padLeft(2, '0')}';
+    'F-${yearMonth(issued.year, issued.month)}${twoDigits(memberIndex)}';
 
 /// A monthly bill per member for every month of the history before last
 /// month (which the story issues), each paid a few days after issue.

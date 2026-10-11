@@ -116,11 +116,12 @@ select ok((select bool_and(l->>'supply' = 'property' and l->>'vat_category' = 'S
             where i.member_id = current_setting('deskilo.s.m')::uuid and i.period = '2026-09'),
           'every line says it is property-connected and taxed');
 
--- Mail handling to the same business: AE, which stays unreviewed here.
+-- Mail handling to the same business: AE, which waits for a valid VIES
+-- check of the buyer's number (0404, pgTAP 168).
 set local role authenticated;
 select is(public.invoice_issue_readiness(current_setting('deskilo.s.ws')::uuid,
-          current_setting('deskilo.s.m')::uuid, '2026-10'), array['vat_treatment_unreviewed'],
-          'a general service to an EU business is reverse-charged, and not issued here yet');
+          current_setting('deskilo.s.m')::uuid, '2026-10'), array['vies_unverified'],
+          'a general service to an EU business is reverse-charged, and waits for VIES');
 select throws_ok($$select public.create_invoice(current_setting('deskilo.s.ws')::uuid,
           current_setting('deskilo.s.m')::uuid, '2026-10')$$, 'DKI01', 'invoice_essentials_missing',
           'the reverse-charged month is refused before numbering');

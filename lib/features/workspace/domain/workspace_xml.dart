@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 import '../../plan/domain/accessory.dart';
@@ -68,6 +69,7 @@ import 'workspace_xml_configuration.dart';
 ///   so a v2 document is a valid v3 document.
 /// Secrets never travel: the invite code, the e-invoice and payment
 /// provider credentials. Neither does anything transactional.
+@visibleForTesting
 abstract final class WorkspaceXmlSchema {
   /// The version the app EXPORTS.
   static const int version = 3;

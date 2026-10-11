@@ -22,6 +22,7 @@ import '../../../../core/time/workspace_time.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../providers/browsed_level.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/time/date_text.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -136,11 +137,7 @@ class WeekGrid extends ConsumerStatefulWidget {
   /// Public day stamp for cell/free-slot keys.
   static String dayStampOf(DateTime day) => _dayStamp(day);
 
-  static String _dayStamp(DateTime day) {
-    final m = day.month.toString().padLeft(2, '0');
-    final d = day.day.toString().padLeft(2, '0');
-    return '${day.year}$m$d';
-  }
+  static String _dayStamp(DateTime day) => ymd(day);
 
   /// Key of one half-slot: `week-cell-<seatId>-<yyyymmdd>-<am|pm>`.
   static Key cellKey(String seatId, DateTime day, {required bool morning}) =>
@@ -707,7 +704,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       fill = scheme.surfaceContainerHighest;
     }
     final free = fill == null;
-    return Container(
+    return DecoratedBox(
       key: WeekGrid.cellKey(seat.id, day, morning: morning),
       decoration: BoxDecoration(
         color: fill,

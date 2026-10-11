@@ -16,7 +16,7 @@ import 'template_compare_screen.dart';
 
 /// The section a concrete path belongs to: `workspace.feature_flags`,
 /// `workspace.booking_rules`, `tables.plans`, `floor_plan`, ...
-String templateDetailSection(String path) {
+String _templateDetailSection(String path) {
   final table = RegExp(r'^tables\.([a-z_]+)').firstMatch(path);
   if (table != null) return 'tables.${table.group(1)}';
   final parts = path.split('.');
@@ -53,7 +53,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
       if (feature != null) return featureName(l10n, feature);
     }
     return f.path
-        .substring(templateDetailSection(f.path).length)
+        .substring(_templateDetailSection(f.path).length)
         .replaceFirst(RegExp(r'^\.'), '');
   }
 
@@ -91,7 +91,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
             );
             final hay = '$label ${f.path} $value'.toLowerCase();
             if (needle.isNotEmpty && !hay.contains(needle)) continue;
-            (rows[templateDetailSection(f.path)] ??= []).add((
+            (rows[_templateDetailSection(f.path)] ??= []).add((
               f.path,
               label,
               value,

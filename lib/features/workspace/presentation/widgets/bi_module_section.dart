@@ -63,7 +63,9 @@ class BiModuleView {
   details;
 }
 
-String _percent(num? v, String locale, String? currency) => v == null
+// The BI table's column renderers: locale-aware (NumberFormat,
+// MoneyFormat), not the plain file formatters of lib/core (#2385).
+String _percentCell(num? v, String locale, String? currency) => v == null
     ? '—'
     : NumberFormat.decimalPercentPattern(
         locale: locale,
@@ -76,7 +78,7 @@ FinanceSummaryKpi? _finance(BiMeasure m) => m.detail as FinanceSummaryKpi?;
 
 /// An amount in [currency]; a dash when it is unknown or has no
 /// currency — never a default euro (#1924).
-String _money(num? v, String locale, String? currency) =>
+String _moneyCell(num? v, String locale, String? currency) =>
     v == null || currency == null || currency.isEmpty
     ? '—'
     : MoneyFormat(currency, locale: locale).formatMinor(v.toInt());
@@ -139,7 +141,7 @@ List<String> _financeDetails(
 final biModuleViews = <String, BiModuleView>{
   'capacity.seat_utilisation': BiModuleView(
     title: (l10n) => l10n?.capacityKpiTitle ?? 'Seat utilisation',
-    value: _percent,
+    value: _percentCell,
     basis: (m, l10n, locale) => switch (_seat(m)) {
       final k? => capacityKpiRatioLine(k, l10n, locale),
       null => '',
@@ -155,15 +157,15 @@ final biModuleViews = <String, BiModuleView>{
   ),
   'finance.invoiced': BiModuleView(
     title: (l10n) => l10n?.biFinanceInvoiced ?? 'Invoiced',
-    value: _money,
+    value: _moneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n?.biFinanceInvoicedBasis(
               '${k.invoices}',
-              _money(k.creditNotesMinor, locale, k.currency),
+              _moneyCell(k.creditNotesMinor, locale, k.currency),
             ) ??
             'From ${k.invoices} invoices; credit notes '
-                '${_money(k.creditNotesMinor, locale, k.currency)}, shown '
+                '${_moneyCell(k.creditNotesMinor, locale, k.currency)}, shown '
                 'apart',
       null => '',
     },
@@ -172,7 +174,7 @@ final biModuleViews = <String, BiModuleView>{
   ),
   'finance.collected': BiModuleView(
     title: (l10n) => l10n?.biFinanceCollected ?? 'Collected',
-    value: _money,
+    value: _moneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n?.biFinanceCollectedBasis('${k.matches}') ??

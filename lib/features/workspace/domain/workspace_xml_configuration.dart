@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 import 'workspace_xml.dart' show WorkspaceXmlError, WorkspaceXmlException;
@@ -111,6 +112,7 @@ void _writeValue(XmlBuilder builder, String? name, Object? value) {
 /// One spelling per number: an integral value prints without a fraction
 /// (`20.00` from a numeric column and `20` from an integer one are the
 /// same configuration), everything else as Dart prints it.
+@visibleForTesting
 String canonicalConfigurationNumber(num v) {
   if (v is int) return '$v';
   if (v.isFinite && v == v.roundToDouble() && v.abs() < 1e15) {

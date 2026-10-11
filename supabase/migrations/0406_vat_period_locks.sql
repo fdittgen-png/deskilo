@@ -110,9 +110,8 @@ create trigger vat_return_entries_guard
 -- The period's amounts with the locks applied: its own tax points that
 -- no filed return of another period covers (a filed period itself reads
 -- what its tax points amount to today), then the corrections of every
--- filed period
--- that ended before it — per document, tax point, rate and category,
--- what the tax points amount to now minus what was declared for them.
+-- filed period that ended before it — per document, tax point, rate and
+-- category, what the tax points amount to now minus what was declared.
 create or replace function public.vat_return_lines(
   p_workspace_id uuid, p_start date, p_end date
 ) returns table (invoice_id uuid, tax_point date, percent numeric,

@@ -152,7 +152,7 @@ class _WireClient implements McpTargetClient {
 
 /// FAULT: the client cache forgets the installation.
 class _InstallationBlindRegistry extends McpClientRegistry {
-  _InstallationBlindRegistry(super.create);
+  _InstallationBlindRegistry(super._create);
   final _cache = <(String, String, McpClientPurpose), McpTargetClient>{};
 
   @override
@@ -165,7 +165,7 @@ class _InstallationBlindRegistry extends McpClientRegistry {
 
 /// FAULT: one authenticated client reused for every target.
 class _GlobalClientRegistry extends McpClientRegistry {
-  _GlobalClientRegistry(super.create);
+  _GlobalClientRegistry(super._create);
   McpTargetClient? _only;
 
   @override

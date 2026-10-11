@@ -87,7 +87,10 @@ paga su IVA, por lo que no existe un tratamiento aparte para consumidores
 intracomunitarios. La comprobación de facturación electrónica se niega a
 enviar un documento con inversión del sujeto pasivo mientras falte el
 número de IVA del cliente, porque es lo que prueba que el impuesto es
-suyo.
+suyo. Emitirlo exige además la prueba de que el cliente es una empresa:
+su número de IVA válido en VIES (la función **Comprobación del número de
+IVA (VIES)**), cuyo número de consulta conserva la factura; si VIES no
+responde, la emisión espera.
 
 **Cuándo se devenga el IVA** es un ajuste del espacio: *por facturas*
 (devengado al emitir) o *por cobros* (devengado el día en que el cliente

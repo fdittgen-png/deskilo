@@ -13,7 +13,7 @@ import '../../domain/workspace_branding.dart';
 import 'brand_swatch.dart';
 
 /// The name of [pattern] in the reader's language.
-String brandPatternLabel(AppLocalizations? l10n, BrandPattern pattern) {
+String _brandPatternLabel(AppLocalizations? l10n, BrandPattern pattern) {
   final t = l10n ?? AppLocalizationsEn();
   return switch (pattern) {
     BrandPattern.solid => t.coloursPatternSolid,
@@ -66,7 +66,7 @@ class PatternPicker extends StatelessWidget {
               Semantics(
                 button: true,
                 selected: pattern == current,
-                label: brandPatternLabel(l10n, pattern),
+                label: _brandPatternLabel(l10n, pattern),
                 child: InkWell(
                   key: ValueKey('colours-pattern-${pattern.name}'),
                   onTap: busy ? null : () => onPick(pattern),
@@ -94,7 +94,7 @@ class PatternPicker extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xs),
                       ExcludeSemantics(
                         child: Text(
-                          brandPatternLabel(l10n, pattern),
+                          _brandPatternLabel(l10n, pattern),
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ),

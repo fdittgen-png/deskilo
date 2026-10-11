@@ -32,6 +32,7 @@ library;
 
 import 'package:meta/meta.dart';
 
+import '../../../core/text/csv.dart';
 import 'reservation.dart';
 
 /// What a reservation actually booked. The model allows exactly one of
@@ -90,20 +91,25 @@ String buildReservationExportCsv({
     ..writeln('# ${reservations.length} row(s); times are UTC')
     ..writeln(_columns.join(','));
 
+  // CSV quoting (#2385, the shared cell writer). Ids and patterns should
+  // never contain a comma or a quote, but `space_label` is a
+  // member-visible name and absolutely can — one unquoted comma there
+  // shifts every following column, and the reader would silently
+  // misread the whole file rather than fail.
   for (final r in reservations) {
     buffer.writeln([
-      _q(r.id),
-      _q(r.workspaceId),
-      _q(r.memberId),
+      csvCell(r.id),
+      csvCell(r.workspaceId),
+      csvCell(r.memberId),
       reservationScopeOf(r).name,
-      _q(r.seatId),
-      _q(r.deskId),
-      _q(r.officeId),
-      _q(r.levelId),
+      csvCell(r.seatId),
+      csvCell(r.deskId),
+      csvCell(r.officeId),
+      csvCell(r.levelId),
       // #587: the substitution snapshot is the ONLY trace of what a
       // deleted plan object was, so a dump without it loses the answer
       // to "what was this booking for".
-      _q(r.spaceLabel),
+      csvCell(r.spaceLabel),
       reservationStatusToDb(r.status),
       _utc(r.startsAt),
       _utc(r.endsAt),
@@ -116,8 +122,8 @@ String buildReservationExportCsv({
       // dot".
       _minutesBetween(r.startsAt, r.checkedInAt),
       _minutesBetween(r.checkedOutAt, r.endsAt),
-      _q(r.seriesId),
-      _q(r.seriesPattern),
+      csvCell(r.seriesId),
+      csvCell(r.seriesPattern),
     ].join(','));
   }
   return buffer.toString();
@@ -135,13 +141,3 @@ String _minutesBetween(DateTime? from, DateTime? to) =>
     (from == null || to == null)
         ? ''
         : to.difference(from).inMinutes.toString();
-
-/// CSV quoting. Ids and patterns should never contain a comma or a
-/// quote, but `space_label` is a member-visible name and absolutely can
-/// — one unquoted comma there shifts every following column, and the
-/// reader would silently misread the whole file rather than fail.
-String _q(String? value) {
-  if (value == null || value.isEmpty) return '';
-  final escaped = value.replaceAll('"', '""');
-  return '"$escaped"';
-}

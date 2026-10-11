@@ -90,7 +90,11 @@ presenza di una partita IVA; un consumatore, in Italia o altrove, paga la
 Sua IVA, quindi non esiste un trattamento a parte per i consumatori
 intracomunitari. Il controllo della fatturazione elettronica rifiuta di
 inviare un documento in inversione contabile finché manca la partita IVA
-del cliente: è ciò che prova che l'imposta è sua.
+del cliente: è ciò che prova che l'imposta è sua. Emetterlo richiede
+inoltre la prova che il cliente sia un'impresa: la sua partita IVA
+risultata valida in VIES (la funzione **Verifica della partita IVA
+(VIES)**), il cui numero di consultazione resta sulla fattura; se VIES non
+risponde, l'emissione attende.
 
 **Quando l'IVA diventa esigibile** è un'impostazione dello spazio: *sulle
 fatture* (esigibile all'emissione) oppure *sugli incassi* (esigibile il

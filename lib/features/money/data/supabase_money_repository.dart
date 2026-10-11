@@ -34,6 +34,7 @@ import '../domain/workspace_status.dart';
 import '../../../core/data/system_columns.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/reminder_evidence.dart';
+import '../../../core/time/date_text.dart';
 
 class SupabaseMoneyRepository implements MoneyRepository {
   @override
@@ -811,8 +812,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
       // moved, in the payer's own calendar.
       'p_paid_on': paidOn == null
           ? null
-          : '${paidOn.year}-${paidOn.month.toString().padLeft(2, '0')}'
-              '-${paidOn.day.toString().padLeft(2, '0')}',
+          : isoDay(paidOn),
       'p_period': period,
     });
     return result as String;

@@ -17,6 +17,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/workspace_currency.dart';
+import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -474,7 +476,8 @@ class _ActiveChips extends StatelessWidget {
       }
     }
     if (filter.hasAmount) {
-      final fmt = formatAmount ?? (c) => (c / 100).toStringAsFixed(2);
+      final fmt = formatAmount ??
+          (c) => minorToText(c, WorkspaceCurrency.code); // #2385
       final lo = filter.minCents == null ? '' : fmt(filter.minCents!);
       final hi = filter.maxCents == null ? '' : fmt(filter.maxCents!);
       chips.add(

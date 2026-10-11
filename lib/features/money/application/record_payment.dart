@@ -19,6 +19,7 @@
 import 'package:meta/meta.dart';
 import '../domain/money_repository.dart';
 import '../domain/payment_method.dart';
+import '../../../core/time/date_text.dart';
 
 /// What happened to a payment somebody tried to register.
 sealed class RecordPaymentOutcome {
@@ -44,7 +45,7 @@ class PaymentIncomplete extends RecordPaymentOutcome {
 /// The month a payment paid on [day] belongs to, `YYYY-MM`.
 @visibleForTesting
 String periodOfPayment(DateTime day) =>
-    '${day.year}-${day.month.toString().padLeft(2, '0')}';
+    yearMonth(day.year, day.month);
 
 class Payments {
   const Payments(this._money);

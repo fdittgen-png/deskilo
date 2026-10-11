@@ -9,7 +9,7 @@ import '../capability_labels.dart';
 import '../screens/template_compare_screen.dart';
 
 /// A capability state in words: never only a colour or a tick.
-String capabilityStateLabel(AppLocalizations? l10n, CapabilityState s) =>
+String _capabilityStateLabel(AppLocalizations? l10n, CapabilityState s) =>
     switch (s) {
       CapabilityState.enabled => l10n?.capabilityStateEnabled ?? 'On',
       CapabilityState.disabled => l10n?.capabilityStateDisabled ?? 'Off',
@@ -88,7 +88,7 @@ class _TemplateWhyMatchState extends State<TemplateWhyMatch> {
                       child: Text(
                         [
                           capabilityLabel(l10n, e.key),
-                          capabilityStateLabel(l10n, e.value.state),
+                          _capabilityStateLabel(l10n, e.value.state),
                           if (e.value.path != null &&
                               e.value.state != CapabilityState.unspecified)
                             comparisonCellText(

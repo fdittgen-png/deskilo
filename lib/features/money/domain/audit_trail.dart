@@ -29,6 +29,8 @@
 /// at exactly that.
 library;
 
+import '../../../core/money/money_text.dart';
+import '../../../core/text/csv.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
 
@@ -174,10 +176,6 @@ String buildAuditTrailCsv({
   required DateTime generatedAt,
   required String workspaceName,
 }) {
-  String q(String value) => value.isEmpty
-      ? ''
-      : '"${value.replaceAll('"', '""').replaceAll(RegExp(r'[\r\n]+'), ' ')}"';
-  String money(int cents) => (cents / 100).toStringAsFixed(2);
 
   final buffer = StringBuffer()
     ..writeln('# DesKilo audit trail — $workspaceName')
@@ -195,13 +193,16 @@ String buildAuditTrailCsv({
     buffer.writeln([
       event.at.toIso8601String().split('T').first,
       event.kind,
-      q(event.reference),
-      q(event.relatesTo),
-      q(event.description),
-      money(event.amountCents),
-      q(event.counterparty),
-      q(event.actor),
-      q(event.status),
+      // #2385 — the shared cell writer: quotes doubled, line breaks and
+      // other control characters a space, formula starts defused.
+      csvCell(event.reference),
+      csvCell(event.relatesTo),
+      csvCell(event.description),
+      // The trail has no currency column: two decimals, as since #669.
+      minorToText(event.amountCents, 'EUR'),
+      csvCell(event.counterparty),
+      csvCell(event.actor),
+      csvCell(event.status),
     ].join(','));
   }
   return buffer.toString();

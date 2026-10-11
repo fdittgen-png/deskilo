@@ -42,7 +42,7 @@ class WorkspaceFieldsController extends ChangeNotifier {
 }
 
 /// The words for [problem], in the reader's language.
-String fieldProblemText(
+String _fieldProblemText(
   AppLocalizations? l10n,
   WorkspaceField field,
   FieldProblem problem,
@@ -202,7 +202,7 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
     // somebody their empty form is wrong before they start is noise.
     final answered = widget.controller.answers.containsKey(field.key);
     final error = (answered && problem != null)
-        ? fieldProblemText(l10n, field, problem)
+        ? _fieldProblemText(l10n, field, problem)
         : null;
 
     switch (field.type) {

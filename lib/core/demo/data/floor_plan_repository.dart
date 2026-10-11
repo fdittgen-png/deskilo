@@ -203,7 +203,7 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   /// #2010 — how many reorder commands were sent (one per save).
-  var reorderCalls = 0;
+  int reorderCalls = 0;
 
   /// levelId → background image bytes (0036).
   final backgrounds = <String, Uint8List>{};

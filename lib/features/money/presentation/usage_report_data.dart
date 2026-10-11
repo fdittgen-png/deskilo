@@ -32,7 +32,6 @@ Map<String, Object?> usageReportData(
   final l10n = l10nOverride ?? AppLocalizations.of(context);
   final workspace = ref.read(currentWorkspaceProvider).value;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  String money(int cents) => currency.formatMinor(cents);
   final locale = localeName ?? Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
   final dayFormat = DateFormat.MMMEd(locale);
@@ -52,7 +51,7 @@ Map<String, Object?> usageReportData(
   final lines = <Map<String, Object?>>[
     {
       'label': l10n?.usageReportPaid ?? 'Paid ahead (participation)',
-      'amount': money(statement?.feeCents ?? 0),
+      'amount': currency.formatMinor(statement?.feeCents ?? 0),
     },
     {
       'label': l10n?.usageReportIncluded ?? 'Included half-days',
@@ -75,7 +74,7 @@ Map<String, Object?> usageReportData(
       {
         'label': l10n?.usageReportSupplements ??
             'Supplements (accessories, desks, offices)',
-        'amount': money(supplements),
+        'amount': currency.formatMinor(supplements),
       },
   ];
   return <String, Object?>{
@@ -87,7 +86,7 @@ Map<String, Object?> usageReportData(
     'issued': dateFormat.format(ref.read(clockProvider).now()),
     'issued_by': workspace?.name ?? '',
     'replaces': '',
-    'total': money(statement?.feeCents ?? 0),
+    'total': currency.formatMinor(statement?.feeCents ?? 0),
     'charges': '',
     'payments': '',
     'net_total': '',
@@ -98,14 +97,14 @@ Map<String, Object?> usageReportData(
     'has_vat': false,
     'lines': lines,
     'vat': const <Map<String, Object?>>[],
-    'usage_paid': money(statement?.feeCents ?? 0),
+    'usage_paid': currency.formatMinor(statement?.feeCents ?? 0),
     'usage_included_half_days': halfDays(statement?.includedHalfDays ?? 0),
     'usage_used_half_days': halfDays(statement?.usedHalfDays ?? 0),
     'usage_remaining_half_days': halfDays(statement?.remainingHalfDays ?? 0),
     'usage_extra_half_days': halfDays(statement?.extraHalfDays ?? 0),
     'usage_overage':
-        (statement?.overageCents ?? 0) > 0 ? money(statement!.overageCents) : '',
-    'usage_supplements': supplements > 0 ? money(supplements) : '',
+        (statement?.overageCents ?? 0) > 0 ? currency.formatMinor(statement!.overageCents) : '',
+    'usage_supplements': supplements > 0 ? currency.formatMinor(supplements) : '',
     'usage_records': [
       for (final r in records)
         {

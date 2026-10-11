@@ -169,7 +169,7 @@ void main() {
       );
 
       expect(off.isBlocked, isFalse);
-      expect(off.flags.values.every((v) => v == false), isTrue);
+      expect(off.flags.values.every((v) => !v), isTrue);
       expect(off.flags[WorkspaceFeature.dunning.dbKey], isFalse);
     });
 

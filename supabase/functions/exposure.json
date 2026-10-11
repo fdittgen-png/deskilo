@@ -13,6 +13,10 @@
       "class": "user_facing",
       "authority": "a workspace admin's native session"
     },
+    "vies-check": {
+      "class": "user_facing",
+      "authority": "an invoice issuer's native session, checked by vies_check_subject"
+    },
     "send-push": {
       "class": "system",
       "authority": "database triggers through the gateway"

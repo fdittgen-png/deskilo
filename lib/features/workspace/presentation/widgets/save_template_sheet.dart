@@ -29,23 +29,23 @@ Future<void> showSaveTemplateSheet(
   final saved = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => SaveTemplateSheet(workspaceId: workspaceId),
+    builder: (_) => _SaveTemplateSheet(workspaceId: workspaceId),
   );
   if (saved == true && context.mounted) {
     AppSnack.success(context, l10n?.librarySaved ?? 'Saved to your templates.');
   }
 }
 
-class SaveTemplateSheet extends ConsumerStatefulWidget {
-  const SaveTemplateSheet({super.key, required this.workspaceId});
+class _SaveTemplateSheet extends ConsumerStatefulWidget {
+  const _SaveTemplateSheet({required this.workspaceId});
 
   final String workspaceId;
 
   @override
-  ConsumerState<SaveTemplateSheet> createState() => _SaveTemplateSheetState();
+  ConsumerState<_SaveTemplateSheet> createState() => _SaveTemplateSheetState();
 }
 
-class _SaveTemplateSheetState extends ConsumerState<SaveTemplateSheet> {
+class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
   late final Future<TemplatePublication> _publication =
       publicationPreview(ref, widget.workspaceId);
   final _name = TextEditingController();

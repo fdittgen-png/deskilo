@@ -14,12 +14,12 @@
 // and an unpaid invoice. Germany on the service period: September
 // services paid on 2 September, on 20 August, and unpaid.
 //
-// And the period lock (0406, `168_vat_period_locks.sql`): a filed
+// And the period lock (0406, `169_vat_period_locks.sql`): a filed
 // September whose unpaid invoice is voided in October — October carries
 // the difference as a correction of the September return, and once
 // October is filed November corrects nothing again.
 //
-// And input VAT (0407, `169_input_vat.sql`): the base and the deductible
+// And input VAT (0407, `170_input_vat.sql`): the base and the deductible
 // share of an expense, rounded as the server rounds them.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
@@ -320,7 +320,7 @@ void main() {
     });
   });
 
-  group('a filed period is locked — the 168_vat_period_locks.sql fixture', () {
+  group('a filed period is locked — the 169_vat_period_locks.sql fixture', () {
     setUp(() => WorkspaceTime.install('Europe/Berlin'));
 
     List<Invoice> invoices({bool voided = false}) => [
@@ -441,7 +441,7 @@ void main() {
     });
   });
 
-  group('input VAT — the 169_input_vat.sql fixture', () {
+  group('input VAT — the 170_input_vat.sql fixture', () {
     test('the base and the deductible share of each expense', () {
       expect(vatInputSplit(12000, 20, 100), (netCents: 10000, deductibleCents: 2000));
       expect(vatInputSplit(12000, 20, 50), (netCents: 10000, deductibleCents: 1000));

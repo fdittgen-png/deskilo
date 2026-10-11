@@ -19,6 +19,7 @@ import '../../core/theme/app_radius.dart';
 import '../../l10n/app_localizations_en.dart';
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/events/providers/attention_providers.dart';
@@ -30,13 +31,30 @@ import '../../features/task_recorder/presentation/route_classification.dart'
 
 part 'shell_drawer.g.dart';
 
+/// #2414 — the navigation a device that never chose gets. "Everyday
+/// only" is a member whose permissions in this space are the everyday
+/// six at most; outside a space (Me), one who runs no space at all.
+@Riverpod(keepAlive: true)
+NavigationStyle navigationDefault(Ref ref) {
+  final inSpace = ref.watch(myMemberProvider).value != null;
+  final everydayOnly = inSpace
+      ? holdsOnlyEverydayPermissions(ref.watch(myPermissionsProvider))
+      : !(ref.watch(myMembershipsProvider).value ?? const []).any(
+          (m) => m.isOwner || m.isAdmin || m.coOwner == CoOwnerStatus.active);
+  return defaultNavigationStyle(
+    isPhone: ref.watch(deviceIsPhoneProvider),
+    everydayOnly: everydayOnly,
+  );
+}
+
 /// Whether the shell navigates through the drawer — the web build
-/// always, native when the user chose the menu (#969), and tests that
-/// ask for it.
+/// always, native per the user's choice (#969) or the device's default
+/// (#2414), and tests that ask for it.
 @Riverpod(keepAlive: true)
 bool webShell(Ref ref) => shellUsesMenu(
       platformIsWeb: ref.watch(platformIsWebProvider),
       override: ref.watch(navigationStyleControllerProvider).value,
+      fallback: ref.watch(navigationDefaultProvider),
     );
 
 /// One destination of the drawer.

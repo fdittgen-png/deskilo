@@ -76,7 +76,7 @@ refusal stays the exception, not the routine.
 - `compute_vat_return` gained `correction` and `corrects` columns (its
   return type changed; it is dropped and recreated).
 - The Dart engine applies the same rule; `vat_return_parity_test.dart`
-  and pgTAP `168_vat_period_locks.sql` pin one fixture: a void after
+  and pgTAP `169_vat_period_locks.sql` pin one fixture: a void after
   filing September is a −59.50 correction in October, the September row
   stays byte-identical, and November corrects nothing again.
 - Input VAT (expenses) will join the same ledger as a second document

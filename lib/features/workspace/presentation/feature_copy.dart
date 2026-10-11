@@ -315,8 +315,9 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the new value from its date, the old value stays on every '
                   'supply before it, and nothing is re-pointed. Off: one '
                   'value per rate.',
-        WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ??
-            AppLocalizationsEn().featureSupplyClassificationDesc,
+        WorkspaceFeature.supplyClassification => l10n?.featureSupplyClassificationDesc ?? AppLocalizationsEn().featureSupplyClassificationDesc,
+        WorkspaceFeature.viesVerification => l10n?.featureViesVerificationDesc ?? AppLocalizationsEn().featureViesVerificationDesc,
+        WorkspaceFeature.recapitulativeStatement => l10n?.featureRecapitulativeStatementDesc ?? AppLocalizationsEn().featureRecapitulativeStatementDesc,
         WorkspaceFeature.inputVat => l10n?.featureInputVatDesc ??
             AppLocalizationsEn().featureInputVatDesc,
         WorkspaceFeature.vatCounterparty =>
@@ -471,9 +472,8 @@ String featureDescription(AppLocalizations? l10n, WorkspaceFeature feature) =>
                   'the hosts: the owners, and the administrators who chose '
                   'to be public contacts. Only that person and the hosts '
                   'read the conversation.',
-        WorkspaceFeature.messageMentions =>
-          l10n?.featureMessageMentionsDesc ??
-              AppLocalizationsEn().featureMessageMentionsDesc,
+        WorkspaceFeature.messageMentions => l10n?.featureMessageMentionsDesc ??
+            AppLocalizationsEn().featureMessageMentionsDesc,
         WorkspaceFeature.messageForwarding =>
           l10n?.featureMessageForwardingDesc ??
               'A message can be forwarded into another conversation the '

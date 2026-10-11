@@ -33,6 +33,8 @@ import '../../providers/money_providers.dart';
 import '../../providers/vat_declaration_providers.dart';
 import '../report_actions.dart';
 import '../../../workspace/domain/workspace_feature.dart';
+import '../recapitulative_actions.dart';
+import '../../../../core/time/calendar_days.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
 import '../widgets/vat_declaration_period_field.dart';
@@ -322,6 +324,30 @@ class _VatDeclarationsScreenState
                     ],
                   ),
                 ],
+                // #2354 — the EU sales list (DES, ZM, 349) of the period.
+                if (ref
+                    .watch(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.recapitulativeStatement))
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppSpacing.sm),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: OutlinedButton.icon(
+                        key: const ValueKey('vat-recap-csv'),
+                        onPressed: () => saveRecapitulativeCsv(context, ref,
+                            start: period.start,
+                            // the period's last day, included
+                            end: addCalendarDays(period.end, 1),
+                            currency: ref.read(currentWorkspaceProvider).value
+                                    ?.currencyCode ??
+                                'EUR'),
+                        icon: const Icon(Icons.public_outlined),
+                        label: Text((l10n ??
+                                lookupAppLocalizations(const Locale('en')))
+                            .recapCsv),
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: AppSpacing.lg),
                 switch (declarationsAsync) {
                   AsyncData(value: final declarations)
