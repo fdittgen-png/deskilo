@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/push/push_opt_out.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/privacy_choices.dart';
 import '../../domain/privacy_notice.dart';
@@ -50,7 +51,7 @@ class SpaceNoticeTile extends ConsumerWidget {
     bool acknowledged,
   ) async {
     final l10n = context.l10n;
-    final acknowledge = await showModalBottomSheet<bool>(
+    final acknowledge = await showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SafeArea(

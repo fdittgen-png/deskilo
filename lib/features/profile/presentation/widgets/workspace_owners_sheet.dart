@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../workspace/domain/workspace_overview.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -24,7 +25,7 @@ Future<void> showWorkspaceOwnersSheet(
     // #970 — demo mode blurs the owners' names and addresses.
     return list;
   });
-  return showModalBottomSheet<void>(
+  return showAppSheet<void>(
     context: context,
     showDragHandle: true,
     builder: (context) {

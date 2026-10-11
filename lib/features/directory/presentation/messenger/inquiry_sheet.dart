@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
 import '../../domain/public_workspace.dart';
@@ -23,7 +24,7 @@ Future<void> showInquirySheet(
   BuildContext context,
   PublicWorkspace workspace,
 ) async {
-  final inquiry = await showModalBottomSheet<String>(
+  final inquiry = await showAppSheet<String>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _InquirySheet(workspace: workspace),

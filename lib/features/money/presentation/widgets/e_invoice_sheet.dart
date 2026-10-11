@@ -5,6 +5,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/e_invoice_routing.dart';
@@ -72,7 +73,7 @@ Future<EInvoiceExport?> showEInvoiceSheet(
   bool canSendCustomer = false,
   bool identityFixedSince = false,
 }) =>
-    showModalBottomSheet<EInvoiceExport>(
+    showAppSheet<EInvoiceExport>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

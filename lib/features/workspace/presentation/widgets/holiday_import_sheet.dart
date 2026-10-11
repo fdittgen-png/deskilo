@@ -18,6 +18,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -59,7 +60,7 @@ class HolidayImportTile extends ConsumerWidget {
 Future<void> _showHolidayImportSheet(
   BuildContext context,
   PublicHolidayImport command,
-) => showModalBottomSheet<void>(
+) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (_) => _HolidayImportSheet(command: command),

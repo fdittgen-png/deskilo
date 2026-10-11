@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/visibility.dart';
@@ -30,7 +31,7 @@ class VisibilityCard extends ConsumerWidget {
     final l10n = context.l10n;
     final spaces =
         ref.read(myWorkspacesProvider).value ?? const <Workspace>[];
-    final choice = await showModalBottomSheet<FieldAudience>(
+    final choice = await showAppSheet<FieldAudience>(
       context: context,
       isScrollControlled: true,
       constraints: BoxConstraints(

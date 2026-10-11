@@ -13,6 +13,7 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
+import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 
 /// The button that offers the demonstration space.
@@ -55,7 +56,7 @@ Future<void> offerDemoEntry(BuildContext context, WidgetRef ref) async {
 /// Explains the demonstration space, and enters it if the visitor agrees.
 Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
   final l10n = context.l10n;
-  final start = await showModalBottomSheet<bool>(
+  final start = await showAppSheet<bool>(
     context: context,
     showDragHandle: true,
     isScrollControlled: true,

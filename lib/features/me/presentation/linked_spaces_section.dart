@@ -16,6 +16,7 @@ import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/backend_uri.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../domain/my_spaces.dart';
 import '../providers/me_providers.dart';
@@ -30,7 +31,7 @@ class LinkedSpacesSection extends ConsumerWidget {
     LinkedSpace space,
   ) async {
     final l10n = context.l10n;
-    final go = await showModalBottomSheet<bool>(
+    final go = await showAppSheet<bool>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Padding(

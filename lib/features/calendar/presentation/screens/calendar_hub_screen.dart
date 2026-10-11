@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_frame.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -624,7 +625,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final l10n = context.l10n;
     final entries = names.entries.toList()
       ..sort((a, b) => a.value.toLowerCase().compareTo(b.value.toLowerCase()));
-    final picked = await showModalBottomSheet<String?>(
+    final picked = await showAppSheet<String?>(
       context: context,
       builder: (_) => SafeArea(
         child: ListView(children: [

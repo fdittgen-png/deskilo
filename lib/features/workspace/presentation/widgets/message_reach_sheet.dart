@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 
@@ -16,7 +17,7 @@ Future<void> showMessageReachSheet(
   required String messageId,
   required Map<String, String> names,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _ReachSheet(messageId: messageId, names: names),

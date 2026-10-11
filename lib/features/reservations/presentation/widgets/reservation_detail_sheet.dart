@@ -13,6 +13,7 @@ import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
@@ -307,7 +308,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   Future<void> _cancel(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
-    final choice = await showModalBottomSheet<CancelScope>(
+    final choice = await showAppSheet<CancelScope>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Column(
@@ -661,7 +662,7 @@ class ReservationDetailSheet extends ConsumerWidget {
           title: Text(label),
           onTap: () => Navigator.of(context).pop(p),
         );
-    return showModalBottomSheet<SeriesPattern?>(
+    return showAppSheet<SeriesPattern?>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Column(
@@ -687,7 +688,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     AppLocalizations l10n,
     DateTime day,
   ) {
-    return showModalBottomSheet<HalfDayWindow>(
+    return showAppSheet<HalfDayWindow>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Column(
@@ -773,7 +774,7 @@ Future<void> showReservationDetail(
   Reservation reservation,
 ) async {
   recordTaskStep(ref, RecorderActions.viewDetails); // #1865
-  final target = await showModalBottomSheet<SeatContext>(
+  final target = await showAppSheet<SeatContext>(
     context: context,
     isScrollControlled: true,
     builder: (_) => ReservationDetailSheet(reservation: reservation),

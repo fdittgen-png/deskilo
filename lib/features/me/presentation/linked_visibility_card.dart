@@ -15,6 +15,7 @@ import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/visibility.dart';
@@ -54,7 +55,7 @@ class LinkedVisibilityCard extends ConsumerWidget {
                   leading: const Icon(Icons.dns_outlined),
                   title: Text(words.visibilityOnServer(host)),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => showModalBottomSheet<void>(
+                  onTap: () => showAppSheet<void>(
                     context: context,
                     isScrollControlled: true,
                     builder: (_) =>

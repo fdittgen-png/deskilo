@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/reference_locale.dart';
@@ -123,7 +124,7 @@ Future<void> showBlockedSpaceSheet(
   required String spaceName,
 }) async {
   final l10n = context.l10n;
-  final message = await showModalBottomSheet<bool>(
+  final message = await showAppSheet<bool>(
     context: context,
     builder: (sheetContext) => SafeArea(
       child: Column(

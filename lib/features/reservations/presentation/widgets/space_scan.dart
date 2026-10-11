@@ -11,6 +11,7 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -62,7 +63,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   final nfcReady = seatTagsOn && await nfcReader.isAvailable();
   if (!context.mounted) return;
 
-  final code = await showModalBottomSheet<SpaceCode>(
+  final code = await showAppSheet<SpaceCode>(
     context: context,
     isScrollControlled: true,
     builder: (context) => SpaceScanSheet(
@@ -154,7 +155,7 @@ Future<void> showSpaceSheet(
   ({DateTime start, DateTime end})? initialWindow,
   List<({String id, String name})> members = const [],
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _SpaceSheet(
@@ -442,7 +443,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     final initial = widget.initialWindow ?? _window;
     final subjects = _subjectOptions(l10n, granted: granted);
 
-    final choice = await showModalBottomSheet<BookingChoice>(
+    final choice = await showAppSheet<BookingChoice>(
       context: context,
       isScrollControlled: true,
       builder: (context) => BookingSheet(

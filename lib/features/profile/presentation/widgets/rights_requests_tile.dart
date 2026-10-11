@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/rights_requests.dart';
@@ -63,7 +64,7 @@ class RightsRequestsTile extends ConsumerWidget {
         l10n.rightsRequestsHint,
       ),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => showModalBottomSheet<void>(
+      onTap: () => showAppSheet<void>(
         context: context,
         isScrollControlled: true,
         builder: (_) => _RightsRequestsSheet(workspaceId: workspaceId),

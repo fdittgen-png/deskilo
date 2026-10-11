@@ -19,7 +19,7 @@ Future<void> _photoSheet(
   Profile profile,
 ) async {
   final l10n = context.l10n;
-  final choice = await showModalBottomSheet<String>(
+  final choice = await showAppSheet<String>(
     context: context,
     builder: (sheetContext) => SafeArea(
       child: Column(

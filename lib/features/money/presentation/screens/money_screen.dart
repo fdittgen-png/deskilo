@@ -20,6 +20,7 @@ import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_frame.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -390,7 +391,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       if (next.isAfter(periodCeiling)) return;
       setSheetState(() => period = yearMonth(next.year, next.month));
     }
-    final submitted = await showModalBottomSheet<bool>(
+    final submitted = await showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       builder: (context) => StatefulBuilder(
@@ -537,7 +538,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (workspace == null) return;
     final count = TextEditingController();
     final period = _period;
-    final submitted = await showModalBottomSheet<bool>(
+    final submitted = await showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(
@@ -618,7 +619,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       );
       return;
     }
-    final chosen = await showModalBottomSheet<Package>(
+    final chosen = await showAppSheet<Package>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(
@@ -780,7 +781,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // 2. Pick the provider (directly when only one is configured).
     final preferred = PaymentProvider.fromWire(ref.read(personalSettingsProvider).value?.effective[PersonalPreference.paymentProvider]);
     PaymentProvider? provider = gateway.providers.contains(preferred) ? preferred : gateway.providers.singleOrNull;
-    provider ??= await showModalBottomSheet<PaymentProvider>(
+    provider ??= await showAppSheet<PaymentProvider>(
       context: context,
       builder: (context) => SheetShell(
         title: l10n.payOnlineChooseTitle,

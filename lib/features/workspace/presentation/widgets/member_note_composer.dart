@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -167,7 +168,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   }
 
   Future<void> _pickMention() async {
-    final picked = await showModalBottomSheet<({String id, String name})>(
+    final picked = await showAppSheet<({String id, String name})>(
       context: context,
       builder: (sheet) => SafeArea(
         child: ListView(

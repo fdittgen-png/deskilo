@@ -14,6 +14,7 @@ import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import '../time/clock.dart';
 import '../trace/guarded.dart';
+import '../ui/app_sheet.dart';
 import 'app_format.dart';
 import 'format_controller.dart';
 import 'format_prefs.dart';
@@ -183,7 +184,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
     FormatPrefs prefs,
     Future<void> Function(FormatPrefs) save,
   ) async {
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,

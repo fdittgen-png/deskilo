@@ -8,6 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../domain/invoice_report.dart';
 import 'invoice_actions.dart';
@@ -31,7 +32,7 @@ Future<void> runReportActions(
   String logMessage = 'report pdf failed',
 }) async {
   final l10n = context.l10n;
-  final choice = await showModalBottomSheet<String>(
+  final choice = await showAppSheet<String>(
     context: context,
     builder: (sheetContext) => SafeArea(
       child: Column(

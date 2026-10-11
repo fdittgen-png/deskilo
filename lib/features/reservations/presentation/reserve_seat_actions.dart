@@ -11,6 +11,7 @@ import '../../../core/time/work_hours.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
@@ -297,7 +298,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     final l10n = context.l10n;
     final blockedText =
         l10n.planSeatBlocked;
-    final unblock = await showModalBottomSheet<bool>(
+    final unblock = await showAppSheet<bool>(
       context: context,
       builder: (context) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -545,7 +546,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           )
         : null;
 
-    final choice = await showModalBottomSheet<BookingChoice>(
+    final choice = await showAppSheet<BookingChoice>(
       context: context,
       isScrollControlled: true,
       builder: (context) => BookingSheet(

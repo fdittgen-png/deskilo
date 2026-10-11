@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/badge_sign_in.dart';
 import '../../providers/auth_providers.dart';
@@ -28,7 +29,7 @@ Future<void> showBadgeSignInSheet(
   BuildContext context, {
   String? scannedUid,
 }) =>
-    showModalBottomSheet(
+    showAppSheet(
       context: context,
       isScrollControlled: true,
       builder: (_) => Padding(

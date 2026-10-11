@@ -11,6 +11,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../application/place_feedback_commands.dart';
 import '../../domain/place_feedback.dart';
 import '../../providers/place_feedback_providers.dart';
@@ -166,7 +167,7 @@ class PlaceFeedbackChip extends ConsumerWidget {
       InkWell(
         key: rateKey(id),
         borderRadius: AppRadius.lgAll,
-        onTap: () => showModalBottomSheet<void>(
+        onTap: () => showAppSheet<void>(
           context: context,
           showDragHandle: true,
           builder: (_) => SafeArea(

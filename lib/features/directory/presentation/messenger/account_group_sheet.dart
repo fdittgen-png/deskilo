@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_group.dart';
 import '../../providers/directory_providers.dart';
@@ -18,7 +19,7 @@ import 'refusal_text.dart';
 /// Answers `true` when the person left the group, so the thread behind the
 /// sheet can close with it.
 Future<bool?> showAccountGroupSheet(BuildContext context, String groupId) =>
-    showModalBottomSheet<bool>(
+    showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _GroupSheet(groupId: groupId),
@@ -80,7 +81,7 @@ class _GroupSheet extends ConsumerWidget {
   }
 
   Future<void> _addPeople(BuildContext context, WidgetRef ref) async {
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       isScrollControlled: true,
       builder: (_) => const _PeoplePicker(),

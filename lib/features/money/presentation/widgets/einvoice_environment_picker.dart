@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 
@@ -38,7 +39,7 @@ Future<String?> pickEInvoiceEnvironment(
         _ => l10n.einvoiceEnvProd,
       };
 
-  return showModalBottomSheet<String>(
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(

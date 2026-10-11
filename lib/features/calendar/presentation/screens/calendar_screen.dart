@@ -14,6 +14,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_frame.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -96,7 +97,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
   Future<void> _cancelMenu(Reservation reservation) async {
     final l10n = context.l10n;
-    final choice = await showModalBottomSheet<String>(
+    final choice = await showAppSheet<String>(
       context: context,
       builder: (context) => SafeArea(
         child: Column(

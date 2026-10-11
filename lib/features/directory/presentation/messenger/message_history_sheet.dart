@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
@@ -19,7 +20,7 @@ Future<void> showMessageHistory(
   required MessageKind kind,
   required String messageId,
   String source = '',
-}) => showModalBottomSheet<void>(
+}) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (_) =>

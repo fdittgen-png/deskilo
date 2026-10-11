@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../money/domain/invoice_ubl.dart';
@@ -88,7 +89,7 @@ Future<void> showValidationTrailSheet(
   BuildContext context, {
   required String eventId,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       showDragHandle: true,
       builder: (_) => SafeArea(

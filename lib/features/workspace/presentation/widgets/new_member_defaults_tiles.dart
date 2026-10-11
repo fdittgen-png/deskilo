@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/labeled_rows.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/new_member_defaults.dart';
@@ -58,12 +59,10 @@ class NewMemberDefaultsTiles extends StatelessWidget {
 
   /// The section's heading, shown whatever state the read is in — the
   /// rows below it are what appears or does not.
-  Widget _heading(ThemeData theme, AppLocalizations l10n) => Padding(
+  Widget _heading(ThemeData theme, AppLocalizations l10n) => SectionHeading(
+        l10n.newMemberDefaultsTitle,
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-        child: Text(
-          l10n.newMemberDefaultsTitle,
-          style: theme.textTheme.titleMedium,
-        ),
+        style: theme.textTheme.titleMedium,
       );
 
   @override

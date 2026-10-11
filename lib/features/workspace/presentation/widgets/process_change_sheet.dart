@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -35,7 +36,7 @@ Future<int?> showProcessChangeSheet(
   required List<String> subprocessKeys,
   required bool activate,
 }) =>
-    showModalBottomSheet<int>(
+    showAppSheet<int>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _ProcessChangeSheet(

@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -122,7 +123,7 @@ Future<void> _showPaymentTermsRequestSheet(
   required Member member,
   required PaymentTerms workspaceTerms,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _RequestSheet(member: member, workspaceTerms: workspaceTerms),

@@ -20,6 +20,7 @@ import '../../../core/backend/secondary_federation.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
@@ -35,7 +36,7 @@ class ConnectWithIdentitySheet extends ConsumerStatefulWidget {
     BuildContext context,
     SecondaryConnectIntent intent,
   ) async =>
-      await showModalBottomSheet<bool>(
+      await showAppSheet<bool>(
         context: context,
         isScrollControlled: true,
         builder: (_) => ConnectWithIdentitySheet(intent: intent),

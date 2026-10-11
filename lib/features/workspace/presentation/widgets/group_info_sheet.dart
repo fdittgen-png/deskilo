@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../directory/domain/group_details.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
@@ -28,7 +29,7 @@ Future<void> showGroupInfoSheet(
   WidgetRef ref, {
   required Conversation conversation,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _GroupInfoSheet(conversation: conversation),
@@ -242,7 +243,7 @@ class _GroupInfoSheet extends ConsumerWidget {
           m,
     ]..sort((a, b) => (names[a.id] ?? '').compareTo(names[b.id] ?? ''));
 
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       builder: (context) => SafeArea(
         child: candidates.isEmpty

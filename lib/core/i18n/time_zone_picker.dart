@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
+import '../ui/app_sheet.dart';
 import 'time_zones.dart';
 
 /// A searchable sheet over the IANA zones (#711). Returns the picked
@@ -17,7 +18,7 @@ Future<String?> showTimeZonePicker(
   required String current,
   required DateTime now,
 }) =>
-    showModalBottomSheet<String>(
+    showAppSheet<String>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _TimeZoneSheet(current: current, now: now),

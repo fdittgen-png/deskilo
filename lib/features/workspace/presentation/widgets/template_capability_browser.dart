@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_names.dart';
 import '../process_names.dart';
@@ -17,7 +18,7 @@ typedef CapabilityChoice = ({String id, bool required});
 /// adds a chip to the search and changes nothing else; closing chooses
 /// nothing. With reduced motion the sheet appears and leaves at once.
 Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
-    showModalBottomSheet<CapabilityChoice>(
+    showAppSheet<CapabilityChoice>(
       context: context,
       sheetAnimationStyle: MotionSettings.enabledOf(context)
           ? null

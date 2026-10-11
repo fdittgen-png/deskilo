@@ -14,6 +14,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../plan/domain/seat.dart';
 import '../../domain/place_feedback.dart';
 import '../../domain/seat_state_logic.dart';
@@ -72,7 +73,7 @@ Future<SeatDayPick?> showSeatDaySheet(
   required DateTime dayEnd,
   required DateTime now,
 }) =>
-    showModalBottomSheet<SeatDayPick>(
+    showAppSheet<SeatDayPick>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _SeatDaySheet(

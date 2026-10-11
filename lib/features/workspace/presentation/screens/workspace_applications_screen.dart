@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
@@ -79,7 +80,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                           ].where((value) => value.isNotEmpty).join(' · '),
                         ),
                         trailing: const Icon(Icons.chat_bubble_outline),
-                        onTap: () => showModalBottomSheet<void>(
+                        onTap: () => showAppSheet<void>(
                           context: context,
                           isScrollControlled: true,
                           useSafeArea: true,

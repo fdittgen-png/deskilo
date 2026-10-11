@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/debouncer.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -123,7 +124,7 @@ class TemplateGallery extends ConsumerStatefulWidget {
 
 class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   final _search = TextEditingController();
-  Timer? _debounce;
+  late final _debounce = Debouncer(delay: TemplateGallery.debounce);
   String _query = '';
   final Set<String> _tags = {};
 
@@ -178,7 +179,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
 
   @override
   void dispose() {
-    _debounce?.cancel();
+    _debounce.dispose();
     _search.dispose();
     super.dispose();
   }
@@ -222,8 +223,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   }
 
   void _onQuery(String value) {
-    _debounce?.cancel();
-    _debounce = Timer(TemplateGallery.debounce, () {
+    _debounce.run(() {
       if (!mounted) return;
       setState(() => _query = value);
       unawaited(_searchCapabilities(value));

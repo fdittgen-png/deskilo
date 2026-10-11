@@ -10,6 +10,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
@@ -323,7 +324,7 @@ class MembersScreen extends ConsumerWidget {
         child: HelpDot(membersTopic, anchor: HelpAnchor.membersActions),
       ),
     );
-    await showModalBottomSheet<void>(
+    await showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SafeArea(

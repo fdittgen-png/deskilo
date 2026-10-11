@@ -21,6 +21,7 @@ import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'ref_picker_filter.dart';
@@ -94,7 +95,7 @@ Future<String?> showRefPicker(
   required String keyPrefix,
   List<RefFacet> facets = const [],
   String Function(int cents)? formatAmount,
-}) => showModalBottomSheet<String>(
+}) => showAppSheet<String>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,

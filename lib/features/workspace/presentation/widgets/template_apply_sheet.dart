@@ -6,6 +6,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -40,7 +41,7 @@ import 'template_group_label.dart';
 /// Returns the number of changes applied, or null when nothing was.
 Future<int?> showTemplateApplySheet(BuildContext context, WidgetRef ref,
     String workspaceId, WorkspaceTemplate template) {
-  return showModalBottomSheet<int>(
+  return showAppSheet<int>(
     context: context,
     isScrollControlled: true,
     builder: (_) =>

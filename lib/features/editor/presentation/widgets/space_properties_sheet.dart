@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 
 /// What the properties sheet hands back when saved.
 typedef SpaceProperties = ({String name, bool bookable, int priceCents});
@@ -30,7 +31,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
   final price = TextEditingController(
     text: priceCents == 0 ? '' : centsToMajor(priceCents),
   );
-  final saved = await showModalBottomSheet<bool>(
+  final saved = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Padding(

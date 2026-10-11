@@ -8,6 +8,7 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -53,7 +54,7 @@ Future<KioskActRequest?> showKioskActSheet(
   String Function(BookingRefusal refusal)? refusalTextOf,
   bool explainNoCamera = false,
 }) =>
-    showModalBottomSheet<KioskActRequest>(
+    showAppSheet<KioskActRequest>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _KioskActSheet(

@@ -7,6 +7,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../money/domain/vat_rate.dart';
@@ -33,7 +34,7 @@ class AccessoriesScreen extends ConsumerWidget {
     if (workspace == null) return;
     final l10n = context.l10n;
 
-    final result = await showModalBottomSheet<_AccessoryDraft>(
+    final result = await showAppSheet<_AccessoryDraft>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _AccessorySheet(

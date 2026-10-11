@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -64,7 +65,7 @@ Future<void> showConsumptionSheet(
   );
   var service = services.first;
   var quantity = 1;
-  final submitted = await showModalBottomSheet<bool>(
+  final submitted = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Padding(

@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -390,7 +391,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
   Future<void> _scan() async {
     final l10n = context.l10n;
     BackendDescriptor? found;
-    await showModalBottomSheet<void>(
+    await showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(

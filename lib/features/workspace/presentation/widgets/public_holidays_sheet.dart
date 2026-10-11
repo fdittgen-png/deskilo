@@ -16,6 +16,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/generate_public_holidays.dart';
@@ -48,7 +49,7 @@ Future<void> showPublicHolidaysSheet(
   BuildContext context,
   PublicHolidayGeneration command,
 ) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _PublicHolidaysSheet(command: command),

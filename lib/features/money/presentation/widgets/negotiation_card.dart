@@ -8,6 +8,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -249,7 +250,7 @@ Future<void> showPriceNegotiationSheet(
               ? ''
               : centsToMajor(current.active!.itemPrice('packages', p.id)!)),
   };
-  final ok = await showModalBottomSheet<bool>(
+  final ok = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,

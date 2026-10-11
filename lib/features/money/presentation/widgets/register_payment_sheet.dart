@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../events/providers/event_providers.dart';
@@ -27,7 +28,7 @@ Future<bool> showRegisterPaymentSheet(
   WidgetRef ref, {
   String? memberId,
 }) async {
-  final done = await showModalBottomSheet<bool>(
+  final done = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _RegisterPaymentSheet(initialMemberId: memberId),

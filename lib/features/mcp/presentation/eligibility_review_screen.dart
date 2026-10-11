@@ -9,6 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -62,7 +63,7 @@ class _EligibilityReviewScreenState
     );
     if (!verified && mounted) {
       verified =
-          await showModalBottomSheet<bool>(
+          await showAppSheet<bool>(
             context: context,
             isScrollControlled: true,
             builder: (_) => SecondFactorSheet(

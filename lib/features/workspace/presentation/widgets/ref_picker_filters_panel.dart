@@ -9,6 +9,7 @@ import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import 'ref_picker_filter.dart';
 
 /// Shows the panel; returns the filter the person settled on, or null when
@@ -20,7 +21,7 @@ Future<RefFilter?> showRefFiltersPanel<T extends RefFilterable>(
   required List<RefFacet> facets,
   required RefFilter initial,
   String Function(int cents)? formatAmount,
-}) => showModalBottomSheet<RefFilter>(
+}) => showAppSheet<RefFilter>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,

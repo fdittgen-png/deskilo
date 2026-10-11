@@ -27,6 +27,7 @@ import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../application/workbench_import.dart';
@@ -193,7 +194,7 @@ void _start(BuildContext context, WidgetRef ref, TaskGuide guide) {
 /// The two ways to add a guide.
 Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
   final l10n = context.l10n;
-  final choice = await showModalBottomSheet<_AddChoice>(
+  final choice = await showAppSheet<_AddChoice>(
     context: context,
     showDragHandle: true,
     builder: (sheet) => SafeArea(
@@ -250,7 +251,7 @@ Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
     );
     return;
   }
-  final picked = await showModalBottomSheet<StoredRecording>(
+  final picked = await showAppSheet<StoredRecording>(
     context: context,
     showDragHandle: true,
     isScrollControlled: true,

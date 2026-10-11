@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/auth_providers.dart';
@@ -75,7 +76,7 @@ class _BadgePinTileState extends ConsumerState<BadgePinTile> {
     AppLocalizations l10n, {
     required bool has,
   }) async {
-    final changed = await showModalBottomSheet<bool>(
+    final changed = await showAppSheet<bool>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _BadgePinSheet(hasPin: has),

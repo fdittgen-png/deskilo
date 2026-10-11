@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -101,7 +102,7 @@ class RolesScreen extends ConsumerWidget {
     if (workspace == null) return;
     final locale =
         workspace.defaultLocale.isEmpty ? 'en' : workspace.defaultLocale;
-    final draft = await showModalBottomSheet<WorkspaceRole>(
+    final draft = await showAppSheet<WorkspaceRole>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

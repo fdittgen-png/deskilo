@@ -7,6 +7,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/billing_rules.dart';
@@ -74,7 +75,7 @@ Future<void> showInvoiceDetailSheet(
   // #831 — the settlement a regrouped source went into.
   String settledByNumber = '',
 }) async {
-  final action = await showModalBottomSheet<InvoiceAction>(
+  final action = await showAppSheet<InvoiceAction>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

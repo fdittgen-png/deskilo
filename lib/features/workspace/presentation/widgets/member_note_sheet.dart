@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../domain/member_note.dart';
 import 'member_note_body.dart';
@@ -27,7 +28,7 @@ Future<void> showMemberNoteSheet(
   String replyToName = '',
   Future<void> Function()? onDelete,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (sheetContext) {

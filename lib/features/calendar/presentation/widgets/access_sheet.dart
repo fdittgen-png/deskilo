@@ -6,6 +6,7 @@ import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -20,7 +21,7 @@ import 'calendar_item_row.dart';
 /// the data is: per kind, the RULE in a sentence and the concrete
 /// PEOPLE it currently names; then the access log, newest first.
 Future<void> showAccessSheet(BuildContext context, WidgetRef ref) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => const _AccessSheet(),

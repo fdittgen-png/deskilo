@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/message_marks.dart';
@@ -76,7 +77,7 @@ Future<void> showMessageActions(
   VoidCallback? onInfo,
 }) async {
   final l10n = context.l10n;
-  final picked = await showModalBottomSheet<Object>(
+  final picked = await showAppSheet<Object>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,

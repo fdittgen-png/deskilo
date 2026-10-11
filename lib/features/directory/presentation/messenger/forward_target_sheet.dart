@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
 import '../../providers/messenger_providers.dart';
@@ -18,7 +19,7 @@ Future<InboxEntry?> pickForwardTarget(
   required String source,
   required MessageContextKind fromKind,
   required String fromContextId,
-}) => showModalBottomSheet<InboxEntry>(
+}) => showAppSheet<InboxEntry>(
   context: context,
   isScrollControlled: true,
   builder: (_) => _ForwardTargetSheet(

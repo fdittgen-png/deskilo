@@ -10,6 +10,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -101,7 +102,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
     setState(() => _busy = false);
     if (!ok || previewed == null) return;
     final entities = previewed!.entities;
-    final confirmed = await showModalBottomSheet<bool>(
+    final confirmed = await showAppSheet<bool>(
       context: context,
       showDragHandle: true,
       // #1006 — seventeen entities do not fit a phone: the sheet takes

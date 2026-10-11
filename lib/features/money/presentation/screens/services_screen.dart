@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/vat/supply_class.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -45,7 +46,7 @@ class ServicesScreen extends ConsumerWidget {
       rates = const [];
     }
     if (!context.mounted) return;
-    final result = await showModalBottomSheet<_ServiceDraft>(
+    final result = await showAppSheet<_ServiceDraft>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _ServiceSheet(service: service, rates: rates),

@@ -11,6 +11,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -68,7 +69,7 @@ Future<void> showExpenseSchedulesSheet(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final dates = DateFormat.yMMMd();
-  await showModalBottomSheet<void>(
+  await showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Consumer(
@@ -224,7 +225,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   DateTime? endsOn;
   final topic = l10n.helpTopicScheduledExpenses;
 
-  final submitted = await showModalBottomSheet<bool>(
+  final submitted = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => StatefulBuilder(

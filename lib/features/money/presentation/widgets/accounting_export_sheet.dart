@@ -5,6 +5,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_capability.dart';
 import '../../domain/accounting_format.dart';
@@ -26,7 +27,7 @@ Future<AccountingFormat?> showAccountingExportSheet(
 }) async {
   if (formats.isEmpty) return null;
   final l10n = context.l10n;
-  return showModalBottomSheet<AccountingFormat>(
+  return showAppSheet<AccountingFormat>(
     context: context,
     showDragHandle: true,
     useSafeArea: true,

@@ -12,6 +12,7 @@ import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
@@ -98,7 +99,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     final l10n = context.l10n;
     final prefs = ref.read(spacePrefsProvider).value ?? SpacePrefs.empty;
     final current = prefs.groupIdOf(key);
-    final picked = await showModalBottomSheet<String>(
+    final picked = await showAppSheet<String>(
       context: context,
       showDragHandle: true,
       builder: (sheet) => SafeArea(

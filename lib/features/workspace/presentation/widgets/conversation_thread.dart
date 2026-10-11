@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../directory/domain/group_details.dart';
 import '../../../directory/domain/message_marks.dart';
 import '../../../directory/domain/messenger.dart';
@@ -70,7 +71,7 @@ Future<void> showConversationThread(
     await context.push('/conversation/$conversationId');
     return;
   }
-  return showModalBottomSheet<void>(
+  return showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (_) => ConversationThread(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 
@@ -16,7 +17,7 @@ Future<String?> showReportFieldPicker(
   /// #880 — the owner's text keys, offered as `text.<key>`.
   List<String> textKeys = const [],
 }) =>
-    showModalBottomSheet<String>(
+    showAppSheet<String>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _FieldPickerSheet(textKeys: textKeys),

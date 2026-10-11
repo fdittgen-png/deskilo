@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -31,7 +32,7 @@ Future<void> showBookingRecoverySheet(
   WidgetRef ref,
   BookingIntent intent, {
   String? spaceName,
-}) => showModalBottomSheet<void>(
+}) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (_) => BookingRecoverySheet(intent: intent, spaceName: spaceName),

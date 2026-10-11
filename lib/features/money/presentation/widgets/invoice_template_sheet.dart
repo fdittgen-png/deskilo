@@ -15,6 +15,7 @@ import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -74,7 +75,7 @@ Future<void> showInvoiceTemplateSheet(
   }
   final template = await ref.read(invoicePdfTemplateProvider.future);
   if (!context.mounted) return;
-  await showModalBottomSheet<void>(
+  await showAppSheet<void>(
     context: context,
     isScrollControlled: true,
     builder: (context) => ReportTemplateEditor(initial: template),

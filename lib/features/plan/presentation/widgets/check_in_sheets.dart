@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/seat.dart';
@@ -45,7 +46,7 @@ Future<String?> showMySeatSheet(
       opensWall.day != nowWall.day;
   final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity));
   final opensOn = DateFormat.MMMd().format(opensWall);
-  return showModalBottomSheet<String>(
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(
@@ -139,7 +140,7 @@ Future<String?> showCheckInOtherSheet(
 }) {
   final l10n = context.l10n;
   final reservedBy = l10n.planReservedBy(name);
-  return showModalBottomSheet<String>(
+  return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(
       // Scrolls, never clips: the #622 message tile can push the sheet

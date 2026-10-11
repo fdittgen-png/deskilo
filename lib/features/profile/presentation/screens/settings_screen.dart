@@ -21,6 +21,7 @@ import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';

@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/assign_role.dart';
@@ -261,7 +262,7 @@ Future<void> showRoleAssignSheet(
       if (role.active && !heldIds.contains(role.id)) role,
   ];
 
-  final chosen = await showModalBottomSheet<Object>(
+  final chosen = await showAppSheet<Object>(
     context: context,
     showDragHandle: true,
     isScrollControlled: true,

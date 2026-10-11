@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
@@ -323,7 +324,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     final flags = entry.flags;
     final pinned = flags?.pinned ?? marks.pinned.contains(entry.key);
     final archived = flags?.archived ?? marks.archived.contains(entry.key);
-    final choice = await showModalBottomSheet<String>(
+    final choice = await showAppSheet<String>(
       context: context,
       showDragHandle: true,
       builder: (sheet) => SafeArea(

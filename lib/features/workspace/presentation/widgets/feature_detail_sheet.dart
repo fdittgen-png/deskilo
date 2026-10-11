@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_copy.dart';
@@ -27,7 +28,7 @@ Future<void> showFeatureDetailSheet(
   required Set<WorkspaceFeature> raw,
   required ValueChanged<WorkspaceFeature> onChange,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (sheetContext) => _FeatureDetailSheet(

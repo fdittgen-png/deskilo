@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/labeled_rows.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_calendar_file.dart';
 import '../../domain/reservation.dart';
@@ -181,14 +181,14 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
               ),
               const SizedBox(height: AppSpacing.md),
             ],
-            _row(l10n.reservationCalendarFileEvent,
+            _labeled(l10n.reservationCalendarFileEvent,
                 snapshot.summary),
-            _row(l10n.reservationCalendarFileWhen, when),
+            _labeled(l10n.reservationCalendarFileWhen, when),
             if (snapshot.location.isNotEmpty)
-              _row(l10n.reservationCalendarFileLocation,
+              _labeled(l10n.reservationCalendarFileLocation,
                   snapshot.location),
-            _row(l10n.reservationCalendarFileStatus, status),
-            _row(l10n.reservationCalendarFileName,
+            _labeled(l10n.reservationCalendarFileStatus, status),
+            _labeled(l10n.reservationCalendarFileName,
                 _preview.fileName),
             const SizedBox(height: AppSpacing.md),
             Text(noteText, style: theme.textTheme.bodySmall),
@@ -226,16 +226,6 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
     );
   }
 
-  Widget _row(String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: '$label: ',
-              style: Theme.of(context).textTheme.bodyMedium?.emphasised,
-            ),
-            TextSpan(text: value),
-          ]),
-        ),
-      );
+  Widget _labeled(String label, String value) =>
+      LabeledRow(label: label, value: value);
 }

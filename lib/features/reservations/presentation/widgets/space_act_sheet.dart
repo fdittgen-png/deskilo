@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -42,7 +43,7 @@ Future<void> showSpaceActSheet(
   required Seat seat,
   FloorPlan? plan,
   required String title,
-}) => showModalBottomSheet<void>(
+}) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (context) => _SpaceActSheet(seat: seat, plan: plan, title: title),

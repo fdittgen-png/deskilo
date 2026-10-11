@@ -6,6 +6,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -27,7 +28,7 @@ import 'template_publish_summary.dart';
 Future<void> showSaveTemplateSheet(
     BuildContext context, WidgetRef ref, String workspaceId) async {
   final l10n = context.l10n;
-  final saved = await showModalBottomSheet<bool>(
+  final saved = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _SaveTemplateSheet(workspaceId: workspaceId),

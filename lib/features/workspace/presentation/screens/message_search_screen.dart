@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/debouncer.dart';
+import '../../../../core/ui/labeled_rows.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
@@ -38,7 +40,7 @@ class _MessageSearchScreen extends ConsumerStatefulWidget {
 
 class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
   final _controller = TextEditingController();
-  Timer? _debounce;
+  final _debounce = Debouncer();
 
   /// What the SERVER is asked. Separate from the field's text so every
   /// keystroke does not become a query: the field updates instantly, the
@@ -47,7 +49,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
 
   @override
   void dispose() {
-    _debounce?.cancel();
+    _debounce.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -56,8 +58,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
     // People and groups filter locally and instantly — they are already
     // in memory. Only the message search waits.
     setState(() {});
-    _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 300), () {
+    _debounce.run(() {
       if (mounted) setState(() => _query = value.trim());
     });
   }
@@ -189,20 +190,18 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
     );
   }
 
-  Widget _header(String text) => Padding(
+  Widget _header(String text) => SectionHeading(
+        text,
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.lg,
           AppSpacing.md,
           AppSpacing.lg,
           AppSpacing.xs,
         ),
-        child: Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium
-              ?.copyWith(color: Theme.of(context).colorScheme.primary),
-        ),
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.primary),
       );
 
   /// A PERSON opens the thread with them, creating it if this is the

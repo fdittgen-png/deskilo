@@ -6,6 +6,7 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -125,7 +126,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
     final scopesOn = features.contains(WorkspaceFeature.validationScopes);
     final chainOn = features.contains(WorkspaceFeature.validationChain);
 
-    final result = await showModalBottomSheet<ValidationPolicy>(
+    final result = await showAppSheet<ValidationPolicy>(
       context: context,
       isScrollControlled: true,
       builder: (context) => PolicyEditorSheet(

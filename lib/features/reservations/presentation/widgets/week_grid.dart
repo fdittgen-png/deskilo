@@ -11,6 +11,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -749,7 +750,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     final l10n = context.l10n;
     final sorted = [...items]
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
-    final picked = await showModalBottomSheet<Reservation>(
+    final picked = await showAppSheet<Reservation>(
       context: context,
       builder: (context) => SafeArea(
         child: SingleChildScrollView(

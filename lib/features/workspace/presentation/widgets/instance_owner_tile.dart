@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/instance_responsibles.dart';
@@ -35,7 +36,7 @@ class InstanceOwnerTile extends ConsumerWidget {
       title: Text(l10n.instanceOwnerTitle),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => showModalBottomSheet<void>(
+      onTap: () => showAppSheet<void>(
         context: context,
         isScrollControlled: true,
         showDragHandle: true,

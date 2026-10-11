@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/workspace_field.dart';
@@ -39,7 +40,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     final locale = workspace.defaultLocale.isEmpty
         ? 'en'
         : workspace.defaultLocale;
-    await showModalBottomSheet<void>(
+    await showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,

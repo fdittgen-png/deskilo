@@ -13,6 +13,7 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -73,7 +74,7 @@ Future<void> showSeatPropertiesSheet(
   var orientation = seat.orientation;
   var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
 
-  final saved = await showModalBottomSheet<bool>(
+  final saved = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Padding(

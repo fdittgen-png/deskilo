@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/password_recovery.dart';
@@ -19,7 +20,7 @@ Future<bool> showPasswordRecoverySheet(
   BuildContext context, {
   required String email,
 }) async {
-  final completed = await showModalBottomSheet<bool>(
+  final completed = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _PasswordRecoverySheet(initialEmail: email),

@@ -14,8 +14,10 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/labeled_rows.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/instance_operator.dart';
@@ -139,7 +141,7 @@ class _InstanceAssistantsScreenState
 
   Future<void> _secondFactor() async {
     final ok =
-        await showModalBottomSheet<bool>(
+        await showAppSheet<bool>(
           context: context,
           isScrollControlled: true,
           builder: (_) =>
@@ -256,10 +258,7 @@ class _InstanceAssistantsScreenState
     );
   }
 
-  Widget _heading(String text) => Padding(
-    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-  );
+  Widget _heading(String text) => SectionHeading(text);
 
   Widget _runtime(AppLocalizations l10n, InstanceMcpOverview o) {
     final can = o.secondFactor && !_busy;

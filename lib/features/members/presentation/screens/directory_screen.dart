@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -422,7 +423,7 @@ Future<void> showMemberProfileSheet(
   // Member notes (#456): null hides the affordance (feature off, self).
   VoidCallback? onNotify,
 }) {
-  return showModalBottomSheet<void>(
+  return showAppSheet<void>(
     context: context,
     // Scrollable so a full sheet (role + chip + status + button) never
     // overflows small viewports.

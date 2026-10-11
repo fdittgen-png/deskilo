@@ -9,6 +9,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -96,7 +97,7 @@ Future<void> showInviteSheet(
   String? memberId,
   PersonalInfo? identity,
 }) =>
-    showModalBottomSheet<void>(
+    showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _InviteSheet(
