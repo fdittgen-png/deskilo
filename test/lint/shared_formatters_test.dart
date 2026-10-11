@@ -11,15 +11,10 @@
 // - CSV cells: `csvCell` (lib/core/text/csv.dart);
 // - rates: `percentText` (lib/core/text/number_text.dart);
 // - dates: lib/core/time/date_text.dart, the one place a date component
-//   is padded by hand — the rest is a ratchet that only goes down.
+//   is padded by hand.
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
-
-/// Date-component paddings still outside date_text.dart, with the reason
-/// they wait: the task recorder (booking_observation.dart) has work in
-/// progress on another branch.
-const _datePaddingBudget = 2;
 
 void main() {
   final outsideCore = handWrittenDartFiles('lib')
@@ -54,7 +49,7 @@ void main() {
     );
   });
 
-  test('date components are padded in date_text.dart only (ratchet)', () {
+  test('date components are padded in date_text.dart only', () {
     final padding = RegExp(
       r"\.(day|month|hour|minute|second)\)?\.toString\(\)\.padLeft\(2, '0'\)",
     );
@@ -64,18 +59,11 @@ void main() {
       padding.hasMatch,
     );
     expect(
-      hits.length,
-      lessThanOrEqualTo(_datePaddingBudget),
+      hits,
+      isEmpty,
       reason:
           'use ymd / isoDay / yearMonth / hhmm / twoDigits '
           '(lib/core/time/date_text.dart):\n${hits.join('\n')}',
-    );
-    expect(
-      hits.length,
-      _datePaddingBudget,
-      reason:
-          'fewer paddings than the budget: lower _datePaddingBudget '
-          'to ${hits.length} so the win stays',
     );
   });
 }
