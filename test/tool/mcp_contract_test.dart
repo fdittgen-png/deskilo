@@ -206,31 +206,74 @@ void main() {
             'a contract change needs a migration with renderMcpCatalogueSql');
   });
 
-  test('every dispatchable operation has its branch in mcp_execute_v1', () {
-    // The replayed function is its last FULL definition plus every later
-    // migration that patches it by anchor (pg_get_functiondef), so the
-    // branches are searched in all of them, in order.
-    final all = Directory('supabase/migrations')
+  group('#2392 one handler per operation, found by name', () {
+    List<File> migrations() => Directory('supabase/migrations')
         .listSync()
         .whereType<File>()
+        .where((f) => f.path.endsWith('.sql'))
         .toList()
       ..sort((a, b) => a.path.compareTo(b.path));
-    final lastFull = all.lastIndexWhere(
-      (f) => f.readAsStringSync().contains('function public.mcp_execute_v1('),
-    );
-    final body = [
-      for (final f in all.skip(lastFull))
-        if (f.readAsStringSync().contains('mcp_execute_v1')) f.readAsStringSync(),
-    ].join('\n');
-    // An operation needing native confirmation answers
-    // `requires_confirmation` through the generic path and executes
-    // nothing until #1619 consumes the confirmation.
-    for (final op in mcpOperations.values.where((o) => o.dispatch && !o.nativeConfirmation)) {
-      expect(body, contains("'${op.id}'"), reason: '${op.id} is dispatchable but has no branch');
-      if (op.rpc != null) {
-        expect(body, contains('public.${op.rpc}('), reason: '${op.id} never calls ${op.rpc}');
-      }
+
+    /// The text of [function]'s LAST definition in the migrations.
+    String latest(String function) {
+      final head = RegExp('create or replace function public\\.$function\\(');
+      final file = migrations().lastWhere((f) => head.hasMatch(f.readAsStringSync()));
+      final text = file.readAsStringSync();
+      final start = head.firstMatch(text)!.start;
+      final end = text.indexOf('\$fn\$;', text.indexOf('\$fn\$', start) + 4);
+      return text.substring(start, end);
     }
+
+    test('every dispatchable operation has its mcp_op_ handler, and no '
+        'handler exists without a catalogue entry', () {
+      final defined = {
+        for (final f in migrations())
+          for (final m in RegExp(r'create or replace function public\.mcp_op_(\w+)\(c public\.mcp_call_context, p_args jsonb\)')
+              .allMatches(f.readAsStringSync()))
+            m.group(1)!,
+      };
+      expect(defined, {
+        for (final op in mcpOperations.values)
+          if (op.dispatch) op.id,
+      });
+    });
+
+    test('the facade finds the handler through to_regprocedure and names no '
+        'operation', () {
+      final facade = latest('mcp_execute_v1');
+      expect(facade, contains("to_regprocedure("));
+      expect(facade, contains("'mcp_op_' || p_operation"));
+      for (final op in mcpOperations.keys) {
+        expect(facade, isNot(contains("'$op'")), reason: 'mcp_execute_v1 names $op');
+      }
+      expect('\n'.allMatches(facade).length, lessThan(80));
+    });
+
+    test('the gate order is reviewed: a change to mcp_authorize bumps this '
+        'digest deliberately', () {
+      // The gates, in order: installation, runtime, client, binding,
+      // Google identity, grant, connection, policy/feature/allowed
+      // clients, consent, membership, permission, ceiling. pgTAP 169
+      // pins what each refuses; this pins that the body was reviewed.
+      final gates = [
+        for (final m in RegExp(r"c\.refusal := '(\w+)'").allMatches(latest('mcp_authorize'))) m.group(1),
+      ];
+      expect(gates, [
+        'unknown_operation',
+        'wrong_installation',
+        'runtime_disabled',
+        'no_client',
+        'no_identity',
+        'no_google_identity',
+        'not_eligible',
+        'no_connection',
+        'not_exposed',
+        'no_consent',
+        'not_a_member',
+        'forbidden',
+        'target_ceiling',
+      ]);
+    });
   });
 
   group('#1629 the OpenAPI document names only what exists', () {
