@@ -122,7 +122,10 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
         locale: TextEditingController(text: initial?.labels[locale] ?? ''),
     };
     _choices = TextEditingController(
-      text: [for (final o in initial?.options ?? const []) o.key].join('\n'),
+      text: [
+        for (final o in initial?.options ?? const <WorkspaceFieldOption>[])
+          o.key,
+      ].join('\n'),
     );
     _rule = TextEditingController(
       text: '${initial?.validation['max_length'] ?? initial?.validation['max'] ?? ''}',

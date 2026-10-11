@@ -28,15 +28,32 @@
 // id correlates transport messages; the request UUID is the intent.
 //
 // Only CORS preflight and the protected-resource metadata are anonymous.
+//
+// #2393 — arguments are checked against the contract's input schema before
+// the database (error.fields names each problem); a bearer is verified
+// locally (signature, issuer, expiry) before Auth is asked; the
+// protected-resource metadata names its scopes and resource; a rate limit
+// is also an HTTP 429 with Retry-After; resources (a workspace's
+// capabilities and booking periods, a place's picture) and one prompt sit
+// beside the tools behind the same gates. The transport is stateless (no
+// Mcp-Session-Id, no server-initiated request), which is why a sensitive
+// write asks for a native confirmation in the app instead of elicitation.
 
 import { Server } from "npm:@modelcontextprotocol/sdk@1.30.1/server/index.js";
 import { WebStandardStreamableHTTPServerTransport } from "npm:@modelcontextprotocol/sdk@1.30.1/server/webStandardStreamableHttp.js";
 import {
   CallToolRequestSchema,
+  GetPromptRequestSchema,
+  ListPromptsRequestSchema,
+  ListResourcesRequestSchema,
+  ListResourceTemplatesRequestSchema,
   ListToolsRequestSchema,
+  ReadResourceRequestSchema,
 } from "npm:@modelcontextprotocol/sdk@1.30.1/types.js";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { delegatedClient } from "../_shared/delegated.ts";
+import { verifyLocally } from "../_shared/local_jwt.ts";
+import { validateInput } from "../_shared/mcp_validate.ts";
 import { placeImageBase64 } from "../_shared/place_image.ts";
 import {
   MCP_FORBIDDEN_INPUTS,
@@ -51,6 +68,12 @@ import {
 
 /** #1616 — named initial limits. */
 export const LIMITS = { inputBytes: 64 * 1024, outputBytes: 256 * 1024, deadlineMs: 15_000 };
+
+/** #2393 — the SDK version these handlers and their tests were written against. */
+export const SDK_VERSION = "1.30.1";
+
+/** #2393 — the first protocol version whose clients read structuredContent. */
+const STRUCTURED_SINCE = "2025-06-18";
 
 const METADATA_PATH = "/.well-known/oauth-protected-resource";
 
@@ -98,14 +121,25 @@ function operationOf(tool: string): McpOperationId | null {
   return MCP_OPERATIONS[id]?.handler ? id : null;
 }
 
-/** Refuses what no operation may carry, before the database is asked. */
-export function refusedInput(op: McpOperationId, args: Record<string, unknown>): string | null {
-  const schema = MCP_INPUT_SCHEMAS[op] as { properties: Record<string, unknown> };
-  for (const key of Object.keys(args)) {
-    if (MCP_FORBIDDEN_INPUTS.includes(key)) return `forbidden field ${key}`;
-    if (!(key in schema.properties)) return `unknown field ${key}`;
-  }
-  return null;
+/**
+ * #2393 — every argument against the contract's input schema, before the
+ * database is asked: field name -> problem; empty = valid.
+ */
+export function refusedFields(op: McpOperationId, args: Record<string, unknown>): Record<string, string> {
+  return validateInput(MCP_INPUT_SCHEMAS[op], args, MCP_FORBIDDEN_INPUTS);
+}
+
+/** The envelope the facade would answer for invalid arguments, made here. */
+function invalidArguments(op: McpOperationId, args: Record<string, unknown>, fields: Record<string, string>) {
+  const str = (v: unknown) => (typeof v === "string" ? v : undefined);
+  return {
+    schema_version: 1,
+    ...(str(args.request_id) ? { request_id: str(args.request_id) } : {}),
+    operation: op,
+    ...(str(args.workspace_id) ? { workspace_id: str(args.workspace_id) } : {}),
+    status: "validation_error",
+    error: { code: "invalid_arguments", fields },
+  };
 }
 
 /**
@@ -150,13 +184,18 @@ export function sameProvenance(
     norm(e.request_id) === norm(asked.request_id);
 }
 
-function boundedResult(envelope: Record<string, unknown>, summary: string, isError = false) {
+/**
+ * #2393 — the answer's bytes are counted once: a client that reads
+ * structuredContent (protocol 2025-06-18 or later) gets the summary as its
+ * text; an older one also gets the envelope as text, and that copy counts.
+ */
+function boundedResult(envelope: Record<string, unknown>, summary: string, isError = false, structured = true) {
   const result = {
     isError,
     structuredContent: envelope,
     content: [
       { type: "text", text: summary },
-      { type: "text", text: JSON.stringify(envelope) },
+      ...(structured ? [] : [{ type: "text", text: JSON.stringify(envelope) }]),
     ],
   };
   if (new TextEncoder().encode(JSON.stringify(result)).length > LIMITS.outputBytes) {
@@ -270,7 +309,7 @@ export function summarize(envelope: Record<string, unknown>): string {
   }
 }
 
-function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
+function toolResult(op: McpOperationId, raw: Record<string, unknown>, structured = true) {
   const projected = raw.data === undefined ? raw : { ...raw, data: projectData(op, raw.data) };
   // #2145 — a rate limit's wait is the one answer a refusal must carry.
   const retry = (raw.data as { retry_after?: unknown } | undefined)?.retry_after;
@@ -279,7 +318,7 @@ function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
     : projected;
   const status = String(envelope.status ?? "");
   const isError = ["denied", "validation_error", "not_found", "conflict", "rate_limited"].includes(status);
-  return boundedResult(envelope, summarize(envelope), isError);
+  return boundedResult(envelope, summarize(envelope), isError, structured);
 }
 
 /**
@@ -288,10 +327,10 @@ function toolResult(op: McpOperationId, raw: Record<string, unknown>) {
  * The geometry string never reaches the assistant as text; a picture that
  * would push the answer over its bound is left out rather than the answer.
  */
-async function placeResult(raw: Record<string, unknown>, wantsImage: boolean) {
+async function placeResult(raw: Record<string, unknown>, wantsImage: boolean, structured = true) {
   const data = (raw.data ?? {}) as Record<string, unknown>;
   const { render, ...described } = data;
-  const result = toolResult("get_place", { ...raw, data: described }) as {
+  const result = toolResult("get_place", { ...raw, data: described }, structured) as {
     isError?: boolean;
     content: { type: string; text?: string; data?: string; mimeType?: string }[];
   };
@@ -302,11 +341,157 @@ async function placeResult(raw: Record<string, unknown>, wantsImage: boolean) {
   return new TextEncoder().encode(JSON.stringify(withImage)).length > LIMITS.outputBytes ? result : withImage;
 }
 
-function buildServer(db: SupabaseClient, installation: string, signal: AbortSignal) {
+/** #2393 — the resources a workspace offers, by the operation that reads them. */
+const RESOURCES = [
+  { path: "capabilities", operation: "get_capabilities", name: "What the assistant may do here", mimeType: "application/json" },
+  { path: "booking-periods", operation: "get_capabilities", name: "Booking periods and opening hours", mimeType: "application/json" },
+] as const;
+const RESOURCE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/(capabilities|booking-periods)$/i;
+const PLACE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/place\/(seat|desk|office|level)\/([0-9a-f-]{36})\/image$/i;
+
+/** #2393 — one prompt that chains the tools the instructions describe. */
+export const PROMPTS = {
+  book_usual_seat: {
+    name: "book_usual_seat",
+    title: "Book my usual seat",
+    description: "Book the person's favourite place for a day and period (by default tomorrow morning).",
+    arguments: [
+      { name: "workspace_id", description: "The workspace (from deskilo_list_workspaces); asked when missing.", required: false },
+      { name: "when", description: "The day and period in words, e.g. \"tomorrow morning\".", required: false },
+    ],
+  },
+} as const;
+
+function promptText(args: Record<string, string | undefined>): string {
+  const when = args.when?.trim() || "tomorrow morning";
+  const where = args.workspace_id ? `in workspace ${args.workspace_id}` : "in the workspace the person names (deskilo_list_workspaces if unsure)";
+  return [
+    `Book my usual seat ${where} for ${when}.`,
+    "1. deskilo_get_capabilities: read booking_periods and the time zone, and turn the day into a date there.",
+    "2. deskilo_list_my_favorites: take the first favourite; if there is none, ask me which place.",
+    "3. deskilo_create_reservation with that place's id, the date and the period, and a new request_id.",
+    "4. Tell me the status in plain words: done, waiting for a validator, or to confirm in the DesKilo app.",
+  ].join("\n");
+}
+
+function buildServer(db: SupabaseClient, installation: string, signal: AbortSignal, structured = true) {
   const server = new Server(
     { name: "deskilo", version: "1" },
-    { capabilities: { tools: { listChanged: false } }, instructions: INSTRUCTIONS },
+    {
+      capabilities: {
+        tools: { listChanged: false },
+        resources: { listChanged: false },
+        prompts: { listChanged: false },
+      },
+      instructions: INSTRUCTIONS,
+    },
   );
+
+  /** The caller's own workspaces and operations (mcp_my_operations). */
+  const mine = async () => {
+    const { data, error } = await db.rpc("mcp_my_operations", { p_installation_id: installation })
+      .abortSignal(signal);
+    if (error) throw new Error("the operation list could not be read");
+    return {
+      operations: new Set<string>((data?.operations ?? []) as string[]),
+      workspaces: (data?.workspaces ?? []) as { workspace_id?: string; name?: string; operations?: string[] }[],
+    };
+  };
+
+  /** One completed read through the facade, as tools/call would make it. */
+  const facadeRead = async (op: McpOperationId, workspace: string, args: Record<string, unknown>) => {
+    const { data, error } = await db.rpc("mcp_execute_v1", {
+      p_installation_id: installation,
+      p_workspace_id: workspace,
+      p_operation: op,
+      p_arguments: args,
+      p_request_id: null,
+    }).abortSignal(signal);
+    if (error || !sameProvenance(data, { operation: op, workspace_id: workspace, request_id: null })) {
+      throw new Error("DesKilo could not deliver an answer to this request just now.");
+    }
+    const envelope = data as Record<string, unknown>;
+    if (envelope.status !== "completed") {
+      throw new Error(summarize(envelope));
+    }
+    return (envelope.data ?? {}) as Record<string, unknown>;
+  };
+
+  server.setRequestHandler(ListResourcesRequestSchema, async () => {
+    const { workspaces } = await mine();
+    const resources = [];
+    for (const w of workspaces) {
+      for (const r of RESOURCES) {
+        if (!(w.operations ?? []).includes(r.operation) || typeof w.workspace_id !== "string") continue;
+        resources.push({
+          uri: `deskilo://workspace/${w.workspace_id}/${r.path}`,
+          name: `${r.name}${typeof w.name === "string" ? ` (${w.name})` : ""}`,
+          mimeType: r.mimeType,
+        });
+      }
+    }
+    return { resources };
+  });
+
+  server.setRequestHandler(ListResourceTemplatesRequestSchema, async () => {
+    const { operations } = await mine();
+    return {
+      resourceTemplates: operations.has("get_place")
+        ? [{
+          uriTemplate: "deskilo://workspace/{workspace_id}/place/{kind}/{place_id}/image",
+          name: "A place on its floor plan",
+          description: "The floor plan with the place highlighted; kind is seat, desk, office or level.",
+          mimeType: "image/png",
+        }]
+        : [],
+    };
+  });
+
+  server.setRequestHandler(ReadResourceRequestSchema, async (request: { params: { uri: string } }) => {
+    const uri = request.params.uri;
+    const workspaceResource = RESOURCE_URI.exec(uri);
+    if (workspaceResource) {
+      const [, workspace, path] = workspaceResource;
+      const data = projectData("get_capabilities", await facadeRead("get_capabilities", workspace, {})) as Record<string, unknown>;
+      const body = path === "booking-periods"
+        ? { time_zone: data.time_zone, opening_hours: data.opening_hours, booking_periods: data.booking_periods }
+        : data;
+      return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(body) }] };
+    }
+    const place = PLACE_URI.exec(uri);
+    if (place) {
+      const [, workspace, kind, id] = place;
+      const { render, ...described } = await facadeRead("get_place", workspace, { [`${kind}_id`]: id, include_image: true });
+      const picture = typeof render === "string" ? await placeImageBase64(render).catch(() => null) : null;
+      if (picture === null) {
+        // No picture to draw: the place in words, as the tool answers it.
+        return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(projectData("get_place", described)) }] };
+      }
+      return { contents: [{ uri, mimeType: "image/png", blob: picture }] };
+    }
+    throw new Error("Unknown resource. Use resources/list or the place image template.");
+  });
+
+  server.setRequestHandler(ListPromptsRequestSchema, async () => {
+    const { operations } = await mine();
+    return {
+      prompts: ["get_capabilities", "list_my_favorites", "create_reservation"].every((o) => operations.has(o))
+        ? [PROMPTS.book_usual_seat]
+        : [],
+    };
+  });
+
+  server.setRequestHandler(GetPromptRequestSchema, async (request: { params: { name: string; arguments?: Record<string, string> } }) => {
+    if (request.params.name !== PROMPTS.book_usual_seat.name) throw new Error("Unknown prompt.");
+    const { operations } = await mine();
+    if (!["get_capabilities", "list_my_favorites", "create_reservation"].every((o) => operations.has(o))) {
+      throw new Error("This assistant may not book here: deskilo_get_capabilities says why.");
+    }
+    return {
+      description: PROMPTS.book_usual_seat.description,
+      messages: [{ role: "user", content: { type: "text", text: promptText(request.params.arguments ?? {}) } }],
+    };
+  });
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     const { data, error } = await db.rpc("mcp_my_operations", { p_installation_id: installation })
@@ -330,9 +515,11 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       return { isError: true, content: [{ type: "text", text: "Not done: unknown tool. Use one of the tools tools/list returns." }] };
     }
     const args = (request.params.arguments ?? {}) as Record<string, unknown>;
-    const refused = refusedInput(op, args);
-    if (refused) {
-      return { isError: true, content: [{ type: "text", text: `Not done: ${refused}. Use only the fields this tool's inputSchema lists.` }] };
+    const fields = refusedFields(op, args);
+    if (Object.keys(fields).length > 0) {
+      const envelope = invalidArguments(op, args, fields);
+      const named = Object.entries(fields).map(([k, v]) => `${k}: ${v}`).join(", ");
+      return boundedResult(envelope, `Not done: ${named}. Use only the fields this tool's inputSchema lists, in their formats, then call again.`, true, structured);
     }
     if (op === "list_workspaces") {
       const limit = args.limit ?? 100;
@@ -349,6 +536,8 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       return boundedResult(
         { workspaces: visible, has_more: workspaces.length > limit },
         workspacesSummary(visible, workspaces.length > limit),
+        false,
+        structured,
       );
     }
     const { workspace_id, request_id, ...rest } = args as { workspace_id?: string; request_id?: string };
@@ -364,9 +553,9 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
       return { isError: true, content: [{ type: "text", text: "DesKilo could not deliver an answer to this request just now. Call again with the same request_id and arguments to learn the outcome: it never acts twice." }] };
     }
     if (op === "get_place") {
-      return await placeResult(data as Record<string, unknown>, (args as { include_image?: unknown }).include_image === true);
+      return await placeResult(data as Record<string, unknown>, (args as { include_image?: unknown }).include_image === true, structured);
     }
-    return toolResult(op, data as Record<string, unknown>);
+    return toolResult(op, data as Record<string, unknown>, structured);
   });
 
   return server;
@@ -406,6 +595,30 @@ async function readBody(req: Request, signal: AbortSignal): Promise<string | nul
   }
 }
 
+/**
+ * #2393 — a tools/call the facade answered `rate_limited` is also an HTTP
+ * 429 with Retry-After, for clients that back off at the transport.
+ */
+async function withRateLimit(response: Response): Promise<Response> {
+  if (!(response.headers.get("content-type") ?? "").includes("application/json")) return response;
+  const text = await response.text();
+  const rebuilt = (status: number, extra: Record<string, string> = {}) => {
+    const headers = new Headers(response.headers);
+    for (const [k, v] of Object.entries(extra)) headers.set(k, v);
+    return new Response(text, { status, headers });
+  };
+  try {
+    const content = JSON.parse(text)?.result?.structuredContent;
+    if (content?.status === "rate_limited") {
+      const wait = typeof content.data?.retry_after === "number" ? Math.max(1, Math.ceil(content.data.retry_after)) : 60;
+      return rebuilt(429, { "Retry-After": String(wait) });
+    }
+  } catch {
+    // Not a JSON-RPC result: delivered as it is.
+  }
+  return rebuilt(response.status);
+}
+
 export async function handle(req: Request): Promise<Response> {
   const origin = req.headers.get("Origin");
   const headers = cors(origin);
@@ -414,14 +627,22 @@ export async function handle(req: Request): Promise<Response> {
   }
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers });
   const url = new URL(req.url);
-  if (req.method === "GET" && url.pathname.endsWith(METADATA_PATH)) {
+  if (req.method === "GET" && (url.pathname.endsWith(METADATA_PATH) || url.pathname.includes(`${METADATA_PATH}/`))) {
+    // RFC 9728: the resource, its authorization server, how the bearer is
+    // sent, the scopes a client asks for, and a name to show. Served at
+    // the endpoint's own well-known path and its path-suffixed form; the
+    // host's root well-known path is not routed to a function.
     return jsonResponse({
       resource: resourceUrl(req),
+      resource_name: "DesKilo",
       authorization_servers: [`${env("SUPABASE_URL")}/auth/v1`],
       bearer_methods_supported: ["header"],
+      scopes_supported: ["openid", "email", "profile"],
     }, 200, headers);
   }
-  if (req.method !== "POST") return jsonResponse({ error: "method_not_allowed" }, 405, headers);
+  if (req.method !== "POST") {
+    return jsonResponse({ error: "method_not_allowed" }, 405, { ...headers, Allow: "POST, OPTIONS" });
+  }
   if (!(req.headers.get("content-type") ?? "").includes("application/json")) {
     return jsonResponse({ error: "unsupported_media_type" }, 415, headers);
   }
@@ -437,10 +658,11 @@ export async function handle(req: Request): Promise<Response> {
   const controller = new AbortController();
   const signal = AbortSignal.any([controller.signal, req.signal]);
   const deadline = setTimeout(() => controller.abort(), LIMITS.deadlineMs);
+  const correlation = crypto.randomUUID();
+  let body: unknown;
   try {
     const raw = await readBody(req, signal);
     if (raw === null) return jsonResponse({ error: "payload_too_large" }, 413, headers);
-    let body: unknown;
     try {
       body = JSON.parse(raw);
     } catch {
@@ -458,10 +680,16 @@ export async function handle(req: Request): Promise<Response> {
       },
       auth: { persistSession: false, autoRefreshToken: false },
     });
+    // #2393 — a forged, unsigned, foreign or expired bearer costs no Auth call.
+    if (await verifyLocally(authorization.slice(7), env("SUPABASE_URL"), signal) === "invalid") {
+      return unauthorized(req, headers);
+    }
+    signal.throwIfAborted();
     const { data: user, error: userError } = await db.auth.getUser(authorization.slice(7));
     signal.throwIfAborted();
     if (userError || !user?.user) return unauthorized(req, headers);
-    const server = buildServer(db, installation, signal);
+    const structured = (req.headers.get("mcp-protocol-version") ?? STRUCTURED_SINCE) >= STRUCTURED_SINCE;
+    const server = buildServer(db, installation, signal, structured);
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,
@@ -472,10 +700,13 @@ export async function handle(req: Request): Promise<Response> {
     );
     signal.throwIfAborted();
     for (const [k, v] of Object.entries(headers)) response.headers.set(k, v);
-    return response;
+    return await withRateLimit(response);
   } catch (e) {
     if (signal.aborted) return jsonResponse({ error: "request_timeout" }, 504, headers);
-    console.error("deskilo-mcp failed", e instanceof Error ? e.name : "error");
+    // A correlation, never the arguments: the JSON-RPC id and this request's id.
+    const rpcId = (body as { id?: unknown } | undefined)?.id;
+    console.error("deskilo-mcp failed", e instanceof Error ? e.name : "error",
+      JSON.stringify({ jsonrpc_id: typeof rpcId === "number" || typeof rpcId === "string" ? rpcId : null, request: correlation }));
     return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32603, message: "Internal error" } }, 500, headers);
   } finally {
     clearTimeout(deadline);
