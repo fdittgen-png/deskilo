@@ -2,7 +2,7 @@
 -- risk: transforming
 --
 -- 0406 (#2391) -- MCP authorization and parity, measured by one matrix
--- (supabase/tests/database/169_mcp_authorization_matrix.sql).
+-- (supabase/tests/database/170_mcp_authorization_matrix.sql).
 --
 -- * A member reads her own pending requests under the `own` ceiling:
 --   list_pending_validations and get_validation become `own` operations;
