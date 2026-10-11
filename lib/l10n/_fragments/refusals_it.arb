@@ -7,5 +7,9 @@
   "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalVatRateVersioned": "Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
   }
 }

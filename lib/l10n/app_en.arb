@@ -13654,6 +13654,10 @@
   "@notificationsSystemOffHint": {
     "description": "Fix hint under the system-notifications warning (#436)"
   },
+  "numberSequenceCreditNoteUnsaved": "Not saved yet: until this series is saved, credit notes take invoice numbers.",
+  "@numberSequenceCreditNoteUnsaved": {
+    "description": "#2356 number sequences: numberSequenceCreditNoteUnsaved"
+  },
   "numberSequenceDateNone": "None",
   "@numberSequenceDateNone": {
     "description": "#925 number sequences: numberSequenceDateNone"
@@ -16196,6 +16200,10 @@
   "refusalSession": "Your session has ended. Sign in again, then retry.",
   "@refusalSession": {
     "description": "#1305 Shown when the session expired during an action"
+  },
+  "refusalVatRateVersioned": "This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
   },
   "regionalClock": "Clock",
   "@regionalClock": {

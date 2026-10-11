@@ -19,6 +19,7 @@ class NumberSequence {
     this.reset = NumberReset.yearly,
     this.nextValue = 1,
     this.periodKey = '',
+    this.stored = false,
   });
 
   /// `invoice`, `credit_note`, … — what the series numbers.
@@ -39,6 +40,11 @@ class NumberSequence {
 
   /// The period [nextValue] belongs to ('' for a never-resetting series).
   final String periodKey;
+
+  /// #2356 — whether the workspace has this series as a row, rather than
+  /// the default the screen shows for one never touched. A credit note
+  /// draws from its own series only once that series was saved.
+  final bool stored;
 
   /// The journals every workspace has a series for; the settings screen
   /// lists them side by side so nobody can miss that two share one.
@@ -124,6 +130,7 @@ class NumberSequence {
     },
     nextValue: (row[keyNextValue] as num?)?.toInt() ?? 1,
     periodKey: row[keyPeriodKey] as String? ?? '',
+    stored: true,
   );
 
   static String datePartWire(NumberDatePart p) => switch (p) {
@@ -159,6 +166,7 @@ class NumberSequence {
     int? digits,
     NumberReset? reset,
     int? nextValue,
+    bool? stored,
   }) => NumberSequence(
     journal: journal,
     prefix: prefix ?? this.prefix,
@@ -168,6 +176,7 @@ class NumberSequence {
     reset: reset ?? this.reset,
     nextValue: nextValue ?? this.nextValue,
     periodKey: periodKey,
+    stored: stored ?? this.stored,
   );
 
   @override
@@ -180,10 +189,12 @@ class NumberSequence {
       other.digits == digits &&
       other.reset == reset &&
       other.nextValue == nextValue &&
-      other.periodKey == periodKey;
+      other.periodKey == periodKey &&
+      other.stored == stored;
 
   @override
   int get hashCode => Object.hash(
     journal, prefix, suffix, datePart, digits, reset, nextValue, periodKey,
+    stored,
   );
 }

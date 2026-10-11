@@ -11723,6 +11723,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Allow them under system Settings → Apps → DesKilo → Notifications — the icon badge needs them.';
 
   @override
+  String get numberSequenceCreditNoteUnsaved =>
+      'Not saved yet: until this series is saved, credit notes take invoice numbers.';
+
+  @override
   String get numberSequenceDateNone => 'None';
 
   @override
@@ -14009,6 +14013,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalSession =>
       'Your session has ended. Sign in again, then retry.';
+
+  @override
+  String get refusalVatRateVersioned =>
+      'This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.';
 
   @override
   String get regionalClock => 'Clock';

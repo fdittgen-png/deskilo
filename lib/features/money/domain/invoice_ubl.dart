@@ -252,7 +252,11 @@ String buildInvoiceUbl({
       // negative QUANTITY at a positive price.
       final quantity = lineNet < 0 ? -units : units;
       final unitCents = lineNet.abs() ~/ units;
-      final lineCategory = line.vatPercent > 0 ? 'S' : category;
+      // #2356 — the category the server froze on the line wins (a Z
+      // zero-rated line of a VAT-registered seller); an older line derives it.
+      final lineCategory = line.vatCategory.isNotEmpty
+          ? line.vatCategory
+          : line.vatPercent > 0 ? 'S' : category;
       builder.element('cac:${docName}Line', nest: () {
         cbc('ID', '${i + 1}');
         cbc(creditNote ? 'CreditedQuantity' : 'InvoicedQuantity', '$quantity',

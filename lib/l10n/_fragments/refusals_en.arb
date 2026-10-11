@@ -19,5 +19,9 @@
   "refusalMoneyLocaleLocked": "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalVatRateVersioned": "This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
   }
 }

@@ -293,6 +293,7 @@ class FakeMoneyRepository implements MoneyRepository {
     }
     lastNumberSequence = sequence.copyWith(
       nextValue: raiseNextValueTo ?? current?.nextValue,
+      stored: true,
     );
     numberSequences[sequence.journal] = lastNumberSequence!;
   }

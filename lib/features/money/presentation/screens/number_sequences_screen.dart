@@ -160,6 +160,19 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
+            // #2356 — a credit note draws from its own series only once
+            // the series was saved; until then it takes an invoice number.
+            if (_draft.journal == 'credit_note' && !widget.sequence.stored)
+              Padding(
+                key: const ValueKey('number-sequence-credit-note-unsaved'),
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                child: Text(
+                  l10n?.numberSequenceCreditNoteUnsaved ??
+                      'Not saved yet: until this series is saved, credit '
+                          'notes take invoice numbers.',
+                  style: theme.textTheme.bodySmall,
+                ),
+              ),
             const SizedBox(height: AppSpacing.md),
             Row(
               children: [

@@ -7,5 +7,9 @@
   "refusalMoneyLocaleLocked": "La moneda y el país quedan fijados en cuanto el espacio ha emitido un documento o registrado dinero. No se ha guardado nada.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
+  },
+  "refusalVatRateVersioned": "Este tipo ya figura en facturas emitidas, así que su porcentaje se mantiene. Use «Cambio por ley» para fijar el nuevo valor a partir de una fecha. No se ha guardado nada.",
+  "@refusalVatRateVersioned": {
+    "description": "#2356: refusalVatRateVersioned"
   }
 }
