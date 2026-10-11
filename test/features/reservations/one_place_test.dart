@@ -8,6 +8,7 @@
 // auto-completes stale ones at their own end. The fake mirrors all of
 // it; bookingErrorText maps the substrings.
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
@@ -165,7 +166,7 @@ void main() {
 
   group('bookingErrorText maps the new pinned substrings', () {
     String map(String message) => bookingErrorText(
-        null, PostgrestException(message: message), 'fallback');
+        englishL10n, PostgrestException(message: message), 'fallback');
 
     test('one place', () {
       expect(map('you already have a reservation in that period'),

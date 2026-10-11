@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/template_capabilities.dart';
 import '../../domain/workspace_template.dart';
 import 'template_why_match.dart';
@@ -39,22 +39,21 @@ class TemplateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final c = template.counts;
     final gives = [
-      l10n?.libraryCounts(c.levels, c.desks, c.seats) ??
-          '${c.levels} levels · ${c.desks} desks · ${c.seats} seats',
+      l10n.libraryCounts(c.levels, c.desks, c.seats),
       if (template.carriesConfiguration)
-        l10n?.libraryCarriesSettings ?? 'with its settings',
+        l10n.libraryCarriesSettings,
     ].join(' · ');
     final visibility = switch (template.visibility) {
       TemplateVisibility.builtin =>
-        l10n?.libraryVisibilityBuiltin ?? 'Built in',
-      TemplateVisibility.private => l10n?.libraryVisibilityPrivate ?? 'Only me',
+        l10n.libraryVisibilityBuiltin,
+      TemplateVisibility.private => l10n.libraryVisibilityPrivate,
       TemplateVisibility.shared =>
-        l10n?.libraryVisibilityShared ?? 'People I invite',
+        l10n.libraryVisibilityShared,
       TemplateVisibility.public =>
-        l10n?.libraryVisibilityPublic ?? 'Everyone (the library)',
+        l10n.libraryVisibilityPublic,
       TemplateVisibility.unknown => '',
     };
     final lines = [
@@ -96,8 +95,8 @@ class TemplateCard extends StatelessWidget {
                       IconButton(
                         key: ValueKey('template-shortlist-${template.key}'),
                         tooltip: shortlisted!
-                            ? (l10n?.compareRemove ?? 'Remove from comparison')
-                            : (l10n?.compareAdd ?? 'Add to comparison'),
+                            ? (l10n.compareRemove)
+                            : (l10n.compareAdd),
                         isSelected: shortlisted,
                         icon: const Icon(Icons.add_chart_outlined),
                         selectedIcon: const Icon(Icons.bar_chart),
@@ -115,7 +114,7 @@ class TemplateCard extends StatelessWidget {
               child: TextButton.icon(
                 key: ValueKey('template-details-${template.key}'),
                 icon: const Icon(Icons.list_alt_outlined),
-                label: Text(l10n?.templateDetails ?? 'What it holds'),
+                label: Text(l10n.templateDetails),
                 onPressed: onDetails,
               ),
             ),

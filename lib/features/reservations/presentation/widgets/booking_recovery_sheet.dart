@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -22,17 +24,15 @@ import '../../providers/reservation_providers.dart';
 import 'reference_open.dart';
 
 /// The one sentence for a device that could not keep the intent.
-String bookingRecoveryNotSavedText(AppLocalizations? l10n) =>
-    l10n?.bookingRecoveryNotSaved ??
-    'This device could not save your booking request, so nothing was sent. '
-        'Free some space or try again.';
+String bookingRecoveryNotSavedText(AppLocalizations l10n) =>
+    l10n.bookingRecoveryNotSaved;
 
 Future<void> showBookingRecoverySheet(
   BuildContext context,
   WidgetRef ref,
   BookingIntent intent, {
   String? spaceName,
-}) => showModalBottomSheet<void>(
+}) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   builder: (_) => BookingRecoverySheet(intent: intent, spaceName: spaceName),
@@ -79,7 +79,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
     ref.invalidate(unresolvedBookingIntentsProvider);
   });
 
-  Future<void> _resume(AppLocalizations? l10n) => _run(() async {
+  Future<void> _resume(AppLocalizations l10n) => _run(() async {
     try {
       final booked = await ref.read(bookingRecoveryProvider).resume(_intent);
       if (!mounted) return;
@@ -101,8 +101,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
       // closed by the command. The member keeps the sheet's facts.
       AppSnack.error(
         context,
-        l10n?.reserveBookingFailed ??
-            'Could not reserve — the seat may have just been taken.',
+        l10n.reserveBookingFailed,
         replace: true,
       );
       Navigator.of(context).pop();
@@ -124,19 +123,16 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final fmt = DateFormat.MMMd(locale).add_Hm();
     final window =
-        l10n?.bookingRecoveryWindow(
+        l10n.bookingRecoveryWindow(
           // Evaluated only when l10n is non-null (null-aware call).
           widget.spaceName ?? l10n.bookingRecoverySpaceFallback,
           fmt.format(_intent.startsAt.toLocal()),
           fmt.format(_intent.endsAt.toLocal()),
-        ) ??
-        '${widget.spaceName ?? 'The space you chose'} · '
-            '${fmt.format(_intent.startsAt.toLocal())} – '
-            '${fmt.format(_intent.endsAt.toLocal())}';
+        );
     final (status, severity) = _status(l10n);
     final committed = _reservationId != null;
     final settledNegative =
@@ -149,7 +145,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.bookingRecoveryTitle ?? 'Your booking request',
+              l10n.bookingRecoveryTitle,
               key: const ValueKey('booking-recovery-title'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
@@ -167,13 +163,13 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
               FilledButton(
                 key: const ValueKey('booking-recovery-view'),
                 onPressed: _busy ? null : _view,
-                child: Text(l10n?.bookingRecoveryView ?? 'View the booking'),
+                child: Text(l10n.bookingRecoveryView),
               )
             else ...[
               FilledButton(
                 key: const ValueKey('booking-recovery-check'),
                 onPressed: _busy ? null : _checkOutcome,
-                child: Text(l10n?.bookingRecoveryCheck ?? 'Check outcome'),
+                child: Text(l10n.bookingRecoveryCheck),
               ),
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton(
@@ -184,7 +180,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
                     ? null
                     : () => _resume(l10n),
                 child: Text(
-                  l10n?.bookingRecoveryResume ?? 'Resume the same request',
+                  l10n.bookingRecoveryResume,
                 ),
               ),
             ],
@@ -193,7 +189,7 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
               TextButton(
                 key: const ValueKey('booking-recovery-discard'),
                 onPressed: _busy ? null : _discard,
-                child: Text(l10n?.bookingRecoveryDiscard ?? 'Let it go'),
+                child: Text(l10n.bookingRecoveryDiscard),
               ),
             ],
           ],
@@ -213,47 +209,36 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
           RecoveryUnavailable() => 'unavailable',
         };
 
-  (String, InlineBannerSeverity) _status(AppLocalizations? l10n) {
+  (String, InlineBannerSeverity) _status(AppLocalizations l10n) {
     if (_resumed != null) {
       return (
-        l10n?.bookingRecoveryResumed ??
-            'Resumed: your original request was booked once.',
+        l10n.bookingRecoveryResumed,
         InlineBannerSeverity.info,
       );
     }
     return switch (_check) {
       null => (
-        l10n?.bookingRecoveryUnknown ??
-            'The connection dropped after your request was sent. The booking '
-                'may or may not exist — check before booking again.',
+        l10n.bookingRecoveryUnknown,
         InlineBannerSeverity.error,
       ),
       RecoveryCommitted() => (
-        l10n?.bookingRecoveryCommitted ??
-            'The booking exists — exactly one, from your original request.',
+        l10n.bookingRecoveryCommitted,
         InlineBannerSeverity.info,
       ),
       RecoveryInProgress() => (
-        l10n?.bookingRecoveryInProgress ??
-            'The server is still working on this request. Check again in a '
-                'moment.',
+        l10n.bookingRecoveryInProgress,
         InlineBannerSeverity.info,
       ),
       RecoveryNotCommitted() => (
-        l10n?.bookingRecoveryNotCommitted ??
-            'Nothing was booked for this request. You can resume it as it '
-                'was, or let it go.',
+        l10n.bookingRecoveryNotCommitted,
         InlineBannerSeverity.info,
       ),
       RecoveryUnresolved() => (
-        l10n?.bookingRecoveryUnresolved ??
-            'The server no longer keeps a record of this request, so it '
-                'cannot say. Check your bookings before booking again.',
+        l10n.bookingRecoveryUnresolved,
         InlineBannerSeverity.error,
       ),
       RecoveryUnavailable() => (
-        l10n?.bookingRecoveryUnavailable ??
-            'The server could not be asked. Nothing was changed; try again.',
+        l10n.bookingRecoveryUnavailable,
         InlineBannerSeverity.error,
       ),
     };

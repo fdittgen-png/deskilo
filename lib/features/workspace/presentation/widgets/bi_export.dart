@@ -14,11 +14,11 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/invoice_pdf_template.dart';
 import '../../../money/presentation/invoice_documents.dart';
 import '../../../money/presentation/report_layout_actions.dart';
@@ -41,7 +41,7 @@ Future<void> exportBiPdf(
   required List<BiModule> modules,
   required BiQueryContext query,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final locale = Localizations.localeOf(context).toString();
   final now = ref.read(clockProvider).now();
   final today = WorkspaceTime.dateOf(now);
@@ -128,12 +128,10 @@ Future<void> exportBiPdf(
     final period = query.current(today);
     await warmLetterDocProviders(ref, 'bi_analytics');
     if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return;
-    final title = l10n?.biPdfTitle ?? 'Business analytics';
+    final title = l10n.biPdfTitle;
     final subtitle = biPeriodLabel(period, l10n, locale);
-    final producedOn = l10n?.biPdfProduced(DateFormat.yMMMMd(locale).format(today)) ??
-        'Produced on ${DateFormat.yMMMMd(locale).format(today)}';
-    final estimateNote = l10n?.biPdfEstimateNote ??
-        'Dashed lines and shaded bands are estimates from past periods, not measurements.';
+    final producedOn = l10n.biPdfProduced(DateFormat.yMMMMd(locale).format(today));
+    final estimateNote = l10n.biPdfEstimateNote;
     final data = withOwnerTexts(
       <String, Object?>{'workspace': workspaceName, 'period': subtitle,
         'issued': DateFormat.yMMMMd(locale).format(today)},
@@ -142,7 +140,7 @@ Future<void> exportBiPdf(
     final report = renderLetterDoc(context, ref, docId: 'bi_analytics', data: data);
     final layout = letterLayoutXml(ref, docId: 'bi_analytics', l10n: l10n);
     final mark = developmentMark(context, ref);
-    final pageLabel = l10n?.invoicePdfPage ?? 'Page';
+    final pageLabel = l10n.invoicePdfPage;
     Uint8List? bytes;
     if (layout != null) {
       bytes = await tryLayoutPdf(layoutXml: layout, data: data, what: title,
@@ -165,15 +163,14 @@ Future<void> exportBiPdf(
     );
     if (!context.mounted) return;
     if (path == null) {
-      AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      AppSnack.error(context, l10n.commonSaveFailed);
       return;
     }
-    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
+    AppSnack.success(context, l10n.commonSavedTo(path));
     if (left > 0 && context.mounted) {
       AppSnack.error(
         context,
-        l10n?.biCardsUnavailable('$left') ??
-            '$left analyses could not be included.',
+        l10n.biCardsUnavailable('$left'),
       );
     }
   } on Object catch (e, st) {
@@ -181,7 +178,7 @@ Future<void> exportBiPdf(
     if (context.mounted) {
       AppSnack.error(
         context,
-        l10n?.biPdfFailed ?? 'The PDF could not be made.',
+        l10n.biPdfFailed,
       );
     }
   }

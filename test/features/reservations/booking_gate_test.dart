@@ -9,6 +9,7 @@
 import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
@@ -210,12 +211,12 @@ void main() {
         () {
       const policies = BookingPolicies();
       for (final refusal in BookingRefusal.values) {
-        final text = bookingRefusalText(null, refusal, policies: policies);
+        final text = bookingRefusalText(englishL10n, refusal, policies: policies);
         expect(text, isNotEmpty);
         expect(text, isNot(contains('Something went wrong')));
       }
       expect(
-        bookingRefusalText(null, BookingRefusal.beyondHorizon,
+        bookingRefusalText(englishL10n, BookingRefusal.beyondHorizon,
             policies: const BookingPolicies(advanceHorizonDays: 14)),
         contains('14 days'),
       );
@@ -259,14 +260,14 @@ void main() {
           _ => 'x ${BookingGate.serverSubstringOf(refusal)} y',
         };
         final mapped = bookingErrorText(
-          null,
+          englishL10n,
           PostgrestException(message: message),
           'fallback',
         );
         expect(mapped, isNot('fallback'), reason: refusal.name);
         expect(
           mapped,
-          bookingRefusalText(null, refusal, policies: policies),
+          bookingRefusalText(englishL10n, refusal, policies: policies),
           reason: '${refusal.name}: gate and server sentences agree',
         );
       }
@@ -512,14 +513,14 @@ void main() {
 
     testWidgets('the browser build says why the camera box is missing',
         (tester) async {
-      await tester.pumpWidget(const MaterialApp(
+      await tester.pumpWidget(MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: SpaceScanSheet(
             workspaceId: 'ws-1',
             scanBuilder: null,
-            l10n: null,
+            l10n: englishL10n,
             explainNoCamera: true,
           ),
         ),

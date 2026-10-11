@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/ids/request_id.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -39,7 +41,7 @@ import 'template_group_label.dart';
 /// Returns the number of changes applied, or null when nothing was.
 Future<int?> showTemplateApplySheet(BuildContext context, WidgetRef ref,
     String workspaceId, WorkspaceTemplate template) {
-  return showModalBottomSheet<int>(
+  return showAppSheet<int>(
     context: context,
     isScrollControlled: true,
     builder: (_) =>
@@ -70,27 +72,26 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
   // #1658 — one request per review: a retry after a lost answer replays it.
   final _requestId = newRequestId();
 
-  static String stateLabel(AppLocalizations? l10n, TemplateGroupState state) =>
+  static String stateLabel(AppLocalizations l10n, TemplateGroupState state) =>
       switch (state) {
-        TemplateGroupState.isNew => l10n?.libraryStateNew ?? 'New',
+        TemplateGroupState.isNew => l10n.libraryStateNew,
         TemplateGroupState.change =>
-          l10n?.libraryStateChange ?? 'Changes what you have',
+          l10n.libraryStateChange,
         TemplateGroupState.matching =>
-          l10n?.libraryStateMatching ?? 'Already the same',
+          l10n.libraryStateMatching,
         TemplateGroupState.needsAttention ||
         TemplateGroupState.unknown =>
-          l10n?.libraryStateAttention ?? 'Needs attention',
+          l10n.libraryStateAttention,
       };
 
-  static String? reasonText(AppLocalizations? l10n, String? reason) =>
+  static String? reasonText(AppLocalizations l10n, String? reason) =>
       switch (reason) {
         null => null,
-        'fee_schedule_replaced_whole' => l10n?.libraryReasonFeeSchedule ??
-            'Your fee schedule would be replaced as a whole.',
+        'fee_schedule_replaced_whole' => l10n.libraryReasonFeeSchedule,
         final other => other,
       };
 
-  Future<void> _apply(AppLocalizations? l10n, TemplatePreview preview) async {
+  Future<void> _apply(AppLocalizations l10n, TemplatePreview preview) async {
     final selected = _selected ?? const <String>{};
     final sensitive = [
       for (final g in preview.groups)
@@ -101,8 +102,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
       final ok = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          content: Text(l10n?.libraryConfirmSensitive(sensitive.join(', ')) ??
-              'This changes ${sensitive.join(', ')}. Apply?'),
+          content: Text(l10n.libraryConfirmSensitive(sensitive.join(', '))),
           actions: [
             TextButton(
                 key: const ValueKey('template-apply-sheet-text-button'),
@@ -137,28 +137,24 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
       AppSnack.error(
         context,
         result.status == TemplateApplyStatus.stale
-            ? (AppLocalizations.of(context)?.templateChangedSinceReview ??
-                'This template changed since you reviewed it. Nothing was applied; open it again to review the new version.')
-            : (AppLocalizations.of(context)?.templateApplyConflict ??
-                'This request was already used for something else. Nothing was applied.'),
+            ? (context.l10n.templateChangedSinceReview)
+            : (context.l10n.templateApplyConflict),
       );
       ref.invalidate(workspaceTemplatesProvider);
       Navigator.of(context).pop();
       return;
     }
     // #1656 — prices in another currency are never relabelled; say so.
-    final words = AppLocalizations.of(context);
+    final words = context.l10n;
     final notes = [
       if (result.prices == TemplatePriceOutcome.currencyMismatch)
-        words?.templatePricesOtherCurrency ??
-            'The template\'s prices are in another currency, so the prices here were left unchanged.',
+        words.templatePricesOtherCurrency,
       // #1657 — a policy restricted to named validators is never opened
       // to everyone: it waits for the owner's own choice.
       if (result.validationBlocked.isNotEmpty)
-        words?.templateValidatorsToChoose(result.validationBlocked
+        words.templateValidatorsToChoose(result.validationBlocked
                 .map((t) => eventTypeWord(words, t))
-                .join(', ')) ??
-            'Choose who validates ${result.validationBlocked.join(', ')} in the validation settings; those rules were left as they were.',
+                .join(', ')),
     ];
     if (notes.isNotEmpty) AppSnack.info(context, notes.join('\n'));
     Navigator.of(context).pop(count);
@@ -166,7 +162,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return SafeArea(
       child: FutureBuilder<TemplatePreview>(
@@ -177,8 +173,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
               padding: AppSpacing.gutterAll,
               child: InlineBanner(
                 icon: Icons.error_outline,
-                text: l10n?.libraryPreviewFailed ??
-                    'The changes could not be previewed. Nothing was applied.',
+                text: l10n.libraryPreviewFailed,
               ),
             );
           }
@@ -210,8 +205,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  l10n?.libraryPreviewTitle(widget.template.name) ??
-                      'What « ${widget.template.name} » would change',
+                  l10n.libraryPreviewTitle(widget.template.name),
                   style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -220,8 +214,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                     key: const ValueKey('template-apply-not-supported'),
                     icon: Icons.block,
                     text: [
-                      l10n?.libraryNotSupported ??
-                          'This template cannot be applied here.',
+                      l10n.libraryNotSupported,
                       if (preview.reason != null) preview.reason!,
                     ].join(' '),
                   )
@@ -231,14 +224,11 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                       key: const ValueKey('template-apply-partial'),
                       icon: Icons.info_outline,
                       severity: InlineBannerSeverity.info,
-                      text: l10n?.libraryPartial ??
-                          'Part of this template cannot be applied here and '
-                              'is left out.',
+                      text: l10n.libraryPartial,
                     ),
                   if (!anythingToApply)
                     Text(
-                      l10n?.libraryNothingToApply ??
-                          'Everything this template carries is already here.',
+                      l10n.libraryNothingToApply,
                       key: const ValueKey('template-apply-nothing'),
                     ),
                   for (final g in preview.groups)
@@ -248,7 +238,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                       state: [
                         stateLabel(l10n, g.state),
                         if (g.customized)
-                          l10n?.libraryCustomizedHere ?? 'Customized here',
+                          l10n.libraryCustomizedHere,
                       ].join(' · '),
                       reason: reasonText(l10n, g.reason),
                       enabled: g.selectable && !_busy,
@@ -271,8 +261,7 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                     onPressed: count == 0 || _busy
                         ? null
                         : () => _apply(l10n, preview),
-                    child: Text(l10n?.libraryApplyChanges(count) ??
-                        'Apply $count changes'),
+                    child: Text(l10n.libraryApplyChanges(count)),
                   ),
                 ],
               ],
@@ -351,7 +340,7 @@ class _ProcessChanges extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(
@@ -364,7 +353,7 @@ class _ProcessChanges extends StatelessWidget {
           for (final g in groups) ...[
             Text(
               g.processKey == null
-                  ? (l10n?.libraryProcessTechnical ?? 'Technical')
+                  ? (l10n.libraryProcessTechnical)
                   : processLabel(l10n, g.processKey!),
               key: ValueKey('template-process-$wire-${g.processKey ?? 'technical'}'),
               style: theme.textTheme.labelLarge,
@@ -372,18 +361,15 @@ class _ProcessChanges extends StatelessWidget {
             for (final c in g.changes)
               Text(
                 c.enabled
-                    ? (l10n?.libraryProcessOn(featureName(l10n, c.feature)) ??
-                        '${featureName(l10n, c.feature)} on')
-                    : (l10n?.libraryProcessOff(featureName(l10n, c.feature)) ??
-                        '${featureName(l10n, c.feature)} off'),
+                    ? (l10n.libraryProcessOn(featureName(l10n, c.feature)))
+                    : (l10n.libraryProcessOff(featureName(l10n, c.feature))),
                 key: ValueKey('template-process-feature-${c.feature.name}'),
                 style: theme.textTheme.bodySmall,
               ),
             for (final c in g.changes)
               if (c.enabled && unmet[c.feature] != null)
                 Text(
-                  l10n?.libraryFeatureNeeds(featureName(l10n, c.feature), featureName(l10n, unmet[c.feature]!)) ??
-                      '${featureName(l10n, c.feature)} needs ${featureName(l10n, unmet[c.feature]!)}, which stays off: it will not work yet.',
+                  l10n.libraryFeatureNeeds(featureName(l10n, c.feature), featureName(l10n, unmet[c.feature]!)),
                   key: ValueKey('template-feature-blocked-${c.feature.name}'),
                   style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
                 ),

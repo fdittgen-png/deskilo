@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import 'money_faces_view.dart';
 
 /// #720 — the Documents face: the paperwork that is not an invoice.
@@ -29,28 +29,28 @@ class DocumentsFaceActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final buttons = <Widget>[
       if (onAgreement != null)
         OutlinedButton.icon(
           key: const ValueKey('agreement-report-button'),
           onPressed: onAgreement,
           icon: const Icon(Icons.handshake_outlined),
-          label: fittedLabel(l10n?.moneyMyAgreement ?? 'My conditions'),
+          label: fittedLabel(l10n.moneyMyAgreement),
         ),
       if (onPaymentsReport != null)
         OutlinedButton.icon(
           key: const ValueKey('payments-report-button'),
           onPressed: onPaymentsReport,
           icon: const Icon(Icons.summarize_outlined),
-          label: fittedLabel(l10n?.reportDocPayments ?? 'Payments report'),
+          label: fittedLabel(l10n.reportDocPayments),
         ),
       if (onUsageReport != null)
         OutlinedButton.icon(
           key: const ValueKey('usage-report-button'),
           onPressed: onUsageReport,
           icon: const Icon(Icons.insights_outlined),
-          label: fittedLabel(l10n?.reportDocUsage ?? 'Consumption report'),
+          label: fittedLabel(l10n.reportDocUsage),
         ),
       if (onStatementPdf != null)
         OutlinedButton.icon(
@@ -58,14 +58,14 @@ class DocumentsFaceActions extends StatelessWidget {
           onPressed: onStatementPdf,
           icon: const Icon(Icons.picture_as_pdf_outlined),
           label: fittedLabel(
-              l10n?.moneyStatementPdf ?? "This month's statement (PDF)"),
+              l10n.moneyStatementPdf),
         ),
       if (showDocumentLibrary)
         OutlinedButton.icon(
           key: const ValueKey('document-library-button'),
           onPressed: () => context.push('/documents'),
           icon: const Icon(Icons.folder_open_outlined),
-          label: fittedLabel(l10n?.moneyDocumentLibrary ?? 'Document library'),
+          label: fittedLabel(l10n.moneyDocumentLibrary),
         ),
     ];
     return Column(

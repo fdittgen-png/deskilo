@@ -12,33 +12,20 @@ import '../application/consent_refusal.dart';
 export '../application/consent_refusal.dart';
 
 String mcpConsentRefusalText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   McpConsentRefusal r,
 ) => switch (r) {
   McpConsentRefusal.clientNotApproved =>
-    l10n?.mcpRefusalClientNotApproved ??
-        'This assistant is not approved on this server yet. The operator '
-            'approves each assistant once; ask them, then connect again '
-            'from the assistant.',
+    l10n.mcpRefusalClientNotApproved,
   McpConsentRefusal.notEligible =>
-    l10n?.mcpRefusalNotEligible ??
-        'Your access to assistants is not approved yet. Ask for it in '
-            'DesKilo under Assistants, then connect again from the '
-            'assistant.',
-  McpConsentRefusal.linkGoogle => l10n?.mcpNextLinkGoogle ?? 'Assistants use your Google sign-in. Link Google to this account first; without it the account cannot use assistants.',
+    l10n.mcpRefusalNotEligible,
+  McpConsentRefusal.linkGoogle => l10n.mcpNextLinkGoogle,
   McpConsentRefusal.signInWithGoogle =>
-    l10n?.mcpNextSignInGoogle ??
-        'Assistants use your Google sign-in. Sign in with Google to continue.',
+    l10n.mcpNextSignInGoogle,
   McpConsentRefusal.noIdentity =>
-    l10n?.mcpRefusalNoIdentity ??
-        'Confirm your identity in DesKilo under Assistants first, then '
-            'connect again from the assistant.',
+    l10n.mcpRefusalNoIdentity,
   McpConsentRefusal.offerChanged =>
-    l10n?.mcpRefusalOfferChanged ??
-        'What this workspace offers changed while you were choosing. '
-            'Connect again from the assistant to see the current offer.',
+    l10n.mcpRefusalOfferChanged,
   McpConsentRefusal.requestExpired =>
-    l10n?.mcpRefusalRequestExpired ??
-        'This connection request has expired or was already used. Start '
-            'again from the assistant.',
+    l10n.mcpRefusalRequestExpired,
 };

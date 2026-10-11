@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
@@ -31,7 +31,7 @@ class InvoiceStageStrip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final overview = ref.watch(invoicingOverviewProvider).value;
     final invoices = ref.watch(invoicesProvider).value;
     if (overview == null || invoices == null) return const SizedBox.shrink();
@@ -73,44 +73,41 @@ class InvoiceStageStrip extends ConsumerWidget {
       _StageTile(
         key: const ValueKey('invoice-stage-issue'),
         index: 1,
-        label: l10n?.journeyStageIssue ?? 'To issue',
+        label: l10n.journeyStageIssue,
         count: counts.toIssue,
         onTap: () => onStage(0),
       ),
       _StageTile(
         key: const ValueKey('invoice-stage-collect'),
         index: 2,
-        label: l10n?.journeyStageCollect ?? 'To collect',
+        label: l10n.journeyStageCollect,
         count: counts.toCollect,
         detail: counts.toCollect == 0
             ? null
-            : (l10n?.journeyOutstanding(
-                    currency.formatMinor(counts.toCollectCents)) ??
-                '${currency.formatMinor(counts.toCollectCents)} outstanding'),
+            : (l10n.journeyOutstanding(
+                    currency.formatMinor(counts.toCollectCents))),
         alert: counts.overdue == 0
             ? null
-            : (l10n?.journeyOverdueCount(counts.overdue) ??
-                '${counts.overdue} overdue'),
+            : (l10n.journeyOverdueCount(counts.overdue)),
         onTap: () => onStage(1),
       ),
       _StageTile(
         key: const ValueKey('invoice-stage-confirm'),
         index: 3,
-        label: l10n?.journeyStageConfirm ?? 'To confirm',
+        label: l10n.journeyStageConfirm,
         count: counts.toConfirm,
         onTap: () => onStage(1),
       ),
       _StageTile(
         key: const ValueKey('invoice-stage-closed'),
         index: 4,
-        label: l10n?.journeyStageClosed ?? 'Closed',
+        label: l10n.journeyStageClosed,
         count: counts.closed,
         onTap: () => onStage(2),
       ),
     ];
     return Semantics(
-      label: l10n?.journeyStageStripLabel ??
-          'The invoicing process: issue, collect, confirm, close',
+      label: l10n.journeyStageStripLabel,
       child: Padding(
         key: const ValueKey('invoicing-summary'),
         padding: const EdgeInsets.fromLTRB(

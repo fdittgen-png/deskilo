@@ -67,7 +67,7 @@ PaymentsFacts paymentsFactsOf(WidgetRef ref, String period) => PaymentsFacts(
       statement: ref.read(myStatementProvider(period)).value,
     );
 
-WorkspaceFacts workspaceFactsOf(WidgetRef ref, AppLocalizations? l10n) {
+WorkspaceFacts workspaceFactsOf(WidgetRef ref, AppLocalizations l10n) {
   final levels = ref.read(levelsProvider).value ?? const <Level>[];
   return WorkspaceFacts(
     now: ref.read(clockProvider).now(),

@@ -11,8 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
+import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 
 /// The button that offers the demonstration space.
@@ -31,11 +32,11 @@ class DemoEntryButton extends ConsumerWidget {
         .contains(WorkspaceFeature.demoMode)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return TextButton.icon(
       key: buttonKey,
       icon: const Icon(Icons.play_circle_outline),
-      label: Text(l10n?.demoEntryAction ?? 'Explore the demo workspace'),
+      label: Text(l10n.demoEntryAction),
       onPressed: () => showDemoEntrySheet(context, ref),
     );
   }
@@ -54,8 +55,8 @@ Future<void> offerDemoEntry(BuildContext context, WidgetRef ref) async {
 
 /// Explains the demonstration space, and enters it if the visitor agrees.
 Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
-  final start = await showModalBottomSheet<bool>(
+  final l10n = context.l10n;
+  final start = await showAppSheet<bool>(
     context: context,
     showDragHandle: true,
     isScrollControlled: true,
@@ -72,17 +73,12 @@ Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.demoEntryTitle ?? 'A workspace to look around',
+              l10n.demoEntryTitle,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              l10n?.demoEntryBody ??
-                  'Everything in it is made up: the people, the bookings '
-                      'and the bills are invented for the demonstration. '
-                      'Nothing you do here reaches a real workspace, '
-                      'nothing leaves this device, and no account is '
-                      'needed. Reset puts it back whenever you like.',
+              l10n.demoEntryBody,
             ),
             const SizedBox(height: AppSpacing.xl),
             Align(
@@ -90,7 +86,7 @@ Future<void> showDemoEntrySheet(BuildContext context, WidgetRef ref) async {
               child: FilledButton(
                 key: const Key('demo-entry-start'),
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l10n?.demoEntryStart ?? 'Start exploring'),
+                child: Text(l10n.demoEntryStart),
               ),
             ),
           ],

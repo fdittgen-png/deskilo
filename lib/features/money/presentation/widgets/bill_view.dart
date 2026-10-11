@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -172,14 +173,12 @@ class _InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final invoice = settlement.invoice;
     final isCreditNote = invoice.totalCents < 0;
     final title = isCreditNote
-        ? (l10n?.billCreditNoteCard(invoice.number) ??
-            'Credit note ${invoice.number}')
-        : (l10n?.billInvoiceCard(invoice.number) ??
-            'Invoice ${invoice.number}');
+        ? (l10n.billCreditNoteCard(invoice.number))
+        : (l10n.billInvoiceCard(invoice.number));
     final paid = settlement.match != null && !settlement.match!.pending
         ? settlement.match!.paidCents
         : 0;
@@ -206,7 +205,7 @@ class _InvoiceCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             _BillLine(
-              label: l10n?.billInvoiceTotal ?? 'Invoice total',
+              label: l10n.billInvoiceTotal,
               detail: DateFormat.yMMMd(
                 Localizations.maybeLocaleOf(context)?.toString(),
               ).format(invoice.issuedAt.toLocal()),
@@ -215,11 +214,11 @@ class _InvoiceCard extends StatelessWidget {
             if (paid != 0 &&
                 settlement.lifecycle == InvoiceLifecycle.partiallyPaid) ...[
               _BillLine(
-                label: l10n?.billInvoicePaid ?? 'Paid so far',
+                label: l10n.billInvoicePaid,
                 value: money(paid),
               ),
               _BillLine(
-                label: l10n?.billInvoiceRemaining ?? 'Remaining to pay',
+                label: l10n.billInvoiceRemaining,
                 value: money(settlement.remainingCents),
                 emphasized: true,
               ),
@@ -228,11 +227,8 @@ class _InvoiceCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 settlement.lifecycle == InvoiceLifecycle.refunded
-                    ? (l10n?.billCreditNoteRefunded ??
-                        'The workspace refunded you this amount.')
-                    : (l10n?.billCreditNoteDue ??
-                        'The workspace owes you this amount — '
-                            'nothing to pay on your side.'),
+                    ? (l10n.billCreditNoteRefunded)
+                    : (l10n.billCreditNoteDue),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -261,7 +257,7 @@ class HowToPayCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final paypalUri = instructions.paypalMeUri;
     // (field, icon, brand label) of the #192 copy-to-clipboard methods —
     // one data row per method instead of three pasted tiles.
@@ -270,19 +266,19 @@ class HowToPayCard extends ConsumerWidget {
         'Wero',
         instructions.wero.trim(),
         Icons.smartphone_outlined,
-        l10n?.paymentMethodWero ?? 'Wero',
+        l10n.paymentMethodWero,
       ),
       (
         'Lydia',
         instructions.lydia.trim(),
         Icons.smartphone_outlined,
-        l10n?.paymentMethodLydia ?? 'Lydia',
+        l10n.paymentMethodLydia,
       ),
       (
         'Wise',
         instructions.wise.trim(),
         Icons.alternate_email,
-        l10n?.paymentMethodWise ?? 'Wise',
+        l10n.paymentMethodWise,
       ),
     ];
     return Card(
@@ -294,7 +290,7 @@ class HowToPayCard extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: Text(
-                l10n?.paymentInstructionsTitle ?? 'Payment instructions',
+                l10n.paymentInstructionsTitle,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -305,7 +301,7 @@ class HowToPayCard extends ConsumerWidget {
                   key: const Key('pay-online-button'),
                   onPressed: onPayOnline,
                   icon: const Icon(Icons.account_balance_wallet_outlined),
-                  label: Text(l10n?.payOnlineButton ?? 'Pay online'),
+                  label: Text(l10n.payOnlineButton),
                 ),
               ),
             // #711 — bank details for countries without IBAN, labelled
@@ -317,17 +313,17 @@ class HowToPayCard extends ConsumerWidget {
                 icon: Icons.account_balance_outlined,
                 // IBAN is a language-neutral banking acronym — the key
                 // carries it verbatim in every locale.
-                title: l10n?.paymentInstructionsIbanTitle ?? 'IBAN',
+                title: l10n.paymentInstructionsIbanTitle,
                 value: instructions.iban.trim(),
                 copiedMessage:
-                    l10n?.paymentInstructionsIbanCopied ?? 'IBAN copied.',
+                    l10n.paymentInstructionsIbanCopied,
               ),
             if (paypalUri != null)
               ListTile(
                 key: const Key('howToPayPaypal'),
                 leading: const Icon(Icons.open_in_new),
                 // Brand name — reuses the #154 method label key.
-                title: Text(l10n?.paymentMethodPaypal ?? 'PayPal'),
+                title: Text(l10n.paymentMethodPaypal),
                 subtitle: Text(paypalUri.toString()),
                 // Launch failures are traced inside the shared link seam.
                 onTap: () => ref.read(linkLauncherProvider)(paypalUri),
@@ -342,16 +338,14 @@ class HowToPayCard extends ConsumerWidget {
                   icon: icon,
                   title: title,
                   value: value,
-                  copiedMessage: l10n?.paymentInstructionsValueCopied ??
-                      'Copied to clipboard.',
+                  copiedMessage: l10n.paymentInstructionsValueCopied,
                 ),
             if (instructions.reference.trim().isNotEmpty)
               ListTile(
                 key: const Key('howToPayReference'),
                 leading: const Icon(Icons.tag_outlined),
                 title: Text(
-                  l10n?.paymentInstructionsReferenceLabel ??
-                      'Payment reference hint',
+                  l10n.paymentInstructionsReferenceLabel,
                 ),
                 subtitle: Text(instructions.reference.trim()),
               ),
@@ -375,7 +369,7 @@ class _EntitlementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context).textTheme;
     final locale = Localizations.maybeLocaleOf(context)?.toString();
@@ -390,11 +384,9 @@ class _EntitlementCard extends StatelessWidget {
         : (used / cap).clamp(0.0, 1.0);
     final barColor = overCap ? scheme.error : scheme.primary;
 
-    final usedLabel = l10n?.entitlementDaysUsed(days(used), days(cap)) ??
-        '${days(used)} of ${days(cap)} days used';
+    final usedLabel = l10n.entitlementDaysUsed(days(used), days(cap));
     final leftLabel =
-        l10n?.entitlementDaysLeft(days(statement.remainingHalfDays)) ??
-            '${days(statement.remainingHalfDays)} days left';
+        l10n.entitlementDaysLeft(days(statement.remainingHalfDays));
 
     // Policy-aware footer, precomputed to a plain string (keeps the
     // no-hardcoded-strings lint happy — no interpolation inside Text()).
@@ -403,19 +395,14 @@ class _EntitlementCard extends StatelessWidget {
       case OveragePolicy.payg:
         // The band overage rate is per half-day; a whole extra day is two.
         final perDay = money(statement.overageRateCents * 2);
-        footer = l10n?.entitlementPaygRate(perDay) ??
-            'Extra days beyond your plan bill at $perDay each.';
+        footer = l10n.entitlementPaygRate(perDay);
       case OveragePolicy.blocked:
         if (statement.isCapReached) {
-          footer = l10n?.entitlementBlockedFull ??
-              "You've used all your days this month. Ask an admin for "
-                  'more or request extra half-days.';
+          footer = l10n.entitlementBlockedFull;
         }
       case OveragePolicy.package:
         if (statement.isCapReached) {
-          footer = l10n?.entitlementPackageFull ??
-              "You've used all your days this month. Buy a package to "
-                  'keep booking.';
+          footer = l10n.entitlementPackageFull;
         }
     }
 
@@ -427,7 +414,7 @@ class _EntitlementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.entitlementTitle ?? 'This month',
+              l10n.entitlementTitle,
               style: theme.labelLarge?.copyWith(
                 color: scheme.onSurfaceVariant,
               ),
@@ -491,7 +478,7 @@ class _SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -501,25 +488,21 @@ class _SubscriptionCard extends StatelessWidget {
             _BillLine(
               label: subscriptionLabel(reportStringsOf(l10n), statement.subscriptionPct,
                   association: association,
-                  month: monthNameOf(l10n?.localeName, statement.period)),
+                  month: monthNameOf(l10n.localeName, statement.period)),
               value: '−${money(statement.feeCents)}',
               emphasized: true,
             ),
             _BillLine(
-              label: l10n?.billEntitlement(
+              label: l10n.billEntitlement(
                     statement.usedHalfDays,
                     statement.includedHalfDays,
                     statement.openDays,
-                  ) ??
-                  '${statement.usedHalfDays} of '
-                      '${statement.includedHalfDays} half-days billed '
-                      '(${statement.openDays} days open)',
+                  ),
               value: '',
             ),
             if (statement.extraHalfDays > 0)
               _BillLine(
-                label: l10n?.billOverage(statement.extraHalfDays) ??
-                    '${statement.extraHalfDays} extra half-days',
+                label: l10n.billOverage(statement.extraHalfDays),
                 value: '−${money(statement.overageCents)}',
               ),
             // #170 — priced seat accessories per booked half-day; the
@@ -527,26 +510,25 @@ class _SubscriptionCard extends StatelessWidget {
             // accessorySupplements feature on.
             if (statement.accessorySupplementCents > 0)
               _BillLine(
-                label: l10n?.billAccessorySupplements ??
-                    'Accessory supplements',
+                label: l10n.billAccessorySupplements,
                 value: '−${money(statement.accessorySupplementCents)}',
               ),
             // 0050 — whole-level reservations priced per half-day.
             if (statement.levelSupplementCents > 0)
               _BillLine(
-                label: l10n?.levelSupplementLabel ?? 'Level reservations',
+                label: l10n.levelSupplementLabel,
                 value: '−${money(statement.levelSupplementCents)}',
               ),
             // 0057 — whole-office reservations priced per half-day.
             if (statement.officeSupplementCents > 0)
               _BillLine(
-                label: l10n?.officeSupplementLabel ?? 'Office reservations',
+                label: l10n.officeSupplementLabel,
                 value: '−${money(statement.officeSupplementCents)}',
               ),
             // 0059 — whole-desk reservations priced per half-day.
             if (statement.deskSupplementCents > 0)
               _BillLine(
-                label: l10n?.deskSupplementLabel ?? 'Desk reservations',
+                label: l10n.deskSupplementLabel,
                 value: '−${money(statement.deskSupplementCents)}',
               ),
           ],
@@ -564,7 +546,7 @@ class _ServicesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -572,20 +554,20 @@ class _ServicesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.billServices ?? 'Consumed services',
+              l10n.billServices,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: 4),
             for (final entry in sections.serviceEntries)
               _BillLine(
                 label: entry.description.isEmpty
-                    ? (l10n?.ledgerCategoryService ?? 'Service')
+                    ? (l10n.ledgerCategoryService)
                     : entry.description,
                 value: '−${money(entry.amountCents)}',
               ),
             const Divider(),
             _BillLine(
-              label: l10n?.billServicesTotal ?? 'Services total',
+              label: l10n.billServicesTotal,
               value: '−${money(sections.servicesTotalCents)}',
               emphasized: true,
             ),
@@ -604,7 +586,7 @@ class _PackagesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       key: const Key('packages-card'),
       child: Padding(
@@ -613,14 +595,14 @@ class _PackagesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.billPackages ?? 'Day packages',
+              l10n.billPackages,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: 4),
             for (final entry in entries)
               _BillLine(
                 label: entry.description.isEmpty
-                    ? (l10n?.billPackages ?? 'Day packages')
+                    ? (l10n.billPackages)
                     : entry.description,
                 value: '−${money(entry.amountCents)}',
               ),
@@ -637,24 +619,24 @@ class _OpenPositionsCard extends StatelessWidget {
   final List<OpenPosition> positions;
   final String Function(int cents) money;
 
-  String _label(AppLocalizations? l10n, WorkspaceEvent event) {
+  String _label(AppLocalizations l10n, WorkspaceEvent event) {
     switch (event.type) {
       case EventType.serviceCharge:
         final name = event.payload['name'] as String? ?? '';
         final quantity = (event.payload['quantity'] as num?)?.toInt() ?? 0;
         return '$name ×$quantity';
       case EventType.payment:
-        return l10n?.eventTypePayment ?? 'Payment';
+        return l10n.eventTypePayment;
       case EventType.expense:
-        return l10n?.eventTypeExpense ?? 'Expense';
+        return l10n.eventTypeExpense;
       case EventType.expenseRepartition:
-        return l10n?.eventTypeExpenseRepartition ?? 'Shared expense';
+        return l10n.eventTypeExpenseRepartition;
       case EventType.expenseSchedule:
       case EventType.usageCorrection:
       case EventType.usageRecordDelete:
       case EventType.paymentTermsChange:
       case EventType.quota:
-        return l10n?.eventTypeQuota ?? 'Extra half-days';
+        return l10n.eventTypeQuota;
       case EventType.invoiceWriteoff:
       case EventType.invoiceReminder:
       case EventType.priceNegotiation:
@@ -673,13 +655,13 @@ class _OpenPositionsCard extends StatelessWidget {
       case EventType.adjustment:
       // #1088 — never an open position; the fallback keeps it exhaustive.
       case EventType.unknown:
-        return l10n?.eventTypeAdjustment ?? 'Adjustment';
+        return l10n.eventTypeAdjustment;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final pendingColor = Colors.amber.shade800;
     return Card(
@@ -698,7 +680,7 @@ class _OpenPositionsCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    l10n?.billOpenPositions ?? 'Open positions',
+                    l10n.billOpenPositions,
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall
@@ -707,7 +689,7 @@ class _OpenPositionsCard extends StatelessWidget {
                 ),
                 Chip(
                   label: Text(
-                    l10n?.billPendingBadge ?? 'pending validation',
+                    l10n.billPendingBadge,
                     style: Theme.of(context)
                         .textTheme
                         .labelSmall
@@ -748,19 +730,19 @@ class _CreditsCard extends StatelessWidget {
   final List<LedgerEntry> entries;
   final String Function(int cents) money;
 
-  String _label(AppLocalizations? l10n, LedgerEntry entry) {
+  String _label(AppLocalizations l10n, LedgerEntry entry) {
     return switch (entry.category) {
       LedgerCategory.expense =>
-        l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
+        l10n.ledgerCategoryExpense,
       LedgerCategory.adjustment =>
-        l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
-      _ => l10n?.ledgerCategoryPayment ?? 'Payment',
+        l10n.ledgerCategoryAdjustment,
+      _ => l10n.ledgerCategoryPayment,
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -768,7 +750,7 @@ class _CreditsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.billPaymentsCredits ?? 'Payments & credits',
+              l10n.billPaymentsCredits,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(height: 4),
@@ -803,7 +785,7 @@ class _BalanceFooter extends StatelessWidget {
   final bool prominent;
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     // Sign convention stays the statement's: negative = the member
     // owes. An open credit note reads as a positive balance — money the
@@ -818,12 +800,12 @@ class _BalanceFooter extends StatelessWidget {
         .titleMedium
         ?.copyWith(fontWeight: FontWeight.bold, color: color);
     final content = <Widget>[
-            Text(l10n?.billBalance ?? 'Balance', style: prominent
+            Text(l10n.billBalance, style: prominent
                 ? Theme.of(context).textTheme.titleMedium : style),
             Chip(
               label: Text(
-                isSettled ? (l10n?.billSettled ?? 'Settled')
-                    : (l10n?.billOutstanding ?? 'Outstanding'),
+                isSettled ? (l10n.billSettled)
+                    : (l10n.billOutstanding),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color),
               ),
               visualDensity: VisualDensity.compact,

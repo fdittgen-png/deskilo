@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// Destructive reset confirmation (0039): the confirm button unlocks only
 /// once the owner types [phrase] exactly (case-insensitive). Owns its text
@@ -26,23 +27,19 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final matches = _controller.text.trim().toLowerCase() ==
         widget.phrase.toLowerCase();
     return AlertDialog(
       title:
-          Text(l10n?.workspaceResetDialogTitle ?? 'Reset this workspace?'),
+          Text(l10n.workspaceResetDialogTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n?.workspaceResetWarning ??
-                'This permanently deletes every reservation, all money and '
-                    'ledger entries, the activity feed, and the entire floor '
-                    'plan. Settings and members are kept. This cannot be '
-                    'undone.',
+            l10n.workspaceResetWarning,
             style: theme.textTheme.bodyMedium
                 ?.copyWith(color: theme.colorScheme.error),
           ),
@@ -53,8 +50,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
             autofocus: true,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              labelText: l10n?.workspaceResetConfirmLabel(widget.phrase) ??
-                  'Type "${widget.phrase}" to confirm',
+              labelText: l10n.workspaceResetConfirmLabel(widget.phrase),
             ),
           ),
         ],
@@ -63,7 +59,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
         TextButton(
           key: const ValueKey('reset-confirm-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const Key('workspaceResetConfirm'),
@@ -73,7 +69,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
           ),
           onPressed:
               matches ? () => Navigator.of(context).pop(true) : null,
-          child: Text(l10n?.workspaceResetConfirmButton ?? 'Reset workspace'),
+          child: Text(l10n.workspaceResetConfirmButton),
         ),
       ],
     );

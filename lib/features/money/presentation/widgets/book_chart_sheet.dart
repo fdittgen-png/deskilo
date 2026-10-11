@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -20,7 +21,7 @@ String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
   BookRole.revenue => l10n?.bookRoleRevenue ?? 'Revenue',
   BookRole.bank => l10n?.bookRoleBank ?? 'Bank',
   BookRole.vatOutput => l10n?.bookRoleVatOutput ?? 'Output VAT',
-  BookRole.vatInput => vatWords(l10n).bookRoleVatInput,
+  BookRole.vatInput => vatWords(l10n ?? englishL10n).bookRoleVatInput,
   BookRole.expenses => l10n?.bookRoleExpenses ?? 'Expenses',
 };
 

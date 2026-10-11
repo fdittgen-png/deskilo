@@ -13,7 +13,7 @@
 // configuration switch the feature on for this import.
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_names.dart';
 
@@ -28,8 +28,7 @@ Future<bool?> askConfigurationTransfer(
 }) {
   // English only where no localization is installed (a bare test app).
   final l10n =
-      AppLocalizations.of(context) ??
-      lookupAppLocalizations(const Locale('en'));
+      context.l10n;
   final feature = featureName(l10n, WorkspaceFeature.configurationTransfer);
   return showDialog<bool>(
     context: context,

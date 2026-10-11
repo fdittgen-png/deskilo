@@ -5,10 +5,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'visibility_labels.dart';
@@ -25,14 +25,14 @@ class _VisibilityPreviewState extends ConsumerState<VisibilityPreview> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final view = ref.watch(visibilityPreviewProvider(_as));
     return Padding(
       padding: AppSpacing.gutterAll,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n?.visibilityPreviewTitle ?? 'How others see me',
+          Text(l10n.visibilityPreviewTitle,
               style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
@@ -50,8 +50,7 @@ class _VisibilityPreviewState extends ConsumerState<VisibilityPreview> {
           const SizedBox(height: AppSpacing.sm),
           switch (view) {
             AsyncData(:final value) => _Preview(view: value),
-            AsyncError() => Text(l10n?.visibilityPreviewFailed ??
-                'The preview could not be loaded.'),
+            AsyncError() => Text(l10n.visibilityPreviewFailed),
             _ => const LoadingView(),
           },
         ],
@@ -67,7 +66,7 @@ class _Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final muted = Theme.of(context).colorScheme.onSurfaceVariant;
     Widget line(String key, IconData icon, String text) => ListTile(
           key: ValueKey(key),
@@ -88,7 +87,7 @@ class _Preview extends StatelessWidget {
             Padding(
               padding: AppSpacing.gutterAll,
               child: Text(
-                l10n?.visibilityPreviewNothing ?? 'They see nothing of you.',
+                l10n.visibilityPreviewNothing,
                 key: const ValueKey('visibility-preview-nothing'),
                 style: TextStyle(color: muted),
               ),
@@ -106,14 +105,13 @@ class _Preview extends StatelessWidget {
           if (view.presenceShared)
             line('visibility-preview-presence', Icons.location_on_outlined,
                 view.presence ??
-                    (l10n?.visibilityPresence ?? 'In the space today')),
+                    (l10n.visibilityPresence)),
           line(
             'visibility-preview-reach',
             view.canMessage ? Icons.forum_outlined : Icons.speaker_notes_off_outlined,
             view.canMessage
-                ? (l10n?.visibilityPreviewCanWrite ?? 'Can start a conversation with you')
-                : (l10n?.visibilityPreviewCannotWrite ??
-                    'Cannot start a conversation with you'),
+                ? (l10n.visibilityPreviewCanWrite)
+                : (l10n.visibilityPreviewCannotWrite),
           ),
         ],
       ),

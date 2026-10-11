@@ -18,87 +18,77 @@ import '../ui_labels.g.dart';
 export '../../guide/guide_destination.dart' show guideStepRoute;
 
 /// The words for [step].
-String guideStepText(AppLocalizations? l10n, GuideStep step) {
+String guideStepText(AppLocalizations l10n, GuideStep step) {
   final own = step.text?.trim();
   if (own != null && own.isNotEmpty) return own;
   switch (step.kind) {
     case GuideStepKind.instruction:
-      return l10n?.guideHostInstruction ?? 'Read this, then mark it done.';
+      return l10n.guideHostInstruction;
     case GuideStepKind.manual:
       final category = step.manualCategory;
       if (category != null) {
         final name = protectedLabel(l10n, category);
-        return l10n?.guideHostManualProtected(name) ??
-            'This part happens on a protected screen ($name). Do it '
-                'yourself, then mark it done.';
+        return l10n.guideHostManualProtected(name);
       }
       final page = step.destination;
       if (page != null) {
         final form = guideDestinationLabel(l10n, page);
-        return l10n?.guideHostManualAt(form) ??
-            'Complete this step on “$form”, then mark it done.';
+        return l10n.guideHostManualAt(form);
       }
-      return l10n?.guideHostDestinationMissing ??
-          'Choose a page in the guide editor.';
+      return l10n.guideHostDestinationMissing;
     case GuideStepKind.perform:
       return _performText(l10n, step);
   }
 }
 
-String _performText(AppLocalizations? l10n, GuideStep step) {
-  final label = step.label == null || l10n == null
+String _performText(AppLocalizations l10n, GuideStep step) {
+  final label = step.label == null
       ? null
       : uiLabel(l10n, step.label!);
   switch (step.action) {
     case RecorderActions.uiTap:
       return label != null
-          ? (l10n?.guideHostTapLabel(label) ?? 'Tap “$label”.')
-          : (l10n?.guideHostTapControl ?? 'Tap the highlighted control.');
+          ? (l10n.guideHostTapLabel(label))
+          : (l10n.guideHostTapControl);
     case RecorderActions.uiCommitField:
       return label != null
-          ? (l10n?.guideHostFillLabel(label) ??
-                'Fill in “$label”, then leave the field.')
-          : (l10n?.guideHostFillField ??
-                'Fill in the highlighted field, then leave it.');
+          ? (l10n.guideHostFillLabel(label))
+          : (l10n.guideHostFillField);
     case RecorderActions.uiOpenScreen:
       final page = step.destination ?? guidePageForTarget(step.target);
       final name =
           label ?? (page == null ? null : guideDestinationLabel(l10n, page));
       return name != null
-          ? (l10n?.guideHostOpenLabel(name) ?? 'Open “$name”.')
-          : (l10n?.guideHostDestinationMissing ??
-                'Choose a page in the guide editor.');
+          ? (l10n.guideHostOpenLabel(name))
+          : (l10n.guideHostDestinationMissing);
     case RecorderActions.changeBookingField:
       final target = step.target;
       if (target != null) {
         final name = targetLabel(l10n, target, action: step.action);
-        return l10n?.guideHostTapLabel(name) ?? 'Tap “$name”.';
+        return l10n.guideHostTapLabel(name);
       }
-      return l10n?.guideHostFillField ??
-          'Fill in the highlighted field, then leave it.';
+      return l10n.guideHostFillField;
     case RecorderActions.uiCommand:
-      return l10n?.guideHostCommand ?? 'Confirm, then wait for the result.';
+      return l10n.guideHostCommand;
   }
   final action =
       _seamAction(l10n, step.action) ??
       actionLabel(l10n, step.action) ??
       step.action ??
       '';
-  return l10n?.guideHostDoAction(action) ?? 'Next: $action.';
+  return l10n.guideHostDoAction(action);
 }
 
 /// The imperative words of the booking seam's actions.
-String? _seamAction(AppLocalizations? l10n, String? action) => switch (action) {
-  RecorderActions.openReserve => l10n?.guideActionOpenReserve ?? 'open Reserve',
-  RecorderActions.selectDate => l10n?.guideActionSelectDate ?? 'choose the day',
+String? _seamAction(AppLocalizations l10n, String? action) => switch (action) {
+  RecorderActions.openReserve => l10n.guideActionOpenReserve,
+  RecorderActions.selectDate => l10n.guideActionSelectDate,
   RecorderActions.selectPeriod =>
-    l10n?.guideActionSelectPeriod ?? 'choose the period',
+    l10n.guideActionSelectPeriod,
   RecorderActions.selectResource =>
-    l10n?.guideActionSelectResource ??
-        'choose a place on the plan or in the list',
+    l10n.guideActionSelectResource,
   RecorderActions.confirmBooking =>
-    l10n?.guideActionConfirmBooking ??
-        'confirm the booking and wait for the answer',
+    l10n.guideActionConfirmBooking,
   _ => null,
 };
 
@@ -129,16 +119,16 @@ String? guideStepAnchor(GuideStep step) {
 }
 
 /// Reader-facing page names, including the personal tab within Me.
-String guideDestinationLabel(AppLocalizations? l10n, String route) {
+String guideDestinationLabel(AppLocalizations l10n, String route) {
   final uri = Uri.parse(route);
   if (uri.path == '/me') {
     final tab = switch (uri.queryParameters['tab']) {
-      'discover' => l10n?.meTabDiscover ?? 'Discover',
-      'messages' => l10n?.meTabMessages ?? 'Messages',
-      'me' => l10n?.meGroupProfile ?? 'My profile',
-      _ => l10n?.meTabHome ?? 'Home',
+      'discover' => l10n.meTabDiscover,
+      'messages' => l10n.meTabMessages,
+      'me' => l10n.meGroupProfile,
+      _ => l10n.meTabHome,
     };
-    return '${l10n?.meTabMe ?? 'Me'} · $tab';
+    return '${l10n.meTabMe} · $tab';
   }
   final key = const {
     '/reserve': 'shellReserveButton',
@@ -154,7 +144,7 @@ String guideDestinationLabel(AppLocalizations? l10n, String route) {
     '/settings': 'settingsTitle',
     '/workspace-settings': 'workspaceSettingsTitle',
   }[uri.path];
-  final label = l10n == null || key == null ? null : uiLabel(l10n, key);
+  final label = key == null ? null : uiLabel(l10n, key);
   if (label != null) return label;
   return uri.path
       .split('/')

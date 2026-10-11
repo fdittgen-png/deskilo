@@ -8,11 +8,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/ids/request_id.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/desk.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_editing.dart';
@@ -270,7 +270,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
 
   Future<void> _commitMarquee(FloorPlan plan, GridRect rect) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final repo = ref.read(floorPlanRepositoryProvider);
@@ -284,9 +284,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     if (_tool == EditorTool.office) {
       final name = await showTextPrompt(
         context,
-        title: l10n?.editorNewOffice ?? 'New office',
-        label: l10n?.editorOfficeNameLabel ?? 'Office name',
-        initial: '${l10n?.editorOfficeNameDefault ?? 'Office'} '
+        title: l10n.editorNewOffice,
+        label: l10n.editorOfficeNameLabel,
+        initial: '${l10n.editorOfficeNameDefault} '
             '${plan.offices.length + 1}',
       );
       if (name == null || name.isEmpty) return;
@@ -303,7 +303,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       await repo.createDesk(
         workspaceId: workspace.id,
         officeId: office.id,
-        name: '${l10n?.editorDeskNameDefault ?? 'Desk'} '
+        name: '${l10n.editorDeskNameDefault} '
             '${plan.desksOf(office.id).length + 1}',
         rect: rect,
       );
@@ -312,14 +312,14 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Future<void> _placeSeat(FloorPlan plan, ({int x, int y}) cell) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final desk = plan.deskAtCell(cell.x, cell.y);
     if (workspace == null) return;
     if (desk == null) {
       AppSnack.error(
         context,
-        l10n?.editorSeatNoDesk ?? 'Seats can only be placed on a desk.',
+        l10n.editorSeatNoDesk,
         replace: true,
       );
       return;
@@ -350,7 +350,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     await ref.read(floorPlanRepositoryProvider).createSeat(
           workspaceId: workspace.id,
           deskId: desk.id,
-          name: '${l10n?.editorSeatNameDefault ?? 'Seat'} '
+          name: '${l10n.editorSeatNameDefault} '
               '${plan.seatsOf(desk.id).length + 1}',
           x: anchor.x,
           y: anchor.y,
@@ -421,11 +421,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Future<void> _showOfficeSheet(Office office) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final props = await showSpacePropertiesSheet(
       context,
-      title: l10n?.editorOfficeProperties ?? 'Office',
-      nameLabel: l10n?.editorOfficeNameLabel ?? 'Office name',
+      title: l10n.editorOfficeProperties,
+      nameLabel: l10n.editorOfficeNameLabel,
       name: office.name,
       bookable: office.bookableAsWhole,
       priceCents: office.priceCents,
@@ -443,11 +443,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Future<void> _showDeskSheet(Desk desk) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final props = await showSpacePropertiesSheet(
       context,
-      title: l10n?.editorDeskProperties ?? 'Desk',
-      nameLabel: l10n?.editorDeskNameLabel ?? 'Desk name',
+      title: l10n.editorDeskProperties,
+      nameLabel: l10n.editorDeskNameLabel,
       name: desk.name,
       bookable: desk.bookableAsWhole,
       priceCents: desk.priceCents,
@@ -558,7 +558,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final planAsync = ref.watch(floorPlanProvider(widget.levelId));
     // Cache the freshest plan and render it through a reload — ref.invalidate
     // drops the provider's value on every edit, so its own value is null then.
@@ -591,7 +591,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
               return PopupMenuButton<String>(
                 key: const ValueKey('level-canvas-editor-background-image'),
                 icon: const Icon(Icons.image_outlined),
-                tooltip: l10n?.editorBackgroundImage ?? 'Background image',
+                tooltip: l10n.editorBackgroundImage,
                 onSelected: (v) {
                   if (v == 'set') {
                     unawaited(_pickBackground(context));
@@ -604,18 +604,15 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                     value: 'set',
                     child: Text(
                       hasBg
-                          ? (l10n?.editorBackgroundReplace ??
-                              'Replace background image')
-                          : (l10n?.editorBackgroundSet ??
-                              'Set background image'),
+                          ? (l10n.editorBackgroundReplace)
+                          : (l10n.editorBackgroundSet),
                     ),
                   ),
                   if (hasBg)
                     PopupMenuItem(
                       value: 'remove',
                       child: Text(
-                        l10n?.editorBackgroundRemove ??
-                            'Remove background image',
+                        l10n.editorBackgroundRemove,
                       ),
                     ),
                 ],
@@ -667,7 +664,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                       ? LinearProgressIndicator(
                           key: const ValueKey('plan-media-progress'),
                           semanticsLabel:
-                              l10n?.editorMediaSaving ?? 'Saving the image…')
+                              l10n.editorMediaSaving)
                       : const SizedBox.shrink(),
                 ),
               ),
@@ -675,8 +672,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           : switch (planAsync) {
               AsyncError() => Center(
                   child: Text(
-                    l10n?.workspaceGenericError ??
-                        'Something went wrong. Please try again.',
+                    l10n.workspaceGenericError,
                   ),
                 ),
               _ => const LoadingView(),
@@ -689,7 +685,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   /// what says "show the tools instead".
   ({ElementKind kind, String name})? _selectedElement(FloorPlan plan) {
     final id = _selectedId;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return switch (_selectedKind) {
       ElementKind.office => plan.offices
           .where((o) => o.id == id)
@@ -707,7 +703,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       ElementKind.image => plan.images.any((i) => i.id == id)
           ? (
               kind: ElementKind.image,
-              name: l10n?.editorToolImage ?? 'Image',
+              name: l10n.editorToolImage,
             )
           : null,
       null => null,
@@ -741,7 +737,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   /// puts the copy on the first free cell of the same desk, so the
   /// second seat costs one tap and the sixth costs one tap.
   Future<void> _duplicateSeat(FloorPlan plan) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final seat = plan.seats.where((s) => s.id == _selectedId).firstOrNull;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (seat == null || workspace == null) return;
@@ -775,7 +771,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     if (free == null) {
       AppSnack.info(
         context,
-        l10n?.editorDeskFull ?? 'No room left on this desk.',
+        l10n.editorDeskFull,
         replace: true,
       );
       return;
@@ -783,7 +779,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     await ref.read(floorPlanRepositoryProvider).createSeat(
           workspaceId: workspace.id,
           deskId: desk.id,
-          name: '${l10n?.editorSeatNameDefault ?? 'Seat'} '
+          name: '${l10n.editorSeatNameDefault} '
               '${siblings.length + 1}',
           x: free.x,
           y: free.y,
@@ -832,7 +828,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   /// The first thing to do on a floor nobody has drawn yet.
   Widget _emptyFloor() {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Center(
       child: Padding(
         padding: AppSpacing.xlAll,
@@ -852,15 +848,13 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    l10n?.editorEmptyFloorTitle ?? 'This floor is empty',
+                    l10n.editorEmptyFloorTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    l10n?.editorEmptyFloorBody ??
-                        'Everything sits inside a room: draw one, put '
-                            'desks in it, then seats on the desks.',
+                    l10n.editorEmptyFloorBody,
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
@@ -871,7 +865,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                         setState(() => _tool = EditorTool.office),
                     icon: const Icon(Icons.add),
                     label: Text(
-                      l10n?.editorEmptyFloorAction ?? 'Draw the first room',
+                      l10n.editorEmptyFloorAction,
                     ),
                   ),
                 ],
@@ -884,7 +878,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Widget _buildCanvas(FloorPlan plan) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     const size = Size(
       GridCanvas.widthCells * GridCanvas.cellSize,
       GridCanvas.heightCells * GridCanvas.cellSize,
@@ -913,7 +907,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
         // no name, and a coordinate nobody navigating by voice can aim
         // at. It is a canvas, so it says so, and the objects on it are
         // reached through the objects panel instead.
-        label: l10n?.editorCanvasSemantics ?? 'Floor plan drawing area',
+        label: l10n.editorCanvasSemantics,
         child: GestureDetector(
         excludeFromSemantics: true,
         // `down` so onPanStart reports the touch-down cell, not the position
@@ -1022,22 +1016,22 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   }
 
   Future<void> _confirmErase(Future<void> Function() action) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.commonDelete ?? 'Delete'),
+        title: Text(l10n.commonDelete),
         content: Text(deleteElementConfirmText(ref, l10n)),
         actions: [
           TextButton(
             key: const ValueKey('level-canvas-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('level-canvas-delete'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.commonDelete ?? 'Delete'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),

@@ -7,12 +7,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/site.dart';
@@ -34,8 +34,8 @@ class ProfilesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final labels = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final labels = l10n;
     final workspacesAsync = ref.watch(myWorkspacesProvider);
     final workspaces = workspacesAsync.value ?? const <Workspace>[];
     // #1650 — a list that could not be fetched is not an empty list: the
@@ -48,14 +48,14 @@ class ProfilesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.profilesTitle ?? 'Profiles'),
+        title: Text(l10n.profilesTitle),
         actions: [
           const ApplicationRequestsEntry(), const AccountPortalEntry(),
-          IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n?.accountActivityTitle ?? 'My consumption and payments',
+          IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n.accountActivityTitle,
             onPressed: () => context.push('/account-activity'),
             icon: const Icon(Icons.receipt_long_outlined)),
           // #763 — one dot for the whole switcher, in the app bar.
-          HelpDot(l10n?.helpTopicSettings ?? 'Settings & profile',
+          HelpDot(l10n.helpTopicSettings,
             anchor: HelpAnchor.profileProfiles,
           ),
         ],
@@ -66,7 +66,7 @@ class ProfilesScreen extends ConsumerWidget {
               key: const ValueKey('profiles-add'),
               onPressed: () => context.push('/onboarding'),
               icon: const Icon(Icons.add),
-              label: Text(l10n?.profilesAdd ?? 'Add a profile'),
+              label: Text(l10n.profilesAdd),
             ),
       body: ListView(
         // #1181 — "Add a profile" floats over the list; the last row has
@@ -79,9 +79,8 @@ class ProfilesScreen extends ConsumerWidget {
             InlineBanner(
               key: const ValueKey('profiles-unavailable'),
               icon: Icons.cloud_off_outlined,
-              text: l10n?.profilesUnavailable ??
-                  'Your workspaces could not be loaded.',
-              actionLabel: l10n?.commonRetry ?? 'Try again',
+              text: l10n.profilesUnavailable,
+              actionLabel: l10n.commonRetry,
               // `refresh`, not `invalidate`: invalidate defers the rebuild
               // to the next frame, and with the router listening to this
               // keepAlive provider a deferred rebuild out of an error left
@@ -130,8 +129,8 @@ class ProfilesScreen extends ConsumerWidget {
                     // state (spec §11), so the tooltip names it too.
                     leading: Tooltip(
                       message: workspace.isDevelopment
-                          ? (l10n?.environmentDev ?? 'Development')
-                          : (l10n?.environmentProd ?? 'Production'),
+                          ? (l10n.environmentDev)
+                          : (l10n.environmentProd),
                       child: CircleAvatar(
                         key: ValueKey('profile-env-${workspace.id}'),
                         backgroundColor: workspace.isDevelopment
@@ -175,10 +174,8 @@ class ProfilesScreen extends ConsumerWidget {
                         IconButton(
                           key: ValueKey('profile-default-${workspace.id}'),
                           tooltip: workspace.id == defaultId
-                              ? (l10n?.profilesDefault ??
-                                  'Default at startup')
-                              : (l10n?.profilesMakeDefault ??
-                                  'Use as default at startup'),
+                              ? (l10n.profilesDefault)
+                              : (l10n.profilesMakeDefault),
                           icon: Icon(
                             workspace.id == defaultId
                                 ? Icons.star
@@ -196,7 +193,7 @@ class ProfilesScreen extends ConsumerWidget {
                             Icons.check_circle,
                             color: Theme.of(context).colorScheme.primary,
                             semanticLabel:
-                                l10n?.profilesActive ?? 'Active profile',
+                                l10n.profilesActive,
                           ),
                       ],
                     ),
@@ -219,7 +216,7 @@ class ProfilesScreen extends ConsumerWidget {
               key: const ValueKey('profiles-platform-section'),
               shape: const Border(), collapsedShape: const Border(),
               leading: const Icon(Icons.admin_panel_settings_outlined),
-              title: Text(l10n?.profilesAllWorkspaces ?? 'Every workspace (platform owner)'),
+              title: Text(l10n.profilesAllWorkspaces),
               children: [
             // #987 — a twin pair is ONE space with two sides, and the
             // list above has rendered it as one row since that issue.
@@ -239,7 +236,7 @@ class ProfilesScreen extends ConsumerWidget {
                     title: Text(group.first.name),
                     subtitle: Text(
                       '${_environmentsLabel(l10n, group)}'
-                      ' · ${l10n?.profilesNotMember(group.first.memberCount) ?? 'Not a member · ${group.first.memberCount} members'}',
+                      ' · ${l10n.profilesNotMember(group.first.memberCount)}',
                     ),
                     // The sheet is about who to write to, and a pair has
                     // one set of owners — the dev side is the one that
@@ -266,7 +263,7 @@ class _HomeSiteLine extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final sites = ref.watch(sitesOfProvider(member.workspaceId)).value ??
         const <Site>[];
     if (sites.length < 2) return const SizedBox.shrink();
@@ -278,8 +275,8 @@ class _HomeSiteLine extends ConsumerWidget {
     return ActionChip(
       key: ValueKey('profile-site-${member.workspaceId}'),
       avatar: const Icon(Icons.location_city_outlined, size: 16),
-      label: Text(l10n?.profilesSiteLine(home.name) ?? 'Site: ${home.name}'),
-      tooltip: l10n?.profilesSitePick ?? 'Change your site',
+      label: Text(l10n.profilesSiteLine(home.name)),
+      tooltip: l10n.profilesSitePick,
       visualDensity: VisualDensity.compact,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       onPressed: () => pickOwnHomeSite(context, ref, member),
@@ -333,11 +330,11 @@ List<List<WorkspaceOverview>> groupedOverviews(List<WorkspaceOverview> all) {
 /// "Development" alone, or "Development + Production" for a pair — the
 /// two sides named rather than two cards.
 String _environmentsLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   List<WorkspaceOverview> group,
 ) {
-  final dev = l10n?.environmentDev ?? 'Development';
-  final prod = l10n?.environmentProd ?? 'Production';
+  final dev = l10n.environmentDev;
+  final prod = l10n.environmentProd;
   if (group.length < 2) {
     return group.first.isDevelopment ? dev : prod;
   }

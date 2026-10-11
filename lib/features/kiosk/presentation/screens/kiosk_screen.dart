@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/realtime/realtime_providers.dart';
@@ -22,7 +23,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/level.dart';
@@ -143,15 +143,13 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     String? seatId,
     String? levelId,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     if (_closedToday()) {
       AppSnack.error(
         context,
-        l10n?.kioskClosedToday ??
-            'The workspace is closed today — check-in and reservations '
-                'are not possible.',
+        l10n.kioskClosedToday,
         replace: true,
       );
       return;
@@ -232,16 +230,14 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       var message = switch (e) {
         PostgrestException(:final message)
             when message.contains(_KioskBadgeError.serverSubstring) =>
-          l10n?.kioskBadgeRejected ?? 'Badge not recognized.',
+          l10n.kioskBadgeRejected,
         PostgrestException(:final message)
             when message.contains('not checked in') =>
-          l10n?.kioskNotCheckedIn ??
-              'No active check-in found — the plan may have just updated.',
+          l10n.kioskNotCheckedIn,
         _ => bookingErrorText(
             l10n,
             e,
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
       };
       // #622 — an occupancy refusal NAMES the holder and points to the
@@ -256,7 +252,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         );
         if (holder != null) {
           message = '$message\n'
-              '${l10n?.kioskBlockedContactHint(holder) ?? 'Held by $holder — you can message them from the app on your phone.'}';
+              '${l10n.kioskBlockedContactHint(holder)}';
         }
       }
       AppSnack.error(context, message, replace: true);
@@ -269,11 +265,11 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // the next member finds a clean wall.
     final actionLabel = request.action == KioskAction.reserve &&
             effective == KioskAction.checkIn
-        ? (l10n?.kioskReserveAndCheckIn ?? 'Reserve & check in')
+        ? (l10n.kioskReserveAndCheckIn)
         : switch (request.action) {
-            KioskAction.checkIn => l10n?.kioskCheckIn ?? 'Check in',
-            KioskAction.reserve => l10n?.kioskReserve ?? 'Reserve',
-            KioskAction.checkOut => l10n?.kioskCheckOut ?? 'Check out',
+            KioskAction.checkIn => l10n.kioskCheckIn,
+            KioskAction.reserve => l10n.kioskReserve,
+            KioskAction.checkOut => l10n.kioskCheckOut,
           };
     // #616 — the member's own photo on the receipt: the visual
     // wrong-badge check, behind its own kiosk-family toggle.
@@ -322,7 +318,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #430: no shell on kiosk devices — arm realtime here.
     ref.watch(realtimeInvalidatorProvider);
     // #446: same out-of-shell rule for the ambient working day — the
@@ -351,7 +347,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         body: EmptyState(
           icon: Icons.map_outlined,
           title:
-              l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
+              l10n.planNoLevels,
         ),
       );
     }
@@ -434,13 +430,13 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                         onPressed: () => _onLevelTap(level),
                         icon: const Icon(Icons.layers_outlined),
                         label: Text(
-                          l10n?.kioskLevelButton ?? 'This level',
+                          l10n.kioskLevelButton,
                         ),
                       ),
                     ),
                   Flexible(
                     child: Text(
-                      l10n?.kioskTapHint ?? 'Tap a seat to check in',
+                      l10n.kioskTapHint,
                       style: Theme.of(context).textTheme.bodySmall,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.end,
@@ -460,9 +456,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 child: InlineBanner(
                   key: const ValueKey('kiosk-closed-banner'),
                   icon: Icons.event_busy_outlined,
-                  text: l10n?.kioskClosedToday ??
-                      'The workspace is closed today — check-in and '
-                          'reservations are not possible.',
+                  text: l10n.kioskClosedToday,
                 ),
               ),
             Expanded(
@@ -549,8 +543,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 ),
                 AsyncError() => Center(
                     child: Text(
-                      l10n?.workspaceGenericError ??
-                          'Something went wrong. Please try again.',
+                      l10n.workspaceGenericError,
                     ),
                   ),
                 _ => const LoadingView(),

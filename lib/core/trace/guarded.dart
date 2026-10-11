@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/widgets.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../ui/app_snack.dart';
 import '../validation/pending_validation.dart';
 import 'refusal_text.dart';
@@ -33,7 +33,7 @@ GuardedCommandWatcher? guardedCommandWatcher;
 /// if (!await runGuarded(context,
 ///     domain: 'money',
 ///     message: 'fee band save failed',
-///     errorText: l10n?.workspaceGenericError ?? '…',
+///     errorText: context.l10n.workspaceGenericError,
 ///     action: () => repo.replaceFeeBands(id, bands))) return;
 /// ```
 Future<bool> runGuarded(
@@ -65,8 +65,7 @@ Future<bool> runGuarded(
     if (context.mounted) {
       AppSnack.info(
         context,
-        AppLocalizations.of(context)?.validationSentForApproval ??
-            'Sent for validation — it applies once approved.',
+        context.l10n.validationSentForApproval,
       );
     }
     return false;
@@ -89,13 +88,11 @@ Future<bool> runGuarded(
       // #1305 — and a refusal is not a fault either: "you may not", "your
       // session ended", "someone already decided" each say what to do,
       // where the caller's generic text would only say "try again".
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       AppSnack.error(
         context,
         isTransientNetworkFailure(e)
-            ? (l10n?.errorOffline ??
-                'No connection — nothing was sent. Try again when you '
-                    'are back online.')
+            ? (l10n.errorOffline)
             : knownRefusalText(l10n, e) ?? errorText,
       );
     }

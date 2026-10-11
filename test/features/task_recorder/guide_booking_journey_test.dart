@@ -11,6 +11,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
@@ -168,7 +169,7 @@ void main() {
     expect(
       c
           .read(guideSessionProvider.notifier)
-          .start(builtinGuide(null, BuiltinGuide.bookAPlace)),
+          .start(builtinGuide(englishL10n, BuiltinGuide.bookAPlace)),
       isTrue,
     );
     await tester.pumpAndSettle();

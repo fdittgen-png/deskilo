@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'instance_done_step.dart';
 
 /// #1829 — the new instance's owner: the e-mail the creator will sign up
@@ -21,17 +21,14 @@ class InstanceOwnerClaimField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           WizardText(
-            l10n?.instanceOwnerClaimIntro ??
-                'Who owns this instance? Enter the e-mail you will sign up '
-                    'with on it. After you confirm that address, claim the '
-                    'ownership from Settings → Instance owner.',
+            l10n.instanceOwnerClaimIntro,
           ),
           TextField(
             key: const ValueKey('instance-owner-email'),
@@ -40,7 +37,7 @@ class InstanceOwnerClaimField extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             autofillHints: const [AutofillHints.email],
             decoration: InputDecoration(
-              labelText: l10n?.instanceOwnerClaimLabel ?? 'Owner e-mail',
+              labelText: l10n.instanceOwnerClaimLabel,
               border: const OutlineInputBorder(),
             ),
           ),

@@ -6,6 +6,7 @@
 // language's value as the hint an empty field falls back to.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -66,7 +67,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
   void _remove(String key) => widget.onChanged({...widget.texts}..remove(key));
 
   Future<void> _add() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     _keyController?.dispose();
     final controller = _keyController = TextEditingController();
     String? error;
@@ -74,17 +75,16 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setDialogState) => AlertDialog(
-          title: Text(l10n?.reportTextsAdd ?? 'Add a text'),
+          title: Text(l10n.reportTextsAdd),
           content: TextField(
             key: const ValueKey('report-texts-key-field'),
             controller: controller,
             autofocus: true,
             autocorrect: false,
             decoration: InputDecoration(
-              labelText: l10n?.reportTextsKey ?? 'Key',
+              labelText: l10n.reportTextsKey,
               helperText:
-                  l10n?.reportTextsKeyHint ??
-                  'Letters, digits and underscores, e.g. greeting',
+                  l10n.reportTextsKeyHint,
               prefixText: 'text.',
               errorText: error,
             ),
@@ -99,7 +99,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
             TextButton(
               key: const ValueKey('report-texts-panel-cancel'),
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(l10n?.commonCancel ?? 'Cancel'),
+              child: Text(l10n.commonCancel),
             ),
             FilledButton(
               key: const ValueKey('report-texts-key-confirm'),
@@ -109,7 +109,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
                 l10n,
                 (e) => setDialogState(() => error = e),
               ),
-              child: Text(l10n?.reportTextsAdd ?? 'Add a text'),
+              child: Text(l10n.reportTextsAdd),
             ),
           ],
         ),
@@ -122,19 +122,18 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
   void _submit(
     BuildContext dialogContext,
     String raw,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     void Function(String?) setError,
   ) {
     final key = raw.trim().toLowerCase();
     if (!ReportTextsPanel.keyPattern.hasMatch(key)) {
       setError(
-        l10n?.reportTextsKeyInvalid ??
-            'Use letters, digits and underscores only, starting with a letter.',
+        l10n.reportTextsKeyInvalid,
       );
       return;
     }
     if (_keys.contains(key)) {
-      setError(l10n?.reportTextsKeyExists ?? 'This key already exists.');
+      setError(l10n.reportTextsKeyExists);
       return;
     }
     Navigator.of(dialogContext).pop(key);
@@ -142,7 +141,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final count = '${_keys.length}';
     // Collapsed by default: the designer column stays as tall as it was
@@ -153,7 +152,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
         key: const ValueKey('report-texts-expand'),
         leading: const Icon(Icons.notes_outlined),
         title: Text(
-          l10n?.reportTextsTitle ?? 'Texts',
+          l10n.reportTextsTitle,
           style: theme.textTheme.titleMedium,
         ),
         subtitle: Text(count, style: theme.textTheme.bodySmall),
@@ -166,15 +165,11 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
               key: const ValueKey('report-texts-add'),
               onPressed: _add,
               icon: const Icon(Icons.add),
-              label: Text(l10n?.reportTextsAdd ?? 'Add a text'),
+              label: Text(l10n.reportTextsAdd),
             ),
           ),
           Text(
-            l10n?.reportTextsHint ??
-                'Your own wording, placed in any band or layout as '
-                    '{{ text.key }}. Each language may carry its own '
-                    'value; an empty one falls back to the default '
-                    'language.',
+            l10n.reportTextsHint,
             style: theme.textTheme.bodySmall,
           ),
           for (final key in _keys) ...[
@@ -197,14 +192,14 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
                           widget.language.isEmpty ||
                               (widget.inherited[key] ?? '').isEmpty
                           ? null
-                          : l10n?.reportTextsInherited ?? 'Default language',
+                          : l10n.reportTextsInherited,
                     ),
                     onChanged: (v) => _set(key, v),
                   ),
                 ),
                 IconButton(
                   key: ValueKey('report-text-remove-$key'),
-                  tooltip: l10n?.reportTextsRemove ?? 'Remove text',
+                  tooltip: l10n.reportTextsRemove,
                   icon: const Icon(Icons.delete_outline),
                   onPressed: () => _remove(key),
                 ),

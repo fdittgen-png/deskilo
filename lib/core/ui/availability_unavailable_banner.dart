@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import 'inline_banner.dart';
 
 /// #1848 — a window read that failed with nothing to show is NOT an empty
@@ -14,16 +14,14 @@ class AvailabilityUnavailableBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: InlineBanner(
         key: const ValueKey('reserve-availability-unavailable'),
         icon: Icons.cloud_off_outlined,
-        text: l10n?.reserveAvailabilityUnavailable ??
-            'Availability could not be loaded completely, so no seat is '
-                'shown as free. Retry to see it.',
-        actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
+        text: l10n.reserveAvailabilityUnavailable,
+        actionLabel: l10n.reserveStaleRetry,
         onAction: onRetry,
       ),
     );

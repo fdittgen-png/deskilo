@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_note.dart';
 
@@ -26,7 +25,7 @@ class ReservationStatusNote extends StatelessWidget {
     final note = reservationNoteOf(reservation, now);
     if (note == null) return const SizedBox.shrink();
     // English from the catalogue itself, not a second copy inline.
-    final words = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final words = context.l10n;
     final text = switch (note) {
       ReservationNote.recordedAfterEnd => words.reservationNoteRecordedAfterEnd,
       ReservationNote.checkedOut => words.reservationNoteCheckedOutAt(

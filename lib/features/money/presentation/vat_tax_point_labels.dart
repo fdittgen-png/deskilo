@@ -4,17 +4,16 @@
 // legal-identity choice, and the one sentence the declaration and the
 // VAT report say before their figures, so a reader knows WHICH dates a
 // period holds.
-import 'package:flutter/widgets.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../domain/vat_tax_point.dart';
 
 /// [l10n], or English when there is no localization in scope.
-AppLocalizations vatWords(AppLocalizations? l10n) =>
-    l10n ?? lookupAppLocalizations(const Locale('en'));
+AppLocalizations vatWords(AppLocalizations l10n) =>
+    l10n;
 
 /// The rule, as an owner reads it.
-String _vatTaxPointRuleLabel(AppLocalizations? l10n, VatTaxPointRule rule) {
+String _vatTaxPointRuleLabel(AppLocalizations l10n, VatTaxPointRule rule) {
   final words = vatWords(l10n);
   return switch (rule) {
     VatTaxPointRule.invoiceDate => words.vatExigibilityInvoice,
@@ -26,7 +25,7 @@ String _vatTaxPointRuleLabel(AppLocalizations? l10n, VatTaxPointRule rule) {
 
 /// One option of [policy], the legal default marked as such.
 String vatTaxPointOptionLabel(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   VatTaxPointPolicy policy,
   VatTaxPointOption option,
 ) {
@@ -36,7 +35,7 @@ String vatTaxPointOptionLabel(
 }
 
 /// The sentence naming the basis a period is declared on.
-String vatTaxPointBasisNote(AppLocalizations? l10n, VatTaxPointBasis basis) {
+String vatTaxPointBasisNote(AppLocalizations l10n, VatTaxPointBasis basis) {
   final words = vatWords(l10n);
   return switch (basis.rule) {
     VatTaxPointRule.receipt => words.vatDeclarationBasisPayment,

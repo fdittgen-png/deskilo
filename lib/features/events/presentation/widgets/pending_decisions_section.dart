@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart';
@@ -44,7 +44,7 @@ class PendingDecisionsSection extends ConsumerWidget {
 
   Future<void> _decide(BuildContext context, WidgetRef ref,
       WorkspaceEvent event, bool accept) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final attempt = recorded
         ? recordTaskAttempt(ref, RecorderActions.decideEvent,
             payload: {'decision': accept ? 'accept' : 'decline'})
@@ -54,14 +54,13 @@ class PendingDecisionsSection extends ConsumerWidget {
         ? RecorderOutcomes.eventDecided
         : RecorderOutcomes.eventNotConfirmed);
     if (reason == null || !context.mounted) return;
-    final base = l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.';
+    final base = l10n.workspaceGenericError;
     AppSnack.error(context, reason.isEmpty ? base : '$base\n$reason');
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(targetNamesProvider).value ?? const {};
     final decisions = ref.watch(eventDecisionsProvider).value ??
@@ -84,8 +83,7 @@ class PendingDecisionsSection extends ConsumerWidget {
           AppSpacing.xs,
         ),
         child: Text(
-          l10n?.eventsPendingHeader ??
-              'Waiting for your confirmation',
+          l10n.eventsPendingHeader,
           style: Theme.of(context).textTheme.titleSmall,
         ),
       ),
@@ -153,7 +151,7 @@ class PendingDecisionsSection extends ConsumerWidget {
                 // decision deserves a labeled button.
                 IconButton(
                   key: ValueKey('pending-decisions-section-event-reject-${event.id}'),
-                  tooltip: l10n?.eventReject ?? 'Decline',
+                  tooltip: l10n.eventReject,
                   color: Theme.of(context).colorScheme.error,
                   onPressed: () => _decide(context, ref, event, false),
                   icon: const Icon(Icons.close),
@@ -172,7 +170,7 @@ class PendingDecisionsSection extends ConsumerWidget {
                   ),
                   onPressed: () => _decide(context, ref, event, true),
                   icon: const Icon(Icons.check, size: 18),
-                  label: Text(l10n?.eventAccept ?? 'Accept'),
+                  label: Text(l10n.eventAccept),
                 ),
               ],
             ),

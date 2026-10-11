@@ -149,7 +149,7 @@ abstract final class Lexicon {
 /// Call sites read:
 ///
 /// ```dart
-/// lexiconText(context, key: 'legendFree', fallback: l10n?.legendFree ?? 'Free')
+/// lexiconText(context, key: 'legendFree', fallback: context.l10n.legendFree)
 /// ```
 ///
 /// The fallback stays a full `AppLocalizations` lookup on purpose. It is

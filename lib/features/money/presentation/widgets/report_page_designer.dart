@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
@@ -222,15 +223,14 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
     );
   }
 
-  Widget _previewContent(AppLocalizations? l10n) {
+  Widget _previewContent(AppLocalizations l10n) {
     final data = widget.previewData();
     final report = renderReportBands(bands: _bands, data: data);
     if (report == null) {
       // #822 — say WHAT is wrong, not that something is.
       final why = reportBandsError(bands: _bands, data: data) ?? '';
       return Text(
-        l10n?.reportDesignerError(why) ??
-            'The template does not render — $why',
+        l10n.reportDesignerError(why),
         key: const ValueKey('report-designer-preview-error'),
         style: const TextStyle(fontSize: 10, color: ReportPage.accent),
       );
@@ -259,7 +259,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final showDesign = widget.sideBySide || !_preview;
     final showPreview = widget.sideBySide || _preview;
@@ -295,12 +295,12 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                     value: false,
                     icon: const Icon(Icons.design_services_outlined,
                         size: 18),
-                    label: Text(l10n?.reportDesignerDesign ?? 'Design'),
+                    label: Text(l10n.reportDesignerDesign),
                   ),
                   ButtonSegment(
                     value: true,
                     icon: const Icon(Icons.visibility_outlined, size: 18),
-                    label: Text(l10n?.reportDesignerPreview ?? 'Preview'),
+                    label: Text(l10n.reportDesignerPreview),
                   ),
                 ],
                 selected: {_preview},
@@ -312,8 +312,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
             // segmented button alone fills the line, and the page count is
             // the one thing here that reads perfectly well underneath.
             Text(
-              l10n?.reportDesignerPages(_pages) ??
-                  (_pages == 1 ? '1 page' : '$_pages pages'),
+              l10n.reportDesignerPages(_pages),
               key: const ValueKey('report-designer-pages'),
               style: theme.textTheme.labelSmall,
             ),
@@ -321,7 +320,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
             // fit-width travels as the 0 sentinel instead.
             PopupMenuButton<double>(
               key: const ValueKey('report-designer-zoom'),
-              tooltip: l10n?.reportDesignerZoom ?? 'Zoom',
+              tooltip: l10n.reportDesignerZoom,
               initialValue: _zoom ?? 0,
               onSelected: (zoom) =>
                   setState(() => _zoom = zoom == 0 ? null : zoom),
@@ -329,7 +328,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                 PopupMenuItem(
                   value: 0.0,
                   child:
-                      Text(l10n?.reportDesignerZoomFit ?? 'Fit width'),
+                      Text(l10n.reportDesignerZoomFit),
                 ),
                 for (final zoom in const [0.75, 1.0, 1.5])
                   PopupMenuItem(
@@ -343,7 +342,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                   const Icon(Icons.zoom_in, size: 20),
                   Text(
                     _zoom == null
-                        ? (l10n?.reportDesignerZoomFit ?? 'Fit width')
+                        ? (l10n.reportDesignerZoomFit)
                         : _zoomLabel(_zoom!),
                     style: theme.textTheme.labelSmall,
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -42,18 +43,18 @@ class DocumentsScreen extends ConsumerWidget {
         _ => 'Link',
       };
 
-  static String categoryName(AppLocalizations? l10n, String category) =>
+  static String categoryName(AppLocalizations l10n, String category) =>
       switch (category) {
-        'statutes' => l10n?.documentsCategoryStatutes ?? 'Statutes & legal',
-        'guides' => l10n?.documentsCategoryGuides ?? 'Guides & manuals',
+        'statutes' => l10n.documentsCategoryStatutes,
+        'guides' => l10n.documentsCategoryGuides,
         'finance' =>
-          l10n?.documentsCategoryFinance ?? 'Financial statements',
-        'minutes' => l10n?.documentsCategoryMinutes ?? 'Meeting minutes',
-        _ => l10n?.documentsCategoryOther ?? 'Other documents',
+          l10n.documentsCategoryFinance,
+        'minutes' => l10n.documentsCategoryMinutes,
+        _ => l10n.documentsCategoryOther,
       };
 
   Future<void> _addDialog(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final title = TextEditingController();
@@ -65,7 +66,7 @@ class DocumentsScreen extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setState) => AlertDialog(
-          title: Text(l10n?.documentsAdd ?? 'Add a document'),
+          title: Text(l10n.documentsAdd),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -75,10 +76,9 @@ class DocumentsScreen extends ConsumerWidget {
                   controller: title,
                   maxLength: 120,
                   decoration: InputDecoration(
-                    labelText: l10n?.documentsTitleLabel ?? 'Title',
+                    labelText: l10n.documentsTitleLabel,
                     counterText: '',
-                    suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
-                        'document library',
+                    suffixIcon: HelpDot(l10n.helpTopicDocumentLibrary,
                       anchor: HelpAnchor.documentsTitle,
                     ),
                   ),
@@ -88,15 +88,12 @@ class DocumentsScreen extends ConsumerWidget {
                   controller: url,
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
-                    labelText: l10n?.documentsUrlLabel ?? 'Link (https://…)',
-                    suffixIcon: HelpDot(l10n?.helpTopicDocumentLibrary ??
-                        'document library',
+                    labelText: l10n.documentsUrlLabel,
+                    suffixIcon: HelpDot(l10n.helpTopicDocumentLibrary,
                       anchor: HelpAnchor.documentsUrl,
                     ),
                     helperMaxLines: 3,
-                    helperText: l10n?.documentsUrlHelper ??
-                        'Paste the share link from your drive — access '
-                            'rights stay managed there.',
+                    helperText: l10n.documentsUrlHelper,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -120,12 +117,11 @@ class DocumentsScreen extends ConsumerWidget {
                           setState(() => provider = v ?? provider),
                       decoration: InputDecoration(
                         labelText:
-                            l10n?.documentsProviderLabel ?? 'Stored on',
+                            l10n.documentsProviderLabel,
                       ),
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library',
+                  HelpDot(l10n.helpTopicDocumentLibrary,
                     anchor: HelpAnchor.documentsProvider,
                   ),
                 ]),
@@ -145,12 +141,11 @@ class DocumentsScreen extends ConsumerWidget {
                           setState(() => category = v ?? category),
                       decoration: InputDecoration(
                         labelText:
-                            l10n?.documentsCategoryLabel ?? 'Category',
+                            l10n.documentsCategoryLabel,
                       ),
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library',
+                  HelpDot(l10n.helpTopicDocumentLibrary,
                     anchor: HelpAnchor.documentsCategory,
                   ),
                 ]),
@@ -163,29 +158,27 @@ class DocumentsScreen extends ConsumerWidget {
                         DropdownMenuItem(
                           value: 'member',
                           child: Text(
-                              l10n?.documentsRoleMember ?? 'Every member'),
+                              l10n.documentsRoleMember),
                         ),
                         DropdownMenuItem(
                           value: 'admin',
-                          child: Text(l10n?.documentsRoleAdmin ??
-                              'Admins and owners'),
+                          child: Text(l10n.documentsRoleAdmin),
                         ),
                         DropdownMenuItem(
                           value: 'owner',
                           child: Text(
-                              l10n?.documentsRoleOwner ?? 'Owners only'),
+                              l10n.documentsRoleOwner),
                         ),
                       ],
                       onChanged: (v) =>
                           setState(() => minRole = v ?? minRole),
                       decoration: InputDecoration(
                         labelText:
-                            l10n?.documentsRoleLabel ?? 'Visible to',
+                            l10n.documentsRoleLabel,
                       ),
                     ),
                   ),
-                  HelpDot(l10n?.helpTopicDocumentLibrary ??
-                      'document library',
+                  HelpDot(l10n.helpTopicDocumentLibrary,
                     anchor: HelpAnchor.documentsRole,
                   ),
                 ]),
@@ -196,12 +189,12 @@ class DocumentsScreen extends ConsumerWidget {
             TextButton(
               key: const ValueKey('documents-cancel'),
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(l10n?.commonCancel ?? 'Cancel'),
+              child: Text(l10n.commonCancel),
             ),
             FilledButton(
               key: const ValueKey('document-save'),
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
           ],
         ),
@@ -212,8 +205,7 @@ class DocumentsScreen extends ConsumerWidget {
         !url.text.trim().startsWith('https://')) {
       AppSnack.error(
         context,
-        l10n?.documentsInvalid ??
-            'A document needs a title and an https:// link.',
+        l10n.documentsInvalid,
       );
       return;
     }
@@ -221,8 +213,7 @@ class DocumentsScreen extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'document add failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(workspaceRepositoryProvider).addDocument(
             WorkspaceDocument(
               id: '',
@@ -245,22 +236,22 @@ class DocumentsScreen extends ConsumerWidget {
     WidgetRef ref,
     WorkspaceDocument document,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n?.documentsDelete ?? 'Remove document?'),
+        title: Text(l10n.documentsDelete),
         content: Text(document.title),
         actions: [
           TextButton(
             key: const ValueKey('documents-cancel-2'),
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const ValueKey('document-delete-confirm'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n?.commonDelete ?? 'Delete'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -270,8 +261,7 @@ class DocumentsScreen extends ConsumerWidget {
       context,
       domain: 'workspace',
       message: 'document delete failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () =>
           ref.read(workspaceRepositoryProvider).deleteDocument(document.id),
     )) {
@@ -282,7 +272,7 @@ class DocumentsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final documentsAsync = ref.watch(workspaceDocumentsProvider);
     // #2137 — whoever manages the library curates it, through a role too.
     final canCurate = ref
@@ -290,7 +280,7 @@ class DocumentsScreen extends ConsumerWidget {
         .contains(WorkspacePermission.manageDocuments);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.documentsTitle ?? 'Documents'),
+        title: Text(l10n.documentsTitle),
       ),
       floatingActionButton: canCurate
           ? FloatingActionButton(
@@ -303,9 +293,7 @@ class DocumentsScreen extends ConsumerWidget {
         AsyncData(value: final documents) => documents.isEmpty
             ? EmptyState(
                 icon: Icons.folder_open_outlined,
-                title: l10n?.documentsEmpty ??
-                    'No document yet. Link your statutes, guides and '
-                        'statements from any drive.',
+                title: l10n.documentsEmpty,
               )
             : ListView(
                 // #1181 — the add button overlays this list; it ends
@@ -341,10 +329,8 @@ class DocumentsScreen extends ConsumerWidget {
                                       .onSurfaceVariant),
                               Text(
                                 document.minRole == 'owner'
-                                    ? (l10n?.documentsRoleOwner ??
-                                        'Owners only')
-                                    : (l10n?.documentsRoleAdmin ??
-                                        'Admins and owners'),
+                                    ? (l10n.documentsRoleOwner)
+                                    : (l10n.documentsRoleAdmin),
                                 style:
                                     Theme.of(context).textTheme.bodySmall,
                               ),
@@ -367,8 +353,7 @@ class DocumentsScreen extends ConsumerWidget {
                 ],
               ),
         AsyncError() => Center(
-            child: Text(l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.'),
+            child: Text(l10n.workspaceGenericError),
           ),
         _ => const LoadingView(),
       },

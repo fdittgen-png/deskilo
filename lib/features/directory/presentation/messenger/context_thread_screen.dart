@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/capture/capture_shield.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -141,15 +142,14 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   Future<void> _send() async {
     final text = _body.text.trim();
     if (_busy || text.isEmpty) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     String? landed;
     final ok = await runMessenger(
       context,
       message: 'send message failed',
       errorText:
-          l10n?.applicationReplyFailed ??
-          'Your message was not sent. Your draft is kept; please try again.',
+          l10n.applicationReplyFailed,
       action: () async {
         landed = await ref
             .read(messengerActionsProvider(source: widget.source))
@@ -223,13 +223,12 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   }
 
   Future<void> _delete(ContextMessage message) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
         content: Text(
-          l10n?.messengerDeleteConfirm ??
-              'Delete this message for everyone in the conversation?',
+          l10n.messengerDeleteConfirm,
         ),
         actions: [
           TextButton(
@@ -240,7 +239,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           FilledButton(
             key: const ValueKey('context-delete-confirm'),
             onPressed: () => Navigator.of(dialog).pop(true),
-            child: Text(l10n?.messengerDelete ?? 'Delete message'),
+            child: Text(l10n.messengerDelete),
           ),
         ],
       ),
@@ -251,8 +250,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       domain: 'messages',
       message: 'delete account message failed',
       errorText:
-          l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l10n.portalActionFailed,
       action: () => _isGroup
           ? ref
               .read(messengerActionsProvider(source: widget.source))
@@ -266,20 +264,19 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     ref.invalidate(_provider);
     AppSnack.success(
       context,
-      l10n?.messengerDeleted ?? 'Message deleted.',
+      l10n.messengerDeleted,
       replace: true,
     );
   }
 
   Future<void> _close() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final ok = await runGuarded(
       context,
       domain: 'messages',
       message: 'close inquiry failed',
       errorText:
-          l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+          l10n.portalActionFailed,
       action: () => ref
           .read(messengerActionsProvider(source: widget.source))
           .closeInquiry(_contextId),
@@ -288,7 +285,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     ref.invalidate(unifiedInboxProvider);
     AppSnack.success(
       context,
-      l10n?.messengerInquiryClosed ?? 'Inquiry closed.',
+      l10n.messengerInquiryClosed,
       replace: true,
     );
   }
@@ -342,8 +339,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     await runMessenger(
       context,
       message: 'react to message failed',
-      errorText: AppLocalizations.of(context)?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: context.l10n.portalActionFailed,
       action: () => ref
           .read(messengerActionsProvider(source: widget.source))
           .react(
@@ -357,7 +353,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final messages = _contextId.isEmpty
         ? const AsyncData<List<ContextMessage>>([])
         : ref.watch(_provider);
@@ -389,7 +385,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           if (_isGroup && _contextId.isNotEmpty)
             IconButton(
               key: const ValueKey('agroup-info'),
-              tooltip: l10n?.conversationGroupInfo ?? 'Group',
+              tooltip: l10n.conversationGroupInfo,
               icon: const Icon(Icons.groups_outlined),
               onPressed: () async {
                 final left = await showAccountGroupSheet(context, _contextId);
@@ -399,14 +395,14 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           if (widget.kind == MessageContextKind.account && widget.peer != null)
             IconButton(
               key: const ValueKey('account-block'),
-              tooltip: l10n?.blockPersonAction ?? 'Block this person',
+              tooltip: l10n.blockPersonAction,
               icon: const Icon(Icons.block_outlined),
               onPressed: _block,
             ),
           if (_isInquiry && _contextId.isNotEmpty)
             IconButton(
               key: const ValueKey('inquiry-close'),
-              tooltip: l10n?.messengerInquiryClose ?? 'Close inquiry',
+              tooltip: l10n.messengerInquiryClose,
               onPressed: _close,
               icon: const Icon(Icons.task_alt),
             ),
@@ -426,7 +422,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                   child: TextButton(
                     key: const ValueKey('context-thread-retry'),
                     onPressed: () => ref.invalidate(_provider),
-                    child: Text(l10n?.commonRetry ?? 'Try again'),
+                    child: Text(l10n.commonRetry),
                   ),
                 ),
                 _ => const LoadingView(),
@@ -444,11 +440,11 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     List<ContextMessage> rows, {
     required bool full,
   }) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (rows.isEmpty) {
       return Center(
         child: Text(
-          l10n?.applicationNoMessages ?? 'No messages yet.',
+          l10n.applicationNoMessages,
           key: const ValueKey('context-thread-empty'),
         ),
       );
@@ -467,7 +463,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               onPressed: _loadingEarlier ? null : () => _loadEarlier(rows.last),
               icon: const Icon(Icons.history, size: 18),
               label: Text(
-                l10n?.conversationLoadEarlier ?? 'Load earlier messages',
+                l10n.conversationLoadEarlier,
               ),
             ),
           );
@@ -489,7 +485,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   /// attach menu for reservations, spaces and documents, send) plus, for
   /// someone in several workspaces, the choice of which workspace the
   /// references speak about. A remote server's thread keeps the plain field.
-  Widget _composer(AppLocalizations? l10n) {
+  Widget _composer(AppLocalizations l10n) {
     if (widget.source.isNotEmpty) return _plainComposer(l10n);
     final mine = ref.watch(myWorkspacesProvider).value ?? const [];
     final active = ref.watch(activeWorkspaceIdProvider).value;
@@ -512,7 +508,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         child: Padding(
           padding: AppSpacing.mdAll,
           child: Text(
-            l10n?.groupPostingClosed ?? 'Only admins can post in this group.',
+            l10n.groupPostingClosed,
             key: const ValueKey('group-posting-closed'),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall,
@@ -546,7 +542,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   const SizedBox(width: AppSpacing.xs),
                   Text(
-                    l10n?.threadRefsIn ?? 'References in',
+                    l10n.threadRefsIn,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(width: AppSpacing.sm),
@@ -585,8 +581,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                     (id: m.userId, name: m.name),
             ],
             mentionTokens: ref.watch(messageMentionsOnProvider),
-            referencesHint: l10n?.threadNoRefs ??
-                'References are only shared with people of the same workspace.',
+            referencesHint: l10n.threadNoRefs,
             onSend: (body) async {
               _body.text = body;
               await _send();
@@ -598,7 +593,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     );
   }
 
-  Widget _plainComposer(AppLocalizations? l10n) => SafeArea(
+  Widget _plainComposer(AppLocalizations l10n) => SafeArea(
     top: false,
     child: Padding(
       padding: AppSpacing.mdAll,
@@ -614,13 +609,13 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               minLines: 1,
               maxLines: 4,
               decoration: InputDecoration(
-                labelText: l10n?.memberNoteHint ?? 'Your message',
+                labelText: l10n.memberNoteHint,
               ),
             ),
           ),
           IconButton(
             key: const ValueKey('context-send'),
-            tooltip: l10n?.memberNoteSend ?? 'Send',
+            tooltip: l10n.memberNoteSend,
             onPressed: _busy ? null : _send,
             icon: const Icon(Icons.send_outlined),
           ),

@@ -25196,6 +25196,12 @@ abstract class AppLocalizations {
   /// **'True on a credit note'**
   String get reportFieldMeaningCreditNote;
 
+  /// #2388 report guide: meaning of declaration_note
+  ///
+  /// In en, this message translates to:
+  /// **'The declaration\'s caution to verify before filing'**
+  String get reportFieldMeaningDeclarationNote;
+
   /// #966 report guide: meaning of due_date
   ///
   /// In en, this message translates to:

@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
 import '../../../workspace/domain/member_note_refs.dart';
@@ -35,31 +35,31 @@ Color calendarGroupColor(ColorScheme scheme, CalendarGroup group) =>
       CalendarGroup.money => scheme.secondary,
     };
 
-String calendarGroupLabel(AppLocalizations? l10n, CalendarGroup group) =>
+String calendarGroupLabel(AppLocalizations l10n, CalendarGroup group) =>
     switch (group) {
       CalendarGroup.bookings =>
-        l10n?.calendarGroupBookings ?? 'Bookings & presence',
+        l10n.calendarGroupBookings,
       CalendarGroup.activity =>
-        l10n?.calendarGroupActivity ?? 'Alerts & messages',
-      CalendarGroup.money => l10n?.calendarGroupMoney ?? 'Money',
+        l10n.calendarGroupActivity,
+      CalendarGroup.money => l10n.calendarGroupMoney,
     };
 
-String calendarKindLabel(AppLocalizations? l10n, CalendarKind kind) =>
+String calendarKindLabel(AppLocalizations l10n, CalendarKind kind) =>
     switch (kind) {
-      CalendarKind.reservation => l10n?.calendarKindReservation ?? 'Bookings',
-      CalendarKind.checkIn => l10n?.calendarKindCheckIn ?? 'Check-ins',
-      CalendarKind.checkOut => l10n?.calendarKindCheckOut ?? 'Check-outs',
-      CalendarKind.event => l10n?.calendarKindEvent ?? 'Alerts',
-      CalendarKind.message => l10n?.calendarKindMessage ?? 'Messages',
-      CalendarKind.invoice => l10n?.calendarKindInvoice ?? 'Invoices',
-      CalendarKind.payment => l10n?.calendarKindPayment ?? 'Payments',
-      CalendarKind.consumption => l10n?.calendarKindConsumption ?? 'Consumption',
-      CalendarKind.reminder => l10n?.calendarKindReminder ?? 'Reminders',
-      CalendarKind.due => l10n?.calendarKindDue ?? 'Payments due',
+      CalendarKind.reservation => l10n.calendarKindReservation,
+      CalendarKind.checkIn => l10n.calendarKindCheckIn,
+      CalendarKind.checkOut => l10n.calendarKindCheckOut,
+      CalendarKind.event => l10n.calendarKindEvent,
+      CalendarKind.message => l10n.calendarKindMessage,
+      CalendarKind.invoice => l10n.calendarKindInvoice,
+      CalendarKind.payment => l10n.calendarKindPayment,
+      CalendarKind.consumption => l10n.calendarKindConsumption,
+      CalendarKind.reminder => l10n.calendarKindReminder,
+      CalendarKind.due => l10n.calendarKindDue,
       CalendarKind.scheduled =>
-        l10n?.calendarKindScheduled ?? 'Scheduled expenses',
+        l10n.calendarKindScheduled,
       CalendarKind.validation =>
-        l10n?.calendarKindValidation ?? 'Validations',
+        l10n.calendarKindValidation,
     };
 
 /// One row of the hub's feed (#718): kind icon, what, who, when, and a
@@ -83,7 +83,7 @@ class CalendarItemRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final format = ref.watch(appFormatProvider);
     final time = item.until == null
@@ -99,9 +99,8 @@ class CalendarItemRow extends ConsumerWidget {
       CalendarKind.validation => _validationTitle(l10n, item),
       // #818 — the two due kinds say WHAT is due, not just the number.
       CalendarKind.due =>
-        l10n?.calendarDueTitle(item.title) ?? 'Payment due · ${item.title}',
-      CalendarKind.scheduled => l10n?.calendarScheduledTitle(item.title) ??
-          'Scheduled expense · ${item.title}',
+        l10n.calendarDueTitle(item.title),
+      CalendarKind.scheduled => l10n.calendarScheduledTitle(item.title),
       _ => item.title.isEmpty ? calendarKindLabel(l10n, item.kind) : item.title,
     };
     final money = item.amountCents == null
@@ -148,7 +147,7 @@ class CalendarItemRow extends ConsumerWidget {
 
   /// `type.action` from the server, read the way the feed reads it: the
   /// type's own name and a verb — never the wire words.
-  String _eventTitle(AppLocalizations? l10n, CalendarItem item) {
+  String _eventTitle(AppLocalizations l10n, CalendarItem item) {
     final parts = item.title.split('.');
     final type = EventType.values
         .where((t) => t.dbName == parts.first)
@@ -157,24 +156,24 @@ class CalendarItemRow extends ConsumerWidget {
         type == null ? parts.first : eventTypeLabel(l10n, type);
     final action = parts.length > 1 ? parts[1] : '';
     final actionLabel = switch (action) {
-      'created' => l10n?.calendarEventActionCreated ?? 'created',
-      'modified' => l10n?.calendarEventActionModified ?? 'changed',
-      'cancelled' => l10n?.calendarEventActionCancelled ?? 'cancelled',
-      'submitted' => l10n?.calendarEventActionSubmitted ?? 'submitted',
-      'approved' => l10n?.calendarEventActionApproved ?? 'approved',
-      'rejected' => l10n?.calendarEventActionRejected ?? 'rejected',
+      'created' => l10n.calendarEventActionCreated,
+      'modified' => l10n.calendarEventActionModified,
+      'cancelled' => l10n.calendarEventActionCancelled,
+      'submitted' => l10n.calendarEventActionSubmitted,
+      'approved' => l10n.calendarEventActionApproved,
+      'rejected' => l10n.calendarEventActionRejected,
       // #843 — the two verbs a decision can carry.
-      'validated' => l10n?.calendarEventActionValidated ?? 'validated',
-      'refused' => l10n?.calendarEventActionRefused ?? 'refused',
+      'validated' => l10n.calendarEventActionValidated,
+      'refused' => l10n.calendarEventActionRefused,
       _ => action,
     };
     final label = actionLabel.isEmpty ? typeLabel : '$typeLabel · $actionLabel';
-    return l10n?.calendarEventTitle(label) ?? 'Alert: $label';
+    return l10n.calendarEventTitle(label);
   }
 
   /// #843 — a decision names what was decided, and the row's own
   /// person line names who decided it.
-  String _validationTitle(AppLocalizations? l10n, CalendarItem item) {
+  String _validationTitle(AppLocalizations l10n, CalendarItem item) {
     final parts = item.title.split('.');
     final type = EventType.values
         .where((t) => t.dbName == parts.first)
@@ -183,17 +182,15 @@ class CalendarItemRow extends ConsumerWidget {
         type == null ? parts.first : eventTypeLabel(l10n, type);
     final accepted = item.status == 'accept';
     return accepted
-        ? (l10n?.calendarValidationValidated(typeLabel) ??
-            'Validated: $typeLabel')
-        : (l10n?.calendarValidationRefused(typeLabel) ??
-            'Refused: $typeLabel');
+        ? (l10n.calendarValidationValidated(typeLabel))
+        : (l10n.calendarValidationRefused(typeLabel));
   }
 
   /// A status worth a word: what still waits or was refused. "applied"
   /// and "confirmed" are the normal course and say nothing.
-  String? _statusLabel(AppLocalizations? l10n, CalendarItem item) {
+  String? _statusLabel(AppLocalizations l10n, CalendarItem item) {
     if (item.kind == CalendarKind.reservation) {
-      final words = l10n ?? AppLocalizationsEn();
+      final words = l10n;
       return switch (item.status) {
         'reserved' => words.a11ySeatReserved,
         'checked_in' => words.a11ySeatOccupied,
@@ -204,9 +201,9 @@ class CalendarItemRow extends ConsumerWidget {
       };
     }
     return switch (item.status) {
-      'pending' => l10n?.calendarEventStatusPending ?? 'awaiting confirmation',
-      'rejected' => l10n?.calendarEventStatusRejected ?? 'rejected',
-      'expired' => l10n?.calendarEventStatusExpired ?? 'expired',
+      'pending' => l10n.calendarEventStatusPending,
+      'rejected' => l10n.calendarEventStatusRejected,
+      'expired' => l10n.calendarEventStatusExpired,
       _ => null,
     };
   }

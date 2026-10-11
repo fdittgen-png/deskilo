@@ -11,15 +11,15 @@ import '../domain/personal_info.dart';
 
 /// The title as [l10n] says it — '' for [Courtesy.none], which prints
 /// the name on its own.
-String courtesyWord(AppLocalizations? l10n, Courtesy courtesy) =>
+String courtesyWord(AppLocalizations l10n, Courtesy courtesy) =>
     switch (courtesy) {
       Courtesy.none => '',
-      Courtesy.mr => l10n?.courtesyMr ?? 'Mr',
-      Courtesy.mrs => l10n?.courtesyMrs ?? 'Ms',
+      Courtesy.mr => l10n.courtesyMr,
+      Courtesy.mrs => l10n.courtesyMrs,
     };
 
 /// What the picker offers, including the honest "none".
-String courtesyOptionLabel(AppLocalizations? l10n, Courtesy courtesy) =>
+String courtesyOptionLabel(AppLocalizations l10n, Courtesy courtesy) =>
     courtesy == Courtesy.none
-        ? (l10n?.courtesyNone ?? 'None')
+        ? (l10n.courtesyNone)
         : courtesyWord(l10n, courtesy);

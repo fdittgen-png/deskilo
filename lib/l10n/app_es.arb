@@ -9240,6 +9240,7 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "La advertencia de la declaración: verificar antes de presentar",
   "reportFieldMeaningDueDate": "La fecha de vencimiento",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"

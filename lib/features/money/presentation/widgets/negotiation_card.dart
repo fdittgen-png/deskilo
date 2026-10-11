@@ -5,10 +5,11 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -32,7 +33,7 @@ class NegotiationCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final async = ref.watch(priceNegotiationProvider(memberId));
     final value = async.value;
@@ -45,8 +46,8 @@ class NegotiationCard extends ConsumerWidget {
       Localizations.maybeLocaleOf(context)?.toString(),
     );
 
-    final defaultLabel = l10n?.negotiationDefaultColumn ?? 'Tariff';
-    final mineLabel = l10n?.negotiationMineColumn ?? 'Mine';
+    final defaultLabel = l10n.negotiationDefaultColumn;
+    final mineLabel = l10n.negotiationMineColumn;
     bool compact(BoxConstraints c) => c.maxWidth < 480 ||
         MediaQuery.textScalerOf(context).scale(100) > 130;
     Widget row(String label, String defaults, String? mine, {Key? key}) {
@@ -94,7 +95,7 @@ class NegotiationCard extends ConsumerWidget {
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
-                  l10n?.negotiationCardTitle ?? 'My negotiated prices',
+                  l10n.negotiationCardTitle,
                   style: theme.textTheme.titleMedium,
                 ),
               ),
@@ -104,21 +105,17 @@ class NegotiationCard extends ConsumerWidget {
                 Chip(
                   key: const ValueKey('negotiation-pending'),
                   label: Text(
-                      l10n?.negotiationPendingBadge ?? 'awaiting validation'),
+                      l10n.negotiationPendingBadge),
                   visualDensity: VisualDensity.compact,
                 )),
             const SizedBox(height: 4),
             Text(
               deal == null
                   ? (pending != null
-                      ? (l10n?.negotiationPending ??
-                          'A deal is awaiting validation.')
-                      : (l10n?.negotiationOnTariff ??
-                          'You are on the workspace tariff.'))
-                  : (l10n?.negotiationActiveSince(
-                          monthFormat.format(deal.validFrom)) ??
-                      'Your deal applies since '
-                          '${monthFormat.format(deal.validFrom)}.'),
+                      ? (l10n.negotiationPending)
+                      : (l10n.negotiationOnTariff))
+                  : (l10n.negotiationActiveSince(
+                          monthFormat.format(deal.validFrom))),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
@@ -141,13 +138,13 @@ class NegotiationCard extends ConsumerWidget {
             ])),
             if (deal?.subscriptionPct != null)
               row(
-                l10n?.negotiationOccupation ?? 'Occupation',
+                l10n.negotiationOccupation,
                 '${deal!.previousSubscriptionPct ?? '—'} %',
                 '${deal.subscriptionPct} %',
                 key: const ValueKey('negotiation-row-occupation'),
               ),
             row(
-              l10n?.negotiationFee ?? 'Monthly fee',
+              l10n.negotiationFee,
               currency.formatMinor(value.defaultFeeCents),
               deal?.feeCents == null
                   ? null
@@ -155,7 +152,7 @@ class NegotiationCard extends ConsumerWidget {
               key: const ValueKey('negotiation-row-fee'),
             ),
             row(
-              l10n?.negotiationOverage ?? 'Overage per half-day',
+              l10n.negotiationOverage,
               currency.formatMinor(value.defaultOverageFeeCents),
               deal?.overageFeeCents == null
                   ? null
@@ -163,7 +160,7 @@ class NegotiationCard extends ConsumerWidget {
               key: const ValueKey('negotiation-row-overage'),
             ),
             row(
-              l10n?.negotiationDiscount ?? 'Discount on supplements',
+              l10n.negotiationDiscount,
               '0 %',
               deal?.discountPercent == null
                   ? null
@@ -193,7 +190,7 @@ class NegotiationCard extends ConsumerWidget {
                 key: const ValueKey('negotiation-who-can-see'),
                 onPressed: () => showAccessSheet(context, ref),
                 icon: const Icon(Icons.shield_outlined, size: 18),
-                label: Text(l10n?.negotiationWhoCanSee ?? 'Who can see this'),
+                label: Text(l10n.negotiationWhoCanSee),
               ),
             ),
           ],
@@ -218,7 +215,7 @@ Future<void> showPriceNegotiationSheet(
   required MoneyFormat currency,
   bool readOnly = false,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final current = await ref.read(priceNegotiationProvider(memberId).future);
   if (!context.mounted) return;
   final fee = TextEditingController(
@@ -253,7 +250,7 @@ Future<void> showPriceNegotiationSheet(
               ? ''
               : centsToMajor(current.active!.itemPrice('packages', p.id)!)),
   };
-  final ok = await showModalBottomSheet<bool>(
+  final ok = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -269,19 +266,17 @@ Future<void> showPriceNegotiationSheet(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('${l10n?.negotiationProposeTitle ?? 'Price negotiation'} · $memberName',
+          Text('${l10n.negotiationProposeTitle} · $memberName',
               style: Theme.of(sheetContext).textTheme.titleMedium),
           const SizedBox(height: 4),
           Text(
-            l10n?.negotiationProposeHint ??
-                'Leave a field empty to keep the tariff. The deal goes '
-                    'through validation before it applies.',
+            l10n.negotiationProposeHint,
             style: Theme.of(sheetContext).textTheme.bodySmall,
           ),
           if (current.pending != null) ...[
             const SizedBox(height: 4),
             Text(
-              l10n?.negotiationPending ?? 'A deal is awaiting validation.',
+              l10n.negotiationPending,
               key: const ValueKey('negotiation-sheet-pending'),
               style: TextStyle(color: Theme.of(sheetContext).colorScheme.error),
             ),
@@ -291,20 +286,18 @@ Future<void> showPriceNegotiationSheet(
             key: const ValueKey('negotiation-occupation'),
             initialValue: pct,
             decoration: InputDecoration(
-              labelText: l10n?.negotiationOccupation ?? 'Occupation',
-              helperText: l10n?.negotiationOccupationHint ??
-                  'The share of open days included each month; applied to '
-                      'the member once validated.',
+              labelText: l10n.negotiationOccupation,
+              helperText: l10n.negotiationOccupationHint,
               helperMaxLines: 2,
             ),
             items: [
               DropdownMenuItem<int?>(
-                child: Text(l10n?.negotiationKeepCurrent ?? 'Keep current'),
+                child: Text(l10n.negotiationKeepCurrent),
               ),
               for (final v in options)
                 DropdownMenuItem<int?>(
                     value: v,
-                    child: Text(l10n?.negotiationPercent(v) ?? '$v %')),
+                    child: Text(l10n.negotiationPercent(v))),
             ],
             onChanged: readOnly ? null : (v) => setSheetState(() => pct = v),
           ),
@@ -315,7 +308,7 @@ Future<void> showPriceNegotiationSheet(
             controller: fee,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
-              labelText: l10n?.negotiationFee ?? 'Monthly fee',
+              labelText: l10n.negotiationFee,
               hintText: currency.formatMinor(current.defaultFeeCents),
               suffixText: currency.currencyName,
             ),
@@ -327,7 +320,7 @@ Future<void> showPriceNegotiationSheet(
             controller: overage,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
-              labelText: l10n?.negotiationOverage ?? 'Overage per half-day',
+              labelText: l10n.negotiationOverage,
               hintText: currency.formatMinor(current.defaultOverageFeeCents),
               suffixText: currency.currencyName,
             ),
@@ -339,7 +332,7 @@ Future<void> showPriceNegotiationSheet(
             controller: discount,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
-              labelText: l10n?.negotiationDiscount ?? 'Discount on supplements',
+              labelText: l10n.negotiationDiscount,
               hintText: '0',
               suffixText: '%',
             ),
@@ -349,15 +342,14 @@ Future<void> showPriceNegotiationSheet(
             key: const ValueKey('negotiation-note'),
             readOnly: readOnly,
             controller: note,
-            decoration: InputDecoration(labelText: l10n?.negotiationNote ?? 'Note'),
+            decoration: InputDecoration(labelText: l10n.negotiationNote),
           ),
           if (services.isNotEmpty || packages.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.md),
-            Text(l10n?.negotiationItems ?? 'Services and packages',
+            Text(l10n.negotiationItems,
                 style: Theme.of(sheetContext).textTheme.titleSmall),
             Text(
-              l10n?.negotiationItemsHint ??
-                  'A unit price for this member; empty keeps the catalogue.',
+              l10n.negotiationItemsHint,
               style: Theme.of(sheetContext).textTheme.bodySmall,
             ),
             for (final s in services)
@@ -393,7 +385,7 @@ Future<void> showPriceNegotiationSheet(
             onPressed: readOnly || current.pending != null
                 ? null
                 : () => Navigator.of(sheetContext).pop(true),
-            child: Text(l10n?.negotiationSubmit ?? 'Propose for validation'),
+            child: Text(l10n.negotiationSubmit),
           ),
         ],
       ),
@@ -429,8 +421,7 @@ Future<void> showPriceNegotiationSheet(
     context,
     domain: 'money',
     message: 'propose price negotiation failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref.read(moneyRepositoryProvider).proposePriceNegotiation(
           memberId: memberId,
           feeCents: feeCents,
@@ -447,7 +438,7 @@ Future<void> showPriceNegotiationSheet(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.negotiationProposed ?? 'Deal proposed — waiting for validation.',
+    l10n.negotiationProposed,
   );
 }
 
@@ -467,7 +458,7 @@ class MemberNegotiationTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final on = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.priceNegotiations);
@@ -484,10 +475,10 @@ class MemberNegotiationTile extends ConsumerWidget {
     return ListTile(
       key: ValueKey('member-negotiation-$memberId'),
       leading: const Icon(Icons.handshake_outlined),
-      title: Text(l10n?.negotiationProposeTitle ?? 'Price negotiation'),
+      title: Text(l10n.negotiationProposeTitle),
       subtitle: canManage
           ? null
-          : Text(l10n?.negotiationReadOnly ?? 'Read only'),
+          : Text(l10n.negotiationReadOnly),
       // #1182 — its two siblings in the Billing card are `_ManageTile`s,
       // which carry one. Three rows that open a sheet, one affordance.
       trailing: const Icon(Icons.chevron_right),

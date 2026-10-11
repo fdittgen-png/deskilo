@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_template_sheet.dart';
 
@@ -16,7 +16,7 @@ class ReportEditorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final template = ref.watch(invoicePdfTemplateProvider);
     return switch (template) {
       AsyncData(:final value) => ReportTemplateEditor(
@@ -28,8 +28,7 @@ class ReportEditorScreen extends ConsumerWidget {
           appBar: AppBar(),
           body: EmptyState(
             icon: Icons.error_outline,
-            title: l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            title: l10n.workspaceGenericError,
           ),
         ),
       _ => Scaffold(

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1654: uncertainty, admission and actual outcomes retain their meaning in copy.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/application/getting_started_hint.dart';
 import 'package:deskilo/features/reservations/presentation/getting_started_copy.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -10,10 +11,10 @@ void main() {
   test('unknown membership never reads as a missing or completed task', () {
     const hint = GettingStartedHint(reason: GettingStartedReason.membershipUnknown,
       action: GettingStartedAction.openHelp);
-    expect(GettingStartedCopy.reason(null, hint),
+    expect(GettingStartedCopy.reason(englishL10n, hint),
       'Your membership could not be loaded right now. The help explains how this workspace works.');
     expect(GettingStartedCopy.reason(lookupAppLocalizations(const Locale('en')), hint),
-      GettingStartedCopy.reason(null, hint));
+      GettingStartedCopy.reason(englishL10n, hint));
   });
   for (final language in ['en', 'fr', 'de', 'es', 'it']) {
     test('$language preserves waiting and actual booking evidence', () {

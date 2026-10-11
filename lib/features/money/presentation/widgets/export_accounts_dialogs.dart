@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/datev.dart';
 import '../../domain/fec.dart';
 import '../../domain/sage.dart';
@@ -28,7 +28,7 @@ Future<FecAccounts?> showFecAccountsDialog(
   BuildContext context, {
   FecAccounts initial = const FecAccounts(),
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final customers = TextEditingController(text: initial.customers);
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
@@ -37,13 +37,11 @@ Future<FecAccounts?> showFecAccountsDialog(
   return showDialog<FecAccounts>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.fecAccountsTitle ?? 'Accounts to book'),
+      title: Text(l10n.fecAccountsTitle),
       content: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            l10n?.fecAccountsIntro ??
-                'A FEC is made of accounting entries, so it needs account '
-                    'numbers.',
+            l10n.fecAccountsIntro,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -52,7 +50,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: customers,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountCustomers ?? 'Customers',
+              labelText: l10n.fecAccountCustomers,
             ),
           ),
           TextField(
@@ -60,7 +58,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: revenue,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountRevenue ?? 'Revenue',
+              labelText: l10n.fecAccountRevenue,
             ),
           ),
           TextField(
@@ -68,7 +66,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: vat,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountVat ?? 'Collected VAT',
+              labelText: l10n.fecAccountVat,
             ),
           ),
           TextField(
@@ -76,7 +74,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: bank,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountBank ?? 'Bank',
+              labelText: l10n.fecAccountBank,
             ),
           ),
           TextField(
@@ -84,7 +82,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: expenses,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountExpenses ?? 'Expenses',
+              labelText: l10n.fecAccountExpenses,
             ),
           ),
         ]),
@@ -93,7 +91,7 @@ Future<FecAccounts?> showFecAccountsDialog(
         TextButton(
           key: const ValueKey('export-accounts-dialogs-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('fec-accounts-confirm'),
@@ -104,7 +102,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             vat: vat.text.trim(),
             expenses: expenses.text.trim(),
           )),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),
@@ -134,7 +132,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   BuildContext context, {
   DatevAccounts initial = const DatevAccounts(),
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final consultant = TextEditingController();
   final client = TextEditingController();
   final customers = TextEditingController(text: initial.customers);
@@ -154,39 +152,35 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   return showDialog<DatevExportSettings>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.datevAccountsTitle ?? 'DATEV export'),
+      title: Text(l10n.datevAccountsTitle),
       content: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            l10n?.datevAccountsIntro ??
-                'Your accountant gives you the consultant and client '
-                    'numbers. DATEV refuses a file whose numbers do not '
-                    'match — which is what keeps it out of the wrong '
-                    'company\'s books.',
+            l10n.datevAccountsIntro,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
           field('datev-consultant', consultant,
-              l10n?.datevConsultantNumber ?? 'Beraternummer'),
+              l10n.datevConsultantNumber),
           field('datev-client', client,
-              l10n?.datevClientNumber ?? 'Mandantennummer'),
+              l10n.datevClientNumber),
           const SizedBox(height: AppSpacing.md),
           field('datev-account-customers', customers,
-              l10n?.fecAccountCustomers ?? 'Debitoren'),
+              l10n.fecAccountCustomers),
           field('datev-account-revenue', revenue,
-              l10n?.fecAccountRevenue ?? 'Erlöse'),
+              l10n.fecAccountRevenue),
           field('datev-account-vat', vat,
-              l10n?.fecAccountVat ?? 'Umsatzsteuer'),
-          field('datev-account-bank', bank, l10n?.fecAccountBank ?? 'Bank'),
+              l10n.fecAccountVat),
+          field('datev-account-bank', bank, l10n.fecAccountBank),
           field('datev-account-expenses', expenses,
-              l10n?.fecAccountExpenses ?? 'Expenses'),
+              l10n.fecAccountExpenses),
         ]),
       ),
       actions: [
         TextButton(
           key: const ValueKey('export-accounts-dialogs-cancel-2'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('datev-accounts-confirm'),
@@ -201,7 +195,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
               expenses: expenses.text.trim(),
             ),
           )),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),
@@ -215,7 +209,7 @@ Future<SageAccounts?> showSageAccountsDialog(
   BuildContext context, {
   SageAccounts initial = const SageAccounts(),
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final debtors = TextEditingController(text: initial.debtors);
   final sales = TextEditingController(text: initial.sales);
   final bank = TextEditingController(text: initial.bank);
@@ -224,15 +218,11 @@ Future<SageAccounts?> showSageAccountsDialog(
   return showDialog<SageAccounts>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.sageAccountsTitle ?? 'Sage export'),
+      title: Text(l10n.sageAccountsTitle),
       content: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            l10n?.sageAccountsIntro ??
-                'The defaults are Sage\'s own shipped nominal codes. The '
-                    'tax code decides which VAT return these land on, so '
-                    'check it with your accountant if you are not on the '
-                    'standard rate.',
+            l10n.sageAccountsIntro,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -241,7 +231,7 @@ Future<SageAccounts?> showSageAccountsDialog(
             controller: debtors,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountCustomers ?? 'Debtors',
+              labelText: l10n.fecAccountCustomers,
             ),
           ),
           TextField(
@@ -249,7 +239,7 @@ Future<SageAccounts?> showSageAccountsDialog(
             controller: sales,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountRevenue ?? 'Sales',
+              labelText: l10n.fecAccountRevenue,
             ),
           ),
           TextField(
@@ -257,14 +247,14 @@ Future<SageAccounts?> showSageAccountsDialog(
             controller: bank,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n?.fecAccountBank ?? 'Bank',
+              labelText: l10n.fecAccountBank,
             ),
           ),
           TextField(
             key: const ValueKey('sage-tax-code'),
             controller: taxCode,
             decoration: InputDecoration(
-              labelText: l10n?.sageTaxCode ?? 'VAT code (T1 / T0 / T9)',
+              labelText: l10n.sageTaxCode,
             ),
           ),
         ]),
@@ -273,7 +263,7 @@ Future<SageAccounts?> showSageAccountsDialog(
         TextButton(
           key: const ValueKey('export-accounts-dialogs-cancel-3'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('sage-accounts-confirm'),
@@ -283,7 +273,7 @@ Future<SageAccounts?> showSageAccountsDialog(
             bank: bank.text.trim(),
             taxCode: taxCode.text.trim(),
           )),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),
@@ -309,7 +299,7 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
   BuildContext context, {
   FecAccounts initial = const FecAccounts(),
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final customers = TextEditingController(text: initial.customers);
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
@@ -326,31 +316,27 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
   return showDialog<SafTLedgerChoice>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.saftLedgerTitle ?? 'Include postings?'),
+      title: Text(l10n.saftLedgerTitle),
       content: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            l10n?.saftLedgerIntro ??
-                'With account numbers, the file carries double-entry '
-                    'postings your accountant can import instead of '
-                    'keying in. They cover your sales and the payments '
-                    'against them — not your whole books.',
+            l10n.saftLedgerIntro,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
           field('saft-account-customers', customers,
-              l10n?.fecAccountCustomers ?? 'Customers'),
+              l10n.fecAccountCustomers),
           field('saft-account-revenue', revenue,
-              l10n?.fecAccountRevenue ?? 'Revenue'),
-          field('saft-account-vat', vat, l10n?.fecAccountVat ?? 'Collected VAT'),
-          field('saft-account-bank', bank, l10n?.fecAccountBank ?? 'Bank'),
+              l10n.fecAccountRevenue),
+          field('saft-account-vat', vat, l10n.fecAccountVat),
+          field('saft-account-bank', bank, l10n.fecAccountBank),
         ]),
       ),
       actions: [
         TextButton(
           key: const ValueKey('export-accounts-dialogs-cancel-4'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         TextButton(
           key: const ValueKey('saft-documents-only'),
@@ -360,7 +346,7 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
               accounts: FecAccounts(),
             ),
           ),
-          child: Text(l10n?.saftDocumentsOnly ?? 'Documents only'),
+          child: Text(l10n.saftDocumentsOnly),
         ),
         FilledButton(
           key: const ValueKey('saft-ledger-confirm'),
@@ -373,7 +359,7 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
               vat: vat.text.trim(),
             ),
           )),
-          child: Text(l10n?.saftWithPostings ?? 'With postings'),
+          child: Text(l10n.saftWithPostings),
         ),
       ],
     ),

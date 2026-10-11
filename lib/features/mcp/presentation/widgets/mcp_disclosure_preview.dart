@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/mcp/mcp_operations.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -15,7 +16,7 @@ class McpDisclosurePreview extends StatelessWidget {
   /// The optional fields the detailed answer carries.
   final Set<String> fields;
 
-  static String answer(AppLocalizations? l10n, Iterable<String> fields) {
+  static String answer(AppLocalizations l10n, Iterable<String> fields) {
     final lines = [
       '  "seat_id": "7f3a…"',
       '  "free": true',
@@ -27,7 +28,7 @@ class McpDisclosurePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     Widget column(String key, String title, Iterable<String> shown) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,8 +50,7 @@ class McpDisclosurePreview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.mcpDisclosurePreviewNote ??
-                  'A fictional answer, to show what assistants would see.',
+              l10n.mcpDisclosurePreviewNote,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -60,12 +60,12 @@ class McpDisclosurePreview extends StatelessWidget {
               children: [
                 column(
                   'mcp-disclosure-preview-minimised',
-                  l10n?.mcpDisclosurePreviewMinimised ?? 'Minimised answer',
+                  l10n.mcpDisclosurePreviewMinimised,
                   const [],
                 ),
                 column(
                   'mcp-disclosure-preview-detailed',
-                  l10n?.mcpDisclosurePreviewDetailed ?? 'Detailed answer',
+                  l10n.mcpDisclosurePreviewDetailed,
                   fields,
                 ),
               ],

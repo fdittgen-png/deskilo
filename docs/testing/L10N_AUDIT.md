@@ -171,7 +171,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_catalogue.dart:169` | label | GST+QST 14,975 % (QC) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:170` | label | GST+PST 12 % (BC/MB) | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_catalogue.dart:171` | label | GST+PST 11 % (SK) | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/presentation/widgets/report_texts_panel.dart:191` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
 

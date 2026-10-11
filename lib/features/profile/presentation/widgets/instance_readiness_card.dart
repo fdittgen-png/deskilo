@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/instance/instance_readiness.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -18,41 +19,33 @@ class InstanceReadinessCard extends StatelessWidget {
   final InstanceReadiness readiness;
   final VoidCallback onChooseAnother;
 
-  static String title(AppLocalizations? l10n, InstanceReadiness r) =>
+  static String title(AppLocalizations l10n, InstanceReadiness r) =>
       switch (r.verdict) {
         InstanceReadinessVerdict.install =>
-          l10n?.instanceReadyInstall ?? 'The project is empty: everything will be installed.',
-        InstanceReadinessVerdict.resume => l10n?.instanceReadyResume(r.pending) ??
-            'A DesKilo install stopped part-way: ${r.pending} migrations remain and only those will run.',
+          l10n.instanceReadyInstall,
+        InstanceReadinessVerdict.resume => l10n.instanceReadyResume(r.pending),
         InstanceReadinessVerdict.upgrade =>
-          l10n?.instanceReadyUpgrade(r.marker ?? 0, r.pending) ??
-              'DesKilo version ${r.marker} is installed: only the ${r.pending} missing migrations will run.',
-        InstanceReadinessVerdict.current => l10n?.instanceReadyCurrent(r.marker ?? 0) ??
-            'DesKilo version ${r.marker} is installed and current: the schema needs nothing.',
+          l10n.instanceReadyUpgrade(r.marker ?? 0, r.pending),
+        InstanceReadinessVerdict.current => l10n.instanceReadyCurrent(r.marker ?? 0),
         InstanceReadinessVerdict.needsAttention =>
-          l10n?.instanceReadyAttention ?? 'This project needs attention — nothing was installed.',
+          l10n.instanceReadyAttention,
       };
 
-  static String? detail(AppLocalizations? l10n, InstanceReadiness r) =>
+  static String? detail(AppLocalizations l10n, InstanceReadiness r) =>
       switch (r.attention) {
         null => null,
-        InstanceAttention.notHealthy => l10n?.instanceAttentionNotHealthy ??
-            'Supabase does not report the project as healthy. Wait until it is, or restore it in the dashboard.',
+        InstanceAttention.notHealthy => l10n.instanceAttentionNotHealthy,
         InstanceAttention.postgresVersion =>
-          l10n?.instanceAttentionPostgres(r.postgresMajor ?? 0, supportedPostgresMajor) ??
-              'It runs Postgres ${r.postgresMajor}; DesKilo is built for Postgres $supportedPostgresMajor.',
+          l10n.instanceAttentionPostgres(r.postgresMajor ?? 0, supportedPostgresMajor),
         InstanceAttention.foreignTables =>
-          l10n?.instanceAttentionForeign(r.foreignTables.join(', ')) ??
-              'Its public schema holds tables DesKilo does not create (${r.foreignTables.join(', ')}). Installing there is refused; use an empty project.',
-        InstanceAttention.unrecorded => l10n?.instanceAttentionUnrecorded ??
-            'DesKilo tables are there but no migration was recorded. Record what it has with `dart run tool/instance.dart record` first.',
-        InstanceAttention.otherTooling => l10n?.instanceAttentionOtherTooling ??
-            'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.',
+          l10n.instanceAttentionForeign(r.foreignTables.join(', ')),
+        InstanceAttention.unrecorded => l10n.instanceAttentionUnrecorded,
+        InstanceAttention.otherTooling => l10n.instanceAttentionOtherTooling,
       };
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final text = detail(l10n, readiness);
     return Card(
@@ -75,7 +68,7 @@ class InstanceReadinessCard extends StatelessWidget {
                 child: TextButton(
                   key: const ValueKey('instance-choose-another'),
                   onPressed: onChooseAnother,
-                  child: Text(l10n?.instanceChooseAnother ?? 'Choose another project'),
+                  child: Text(l10n.instanceChooseAnother),
                 ),
               ),
           ],

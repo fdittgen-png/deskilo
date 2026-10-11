@@ -10,11 +10,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/labeled_rows.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/instance_operator.dart';
@@ -88,13 +91,11 @@ class _InstanceAssistantsScreenState
     } on Object catch (e, st) {
       TraceLogger.instance.error('mcp', message, error: e, stackTrace: st);
       if (mounted) {
-        final l10n = AppLocalizations.of(context);
+        final l10n = context.l10n;
         AppSnack.error(
           context,
           instanceRefusalText(l10n, e) ??
-              l10n?.mcpNextUnavailable ??
-              'The server could not answer. Nothing is assumed; try again '
-                  'later.',
+              l10n.mcpNextUnavailable,
         );
       }
     }
@@ -140,7 +141,7 @@ class _InstanceAssistantsScreenState
 
   Future<void> _secondFactor() async {
     final ok =
-        await showModalBottomSheet<bool>(
+        await showAppSheet<bool>(
           context: context,
           isScrollControlled: true,
           builder: (_) =>
@@ -150,13 +151,13 @@ class _InstanceAssistantsScreenState
     if (ok && mounted) await _load();
   }
 
-  Future<void> _turnOn(AppLocalizations? l10n) async {
+  Future<void> _turnOn(AppLocalizations l10n) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.instanceTurnOn ?? 'Turn on for every workspace'),
+        title: Text(l10n.instanceTurnOn),
         content: Text(
-          l10n?.instanceTurnOnConfirm ?? 'Assistants become usable in every workspace that offers them. You can turn them off again at any time.',
+          l10n.instanceTurnOnConfirm,
         ),
         actions: [
           TextButton(
@@ -167,7 +168,7 @@ class _InstanceAssistantsScreenState
           FilledButton(
             key: const ValueKey('instance-turn-on-confirm'),
             onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n?.instanceTurnOn ?? 'Turn on for every workspace'),
+            child: Text(l10n.instanceTurnOn),
           ),
         ],
       ),
@@ -181,11 +182,11 @@ class _InstanceAssistantsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final o = _overview;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.instanceTitle ?? 'Installation: assistants'),
+        title: Text(l10n.instanceTitle),
       ),
       body: _loading
           ? const LoadingView()
@@ -196,14 +197,14 @@ class _InstanceAssistantsScreenState
                 key: const ValueKey('instance-not-operator'),
                 icon: Icons.lock_outline,
                 severity: InlineBannerSeverity.info,
-                text: l10n?.instanceNotOperator ?? "Only the instance operator manages the installation's assistants.",
+                text: l10n.instanceNotOperator,
               ),
             )
           : ListView(
               padding: AppSpacing.gutterAll,
               children: [
                 Text(
-                  l10n?.instanceIntro ?? 'Switches for every workspace of this installation. Only the instance operator sees this page; every change needs your second factor and is recorded.',
+                  l10n.instanceIntro,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 if (!o.secondFactor) ...[
@@ -212,8 +213,7 @@ class _InstanceAssistantsScreenState
                     icon: Icons.verified_user_outlined,
                     severity: InlineBannerSeverity.info,
                     text:
-                        l10n?.instanceSecondFactorNeeded ??
-                        'Changes here need your second factor on this session.',
+                        l10n.instanceSecondFactorNeeded,
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -221,8 +221,7 @@ class _InstanceAssistantsScreenState
                       key: const ValueKey('instance-second-factor'),
                       onPressed: _secondFactor,
                       child: Text(
-                        l10n?.instanceConfirmSecondFactor ??
-                            'Confirm with my authenticator',
+                        l10n.instanceConfirmSecondFactor,
                       ),
                     ),
                   ),
@@ -259,18 +258,15 @@ class _InstanceAssistantsScreenState
     );
   }
 
-  Widget _heading(String text) => Padding(
-    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-  );
+  Widget _heading(String text) => SectionHeading(text);
 
-  Widget _runtime(AppLocalizations? l10n, InstanceMcpOverview o) {
+  Widget _runtime(AppLocalizations l10n, InstanceMcpOverview o) {
     final can = o.secondFactor && !_busy;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _heading(
-          l10n?.instanceRuntimeTitle ?? 'Assistants on this installation',
+          l10n.instanceRuntimeTitle,
         ),
         ListTile(
           key: ValueKey('instance-runtime-${o.enabled ? 'on' : 'off'}'),
@@ -280,21 +276,19 @@ class _InstanceAssistantsScreenState
           ),
           title: Text(
             o.enabled
-                ? (l10n?.instanceRuntimeOn ?? 'On')
-                : (l10n?.instanceRuntimeOff ?? 'Off'),
+                ? (l10n.instanceRuntimeOn)
+                : (l10n.instanceRuntimeOff),
           ),
         ),
         if (!o.enabled && !endpointReady(o.endpointProbe))
           Text(
             key: const ValueKey('instance-turn-on-needs-probe'),
-            l10n?.instanceTurnOnNeedsProbe ??
-                'The assistant endpoint is not confirmed. Check the server '
-                    'first.',
+            l10n.instanceTurnOnNeedsProbe,
           ),
         if (!o.enabled && o.blockers.isNotEmpty)
           Text(
             key: const ValueKey('instance-blockers'),
-            '${l10n?.instanceBlockers ?? 'Still missing:'} '
+            '${l10n.instanceBlockers} '
             '${o.blockers.map((b) => _blocker(l10n, b)).join(', ')}',
           ),
         Align(
@@ -310,7 +304,7 @@ class _InstanceAssistantsScreenState
                               .setRuntime(enabled: false),
                         )
                       : null,
-                  child: Text(l10n?.instanceTurnOff ?? 'Turn off'),
+                  child: Text(l10n.instanceTurnOff),
                 )
               : FilledButton(
                   key: const ValueKey('instance-turn-on'),
@@ -320,7 +314,7 @@ class _InstanceAssistantsScreenState
                       ? () => _turnOn(l10n)
                       : null,
                   child: Text(
-                    l10n?.instanceTurnOn ?? 'Turn on for every workspace',
+                    l10n.instanceTurnOn,
                   ),
                 ),
         ),
@@ -328,22 +322,22 @@ class _InstanceAssistantsScreenState
     );
   }
 
-  String _blocker(AppLocalizations? l10n, String code) => switch (code) {
+  String _blocker(AppLocalizations l10n, String code) => switch (code) {
     'no_database_administrator' =>
-      l10n?.instanceBlockerNoAdmin ?? 'a database administrator',
+      l10n.instanceBlockerNoAdmin,
     _ => code,
   };
 
-  Widget _administrators(AppLocalizations? l10n, InstanceMcpOverview o) {
+  Widget _administrators(AppLocalizations l10n, InstanceMcpOverview o) {
     final can = o.secondFactor && !_busy;
     String name(InstanceMember m) =>
-        m.me ? '${m.name} (${l10n?.instanceYou ?? 'you'})' : m.name;
+        m.me ? '${m.name} (${l10n.instanceYou})' : m.name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _heading(l10n?.instanceAdminsTitle ?? 'Database administrators'),
+        _heading(l10n.instanceAdminsTitle),
         Text(
-          l10n?.instanceAdminsHelp ?? 'They decide who may use assistants. Only people who confirmed their identity for assistants can be chosen.',
+          l10n.instanceAdminsHelp,
         ),
         for (final a in o.administrators)
           ListTile(
@@ -361,7 +355,7 @@ class _InstanceAssistantsScreenState
                           .revokeAdministrator(a.userId),
                     )
                   : null,
-              child: Text(l10n?.instanceRemoveAdmin ?? 'Remove'),
+              child: Text(l10n.instanceRemoveAdmin),
             ),
           ),
         if (o.candidates.isEmpty)
@@ -369,8 +363,7 @@ class _InstanceAssistantsScreenState
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
               key: const ValueKey('instance-no-candidates'),
-              l10n?.instanceNoCandidates ??
-                  'Nobody else has confirmed their identity yet.',
+              l10n.instanceNoCandidates,
             ),
           ),
         for (final c in o.candidates)
@@ -389,7 +382,7 @@ class _InstanceAssistantsScreenState
                           .grantAdministrator(c.userId),
                     )
                   : null,
-              child: Text(l10n?.instanceMakeAdmin ?? 'Make administrator'),
+              child: Text(l10n.instanceMakeAdmin),
             ),
           ),
       ],
@@ -398,31 +391,27 @@ class _InstanceAssistantsScreenState
 
   /// #2145 — the family a client was recognised as, by its exact
   /// redirects (0359); null for anything else.
-  String? _family(AppLocalizations? l10n, String? family) => switch (family) {
-    'claude' => l10n?.instanceFamilyClaude ?? 'Claude',
-    'chatgpt' => l10n?.instanceFamilyChatgpt ?? 'ChatGPT',
+  String? _family(AppLocalizations l10n, String? family) => switch (family) {
+    'claude' => l10n.instanceFamilyClaude,
+    'chatgpt' => l10n.instanceFamilyChatgpt,
     'loopback' =>
-      l10n?.instanceFamilyLoopback ?? 'Desktop or command-line assistant',
+      l10n.instanceFamilyLoopback,
     _ => null,
   };
 
   /// #2145 — one audited switch for assistants that answer on the
   /// person's own computer (Claude Code, Cursor, VS Code).
-  Widget _loopback(AppLocalizations? l10n, InstanceMcpOverview o) =>
+  Widget _loopback(AppLocalizations l10n, InstanceMcpOverview o) =>
       SwitchListTile(
         key: ValueKey(
           'instance-loopback-${o.allowLoopbackClients ? 'on' : 'off'}',
         ),
         contentPadding: EdgeInsets.zero,
         title: Text(
-          l10n?.instanceLoopbackTitle ??
-              'Allow desktop and command-line assistants',
+          l10n.instanceLoopbackTitle,
         ),
         subtitle: Text(
-          l10n?.instanceLoopbackHelp ??
-              'Claude Code, Cursor, VS Code and other assistants that run on '
-                  'a person\'s own computer. Each person still approves '
-                  'their own connection.',
+          l10n.instanceLoopbackHelp,
         ),
         value: o.allowLoopbackClients,
         onChanged: o.secondFactor && !_busy
@@ -435,19 +424,19 @@ class _InstanceAssistantsScreenState
             : null,
       );
 
-  Widget _clients(AppLocalizations? l10n, InstanceMcpOverview o) {
+  Widget _clients(AppLocalizations l10n, InstanceMcpOverview o) {
     final can = o.secondFactor && !_busy;
     String status(InstanceClient c) => switch (c.status) {
-      'active' => l10n?.instanceClientApproved ?? 'Approved',
-      'revoked' => l10n?.instanceClientBlocked ?? 'Blocked',
-      _ => l10n?.instanceClientWaiting ?? 'Waiting for approval',
+      'active' => l10n.instanceClientApproved,
+      'revoked' => l10n.instanceClientBlocked,
+      _ => l10n.instanceClientWaiting,
     };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _heading(l10n?.instanceClientsTitle ?? 'Assistant clients'),
+        _heading(l10n.instanceClientsTitle),
         Text(
-          l10n?.instanceClientsHelp ?? 'An assistant registers itself the first time someone connects it; it works only once approved here.',
+          l10n.instanceClientsHelp,
         ),
         for (final c in o.clients)
           ListTile(
@@ -473,7 +462,7 @@ class _InstanceAssistantsScreenState
                                 .setClient(c.clientId, active: false),
                           )
                         : null,
-                    child: Text(l10n?.instanceBlock ?? 'Block'),
+                    child: Text(l10n.instanceBlock),
                   )
                 : OutlinedButton(
                     key: ValueKey('instance-approve-${c.clientId}'),
@@ -485,7 +474,7 @@ class _InstanceAssistantsScreenState
                                 .setClient(c.clientId, active: true),
                           )
                         : null,
-                    child: Text(l10n?.instanceApprove ?? 'Approve'),
+                    child: Text(l10n.instanceApprove),
                   ),
           ),
       ],

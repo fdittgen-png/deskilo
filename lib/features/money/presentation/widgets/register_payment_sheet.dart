@@ -4,12 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -27,7 +28,7 @@ Future<bool> showRegisterPaymentSheet(
   WidgetRef ref, {
   String? memberId,
 }) async {
-  final done = await showModalBottomSheet<bool>(
+  final done = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _RegisterPaymentSheet(initialMemberId: memberId),
@@ -67,7 +68,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
   }
 
   Future<void> _submit() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final memberId = _memberId;
     final cents = _cents;
@@ -80,8 +81,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
       context,
       domain: 'money',
       message: 'register payment failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => payments.record(
         workspaceId: workspace.id,
         memberId: memberId,
@@ -98,14 +98,13 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
     Navigator.of(context).pop(true);
     AppSnack.success(
       context,
-      l10n?.registerPaymentDone ??
-          'Payment registered — the member confirms it from their side.',
+      l10n.registerPaymentDone,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final members = (ref.watch(workspaceMembersProvider).value ?? const [])
         .where((m) => m.status == MemberStatus.active && !m.isKiosk)
         .toList();
@@ -116,7 +115,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
         padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SheetShell(
-          title: l10n?.registerPaymentTitle ?? 'Register a payment',
+          title: l10n.registerPaymentTitle,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -125,9 +124,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    l10n?.registerPaymentHint ??
-                        'A payment that reached the workspace — the member '
-                            'confirms it, then it can be matched to an invoice.',
+                    l10n.registerPaymentHint,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -135,7 +132,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     key: const ValueKey('register-payment-member'),
                     initialValue: _memberId,
                     decoration: InputDecoration(
-                        labelText: l10n?.registerPaymentMember ?? 'Member'),
+                        labelText: l10n.registerPaymentMember),
                     items: [
                       for (final m in members)
                         DropdownMenuItem(
@@ -154,7 +151,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => setState(() {}),
                     decoration: InputDecoration(
-                      labelText: l10n?.registerPaymentAmount ?? 'Amount',
+                      labelText: l10n.registerPaymentAmount,
                       suffixText: currency,
                     ),
                   ),
@@ -163,7 +160,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     key: const ValueKey('register-payment-method'),
                     initialValue: _method,
                     decoration: InputDecoration(
-                        labelText: l10n?.registerPaymentMethod ?? 'Method'),
+                        labelText: l10n.registerPaymentMethod),
                     items: [
                       for (final m in PaymentMethod.values)
                         DropdownMenuItem(value: m, child: Text(m.name)),
@@ -175,7 +172,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     key: const ValueKey('register-payment-date'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.event_outlined),
-                    title: Text(l10n?.registerPaymentDate ?? 'Paid on'),
+                    title: Text(l10n.registerPaymentDate),
                     subtitle: Text(DateFormat.yMMMd().format(_paidOn)),
                     onTap: () async {
                       final picked = await showDatePicker(
@@ -191,7 +188,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     key: const ValueKey('register-payment-note'),
                     controller: _note,
                     decoration: InputDecoration(
-                        labelText: l10n?.registerPaymentNote ?? 'Note'),
+                        labelText: l10n.registerPaymentNote),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   FilledButton(
@@ -200,7 +197,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                         _busy || _memberId == null || _cents == null
                             ? null
                             : _submit,
-                    child: Text(l10n?.registerPaymentSubmit ?? 'Register'),
+                    child: Text(l10n.registerPaymentSubmit),
                   ),
                 ],
               ),

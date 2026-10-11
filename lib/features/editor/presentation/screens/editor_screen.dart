@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -20,7 +20,7 @@ Future<String?> _promptName(
   required String title,
   String initial = '',
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final controller = TextEditingController(text: initial);
   return showDialog<String>(
     context: context,
@@ -30,19 +30,19 @@ Future<String?> _promptName(
         controller: controller,
         autofocus: true,
         decoration: InputDecoration(
-          labelText: l10n?.editorLevelNameLabel ?? 'Level name',
+          labelText: l10n.editorLevelNameLabel,
         ),
       ),
       actions: [
         TextButton(
           key: const ValueKey('editor-rename-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('editor-rename-save'),
           onPressed: () => Navigator.of(context).pop(controller.text.trim()),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     ),
@@ -56,13 +56,13 @@ class EditorScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final levelsAsync = ref.watch(levelsProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.editorTitle ?? 'Workspace editor'),
+        title: Text(l10n.editorTitle),
       ),
       floatingActionButton: FloatingActionButton.extended(
         key: const ValueKey('editor-add-level'),
@@ -71,7 +71,7 @@ class EditorScreen extends ConsumerWidget {
             : () async {
                 final name = await _promptName(
                   context,
-                  title: l10n?.editorAddLevel ?? 'Add level',
+                  title: l10n.editorAddLevel,
                 );
                 if (name == null || name.isEmpty) return;
                 final count = levelsAsync.value?.length ?? 0;
@@ -81,7 +81,7 @@ class EditorScreen extends ConsumerWidget {
                 ref.invalidate(levelsProvider);
               },
         icon: const Icon(Icons.add),
-        label: Text(l10n?.editorAddLevel ?? 'Add level'),
+        label: Text(l10n.editorAddLevel),
       ),
       // #606 — the editor's contextual how-to; gated inside the widget.
       body: Column(children: [
@@ -91,8 +91,7 @@ class EditorScreen extends ConsumerWidget {
             child: Padding(
               padding: AppSpacing.xlAll,
               child: Text(
-                l10n?.editorNoLevels ??
-                    'No levels yet. Add the first floor of your workspace.',
+                l10n.editorNoLevels,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -100,8 +99,7 @@ class EditorScreen extends ConsumerWidget {
         AsyncData(value: final levels) => _LevelList(levels: levels),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -118,7 +116,7 @@ class _LevelList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ReorderableListView.builder(
       // #1181 — the add button overlays this list; it ends above it.
       padding: const EdgeInsets.only(bottom: kFabSafeBottom),
@@ -154,8 +152,7 @@ class _LevelList extends ConsumerWidget {
         if (saved == false) {
           AppSnack.error(
             context,
-            l10n?.levelReorderStale ??
-                'The levels changed meanwhile. Nothing was saved; the current order is shown.',
+            l10n.levelReorderStale,
           );
         }
       },
@@ -173,10 +170,8 @@ class _LevelList extends ConsumerWidget {
           // one tap on the layers icon.
           subtitle: Text(
             level.bookableAsWhole
-                ? (l10n?.editorLevelBookableOn ??
-                    'Bookable as a whole')
-                : (l10n?.editorLevelBookableOff ??
-                    'Not bookable as a whole'),
+                ? (l10n.editorLevelBookableOn)
+                : (l10n.editorLevelBookableOff),
           ),
           onTap: () => context.push('/editor/level/${level.id}'),
           trailing: Row(
@@ -184,7 +179,7 @@ class _LevelList extends ConsumerWidget {
             children: [
               IconButton(
                 key: ValueKey('editor-level-booking-${level.id}'),
-                tooltip: l10n?.levelBookableToggle ?? 'Bookable as a whole',
+                tooltip: l10n.levelBookableToggle,
                 icon: Icon(
                   level.bookableAsWhole ? Icons.layers : Icons.layers_outlined,
                 ),
@@ -197,7 +192,7 @@ class _LevelList extends ConsumerWidget {
             builder: (context, controller, child) => IconButton(
               key: ValueKey('editor-level-actions-$index'),
               icon: const Icon(Icons.more_vert),
-              tooltip: l10n?.editorLevelActions ?? 'Level actions',
+              tooltip: l10n.editorLevelActions,
               onPressed: () =>
                   controller.isOpen ? controller.close() : controller.open(),
             ),
@@ -207,7 +202,7 @@ class _LevelList extends ConsumerWidget {
                 onPressed: () async {
                   final name = await _promptName(
                     context,
-                    title: l10n?.editorRenameLevel ?? 'Rename',
+                    title: l10n.editorRenameLevel,
                     initial: level.name,
                   );
                   if (name == null || name.isEmpty) return;
@@ -216,7 +211,7 @@ class _LevelList extends ConsumerWidget {
                       .renameLevel(level.id, name);
                   ref.invalidate(levelsProvider);
                 },
-                child: Text(l10n?.editorRenameLevel ?? 'Rename'),
+                child: Text(l10n.editorRenameLevel),
               ),
               // Whole-level booking (0050): bookable toggle + half-day
               // price, per level.
@@ -227,7 +222,7 @@ class _LevelList extends ConsumerWidget {
                   builder: (_) => _LevelBookingDialog(level: level),
                 ),
                 child: Text(
-                  l10n?.levelBookableToggle ?? 'Bookable as a whole',
+                  l10n.levelBookableToggle,
                 ),
               ),
               MenuItemButton(
@@ -236,19 +231,19 @@ class _LevelList extends ConsumerWidget {
                   final confirmed = await showDialog<bool>(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text(l10n?.commonDelete ?? 'Delete'),
+                      title: Text(l10n.commonDelete),
                       content:
                           Text(deleteLevelConfirmText(ref, l10n)),
                       actions: [
                         TextButton(
                           key: ValueKey('editor-cancel-2-$index'),
                           onPressed: () => Navigator.of(context).pop(false),
-                          child: Text(l10n?.commonCancel ?? 'Cancel'),
+                          child: Text(l10n.commonCancel),
                         ),
                         FilledButton(
                           key: ValueKey('editor-delete-$index'),
                           onPressed: () => Navigator.of(context).pop(true),
-                          child: Text(l10n?.commonDelete ?? 'Delete'),
+                          child: Text(l10n.commonDelete),
                         ),
                       ],
                     ),
@@ -259,7 +254,7 @@ class _LevelList extends ConsumerWidget {
                       .deleteLevel(level.id);
                   ref.invalidate(levelsProvider);
                 },
-                child: Text(l10n?.commonDelete ?? 'Delete'),
+                child: Text(l10n.commonDelete),
               ),
             ],
               ),
@@ -299,14 +294,13 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final cents = parseCentsInput(_price.text) ?? 0;
     if (!await runGuarded(
       context,
       domain: 'editor',
       message: 'level booking save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(floorPlanRepositoryProvider).setLevelBooking(
             widget.level.id,
             bookableAsWhole: _bookable,
@@ -321,7 +315,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
       title: Text(widget.level.name),
       content: Column(
@@ -331,11 +325,10 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
             key: const ValueKey('level-bookable-switch'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              l10n?.levelBookableToggle ?? 'Bookable as a whole',
+              l10n.levelBookableToggle,
             ),
             subtitle: Text(
-              l10n?.levelBookableDesc ??
-                  'The whole floor can be reserved as one booking.',
+              l10n.levelBookableDesc,
             ),
             value: _bookable,
             onChanged: (v) => setState(() => _bookable = v),
@@ -347,7 +340,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
             keyboardType:
                 const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
-              labelText: l10n?.levelPriceLabel ?? 'Price per half-day',
+              labelText: l10n.levelPriceLabel,
             ),
           ),
         ],
@@ -356,12 +349,12 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
         TextButton(
           key: const ValueKey('editor-cancel-3'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('level-booking-save'),
           onPressed: _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

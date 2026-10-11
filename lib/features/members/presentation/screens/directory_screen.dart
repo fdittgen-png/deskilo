@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/theme/app_elevation.dart';
@@ -15,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -117,7 +119,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
   }
 
   Future<void> _openLink(BuildContext context, WidgetRef ref, Uri uri) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       final handled = await ref.read(linkLauncherProvider)(uri);
       if (!handled) throw StateError('no handler for $uri');
@@ -132,15 +134,14 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final now = ref.read(clockProvider).now();
     final membersAsync = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider).value ?? const {};
@@ -205,7 +206,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                     padding: const EdgeInsets.only(top: 48),
                     child: EmptyState(
                       icon: Icons.people_outline,
-                      title: l10n?.directoryEmpty ?? 'No members yet.',
+                      title: l10n.directoryEmpty,
                     ),
                   )
                 else
@@ -260,8 +261,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
       ),
       AsyncError() => Center(
         child: Text(
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
       ),
       _ => const LoadingView(),
@@ -276,7 +276,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
 /// target each surface.
 Widget? _presenceChip(
   BuildContext context, {
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
   required String memberId,
   required DirectoryPresence presence,
   required DateTime now,
@@ -286,7 +286,7 @@ Widget? _presenceChip(
   return switch (presence.kind) {
     DirectoryPresenceKind.online => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
-      label: l10n?.directoryOnline ?? 'Online',
+      label: l10n.directoryOnline,
       foreground: AppStatusColors.successOf(theme.brightness),
       outlined: true,
     ),
@@ -320,7 +320,7 @@ String _upcomingLabel(AppFormat format, Reservation reservation, String seatName
 /// [keyPrefix] keeps row and sheet [ValueKey]s distinct.
 Widget? _reservationChip(
   BuildContext context, {
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
   required String memberId,
   required ReservationInfo? info,
   required Map<String, String> targetNames,
@@ -336,18 +336,16 @@ Widget? _reservationChip(
     CheckedInNow() => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
       label: seatName.isEmpty
-          ? (l10n?.directoryCheckedIn ?? 'Checked in')
-          : (l10n?.directoryCheckedInSeat(seatName) ??
-                'Checked in · $seatName'),
+          ? (l10n.directoryCheckedIn)
+          : (l10n.directoryCheckedInSeat(seatName)),
       foreground: AppStatusColors.onSuccessOf(brightness),
       background: AppStatusColors.successOf(brightness),
     ),
     ReservedNow() => _StatusChip(
       chipKey: ValueKey('$keyPrefix-$memberId'),
       label: seatName.isEmpty
-          ? (l10n?.directoryReservedNow ?? 'Reserved now')
-          : (l10n?.directoryReservedNowSeat(seatName) ??
-                'Reserved now · $seatName'),
+          ? (l10n.directoryReservedNow)
+          : (l10n.directoryReservedNowSeat(seatName)),
       foreground: theme.colorScheme.primary,
       outlined: true,
     ),
@@ -367,7 +365,7 @@ Widget? _reservationChip(
 /// additive flags (spec §2) — owner outranks admin.
 Widget? _roleBadge(
   BuildContext context, {
-  required AppLocalizations? l10n,
+  required AppLocalizations l10n,
   required Member member,
 }) {
   final theme = Theme.of(context);
@@ -376,7 +374,7 @@ Widget? _roleBadge(
       padding: const EdgeInsets.only(left: AppSpacing.xs),
       child: _StatusChip(
         chipKey: ValueKey('directory-role-${member.id}'),
-        label: l10n?.memberRoleOwner ?? 'Owner',
+        label: l10n.memberRoleOwner,
         foreground: theme.colorScheme.onPrimary,
         background: theme.colorScheme.primary,
       ),
@@ -387,7 +385,7 @@ Widget? _roleBadge(
       padding: const EdgeInsets.only(left: AppSpacing.xs),
       child: _StatusChip(
         chipKey: ValueKey('directory-role-${member.id}'),
-        label: l10n?.memberRoleAdmin ?? 'Administrator',
+        label: l10n.memberRoleAdmin,
         foreground: theme.colorScheme.primary,
         outlined: true,
       ),
@@ -425,19 +423,19 @@ Future<void> showMemberProfileSheet(
   // Member notes (#456): null hides the affordance (feature off, self).
   VoidCallback? onNotify,
 }) {
-  return showModalBottomSheet<void>(
+  return showAppSheet<void>(
     context: context,
     // Scrollable so a full sheet (role + chip + status + button) never
     // overflows small viewports.
     isScrollControlled: true,
     builder: (sheetContext) {
-      final l10n = AppLocalizations.of(sheetContext);
+      final l10n = sheetContext.l10n;
       final theme = Theme.of(sheetContext);
       final role = member.isOwner
-          ? (l10n?.memberRoleOwner ?? 'Owner')
+          ? (l10n.memberRoleOwner)
           : member.isAdmin
-          ? (l10n?.memberRoleAdmin ?? 'Administrator')
-          : (l10n?.memberRoleMember ?? 'Member');
+          ? (l10n.memberRoleAdmin)
+          : (l10n.memberRoleMember);
       final chips = <Widget>[
         ?_reservationChip(
           sheetContext,
@@ -514,13 +512,13 @@ Future<void> showMemberProfileSheet(
               ],
               const SizedBox(height: AppSpacing.lg),
               Text(
-                l10n?.directoryReservationsHeading ?? 'Reservations',
+                l10n.directoryReservationsHeading,
                 style: theme.textTheme.titleSmall,
               ),
               const SizedBox(height: AppSpacing.xs),
               if (memberReservations.isEmpty)
                 Text(
-                  l10n?.directoryNoUpcoming ?? 'No upcoming reservations',
+                  l10n.directoryNoUpcoming,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -548,7 +546,7 @@ Future<void> showMemberProfileSheet(
                   key: ValueKey('directory-sheet-notify-${member.id}'),
                   icon: const Icon(Icons.notifications_active_outlined),
                   label: Text(
-                      l10n?.memberNotifyAction ?? 'Send notification'),
+                      l10n.memberNotifyAction),
                   onPressed: () {
                     Navigator.of(sheetContext).pop();
                     onNotify();
@@ -560,7 +558,7 @@ Future<void> showMemberProfileSheet(
                 FilledButton.icon(
                   key: ValueKey('directory-sheet-wa-${member.id}'),
                   icon: const Icon(Icons.chat_outlined),
-                  label: Text(l10n?.directoryWhatsapp ?? 'Chat on WhatsApp'),
+                  label: Text(l10n.directoryWhatsapp),
                   onPressed: () {
                     Navigator.of(sheetContext).pop();
                     onWhatsapp(whatsappUri);
@@ -571,7 +569,7 @@ Future<void> showMemberProfileSheet(
               TextButton(
                 key: const ValueKey('directory-contact-close'),
                 onPressed: () => Navigator.of(sheetContext).pop(),
-                child: Text(l10n?.directoryClose ?? 'Close'),
+                child: Text(l10n.directoryClose),
               ),
             ],
           ),
@@ -590,7 +588,7 @@ class _GroupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       key: const ValueKey('directory-group'),
       margin: const EdgeInsets.symmetric(
@@ -600,7 +598,7 @@ class _GroupTile extends StatelessWidget {
       child: ListTile(
         key: const ValueKey('directory-open-group'),
         leading: const Icon(Icons.groups_outlined),
-        title: Text(l10n?.directoryOpenGroup ?? 'Open WhatsApp group'),
+        title: Text(l10n.directoryOpenGroup),
         trailing: const Icon(Icons.open_in_new),
         onTap: onOpen,
       ),
@@ -656,7 +654,7 @@ class _MemberRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final brightness = theme.brightness;
 
@@ -764,7 +762,7 @@ class _MemberRow extends StatelessWidget {
           : IconButton(
               key: ValueKey('directory-wa-${member.id}'),
               icon: const Icon(Icons.chat_outlined),
-              tooltip: l10n?.directoryWhatsapp ?? 'Chat on WhatsApp',
+              tooltip: l10n.directoryWhatsapp,
               onPressed: () => onWhatsapp(whatsappUri),
             ),
       // #825 — the member page when its flag is on; the sheet otherwise.
@@ -844,7 +842,7 @@ class _MemberRow extends StatelessWidget {
             Icon(Icons.chat, color: AppStatusColors.onSuccessOf(brightness)),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              l10n?.directoryWhatsapp ?? 'Chat on WhatsApp',
+              l10n.directoryWhatsapp,
               style: TextStyle(color: AppStatusColors.onSuccessOf(brightness)),
             ),
           ],

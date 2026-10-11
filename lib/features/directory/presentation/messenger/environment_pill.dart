@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// A workspace name followed by PROD / DEV, in the colours of the Start page:
 /// green filled says the space is real, orange outlined one to try things in.
@@ -18,7 +18,7 @@ class EnvironmentLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final brightness = Theme.of(context).brightness;
     final fill = isProd
         ? AppEnvironmentColors.productionOf(brightness)
@@ -39,8 +39,8 @@ class EnvironmentLabel extends StatelessWidget {
           ),
           child: Text(
             isProd
-                ? (l10n?.profilesPairProd ?? 'PROD')
-                : (l10n?.profilesPairDev ?? 'DEV'),
+                ? (l10n.profilesPairProd)
+                : (l10n.profilesPairDev),
             style: Theme.of(context).textTheme.labelSmall
                 ?.copyWith(
                   color: isProd

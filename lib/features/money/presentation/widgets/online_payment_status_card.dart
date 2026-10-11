@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/payment_intent.dart';
 import '../../domain/payment_provider.dart';
@@ -38,7 +39,7 @@ class OnlinePaymentStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final currency = moneyFormat(currencyCode);
     return Card(
@@ -57,9 +58,8 @@ class OnlinePaymentStatusCard extends StatelessWidget {
               ),
               title: Text(
                 intent.status == 'failed'
-                    ? (l10n?.payOnlineFailedTitle ?? 'Online payment failed')
-                    : (l10n?.payOnlinePendingTitle ??
-                        'Online payment pending'),
+                    ? (l10n.payOnlineFailedTitle)
+                    : (l10n.payOnlinePendingTitle),
               ),
               subtitle: Text(_detail(l10n, intent, currency)),
             ),
@@ -69,7 +69,7 @@ class OnlinePaymentStatusCard extends StatelessWidget {
   }
 
   String _detail(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     PaymentIntent intent,
     MoneyFormat currency,
   ) {
@@ -79,12 +79,7 @@ class OnlinePaymentStatusCard extends StatelessWidget {
         : paymentProviderLabel(l10n, provider);
     final amount = currency.formatMinor(intent.amountCents);
     return intent.status == 'failed'
-        ? (l10n?.payOnlineFailedDetail(intent.reference, amount, via) ??
-            'Payment ${intent.reference} ($amount via $via) was not '
-                'completed — nothing was credited; the balance is still owed.')
-        : (l10n?.payOnlinePendingDetail(intent.reference, amount, via) ??
-            'Payment ${intent.reference} ($amount via $via) has not been '
-                'confirmed by the provider yet, so the balance still shows '
-                'what is owed. Quote this reference if it does not settle.');
+        ? (l10n.payOnlineFailedDetail(intent.reference, amount, via))
+        : (l10n.payOnlinePendingDetail(intent.reference, amount, via));
   }
 }

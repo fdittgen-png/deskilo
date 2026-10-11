@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/feature_lifecycle.dart';
@@ -55,13 +56,13 @@ class FeatureCapabilityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     if (rows.isEmpty) {
       return EmptyState(
         key: const ValueKey('features-no-match'),
         icon: Icons.search_off_outlined,
-        title: l10n?.featuresNoMatch ?? 'No feature matches that.',
+        title: l10n.featuresNoMatch,
       );
     }
 
@@ -90,7 +91,7 @@ class FeatureCapabilityList extends StatelessWidget {
     );
   }
 
-  Widget _tile(AppLocalizations? l10n, FeatureManifestEntry entry) {
+  Widget _tile(AppLocalizations l10n, FeatureManifestEntry entry) {
     final requires = entry.requires;
     return FeatureTile(
       key: ValueKey('feature-tile-${entry.feature.name}'),
@@ -101,8 +102,7 @@ class FeatureCapabilityList extends StatelessWidget {
       description: featureDescription(l10n, entry.feature),
       requiresLabel: requires == null
           ? null
-          : (l10n?.featureRequires(featureName(l10n, requires)) ??
-              'Requires ${featureName(l10n, requires)}'),
+          : (l10n.featureRequires(featureName(l10n, requires))),
       value: raw.contains(entry.feature),
       // #800 — every switch is live. A child no longer waits for its
       // parent: turning it on brings the parent with it, which is what

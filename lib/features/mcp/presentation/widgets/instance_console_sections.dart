@@ -9,6 +9,7 @@
 // can decide, with a reason and a length, shown as such afterwards.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -17,29 +18,22 @@ import '../../domain/instance_operator.dart';
 import '../../domain/mcp_onboarding.dart';
 
 /// The probe in words.
-String _endpointProbeText(AppLocalizations? l10n, EndpointProbe p) =>
+String _endpointProbeText(AppLocalizations l10n, EndpointProbe p) =>
     switch (p.state) {
       EndpointProbeState.deployed when p.fresh =>
-        l10n?.instanceProbeDeployed ??
-            'The assistant endpoint answers as it should.',
+        l10n.instanceProbeDeployed,
       EndpointProbeState.deployed =>
-        l10n?.instanceProbeStale ??
-            'The last check is more than 15 minutes old. Check again before '
-                'turning assistants on.',
+        l10n.instanceProbeStale,
       EndpointProbeState.pending =>
-        l10n?.instanceProbePending ?? 'Checking the server…',
+        l10n.instanceProbePending,
       EndpointProbeState.endpointNotDeployed =>
-        l10n?.instanceProbeNotDeployed ??
-            'The assistant endpoint is not deployed on this server yet.',
+        l10n.instanceProbeNotDeployed,
       EndpointProbeState.resourceMismatch =>
-        l10n?.instanceProbeMismatch ??
-            'The endpoint answers with another address than the one '
-                'assistants are given.',
+        l10n.instanceProbeMismatch,
       EndpointProbeState.unavailable =>
-        l10n?.instanceProbeUnavailable ??
-            'The server could not be reached. Try again in a moment.',
+        l10n.instanceProbeUnavailable,
       EndpointProbeState.missing || EndpointProbeState.unknown =>
-        l10n?.instanceProbeMissing ?? 'The server has not been checked yet.',
+        l10n.instanceProbeMissing,
     };
 
 /// Whether Turn on may be offered: a fresh probe that found the endpoint.
@@ -48,25 +42,20 @@ bool endpointReady(EndpointProbe p) =>
 
 /// The refusals the console's changes can meet, in plain words; null for
 /// anything else (the caller keeps its generic text).
-String? instanceRefusalText(AppLocalizations? l10n, Object error) =>
+String? instanceRefusalText(AppLocalizations l10n, Object error) =>
     switch (instanceRefusalOf(error)) {
       InstanceRefusal.grantNeedsGoogle =>
-        l10n?.instanceGrantNeedsGoogle ??
-            'Approving access needs this session to be signed in with Google.',
+        l10n.instanceGrantNeedsGoogle,
       InstanceRefusal.grantDays =>
-        l10n?.instanceGrantDays ?? 'Choose between 1 and 30 days.',
+        l10n.instanceGrantDays,
       InstanceRefusal.grantReason =>
-        l10n?.instanceGrantReasonNeeded ??
-            'Write why this access is approved (up to 500 characters).',
+        l10n.instanceGrantReasonNeeded,
       InstanceRefusal.otherAdministrator =>
-        l10n?.instanceGrantOtherAdmin ??
-            'A database administrator decides access here; ask them.',
+        l10n.instanceGrantOtherAdmin,
       InstanceRefusal.noIdentity =>
-        l10n?.instanceGrantNoIdentity ??
-            'That person has not confirmed their identity yet.',
+        l10n.instanceGrantNoIdentity,
       InstanceRefusal.endpointNotConfirmed =>
-        l10n?.instanceTurnOnNeedsProbe ??
-            'The assistant endpoint is not confirmed. Check the server first.',
+        l10n.instanceTurnOnNeedsProbe,
       null => null,
     };
 
@@ -82,19 +71,16 @@ class InstanceNoticesBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final unread = notices.notices.where((n) => n.unread).toList();
     if (unread.isEmpty) return const SizedBox.shrink();
     String text(InstanceNotice n) => switch (n.kind) {
       'mcp_client_waiting' =>
-        l10n?.instanceNoticeClientWaiting(n.subject) ??
-            '${n.subject} is waiting for your approval.',
+        l10n.instanceNoticeClientWaiting(n.subject),
       'mcp_self_grant' =>
-        l10n?.instanceNoticeSelfGrant(n.subject) ??
-            '${n.subject} approved their own assistant access.',
+        l10n.instanceNoticeSelfGrant(n.subject),
       'mcp_operator_grant' =>
-        l10n?.instanceNoticeOperatorGrant(n.subject) ??
-            'The operator approved assistant access for ${n.subject}.',
+        l10n.instanceNoticeOperatorGrant(n.subject),
       _ => n.subject,
     };
     return Padding(
@@ -118,7 +104,7 @@ class InstanceNoticesBanner extends StatelessWidget {
             child: TextButton(
               key: const ValueKey('instance-notices-read'),
               onPressed: onMarkAllRead,
-              child: Text(l10n?.instanceNoticesMarkRead ?? 'Mark as read'),
+              child: Text(l10n.instanceNoticesMarkRead),
             ),
           ),
         ],
@@ -140,14 +126,14 @@ class InstanceEndpointSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final probe = overview.endpointProbe;
     final resource = overview.endpoint.resource;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.instanceEndpointTitle ?? 'Assistant endpoint',
+          l10n.instanceEndpointTitle,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -162,7 +148,7 @@ class InstanceEndpointSection extends StatelessWidget {
           child: OutlinedButton(
             key: const ValueKey('instance-probe'),
             onPressed: onCheck,
-            child: Text(l10n?.instanceProbeCheck ?? 'Check the server'),
+            child: Text(l10n.instanceProbeCheck),
           ),
         ),
       ],
@@ -185,7 +171,7 @@ class InstanceAccessSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final o = overview;
     final dates = MaterialLocalizations.of(context);
     final granted = {for (final u in o.eligibleUsers) u.userId};
@@ -194,12 +180,12 @@ class InstanceAccessSection extends StatelessWidget {
     }.values.where((p) => !granted.contains(p.userId)).toList();
     // ignore: avoid_positional_boolean_parameters — #2389, an existing API; named when it next changes
     String who(String name, bool me) =>
-        me ? '$name (${l10n?.instanceYou ?? 'you'})' : name;
+        me ? '$name (${l10n.instanceYou})' : name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.instanceAccessTitle ?? 'Assistant access',
+          l10n.instanceAccessTitle,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         for (final u in o.eligibleUsers)
@@ -211,12 +197,11 @@ class InstanceAccessSection extends StatelessWidget {
             subtitle: Text(
               [
                 if (u.expiresAt case final at?)
-                  l10n?.instanceAccessUntil(dates.formatMediumDate(at)) ??
-                      'Until ${dates.formatMediumDate(at)}',
+                  l10n.instanceAccessUntil(dates.formatMediumDate(at)),
                 if (u.selfGrant)
-                  l10n?.instanceSelfApproved ?? 'Self-approved by operator'
+                  l10n.instanceSelfApproved
                 else if (u.grantedByOperator)
-                  l10n?.instanceOperatorApproved ?? 'Approved by the operator',
+                  l10n.instanceOperatorApproved,
               ].join(' · '),
             ),
           ),
@@ -224,18 +209,13 @@ class InstanceAccessSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: Text(
-              l10n?.instanceGrantHelp ??
-                  'While no other database administrator exists, you approve '
-                      'access yourself — yours included — for up to 30 days, '
-                      'with a reason. Each approval is recorded.',
+              l10n.instanceGrantHelp,
             ),
           ),
           if (!o.googleSession)
             Text(
               key: const ValueKey('instance-grant-google'),
-              l10n?.instanceGrantNeedsGoogle ??
-                  'Approving access needs this session to be signed in with '
-                      'Google.',
+              l10n.instanceGrantNeedsGoogle,
             ),
           for (final p in people)
             ListTile(
@@ -248,7 +228,7 @@ class InstanceAccessSection extends StatelessWidget {
                 onPressed: onGrant == null || !o.googleSession
                     ? null
                     : () => onGrant!(p),
-                child: Text(l10n?.instanceGrant ?? 'Approve access'),
+                child: Text(l10n.instanceGrant),
               ),
             ),
         ],
@@ -279,13 +259,12 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final days = _days.round();
     final reason = _reason.text.trim();
     return AlertDialog(
       title: Text(
-        l10n?.instanceGrantTitle(widget.name) ??
-            'Approve assistant access for ${widget.name}',
+        l10n.instanceGrantTitle(widget.name),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -297,11 +276,11 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
             maxLength: 500,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              labelText: l10n?.instanceGrantReason ?? 'Reason',
+              labelText: l10n.instanceGrantReason,
             ),
           ),
           Text(
-            l10n?.instanceGrantDaysLabel(days) ?? 'For $days days',
+            l10n.instanceGrantDaysLabel(days),
             key: const ValueKey('instance-grant-days'),
           ),
           Slider(
@@ -326,7 +305,7 @@ class _InstanceGrantDialogState extends State<InstanceGrantDialog> {
           onPressed: reason.isEmpty
               ? null
               : () => Navigator.pop(context, (reason: reason, days: days)),
-          child: Text(l10n?.instanceGrant ?? 'Approve access'),
+          child: Text(l10n.instanceGrant),
         ),
       ],
     );

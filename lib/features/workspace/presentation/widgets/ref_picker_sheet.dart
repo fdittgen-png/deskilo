@@ -18,8 +18,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/workspace_currency.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'ref_picker_filter.dart';
@@ -93,7 +95,7 @@ Future<String?> showRefPicker(
   required String keyPrefix,
   List<RefFacet> facets = const [],
   String Function(int cents)? formatAmount,
-}) => showModalBottomSheet<String>(
+}) => showAppSheet<String>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,
@@ -136,11 +138,11 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
   bool get _hasAdvanced =>
       widget.facets.isNotEmpty || refAmountBounds(widget.candidates) != null;
 
-  String _sortLabel(AppLocalizations? l10n, RefSort sort) => switch (sort) {
-    RefSort.newest => l10n?.refSortNewest ?? 'Newest first',
-    RefSort.oldest => l10n?.refSortOldest ?? 'Oldest first',
-    RefSort.amountHigh => l10n?.refSortAmountHigh ?? 'Highest amount',
-    RefSort.amountLow => l10n?.refSortAmountLow ?? 'Lowest amount',
+  String _sortLabel(AppLocalizations l10n, RefSort sort) => switch (sort) {
+    RefSort.newest => l10n.refSortNewest,
+    RefSort.oldest => l10n.refSortOldest,
+    RefSort.amountHigh => l10n.refSortAmountHigh,
+    RefSort.amountLow => l10n.refSortAmountLow,
   };
 
   Future<void> _openAdvanced() async {
@@ -157,7 +159,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final visible = applyRefFilter(widget.candidates, _filter);
     // The filter earns its place only on a list long enough to hide
@@ -206,13 +208,12 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                           prefixIcon: const Icon(Icons.search),
                           isDense: true,
                           border: const OutlineInputBorder(),
-                          labelText: l10n?.noteRefFilterLabel ?? 'Filter',
+                          labelText: l10n.noteRefFilterLabel,
                           helperText:
-                              l10n?.noteRefFilterCount(
+                              l10n.noteRefFilterCount(
                                 visible.length,
                                 widget.candidates.length,
-                              ) ??
-                              '${visible.length} of ${widget.candidates.length}',
+                              ),
                         ),
                         onChanged: (value) => setState(
                           () => _filter = _filter.copyWith(query: value),
@@ -223,7 +224,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                       const SizedBox(width: AppSpacing.sm),
                       IconButton.filledTonal(
                         key: Key('${widget.keyPrefix}-more'),
-                        tooltip: l10n?.refFilterMore ?? 'Filters',
+                        tooltip: l10n.refFilterMore,
                         onPressed: _openAdvanced,
                         icon: _filter.activeCount > 0
                             ? Badge.count(
@@ -264,7 +265,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                     if (sortable)
                       PopupMenuButton<RefSort>(
                         key: Key('${widget.keyPrefix}-sort'),
-                        tooltip: l10n?.refFilterSort ?? 'Sort',
+                        tooltip: l10n.refFilterSort,
                         initialValue: _filter.sort,
                         onSelected: (s) =>
                             setState(() => _filter = _filter.copyWith(sort: s)),
@@ -297,7 +298,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                         onPressed: () => setState(
                           () => _filter = RefFilter(sort: _filter.sort),
                         ),
-                        child: Text(l10n?.refFilterClear ?? 'Clear filters'),
+                        child: Text(l10n.refFilterClear),
                       ),
                   ],
                 ),
@@ -307,7 +308,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                   ? Padding(
                       padding: const EdgeInsets.all(AppSpacing.lg),
                       child: Text(
-                        l10n?.noteRefFilterEmpty ?? 'Nothing matches.',
+                        l10n.noteRefFilterEmpty,
                         key: Key('${widget.keyPrefix}-empty'),
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
@@ -385,7 +386,7 @@ class _QuickChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final options = refFacetOptions(all, filter, facet.key);
     if (options.length < 2 &&
         (filter.selected[facet.key] ?? const {}).isEmpty) {
@@ -408,7 +409,7 @@ class _QuickChips extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8),
               child: ChoiceChip(
                 key: Key('$keyPrefix-quick-all'),
-                label: Text('${l10n?.refFilterAll ?? 'All'} · $total'),
+                label: Text('${l10n.refFilterAll} · $total'),
                 selected: chosen.isEmpty,
                 onSelected: (_) => onChanged(filter.cleared(facet.key)),
               ),
@@ -454,7 +455,7 @@ class _ActiveChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final chips = <Widget>[];
     for (final facet in facets) {
       if (facet.key == skip) continue;
@@ -483,7 +484,7 @@ class _ActiveChips extends StatelessWidget {
         InputChip(
           key: Key('$keyPrefix-active-amount'),
           avatar: const Icon(Icons.payments_outlined, size: 18),
-          label: Text('${l10n?.refFilterAmount ?? 'Amount'} $lo – $hi'),
+          label: Text('${l10n.refFilterAmount} $lo – $hi'),
           onDeleted: () => onChanged(filter.copyWith(clearAmount: true)),
         ),
       );

@@ -20,6 +20,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../../core/share/file_sharer.dart';
@@ -29,7 +30,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../directory/presentation/admin_visibility_tile.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../money/domain/report_data_letters.dart';
@@ -172,14 +172,13 @@ class _WorkspaceSettingsScreenState
     if (!WorkspaceFormGroup.validate(_formKey.currentState)) return;
     final code = _countryCode;
     if (code == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'update workspace locale failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
           // #1451 — ONE command, one transaction, against the version the
           // form was opened on. The visible template is stashed first;
@@ -209,9 +208,7 @@ class _WorkspaceSettingsScreenState
             if (mounted) {
               AppSnack.error(
                 context,
-                l10n?.workspaceSettingsConflict ??
-                    'Someone changed these settings while you were editing. '
-                        'Nothing was saved; your changes are still here.',
+                l10n.workspaceSettingsConflict,
               );
             }
             return;
@@ -224,7 +221,7 @@ class _WorkspaceSettingsScreenState
           if (!mounted) return;
           AppSnack.success(
             context,
-            l10n?.workspaceSettingsSaved ?? 'Workspace saved.',
+            l10n.workspaceSettingsSaved,
           );
       },
     )) {
@@ -239,7 +236,7 @@ class _WorkspaceSettingsScreenState
   /// XML format (#164) and hands it to the system share sheet as a `.xml`
   /// file — same seam the bill PDF export uses (#133).
   Future<void> _exportXml(Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     // #1012 — every export leaves a trace of its start and its end, so a
     // silent device tells its story; the save is bounded, so a bridge
@@ -250,8 +247,7 @@ class _WorkspaceSettingsScreenState
       context,
       domain: 'workspace',
       message: 'workspace XML export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
           final levels = await ref.read(levelsProvider.future);
           final plans = <({Level level, FloorPlan plan})>[];
@@ -303,7 +299,7 @@ class _WorkspaceSettingsScreenState
             path,
             action: SnackBarAction(
               key: const ValueKey('workspace-settings-share'),
-              label: l10n?.commonShare ?? 'Share',
+              label: l10n.commonShare,
               onPressed: () => ref.read(fileSharerProvider)(
                 bytes: bytes,
                 fileName: fileName,
@@ -320,30 +316,30 @@ class _WorkspaceSettingsScreenState
   }
 
   /// Confirms a local export saved (or reports failure) — never a share.
-  void _announceSaved(AppLocalizations? l10n, String? path,
+  void _announceSaved(AppLocalizations l10n, String? path,
       {SnackBarAction? action}) {
     if (path == null) {
-      AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+      AppSnack.error(context, l10n.commonSaveFailed);
       return;
     }
-    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path',
+    AppSnack.success(context, l10n.commonSavedTo(path),
         action: action);
   }
 
   /// Role label for a member — owner outranks admin outranks member.
   String _granularityLabel(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     BookingGranularity granularity,
   ) =>
       switch (granularity) {
         BookingGranularity.flexible =>
-          l10n?.availabilityGranularityFlexible ?? 'Flexible',
+          l10n.availabilityGranularityFlexible,
         BookingGranularity.halfDay =>
-          l10n?.availabilityGranularityHalfDay ?? 'Half day',
+          l10n.availabilityGranularityHalfDay,
         BookingGranularity.fullDay =>
-          l10n?.availabilityGranularityFullDay ?? 'Full day',
+          l10n.availabilityGranularityFullDay,
         BookingGranularity.hours =>
-          l10n?.availabilityGranularityHours ?? 'Real hours',
+          l10n.availabilityGranularityHours,
         // Minute granularities carry their step in the label itself.
         BookingGranularity.minutes5 ||
         BookingGranularity.minutes15 ||
@@ -359,14 +355,13 @@ class _WorkspaceSettingsScreenState
   /// this is the owner's shareable configuration record.
   /// #494 — the engine-based workspace report, saved to the device.
   Future<void> _exportWorkspaceReport() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'workspace report export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         await warmLetterDocProviders(ref, 'workspace');
         if (!mounted) return;
@@ -378,9 +373,7 @@ class _WorkspaceSettingsScreenState
         } on AmbiguousReportLanguage {
           AppSnack.error(
             context,
-            l10n?.reportLanguageAmbiguous ??
-                'This country has several languages — set the '
-                    'workspace language in Workspace settings first.',
+            l10n.reportLanguageAmbiguous,
           );
           return;
         }
@@ -409,15 +402,14 @@ class _WorkspaceSettingsScreenState
   }
 
   Future<void> _exportConfigPdf(Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     setState(() => _busy = true);
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'workspace config PDF export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
           final levelsList = await ref.read(levelsProvider.future);
           final plans = <ConfigPdfLevel>[];
@@ -463,17 +455,16 @@ class _WorkspaceSettingsScreenState
             final parts = <String>[
               switch (member.overagePolicy) {
                 OveragePolicy.blocked =>
-                  l10n?.overagePolicyBlocked ?? 'Blocked at quota',
+                  l10n.overagePolicyBlocked,
                 OveragePolicy.payg =>
-                  l10n?.overagePolicyPayg ?? 'Pay as you go',
+                  l10n.overagePolicyPayg,
                 OveragePolicy.package =>
-                  l10n?.overagePolicyPackage ?? 'Day packages',
+                  l10n.overagePolicyPackage,
               },
               if (member.maxActiveReservations != null)
                 'max ${member.maxActiveReservations}',
               if (member.canReserveLevel)
-                l10n?.levelPermissionAllowed ??
-                    'May reserve a whole level',
+                l10n.levelPermissionAllowed,
             ];
             return parts.join(' · ');
           }
@@ -493,8 +484,7 @@ class _WorkspaceSettingsScreenState
           final data = workspaceConfigurationReportData(
             strings: strings,
             workspaceName: workspace.name,
-            generatedOnLabel: l10n?.workspaceConfigPdfGeneratedOn(generatedOn) ??
-                'Generated on $generatedOn',
+            generatedOnLabel: l10n.workspaceConfigPdfGeneratedOn(generatedOn),
             countryLabel: localizedCountryName(l10n, workspace.countryCode),
             currencyCode: workspace.currencyCode,
             timezone: workspace.timezone,
@@ -547,7 +537,7 @@ class _WorkspaceSettingsScreenState
   /// #584 — the owner first picks the card size (S/M/L) and which
   /// information rides each card (printed AND embedded in the QR).
   Future<void> _exportSpaceCodes(Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final options = await showDialog<SpaceCodesOptions>(
       context: context,
       builder: (_) => const SpaceCodesOptionsDialog(),
@@ -558,8 +548,7 @@ class _WorkspaceSettingsScreenState
       context,
       domain: 'workspace',
       message: 'space codes export failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         // #671 — cover wording and images come from report management.
         final cover = await batchCover(context, ref, docId: 'space_codes', data: {
@@ -569,14 +558,14 @@ class _WorkspaceSettingsScreenState
         if (!mounted || cover == null) return;
         // #1277 — capture localized space nouns before reading the entries.
         final kindLevel = lexiconText(context,
-            key: 'spaceKindLevel', fallback: l10n?.spaceKindLevel ?? 'Level');
+            key: 'spaceKindLevel', fallback: l10n.spaceKindLevel);
         final kindOffice = lexiconText(context,
             key: 'spaceKindOffice',
-            fallback: l10n?.spaceKindOffice ?? 'Office');
+            fallback: l10n.spaceKindOffice);
         final kindDesk = lexiconText(context,
-            key: 'spaceKindDesk', fallback: l10n?.spaceKindDesk ?? 'Desk');
+            key: 'spaceKindDesk', fallback: l10n.spaceKindDesk);
         final kindSeat = lexiconText(context,
-            key: 'spaceKindSeat', fallback: l10n?.spaceKindSeat ?? 'Seat');
+            key: 'spaceKindSeat', fallback: l10n.spaceKindSeat);
         final levels = await ref.read(levelsProvider.future);
         final entries = buildSpaceCodeEntries(
           workspaceId: workspace.id,
@@ -598,7 +587,7 @@ class _WorkspaceSettingsScreenState
           if (!mounted) return;
           AppSnack.info(
             context,
-            l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
+            l10n.planNoLevels,
           );
           return;
         }
@@ -613,7 +602,7 @@ class _WorkspaceSettingsScreenState
           size: options.size,
           qrSize: options.qrSize,
           coverContinuation: cover.continuation,
-          pageLabel: l10n?.invoicePdfPage ?? 'Page',
+          pageLabel: l10n.invoicePdfPage,
           coverHeader: cover.header,
           coverBody: cover.body,
           coverFooter: cover.footer,
@@ -637,11 +626,11 @@ class _WorkspaceSettingsScreenState
   /// phrase ("I agree"), then wipes all transactions + the floor plan while
   /// keeping settings and members.
   Future<void> _resetWorkspace(Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => ResetConfirmDialog(
-        phrase: l10n?.workspaceResetConfirmPhrase ?? 'I agree',
+        phrase: l10n.workspaceResetConfirmPhrase,
       ),
     );
     if (confirmed != true || !mounted) return;
@@ -651,8 +640,7 @@ class _WorkspaceSettingsScreenState
       context,
       domain: 'workspace',
       message: 'workspace reset failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
           await ref.read(workspaceRepositoryProvider).resetWorkspace(workspace.id);
           // Refresh every surface that read the now-deleted data.
@@ -667,7 +655,7 @@ class _WorkspaceSettingsScreenState
           if (!mounted) return;
           AppSnack.success(
             context,
-            l10n?.workspaceResetDone ?? 'Workspace reset.',
+            l10n.workspaceResetDone,
           );
       },
     )) {
@@ -679,25 +667,19 @@ class _WorkspaceSettingsScreenState
 
   /// User-facing message for a typed parse failure (#164/#165). The
   /// technical [WorkspaceXmlException.detail] goes to the trace log only.
-  String _xmlErrorMessage(AppLocalizations? l10n, WorkspaceXmlError error) =>
+  String _xmlErrorMessage(AppLocalizations l10n, WorkspaceXmlError error) =>
       switch (error) {
         WorkspaceXmlError.malformed =>
-          l10n?.workspaceXmlErrorMalformed ?? 'The file is not readable XML.',
-        WorkspaceXmlError.wrongRoot => l10n?.workspaceXmlErrorWrongRoot ??
-            'This is not a DesKilo workspace file.',
+          l10n.workspaceXmlErrorMalformed,
+        WorkspaceXmlError.wrongRoot => l10n.workspaceXmlErrorWrongRoot,
         WorkspaceXmlError.unsupportedVersion =>
-          l10n?.workspaceXmlErrorUnsupportedVersion ??
-              'The file was exported by a newer version of DesKilo and '
-                  'cannot be imported.',
+          l10n.workspaceXmlErrorUnsupportedVersion,
         WorkspaceXmlError.missingElement =>
-          l10n?.workspaceXmlErrorMissingElement ??
-              'The file is incomplete — a required section is missing.',
+          l10n.workspaceXmlErrorMissingElement,
         WorkspaceXmlError.missingAttribute =>
-          l10n?.workspaceXmlErrorMissingAttribute ??
-              'The file is incomplete — a required value is missing.',
+          l10n.workspaceXmlErrorMissingAttribute,
         WorkspaceXmlError.invalidValue =>
-          l10n?.workspaceXmlErrorInvalidValue ??
-              'The file contains an invalid value and cannot be imported.',
+          l10n.workspaceXmlErrorInvalidValue,
       };
 
   /// Owner-only XML import (#165): pick file → parse (typed errors) →
@@ -705,7 +687,7 @@ class _WorkspaceSettingsScreenState
   /// transactional replace via the import RPC, settings via the existing
   /// owner writers.
   Future<void> _importXml(Workspace workspace) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     // #1532 — how far the import got, so a stop partway is not reported
     // as if nothing had happened. Out here because the catch reads it.
@@ -715,7 +697,7 @@ class _WorkspaceSettingsScreenState
       final file = await pick(XTypeGroup(
         // Acronym identical in every locale (IBAN precedent, #155); the
         // key exists so the parity gate covers the whole set.
-        label: l10n?.workspaceXmlFileTypeLabel ?? 'XML',
+        label: l10n.workspaceXmlFileTypeLabel,
         extensions: const ['xml'],
         mimeTypes: const ['application/xml', 'text/xml'],
       ));
@@ -748,9 +730,7 @@ class _WorkspaceSettingsScreenState
         if (!mounted) return;
         AppSnack.error(
           context,
-          l10n?.workspaceXmlErrorInvalidPlan ??
-              'The floor plan in the file is invalid: rooms, desks or seats '
-                  'overlap or extend outside their parent.',
+          l10n.workspaceXmlErrorInvalidPlan,
         );
         return;
       }
@@ -785,46 +765,34 @@ class _WorkspaceSettingsScreenState
         builder: (dialogContext) {
           final theme = Theme.of(dialogContext);
           return AlertDialog(
-            title: Text(l10n?.workspaceXmlImportPreviewTitle ??
-                'Replace floor plan?'),
+            title: Text(l10n.workspaceXmlImportPreviewTitle),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n?.workspaceXmlImportPreviewCounts(counts.levels,
-                          counts.offices, counts.desks, counts.seats) ??
-                      'Levels: ${counts.levels} · '
-                          'Offices: ${counts.offices} · '
-                          'Desks: ${counts.desks} · '
-                          'Seats: ${counts.seats}',
+                  l10n.workspaceXmlImportPreviewCounts(counts.levels,
+                          counts.offices, counts.desks, counts.seats),
                 ),
                 // #180 — own additive line: the four-count key keeps its
                 // placeholders untouched across all locales.
                 Text(
-                  l10n?.workspaceXmlImportPreviewAccessories(
-                          counts.accessories) ??
-                      'Accessories: ${counts.accessories}',
+                  l10n.workspaceXmlImportPreviewAccessories(
+                          counts.accessories),
                 ),
                 if (configurationCount != null)
                   Text(
-                    l10n?.workspaceXmlImportPreviewConfiguration(
+                    l10n.workspaceXmlImportPreviewConfiguration(
                             configurationCount.settings,
                             configurationCount.tables,
-                            configurationCount.rows) ??
-                        'Configuration: ${configurationCount.settings} '
-                            'settings, ${configurationCount.rows} rows in '
-                            '${configurationCount.tables} tables',
+                            configurationCount.rows),
                   ),
                 if (configuration != null && !applyConfiguration)
-                  Text((l10n ?? lookupAppLocalizations(const Locale('en')))
+                  Text(l10n
                       .workspaceXmlImportPreviewConfigurationSkipped),
                 const SizedBox(height: 12),
                 Text(
-                  l10n?.workspaceXmlImportPreviewWarning ??
-                      'The current floor plan will be deleted and replaced, '
-                          'and the workspace settings will be overwritten. '
-                          'This cannot be undone.',
+                  l10n.workspaceXmlImportPreviewWarning,
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.error),
                 ),
@@ -834,7 +802,7 @@ class _WorkspaceSettingsScreenState
               TextButton(
                 key: const Key('workspaceXmlImportCancel'),
                 onPressed: () => Navigator.of(dialogContext).pop(false),
-                child: Text(l10n?.commonCancel ?? 'Cancel'),
+                child: Text(l10n.commonCancel),
               ),
               FilledButton(
                 key: const Key('workspaceXmlImportConfirm'),
@@ -844,7 +812,7 @@ class _WorkspaceSettingsScreenState
                 ),
                 onPressed: () => Navigator.of(dialogContext).pop(true),
                 child: Text(
-                    l10n?.workspaceXmlImportConfirm ?? 'Replace and import'),
+                    l10n.workspaceXmlImportConfirm),
               ),
             ],
           );
@@ -938,23 +906,18 @@ class _WorkspaceSettingsScreenState
       if (brandRefused.isNotEmpty) {
         AppSnack.error(
           context,
-          l10n?.brandColorRefused(data.settings.brandColor ?? '', brandRefused) ??
-              'The colour ${data.settings.brandColor} was not applied: '
-                  '$brandRefused would be unreadable.',
+          l10n.brandColorRefused(data.settings.brandColor ?? '', brandRefused),
         );
       }
       if (planKept) {
         AppSnack.info(
           context,
-          l10n?.workspaceXmlImportConfigurationOnly ??
-              'The configuration was applied. The floor plan was kept: '
-                  'this space already has reservations, so its plan cannot '
-                  'be replaced.',
+          l10n.workspaceXmlImportConfigurationOnly,
         );
       } else {
         AppSnack.success(
           context,
-          l10n?.workspaceXmlImportSuccess ?? 'Workspace imported.',
+          l10n.workspaceXmlImportSuccess,
         );
       }
     } on PostgrestException catch (e, st) {
@@ -965,12 +928,8 @@ class _WorkspaceSettingsScreenState
       AppSnack.error(
         context,
         e.message.contains(kWorkspaceHasReservationsError)
-            ? (l10n?.workspaceXmlImportReservationsError ??
-                'This workspace already has reservations, so its floor plan '
-                    'cannot be replaced. Imports are only possible before '
-                    'the first booking.')
-            : (l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.'),
+            ? (l10n.workspaceXmlImportReservationsError)
+            : (l10n.workspaceGenericError),
       );
       if (anythingApplied) _sayPartial(context, l10n);
     } on Object catch (e, st) {
@@ -980,8 +939,7 @@ class _WorkspaceSettingsScreenState
       if (!mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       if (anythingApplied) _sayPartial(context, l10n);
     } finally {
@@ -1000,10 +958,10 @@ class _WorkspaceSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final labels = l10n ?? AppLocalizationsEn();
+    final l10n = context.l10n;
+    final labels = l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final helpTopic = l10n?.helpHintWorkspaceTopic ?? 'Workspace settings';
+    final helpTopic = l10n.helpHintWorkspaceTopic;
     if (widget.reportsOnly) { return Scaffold(
       appBar: AppBar(title: Text(labels.uxReportsTitle)),
       body: workspace == null ? const LoadingView() : WorkspaceReports(
@@ -1046,7 +1004,7 @@ class _WorkspaceSettingsScreenState
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.workspaceSettingsTitle ?? 'Workspace'),
+        title: Text(l10n.workspaceSettingsTitle),
       ),
       body: workspace == null
           ? const LoadingView()
@@ -1056,7 +1014,7 @@ class _WorkspaceSettingsScreenState
                   // #2313 — tips sit at the top of every screen.
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
-                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n?.portalPublication??'Public workspace page'),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
+                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
                   WorkspaceFormGroup(id: 'tools', title: labels.uxWorkspaceTools, icon: Icons.import_export,
@@ -1073,7 +1031,7 @@ class _WorkspaceSettingsScreenState
   /// lines long; the tiles are unchanged, only the list is cut.
   List<Widget> _parametersTiles(
     BuildContext context, {
-    required AppLocalizations? l10n,
+    required AppLocalizations l10n,
     required Workspace workspace,
     required String helpTopic,
   }) =>
@@ -1083,14 +1041,14 @@ class _WorkspaceSettingsScreenState
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),
-                  WorkspaceFormGroup(id: 'general', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceGeneral, icon: Icons.location_on_outlined, initiallyExpanded: true, children: [
+                  WorkspaceFormGroup(id: 'general', title: l10n.uxWorkspaceGeneral, icon: Icons.location_on_outlined, initiallyExpanded: true, children: [
                   _withDot(
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsCountry'),
                       isExpanded: true,
                       initialValue: _countryCode,
                       decoration: InputDecoration(
-                        labelText: l10n?.workspaceCountryLabel ?? 'Country',
+                        labelText: l10n.workspaceCountryLabel,
                       ),
                       items: [
                         for (final country in CountryCatalog.countries)
@@ -1128,18 +1086,14 @@ class _WorkspaceSettingsScreenState
                       isExpanded: true,
                       initialValue: _defaultLocale,
                       decoration: InputDecoration(
-                        labelText: l10n?.workspaceLanguageLabel ??
-                            'Workspace language',
+                        labelText: l10n.workspaceLanguageLabel,
                         helperMaxLines: 3,
-                        helperText: l10n?.workspaceLanguageHelper ??
-                            'Invitations are written in this language by '
-                                'default.',
+                        helperText: l10n.workspaceLanguageHelper,
                       ),
                       items: [
                         DropdownMenuItem(
                           value: '',
-                          child: Text(l10n?.workspaceLanguageUnset ??
-                              "Sender's app language"),
+                          child: Text(l10n.workspaceLanguageUnset),
                         ),
                         for (final entry in _languages.entries)
                           DropdownMenuItem(
@@ -1164,8 +1118,7 @@ class _WorkspaceSettingsScreenState
                     enabled: !_busy,
                     maxLines: 2,
                     decoration: InputDecoration(
-                      labelText: l10n?.workspaceAddressLabel ??
-                          'Workspace address',
+                      labelText: l10n.workspaceAddressLabel,
                       suffixIcon: HelpDot(helpTopic,
                         anchor: HelpAnchor.workspaceAddress,
                       ),
@@ -1173,17 +1126,14 @@ class _WorkspaceSettingsScreenState
                   ),
                   const SizedBox(height: 24),
                   ]),
-                  WorkspaceFormGroup(id: 'payments', title: (l10n ?? AppLocalizationsEn()).workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
+                  WorkspaceFormGroup(id: 'payments', title: l10n.workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
                   ListTile(
                     key: const Key('workspaceSettingsPaymentMethods'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(
                         Icons.account_balance_wallet_outlined),
-                    title: Text(l10n?.paymentInstructionsTitle ??
-                        'Payment instructions'),
-                    subtitle: Text(l10n?.paymentMethodsSubtitle ??
-                        'IBAN, PayPal, Wero, Lydia, Wise and the '
-                            'payment reference'),
+                    title: Text(l10n.paymentInstructionsTitle),
+                    subtitle: Text(l10n.paymentMethodsSubtitle),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/payment-methods'),
                   ),
@@ -1194,31 +1144,24 @@ class _WorkspaceSettingsScreenState
                     key: const Key('workspaceSettingsLegalIdentity'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.badge_outlined),
-                    title: Text(l10n?.legalIdentityTitle ??
-                        'Legal identity & e-invoicing'),
-                    subtitle: Text(l10n?.legalIdentitySubtitle ??
-                        'VAT regime and registration numbers'),
+                    title: Text(l10n.legalIdentityTitle),
+                    subtitle: Text(l10n.legalIdentitySubtitle),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/legal-identity'),
                   ),
                   ..._billingTools(context, l10n: l10n, helpTopic: helpTopic),
                   const SizedBox(height: 24),
                   ]),
-                  WorkspaceFormGroup(id: 'community', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceCommunity, icon: Icons.forum_outlined, children: [
+                  WorkspaceFormGroup(id: 'community', title: l10n.uxWorkspaceCommunity, icon: Icons.forum_outlined, children: [
                   // #231 — the community's WhatsApp group; the link is
                   // shown to members in the directory (#232).
                   Text(
-                    l10n?.workspaceWhatsappGroupTitle ?? 'WhatsApp group',
+                    l10n.workspaceWhatsappGroupTitle,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    l10n?.workspaceWhatsappGroupHelper ??
-                        'Shown to members so they can join the '
-                            'community\'s WhatsApp group. Paste the '
-                            'group\'s invite link '
-                            '(https://chat.whatsapp.com/…). Leave empty '
-                            'to show nothing.',
+                    l10n.workspaceWhatsappGroupHelper,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 12),
@@ -1228,8 +1171,7 @@ class _WorkspaceSettingsScreenState
                     enabled: !_busy,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(
-                      labelText: l10n?.workspaceWhatsappGroupLabel ??
-                          'WhatsApp group link',
+                      labelText: l10n.workspaceWhatsappGroupLabel,
                       suffixIcon: HelpDot(helpTopic,
                         anchor: HelpAnchor.workspaceWhatsappGroup,
                       ),
@@ -1240,8 +1182,7 @@ class _WorkspaceSettingsScreenState
                     validator: (value) =>
                         WhatsappGroupRules.isValid(value?.trim() ?? '')
                             ? null
-                            : (l10n?.workspaceWhatsappGroupInvalid ??
-                                'Must be a chat.whatsapp.com invite link'),
+                            : (l10n.workspaceWhatsappGroupInvalid),
                   ),
                   const SizedBox(height: 24),
                   // 0049 — the invitation message template. Tags are
@@ -1249,7 +1190,7 @@ class _WorkspaceSettingsScreenState
                   // built-in message (invite sheet on the ID & QR screen).
                   Row(children: [
                     Expanded(child: Text(
-                      l10n?.invitationTemplateTitle ?? 'Invitation message',
+                      l10n.invitationTemplateTitle,
                       style: Theme.of(context).textTheme.titleMedium,
                     )),
                     HelpDot(helpTopic,
@@ -1258,11 +1199,7 @@ class _WorkspaceSettingsScreenState
                   ]),
                   const SizedBox(height: 4),
                   Text(
-                    l10n?.invitationTemplateHelp ??
-                        'Sent when you invite someone via WhatsApp, SMS, '
-                            'or share. Leave empty to use the built-in '
-                            'message in the chosen language. '
-                            'Available tags:',
+                    l10n.invitationTemplateHelp,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
@@ -1276,7 +1213,7 @@ class _WorkspaceSettingsScreenState
                   // from the workspace language on every open, and
                   // nothing about it is saved. Say so.
                   Text(
-                    l10n?.invitationTemplateLanguage ?? 'Message language',
+                    l10n.invitationTemplateLanguage,
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                   const SizedBox(height: 4),
@@ -1330,15 +1267,13 @@ class _WorkspaceSettingsScreenState
                     maxLines: 8,
                     maxLength: invitationTemplateMaxLength,
                     decoration: InputDecoration(
-                      labelText: l10n?.invitationTemplateTitle ??
-                          'Invitation message',
-                      hintText: l10n?.invitationTemplateHint ??
-                          'Custom invitation message using the tags above…',
+                      labelText: l10n.invitationTemplateTitle,
+                      hintText: l10n.invitationTemplateHint,
                     ),
                   ),
                   const SizedBox(height: 24),
                   ]),
-                  WorkspaceFormGroup(id: 'appearance', title: (l10n ?? AppLocalizationsEn()).uxWorkspaceAppearance, icon: Icons.palette_outlined, children: [
+                  WorkspaceFormGroup(id: 'appearance', title: l10n.uxWorkspaceAppearance, icon: Icons.palette_outlined, children: [
                   // #1277 / #1289 — the rows that open a screen of their
                   // own: neither rides the Save button below.
                   WorkspaceOwnScreens(helpTopic: helpTopic),
@@ -1346,8 +1281,7 @@ class _WorkspaceSettingsScreenState
                   // 0040 — desk transparency. Rides the same Save button.
                   Row(children: [
                     Expanded(child: Text(
-                      l10n?.workspaceDeskTransparencyTitle ??
-                          'Desk transparency',
+                      l10n.workspaceDeskTransparencyTitle,
                       style: Theme.of(context).textTheme.titleMedium,
                     )),
                     HelpDot(helpTopic,
@@ -1356,9 +1290,7 @@ class _WorkspaceSettingsScreenState
                   ]),
                   const SizedBox(height: 4),
                   Text(
-                    l10n?.workspaceDeskTransparencyHelper ??
-                        'Lower the desk opacity so a level\'s background photo '
-                            'shows through the tables.',
+                    l10n.workspaceDeskTransparencyHelper,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Slider(
@@ -1367,20 +1299,18 @@ class _WorkspaceSettingsScreenState
                     max: 100,
                     divisions: 16,
                     value: _deskOpacity.toDouble(),
-                    label: l10n?.workspaceDeskOpacityValue(_deskOpacity) ??
-                        'Opacity: $_deskOpacity%',
+                    label: l10n.workspaceDeskOpacityValue(_deskOpacity),
                     onChanged: _busy
                         ? null
                         : (v) => setState(() => _deskOpacity = v.round()),
                   ),
                   Text(
-                    l10n?.workspaceDeskOpacityValue(_deskOpacity) ??
-                        'Opacity: $_deskOpacity%',
+                    l10n.workspaceDeskOpacityValue(_deskOpacity),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 24),
                   ]),
-                  WorkspaceFormGroup(id: 'membership', title: (l10n ?? AppLocalizationsEn()).newMemberDefaultsTitle, icon: Icons.person_add_outlined, children: [
+                  WorkspaceFormGroup(id: 'membership', title: l10n.newMemberDefaultsTitle, icon: Icons.person_add_outlined, children: [
                   NewMemberDefaultsTiles(
                     defaults: _newMemberDefaults,
                     enabled: !_busy,
@@ -1397,12 +1327,12 @@ class _WorkspaceSettingsScreenState
       ];
 
   List<Widget> _billingTools(BuildContext context, {
-    required AppLocalizations? l10n, required String helpTopic,
+    required AppLocalizations l10n, required String helpTopic,
   }) => [
                   ListTile(key: const Key('workspaceSettingsReports'),
                     leading: const Icon(Icons.summarize_outlined),
-                    title: Text((l10n ?? AppLocalizationsEn()).uxReportsTitle),
-                    subtitle: Text((l10n ?? AppLocalizationsEn()).uxReportsHint),
+                    title: Text(l10n.uxReportsTitle),
+                    subtitle: Text(l10n.uxReportsHint),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/reports')),
                   if (ref
@@ -1413,12 +1343,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.rule_outlined),
                     title: HelpDotTitle(
-                      l10n?.dunningSettingsTitle ?? 'Reminder rules',
+                      l10n.dunningSettingsTitle,
                       helpTopic,
                       anchor: HelpAnchor.remindersRules,
                     ),
                     subtitle: Text(
-                      l10n?.dunningLevels ?? 'Number of reminder levels',
+                      l10n.dunningLevels,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1435,20 +1365,19 @@ class _WorkspaceSettingsScreenState
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.event_repeat_outlined),
                       title: HelpDotTitle(
-                        l10n?.billingRulesTitle ?? 'Invoice schedule',
-                        l10n?.billingRulesTitle ?? 'Invoice schedule',
+                        l10n.billingRulesTitle,
+                        l10n.billingRulesTitle,
                         anchor: HelpAnchor.billingSchedule,
                       ),
                       subtitle: Text(
-                        l10n?.billingRulesSubtitle ??
-                            'When subscription and end-of-month invoices go out',
+                        l10n.billingRulesSubtitle,
                       ),
                       onTap: () => showBillingRulesDialog(context, ref),
                     ),
       ];
 
   List<Widget> _toolsTiles(BuildContext context, {
-    required AppLocalizations? l10n, required Workspace workspace,
+    required AppLocalizations l10n, required Workspace workspace,
     required String helpTopic, bool reports = false,
   }) => [
                   if (!reports) ...[
@@ -1459,9 +1388,8 @@ class _WorkspaceSettingsScreenState
                       key: const Key('workspaceSettingsLibrary'),
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.grid_view_outlined),
-                      title: Text(l10n?.libraryTitle ?? 'Workspace library'),
-                      subtitle: Text(l10n?.librarySave ??
-                          'Save this space as a template'),
+                      title: Text(l10n.libraryTitle),
+                      subtitle: Text(l10n.librarySave),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => context.push('/library'),
                     ),
@@ -1472,14 +1400,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.upload_file_outlined),
                     title: HelpDotTitle(
-                      l10n?.workspaceXmlExport ?? 'Export workspace (XML)',
+                      l10n.workspaceXmlExport,
                       helpTopic,
                       anchor: HelpAnchor.exportSpaceXml,
                     ),
                     subtitle: Text(
-                      l10n?.workspaceXmlExportSubtitle ??
-                          'Settings and floor plan as a shareable file. '
-                              'No members, bookings or money data.',
+                      l10n.workspaceXmlExportSubtitle,
                     ),
                     enabled: !_busy,
                     onTap: () => _exportXml(workspace),
@@ -1493,15 +1419,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.picture_as_pdf_outlined),
                     title: HelpDotTitle(
-                      l10n?.workspaceConfigPdfExport ??
-                          'Export configuration (PDF)',
+                      l10n.workspaceConfigPdfExport,
                       helpTopic,
                       anchor: HelpAnchor.exportConfigPdf,
                     ),
                     subtitle: Text(
-                      l10n?.workspaceConfigPdfExportSubtitle ??
-                          'Complete snapshot: settings, all members and the '
-                              'floor plan.',
+                      l10n.workspaceConfigPdfExportSubtitle,
                     ),
                     enabled: !_busy,
                     onTap: () => _exportConfigPdf(workspace),
@@ -1513,13 +1436,11 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.summarize_outlined),
                     title: HelpDotTitle(
-                      l10n?.reportDocWorkspace ?? 'Workspace report',
+                      l10n.reportDocWorkspace,
                       helpTopic,
                       anchor: HelpAnchor.exportWorkspaceReport,
                     ),
-                    subtitle: Text(l10n?.reportDocWorkspaceSubtitle ??
-                        'Everything about the space — through the '
-                            'report editor\'s workspace template'),
+                    subtitle: Text(l10n.reportDocWorkspaceSubtitle),
                     onTap: _exportWorkspaceReport,
                   ),
                   // Space QR codes (field request): one printable card
@@ -1533,15 +1454,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.qr_code_2_outlined),
                     title: HelpDotTitle(
-                      l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)',
+                      l10n.spaceCodesTitle,
                       helpTopic,
                       anchor: HelpAnchor.exportSpaceQr,
                     ),
                     subtitle: Text(
-                      l10n?.spaceCodesDesc ??
-                          'One printable QR card per desk, office and '
-                              'level — members scan to reserve or check '
-                              'in.',
+                      l10n.spaceCodesDesc,
                     ),
                     enabled: !_busy,
                     onTap: () => _exportSpaceCodes(workspace),
@@ -1563,15 +1481,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.table_view_outlined),
                     title: HelpDotTitle(
-                      l10n?.workspaceExcelExport ?? 'Export data (Excel)',
+                      l10n.workspaceExcelExport,
                       helpTopic,
                       anchor: HelpAnchor.exportExcel,
                     ),
                     subtitle: Text(
-                      l10n?.workspaceExcelExportSubtitle ??
-                          'Every dataset in one workbook: bookings, '
-                              'payments, invoices, members and the floor '
-                              'plan — a tab each.',
+                      l10n.workspaceExcelExportSubtitle,
                     ),
                     enabled: !_busy,
                     onTap: () async {
@@ -1590,14 +1505,12 @@ class _WorkspaceSettingsScreenState
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.file_open_outlined),
                     title: HelpDotTitle(
-                      l10n?.workspaceXmlImport ?? 'Import workspace (XML)',
+                      l10n.workspaceXmlImport,
                       helpTopic,
                       anchor: HelpAnchor.exportSpaceImport,
                     ),
                     subtitle: Text(
-                      l10n?.workspaceXmlImportSubtitle ??
-                          'Restore settings and floor plan from an exported '
-                              'file. Replaces the current floor plan.',
+                      l10n.workspaceXmlImportSubtitle,
                     ),
                     enabled: !_busy,
                     onTap: () => _importXml(workspace),
@@ -1607,7 +1520,7 @@ class _WorkspaceSettingsScreenState
       ];
 
   List<Widget> _dangerZoneTiles(BuildContext context, {
-    required AppLocalizations? l10n, required Workspace workspace,
+    required AppLocalizations l10n, required Workspace workspace,
   }) => [
                   ListTile(
                     key: const Key('workspaceSettingsReset'),
@@ -1617,15 +1530,13 @@ class _WorkspaceSettingsScreenState
                       color: Theme.of(context).colorScheme.error,
                     ),
                     title: Text(
-                      l10n?.workspaceResetTitle ?? 'Reset workspace',
+                      l10n.workspaceResetTitle,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
                       ),
                     ),
                     subtitle: Text(
-                      l10n?.workspaceResetSubtitle ??
-                          'Delete all bookings, money and the floor plan. '
-                              'Keeps settings and members.',
+                      l10n.workspaceResetSubtitle,
                     ),
                     enabled: !_busy,
                     onTap: () => _resetWorkspace(workspace),
@@ -1638,10 +1549,8 @@ class _WorkspaceSettingsScreenState
 /// partial steps are deliberate (#916, #1289). What was missing is that
 /// nobody said so: a floor plan already replaced is not nothing, and
 /// being told only that the import failed leaves the owner to find out.
-void _sayPartial(BuildContext context, AppLocalizations? l10n) =>
+void _sayPartial(BuildContext context, AppLocalizations l10n) =>
     AppSnack.info(
       context,
-      l10n?.workspaceXmlImportPartial ??
-          'Part of the import was applied before it stopped — check the '
-              'settings and the floor plan below.',
+      l10n.workspaceXmlImportPartial,
     );

@@ -18,7 +18,7 @@ Future<void> _openOthersBooking(
   required bool canCheckInForOthers,
   required BookingGranularity granularity,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final names = ref.read(memberNamesProvider).value ?? const {};
   final name = names[other.memberId] ?? '';
   // #687 — admin powers on another member's seat came with the
@@ -65,12 +65,12 @@ Future<void> _openOthersBooking(
     return;
   }
   final template = state == SeatState.occupied
-      ? (l10n?.planOccupiedBy(name) ?? 'Occupied by $name')
-      : (l10n?.planReservedBy(name) ?? 'Reserved by $name');
+      ? (l10n.planOccupiedBy(name))
+      : (l10n.planReservedBy(name));
   // #908 — display, not wall: a member who asked to read hours in
   // their own timezone must get them here too.
   final until = ref.read(appFormatProvider).time(other.endsAt);
-  final infoLine = '$template · ${l10n?.planUntil(until) ?? 'until $until'}';
+  final infoLine = '$template · ${l10n.planUntil(until)}';
   // #622 — a REGULAR member can message the holder instead of
   // reading a dead-end snack; the flag off keeps the plain line.
   if (canMessageReserver(ref, other)) {

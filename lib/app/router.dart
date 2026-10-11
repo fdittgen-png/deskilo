@@ -114,6 +114,7 @@ import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
 import 'oauth_consent_route.dart';
+import 'page_routes.dart';
 import 'route_access.dart';
 import 'route_classes.dart';
 import 'route_policy.dart';
@@ -280,6 +281,7 @@ GoRouter router(Ref ref) {
     },
     routes: [
       GoRoute(path: '/auth', builder: (_, s) => AuthScreen(offerDemo: s.uri.queryParameters['demo'] == '1')),
+      for (final page in openedPages) page.route(), // #2388
       GoRoute(path: '/me', builder: (context, state) => // #1823 the Me layer
           MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab']))),
       GoRoute(

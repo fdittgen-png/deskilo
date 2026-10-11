@@ -12,6 +12,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/time/clock.dart';
@@ -88,7 +89,7 @@ class _VatDeclarationsScreenState
   String _basisNote(AppLocalizations? l10n) {
     final workspace = ref.read(currentWorkspaceProvider).value;
     return vatTaxPointBasisNote(
-        l10n,
+        l10n ?? englishL10n,
         workspaceTaxPointBasis(
             workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''));
   }
@@ -163,7 +164,7 @@ class _VatDeclarationsScreenState
   /// expense's VAT, « Correction of September 2026 » for a correction of
   /// a filed return; '' for the period's own sales.
   String _lineNote(AppLocalizations? l10n, VatDeclarationLine line) {
-    final words = vatWords(l10n);
+    final words = vatWords(l10n ?? englishL10n);
     final start = line.correctsStart;
     final end = line.correctsEnd;
     final correction = !line.isCorrection
@@ -258,7 +259,7 @@ class _VatDeclarationsScreenState
                 InlineBanner(
                   key: const ValueKey('vat-decl-period-note'),
                   icon: Icons.date_range_outlined,
-                  text: vatWords(l10n).vatDeclPeriodNote(
+                  text: vatWords(l10n ?? englishL10n).vatDeclPeriodNote(
                       vatDeclarationPeriodName(l10n, filing)),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -412,7 +413,7 @@ class _VatDeclarationsScreenState
                                   if (declaration.lines
                                       .any((l) => l.isCorrection))
                                     Text(
-                                      vatWords(l10n).vatDeclCorrectionsNote,
+                                      vatWords(l10n ?? englishL10n).vatDeclCorrectionsNote,
                                       style: theme.textTheme.bodySmall,
                                     ),
                                   const SizedBox(height: 4),
@@ -434,7 +435,7 @@ class _VatDeclarationsScreenState
                                     Text(
                                       key: ValueKey(
                                           'vat-decl-balance-${declaration.id}'),
-                                      '${declaration.totalVatCents >= 0 ? vatWords(l10n).vatDeclPayable : vatWords(l10n).vatDeclCredit}: '
+                                      '${declaration.totalVatCents >= 0 ? vatWords(l10n ?? englishL10n).vatDeclPayable : vatWords(l10n ?? englishL10n).vatDeclCredit}: '
                                       '${centsToMajor(declaration.totalVatCents.abs())} ${declaration.currency}',
                                       style: theme.textTheme.bodyMedium,
                                     ),

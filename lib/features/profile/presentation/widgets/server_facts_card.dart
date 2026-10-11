@@ -6,6 +6,7 @@ import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/instance_facts.dart';
 import '../../../../core/backend/schema_version.dart';
 import '../../../../core/instance/schema_compatibility.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'server_full_check.dart';
@@ -33,7 +34,7 @@ class ServerFactsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final projectRef = isDefault ? null : supabaseProjectRef(endpoint.host);
     final version = ref.watch(schemaCompatibilityProvider).value;
     return Card(
@@ -46,16 +47,11 @@ class ServerFactsCard extends ConsumerWidget {
               key: const ValueKey('backend-ownership'),
               leading: const Icon(Icons.verified_user_outlined),
               title: Text(projectRef == null
-                  ? (l10n?.backendOwnServer ?? 'Your own server')
-                  : (l10n?.backendProjectRef(projectRef) ??
-                      'Your Supabase project $projectRef')),
+                  ? (l10n.backendOwnServer)
+                  : (l10n.backendProjectRef(projectRef))),
               subtitle: Text(projectRef == null
-                  ? (l10n?.backendOwnershipOther ??
-                      'Whoever runs this server owns it. DesKilo keeps no '
-                          'access to it.')
-                  : (l10n?.backendOwnership ??
-                      'Your Supabase organization owns it. DesKilo keeps no '
-                          'access to it.')),
+                  ? (l10n.backendOwnershipOther)
+                  : (l10n.backendOwnership)),
             ),
           if (projectRef != null)
             Align(
@@ -65,7 +61,7 @@ class ServerFactsCard extends ConsumerWidget {
                 child: TextButton.icon(
                   key: const ValueKey('backend-open-dashboard'),
                   icon: const Icon(Icons.open_in_new),
-                  label: Text(l10n?.backendOpenDashboard ?? 'Open in Supabase'),
+                  label: Text(l10n.backendOpenDashboard),
                   onPressed: () => ref
                       .read(linkLauncherProvider)(supabaseDashboardUri(projectRef)),
                 ),
@@ -83,21 +79,16 @@ class ServerFactsCard extends ConsumerWidget {
               }),
               title: Text(_versionTitle(l10n, version)),
               subtitle: version == SchemaCompatibility.behind
-                  ? Text(l10n?.backendVersionBehindHow ??
-                      'Its owner updates it with the setup wizard or '
-                          '`dart run tool/instance.dart install`, which applies '
-                          'only what is missing.')
+                  ? Text(l10n.backendVersionBehindHow)
                   : null,
             ),
           if (lastSuccessfulTest != null)
             ListTile(
               key: const ValueKey('backend-last-ok'),
               leading: const Icon(Icons.network_check),
-              title: Text(l10n?.backendLastOk(
+              title: Text(l10n.backendLastOk(
                       TimeOfDay.fromDateTime(lastSuccessfulTest!)
-                          .format(context)) ??
-                  'Last successful test: '
-                      '${TimeOfDay.fromDateTime(lastSuccessfulTest!).format(context)}'),
+                          .format(context))),
             ),
         ],
       ),
@@ -105,18 +96,14 @@ class ServerFactsCard extends ConsumerWidget {
   }
 
   static String _versionTitle(
-          AppLocalizations? l10n, SchemaCompatibility version) =>
+          AppLocalizations l10n, SchemaCompatibility version) =>
       switch (version) {
         SchemaCompatibility.current =>
-          l10n?.backendVersionCurrent(requiredSchemaVersion) ??
-              'Up to date (schema $requiredSchemaVersion)',
+          l10n.backendVersionCurrent(requiredSchemaVersion),
         SchemaCompatibility.behind =>
-          l10n?.backendVersionBehind(requiredSchemaVersion) ??
-              'Needs an update: this app needs schema $requiredSchemaVersion',
-        SchemaCompatibility.ahead => l10n?.backendVersionAhead ??
-            'The server is newer than this app — update the app when you can',
-        SchemaCompatibility.unknown => l10n?.backendVersionUnknown ??
-            'The version could not be checked right now',
+          l10n.backendVersionBehind(requiredSchemaVersion),
+        SchemaCompatibility.ahead => l10n.backendVersionAhead,
+        SchemaCompatibility.unknown => l10n.backendVersionUnknown,
       };
 }
 
@@ -129,20 +116,18 @@ class ServerResetAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextButton(
           key: const ValueKey('backend-reset'),
           onPressed: onReset,
-          child: Text(l10n?.backendServerReset ?? "Use the app's server"),
+          child: Text(l10n.backendServerReset),
         ),
         Text(
           key: const ValueKey('backend-reset-hint'),
-          l10n?.backendResetDeviceOnly ??
-              'This changes this device only and never touches your '
-                  'Supabase project.',
+          l10n.backendResetDeviceOnly,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodySmall,
         ),

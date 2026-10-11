@@ -11,36 +11,25 @@ import '../domain/auth_outcome.dart';
 /// a disabled provider and a dead network are six different sentences
 /// (#1649), and never the server's own words, which may quote what was
 /// typed.
-String? authOutcomeText(AuthResult result, AppLocalizations? l10n) =>
+String? authOutcomeText(AuthResult result, AppLocalizations l10n) =>
     switch (result.outcome) {
       AuthOutcome.authenticated || AuthOutcome.completed => null,
       AuthOutcome.verificationRequired =>
-        l10n?.authVerifyTitle ?? 'Check your e-mail',
+        l10n.authVerifyTitle,
       AuthOutcome.recoveryVerificationRequired =>
-        l10n?.authResetCodeSent ?? 'Code sent — check your email.',
+        l10n.authResetCodeSent,
       AuthOutcome.recoverySessionReadyButPasswordNotUpdated =>
-        l10n?.authRecoveryNotSaved ??
-            'Your code was accepted, but the new password was not saved. '
-                'Try saving it again.',
+        l10n.authRecoveryNotSaved,
       AuthOutcome.rateLimited =>
-        l10n?.authRateLimited ?? 'Too many attempts. Wait a moment, then '
-            'try again.',
-      AuthOutcome.unavailable => l10n?.authNetworkError ??
-          'Could not reach the server. Check your connection and try again.',
+        l10n.authRateLimited,
+      AuthOutcome.unavailable => l10n.authNetworkError,
       AuthOutcome.refused => switch (result.refusal) {
-          AuthRefusal.emailNotConfirmed => l10n?.authEmailNotConfirmed ??
-              'Confirm your e-mail address first: open the message we sent '
-                  'you, then sign in.',
-          AuthRefusal.providerDisabled => l10n?.authProviderDisabled ??
-              'This sign-in method is switched off on this server.',
-          AuthRefusal.alreadyRegistered => l10n?.authAlreadyRegistered ??
-              'This address cannot be used to create an account. Sign in '
-                  'or reset your password instead.',
+          AuthRefusal.emailNotConfirmed => l10n.authEmailNotConfirmed,
+          AuthRefusal.providerDisabled => l10n.authProviderDisabled,
+          AuthRefusal.alreadyRegistered => l10n.authAlreadyRegistered,
           AuthRefusal.weakPassword =>
-            l10n?.authWeakPassword ?? 'Choose a stronger password.',
-          AuthRefusal.codeInvalid => l10n?.authResetInvalidCode ??
-              'That code is invalid or expired.',
-          AuthRefusal.credentials || null => l10n?.authGenericError ??
-              'Authentication failed. Check your credentials and try again.',
+            l10n.authWeakPassword,
+          AuthRefusal.codeInvalid => l10n.authResetInvalidCode,
+          AuthRefusal.credentials || null => l10n.authGenericError,
         },
     };

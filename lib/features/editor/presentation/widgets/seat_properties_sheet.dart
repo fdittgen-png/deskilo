@@ -8,12 +8,13 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/accessory.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_rules.dart';
@@ -45,7 +46,7 @@ Future<void> showSeatPropertiesSheet(
   required FloorPlan plan,
   required Seat seat,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   // #168: the seat's equipment comes from the workspace accessory
   // catalog (active entries, catalog order), not a hard-coded list.
@@ -73,7 +74,7 @@ Future<void> showSeatPropertiesSheet(
   var orientation = seat.orientation;
   var blocked = seat.isBlockedAt(ref.read(clockProvider).now());
 
-  final saved = await showModalBottomSheet<bool>(
+  final saved = await showAppSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => Padding(
@@ -90,25 +91,24 @@ Future<void> showSeatPropertiesSheet(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n?.editorSeatProperties ?? 'Seat',
+                l10n.editorSeatProperties,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: name,
                 decoration: InputDecoration(
-                  labelText: l10n?.editorSeatNameLabel ?? 'Seat name',
+                  labelText: l10n.editorSeatNameLabel,
                 ),
               ),
               const SizedBox(height: 12),
-              Text(l10n?.editorOrientationLabel ?? 'Sitting direction'),
+              Text(l10n.editorOrientationLabel),
               // #1216 — four bare arrows say nothing about what "up"
               // means. It is the direction on the PLAN, the same one
               // the canvas is drawn in, which is the one fact the
               // reader needs to pick the right arrow first time.
               Text(
-                l10n?.editorOrientationHint ??
-                    'Which way the chair faces on the plan.',
+                l10n.editorOrientationHint,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -141,11 +141,11 @@ Future<void> showSeatPropertiesSheet(
               TextField(
                 controller: chair,
                 decoration: InputDecoration(
-                  labelText: l10n?.editorChairLabel ?? 'Chair type',
+                  labelText: l10n.editorChairLabel,
                 ),
               ),
               const SizedBox(height: 12),
-              Text(l10n?.editorAccessoriesLabel ?? 'Accessories'),
+              Text(l10n.editorAccessoriesLabel),
               const SizedBox(height: 4),
               // #1216 — a link, not an instruction. Telling somebody
               // where to go and making them walk there themselves is
@@ -162,8 +162,7 @@ Future<void> showSeatPropertiesSheet(
                     },
                     icon: const Icon(Icons.add, size: 18),
                     label: Text(
-                      l10n?.editorNoAccessoriesAction ??
-                          'No accessories yet — set them up',
+                      l10n.editorNoAccessoriesAction,
                     ),
                   ),
                 )
@@ -194,14 +193,12 @@ Future<void> showSeatPropertiesSheet(
                 controller: nfcUid,
                 decoration: InputDecoration(
                   labelText:
-                      l10n?.editorSeatNfcLabel ?? 'NFC/RFID tag',
-                  helperText: l10n?.editorSeatNfcHelp ??
-                      'Tag uid in hex — leave empty for no tag.',
+                      l10n.editorSeatNfcLabel,
+                  helperText: l10n.editorSeatNfcHelp,
                   suffixIcon: nfcReady
                       ? IconButton(
                           key: const ValueKey('editor-seat-nfc-read'),
-                          tooltip: l10n?.editorSeatNfcRead ??
-                              'Read a tag now',
+                          tooltip: l10n.editorSeatNfcRead,
                           icon: const Icon(Icons.nfc),
                           onPressed: () async {
                             final ok = await nfcReader.startRead(
@@ -213,8 +210,7 @@ Future<void> showSeatPropertiesSheet(
                             if (!ok && context.mounted) {
                               AppSnack.error(
                                 context,
-                                l10n?.editorSeatNfcReadFailed ??
-                                    'Could not start the tag reader.',
+                                l10n.editorSeatNfcReadFailed,
                               );
                             }
                           },
@@ -226,7 +222,7 @@ Future<void> showSeatPropertiesSheet(
                 key: ValueKey('seat-properties-sheet-editor-blocked-label-$levelId'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  l10n?.editorBlockedLabel ?? 'Blocked (maintenance)',
+                  l10n.editorBlockedLabel,
                 ),
                 value: blocked,
                 onChanged: (v) => setSheetState(() => blocked = v),
@@ -235,7 +231,7 @@ Future<void> showSeatPropertiesSheet(
               FilledButton(
                 key: ValueKey('seat-properties-sheet-save-$levelId'),
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l10n?.commonSave ?? 'Save'),
+                child: Text(l10n.commonSave),
               ),
             ],
           ),
@@ -274,8 +270,7 @@ Future<void> showSeatPropertiesSheet(
       if (context.mounted) {
         AppSnack.error(
           context,
-          l10n?.editorSeatNfcDuplicate ??
-              'This tag is already linked to another chair.',
+          l10n.editorSeatNfcDuplicate,
         );
       }
       return;

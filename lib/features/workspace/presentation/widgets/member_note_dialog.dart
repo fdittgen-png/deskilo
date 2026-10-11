@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import 'member_note_actions.dart';
 import 'member_note_composer.dart';
 
@@ -17,12 +17,12 @@ Future<void> showMemberNoteDialog(
   required String? toMemberId,
   required String recipientName,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   await showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(
-        l10n?.memberNoteTitle(recipientName) ?? 'Notify $recipientName',
+        l10n.memberNoteTitle(recipientName),
       ),
       content: MemberNoteComposer(
         onSend: (body) async {
@@ -42,7 +42,7 @@ Future<void> showMemberNoteDialog(
         TextButton(
           key: ValueKey('member-note-dialog-cancel-$recipientName'),
           onPressed: () => Navigator.of(dialogContext).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
       ],
     ),

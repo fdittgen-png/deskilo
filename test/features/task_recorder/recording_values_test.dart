@@ -9,6 +9,7 @@
 // declare.
 import 'dart:convert';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/task_recorder/application/recorder_controller.dart';
 import 'package:deskilo/features/task_recorder/data/recorder_store.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';
@@ -125,7 +126,7 @@ void main() {
       values: StepValues.of({'value': const RedactedValue(7)}),
     );
     final r = (await c.stop())!;
-    final text = recordingTranscript(null, r);
+    final text = recordingTranscript(englishL10n, r);
     expect(text, contains('date: 2026-10-06'));
     expect(text, contains('value: not kept (7 characters)'));
   });

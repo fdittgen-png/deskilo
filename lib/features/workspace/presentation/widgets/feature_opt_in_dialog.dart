@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 
 /// #1851 — the explicit opt-in before an alpha or beta feature is
 /// switched on. True only when the owner confirms; dismissing it writes
@@ -16,14 +16,14 @@ Future<bool> confirmExperimentalOptIn(
   List<String> stages = const [],
   List<String> alsoOn = const [],
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final names = featureNames.join(', ');
   final answer = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       key: const ValueKey('feature-opt-in'),
       title: Text(
-        l10n?.featureOptInTitle ?? 'Switch on an experimental feature?',
+        l10n.featureOptInTitle,
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -31,10 +31,7 @@ Future<bool> confirmExperimentalOptIn(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.featureOptInBody(names) ??
-                  'Not yet reviewed as stable: $names. It may change and '
-                      'has known limits. Switch on only if this space '
-                      'accepts that.',
+              l10n.featureOptInBody(names),
             ),
             for (final (i, name) in featureNames.indexed)
               if (i < stages.length)
@@ -42,8 +39,7 @@ Future<bool> confirmExperimentalOptIn(
                   key: ValueKey('feature-opt-in-stage-$i'),
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    l10n?.featureOptInStage(name, stages[i]) ??
-                        '$name: ${stages[i]}',
+                    l10n.featureOptInStage(name, stages[i]),
                   ),
                 ),
             if (alsoOn.isNotEmpty)
@@ -51,9 +47,7 @@ Future<bool> confirmExperimentalOptIn(
                 key: const ValueKey('feature-opt-in-also-on'),
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  l10n?.featureOptInAlsoOn(alsoOn.length, alsoOn.join(', ')) ??
-                      'Also switched on, because they are needed '
-                          '(${alsoOn.length}): ${alsoOn.join(', ')}',
+                  l10n.featureOptInAlsoOn(alsoOn.length, alsoOn.join(', ')),
                 ),
               ),
           ],
@@ -68,7 +62,7 @@ Future<bool> confirmExperimentalOptIn(
         FilledButton(
           key: const ValueKey('feature-opt-in-confirm'),
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n?.featureOptInConfirm ?? 'Switch on'),
+          child: Text(l10n.featureOptInConfirm),
         ),
       ],
     ),

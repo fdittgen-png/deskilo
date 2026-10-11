@@ -10,6 +10,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -19,7 +21,6 @@ import '../../../../core/time/date_text.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../domain/finance_overview.dart';
@@ -48,7 +49,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final overview = ref.watch(financeOverviewProvider);
     final all = overview.value ?? const FinanceOverview();
     // Me is production. A development space's documents are test data:
@@ -63,18 +64,18 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.financesTitle ?? 'Finances'),
+          title: Text(l10n.financesTitle),
           bottom: AppTabBar.bottom(
             context,
             barKey: const ValueKey('finances-tabs'),
             tabs: [
-              AppTab(l10n?.financesOutstanding ?? 'Outstanding',
+              AppTab(l10n.financesOutstanding,
                   key: const ValueKey('finances-tab-outstanding'), badge: owed),
-              AppTab(l10n?.financesPaid ?? 'Paid',
+              AppTab(l10n.financesPaid,
                   key: const ValueKey('finances-tab-paid')),
-              AppTab(l10n?.financesPayments ?? 'Payments',
+              AppTab(l10n.financesPayments,
                   key: const ValueKey('finances-tab-payments')),
-              AppTab(l10n?.financesReminders ?? 'Reminders',
+              AppTab(l10n.financesReminders,
                   key: const ValueKey('finances-tab-reminders'),
                   badge: prod.invoices.where((i) => i.state.owed && i.reminderCount > 0).length),
             ],
@@ -85,8 +86,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
               child: TextButton(
                 key: const ValueKey('finances-retry'),
                 onPressed: () => ref.invalidate(financeOverviewProvider),
-                child: Text(l10n?.accountActivityFailed ??
-                    'Could not load your financial history. Tap to retry.'),
+                child: Text(l10n.accountActivityFailed),
               ),
             ),
           AsyncData() => Column(
@@ -184,7 +184,7 @@ class _Outstanding extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final now = ref.watch(clockProvider).now();
     final list = data.outstanding;
@@ -199,7 +199,7 @@ class _Outstanding extends ConsumerWidget {
           EmptyState(
             key: const ValueKey('finances-outstanding-empty'),
             icon: Icons.check_circle_outline,
-            title: l10n?.financesNothingOwed ?? 'Nothing to pay — you are up to date.',
+            title: l10n.financesNothingOwed,
           )
         else ...[
           Card(
@@ -209,7 +209,7 @@ class _Outstanding extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n?.financesToPay ?? 'To pay',
+                  Text(l10n.financesToPay,
                       style: theme.textTheme.labelLarge),
                   const SizedBox(height: 4),
                   for (final e in data.owedByCurrency.entries)
@@ -223,7 +223,7 @@ class _Outstanding extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(
-                        l10n?.financesOverdueCount(overdue) ?? '$overdue overdue',
+                        l10n.financesOverdueCount(overdue),
                         key: const ValueKey('finances-overdue'),
                         style: theme.textTheme.bodySmall
                             ?.copyWith(color: theme.colorScheme.error),
@@ -253,7 +253,7 @@ class _Paid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final now = ref.watch(clockProvider).now();
     final list = data.paid;
     return _Column(
@@ -266,7 +266,7 @@ class _Paid extends ConsumerWidget {
           EmptyState(
             key: const ValueKey('finances-paid-empty'),
             icon: Icons.receipt_long_outlined,
-            title: l10n?.financesNothingPaid ?? 'No settled invoice yet.',
+            title: l10n.financesNothingPaid,
           )
         else
           for (final invoice in list) _InvoiceCard(invoice: invoice, now: now),
@@ -294,7 +294,7 @@ class _InvoiceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
@@ -303,11 +303,11 @@ class _InvoiceCard extends ConsumerWidget {
     final status = switch (invoice.state) {
       FinanceState.open => null,
       FinanceState.awaitingValidation =>
-        l10n?.financesAwaitingValidation ?? 'Payment being validated',
-      FinanceState.partiallyPaid => l10n?.financesPartlyPaid ?? 'Partly paid',
-      FinanceState.paid => l10n?.financesStatePaid ?? 'Paid',
-      FinanceState.refunded => l10n?.financesStateRefunded ?? 'Refunded',
-      FinanceState.closed => l10n?.financesStateClosed ?? 'Closed',
+        l10n.financesAwaitingValidation,
+      FinanceState.partiallyPaid => l10n.financesPartlyPaid,
+      FinanceState.paid => l10n.financesStatePaid,
+      FinanceState.refunded => l10n.financesStateRefunded,
+      FinanceState.closed => l10n.financesStateClosed,
     };
     final amount = invoice.state.owed ? invoice.remainingCents : invoice.totalCents;
     final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
@@ -358,10 +358,8 @@ class _InvoiceCard extends ConsumerWidget {
                     if (invoice.state.owed && due != null)
                       Text(
                         overdue
-                            ? (l10n?.financesOverdueSince(format.format(due)) ??
-                                'Overdue since ${format.format(due)}')
-                            : (l10n?.financesDueOn(format.format(due)) ??
-                                'Due ${format.format(due)}'),
+                            ? (l10n.financesOverdueSince(format.format(due)))
+                            : (l10n.financesDueOn(format.format(due))),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: overdue ? scheme.error : scheme.onSurfaceVariant,
                         ),
@@ -383,9 +381,8 @@ class _InvoiceCard extends ConsumerWidget {
                               ),
                             if (invoice.reminderCount > 0 && invoice.state.owed)
                               Chip(
-                                label: Text(l10n?.financesRemindedTimes(
-                                        invoice.reminderCount) ??
-                                    'Reminded ×${invoice.reminderCount}'),
+                                label: Text(l10n.financesRemindedTimes(
+                                        invoice.reminderCount)),
                                 visualDensity: VisualDensity.compact,
                               ),
                           ],
@@ -416,7 +413,7 @@ class _Reminders extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
     final workspaceOf = {
@@ -436,7 +433,7 @@ class _Reminders extends ConsumerWidget {
             color: isDev ? tone : null,
           ),
           title: Text(
-            '${l10n?.financesReminderLevel(r.level) ?? 'Reminder ${r.level}'} · ${r.invoiceNumber}',
+            '${l10n.financesReminderLevel(r.level)} · ${r.invoiceNumber}',
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,7 +443,7 @@ class _Reminders extends ConsumerWidget {
                 [
                   if (!isDev) r.workspaceName,
                   format.format(r.sentAt.toLocal()),
-                  if (r.automatic) l10n?.financesAutomatic ?? 'automatic',
+                  if (r.automatic) l10n.financesAutomatic,
                 ].join(' · '),
                 style: theme.textTheme.bodySmall,
               ),
@@ -471,7 +468,7 @@ class _Reminders extends ConsumerWidget {
           EmptyState(
             key: const ValueKey('finances-reminders-empty'),
             icon: Icons.notifications_none_outlined,
-            title: l10n?.financesNoReminders ?? 'No reminder received.',
+            title: l10n.financesNoReminders,
           ),
         for (final r in data.reminders) row(r),
         if (dev.reminders.isNotEmpty) ...[
@@ -494,7 +491,7 @@ class _Payments extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final rows = ref.watch(accountActivityProvider(AccountActivityKind.payments));
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
     return _Column(
@@ -509,7 +506,7 @@ class _Payments extends ConsumerWidget {
               .isEmpty => EmptyState(
               key: const ValueKey('finances-payments-empty'),
               icon: Icons.payments_outlined,
-              title: l10n?.accountActivityEmpty ?? 'No records to display.',
+              title: l10n.accountActivityEmpty,
             ),
           AsyncData(value: final all) => Column(
               children: [
@@ -551,8 +548,7 @@ class _Payments extends ConsumerWidget {
               key: const ValueKey('finances-payments-retry'),
               onPressed: () =>
                   ref.invalidate(accountActivityProvider(AccountActivityKind.payments)),
-              child: Text(l10n?.accountActivityFailed ??
-                  'Could not load your financial history. Tap to retry.'),
+              child: Text(l10n.accountActivityFailed),
             ),
           _ => const LoadingView(),
         },
@@ -561,13 +557,18 @@ class _Payments extends ConsumerWidget {
           child: TextButton.icon(
             key: const ValueKey('finances-full-history'),
             icon: const Icon(Icons.history),
-            label: Text(l10n?.financesFullHistory ?? 'Full history, usage and other servers'),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute<void>(builder: (_) => const AccountActivityScreen()),
-            ),
+            label: Text(l10n.financesFullHistory),
+            onPressed: () => accountActivityPage.open<void>(context, null),
           ),
         ),
       ],
     );
   }
 }
+
+/// #2388 — the full account history as a page with a path.
+final accountActivityPage = PageSpec<Null>(
+  '/account-activity/history',
+  (_) => const AccountActivityScreen(),
+  fallback: '/account-activity',
+);

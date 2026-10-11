@@ -14623,6 +14623,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'True on a credit note';
 
   @override
+  String get reportFieldMeaningDeclarationNote =>
+      'The declaration\'s caution to verify before filing';
+
+  @override
   String get reportFieldMeaningDueDate => 'The settlement date';
 
   @override

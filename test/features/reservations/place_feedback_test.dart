@@ -53,7 +53,7 @@ Future<void> _pumpChips(
 void main() {
   testWidgets('a heart, five stars and what everybody gave', (tester) async {
     final repo = await _pump(tester);
-    expect(find.text('4.0 · 2'), findsOneWidget);
+    expect(find.text('4.0 · 2 ratings'), findsOneWidget);
 
     await tester.tap(find.byKey(PlaceFeedbackBar.heartKey('s1')));
     await tester.pumpAndSettle();
@@ -62,7 +62,7 @@ void main() {
     await tester.tap(find.byKey(PlaceFeedbackBar.starKey('s1', 4)));
     await tester.pumpAndSettle();
     expect((await repo.fetch('ws-1', PlaceKind.seat, 's1')).mine, 4);
-    expect(find.text('4.0 · 3'), findsOneWidget);
+    expect(find.text('4.0 · 3 ratings'), findsOneWidget);
 
     // The same star again takes the rating back; zero is a rating of its own.
     await tester.tap(find.byKey(PlaceFeedbackBar.starKey('s1', 4)));

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan_editing.dart';
 
 /// What the canvas offers for the thing you have selected (#1216).
@@ -42,7 +42,7 @@ class EditorSelectionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return SafeArea(
       child: Material(
@@ -70,20 +70,20 @@ class EditorSelectionBar extends StatelessWidget {
               if (onDuplicate != null)
                 IconButton(
                   key: const ValueKey('editor-selection-duplicate'),
-                  tooltip: l10n?.editorDuplicate ?? 'Duplicate',
+                  tooltip: l10n.editorDuplicate,
                   icon: const Icon(Icons.content_copy_outlined),
                   onPressed: onDuplicate,
                 ),
               if (onEdit != null)
                 IconButton(
                   key: const ValueKey('editor-selection-edit'),
-                  tooltip: l10n?.editorProperties ?? 'Properties',
+                  tooltip: l10n.editorProperties,
                   icon: const Icon(Icons.tune),
                   onPressed: onEdit,
                 ),
               IconButton(
                 key: const ValueKey('editor-selection-delete'),
-                tooltip: l10n?.commonDelete ?? 'Delete',
+                tooltip: l10n.commonDelete,
                 icon: Icon(Icons.delete_outline, color: scheme.error),
                 onPressed: onDelete,
               ),

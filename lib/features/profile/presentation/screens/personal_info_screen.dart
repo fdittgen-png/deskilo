@@ -8,11 +8,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_field.dart';
 import '../../../workspace/presentation/widgets/workspace_fields_section.dart';
 import '../../../workspace/providers/workspace_fields_providers.dart';
@@ -41,15 +41,14 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
   Future<void> _save(PersonalInfo info) async {
     // #1514 — this form was prefilled from the recording seam.
     if (refusedWhileRecording(context, ref)) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     final ok = await runGuarded(
       context,
       domain: 'profile',
       message: 'personal information update failed',
       errorText:
-          l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
       action: () =>
           ref.read(profileRepositoryProvider).updatePersonalInfo(info),
     );
@@ -71,9 +70,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
         message: 'workspace questions update failed',
         // Its own sentence, not the generic one: the profile half
         // already saved, and a member has to be told which half did not.
-        errorText: l10n?.workspaceFieldsSaveFailed ??
-            'Your answers to this space\'s questions were not saved. '
-                'Your other details were.',
+        errorText: l10n.workspaceFieldsSaveFailed,
         action: () => ref.read(workspaceFieldsRepositoryProvider).saveAnswers(
               memberId: member.id,
               context: WorkspaceFieldContext.profile,
@@ -87,7 +84,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
 
     AppSnack.success(
       context,
-      l10n?.personalInfoSaved ?? 'Personal information saved',
+      l10n.personalInfoSaved,
     );
     if (context.canPop()) context.pop();
   }
@@ -115,15 +112,15 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final profile = ref.watch(myProfileProvider);
     final workspaceCountry =
         ref.watch(currentWorkspaceProvider).value?.countryCode ?? '';
     return Scaffold(
       appBar: AppBar(
         title: HelpDotTitle(
-          l10n?.personalInfoTitle ?? 'Personal information',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.personalInfoTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profilePersonalInfo,
         ),
       ),
@@ -131,8 +128,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
           child: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
         ),
         data: (p) => SingleChildScrollView(

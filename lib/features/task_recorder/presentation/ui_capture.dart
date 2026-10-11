@@ -74,7 +74,7 @@ class UiCapture implements GuardedCommandWatcher {
   /// The language labels are matched in; the index is rebuilt on change.
   AppLocalizations? get localizations => _l10n;
 
-  set localizations(AppLocalizations? l10n) {
+  set localizations(AppLocalizations l10n) {
     if (identical(l10n, _l10n)) return;
     _l10n = l10n;
     _labelIndex = null;

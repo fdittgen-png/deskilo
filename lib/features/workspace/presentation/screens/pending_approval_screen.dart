@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/guide_site.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -71,7 +71,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final name = workspace?.name ?? '';
@@ -79,7 +79,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
     final notUpdated = _notUpdated;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.pendingApprovalTitle ?? 'Workspace membership awaiting approval'),
+        title: Text(l10n.pendingApprovalTitle),
         actions: const [ApplicationRequestsEntry(), AccountPortalEntry()],
       ),
       body: Center(
@@ -102,17 +102,13 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  l10n?.pendingApprovalBody(name) ??
-                      'You have joined $name. An administrator must approve your '
-                          'membership before you can use the workspace — you will '
-                          'get access as soon as they confirm.',
+                  l10n.pendingApprovalBody(name),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  l10n?.pendingAvailable ??
-                      'While you wait, your other workspaces, your account and the help stay available.',
+                  l10n.pendingAvailable,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodySmall,
                 ),
@@ -124,18 +120,16 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                     liveRegion: true,
                     child: Text(
                       notUpdated
-                          ? l10n?.pendingNotUpdated ??
-                              'Status not updated — the server could not be reached. Your request is unchanged.'
-                          : l10n?.pendingStillWaiting ?? 'Still awaiting approval.',
+                          ? l10n.pendingNotUpdated
+                          : l10n.pendingStillWaiting,
                       key: const ValueKey('pending-status'),
                       textAlign: TextAlign.center,
                     ),
                   ),
                 if (checked != null)
                   Text(
-                    l10n?.pendingLastChecked(MaterialLocalizations.of(context)
-                            .formatTimeOfDay(TimeOfDay.fromDateTime(checked))) ??
-                        'Last checked',
+                    l10n.pendingLastChecked(MaterialLocalizations.of(context)
+                            .formatTimeOfDay(TimeOfDay.fromDateTime(checked))),
                     key: const ValueKey('pending-last-checked'),
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodySmall,
@@ -145,7 +139,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   key: const ValueKey('pending-refresh'),
                   onPressed: _checking ? null : _check,
                   icon: const Icon(Icons.refresh),
-                  label: Text(l10n?.pendingApprovalRefresh ?? 'Check again'),
+                  label: Text(l10n.pendingApprovalRefresh),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Wrap(
@@ -155,13 +149,13 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                       key: const ValueKey('pending-switch'),
                       onPressed: () => context.go('/me'),
                       icon: const Icon(Icons.switch_account_outlined),
-                      label: Text(l10n?.spaceBackToMe ?? 'Back to Me'),
+                      label: Text(l10n.spaceBackToMe),
                     ),
                     TextButton.icon(
                       key: const ValueKey('pending-help'),
                       onPressed: () => openGuide(ref, context, anchor: 'user.start.join'),
                       icon: const Icon(Icons.help_outline),
-                      label: Text(l10n?.pendingHelp ?? 'Help'),
+                      label: Text(l10n.pendingHelp),
                     ),
                   ],
                 ),

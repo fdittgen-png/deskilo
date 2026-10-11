@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../l10n/app_localizations.dart';
 import '../providers/directory_providers.dart';
 
 /// #1824 — the account messenger's two lists, ONE SERVER each, so every
@@ -29,7 +29,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
   final _pages = <String>[];
 
   Widget _person(BuildContext context, Map<String, dynamic> person) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final id = '${person['id']}';
     final name = '${person['name'] ?? ''}';
     return ListTile(
@@ -37,7 +37,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
       title: Text(name),
       subtitle: widget.host.isEmpty
           ? null
-          : Text(l?.messengerOnServer(widget.host) ?? 'on ${widget.host}'),
+          : Text(l.messengerOnServer(widget.host)),
       trailing: const Icon(Icons.chat_outlined),
       onTap: () => widget.onOpen(id, name),
     );
@@ -45,7 +45,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final provider = accountContactsProvider(
       widget.query,
       source: widget.source,
@@ -76,7 +76,7 @@ class _ContactResultsState extends ConsumerState<ContactResults> {
         key: const ValueKey('account-messenger-sections-portal-source-unavailable'),
         onPressed: () => ref.invalidate(provider),
         child: Text(
-          l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
+          l.portalSourceUnavailable,
         ),
       ),
       _ => const LoadingView(),
@@ -106,7 +106,7 @@ class _AccountConversationListState
 
   /// One conversation: its unread count, and its server when not this one.
   Widget _row(BuildContext context, Map<String, dynamic> conversation) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final id = '${conversation['id']}';
     final name = '${conversation['name'] ?? ''}';
     final recipient = conversation['recipient'] as String?;
@@ -116,7 +116,7 @@ class _AccountConversationListState
       title: Text(name),
       subtitle: widget.host.isEmpty
           ? null
-          : Text(l?.messengerOnServer(widget.host) ?? 'on ${widget.host}'),
+          : Text(l.messengerOnServer(widget.host)),
       trailing: unread > 0
           ? Badge.count(
               key: ValueKey('account-conversation-unread-$id'),
@@ -131,7 +131,7 @@ class _AccountConversationListState
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final cursor = _pages.lastOrNull;
     final provider = accountConversationsProvider(
       source: widget.source,
@@ -178,7 +178,7 @@ class _AccountConversationListState
         key: const ValueKey('account-messenger-sections-portal-source-unavailable-2'),
         onPressed: () => ref.invalidate(provider),
         child: Text(
-          l?.portalSourceUnavailable ?? 'A server is unavailable. This overview is incomplete. Tap to retry.',
+          l.portalSourceUnavailable,
         ),
       ),
       _ => const LoadingView(),

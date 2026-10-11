@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -105,7 +106,7 @@ Future<void> showExpenseSheet(
       l10n?.expenseInvalidUnitPrice ??
           'Enter a valid unit price, or leave it empty.',
     ExpenseOutcome.invalidDeductible =>
-      vatWords(l10n).expenseInvalidDeductible,
+      vatWords(l10n ?? englishL10n).expenseInvalidDeductible,
   };
   // The field each refusal is about, so its words sit under that field.
   String? fieldOf(ExpenseOutcome outcome) => switch (outcome) {
@@ -185,11 +186,11 @@ Future<void> showExpenseSheet(
             key: const ValueKey('expense-vat-rate'),
             initialValue: vatPercent,
             decoration: InputDecoration(
-              labelText: vatWords(l10n).expenseVatRate,
+              labelText: vatWords(l10n ?? englishL10n).expenseVatRate,
             ),
             items: [
               DropdownMenuItem<double?>(
-                child: Text(vatWords(l10n).expenseVatNone),
+                child: Text(vatWords(l10n ?? englishL10n).expenseVatNone),
               ),
               for (final p in vatPercents)
                 DropdownMenuItem<double?>(
@@ -211,7 +212,7 @@ Future<void> showExpenseSheet(
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
-              label: vatWords(l10n).expenseVatDeductible,
+              label: vatWords(l10n ?? englishL10n).expenseVatDeductible,
               helper: _deductibleHelper(
                 l10n,
                 currency,
@@ -337,7 +338,7 @@ String _deductibleHelper(
   double percent,
   String share,
 ) {
-  final words = vatWords(l10n);
+  final words = vatWords(l10n ?? englishL10n);
   final gross = parseCentsInput(amount);
   final pct = double.tryParse(share.trim().replaceAll(',', '.'));
   if (gross == null || gross <= 0 || pct == null || pct < 0 || pct > 100) {

@@ -4,22 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 
 /// The label of a face, as the tab and the help hint call it.
-String _moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
-      MoneyFace.statement => l10n?.moneyFaceStatement ?? 'Statement',
-      MoneyFace.payments => l10n?.moneyFacePayments ?? 'Payments',
-      MoneyFace.invoices => l10n?.moneyFaceInvoices ?? 'Invoices',
-      MoneyFace.usage => l10n?.moneyFaceUsage ?? 'Usage',
-      MoneyFace.documents => l10n?.moneyFaceDocuments ?? 'Documents',
+String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
+      MoneyFace.statement => l10n.moneyFaceStatement,
+      MoneyFace.payments => l10n.moneyFacePayments,
+      MoneyFace.invoices => l10n.moneyFaceInvoices,
+      MoneyFace.usage => l10n.moneyFaceUsage,
+      MoneyFace.documents => l10n.moneyFaceDocuments,
     };
 
 /// The #486 section label of the classic column: small caps, muted.
@@ -72,7 +72,7 @@ class MoneyWorkspaceTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(child: ExpansionTile(
     key: const ValueKey('money-workspace-tools'),
-    title: Text((AppLocalizations.of(context) ?? AppLocalizationsEn()).uxMoneyWorkspaceTools),
+    title: Text(context.l10n.uxMoneyWorkspaceTools),
     leading: const Icon(Icons.business_outlined),
     childrenPadding: AppSpacing.gutterAll,
     children: actions,
@@ -95,7 +95,7 @@ class MoneyBalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cents = balanceCents;
     if (cents == null) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Card(
       key: const ValueKey('money-balance-card'),
@@ -103,7 +103,7 @@ class MoneyBalanceCard extends StatelessWidget {
         padding: AppSpacing.mdAll,
         child: Row(children: [
           Expanded(
-            child: Text(l10n?.billBalance ?? 'Balance',
+            child: Text(l10n.billBalance,
                 style: theme.textTheme.titleMedium),
           ),
           Text(
@@ -178,7 +178,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final face = ref.watch(moneyFaceControllerProvider);
@@ -193,7 +193,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     final actions = widget.actions[face] ?? const <Widget>[];
     final hint = HelpHint(_moneyFaceHint(face), key: ValueKey('money-hint-${face.name}'));
 
-    final labels = l10n ?? AppLocalizationsEn();
+    final labels = l10n;
     final scope = switch (face) {
       MoneyFace.statement => labels.uxMoneyStatementScope,
       MoneyFace.payments => labels.uxMoneyPaymentsScope,
