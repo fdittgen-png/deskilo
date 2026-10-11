@@ -230,6 +230,7 @@ Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espac
 - La franja lleva la marca **Demo** y permanece encima de todas las pantallas, de modo que no se puede confundir con un espacio real.
 - Ver la misma pantalla como propietario, como administrador y como miembro es la forma más rápida de aprender lo que puede hacer cada rol.
 - La demo se queda en este dispositivo. Salir de ella no crea ninguna cuenta.
+- **Descubrir** en Yo muestra el espacio de demostración y dos vecinos inventados, Le Quai Numérique y La Fabrique des Halles. Lea una página y sus **Planes y precios**, pida unirse o use **Escribir a los anfitriones**: responde la demo y nadie real recibe nada. Como propietario o administrador, **Mensajes** contiene la solicitud de visita de una desconocida para contestar.
 
 **Véase también:** [Qué es DesKilo y quién hace qué](#qué-es-deskilo-y-quién-hace-qué) · [Crear una cuenta o iniciar sesión](#crear-una-cuenta-o-iniciar-sesión)
 
@@ -307,7 +308,7 @@ Usted no tiene ningún código pero quisiera encontrar un espacio cercano. Los e
 
 **Conviene saber**
 
-- Solo se muestran los espacios que han decidido ser visibles. Esta demo no tiene ninguno, así que el mapa aparece vacío.
+- Solo se muestran los espacios que han decidido ser visibles. En la demo, el mapa muestra el espacio de demostración y dos vecinos inventados; sus páginas, una solicitud para unirse y un mensaje a sus anfitriones se quedan dentro de la demo.
 - Puede mirar sin una cuenta; para unirse hace falta una.
 
 **Véase también:** [Unirse a un espacio](#unirse-a-un-espacio)
@@ -1458,6 +1459,7 @@ Usted quiere todas sus conversaciones en una sola lista, sea cual sea el espacio
 **Conviene saber**
 
 - Las conversaciones de sus otros servidores conectados aparecen en la misma lista, con el servidor indicado.
+- Solo las personas de una conversación pueden abrirla; los propietarios y administradores de un espacio no pueden leerla. Los mensajes no están cifrados de extremo a extremo: quien gestiona el servidor donde vive una conversación puede acceder a ella técnicamente. Vea [Sus datos, sus derechos](#tus-datos-tus-derechos).
 - Un mensaje que ha escrito muestra una marca cuando se entrega y una doble marca azul cuando se lee.
 - Una conversación archivada conserva su historial. Una silenciada permanece callada, pero se sigue contando.
 - Desde el espacio, **Abrir mi mensajería** (en Alertas) conduce hasta aquí.
@@ -2276,7 +2278,7 @@ Usted quiere volver a leer lo que aceptó sobre sus datos.
 
 1. Abra [Privacidad y datos](https://fdittgen-png.github.io/deskilo/#/privacy).
 2. Toque **Sus datos, sus derechos**.
-3. Lea el texto: qué se trata, qué no se hace nunca, quién ve qué, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
+3. Lea el texto: qué se trata y dónde, qué no se hace nunca, quién ve qué, los mensajes, las notificaciones push, quién es responsable, durante cuánto tiempo y cuáles son sus derechos.
 
 **Conviene saber**
 

@@ -169,6 +169,7 @@ Vous voulez jeter un coup d'œil avant de vous engager. La démo est un espace f
 - La bande porte la mention **Démo** et reste au-dessus de chaque écran : vous ne pouvez donc pas la confondre avec un espace réel.
 - Voir le même écran en tant que propriétaire, administrateur et membre est le moyen le plus rapide de comprendre ce que chaque rôle peut faire.
 - La démo reste sur cet appareil. La quitter ne crée pas de compte.
+- **Découvrir** dans Moi liste l'espace de démonstration et deux voisins inventés, Le Quai Numérique et La Fabrique des Halles. Lisez une page et ses **Formules et tarifs**, demandez à rejoindre ou **Écrire aux hôtes** : c'est la démo qui répond, et personne de réel ne reçoit quoi que ce soit. En propriétaire ou en administrateur, **Messages** contient une demande de visite d'une inconnue, à laquelle répondre.
 
 **Voir aussi:** [Ce qu'est DesKilo et qui fait quoi](help:user.start.what-is) · [Créer un compte ou se connecter](help:user.start.account)
 
@@ -246,7 +247,7 @@ Vous n'avez pas de code mais aimeriez trouver un espace près de chez vous. Les 
 
 **Bon à savoir**
 
-- Seuls les espaces qui ont choisi d'être visibles sont listés. Cette démo n'en a aucun : la carte est donc vide ici.
+- Seuls les espaces qui ont choisi d'être visibles sont listés. Dans la démo, la carte montre l'espace de démonstration et deux voisins inventés ; leur page, une demande pour les rejoindre et un message à leurs hôtes restent dans la démo.
 - Vous pouvez regarder sans compte ; pour rejoindre un espace, il en faut un.
 
 **Voir aussi:** [Rejoindre un espace](help:user.start.join)

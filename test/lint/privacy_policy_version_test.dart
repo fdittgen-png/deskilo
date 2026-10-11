@@ -32,6 +32,13 @@ const _pins = <String, int>{
   // the right call: a privacy policy that misstates the licence it tells
   // people to verify the code under is a policy that cannot be verified.
   '2026-09-20': 592690133,
+  // 2026-10-10 (#2405) — checked against what the guide documents: where
+  // the data is depends on the server, messages are open to their
+  // participants only and are not end-to-end encrypted, the public
+  // profile is voluntary, and push is an outbound flow to the push
+  // service. Two sections were added (Messages, Push notifications), so
+  // everybody is asked again.
+  '2026-10-10': 196460937,
 };
 
 void main() {

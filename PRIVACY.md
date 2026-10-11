@@ -1,6 +1,6 @@
 # DesKilo Privacy Policy
 
-*Last updated: 2026-07-22 · Contact: fdittgen@gmail.com*
+*Last updated: 2026-10-10 · Contact: fdittgen@gmail.com*
 
 DesKilo is a booking and community-ledger app for small self-organized
 coworking spaces, published by Florian Dittgen (Germany). This policy
@@ -17,8 +17,11 @@ describes what the app processes and why. DesKilo is open source
 | Workspace membership, role, subscription percentage | Running your coworking community | Supabase |
 | Reservations and check-ins (seat/level, time) | Desk booking — the app's core function | Supabase |
 | Ledger entries: subscription fees, usage, payments, expenses, services | The community's transparent member ledger | Supabase |
-| Optional profile fields: photo, status text, WhatsApp number | Shown to members of YOUR workspaces only, each shareable at your choice | Supabase |
-| Presence (last-seen timestamp) | "Online" dot in the member directory | Supabase |
+| Optional profile fields: photo, status text, profession and bio, WhatsApp number, e-mail | Shown only to the audience you pick for each item under *Who sees me*; nothing is public unless you choose it, and WhatsApp, e-mail and presence never go wider than your own spaces | Supabase |
+| Presence (last-seen timestamp, "in the space today") | "Online" dot in the member directory, to the audience you pick | Supabase |
+| Public profile: name, profession, bio | Readable by anyone with the link, signed in or not — only after you publish it; off by default, withdrawn at any time. Never your contact details, presence or spaces | Supabase |
+| Conversations: person to person, groups, messages to a space's hosts | Readable only by the people in the conversation (for a message to a space: its owners and the admins who agreed to be its public contacts, named before you write); see Messages below | the server the conversation lives on |
+| Push token (this device's address) | Delivering push notifications, where the operator set push up and it is on for this device | Supabase + the push service (Firebase Cloud Messaging) |
 | Badge credentials (kiosk QR / RFID card) | Wall-tablet check-in; stored **only as SHA-256 hashes** — the raw badge never persists server-side | Supabase |
 | Online payment intents (amount, provider order id) | Settling a bill you chose to pay online | Supabase + your workspace's payment provider |
 
@@ -40,11 +43,34 @@ describes what the app processes and why. DesKilo is open source
   stored on your device only and shared only if you export it
   yourself.
 
+## Messages
+
+- **Only participants open a conversation**: the two of you, the
+  members of a group or, for a message to a space, the hosts named
+  before you write. A space's owners and admins cannot read your
+  conversations: account messages are reachable only through
+  server functions that check you take part, and a space's direct and
+  group messages only by their participants.
+- **Not end-to-end encrypted.** A message is stored on the server the
+  conversation lives on, and whoever runs that server can technically
+  reach its database. This is an access rule, not encryption.
+- **Across spaces and servers.** Writing to someone on another server,
+  or asking to join a space there, connects you to that server first
+  and asks you before anything is sent; that conversation is then
+  stored on that server, under its operator.
+
 ## Push notifications
 
-On Google Play builds, notifications are generated locally on the
-device. Push notifications use Firebase Cloud Messaging; pushed
-payloads carry no personal data (a generic kind only).
+Push is an outbound flow, and optional. It works only where the
+operator of the installation has set it up and the space uses it. When
+it is on for a device, that device's address (its push token) and each
+notification go to Firebase Cloud Messaging, which passes notifications
+for Apple devices on to Apple. The text is generic ("You have a new
+message", "Someone needs your confirmation") — no names, no times, no
+message text; the details are read in the app. Switching *Push
+notifications on this device* off in Settings → Privacy & data stops
+it for that device, and the app keeps working. A build prepared for
+F-Droid has no push transport and no Google services.
 
 ## Data controller & processors
 

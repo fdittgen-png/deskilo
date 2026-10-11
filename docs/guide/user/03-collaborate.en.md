@@ -356,6 +356,7 @@ You want all your conversations in one list, whichever space or server they belo
 **Good to know**
 
 - Conversations from your other connected servers appear in the same list, with the server named.
+- Only the people in a conversation can open it; a space's owners and administrators cannot read it. Messages are not end-to-end encrypted: whoever runs the server a conversation lives on can technically reach it. See [Your data, your rights](help:user.privacy.consent).
 - A message you wrote shows a tick when delivered and a blue double tick once read.
 - An archived conversation keeps its history. A muted one stays silent but is still counted.
 - From the workspace, **Open my messenger** (in Alerts) leads here.

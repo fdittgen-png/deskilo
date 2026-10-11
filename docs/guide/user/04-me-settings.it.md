@@ -647,7 +647,7 @@ Vuole rileggere ciò che ha accettato riguardo ai suoi dati.
 
 1. Apra [Privacy e dati](app:/privacy).
 2. Tocchi **I suoi dati, i suoi diritti**.
-3. Legga il testo: che cosa viene trattato, che cosa non viene mai fatto, chi vede che cosa, chi è responsabile, per quanto tempo, e i suoi diritti.
+3. Legga il testo: che cosa viene trattato e dove, che cosa non viene mai fatto, chi vede che cosa, i messaggi, le notifiche push, chi è responsabile, per quanto tempo, e i suoi diritti.
 
 **Da sapere**
 

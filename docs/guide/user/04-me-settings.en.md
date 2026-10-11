@@ -647,7 +647,7 @@ You want to reread what you accepted about your data.
 
 1. Open [Privacy & data](app:/privacy).
 2. Tap **Your data, your rights**.
-3. Read the text: what is processed, what is never done, who sees what, who is responsible, how long, and your rights.
+3. Read the text: what is processed and where, what is never done, who sees what, messages, push notifications, who is responsible, how long, and your rights.
 
 **Good to know**
 
