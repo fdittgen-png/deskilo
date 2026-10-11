@@ -38,16 +38,16 @@ import 'event_repository.dart';
 import 'fixture_clock.dart';
 import 'workspace_status_computation.dart';
 
+part 'money_repository_part1.dart';
+part 'money_repository_part2.dart';
+part 'money_repository_part3.dart';
+part 'money_repository_part4.dart';
+
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
 class FakeMoneyRepository implements MoneyRepository {
   /// VAT declarations (0107), newest period first on read.
   final List<VatDeclaration> vatDeclarations = [];
-
-  @override
-  Future<List<VatDeclaration>> fetchVatDeclarations(
-          String workspaceId) async =>
-      List.of(vatDeclarations);
 
   /// #2357 — the basis the fake prepares on (the server reads the space's).
   VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
@@ -55,147 +55,16 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
   final List<VatDeclaredAmount> vatDeclared = [];
 
-  /// The return of [start]..[end], filed periods locked (`vat_return_lines`).
-  List<VatReturnAmount> _vatReturn(DateTime start, DateTime end) {
-    final view = accountingView(invoices, invoiceMatchesStore);
-    return vatReturnAmountsOf(vatTaxPointLedger(view.invoices,
-            matches: view.matches,
-            instalments: invoiceInstalmentsStore,
-            basis: vatReturnBasis),
-        start: start, end: end,
-        locks: vatPeriodLocksOf(vatDeclarations), declared: vatDeclared);
-  }
-
-  /// Prepares the period like `save_vat_declaration` (0402/0406) with
-  /// the Dart engine the SQL is the twin of.
-  @override
-  Future<String> saveVatDeclaration({
-    required String workspaceId,
-    required DateTime periodStart,
-    required DateTime periodEnd,
-  }) async {
-    final existing = vatDeclarations.indexWhere((d) =>
-        d.periodStart == periodStart && d.periodEnd == periodEnd);
-    if (existing != -1 && vatDeclarations[existing].isFiled) {
-      throw StateError('declaration already filed for this period');
-    }
-    if (vatPeriodLocksOf(vatDeclarations).any((l) =>
-        !l.start.isAfter(periodEnd) && !l.end.isBefore(periodStart))) {
-      throw StateError('this period overlaps a filed return');
-    }
-    final amounts = _vatReturn(periodStart, periodEnd);
-    final lines = vatReturnLinesOf(amounts, declarations: vatDeclarations);
-    final documents = {for (final a in amounts) a.invoiceId};
-    final declaration = VatDeclaration(
-      id: existing != -1
-          ? vatDeclarations[existing].id
-          : 'decl-${vatDeclarations.length + 1}',
-      workspaceId: workspaceId,
-      periodStart: periodStart,
-      periodEnd: periodEnd,
-      status: 'prepared',
-      lines: lines,
-      totalNetCents: lines.fold(0, (sum, l) => sum + l.netCents),
-      totalVatCents: lines.fold(0, (sum, l) => sum + l.vatCents),
-      currency: 'EUR',
-      invoiceCount: documents.length,
-      createdAt: DateTime.utc(2026, 8, 11),
-    );
-    if (existing != -1) {
-      vatDeclarations[existing] = declaration;
-    } else {
-      vatDeclarations.add(declaration);
-    }
-    return declaration.id;
-  }
-
-  @override
-  Future<void> markVatDeclarationSubmitted({
-    required String declarationId,
-    required String channel,
-    required String receipt,
-  }) async {
-    final index =
-        vatDeclarations.indexWhere((d) => d.id == declarationId);
-    if (index == -1) throw StateError('unknown declaration');
-    final d = vatDeclarations[index];
-    if (d.isFiled) throw StateError('declaration already filed');
-    if (channel != 'manual' && channel != 'export') {
-      throw StateError('unknown channel');
-    }
-    if (receipt.trim().isEmpty) {
-      throw StateError('the receipt reference is required');
-    }
-    if (!d.isPrepared) throw StateError('prepare the return before filing it');
-    vatDeclared.addAll(vatDeclaredBy(_vatReturn(d.periodStart, d.periodEnd)));
-    vatDeclarations[index] = VatDeclaration(
-      id: d.id,
-      workspaceId: d.workspaceId,
-      periodStart: d.periodStart,
-      periodEnd: d.periodEnd,
-      status: 'filed',
-      lines: d.lines,
-      totalNetCents: d.totalNetCents,
-      totalVatCents: d.totalVatCents,
-      currency: d.currency,
-      invoiceCount: d.invoiceCount,
-      createdAt: d.createdAt,
-      submittedAt: DateTime.utc(2026, 8, 11, 12),
-      submittedChannel: channel,
-      submittedReceipt: receipt.trim(),
-      number: 'DECL-2026-${(index + 1).toString().padLeft(4, '0')}',
-    );
-  }
-
   /// #488 — the in-memory report-image library.
   final Map<String, List<int>> reportImages = {};
-
-  @override
-  Future<List<String>> listReportImages(String workspaceId) async =>
-      reportImages.keys.toList()..sort();
-
-  @override
-  Future<void> uploadReportImage(
-    String workspaceId, {
-    required String name,
-    required List<int> bytes,
-    required String contentType,
-  }) async {
-    reportImages[name] = bytes;
-  }
-
-  @override
-  Future<Uint8List?> fetchReportImage(
-          String workspaceId, String name) async =>
-      reportImages[name] == null
-          ? null
-          : Uint8List.fromList(reportImages[name]!);
 
   /// The immutable archive (0060); [createInvoice] mirrors the server's
   /// numbering + fingerprint contract.
   final invoices = <Invoice>[];
   var _nextInvoice = 1;
 
-  @override
-  Future<List<Invoice>> fetchInvoices(String workspaceId) async =>
-      List.unmodifiable(invoices);
-
   /// #454 — per-workspace invoice-PDF template.
   InvoicePdfTemplate pdfTemplate = InvoicePdfTemplate.empty;
-
-  @override
-  Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(
-    String workspaceId,
-  ) async =>
-      pdfTemplate;
-
-  @override
-  Future<void> setInvoicePdfTemplate(
-    String workspaceId,
-    InvoicePdfTemplate template,
-  ) async {
-    pdfTemplate = template;
-  }
 
   /// #472 — per-workspace dunning policy.
   DunningRules dunningRules = DunningRules.defaults;
@@ -205,71 +74,7 @@ class FakeMoneyRepository implements MoneyRepository {
   final proposedNegotiations = <({String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note, int? subscriptionPct, Map<String, Map<String, int>> items})>[];
   int negotiationReads = 0;
 
-  @override
-  Future<PriceNegotiation> fetchPriceNegotiation(String memberId) async {
-    negotiationReads++;
-    return negotiations[memberId] ??
-        const PriceNegotiation(
-          defaultFeeCents: 25000,
-          defaultOverageFeeCents: 1200,
-        );
-  }
-
-  @override
-  Future<void> proposePriceNegotiation({
-    required String memberId,
-    int? feeCents,
-    int? overageFeeCents,
-    double? discountPercent,
-    String note = '',
-    DateTime? validFrom,
-    int? subscriptionPct,
-    Map<String, Map<String, int>> items = const {},
-  }) async {
-    proposedNegotiations.add((
-      memberId: memberId,
-      feeCents: feeCents,
-      overageFeeCents: overageFeeCents,
-      discountPercent: discountPercent,
-      note: note,
-      subscriptionPct: subscriptionPct,
-      items: items,
-    ));
-    negotiations[memberId] = (negotiations[memberId] ??
-            const PriceNegotiation(defaultFeeCents: 25000, defaultOverageFeeCents: 1200))
-        .copyWith(
-      pending: NegotiationDeal(
-        feeCents: feeCents,
-        overageFeeCents: overageFeeCents,
-        discountPercent: discountPercent,
-        note: note,
-        validFrom: validFrom ?? kTestNow,
-        status: 'pending',
-        subscriptionPct: subscriptionPct,
-        items: items,
-      ),
-    );
-  }
-
   int sweeps = 0;
-
-  @override
-  Future<int> sweepPaymentReminders(String workspaceId) async {
-    sweeps++;
-    return 0;
-  }
-
-  @override
-  Future<DunningRules> fetchDunningRules(String workspaceId) async =>
-      dunningRules;
-
-  @override
-  Future<void> setDunningRules(
-    String workspaceId,
-    DunningRules rules,
-  ) async {
-    dunningRules = rules;
-  }
 
   /// #925 — the series as the fake holds them.
   final numberSequences = <String, NumberSequence>{
@@ -279,43 +84,6 @@ class FakeMoneyRepository implements MoneyRepository {
 
   /// #956 — what the fake answers for an invoice's fingerprint.
   final integrity = <String, String>{};
-
-  @override
-  Future<String> verifyInvoiceSignature(String invoiceId) async =>
-      integrity[invoiceId] ?? 'verified';
-
-  @override
-  Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) async => [
-    for (final j in NumberSequence.journals)
-      numberSequences[j] ?? NumberSequence.defaultsFor(j),
-  ];
-
-  @override
-  Future<void> setNumberSequence(
-    String workspaceId,
-    NumberSequence sequence, {
-    int? raiseNextValueTo,
-  }) async {
-    final current = numberSequences[sequence.journal];
-    if (raiseNextValueTo != null &&
-        current != null &&
-        raiseNextValueTo < current.nextValue) {
-      throw StateError('a sequence never goes backwards');
-    }
-    lastNumberSequence = sequence.copyWith(
-      nextValue: raiseNextValueTo ?? current?.nextValue, stored: true,
-    );
-    numberSequences[sequence.journal] = lastNumberSequence!;
-  }
-
-  @override
-  Future<String> previewDocumentNumber(
-    String workspaceId,
-    String journal,
-  ) async {
-    final s = numberSequences[journal] ?? NumberSequence.defaultsFor(journal);
-    return s.format(s.nextValue, kTestNow);
-  }
 
   /// #804 — settlements requested, in order.
   final List<({String memberId, List<String> invoiceIds})> settlements = [];
@@ -327,177 +95,18 @@ class FakeMoneyRepository implements MoneyRepository {
   String lastBuyerReference = '';
   String lastPurchaseOrder = '';
 
-  @override
-  Future<String> settleInvoices({
-    required String workspaceId,
-    required String memberId,
-    required List<String> invoiceIds,
-    String note = '',
-  }) async {
-    if (invoiceIds.length < 2) {
-      throw StateError('settle at least two invoices');
-    }
-    settlements.add((memberId: memberId, invoiceIds: invoiceIds));
-    // #831 — build the document the server builds: the sources' lines
-    // tagged with their number, the snapshot, the back-pointers.
-    final sources = [
-      for (final id in invoiceIds)
-        ...invoices.where((i) => i.id == id),
-    ];
-    // Older tests settle ids the fake never issued: they only observe
-    // the call, so build nothing for them.
-    if (sources.length != invoiceIds.length) return nextSettlementId;
-    final settlementId = 'inv-settle-${settlements.length}';
-    final settlement = Invoice(
-      id: settlementId,
-      workspaceId: workspaceId,
-      memberId: memberId,
-      number: nextSettlementId,
-      issuedAt: kTestNow,
-      title: nextSettlementId,
-      lines: [
-        for (final s in sources)
-          for (final l in s.lines) l.copyWith(sourceNumber: s.number),
-      ],
-      totalCents: sources.fold(0, (t, s) => t + s.totalCents),
-      currency: sources.first.currency,
-      memberName: sources.first.memberName,
-      memberAddress: sources.first.memberAddress,
-      workspaceName: sources.first.workspaceName,
-      workspaceAddress: sources.first.workspaceAddress,
-      issuerName: 'Flo',
-      signature: 's' * 64,
-      kind: InvoiceKind.settlement,
-      settles: [
-        for (final s in sources)
-          SettledSource(
-            invoiceId: s.id,
-            number: s.number,
-            period: s.period,
-            kind: s.kind,
-            totalCents: s.totalCents,
-            lines: s.lines,
-          ),
-      ],
-    );
-    for (var i = 0; i < invoices.length; i++) {
-      if (invoiceIds.contains(invoices[i].id)) {
-        invoices[i] = invoices[i].copyWith(settledByInvoiceId: settlementId);
-      }
-    }
-    invoices.insert(0, settlement);
-    // The server returns the new document's id; the sheet looks its
-    // number up from there (#831).
-    return settlementId;
-  }
-
   /// #802 — when the two automatic invoice runs happen.
   BillingRules billingRules = BillingRules.defaults;
 
   /// Workspaces passed to [sweepBillingInvoices], in order.
   final List<String> billingSweeps = [];
 
-  @override
-  Future<BillingRules> fetchBillingRules(String workspaceId) async =>
-      billingRules;
-
-  @override
-  Future<void> setBillingRules(
-    String workspaceId,
-    BillingRules rules,
-  ) async {
-    billingRules = rules;
-  }
-
   /// #934 — the status the fake answers with (#2327: else computed).
   WorkspaceStatus? status;
   RepartitionRule repartitionRule = const RepartitionRule();
 
-  @override
-  Future<WorkspaceStatus> fetchWorkspaceStatus(
-          String workspaceId, String from, String to) async =>
-      status ?? demoWorkspaceStatus(this, from, to);
-
-  @override
-  Future<RepartitionRule> fetchRepartitionRule(String workspaceId) async =>
-      repartitionRule;
-
-  @override
-  Future<void> setRepartitionRule(
-      String workspaceId, RepartitionRule rule) async {
-    repartitionRule = rule;
-  }
-
-  @override
-  Future<int> sweepBillingInvoices(String workspaceId) async {
-    billingSweeps.add(workspaceId);
-    return 0;
-  }
-
-  /// Mirrors invoice_lines_for (0062): positions derive EXCLUSIVELY
-  /// from the period's statement + confirmed ledger charges — nothing
-  /// is accepted from the caller.
-  List<InvoiceLine> derivedLines(String memberId, String period) {
-    final s = statements[period] ?? statement.copyWith(period: period);
-    return [
-      if (s.feeCents > 0)
-        InvoiceLine(
-            kind: 'subscription',
-            label: '${s.subscriptionPct}',
-            amountCents: s.feeCents),
-      if (s.overageCents > 0)
-        InvoiceLine(
-            kind: 'overage',
-            label: '',
-            quantity: s.extraHalfDays,
-            amountCents: s.overageCents),
-      if (s.accessorySupplementCents > 0)
-        InvoiceLine(
-            kind: 'accessories',
-            label: '',
-            amountCents: s.accessorySupplementCents),
-      if (s.levelSupplementCents > 0)
-        InvoiceLine(
-            kind: 'level', label: '', amountCents: s.levelSupplementCents),
-      if (s.officeSupplementCents > 0)
-        InvoiceLine(
-            kind: 'office', label: '', amountCents: s.officeSupplementCents),
-      if (s.deskSupplementCents > 0)
-        InvoiceLine(
-            kind: 'desk', label: '', amountCents: s.deskSupplementCents),
-      for (final entry in ledger)
-        if (entry.memberId == memberId &&
-            entry.period == period &&
-            ((entry.kind == LedgerKind.charge &&
-                    (entry.category == LedgerCategory.service ||
-                        entry.category == LedgerCategory.package ||
-                        entry.category == LedgerCategory.adjustment)) ||
-                (entry.kind == LedgerKind.credit &&
-                    (entry.category == LedgerCategory.payment ||
-                        entry.category == LedgerCategory.expense ||
-                        entry.category == LedgerCategory.adjustment))))
-          InvoiceLine(
-              kind: entry.category.name,
-              label: entry.description,
-              // 0063 — credits net against the charges: the total IS
-              // the solde.
-              amountCents: entry.kind == LedgerKind.credit
-                  ? -entry.amountCents
-                  : entry.amountCents),
-    ];
-  }
-
   /// Tests seed what the server would report missing.
   List<String> invoiceMissing = const [];
-
-  @override
-  Future<List<String>> invoiceIssueReadiness({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    InvoiceKind kind = InvoiceKind.full,
-    String? replacesId,
-  }) async => invoiceMissing;
 
   @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({
@@ -516,165 +125,11 @@ class FakeMoneyRepository implements MoneyRepository {
   /// tests seed these (the money fake has no reservations access).
   List<InvoiceAttendance> attendanceSeed = [];
 
-  @override
-  Future<String> createInvoice({
-    required String workspaceId,
-    required String memberId,
-    required String period,
-    String? replacesId,
-    bool detailed = false,
-    InvoiceKind kind = InvoiceKind.full,
-    String buyerReference = '',
-    String purchaseOrder = '',
-  }) async {
-    lastBuyerReference = buyerReference;
-    lastPurchaseOrder = purchaseOrder;
-    // Server contract (0067/0142): one ACTIVE invoice per member, month
-    // and KIND — a full invoice blocks both kinds.
-    if (invoices.any((i) =>
-        i.memberId == memberId &&
-        i.period == period &&
-        !i.isVoided &&
-        i.id != replacesId &&
-        (i.kind == kind ||
-            i.kind == InvoiceKind.full ||
-            kind == InvoiceKind.full))) {
-      throw StateError('period already invoiced for this member');
-    }
-    // #827 — the kind narrows the lines the way invoice_lines_for does.
-    final lines = [
-      for (final l in derivedLines(memberId, period))
-        if (lineBelongsTo(l, kind)) l,
-    ];
-    if (lines.isEmpty) throw StateError('nothing to invoice for this period');
-    var replacesNumber = '';
-    if (replacesId != null) {
-      // Server contract (0061): the reference must resolve, one direct
-      // replacement per invoice, and the replaced one ends up voided in
-      // the same transaction.
-      final i = invoices.indexWhere((inv) => inv.id == replacesId);
-      if (i < 0) throw StateError('unknown invoice');
-      if (invoices.any((inv) => inv.replacesInvoiceId == replacesId)) {
-        throw StateError('invoice already replaced');
-      }
-      if (!invoices[i].isVoided) {
-        invoices[i] = invoices[i]
-            .copyWith(voidedAt: kTestNow, voidedByName: 'Flo');
-      }
-      replacesNumber = invoices[i].number;
-    }
-    final invoice = Invoice(
-      id: 'inv-$_nextInvoice',
-      workspaceId: workspaceId,
-      memberId: memberId,
-      number: 'INV-2026-${_nextInvoice.toString().padLeft(4, '0')}',
-      issuedAt: kTestNow,
-      period: period,
-      title: period,
-      lines: lines,
-      totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
-      currency: 'EUR',
-      // Distinguishable snapshots for the archive filters.
-      memberName: memberId == 'member-1' ? 'Flo' : 'Ana',
-      memberAddress: '1 Rue Test, 34120 Pézenas',
-      workspaceName: 'Test Space',
-      workspaceAddress: '2 Place du Marché, 34120 Pézenas',
-      issuerName: 'Flo',
-      signature: 'f' * 64,
-      replacesInvoiceId: replacesId,
-      replacesNumber: replacesNumber,
-      detailed: detailed,
-      kind: kind,
-      detailLedger: detailed
-          ? [
-              for (final entry in ledger)
-                if (entry.memberId == memberId && entry.period == period)
-                  InvoiceDetailEntry(
-                    on: entry.createdAt.toIso8601String().split('T').first,
-                    category: entry.category.name,
-                    label: entry.description,
-                    amountCents: entry.kind == LedgerKind.credit
-                        ? -entry.amountCents
-                        : entry.amountCents,
-                  ),
-            ]
-          : const [],
-      attendance: detailed ? List.of(attendanceSeed) : const [],
-    );
-    _nextInvoice++;
-    invoices.insert(0, invoice);
-    return invoice.id;
-  }
-
-  @override
-  Future<void> voidInvoice(String invoiceId) async {
-    final i = invoices.indexWhere((inv) => inv.id == invoiceId);
-    if (i < 0) throw StateError('unknown invoice');
-    // 0068 — a paid invoice is definitive.
-    if (invoiceMatchesStore.containsKey(invoiceId)) {
-      throw StateError('invoice is matched');
-    }
-    if (invoices[i].isVoided) throw StateError('invoice already voided');
-    invoices[i] = invoices[i]
-        .copyWith(voidedAt: kTestNow, voidedByName: 'Flo');
-  }
-
   /// invoiceId → reminder instants (0066).
   final invoiceReminders = <String, List<DateTime>>{};
 
-  @override
-  Future<void> remindInvoice(String invoiceId) async {
-    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
-    if (invoice == null) throw StateError('unknown invoice');
-    if (invoice.isVoided) throw StateError('invoice is voided');
-    // #1913 — the server refuses a held invoice; so does the demo.
-    if (dunningHolds.containsKey(invoiceId)) {
-      throw StateError('this invoice is on hold');
-    }
-    invoiceReminders.putIfAbsent(invoiceId, () => []).add(kTestNow);
-  }
-
-  /// #1922 — the demo sends by hand only, and its share sheet always
-  /// completes: every reminder is the sender's declaration.
-  @override
-  Future<List<ReminderEvidence>> fetchReminderEvidence(
-    String invoiceId,
-  ) async => [
-    for (final (i, at) in (invoiceReminders[invoiceId] ?? const <DateTime>[]).indexed)
-      ReminderEvidence(
-        intentId: '$invoiceId-reminder-$i',
-        level: i + 1,
-        origin: 'manual',
-        status: 'declared_delivered',
-        preparedAt: at,
-      ),
-  ];
-
   /// #1913 — invoiceId → reason of its active hold.
   final Map<String, String> dunningHolds = {};
-
-  @override
-  Future<Map<String, String>> fetchDunningHolds(String workspaceId) async =>
-      Map.of(dunningHolds);
-
-  @override
-  Future<void> placeDunningHold(
-    String invoiceId, {
-    required String reason,
-    String note = '',
-  }) async {
-    if (dunningHolds.containsKey(invoiceId)) {
-      throw StateError('this invoice is already on hold');
-    }
-    dunningHolds[invoiceId] = reason;
-  }
-
-  @override
-  Future<void> releaseDunningHold(String invoiceId) async {
-    if (dunningHolds.remove(invoiceId) == null) {
-      throw StateError('this invoice is not on hold');
-    }
-  }
 
   @override
   Future<Map<String, ({int count, DateTime last})>> fetchInvoiceReminders(
@@ -697,223 +152,11 @@ class FakeMoneyRepository implements MoneyRepository {
   /// #506 — every payment a match (or additional payment) consumed.
   final consumedPaymentIds = <String>{};
 
-  @override
-  Future<void> settleCreditInvoice(String invoiceId,
-      {String note = ''}) async {
-    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
-    if (invoice == null) throw StateError('unknown invoice');
-    if (invoice.totalCents >= 0) throw StateError('not a credit note');
-    if (invoiceMatchesStore.containsKey(invoiceId)) {
-      throw StateError('invoice already matched');
-    }
-    final trimmed = note.trim();
-    ledger.add(LedgerEntry(
-      id: 'ledger-refund-${ledger.length + 1}',
-      memberId: invoice.memberId,
-      kind: LedgerKind.charge,
-      category: LedgerCategory.adjustment,
-      amountCents: -invoice.totalCents,
-      description: 'Refund ${invoice.number}'
-          '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-      period: yearMonth(kTestNow.year, kTestNow.month),
-      createdAt: kTestNow,
-    ));
-    invoiceMatchesStore[invoiceId] = InvoiceMatch(
-      invoiceId: invoiceId,
-      paidCents: -invoice.totalCents,
-      resolution: 'refunded',
-      note: trimmed,
-      status: matchPolicyConfigured ? 'pending' : 'confirmed',
-      matchedAt: kTestNow,
-      byName: 'Flo',
-    );
-  }
-
   /// #2355 — the instalments recorded one by one; tests seed them here.
   final invoiceInstalmentsStore = <String, List<TaxPointPayment>>{};
 
-  @override
-  Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(
-    String workspaceId,
-  ) async =>
-      {
-        for (final entry in invoiceInstalmentsStore.entries)
-          entry.key: List.of(entry.value),
-      };
-
-  @override
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>
-      {
-        ...consumedPaymentIds,
-        for (final match in invoiceMatchesStore.values)
-          ?match.paymentLedgerId,
-      };
-
   /// When true, matches land PENDING (a validation policy exists).
   bool matchPolicyConfigured = false;
-
-  /// Seeds a CONFIRMED registered payment (0068) — what record_payment
-  /// or an online settlement leaves on the ledger; returns its id.
-  String seedPayment(String memberId, int amountCents,
-      {String description = '', String? period}) {
-    final id = 'pay-${ledger.length + 1}';
-    final now = kTestNow;
-    ledger.add(LedgerEntry(
-      id: id,
-      memberId: memberId,
-      kind: LedgerKind.credit,
-      category: LedgerCategory.payment,
-      amountCents: amountCents,
-      description: description,
-      period: period ?? yearMonth(now.year, now.month),
-      createdAt: now,
-    ));
-    return id;
-  }
-
-  /// #512 — an account credit (credit-note excess, category
-  /// 'adjustment') the imputation flow can spend on open invoices.
-  String seedCreditNote(String memberId, int amountCents,
-      {String description = 'Credit note', String? period}) {
-    final id = 'avoir-${ledger.length + 1}';
-    final now = kTestNow;
-    ledger.add(LedgerEntry(
-      id: id,
-      memberId: memberId,
-      kind: LedgerKind.credit,
-      category: LedgerCategory.adjustment,
-      amountCents: amountCents,
-      description: description,
-      period: period ?? yearMonth(now.year, now.month),
-      createdAt: now,
-    ));
-    return id;
-  }
-
-  @override
-  Future<void> matchInvoice({
-    required String invoiceId,
-    required String paymentLedgerId,
-    required String resolution,
-    String note = '',
-  }) async {
-    final invoice = invoices.where((i) => i.id == invoiceId).firstOrNull;
-    if (invoice == null) throw StateError('unknown invoice');
-    if (invoice.isVoided) throw StateError('invoice is voided');
-    // #506 — a STANDING partial accepts ADDITIONAL payments against the
-    // remaining amount; anything else refuses like before.
-    final existing = invoiceMatchesStore[invoiceId];
-    final additional = existing != null &&
-        !existing.pending &&
-        existing.resolution == 'under_accepted' &&
-        existing.writeoffAt == null;
-    if (existing != null && !additional) {
-      throw StateError('invoice already matched');
-    }
-    // 0068 — the amount comes FROM the selected registered payment;
-    // #512 — account credits (credit-note excess) settle too.
-    final payment = ledger
-        .where((entry) =>
-            entry.id == paymentLedgerId &&
-            entry.memberId == invoice.memberId &&
-            entry.kind == LedgerKind.credit &&
-            (entry.category == LedgerCategory.payment ||
-                entry.category == LedgerCategory.adjustment))
-        .firstOrNull;
-    if (payment == null) throw StateError('unknown payment');
-    // #512 — a credit baked into an issued invoice was spent there.
-    if (invoices.any((i) =>
-        i.memberId == invoice.memberId &&
-        !i.isVoided &&
-        i.period == payment.period &&
-        i.issuedAt.isAfter(payment.createdAt))) {
-      throw StateError('credit already deducted on an issued invoice');
-    }
-    if (invoiceMatchesStore.values
-        .any((m) => m.paymentLedgerId == paymentLedgerId)) {
-      throw StateError('payment already matched');
-    }
-    final paidCents = payment.amountCents;
-    // #506 — every amount rule compares against what is STILL DUE.
-    final dueCents =
-        invoice.totalCents - (additional ? existing.paidCents : 0);
-    final trimmed = note.trim();
-    if (resolution == 'exact' && paidCents != dueCents) {
-      throw StateError('amount does not match the invoice');
-    }
-    if ((resolution == 'over_forced' || resolution == 'over_credit_note') &&
-        paidCents <= dueCents) {
-      throw StateError('amount does not exceed the invoice');
-    }
-    if (resolution == 'under_accepted' && paidCents >= dueCents) {
-      throw StateError('amount is not below the invoice');
-    }
-    if ((resolution == 'over_forced' || resolution == 'under_accepted') &&
-        trimmed.isEmpty) {
-      throw StateError('a note is required');
-    }
-    if (resolution == 'over_credit_note') {
-      ledger.add(LedgerEntry(
-        id: 'ledger-credit-${ledger.length + 1}',
-        memberId: invoice.memberId,
-        kind: LedgerKind.credit,
-        category: LedgerCategory.adjustment,
-        amountCents: paidCents - dueCents,
-        description: 'Credit note ${invoice.number}'
-            '${trimmed.isEmpty ? '' : ' — $trimmed'}',
-        period:
-            yearMonth(kTestNow.year, kTestNow.month),
-        createdAt: kTestNow,
-      ));
-    }
-    consumedPaymentIds.add(paymentLedgerId);
-    if (additional) {
-      // #506 — the aggregate grows; full settlement flips the state.
-      invoiceMatchesStore[invoiceId] = InvoiceMatch(
-        invoiceId: invoiceId,
-        paidCents: existing.paidCents + paidCents,
-        resolution: resolution,
-        note: trimmed.isEmpty ? existing.note : trimmed,
-        paymentLedgerId: paymentLedgerId,
-        matchedAt: kTestNow,
-        byName: 'Flo',
-      );
-      return;
-    }
-    // #841 — a governed match carries the event that has to be
-    // validated, exactly as invoice_matches.event_id does on the server,
-    // so the document can show who released it.
-    String? eventId;
-    if (matchPolicyConfigured && _events != null) {
-      eventId = 'invpay-${_events.events.length + 1}';
-      _events.events.add(WorkspaceEvent(
-        id: eventId,
-        workspaceId: invoice.workspaceId,
-        type: EventType.invoicePayment,
-        action: EventAction.created,
-        actorMemberId: 'member-1',
-        subjectMemberId: invoice.memberId,
-        payload: {
-          'invoice_id': invoiceId,
-          'paid_cents': paidCents,
-          'resolution': resolution,
-        },
-        status: EventStatus.pending,
-        createdAt: kTestNow,
-      ));
-    }
-    invoiceMatchesStore[invoiceId] = InvoiceMatch(
-      invoiceId: invoiceId,
-      paidCents: paidCents,
-      resolution: resolution,
-      note: trimmed,
-      status: matchPolicyConfigured ? 'pending' : 'confirmed',
-      paymentLedgerId: paymentLedgerId,
-      matchedAt: kTestNow,
-      byName: 'Flo',
-      eventId: eventId,
-    );
-  }
 
   /// #833 — the month's usage records, keyed by reservation like the
   /// server's table. The fake mirrors the server's rules: a correction
@@ -923,107 +166,6 @@ class FakeMoneyRepository implements MoneyRepository {
   bool usagePolicyConfigured = false;
   String usageMemberId = 'member-1';
   var _nextUsage = 1;
-
-  /// Seeds one record the way a check-out would leave it.
-  UsageRecord seedUsage({
-    required int reservedMinutes,
-    int? actualMinutes,
-    String memberId = 'member-1',
-    String period = '2026-08',
-    String space = 'Desk A1',
-  }) {
-    final from = DateTime.utc(2026, 8, 12, 9);
-    final record = UsageRecord(
-      id: 'usage-${_nextUsage++}',
-      memberId: memberId,
-      reservationId: 'res-$_nextUsage',
-      period: period,
-      reservedFrom: from,
-      reservedTo: from.add(Duration(minutes: reservedMinutes)),
-      checkedInAt: actualMinutes == null ? null : from,
-      checkedOutAt: actualMinutes == null
-          ? null
-          : from.add(Duration(minutes: actualMinutes)),
-      countedMinutes: reservedMinutes,
-      reservedMinutes: reservedMinutes,
-      actualMinutes: actualMinutes,
-      spaceLabel: space,
-    );
-    usageRecords.add(record);
-    return record;
-  }
-
-  @override
-  Future<List<UsageRecord>> fetchUsageRecords({
-    required String workspaceId,
-    required String period,
-    String? memberId,
-  }) async =>
-      [
-        for (final record in usageRecords)
-          if (record.period == period &&
-              (memberId == null || record.memberId == memberId))
-            record,
-      ];
-
-  @override
-  Future<String> requestUsageCorrection(
-    String recordId, {
-    String reason = '',
-  }) async {
-    final index = usageRecords.indexWhere((r) => r.id == recordId);
-    if (index < 0) throw StateError('unknown usage record');
-    final record = usageRecords[index];
-    if (record.memberId != usageMemberId) {
-      throw StateError('only the member concerned may ask for this');
-    }
-    if (record.isCorrected) throw StateError('already corrected');
-    if (record.actualMinutes == null || record.checkedOutAt == null) {
-      throw StateError('no check-out to correct to');
-    }
-    if (record.actualMinutes! >= record.reservedMinutes) {
-      throw StateError('nothing to reduce');
-    }
-    // With a rule the correction waits for somebody else; without one it
-    // stands at once, exactly as the RPC does.
-    if (!usagePolicyConfigured) {
-      usageRecords[index] = UsageRecord(
-        id: record.id,
-        memberId: record.memberId,
-        reservationId: record.reservationId,
-        period: record.period,
-        reservedFrom: record.reservedFrom,
-        reservedTo: record.reservedTo,
-        checkedInAt: record.checkedInAt,
-        checkedOutAt: record.checkedOutAt,
-        countedMinutes: record.actualMinutes!,
-        reservedMinutes: record.reservedMinutes,
-        actualMinutes: record.actualMinutes,
-        basis: UsageBasis.corrected,
-        correctedFromMinutes: record.countedMinutes,
-        correctedAt: kTestNow,
-        spaceLabel: record.spaceLabel,
-      );
-    }
-    return 'usage-event-${usageRecords.length}';
-  }
-
-  @override
-  Future<String> requestUsageRecordDelete(
-    String recordId, {
-    String reason = '',
-  }) async {
-    if (!usagePolicyConfigured) {
-      usageRecords.removeWhere((r) => r.id == recordId);
-    }
-    return 'usage-delete-event';
-  }
-
-  @override
-  Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(
-    String workspaceId,
-  ) async =>
-      Map.of(invoiceMatchesStore);
 
   FakeMoneyRepository({this._events});
 
@@ -1066,28 +208,6 @@ class FakeMoneyRepository implements MoneyRepository {
     String? period,
   })>[];
 
-  @override
-  Future<Statement> fetchStatement(String memberId, String period) async {
-    fetchedPeriods.add(period);
-    // #512 — months fully before the membership owe NOTHING.
-    if (memberJoinedPeriod != null && period.compareTo(memberJoinedPeriod!) < 0) {
-      return Statement(
-        period: period,
-        subscriptionPct: statement.subscriptionPct,
-        feeCents: 0,
-        includedHalfDays: 0,
-        openDays: 0,
-        usedHalfDays: 0,
-        extraHalfDays: 0,
-        overageCents: 0,
-        creditsCents: 0,
-        balanceCents: 0,
-        overagePolicy: statement.overagePolicy,
-      );
-    }
-    return statements[period] ?? statement.copyWith(period: period);
-  }
-
   /// #512 — when set, [fetchStatement] zeroes any earlier month, like
   /// member_statement does from the member's joined_at.
   String? memberJoinedPeriod;
@@ -1096,73 +216,6 @@ class FakeMoneyRepository implements MoneyRepository {
   /// (`not your account`) or a dead network, so a screen's error state
   /// can be exercised.
   Exception? accountFailure;
-
-  @override
-  Future<MemberAccount> fetchMemberAccount(String memberId) async {
-    if (accountFailure != null) throw accountFailure!;
-    // Mirrors the member_account RPC over the fake stores.
-    bool consumed(LedgerEntry e) => consumedPaymentIds.contains(e.id) ||
-        invoiceMatchesStore.values.any((m) => m.paymentLedgerId == e.id);
-    bool baked(LedgerEntry e) => invoices.any((i) =>
-        i.memberId == memberId &&
-        !i.isVoided &&
-        i.period == e.period &&
-        i.issuedAt.isAfter(e.createdAt));
-    // Spare credit only: an avoir of any month, or a payment left over
-    // from a PAST month — running-month payments offset the upcoming
-    // invoice and stay ordinary payments.
-    final nowPeriod = yearMonth(kTestNow.year, kTestNow.month);
-    final credit = ledger
-        .where((e) =>
-            e.memberId == memberId &&
-            e.kind == LedgerKind.credit &&
-            (e.category == LedgerCategory.adjustment ||
-                (e.category == LedgerCategory.payment &&
-                    e.period.compareTo(nowPeriod) < 0)) &&
-            !consumed(e) &&
-            !baked(e))
-        .fold(0, (sum, e) => sum + e.amountCents);
-    final replaced = {for (final i in invoices) ?i.replacesInvoiceId};
-    final open = <OpenInvoicePosition>[];
-    for (final invoice in invoices) {
-      if (invoice.memberId != memberId ||
-          invoice.isVoided ||
-          invoice.totalCents <= 0 ||
-          replaced.contains(invoice.id)) {
-        continue;
-      }
-      final match = invoiceMatchesStore[invoice.id];
-      final settledPartial = match != null &&
-          !match.pending &&
-          match.resolution == 'under_accepted' &&
-          match.writeoffAt == null;
-      if (match != null && !match.pending && !settledPartial) continue;
-      final paid = settledPartial ? match.paidCents : 0;
-      open.add((
-        invoiceId: invoice.id,
-        number: invoice.number,
-        period: invoice.period ?? '',
-        totalCents: invoice.totalCents,
-        paidCents: paid,
-        remainingCents: invoice.totalCents - paid,
-      ));
-    }
-    final openTotal = open.fold(0, (sum, o) => sum + o.remainingCents);
-    final refunds = invoices
-        .where((i) =>
-            i.memberId == memberId &&
-            !i.isVoided &&
-            i.totalCents < 0 &&
-            invoiceMatchesStore[i.id] == null)
-        .fold(0, (sum, i) => sum - i.totalCents);
-    return MemberAccount(
-      creditCents: credit,
-      openInvoices: open,
-      openTotalCents: openTotal,
-      refundsDueCents: refunds,
-      netPositionCents: credit + refunds - openTotal,
-    );
-  }
 
   /// Online-payment attempts the fake reports for the export (#395).
   final paymentIntents = <PaymentIntent>[];
@@ -1173,91 +226,6 @@ class FakeMoneyRepository implements MoneyRepository {
   final repartitions = <ExpenseRepartition>[];
   bool repartitionPolicyConfigured = false;
   int _nextRepartition = 1;
-
-  @override
-  Future<String> distributeExpense({
-    required String workspaceId,
-    required String title,
-    required int amountCents,
-    required RepartitionMethod method,
-    required String period,
-    required List<RepartitionShare> shares,
-    String? sourceEventId,
-  }) async {
-    if (amountCents == 0) throw StateError('amount must not be zero');
-    if (shares.isEmpty) throw StateError('no shares');
-    if (shares.fold(0, (s, x) => s + x.amountCents) != amountCents) {
-      throw StateError('shares must add up to the amount');
-    }
-    final id = 'rep-${_nextRepartition++}';
-    final pending = repartitionPolicyConfigured;
-    if (!pending) {
-      for (final share in shares) {
-        ledger.add(LedgerEntry(
-          id: 'ledger-rep-$id-${share.memberId}',
-          memberId: share.memberId,
-          kind: amountCents > 0 ? LedgerKind.charge : LedgerKind.credit,
-          category: LedgerCategory.adjustment,
-          amountCents: share.amountCents.abs(),
-          description: title,
-          period: period,
-          createdAt: kTestNow,
-        ));
-      }
-    }
-    repartitions.insert(
-      0,
-      ExpenseRepartition(
-        id: id,
-        title: title,
-        amountCents: amountCents,
-        method: method,
-        period: period,
-        shares: shares,
-        status: pending ? 'pending' : 'confirmed',
-        createdAt: kTestNow,
-        appliedAt: pending ? null : kTestNow,
-      ),
-    );
-    return id;
-  }
-
-  @override
-  Future<List<ExpenseRepartition>> fetchExpenseRepartitions(
-          String workspaceId) async =>
-      List.of(repartitions);
-
-  @override
-  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async =>
-      List.of(ledger);
-
-  @override
-  Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async =>
-      List.of(paymentIntents);
-
-  @override
-  Future<List<LedgerEntry>> fetchLedger(String memberId) async =>
-      List.of(ledger);
-
-  @override
-  Future<String> recordPayment({
-    required String workspaceId,
-    required String memberId,
-    required int amountCents,
-    String note = '',
-    PaymentMethod? method,
-    DateTime? paidOn,
-    String? period,
-  }) async {
-    recordedPayments.add((
-      amountCents: amountCents,
-      note: note,
-      method: method,
-      paidOn: paidOn,
-      period: period,
-    ));
-    return 'evt-payment-${recordedPayments.length}';
-  }
 
   // ── e-invoice transmission (0071/0073) ──────────────────────────────
 
@@ -1277,82 +245,6 @@ class FakeMoneyRepository implements MoneyRepository {
   })>[];
   final transmissions = <String, InvoiceTransmission>{};
   final einvoiceConfig = <String, String>{};
-
-  @override
-  Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(
-    String workspaceId,
-  ) async =>
-      einvoiceGateway;
-
-  @override
-  Future<EInvoiceSubmission> sendEInvoice({
-    required String workspaceId,
-    required String invoiceId,
-    required String fileName,
-    required String mimeType,
-    required List<int> bytes,
-    String environment = 'prod',
-    String destination = 'government',
-  }) async {
-    sentEInvoices.add((
-      invoiceId: invoiceId,
-      fileName: fileName,
-      bytes: bytes.length,
-      environment: environment,
-      destination: destination,
-    ));
-    transmissions[invoiceId] = InvoiceTransmission(
-      invoiceId: invoiceId,
-      status: einvoiceOutcome,
-      sentAt: kTestNow,
-      externalId: 'platform-${sentEInvoices.length}',
-      environment: environment,
-      destination: destination,
-    );
-    return EInvoiceSubmission(
-      status: einvoiceOutcome,
-      externalId: 'platform-${sentEInvoices.length}',
-      detail: einvoiceOutcome == EInvoiceSubmissionStatus.accepted
-          ? ''
-          : 'the platform said no',
-    );
-  }
-
-  @override
-  Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
-    String workspaceId,
-  ) async =>
-      Map.of(transmissions);
-
-  @override
-  Future<void> setEInvoiceCredentials(
-    String workspaceId,
-    Map<String, String> config,
-  ) async {
-    // Mirrors the RPC: blank fields keep their stored value.
-    config.forEach((key, value) {
-      if (value.trim().isNotEmpty) einvoiceConfig[key] = value.trim();
-    });
-  }
-
-  @override
-  Future<void> clearEInvoiceCredentials(String workspaceId) async =>
-      einvoiceConfig.clear();
-
-  @override
-  Future<EInvoiceProviderStatus> fetchEInvoiceStatus(
-    String workspaceId,
-  ) async =>
-      EInvoiceProviderStatus(
-        configured: einvoiceConfig.isNotEmpty,
-        fields: {
-          for (final entry in einvoiceConfig.entries)
-            if (entry.key != 'auth_value') entry.key: entry.value,
-        },
-        secretsSet: [
-          if (einvoiceConfig.containsKey('auth_value')) 'auth_value',
-        ],
-      );
 
   /// Mirrors the migration's default seed: (0,25] Flex-like, (25,50]
   /// Half-like, (50,100] Full-like (#128).
@@ -1383,46 +275,7 @@ class FakeMoneyRepository implements MoneyRepository {
     ),
   ];
 
-  @override
-  Future<List<FeeBand>> fetchFeeBands(String workspaceId) async =>
-      List.of(feeBands)..sort((a, b) => a.fromPct.compareTo(b.fromPct));
-
-  @override
-  Future<void> replaceFeeBands(
-    String workspaceId,
-    List<FeeBand> bands,
-  ) async {
-    // Same contiguity contract as the replace_fee_bands RPC.
-    var expected = 0;
-    for (final band in bands.toList()
-      ..sort((a, b) => a.fromPct.compareTo(b.fromPct))) {
-      if (band.fromPct != expected) throw StateError('bands not contiguous');
-      expected = band.toPct;
-    }
-    if (expected != 100) throw StateError('bands must cover up to 100');
-    feeBands
-      ..clear()
-      ..addAll([
-        for (final (i, band) in bands.indexed)
-          band.copyWith(id: 'band-${i + 1}', workspaceId: workspaceId),
-      ]);
-  }
-
   SubscriptionLevels subscriptionLevels = const SubscriptionLevels();
-
-  @override
-  Future<SubscriptionLevels> fetchSubscriptionLevels(
-    String workspaceId,
-  ) async =>
-      subscriptionLevels;
-
-  @override
-  Future<void> setSubscriptionLevels(
-    String workspaceId,
-    SubscriptionLevels levels,
-  ) async {
-    subscriptionLevels = levels;
-  }
 
   final services = <ServiceItem>[
     const ServiceItem(
@@ -1452,107 +305,6 @@ class FakeMoneyRepository implements MoneyRepository {
   /// turned VAT on — which is every workspace before this migration.
   List<VatRate> vatRates = [];
 
-  @override
-  Future<List<VatRate>> fetchVatRates(String workspaceId) async =>
-      vatRates.where((r) => r.active).toList()
-        ..sort((a, b) => b.percent.compareTo(a.percent));
-
-  @override
-  Future<void> setVatRates(String workspaceId, List<VatRate> rates) async {
-    // Mirror set_vat_rates' precondition rather than accepting a set the
-    // server would reject. An EMPTY set is allowed: that is how VAT is
-    // turned back off.
-    if (rates.isNotEmpty &&
-        rates.where((r) => r.active && r.isDefault).length != 1) {
-      throw StateError('exactly one default rate is required');
-    }
-    vatRates = [
-      for (var i = 0; i < rates.length; i++)
-        if (rates[i].id.isEmpty) VatRate(
-                id: 'vat-${i + 1}',
-                label: rates[i].label,
-                percent: rates[i].percent,
-                category: rates[i].category,
-                isDefault: rates[i].isDefault,
-                active: rates[i].active,
-                groupKey: rates[i].groupKey,
-                outsideBase: rates[i].outsideBase,
-                exemptionReason: rates[i].exemptionReason,
-                validFrom: rates[i].validFrom,
-                validTo: rates[i].validTo,
-                supersedesId: rates[i].supersedesId,
-              ) else rates[i],
-    ];
-  }
-
-  /// What [recordServiceCharge] and [buyPackage] stamp when the item has no
-  /// rate of its own — the fake's stand-in for
-  /// `workspace_default_vat_percent`.
-  double get _defaultVatPercent => vatRates
-      .where((r) => r.active && r.isDefault)
-      .map((r) => r.percent)
-      .firstOrNull ??
-      0;
-
-  double _vatPercentOf(String vatRateId) => vatRateId.isEmpty
-      ? _defaultVatPercent
-      : vatRates
-              .where((r) => r.id == vatRateId)
-              .map((r) => r.percent)
-              .firstOrNull ??
-          _defaultVatPercent;
-
-  @override
-  Future<List<ServiceItem>> fetchServices(
-    String workspaceId, {
-    bool includeInactive = false,
-  }) async =>
-      services.where((s) => includeInactive || s.active).toList()
-        ..sort((a, b) => a.name.compareTo(b.name));
-
-  @override
-  Future<ServiceItem> createService(
-    String workspaceId, {
-    required String name,
-    required int priceCents,
-    String? vatRateId,
-    SupplyClass supplyClass = SupplyClass.property,
-  }) async {
-    final service = ServiceItem(
-      supplyClass: supplyClass,
-      id: 'service-${services.length + 1}',
-      workspaceId: workspaceId,
-      name: name,
-      priceCents: priceCents,
-      active: true,
-      vatRateId: vatRateId ?? '',
-    );
-    services.add(service);
-    return service;
-  }
-
-  @override
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-  }) async {
-    final i = services.indexWhere((s) => s.id == serviceId);
-    if (i < 0) throw StateError('unknown service');
-    final updated = services[i].copyWith(
-      supplyClass: supplyClass ?? services[i].supplyClass,
-      name: name ?? services[i].name,
-      priceCents: priceCents ?? services[i].priceCents,
-      active: active ?? services[i].active,
-      vatRateId: vatRateId ?? services[i].vatRateId,
-    );
-    services[i] = updated;
-    return updated;
-  }
-
   /// Captured like [recordedPayments]: the real RPC only creates a pending
   /// event — nothing hits [ledger] until confirmation.
   final recordedServiceCharges = <({
@@ -1562,63 +314,6 @@ class FakeMoneyRepository implements MoneyRepository {
     int quantity,
     String? period,
   })>[];
-
-  @override
-  Future<void> recordServiceCharge({
-    required String workspaceId,
-    required String subjectMemberId,
-    required String serviceId,
-    required int quantity,
-    String? period,
-  }) async {
-    final service = services.firstWhere(
-      (s) => s.id == serviceId,
-      orElse: () => throw StateError('unknown service'),
-    );
-    if (!service.active) throw StateError('service is inactive');
-    if (quantity < 1 || quantity > 999) {
-      throw StateError('quantity must be between 1 and 999');
-    }
-    recordedServiceCharges.add(
-      (
-        workspaceId: workspaceId,
-        subjectMemberId: subjectMemberId,
-        serviceId: serviceId,
-        quantity: quantity,
-        period: period,
-      ),
-    );
-    // Mirror the record_service_charge RPC: it only files a PENDING
-    // service_charge event — the ledger charge appears on confirmation.
-    final events = _events;
-    if (events != null) {
-      final now = kTestNow;
-      events.events.add(
-        WorkspaceEvent(
-          id: 'evt-service-${recordedServiceCharges.length}',
-          workspaceId: workspaceId,
-          type: EventType.serviceCharge,
-          action: EventAction.submitted,
-          // The signed-in viewer records the charge, exactly like the RPC
-          // stamps auth.uid()'s member as the actor.
-          actorMemberId: events.respondingMemberId,
-          subjectMemberId: subjectMemberId,
-          payload: {
-            'service_id': serviceId,
-            'name': service.name,
-            'price_cents': service.priceCents,
-            'quantity': quantity,
-            'amount_cents': service.priceCents * quantity,
-            'vat_percent': _vatPercentOf(service.vatRateId),
-            'period': period ??
-                yearMonth(now.year, now.month),
-          },
-          status: EventStatus.pending,
-          createdAt: now,
-        ),
-      );
-    }
-  }
 
   final submittedExpenses = <({
     int amountCents,
@@ -1642,114 +337,6 @@ class FakeMoneyRepository implements MoneyRepository {
       <({String occurrenceId, int amountCents, String reason})>[];
   int sweptSchedules = 0;
 
-  @override
-  Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) async =>
-      List.of(expenseSchedules);
-
-  @override
-  Future<String> createExpenseSchedule({
-    required String workspaceId,
-    required String title,
-    required int amountCents,
-    required DateTime startsOn,
-    required ScheduleUnit unit,
-    int every = 1,
-    int? repeatCount,
-    DateTime? endsOn,
-    String description = '',
-  }) async {
-    createdSchedules.add((title: title, amountCents: amountCents, unit: unit,
-        every: every, repeatCount: repeatCount, endsOn: endsOn));
-    final schedule = ExpenseSchedule(
-      id: 'schedule-${expenseSchedules.length + 1}',
-      workspaceId: workspaceId,
-      memberId: 'member-1',
-      title: title,
-      description: description,
-      amountCents: amountCents,
-      startsOn: startsOn,
-      endsOn: endsOn,
-      unit: unit,
-      every: every,
-      repeatCount: repeatCount,
-    );
-    expenseSchedules.add(schedule);
-    return schedule.id;
-  }
-
-  @override
-  Future<void> cancelExpenseSchedule(String scheduleId) async {
-    final i = expenseSchedules.indexWhere((s) => s.id == scheduleId);
-    if (i < 0) return;
-    final s = expenseSchedules[i];
-    expenseSchedules[i] = ExpenseSchedule(
-      id: s.id, workspaceId: s.workspaceId, memberId: s.memberId,
-      title: s.title, description: s.description, amountCents: s.amountCents,
-      startsOn: s.startsOn, endsOn: s.endsOn, unit: s.unit, every: s.every,
-      repeatCount: s.repeatCount, status: ScheduleStatus.ended,
-      occurrencesDone: s.occurrencesDone,
-    );
-  }
-
-  @override
-  Future<int> sweepExpenseSchedules(String workspaceId) async {
-    sweptSchedules++;
-    return 0;
-  }
-
-  @override
-  Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(
-          String workspaceId) async =>
-      List.of(expenseOccurrences);
-
-  @override
-  Future<void> confirmExpenseOccurrence({
-    required String occurrenceId,
-    required int amountCents,
-    String reason = '',
-    String? note,
-  }) async {
-    final i = expenseOccurrences.indexWhere((o) => o.id == occurrenceId);
-    if (i < 0) throw StateError('unknown occurrence');
-    final o = expenseOccurrences[i];
-    final matches = amountCents == (o.scheduledAmountCents ?? o.amountCents) &&
-        o.status == OccurrenceStatus.awaitingMember;
-    if (!matches && reason.trim().isEmpty) {
-      throw StateError('a different amount needs an explanation');
-    }
-    confirmedOccurrences.add(
-        (occurrenceId: occurrenceId, amountCents: amountCents, reason: reason));
-    expenseOccurrences[i] = ExpenseOccurrence(
-      id: o.id, scheduleId: o.scheduleId, workspaceId: o.workspaceId,
-      memberId: o.memberId, dueOn: o.dueOn, amountCents: amountCents,
-      note: note ?? o.note, deviationReason: reason,
-      status: matches ? OccurrenceStatus.added : OccurrenceStatus.pendingValidation,
-      scheduleTitle: o.scheduleTitle,
-      scheduledAmountCents: o.scheduledAmountCents,
-    );
-  }
-
-  @override
-  Future<String> submitExpense({
-    required String workspaceId,
-    required int amountCents,
-    required String category,
-    String description = '',
-    Map<String, Object?>? supply,
-    Map<String, Object?>? vat,
-  }) async {
-    submittedExpenseVat.add(vat);
-    submittedExpenses.add(
-      (
-        amountCents: amountCents,
-        category: category,
-        description: description,
-        supply: supply,
-      ),
-    );
-    return 'evt-expense-${submittedExpenses.length}';
-  }
-
   /// Owner-defined packages; seeded with one 5-day pack by default.
   final packages = <Package>[
     const Package(
@@ -1761,64 +348,8 @@ class FakeMoneyRepository implements MoneyRepository {
     ),
   ];
 
-  @override
-  Future<List<Package>> fetchPackages(
-    String workspaceId, {
-    bool includeInactive = false,
-  }) async =>
-      packages.where((p) => includeInactive || p.active).toList()
-        ..sort((a, b) => a.days.compareTo(b.days));
-
-  @override
-  Future<Package> createPackage(
-    String workspaceId, {
-    required String name,
-    required int days,
-    required int priceCents,
-    String? vatRateId,
-  }) async {
-    final package = Package(
-      id: 'package-${packages.length + 1}',
-      workspaceId: workspaceId,
-      name: name,
-      days: days,
-      priceCents: priceCents,
-      vatRateId: vatRateId ?? '',
-    );
-    packages.add(package);
-    return package;
-  }
-
-  @override
-  Future<Package> updatePackage(
-    String packageId, {
-    String? name,
-    int? days,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-  }) async {
-    final i = packages.indexWhere((p) => p.id == packageId);
-    if (i < 0) throw StateError('unknown package');
-    final updated = packages[i].copyWith(
-      name: name ?? packages[i].name,
-      days: days ?? packages[i].days,
-      priceCents: priceCents ?? packages[i].priceCents,
-      active: active ?? packages[i].active,
-      vatRateId: vatRateId ?? packages[i].vatRateId,
-    );
-    packages[i] = updated;
-    return updated;
-  }
-
   /// (workspaceId, packageId) of buy_package calls.
   final boughtPackages = <(String, String)>[];
-
-  @override
-  Future<String> buyPackage(String workspaceId, String packageId) async {
-    boughtPackages.add((workspaceId, packageId));
-    return 'ext-${boughtPackages.length}';
-  }
 
   /// Providers the fake deployment offers; empty models "not configured".
   List<PaymentProvider> paymentProviders = [PaymentProvider.paypal];
@@ -1832,13 +363,6 @@ class FakeMoneyRepository implements MoneyRepository {
   /// Approval URL the fake returns; null models an unconfigured provider.
   Uri? paymentApprovalUrl;
 
-  @override
-  Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) async =>
-      PaymentGatewayConfig(
-        providers: List.of(paymentProviders),
-        missing: paymentMissing,
-      );
-
   /// Per-provider server config the owner UI reads back.
   final Map<PaymentProvider, PaymentProviderStatus> paymentStatus = {};
 
@@ -1846,43 +370,100 @@ class FakeMoneyRepository implements MoneyRepository {
   final savedPaymentConfigs = <(PaymentProvider, Map<String, String>)>[];
   final clearedProviders = <PaymentProvider>[];
 
-  @override
-  Future<Map<PaymentProvider, PaymentProviderStatus>>
-      fetchPaymentGatewayStatus(String workspaceId) async =>
-          Map.of(paymentStatus);
+  /// What [recordServiceCharge] and [buyPackage] stamp when the item has no
+  /// rate of its own — the fake's stand-in for
+  /// `workspace_default_vat_percent`.
+  double get _defaultVatPercent => vatRates
+      .where((r) => r.active && r.isDefault)
+      .map((r) => r.percent)
+      .firstOrNull ??
+      0;
 
-  @override
-  Future<void> setPaymentCredentials(
-    String workspaceId,
-    PaymentProvider provider,
-    Map<String, String> config,
-  ) async {
-    savedPaymentConfigs.add((provider, config));
-  }
+  // #2386 — the operations; each body is in a part file.
+  @override Future<List<VatDeclaration>> fetchVatDeclarations(String workspaceId) => _fetchVatDeclarationsImpl(workspaceId);
+  @override Future<String> saveVatDeclaration({required String workspaceId, required DateTime periodStart, required DateTime periodEnd}) => _saveVatDeclarationImpl(workspaceId: workspaceId, periodStart: periodStart, periodEnd: periodEnd);
+  @override Future<void> markVatDeclarationSubmitted({required String declarationId, required String channel, required String receipt}) => _markVatDeclarationSubmittedImpl(declarationId: declarationId, channel: channel, receipt: receipt);
+  @override Future<List<String>> listReportImages(String workspaceId) => _listReportImagesImpl(workspaceId);
+  @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _uploadReportImageImpl(workspaceId, name: name, bytes: bytes, contentType: contentType);
+  @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _fetchReportImageImpl(workspaceId, name);
+  @override Future<List<Invoice>> fetchInvoices(String workspaceId) => _fetchInvoicesImpl(workspaceId);
+  @override Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId) => _fetchInvoicePdfTemplateImpl(workspaceId);
+  @override Future<void> setInvoicePdfTemplate(String workspaceId, InvoicePdfTemplate template) => _setInvoicePdfTemplateImpl(workspaceId, template);
+  @override Future<PriceNegotiation> fetchPriceNegotiation(String memberId) => _fetchPriceNegotiationImpl(memberId);
+  @override Future<void> proposePriceNegotiation({required String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note = '', DateTime? validFrom, int? subscriptionPct, Map<String, Map<String, int>> items = const {}}) => _proposePriceNegotiationImpl(memberId: memberId, feeCents: feeCents, overageFeeCents: overageFeeCents, discountPercent: discountPercent, note: note, validFrom: validFrom, subscriptionPct: subscriptionPct, items: items);
+  @override Future<int> sweepPaymentReminders(String workspaceId) => _sweepPaymentRemindersImpl(workspaceId);
+  @override Future<DunningRules> fetchDunningRules(String workspaceId) => _fetchDunningRulesImpl(workspaceId);
+  @override Future<void> setDunningRules(String workspaceId, DunningRules rules) => _setDunningRulesImpl(workspaceId, rules);
+  @override Future<String> verifyInvoiceSignature(String invoiceId) => _verifyInvoiceSignatureImpl(invoiceId);
+  @override Future<List<NumberSequence>> fetchNumberSequences(String workspaceId) => _fetchNumberSequencesImpl(workspaceId);
+  @override Future<void> setNumberSequence(String workspaceId, NumberSequence sequence, {int? raiseNextValueTo}) => _setNumberSequenceImpl(workspaceId, sequence, raiseNextValueTo: raiseNextValueTo);
+  @override Future<String> previewDocumentNumber(String workspaceId, String journal) => _previewDocumentNumberImpl(workspaceId, journal);
+  @override Future<String> settleInvoices({required String workspaceId, required String memberId, required List<String> invoiceIds, String note = ''}) => _settleInvoicesImpl(workspaceId: workspaceId, memberId: memberId, invoiceIds: invoiceIds, note: note);
+  @override Future<BillingRules> fetchBillingRules(String workspaceId) => _fetchBillingRulesImpl(workspaceId);
+  @override Future<void> setBillingRules(String workspaceId, BillingRules rules) => _setBillingRulesImpl(workspaceId, rules);
+  @override Future<WorkspaceStatus> fetchWorkspaceStatus(String workspaceId, String from, String to) => _fetchWorkspaceStatusImpl(workspaceId, from, to);
+  @override Future<RepartitionRule> fetchRepartitionRule(String workspaceId) => _fetchRepartitionRuleImpl(workspaceId);
+  @override Future<void> setRepartitionRule(String workspaceId, RepartitionRule rule) => _setRepartitionRuleImpl(workspaceId, rule);
+  @override Future<int> sweepBillingInvoices(String workspaceId) => _sweepBillingInvoicesImpl(workspaceId);
+  List<InvoiceLine> derivedLines(String memberId, String period) => _derivedLinesImpl(memberId, period);
+  @override Future<List<String>> invoiceIssueReadiness({required String workspaceId, required String memberId, required String period, InvoiceKind kind = InvoiceKind.full, String? replacesId}) => _invoiceIssueReadinessImpl(workspaceId: workspaceId, memberId: memberId, period: period, kind: kind, replacesId: replacesId);
+  @override Future<String> createInvoice({required String workspaceId, required String memberId, required String period, String? replacesId, bool detailed = false, InvoiceKind kind = InvoiceKind.full, String buyerReference = '', String purchaseOrder = ''}) => _createInvoiceImpl(workspaceId: workspaceId, memberId: memberId, period: period, replacesId: replacesId, detailed: detailed, kind: kind, buyerReference: buyerReference, purchaseOrder: purchaseOrder);
+  @override Future<void> voidInvoice(String invoiceId) => _voidInvoiceImpl(invoiceId);
+  @override Future<void> remindInvoice(String invoiceId) => _remindInvoiceImpl(invoiceId);
+  @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _fetchReminderEvidenceImpl(invoiceId);
+  @override Future<Map<String, String>> fetchDunningHolds(String workspaceId) => _fetchDunningHoldsImpl(workspaceId);
+  @override Future<void> placeDunningHold(String invoiceId, {required String reason, String note = ''}) => _placeDunningHoldImpl(invoiceId, reason: reason, note: note);
+  @override Future<void> releaseDunningHold(String invoiceId) => _releaseDunningHoldImpl(invoiceId);
+  @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => _settleCreditInvoiceImpl(invoiceId, note: note);
+  @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => _fetchInvoiceInstalmentsImpl(workspaceId);
+  @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => _fetchConsumedPaymentIdsImpl(workspaceId);
+  String seedPayment(String memberId, int amountCents, {String description = '', String? period}) => _seedPaymentImpl(memberId, amountCents, description: description, period: period);
+  String seedCreditNote(String memberId, int amountCents, {String description = 'Credit note', String? period}) => _seedCreditNoteImpl(memberId, amountCents, description: description, period: period);
+  @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = ''}) => _matchInvoiceImpl(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note);
+  UsageRecord seedUsage({required int reservedMinutes, int? actualMinutes, String memberId = 'member-1', String period = '2026-08', String space = 'Desk A1'}) => _seedUsageImpl(reservedMinutes: reservedMinutes, actualMinutes: actualMinutes, memberId: memberId, period: period, space: space);
+  @override Future<List<UsageRecord>> fetchUsageRecords({required String workspaceId, required String period, String? memberId}) => _fetchUsageRecordsImpl(workspaceId: workspaceId, period: period, memberId: memberId);
+  @override Future<String> requestUsageCorrection(String recordId, {String reason = ''}) => _requestUsageCorrectionImpl(recordId, reason: reason);
+  @override Future<String> requestUsageRecordDelete(String recordId, {String reason = ''}) => _requestUsageRecordDeleteImpl(recordId, reason: reason);
+  @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => _fetchInvoiceMatchesImpl(workspaceId);
+  @override Future<Statement> fetchStatement(String memberId, String period) => _fetchStatementImpl(memberId, period);
+  @override Future<MemberAccount> fetchMemberAccount(String memberId) => _fetchMemberAccountImpl(memberId);
+  @override Future<String> distributeExpense({required String workspaceId, required String title, required int amountCents, required RepartitionMethod method, required String period, required List<RepartitionShare> shares, String? sourceEventId}) => _distributeExpenseImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, method: method, period: period, shares: shares, sourceEventId: sourceEventId);
+  @override Future<List<ExpenseRepartition>> fetchExpenseRepartitions(String workspaceId) => _fetchExpenseRepartitionsImpl(workspaceId);
+  @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => _fetchWorkspaceLedgerImpl(workspaceId);
+  @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => _fetchPaymentIntentsImpl(workspaceId);
+  @override Future<List<LedgerEntry>> fetchLedger(String memberId) => _fetchLedgerImpl(memberId);
+  @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => _recordPaymentImpl(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);
+  @override Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) => _fetchEInvoiceGatewayImpl(workspaceId);
+  @override Future<EInvoiceSubmission> sendEInvoice({required String workspaceId, required String invoiceId, required String fileName, required String mimeType, required List<int> bytes, String environment = 'prod', String destination = 'government'}) => _sendEInvoiceImpl(workspaceId: workspaceId, invoiceId: invoiceId, fileName: fileName, mimeType: mimeType, bytes: bytes, environment: environment, destination: destination);
+  @override Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(String workspaceId) => _fetchInvoiceTransmissionsImpl(workspaceId);
+  @override Future<void> setEInvoiceCredentials(String workspaceId, Map<String, String> config) => _setEInvoiceCredentialsImpl(workspaceId, config);
+  @override Future<void> clearEInvoiceCredentials(String workspaceId) => _clearEInvoiceCredentialsImpl(workspaceId);
+  @override Future<EInvoiceProviderStatus> fetchEInvoiceStatus(String workspaceId) => _fetchEInvoiceStatusImpl(workspaceId);
+  @override Future<List<FeeBand>> fetchFeeBands(String workspaceId) => _fetchFeeBandsImpl(workspaceId);
+  @override Future<void> replaceFeeBands(String workspaceId, List<FeeBand> bands) => _replaceFeeBandsImpl(workspaceId, bands);
+  @override Future<SubscriptionLevels> fetchSubscriptionLevels(String workspaceId) => _fetchSubscriptionLevelsImpl(workspaceId);
+  @override Future<void> setSubscriptionLevels(String workspaceId, SubscriptionLevels levels) => _setSubscriptionLevelsImpl(workspaceId, levels);
+  @override Future<List<VatRate>> fetchVatRates(String workspaceId) => _fetchVatRatesImpl(workspaceId);
+  @override Future<void> setVatRates(String workspaceId, List<VatRate> rates) => _setVatRatesImpl(workspaceId, rates);
+  @override Future<List<ServiceItem>> fetchServices(String workspaceId, {bool includeInactive = false}) => _fetchServicesImpl(workspaceId, includeInactive: includeInactive);
+  @override Future<ServiceItem> createService(String workspaceId, {required String name, required int priceCents, String? vatRateId, SupplyClass supplyClass = SupplyClass.property}) => _createServiceImpl(workspaceId, name: name, priceCents: priceCents, vatRateId: vatRateId, supplyClass: supplyClass);
+  @override Future<ServiceItem> updateService(String serviceId, {String? name, int? priceCents, bool? active, String? vatRateId, SupplyClass? supplyClass}) => _updateServiceImpl(serviceId, name: name, priceCents: priceCents, active: active, vatRateId: vatRateId, supplyClass: supplyClass);
+  @override Future<void> recordServiceCharge({required String workspaceId, required String subjectMemberId, required String serviceId, required int quantity, String? period}) => _recordServiceChargeImpl(workspaceId: workspaceId, subjectMemberId: subjectMemberId, serviceId: serviceId, quantity: quantity, period: period);
+  @override Future<List<ExpenseSchedule>> fetchExpenseSchedules(String workspaceId) => _fetchExpenseSchedulesImpl(workspaceId);
+  @override Future<String> createExpenseSchedule({required String workspaceId, required String title, required int amountCents, required DateTime startsOn, required ScheduleUnit unit, int every = 1, int? repeatCount, DateTime? endsOn, String description = ''}) => _createExpenseScheduleImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, startsOn: startsOn, unit: unit, every: every, repeatCount: repeatCount, endsOn: endsOn, description: description);
+  @override Future<void> cancelExpenseSchedule(String scheduleId) => _cancelExpenseScheduleImpl(scheduleId);
+  @override Future<int> sweepExpenseSchedules(String workspaceId) => _sweepExpenseSchedulesImpl(workspaceId);
+  @override Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId) => _fetchExpenseOccurrencesImpl(workspaceId);
+  @override Future<void> confirmExpenseOccurrence({required String occurrenceId, required int amountCents, String reason = '', String? note}) => _confirmExpenseOccurrenceImpl(occurrenceId: occurrenceId, amountCents: amountCents, reason: reason, note: note);
+  @override Future<String> submitExpense({required String workspaceId, required int amountCents, required String category, String description = '', Map<String, Object?>? supply, Map<String, Object?>? vat}) => _submitExpenseImpl(workspaceId: workspaceId, amountCents: amountCents, category: category, description: description, supply: supply, vat: vat);
+  @override Future<List<Package>> fetchPackages(String workspaceId, {bool includeInactive = false}) => _fetchPackagesImpl(workspaceId, includeInactive: includeInactive);
+  @override Future<Package> createPackage(String workspaceId, {required String name, required int days, required int priceCents, String? vatRateId}) => _createPackageImpl(workspaceId, name: name, days: days, priceCents: priceCents, vatRateId: vatRateId);
+  @override Future<Package> updatePackage(String packageId, {String? name, int? days, int? priceCents, bool? active, String? vatRateId}) => _updatePackageImpl(packageId, name: name, days: days, priceCents: priceCents, active: active, vatRateId: vatRateId);
+  @override Future<String> buyPackage(String workspaceId, String packageId) => _buyPackageImpl(workspaceId, packageId);
+  @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => _fetchPaymentConfigImpl(workspaceId);
+  @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _fetchPaymentGatewayStatusImpl(workspaceId);
+  @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => _setPaymentCredentialsImpl(workspaceId, provider, config);
+  @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _clearPaymentProviderImpl(workspaceId, provider);
+  @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _createPaymentOrderImpl(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
 
-  @override
-  Future<void> clearPaymentProvider(
-    String workspaceId,
-    PaymentProvider provider,
-  ) async {
-    clearedProviders.add(provider);
-  }
-
-  @override
-  Future<PaymentOrderStart> createPaymentOrder({
-    required PaymentProvider provider,
-    required String workspaceId,
-    required String memberId,
-    required int amountCents,
-    required String currencyCode,
-    required String period,
-    String? requestId,
-  }) async {
-    paymentOrders.add((provider, amountCents));
-    final url = paymentApprovalUrl;
-    if (url == null) {
-      return const PaymentOrderStart(missing: ['PAYPAL_CLIENT_ID']);
-    }
-    return PaymentOrderStart(approveUrl: url, orderId: 'order-1');
-  }
 }
