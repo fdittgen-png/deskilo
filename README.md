@@ -179,47 +179,43 @@ Follow the [open issues](https://github.com/fdittgen-png/deskilo/issues?q=is%3Ai
 <table>
 <tr>
 <td width="33%" valign="top">
+<img src="docs/readme/icon-documents.svg" width="44" alt=""><br>
 <b><a href="https://fdittgen-png.github.io/deskilo/guide/en.html">User guide</a></b><br>
-Every screen by audience, illustrated, in five languages — members, administrators, owners, operators.
+Every screen, by audience — member, administrator, owner, operator — with screenshots from the demo workspace.<br><sub><a href="https://fdittgen-png.github.io/deskilo/guide/en.html">English</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/fr.html">Français</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/de.html">Deutsch</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/es.html">Español</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/it.html">Italiano</a></sub>
 </td>
 <td width="33%" valign="top">
+<img src="docs/readme/icon-rocket.svg" width="44" alt=""><br>
 <b><a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html">Setup guide</a></b><br>
-What is possible, what is necessary, in which order — for a future owner.
+For a future owner: what is possible, what is necessary and in which order, from the first booking to invoicing.<br><sub><a href="https://fdittgen-png.github.io/deskilo/guide/setup-en.html">English</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/setup-fr.html">Français</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/setup-de.html">Deutsch</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/setup-es.html">Español</a> · <a href="https://fdittgen-png.github.io/deskilo/guide/setup-it.html">Italiano</a></sub>
 </td>
 <td width="33%" valign="top">
+<img src="docs/readme/icon-server.svg" width="44" alt=""><br>
 <b><a href="docs/guides/OPERATIONS.md">Operations</a></b><br>
-Instance health, backup, restore and recovery.
+Instance health, backup, restore, upgrades and recovery for whoever runs a server.<br><sub><a href="docs/guides/RELEASING.md">Releasing</a> · <a href="docs/guides/fdroid.md">F-Droid</a></sub>
 </td>
 </tr>
 <tr>
-<td valign="top">
-<b><a href="docs/product/CAPABILITIES.md">Capabilities and evidence</a></b><br>
-What ships, what is tested at which scope, what is roadmap.
-</td>
-<td valign="top">
+<td width="33%" valign="top">
+<img src="docs/readme/icon-network.svg" width="44" alt=""><br>
 <b><a href="docs/wiki/Architecture.md">Architecture</a></b><br>
-Client structure, backend model and platform choices.
+Client structure, the Supabase data model, security and platform choices.
 </td>
-<td valign="top">
+<td width="33%" valign="top">
+<img src="docs/readme/icon-tune.svg" width="44" alt=""><br>
 <b><a href="docs/wiki/Implementation.md">Implementation</a></b><br>
-Development setup, builds, testing and contribution patterns.
+Repository layout, code generation, migrations, testing and how to build on every platform.
 </td>
-</tr>
-<tr>
-<td valign="top">
+<td width="33%" valign="top">
+<img src="docs/readme/icon-globe.svg" width="44" alt=""><br>
 <b><a href="docs/wiki/Technical-Reference.md">Technical reference</a></b><br>
-Versions, dependencies, quality gates, release trains, standards and the ADR index.
-</td>
-<td valign="top">
-<b><a href="docs/SPECIFICATION.md">Product specification</a></b><br>
-Product intent and scope; issues and code tell the delivery status.
-</td>
-<td valign="top">
-<b><a href="https://github.com/fdittgen-png/deskilo/wiki">Project wiki</a></b><br>
-The developer pages, with the guides one click away.
+Versions, dependencies, quality gates, release trains, standards implemented and the decision records.
 </td>
 </tr>
 </table>
+
+<p align="center">
+<a href="docs/product/CAPABILITIES.md">Capabilities and evidence</a> &nbsp;·&nbsp; <a href="docs/SPECIFICATION.md">Product specification</a> &nbsp;·&nbsp; <a href="docs/decisions/">Decision records</a> &nbsp;·&nbsp; <a href="https://github.com/fdittgen-png/deskilo/wiki">Project wiki</a>
+</p>
 
 ## Run or develop your own deployment
 

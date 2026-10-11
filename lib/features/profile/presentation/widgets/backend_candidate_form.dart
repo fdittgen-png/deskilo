@@ -5,8 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/backend_uri.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -379,7 +377,6 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
                 onChanged(pasted);
               },
             ),
-            HelpDot(widget.topic, anchor: HelpAnchor.backendServer),
           ],
         ),
       ),

@@ -17,7 +17,6 @@ import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
-import 'package:deskilo/features/help/presentation/screens/help_screen.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
 import 'package:deskilo/features/profile/presentation/screens/settings_screen.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -25,6 +24,7 @@ import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:deskilo/features/editor/presentation/screens/editor_screen.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,6 +99,7 @@ Future<Hub> pumpCard(
   BackendSettingsStore? backendSettings,
   String? languageCode,
   FakeLocalSetupRepository? localSetup,
+  LinkLauncher? launcher,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -131,6 +132,7 @@ Future<Hub> pumpCard(
           backendSettings: backendSettings,
           localSetup: localSetup,
         ),
+        if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
         if (languageCode != null)
           localeStoreProvider.overrideWithValue(
             InMemoryLocaleStore()..languageCode = languageCode,
@@ -204,13 +206,16 @@ void main() {
 
   testWidgets('a membership that could not be loaded suggests the help, '
       'claims nothing about booking, and the tap reaches it', (tester) async {
-    await pumpCard(tester, workspace: _MembershipDown());
+    final opened = <Uri>[];
+    await pumpCard(tester,
+        workspace: _MembershipDown(),
+        launcher: (uri) async { opened.add(uri); return true; });
     expect(_primaryLabel(tester), 'Help for this workspace');
     expect(find.textContaining('open on this day'), findsNothing);
     expect(find.textContaining('You may hold'), findsNothing);
     await tester.tap(find.byKey(_primary));
     await tester.pumpAndSettle();
-    expect(find.byType(HelpScreen), findsOneWidget);
+    expect(opened.single.toString(), endsWith('#user.start.get-started'));
   });
 
   testWidgets('one normal booking through the existing sheet: the card '

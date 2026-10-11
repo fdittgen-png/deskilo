@@ -11,6 +11,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/application_requests_entry.dart';
+import '../../../../core/help/guide_site.dart';
 
 /// The waiting room (0052): a freshly joined member is PENDING until the
 /// workspace's validators approve. They see only the workspace name here
@@ -158,7 +159,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                     ),
                     TextButton.icon(
                       key: const ValueKey('pending-help'),
-                      onPressed: () => context.push('/help'),
+                      onPressed: () => openGuide(ref, context, anchor: 'user.start.join'),
                       icon: const Icon(Icons.help_outline),
                       label: Text(l10n?.pendingHelp ?? 'Help'),
                     ),

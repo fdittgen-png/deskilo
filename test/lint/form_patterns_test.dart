@@ -28,9 +28,9 @@ import 'lint_sources.dart';
 /// Ceilings measured 2026-10-07, then lowered by the expense sheet's move to
 /// the kit and the e-mail autofill fixes. Lower them as forms move.
 const int _rawFieldCeiling = 205; // #2383 the legacy new-conversation sheet left lib/.
-const int _literalGapCeiling = 250; // #2286 and #2291 use spacing tokens; #2383 the legacy conversation list left lib/.
+const int _literalGapCeiling = 249; // #2286 and #2291 use spacing tokens; #2383 the legacy conversation list left lib/.
 const int _fallbackCeiling =
-    6338; // 2026-10-10 #2383: -15, the legacy conversation list left lib/. 2026-10-10 #2405: +4, the consent text's two new sections — its English fallback is the text of record the version pin hashes, so it cannot read the catalogue. 2026-10-10 #2357: the VAT return screen drops the transmit snacks. 2026-10-10 #2327: the demo persona labels read the catalogue. 2026-10-10 #2328: the deletion request reads the catalogue; 2026-10-09 #2313: the scenario tips read the catalogue, not inline English.
+    6303; // 2026-10-11 the help buttons open the guide site: -34. 2026-10-10 #2383: -15, the legacy conversation list left lib/. 2026-10-10 #2405: +4, the consent text's two new sections — its English fallback is the text of record the version pin hashes, so it cannot read the catalogue. 2026-10-10 #2357: the VAT return screen drops the transmit snacks. 2026-10-10 #2327: the demo persona labels read the catalogue. 2026-10-10 #2328: the deletion request reads the catalogue; 2026-10-09 #2313: the scenario tips read the catalogue, not inline English.
 const int _emailWithoutAutofillCeiling = 0;
 
 Iterable<File> _lib() => handWrittenDartFiles('lib');

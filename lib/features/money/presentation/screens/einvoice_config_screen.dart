@@ -297,11 +297,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(
                       labelText: l10n?.einvoiceConfigEndpoint ?? 'Upload URL',
-                      suffixIcon:
-                          HelpDot(
-                            l10n?.helpTopicEinvoice ?? 'e-invoice',
-                            anchor: HelpAnchor.einvoiceEndpoint,
-                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -319,11 +314,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                                   'A token is stored (type a new one to '
                                       'replace it).')
                               : null,
-                      suffixIcon:
-                          HelpDot(
-                            l10n?.helpTopicEinvoice ?? 'e-invoice',
-                            anchor: HelpAnchor.einvoiceToken,
-                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -332,11 +322,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     controller: _customerHeader,
                     decoration: InputDecoration(
                       labelText: l10n?.einvoiceConfigHeader ?? 'Auth header',
-                      suffixIcon:
-                          HelpDot(
-                            l10n?.helpTopicEinvoice ?? 'e-invoice',
-                            anchor: HelpAnchor.einvoiceAuthHeader,
-                          ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -346,11 +331,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                     decoration: InputDecoration(
                       labelText:
                           l10n?.einvoiceConfigField ?? 'File field name',
-                      suffixIcon:
-                          HelpDot(
-                            l10n?.helpTopicEinvoice ?? 'e-invoice',
-                            anchor: HelpAnchor.einvoiceFileField,
-                          ),
                     ),
                   ),
                 ],
@@ -396,10 +376,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                             'A token is stored (type a new one to replace '
                                 'it).')
                         : null,
-                    suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
-                      anchor: HelpAnchor.einvoiceUat,
-                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -428,10 +404,6 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                             'A token is stored (type a new one to replace '
                                 'it).')
                         : null,
-                    suffixIcon: HelpDot(
-                      l10n?.helpTopicEinvoice ?? 'e-invoice',
-                      anchor: HelpAnchor.einvoiceDev,
-                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),

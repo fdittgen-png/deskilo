@@ -18,8 +18,8 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/help/help_hint.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
-import 'package:deskilo/features/help/presentation/screens/help_screen.dart';
 import 'package:deskilo/features/help/providers/help_providers.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -39,6 +39,7 @@ Future<void> _pumpApp(
   WidgetTester tester, {
   HelpHintStore? store,
   Map<String, dynamic> featureFlags = const {},
+  LinkLauncher? launcher,
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
@@ -56,6 +57,7 @@ Future<void> _pumpApp(
           ),
         ),
         _helpOverride(),
+        if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
       ],
       child: const DeskiloApp(),
     ),
@@ -197,23 +199,17 @@ void main() {
     expect(find.byKey(const ValueKey('help-hint-events')), findsOneWidget);
   });
 
-  testWidgets('"Learn more" opens /help carrying the localized topic', (
+  testWidgets('"Learn more" opens the guide site at the surface\'s section', (
     tester,
   ) async {
-    await _pumpApp(tester);
+    final opened = <Uri>[];
+    await _pumpApp(tester, launcher: (uri) async { opened.add(uri); return true; });
     await tester.tap(
       find.byKey(const ValueKey('help-hint-learn-more-reserve')),
     );
     await tester.pumpAndSettle();
-
-    // The route landed on the help screen with the hub's topic — the
-    // deep link the guide jump consumes. No heading matches the fake
-    // guide, which is exactly the never-crash path.
-    expect(find.byType(HelpScreen), findsOneWidget);
-    expect(
-      tester.widget<HelpScreen>(find.byType(HelpScreen)).topic,
-      'Reserve hub',
-    );
+    expect(opened.single.toString(),
+        'https://fdittgen-png.github.io/deskilo/guide/en.html#user.reserve.hub');
   });
 
   testWidgets('a tip that names a form links to it (#2313)', (tester) async {
@@ -363,65 +359,12 @@ void main() {
   // twice is not a gate. Reading the aggregate ARB is the idiom
   // `arb_key_parity_test`, `legal_terms_test` and
   // `lexicon_allow_list_test` already use.
-  test('every helpTopic in the ARB matches a heading of its language\'s '
-      'guide (#763, #1393)', () {
-    Map<String, String> topicsOf(String locale) {
-      final map = json.decode(
-        File('lib/l10n/app_$locale.arb').readAsStringSync(),
-      ) as Map<String, dynamic>;
-      return {
-        for (final e in map.entries)
-          if (e.key.startsWith('helpTopic')) e.key: e.value as String,
-      };
-    }
-
-    final en = topicsOf('en');
-    expect(
-      en,
-      isNotEmpty,
-      reason:
-          'no helpTopic* key was found in lib/l10n/app_en.arb — the '
-          'derivation is reading the wrong file and this test now '
-          'asserts nothing',
-    );
-
-    for (final locale in ['en', 'fr', 'de', 'es', 'it']) {
-      final topics = topicsOf(locale);
-      expect(
-        topics.keys,
-        unorderedEquals(en.keys),
-        reason:
-            '$locale carries a different set of helpTopic keys than '
-            'en — arb_key_parity_test should have caught this first',
-      );
-
-      final headings = File('assets/help/$locale.md')
-          .readAsLinesSync()
-          .where((l) => l.startsWith('#'))
-          .toList();
-      topics.forEach((key, topic) {
-        expect(
-          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase())),
-          isTrue,
-          reason:
-              '$key "$topic" ($locale) matches no guide heading — the '
-              '/help jump would land at the top of the guide instead of '
-              'the paragraph',
-        );
-      });
-    }
-  });
-
   // And the getters still agree with the ARB the derivation reads. The
   // test above catches an omission; this one catches a divergence
   // between the generated getter and the file it was generated from.
   test('every HelpDot topic getter returns what the ARB says (#763)', () async {
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = await AppLocalizations.delegate.load(locale);
-      final headings = File('assets/help/${locale.languageCode}.md')
-          .readAsLinesSync()
-          .where((l) => l.startsWith('#'))
-          .toList();
       final topics = {
         'helpTopicLegalIdentity': l10n.helpTopicLegalIdentity,
         'helpTopicEinvoice': l10n.helpTopicEinvoice,
@@ -472,51 +415,14 @@ void main() {
             'disagree about which helpTopic keys exist — add the new '
             'getter here, or remove the retired one',
       );
-      topics.forEach((key, topic) {
-        expect(
-          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase())),
-          isTrue,
-          reason:
-              '$key "$topic" (${locale.languageCode}) matches no '
-              'guide heading — the /help jump would land nowhere',
-        );
-      });
     }
   });
 
-  test('every localized tip topic matches a heading of its language\'s '
-      'guide — each Learn more must land in all five languages', () {
-    for (final locale in helpLocales) {
-      final l10n = lookupAppLocalizations(Locale(locale));
-      final headings = File('assets/help/$locale.md')
-          .readAsLinesSync()
-          .where((line) => line.startsWith('#'))
-          .map((line) => line.replaceFirst(RegExp(r'^#+\s*'), ''))
-          .toList();
-      bool lands(String topic) =>
-          headings.any((h) => h.toLowerCase().contains(topic.toLowerCase()));
-      for (final id in HelpHintId.values) {
-        // The surface's default topic…
-        expect(
-          lands(HelpHint.topic(l10n, id)),
-          isTrue,
-          reason:
-              '$locale: topic "${HelpHint.topic(l10n, id)}" of '
-              '${id.name} matches no heading in assets/help/$locale.md',
-        );
-        // …and every tip's own topic (falling back to the surface's).
-        final tips = HelpHint.tips(l10n, id);
-        for (var i = 0; i < tips.length; i++) {
-          final topic = tips[i].topic ?? HelpHint.topic(l10n, id);
-          expect(
-            lands(topic),
-            isTrue,
-            reason:
-                '$locale: topic "$topic" of ${id.name} tip ${i + 1} '
-                'matches no heading in assets/help/$locale.md',
-          );
-        }
-      }
+  test('every surface\'s Learn more opens a section the guide has', () {
+    final anchors = (json.decode(File('assets/help/en.anchors.json')
+        .readAsStringSync()) as Map<String, dynamic>).keys.toSet();
+    for (final id in HelpHintId.values) {
+      expect(anchors, contains(helpHintAnchor(id)), reason: id.name);
     }
   });
 }

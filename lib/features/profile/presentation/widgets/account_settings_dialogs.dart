@@ -35,11 +35,7 @@ class _LanguageDialog extends ConsumerWidget {
         ref.watch(personalLocaleProvider)?.languageCode ??
         _systemDefault;
     return SimpleDialog(
-      title: HelpDotTitle(
-        l10n?.languageTitle ?? 'Language',
-        l10n?.helpTopicSettings ?? 'Settings & profile',
-        anchor: HelpAnchor.profileLanguage,
-      ),
+      title: Text(l10n?.languageTitle ?? 'Language'),
       children: [
         RadioGroup<String>(
           key: const ValueKey('account-settings-dialogs-preferences-save-failed'),
@@ -139,13 +135,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      // The dot on the title covers the country dropdown too, whose
-      // decoration already carries the dropdown arrow.
-      title: HelpDotTitle(
-        l10n?.addressTitle ?? 'Address',
-        l10n?.helpTopicSettings ?? 'Settings & profile',
-        anchor: HelpAnchor.profileAddress,
-      ),
+      title: Text(l10n?.addressTitle ?? 'Address'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -157,10 +147,6 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               maxLength: 400,
               decoration: InputDecoration(
                 labelText: l10n?.addressTitle ?? 'Address',
-                suffixIcon: HelpDot(
-                  l10n?.helpTopicSettings ?? 'Settings & profile',
-                  anchor: HelpAnchor.profileAddress,
-                ),
               ),
             ),
             // 0069 — what the e-invoice needs beyond the street: the
@@ -230,11 +216,7 @@ class _ThemeDialog extends ConsumerWidget {
     final current =
         ref.watch(personalThemeProvider) ?? ThemeMode.system;
     return SimpleDialog(
-      title: HelpDotTitle(
-        l10n?.themeTitle ?? 'Theme',
-        l10n?.helpTopicSettings ?? 'Settings & profile',
-        anchor: HelpAnchor.profileTheme,
-      ),
+      title: Text(l10n?.themeTitle ?? 'Theme'),
       children: [
         RadioGroup<ThemeMode>(
           key: const ValueKey('account-settings-dialogs-preferences-save-failed-2'),
@@ -291,11 +273,7 @@ class _NavigationDialog extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final current = ref.watch(navigationStyleControllerProvider).value;
     return SimpleDialog(
-      title: HelpDotTitle(
-        l10n?.navigationTitle ?? 'Navigation',
-        l10n?.helpTopicSettings ?? 'Settings & profile',
-        anchor: HelpAnchor.profileNavigation,
-      ),
+      title: Text(l10n?.navigationTitle ?? 'Navigation'),
       children: [
         RadioGroup<NavigationStyle?>(
           key: const ValueKey('account-settings-dialogs-navigation-default'),

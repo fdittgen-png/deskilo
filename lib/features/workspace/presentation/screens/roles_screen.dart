@@ -157,6 +157,12 @@ class RolesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.rolesTitle ?? 'Roles'),
+        actions: [
+          HelpDot(
+            l10n?.helpHintMembersTip4Topic ?? 'Role management',
+            anchor: HelpAnchor.rolesMatrix,
+          ),
+        ],
       ),
       body: ListView(
         padding: AppSpacing.lgAll,
@@ -266,23 +272,7 @@ class RolesScreen extends ConsumerWidget {
                                   role: role,
                                   permission: permission,
                                   current: granted),
-                          // #763 — height-capped: the dot's tap padding
-                          // must not grow the dense matrix row.
-                          title: SizedBox(
-                            height: 24,
-                            child: HelpDotTitle(
-                              permissionLabel(l10n, permission),
-                              switch (permission) {
-                                WorkspacePermission.viewNegotiations ||
-                                WorkspacePermission.manageNegotiations =>
-                                  l10n?.helpHintMembersTipNegotiationTopic ??
-                                      'Price negotiations',
-                                _ => l10n?.helpHintMembersTip4Topic ??
-                                    'Role management',
-                              },
-                              anchor: HelpAnchor.rolesMatrix,
-                            ),
-                          ),
+                          title: Text(permissionLabel(l10n, permission)),
                         ),
                     ],
                   ),
