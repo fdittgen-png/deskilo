@@ -2108,6 +2108,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookRoleRevenue => 'Ingresos';
 
   @override
+  String get bookRoleVatInput => 'IVA soportado';
+
+  @override
   String get bookRoleVatOutput => 'IVA repercutido';
 
   @override
@@ -4694,6 +4697,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get expenseInvalidAmount => 'Introduzca un importe mayor que cero.';
 
   @override
+  String get expenseInvalidDeductible => 'Introduzca una parte entre 0 y 100.';
+
+  @override
   String get expenseInvalidSupplyQuantity => 'Introduzca al menos una unidad.';
 
   @override
@@ -4726,6 +4732,24 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get expenseSupplyUnitPriceHint =>
       'Prellenado con importe ÷ cantidad; redondee si quiere.';
+
+  @override
+  String get expenseVatDeductible => 'Parte deducible (%)';
+
+  @override
+  String expenseVatDeductibleAmount(String amount) {
+    return 'IVA deducible: $amount';
+  }
+
+  @override
+  String get expenseVatDeductibleHint =>
+      '100 % salvo que parte del gasto sea privada o sirva a una actividad exenta.';
+
+  @override
+  String get expenseVatNone => 'Sin IVA';
+
+  @override
+  String get expenseVatRate => 'IVA de este gasto';
 
   @override
   String get exportClaimExchange =>
@@ -5089,6 +5113,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureHolidayImportTitle => 'Importar días festivos';
+
+  @override
+  String get featureInputVatDesc =>
+      'Un gasto indica su tipo de IVA y la parte deducible; la declaración del IVA resta el IVA deducible del IVA repercutido. Desactivado: la declaración solo recoge el IVA repercutido.';
+
+  @override
+  String get featureInputVatTitle => 'IVA soportado';
 
   @override
   String get featureInstanceWizard => 'Asistente de instancia';
@@ -18835,6 +18866,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una declaración presentada nunca cambia. Lo que cambió después en un periodo presentado — una factura anulada, un pago registrado tarde — se declara aquí como corrección de esa declaración.';
 
   @override
+  String get vatDeclCredit => 'IVA a compensar';
+
+  @override
   String get vatDeclDisclaimer =>
       'Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.';
 
@@ -18852,6 +18886,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclGenerate => 'Preparar';
 
   @override
+  String get vatDeclInputVat => 'IVA deducible';
+
+  @override
   String get vatDeclInvoices => 'Facturas';
 
   @override
@@ -18863,6 +18900,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclNet => 'Base imponible';
+
+  @override
+  String get vatDeclPayable => 'IVA a ingresar';
 
   @override
   String get vatDeclPdf => 'PDF';

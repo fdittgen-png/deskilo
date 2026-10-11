@@ -278,6 +278,7 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 - Vous voyez « Dépense soumise — en attente d'approbation ». La dépense ne compte qu'une fois confirmée.
 - Une fourniture confirmée est mise en rayon comme un service : les membres qui l'utilisent la paient.
+- Dans un espace assujetti à la TVA où **TVA déductible** est activée, choisissez la **TVA sur cette dépense** et la **Part déductible (%)** — 100 % sauf si une partie de la dépense est privée ou sert une activité exonérée. Une fois la dépense approuvée, sa TVA déductible est retranchée sur la déclaration de TVA du mois de l'approbation.
 - Les coûts récurrents ont leur propre entrée, **Dépenses programmées**, à côté de ce bouton.
 
 **Voir aussi:** [Approuver ou refuser une dépense](help:user.money.expense.approve)
