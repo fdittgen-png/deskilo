@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.",
   "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.",
   "featureQrBadgesTitle": "QR-Badges",
+  "featureRecapitulativeStatementDesc": "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.",
+  "featureRecapitulativeStatementTitle": "Zusammenfassende Meldung",
   "featureRecordingPrivacyDesc": "Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -8640,6 +8642,19 @@
   "readinessStateUnavailable": "Konnte nicht gelesen werden",
   "readinessStateUnverified": "Noch nicht geprüft",
   "readinessTitle": "Einrichtung dieses Workspace",
+  "recapCsv": "Zusammenfassende Meldung (CSV)",
+  "recapDue": "Für {month} ist eine Zusammenfassende Meldung fällig: {count, plural, =1{1 Rechnung mit Steuerschuldnerschaft des Empfängers} other{{count} Rechnungen mit Steuerschuldnerschaft des Empfängers}}. Exportieren Sie sie unter Umsatzsteuer-Voranmeldungen.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.",
   "recordingPrivacyBadge": "Aufnahmemodus — erfundene Personen",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

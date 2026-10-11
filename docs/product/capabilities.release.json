@@ -1263,6 +1263,12 @@
       "capabilities": []
     },
     {
+      "key": "recapitulativeStatement",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "recordingPrivacy",
       "maturity": "unreviewed",
       "lifecycle": "active",

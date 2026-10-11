@@ -4635,6 +4635,27 @@ Prima di applicare l'inversione contabile a un servizio generico per un'impresa 
 
 **Vedi anche:** [Inversione contabile per imprese UE](help:user.money.vat.reverse-charge) · [Luogo della prestazione di un servizio](help:user.money.services.supply)
 
+### Elenchi riepilogativi (Intrastat servizi)
+
+**Destinatari:** Proprietario
+
+Ogni mese in cui applica l'inversione contabile a servizi per imprese di altri Paesi UE, l'amministrazione si aspetta il loro elenco: gli elenchi Intrastat servizi in Italia, la DES in Francia, la Zusammenfassende Meldung in Germania.
+
+**Passaggi**
+
+1. Apra [Dichiarazioni IVA](app:/vat-declarations) e scelga il periodo.
+2. Tocchi **Elenco riepilogativo (CSV)**.
+3. Lo presenti sul portale dell'amministrazione o lo consegni al Suo commercialista.
+
+**Da sapere**
+
+- L'elenco somma, per mese e per partita IVA del cliente, ciò che le Sue fatture emesse hanno messo in inversione contabile; una postazione con la Sua IVA non compare mai.
+- Finché un elenco è dovuto, la **Fatturazione** mostra un avviso: **È dovuto un elenco riepilogativo per** il mese.
+- Il file ha colonne fisse: periodo, paese, partita IVA, cliente, importo, documenti.
+- Richiede la funzione **Elenchi riepilogativi (Intrastat servizi)**.
+
+**Vedi anche:** [Verifica della partita IVA (VIES)](help:user.money.vat.vies) · [Inversione contabile per imprese UE](help:user.money.vat.reverse-charge)
+
 ### Quando l'IVA diventa esigibile
 
 **Destinatari:** Proprietario

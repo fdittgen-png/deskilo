@@ -4862,6 +4862,28 @@ Bevor eine allgemeine Dienstleistung an ein Unternehmen in einem anderen EU-Land
 
 **Siehe auch:** [Reverse-Charge für EU-Unternehmen](#reverse-charge-für-eu-unternehmen) · [Leistungsort einer Leistung](#leistungsort-einer-leistung)
 
+<!-- anchor: user.money.vat.recap -->
+### Zusammenfassende Meldung
+
+**Zielgruppe:** Inhaber
+
+In jedem Monat, in dem Leistungen an Unternehmen in anderen EU-Ländern unter die Steuerschuldnerschaft des Empfängers fallen, erwartet das Finanzamt deren Liste: die Zusammenfassende Meldung in Deutschland, die DES in Frankreich, das Modelo 349 in Spanien.
+
+**Schritte**
+
+1. Öffnen Sie [Umsatzsteuer-Voranmeldungen](https://fdittgen-png.github.io/deskilo/#/vat-declarations) und wählen Sie den Zeitraum.
+2. Tippen Sie auf **Zusammenfassende Meldung (CSV)**.
+3. Reichen Sie sie über das Portal der Finanzverwaltung ein oder geben Sie sie Ihrer Buchhaltung.
+
+**Gut zu wissen**
+
+- Die Liste summiert je Monat und USt-IdNr. des Kunden, was Ihre ausgestellten Rechnungen unter die Steuerschuldnerschaft des Empfängers gestellt haben; ein Arbeitsplatz mit Ihrer Umsatzsteuer erscheint nie.
+- Solange eine Meldung fällig ist, zeigt die **Rechnungsstellung** einen Hinweis: **Für** den Monat **ist eine Zusammenfassende Meldung fällig**.
+- Die Datei hat feste Spalten: Zeitraum, Land, USt-IdNr., Kunde, Betrag, Belege.
+- Sie braucht die Funktion **Zusammenfassende Meldung**.
+
+**Siehe auch:** [USt-IdNr.-Prüfung (VIES)](#ust-idnr-prüfung-vies) · [Reverse-Charge für EU-Unternehmen](#reverse-charge-für-eu-unternehmen)
+
 <!-- anchor: user.money.vat.due -->
 ### Wann die Umsatzsteuer entsteht
 

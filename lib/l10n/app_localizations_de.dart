@@ -5499,6 +5499,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR-Badges';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.';
+
+  @override
+  String get featureRecapitulativeStatementTitle => 'Zusammenfassende Meldung';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.';
 
@@ -14015,6 +14022,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get readinessTitle => 'Einrichtung dieses Workspace';
+
+  @override
+  String get recapCsv => 'Zusammenfassende Meldung (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen mit Steuerschuldnerschaft des Empfängers',
+      one: '1 Rechnung mit Steuerschuldnerschaft des Empfängers',
+    );
+    return 'Für $month ist eine Zusammenfassende Meldung fällig: $_temp0. Exportieren Sie sie unter Umsatzsteuer-Voranmeldungen.';
+  }
+
+  @override
+  String get recapEmpty =>
+      'In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.';
 
   @override
   String get recordingPrivacyBadge => 'Aufnahmemodus — erfundene Personen';

@@ -9462,6 +9462,18 @@ abstract class AppLocalizations {
   /// **'QR badges'**
   String get featureQrBadgesTitle;
 
+  /// #2354 recapitulative statement: featureRecapitulativeStatementDesc
+  ///
+  /// In en, this message translates to:
+  /// **'The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.'**
+  String get featureRecapitulativeStatementDesc;
+
+  /// #2354 recapitulative statement: featureRecapitulativeStatementTitle
+  ///
+  /// In en, this message translates to:
+  /// **'EU sales list'**
+  String get featureRecapitulativeStatementTitle;
+
   /// #1514 recording privacy: featureRecordingPrivacyDesc
   ///
   /// In en, this message translates to:
@@ -23863,6 +23875,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Setting up this space'**
   String get readinessTitle;
+
+  /// #2354 recapitulative statement: recapCsv
+  ///
+  /// In en, this message translates to:
+  /// **'EU sales list (CSV)'**
+  String get recapCsv;
+
+  /// #2354 recapitulative statement: recapDue
+  ///
+  /// In en, this message translates to:
+  /// **'An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.'**
+  String recapDue(String month, int count);
+
+  /// #2354 recapitulative statement: recapEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was reverse-charged in this period.'**
+  String get recapEmpty;
 
   /// #1514 recording privacy: recordingPrivacyBadge
   ///

@@ -137,4 +137,5 @@ const Set<String> workspaceFeatureKeys = {
   'messageMentions',
   'supplyClassification',
   'viesVerification',
+  'recapitulativeStatement',
 };

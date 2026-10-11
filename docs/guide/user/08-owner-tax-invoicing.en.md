@@ -351,6 +351,28 @@ Before a general service is reverse-charged to a business in another EU country,
 
 **See also:** [Reverse charge for EU businesses](#reverse-charge-for-eu-businesses) · [Place of supply of a service](#place-of-supply-of-a-service)
 
+<!-- anchor: user.money.vat.recap -->
+### EU sales list
+
+**Audience:** Owner
+
+Each month in which you reverse-charge services to businesses in other EU countries, your tax office expects a list of them: the DES in France, the Zusammenfassende Meldung in Germany, modelo 349 in Spain.
+
+**Steps**
+
+1. Open [VAT declarations](https://fdittgen-png.github.io/deskilo/#/vat-declarations) and pick the period.
+2. Tap **EU sales list (CSV)**.
+3. File it on your tax office's portal, or hand it to your accountant.
+
+**Good to know**
+
+- The list sums, per month and per customer VAT number, what your issued invoices reverse-charged; a desk at your own VAT never appears.
+- While one is due, **Invoicing** shows a notice: **An EU sales list is due for** the month.
+- The file has fixed columns: period, country, VAT number, customer, amount, documents.
+- It needs the **EU sales list** feature.
+
+**See also:** [VAT number check (VIES)](#vat-number-check-vies) · [Reverse charge for EU businesses](#reverse-charge-for-eu-businesses)
+
 <!-- anchor: user.money.vat.due -->
 ### When VAT falls due
 

@@ -3642,6 +3642,8 @@
   "featurePushNotificationsDesc": "Entregar las confirmaciones pendientes en los dispositivos de los miembros.",
   "featureQrBadgesDesc": "Tarjetas de credencial QR imprimibles para el quiosco, junto a las tarjetas NFC/RFID.",
   "featureQrBadgesTitle": "Credenciales QR",
+  "featureRecapitulativeStatementDesc": "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso.",
+  "featureRecapitulativeStatementTitle": "Declaración recapitulativa (modelo 349)",
   "featureRecordingPrivacyDesc": "Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo.",
   "@featureRecordingPrivacyDesc": {
     "description": "#1514 recording privacy: featureRecordingPrivacyDesc"
@@ -8640,6 +8642,19 @@
   "readinessStateUnavailable": "No se pudo leer",
   "readinessStateUnverified": "Aún no verificado",
   "readinessTitle": "Configuración de este espacio",
+  "recapCsv": "Declaración recapitulativa (CSV)",
+  "recapDue": "Hay una declaración recapitulativa pendiente para {month}: {count, plural, =1{1 factura con inversión del sujeto pasivo} other{{count} facturas con inversión del sujeto pasivo}}. Expórtela desde las declaraciones de IVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
   "recordingPrivacyBadge": "Modo grabación — personas inventadas",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"

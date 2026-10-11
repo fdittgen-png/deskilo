@@ -1127,6 +1127,10 @@ window.SETUP_L10N={
    "viesVerification": [
     "VAT number check (VIES)",
     "A business customer's VAT number is checked against the EU's VIES service, and the consultation number is kept on the member and on each invoice. A general service reverse-charged to a business in another EU country is issued only after a valid check; when VIES does not answer, issuing waits. Off: those invoices are issued outside the app."
+   ],
+   "recapitulativeStatement": [
+    "EU sales list",
+    "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice."
    ]
   },
   "process": {
@@ -2473,6 +2477,10 @@ window.SETUP_L10N={
    "viesVerification": [
     "Vérification du numéro de TVA (VIES)",
     "Le numéro de TVA d'un client professionnel est vérifié auprès du service VIES de l'UE, et le numéro de consultation est conservé sur le membre et sur chaque facture. Une prestation générale autoliquidée par une entreprise d'un autre pays de l'UE n'est émise qu'après une vérification valide ; quand VIES ne répond pas, l'émission attend. Désactivé : ces factures sont émises hors de l'app."
+   ],
+   "recapitulativeStatement": [
+    "Déclaration européenne de services",
+    "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis."
    ]
   },
   "process": {
@@ -3819,6 +3827,10 @@ window.SETUP_L10N={
    "viesVerification": [
     "USt-IdNr.-Prüfung (VIES)",
     "Die USt-IdNr. eines Geschäftskunden wird beim VIES-Dienst der EU geprüft, und die Abfragenummer wird beim Mitglied und auf jeder Rechnung festgehalten. Eine allgemeine Dienstleistung mit Steuerschuldnerschaft eines Unternehmens in einem anderen EU-Land wird erst nach einer gültigen Prüfung ausgestellt; antwortet VIES nicht, wartet die Ausstellung. Aus: Diese Rechnungen werden außerhalb der App ausgestellt."
+   ],
+   "recapitulativeStatement": [
+    "Zusammenfassende Meldung",
+    "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis."
    ]
   },
   "process": {
@@ -5165,6 +5177,10 @@ window.SETUP_L10N={
    "viesVerification": [
     "Comprobación del número de IVA (VIES)",
     "El número de IVA de un cliente empresarial se comprueba en el servicio VIES de la UE, y el número de consulta se conserva en el miembro y en cada factura. Un servicio general con inversión del sujeto pasivo para una empresa de otro país de la UE solo se emite tras una comprobación válida; cuando VIES no responde, la emisión espera. Desactivado: esas facturas se emiten fuera de la aplicación."
+   ],
+   "recapitulativeStatement": [
+    "Declaración recapitulativa (modelo 349)",
+    "Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso."
    ]
   },
   "process": {
@@ -6511,6 +6527,10 @@ window.SETUP_L10N={
    "viesVerification": [
     "Verifica della partita IVA (VIES)",
     "La partita IVA di un cliente impresa viene verificata presso il servizio VIES dell'UE e il numero di consultazione viene conservato sul membro e su ogni fattura. Un servizio generico in inversione contabile per un'impresa di un altro Paese UE viene emesso solo dopo una verifica valida; quando VIES non risponde, l'emissione attende. Disattivato: queste fatture si emettono fuori dall'app."
+   ],
+   "recapitulativeStatement": [
+    "Elenchi riepilogativi (Intrastat servizi)",
+    "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso."
    ]
   },
   "process": {

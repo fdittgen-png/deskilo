@@ -5495,6 +5495,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureQrBadgesTitle => 'Credenciales QR';
 
   @override
+  String get featureRecapitulativeStatementDesc =>
+      'Los servicios con inversión del sujeto pasivo para empresas de otros países de la UE, por número de IVA del cliente y por mes, exportados en CSV junto a las declaraciones de IVA: la lista que espera la administración (DES en Francia, Zusammenfassende Meldung en Alemania, modelo 349 en España). La facturación muestra un aviso mientras haya una pendiente. Desactivado: ni exportación ni aviso.';
+
+  @override
+  String get featureRecapitulativeStatementTitle =>
+      'Declaración recapitulativa (modelo 349)';
+
+  @override
   String get featureRecordingPrivacyDesc =>
       'Para filmar o fotografiar este espacio. Cada nombre, correo electrónico, número de teléfono, dirección postal y fotografía se sustituye por una persona inventada antes de llegar a la pantalla, mientras que el plano, las reservas y los importes siguen siendo los reales. Un aviso lo indica en cada pantalla, y los formularios de identidad se niegan a guardar mientras esté activo.';
 
@@ -13983,6 +13991,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get readinessTitle => 'Configuración de este espacio';
+
+  @override
+  String get recapCsv => 'Declaración recapitulativa (CSV)';
+
+  @override
+  String recapDue(String month, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count facturas con inversión del sujeto pasivo',
+      one: '1 factura con inversión del sujeto pasivo',
+    );
+    return 'Hay una declaración recapitulativa pendiente para $month: $_temp0. Expórtela desde las declaraciones de IVA.';
+  }
+
+  @override
+  String get recapEmpty =>
+      'No hubo inversión del sujeto pasivo en este periodo.';
 
   @override
   String get recordingPrivacyBadge => 'Modo grabación — personas inventadas';

@@ -59,5 +59,20 @@
   "viesCheckNow": "Vérifier maintenant",
   "viesCheckExplainer": "VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n'est émise qu'après une telle réponse.",
   "invoiceMissingVies": "Une vérification VIES valide du numéro de TVA du membre (requise pour l'autoliquidation ; si VIES n'a pas répondu, réessayez plus tard)",
-  "viesCheckFailed": "VIES n'a pas pu être interrogé. Réessayez plus tard."
+  "viesCheckFailed": "VIES n'a pas pu être interrogé. Réessayez plus tard.",
+  "featureRecapitulativeStatementTitle": "Déclaration européenne de services",
+  "featureRecapitulativeStatementDesc": "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis.",
+  "recapCsv": "Déclaration européenne de services (CSV)",
+  "recapEmpty": "Rien n'a été autoliquidé sur cette période.",
+  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, =1{1 facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
+  "@recapDue": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

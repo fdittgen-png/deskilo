@@ -227,6 +227,7 @@
   "user.money.vat.regime": "Regime IVA",
   "user.money.vat.reverse-charge": "Inversione contabile per imprese UE",
   "user.money.vat.vies": "Verifica della partita IVA (VIES)",
+  "user.money.vat.recap": "Elenchi riepilogativi (Intrastat servizi)",
   "user.money.vat.due": "Quando l'IVA diventa esigibile",
   "user.money.vat.account": "Conto IVA",
   "user.money.vat.number": "Partita IVA",
