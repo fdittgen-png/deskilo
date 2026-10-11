@@ -10,10 +10,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
-import '../vat_tax_point_labels.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/vat_regime.dart';
 import '../../providers/book_profile_providers.dart';
+import '../vat_tax_point_labels.dart';
 
 String bookRoleLabel(AppLocalizations? l10n, BookRole r) => switch (r) {
   BookRole.customers => l10n?.bookRoleCustomers ?? 'Customers (receivable)',

@@ -58,7 +58,7 @@ Future<void> showExpenseSheet(
       vatRegimeFromWire(workspace.vatRegime) == VatRegime.vatRegistered) {
     try {
       rates = await ref.read(vatRatesProvider.future);
-    } catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn('money', 'expense VAT rates failed',
           error: e, stackTrace: st);
     }
@@ -189,7 +189,6 @@ Future<void> showExpenseSheet(
             ),
             items: [
               DropdownMenuItem<double?>(
-                value: null,
                 child: Text(vatWords(l10n).expenseVatNone),
               ),
               for (final p in vatPercents)
