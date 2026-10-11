@@ -55,6 +55,15 @@ List<String> mcpOptionalOutput(Map<String, dynamic> contract, Map<String, dynami
     ..sort();
 }
 
+/// #2391 — the process group an operation belongs to: the contract's own
+/// `group` when it names one, else the permission it needs (so an
+/// operation with a new permission lands in a group of its own, never in
+/// `own`), else `own`.
+String mcpOperationGroupOf(Map<String, dynamic> op) =>
+    op['group'] as String? ??
+    (op['authority'] as Map?)?['permission'] as String? ??
+    'own';
+
 /// #1629 — the security schemes the documented paths use.
 const Map<String, Object?> mcpSecuritySchemes = {
   'nativeSession': {
@@ -617,6 +626,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     }
     dart.writeln('    },');
     dart.writeln('    output: [${[for (final o in op['output'] as List) "'$o'"].join(', ')}],');
+    dart.writeln("    group: '${mcpOperationGroupOf(op)}',");
     dart.writeln('  ),');
   }
   dart.writeln('};');

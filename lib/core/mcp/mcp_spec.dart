@@ -49,6 +49,7 @@ class McpOperationSpec {
     required this.nativeConfirmation,
     required this.fields,
     required this.output,
+    required this.group,
   });
 
   final String id;
@@ -72,6 +73,10 @@ class McpOperationSpec {
   final bool nativeConfirmation;
   final Map<String, McpField> fields;
   final List<String> output;
+
+  /// #2391 — the process group the policy screen shows the operation in,
+  /// from the contract (`mcpOperationGroupOf`), never a hand-kept list.
+  final String group;
 }
 
 final _uuid = RegExp(

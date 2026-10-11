@@ -10168,10 +10168,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpFieldNameSample => 'Bureau fenêtre 12';
 
   @override
-  String get mcpGroupFinancial => 'Demandes financières';
+  String get mcpGroupFinancial => 'Finances';
 
   @override
   String get mcpGroupMembership => 'Demandes d\'adhésion';
+
+  @override
+  String get mcpGroupOther => 'Autres opérations soumises à une permission';
 
   @override
   String get mcpGroupOwn => 'Réservations et compte personnels';
@@ -10263,6 +10266,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpOpListWorkspaces => 'Voir les espaces qu\'il peut utiliser';
+
+  @override
+  String get mcpOpMemberStatement => 'Voir le relevé de compte d\'un membre';
 
   @override
   String get mcpOpMemberStatus => 'Modifier le statut d\'un membre';

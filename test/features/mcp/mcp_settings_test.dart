@@ -25,12 +25,16 @@ import 'package:deskilo/features/mcp/domain/mcp_context.dart';
 import 'package:deskilo/features/mcp/presentation/assistants_screen.dart';
 import 'package:deskilo/features/mcp/presentation/eligibility_review_screen.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/mcp/mcp_operations.dart';
+import 'package:deskilo/core/mcp/mcp_spec.dart' as spec;
 import 'package:deskilo/features/mcp/presentation/mcp_policy_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../tool/mcp_contract/render.dart' show mcpOperationGroupOf;
 
 import '../../helpers/mock_providers.dart';
 
@@ -116,15 +120,52 @@ Future<({EligibilityReview review, VerifiedMcpTarget target})> _reviewFor(
 void main() {
   group('grouping and DTOs', () {
     test('operations fall into their process groups', () {
-      expect(mcpOperationGroup('create_reservation'), McpOperationGroup.own);
-      expect(mcpOperationGroup('request_refund'), McpOperationGroup.financial);
+      expect(mcpOperationGroup('create_reservation'), McpOperationGroups.own);
+      expect(mcpOperationGroup('request_refund'), McpOperationGroups.financial);
+      expect(mcpOperationGroup('get_member_statement'), McpOperationGroups.financial);
       expect(
         mcpOperationGroup('request_subscription_change'),
-        McpOperationGroup.membership,
+        McpOperationGroups.membership,
       );
       expect(
         mcpOperationGroup('get_validation'),
-        McpOperationGroup.validations,
+        McpOperationGroups.validations,
+      );
+      expect(mcpOperationGroups, [
+        McpOperationGroups.own,
+        McpOperationGroups.financial,
+        McpOperationGroups.membership,
+        McpOperationGroups.validations,
+      ]);
+    });
+    test('#2391 the group comes from the contract: a new permission gets '
+        'its own group, never own', () {
+      final fixture = <String, dynamic>{
+        'id': 'request_space_change',
+        'authority': {'kind': 'permission', 'permission': 'manageSpaces'},
+      };
+      expect(mcpOperationGroupOf(fixture), 'manageSpaces');
+      expect(mcpOperationGroupOf({'id': 'x', 'authority': {'kind': 'self'}}), 'own');
+      expect(mcpOperationGroupOf({...fixture, 'group': 'financial'}), 'financial');
+      const fixtureSpec = spec.McpOperationSpec(
+        id: 'request_space_change',
+        rpc: null,
+        handler: true,
+        dispatch: true,
+        authority: spec.McpAuthority.permission,
+        permission: 'manageSpaces',
+        features: [],
+        scope: spec.McpScope.workspace,
+        mutation: spec.McpMutation.request,
+        idempotent: true,
+        nativeConfirmation: false,
+        fields: {},
+        output: [],
+        group: 'manageSpaces',
+      );
+      expect(
+        mcpOperationGroupsOf([...mcpOperations.values, fixtureSpec]),
+        [...mcpOperationGroups, 'manageSpaces'],
       );
     });
     test('a stale save is its own outcome; anything unknown is a conflict', () {
@@ -163,7 +204,7 @@ void main() {
           const McpPolicyScreen(),
           standardTestOverrides(workspace: workspace, mcpAdmin: admin),
         );
-        expect(find.text('Financial requests'), findsOneWidget);
+        expect(find.text('Finances'), findsOneWidget);
         expect(find.text('Membership requests'), findsOneWidget);
         final refund = find.byKey(
           const ValueKey('mcp-policy-op-request_refund'),

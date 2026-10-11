@@ -10151,10 +10151,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpFieldNameSample => 'Scrivania finestra 12';
 
   @override
-  String get mcpGroupFinancial => 'Richieste finanziarie';
+  String get mcpGroupFinancial => 'Finanze';
 
   @override
   String get mcpGroupMembership => 'Richieste di iscrizione';
+
+  @override
+  String get mcpGroupOther => 'Altre operazioni che richiedono un permesso';
 
   @override
   String get mcpGroupOwn => 'Prenotazioni e conto personali';
@@ -10246,6 +10249,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpOpListWorkspaces => 'Vedere quali spazi può usare';
+
+  @override
+  String get mcpOpMemberStatement => 'Vedere l\'estratto conto di un membro';
 
   @override
   String get mcpOpMemberStatus => 'Modificare lo stato di un membro';

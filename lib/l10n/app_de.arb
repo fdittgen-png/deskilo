@@ -6412,8 +6412,9 @@
   "mcpEligibleYes": "Diese Datenbank erlaubt Ihnen, Assistenten zu nutzen.",
   "mcpFieldName": "Namen von Workspaces und Plätzen",
   "mcpFieldNameSample": "Fensterplatz 12",
-  "mcpGroupFinancial": "Finanzanfragen",
+  "mcpGroupFinancial": "Finanzen",
   "mcpGroupMembership": "Mitgliedschaftsanfragen",
+  "mcpGroupOther": "Weitere Vorgänge mit Berechtigung",
   "mcpGroupOwn": "Eigene Buchungen und Konto",
   "mcpGroupValidations": "Freigaben",
   "mcpIdentityConflict": "Ein anderes Konto hält diese Identität hier bereits — ein Datenbankadministrator kann das klären.",
@@ -6449,6 +6450,7 @@
     "description": "#2185 mcp_consent"
   },
   "mcpOpListWorkspaces": "Sehen, welche Arbeitsbereiche er nutzen darf",
+  "mcpOpMemberStatement": "Den Kontoauszug eines Mitglieds sehen",
   "mcpOpMemberStatus": "Status eines Mitglieds ändern",
   "mcpOpMyInvoices": "Ihre Rechnungen sehen",
   "mcpOpMyReservations": "Ihre Reservierungen sehen",
