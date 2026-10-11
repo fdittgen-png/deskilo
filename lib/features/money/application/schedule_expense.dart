@@ -48,7 +48,7 @@ bool needsExplanation(ExpenseOccurrence occurrence, int? amountCents) {
 }
 
 /// What answering [occurrence] with [amountCents] and [reason] means.
-OccurrenceAnswer occurrenceAnswer({
+OccurrenceAnswer _occurrenceAnswer({
   required ExpenseOccurrence occurrence,
   required int? amountCents,
   required String reason,
@@ -128,7 +128,7 @@ class ExpenseSchedules {
     required int? amountCents,
     required String reason,
   }) async {
-    final answer = occurrenceAnswer(
+    final answer = _occurrenceAnswer(
       occurrence: occurrence,
       amountCents: amountCents,
       reason: reason,

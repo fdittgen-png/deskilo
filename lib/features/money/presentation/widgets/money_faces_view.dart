@@ -15,7 +15,7 @@ import '../../providers/money_face_controller.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 
 /// The label of a face, as the tab and the help hint call it.
-String moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
+String _moneyFaceLabel(AppLocalizations? l10n, MoneyFace face) => switch (face) {
       MoneyFace.statement => l10n?.moneyFaceStatement ?? 'Statement',
       MoneyFace.payments => l10n?.moneyFacePayments ?? 'Payments',
       MoneyFace.invoices => l10n?.moneyFaceInvoices ?? 'Invoices',
@@ -120,7 +120,7 @@ class MoneyBalanceCard extends StatelessWidget {
   }
 }
 
-HelpHintId moneyFaceHint(MoneyFace face) => switch (face) {
+HelpHintId _moneyFaceHint(MoneyFace face) => switch (face) {
       MoneyFace.statement => HelpHintId.moneyStatement,
       MoneyFace.payments => HelpHintId.moneyPayments,
       MoneyFace.invoices => HelpHintId.moneyInvoices,
@@ -192,7 +192,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     }
     final cards = widget.cards[face] ?? const <Widget>[];
     final actions = widget.actions[face] ?? const <Widget>[];
-    final hint = HelpHint(moneyFaceHint(face), key: ValueKey('money-hint-${face.name}'));
+    final hint = HelpHint(_moneyFaceHint(face), key: ValueKey('money-hint-${face.name}'));
 
     final labels = l10n ?? AppLocalizationsEn();
     final scope = switch (face) {
@@ -206,7 +206,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
       key: ValueKey('money-scope-${face.name}'),
       padding: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(moneyFaceLabel(l10n, face), style: theme.textTheme.headlineSmall?.strong),
+        Text(_moneyFaceLabel(l10n, face), style: theme.textTheme.headlineSmall?.strong),
         const SizedBox(height: AppSpacing.xs),
         Text(scope, style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant)),
       ]),
@@ -219,7 +219,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
       controller: _controller,
       tabs: [
         for (final f in MoneyFace.values)
-          AppTab(moneyFaceLabel(l10n, f), key: ValueKey('money-face-${f.name}')),
+          AppTab(_moneyFaceLabel(l10n, f), key: ValueKey('money-face-${f.name}')),
       ],
     );
 

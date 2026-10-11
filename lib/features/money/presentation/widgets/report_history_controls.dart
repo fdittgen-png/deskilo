@@ -18,7 +18,7 @@ import '../../../../l10n/app_localizations.dart';
 /// editor" became "Rep…", so the one word telling you where you are was
 /// the one that went. Chosen so every phone folds and a tablet or desktop
 /// window does not.
-const double kNarrowAppBar = 420;
+const double _kNarrowAppBar = 420;
 
 /// The designer's undo/redo pair, in whichever shape the width allows.
 class ReportHistoryControls extends StatelessWidget {
@@ -41,7 +41,7 @@ class ReportHistoryControls extends StatelessWidget {
     final undoLabel = l10n?.reportDesignerUndo ?? 'Undo';
     final redoLabel = l10n?.reportDesignerRedo ?? 'Redo';
 
-    if (MediaQuery.sizeOf(context).width >= kNarrowAppBar) {
+    if (MediaQuery.sizeOf(context).width >= _kNarrowAppBar) {
       return Row(mainAxisSize: MainAxisSize.min, children: [
         IconButton(
           key: const ValueKey('report-designer-undo'),

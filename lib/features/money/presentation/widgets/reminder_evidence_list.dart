@@ -14,6 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/reminder_evidence.dart';
 import '../../providers/reminder_evidence_providers.dart';
 
+@visibleForTesting
 String reminderStatusLabel(AppLocalizations? l10n, String status) =>
     switch (status) {
       'prepared' => l10n?.reminderStatusPrepared ?? 'Prepared',
@@ -32,7 +33,7 @@ String reminderStatusLabel(AppLocalizations? l10n, String status) =>
             'Recorded before delivery was tracked — unknown',
     };
 
-String reminderOriginLabel(AppLocalizations? l10n, String origin) =>
+String _reminderOriginLabel(AppLocalizations? l10n, String origin) =>
     switch (origin) {
       'manual' => l10n?.reminderOriginManual ?? 'by hand',
       'automatic' => l10n?.reminderOriginAutomatic ?? 'automatic',
@@ -80,8 +81,8 @@ class ReminderEvidenceList extends ConsumerWidget {
             key: ValueKey('invoice-reminder-evidence-${item.intentId}'),
             padding: const EdgeInsets.only(top: AppSpacing.xs),
             child: Text(
-              '${l10n?.reminderHistoryLine(item.level, reminderOriginLabel(l10n, item.origin), date.format(item.preparedAt)) ?? 'Level ${item.level} · '
-                      '${reminderOriginLabel(l10n, item.origin)} · '
+              '${l10n?.reminderHistoryLine(item.level, _reminderOriginLabel(l10n, item.origin), date.format(item.preparedAt)) ?? 'Level ${item.level} · '
+                      '${_reminderOriginLabel(l10n, item.origin)} · '
                       '${date.format(item.preparedAt)}'}\n'
               '${reminderStatusLabel(l10n, item.status)}',
               style: theme.textTheme.bodySmall,

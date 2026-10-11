@@ -2,6 +2,7 @@
 //
 // Shipped localized report templates. Legal facts come from the qualified
 // data projection; a layout alone is not evidence of country compliance.
+import 'package:meta/meta.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
 // The three #671 documents (CoA preview, badge sheet, space codes) live
@@ -41,6 +42,7 @@ String _legalFooter(AppLocalizations? l10n) => '''
 
 /// The built-in invoice layout as editable bands — the CLASSIC preset,
 /// legally complete (#480).
+@visibleForTesting
 InvoicePdfTemplate defaultInvoiceTemplate(AppLocalizations? l10n) {
   final classic = _invoicePresetBands(l10n, 'classic');
   return InvoicePdfTemplate(
@@ -298,7 +300,7 @@ $clauses
 
 /// The built-in member-statement document (#476) as editable bands —
 /// the CLASSIC preset.
-ReportBands defaultStatementBands(AppLocalizations? l10n) =>
+ReportBands _defaultStatementBands(AppLocalizations? l10n) =>
     _statementPresetBands(l10n, 'classic');
 
 ReportBands _statementPresetBands(AppLocalizations? l10n, String id) {
@@ -357,13 +359,13 @@ ${l10n?.reportRegards ?? 'Kind regards'},
 }
 
 /// The FINANCIAL AGREEMENT document (#494) as editable bands.
-ReportBands defaultAgreementBands(AppLocalizations? l10n) =>
+ReportBands _defaultAgreementBands(AppLocalizations? l10n) =>
     _simpleDocPresetBands(
         l10n, 'classic', l10n?.reportDocAgreement ?? 'Financial agreement',
         subtitle: '{{ member }}');
 
 /// The MONTHLY PAYMENTS document (#494) as editable bands.
-ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
+ReportBands _defaultPaymentsBands(AppLocalizations? l10n) =>
     _simpleDocPresetBands(
         l10n, 'classic', l10n?.reportDocPayments ?? 'Payments report',
         subtitle: '{{ member }} — {{ period }}',
@@ -379,7 +381,7 @@ ReportBands defaultPaymentsBands(AppLocalizations? l10n) =>
 /// The WORKSPACE STATUS (#934): what the workspace invoiced, collected,
 /// reimbursed and shared out over a range of months, then the same per
 /// member. Owners and admins only; the numbers are the database's.
-ReportBands defaultStatusBands(AppLocalizations? l10n) => ReportBands(
+ReportBands _defaultStatusBands(AppLocalizations? l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 > {{ workspace_address }}
@@ -399,6 +401,7 @@ ReportBands defaultStatusBands(AppLocalizations? l10n) => ReportBands(
 /// The CONSUMPTION REPORT (#873): what the month's participation paid
 /// for, what was actually consumed, what is left or exceeded — and the
 /// records behind the numbers. Sent to the member at month end.
+@visibleForTesting
 ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
       header: '''
 # {{ workspace }}
@@ -421,6 +424,7 @@ ReportBands defaultUsageBands(AppLocalizations? l10n) => ReportBands(
 /// The VAT REPORT (#878): every position of the period by rate, the
 /// subtotals per rate and category, the period totals — what the
 /// accountant reconciles against the declaration boxes.
+@visibleForTesting
 ReportBands defaultVatBands(AppLocalizations? l10n) => ReportBands(
       header: '''
 # {{ workspace }}
@@ -442,7 +446,7 @@ ReportBands defaultVatBands(AppLocalizations? l10n) => ReportBands(
     );
 
 /// The WORKSPACE REPORT document (#494) as editable bands.
-ReportBands defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
+ReportBands _defaultWorkspaceBands(AppLocalizations? l10n) => ReportBands(
       header: '''
 # {{ workspace }}
 {% if seller_legal_form != "" %}> {{ seller_legal_form }}{% endif %}
@@ -541,6 +545,7 @@ class ReportPreset {
 
 /// The four preset ids every document ships (#480). The FIRST is the
 /// built-in default the uncustomized document renders with.
+@visibleForTesting
 const List<String> reportPresetIds = ['classic', 'simple', 'verbose', 'formal'];
 
 String _presetName(String id, AppLocalizations? l10n) => switch (id) {
@@ -569,9 +574,9 @@ List<ReportPreset> presetsForDoc(String docId, AppLocalizations? l10n) {
         ReportDocSlot(key: 'agreement') => _simpleDocPresetBands(
             l10n, id, l10n?.reportDocAgreement ?? 'Financial agreement',
             subtitle: '{{ member }}'),
-        ReportDocSlot(key: 'payments') => defaultPaymentsBands(l10n),
+        ReportDocSlot(key: 'payments') => _defaultPaymentsBands(l10n),
         ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
-        ReportDocSlot(key: 'workspace') => defaultWorkspaceBands(l10n),
+        ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
         // One shipped layout each. These documents are structural — a
         // chart, a grid of cards, a table — so the presets that make
         // sense for an invoice (Classic / Formal letter) would only
@@ -607,12 +612,12 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations? l10n) =>
     switch (reportKindById(docId, reminderLevels: kMaxReminderLevels)?.slot) {
       ReportRootSlot() || ReportProformaSlot() =>
         defaultInvoiceTemplate(l10n).invoiceBands,
-      ReportStatementSlot() => defaultStatementBands(l10n),
-      ReportDocSlot(key: 'agreement') => defaultAgreementBands(l10n),
-      ReportDocSlot(key: 'payments') => defaultPaymentsBands(l10n),
+      ReportStatementSlot() => _defaultStatementBands(l10n),
+      ReportDocSlot(key: 'agreement') => _defaultAgreementBands(l10n),
+      ReportDocSlot(key: 'payments') => _defaultPaymentsBands(l10n),
       ReportDocSlot(key: 'usage') => defaultUsageBands(l10n),
-      ReportDocSlot(key: 'workspace') => defaultWorkspaceBands(l10n),
-      ReportDocSlot(key: 'status') => defaultStatusBands(l10n),
+      ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
+      ReportDocSlot(key: 'status') => _defaultStatusBands(l10n),
       ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n?.biPdfTitle ?? 'Business analytics'),
       ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n?.workspaceConfigPdfTitle ?? 'Workspace configuration'),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),

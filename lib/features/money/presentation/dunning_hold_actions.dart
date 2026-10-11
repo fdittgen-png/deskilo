@@ -16,7 +16,7 @@ import '../providers/money_providers.dart';
 import '../application/dunning_hold.dart';
 
 /// #1913 — the reasons a reminder may be held, as the server knows them.
-const dunningHoldReasons = ['dispute', 'identity_error', 'insolvency', 'other'];
+const _dunningHoldReasons = ['dispute', 'identity_error', 'insolvency', 'other'];
 
 String dunningHoldReasonLabel(AppLocalizations? l10n, String reason) =>
     switch (reason) {
@@ -92,7 +92,7 @@ class _DunningHoldDialog extends StatefulWidget {
 }
 
 class _DunningHoldDialogState extends State<_DunningHoldDialog> {
-  String _reason = dunningHoldReasons.first;
+  String _reason = _dunningHoldReasons.first;
   final _note = TextEditingController();
 
   @override
@@ -122,7 +122,7 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
               onChanged: (value) => setState(() => _reason = value ?? _reason),
               child: Column(
                 children: [
-                  for (final reason in dunningHoldReasons)
+                  for (final reason in _dunningHoldReasons)
                     RadioListTile<String>(
                       key: ValueKey('dunning-hold-$reason'),
                       contentPadding: EdgeInsets.zero,

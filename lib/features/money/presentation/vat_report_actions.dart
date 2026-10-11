@@ -37,7 +37,7 @@ VatTaxPointBasis workspaceTaxPointBasis(
     InvoiceLegal.fromJson(invoiceLegal).taxPointBasis(country);
 
 /// The period's report from the invoices already loaded for the hub.
-Future<VatReport> loadVatReport(
+Future<VatReport> _loadVatReport(
   WidgetRef ref, {
   required DateTime start,
   required DateTime end,
@@ -70,7 +70,7 @@ Future<VatReport> loadVatReport(
 
 /// The Liquid data of the VAT report — the same legal mentions and
 /// workspace identity every letter carries, plus the positions.
-Map<String, Object?> vatReportData(
+Map<String, Object?> _vatReportData(
   BuildContext context,
   WidgetRef ref,
   VatReport report,
@@ -161,9 +161,9 @@ Future<void> showVatReport(
   required DateTime end,
 }) async {
   final l10n = AppLocalizations.of(context);
-  final report = await loadVatReport(ref, start: start, end: end);
+  final report = await _loadVatReport(ref, start: start, end: end);
   if (!context.mounted) return;
-  final data = vatReportData(context, ref, report);
+  final data = _vatReportData(context, ref, report);
   final rendered =
       renderLetterDoc(context, ref, docId: 'vat', data: data, language: '');
   final title = l10n?.reportDocVat ?? 'VAT report';
@@ -192,7 +192,7 @@ Future<void> saveVatReportCsv(
   required DateTime end,
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final report = await loadVatReport(ref, start: start, end: end);
+  final report = await _loadVatReport(ref, start: start, end: end);
   if (!context.mounted) return;
   final csv =
       vatReportCsv(report, currency: workspace?.currencyCode ?? 'EUR');

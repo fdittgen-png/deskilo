@@ -11,6 +11,8 @@
 /// an answer, not a gap: nothing here invents an absence of obligations.
 library;
 
+import 'package:meta/meta.dart';
+
 import 'accounting_format.dart';
 
 /// How far a format's production has been qualified. Ordered: a later
@@ -68,6 +70,7 @@ class AccountingCapability {
 /// The reviewed decision for every offered format. Keyed by the format id so
 /// a format added to [accountingFormats] without a decision is caught by the
 /// qualification test rather than defaulting to "fine".
+@visibleForTesting
 const Map<String, AccountingCapability> accountingCapabilities = {
   // Reconstructed from invoices and payments. Without complete posted-book
   // evidence it is a reconstruction an accountant completes, not the entity's

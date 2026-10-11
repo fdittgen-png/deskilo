@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import '../../../core/i18n/currencies.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
@@ -30,6 +31,7 @@ const int accountantCsvFormatVersion = 2;
 
 /// #1640 — the longest text a cell carries; longer is cut with an
 /// ellipsis, so a pasted essay cannot turn one row into a page.
+@visibleForTesting
 const int accountantCsvMaxText = 1000;
 
 /// #1640 — the spreadsheet-safe text policy (OWASP "CSV injection").
@@ -42,7 +44,7 @@ const int accountantCsvMaxText = 1000;
 /// can open a cell either. Numbers never pass through here: a credit
 /// note's `-12.00` stays a number. The stored value is untouched; only
 /// this export's text changes.
-String accountantCsvText(String? value) {
+String _accountantCsvText(String? value) {
   if (value == null || value.isEmpty) return '';
   var text = value.replaceAll(RegExp(r'[\x00-\x1F\x7F]+'), ' ');
   if (text.length > accountantCsvMaxText) {
@@ -102,7 +104,7 @@ String buildAccountantCsv({
   required String workspaceName,
   String currencyFallback = 'EUR',
 }) {
-  const q = accountantCsvText;
+  const q = _accountantCsvText;
 
   // #1077 — the document's own currency decides the grain.
   String money(int minor, String code) => Currencies.toMajor(minor, code)

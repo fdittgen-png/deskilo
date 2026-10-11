@@ -59,10 +59,10 @@ class LayoutException implements Exception {
 enum LengthUnit { mm, cm, px, pt, percent }
 
 /// PostScript points per millimetre.
-const double pointsPerMm = 72 / 25.4;
+const double _pointsPerMm = 72 / 25.4;
 
 /// A CSS pixel is 1/96 inch, so 0.75 pt — the web's px, not a screen's.
-const double pointsPerPx = 72 / 96;
+const double _pointsPerPx = 72 / 96;
 
 /// One length as written — the number and its unit — resolvable against
 /// the extent of whatever contains it.
@@ -112,9 +112,9 @@ class Length {
   /// to: the parent's WIDTH for x and w, its HEIGHT for y and h. Every
   /// absolute unit ignores it.
   double resolve(double parentPt) => switch (unit) {
-        LengthUnit.mm => value * pointsPerMm,
-        LengthUnit.cm => value * 10 * pointsPerMm,
-        LengthUnit.px => value * pointsPerPx,
+        LengthUnit.mm => value * _pointsPerMm,
+        LengthUnit.cm => value * 10 * _pointsPerMm,
+        LengthUnit.px => value * _pointsPerPx,
         LengthUnit.pt => value,
         LengthUnit.percent => parentPt * value / 100,
       };

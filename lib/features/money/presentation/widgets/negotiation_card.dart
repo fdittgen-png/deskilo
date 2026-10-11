@@ -209,6 +209,7 @@ class NegotiationCard extends ConsumerWidget {
 /// The proposal sheet an owner or finance admin uses for a member
 /// (#739): each field optional, the tariff shown as placeholder, the
 /// deal goes through validation.
+@visibleForTesting
 Future<void> showPriceNegotiationSheet(
   BuildContext context,
   WidgetRef ref, {

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import '../../../core/i18n/currencies.dart';
 import 'package:xml/xml.dart';
 
@@ -296,6 +297,7 @@ String _percent(double percent) => percent == percent.roundToDouble()
 /// digit count: 9 is a SIREN (0002), 14 a SIRET (0009). Anything else,
 /// or another country, carries no scheme — a reader then treats the id
 /// as plain text, which is honest.
+@visibleForTesting
 String legalIdScheme(String legalId, String country) {
   if (country.trim().toUpperCase() != 'FR') return '';
   final compact = legalId.replaceAll(' ', '');

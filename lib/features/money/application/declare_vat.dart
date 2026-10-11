@@ -16,6 +16,7 @@
 //
 // **Filed** is what the owner records after filing with the authority,
 // with the receipt it gave: no upload marks a return filed.
+import 'package:meta/meta.dart';
 import '../domain/invoice.dart';
 import '../domain/money_repository.dart';
 import '../domain/vat_declaration.dart';
@@ -23,6 +24,7 @@ import '../domain/vat_report.dart';
 import '../domain/vat_tax_point.dart';
 
 /// The numbers one filing period declares.
+@visibleForTesting
 class VatDeclarationDraft {
   const VatDeclarationDraft({
     required this.lines,

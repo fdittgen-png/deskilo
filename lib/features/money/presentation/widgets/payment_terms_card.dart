@@ -100,7 +100,7 @@ class PaymentTermsCard extends ConsumerWidget {
                 alignment: AlignmentDirectional.centerEnd,
                 child: OutlinedButton.icon(
                   key: const ValueKey('payment-terms-edit'),
-                  onPressed: () => showPaymentTermsRequestSheet(
+                  onPressed: () => _showPaymentTermsRequestSheet(
                     context,
                     member: member,
                     workspaceTerms: PaymentTerms.ofLegal(legal),
@@ -119,7 +119,7 @@ class PaymentTermsCard extends ConsumerWidget {
 /// The request: the member's own keys (empty = keep the workspace's
 /// wording), a reason, and "inherit again" — submitted as a
 /// payment_terms_change event for validators.
-Future<void> showPaymentTermsRequestSheet(
+Future<void> _showPaymentTermsRequestSheet(
   BuildContext context, {
   required Member member,
   required PaymentTerms workspaceTerms,

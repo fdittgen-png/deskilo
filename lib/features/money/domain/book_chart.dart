@@ -44,7 +44,7 @@ enum BookRole {
 }
 
 /// The roles a local book cannot start without.
-const List<BookRole> requiredForLocalBook = [
+const List<BookRole> _requiredForLocalBook = [
   BookRole.customers,
   BookRole.revenue,
   BookRole.bank,
@@ -185,7 +185,7 @@ List<BookRole> missingForLocalBook(
   String issuerSiteId,
   DateTime day,
 ) => [
-  for (final role in requiredForLocalBook)
+  for (final role in _requiredForLocalBook)
     if (mappingOn(mappings, issuerSiteId, role, day) == null) role,
 ];
 

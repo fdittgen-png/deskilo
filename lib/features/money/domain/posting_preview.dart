@@ -9,10 +9,12 @@
 //
 // Pure Dart; every amount is an [AccountingAmount], never a double.
 
+import 'package:meta/meta.dart';
 import 'accounting_amount.dart';
 import 'accounting_tax.dart';
 import 'book_chart.dart';
 
+@visibleForTesting
 enum PostingBlock {
   /// The currency has no reviewed exponent.
   unsupportedCurrency,
@@ -61,6 +63,7 @@ class PostingLine {
   final AccountingAmount credit;
 }
 
+@visibleForTesting
 class PostingPreview {
   const PostingPreview(this.lines, this.blockers);
 

@@ -169,7 +169,7 @@ class AccountantHandoff {
 /// The data rows of an emitted accountant CSV: `#` preamble lines and
 /// the header skipped, quoted fields (with doubled quotes and embedded
 /// delimiters) honoured. Used to check the bytes, not to build them.
-List<List<String>> parseAccountantCsvRows(String csv) {
+List<List<String>> _parseAccountantCsvRows(String csv) {
   final rows = <List<String>>[];
   final lines = const LineSplitter().convert(csv);
   var headerSeen = false;
@@ -314,7 +314,7 @@ AccountantHandoff buildAccountantHandoff({
     }
   }
 
-  final rows = parseAccountantCsvRows(csv).length;
+  final rows = _parseAccountantCsvRows(csv).length;
   if (rows != included) {
     findings.add(
       HandoffFinding(HandoffFindingKind.rowCountMismatch, '$rows != $included'),
