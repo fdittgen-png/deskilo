@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
 import '../../providers/workspace_application_providers.dart';
@@ -29,16 +29,16 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
       _account = account;
       _pages.clear();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final provider = workspaceApplicationsProvider(before: _pages.lastOrNull);
     final applications = ref.watch(provider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.applicationsTitle ?? 'Workspace requests'),
+        title: Text(l10n.applicationsTitle),
         actions: [
           IconButton(
             key: const ValueKey('workspace-applications-pending-approval-refresh'),
-            tooltip: l10n?.pendingApprovalRefresh ?? 'Check again',
+            tooltip: l10n.pendingApprovalRefresh,
             onPressed: () => ref.invalidate(provider),
             icon: const Icon(Icons.refresh),
           ),
@@ -51,11 +51,11 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                 padding: AppSpacing.mdAll,
                 children: [
                   Text(
-                    l10n?.applicationDiscussionHint ?? 'Your requests and reviewer discussions remain available, even if a request is refused.',
+                    l10n.applicationDiscussionHint,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   if (rows.isEmpty)
-                    Text(l10n?.applicationsEmpty ?? 'No workspace requests.'),
+                    Text(l10n.applicationsEmpty),
                   for (final application in rows)
                     Card(
                       child: ListTile(
@@ -121,13 +121,12 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      l10n?.applicationsLoadFailed ??
-                          'Could not load your workspace requests. Please try again.',
+                      l10n.applicationsLoadFailed,
                     ),
                     TextButton(
                       key: const ValueKey('workspace-applications-retry'),
                       onPressed: () => ref.invalidate(provider),
-                      child: Text(l10n?.commonRetry ?? 'Try again'),
+                      child: Text(l10n.commonRetry),
                     ),
                   ],
                 ),

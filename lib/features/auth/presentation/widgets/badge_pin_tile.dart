@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -43,7 +44,7 @@ class _BadgePinTileState extends ConsumerState<BadgePinTile> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return FutureBuilder<bool>(
       future: _hasPin,
       builder: (context, snapshot) {
@@ -54,13 +55,13 @@ class _BadgePinTileState extends ConsumerState<BadgePinTile> {
         return ListTile(
           key: const ValueKey('settings-badge-pin'),
           leading: const Icon(Icons.pin_outlined),
-          title: Text(l10n?.badgePinSectionTitle ?? 'My PIN'),
+          title: Text(l10n.badgePinSectionTitle),
           subtitle: Text(
             has == null
                 ? ''
                 : has
-                    ? (l10n?.badgePinSet ?? 'PIN set')
-                    : (l10n?.badgePinNotSet ?? 'No PIN yet'),
+                    ? (l10n.badgePinSet)
+                    : (l10n.badgePinNotSet),
           ),
           trailing: const Icon(Icons.chevron_right),
           onTap: has == null ? null : () => _open(context, l10n, has: has),
@@ -71,7 +72,7 @@ class _BadgePinTileState extends ConsumerState<BadgePinTile> {
 
   Future<void> _open(
     BuildContext context,
-    AppLocalizations? l10n, {
+    AppLocalizations l10n, {
     required bool has,
   }) async {
     final changed = await showModalBottomSheet<bool>(
@@ -105,18 +106,17 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
     super.dispose();
   }
 
-  Future<void> _save(AppLocalizations? l10n) async {
+  Future<void> _save(AppLocalizations l10n) async {
     // Both checks are client-side ONLY because they are about typing,
     // not about security: the server enforces the length too, and a PIN
     // that reached it from anywhere else would still be refused.
     if (_pin.text.length < _kBadgePinMinLength) {
-      setState(() => _error = l10n?.badgePinTooShort(_kBadgePinMinLength) ??
-          'Use at least $_kBadgePinMinLength digits.');
+      setState(() => _error = l10n.badgePinTooShort(_kBadgePinMinLength));
       return;
     }
     if (_pin.text != _confirm.text) {
       setState(() =>
-          _error = l10n?.badgePinMismatch ?? 'The two entries do not match.');
+          _error = l10n.badgePinMismatch);
       return;
     }
     setState(() {
@@ -137,18 +137,16 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
       if (!mounted) return;
       setState(() {
         _busy = false;
-        _error = l10n?.badgePinSaveFailed ??
-            'Could not reach the server. Your PIN was not changed — '
-                'try again.';
+        _error = l10n.badgePinSaveFailed;
       });
       return;
     }
     if (!mounted) return;
-    AppSnack.success(context, l10n?.badgePinSaved ?? 'PIN saved.');
+    AppSnack.success(context, l10n.badgePinSaved);
     Navigator.of(context).pop(true);
   }
 
-  Future<void> _clear(AppLocalizations? l10n) async {
+  Future<void> _clear(AppLocalizations l10n) async {
     setState(() {
       _busy = true;
       _error = null;
@@ -166,24 +164,21 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
       if (!mounted) return;
       setState(() {
         _busy = false;
-        _error = l10n?.badgePinSaveFailed ??
-            'Could not reach the server. Your PIN was not changed — '
-                'try again.';
+        _error = l10n.badgePinSaveFailed;
       });
       return;
     }
     if (!mounted) return;
     AppSnack.success(
       context,
-      l10n?.badgePinCleared ??
-          'PIN removed. Your badges no longer sign you in.',
+      l10n.badgePinCleared,
     );
     Navigator.of(context).pop(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -197,29 +192,26 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
         children: [
           Text(
             widget.hasPin
-                ? (l10n?.badgePinChangeAction ?? 'Change PIN')
-                : (l10n?.badgePinSetAction ?? 'Set a PIN'),
+                ? (l10n.badgePinChangeAction)
+                : (l10n.badgePinSetAction),
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
-            l10n?.badgePinExplain ??
-                'Your PIN lets you sign in by scanning your badge instead '
-                    'of typing your e-mail. Only you can set it, and '
-                    'nobody — not even an owner — can read it back.',
+            l10n.badgePinExplain,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
           _field(
             key: const ValueKey('badge-pin-new'),
             controller: _pin,
-            label: l10n?.badgePinNewLabel ?? 'New PIN',
+            label: l10n.badgePinNewLabel,
           ),
           const SizedBox(height: 12),
           _field(
             key: const ValueKey('badge-pin-confirm'),
             controller: _confirm,
-            label: l10n?.badgePinConfirmLabel ?? 'Repeat it',
+            label: l10n.badgePinConfirmLabel,
           ),
           if (_error != null) ...[
             const SizedBox(height: 12),
@@ -239,7 +231,7 @@ class _BadgePinSheetState extends ConsumerState<_BadgePinSheet> {
             TextButton(
               key: const ValueKey('badge-pin-clear'),
               onPressed: _busy ? null : () => _clear(l10n),
-              child: Text(l10n?.badgePinClearAction ?? 'Remove PIN'),
+              child: Text(l10n.badgePinClearAction),
             ),
         ],
       ),

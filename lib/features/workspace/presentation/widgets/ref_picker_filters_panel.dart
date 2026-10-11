@@ -6,9 +6,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/workspace_currency.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/money/money_text.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'ref_picker_filter.dart';
 
 /// Shows the panel; returns the filter the person settled on, or null when
@@ -64,7 +64,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final shown = applyRefFilter(widget.all, _filter).length;
     final bounds = refAmountBounds(widget.all);
@@ -91,7 +91,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
                 children: [
                   Expanded(
                     child: Text(
-                      l10n?.refFilterMore ?? 'Filters',
+                      l10n.refFilterMore,
                       style: theme.textTheme.titleMedium,
                     ),
                   ),
@@ -105,7 +105,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
                               sort: _filter.sort,
                             ),
                           ),
-                    child: Text(l10n?.refFilterReset ?? 'Reset'),
+                    child: Text(l10n.refFilterReset),
                   ),
                 ],
               ),
@@ -130,7 +130,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
                   key: Key('${widget.keyPrefix}-apply'),
                   onPressed: () => Navigator.of(context).pop(_filter),
                   child: Text(
-                    l10n?.refFilterShow(shown) ?? 'Show $shown results',
+                    l10n.refFilterShow(shown),
                   ),
                 ),
               ),
@@ -142,7 +142,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
   }
 
   Widget _facetSection(BuildContext context, RefFacet facet) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     var options = refFacetOptions(widget.all, _filter, facet.key);
     if (options.isEmpty) return const SizedBox.shrink();
@@ -177,7 +177,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
                   isDense: true,
                   prefixIcon: const Icon(Icons.search, size: 20),
                   border: const OutlineInputBorder(),
-                  hintText: l10n?.refFilterFindIn(facet.label) ?? facet.label,
+                  hintText: l10n.refFilterFindIn(facet.label),
                 ),
                 onChanged: (v) => setState(() => _search[facet.key] = v),
               ),
@@ -209,7 +209,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
     ({int min, int max}) bounds,
     String Function(int) fmt,
   ) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final lo = (_filter.minCents ?? bounds.min).clamp(bounds.min, bounds.max);
     final hi = (_filter.maxCents ?? bounds.max).clamp(bounds.min, bounds.max);
@@ -219,7 +219,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n?.refFilterAmount ?? 'Amount',
+            l10n.refFilterAmount,
             style: theme.textTheme.titleSmall,
           ),
           RangeSlider(

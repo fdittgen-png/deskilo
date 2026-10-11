@@ -21,6 +21,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/l10n/lexicon_defaults.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -72,9 +73,9 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
   Future<void> _write(String locale, String key, String? text) async {
     // Everything context-dependent is read BEFORE the first await: the
     // rest of this method is an async gap.
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final errorText =
-        l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.';
+        l10n.workspaceGenericError;
     // The DECISION, not the repository (#1234 / ADR 0024): this widget
     // says what the owner asked for and does not know what a repository
     // is. `rename` treats an emptied box as a reset, so the two cannot
@@ -98,12 +99,12 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
     );
     if (!ok || !mounted) return;
     ref.invalidate(lexiconProvider);
-    AppSnack.success(context, l10n?.wordingSavedOne ?? 'Saved');
+    AppSnack.success(context, l10n.wordingSavedOne);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final overrides = ref.watch(lexiconProvider);
     final locales = _locales(
@@ -114,7 +115,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.wordingTitle ?? 'Wording'),
+        title: Text(l10n.wordingTitle),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
@@ -134,7 +135,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
       body: switch (overrides) {
         AsyncData(value: final raw) => _body(context, l10n, raw, locale),
         AsyncError() => Center(
-            child: Text(l10n?.workspaceGenericError ?? 'Something went wrong.'),
+            child: Text(l10n.workspaceGenericError),
           ),
         _ => const LoadingView(),
       },
@@ -143,7 +144,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
 
   Widget _body(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Map<String, dynamic> raw,
     String locale,
   ) {
@@ -151,7 +152,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
     final mine = (raw[locale] as Map?)?.cast<String, dynamic>() ?? const {};
 
     // The defaults must be the EDITED locale's, not the app's, so the
-    // delegate is loaded for it. `AppLocalizations.of(context)` would
+    // delegate is loaded for it. `context.l10n` would
     // show French defaults while an owner edits the German words.
     return FutureBuilder<AppLocalizations>(
       future: AppLocalizations.delegate.load(Locale(locale)),
@@ -181,9 +182,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
           padding: AppSpacing.lgAll,
           children: [
             Text(
-              l10n?.wordingIntro ??
-                  'Rename a small, approved set of product words. Everything '
-                      'else keeps the product\'s own wording.',
+              l10n.wordingIntro,
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.md),
@@ -192,21 +191,21 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
               controller: _search,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                labelText: l10n?.wordingSearch ?? 'Search a word',
+                labelText: l10n.wordingSearch,
               ),
               onChanged: (_) => setState(() {}),
             ),
             const SizedBox(height: AppSpacing.sm),
             FilterChip(
               key: const ValueKey('wording-changed-only'),
-              label: Text(l10n?.wordingChangedOnly ?? 'Changed only'),
+              label: Text(l10n.wordingChangedOnly),
               selected: _changedOnly,
               onSelected: (value) => setState(() => _changedOnly = value),
             ),
             const SizedBox(height: AppSpacing.md),
             if (bySurface.isEmpty)
               Text(
-                l10n?.wordingNone ?? 'No term matches.',
+                l10n.wordingNone,
                 style: theme.textTheme.bodyMedium,
               ),
             for (final surface in LexiconSurface.values)
@@ -233,13 +232,13 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
     );
   }
 
-  String _surfaceName(AppLocalizations? l10n, LexiconSurface surface) =>
+  String _surfaceName(AppLocalizations l10n, LexiconSurface surface) =>
       switch (surface) {
-        LexiconSurface.legend => l10n?.wordingSurfaceLegend ?? 'Legend',
-        LexiconSurface.plan => l10n?.wordingSurfacePlan ?? 'The space',
+        LexiconSurface.legend => l10n.wordingSurfaceLegend,
+        LexiconSurface.plan => l10n.wordingSurfacePlan,
         LexiconSurface.navigation =>
-          l10n?.wordingSurfaceNavigation ?? 'Navigation',
-        LexiconSurface.booking => l10n?.wordingSurfaceBooking ?? 'Booking',
+          l10n.wordingSurfaceNavigation,
+        LexiconSurface.booking => l10n.wordingSurfaceBooking,
       };
 }
 
@@ -260,7 +259,7 @@ class _TermTile extends StatelessWidget {
   /// The workspace's own word, or null when it uses the
   /// product's. NOT named `override`: that is the annotation.
   final String? word;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
   final ValueChanged<String> onSave;
   final VoidCallback onReset;
 
@@ -272,13 +271,13 @@ class _TermTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(renamed ? word! : product),
       subtitle: Text(
-        '${l10n?.wordingDefaultLabel ?? 'Product default'}: $product',
+        '${l10n.wordingDefaultLabel}: $product',
         style: Theme.of(context).textTheme.bodySmall,
       ),
       trailing: renamed
           ? IconButton(
               key: ValueKey('wording-reset-$termKey'),
-              tooltip: l10n?.wordingReset ?? 'Reset',
+              tooltip: l10n.wordingReset,
               icon: const Icon(Icons.undo),
               onPressed: onReset,
             )
@@ -299,9 +298,8 @@ class _TermTile extends StatelessWidget {
           autofocus: true,
           maxLength: 120,
           decoration: InputDecoration(
-            labelText: l10n?.wordingTitle ?? 'Wording',
-            helperText: l10n?.wordingResetHint ??
-                'Reset removes your word and brings the product\'s back.',
+            labelText: l10n.wordingTitle,
+            helperText: l10n.wordingResetHint,
           ),
         ),
         actions: [

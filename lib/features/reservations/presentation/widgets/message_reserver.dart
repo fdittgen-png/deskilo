@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/reference_locale.dart';
@@ -93,11 +93,11 @@ class MessageReserverButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return OutlinedButton.icon(
       key: widgetKey,
       icon: const Icon(Icons.chat_outlined),
-      label: Text(l10n?.spaceMessageReserver(name) ?? 'Message $name'),
+      label: Text(l10n.spaceMessageReserver(name)),
       onPressed: () => messageReserver(
         context,
         ref,
@@ -122,7 +122,7 @@ Future<void> showBlockedSpaceSheet(
   required String name,
   required String spaceName,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final message = await showModalBottomSheet<bool>(
     context: context,
     builder: (sheetContext) => SafeArea(
@@ -136,7 +136,7 @@ Future<void> showBlockedSpaceSheet(
           ListTile(
             key: const ValueKey('blocked-message-reserver'),
             leading: const Icon(Icons.chat_outlined),
-            title: Text(l10n?.spaceMessageReserver(name) ?? 'Message $name'),
+            title: Text(l10n.spaceMessageReserver(name)),
             onTap: () => Navigator.of(sheetContext).pop(true),
           ),
           const SizedBox(height: 8),

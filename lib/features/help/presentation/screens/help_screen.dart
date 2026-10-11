@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/help_providers.dart';
 import 'support_bundle_screen.dart';
 
@@ -94,18 +94,18 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final languageCode = Localizations.localeOf(context).languageCode;
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.helpTitle ?? 'Help'),
+        title: Text(l10n.helpTitle),
         actions: [
           // The task wizard (recording, guides, task files) has its own
           // entry in the menus; Help keeps only what helps.
           IconButton(
             key: const ValueKey('help-support-title'),
-            tooltip: l10n?.supportTitle ?? 'Support details',
+            tooltip: l10n.supportTitle,
             icon: const Icon(Icons.support_agent),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
               builder: (_) => const SupportBundleScreen(),
@@ -115,7 +115,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
             builder: (context) => IconButton(
               key: const ValueKey('help-toc-button'),
               icon: const Icon(Icons.toc),
-              tooltip: l10n?.helpContents ?? 'Contents',
+              tooltip: l10n.helpContents,
               onPressed: () => Scaffold.of(context).openEndDrawer(),
             ),
           ),

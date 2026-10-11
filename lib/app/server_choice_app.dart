@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../core/backend/backend_settings.dart';
+import '../core/l10n/context_l10n.dart';
 import '../features/profile/presentation/screens/server_choice_screen.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../l10n/app_localizations.dart';
@@ -52,7 +53,7 @@ class _ServerChoiceAppState extends State<ServerChoiceApp> {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     onGenerateTitle: (context) =>
-        AppLocalizations.of(context)?.appTitle ?? 'DesKilo',
+        context.l10n.appTitle,
     localizationsDelegates: const [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,

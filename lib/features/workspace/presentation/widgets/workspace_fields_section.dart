@@ -13,6 +13,7 @@
 // messages live in the ARB and the decision does not.
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -43,43 +44,41 @@ class WorkspaceFieldsController extends ChangeNotifier {
 
 /// The words for [problem], in the reader's language.
 String _fieldProblemText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   WorkspaceField field,
   FieldProblem problem,
 ) {
   final rules = field.validation;
   String s(Object? v) => '$v';
   return switch (problem) {
-    FieldProblem.required => l10n?.fieldProblemRequired ?? 'Please answer this.',
-    FieldProblem.tooShort => l10n?.fieldProblemTooShort(
+    FieldProblem.required => l10n.fieldProblemRequired,
+    FieldProblem.tooShort => l10n.fieldProblemTooShort(
               (rules['min_length'] as num?)?.toInt() ?? 0,
-            ) ??
-        'Too short.',
-    FieldProblem.tooLong => l10n?.fieldProblemTooLong(
+            ),
+    FieldProblem.tooLong => l10n.fieldProblemTooLong(
               (rules['max_length'] as num?)?.toInt() ?? 0,
-            ) ??
-        'Too long.',
+            ),
     FieldProblem.tooSmall =>
-      l10n?.fieldProblemTooSmall(s(rules['min'])) ?? 'Too small.',
+      l10n.fieldProblemTooSmall(s(rules['min'])),
     FieldProblem.tooLarge =>
-      l10n?.fieldProblemTooLarge(s(rules['max'])) ?? 'Too large.',
+      l10n.fieldProblemTooLarge(s(rules['max'])),
     FieldProblem.notWhole =>
-      l10n?.fieldProblemNotWhole ?? 'A whole number, please.',
+      l10n.fieldProblemNotWhole,
     FieldProblem.notANumber =>
-      l10n?.fieldProblemNotANumber ?? 'A number, please.',
-    FieldProblem.notADate => l10n?.fieldProblemNotADate ?? 'A date, please.',
+      l10n.fieldProblemNotANumber,
+    FieldProblem.notADate => l10n.fieldProblemNotADate,
     FieldProblem.notAChoice =>
-      l10n?.fieldProblemNotAChoice ?? 'Please pick from the list.',
+      l10n.fieldProblemNotAChoice,
     FieldProblem.tooEarly =>
-      l10n?.fieldProblemTooEarly(s(rules['min_date'])) ?? 'Too early.',
+      l10n.fieldProblemTooEarly(s(rules['min_date'])),
     FieldProblem.tooLate =>
-      l10n?.fieldProblemTooLate(s(rules['max_date'])) ?? 'Too late.',
+      l10n.fieldProblemTooLate(s(rules['max_date'])),
     FieldProblem.notAnEmail =>
-      l10n?.fieldProblemNotAnEmail ?? 'That is not an e-mail address.',
+      l10n.fieldProblemNotAnEmail,
     FieldProblem.notAPhone =>
-      l10n?.fieldProblemNotAPhone ?? 'That is not a telephone number.',
+      l10n.fieldProblemNotAPhone,
     FieldProblem.notAUrl =>
-      l10n?.fieldProblemNotAUrl ?? 'That is not a web address.',
+      l10n.fieldProblemNotAUrl,
   };
 }
 
@@ -149,7 +148,7 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
   @override
   Widget build(BuildContext context) {
     if (widget.fields.isEmpty) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
 
     return AnimatedBuilder(
@@ -162,18 +161,13 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
           children: [
             const SizedBox(height: AppSpacing.lg),
             Text(
-              l10n?.workspaceFieldsTitle(widget.workspaceName) ??
-                  'Questions from ${widget.workspaceName}',
+              l10n.workspaceFieldsTitle(widget.workspaceName),
               style: theme.textTheme.labelLarge,
             ),
             // #1912 — every answer is stored against the membership, so
             // every answer is personal data, whatever the owner ticked.
             Text(
-              l10n?.workspaceFieldsPersonalNote ??
-                  'Your answers are personal data: they are part of your '
-                      'data export and are erased when you leave this space, '
-                      'unless the space documents a legal obligation to keep '
-                      'one.',
+              l10n.workspaceFieldsPersonalNote,
               key: WorkspaceFieldsSection.personalNoteKey,
               style: theme.textTheme.bodySmall,
             ),
@@ -191,12 +185,12 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
   Widget _control(
     WorkspaceField field,
     FieldProblem? problem,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     ThemeData theme,
   ) {
     final label = field.labelIn(widget.locale);
     final help = field.helpIn(widget.locale);
-    final optional = l10n?.workspaceFieldsOptional ?? 'optional';
+    final optional = l10n.workspaceFieldsOptional;
     final title = field.required ? label : '$label ($optional)';
     // A problem is shown only once the field has been answered: telling
     // somebody their empty form is wrong before they start is noise.

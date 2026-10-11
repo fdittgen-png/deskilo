@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 
 /// Who a message of mine reached in a group (0383): the people whose last
@@ -29,7 +29,7 @@ class _ReachSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final format = ref.watch(appFormatProvider);
     final reach = ref.watch(messageReachProvider(messageId));
@@ -41,10 +41,10 @@ class _ReachSheet extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n?.messageInfo ?? 'Message info',
+                Text(l10n.messageInfo,
                     style: theme.textTheme.titleMedium),
                 const SizedBox(height: AppSpacing.md),
-                Text(l10n?.messageReadBy ?? 'Read by',
+                Text(l10n.messageReadBy,
                     style: theme.textTheme.labelLarge),
                 if (r.readers.isEmpty) const Text('—'),
                 for (final p in r.readers)
@@ -56,7 +56,7 @@ class _ReachSheet extends ConsumerWidget {
                     trailing: Text(format.dateTime(p.readAt)),
                   ),
                 const SizedBox(height: AppSpacing.sm),
-                Text(l10n?.messageNotReadYet ?? 'Not read yet',
+                Text(l10n.messageNotReadYet,
                     style: theme.textTheme.labelLarge),
                 if (r.pending.isEmpty) const Text('—'),
                 for (final id in r.pending)
@@ -68,8 +68,7 @@ class _ReachSheet extends ConsumerWidget {
                   ),
               ],
             ),
-          AsyncError() => Text(l10n?.portalActionFailed ??
-              'Could not save this change. Please try again.'),
+          AsyncError() => Text(l10n.portalActionFailed),
           _ => const LoadingView(),
         },
       ),

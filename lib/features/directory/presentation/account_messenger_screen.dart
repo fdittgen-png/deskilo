@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/directory_providers.dart';
 import 'account_messenger_sections.dart';
@@ -44,7 +44,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
   @override
   Widget build(BuildContext context) {
     final account = ref.watch(authStateProvider).value;
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     if (account == null) return const SizedBox.shrink();
     if (account != _account) {
       _account = account;
@@ -85,11 +85,11 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
     void submit(String value) => setState(() => _query = value.trim());
     return Scaffold(
       appBar: AppBar(
-        title: Text(l?.portalMessenger ?? 'Account messenger'),
+        title: Text(l.portalMessenger),
         actions: [
           IconButton(
             key: const ValueKey('account-messenger-portal-connections'),
-            tooltip: l?.portalConnections ?? 'Connected servers',
+            tooltip: l.portalConnections,
             onPressed: () => context.push('/connections'),
             icon: const Icon(Icons.dns_outlined),
           ),
@@ -105,8 +105,8 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
           ListTile(
             key: const ValueKey('portal-visibility-link'),
             leading: const Icon(Icons.visibility_outlined),
-            title: Text(l?.portalVisibilityLink ?? 'Who can find and message me'),
-            subtitle: Text(l?.portalVisibilityLinkBody ?? 'Chosen in Me, under Who sees me.'),
+            title: Text(l.portalVisibilityLink),
+            subtitle: Text(l.portalVisibilityLinkBody),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go('/me?tab=me'),
           ),
@@ -117,10 +117,10 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
             key: const ValueKey('account-messenger-portal-find-people-2'),
             controller: _search,
             decoration: InputDecoration(
-              labelText: l?.portalFindPeople ?? 'Find available people',
+              labelText: l.portalFindPeople,
               suffixIcon: IconButton(
                 key: const ValueKey('account-messenger-portal-find-people'),
-                tooltip: l?.portalFindPeople ?? 'Find available people',
+                tooltip: l.portalFindPeople,
                 icon: const Icon(Icons.search),
                 onPressed: () => submit(_search.text),
               ),
@@ -163,15 +163,15 @@ class _AvailabilitySwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final available = ref.watch(contactAvailabilityProvider(source: source));
     return SwitchListTile(
       key: ValueKey('availability-$source'),
       value: available.value ?? false,
-      title: Text(l?.portalAvailable ?? 'Let users find and message my account'),
+      title: Text(l.portalAvailable),
       subtitle: host.isEmpty
           ? null
-          : Text(l?.messengerOnServer(host) ?? 'on $host'),
+          : Text(l.messengerOnServer(host)),
       onChanged: available.hasValue
           ? (value) async {
               final ok = await runGuarded(
@@ -179,8 +179,7 @@ class _AvailabilitySwitch extends ConsumerWidget {
                 domain: 'messages',
                 message: 'save account availability failed',
                 errorText:
-                    l?.portalActionFailed ??
-                    'Could not save this change. Please try again.',
+                    l.portalActionFailed,
                 action: () => ref
                     .read(accountContactActionsProvider(source: source))
                     .setAvailability(value),

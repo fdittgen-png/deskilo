@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/time/clock.dart';
@@ -48,7 +49,7 @@ import 'space_scan_sheet.dart';
 /// bookable flag AND the member's personal grant — the server re-checks
 /// everything.
 Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
@@ -86,8 +87,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
   if (resolved == null) {
     AppSnack.error(
       context,
-      l10n?.spaceScanUnknown ??
-          'This code does not match any space here anymore.',
+      l10n.spaceScanUnknown,
     );
     return;
   }
@@ -108,9 +108,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
     if (gate != null && !gate.dayOpen(gate.now)) {
       AppSnack.info(
         context,
-        l10n?.kioskClosedToday ??
-            'The workspace is closed today — check-in and reservations '
-                'are not possible.',
+        l10n.kioskClosedToday,
         replace: true,
       );
       return;
@@ -232,7 +230,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null || _busy) return;
     setState(() => _busy = true);
@@ -262,8 +260,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         bookingErrorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
         replace: true,
       );
@@ -273,7 +270,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.kioskDone ?? "Done — you're all set.",
+      l10n.kioskDone,
       replace: true,
     );
     invalidateBookingData(ref);
@@ -289,7 +286,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     required DateTime startsAt,
     required DateTime endsAt,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null || _busy) return;
     setState(() => _busy = true);
@@ -316,8 +313,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         bookingErrorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
         replace: true,
       );
@@ -327,7 +323,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.planBookedForPending(who) ?? 'Sent to $who for confirmation.',
+      l10n.planBookedForPending(who),
       replace: true,
     );
     invalidateBookingData(ref);
@@ -347,7 +343,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     required Future<void> Function(String id) act,
     required String what,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (_busy) return;
     setState(() => _busy = true);
     try {
@@ -364,8 +360,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         bookingErrorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
         replace: true,
       );
@@ -375,7 +370,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.kioskDone ?? "Done — you're all set.",
+      l10n.kioskDone,
       replace: true,
     );
     // The plan behind this sheet is now stale.
@@ -400,7 +395,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
   /// the whole-space grant, plus every candidate the caller passed. An
   /// empty list means no selector at all — a plain member never sees one.
   List<({String id, String name})> _subjectOptions(
-    AppLocalizations? l10n, {
+    AppLocalizations l10n, {
     required bool granted,
   }) {
     final me = ref.read(myMemberProvider).value;
@@ -415,7 +410,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     if (others.isEmpty) return const <({String id, String name})>[];
     return [
       if (granted)
-        (id: me.id, name: l10n?.levelAssignMyself ?? 'Myself'),
+        (id: me.id, name: l10n.levelAssignMyself),
       ...others,
     ];
   }
@@ -434,7 +429,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     required bool granted,
     String? knownPrice,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null || _busy) return;
     final granularity =
@@ -517,8 +512,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         bookingErrorText(
           l10n,
           e,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         ),
         replace: true,
       );
@@ -543,7 +537,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final me = ref.watch(myMemberProvider).value;
     final featureOn = ref
         .watch(enabledFeaturesSyncProvider)
@@ -669,7 +663,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     final priceLine = wholeTarget != null && wholeTarget.priceCents > 0
         ? '${centsToMajor(wholeTarget.priceCents)} '
             '${workspace?.currencyCode ?? ''} / '
-            '${l10n?.levelPriceLabel ?? 'Price per half-day'}'
+            '${l10n.levelPriceLabel}'
         : null;
 
     return SheetShell(
@@ -695,9 +689,8 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
           if (myWholeReservation != null) ...[
             Text(
               myWholeReservation.status == ReservationStatus.checkedIn
-                  ? (l10n?.spaceYoursCheckedIn ??
-                      'You are checked in here for this slot.')
-                  : (l10n?.spaceYoursNow ?? 'Reserved by you for this slot.'),
+                  ? (l10n.spaceYoursCheckedIn)
+                  : (l10n.spaceYoursNow),
               key: const ValueKey('space-yours'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -711,7 +704,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
                 onPressed:
                     _busy ? null : () => _checkOutExisting(myWholeReservation),
                 icon: const Icon(Icons.logout_outlined),
-                label: Text(l10n?.kioskCheckOut ?? 'Check out'),
+                label: Text(l10n.kioskCheckOut),
               )
             else
               FilledButton.icon(
@@ -720,7 +713,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
                     ? null
                     : () => _checkInExisting(myWholeReservation),
                 icon: const Icon(Icons.login_outlined),
-                label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+                label: Text(l10n.kioskCheckIn),
               ),
             // ...and the way to undo it. Cancel, end early and request
             // deletion each have their own rules and their own gates;
@@ -751,7 +744,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
                           checkIn: true,
                         ),
                 icon: const Icon(Icons.login_outlined),
-                label: Text(l10n?.kioskCheckIn ?? 'Check in'),
+                label: Text(l10n.kioskCheckIn),
               ),
               const SizedBox(height: 8),
             ],
@@ -774,16 +767,14 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
                         granted: granted,
                       ),
               icon: const Icon(Icons.event_available_outlined),
-              label: Text(l10n?.kioskReserve ?? 'Reserve'),
+              label: Text(l10n.kioskReserve),
             ),
             if (wholeConflict) ...[
               const SizedBox(height: 8),
               Text(
                 wholeBlocking.memberId == me?.id
-                    ? (l10n?.spaceBlockedByYou ??
-                        'You already hold this space for that period.')
-                    : (l10n?.levelConflict ??
-                        'The level has reservations in that period.'),
+                    ? (l10n.spaceBlockedByYou)
+                    : (l10n.levelConflict),
                 key: const ValueKey('space-conflict'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -799,12 +790,8 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             // functionalities to which the user is permitted").
             Text(
               !featureOn || !wholeTarget.bookable
-                  ? (l10n?.spaceNotBookable ??
-                      'This space is not set up for whole-space '
-                          'reservations.')
-                  : (l10n?.levelNotAllowed ??
-                      'You are not allowed to reserve a whole office or '
-                          'level.'),
+                  ? (l10n.spaceNotBookable)
+                  : (l10n.levelNotAllowed),
               key: const ValueKey('space-not-allowed'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -824,7 +811,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
               ),
               title: Text(seat.name),
               subtitle: seatTaken(seat)
-                  ? Text(l10n?.spaceSeatTaken ?? 'Taken')
+                  ? Text(l10n.spaceSeatTaken)
                   : null,
               onTap: seatTaken(seat) ? null : () => _seatActions(seat),
             ),
@@ -837,7 +824,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
           OutlinedButton.icon(
             key: const ValueKey('space-show-plan'),
             icon: const Icon(Icons.map_outlined),
-            label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
+            label: Text(l10n.calendarShowOnPlan),
             onPressed: () {
               // #576 — the highlight matches WHAT was selected: seat,
               // table, office or the whole floor.

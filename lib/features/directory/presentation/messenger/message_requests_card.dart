@@ -6,8 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/blocks_providers.dart';
 import '../../providers/messenger_providers.dart';
 import 'block_person.dart';
@@ -17,7 +17,7 @@ class MessageRequestsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final requests = ref.watch(messageRequestsProvider).value ?? const [];
     if (requests.isEmpty) return const SizedBox.shrink();
 
@@ -45,13 +45,11 @@ class MessageRequestsCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.messageRequestsTitle ?? 'Message requests',
+              l10n.messageRequestsTitle,
               style: Theme.of(context).textTheme.titleSmall,
             ),
             Text(
-              l10n?.messageRequestsHint ??
-                  'These people are outside the ones you chose to be '
-                      'reachable by. They are not told what you decide.',
+              l10n.messageRequestsHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             for (final r in requests) ...[
@@ -67,12 +65,12 @@ class MessageRequestsCard extends ConsumerWidget {
                   FilledButton(
                     key: ValueKey('request-accept-${r.conversationId}'),
                     onPressed: () => respond(r.conversationId, accept: true),
-                    child: Text(l10n?.requestAccept ?? 'Accept'),
+                    child: Text(l10n.requestAccept),
                   ),
                   OutlinedButton(
                     key: ValueKey('request-ignore-${r.conversationId}'),
                     onPressed: () => respond(r.conversationId, accept: false),
-                    child: Text(l10n?.requestIgnore ?? 'Ignore'),
+                    child: Text(l10n.requestIgnore),
                   ),
                   TextButton(
                     key: ValueKey('request-block-${r.conversationId}'),
@@ -88,7 +86,7 @@ class MessageRequestsCard extends ConsumerWidget {
                         await respond(r.conversationId, accept: false);
                       }
                     },
-                    child: Text(l10n?.requestBlock ?? 'Block'),
+                    child: Text(l10n.requestBlock),
                   ),
                 ],
               ),

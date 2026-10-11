@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_tab_bar.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/workspace_feature.dart';
@@ -63,7 +62,7 @@ class WorkspaceReports extends ConsumerWidget {
   final String? initialSection;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final l = context.l10n;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final permissions = ref.watch(myPermissionsProvider);
     final member = ref.watch(myMemberProvider).value;

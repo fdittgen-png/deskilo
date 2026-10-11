@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/badge_sign_in.dart';
@@ -153,21 +154,15 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
   /// Deliberately flat: every refusal reads the same. Only a lockout and
   /// an unreachable server differ, and neither tells a stranger anything
   /// about a card they are holding.
-  String _failureText(AppLocalizations? l10n) => switch (_failure!) {
-        BadgeSignInFailure.locked => l10n?.badgeSignInLocked ??
-            'Too many attempts. Wait a few minutes, or sign in with your '
-                'e-mail.',
-        BadgeSignInFailure.unavailable => l10n?.badgeSignInUnavailable ??
-            'Badge sign-in is not reachable right now. Sign in with your '
-                'e-mail instead.',
-        BadgeSignInFailure.refused => l10n?.badgeSignInRefused ??
-            'That did not work. Check the badge and the PIN, or sign in '
-                'with your e-mail.',
+  String _failureText(AppLocalizations l10n) => switch (_failure!) {
+        BadgeSignInFailure.locked => l10n.badgeSignInLocked,
+        BadgeSignInFailure.unavailable => l10n.badgeSignInUnavailable,
+        BadgeSignInFailure.refused => l10n.badgeSignInRefused,
       };
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final who = _who;
     return Padding(
       padding: EdgeInsets.only(
@@ -178,7 +173,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            l10n?.badgeSignInTitle ?? 'Sign in with your badge',
+            l10n.badgeSignInTitle,
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
@@ -197,14 +192,14 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           TextButton(
             key: const ValueKey('badge-sign-in-sheet-sign-in-use-email'),
             onPressed: _busy ? null : () => Navigator.of(context).pop(),
-            child: Text(l10n?.badgeSignInUseEmail ?? 'Use my e-mail instead'),
+            child: Text(l10n.badgeSignInUseEmail),
           ),
         ],
       ),
     );
   }
 
-  List<Widget> _scanStep(AppLocalizations? l10n) => [
+  List<Widget> _scanStep(AppLocalizations l10n) => [
         Icon(
           Icons.contactless_outlined,
           size: 64,
@@ -213,10 +208,8 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
         const SizedBox(height: 16),
         Text(
           _reading
-              ? (l10n?.badgeSignInTapPrompt ?? 'Hold your badge against the '
-                  'phone.')
-              : (l10n?.badgeSignInNoReader ?? 'No badge reader is available '
-                  'on this device.'),
+              ? (l10n.badgeSignInTapPrompt)
+              : (l10n.badgeSignInNoReader),
           key: const ValueKey('badge-signin-prompt'),
           textAlign: TextAlign.center,
         ),
@@ -225,15 +218,15 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           OutlinedButton(
             key: const ValueKey('badge-signin-retry'),
             onPressed: _busy ? null : _scan,
-            child: Text(l10n?.badgeSignInRetry ?? 'Try again'),
+            child: Text(l10n.badgeSignInRetry),
           ),
         ],
       ];
 
-  List<Widget> _pinStep(AppLocalizations? l10n, BadgeIdentity who) => [
+  List<Widget> _pinStep(AppLocalizations l10n, BadgeIdentity who) => [
         // Greeting them by name is the whole reason the steps are split.
         Text(
-          l10n?.badgeSignInHello(who.displayName) ?? 'Hello ${who.displayName}',
+          l10n.badgeSignInHello(who.displayName),
           key: const ValueKey('badge-signin-hello'),
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
@@ -250,7 +243,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
           textAlign: TextAlign.center,
           onSubmitted: (_) => _submit(),
           decoration: InputDecoration(
-            labelText: l10n?.badgeSignInPinLabel ?? 'Your PIN',
+            labelText: l10n.badgeSignInPinLabel,
             border: const OutlineInputBorder(),
           ),
         ),
@@ -264,7 +257,7 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
                   width: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(l10n?.badgeSignInButton ?? 'Sign in'),
+              : Text(l10n.badgeSignInButton),
         ),
       ];
 }

@@ -12,12 +12,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -97,7 +97,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
   }
 
   Future<void> _book() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final cents = _cents;
     final shares = _shares();
@@ -109,7 +109,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       context,
       domain: 'money',
       message: 'repartition wizard failed',
-      errorText: l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         // The order is the decision, so it lives in the command
         // (#1532): the rule first, the money second.
@@ -132,26 +132,24 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     if (ok && outcome is RepartitionNotBooked) {
       AppSnack.error(
           context,
-          l10n?.repartitionRuleNotSaved ??
-              'The rule could not be saved, so nothing was shared. '
-                  'Try again.');
+          l10n.repartitionRuleNotSaved);
       return;
     }
     if (ok) {
       ref.invalidate(repartitionRuleProvider);
-      AppSnack.success(context, l10n?.repartitionBooked ?? 'Repartition booked.');
+      AppSnack.success(context, l10n.repartitionBooked);
       unawaited(Navigator.of(context).maybePop());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final steps = <WizardStepSpec>[
-      (name: 'cost', label: l10n?.repartitionStepCost ?? 'The cost'),
-      (name: 'rule', label: l10n?.repartitionStepRule ?? 'The rule'),
-      (name: 'book', label: l10n?.repartitionStepBook ?? 'Book'),
+      (name: 'cost', label: l10n.repartitionStepCost),
+      (name: 'rule', label: l10n.repartitionStepRule),
+      (name: 'book', label: l10n.repartitionStepBook),
     ];
     final workspace = ref.watch(currentWorkspaceProvider).value;
     // Watched, not merely read: `_pool()` reads these two, and a `read`
@@ -176,7 +174,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
               key: const ValueKey('wizard-title'),
               controller: _title,
               onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(labelText: l10n?.repartitionTitleLabel ?? 'Title'),
+              decoration: InputDecoration(labelText: l10n.repartitionTitleLabel),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
@@ -184,7 +182,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
               controller: _amount,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(labelText: l10n?.repartitionAmountLabel ?? 'Amount'),
+              decoration: InputDecoration(labelText: l10n.repartitionAmountLabel),
             ),
             const SizedBox(height: AppSpacing.md),
             Row(
@@ -209,8 +207,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       1 => ListView(
           padding: AppSpacing.lgAll,
           children: [
-            Text(l10n?.repartitionRuleHint ??
-                'Each share is proposed by subscription percentage. Untick a member to leave them out; with the custom method, type their weight.'),
+            Text(l10n.repartitionRuleHint),
             const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<RepartitionMethod>(
               key: const ValueKey('wizard-method'),
@@ -257,7 +254,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
                             key: ValueKey('wizard-weight-${m.id}'),
                             controller: weight,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(labelText: l10n?.repartitionWizardWeight ?? 'Weight', isDense: true),
+                            decoration: InputDecoration(labelText: l10n.repartitionWizardWeight, isDense: true),
                             onChanged: (v) => setState(() => _rule = rule.copyWith(
                                 weights: {...rule.weights, m.id: num.tryParse(v.trim()) ?? 0})),
                           ),
@@ -276,7 +273,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
             ListTile(
               key: const ValueKey('wizard-shares-total'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.repartitionSharesTotal ?? 'Total of the shares'),
+              title: Text(l10n.repartitionSharesTotal),
               trailing: Text(currency.formatMinor(total)),
             ),
           ],
@@ -295,13 +292,13 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
               contentPadding: EdgeInsets.zero,
               value: _remember,
               onChanged: (v) => setState(() => _remember = v),
-              title: Text(l10n?.repartitionRememberRule ?? 'Remember this rule'),
+              title: Text(l10n.repartitionRememberRule),
             ),
           ],
         ),
     };
     return WizardScaffold(
-      title: l10n?.repartitionWizardTitle ?? 'Share a cost',
+      title: l10n.repartitionWizardTitle,
       steps: steps,
       index: _step,
       body: body,

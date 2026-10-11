@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../directory/domain/message_marks.dart';
 import '../../../directory/presentation/messenger/message_marks.dart';
 import '../../../directory/presentation/messenger/reaction_strip.dart';
@@ -91,7 +91,7 @@ class ConversationBubble extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final gestures = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.messageGestures);
@@ -138,10 +138,8 @@ class ConversationBubble extends ConsumerWidget {
           AppSnack.info(
             context,
             mine
-                ? (l10n?.memberNoteDeleteRead ??
-                    'Already read — this message can no longer be taken back.')
-                : (l10n?.memberNoteDeleteNotMine ??
-                    'Only the sender can take a message back.'),
+                ? (l10n.memberNoteDeleteRead)
+                : (l10n.memberNoteDeleteNotMine),
             replace: true,
           );
           return false;
@@ -166,7 +164,7 @@ class ConversationBubble extends ConsumerWidget {
       );
 
   Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final when = timeOnly
         ? ref.watch(appFormatProvider).time(note.createdAt)
         : DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
@@ -177,7 +175,7 @@ class ConversationBubble extends ConsumerWidget {
         ? null
         : IconButton(
             key: ValueKey('bubble-actions-${note.id}'),
-            tooltip: l10n?.messengerMessageActions ?? 'Message actions',
+            tooltip: l10n.messengerMessageActions,
             visualDensity: VisualDensity.compact,
             iconSize: 18,
             color: theme.colorScheme.onSurfaceVariant,
@@ -261,7 +259,7 @@ class ConversationBubble extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 4),
                           child: Text(
-                            l10n?.messengerEdited ?? 'edited',
+                            l10n.messengerEdited,
                             key: ValueKey('note-edited-${note.id}'),
                             style: theme.textTheme.labelSmall
                                 ?.copyWith(color: fgMuted),

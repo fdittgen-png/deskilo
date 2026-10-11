@@ -10,6 +10,7 @@
 // There is no write queue yet — that needs the server-side idempotency
 // work first. Saying it plainly is the part that ships without one, and
 // it is the part that turns a lost booking from a mystery into a retry.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/guarded.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -64,7 +65,7 @@ void main() {
       'matters', () {
     expect(
       bookingErrorText(
-        null,
+        englishL10n,
         const SocketException('Connection refused'),
         'Something went wrong.',
       ),
@@ -75,7 +76,7 @@ void main() {
   test('and a server refusal on that path still maps to its own rule', () {
     // Not a transport failure, so the fallback stands.
     expect(
-      bookingErrorText(null, StateError('nope'), 'Something went wrong.'),
+      bookingErrorText(englishL10n, StateError('nope'), 'Something went wrong.'),
       'Something went wrong.',
     );
   });

@@ -11,6 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -23,7 +24,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../profile/domain/personal_preferences.dart';
 import '../../../profile/providers/personal_preferences_providers.dart';
@@ -164,7 +164,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// #494 — one of the member's self-service letter documents: quick
   /// in-app view, download, or share.
   Future<void> _memberDoc(String docId) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     await warmLetterDocProviders(ref, docId);
     if (!mounted) return;
     final me = ref.read(myMemberProvider).value;
@@ -180,9 +180,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     } on AmbiguousReportLanguage {
       AppSnack.error(
         context,
-        l10n?.reportLanguageAmbiguous ??
-            'This country has several languages — set the workspace '
-                'language in Workspace settings first.',
+        l10n.reportLanguageAmbiguous,
       );
       return;
     }
@@ -239,7 +237,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   Future<void> _exportPdf(Statement statement) async {
     final context = this.context;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     final workspace = ref.read(currentWorkspaceProvider).value;
     final member = ref.read(myMemberProvider).value;
@@ -251,41 +249,37 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final monthLabel = DateFormat.yMMMM(locale).format(_month);
 
     final strings = BillPdfStrings(
-      title: l10n?.billPdfTitle ?? 'Monthly bill',
+      title: l10n.billPdfTitle,
       subscription: subscriptionLabel(reportStringsOf(l10n), statement.subscriptionPct,
           association: ref.watch(sellerIsAssociationProvider),
           // #1000 — the bill's position names its month too.
           month: monthNameOf(locale,
               yearMonth(_month.year, _month.month))),
-      entitlement: l10n?.billEntitlement(
+      entitlement: l10n.billEntitlement(
             statement.usedHalfDays,
             statement.includedHalfDays,
             statement.openDays,
-          ) ??
-          '${statement.usedHalfDays} of '
-              '${statement.includedHalfDays} half-days used '
-              '(${statement.openDays} open days)',
-      overage: l10n?.billOverage(statement.extraHalfDays) ??
-          '${statement.extraHalfDays} extra half-days',
+          ),
+      overage: l10n.billOverage(statement.extraHalfDays),
       accessorySupplements:
-          l10n?.billAccessorySupplements ?? 'Accessory supplements',
-      services: l10n?.billServices ?? 'Consumed services',
-      servicesTotal: l10n?.billServicesTotal ?? 'Services total',
-      serviceFallback: l10n?.ledgerCategoryService ?? 'Service',
-      packages: l10n?.billPackages ?? 'Day packages',
-      openPositions: l10n?.billOpenPositions ?? 'Open positions',
-      pendingBadge: l10n?.billPendingBadge ?? 'pending validation',
-      paymentsCredits: l10n?.billPaymentsCredits ?? 'Payments & credits',
-      paymentFallback: l10n?.ledgerCategoryPayment ?? 'Payment',
+          l10n.billAccessorySupplements,
+      services: l10n.billServices,
+      servicesTotal: l10n.billServicesTotal,
+      serviceFallback: l10n.ledgerCategoryService,
+      packages: l10n.billPackages,
+      openPositions: l10n.billOpenPositions,
+      pendingBadge: l10n.billPendingBadge,
+      paymentsCredits: l10n.billPaymentsCredits,
+      paymentFallback: l10n.ledgerCategoryPayment,
       expenseFallback:
-          l10n?.ledgerCategoryExpense ?? 'Expense reimbursement',
-      adjustmentFallback: l10n?.ledgerCategoryAdjustment ?? 'Adjustment',
-      eventPayment: l10n?.eventTypePayment ?? 'Payment',
-      eventExpense: l10n?.eventTypeExpense ?? 'Expense',
-      eventAdjustment: l10n?.eventTypeAdjustment ?? 'Adjustment',
-      balance: l10n?.billBalance ?? 'Balance',
-      settled: l10n?.billSettled ?? 'Settled',
-      outstanding: l10n?.billOutstanding ?? 'Outstanding',
+          l10n.ledgerCategoryExpense,
+      adjustmentFallback: l10n.ledgerCategoryAdjustment,
+      eventPayment: l10n.eventTypePayment,
+      eventExpense: l10n.eventTypeExpense,
+      eventAdjustment: l10n.eventTypeAdjustment,
+      balance: l10n.billBalance,
+      settled: l10n.billSettled,
+      outstanding: l10n.billOutstanding,
     );
 
     final sections = buildBillSections(
@@ -348,9 +342,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             baseFont: pw.Font.ttf(regular),
             boldFont: pw.Font.ttf(bold),
             locale: locale,
-            pageLabel: l10n?.invoicePdfPage ?? 'Page',
+            pageLabel: l10n.invoicePdfPage,
             watermark: workspace.isDevelopment
-                ? (l10n?.developmentWatermark ?? 'DEVELOPMENT') : '',
+                ? (l10n.developmentWatermark) : '',
           );
         return (
           bytes: bytes,
@@ -362,7 +356,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   Future<void> _recordPaymentSheet(MoneyFormat currency) async {
     final context = this.context;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final member = ref.read(myMemberProvider).value;
     if (workspace == null || member == null) return;
@@ -401,13 +395,13 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) => SheetShell(
-          title: l10n?.moneyRecordPayment ?? 'Record a payment',
+          title: l10n.moneyRecordPayment,
           children: [
               const SizedBox(height: 12),
               TextField(
                 controller: amount,
                 decoration: InputDecoration(
-                  labelText: l10n?.moneyAmountLabel ?? 'Amount',
+                  labelText: l10n.moneyAmountLabel,
                   suffixText: currency.currencyName,
                 ),
                 keyboardType:
@@ -441,7 +435,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 key: const ValueKey('payment-date-tile'),
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.event_outlined),
-                title: Text(l10n?.moneyPaymentDateLabel ?? 'Payment date'),
+                title: Text(l10n.moneyPaymentDateLabel),
                 subtitle: Text(dayFormat.format(paidOn)),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -449,7 +443,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                     initialDate: paidOn,
                     firstDate: DateTime(today.year - 2),
                     lastDate: DateTime(today.year, today.month, today.day),
-                    helpText: l10n?.moneyPaymentDateLabel ?? 'Payment date',
+                    helpText: l10n.moneyPaymentDateLabel,
                   );
                   if (picked != null) setSheetState(() => paidOn = picked);
                 },
@@ -460,7 +454,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 key: const ValueKey('payment-period-tile'),
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.calendar_month_outlined),
-                title: Text(l10n?.moneyPaymentPeriodLabel ?? 'Applies to'),
+                title: Text(l10n.moneyPaymentPeriodLabel),
                 subtitle: Text(
                   monthFormat.format(monthOf(period)),
                   key: const ValueKey('payment-period-label'),
@@ -487,7 +481,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               TextField(
                 controller: note,
                 decoration: InputDecoration(
-                  labelText: l10n?.moneyNoteLabel ?? 'Note (optional)',
+                  labelText: l10n.moneyNoteLabel,
                 ),
               ),
               const SizedBox(height: 16),
@@ -495,7 +489,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 key: const ValueKey('money-submit-payment'),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: Text(
-                  l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+                  l10n.moneySubmitPayment,
                 ),
               ),
           ],
@@ -510,8 +504,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context,
       domain: 'money',
       message: 'record payment failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(moneyRepositoryProvider).recordPayment(
             workspaceId: workspace.id,
             memberId: member.id,
@@ -527,8 +520,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (!context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.moneyPaymentPending ??
-          'Payment submitted — waiting for confirmation.',
+      l10n.moneyPaymentPending,
     );
     ref.invalidate(eventsProvider);
   }
@@ -540,7 +532,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// lands as a pending 'quota' event that owners/admins validate per the
   /// owner's policy; once confirmed the booking cap rises for [_period].
   Future<void> _requestQuotaSheet() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final count = TextEditingController();
@@ -549,13 +541,11 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(
-        title: l10n?.quotaRequestTitle ?? 'Request extra half-days',
+        title: l10n.quotaRequestTitle,
         children: [
             const SizedBox(height: 8),
             Text(
-              l10n?.quotaRequestExplainer(period) ??
-                  'Your reservations are capped by your subscription. '
-                      'Extra half-days for $period apply once validated.',
+              l10n.quotaRequestExplainer(period),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -564,7 +554,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               controller: count,
               decoration: InputDecoration(
                 labelText:
-                    l10n?.quotaRequestCountLabel ?? 'Number of half-days',
+                    l10n.quotaRequestCountLabel,
               ),
               keyboardType: TextInputType.number,
               autofocus: true,
@@ -574,7 +564,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               key: const ValueKey('money-submit-payment-2'),
               onPressed: () => Navigator.of(context).pop(true),
               child: Text(
-                l10n?.moneySubmitPayment ?? 'Submit for confirmation',
+                l10n.moneySubmitPayment,
               ),
             ),
         ],
@@ -588,8 +578,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context,
       domain: 'money',
       message: 'quota request failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(eventRepositoryProvider).requestQuotaExtension(
             workspace.id,
             period: period,
@@ -601,7 +590,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (!mounted) return;
     AppSnack.success(
       context,
-      l10n?.quotaRequestPending ?? 'Request sent — waiting for validation.',
+      l10n.quotaRequestPending,
     );
     ref.invalidate(eventsProvider);
   }
@@ -609,7 +598,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// Self-serve package purchase (0042): pick an owner-defined package; the
   /// cap rises immediately and the price posts to this month's bill.
   Future<void> _buyPackageSheet(MoneyFormat currency) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final packages = await ref.read(packagesProvider.future);
@@ -625,7 +614,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (packages.isEmpty) {
       AppSnack.info(
         context,
-        l10n?.buyPackageNone ?? 'No packages are available yet.',
+        l10n.buyPackageNone,
       );
       return;
     }
@@ -633,7 +622,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(
-        title: l10n?.buyPackageTitle ?? 'Buy a package',
+        title: l10n.buyPackageTitle,
         children: [
             const SizedBox(height: 8),
             for (final package in packages)
@@ -642,8 +631,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                   key: ValueKey('money-buy-package-days-${package.id}'),
                   title: Text(package.name),
                   subtitle: Text(
-                    l10n?.buyPackageDays(package.days) ??
-                        '${package.days} days',
+                    l10n.buyPackageDays(package.days),
                   ),
                   trailing: Text(currency.formatMinor(
                       myDeal?.itemPrice('packages', package.id) ??
@@ -659,8 +647,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context,
       domain: 'money',
       message: 'buy package failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(moneyRepositoryProvider).buyPackage(
             workspace.id,
             chosen.id,
@@ -671,7 +658,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (!mounted) return;
     AppSnack.success(
       context,
-      l10n?.buyPackageDone ?? 'Days added — enjoy the extra time.',
+      l10n.buyPackageDone,
     );
     // The bill (new charge + higher cap) and every booking surface (the
     // guard now allows more) must refresh.
@@ -691,7 +678,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   /// up" is actionable instead of a mystery. Members get the friendly
   /// snack instead.
   Future<void> _paymentDiagnostics(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     PaymentGatewayConfig config,
   ) async {
     final canAdminister =
@@ -699,8 +686,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     if (!canAdminister) {
       AppSnack.info(
         context,
-        l10n?.payOnlineNotConfigured ??
-            "Online payments aren't set up yet. Ask the workspace owner.",
+        l10n.payOnlineNotConfigured,
       );
       return;
     }
@@ -713,16 +699,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          l10n?.payOnlineDiagTitle ?? 'Online payments — not configured',
+          l10n.payOnlineDiagTitle,
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.payOnlineDiagHint ??
-                  'The server is missing this configuration '
-                      '(docs/design/payments-integration.md):',
+              l10n.payOnlineDiagHint,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
@@ -743,7 +727,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           TextButton(
             key: const ValueKey('money-close'),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n?.commonClose ?? 'Close'),
+            child: Text(l10n.commonClose),
           ),
           FilledButton(
             key: const ValueKey('pay-config-open'),
@@ -751,7 +735,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               Navigator.of(context).pop();
               unawaited(context.push('/payment-config'));
             },
-            child: Text(l10n?.payConfigOpen ?? 'Configure'),
+            child: Text(l10n.payConfigOpen),
           ),
         ],
       ),
@@ -759,7 +743,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   }
 
   Future<void> _payOnline(int amountCents) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     final member = ref.read(myMemberProvider).value;
     if (workspace == null || member == null || amountCents <= 0) return;
@@ -771,8 +755,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context,
       domain: 'payments',
       message: 'payment config probe failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         config = await ref
             .read(moneyRepositoryProvider)
@@ -800,7 +783,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     provider ??= await showModalBottomSheet<PaymentProvider>(
       context: context,
       builder: (context) => SheetShell(
-        title: l10n?.payOnlineChooseTitle ?? 'Pay online',
+        title: l10n.payOnlineChooseTitle,
         children: [
           const SizedBox(height: 12),
           for (final candidate in gateway.providers) ...[
@@ -830,8 +813,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       context,
       domain: 'payments',
       message: 'create payment order failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         final repo = ref.read(moneyRepositoryProvider);
         final currency =
@@ -879,7 +861,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // The space may arrive after the request: try again once it does.
     ref.listen(currentWorkspaceProvider, (_, _) =>
         _applyInvoiceFocus(ref.read(invoiceFocusProvider)));
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final member = ref.watch(myMemberProvider).value;
     final statementAsync = ref.watch(myStatementProvider(_period));
@@ -941,7 +923,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
           IconButton(
             key: const ValueKey('money-bill-pdf-export'),
             icon: const Icon(Icons.picture_as_pdf_outlined),
-            tooltip: l10n?.billPdfExport ?? 'Export bill as PDF',
+            tooltip: l10n.billPdfExport,
             onPressed: visibleStatement == null
                 ? null
                 : () => _exportPdf(visibleStatement),
@@ -992,7 +974,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
       key: const ValueKey('money-record-payment'),
       onPressed: () => _recordPaymentSheet(currency),
       icon: const Icon(Icons.payments_outlined),
-      label: Text(l10n?.moneyRecordPayment ?? 'Record a payment'),
+      label: Text(l10n.moneyRecordPayment),
     );
     // Buy-a-package entry point (0042): only for members the owner
     // put on the package plan — it PAYS, so it lives here.
@@ -1001,20 +983,20 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             key: const ValueKey('buy-package-button'),
             onPressed: () => _buyPackageSheet(currency),
             icon: const Icon(Icons.shopping_bag_outlined),
-            label: Text(l10n?.buyPackageButton ?? 'Buy a package'),
+            label: Text(l10n.buyPackageButton),
           )
         : null;
     final submitExpense = OutlinedButton.icon(
       key: const ValueKey('money-submit-expense'),
       onPressed: () => _submitExpenseSheet(currency),
       icon: const Icon(Icons.receipt_long_outlined),
-      label: fitted(l10n?.moneySubmitExpense ?? 'Submit an expense'),
+      label: fitted(l10n.moneySubmitExpense),
     );
     final requestQuota = OutlinedButton.icon(
       key: const ValueKey('quota-request-button'),
       onPressed: _requestQuotaSheet,
       icon: const Icon(Icons.hourglass_top_outlined),
-      label: fitted(l10n?.quotaRequestButton ?? 'Request extra half-days'),
+      label: fitted(l10n.quotaRequestButton),
     );
     // #767 — recurring expenses: the schedule list/create door, and the
     // occurrences presented for confirmation (cards below).
@@ -1025,7 +1007,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             onPressed: () => showExpenseSchedulesSheet(context, ref, currency),
             icon: const Icon(Icons.event_repeat_outlined),
             label: fitted(
-                l10n?.scheduledExpensesTitle ?? 'Scheduled expenses'),
+                l10n.scheduledExpensesTitle),
           )
         : null;
     // Consumption follows the services feature (#146).
@@ -1038,7 +1020,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               unawaited(showConsumptionSheet(context, ref, subjectMemberId: me.id));
             },
             icon: const Icon(Icons.room_service_outlined),
-            label: fitted(l10n?.consumptionAdd ?? 'Add consumption'),
+            label: fitted(l10n.consumptionAdd),
           )
         : null;
     // #871 — the hand-off to invoice MANAGEMENT reads like every other
@@ -1050,9 +1032,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             key: const ValueKey('invoices-button'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.receipt_long_outlined),
-            title: Text(l10n?.invoicesManage ?? 'Manage invoices'),
+            title: Text(l10n.invoicesManage),
             subtitle:
-                Text(l10n?.uxNavFinance ?? 'Billing & payments'),
+                Text(l10n.uxNavFinance),
             // Not chevron_right: the period bar owns that icon on this screen.
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => context.push('/invoices'),
@@ -1066,9 +1048,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
             key: const ValueKey('workspace-status-button'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.account_balance_outlined),
-            title: Text(l10n?.statusTitle ?? 'Workspace status'),
-            subtitle: Text(l10n?.statusSubtitle ??
-                'Revenues, expenses and members over a period'),
+            title: Text(l10n.statusTitle),
+            subtitle: Text(l10n.statusSubtitle),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => context.push('/money/status'),
           )
@@ -1080,9 +1061,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 key: const ValueKey('repartition-wizard-button'),
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.pie_chart_outline),
-                title: Text(l10n?.repartitionWizardTitle ?? 'Share a cost'),
-                subtitle: Text(l10n?.repartitionWizardSubtitle ??
-                    'Propose a split by subscription share, adjust, book'),
+                title: Text(l10n.repartitionWizardTitle),
+                subtitle: Text(l10n.repartitionWizardSubtitle),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () => context.push('/money/repartition-wizard'),
               )
@@ -1120,20 +1100,19 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final occurrenceCards = awaitingOccurrences.isEmpty
         ? const <Widget>[]
         : <Widget>[
-            sectionLabel(l10n?.scheduledAwaitingTitle ??
-                'Scheduled expenses awaiting you'),
+            sectionLabel(l10n.scheduledAwaitingTitle),
             for (final o in awaitingOccurrences)
               ExpenseOccurrenceCard(o, currency),
             const SizedBox(height: 8),
           ];
     final actionChildren = <Widget>[
       ...occurrenceCards,
-      sectionLabel(l10n?.moneySectionPay ?? 'Pay'),
+      sectionLabel(l10n.moneySectionPay),
       recordPayment,
       if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
-      sectionLabel(l10n?.moneySectionRequests ?? 'Requests'),
+      sectionLabel(l10n.moneySectionRequests),
       grid(requestButtons),
-      sectionLabel(l10n?.moneySectionDocuments ?? 'Documents'),
+      sectionLabel(l10n.moneySectionDocuments),
       if (invoicesButton != null) ...[invoicesButton, const SizedBox(height: 8)],
       if (statusButton != null) ...[statusButton, const SizedBox(height: 8)],
       if (wizardButton != null) ...[wizardButton, const SizedBox(height: 8)],
@@ -1168,7 +1147,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         if (overdueBanner != null) ...[overdueBanner, const SizedBox(height: 8)],
         ...attemptsCard,
         ...occurrenceCards,
-        sectionLabel((l10n ?? AppLocalizationsEn()).moneySectionPay),
+        sectionLabel(l10n.moneySectionPay),
         if (visibleStatement != null) bill(MoneyFace.payments),
       ],
       MoneyFace.invoices: [
@@ -1192,7 +1171,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               key: const ValueKey('usage-report-button-face'),
               onPressed: () => _memberDoc('usage'),
               icon: const Icon(Icons.insights_outlined),
-              label: Text(l10n?.usageReportButton ?? 'Month consumption report'),
+              label: Text(l10n.usageReportButton),
             ),
           ),
         if (features.contains(WorkspaceFeature.usageRecords))
@@ -1210,7 +1189,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         const SizedBox(height: 8),
         recordPayment,
         if (buyPackage != null) ...[const SizedBox(height: 8), buyPackage],
-        sectionLabel((l10n ?? AppLocalizationsEn()).moneySectionRequests),
+        sectionLabel(l10n.moneySectionRequests),
         grid(requestButtons),
         MyFinancesLinkCard(
           workspaceId: workspaceForSweep?.id,
@@ -1298,8 +1277,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
         ),
       AsyncError() => Center(
           child: Text(
-            l10n?.workspaceGenericError ??
-                'Something went wrong. Please try again.',
+            l10n.workspaceGenericError,
           ),
         ),
       _ => const LoadingView(),

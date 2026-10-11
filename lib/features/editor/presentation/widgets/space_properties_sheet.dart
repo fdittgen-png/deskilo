@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// What the properties sheet hands back when saved.
 typedef SpaceProperties = ({String name, bool bookable, int priceCents});
@@ -23,7 +23,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
   required int priceCents,
   required String keyPrefix,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   var isBookable = bookable;
   final nameField = TextEditingController(text: name);
   // Price per half-day — the 0050 level shape.
@@ -56,15 +56,13 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
               key: ValueKey('$keyPrefix-bookable-switch'),
               contentPadding: EdgeInsets.zero,
               title: Text(
-                l10n?.editorBookableAsWhole ?? 'Bookable as a whole',
+                l10n.editorBookableAsWhole,
               ),
               // #1216 — say what the switch DOES. "Bookable as a whole"
               // is the app's word for it; whether somebody can take the
               // room and everything in it is the question being asked.
               subtitle: Text(
-                l10n?.editorBookableAsWholeHint ??
-                    'Somebody can reserve it entire, with everything '
-                        'inside it.',
+                l10n.editorBookableAsWholeHint,
               ),
               value: isBookable,
               onChanged: (v) => setSheetState(() => isBookable = v),
@@ -88,7 +86,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
                             decimal: true),
                         decoration: InputDecoration(
                           labelText:
-                              l10n?.levelPriceLabel ?? 'Price per half-day',
+                              l10n.levelPriceLabel,
                         ),
                       ),
                     )
@@ -98,7 +96,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
             FilledButton(
               key: ValueKey('space-properties-sheet-save-$keyPrefix'),
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text(l10n?.commonSave ?? 'Save'),
+              child: Text(l10n.commonSave),
             ),
           ],
         ),

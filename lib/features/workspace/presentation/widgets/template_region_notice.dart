@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_template.dart';
 
 /// #1656 — the chosen template was made somewhere else. Its region is
@@ -42,7 +42,7 @@ class TemplateRegionNotice extends StatelessWidget {
         )) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final values = [
       ?suggestion.countryCode,
       ?suggestion.currencyCode,
@@ -55,8 +55,7 @@ class TemplateRegionNotice extends StatelessWidget {
         InlineBanner(
           icon: Icons.public,
           text:
-              l10n?.templateRegionSuggested(values) ??
-              'This template was made for $values. Your choice is kept unless you use its values.',
+              l10n.templateRegionSuggested(values),
         ),
         Align(
           alignment: Alignment.centerRight,
@@ -64,7 +63,7 @@ class TemplateRegionNotice extends StatelessWidget {
             key: const ValueKey('template-region-use'),
             onPressed: enabled ? onUse : null,
             child: Text(
-              l10n?.templateRegionUse ?? 'Use the template\'s region',
+              l10n.templateRegionUse,
             ),
           ),
         ),

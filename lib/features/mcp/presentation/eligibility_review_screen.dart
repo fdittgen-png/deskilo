@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -144,7 +145,7 @@ class _EligibilityReviewScreenState
     if (saved != null) ref.invalidate(mcpDisclosureMaximumProvider);
   }
 
-  Widget _disclosureMaximum(AppLocalizations? l10n) {
+  Widget _disclosureMaximum(AppLocalizations l10n) {
     final theme = Theme.of(context);
     final state = ref.watch(mcpDisclosureMaximumProvider);
     return Card(
@@ -156,14 +157,12 @@ class _EligibilityReviewScreenState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.mcpDisclosureTitle ?? 'Optional details',
+              l10n.mcpDisclosureTitle,
               style: theme.textTheme.titleSmall,
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              l10n?.mcpDisclosureMaximumExplain ??
-                  'The most that owners on this database may let assistants see. It never '
-                      'widens a workspace\'s policy or a person\'s consent.',
+              l10n.mcpDisclosureMaximumExplain,
             ),
             if (_maximumOutcome != null)
               Padding(
@@ -175,9 +174,8 @@ class _EligibilityReviewScreenState
                       ? InlineBannerSeverity.info
                       : InlineBannerSeverity.error,
                   text: _maximumOutcome == 'saved'
-                      ? (l10n?.mcpDisclosureMaximumSaved ?? 'Maximum saved.')
-                      : (l10n?.mcpDisclosureMaximumRefused ??
-                            'The maximum was not saved. It needs your second factor.'),
+                      ? (l10n.mcpDisclosureMaximumSaved)
+                      : (l10n.mcpDisclosureMaximumRefused),
                 ),
               ),
             ...state.when(
@@ -185,15 +183,14 @@ class _EligibilityReviewScreenState
               error: (e, _) => [
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  l10n?.mcpDisclosureMaximumLocked ??
-                      'Confirm with your second factor to see and change the maximum.',
+                  l10n.mcpDisclosureMaximumLocked,
                   key: const ValueKey('mcp-maximum-locked'),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton(
                   key: const ValueKey('mcp-maximum-unlock'),
                   onPressed: _busy ? null : _unlockMaximum,
-                  child: Text(l10n?.mcpDisclosureUnlock ?? 'Confirm'),
+                  child: Text(l10n.mcpDisclosureUnlock),
                 ),
               ],
               data: (m) {
@@ -219,7 +216,7 @@ class _EligibilityReviewScreenState
                     key: const ValueKey('mcp-maximum-save'),
                     onPressed: _busy ? null : _saveMaximum,
                     child: Text(
-                      l10n?.mcpDisclosureMaximumSave ?? 'Save the maximum',
+                      l10n.mcpDisclosureMaximumSave,
                     ),
                   ),
                 ];
@@ -233,22 +230,20 @@ class _EligibilityReviewScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final caps = ref.watch(myDatabaseCapabilitiesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.mcpReviewTitle ?? 'Assistant approvals'),
+        title: Text(l10n.mcpReviewTitle),
       ),
       body: caps.when(
         loading: () => const LoadingView(),
         error: (e, _) => _message(
-          l10n?.mcpAssistantsUnavailable ??
-              'Your assistant access could not be loaded. Try again later.',
+          l10n.mcpAssistantsUnavailable,
         ),
         data: (c) => !c.databaseAdministrator
             ? _message(
-                l10n?.mcpReviewNotAdmin ??
-                    'Only this database\'s administrators review approvals.',
+                l10n.mcpReviewNotAdmin,
               )
             : ref
                   .watch(eligibilityRequestsProvider)
@@ -257,8 +252,7 @@ class _EligibilityReviewScreenState
                     error: (e, _) => ListView(
                       children: [
                         _message(
-                          l10n?.mcpReviewUnavailable ??
-                              'The requests could not be loaded. A review needs your second factor; try again.',
+                          l10n.mcpReviewUnavailable,
                         ),
                         Padding(
                           padding: AppSpacing.gutterH,
@@ -271,15 +265,13 @@ class _EligibilityReviewScreenState
                       children: [
                         if (_outcome != null) _outcomeBanner(l10n, _outcome!),
                         Text(
-                          l10n?.mcpReviewExplain ??
-                              'Approving lets a person connect assistants on this database, in the '
-                                  'workspaces whose owners allow it. It grants no membership or role.',
+                          l10n.mcpReviewExplain,
                         ),
                         const SizedBox(height: AppSpacing.md),
                         if (requests.isEmpty)
                           Text(
                             key: const ValueKey('mcp-review-empty'),
-                            l10n?.mcpReviewEmpty ?? 'No request is waiting.',
+                            l10n.mcpReviewEmpty,
                           ),
                         for (final r in requests)
                           Card(
@@ -298,7 +290,7 @@ class _EligibilityReviewScreenState
                                         ? null
                                         : () => _decide(r, false),
                                     child: Text(
-                                      l10n?.mcpReviewReject ?? 'Reject',
+                                      l10n.mcpReviewReject,
                                     ),
                                   ),
                                   FilledButton(
@@ -309,7 +301,7 @@ class _EligibilityReviewScreenState
                                         ? null
                                         : () => _decide(r, true),
                                     child: Text(
-                                      l10n?.mcpReviewApprove ?? 'Approve',
+                                      l10n.mcpReviewApprove,
                                     ),
                                   ),
                                 ],
@@ -333,24 +325,22 @@ class _EligibilityReviewScreenState
     ),
   );
 
-  Widget _outcomeBanner(AppLocalizations? l10n, String outcome) {
+  Widget _outcomeBanner(AppLocalizations l10n, String outcome) {
     final (text, severity) = switch (outcome) {
       'decided' || 'replayed' => (
-        l10n?.mcpReviewDone ?? 'Decision recorded.',
+        l10n.mcpReviewDone,
         InlineBannerSeverity.info,
       ),
       'changed' => (
-        l10n?.mcpReviewChanged ??
-            'This request changed or another administrator decided first. Nothing was done.',
+        l10n.mcpReviewChanged,
         InlineBannerSeverity.error,
       ),
       'secondFactorRequired' => (
-        l10n?.mcpReviewSecondFactor ??
-            'That database needs your second factor on its own session. Nothing was decided.',
+        l10n.mcpReviewSecondFactor,
         InlineBannerSeverity.error,
       ),
       _ => (
-        l10n?.mcpReviewRefused ?? 'The decision was refused.',
+        l10n.mcpReviewRefused,
         InlineBannerSeverity.error,
       ),
     };
@@ -446,7 +436,7 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final e = _enrollment;
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -460,14 +450,13 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            l10n?.mfaTitle ?? 'Confirm with your authenticator',
+            l10n.mfaTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.md),
           if (e != null) ...[
             Text(
-              l10n?.mfaEnroll ??
-                  'Scan this code with an authenticator app, or enter the key, then type the six digits it shows.',
+              l10n.mfaEnroll,
             ),
             const SizedBox(height: AppSpacing.md),
             Center(
@@ -493,10 +482,9 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
               LengthLimitingTextInputFormatter(6),
             ],
             decoration: InputDecoration(
-              labelText: l10n?.mfaCode ?? 'Six-digit code',
+              labelText: l10n.mfaCode,
               errorText: _failed
-                  ? (l10n?.mfaWrong ??
-                        'That code was not accepted. Try the current one.')
+                  ? (l10n.mfaWrong)
                   : null,
             ),
             onSubmitted: (_) => _verify(),
@@ -505,7 +493,7 @@ class _SecondFactorSheetState extends State<SecondFactorSheet> {
           FilledButton(
             key: const ValueKey('mfa-verify'),
             onPressed: _busy || _factorId == null ? null : _verify,
-            child: Text(l10n?.mfaVerify ?? 'Verify'),
+            child: Text(l10n.mfaVerify),
           ),
         ],
       ),

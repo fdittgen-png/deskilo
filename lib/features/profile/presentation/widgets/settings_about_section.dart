@@ -30,17 +30,17 @@ const _revolutHandle = 'revolut.me/floriamcep';
 List<Widget> aboutSettingsTiles(
     BuildContext context,
     WidgetRef ref, {
-    required AppLocalizations? l10n,
+    required AppLocalizations l10n,
     required ColorScheme colorScheme,
   }) =>
       [
           const Divider(),
-          SettingsSectionHeader(l10n?.settingsSectionHelpAbout ?? 'Help & about'),
+          SettingsSectionHeader(l10n.settingsSectionHelpAbout),
           // The guide site, in the app's language. Available to every member.
           ListTile(
             key: const ValueKey('settings-help'),
             leading: const Icon(Icons.help_outline),
-            title: Text(l10n?.helpTitle ?? 'Help'),
+            title: Text(l10n.helpTitle),
             onTap: () => openGuide(ref, context),
           ),
           ListTile(
@@ -50,7 +50,7 @@ List<Widget> aboutSettingsTiles(
             subtitle: switch (ref.watch(appVersionProvider).value) {
               null || '' => null,
               final version => Text(
-                l10n?.aboutVersion(version) ?? 'Version $version',
+                l10n.aboutVersion(version),
               ),
             },
           ),
@@ -66,9 +66,9 @@ List<Widget> aboutSettingsTiles(
           ListTile(
             key: const ValueKey('about-source'),
             leading: const Icon(Icons.code),
-            title: Text(l10n?.aboutOpenSource ?? 'Free software (AGPL-3.0)'),
+            title: Text(l10n.aboutOpenSource),
             subtitle: Text(
-              l10n?.aboutOpenSourceDesc ?? 'Source code on GitHub',
+              l10n.aboutOpenSourceDesc,
             ),
             onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_repoUrl)),
           ),
@@ -78,22 +78,20 @@ List<Widget> aboutSettingsTiles(
           ListTile(
             key: const ValueKey('about-attribution'),
             leading: const Icon(Icons.copyright),
-            title: Text(l10n?.aboutAttribution ??
-                'Based on DesKilo by Florian DITTGEN — https://github.com/fdittgen-png/deskilo'),
-            subtitle: Text(l10n?.aboutAttributionNote ??
-                'This credit must stay visible in every copy and modified version.'),
+            title: Text(l10n.aboutAttribution),
+            subtitle: Text(l10n.aboutAttributionNote),
           ),
           ListTile(
             key: const ValueKey('about-privacy'),
             leading: const Icon(Icons.shield_outlined),
-            title: Text(l10n?.aboutPrivacy ?? 'Privacy policy'),
+            title: Text(l10n.aboutPrivacy),
             onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_privacyUrl)),
           ),
           ListTile(
             key: const ValueKey('about-issues'),
             leading: const Icon(Icons.bug_report_outlined),
             title: Text(
-              l10n?.aboutReportBug ?? 'Report a bug / suggest a feature',
+              l10n.aboutReportBug,
             ),
             onTap: () => ref.read(linkLauncherProvider)(Uri.parse(_issuesUrl)),
           ),
@@ -107,14 +105,12 @@ List<Widget> aboutSettingsTiles(
             child: Column(
               children: [
                 Text(
-                  l10n?.aboutSupportTitle ?? 'Support this project',
+                  l10n.aboutSupportTitle,
                   style: Theme.of(context).textTheme.sectionTitle,
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  l10n?.aboutSupportBody ??
-                      'This app is free, open source and ad-free. If '
-                          'you find it useful, support the developer.',
+                  l10n.aboutSupportBody,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
@@ -147,7 +143,7 @@ List<Widget> aboutSettingsTiles(
             key: const ValueKey('settings-about-section-auth-sign-out'),
             leading: Icon(Icons.logout, color: colorScheme.error),
             title: Text(
-              l10n?.authSignOut ?? 'Sign out',
+              l10n.authSignOut,
               style: TextStyle(color: colorScheme.error),
             ),
             onTap: () async {

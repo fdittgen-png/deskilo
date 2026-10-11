@@ -9,8 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/payment_terms_card.dart';
 
@@ -19,13 +19,13 @@ class MyPaymentTermsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final member = ref.watch(myMemberProvider).value;
     return Scaffold(
       appBar: AppBar(
         title: HelpDotTitle(
-          l10n?.paymentTermsTitle ?? 'Payment conditions',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.paymentTermsTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profilePaymentTerms,
         ),
       ),

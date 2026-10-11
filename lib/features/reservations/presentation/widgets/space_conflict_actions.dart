@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 import 'message_reserver.dart';
@@ -45,7 +45,7 @@ class SpaceConflictActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final mine = blocking.memberId == myMemberId;
 
     if (mine) {
@@ -64,7 +64,7 @@ class SpaceConflictActions extends ConsumerWidget {
                   if (nav.mounted) nav.pop();
                 },
           icon: const Icon(Icons.event_busy_outlined),
-          label: Text(l10n?.spaceManageMyBooking ?? 'Manage my booking'),
+          label: Text(l10n.spaceManageMyBooking),
         ),
       );
     }

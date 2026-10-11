@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -169,21 +170,21 @@ class WizardNothing extends StatelessWidget {
   }
 }
 
-String wizardStepLabel(AppLocalizations? l10n, WizardStep step) =>
+String wizardStepLabel(AppLocalizations l10n, WizardStep step) =>
     switch (step) {
-      WizardStep.review => l10n?.wizardStepReview ?? 'Review',
-      WizardStep.issue => l10n?.wizardStepIssue ?? 'Issue',
-      WizardStep.send => l10n?.wizardStepSend ?? 'Send',
-      WizardStep.remind => l10n?.wizardStepRemind ?? 'Remind',
-      WizardStep.payments => l10n?.wizardStepPayments ?? 'Payments',
-      WizardStep.match => l10n?.wizardStepMatch ?? 'Match',
-      WizardStep.close => l10n?.wizardStepClose ?? 'Close',
-      WizardStep.summary => l10n?.wizardStepSummary ?? 'Summary',
+      WizardStep.review => l10n.wizardStepReview,
+      WizardStep.issue => l10n.wizardStepIssue,
+      WizardStep.send => l10n.wizardStepSend,
+      WizardStep.remind => l10n.wizardStepRemind,
+      WizardStep.payments => l10n.wizardStepPayments,
+      WizardStep.match => l10n.wizardStepMatch,
+      WizardStep.close => l10n.wizardStepClose,
+      WizardStep.summary => l10n.wizardStepSummary,
     };
 
-String wizardRunLabel(AppLocalizations? l10n, WizardRun run) => switch (run) {
-      WizardRun.startOfMonth => l10n?.wizardRunStart ?? 'Start of month',
-      WizardRun.endOfMonth => l10n?.wizardRunEnd ?? 'End of month',
+String wizardRunLabel(AppLocalizations l10n, WizardRun run) => switch (run) {
+      WizardRun.startOfMonth => l10n.wizardRunStart,
+      WizardRun.endOfMonth => l10n.wizardRunEnd,
     };
 
 /// #827 — the door to the wizard on the invoicing hub: names the run the
@@ -193,7 +194,7 @@ class WizardEntryCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (!ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.invoicingWizard)) {
@@ -220,7 +221,7 @@ class WizardEntryCard extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n?.invoiceWizardAction ?? 'Month-close wizard',
+                  Text(l10n.invoiceWizardAction,
                       style: theme.textTheme.titleSmall),
                   Text(wizardRunLabel(l10n, run),
                       style: theme.textTheme.bodySmall),

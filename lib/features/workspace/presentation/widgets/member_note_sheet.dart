@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/member_note.dart';
 import 'member_note_body.dart';
 import 'open_conversation.dart';
@@ -31,7 +31,7 @@ Future<void> showMemberNoteSheet(
       context: context,
       isScrollControlled: true,
       builder: (sheetContext) {
-        final l10n = AppLocalizations.of(sheetContext);
+        final l10n = sheetContext.l10n;
         final theme = Theme.of(sheetContext);
         final when = DateFormat.yMMMd()
             .add_Hm()
@@ -59,7 +59,7 @@ Future<void> showMemberNoteSheet(
                     child: FilledButton.icon(
                       key: const ValueKey('note-sheet-reply'),
                       icon: const Icon(Icons.reply),
-                      label: Text(l10n?.memberNoteReply ?? 'Reply'),
+                      label: Text(l10n.memberNoteReply),
                       onPressed: () async {
                         Navigator.of(sheetContext).pop();
                         // Replying = the conversation (refactor): the
@@ -80,7 +80,7 @@ Future<void> showMemberNoteSheet(
                       key: const ValueKey('note-sheet-delete'),
                       icon: const Icon(Icons.delete_outline),
                       label:
-                          Text(l10n?.memberNoteDelete ?? 'Delete'),
+                          Text(l10n.memberNoteDelete),
                       onPressed: () async {
                         Navigator.of(sheetContext).pop();
                         await onDelete();

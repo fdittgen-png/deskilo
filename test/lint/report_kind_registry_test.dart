@@ -11,6 +11,7 @@
 // whether every surface knows about it.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_design_file.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
@@ -32,7 +33,7 @@ void main() {
 
   test('every kind has a human label, and none falls back to its id', () {
     for (final kind in kinds) {
-      final label = reportKindLabel(null, kind);
+      final label = reportKindLabel(englishL10n, kind);
       expect(label.trim(), isNotEmpty, reason: kind.id);
       expect(label, isNot(kind.id),
           reason: '${kind.id} has no label — reportKindLabel fell back to '

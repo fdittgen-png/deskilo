@@ -14714,6 +14714,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Vero su una nota di credito';
 
   @override
+  String get reportFieldMeaningDeclarationNote =>
+      'L\'avvertenza della dichiarazione: verificare prima dell\'invio';
+
+  @override
   String get reportFieldMeaningDueDate => 'La data di scadenza';
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -81,13 +82,13 @@ InvoiceJourney? _journey(
   );
 }
 
-String invoiceStepLabel(AppLocalizations? l10n, InvoiceStep step) =>
+String invoiceStepLabel(AppLocalizations l10n, InvoiceStep step) =>
     switch (step) {
-      InvoiceStep.issued => l10n?.journeyStepIssued ?? 'Issued',
-      InvoiceStep.payment => l10n?.journeyStepPayment ?? 'Payment',
+      InvoiceStep.issued => l10n.journeyStepIssued,
+      InvoiceStep.payment => l10n.journeyStepPayment,
       InvoiceStep.confirmation =>
-        l10n?.journeyStepConfirmation ?? 'Confirmation',
-      InvoiceStep.closed => l10n?.journeyStepClosed ?? 'Closed',
+        l10n.journeyStepConfirmation,
+      InvoiceStep.closed => l10n.journeyStepClosed,
     };
 
 /// The four steps as a bar: a dot per step joined by a line, done steps
@@ -101,7 +102,7 @@ class InvoiceJourneyBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final steps = journey.steps;
     final labelStyle = Theme.of(context).textTheme.labelSmall;
@@ -213,7 +214,7 @@ String invoiceMoveText(
   required InvoiceMatch? match,
   required bool issuer,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
   final dateFormat = DateFormat.yMMMd(
     Localizations.maybeLocaleOf(context)?.toString(),
@@ -229,85 +230,58 @@ String invoiceMoveText(
   final refund = currency.formatMinor(-invoice.totalCents);
   return switch (journey.move) {
     InvoiceMove.memberPays when journey.overdue => issuer
-        ? (l10n?.journeyIssuerMemberPaysOverdue(name, owed, late) ??
-            '$name owes $owed — overdue by $late days')
-        : (l10n?.journeyMemberPaysOverdue(owed, late) ??
-            'Your move: pay $owed — overdue by $late days'),
+        ? (l10n.journeyIssuerMemberPaysOverdue(name, owed, late))
+        : (l10n.journeyMemberPaysOverdue(owed, late)),
     InvoiceMove.memberPays => issuer
-        ? (l10n?.journeyIssuerMemberPays(name, owed, due) ??
-            "Waiting for $name's payment of $owed — due $due")
-        : (l10n?.journeyMemberPays(owed, due) ??
-            'Your move: pay $owed by $due'),
+        ? (l10n.journeyIssuerMemberPays(name, owed, due))
+        : (l10n.journeyMemberPays(owed, due)),
     InvoiceMove.memberPaysRemainder => issuer
-        ? (l10n?.journeyIssuerMemberPaysRemainder(name, owed) ??
-            '$name still owes $owed after a partial payment')
-        : (l10n?.journeyMemberPaysRemainder(owed) ??
-            'Your move: pay the remaining $owed'),
+        ? (l10n.journeyIssuerMemberPaysRemainder(name, owed))
+        : (l10n.journeyMemberPaysRemainder(owed)),
     InvoiceMove.adminConfirmsPayment => issuer
-        ? (l10n?.journeyIssuerAdminConfirms(name, declared) ??
-            '$name declared a payment of $declared — another admin '
-                'confirms it in Events')
-        : (l10n?.journeyMemberDeclared(declared) ??
-            'You declared $declared — the workspace is confirming it'),
+        ? (l10n.journeyIssuerAdminConfirms(name, declared))
+        : (l10n.journeyMemberDeclared(declared)),
     InvoiceMove.memberConfirmsPayment => issuer
-        ? (l10n?.journeyIssuerMemberConfirms(name, recorded) ??
-            'A payment of $recorded was recorded — $name confirms it in '
-                'Events')
-        : (l10n?.journeyMemberConfirms(recorded) ??
-            'Your move: confirm the payment of $recorded recorded for '
-                'you, in Events'),
+        ? (l10n.journeyIssuerMemberConfirms(name, recorded))
+        : (l10n.journeyMemberConfirms(recorded)),
     InvoiceMove.issuerMatchesPayment => issuer
-        ? (l10n?.journeyIssuerMatches(registered) ??
-            'A payment of $registered is registered — match it to this '
-                'invoice')
-        : (l10n?.journeyMemberRegistered(registered) ??
-            'Your payment of $registered is registered — the workspace '
-                'matches it to this invoice'),
+        ? (l10n.journeyIssuerMatches(registered))
+        : (l10n.journeyMemberRegistered(registered)),
     InvoiceMove.validatorsDecideMatch => issuer
-        ? (l10n?.journeyValidatorsMatch ??
-            "Payment matched — awaiting the validators' decision")
-        : (l10n?.journeyMemberValidators ??
-            'Payment matched — awaiting validation'),
+        ? (l10n.journeyValidatorsMatch)
+        : (l10n.journeyMemberValidators),
     InvoiceMove.validatorsDecideWriteoff => issuer
-        ? (l10n?.journeyValidatorsWriteoff ??
-            'Write-off of the remainder requested — awaiting the validators')
-        : (l10n?.journeyMemberWriteoff ??
-            'The workspace asked to cancel the remainder — awaiting '
-                'validation'),
+        ? (l10n.journeyValidatorsWriteoff)
+        : (l10n.journeyMemberWriteoff),
     InvoiceMove.issuerRefunds => issuer
-        ? (l10n?.journeyIssuerRefunds(name, refund) ??
-            'Credit note — refund $refund to $name and record it')
-        : (l10n?.journeyMemberRefund(refund) ??
-            'The workspace owes you $refund — nothing to pay'),
+        ? (l10n.journeyIssuerRefunds(name, refund))
+        : (l10n.journeyMemberRefund(refund)),
     InvoiceMove.issuerReplaces => issuer
-        ? (l10n?.journeyIssuerReplaces ?? 'Cancelled — issue the replacement')
-        : (l10n?.journeyMemberReplaces ?? 'Cancelled — a replacement follows'),
+        ? (l10n.journeyIssuerReplaces)
+        : (l10n.journeyMemberReplaces),
     InvoiceMove.none => _closedText(l10n, journey, match, dateFormat),
   };
 }
 
 String _closedText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   InvoiceJourney journey,
   InvoiceMatch? match,
   DateFormat dateFormat,
 ) {
   if (journey.settled) {
-    return l10n?.journeyClosedSettled ??
-        'Regrouped into another invoice — that one is owed and chased';
+    return l10n.journeyClosedSettled;
   }
   final on = match == null ? '' : dateFormat.format(match.matchedAt);
   return switch (journey.lifecycle) {
     InvoiceLifecycle.paid =>
-      l10n?.journeyClosedPaid(on) ?? 'Paid on $on — closed',
-    InvoiceLifecycle.remainderCancelled => l10n?.journeyClosedRemainder(
+      l10n.journeyClosedPaid(on),
+    InvoiceLifecycle.remainderCancelled => l10n.journeyClosedRemainder(
           match?.writeoffAt == null ? on : dateFormat.format(match!.writeoffAt!),
-        ) ??
-        'Closed — remainder cancelled',
+        ),
     InvoiceLifecycle.refunded =>
-      l10n?.journeyClosedRefunded(on) ?? 'Refunded on $on — closed',
-    _ => l10n?.journeyClosedReplaced(journey.replacedByNumber) ??
-        'Cancelled — replaced by ${journey.replacedByNumber}',
+      l10n.journeyClosedRefunded(on),
+    _ => l10n.journeyClosedReplaced(journey.replacedByNumber),
   };
 }
 

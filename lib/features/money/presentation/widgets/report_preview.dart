@@ -4,9 +4,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
 
@@ -130,7 +130,7 @@ Future<void> showReportQuickPreview(
     showDialog<void>(
       context: context,
       builder: (context) {
-        final l10n = AppLocalizations.of(context);
+        final l10n = context.l10n;
         return Dialog(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 640),
@@ -143,10 +143,8 @@ Future<void> showReportQuickPreview(
                       AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
                   child: Text(
                     simulated
-                        ? (l10n?.reportPreviewSimulated ??
-                            'Quick preview — sample data')
-                        : (l10n?.reportPreviewTitle ??
-                            'Quick preview — your newest invoice'),
+                        ? (l10n.reportPreviewSimulated)
+                        : (l10n.reportPreviewTitle),
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
@@ -178,7 +176,7 @@ Future<void> showReportQuickPreview(
                       key: const ValueKey('report-preview-directory-close'),
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
-                          l10n?.directoryClose ?? 'Close'),
+                          l10n.directoryClose),
                     ),
                   ),
                 ),
@@ -253,7 +251,7 @@ class _ZoomablePagesState extends State<_ZoomablePages> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ColoredBox(
       color: ReportPage.backdrop,
       child: LayoutBuilder(
@@ -305,7 +303,7 @@ class _ZoomablePagesState extends State<_ZoomablePages> {
                     children: [
                       IconButton(
                         key: const ValueKey('preview-zoom-out'),
-                        tooltip: l10n?.reportPreviewZoomOut ?? 'Zoom out',
+                        tooltip: l10n.reportPreviewZoomOut,
                         onPressed: _scale <= _ZoomablePages.minScale + 1e-6
                             ? null
                             : () => _apply(_scale / _ZoomablePages.step),
@@ -313,13 +311,13 @@ class _ZoomablePagesState extends State<_ZoomablePages> {
                       ),
                       IconButton(
                         key: const ValueKey('preview-zoom-fit'),
-                        tooltip: l10n?.reportPreviewFit ?? 'Fit the width',
+                        tooltip: l10n.reportPreviewFit,
                         onPressed: () => _apply(_fitted ?? 1),
                         icon: const Icon(Icons.fit_screen_outlined),
                       ),
                       IconButton(
                         key: const ValueKey('preview-zoom-in'),
-                        tooltip: l10n?.reportPreviewZoomIn ?? 'Zoom in',
+                        tooltip: l10n.reportPreviewZoomIn,
                         onPressed: _scale >= _ZoomablePages.maxScale - 1e-6
                             ? null
                             : () => _apply(_scale * _ZoomablePages.step),

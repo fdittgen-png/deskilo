@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -573,7 +574,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               for (final wire in const ['', 'business', 'consumer'])
                 ButtonSegment(
                   value: wire,
-                  label: Text(customerCapacityName(l10n, wire)),
+                  label: Text(customerCapacityName(l10n ?? englishL10n, wire)),
                 ),
             ],
             selected: {_customerCapacity},

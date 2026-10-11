@@ -7,10 +7,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/place_feedback_commands.dart';
 import '../../domain/place_feedback.dart';
 import '../../providers/place_feedback_providers.dart';
@@ -28,7 +28,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!placeFeedbackShown(ref, kind)) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final feedback = ref.watch(placeFeedbackProvider(kind, id)).value ??
         const PlaceFeedback();
@@ -37,7 +37,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
           context,
           domain: 'reservations',
           message: 'place feedback failed',
-          errorText: l10n?.placeFeedbackFailed ?? 'Could not save. Please try again.',
+          errorText: l10n.placeFeedbackFailed,
           action: action,
         );
 
@@ -47,10 +47,9 @@ class PlaceFeedbackBar extends ConsumerWidget {
     final round = IconButton.styleFrom(shape: const CircleBorder());
     final summary = Text(
       feedback.count == 0
-          ? (l10n?.placeFeedbackNoRating ?? 'No rating yet')
-          : (l10n?.placeFeedbackAverage(
-                  feedback.average!.toStringAsFixed(1), feedback.count) ??
-              '${feedback.average!.toStringAsFixed(1)} · ${feedback.count}'),
+          ? (l10n.placeFeedbackNoRating)
+          : (l10n.placeFeedbackAverage(
+                  feedback.average!.toStringAsFixed(1), feedback.count)),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: theme.textTheme.bodySmall
@@ -75,8 +74,8 @@ class PlaceFeedbackBar extends ConsumerWidget {
                 key: heartKey(id),
                 style: round,
                 tooltip: feedback.favorite
-                    ? (l10n?.placeFeedbackUnfavorite ?? 'Remove from favourites')
-                    : (l10n?.placeFeedbackFavorite ?? 'Add to favourites'),
+                    ? (l10n.placeFeedbackUnfavorite)
+                    : (l10n.placeFeedbackFavorite),
                 isSelected: feedback.favorite,
                 icon: const Icon(Icons.favorite_border),
                 selectedIcon:
@@ -89,7 +88,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
                 IconButton(
                   key: starKey(id, n),
                   style: round,
-                  tooltip: l10n?.placeFeedbackStars(n) ?? '$n stars',
+                  tooltip: l10n.placeFeedbackStars(n),
                   icon: Icon(
                     (mine ?? 0) >= n ? Icons.star : Icons.star_border,
                     color: (mine ?? 0) >= n ? theme.colorScheme.tertiary : null,
@@ -108,7 +107,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
                 key: zeroKey(id),
                 onPressed: () => run(() => setPlaceRating(ref,
                     kind: kind, id: id, stars: mine == 0 ? null : 0)),
-                child: Text(l10n?.placeFeedbackZero ?? '0 stars',
+                child: Text(l10n.placeFeedbackZero,
                     maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
@@ -141,7 +140,7 @@ class PlaceFeedbackChip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!placeFeedbackShown(ref, kind)) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final feedback = ref.watch(placeFeedbackProvider(kind, id)).value ??
         const PlaceFeedback();
@@ -150,8 +149,8 @@ class PlaceFeedbackChip extends ConsumerWidget {
         key: heartKey(id),
         visualDensity: VisualDensity.compact,
         tooltip: feedback.favorite
-            ? (l10n?.placeFeedbackUnfavorite ?? 'Remove from favourites')
-            : (l10n?.placeFeedbackFavorite ?? 'Add to favourites'),
+            ? (l10n.placeFeedbackUnfavorite)
+            : (l10n.placeFeedbackFavorite),
         isSelected: feedback.favorite,
         icon: const Icon(Icons.favorite_border),
         selectedIcon: Icon(Icons.favorite, color: theme.colorScheme.error),
@@ -159,7 +158,7 @@ class PlaceFeedbackChip extends ConsumerWidget {
           context,
           domain: 'reservations',
           message: 'place feedback failed',
-          errorText: l10n?.placeFeedbackFailed ?? 'Could not save. Please try again.',
+          errorText: l10n.placeFeedbackFailed,
           action: () => setPlaceFavorite(ref,
               kind: kind, id: id, on: !feedback.favorite),
         ),

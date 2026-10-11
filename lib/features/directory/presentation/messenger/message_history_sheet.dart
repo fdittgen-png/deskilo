@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -36,25 +37,22 @@ class _MessageHistorySheet extends ConsumerWidget {
   final String messageId;
   final String source;
 
-  static String line(AppLocalizations? l10n, MessageEvent e) {
+  static String line(AppLocalizations l10n, MessageEvent e) {
     final actor = e.actorName;
     return switch (e.event) {
-      'sent' => l10n?.messengerEventSent(actor) ?? 'Sent by $actor',
-      'read' => l10n?.messengerEventRead(actor) ?? 'Read by $actor',
+      'sent' => l10n.messengerEventSent(actor),
+      'read' => l10n.messengerEventRead(actor),
       'forwarded' when e.targetLabel.isEmpty =>
-        l10n?.messengerEventForwardedPrivate(actor) ??
-            'Forwarded by $actor to a personal conversation',
+        l10n.messengerEventForwardedPrivate(actor),
       'forwarded' =>
-        l10n?.messengerEventForwarded(actor, e.targetLabel) ??
-            'Forwarded by $actor to ${e.targetLabel}',
+        l10n.messengerEventForwarded(actor, e.targetLabel),
       // On a copy: where the original was written.
       'forwarded_from' =>
-        l10n?.messengerEventForwardedFrom(actor, e.targetLabel) ??
-            'Originally written by $actor in ${e.targetLabel}',
-      'deleted' => l10n?.messengerEventDeleted(actor) ?? 'Deleted by $actor',
+        l10n.messengerEventForwardedFrom(actor, e.targetLabel),
+      'deleted' => l10n.messengerEventDeleted(actor),
       'captured' =>
-        l10n?.messengerEventCaptured(actor) ?? 'Screenshot taken by $actor',
-      _ => l10n?.messengerEventOther(e.event, actor) ?? '${e.event} · $actor',
+        l10n.messengerEventCaptured(actor),
+      _ => l10n.messengerEventOther(e.event, actor),
     };
   }
 
@@ -69,7 +67,7 @@ class _MessageHistorySheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
     final provider = messageHistoryProvider(kind, messageId, source: source);
     final events = ref.watch(provider);
@@ -86,7 +84,7 @@ class _MessageHistorySheet extends ConsumerWidget {
             Padding(
               padding: AppSpacing.lgAll,
               child: Text(
-                l10n?.messengerHistory ?? 'What happened',
+                l10n.messengerHistory,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -95,8 +93,7 @@ class _MessageHistorySheet extends ConsumerWidget {
                 AsyncData(value: final list) when list.isEmpty => Padding(
                   padding: AppSpacing.lgAll,
                   child: Text(
-                    l10n?.messengerHistoryEmpty ??
-                        'Nothing recorded for this message yet.',
+                    l10n.messengerHistoryEmpty,
                     key: const ValueKey('message-history-empty'),
                   ),
                 ),
@@ -116,7 +113,7 @@ class _MessageHistorySheet extends ConsumerWidget {
                   child: TextButton(
                     key: const ValueKey('message-history-retry'),
                     onPressed: () => ref.invalidate(provider),
-                    child: Text(l10n?.commonRetry ?? 'Try again'),
+                    child: Text(l10n.commonRetry),
                   ),
                 ),
                 _ => const LoadingView(),

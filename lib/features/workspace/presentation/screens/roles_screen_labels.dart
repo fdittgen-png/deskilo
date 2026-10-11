@@ -9,68 +9,68 @@
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_permission.dart';
 
-String permissionLabel(AppLocalizations? l10n, WorkspacePermission permission) =>
+String permissionLabel(AppLocalizations l10n, WorkspacePermission permission) =>
     switch (permission) {
         WorkspacePermission.manageRoles =>
-          l10n?.permManageRoles ?? 'Manage roles & permissions',
+          l10n.permManageRoles,
         WorkspacePermission.manageMembers =>
-          l10n?.permManageMembers ?? 'Manage members',
+          l10n.permManageMembers,
         WorkspacePermission.manageValidation =>
-          l10n?.permManageValidation ?? 'Configure validation policies',
+          l10n.permManageValidation,
         WorkspacePermission.workspaceSettings =>
-          l10n?.permWorkspaceSettings ?? 'Edit workspace settings',
+          l10n.permWorkspaceSettings,
         WorkspacePermission.issueInvoices =>
-          l10n?.permIssueInvoices ?? 'Issue invoices & match payments',
+          l10n.permIssueInvoices,
         WorkspacePermission.viewFinances =>
-          l10n?.permViewFinances ?? 'View workspace finances',
+          l10n.permViewFinances,
         WorkspacePermission.manageDocuments =>
-          l10n?.permManageDocuments ?? 'Manage the document library',
+          l10n.permManageDocuments,
         WorkspacePermission.manageServices =>
-          l10n?.permManageServices ?? 'Manage services & packages',
+          l10n.permManageServices,
         WorkspacePermission.approveExpenses =>
-          l10n?.permApproveExpenses ?? 'Approve expenses',
+          l10n.permApproveExpenses,
         WorkspacePermission.viewNegotiations =>
-          l10n?.permViewNegotiations ?? 'View commercial agreements',
+          l10n.permViewNegotiations,
         WorkspacePermission.manageNegotiations =>
-          l10n?.permManageNegotiations ?? 'Manage commercial agreements',
+          l10n.permManageNegotiations,
         WorkspacePermission.paymentTermsEdit =>
-          l10n?.permPaymentTermsEdit ?? 'Request payment-condition changes',
+          l10n.permPaymentTermsEdit,
         WorkspacePermission.manageSites =>
-          l10n?.permManageSites ?? 'Manage sites and edit the floor plan',
+          l10n.permManageSites,
         WorkspacePermission.manageBilling =>
-          l10n?.permManageBilling ?? 'Manage tariffs and billing rules',
+          l10n.permManageBilling,
         WorkspacePermission.manageReservations =>
-          l10n?.permManageReservations ?? 'Manage reservations of others',
+          l10n.permManageReservations,
         WorkspacePermission.operateKiosk =>
-          l10n?.permOperateKiosk ?? 'Operate the kiosk and badges',
+          l10n.permOperateKiosk,
         WorkspacePermission.exportData =>
-          l10n?.permExportData ?? 'Export accounting and data',
+          l10n.permExportData,
         WorkspacePermission.designDocuments =>
-          l10n?.permDesignDocuments ?? 'Design the documents',
+          l10n.permDesignDocuments,
         WorkspacePermission.viewPersonalData =>
-          l10n?.permViewPersonalData ?? 'Read members\' personal data',
+          l10n.permViewPersonalData,
         WorkspacePermission.manageIntegrations =>
-          l10n?.permManageIntegrations ?? 'Manage integrations',
+          l10n.permManageIntegrations,
         WorkspacePermission.manageConfiguration =>
-          l10n?.permManageConfiguration ?? 'Manage the configuration',
+          l10n.permManageConfiguration,
         WorkspacePermission.deployToProd =>
-          l10n?.permDeployToProd ?? 'Deploy to production',
+          l10n.permDeployToProd,
         WorkspacePermission.deployToDev =>
-          l10n?.permDeployToDev ?? 'Deploy to development',
+          l10n.permDeployToDev,
         WorkspacePermission.accessProd =>
-          l10n?.permAccessProd ?? 'Enter the production workspace',
+          l10n.permAccessProd,
         WorkspacePermission.viewAnalytics =>
-          l10n?.permViewAnalytics ?? 'Read the workspace figures',
+          l10n.permViewAnalytics,
         WorkspacePermission.useMessages =>
-          l10n?.permUseMessages ?? 'Use the messenger',
+          l10n.permUseMessages,
         WorkspacePermission.makeReservations =>
-          l10n?.permMakeReservations ?? 'Book and use reservations',
+          l10n.permMakeReservations,
         WorkspacePermission.viewCalendar =>
-          l10n?.permViewCalendar ?? 'See the calendar',
+          l10n.permViewCalendar,
         WorkspacePermission.viewDirectory =>
-          l10n?.permViewDirectory ?? 'See the member directory',
+          l10n.permViewDirectory,
         WorkspacePermission.viewMyMoney =>
-          l10n?.permViewMyMoney ?? 'See their own account and invoices',
+          l10n.permViewMyMoney,
         WorkspacePermission.viewDocuments =>
-          l10n?.permViewDocuments ?? 'See the shared documents',
+          l10n.permViewDocuments,
       };

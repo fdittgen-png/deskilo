@@ -4,6 +4,7 @@
 // bands that print what was paid ahead, what was consumed and the
 // records behind it; reachable from the Usage face.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
@@ -27,8 +28,8 @@ void main() {
   test('the kind is registered and its default bands render the sample', () {
     expect(reportKindById('usage'), isNotNull);
     final report = renderReportBands(
-      bands: defaultUsageBands(null),
-      data: sampleReportData(null),
+      bands: defaultUsageBands(englishL10n),
+      data: sampleReportData(englishL10n),
     );
     expect(report, isNotNull);
     final header = report!.header.map(_text).join('\n');

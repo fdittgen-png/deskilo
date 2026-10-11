@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/currencies.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accountant_handoff.dart';
@@ -9,28 +10,22 @@ import '../../domain/accountant_handoff.dart';
 String _amount(int minor, String currency) =>
     '${Currencies.toMajor(minor, currency).toStringAsFixed(Currencies.minorDigits(currency))} $currency';
 
-String _handoffFindingLabel(AppLocalizations? l10n, HandoffFinding f) =>
+String _handoffFindingLabel(AppLocalizations l10n, HandoffFinding f) =>
     switch (f.kind) {
       HandoffFindingKind.missingCurrency =>
-        l10n?.handoffMissingCurrency(f.subject) ?? '${f.subject}: no currency',
+        l10n.handoffMissingCurrency(f.subject),
       HandoffFindingKind.duplicateDocument =>
-        l10n?.handoffDuplicate(f.subject) ??
-            '${f.subject}: appears twice in the source',
+        l10n.handoffDuplicate(f.subject),
       HandoffFindingKind.orphanMatch =>
-        l10n?.handoffOrphanMatch(f.subject) ??
-            'A payment (${f.subject}) belongs to no document of this export',
+        l10n.handoffOrphanMatch(f.subject),
       HandoffFindingKind.rowCountMismatch =>
-        l10n?.handoffRowMismatch(f.subject) ??
-            'The file rows do not match the documents (${f.subject})',
+        l10n.handoffRowMismatch(f.subject),
       HandoffFindingKind.overpaid =>
-        l10n?.handoffOverpaid(f.subject) ??
-            '${f.subject}: paid more than it charges',
+        l10n.handoffOverpaid(f.subject),
       HandoffFindingKind.unsupportedCurrency =>
-        l10n?.handoffUnsupportedCurrency(f.subject) ??
-            '${f.subject}: its currency has no reviewed number of decimals',
+        l10n.handoffUnsupportedCurrency(f.subject),
       HandoffFindingKind.amountOutOfRange =>
-        l10n?.handoffAmountOutOfRange(f.subject) ??
-            '${f.subject}: a total too large to carry exactly',
+        l10n.handoffAmountOutOfRange(f.subject),
     };
 
 /// #1640 — before the accountant CSV is saved: what it holds, what it
@@ -41,18 +36,16 @@ Future<bool> showAccountantHandoffPreflight(
   BuildContext context,
   AccountantHandoff report,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final textTheme = Theme.of(context).textTheme;
   final lines = <Widget>[
     Text(
-      l10n?.handoffIncluded('${report.included}') ??
-          '${report.included} document(s) in the file',
+      l10n.handoffIncluded('${report.included}'),
       key: const ValueKey('handoff-included'),
     ),
     for (final e in report.excluded.entries)
       Text(
-        l10n?.handoffExcludedSettlements('${e.value}') ??
-            '${e.value} settlement summary(ies) left out: their invoices are already listed',
+        l10n.handoffExcludedSettlements('${e.value}'),
         key: ValueKey('handoff-excluded-${e.key}'),
       ),
     const SizedBox(height: AppSpacing.sm),
@@ -61,18 +54,16 @@ Future<bool> showAccountantHandoffPreflight(
       for (final l in c.value.entries)
         Text(
           key: ValueKey('handoff-total-${c.key}-${l.key}'),
-          '${l.key == 'voided' ? (l10n?.handoffVoided ?? 'Voided') : (l10n?.handoffIssued ?? 'Issued')}: '
+          '${l.key == 'voided' ? (l10n.handoffVoided) : (l10n.handoffIssued)}: '
           '${l.value.count} · ${_amount(l.value.grossMinor, c.key)}',
         ),
       if (report.payments[c.key] case final p?)
         Text(
           key: ValueKey('handoff-payments-${c.key}'),
-          l10n?.handoffPayments(
+          l10n.handoffPayments(
                 _amount(p.confirmedMinor, c.key),
                 _amount(p.pendingMinor, c.key),
-              ) ??
-              'Paid: ${_amount(p.confirmedMinor, c.key)} confirmed, '
-                  '${_amount(p.pendingMinor, c.key)} pending',
+              ),
         ),
     ],
     if (report.findings.isNotEmpty) ...[
@@ -88,8 +79,7 @@ Future<bool> showAccountantHandoffPreflight(
     ],
     if (!report.clean)
       Text(
-        l10n?.handoffBlocked ??
-            'This file cannot be handed over until the source is corrected.',
+        l10n.handoffBlocked,
         key: const ValueKey('handoff-blocked'),
         style: textTheme.bodySmall?.copyWith(
           color: Theme.of(context).colorScheme.error,
@@ -100,7 +90,7 @@ Future<bool> showAccountantHandoffPreflight(
     context: context,
     builder: (context) => AlertDialog(
       key: const ValueKey('handoff-preflight'),
-      title: Text(l10n?.handoffTitle ?? 'Before you save'),
+      title: Text(l10n.handoffTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -112,12 +102,12 @@ Future<bool> showAccountantHandoffPreflight(
         TextButton(
           key: const ValueKey('accountant-handoff-preflight-cancel'),
           onPressed: () => Navigator.pop(context, false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('handoff-save'),
           onPressed: report.clean ? () => Navigator.pop(context, true) : null,
-          child: Text(l10n?.handoffSave ?? 'Save file and report'),
+          child: Text(l10n.handoffSave),
         ),
       ],
     ),

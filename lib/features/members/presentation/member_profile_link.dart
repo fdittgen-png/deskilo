@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/domain/reservation.dart';
 import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
@@ -104,7 +104,7 @@ Future<void> _launchLink(
   WidgetRef ref,
   Uri uri,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   try {
     final handled = await ref.read(linkLauncherProvider)(uri);
     if (!handled) throw StateError('no handler for $uri');
@@ -118,8 +118,7 @@ Future<void> _launchLink(
     if (!context.mounted) return;
     AppSnack.error(
       context,
-      l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      l10n.workspaceGenericError,
     );
   }
 }

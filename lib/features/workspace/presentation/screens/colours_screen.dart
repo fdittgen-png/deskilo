@@ -12,13 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../l10n/app_localizations_en.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
@@ -62,9 +61,9 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
   }
 
   Future<void> _apply(String text) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final errorText =
-        l10n?.coloursSaveFailed ?? 'The colour could not be saved. Nothing changed.';
+        l10n.coloursSaveFailed;
     final colours = ref.read(workspaceColoursProvider);
     final workspace = await ref.read(currentWorkspaceProvider.future);
     if (workspace == null || !mounted) return;
@@ -84,23 +83,22 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     switch (outcome) {
       case ColourApplied(:final hex):
         ref.invalidate(myWorkspacesProvider);
-        AppSnack.success(context, l10n?.coloursApplied(hex) ?? 'Colour $hex applied.');
+        AppSnack.success(context, l10n.coloursApplied(hex));
       case ColourReset():
         ref.invalidate(myWorkspacesProvider);
         setState(() => _field.text = '');
         AppSnack.success(
-            context, l10n?.coloursResetDone ?? 'The product colours are back.');
+            context, l10n.coloursResetDone);
       case ColourMalformed(:final text):
         AppSnack.error(
-            context, l10n?.coloursMalformed(text) ?? '$text is not a #RRGGBB colour.');
+            context, l10n.coloursMalformed(text));
       case ColourRefused(:final pair):
         AppSnack.error(context,
-            l10n?.coloursRefused(pair) ?? 'Refused: $pair would be unreadable.');
+            l10n.coloursRefused(pair));
       case ColourTooMany(:final most):
         AppSnack.error(
             context,
-            l10n?.coloursTooMany(most) ??
-                'The plan paints at most $most room colours.');
+            l10n.coloursTooMany(most));
       case null:
         break;
     }
@@ -109,9 +107,8 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
   /// The room fills, written as one list: the order is what the plan
   /// reads, so a partial write would repaint the wrong rooms.
   Future<void> _saveFills(List<String> fills) async {
-    final l10n = AppLocalizations.of(context);
-    final errorText = l10n?.coloursSaveFailed ??
-        'The colour could not be saved. Nothing changed.';
+    final l10n = context.l10n;
+    final errorText = l10n.coloursSaveFailed;
     final colours = ref.read(workspaceColoursProvider);
     final workspace = await ref.read(currentWorkspaceProvider.future);
     if (workspace == null || !mounted) return;
@@ -135,18 +132,17 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
       case ColourReset():
         setState(() => _fills = const []);
         AppSnack.success(
-            context, l10n?.coloursResetDone ?? 'The product colours are back.');
+            context, l10n.coloursResetDone);
       case ColourApplied():
         AppSnack.success(context,
-            l10n?.coloursRoomsSaved(fills.length) ?? '${fills.length} saved.');
+            l10n.coloursRoomsSaved(fills.length));
       case ColourMalformed(:final text):
         AppSnack.error(context,
-            l10n?.coloursMalformed(text) ?? '$text is not a #RRGGBB colour.');
+            l10n.coloursMalformed(text));
       case ColourTooMany(:final most):
         AppSnack.error(
             context,
-            l10n?.coloursTooMany(most) ??
-                'The plan paints at most $most room colours.');
+            l10n.coloursTooMany(most));
       case ColourRefused() || null:
         break;
     }
@@ -155,7 +151,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
   /// #2313 — the pattern the colour is drawn in where the space is told
   /// apart from the others.
   Future<void> _savePattern(BrandPattern pattern) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final colours = ref.read(workspaceColoursProvider);
     final workspace = await ref.read(currentWorkspaceProvider.future);
     if (workspace == null || !mounted) return;
@@ -164,7 +160,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
       context,
       domain: 'workspace',
       message: 'workspace pattern save failed',
-      errorText: (l10n ?? AppLocalizationsEn()).coloursSaveFailed,
+      errorText: l10n.coloursSaveFailed,
       action: () => colours.choosePattern(
         workspaceId: workspace.id,
         pattern: pattern == BrandPattern.solid ? null : pattern,
@@ -174,12 +170,12 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     setState(() => _busy = false);
     if (!ok) return;
     ref.invalidate(myWorkspacesProvider);
-    AppSnack.success(context, (l10n ?? AppLocalizationsEn()).coloursPatternSaved);
+    AppSnack.success(context, l10n.coloursPatternSaved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final stored = WorkspaceBranding.fromJson(workspace?.branding ?? const {});
     if (!_seeded && workspace != null) {
@@ -194,14 +190,12 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.coloursTitle ?? 'Colours')),
+      appBar: AppBar(title: Text(l10n.coloursTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.coloursIntro ??
-                'One colour, and the app derives its light and dark themes '
-                    'from it. Everything else keeps the product palette.',
+            l10n.coloursIntro,
             key: const ValueKey('colours-intro'),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -227,10 +221,9 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             controller: _field,
             enabled: !_busy,
             decoration: InputDecoration(
-              labelText: l10n?.coloursHexLabel ?? 'Colour',
+              labelText: l10n.coloursHexLabel,
               hintText: '#C2410C',
-              helperText: l10n?.coloursHexHint ??
-                  'Six hexadecimal digits. Leave empty for the product colours.',
+              helperText: l10n.coloursHexHint,
             ),
             onChanged: (_) => setState(() {}),
           ),
@@ -239,15 +232,14 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             InlineBanner(
               key: const ValueKey('colours-refusal'),
               icon: Icons.block,
-              text: l10n?.coloursRefused(refusals.first) ??
-                  'Refused: ${refusals.first} would be unreadable.',
+              text: l10n.coloursRefused(refusals.first),
             ),
           ],
           const SizedBox(height: AppSpacing.md),
           _Preview(
             key: const ValueKey('colours-preview'),
             brand: typed == null ? null : Color(typed),
-            title: l10n?.coloursPreview ?? 'What it looks like',
+            title: l10n.coloursPreview,
           ),
           const SizedBox(height: AppSpacing.md),
           // Wrap, not Row: "Product colours" is a long word in four of
@@ -262,14 +254,14 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
                 onPressed: _busy || refusals.isNotEmpty
                     ? null
                     : () => _apply(_field.text),
-                child: Text(l10n?.commonSave ?? 'Save'),
+                child: Text(l10n.commonSave),
               ),
               TextButton(
                 key: const ValueKey('colours-reset'),
                 onPressed: _busy || stored.seedArgb == null
                     ? null
                     : () => _apply(''),
-                child: Text(l10n?.coloursReset ?? 'Product colours'),
+                child: Text(l10n.coloursReset),
               ),
             ],
           ),
@@ -298,16 +290,14 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             const SizedBox(height: AppSpacing.lg),
             EmblemEditor(workspaceId: workspace.id),
             Text(
-              (l10n ?? AppLocalizationsEn()).coloursLogoHint,
+              l10n.coloursLogoHint,
               key: const ValueKey('colours-logo-hint'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
           const SizedBox(height: AppSpacing.md),
           Text(
-            l10n?.coloursNeverTheirs ??
-                'The DesKilo mark, the colours of the seat states and the '
-                    'production banner are the product’s, in every space.',
+            l10n.coloursNeverTheirs,
             key: const ValueKey('colours-never'),
             style: Theme.of(context).textTheme.bodySmall,
           ),
@@ -366,7 +356,7 @@ class _Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -377,14 +367,14 @@ class _Preview extends StatelessWidget {
             Expanded(
               child: _Sample(
                 theme: DeskiloTheme.light(brand: brand),
-                label: l10n?.coloursLight ?? 'Light',
+                label: l10n.coloursLight,
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _Sample(
                 theme: DeskiloTheme.dark(brand: brand),
-                label: l10n?.coloursDark ?? 'Dark',
+                label: l10n.coloursDark,
               ),
             ),
           ],
@@ -423,7 +413,7 @@ class _Sample extends StatelessWidget {
               borderRadius: AppRadius.smAll,
             ),
             child: Text(
-              AppLocalizations.of(context)?.commonSave ?? 'Save',
+              context.l10n.commonSave,
               style: TextStyle(color: cs.onPrimary),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -367,7 +368,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               child: Row(
                 key: ValueKey('invoice-preview-line-$i'),
                 children: [
-                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n), line,
+                  Expanded(child: Text(invoiceLineText(reportStringsOf(l10n ?? englishL10n), line,
                       association: widget.association, period: _period))),
                   Text(widget.currency.formatMinor(line.amountCents)),
                 ],

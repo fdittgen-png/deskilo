@@ -14742,6 +14742,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Vrai sur un avoir';
 
   @override
+  String get reportFieldMeaningDeclarationNote =>
+      'La mise en garde de la déclaration : vérifier avant de déposer';
+
+  @override
   String get reportFieldMeaningDueDate => 'La date d\'échéance';
 
   @override

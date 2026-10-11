@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/server_label.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
@@ -38,7 +38,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = context.l10n;
     final provider = publicDirectoryProvider(
       _query,
       sourcePage: _sources,
@@ -55,12 +55,12 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         subtitle: Text(
           [
             w.text('address'),
-            if (l != null && w.source.isNotEmpty) serverLabel(l, w.source),
+            if (w.source.isNotEmpty) serverLabel(l, w.source),
           ].where((part) => part.isNotEmpty).join(' · '),
         ),
         trailing: IconButton(
           key: ValueKey('directory-locate-${w.source}/${w.id}'),
-          tooltip: l?.directoryLocate ?? 'Locate on map',
+          tooltip: l.directoryLocate,
           icon: const Icon(Icons.location_on_outlined),
           onPressed: () => setState(() { _selected = w; _map = true; }),
         ),
@@ -117,13 +117,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                           children: [
                             if (result.unavailable.isNotEmpty)
                               Text(
-                                '${l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.'}\n${result.unavailable.join('\n')}',
+                                '${l.portalDirectoryUnavailable}\n${result.unavailable.join('\n')}',
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             if (result.incompatible.isNotEmpty)
                               Text(
                                 key: const ValueKey('directory-incompatible'),
-                                '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
+                                '${l.portalDirectoryIncompatible}\n${result.incompatible.join('\n')}',
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                           ],
@@ -159,7 +159,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                       borderRadius: AppRadius.lgAll,
                       child: Padding(
                         padding: AppSpacing.mdAll,
-                        child: Text(l?.portalNoWorkspaces ?? 'No published workspaces found.'),
+                        child: Text(l.portalNoWorkspaces),
                       ),
                     ),
                   )
@@ -180,10 +180,10 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
               key: const ValueKey('directory-portal-search-2'),
               controller: _search,
               decoration: InputDecoration(
-                labelText: l?.portalSearch ?? 'Search workspaces',
+                labelText: l.portalSearch,
                 suffixIcon: IconButton(
                   key: const ValueKey('directory-portal-search'),
-                  tooltip: l?.portalSearch ?? 'Search workspaces',
+                  tooltip: l.portalSearch,
                   icon: const Icon(Icons.search),
                   onPressed: () => setState(() {
                     _query = _search.text;
@@ -204,11 +204,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         automaticallyImplyLeading: !widget.embedded,
         title: widget.embedded
             ? null
-            : Text(l?.portalDiscover ?? 'Find a workspace'),
+            : Text(l.portalDiscover),
         actions: [
           IconButton(
             key: const ValueKey('directory-portal-list'),
-            tooltip: _map ? (l?.portalList ?? 'List') : (l?.portalMap ?? 'Map'),
+            tooltip: _map ? (l.portalList) : (l.portalMap),
             icon: Icon(_map ? Icons.list : Icons.map_outlined),
             onPressed: () => setState(() => _map = !_map),
           ),
@@ -216,8 +216,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             IconButton(
               key: const ValueKey('directory-portal-register-directory'),
               tooltip:
-                  l?.portalRegisterDirectory ??
-                  'Publish a server in the directory',
+                  l.portalRegisterDirectory,
               icon: const Icon(Icons.add_business_outlined),
               // #2343 — opens on this device's own server: the one an
               // operator most often wants listed.
@@ -248,7 +247,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                       key: const ValueKey('directory-portal-directory-unavailable'),
                       onPressed: () => ref.invalidate(provider),
                       child: Text(
-                        '${l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.'}\n${result.unavailable.join('\n')}',
+                        '${l.portalDirectoryUnavailable}\n${result.unavailable.join('\n')}',
                       ),
                     ),
                   // #1847 — a card this version cannot interpret is not
@@ -256,11 +255,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   if (result.incompatible.isNotEmpty)
                     Text(
                       key: const ValueKey('directory-incompatible'),
-                      '${l?.portalDirectoryIncompatible ?? 'Some workspaces need a newer version of the app and are not shown.'}\n${result.incompatible.join('\n')}',
+                      '${l.portalDirectoryIncompatible}\n${result.incompatible.join('\n')}',
                     ),
                   if (result.workspaces.isEmpty)
                     Text(
-                      l?.portalNoWorkspaces ?? 'No published workspaces found.',
+                      l.portalNoWorkspaces,
                     ),
                   for (final w in result.workspaces) card(w),
                   Row(
@@ -316,7 +315,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                             _selected = null;
                           }),
                           child: Text(
-                            l?.portalMoreDirectories ?? 'More directories',
+                            l.portalMoreDirectories,
                           ),
                         ),
                     ],
@@ -330,7 +329,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   key: const ValueKey('directory-portal-directory-unavailable-2'),
                   onPressed: () => ref.invalidate(provider),
                   child: Text(
-                    l?.portalDirectoryUnavailable ?? 'Some directories could not be reached. Results are incomplete.',
+                    l.portalDirectoryUnavailable,
                   ),
                 ),
               ),

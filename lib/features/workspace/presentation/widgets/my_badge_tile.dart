@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../profile/providers/profile_providers.dart';
 import '../../domain/member.dart';
@@ -23,7 +23,7 @@ class MyBadgeTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final myProfile = ref.watch(myProfileProvider).value;
     return Column(mainAxisSize: MainAxisSize.min, children: [
       // My badge (0053): the member's own kiosk credentials — mint
@@ -34,7 +34,7 @@ class MyBadgeTile extends ConsumerWidget {
         ListTile(
           key: const ValueKey('settings-my-badge'),
           leading: const Icon(Icons.badge_outlined),
-          title: Text(l10n?.myBadgeTitle ?? 'My badge'),
+          title: Text(l10n.myBadgeTitle),
           onTap: () {
             final workspace =
                 ref.read(currentWorkspaceProvider).value;

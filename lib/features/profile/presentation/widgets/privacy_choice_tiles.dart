@@ -6,11 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/push/push_opt_out.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/privacy_choices.dart';
 import '../../domain/privacy_notice.dart';
 import '../../providers/profile_providers.dart';
@@ -22,7 +22,7 @@ class SpaceNoticeTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final notices = ref.watch(privacyNoticesProvider).value;
     final workspaceId = notices?.workspaceId;
     final notice = notices?.workspace;
@@ -31,12 +31,11 @@ class SpaceNoticeTile extends ConsumerWidget {
     return ListTile(
       key: const ValueKey('privacy-space-notice'),
       leading: const Icon(Icons.article_outlined),
-      title: Text(l10n?.privacySpaceNotice ?? 'This space\'s privacy notice'),
+      title: Text(l10n.privacySpaceNotice),
       subtitle: Text(
         acknowledged
-            ? (l10n?.privacySpaceNoticeRead ?? 'You acknowledged this version.')
-            : (l10n?.privacySpaceNoticeUnread ??
-                  'Not acknowledged yet — read it here.'),
+            ? (l10n.privacySpaceNoticeRead)
+            : (l10n.privacySpaceNoticeUnread),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _show(context, ref, workspaceId, notice, acknowledged),
@@ -50,7 +49,7 @@ class SpaceNoticeTile extends ConsumerWidget {
     PrivacyNotice notice,
     bool acknowledged,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final acknowledge = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -61,7 +60,7 @@ class SpaceNoticeTile extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n?.privacySpaceNotice ?? 'This space\'s privacy notice',
+                l10n.privacySpaceNotice,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -72,8 +71,7 @@ class SpaceNoticeTile extends ConsumerWidget {
                   key: const ValueKey('privacy-space-notice-acknowledge'),
                   onPressed: () => Navigator.of(context).pop(true),
                   child: Text(
-                    l10n?.privacySpaceNoticeAcknowledge ??
-                        'I have read this notice',
+                    l10n.privacySpaceNoticeAcknowledge,
                   ),
                 ),
             ],
@@ -87,8 +85,7 @@ class SpaceNoticeTile extends ConsumerWidget {
       domain: 'privacy',
       message: 'space notice acknowledgment failed',
       errorText:
-          l10n?.privacySpaceNoticeFailed ??
-          'The acknowledgment could not be recorded. Please try again.',
+          l10n.privacySpaceNoticeFailed,
       action: () => acknowledgeSpaceNotice(ref, workspaceId, notice.version),
     )) {
       return;
@@ -96,7 +93,7 @@ class SpaceNoticeTile extends ConsumerWidget {
     if (!context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.privacySpaceNoticeRead ?? 'You acknowledged this version.',
+      l10n.privacySpaceNoticeRead,
     );
   }
 }
@@ -107,19 +104,16 @@ class PushOptOutTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final optedOut = ref.watch(pushOptedOutProvider).value ?? false;
     return SwitchListTile(
       key: const ValueKey('privacy-push-on-device'),
       secondary: const Icon(Icons.notifications_outlined),
       title: Text(
-        l10n?.privacyPushOnDevice ?? 'Push notifications on this device',
+        l10n.privacyPushOnDevice,
       ),
       subtitle: Text(
-        l10n?.privacyPushOnDeviceHint ??
-            'Optional. On, this device\'s address and each notification go '
-                'to the push service; off, the app keeps working and '
-                'nothing is sent to this device.',
+        l10n.privacyPushOnDeviceHint,
       ),
       value: !optedOut,
       onChanged: (on) async {
@@ -128,8 +122,7 @@ class PushOptOutTile extends ConsumerWidget {
           domain: 'privacy',
           message: 'push opt-out failed',
           errorText:
-              l10n?.privacyPushOnDeviceFailed ??
-              'The choice could not be saved. Please try again.',
+              l10n.privacyPushOnDeviceFailed,
           action: () => setPushOnThisDevice(ref, on: on),
         );
       },

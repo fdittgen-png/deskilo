@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import 'time_zones.dart';
 
@@ -38,7 +38,7 @@ class _TimeZoneSheetState extends State<_TimeZoneSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final matches = TimeZones.search(_query);
     final media = MediaQuery.of(context);
     return Padding(
@@ -58,8 +58,8 @@ class _TimeZoneSheetState extends State<_TimeZoneSheet> {
               autofocus: true,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                labelText: l10n?.workspaceTimezoneLabel ?? 'Time zone',
-                hintText: l10n?.workspaceTimezoneHint ?? 'Europe/London',
+                labelText: l10n.workspaceTimezoneLabel,
+                hintText: l10n.workspaceTimezoneHint,
               ),
               onChanged: (q) => setState(() => _query = q),
             ),

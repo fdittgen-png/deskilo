@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -188,7 +189,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
       return const LoadingView();
@@ -215,7 +216,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
           onSelected: (id) =>
               ref.read(browsedLevelProvider.notifier).select(id),
           // Sentinel chip FIRST: stack every level in one grid.
-          allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
+          allLevelsLabel: l10n.calendarAllLevels,
           allLevelsSelected: allSelected,
           onAllLevelsSelected: () =>
               ref.read(browsedLevelProvider.notifier).selectAll(),
@@ -230,7 +231,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
   }
 
   Widget _singleLevelBody(BuildContext context, Level level) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final planAsync = ref.watch(floorPlanProvider(level.id));
     return switch (planAsync) {
       AsyncData(value: final plan) => _grid(context, [(null, plan)]),
@@ -265,7 +266,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
   /// Unlike the timeline there is no per-day empty case — the grid shows
   /// EVERY seat so free weeks read as free — so the only empty state is a
   /// workspace without a drawn plan.
-  Widget _emptyHint(AppLocalizations? l10n) {
+  Widget _emptyHint(AppLocalizations l10n) {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
@@ -274,7 +275,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
           child: EmptyState(
             icon: Icons.view_week_outlined,
             title:
-                l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
+                l10n.planNoLevels,
           ),
         ),
       ],
@@ -285,7 +286,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
   /// one `(null, plan)` entry (no level-header row); all-levels mode
   /// passes every level's plan in [levelsProvider]'s sortOrder.
   Widget _grid(BuildContext context, List<(Level?, FloorPlan)> plans) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final brightness = Theme.of(context).brightness;
     if (!plans.any((e) => e.$2.seats.isNotEmpty)) {
       return _emptyHint(l10n);
@@ -745,7 +746,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     List<Reservation> items,
   ) async {
     final names = ref.read(memberNamesProvider).value ?? const {};
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final sorted = [...items]
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
     final picked = await showModalBottomSheet<Reservation>(
@@ -797,7 +798,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
   String _occupantLine(
     Reservation r,
     Map<String, String> names,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
   ) {
     final range = bookingRangeText(context, appFormatOf(context), l10n, r.startsAt, r.endsAt);
     if (!widget.everyone) return range;

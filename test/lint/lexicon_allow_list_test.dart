@@ -18,6 +18,7 @@
 // SQL and the allow-list is Dart.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/core/l10n/lexicon_defaults.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -161,7 +162,7 @@ void main() {
     // `legendFree` on screen where "Free" belongs. Nothing else would
     // catch that: it renders, it just renders nonsense.
     final unresolved = lexiconAllowList.keys
-        .where((k) => lexiconDefault(null, k) == k)
+        .where((k) => lexiconDefault(englishL10n, k) == k)
         .toList()
       ..sort();
     expect(unresolved, isEmpty,
@@ -185,7 +186,7 @@ void main() {
     for (final key in rendered.toList()..sort()) {
       final where = [
         if (!lexiconAllowList.containsKey(key)) 'lexiconAllowList',
-        if (lexiconDefault(null, key) == key) 'lexiconDefault',
+        if (lexiconDefault(englishL10n, key) == key) 'lexiconDefault',
         if (!server.contains(key)) 'lexicon_allowed_keys()',
       ];
       if (where.isNotEmpty) offenders.add('$key — missing from ${where.join(', ')}');

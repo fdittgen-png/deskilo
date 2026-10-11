@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_overview.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -28,7 +28,7 @@ Future<void> showWorkspaceOwnersSheet(
     context: context,
     showDragHandle: true,
     builder: (context) {
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       final theme = Theme.of(context);
       return SafeArea(
         child: Padding(
@@ -38,8 +38,7 @@ Future<void> showWorkspaceOwnersSheet(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n?.profilesOwnersOf(workspace.name) ??
-                    'Owners of ${workspace.name}',
+                l10n.profilesOwnersOf(workspace.name),
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -54,7 +53,7 @@ Future<void> showWorkspaceOwnersSheet(
                   }
                   final rows = snapshot.data!;
                   if (rows.isEmpty) {
-                    return Text(l10n?.profilesOwnersNone ?? 'No owner.');
+                    return Text(l10n.profilesOwnersNone);
                   }
                   return Column(
                     mainAxisSize: MainAxisSize.min,
@@ -67,7 +66,7 @@ Future<void> showWorkspaceOwnersSheet(
                           subtitle: Text(owner.email),
                           trailing: IconButton(
                             key: ValueKey('workspace-owner-copy-email-${owner.memberId}'),
-                            tooltip: l10n?.profilesCopyEmail ?? 'Copy e-mail',
+                            tooltip: l10n.profilesCopyEmail,
                             icon: const Icon(Icons.copy_outlined),
                             onPressed: () async {
                               await Clipboard.setData(
@@ -76,7 +75,7 @@ Future<void> showWorkspaceOwnersSheet(
                               if (context.mounted) {
                                 AppSnack.success(
                                   context,
-                                  l10n?.profilesEmailCopied ?? 'E-mail copied.',
+                                  l10n.profilesEmailCopied,
                                 );
                               }
                             },

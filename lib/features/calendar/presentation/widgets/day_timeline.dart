@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -206,13 +207,13 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       widget.onReservationTap(reservation);
       return;
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final names = ref.read(memberNamesProvider).value ?? const {};
     final name = names[reservation.memberId] ?? '';
     final until =
         ref.watch(appFormatProvider).time(reservation.endsAt);
-    final message = '${l10n?.planOccupiedBy(name) ?? 'Occupied by $name'} · '
-        '${l10n?.planUntil(until) ?? 'until $until'}';
+    final message = '${l10n.planOccupiedBy(name)} · '
+        '${l10n.planUntil(until)}';
     AppSnack.info(context, message, replace: true);
   }
 
@@ -244,7 +245,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
       return const LoadingView();
@@ -273,7 +274,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
           onSelected: (id) =>
               ref.read(browsedLevelProvider.notifier).select(id),
           // Sentinel chip FIRST: stack every level on one axis (#221).
-          allLevelsLabel: l10n?.calendarAllLevels ?? 'All levels',
+          allLevelsLabel: l10n.calendarAllLevels,
           allLevelsSelected: allSelected,
           onAllLevelsSelected: () =>
               ref.read(browsedLevelProvider.notifier).selectAll(),
@@ -307,7 +308,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     Level level,
     Map<String, String> names,
   ) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final planAsync = ref.watch(floorPlanProvider(level.id));
     return switch (planAsync) {
       AsyncData(value: final plan) => _grid(context, [(null, plan)], names),
@@ -345,12 +346,10 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     return _grid(context, plans, names);
   }
 
-  Widget _emptyHint(AppLocalizations? l10n, {required bool allLevels}) {
+  Widget _emptyHint(AppLocalizations l10n, {required bool allLevels}) {
     final hint = allLevels
-        ? (l10n?.calendarTimelineAllEmpty ??
-            'No reservations on any level for this day.')
-        : (l10n?.calendarTimelineEmpty ??
-            'No reservations on this level for this day.');
+        ? (l10n.calendarTimelineAllEmpty)
+        : (l10n.calendarTimelineEmpty);
     // Stays a scrollable so an enclosing RefreshIndicator keeps working.
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -374,7 +373,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     List<(Level?, FloorPlan)> plans,
     Map<String, String> names,
   ) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
     final allLevels = plans.any((e) => e.$1 != null);
@@ -600,7 +599,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     required bool collapsed,
   }) {
     final scheme = Theme.of(context).colorScheme;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return SizedBox(
       key: DayTimeline.levelHeaderKey(level.id),
       height: TimelineAxis.levelHeaderRowHeight,
@@ -627,10 +626,8 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   semanticsLabel: collapsed
-                      ? (l10n?.calendarLevelCollapsed(level.name) ??
-                          '${level.name}, collapsed')
-                      : (l10n?.calendarLevelExpanded(level.name) ??
-                          '${level.name}, expanded'),
+                      ? (l10n.calendarLevelCollapsed(level.name))
+                      : (l10n.calendarLevelExpanded(level.name)),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: scheme.primary,
                       ),

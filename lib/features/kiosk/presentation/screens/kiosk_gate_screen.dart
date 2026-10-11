@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/kiosk_mode.dart';
 
@@ -15,7 +15,7 @@ class KioskGateScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
       body: SafeArea(
@@ -35,7 +35,7 @@ class KioskGateScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
-                    l10n?.kioskGateTitle ?? 'Start kiosk mode?',
+                    l10n.kioskGateTitle,
                     key: const ValueKey('kiosk-gate-title'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineSmall,
@@ -48,12 +48,7 @@ class KioskGateScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.md),
                   Text(
-                    l10n?.kioskGateBody ??
-                        'This account is set up as the workspace kiosk. '
-                            'In kiosk mode the tablet only shows the floor '
-                            'plan for badge check-in — nothing else can be '
-                            'opened. To leave kiosk mode, restart the '
-                            'tablet.',
+                    l10n.kioskGateBody,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -64,7 +59,7 @@ class KioskGateScreen extends ConsumerWidget {
                         ref.read(kioskModeProvider.notifier).accept(),
                     icon: const Icon(Icons.lock_outline),
                     label: Text(
-                      l10n?.kioskGateStart ?? 'Start kiosk mode',
+                      l10n.kioskGateStart,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -73,8 +68,7 @@ class KioskGateScreen extends ConsumerWidget {
                     onPressed: () =>
                         ref.read(kioskModeProvider.notifier).reject(),
                     child: Text(
-                      l10n?.kioskGateReject ??
-                          'Not now — open the app normally',
+                      l10n.kioskGateReject,
                     ),
                   ),
                 ],

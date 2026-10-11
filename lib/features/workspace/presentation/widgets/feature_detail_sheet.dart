@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_copy.dart';
@@ -56,7 +56,7 @@ class _FeatureDetailSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final effective = effectiveFeatures(raw);
     final requires = requirementChain(feature);
@@ -88,17 +88,15 @@ class _FeatureDetailSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             _WhyLine(feature: feature, raw: raw, effective: effective),
             const SizedBox(height: AppSpacing.sm),
-            _Heading(l10n?.featureDetailProvides ?? 'Provides'),
+            _Heading(l10n.featureDetailProvides),
             Text(featureDescription(l10n, feature)),
             if (feature == WorkspaceFeature.adminInvoicing)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: Text(
-                  l10n?.featureDetailGrantsPermission(
+                  l10n.featureDetailGrantsPermission(
                         l10n.permIssueInvoices,
-                      ) ??
-                      'Grants administrators the permission '
-                          '"Issue invoices & match payments".',
+                      ),
                   key: const ValueKey('feature-detail-permission'),
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -106,7 +104,7 @@ class _FeatureDetailSheet extends StatelessWidget {
               ),
             _Relation(
               keyName: 'requires',
-              title: l10n?.featureDetailRequires ?? 'Requires',
+              title: l10n.featureDetailRequires,
               features: requires,
               home: home,
               mark: (f) => effective.contains(f)
@@ -115,7 +113,7 @@ class _FeatureDetailSheet extends StatelessWidget {
             ),
             _Relation(
               keyName: 'used-by',
-              title: l10n?.featureDetailUsedBy ?? 'Used by',
+              title: l10n.featureDetailUsedBy,
               features: usedBy,
               home: home,
               mark: (f) => effective.contains(f)
@@ -125,11 +123,11 @@ class _FeatureDetailSheet extends StatelessWidget {
             ExpansionTile(
               key: const ValueKey('feature-detail-technical'),
               tilePadding: EdgeInsets.zero,
-              title: Text(l10n?.featureDetailTechnical ?? 'Technical details'),
+              title: Text(l10n.featureDetailTechnical),
               children: [
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text(l10n?.featureDetailKey ?? 'Technical key'),
+                  title: Text(l10n.featureDetailKey),
                   subtitle: SelectableText(feature.dbKey,
                       key: const ValueKey('feature-detail-db-key'),
                       style: const TextStyle(fontFamily: 'monospace')),
@@ -141,7 +139,7 @@ class _FeatureDetailSheet extends StatelessWidget {
               key: const ValueKey('feature-detail-change'),
               onPressed: () => onChange(feature),
               icon: const Icon(Icons.tune),
-              label: Text(l10n?.featureDetailChange ?? 'Change it among the switches'),
+              label: Text(l10n.featureDetailChange),
             ),
           ],
         ),
@@ -164,7 +162,7 @@ class _WhyLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final String text;
     final IconData icon;
     final String keyName;
@@ -174,23 +172,21 @@ class _WhyLine extends StatelessWidget {
           if (effective.contains(f) && !internalCapabilities.containsKey(f)) f,
       ];
       if (neededBy.isEmpty) {
-        text = l10n?.featureDetailOn ?? 'Switched on.';
+        text = l10n.featureDetailOn;
         keyName = 'on';
       } else {
         final names = neededBy.map((f) => featureName(l10n, f)).join(', ');
-        text = l10n?.featureDetailOnNeededBy(names) ??
-            'Switched on, and needed by $names.';
+        text = l10n.featureDetailOnNeededBy(names);
         keyName = 'on-needed';
       }
       icon = Icons.check_circle_outline;
     } else if (raw.contains(feature)) {
       final waiting = requirementChain(feature).firstWhere((p) => !raw.contains(p));
-      text = l10n?.featureDetailHeldBack(featureName(l10n, waiting)) ??
-          'Switched on, but held back: it needs ${featureName(l10n, waiting)}, which is off.';
+      text = l10n.featureDetailHeldBack(featureName(l10n, waiting));
       icon = Icons.pause_circle_outline;
       keyName = 'held-back';
     } else {
-      text = l10n?.featureDetailOff ?? 'Switched off.';
+      text = l10n.featureDetailOff;
       icon = Icons.radio_button_unchecked;
       keyName = 'off';
     }
@@ -236,14 +232,14 @@ class _Relation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       key: ValueKey('feature-detail-$keyName'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _Heading(title),
         if (features.isEmpty)
-          Text(l10n?.featureDetailNone ?? 'Nothing.',
+          Text(l10n.featureDetailNone,
               style: Theme.of(context).textTheme.bodySmall)
         else
           for (final f in features)
@@ -254,9 +250,8 @@ class _Relation extends StatelessWidget {
               leading: Icon(mark(f), size: 18),
               title: Text(featureName(l10n, f)),
               subtitle: homeProcessOf(f) != null && homeProcessOf(f) != home
-                  ? Text(l10n?.processInProcess(
-                          processLabel(l10n, homeProcessOf(f)!)) ??
-                      'in ${processLabel(l10n, homeProcessOf(f)!)}')
+                  ? Text(l10n.processInProcess(
+                          processLabel(l10n, homeProcessOf(f)!)))
                   : null,
             ),
       ],

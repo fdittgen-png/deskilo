@@ -4,10 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
 import '../../providers/workspace_application_providers.dart';
@@ -59,15 +59,14 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
         ref.read(authStateProvider).value != widget.account) {
       return;
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _sending = true);
     final sent = await runGuarded(
       context,
       domain: 'workspace',
       message: 'application reply failed',
       errorText:
-          l10n?.applicationReplyFailed ??
-          'Your message was not sent. Your draft is kept; please try again.',
+          l10n.applicationReplyFailed,
       action: () => ref
           .read(applicationRepliesProvider)
           .send(
@@ -94,7 +93,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
     if (ref.watch(authStateProvider).value != widget.account) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final provider = workspaceApplicationThreadProvider(
       widget.application.id,
       before: _pages.lastOrNull,
@@ -121,7 +120,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                   padding: AppSpacing.mdAll,
                   children: [
                     if (rows.isEmpty)
-                      Text(l10n?.applicationNoMessages ?? 'No messages yet.'),
+                      Text(l10n.applicationNoMessages),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -159,18 +158,15 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                             children: [
                               Text(
                                 message.authorName.isEmpty
-                                    ? (l10n?.conversationUnknownMember ??
-                                          'Member')
+                                    ? (l10n.conversationUnknownMember)
                                     : message.authorName,
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                               if (message.kind != 'discussion')
                                 Text(
                                   message.kind == 'accepted'
-                                      ? (l10n?.applicationAcceptedVote ??
-                                            'Approved this request')
-                                      : (l10n?.applicationRefusedVote ??
-                                            'Refused this request'),
+                                      ? (l10n.applicationAcceptedVote)
+                                      : (l10n.applicationRefusedVote),
                                 ),
                               if (message.body.isNotEmpty)
                                 SelectableText(message.body),
@@ -190,7 +186,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                   child: TextButton(
                     key: const ValueKey('workspace-application-thread-retry'),
                     onPressed: () => ref.invalidate(provider),
-                    child: Text(l10n?.commonRetry ?? 'Try again'),
+                    child: Text(l10n.commonRetry),
                   ),
                 ),
                 _ => const LoadingView(),
@@ -210,14 +206,14 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                       maxLines: 3,
                       key: const ValueKey('application-reply'),
                       decoration: InputDecoration(
-                        labelText: l10n?.memberNoteHint ?? 'Your message',
+                        labelText: l10n.memberNoteHint,
                       ),
                     ),
                   ),
                   IconButton(
                     key: const ValueKey('workspace-application-thread-member-note-send'),
                     onPressed: _sending ? null : _send,
-                    tooltip: l10n?.memberNoteSend ?? 'Send',
+                    tooltip: l10n.memberNoteSend,
                     icon: const Icon(Icons.send_outlined),
                   ),
                 ],

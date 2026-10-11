@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -61,7 +61,7 @@ class MonthGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
 
     // Total bookable desks across every floor — the availability
@@ -170,11 +170,10 @@ class MonthGrid extends ConsumerWidget {
                 totalSeats: totalSeats,
                 closed: !open,
                 label: !open
-                    ? (lexiconText(context, key: 'reserveClosedShort', fallback: l10n?.reserveClosedShort ?? 'Closed'))
+                    ? (lexiconText(context, key: 'reserveClosedShort', fallback: l10n.reserveClosedShort))
                     : free == null
                         ? ''
-                        : (l10n?.monthFreeCount(free, totalSeats) ??
-                            '$free/$totalSeats'),
+                        : (l10n.monthFreeCount(free, totalSeats)),
                 onTap: inMonth ? () => onDaySelected(day) : null,
               );
             },

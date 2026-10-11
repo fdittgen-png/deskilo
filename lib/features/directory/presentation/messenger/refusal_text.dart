@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -9,28 +10,22 @@ import '../../application/messenger_actions.dart';
 import '../../domain/messenger.dart';
 
 /// #1824 — the sentence for a refusal the server explained.
-String refusalText(AppLocalizations? l10n, MessengerRefusal refusal) =>
+String refusalText(AppLocalizations l10n, MessengerRefusal refusal) =>
     switch (refusal) {
       MessengerRefusal.locked =>
-        l10n?.messengerForwardLocked ??
-            'The author locked this message against forwarding.',
+        l10n.messengerForwardLocked,
       MessengerRefusal.forwardingOff =>
-        l10n?.messengerRefusedForwardingOff ??
-            'This space does not allow forwarding its messages.',
+        l10n.messengerRefusedForwardingOff,
       MessengerRefusal.tooLong =>
-        l10n?.messengerRefusedTooLong ??
-            'This message is too long for that conversation.',
+        l10n.messengerRefusedTooLong,
       MessengerRefusal.closed =>
-        l10n?.messengerRefusedClosed ?? 'This inquiry is closed.',
+        l10n.messengerRefusedClosed,
       MessengerRefusal.unavailable =>
-        l10n?.messengerRefusedUnavailable ??
-            'This space does not take inquiries right now.',
+        l10n.messengerRefusedUnavailable,
       MessengerRefusal.requestPending =>
-        l10n?.messengerRefusedRequestPending ??
-            'Your first message is waiting for an answer.',
+        l10n.messengerRefusedRequestPending,
       MessengerRefusal.limit =>
-        l10n?.messengerRefusedLimit ??
-            'Too many at once. Please wait a minute.',
+        l10n.messengerRefusedLimit,
     };
 
 /// [runGuarded], except that a refusal the server explained is said in
@@ -67,7 +62,7 @@ Future<bool> runMessenger(
     if (context.mounted) {
       AppSnack.error(
         context,
-        refusalText(AppLocalizations.of(context), refusal),
+        refusalText(context.l10n, refusal),
       );
     }
     return false;

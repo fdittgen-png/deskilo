@@ -4,10 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/password_recovery.dart';
 import '../../domain/auth_outcome.dart';
 import '../auth_outcome_text.dart';
@@ -74,10 +74,10 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
     // Enter in a field and the button share this path; one intent, one
     // call, whichever arrives second while the first is in flight.
     if (_busy) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (_flow.step != RecoveryStep.request && _newPassword.text.length < 8) {
       setState(() =>
-          _error = l10n?.authPasswordTooShort ?? 'At least 8 characters');
+          _error = l10n.authPasswordTooShort);
       return;
     }
     setState(() {
@@ -101,32 +101,27 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
       _error = switch (turn.notice) {
         RecoveryNotice.none => null,
         RecoveryNotice.outcome => authOutcomeText(turn.result, l10n),
-        RecoveryNotice.sessionLost => l10n?.authRecoverySessionLost ??
-            'That code is no longer valid here. Request a new one.',
+        RecoveryNotice.sessionLost => l10n.authRecoverySessionLost,
       };
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final step = _flow.step;
     final atRequest = step == RecoveryStep.request;
     return SheetShell(
-      title: l10n?.authResetTitle ?? 'Reset password',
+      title: l10n.authResetTitle,
       children: [
         const SizedBox(height: AppSpacing.sm),
         Text(
           switch (step) {
-            RecoveryStep.request => l10n?.authResetExplainer ??
-                "We'll email you a one-time code. Use it here to set a new "
-                    'password.',
+            RecoveryStep.request => l10n.authResetExplainer,
             RecoveryStep.verify =>
-              l10n?.authResetCodeSent ?? 'Code sent — check your email.',
-            RecoveryStep.retryUpdate => l10n?.authRecoveryNotSaved ??
-                'Your code was accepted, but the new password was not '
-                    'saved. Try saving it again.',
+              l10n.authResetCodeSent,
+            RecoveryStep.retryUpdate => l10n.authRecoveryNotSaved,
           },
           key: const ValueKey('reset-explainer'),
           style: theme.textTheme.bodySmall,
@@ -141,7 +136,7 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
           textInputAction: TextInputAction.done,
           onSubmitted: (_) => _primary(),
           decoration: InputDecoration(
-            labelText: l10n?.authEmailLabel ?? 'Email',
+            labelText: l10n.authEmailLabel,
           ),
         ),
         if (step == RecoveryStep.verify) ...[
@@ -156,7 +151,7 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
             autofillHints: const [AutofillHints.oneTimeCode],
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              labelText: l10n?.authResetCodeLabel ?? 'Code from the email',
+              labelText: l10n.authResetCodeLabel,
             ),
           ),
         ],
@@ -171,7 +166,7 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
             textInputAction: TextInputAction.done,
             onSubmitted: (_) => _primary(),
             decoration: InputDecoration(
-              labelText: l10n?.authResetNewPasswordLabel ?? 'New password',
+              labelText: l10n.authResetNewPasswordLabel,
             ),
           ),
         ],
@@ -188,17 +183,16 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
           key: const ValueKey('reset-primary'),
           onPressed: _busy ? null : _primary,
           child: Text(switch (step) {
-            RecoveryStep.request => l10n?.authResetSendCode ?? 'Send code',
+            RecoveryStep.request => l10n.authResetSendCode,
             RecoveryStep.verify =>
-              l10n?.authResetSubmit ?? 'Set new password',
-            RecoveryStep.retryUpdate => l10n?.authRecoveryRetryUpdate ??
-                'Save the new password again',
+              l10n.authResetSubmit,
+            RecoveryStep.retryUpdate => l10n.authRecoveryRetryUpdate,
           }),
         ),
         TextButton(
           key: const ValueKey('reset-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
       ],
     );

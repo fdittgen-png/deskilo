@@ -12,6 +12,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/time/clock.dart';
@@ -88,7 +89,7 @@ class _VatDeclarationsScreenState
   String _basisNote(AppLocalizations? l10n) {
     final workspace = ref.read(currentWorkspaceProvider).value;
     return vatTaxPointBasisNote(
-        l10n,
+        l10n ?? englishL10n,
         workspaceTaxPointBasis(
             workspace?.invoiceLegal ?? const {}, workspace?.countryCode ?? ''));
   }
@@ -167,7 +168,7 @@ class _VatDeclarationsScreenState
     final period = start == null || end == null
         ? line.corrects
         : vatFilingPeriodLabel(l10n, (start: start, end: end));
-    return vatWords(l10n).vatDeclCorrectionOf(period);
+    return vatWords(l10n ?? englishL10n).vatDeclCorrectionOf(period);
   }
 
   String _statusLabel(AppLocalizations? l10n, VatDeclaration declaration) =>
@@ -251,7 +252,7 @@ class _VatDeclarationsScreenState
                 InlineBanner(
                   key: const ValueKey('vat-decl-period-note'),
                   icon: Icons.date_range_outlined,
-                  text: vatWords(l10n).vatDeclPeriodNote(
+                  text: vatWords(l10n ?? englishL10n).vatDeclPeriodNote(
                       vatDeclarationPeriodName(l10n, filing)),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -405,7 +406,7 @@ class _VatDeclarationsScreenState
                                   if (declaration.lines
                                       .any((l) => l.isCorrection))
                                     Text(
-                                      vatWords(l10n).vatDeclCorrectionsNote,
+                                      vatWords(l10n ?? englishL10n).vatDeclCorrectionsNote,
                                       style: theme.textTheme.bodySmall,
                                     ),
                                   const SizedBox(height: 4),

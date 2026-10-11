@@ -4,6 +4,7 @@
 // the reader's language, and the resolution with the owner's design
 // (positioned OR banded) in front. The layouts themselves are pure
 // Dart in the domain so the CLI prints them too.
+import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_kind.dart';
@@ -14,35 +15,33 @@ import 'report_kind_labels.dart';
 export '../domain/report_letter_layouts.dart'
     show LetterStrings, defaultLetterLayoutXml, isPersonFacingKind, resolveLayoutXml;
 
-LetterStrings _letterStringsOf(AppLocalizations? l10n) => LetterStrings(
-      creditNote: l10n?.invoicePdfCreditNote ?? 'Credit note',
-      replaces: l10n?.invoicePdfReplaces ?? 'Replaces',
-      net: l10n?.vatPdfNet ?? 'Net',
-      vat: l10n?.vatPdfVat ?? 'VAT',
-      vatNumber: l10n?.legalIdentityVatId ?? 'VAT number',
-      usage: l10n?.reportDocUsage ?? 'Consumption report',
-      status: l10n?.reportDocStatus ?? 'Workspace status',
-      records: l10n?.usageReportRecordsHeading ?? 'What was consumed',
-      invoice: l10n?.invoicePdfTitle ?? 'Invoice',
-      proforma: l10n?.invoicePdfProforma ?? 'Proforma',
-      statement: l10n?.invoiceTemplateDocStatement ?? 'Statement',
-      agreement: l10n?.reportDocAgreement ?? 'Financial agreement',
-      payments: l10n?.reportDocPayments ?? 'Payments report',
-      reminder: l10n == null
-          ? 'Reminder'
-          : l10n.invoiceTemplateDocReminder(0).replaceAll(' 0', '').trim(),
-      issuedOn: l10n?.invoicePdfIssuedOn ?? 'Issued on',
-      dueOn: l10n?.invoicePdfDueOn ?? 'Due on',
-      orderRef: l10n?.invoicePdfPurchaseOrder ?? 'Order',
-      serviceRef: l10n?.invoicePdfBuyerReference ?? 'Service',
-      description: l10n?.invoicePdfDescription ?? 'Description',
-      qty: l10n?.reportColQty ?? 'Qty',
-      unitPrice: l10n?.reportColUnitPrice ?? 'Unit price',
-      total: l10n?.reportColTotal ?? 'Total',
-      paymentsLabel: l10n?.invoicePdfPayments ?? 'Payments',
-      balance: l10n?.invoiceBalance ?? 'Balance due',
-      regards: l10n?.reportRegards ?? 'Kind regards',
-      page: l10n?.invoicePdfPage ?? 'Page',
+LetterStrings _letterStringsOf(AppLocalizations l10n) => LetterStrings(
+      creditNote: l10n.invoicePdfCreditNote,
+      replaces: l10n.invoicePdfReplaces,
+      net: l10n.vatPdfNet,
+      vat: l10n.vatPdfVat,
+      vatNumber: l10n.legalIdentityVatId,
+      usage: l10n.reportDocUsage,
+      status: l10n.reportDocStatus,
+      records: l10n.usageReportRecordsHeading,
+      invoice: l10n.invoicePdfTitle,
+      proforma: l10n.invoicePdfProforma,
+      statement: l10n.invoiceTemplateDocStatement,
+      agreement: l10n.reportDocAgreement,
+      payments: l10n.reportDocPayments,
+      reminder: l10n.invoiceTemplateDocReminder(0).replaceAll(' 0', '').trim(),
+      issuedOn: l10n.invoicePdfIssuedOn,
+      dueOn: l10n.invoicePdfDueOn,
+      orderRef: l10n.invoicePdfPurchaseOrder,
+      serviceRef: l10n.invoicePdfBuyerReference,
+      description: l10n.invoicePdfDescription,
+      qty: l10n.reportColQty,
+      unitPrice: l10n.reportColUnitPrice,
+      total: l10n.reportColTotal,
+      paymentsLabel: l10n.invoicePdfPayments,
+      balance: l10n.invoiceBalance,
+      regards: l10n.reportRegards,
+      page: l10n.invoicePdfPage,
     );
 
 /// [resolveLayoutXml] with the app's words and the owner's BANDS
@@ -63,7 +62,7 @@ String? resolveLayoutXmlFor({
     kindId: kindId,
     letterStandard: letterStandard,
     bandsDesigned: bandsDesigned,
-    strings: _letterStringsOf(l10n),
+    strings: _letterStringsOf(l10n ?? englishL10n),
     countryCode: countryCode,
   );
   if (resolved == null || template.layoutFor(kindId) != null ||
@@ -72,8 +71,8 @@ String? resolveLayoutXmlFor({
   }
   // Use the complete kind-specific content, including reminder wording,
   // pending payments and usage detail, in the standard postal frame.
-  final bands = defaultBandsForDoc(kindId, l10n);
-  final content = '## ${reportKindLabel(l10n, kind)}\n'
+  final bands = defaultBandsForDoc(kindId, l10n ?? englishL10n);
+  final content = '## ${reportKindLabel(l10n ?? englishL10n, kind)}\n'
       '{{ member }} · {{ period }}\n'
       '${kindId == 'status' ? '{{ status_from }} → {{ status_to }}' : ''}'
       '\n\n${bands.body}\n\n${bands.footer}';

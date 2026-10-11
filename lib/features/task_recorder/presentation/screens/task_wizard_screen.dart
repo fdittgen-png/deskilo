@@ -24,11 +24,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/stored_guide.dart';
 import '../../domain/stored_recording.dart';
@@ -50,36 +50,34 @@ class TaskWizardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final text = Theme.of(context).textTheme;
     final available = ref.watch(taskRecorderAvailableProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.taskWizardTitle ?? 'Task wizard')),
+      appBar: AppBar(title: Text(l10n.taskWizardTitle)),
       body: ListView(
         key: const ValueKey('task-wizard'),
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.taskWizardIntro ??
-                'Record what you do, turn it into a guide, and follow guides '
-                    'step by step on the real app.',
+            l10n.taskWizardIntro,
           ),
           const SizedBox(height: AppSpacing.lg),
           _SectionHeader(
             key: const ValueKey('task-wizard-guides'),
-            title: l10n?.taskWizardGuides ?? 'Guides',
+            title: l10n.taskWizardGuides,
             action: FilledButton.tonalIcon(
               key: const ValueKey('task-wizard-add-guide'),
               onPressed: () => _addGuide(context, ref),
               icon: const Icon(Icons.library_add_outlined),
-              label: Text(l10n?.taskWizardAddGuide ?? 'Add a guide'),
+              label: Text(l10n.taskWizardAddGuide),
             ),
           ),
           const _MyGuides(),
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.md),
             child: Text(
-              l10n?.taskWizardBuiltIn ?? 'Guides that come with the app',
+              l10n.taskWizardBuiltIn,
               style: text.titleSmall,
             ),
           ),
@@ -92,17 +90,14 @@ class TaskWizardScreen extends ConsumerWidget {
               trailing: FilledButton(
                 key: ValueKey('task-wizard-start-builtin-${g.name}'),
                 onPressed: () => _start(context, ref, builtinGuide(l10n, g)),
-                child: Text(l10n?.guideStart ?? 'Start the guide'),
+                child: Text(l10n.guideStart),
               ),
             ),
           if (!available)
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.sm),
               child: Text(
-                l10n?.taskWizardUnavailable ??
-                    'The task recorder is turned off in this workspace: '
-                        'guides can be read and edited here, but not '
-                        'followed.',
+                l10n.taskWizardUnavailable,
                 key: const ValueKey('task-wizard-unavailable'),
                 style: text.bodySmall,
               ),
@@ -110,26 +105,24 @@ class TaskWizardScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg),
           _SectionHeader(
             key: const ValueKey('task-wizard-recordings'),
-            title: l10n?.taskWizardRecordings ?? 'Recordings',
+            title: l10n.taskWizardRecordings,
             action: FilledButton.icon(
               key: const ValueKey('task-wizard-record'),
               onPressed: () => context.push(taskRecorderRoute),
               icon: const Icon(Icons.fiber_manual_record_outlined),
-              label: Text(l10n?.taskRecorderRecordATask ?? 'Record a task'),
+              label: Text(l10n.taskRecorderRecordATask),
             ),
           ),
           const _Recordings(),
           const SizedBox(height: AppSpacing.lg),
-          _SectionHeader(title: l10n?.taskWizardTools ?? 'Tools'),
+          _SectionHeader(title: l10n.taskWizardTools),
           ListTile(
             key: const ValueKey('task-wizard-open-file'),
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.file_open_outlined),
-            title: Text(l10n?.taskWorkbenchOpen ?? 'Open a task file'),
+            title: Text(l10n.taskWorkbenchOpen),
             subtitle: Text(
-              l10n?.taskWizardOpenFileHint ??
-                  'Read, edit and export a recording or task package, '
-                      'without an account.',
+              l10n.taskWizardOpenFileHint,
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(taskWorkbenchRoute),
@@ -169,16 +162,14 @@ class _SectionHeader extends StatelessWidget {
 
 /// Starts [guide] on the live app, or says why it cannot.
 void _start(BuildContext context, WidgetRef ref, TaskGuide guide) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final decoded = decodeGuideText(encodeGuideText(guide));
   final messenger = ScaffoldMessenger.of(context);
   if (!decoded.runnable) {
     messenger.showSnackBar(
       SnackBar(
         content: Text(
-          l10n?.guideStartNotRunnable ??
-              'This guide names steps this version of the app does not '
-                  'know; it can be read, not followed.',
+          l10n.guideStartNotRunnable,
         ),
       ),
     );
@@ -188,9 +179,7 @@ void _start(BuildContext context, WidgetRef ref, TaskGuide guide) {
     messenger.showSnackBar(
       SnackBar(
         content: Text(
-          l10n?.guideStartRefused ??
-              'This guide cannot start here: sign in and turn the task '
-                  'recorder on in this workspace.',
+          l10n.guideStartRefused,
         ),
       ),
     );
@@ -202,7 +191,7 @@ void _start(BuildContext context, WidgetRef ref, TaskGuide guide) {
 
 /// The two ways to add a guide.
 Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final choice = await showModalBottomSheet<_AddChoice>(
     context: context,
     showDragHandle: true,
@@ -214,11 +203,10 @@ Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
             key: const ValueKey('task-wizard-add-from-recording'),
             leading: const Icon(Icons.list_alt),
             title: Text(
-              l10n?.taskWizardFromRecording ?? 'From one of my recordings',
+              l10n.taskWizardFromRecording,
             ),
             subtitle: Text(
-              l10n?.taskWizardFromRecordingHint ??
-                  'Pick a recording; it becomes a guide at once.',
+              l10n.taskWizardFromRecordingHint,
             ),
             onTap: () => Navigator.of(sheet).pop(_AddChoice.recording),
           ),
@@ -226,12 +214,10 @@ Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
             key: const ValueKey('task-wizard-add-from-file'),
             leading: const Icon(Icons.inventory_2_outlined),
             title: Text(
-              l10n?.taskWizardFromFile ?? 'From a task file or package',
+              l10n.taskWizardFromFile,
             ),
             subtitle: Text(
-              l10n?.taskWizardFromFileHint ??
-                  'A recording, a task package or a guide file from '
-                      'someone else.',
+              l10n.taskWizardFromFileHint,
             ),
             onTap: () => Navigator.of(sheet).pop(_AddChoice.file),
           ),
@@ -251,7 +237,7 @@ Future<void> _addGuide(BuildContext context, WidgetRef ref) async {
 enum _AddChoice { recording, file }
 
 Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final recordings =
       (ref.read(myRecordingsProvider).value ?? const <StoredRecording>[])
           .where((r) => r.recording != null)
@@ -259,7 +245,7 @@ Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
   if (recordings.isEmpty) {
     AppSnack.error(
       context,
-      l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
+      l10n.taskRecorderNoRecordings,
     );
     return;
   }
@@ -274,7 +260,7 @@ Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
           Padding(
             padding: AppSpacing.gutterH,
             child: Text(
-              l10n?.taskWizardFromRecording ?? 'From one of my recordings',
+              l10n.taskWizardFromRecording,
               style: Theme.of(sheet).textTheme.titleMedium,
             ),
           ),
@@ -284,11 +270,10 @@ Future<void> _pickRecording(BuildContext context, WidgetRef ref) async {
               leading: const Icon(Icons.list_alt),
               title: Text(
                 r.recording!.title ??
-                    (l10n?.taskRecorderUntitled ?? 'Untitled task'),
+                    (l10n.taskRecorderUntitled),
               ),
               subtitle: Text(
-                l10n?.taskRecorderStepCount(r.recording!.steps.length) ??
-                    '${r.recording!.steps.length} steps',
+                l10n.taskRecorderStepCount(r.recording!.steps.length),
               ),
               onTap: () => Navigator.of(sheet).pop(r),
             ),
@@ -307,7 +292,7 @@ Future<void> _makeGuide(
   WidgetRef ref,
   StoredRecording stored,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final recording = stored.recording;
   final store = ref.read(guideStoreProvider);
   if (recording == null || store == null) return;
@@ -319,10 +304,10 @@ Future<void> _makeGuide(
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         key: const ValueKey('task-wizard-guide-added'),
-        content: Text(l10n?.taskWizardGuideAdded ?? 'Added to My guides.'),
+        content: Text(l10n.taskWizardGuideAdded),
         action: SnackBarAction(
           key: const ValueKey('task-wizard-guide-added-edit'),
-          label: l10n?.taskWizardEdit ?? 'Edit',
+          label: l10n.taskWizardEdit,
           onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (_) => GuideDraftScreen(guide: guide, libraryId: id),
@@ -340,20 +325,20 @@ Future<void> _makeGuide(
     if (!context.mounted) return;
     AppSnack.error(
       context,
-      l10n?.taskWizardGuideNotSaved ?? 'The guide could not be kept.',
+      l10n.taskWizardGuideNotSaved,
     );
   }
 }
 
 Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final store = ref.read(guideStoreProvider);
   if (store == null) return;
   final XFile? file;
   try {
     file = await ref.read(filePickerProvider)(
       XTypeGroup(
-        label: l10n?.taskWorkbenchFileType ?? 'Task file',
+        label: l10n.taskWorkbenchFileType,
         extensions: workbenchExtensions,
       ),
     );
@@ -419,13 +404,13 @@ class _MyGuides extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final guides = ref.watch(myGuidesProvider).value ?? const <StoredGuide>[];
     if (guides.isEmpty) {
       return EmptyState(
         key: const ValueKey('task-wizard-no-guides'),
         icon: Icons.route_outlined,
-        title: l10n?.taskWizardNoGuides ?? 'No guide of your own yet. Add one from a recording or a task file.',
+        title: l10n.taskWizardNoGuides,
       );
     }
     return Column(
@@ -441,16 +426,15 @@ class _GuideTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final guide = stored.guide;
     return ListTile(
       key: ValueKey('task-wizard-guide-${stored.id}'),
       contentPadding: EdgeInsets.zero,
       leading: const Icon(Icons.route_outlined),
-      title: Text(guide.title ?? (l10n?.guideHostTitle ?? 'Guided task')),
+      title: Text(guide.title ?? (l10n.guideHostTitle)),
       subtitle: Text(
-        l10n?.taskRecorderStepCount(guide.steps.length) ??
-            '${guide.steps.length} steps',
+        l10n.taskRecorderStepCount(guide.steps.length),
       ),
       onTap: () => _edit(context, ref),
       trailing: Wrap(
@@ -465,7 +449,7 @@ class _GuideTile extends ConsumerWidget {
                 )
                 ? _edit(context, ref)
                 : _start(context, ref, guide),
-            child: Text(l10n?.guideStart ?? 'Start the guide'),
+            child: Text(l10n.guideStart),
           ),
           PopupMenuButton<String>(
             key: ValueKey('task-wizard-menu-${stored.id}'),
@@ -476,12 +460,12 @@ class _GuideTile extends ConsumerWidget {
             itemBuilder: (_) => [
               PopupMenuItem(
                 value: 'edit',
-                child: Text(l10n?.taskWizardEdit ?? 'Edit'),
+                child: Text(l10n.taskWizardEdit),
               ),
               PopupMenuItem(
                 key: ValueKey('task-wizard-delete-${stored.id}'),
                 value: 'delete',
-                child: Text(l10n?.taskWizardDeleteGuide ?? 'Delete this guide'),
+                child: Text(l10n.taskWizardDeleteGuide),
               ),
             ],
           ),
@@ -501,16 +485,14 @@ class _GuideTile extends ConsumerWidget {
   }
 
   Future<void> _delete(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final ok = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: Text(l10n?.taskWizardDeleteGuide ?? 'Delete this guide'),
+        title: Text(l10n.taskWizardDeleteGuide),
         content: Text(
-          l10n?.taskWizardDeleteGuideBody ??
-              'The guide is removed from this device. The recording it came '
-                  'from is not touched.',
+          l10n.taskWizardDeleteGuideBody,
         ),
         actions: [
           TextButton(
@@ -537,7 +519,7 @@ class _Recordings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final recordings =
         ref.watch(myRecordingsProvider).value ?? const <StoredRecording>[];
     if (recordings.isEmpty) {
@@ -545,7 +527,7 @@ class _Recordings extends ConsumerWidget {
         key: const ValueKey('task-wizard-no-recordings'),
         icon: Icons.history,
         title:
-            l10n?.taskRecorderNoRecordings ?? 'No recordings on this device.',
+            l10n.taskRecorderNoRecordings,
       );
     }
     return Column(
@@ -559,13 +541,12 @@ class _Recordings extends ConsumerWidget {
             ),
             title: Text(
               stored.recording?.title ??
-                  (l10n?.taskRecorderUntitled ?? 'Untitled task'),
+                  (l10n.taskRecorderUntitled),
             ),
             subtitle: Text(
               stored.recording == null
-                  ? (l10n?.taskRecorderUnreadable ??
-                        'This recording cannot be read. You can delete it.')
-                  : '${l10n?.taskRecorderStepCount(stored.recording!.steps.length) ?? ''}'
+                  ? (l10n.taskRecorderUnreadable)
+                  : '${l10n.taskRecorderStepCount(stored.recording!.steps.length)}'
                         ' · ${completenessLabel(l10n, stored.recording!.completeness)}',
             ),
             onTap: () async {
@@ -582,7 +563,7 @@ class _Recordings extends ConsumerWidget {
                     key: ValueKey('task-wizard-make-guide-${stored.id}'),
                     onPressed: () => _makeGuide(context, ref, stored),
                     icon: const Icon(Icons.route_outlined),
-                    label: Text(l10n?.taskWizardMakeGuide ?? 'Make a guide'),
+                    label: Text(l10n.taskWizardMakeGuide),
                   ),
           ),
       ],

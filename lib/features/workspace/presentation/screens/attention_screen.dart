@@ -25,6 +25,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -47,12 +48,12 @@ class AttentionScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final items = ref.watch(attentionProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.featureDecisionSurfaceTitle ?? 'What needs you'),
+        title: Text(l10n.featureDecisionSurfaceTitle),
       ),
       body: items.when(
         loading: () => const LoadingView(),
@@ -66,9 +67,9 @@ class AttentionScreen extends ConsumerWidget {
             ? EmptyState(
                 key: emptyKey,
                 icon: Icons.check_circle_outline,
-                title: l10n?.decisionSurfaceEmpty ?? 'Nothing needs you',
+                title: l10n.decisionSurfaceEmpty,
                 subtitle:
-                    l10n?.decisionSurfaceEmptyDetail ?? 'Everything is answered.',
+                    l10n.decisionSurfaceEmptyDetail,
               )
             : ListView.builder(
                 key: listKey,
@@ -98,8 +99,7 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // English only where no localization is installed (a bare test app).
-    final l10n = AppLocalizations.of(context) ??
-        lookupAppLocalizations(const Locale('en'));
+    final l10n = context.l10n;
     final locale = Localizations.maybeLocaleOf(context)?.toLanguageTag();
     final since = DateFormat.yMMMd(locale).format(item.waitingSince.toLocal());
     return ListTile(

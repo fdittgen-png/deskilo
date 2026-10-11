@@ -10,12 +10,12 @@ import 'package:go_router/go_router.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
@@ -62,26 +62,21 @@ Future<void> settleCreditInvoiceDialog(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
   final noteController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(l10n?.invoiceRefundButton ?? 'Record the refund'),
+      title: Text(l10n.invoiceRefundButton),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n?.invoiceRefundExplain(
+            l10n.invoiceRefundExplain(
                   currency.formatMinor(-invoice.totalCents),
-                ) ??
-                'This credit note means the WORKSPACE owes the member '
-                    '${currency.formatMinor(-invoice.totalCents)}. '
-                    'Record that the refund was paid out — the amount is '
-                    'booked against the member\'s balance and the '
-                    'document closes as Refunded.',
+                ),
           ),
           const SizedBox(height: AppSpacing.md),
           TextField(
@@ -91,7 +86,7 @@ Future<void> settleCreditInvoiceDialog(
             maxLines: 2,
             decoration: InputDecoration(
               labelText:
-                  l10n?.reservationDeleteReasonLabel ?? 'Reason (optional)',
+                  l10n.reservationDeleteReasonLabel,
               counterText: '',
             ),
           ),
@@ -101,12 +96,12 @@ Future<void> settleCreditInvoiceDialog(
         TextButton(
           key: const ValueKey('invoice-actions-cancel'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('invoice-refund-submit'),
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(l10n?.invoiceRefundButton ?? 'Record the refund'),
+          child: Text(l10n.invoiceRefundButton),
         ),
       ],
     ),
@@ -118,8 +113,7 @@ Future<void> settleCreditInvoiceDialog(
     domain: 'money',
     message: 'credit note refund failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () => ref
         .read(moneyRepositoryProvider)
         .settleCreditInvoice(invoice.id, note: note),
@@ -132,7 +126,7 @@ Future<void> settleCreditInvoiceDialog(
     ..invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
-  AppSnack.success(context, l10n?.invoiceRefunded ?? 'Refund recorded.');
+  AppSnack.success(context, l10n.invoiceRefunded);
 }
 
 /// #504 — asks the validators to CANCEL the outstanding remainder of a
@@ -143,22 +137,18 @@ Future<void> requestInvoiceWriteoffDialog(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final reasonController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: Text(l10n?.invoiceWriteoffButton ?? 'Cancel outstanding amount'),
+      title: Text(l10n.invoiceWriteoffButton),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n?.invoiceWriteoffExplain ??
-                'The unpaid remainder of this invoice will be cancelled '
-                    'and the invoice archived as partially paid — once '
-                    'the validators confirm. Until then it stays open '
-                    'and owed.',
+            l10n.invoiceWriteoffExplain,
           ),
           const SizedBox(height: AppSpacing.md),
           TextField(
@@ -168,7 +158,7 @@ Future<void> requestInvoiceWriteoffDialog(
             maxLines: 2,
             decoration: InputDecoration(
               labelText:
-                  l10n?.reservationDeleteReasonLabel ?? 'Reason (optional)',
+                  l10n.reservationDeleteReasonLabel,
               counterText: '',
             ),
           ),
@@ -178,12 +168,12 @@ Future<void> requestInvoiceWriteoffDialog(
         TextButton(
           key: const ValueKey('invoice-actions-cancel-2'),
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('invoice-writeoff-submit'),
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(l10n?.reservationDeleteSubmit ?? 'Send request'),
+          child: Text(l10n.reservationDeleteSubmit),
         ),
       ],
     ),
@@ -195,8 +185,7 @@ Future<void> requestInvoiceWriteoffDialog(
     domain: 'money',
     message: 'invoice writeoff request failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () => ref
         .read(eventRepositoryProvider)
         .requestInvoiceWriteoff(invoice.id, reason: reason),
@@ -208,8 +197,7 @@ Future<void> requestInvoiceWriteoffDialog(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.invoiceWriteoffRequested ??
-        'Write-off requested — awaiting validation.',
+    l10n.invoiceWriteoffRequested,
   );
 }
 
@@ -229,15 +217,14 @@ Future<void> sendEInvoice(
   String environment = 'prod',
   String destination = 'government',
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   EInvoiceSubmission? result;
   if (!await runGuarded(
     context,
     domain: 'money',
     message: 'e-invoice submission failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       final file = await buildFacturXFile(
         context,
@@ -271,12 +258,10 @@ Future<void> sendEInvoice(
     AppSnack.success(
       context,
       environment != 'prod'
-          ? (l10n?.invoiceSendAcceptedTest(environment.toUpperCase()) ??
-                'Test send accepted (${environment.toUpperCase()}).')
+          ? (l10n.invoiceSendAcceptedTest(environment.toUpperCase()))
           : destination == 'customer'
-          ? (l10n?.invoiceSendCustomerAccepted ??
-                "Sent — the customer's service accepted it.")
-          : (l10n?.invoiceSendAccepted ?? 'Sent — the platform accepted it.'),
+          ? (l10n.invoiceSendCustomerAccepted)
+          : (l10n.invoiceSendAccepted),
     );
     return;
   }
@@ -285,8 +270,8 @@ Future<void> sendEInvoice(
   AppSnack.error(
     context,
     submission.detail.isEmpty
-        ? (l10n?.invoiceSendRejected ?? 'The platform refused it.')
-        : '${l10n?.invoiceSendRejected ?? 'The platform refused it.'} '
+        ? (l10n.invoiceSendRejected)
+        : '${l10n.invoiceSendRejected} '
               '${submission.detail}',
   );
 }
@@ -300,16 +285,16 @@ Future<void> savePdfToDownloads(
   required Uint8List bytes,
   required String fileName,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final path = await ref.read(fileSaverProvider)(
     bytes: bytes,
     fileName: fileName,
   );
   if (!context.mounted) return;
   if (path == null) {
-    AppSnack.error(context, l10n?.commonSaveFailed ?? 'Could not save.');
+    AppSnack.error(context, l10n.commonSaveFailed);
   } else {
-    AppSnack.success(context, l10n?.commonSavedTo(path) ?? 'Saved to $path');
+    AppSnack.success(context, l10n.commonSavedTo(path));
   }
 }
 
@@ -318,7 +303,7 @@ Future<void> downloadInvoicePdf(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
@@ -326,8 +311,7 @@ Future<void> downloadInvoicePdf(
     domain: 'money',
     message: 'invoice download failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       final pdf = await buildInvoicePdfFile(
         context,
@@ -363,7 +347,7 @@ Future<void> _quickViewInvoice(
   Invoice invoice, {
   bool proforma = false,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   final template = invoicePdfTemplateFor(ref);
@@ -386,15 +370,14 @@ Future<void> _quickViewInvoice(
   if (report == null) {
     AppSnack.error(
       context,
-      l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+      l10n.workspaceGenericError,
     );
     return;
   }
   // #837 — the regrouped invoices as further sheets, same stamp as the
   // PDF, each below the one before it.
   final stamp =
-      l10n?.invoicePdfSettledIn(invoice.number) ??
-      'Regrouped in ${invoice.number}';
+      l10n.invoicePdfSettledIn(invoice.number);
   final annexReports = <QuickPreviewAnnex>[];
   for (final source in annexes) {
     final sourceReport = renderReportBands(
@@ -431,7 +414,7 @@ Future<void> shareInvoicePdf(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final annexes = await _askRegroupedAnnexes(context, ref, invoice);
   if (annexes == null || !context.mounted) return;
   await runGuarded(
@@ -439,8 +422,7 @@ Future<void> shareInvoicePdf(
     domain: 'money',
     message: 'invoice share failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       final pdf = await buildInvoicePdfFile(
         context,
@@ -472,26 +454,24 @@ Future<void> voidInvoiceWithConfirm(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.invoiceVoidAction ?? 'Mark erroneous'),
+      title: Text(l10n.invoiceVoidAction),
       content: Text(
-        l10n?.invoiceVoidConfirm(invoice.number) ??
-            'Mark invoice ${invoice.number} as erroneous? '
-                'This cannot be undone.',
+        l10n.invoiceVoidConfirm(invoice.number),
       ),
       actions: [
         TextButton(
           key: const ValueKey('invoice-actions-cancel-3'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('invoice-void-confirm'),
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n?.invoiceVoidAction ?? 'Mark erroneous'),
+          child: Text(l10n.invoiceVoidAction),
         ),
       ],
     ),
@@ -502,8 +482,7 @@ Future<void> voidInvoiceWithConfirm(
     domain: 'money',
     message: 'invoice void failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () => ref.read(moneyRepositoryProvider).voidInvoice(invoice.id),
   )) {
     return;
@@ -512,7 +491,7 @@ Future<void> voidInvoiceWithConfirm(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.invoiceVoided ?? 'Invoice marked as erroneous.',
+    l10n.invoiceVoided,
   );
 }
 
@@ -521,7 +500,7 @@ Future<void> remindInvoice(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
   // #1913 — the message states what is still owed, never the total of a
   // half-paid invoice; the server records the same remainder.
@@ -530,12 +509,10 @@ Future<void> remindInvoice(
     ref.read(invoiceMatchesProvider).value?[invoice.id],
   );
   final message =
-      l10n?.invoiceReminderMessage(
+      l10n.invoiceReminderMessage(
         invoice.number,
         currency.formatMinor(owed),
-      ) ??
-      'Friendly reminder: invoice ${invoice.number} — balance due '
-          '${currency.formatMinor(owed)}.';
+      );
   // #472: the level of THIS send — one past what was already sent,
   // capped at the configured maximum (extra sends reuse the last
   // letter).
@@ -549,8 +526,7 @@ Future<void> remindInvoice(
     domain: 'money',
     message: 'invoice reminder failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       // PDF first — it captures its context-derived values before any
       // await (use_build_context_synchronously).
@@ -581,13 +557,12 @@ Future<void> remindInvoice(
     if (!context.mounted) return;
     AppSnack.info(
         context,
-        l10n?.invoiceReminderNotSent ??
-            'Nothing was sent, so nothing was recorded.');
+        l10n.invoiceReminderNotSent);
     return;
   }
   ref.invalidate(invoiceRemindersProvider);
   if (!context.mounted) return;
-  AppSnack.success(context, l10n?.invoiceReminded ?? 'Reminder recorded.');
+  AppSnack.success(context, l10n.invoiceReminded);
 }
 
 /// EN 16931 e-invoice (0066/0069): the sheet first — WHERE the file has to
@@ -668,7 +643,7 @@ Future<void> _exportEInvoice(
     unawaited(context.push('/legal-identity'));
     return;
   }
-  final l10nForFile = AppLocalizations.of(context);
+  final l10nForFile = context.l10n;
   if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
     final toCustomer = export == EInvoiceExport.sendCustomer;
     // Dev mode + a configured test platform → choose the target (#393);
@@ -707,8 +682,7 @@ Future<void> _exportEInvoice(
       domain: 'money',
       message: 'factur-x export failed',
       errorText:
-          l10nForFile?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+          l10nForFile.workspaceGenericError,
       action: () async {
         final file = await buildFacturXFile(
           context,
@@ -739,15 +713,14 @@ Future<void> _exportEInvoice(
     );
     return;
   }
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final words = reportStringsOf(l10n);
   await runGuarded(
     context,
     domain: 'money',
     message: 'e-invoice export failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () async {
       final xml = buildInvoiceUbl(
         invoice: invoice,
@@ -782,7 +755,7 @@ Future<void> matchInvoiceToPayment(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
   // 0068 — the candidates: the member's registered payments (incl. settled
   // online payments) not yet consumed by another match.
@@ -844,8 +817,7 @@ Future<void> matchInvoiceToPayment(
     domain: 'money',
     message: 'invoice match failed',
     errorText:
-        l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () => ref
         .read(moneyRepositoryProvider)
         .matchInvoice(
@@ -863,7 +835,7 @@ Future<void> matchInvoiceToPayment(
     ..invalidate(invoicesProvider);
   invalidateBookingData(ref);
   if (!context.mounted) return;
-  AppSnack.success(context, l10n?.invoiceMatched ?? 'Invoice matched.');
+  AppSnack.success(context, l10n.invoiceMatched);
 }
 
 /// One tap invoices every listed member for [period] — behind a confirm
@@ -877,35 +849,31 @@ Future<void> issueInvoicesForAll(
   String period,
   MoneyFormat currency,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null || entries.isEmpty) return;
   final total = entries.fold(0, (sum, e) => sum + e.totalCents);
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
+      title: Text(l10n.invoiceIssueAll),
       content: Text(
-        l10n?.invoiceIssueAllConfirm(
+        l10n.invoiceIssueAllConfirm(
               entries.length,
               monthLabel(context, period),
               currency.formatMinor(total),
-            ) ??
-            'Issue ${entries.length} invoices for '
-                '${monthLabel(context, period)}, '
-                '${currency.formatMinor(total)} in total? An issued '
-                'invoice can no longer be edited.',
+            ),
       ),
       actions: [
         TextButton(
           key: ValueKey('invoice-actions-cancel-4-$period'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('invoice-issue-all-confirm'),
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
+          child: Text(l10n.invoiceIssueAll),
         ),
       ],
     ),
@@ -938,14 +906,13 @@ Future<void> issueInvoicesForAll(
   if (failed > 0) {
     AppSnack.error(
       context,
-      l10n?.invoiceIssuedPartial(issued, failed) ??
-          '$issued issued, $failed failed.',
+      l10n.invoiceIssuedPartial(issued, failed),
     );
     return;
   }
   AppSnack.success(
     context,
-    l10n?.invoiceIssuedCount(issued) ?? '$issued invoices issued.',
+    l10n.invoiceIssuedCount(issued),
   );
 }
 
@@ -964,11 +931,10 @@ Future<void> runInvoiceAction(
       action != InvoiceAction.quickView &&
       action != InvoiceAction.downloadPdf &&
       action != InvoiceAction.sharePdf) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     AppSnack.info(
       context,
-      l10n?.settlementDocumentationOnly ??
-          'Documentation only — every operation happens on the regrouping invoice.',
+      l10n.settlementDocumentationOnly,
       replace: true,
     );
     return Future.value();
@@ -1014,28 +980,26 @@ Future<List<Invoice>?> _askRegroupedAnnexes(
 ) async {
   final sources = regroupedSourcesOf(ref, invoice);
   if (sources.isEmpty) return const [];
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final include = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(
-        l10n?.settlementAnnexTitle ?? 'Attach the regrouped invoices?',
+        l10n.settlementAnnexTitle,
       ),
       content: Text(
-        l10n?.settlementAnnexBody(sources.length) ??
-            'The ${sources.length} invoices this one replaces can follow it, '
-                'each on its own pages and stamped as regrouped.',
+        l10n.settlementAnnexBody(sources.length),
       ),
       actions: [
         TextButton(
           key: const ValueKey('invoice-annex-alone'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.settlementAnnexAlone ?? 'This invoice only'),
+          child: Text(l10n.settlementAnnexAlone),
         ),
         FilledButton(
           key: const ValueKey('invoice-annex-with'),
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n?.settlementAnnexWith ?? 'Attach them'),
+          child: Text(l10n.settlementAnnexWith),
         ),
       ],
     ),

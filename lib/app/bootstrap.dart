@@ -12,6 +12,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../core/l10n/context_l10n.dart';
 import '../core/ui/loading_view.dart';
 import '../l10n/app_localizations.dart';
 
@@ -120,7 +121,7 @@ class _BootRecoveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -137,19 +138,16 @@ class _BootRecoveryScreen extends StatelessWidget {
                 Text(
                   key: ValueKey(failed ? 'boot-failed' : 'boot-slow'),
                   failed
-                      ? (l10n?.bootFailedTitle ?? 'DesKilo could not start')
-                      : (l10n?.bootSlowTitle ??
-                            'Starting is taking longer than usual'),
+                      ? (l10n.bootFailedTitle)
+                      : (l10n.bootSlowTitle),
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   failed
-                      ? (l10n?.bootFailedBody ??
-                            'The server or this device\'s secure storage did not answer. Nothing was changed. Close the app and open it again; if it keeps happening, check the network.')
-                      : (l10n?.bootSlowBody ??
-                            'It keeps trying. If nothing happens, close the app and open it again.'),
+                      ? (l10n.bootFailedBody)
+                      : (l10n.bootSlowBody),
                   textAlign: TextAlign.center,
                 ),
               ],

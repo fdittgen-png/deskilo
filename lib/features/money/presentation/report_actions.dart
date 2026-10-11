@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_report.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
@@ -30,7 +30,7 @@ Future<void> runReportActions(
   InvoiceReport? Function()? render,
   String logMessage = 'report pdf failed',
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final choice = await showModalBottomSheet<String>(
     context: context,
     builder: (sheetContext) => SafeArea(
@@ -41,19 +41,19 @@ Future<void> runReportActions(
             ListTile(
               key: ValueKey('$keyPrefix-quick'),
               leading: const Icon(Icons.bolt_outlined),
-              title: Text(l10n?.reportQuickView ?? 'Quick view'),
+              title: Text(l10n.reportQuickView),
               onTap: () => Navigator.of(sheetContext).pop('quick'),
             ),
           ListTile(
             key: ValueKey('$keyPrefix-download'),
             leading: const Icon(Icons.download_outlined),
-            title: Text(l10n?.invoiceTemplateDownload ?? 'Download PDF'),
+            title: Text(l10n.invoiceTemplateDownload),
             onTap: () => Navigator.of(sheetContext).pop('download'),
           ),
           ListTile(
             key: ValueKey('$keyPrefix-share'),
             leading: const Icon(Icons.share_outlined),
-            title: Text(l10n?.invoiceTemplateShare ?? 'Share PDF'),
+            title: Text(l10n.invoiceTemplateShare),
             onTap: () => Navigator.of(sheetContext).pop('share'),
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -67,8 +67,7 @@ Future<void> runReportActions(
     if (report == null) {
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -82,8 +81,7 @@ Future<void> runReportActions(
     context,
     domain: 'money',
     message: logMessage,
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () async {
       final pdf = await buildPdf();
       if (!context.mounted) return;

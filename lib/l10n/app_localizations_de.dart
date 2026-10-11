@@ -14738,6 +14738,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
 
   @override
+  String get reportFieldMeaningDeclarationNote =>
+      'Der Hinweis der Erklärung: vor der Abgabe prüfen';
+
+  @override
   String get reportFieldMeaningDueDate => 'Das Fälligkeitsdatum';
 
   @override

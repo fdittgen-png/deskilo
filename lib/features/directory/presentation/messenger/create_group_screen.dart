@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
@@ -35,14 +35,13 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
   }
 
   Future<void> _create() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     String? id;
     final ok = await runMessenger(
       context,
       message: 'create group failed',
-      errorText: l10n?.portalActionFailed ??
-          'Could not save this change. Please try again.',
+      errorText: l10n.portalActionFailed,
       action: () async => id = await ref
           .read(messengerActionsProvider())
           .createGroup(_title.text, _people.keys.toList()),
@@ -65,7 +64,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final results = _query.isEmpty
         ? const AsyncData<List<Map<String, dynamic>>>([])
@@ -73,7 +72,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     final ready = _title.text.trim().isNotEmpty && _people.isNotEmpty && !_busy;
     return Scaffold(
       key: const ValueKey('create-group'),
-      appBar: AppBar(title: Text(l10n?.groupNewTitle ?? 'New group')),
+      appBar: AppBar(title: Text(l10n.groupNewTitle)),
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
@@ -87,17 +86,17 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
                 maxLength: 60,
                 onChanged: (_) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: l10n?.groupName ?? 'Group name',
+                  labelText: l10n.groupName,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
-              Text(l10n?.groupPeople ?? 'People in the group',
+              Text(l10n.groupPeople,
                   style: theme.textTheme.titleSmall),
               if (_people.isEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Text(
-                    l10n?.groupNeedsPeople ?? 'Add at least one person.',
+                    l10n.groupNeedsPeople,
                     style: theme.textTheme.bodySmall,
                   ),
                 )
@@ -117,10 +116,10 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
                 key: const ValueKey('create-group-search'),
                 controller: _search,
                 decoration: InputDecoration(
-                  labelText: l10n?.groupPickPeople ?? 'Add people',
+                  labelText: l10n.groupPickPeople,
                   suffixIcon: IconButton(
                     key: const ValueKey('create-group-go'),
-                    tooltip: l10n?.portalFindPeople ?? 'Find available people',
+                    tooltip: l10n.portalFindPeople,
                     icon: const Icon(Icons.search),
                     onPressed: () => setState(() => _query = _search.text.trim()),
                   ),
@@ -141,7 +140,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
               FilledButton(
                 key: const ValueKey('create-group-submit'),
                 onPressed: ready ? _create : null,
-                child: Text(l10n?.groupCreate ?? 'Create group'),
+                child: Text(l10n.groupCreate),
               ),
             ],
           ),

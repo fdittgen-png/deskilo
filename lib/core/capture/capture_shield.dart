@@ -5,7 +5,7 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import 'capture_protection.dart';
 import 'capture_providers.dart';
@@ -105,7 +105,7 @@ class _CaptureShieldState extends ConsumerState<CaptureShield> {
   Widget build(BuildContext context) {
     final held = _held;
     if (!widget.enabled || held == null) return widget.child;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     if (_recording) {
       return Center(
@@ -113,8 +113,7 @@ class _CaptureShieldState extends ConsumerState<CaptureShield> {
         child: Padding(
           padding: AppSpacing.lgAll,
           child: Text(
-            l10n?.captureRecordingHidden ??
-                'Hidden while your screen is recorded or mirrored.',
+            l10n.captureRecordingHidden,
             textAlign: TextAlign.center,
           ),
         ),
@@ -133,8 +132,7 @@ class _CaptureShieldState extends ConsumerState<CaptureShield> {
             vertical: AppSpacing.xs,
           ),
           child: Text(
-            l10n?.captureWebNotice ??
-                'Your browser cannot block screenshots of this conversation.',
+            l10n.captureWebNotice,
             style: theme.textTheme.labelSmall,
           ),
         ),

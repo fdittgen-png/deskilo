@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_blocker.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -397,7 +398,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     );
     if (picked == null) return;
     if (!mounted) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final from = window.start;
     final fromWall = WorkspaceTime.wall(from);
     final end = _snapToSlot(WorkspaceTime.at(
@@ -410,7 +411,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     if (!end.isAfter(from)) {
       AppSnack.error(
         context,
-        l10n?.planEndBeforeStart ?? 'End must be after start.',
+        l10n.planEndBeforeStart,
         replace: true,
       );
       return;
@@ -593,7 +594,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     ref.listen(planFocusControllerProvider, (_, focus) {
       if (focus != null) _applyFocus(focus);
     });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // Watched so the chips swap once the rule resolves (#201) — flexible
     // is also the rule's default, so nothing flashes.
     final granularity = ref.watch(bookingGranularityProvider).value ??
@@ -701,8 +702,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               IconButton(
                 key: const ValueKey('reserve-seat-view-switch'),
                 tooltip: _seatList
-                    ? (l10n?.planMapViewTooltip ?? 'Plan view')
-                    : (l10n?.planListViewTooltip ?? 'List view'),
+                    ? (l10n.planMapViewTooltip)
+                    : (l10n.planListViewTooltip),
                 icon: Icon(
                   _seatList ? Icons.map_outlined : Icons.view_list_outlined,
                 ),
@@ -721,7 +722,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
               // A word, not a clock (that read as a time editor); the
               // full action is the tooltip and the screen-reader label.
               Tooltip(
-                message: l10n?.reserveBackToNow ?? 'Back to now',
+                message: l10n.reserveBackToNow,
                 child: TextButton(
                   key: const ValueKey('reserve-now-button'),
                   onPressed: () => setState(() {
@@ -735,8 +736,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                     minimumSize: const Size(0, kMinInteractiveDimension),
                   ),
                   child: Text(
-                    l10n?.planNowButton ?? 'Now',
-                    semanticsLabel: l10n?.reserveBackToNow ?? 'Back to now',
+                    l10n.planNowButton,
+                    semanticsLabel: l10n.reserveBackToNow,
                   ),
                 ),
               ),
@@ -850,7 +851,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// Closed-day banner (#186 style): the workspace is not open on the
   /// selected day, so nothing below is bookable. Shared [InlineBanner]
   /// since #210.
-  Widget _closedDayBanner(AppLocalizations? l10n) {
+  Widget _closedDayBanner(AppLocalizations l10n) {
     // #1196 — the banner used to state the fact and stop there, so a
     // member who opened the hub on a Sunday got a blocked plan, inert
     // chips and no way forward but the date picker, two taps away and
@@ -870,13 +871,13 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     return InlineBanner(
       key: const ValueKey('reserve-closed-banner'),
       icon: Icons.event_busy,
-      text: l10n?.planClosedDay ?? 'Closed on this day',
+      text: l10n.planClosedDay,
       // A workspace closed for longer than the horizon, or with no open
       // weekday at all, has nothing to point at. Then the banner says
       // only what it always said, which is the honest answer.
       actionLabel: label == null
           ? null
-          : (l10n?.planClosedDayShowNext(label) ?? 'Show $label'),
+          : (l10n.planClosedDayShowNext(label)),
       onAction: next == null ? null : () => _selectDay(next),
     );
   }
@@ -884,7 +885,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   /// Plan view: availability of the selected window on the live-plan
   /// canvas, hub-local level chips, free-seat tap books.
   Widget _planView(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     HalfDayWindow window, {
     required bool dayOpen,
   }) {
@@ -895,7 +896,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     if (levels.isEmpty) {
       return EmptyState(
         icon: Icons.map_outlined,
-        title: l10n?.planNoLevels ?? 'The workspace has no floor plan yet.',
+        title: l10n.planNoLevels,
       );
     }
     // #687 — the hub is the only map surface, so the floor it shows is
@@ -960,9 +961,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                       key: const ValueKey('reserve-reserve-level'),
                       tooltip: lexiconText(context,
                           key: 'levelReserveButton',
-                          fallback: AppLocalizations.of(context)
-                                  ?.levelReserveButton ??
-                              'Reserve level'),
+                          fallback: context.l10n
+                                  .levelReserveButton),
                       icon: const Icon(Icons.layers_outlined),
                       onPressed: () {
                         final plan =
@@ -1052,9 +1052,8 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
                 child: InlineBanner(
                   key: const ValueKey('reserve-plan-unavailable'),
                   icon: Icons.cloud_off_outlined,
-                  text: l10n?.workspaceGenericError ??
-                      'Something went wrong. Please try again.',
-                  actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
+                  text: l10n.workspaceGenericError,
+                  actionLabel: l10n.reserveStaleRetry,
                   onAction: () => ref.invalidate(floorPlanProvider(level.id)),
                 ),
               ),

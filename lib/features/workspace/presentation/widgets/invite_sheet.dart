@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -182,15 +183,13 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   /// a code is one person's, for one join, in the role of this sheet.
   /// Null when minting failed (already traced + snackbarred).
   Future<String?> _composeWithFreshCode({required bool monospace}) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     String? code;
     if (!await runGuarded(
       context,
       domain: 'workspace',
       message: 'create invitation failed',
-      errorText: l10n?.inviteCreateFailed ??
-          'Could not create the invitation. '
-              'Check your connection and try again.',
+      errorText: l10n.inviteCreateFailed,
       action: () async {
         code = await ref.read(workspaceRepositoryProvider).createInvitation(
               widget.workspace.id,
@@ -241,7 +240,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     Uri Function(String message) uriOf, {
     required bool monospace,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final message = await _composeWithFreshCode(monospace: monospace);
     if (message == null || !mounted) return;
     final opened = await ref.read(linkLauncherProvider)(uriOf(message));
@@ -253,9 +252,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       if (!mounted) return;
       AppSnack.info(
         context,
-        l10n?.inviteSendFailed ??
-            'Could not open the app for sending. '
-                'The message was copied instead.',
+        l10n.inviteSendFailed,
       );
     }
     if (mounted) Navigator.of(context).pop();
@@ -290,7 +287,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final selected =
         _language ?? _defaultLanguage(context);
     // Only a DEV workspace that HAS a twin can offer the choice: joining
@@ -303,7 +300,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
         widget.workspace.pairId.isNotEmpty &&
         widget.workspace.environment == 'dev';
     return SheetShell(
-      title: l10n?.inviteSectionTitle ?? 'Invite someone',
+      title: l10n.inviteSectionTitle,
       children: [
         const SizedBox(height: AppSpacing.md),
         Row(children: [
@@ -313,8 +310,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               controller: _firstName,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                labelText: l10n?.inviteFirstNameLabel ??
-                    'First name (optional)',
+                labelText: l10n.inviteFirstNameLabel,
               ),
             ),
           ),
@@ -326,7 +322,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 labelText:
-                    l10n?.inviteLastNameLabel ?? 'Last name (optional)',
+                    l10n.inviteLastNameLabel,
               ),
             ),
           ),
@@ -337,8 +333,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
           controller: _phone,
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
-            labelText: l10n?.invitePhoneLabel ??
-                'Phone (optional, with country code)',
+            labelText: l10n.invitePhoneLabel,
           ),
         ),
         if (canChooseEnvironments) ...[
@@ -348,12 +343,9 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
             contentPadding: EdgeInsets.zero,
             value: _alsoProd,
             onChanged: (value) => setState(() => _alsoProd = value),
-            title: Text(l10n?.inviteAlsoProdTitle ??
-                'Also give access to production'),
+            title: Text(l10n.inviteAlsoProdTitle),
             subtitle: Text(
-              l10n?.inviteAlsoProdSubtitle ??
-                  'They join the test space either way. The role still '
-                      'has to allow production access.',
+              l10n.inviteAlsoProdSubtitle,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
@@ -366,7 +358,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
           ),
         const SizedBox(height: AppSpacing.md),
         Text(
-          l10n?.inviteLanguageLabel ?? 'Message language',
+          l10n.inviteLanguageLabel,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -389,7 +381,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               key: const ValueKey('invite-whatsapp'),
               onPressed: _whatsapp,
               icon: const Icon(Icons.chat_outlined),
-              label: Text(l10n?.inviteViaWhatsapp ?? 'WhatsApp'),
+              label: Text(l10n.inviteViaWhatsapp),
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -398,7 +390,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               key: const ValueKey('invite-sms'),
               onPressed: _sms,
               icon: const Icon(Icons.sms_outlined),
-              label: Text(l10n?.inviteViaSms ?? 'SMS'),
+              label: Text(l10n.inviteViaSms),
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -407,7 +399,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
               key: const ValueKey('invite-share'),
               onPressed: _share,
               icon: const Icon(Icons.share_outlined),
-              label: Text(l10n?.inviteViaShare ?? 'Share…'),
+              label: Text(l10n.inviteViaShare),
             ),
           ),
         ]),

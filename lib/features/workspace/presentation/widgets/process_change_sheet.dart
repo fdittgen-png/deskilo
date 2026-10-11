@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -102,9 +103,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
       if (mounted) {
         AppSnack.error(
           context,
-          AppLocalizations.of(context)?.processChangeFailed ??
-              'The features could not be changed. Nothing was written; '
-                  'try again.',
+          context.l10n.processChangeFailed,
         );
       }
     } finally {
@@ -114,7 +113,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) {
@@ -133,8 +132,8 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
         ? processLabel(l10n, widget.subprocessKeys.single)
         : processLabel(l10n, widget.processKey);
     final title = widget.activate
-        ? (l10n?.processSheetTitleOn(name) ?? 'Switch on $name')
-        : (l10n?.processSheetTitleOff(name) ?? 'Switch off $name');
+        ? (l10n.processSheetTitleOn(name))
+        : (l10n.processSheetTitleOff(name));
     final refused = plan.isBlocked && _mode == DeactivationMode.refuse;
     final canApply = !_busy && !_unconfirmed && !refused && !plan.nothingToDo;
     final count = plan.flags.length;
@@ -154,23 +153,17 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
                 key: const ValueKey('process-change-conflict'),
                 icon: Icons.sync_problem_outlined,
                 severity: InlineBannerSeverity.info,
-                text: l10n?.processConflict ??
-                    'Someone changed the features meanwhile. This is the '
-                        'updated preview — check it again.',
+                text: l10n.processConflict,
               ),
             if (_unconfirmed)
               InlineBanner(
                 key: const ValueKey('process-change-unconfirmed'),
                 icon: Icons.help_outline,
-                text: l10n?.processUnconfirmed ??
-                    'The change was written, but the app could not confirm '
-                        'it. Close and reopen the features to see the '
-                        'current state.',
+                text: l10n.processUnconfirmed,
               ),
             if (plan.nothingToDo)
               Text(
-                l10n?.processNothingToDo ??
-                    'Already the case — nothing to change.',
+                l10n.processNothingToDo,
                 key: const ValueKey('process-change-nothing'),
               )
             else if (widget.activate)
@@ -182,10 +175,8 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
               key: const ValueKey('process-change-confirm'),
               onPressed: canApply ? () => _apply(plan) : null,
               child: Text(widget.activate
-                  ? (l10n?.processConfirmOn(count) ??
-                      'Switch on $count features')
-                  : (l10n?.processConfirmOff(count) ??
-                      'Switch off $count features')),
+                  ? (l10n.processConfirmOn(count))
+                  : (l10n.processConfirmOff(count))),
             ),
           ],
         ),
@@ -193,7 +184,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
     );
   }
 
-  List<Widget> _activation(AppLocalizations? l10n, ProcessChangePlan plan) {
+  List<Widget> _activation(AppLocalizations l10n, ProcessChangePlan plan) {
     final on = <ResolvedCapability>[];
     final needed = <ResolvedCapability>[];
     final already = <ResolvedCapability>[];
@@ -210,37 +201,36 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
     return [
       _Section(
         keyName: 'on',
-        title: l10n?.processSectionSwitchedOn ?? 'Switched on',
+        title: l10n.processSectionSwitchedOn,
         rows: [for (final c in on) _row(l10n, c.feature)],
       ),
       _Section(
         keyName: 'needed',
-        title: l10n?.processSectionAlsoNeeded ?? 'Also needed',
+        title: l10n.processSectionAlsoNeeded,
         rows: [
           for (final c in needed)
             _row(
               l10n,
               c.feature,
-              detail: l10n?.processNeededBy(
-                      c.neededBy.map((f) => featureName(l10n, f)).join(', ')) ??
-                  'needed by ${c.neededBy.map((f) => featureName(l10n, f)).join(', ')}',
+              detail: l10n.processNeededBy(
+                      c.neededBy.map((f) => featureName(l10n, f)).join(', ')),
             ),
         ],
       ),
       _Section(
         keyName: 'works-again',
-        title: l10n?.processSectionWorksAgain ?? 'Works again',
+        title: l10n.processSectionWorksAgain,
         rows: [for (final f in plan.revived) _row(l10n, f)],
       ),
       _Section(
         keyName: 'already',
-        title: l10n?.processSectionAlreadyOn ?? 'Already on',
+        title: l10n.processSectionAlreadyOn,
         rows: [for (final c in already) _row(l10n, c.feature)],
       ),
     ];
   }
 
-  List<Widget> _deactivation(AppLocalizations? l10n, ProcessChangePlan plan) {
+  List<Widget> _deactivation(AppLocalizations l10n, ProcessChangePlan plan) {
     final refused = plan.isBlocked && _mode == DeactivationMode.refuse;
     final dependants = {
       for (final b in plan.changeSet.blockedBy) ...b.orphans,
@@ -252,11 +242,9 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
             key: ValueKey('process-change-blocked-${b.feature.name}'),
             icon: Icons.link,
             severity: InlineBannerSeverity.info,
-            text: l10n?.processBlockedIntro(
+            text: l10n.processBlockedIntro(
                     featureName(l10n, b.feature),
-                    b.orphans.map((f) => featureName(l10n, f)).join(', ')) ??
-                '${featureName(l10n, b.feature)} is still needed by: '
-                    '${b.orphans.map((f) => featureName(l10n, f)).join(', ')}',
+                    b.orphans.map((f) => featureName(l10n, f)).join(', ')),
           ),
         const SizedBox(height: AppSpacing.sm),
         OutlinedButton(
@@ -264,8 +252,7 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
           onPressed: _busy
               ? null
               : () => setState(() => _mode = DeactivationMode.keepDependants),
-          child: Text(l10n?.processKeepDependants ??
-              'Switch off anyway, keep their settings'),
+          child: Text(l10n.processKeepDependants),
         ),
         OutlinedButton(
           key: const ValueKey('process-change-remove'),
@@ -273,13 +260,12 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
               ? null
               : () =>
                   setState(() => _mode = DeactivationMode.removeDependants),
-          child: Text(l10n?.processRemoveDependants(dependants) ??
-              'Also switch off the $dependants dependants'),
+          child: Text(l10n.processRemoveDependants(dependants)),
         ),
       ] else ...[
         _Section(
           keyName: 'off',
-          title: l10n?.processSectionSwitchedOff ?? 'Switched off',
+          title: l10n.processSectionSwitchedOff,
           rows: [
             for (final f in plan.written)
               if (!plan.alsoOff.contains(f)) _row(l10n, f),
@@ -287,25 +273,23 @@ class _ProcessChangeSheetState extends ConsumerState<_ProcessChangeSheet> {
         ),
         _Section(
           keyName: 'kept',
-          title: l10n?.processSectionKeptWaiting ??
-              'Stops working; its setting is kept',
+          title: l10n.processSectionKeptWaiting,
           rows: [for (final f in plan.heldBack) _row(l10n, f)],
         ),
         _Section(
           keyName: 'also-off',
-          title: l10n?.processSectionAlsoOff ?? 'Also switched off',
+          title: l10n.processSectionAlsoOff,
           rows: [for (final f in plan.alsoOff) _row(l10n, f)],
         ),
       ],
     ];
   }
 
-  Widget _row(AppLocalizations? l10n, WorkspaceFeature feature,
+  Widget _row(AppLocalizations l10n, WorkspaceFeature feature,
       {String? detail}) {
     final home = homeProcessOf(feature);
     final elsewhere = home != null && home != widget.processKey
-        ? (l10n?.processInProcess(processLabel(l10n, home)) ??
-            'in ${processLabel(l10n, home)}')
+        ? (l10n.processInProcess(processLabel(l10n, home)))
         : null;
     final subtitle = [?detail, ?elsewhere].join(' · ');
     return ListTile(

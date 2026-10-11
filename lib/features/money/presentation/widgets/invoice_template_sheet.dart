@@ -10,6 +10,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../core/files/file_names.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -341,8 +342,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       }
     });
     AppSnack.success(context,
-        AppLocalizations.of(context)?.reportLayoutImported ??
-            'Layout imported. Save to keep it.');
+        context.l10n.reportLayoutImported);
   }
 
   Future<void> _previewLayout() async {
@@ -351,7 +351,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     await showLayoutQuickPreview(context, ref,
         layoutXml: xml,
         data: withOwnerTexts(
-            liveReportData(context, ref, _doc) ?? sampleReportData(AppLocalizations.of(context)),
+            liveReportData(context, ref, _doc) ?? sampleReportData(context.l10n),
             _currentTexts));
   }
 
@@ -374,7 +374,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// the editor, not in the workspace: nothing is stored until Save,
   /// which is what makes an import reviewable before it counts.
   Future<void> _importDesign() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final kind = reportKindById(_doc, reminderLevels: _reminderLevels);
     if (kind == null) return;
     if (!await _confirmReplace() || !mounted) return;
@@ -388,11 +388,11 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     _apply(bands);
     AppSnack.info(
         context,
-        l10n?.reportDesignImported ?? 'Design imported. Save to keep it.');
+        l10n.reportDesignImported);
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final levels =
@@ -410,8 +410,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       setState(() => _busy = false);
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -421,7 +420,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
     Navigator.of(context).pop();
     AppSnack.info(
       context,
-      l10n?.invoiceTemplateSaved ?? 'Invoice template saved.',
+      l10n.invoiceTemplateSaved,
       replace: true,
     );
   }
@@ -435,7 +434,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// sample data otherwise. No PDF round-trip.
 
   Future<void> _quickPreview() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final live = liveReportData(context, ref, _doc);
     final simulated = live == null;
     final data = withOwnerTexts(live ?? sampleReportData(l10n), _currentTexts);
@@ -450,8 +449,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       final why = reportBandsError(bands: bands, data: data) ?? '';
       AppSnack.error(
         context,
-        l10n?.reportDesignerError(why) ??
-            'The template does not render — $why',
+        l10n.reportDesignerError(why),
       );
       return;
     }
@@ -463,20 +461,19 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
   /// the invoice as a watermarked copy, a reminder as its letter — and
   /// either DOWNLOADS it or hands it to the share sheet (#474).
   Future<void> _pdf({required bool download}) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final invoices = ref.read(invoicesProvider).value ?? const [];
     if (invoices.isEmpty) {
       AppSnack.info(
         context,
-        l10n?.invoiceTemplateNoPreview ??
-            'Issue an invoice first — the preview renders your newest one.',
+        l10n.invoiceTemplateNoPreview,
         replace: true,
       );
       return;
     }
     setState(() => _busy = true);
     try {
-      final l10nSync = AppLocalizations.of(context);
+      final l10nSync = context.l10n;
       final ({List<int> bytes, String fileName}) pdf;
       if (_doc == 'invoice' || _doc == 'proforma') {
         final invoicePdf = await buildInvoicePdfFile(
@@ -515,15 +512,15 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         final bytes = await buildBandedLetterPdf(
           report: report,
           reportImages: await resolveReportImages(ref, report),
-          pageLabel: l10nSync?.invoicePdfPage ?? 'Page',
-          documentTitle: l10nSync?.billPdfTitle ?? 'Monthly bill',
+          pageLabel: l10nSync.invoicePdfPage,
+          documentTitle: l10nSync.billPdfTitle,
           baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
           boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
         );
         pdf = (
           bytes: bytes,
           fileName:
-              '${safeFileSlug(l10nSync?.billPdfTitle ?? 'statement')}.pdf',
+              '${safeFileSlug(l10nSync.billPdfTitle)}.pdf',
         );
       } else {
         final letter = await buildReminderPdfFile(
@@ -556,8 +553,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
       if (mounted) {
         AppSnack.error(
           context,
-          l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          l10n.workspaceGenericError,
         );
       }
     } finally {
@@ -592,12 +588,12 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
 
   /// #864 — the chips come from the registry, so a report kind added
   /// there appears here without this list being remembered.
-  List<(String, String)> _docs(AppLocalizations? l10n) => [
+  List<(String, String)> _docs(AppLocalizations l10n) => [
         for (final kind in reportKinds(reminderLevels: _reminderLevels))
           (kind.id, reportKindLabel(l10n, kind)),
       ];
 
-  Widget _editorArea(AppLocalizations? l10n, {required bool sideBySide}) {
+  Widget _editorArea(AppLocalizations l10n, {required bool sideBySide}) {
     if (_visual) {
       // #548 — the page-true design surface: one A4 page, the
       // document's margins, band strips, page-break guides, zoom, and
@@ -607,11 +603,9 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         header: _header,
         body: _body,
         footer: _footer,
-        headerLabel: l10n?.invoiceTemplateHeaderLabel ?? 'Header band',
-        bodyLabel: l10n?.invoiceTemplateBodyLabel ??
-            'Body band (the invoice lines)',
-        footerLabel: l10n?.invoiceTemplateFooterLabel ??
-            'Footer band (payment terms, legal mentions)',
+        headerLabel: l10n.invoiceTemplateHeaderLabel,
+        bodyLabel: l10n.invoiceTemplateBodyLabel,
+        footerLabel: l10n.invoiceTemplateFooterLabel,
         editorKeyPrefix: 'visual-$_doc-$_visualEpoch',
         previewData: () =>
             withOwnerTexts(liveReportData(context, ref, _doc) ?? sampleReportData(l10n), _currentTexts),
@@ -629,7 +623,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final wide = widget.asPage && MediaQuery.sizeOf(context).width >= 1000;
     final designExchange = ref
@@ -643,10 +637,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           Row(
             children: [
               Text(
-                l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+                l10n.invoiceTemplateTitle,
                 style: theme.textTheme.titleMedium,
               ),
-              HelpDot(l10n?.helpTopicReportEditor ?? 'report editor',
+              HelpDot(l10n.helpTopicReportEditor,
                 anchor: HelpAnchor.reportsInvoiceTemplate,
               ),
             ],
@@ -687,12 +681,12 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
             ButtonSegment(
               value: false,
               icon: const Icon(Icons.code),
-              label: Text(l10n?.reportEditorMarkup ?? 'Markup'),
+              label: Text(l10n.reportEditorMarkup),
             ),
             ButtonSegment(
               value: true,
               icon: const Icon(Icons.design_services_outlined),
-              label: Text(l10n?.reportEditorVisual ?? 'Visual'),
+              label: Text(l10n.reportEditorVisual),
             ),
           ],
           selected: {_visual},
@@ -787,10 +781,10 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
           // title's leading spacing, while every other screen puts its
           // help dot in the actions. Moved there, the title has room and
           // the app is one shape less inconsistent.
-          title: Text(l10n?.reportEditorTitle ?? 'Report editor',
+          title: Text(l10n.reportEditorTitle,
               overflow: TextOverflow.ellipsis),
           actions: [
-            HelpDot(l10n?.helpTopicReportEditor ?? 'report editor',
+            HelpDot(l10n.helpTopicReportEditor,
               anchor: HelpAnchor.reportsEditor,
             ),
             ReportHistoryControls(
@@ -804,7 +798,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               child: FilledButton(
                 key: const ValueKey('invoice-template-save'),
                 onPressed: _busy ? null : _save,
-                child: Text(l10n?.commonSave ?? 'Save'),
+                child: Text(l10n.commonSave),
               ),
             ),
           ],

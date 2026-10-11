@@ -7,6 +7,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -23,39 +24,37 @@ import '../../providers/money_providers.dart';
 /// #767 — the localized wording of one recurrence rule: "every 2 weeks,
 /// 12 times", "monthly until 31.12.2026", "every 10 days".
 String _scheduleRuleText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   ExpenseSchedule s,
   DateFormat dates,
 ) {
   final unit = switch (s.unit) {
     ScheduleUnit.day =>
-      s.every == 1 ? (l10n?.scheduleDaily ?? 'daily') : null,
+      s.every == 1 ? (l10n.scheduleDaily) : null,
     ScheduleUnit.week =>
-      s.every == 1 ? (l10n?.scheduleWeekly ?? 'weekly') : null,
+      s.every == 1 ? (l10n.scheduleWeekly) : null,
     ScheduleUnit.month =>
-      s.every == 1 ? (l10n?.scheduleMonthly ?? 'monthly') : null,
+      s.every == 1 ? (l10n.scheduleMonthly) : null,
     ScheduleUnit.year =>
-      s.every == 1 ? (l10n?.scheduleYearly ?? 'yearly') : null,
+      s.every == 1 ? (l10n.scheduleYearly) : null,
   };
   final everyText = unit ??
       switch (s.unit) {
         ScheduleUnit.day =>
-          l10n?.scheduleEveryDays(s.every) ?? 'every ${s.every} days',
+          l10n.scheduleEveryDays(s.every),
         ScheduleUnit.week =>
-          l10n?.scheduleEveryWeeks(s.every) ?? 'every ${s.every} weeks',
+          l10n.scheduleEveryWeeks(s.every),
         ScheduleUnit.month =>
-          l10n?.scheduleEveryMonths(s.every) ?? 'every ${s.every} months',
+          l10n.scheduleEveryMonths(s.every),
         ScheduleUnit.year =>
-          l10n?.scheduleEveryMonths(s.every * 12) ??
-              'every ${s.every * 12} months',
+          l10n.scheduleEveryMonths(s.every * 12),
       };
   return [
     everyText,
     if (s.repeatCount != null)
-      l10n?.scheduleTimes(s.repeatCount!) ?? '${s.repeatCount} times',
+      l10n.scheduleTimes(s.repeatCount!),
     if (s.endsOn != null)
-      l10n?.scheduleUntil(dates.format(s.endsOn!)) ??
-          'until ${dates.format(s.endsOn!)}',
+      l10n.scheduleUntil(dates.format(s.endsOn!)),
   ].join(' · ');
 }
 
@@ -65,7 +64,7 @@ Future<void> showExpenseSchedulesSheet(
   WidgetRef ref,
   MoneyFormat currency,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
   final dates = DateFormat.yMMMd();
@@ -78,20 +77,17 @@ Future<void> showExpenseSchedulesSheet(
             ref.watch(expenseSchedulesProvider(workspace.id)).value ??
                 const <ExpenseSchedule>[];
         return SheetShell(
-          title: l10n?.scheduledExpensesTitle ?? 'Scheduled expenses',
+          title: l10n.scheduledExpensesTitle,
           children: [
             Row(children: [
               Expanded(
                 child: Text(
-                  l10n?.scheduledExpensesIntro ??
-                      'Subscriptions the space pays for — internet, phone, '
-                          'electricity. The schedule is validated once; every '
-                          'due date is presented to you before it counts.',
+                  l10n.scheduledExpensesIntro,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               HelpDot(
-                l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses',
+                l10n.helpTopicScheduledExpenses,
                 anchor: HelpAnchor.expenseSchedule,
               ),
             ]),
@@ -100,7 +96,7 @@ Future<void> showExpenseSchedulesSheet(
               Padding(
                 padding: AppSpacing.mdAll,
                 child: Text(
-                  l10n?.scheduledExpensesEmpty ?? 'No scheduled expense yet.',
+                  l10n.scheduledExpensesEmpty,
                 ),
               ),
             // #1059 — the list answers "what does the space pay for", and a
@@ -120,21 +116,20 @@ Future<void> showExpenseSchedulesSheet(
                   '${currency.formatMinor(s.amountCents)} · '
                   '${_scheduleRuleText(l10n, s, dates)}\n'
                   '${_statusText(l10n, s.status)}'
-                  '${s.nextDue != null ? ' · ${l10n?.scheduleNextDue(dates.format(s.nextDue!)) ?? 'next: ${dates.format(s.nextDue!)}'}' : ''}',
+                  '${s.nextDue != null ? ' · ${l10n.scheduleNextDue(dates.format(s.nextDue!))}' : ''}',
                 ),
                 isThreeLine: true,
                 trailing: canEndSchedule(s.status)
                     ? IconButton(
                         key: ValueKey('schedule-cancel-${s.id}'),
-                        tooltip: l10n?.scheduleCancel ?? 'End this schedule',
+                        tooltip: l10n.scheduleCancel,
                         icon: const Icon(Icons.stop_circle_outlined),
                         onPressed: () async {
                           final ok = await runGuarded(
                             context,
                             domain: 'money',
                             message: 'cancel expense schedule failed',
-                            errorText: l10n?.workspaceGenericError ??
-                                'Something went wrong. Please try again.',
+                            errorText: l10n.workspaceGenericError,
                             action: () =>
                                 ref.read(expenseScheduleCommandProvider).end(s),
                           );
@@ -151,7 +146,7 @@ Future<void> showExpenseSchedulesSheet(
               key: const ValueKey('schedule-new'),
               icon: const Icon(Icons.event_repeat_outlined),
               label: Text(
-                  l10n?.scheduleNew ?? 'Schedule a recurring expense'),
+                  l10n.scheduleNew),
               onPressed: () async {
                 final created =
                     await _showCreateExpenseScheduleSheet(context, ref, currency);
@@ -165,10 +160,8 @@ Future<void> showExpenseSchedulesSheet(
                 key: const ValueKey('schedule-finished'),
                 tilePadding: EdgeInsets.zero,
                 title: Text(
-                  l10n?.scheduledExpensesFinished(
-                          schedules.where((s) => !_stillFires(s)).length) ??
-                      'Ended and rejected '
-                          '(${schedules.where((s) => !_stillFires(s)).length})',
+                  l10n.scheduledExpensesFinished(
+                          schedules.where((s) => !_stillFires(s)).length),
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 children: [
@@ -201,13 +194,13 @@ Future<void> showExpenseSchedulesSheet(
 bool _stillFires(ExpenseSchedule s) =>
     s.status == ScheduleStatus.pending || s.status == ScheduleStatus.active;
 
-String _statusText(AppLocalizations? l10n, ScheduleStatus status) =>
+String _statusText(AppLocalizations l10n, ScheduleStatus status) =>
     switch (status) {
       ScheduleStatus.pending =>
-        l10n?.scheduleStatusPending ?? 'Awaiting validation',
-      ScheduleStatus.active => l10n?.scheduleStatusActive ?? 'Active',
-      ScheduleStatus.rejected => l10n?.scheduleStatusRejected ?? 'Rejected',
-      ScheduleStatus.ended => l10n?.scheduleStatusEnded ?? 'Ended',
+        l10n.scheduleStatusPending,
+      ScheduleStatus.active => l10n.scheduleStatusActive,
+      ScheduleStatus.rejected => l10n.scheduleStatusRejected,
+      ScheduleStatus.ended => l10n.scheduleStatusEnded,
     };
 
 /// The creation form: what, how much, from when, how often, how long.
@@ -216,7 +209,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   WidgetRef ref,
   MoneyFormat currency,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return false;
   final dates = DateFormat.yMMMd();
@@ -229,14 +222,14 @@ Future<bool> _showCreateExpenseScheduleSheet(
   final now = ref.read(clockProvider).now();
   var startsOn = now;
   DateTime? endsOn;
-  final topic = l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses';
+  final topic = l10n.helpTopicScheduledExpenses;
 
   final submitted = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (context) => StatefulBuilder(
       builder: (context, setSheetState) => SheetShell(
-        title: l10n?.scheduleNew ?? 'Schedule a recurring expense',
+        title: l10n.scheduleNew,
         children: [
           Align(
             alignment: Alignment.centerRight,
@@ -247,7 +240,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
             controller: title,
             autofocus: true,
             decoration: InputDecoration(
-              labelText: l10n?.scheduleTitleLabel ?? 'What (e.g. Internet)',
+              labelText: l10n.scheduleTitleLabel,
             ),
           ),
           const SizedBox(height: 12),
@@ -255,7 +248,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
             key: const ValueKey('schedule-amount'),
             controller: amount,
             decoration: InputDecoration(
-              labelText: l10n?.moneyAmountLabel ?? 'Amount',
+              labelText: l10n.moneyAmountLabel,
               suffixText: currency.currencyName,
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -264,14 +257,14 @@ Future<bool> _showCreateExpenseScheduleSheet(
           TextField(
             controller: description,
             decoration: InputDecoration(
-              labelText: l10n?.moneyDescriptionLabel ?? 'Description',
+              labelText: l10n.moneyDescriptionLabel,
             ),
           ),
           const SizedBox(height: 12),
           ListTile(
             key: const ValueKey('schedule-starts'),
             contentPadding: EdgeInsets.zero,
-            title: Text(l10n?.scheduleStartsOn ?? 'First occurrence'),
+            title: Text(l10n.scheduleStartsOn),
             subtitle: Text(dates.format(startsOn)),
             trailing: const Icon(Icons.edit_calendar_outlined),
             onTap: () async {
@@ -290,7 +283,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
                 key: const ValueKey('schedule-every'),
                 controller: every,
                 decoration: InputDecoration(
-                  labelText: l10n?.scheduleEveryLabel ?? 'Every',
+                  labelText: l10n.scheduleEveryLabel,
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -301,7 +294,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
                 key: const ValueKey('schedule-unit'),
                 initialValue: unit,
                 decoration: InputDecoration(
-                  labelText: l10n?.scheduleUnitLabel ?? 'Unit',
+                  labelText: l10n.scheduleUnitLabel,
                 ),
                 items: [
                   for (final u in ScheduleUnit.values)
@@ -316,23 +309,22 @@ Future<bool> _showCreateExpenseScheduleSheet(
             key: const ValueKey('schedule-times'),
             controller: times,
             decoration: InputDecoration(
-              labelText: l10n?.scheduleTimesLabel ??
-                  'Repetitions (empty = until the end date)',
+              labelText: l10n.scheduleTimesLabel,
             ),
             keyboardType: TextInputType.number,
           ),
           ListTile(
             key: const ValueKey('schedule-ends'),
             contentPadding: EdgeInsets.zero,
-            title: Text(l10n?.scheduleEndsOn ?? 'Until (optional)'),
+            title: Text(l10n.scheduleEndsOn),
             subtitle: Text(endsOn == null
-                ? (l10n?.scheduleNoEnd ?? 'No end date')
+                ? (l10n.scheduleNoEnd)
                 : dates.format(endsOn!)),
             trailing: endsOn == null
                 ? const Icon(Icons.edit_calendar_outlined)
                 : IconButton(
                   key: const ValueKey('expense-schedule-sheet-a11y-clear-date'),
-                  tooltip: l10n?.a11yClearDate ?? 'Clear the date',
+                  tooltip: l10n.a11yClearDate,
                     icon: const Icon(Icons.clear),
                     onPressed: () => setSheetState(() => endsOn = null),
                   ),
@@ -348,18 +340,14 @@ Future<bool> _showCreateExpenseScheduleSheet(
           ),
           const SizedBox(height: 8),
           Text(
-            l10n?.scheduleValidationHint ??
-                'The schedule goes to the validators first. Each due date is '
-                    'then presented to you: confirmed at this amount it counts '
-                    'immediately; a different amount explains itself and is '
-                    'validated again.',
+            l10n.scheduleValidationHint,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
           FilledButton(
             key: const ValueKey('schedule-submit'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.scheduleSubmit ?? 'Schedule it'),
+            child: Text(l10n.scheduleSubmit),
           ),
         ],
       ),
@@ -370,7 +358,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   // #1449 — the command refuses it and writes nothing; the sheet says so.
   if (!isSchedulable(title: title.text, amountCents: cents)) {
     AppSnack.error(
-        context, l10n?.scheduleMissingFields ?? 'Name and amount are needed.');
+        context, l10n.scheduleMissingFields);
     return false;
   }
   final ok = await runGuarded(
@@ -378,7 +366,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
     domain: 'money',
     message: 'create expense schedule failed',
     errorText:
-        l10n?.workspaceGenericError ?? 'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
     action: () => ref.read(expenseScheduleCommandProvider).schedule(
           workspaceId: workspace.id,
           title: title.text,
@@ -394,18 +382,17 @@ Future<bool> _showCreateExpenseScheduleSheet(
   if (!ok || !context.mounted) return false;
   AppSnack.success(
     context,
-    l10n?.schedulePending ??
-        'Scheduled — waiting for the validators to confirm it.',
+    l10n.schedulePending,
   );
   ref.invalidate(eventsProvider);
   return true;
 }
 
-String _unitText(AppLocalizations? l10n, ScheduleUnit u) => switch (u) {
-      ScheduleUnit.day => l10n?.scheduleUnitDays ?? 'days',
-      ScheduleUnit.week => l10n?.scheduleUnitWeeks ?? 'weeks',
-      ScheduleUnit.month => l10n?.scheduleUnitMonths ?? 'months',
-      ScheduleUnit.year => l10n?.scheduleUnitYears ?? 'years',
+String _unitText(AppLocalizations l10n, ScheduleUnit u) => switch (u) {
+      ScheduleUnit.day => l10n.scheduleUnitDays,
+      ScheduleUnit.week => l10n.scheduleUnitWeeks,
+      ScheduleUnit.month => l10n.scheduleUnitMonths,
+      ScheduleUnit.year => l10n.scheduleUnitYears,
     };
 
 /// One presented occurrence on the Payments face: due date, amount
@@ -438,7 +425,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final o = widget.occurrence;
     final scheduled = o.scheduledAmountCents;
     final cents = parseCentsInput(_amount.text);
@@ -470,7 +457,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 ),
               ),
               HelpDot(
-                l10n?.helpTopicScheduledExpenses ?? 'Scheduled expenses',
+                l10n.helpTopicScheduledExpenses,
                 anchor: HelpAnchor.expenseSchedule,
               ),
             ]),
@@ -478,9 +465,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  l10n?.occurrenceRejected ??
-                      'The validators rejected it — adjust the amount or the '
-                          'description and resend.',
+                  l10n.occurrenceRejected,
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
@@ -492,13 +477,12 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
               key: ValueKey('occurrence-amount-${o.id}'),
               controller: _amount,
               decoration: InputDecoration(
-                labelText: l10n?.moneyAmountLabel ?? 'Amount',
+                labelText: l10n.moneyAmountLabel,
                 suffixText: widget.currency.currencyName,
                 helperText: scheduled == null
                     ? null
-                    : (l10n?.occurrenceScheduledAmount(
-                            widget.currency.formatMinor(scheduled)) ??
-                        'Validated: ${widget.currency.formatMinor(scheduled)}'),
+                    : (l10n.occurrenceScheduledAmount(
+                            widget.currency.formatMinor(scheduled))),
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -510,8 +494,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 key: ValueKey('occurrence-reason-${o.id}'),
                 controller: _reason,
                 decoration: InputDecoration(
-                  labelText: l10n?.occurrenceReasonLabel ??
-                      'Why it differs (required)',
+                  labelText: l10n.occurrenceReasonLabel,
                 ),
               ),
             ],
@@ -522,8 +505,8 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
                 key: ValueKey('occurrence-confirm-${o.id}'),
                 onPressed: _confirm,
                 child: Text(rejected
-                    ? (l10n?.occurrenceResend ?? 'Resend for validation')
-                    : (l10n?.occurrenceConfirm ?? 'Confirm this expense')),
+                    ? (l10n.occurrenceResend)
+                    : (l10n.occurrenceConfirm)),
               ),
             ),
           ],
@@ -535,15 +518,14 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
   /// #1449 — the command decides what this amount means and refuses the
   /// write the rule forbids; the sheet says which answer it was.
   Future<void> _confirm() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspaceId = widget.occurrence.workspaceId;
     OccurrenceAnswer? answer;
     final ok = await runGuarded(
       context,
       domain: 'money',
       message: 'confirm expense occurrence failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         answer = await ref.read(expenseScheduleCommandProvider).answer(
               occurrence: widget.occurrence,
@@ -558,16 +540,14 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
         return;
       case OccurrenceAnswer.explanationMissing:
         AppSnack.error(context,
-            l10n?.occurrenceReasonMissing ??
-                'A different amount needs an explanation.');
+            l10n.occurrenceReasonMissing);
         return;
       case OccurrenceAnswer.forValidation:
         AppSnack.success(context,
-            l10n?.occurrenceSentForValidation ??
-                'Sent to the validators — it counts once they confirm.');
+            l10n.occurrenceSentForValidation);
       case OccurrenceAnswer.settled:
         AppSnack.success(
-            context, l10n?.occurrenceAdded ?? 'Added to your expenses.');
+            context, l10n.occurrenceAdded);
     }
     ref
       ..invalidate(expenseOccurrencesProvider(workspaceId))

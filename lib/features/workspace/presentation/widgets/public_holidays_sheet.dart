@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -23,21 +24,21 @@ import '../../providers/workspace_providers.dart';
 
 /// The localized name of a holiday the SERVER named. The key travels
 /// between the two sides; the word never does.
-String _holidayName(AppLocalizations? l10n, String key) => switch (key) {
-      'newYear' => l10n?.holidayNewYear ?? 'New Year',
-      'easterMonday' => l10n?.holidayEasterMonday ?? 'Easter Monday',
-      'labourDay' => l10n?.holidayLabourDay ?? 'Labour Day',
-      'victory1945' => l10n?.holidayVictory1945 ?? 'Victory 1945',
-      'ascension' => l10n?.holidayAscension ?? 'Ascension',
-      'whitMonday' => l10n?.holidayWhitMonday ?? 'Whit Monday',
-      'nationalDay' => l10n?.holidayNationalDay ?? 'National day',
-      'assumption' => l10n?.holidayAssumption ?? 'Assumption',
-      'allSaints' => l10n?.holidayAllSaints ?? 'All Saints',
-      'armistice' => l10n?.holidayArmistice ?? 'Armistice 1918',
-      'christmas' => l10n?.holidayChristmas ?? 'Christmas',
-      'goodFriday' => l10n?.holidayGoodFriday ?? 'Good Friday',
-      'germanUnity' => l10n?.holidayGermanUnity ?? 'German Unity Day',
-      'boxingDay' => l10n?.holidayBoxingDay ?? 'Boxing Day',
+String _holidayName(AppLocalizations l10n, String key) => switch (key) {
+      'newYear' => l10n.holidayNewYear,
+      'easterMonday' => l10n.holidayEasterMonday,
+      'labourDay' => l10n.holidayLabourDay,
+      'victory1945' => l10n.holidayVictory1945,
+      'ascension' => l10n.holidayAscension,
+      'whitMonday' => l10n.holidayWhitMonday,
+      'nationalDay' => l10n.holidayNationalDay,
+      'assumption' => l10n.holidayAssumption,
+      'allSaints' => l10n.holidayAllSaints,
+      'armistice' => l10n.holidayArmistice,
+      'christmas' => l10n.holidayChristmas,
+      'goodFriday' => l10n.holidayGoodFriday,
+      'germanUnity' => l10n.holidayGermanUnity,
+      'boxingDay' => l10n.holidayBoxingDay,
       // A key this build does not know is shown as itself rather than
       // hidden: a newer server may name a day this client has no word for.
       _ => key,
@@ -96,8 +97,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
       setState(() => _preview = HolidayGeneration.empty);
       AppSnack.error(
         context,
-        AppLocalizations.of(context)?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        context.l10n.workspaceGenericError,
       );
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -107,7 +107,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
   Future<void> _apply() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _busy = true);
     try {
       final result = await widget.command.apply(
@@ -119,8 +119,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
       if (!mounted) return;
       AppSnack.success(
         context,
-        l10n?.publicHolidaysCreated(result.created) ??
-            '${result.created} closure days created',
+        l10n.publicHolidaysCreated(result.created),
       );
       Navigator.of(context).pop();
     } on Object catch (e, st) {
@@ -131,8 +130,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
       setState(() => _busy = false);
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
     }
   }
@@ -147,7 +145,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
     final preview = _preview;
     final creatable = preview?.creatable.length ?? 0;
@@ -167,7 +165,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
             Row(children: [
               Flexible(
                 child: Text(
-                  l10n?.publicHolidaysSheetTitle ?? 'Public holidays',
+                  l10n.publicHolidaysSheetTitle,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -191,11 +189,9 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
               Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: Text(
-                  l10n?.publicHolidaysLockedMonths(
+                  l10n.publicHolidaysLockedMonths(
                         preview.lockedMonths.join(', '),
-                      ) ??
-                      'Skipped, already invoiced: '
-                          '${preview.lockedMonths.join(', ')}',
+                      ),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                   ),
@@ -205,8 +201,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
               child: switch (preview) {
                 null => const Center(child: CircularProgressIndicator()),
                 final p when p.days.isEmpty => Text(
-                    l10n?.publicHolidaysPreviewNone ??
-                        'No public holidays for this year.',
+                    l10n.publicHolidaysPreviewNone,
                   ),
                 final p => ListView(
                     shrinkWrap: true,
@@ -223,11 +218,9 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
                           title: Text(_holidayName(l10n, d.key)),
                           subtitle: Text(DateFormat.yMMMMd(locale).format(d.day)),
                           trailing: d.locked
-                              ? Text(l10n?.publicHolidaysLocked ??
-                                  'Invoiced month')
+                              ? Text(l10n.publicHolidaysLocked)
                               : d.present
-                                  ? Text(l10n?.publicHolidaysPresent ??
-                                      'Already a closure day')
+                                  ? Text(l10n.publicHolidaysPresent)
                                   : null,
                         ),
                     ],
@@ -240,10 +233,8 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
               onPressed: _busy || creatable == 0 ? null : _apply,
               child: Text(
                 creatable == 0
-                    ? (l10n?.publicHolidaysNothingToCreate ??
-                        'Nothing to create')
-                    : (l10n?.publicHolidaysConfirm(creatable) ??
-                        'Create $creatable closure days'),
+                    ? (l10n.publicHolidaysNothingToCreate)
+                    : (l10n.publicHolidaysConfirm(creatable)),
               ),
             ),
           ],

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -37,7 +38,7 @@ class InvoicingSummaryBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final overview = ref.watch(invoicingOverviewProvider).value;
     if (overview == null) return const SizedBox.shrink();
     if (overview.toInvoice.isEmpty && overview.open.isEmpty) {
@@ -83,29 +84,24 @@ class InvoicingSummaryBar extends ConsumerWidget {
           if (overview.toInvoice.isNotEmpty)
             _Pill(
               icon: Icons.pending_actions_outlined,
-              text: l10n?.invoiceSummaryToInvoice(overview.toInvoice.length) ??
-                  '${overview.toInvoice.length} to invoice',
+              text: l10n.invoiceSummaryToInvoice(overview.toInvoice.length),
             ),
           if (collectable.isNotEmpty)
             _Pill(
               icon: Icons.hourglass_bottom_outlined,
               alert: overdue,
-              text: l10n?.invoiceSummaryOpen(
+              text: l10n.invoiceSummaryOpen(
                     collectable.length,
                     currency.formatMinor(toCollect),
-                  ) ??
-                  '${collectable.length} open · '
-                      '${currency.formatMinor(toCollect)} outstanding',
+                  ),
             ),
           if (refundable.isNotEmpty)
             _Pill(
               icon: Icons.replay_outlined,
-              text: l10n?.invoiceSummaryToRefund(
+              text: l10n.invoiceSummaryToRefund(
                     refundable.length,
                     currency.formatMinor(toRefund),
-                  ) ??
-                  '${refundable.length} to refund · '
-                      '${currency.formatMinor(toRefund)}',
+                  ),
             ),
         ],
       ),
@@ -179,15 +175,14 @@ class ToInvoiceTab extends ConsumerWidget {
       ]);
 
   Widget _list(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final overviewAsync = ref.watch(invoicingOverviewProvider);
     final overview = overviewAsync.value;
     if (overview == null) return const LoadingView();
     if (overview.toInvoice.isEmpty) {
       return EmptyState(
         icon: Icons.task_alt_outlined,
-        title: l10n?.invoiceAllCaughtUp ??
-            'All caught up — nothing to invoice.',
+        title: l10n.invoiceAllCaughtUp,
       );
     }
     final total =
@@ -222,7 +217,7 @@ class ToInvoiceTab extends ConsumerWidget {
               key: const ValueKey('invoice-issue-all'),
               onPressed: () => onIssueAll(overview.toInvoice, overview.period),
               icon: const Icon(Icons.playlist_add_check_outlined),
-              label: Text(l10n?.invoiceIssueAll ?? 'Invoice all'),
+              label: Text(l10n.invoiceIssueAll),
             ),
           ),
         ]),
@@ -236,7 +231,7 @@ class ToInvoiceTab extends ConsumerWidget {
               trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(
                   key: ValueKey('invoice-proforma-${entry.memberId}'),
-                  tooltip: l10n?.invoiceProformaAction ?? 'Proforma invoice',
+                  tooltip: l10n.invoiceProformaAction,
                   icon: const Icon(Icons.description_outlined),
                   onPressed: () =>
                       onProforma(entry.memberId, overview.period),
@@ -244,7 +239,7 @@ class ToInvoiceTab extends ConsumerWidget {
                 FilledButton(
                   key: ValueKey('invoice-issue-${entry.memberId}'),
                   onPressed: () => onIssue(entry.memberId, overview.period),
-                  child: Text(l10n?.invoiceIssueOne ?? 'Issue'),
+                  child: Text(l10n.invoiceIssueOne),
                 ),
               ]),
             ),
@@ -301,7 +296,7 @@ class OpenInvoicesTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final overview = ref.watch(invoicingOverviewProvider).value;
     final reminders =
         ref.watch(invoiceRemindersProvider).value ??
@@ -323,7 +318,7 @@ class OpenInvoicesTab extends ConsumerWidget {
     if (overview.open.isEmpty) {
       return EmptyState(
         icon: Icons.price_check_outlined,
-        title: l10n?.invoiceNoOpen ?? 'No open invoices.',
+        title: l10n.invoiceNoOpen,
       );
     }
     // #812 — the process view: journey bar, next move, labelled action.
@@ -416,8 +411,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                               color:
                                   Theme.of(context).colorScheme.error),
                           label: Text(
-                            l10n?.dunningDueChip(dueLevel) ??
-                                'Reminder $dueLevel due',
+                            l10n.dunningDueChip(dueLevel),
                           ),
                         ),
                       ),
@@ -433,7 +427,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
-                            '${l10n?.invoiceRefundLabel ?? 'To refund'}: '
+                            '${l10n.invoiceRefundLabel}: '
                             '${currency.formatMinor(-entry.invoice.totalCents)}',
                             style: Theme.of(context)
                                 .textTheme
@@ -447,16 +441,14 @@ class OpenInvoicesTab extends ConsumerWidget {
                         IconButton(
                           key: ValueKey(
                               'invoice-void-open-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceVoidAction ??
-                              'Mark erroneous',
+                          tooltip: l10n.invoiceVoidAction,
                           icon: const Icon(Icons.block_outlined),
                           onPressed: () => onVoid(entry),
                         ),
                         IconButton.filledTonal(
                           key: ValueKey(
                               'invoice-refund-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceRefundButton ??
-                              'Record the refund',
+                          tooltip: l10n.invoiceRefundButton,
                           icon: const Icon(Icons.currency_exchange),
                           onPressed: () => onRefund(entry),
                         ),
@@ -474,7 +466,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
-                            '${l10n?.invoiceRemainingLabel ?? 'Remaining'}: '
+                            '${l10n.invoiceRemainingLabel}: '
                             '${currency.formatMinor(entry.invoice.totalCents - entry.pendingMatch!.paidCents)}',
                             style: Theme.of(context)
                                 .textTheme
@@ -488,8 +480,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                         IconButton(
                           key: ValueKey(
                               'invoice-remind-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceRemindAction ??
-                              'Send a reminder',
+                          tooltip: l10n.invoiceRemindAction,
                           icon: Icon(
                             dueLevels[entry.invoice.id] != null
                                 ? Icons.notification_important
@@ -507,7 +498,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                           key: ValueKey(
                               'invoice-match-${entry.invoice.id}'),
                           tooltip:
-                              l10n?.invoiceMatchAction ?? 'Mark as paid',
+                              l10n.invoiceMatchAction,
                           icon: const Icon(Icons.price_check_outlined),
                           onPressed: () => onMatch(entry),
                         ),
@@ -518,15 +509,13 @@ class OpenInvoicesTab extends ConsumerWidget {
                                 'invoice-writeoff-pending-${entry.invoice.id}'),
                             avatar: const Icon(Icons.how_to_vote_outlined,
                                 size: 18),
-                            label: Text(l10n?.invoiceMatchPendingBadge ??
-                                'Awaiting validation'),
+                            label: Text(l10n.invoiceMatchPendingBadge),
                           )
                         else
                           IconButton.filledTonal(
                             key: ValueKey(
                                 'invoice-writeoff-${entry.invoice.id}'),
-                            tooltip: l10n?.invoiceWriteoffButton ??
-                                'Cancel outstanding amount',
+                            tooltip: l10n.invoiceWriteoffButton,
                             icon: const Icon(
                                 Icons.money_off_csred_outlined),
                             onPressed: () => onWriteoff(entry),
@@ -543,8 +532,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                               'invoice-match-pending-${entry.invoice.id}'),
                           avatar:
                               const Icon(Icons.how_to_vote_outlined, size: 18),
-                          label: Text(l10n?.invoiceMatchPendingBadge ??
-                              'Awaiting validation'),
+                          label: Text(l10n.invoiceMatchPendingBadge),
                         ),
                       ),
                     )
@@ -559,24 +547,21 @@ class OpenInvoicesTab extends ConsumerWidget {
                         IconButton(
                           key: ValueKey(
                               'invoice-void-open-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceVoidAction ??
-                              'Mark erroneous',
+                          tooltip: l10n.invoiceVoidAction,
                           icon: const Icon(Icons.block_outlined),
                           onPressed: () => onVoid(entry),
                         ),
                         IconButton(
                           key: ValueKey(
                               'invoice-proforma-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceProformaAction ??
-                              'Proforma invoice',
+                          tooltip: l10n.invoiceProformaAction,
                           icon: const Icon(Icons.description_outlined),
                           onPressed: () => onProforma(entry),
                         ),
                         IconButton(
                           key: ValueKey(
                               'invoice-remind-${entry.invoice.id}'),
-                          tooltip: l10n?.invoiceRemindAction ??
-                              'Send a reminder',
+                          tooltip: l10n.invoiceRemindAction,
                           // Filled + error tone while a level is due
                           // (#472) — the suggested action stands out.
                           icon: Icon(
@@ -593,7 +578,7 @@ class OpenInvoicesTab extends ConsumerWidget {
                           key:
                               ValueKey('invoice-match-${entry.invoice.id}'),
                           tooltip:
-                              l10n?.invoiceMatchAction ?? 'Mark as paid',
+                              l10n.invoiceMatchAction,
                           icon: const Icon(Icons.price_check_outlined),
                           onPressed: () => onMatch(entry),
                         ),
@@ -613,7 +598,7 @@ class OpenInvoicesTab extends ConsumerWidget {
   /// at a glance instead of parsed word by word.
   Widget _openSubtitle(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     OpenInvoiceEntry entry,
     Map<String, ({int count, DateTime last})> reminders,
     DateFormat dateFormat,
@@ -630,7 +615,7 @@ class OpenInvoicesTab extends ConsumerWidget {
         TextSpan(text: dateFormat.format(entry.invoice.issuedAt)),
         const TextSpan(text: ' · '),
         TextSpan(
-          text: l10n?.invoiceOpenAge(days) ?? '${days}d',
+          text: l10n.invoiceOpenAge(days),
           style: days >= _overdueDays
               ? muted?.copyWith(
                   color: theme.colorScheme.error,
@@ -641,8 +626,7 @@ class OpenInvoicesTab extends ConsumerWidget {
         if (reminder != null) ...[
           const TextSpan(text: ' · '),
           TextSpan(
-            text: l10n?.invoiceRemindedBadge(reminder.count) ??
-                'Reminded ×${reminder.count}',
+            text: l10n.invoiceRemindedBadge(reminder.count),
           ),
         ],
       ]),
@@ -699,7 +683,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
       .firstOrNull;
 
   void _submit() {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final payment = _payment;
     if (payment == null) return;
     final paid = payment.amountCents;
@@ -712,7 +696,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
         resolution == 'over_forced' || resolution == 'under_accepted';
     if (noteRequired && _note.text.trim().isEmpty) {
       setState(() =>
-          _error = l10n?.invoiceMatchNoteRequired ?? 'A note is required.');
+          _error = l10n.invoiceMatchNoteRequired);
       return;
     }
     Navigator.of(context).pop<MatchChoice>((
@@ -724,7 +708,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final dateFormat = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
@@ -733,24 +717,21 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
     final over = paid != null && paid > widget.dueCents;
     final under = paid != null && paid < widget.dueCents;
     return AlertDialog(
-      title: Text(l10n?.invoiceMatchAction ?? 'Mark as paid'),
+      title: Text(l10n.invoiceMatchAction),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.invoiceMatchPickPayment ??
-                  'Select the registered payment',
+              l10n.invoiceMatchPickPayment,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             if (widget.payments.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Text(
-                  l10n?.invoiceMatchNoPayments ??
-                      'No registered payment to match — record or '
-                          'confirm it first.',
+                  l10n.invoiceMatchNoPayments,
                   key: const ValueKey('invoice-match-no-payments'),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
@@ -784,11 +765,8 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
             if (over) ...[
               const SizedBox(height: 8),
               Text(
-                l10n?.invoiceMatchOver(widget.currency
-                        .formatMinor(paid - widget.dueCents)) ??
-                    'The member paid '
-                        '${widget.currency.formatMinor(paid - widget.dueCents)}'
-                        ' more.',
+                l10n.invoiceMatchOver(widget.currency
+                        .formatMinor(paid - widget.dueCents)),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               RadioGroup<String>(
@@ -801,15 +779,13 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                     key: const ValueKey('invoice-match-credit-note'),
                     value: 'over_credit_note',
                     contentPadding: EdgeInsets.zero,
-                    title: Text(l10n?.invoiceMatchCreditNote ??
-                        'Create a credit note for the excess'),
+                    title: Text(l10n.invoiceMatchCreditNote),
                   ),
                   RadioListTile<String>(
                     key: const ValueKey('invoice-match-force'),
                     value: 'over_forced',
                     contentPadding: EdgeInsets.zero,
-                    title: Text(l10n?.invoiceMatchForce ??
-                        'Accept anyway (note why)'),
+                    title: Text(l10n.invoiceMatchForce),
                   ),
                 ]),
               ),
@@ -817,11 +793,8 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
             if (under) ...[
               const SizedBox(height: 8),
               Text(
-                l10n?.invoiceMatchUnder(widget.currency
-                        .formatMinor(widget.dueCents - paid)) ??
-                    'The member paid '
-                        '${widget.currency.formatMinor(widget.dueCents - paid)}'
-                        ' less — accepting requires a note.',
+                l10n.invoiceMatchUnder(widget.currency
+                        .formatMinor(widget.dueCents - paid)),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -831,7 +804,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
               controller: _note,
               maxLines: 2,
               decoration: InputDecoration(
-                labelText: l10n?.invoiceMatchNoteLabel ?? 'Note',
+                labelText: l10n.invoiceMatchNoteLabel,
                 errorText: _error,
               ),
             ),
@@ -842,12 +815,12 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
         TextButton(
           key: const ValueKey('invoicing-dashboard-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('invoice-match-confirm'),
           onPressed: payment == null ? null : _submit,
-          child: Text(l10n?.invoiceMatchAction ?? 'Mark as paid'),
+          child: Text(l10n.invoiceMatchAction),
         ),
       ],
     );

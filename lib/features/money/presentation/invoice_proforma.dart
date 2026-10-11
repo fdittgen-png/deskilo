@@ -12,9 +12,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../members/providers/directory_providers.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../reservations/providers/reservation_providers.dart';
@@ -38,12 +38,11 @@ Future<void> shareProforma(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   if (!invoice.lines.any((line) => line.amountCents > 0)) {
     AppSnack.info(
       context,
-      l10n?.invoiceProformaNothing ??
-          'Nothing tracked for this month — no proforma to send.',
+      l10n.invoiceProformaNothing,
     );
     return;
   }

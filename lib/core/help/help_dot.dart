@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../../l10n/app_localizations.dart';
+import '../l10n/context_l10n.dart';
 import 'guide_site.dart';
 
 /// #763 — the little ? beside a parameter or entry field: one tap opens
@@ -42,11 +42,11 @@ class HelpDot extends ConsumerWidget {
         .contains(WorkspaceFeature.formHelpHints)) {
       return const SizedBox.shrink();
     }
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     return IconButton(
       key: ValueKey('help-dot-$topic'),
-      tooltip: l10n?.helpDotTooltip ?? 'Open the guide',
+      tooltip: l10n.helpDotTooltip,
       // The FINGER gets 48; the ink and the glyph stay small.
       constraints: const BoxConstraints.tightFor(width: 48, height: 48),
       padding: EdgeInsets.zero,

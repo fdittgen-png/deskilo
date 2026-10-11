@@ -6,12 +6,12 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/vat/supply_class.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
 import '../../domain/vat_rate.dart';
@@ -32,7 +32,7 @@ class ServicesScreen extends ConsumerWidget {
   }) async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     // AWAIT the rates: a cached `.value` is null the first time the sheet
     // opens, which would hide the VAT field exactly when it is needed.
@@ -56,8 +56,7 @@ class ServicesScreen extends ConsumerWidget {
       context,
       domain: 'money',
       message: 'service save failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () async {
         final repo = ref.read(moneyRepositoryProvider);
         if (service == null) {
@@ -89,7 +88,7 @@ class ServicesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final servicesAsync = ref.watch(allServicesProvider);
     final chargesVat =
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
@@ -100,17 +99,17 @@ class ServicesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.servicesTitle ?? 'Services'),
+        title: Text(l10n.servicesTitle),
       ),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('services-new'),
-        tooltip: l10n?.servicesNew ?? 'New service',
+        tooltip: l10n.servicesNew,
         onPressed: () => _editSheet(context, ref),
         child: const Icon(Icons.add),
       ),
       body: switch (servicesAsync) {
         AsyncData(value: final services) when services.isEmpty => Center(
-            child: Text(l10n?.servicesEmpty ?? 'No services yet.'),
+            child: Text(l10n.servicesEmpty),
           ),
         AsyncData(value: final services) => ListView(
             // #1181 — the add button overlays this list; it ends above it.
@@ -144,15 +143,13 @@ class ServicesScreen extends ConsumerWidget {
                     );
                     final vatLabel = rate == null
                         ? null
-                        : (l10n?.priceVatIncluded(rate) ??
-                            'incl. VAT $rate');
+                        : (l10n.priceVatIncluded(rate));
                     // #731 — the shelf count for a supply.
                     final stock = service.stock == null
                         ? null
                         : service.stock == 0
-                            ? (l10n?.serviceOutOfStock ?? 'Out of stock')
-                            : (l10n?.serviceStockCount(service.stock!) ??
-                                '${service.stock} in stock');
+                            ? (l10n.serviceOutOfStock)
+                            : (l10n.serviceStockCount(service.stock!));
                     return Text([
                       price,
                       ?vatLabel,
@@ -161,15 +158,14 @@ class ServicesScreen extends ConsumerWidget {
                   }),
                   trailing: service.active
                       ? null
-                      : Text(l10n?.servicesInactive ?? 'Inactive'),
+                      : Text(l10n.servicesInactive),
                   onTap: () => _editSheet(context, ref, service: service),
                 ),
             ],
           ),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -252,7 +248,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Padding(
       // #210: sheet gutter unified onto the xl token like every other
       // modal edit sheet (was 16).
@@ -270,12 +266,12 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             children: [
               Text(
                 widget.service == null
-                    ? (l10n?.servicesNew ?? 'New service')
-                    : (l10n?.servicesEdit ?? 'Edit service'),
+                    ? (l10n.servicesNew)
+                    : (l10n.servicesEdit),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               HelpDot(
-                l10n?.helpHintMoneyPaymentsTipSupplyTopic ?? 'Services and Accessories',
+                l10n.helpHintMoneyPaymentsTipSupplyTopic,
                 anchor: HelpAnchor.serviceOverview,
               ),
             ],
@@ -286,7 +282,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             autofocus: widget.service == null,
             maxLength: 80,
             decoration: InputDecoration(
-              labelText: l10n?.servicesName ?? 'Name',
+              labelText: l10n.servicesName,
             ),
           ),
           TextField(
@@ -294,10 +290,9 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             keyboardType:
                 const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
-              labelText: l10n?.servicesPrice ?? 'Price',
+              labelText: l10n.servicesPrice,
               // #537 — kill the net-or-gross ambiguity at the input.
-              helperText: l10n?.priceGrossHint ??
-                  'Gross price — what the member pays; VAT is part of it.',
+              helperText: l10n.priceGrossHint,
             ),
           ),
           // The price stays what the member pays; the rate only decides
@@ -318,7 +313,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             SwitchListTile(
               key: const ValueKey('services-active'),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n?.servicesActive ?? 'Active'),
+              title: Text(l10n.servicesActive),
               value: _active,
               onChanged: (v) => setState(() => _active = v),
             ),
@@ -326,7 +321,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
           FilledButton(
             key: const ValueKey('services-save'),
             onPressed: _submit,
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),

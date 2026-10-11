@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
@@ -116,11 +117,11 @@ class _KioskActSheetState extends State<_KioskActSheet> {
     // names the reason under the period; the badge only repeats it.
     final refusal = _form.currentState?.refusal;
     if (refusal != null) {
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       AppSnack.error(
         context,
         widget.refusalTextOf?.call(refusal) ??
-            (l10n?.bookingGateBlocked ?? 'Not bookable as chosen'),
+            (l10n.bookingGateBlocked),
       );
       return;
     }
@@ -139,7 +140,7 @@ class _KioskActSheetState extends State<_KioskActSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return SingleChildScrollView(
       // One tall surface on a small kiosk screen: scrolls, never clips.
@@ -195,7 +196,7 @@ class _BadgeCapture extends StatefulWidget {
 
   /// #814 — the browser build: no camera, and the sheet says so.
   final bool explainNoCamera;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
   final ValueChanged<String> onCode;
 
   @override
@@ -278,29 +279,23 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
     final nfcProblem = switch (_nfc) {
-      _NfcUiState.off => l10n?.kioskNfcOff ??
-          "NFC is turned off in this tablet's Android settings — turn it "
-              'on to read RFID cards.',
-      _NfcUiState.unsupported => l10n?.kioskNfcUnsupported ??
-          'This tablet has no NFC reader — scan the QR badge instead.',
-      _NfcUiState.failed => l10n?.kioskNfcFailed ??
-          'The RFID reader did not start — restart the app and try again.',
+      _NfcUiState.off => l10n.kioskNfcOff,
+      _NfcUiState.unsupported => l10n.kioskNfcUnsupported,
+      _NfcUiState.failed => l10n.kioskNfcFailed,
       _ => null,
     };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.kioskPresentBadge ?? 'Present your badge',
+          l10n.kioskPresentBadge,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 4),
         Text(
           _nfc == _NfcUiState.reading
-              ? (l10n?.kioskBadgeHintNfc ??
-                  'Tap your card, scan your QR, or type its code.')
-              : (l10n?.kioskBadgeHint ??
-                  'Scan your badge QR, or type its code.'),
+              ? (l10n.kioskBadgeHintNfc)
+              : (l10n.kioskBadgeHint),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         if (_nfc == _NfcUiState.reading)
@@ -336,10 +331,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Text(
-              l10n?.scanCameraWebUnavailable ??
-                  'Camera scanning is not available in the browser — type '
-                      'the code, or hold an NFC tag to the device (Chrome '
-                      'on Android).',
+              l10n.scanCameraWebUnavailable,
               key: const ValueKey('kiosk-no-camera'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -352,7 +344,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
               onPressed: () => setState(() => _cameraMode = true),
               icon: const Icon(Icons.qr_code_scanner_outlined),
               label: Text(
-                l10n?.kioskScanQr ?? 'Scan the QR badge',
+                l10n.kioskScanQr,
               ),
             ),
           ),
@@ -370,7 +362,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           autofocus: widget.scanBuilder == null,
           obscureText: true,
           decoration: InputDecoration(
-            labelText: l10n?.kioskBadgeFieldLabel ?? 'Badge code',
+            labelText: l10n.kioskBadgeFieldLabel,
           ),
           // Wedge scanners terminate with Enter — submit directly.
           onSubmitted: _submit,
@@ -379,7 +371,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
         FilledButton(
           key: const ValueKey('kiosk-badge-submit'),
           onPressed: () => _submit(_controller.text),
-          child: Text(l10n?.kioskBadgeConfirm ?? 'Confirm'),
+          child: Text(l10n.kioskBadgeConfirm),
         ),
       ],
     );

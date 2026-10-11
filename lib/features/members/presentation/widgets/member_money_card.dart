@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/invoice.dart';
 import '../../../money/domain/ledger_entry.dart';
 import '../../../money/domain/member_account.dart';
@@ -50,7 +50,7 @@ class MemberMoneyCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final permissions = ref.watch(myPermissionsProvider);
     final maySee = isSelf ||
@@ -80,8 +80,7 @@ class MemberMoneyCard extends ConsumerWidget {
       return Padding(
         padding: const EdgeInsets.only(top: AppSpacing.md),
         child: Text(
-          l10n?.memberMoneyUnavailable ??
-              'Money could not be loaded. Pull to refresh.',
+          l10n.memberMoneyUnavailable,
           key: const ValueKey('member-money-error'),
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.error,
@@ -127,7 +126,7 @@ class MemberMoneyCard extends ConsumerWidget {
       key: const ValueKey('member-money'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        label(lexiconText(context, key: 'tabMoney', fallback: l10n?.tabMoney ?? 'Money')),
+        label(lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney)),
         // The one number the question is really about. The shared card,
         // not a second rendering of the same arithmetic — a profile that
         // computed the position itself is a profile that can disagree
@@ -138,13 +137,13 @@ class MemberMoneyCard extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
             child: Text(
-              l10n?.memberMoneySettled ?? 'Nothing outstanding.',
+              l10n.memberMoneySettled,
               key: const ValueKey('member-money-settled'),
               style: theme.textTheme.bodyMedium,
             ),
           ),
         if (invoices.isNotEmpty) ...[
-          label(l10n?.invoicesTitle ?? 'Invoices'),
+          label(l10n.invoicesTitle),
           for (final invoice in invoices.take(5))
             _InvoiceRow(
               invoice: invoice,
@@ -155,14 +154,13 @@ class MemberMoneyCard extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: Text(
-                l10n?.memberMoreInvoices(invoices.length - 5) ??
-                    '+${invoices.length - 5} more',
+                l10n.memberMoreInvoices(invoices.length - 5),
                 style: theme.textTheme.bodySmall,
               ),
             ),
         ],
         if (payments.isNotEmpty) ...[
-          label(l10n?.memberPayments ?? 'Payments'),
+          label(l10n.memberPayments),
           for (final payment in payments)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
@@ -187,7 +185,7 @@ class MemberMoneyCard extends ConsumerWidget {
         // The month being consumed right now — what the next invoice
         // will be made of, before it exists.
         if (statement != null) ...[
-          label(l10n?.memberMonthInProgress ?? 'This month'),
+          label(l10n.memberMonthInProgress),
           Text(
             '${statement.usedHalfDays}/'
             '${statement.includedHalfDays + statement.grantedHalfDays}'
@@ -217,16 +215,15 @@ class _InvoiceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final voided = invoice.voidedAt != null;
     final open = !voided && (remainingCents ?? 0) > 0;
     final status = voided
-        ? (l10n?.memberInvoiceVoided ?? 'Voided')
+        ? (l10n.memberInvoiceVoided)
         : open
-            ? (l10n?.memberInvoiceOpen(money(remainingCents!)) ??
-                '${money(remainingCents!)} open')
-            : (l10n?.memberInvoicePaid ?? 'Paid');
+            ? (l10n.memberInvoiceOpen(money(remainingCents!)))
+            : (l10n.memberInvoicePaid);
     return Padding(
       key: ValueKey('member-invoice-${invoice.id}'),
       padding: const EdgeInsets.symmetric(vertical: 2),

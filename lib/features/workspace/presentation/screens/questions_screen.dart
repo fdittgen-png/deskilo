@@ -9,11 +9,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_field.dart';
 import '../../providers/workspace_fields_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -57,7 +57,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
   }
 
   Future<void> _save(String workspaceId, WorkspaceField draft) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     final repository = ref.read(workspaceFieldsRepositoryProvider);
     final ok = await runGuarded(
@@ -72,8 +72,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
       // two calls, and when the choices were refused the question had
       // already landed — live for members, a choice question with no
       // choices — under a message saying it had not been saved (#1532).
-      errorText: l10n?.questionEditorSaveFailed ??
-          'The question was not saved.',
+      errorText: l10n.questionEditorSaveFailed,
       action: () => repository.saveField(
         workspaceId,
         draft,
@@ -84,12 +83,12 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
     setState(() => _saving = false);
     if (!ok) return;
     ref.invalidate(workspaceFieldsProvider);
-    AppSnack.success(context, l10n?.billingSaved ?? 'Saved.');
+    AppSnack.success(context, l10n.billingSaved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final fields = ref.watch(workspaceFieldsProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
@@ -99,13 +98,13 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.questionsTitle ?? 'Questions this space asks'),
+        title: Text(l10n.questionsTitle),
       ),
       floatingActionButton: FloatingActionButton.extended(
         key: QuestionsScreen.addKey,
         onPressed: _saving ? null : () => _edit(null),
         icon: const Icon(Icons.add),
-        label: Text(l10n?.questionsAdd ?? 'Add a question'),
+        label: Text(l10n.questionsAdd),
       ),
       body: fields.when(
         loading: () => const LoadingView(),
@@ -117,15 +116,13 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
           padding: AppSpacing.gutterAll,
           children: [
             Text(
-              l10n?.questionsSubtitle ??
-                  "They appear inside personal information, under your "
-                      "space's name.",
+              l10n.questionsSubtitle,
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.lg),
             if (list.isEmpty)
               Text(
-                l10n?.questionsEmpty ?? 'No questions yet.',
+                l10n.questionsEmpty,
                 style: theme.textTheme.bodyMedium,
               ),
             for (final field in list)
@@ -137,7 +134,7 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
                   [
                     questionTypeLabel(l10n, field.type),
                     if (!field.active)
-                      l10n?.questionsInactive ?? 'Put aside',
+                      l10n.questionsInactive,
                   ].join(' · '),
                 ),
                 trailing: const Icon(Icons.chevron_right),

@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/federation_handoff.dart';
 import '../../../core/backend/secondary_federation.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -75,22 +76,20 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
 
   void _onEvent(SecondaryConnectEvent event) {
     if (!mounted || event.flow != _flow) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     switch (event.status) {
       case SecondaryConnectStatus.connected:
         _flow = null;
         AppSnack.success(
           context,
-          l10n?.identityConnectDone(_host) ?? 'Connected to $_host.',
+          l10n.identityConnectDone(_host),
         );
         Navigator.of(context).pop(true);
       case SecondaryConnectStatus.notSaved:
         setState(() {
           _flow = null;
           _message =
-              l10n?.identityConnectNotSaved(_host) ??
-              '$_host accepted you, but this device could not keep the '
-                  'connection. Nothing was sent. Try again.';
+              l10n.identityConnectNotSaved(_host);
         });
       case SecondaryConnectStatus.failed:
         setState(() {
@@ -108,7 +107,7 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
       _busy = true;
       _message = null;
     });
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       final flow = await _connector.begin(widget.intent);
       if (mounted) setState(() => _flow = flow);
@@ -144,7 +143,7 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -163,7 +162,7 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  l10n?.identityConnectTitle(_host) ?? 'Connect to $_host',
+                  l10n.identityConnectTitle(_host),
                   style: theme.textTheme.titleLarge,
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -181,19 +180,13 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
                 else ...[
                   Text(
                     key: const ValueKey('identity-connect-explain'),
-                    l10n?.identityConnectExplain(_host) ??
-                        '$_host will know it is you, through your Deskilo '
-                            'identity. Connecting does not make you a member, '
-                            'give you a role or connect an assistant: the space '
-                            'still decides any request.',
+                    l10n.identityConnectExplain(_host),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   if (_flow != null) ...[
                     Text(
                       key: const ValueKey('identity-connect-waiting'),
-                      l10n?.identityConnectWaiting ??
-                          'Finish signing in in your browser, then come back '
-                              'here.',
+                      l10n.identityConnectWaiting,
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     OutlinedButton(
@@ -209,9 +202,8 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
                       onPressed: _busy ? null : _continue,
                       child: Text(
                         _message == null
-                            ? (l10n?.identityConnectContinue ??
-                                  'Continue with Deskilo')
-                            : (l10n?.identityConnectRetry ?? 'Try again'),
+                            ? (l10n.identityConnectContinue)
+                            : (l10n.identityConnectRetry),
                       ),
                     ),
                 ],
@@ -230,8 +222,7 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
                     key: const ValueKey('identity-connect-existing'),
                     onPressed: _busy ? null : _existingAccount,
                     child: Text(
-                      l10n?.identityConnectExistingAccount ??
-                          'Use an account I already have on this server',
+                      l10n.identityConnectExistingAccount,
                     ),
                   ),
               ],
@@ -243,51 +234,40 @@ class _SheetState extends ConsumerState<ConnectWithIdentitySheet> {
   }
 
   String _failureText(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     FederationFailure? failure,
   ) => switch (failure) {
     FederationFailure.wrongAccount =>
-      l10n?.identityConnectWrongAccount ??
-          'The browser signed in as someone else. Nothing was connected.',
+      l10n.identityConnectWrongAccount,
     FederationFailure.unlinkedAccount =>
-      l10n?.identityConnectUnlinked ??
-          'An account on that server already uses this identity or e-mail '
-              'without being linked to it. Use that account instead.',
+      l10n.identityConnectUnlinked,
     FederationFailure.expired =>
-      l10n?.identityConnectExpired ?? 'The sign-in took too long. Start again.',
+      l10n.identityConnectExpired,
     FederationFailure.network =>
-      l10n?.identityConnectNetwork ?? 'The server did not answer. Try again.',
+      l10n.identityConnectNetwork,
     FederationFailure.browserUnavailable =>
-      l10n?.identityConnectBrowser ?? 'The browser could not be opened.',
+      l10n.identityConnectBrowser,
     FederationFailure.providerMissing =>
-      l10n?.identityConnectNoDeskiloSignIn ??
-          'This server does not offer sign-in with Deskilo.',
+      l10n.identityConnectNoDeskiloSignIn,
     _ =>
-      l10n?.identityConnectRefused ??
-          'The connection was not completed. Nothing was sent.',
+      l10n.identityConnectRefused,
   };
 
   String _unsupportedText(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     IdentityConnectUnsupported reason,
   ) => switch (reason) {
     IdentityConnectUnsupported.noSharedIdentity =>
-      l10n?.identityConnectNoSharedIdentity ??
-          'Your account here has no Deskilo identity another server could '
-              'accept.',
+      l10n.identityConnectNoSharedIdentity,
     IdentityConnectUnsupported.targetWithoutDeskiloSignIn =>
-      l10n?.identityConnectNoDeskiloSignIn ??
-          'This server does not offer sign-in with Deskilo.',
+      l10n.identityConnectNoDeskiloSignIn,
     IdentityConnectUnsupported.differentAuthority =>
-      l10n?.identityConnectDifferentAuthority ??
-          'This server accepts a different identity provider.',
+      l10n.identityConnectDifferentAuthority,
     IdentityConnectUnsupported.serverUnsupported =>
-      l10n?.identityConnectServerUnsupported ??
-          'This server cannot be connected from this version of the app.',
+      l10n.identityConnectServerUnsupported,
     IdentityConnectUnsupported.currentServer =>
-      l10n?.identityConnectCurrentServer ??
-          'This is the server you are already signed in to.',
+      l10n.identityConnectCurrentServer,
     IdentityConnectUnsupported.unavailable =>
-      l10n?.identityConnectUnavailable ?? 'This server did not answer.',
+      l10n.identityConnectUnavailable,
   };
 }

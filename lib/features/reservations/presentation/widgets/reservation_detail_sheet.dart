@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -58,7 +59,7 @@ class ReservationDetailSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final seatId = r.seatId;
     final officeId = r.officeId;
@@ -165,7 +166,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .watch(targetNamesProvider)
                                   .value?[r.deskId];
                               return Text(
-                                '${lexiconText(context, key: 'deskDetail', fallback: l10n?.deskDetail ?? 'Whole desk')}'
+                                '${lexiconText(context, key: 'deskDetail', fallback: l10n.deskDetail)}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-desk'),
                               );
@@ -182,7 +183,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .firstOrNull
                                   ?.name;
                               return Text(
-                                '${lexiconText(context, key: 'levelDetail', fallback: l10n?.levelDetail ?? 'Whole level')}'
+                                '${lexiconText(context, key: 'levelDetail', fallback: l10n.levelDetail)}'
                                 '${name == null ? '' : ' — $name'}',
                                 key: const ValueKey('reservation-level'),
                               );
@@ -207,7 +208,7 @@ class ReservationDetailSheet extends ConsumerWidget {
               onPressed: target == null
                   ? null
                   : () => Navigator.of(context).pop(target),
-              label: Text(l10n?.calendarShowOnPlan ?? 'Show on plan'),
+              label: Text(l10n.calendarShowOnPlan),
             ),
             if (editable) ...[
               const SizedBox(height: 8),
@@ -219,7 +220,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                       icon: const Icon(Icons.edit_calendar_outlined),
                       onPressed: () => _editTimes(context, ref),
                       label: Text(
-                        l10n?.reservationEditTimes ?? 'Edit times',
+                        l10n.reservationEditTimes,
                       ),
                     ),
                   ),
@@ -234,8 +235,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                       icon: const Icon(Icons.event_busy_outlined),
                       onPressed: () => _cancel(context, ref),
                       label: Text(
-                        l10n?.planCancelReservationButton ??
-                            'Cancel reservation',
+                        l10n.planCancelReservationButton,
                       ),
                     ),
                   ),
@@ -249,7 +249,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.more_time_outlined),
                 onPressed: () => _extendEnd(context, ref),
                 label: Text(
-                  l10n?.reservationExtendButton ?? 'Stay longer',
+                  l10n.reservationExtendButton,
                 ),
               ),
             ],
@@ -260,7 +260,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.timelapse_outlined),
                 onPressed: () => _endEarly(context, ref),
                 label: Text(
-                  l10n?.reservationEndEarlyButton ?? 'End earlier',
+                  l10n.reservationEndEarlyButton,
                 ),
               ),
             ],
@@ -274,8 +274,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () => _requestDeletion(context, ref),
                 // The label says REQUEST — nothing is deleted here.
-                label: Text(l10n?.reservationDeleteRequestButton ??
-                    'Request deletion'),
+                label: Text(l10n.reservationDeleteRequestButton),
               ),
             ],
             if (calendarFile) ...[
@@ -306,7 +305,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// Same choice flow as the calendar's menu (#118): a single booking
   /// offers one cancel action; a series adds "this and following".
   Future<void> _cancel(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final choice = await showModalBottomSheet<CancelScope>(
       context: context,
@@ -319,10 +318,8 @@ class ReservationDetailSheet extends ConsumerWidget {
               leading: const Icon(Icons.event_busy_outlined),
               title: Text(
                 r.seriesId == null
-                    ? (l10n?.planCancelReservationButton ??
-                        'Cancel reservation')
-                    : (l10n?.calendarCancelOccurrence ??
-                        'Cancel this occurrence'),
+                    ? (l10n.planCancelReservationButton)
+                    : (l10n.calendarCancelOccurrence),
               ),
               onTap: () =>
                   Navigator.of(sheetContext).pop(CancelScope.thisOne),
@@ -332,8 +329,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                 key: const ValueKey('reservation-detail-sheet-calendar-cancel-following'),
                 leading: const Icon(Icons.fast_forward_outlined),
                 title: Text(
-                  l10n?.calendarCancelFollowing ??
-                      'Cancel this and following',
+                  l10n.calendarCancelFollowing,
                 ),
                 onTap: () => Navigator.of(sheetContext)
                     .pop(CancelScope.thisAndFollowing),
@@ -361,8 +357,7 @@ class ReservationDetailSheet extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -371,7 +366,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.reservationCancelledSnack ?? 'Reservation cancelled.',
+      l10n.reservationCancelledSnack,
     );
   }
 
@@ -382,7 +377,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// legacy flexible offer snapped from/to pickers, full-day re-books
   /// the full day (nothing else exists to pick).
   Future<void> _editTimes(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final granularity = ref.read(bookingGranularityProvider).value ??
         BookingGranularity.flexible;
@@ -447,8 +442,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         bookingErrorText(
           l10n,
           e,
-          l10n?.reserveBookingFailed ??
-              'Could not reserve — the seat may have just been taken.',
+          l10n.reserveBookingFailed,
           stepMinutes: granularity.stepMinutes,
         ),
       );
@@ -466,7 +460,7 @@ class ReservationDetailSheet extends ConsumerWidget {
       case Moved():
         AppSnack.success(
           context,
-          l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
+          l10n.reservationUpdatedSnack,
         );
     }
   }
@@ -535,7 +529,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// granularity. Day-based: one confirm to the day's end (that IS the
   /// only later canonical edge). Grids/hours: a snapped time picker.
   Future<void> _extendEnd(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final granularity = ref.read(bookingGranularityProvider).value ??
         BookingGranularity.flexible;
@@ -558,8 +552,7 @@ class ReservationDetailSheet extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.info(
         context,
-        l10n?.reservationExtendLaterOnly ??
-            'Pick a time after the current end.',
+        l10n.reservationExtendLaterOnly,
       );
       return;
     }
@@ -573,7 +566,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// already described; grids/hours offer a snapped picker that refuses
   /// anything not still ahead of now.
   Future<void> _endEarly(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     final granularity = ref.read(bookingGranularityProvider).value ??
         BookingGranularity.flexible;
@@ -602,8 +595,7 @@ class ReservationDetailSheet extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.info(
         context,
-        l10n?.reservationEndEarlyAheadOnly ??
-            'Pick a time still ahead of now and before the current end.',
+        l10n.reservationEndEarlyAheadOnly,
       );
       return;
     }
@@ -619,7 +611,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     DateTime newEnd,
     BookingGranularity granularity,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final r = reservation;
     try {
       // #1234 — "I am leaving at a different time", never "I arrived at
@@ -641,8 +633,7 @@ class ReservationDetailSheet extends ConsumerWidget {
         bookingErrorText(
           l10n,
           e,
-          l10n?.reserveBookingFailed ??
-              'Could not reserve — the seat may have just been taken.',
+          l10n.reserveBookingFailed,
           stepMinutes: granularity.stepMinutes,
         ),
       );
@@ -653,7 +644,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     Navigator.of(context).pop();
     AppSnack.success(
       context,
-      l10n?.reservationUpdatedSnack ?? 'Reservation updated.',
+      l10n.reservationUpdatedSnack,
     );
   }
 
@@ -661,7 +652,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// choices as the booking sheet's Repeat dropdown, as tappable rows.
   Future<SeriesPattern?> _pickPattern(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
   ) {
     Widget row(String key, SeriesPattern? p, String label, IconData icon) =>
         ListTile(
@@ -677,14 +668,14 @@ class ReservationDetailSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             row('edit-repeat-none', null,
-                l10n?.repeatNone ?? 'Does not repeat', Icons.event_outlined),
+                l10n.repeatNone, Icons.event_outlined),
             row('edit-repeat-daily', SeriesPattern.daily,
-                l10n?.repeatDaily ?? 'Every day', Icons.repeat),
+                l10n.repeatDaily, Icons.repeat),
             row('edit-repeat-weekdays', SeriesPattern.weekdays,
-                l10n?.repeatWeekdays ?? 'Every weekday',
+                l10n.repeatWeekdays,
                 Icons.work_outline),
             row('edit-repeat-weekly', SeriesPattern.weekly,
-                l10n?.repeatWeekly ?? 'Weekly', Icons.view_week_outlined),
+                l10n.repeatWeekly, Icons.view_week_outlined),
             const SizedBox(height: 8),
           ],
         ),
@@ -693,7 +684,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   }
   Future<HalfDayWindow?> _pickHalfDayWindow(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     DateTime day,
   ) {
     return showModalBottomSheet<HalfDayWindow>(
@@ -705,21 +696,21 @@ class ReservationDetailSheet extends ConsumerWidget {
             ListTile(
               key: const ValueKey('edit-window-am'),
               leading: const Icon(Icons.wb_twilight_outlined),
-              title: Text(lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning')),
+              title: Text(lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip)),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.morning(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-pm'),
               leading: const Icon(Icons.wb_sunny_outlined),
-              title: Text(lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon')),
+              title: Text(lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip)),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.afternoon(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-day'),
               leading: const Icon(Icons.today_outlined),
-              title: Text(lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day')),
+              title: Text(lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip)),
               onTap: () => Navigator.of(sheetContext)
                   .pop(HalfDayWindows.fullDay(day)),
             ),
@@ -734,7 +725,7 @@ class ReservationDetailSheet extends ConsumerWidget {
   /// the granularity's step — the same slot language as the hub's chips.
   Future<HalfDayWindow?> _pickTimes(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     BookingGranularity granularity,
   ) async {
     final r = reservation;
@@ -744,13 +735,13 @@ class ReservationDetailSheet extends ConsumerWidget {
     final from = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(local),
-      helpText: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
+      helpText: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
     );
     if (from == null || !context.mounted) return null;
     final to = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(endLocal),
-      helpText: l10n?.planToLabel ?? 'To',
+      helpText: l10n.planToLabel,
     );
     if (to == null) return null;
     DateTime snapDown(int hour, int minute) {
@@ -836,8 +827,7 @@ Future<bool> requestBookingDeletion(
 ) async {
   // English only where no localization is installed (a bare test app).
   final l10n =
-      AppLocalizations.of(context) ??
-      lookupAppLocalizations(const Locale('en'));
+      context.l10n;
   final reasonController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,

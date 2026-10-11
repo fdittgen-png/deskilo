@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import '../../../../core/l10n/lexicon.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/lexicon.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_codes_pdf.dart';
 
@@ -30,40 +31,40 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
   SpaceQrSize _qrSize = SpaceQrSize.medium;
   final Set<SpaceCardInfo> _info = {...SpaceCardInfo.values};
 
-  String _sizeLabel(AppLocalizations? l10n, SpaceCardSize size) =>
+  String _sizeLabel(AppLocalizations l10n, SpaceCardSize size) =>
       switch (size) {
-        SpaceCardSize.small => l10n?.spaceCardSizeSmall ?? 'Small',
-        SpaceCardSize.medium => l10n?.spaceCardSizeMedium ?? 'Medium',
-        SpaceCardSize.large => l10n?.spaceCardSizeLarge ?? 'Large',
+        SpaceCardSize.small => l10n.spaceCardSizeSmall,
+        SpaceCardSize.medium => l10n.spaceCardSizeMedium,
+        SpaceCardSize.large => l10n.spaceCardSizeLarge,
       };
 
-  String _qrSizeLabel(AppLocalizations? l10n, SpaceQrSize size) =>
+  String _qrSizeLabel(AppLocalizations l10n, SpaceQrSize size) =>
       switch (size) {
-        SpaceQrSize.small => l10n?.spaceCardSizeSmall ?? 'Small',
-        SpaceQrSize.medium => l10n?.spaceCardSizeMedium ?? 'Medium',
-        SpaceQrSize.large => l10n?.spaceCardSizeLarge ?? 'Large',
+        SpaceQrSize.small => l10n.spaceCardSizeSmall,
+        SpaceQrSize.medium => l10n.spaceCardSizeMedium,
+        SpaceQrSize.large => l10n.spaceCardSizeLarge,
       };
 
-  String _infoLabel(AppLocalizations? l10n, SpaceCardInfo info) =>
+  String _infoLabel(AppLocalizations l10n, SpaceCardInfo info) =>
       switch (info) {
-        SpaceCardInfo.workspace => l10n?.spaceCardInfoWorkspace ?? 'Workspace',
-        SpaceCardInfo.level => lexiconText(context, key: 'spaceKindLevel', fallback: l10n?.spaceKindLevel ?? 'Level'),
-        SpaceCardInfo.room => lexiconText(context, key: 'spaceKindOffice', fallback: l10n?.spaceKindOffice ?? 'Office'),
-        SpaceCardInfo.table => lexiconText(context, key: 'spaceKindDesk', fallback: l10n?.spaceKindDesk ?? 'Desk'),
-        SpaceCardInfo.chair => lexiconText(context, key: 'spaceKindSeat', fallback: l10n?.spaceKindSeat ?? 'Seat'),
+        SpaceCardInfo.workspace => l10n.spaceCardInfoWorkspace,
+        SpaceCardInfo.level => lexiconText(context, key: 'spaceKindLevel', fallback: l10n.spaceKindLevel),
+        SpaceCardInfo.room => lexiconText(context, key: 'spaceKindOffice', fallback: l10n.spaceKindOffice),
+        SpaceCardInfo.table => lexiconText(context, key: 'spaceKindDesk', fallback: l10n.spaceKindDesk),
+        SpaceCardInfo.chair => lexiconText(context, key: 'spaceKindSeat', fallback: l10n.spaceKindSeat),
       };
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.spaceCodesTitle ?? 'Space QR codes (PDF)'),
+      title: Text(l10n.spaceCodesTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n?.spaceCardSizeLabel ?? 'Card size'),
+            Text(l10n.spaceCardSizeLabel),
             const SizedBox(height: 4),
             SegmentedButton<SpaceCardSize>(
               segments: [
@@ -81,7 +82,7 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
                   setState(() => _size = selection.first),
             ),
             const SizedBox(height: 16),
-            Text(l10n?.spaceQrSizeLabel ?? 'QR code size'),
+            Text(l10n.spaceQrSizeLabel),
             const SizedBox(height: 4),
             SegmentedButton<SpaceQrSize>(
               segments: [
@@ -99,7 +100,7 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
                   setState(() => _qrSize = selection.first),
             ),
             const SizedBox(height: 16),
-            Text(l10n?.spaceCardInfoLabel ?? 'Information on the card'),
+            Text(l10n.spaceCardInfoLabel),
             for (final info in SpaceCardInfo.values)
               CheckboxListTile(
                 key: ValueKey('space-card-info-${info.wire}'),
@@ -118,13 +119,13 @@ class _SpaceCodesOptionsDialogState extends State<SpaceCodesOptionsDialog> {
         TextButton(
           key: const ValueKey('space-codes-options-dialog-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('space-codes-export'),
           onPressed: () => Navigator.of(context).pop(
               (size: _size, qrSize: _qrSize, info: Set.of(_info))),
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

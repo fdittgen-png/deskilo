@@ -14,6 +14,7 @@
 // whose kiosk path now goes through the same mirrored rule set.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/walk_up_window.dart';
@@ -150,7 +151,7 @@ void main() {
     test('the moved substrings keep their explanations', () {
       expect(
         bookingErrorText(
-            null,
+            englishL10n,
             const PostgrestException(
                 message: 'the booking lies entirely in the past'),
             'fallback'),
@@ -158,7 +159,7 @@ void main() {
       );
       expect(
         bookingErrorText(
-            null,
+            englishL10n,
             const PostgrestException(
                 message: 'a walk-up check-in must start today'),
             'fallback'),
@@ -283,7 +284,7 @@ void main() {
     test('the refusal reaches the member in their own words', () {
       expect(
         bookingErrorText(
-          null,
+          englishL10n,
           const PostgrestException(
               message: 'a booking must end on the day it starts'),
           'fallback',

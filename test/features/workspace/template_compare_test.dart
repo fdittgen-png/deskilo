@@ -4,6 +4,7 @@
 // inspected settings: differences first, every setting on request, a
 // missing value shown as missing (never "No"), different currencies not
 // compared, and on a narrow screen a baseline against one alternative.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/workspace/domain/template_capabilities.dart';
 import 'package:deskilo/features/workspace/domain/template_inspection.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
@@ -79,7 +80,7 @@ Future<void> _pump(
 
 void main() {
   test('a cell says what it is, never false for a missing value', () {
-    String t(ComparisonCell c) => comparisonCellText(null, c);
+    String t(ComparisonCell c) => comparisonCellText(englishL10n, c);
     expect(
       t(
         const ComparisonCell(

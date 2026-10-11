@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/messenger.dart';
@@ -41,7 +41,7 @@ Future<void> openInboxEntry(
       await ref.read(activeWorkspaceIdProvider.notifier).select(previous);
     }
   } else {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final servers = ref.read(serverLabelsProvider).value ?? const {};
     final peer = entry.peerId ?? await _peerOf(ref, entry);
     if (!context.mounted) return;

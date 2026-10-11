@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -27,7 +27,7 @@ class PaymentTermsCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final legal = InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {});
@@ -39,12 +39,12 @@ class PaymentTermsCard extends ConsumerWidget {
         ((me?.actsAsOwner ?? false) ||
             perms.contains(WorkspacePermission.paymentTermsEdit));
     final rows = <(String, String)>[
-      (l10n?.paymentTermsFieldTerms ?? 'Payment terms', effective.paymentTerms),
-      (l10n?.paymentTermsFieldEscompte ?? 'Early-payment discount',
+      (l10n.paymentTermsFieldTerms, effective.paymentTerms),
+      (l10n.paymentTermsFieldEscompte,
           effective.escompte),
-      (l10n?.paymentTermsFieldLatePenalty ?? 'Late-payment penalty',
+      (l10n.paymentTermsFieldLatePenalty,
           effective.latePenalty),
-      (l10n?.paymentTermsFieldRecovery ?? 'Recovery indemnity',
+      (l10n.paymentTermsFieldRecovery,
           effective.recoveryIndemnity),
     ].where((r) => r.$2.trim().isNotEmpty).toList();
     return Card(
@@ -58,22 +58,22 @@ class PaymentTermsCard extends ConsumerWidget {
               const Icon(Icons.request_quote_outlined),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
-                child: Text(l10n?.paymentTermsTitle ?? 'Payment conditions',
+                child: Text(l10n.paymentTermsTitle,
                     style: theme.textTheme.titleMedium),
               ),
               Chip(
                 key: ValueKey(
                     'payment-terms-${overridden ? 'member' : 'workspace'}'),
                 label: Text(overridden
-                    ? (l10n?.paymentTermsOverridden ?? "Member's own")
-                    : (l10n?.paymentTermsInherited ?? 'Workspace default')),
+                    ? (l10n.paymentTermsOverridden)
+                    : (l10n.paymentTermsInherited)),
                 visualDensity: VisualDensity.compact,
               ),
             ]),
             if (rows.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
-                child: Text(l10n?.paymentTermsNone ?? 'No conditions written yet',
+                child: Text(l10n.paymentTermsNone,
                     style: theme.textTheme.bodySmall),
               ),
             for (final row in rows)
@@ -90,9 +90,7 @@ class PaymentTermsCard extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm),
             if (isSelf)
               Text(
-                l10n?.paymentTermsMemberNote ??
-                    'These conditions are set by the workspace; a change '
-                        'goes through its validation.',
+                l10n.paymentTermsMemberNote,
                 style: theme.textTheme.bodySmall,
               )
             else if (canRequest)
@@ -106,7 +104,7 @@ class PaymentTermsCard extends ConsumerWidget {
                     workspaceTerms: PaymentTerms.ofLegal(legal),
                   ),
                   icon: const Icon(Icons.edit_outlined),
-                  label: Text(l10n?.paymentTermsEdit ?? 'Request a change'),
+                  label: Text(l10n.paymentTermsEdit),
                 ),
               ),
           ],
@@ -167,7 +165,7 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
   }
 
   Future<void> _submit({required bool inherit}) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final terms = inherit
         ? PaymentTerms.empty
         : PaymentTerms(
@@ -181,8 +179,7 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
       context,
       domain: 'money',
       message: 'payment terms request failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref.read(eventRepositoryProvider).requestPaymentTermsChange(
             widget.member.id,
             terms: terms,
@@ -196,8 +193,7 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
     Navigator.of(context).pop();
     AppSnack.success(
         context,
-        l10n?.paymentTermsRequested ??
-            'Change requested — pending validation');
+        l10n.paymentTermsRequested);
   }
 
   Widget _field(TextEditingController c, String keySuffix, String label,
@@ -219,7 +215,7 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final w = widget.workspaceTerms;
     return SafeArea(
@@ -236,42 +232,38 @@ class _RequestSheetState extends ConsumerState<_RequestSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                l10n?.paymentTermsRequestTitle ??
-                    'Request a change of payment conditions',
+                l10n.paymentTermsRequestTitle,
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                l10n?.paymentTermsRequestHint ??
-                    "Leave a field empty to keep the workspace's wording for "
-                        'it. The change applies once validated.',
+                l10n.paymentTermsRequestHint,
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: AppSpacing.lg),
               _field(_terms, 'terms',
-                  l10n?.paymentTermsFieldTerms ?? 'Payment terms', w.paymentTerms),
+                  l10n.paymentTermsFieldTerms, w.paymentTerms),
               _field(_escompte, 'escompte',
-                  l10n?.paymentTermsFieldEscompte ?? 'Early-payment discount',
+                  l10n.paymentTermsFieldEscompte,
                   w.escompte),
               _field(_late, 'late-penalty',
-                  l10n?.paymentTermsFieldLatePenalty ?? 'Late-payment penalty',
+                  l10n.paymentTermsFieldLatePenalty,
                   w.latePenalty),
               _field(_recovery, 'recovery',
-                  l10n?.paymentTermsFieldRecovery ?? 'Recovery indemnity',
+                  l10n.paymentTermsFieldRecovery,
                   w.recoveryIndemnity),
               _field(_reason, 'reason',
-                  l10n?.paymentTermsReason ?? 'Reason (optional)', ''),
+                  l10n.paymentTermsReason, ''),
               FilledButton(
                 key: const ValueKey('payment-terms-submit'),
                 onPressed: _busy ? null : () => _submit(inherit: false),
-                child: Text(l10n?.paymentTermsSubmit ?? 'Submit request'),
+                child: Text(l10n.paymentTermsSubmit),
               ),
               if (widget.member.paymentTerms != null)
                 TextButton(
                   key: const ValueKey('payment-terms-inherit'),
                   onPressed: _busy ? null : () => _submit(inherit: true),
-                  child: Text(l10n?.paymentTermsUseDefault ??
-                      'Use the workspace default again'),
+                  child: Text(l10n.paymentTermsUseDefault),
                 ),
             ],
           ),

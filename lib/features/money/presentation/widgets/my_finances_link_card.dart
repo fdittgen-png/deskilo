@@ -7,8 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../my_finances_route.dart';
 
 class MyFinancesLinkCard extends StatelessWidget {
@@ -23,7 +23,7 @@ class MyFinancesLinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final id = workspaceId;
     if (id == null) return const SizedBox.shrink();
     final theme = Theme.of(context);
@@ -44,7 +44,7 @@ class MyFinancesLinkCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
-                    l10n?.financesLinkTitle ?? 'Your finances across spaces',
+                    l10n.financesLinkTitle,
                     style: theme.textTheme.titleSmall,
                   ),
                 ),
@@ -52,9 +52,7 @@ class MyFinancesLinkCard extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              l10n?.financesLinkBody ??
-                  'Your invoices, reminders and payments from every space are '
-                      'together in Me › Finances.',
+              l10n.financesLinkBody,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -67,8 +65,7 @@ class MyFinancesLinkCard extends StatelessWidget {
                 onPressed: () =>
                     context.push(myFinancesRoute(workspaceId: id)),
                 child: Text(
-                  l10n?.financesLinkAction(workspaceName ?? '') ??
-                      'Open for ${workspaceName ?? ''}',
+                  l10n.financesLinkAction(workspaceName ?? ''),
                 ),
               ),
             ),

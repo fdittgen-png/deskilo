@@ -10,6 +10,7 @@
 // The flag is Platform and OFF by default, so these switch it on
 // explicitly — which is also the proof that a space which never asked
 // for the surface does not get one.
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/presentation/event_labels.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
@@ -174,7 +175,7 @@ void main() {
     // surface; the switch is exhaustive, and this proves no arm falls
     // back to the name.
     for (final type in EventType.values) {
-      final label = eventTypeLabel(null, type);
+      final label = eventTypeLabel(englishL10n, type);
       expect(label, isNot(type.dbName), reason: type.name);
       expect(label, isNot(type.name), reason: type.name);
       expect(label, isNot(contains('_')), reason: type.name);

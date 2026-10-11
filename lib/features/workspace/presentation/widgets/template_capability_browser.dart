@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_process.dart';
 import '../feature_names.dart';
 import '../process_names.dart';
@@ -26,7 +26,7 @@ Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
       showDragHandle: true,
       useSafeArea: true,
       builder: (context) {
-        final l10n = AppLocalizations.of(context);
+        final l10n = context.l10n;
         return DraggableScrollableSheet(
           expand: false,
           initialChildSize: 0.8,
@@ -36,7 +36,7 @@ Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             children: [
               Text(
-                l10n?.capabilityBrowserTitle ?? 'Browse capabilities',
+                l10n.capabilityBrowserTitle,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               for (final process in workspaceProcesses)
@@ -67,7 +67,7 @@ Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
                                   required: false,
                                 )),
                                 child: Text(
-                                  l10n?.capabilityBrowserPrefer ?? 'Prefer',
+                                  l10n.capabilityBrowserPrefer,
                                 ),
                               ),
                               FilledButton.tonal(
@@ -77,7 +77,7 @@ Future<CapabilityChoice?> showCapabilityBrowser(BuildContext context) =>
                                   required: true,
                                 )),
                                 child: Text(
-                                  l10n?.capabilityBrowserRequire ?? 'Require',
+                                  l10n.capabilityBrowserRequire,
                                 ),
                               ),
                             ],

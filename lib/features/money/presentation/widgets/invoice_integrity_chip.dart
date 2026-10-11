@@ -7,8 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/money_providers.dart';
 
 class InvoiceIntegrityChip extends ConsumerWidget {
@@ -17,16 +17,16 @@ class InvoiceIntegrityChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return FutureBuilder<String>(
       future: ref.read(moneyRepositoryProvider).verifyInvoiceSignature(invoiceId),
       builder: (context, snapshot) {
         final status = snapshot.data;
         if (status == null) return const SizedBox.shrink();
         final (label, color) = switch (status) {
-          'verified' => (l10n?.invoiceIntegrityVerified ?? 'Integrity verified', AppEnvironmentColors.productionOf(Theme.of(context).brightness)),
-          'altered' => (l10n?.invoiceIntegrityAltered ?? 'Altered since issue', Theme.of(context).colorScheme.error),
-          _ => (l10n?.invoiceIntegrityUnverifiable ?? 'Issued before integrity checks', Theme.of(context).colorScheme.outline),
+          'verified' => (l10n.invoiceIntegrityVerified, AppEnvironmentColors.productionOf(Theme.of(context).brightness)),
+          'altered' => (l10n.invoiceIntegrityAltered, Theme.of(context).colorScheme.error),
+          _ => (l10n.invoiceIntegrityUnverifiable, Theme.of(context).colorScheme.outline),
         };
         return Chip(
           key: ValueKey('invoice-integrity-$invoiceId'),

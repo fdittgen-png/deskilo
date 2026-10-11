@@ -16765,6 +16765,10 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningDeclarationNote": "The declaration's caution to verify before filing",
+  "@reportFieldMeaningDeclarationNote": {
+    "description": "#2388 report guide: meaning of declaration_note"
+  },
   "reportFieldMeaningDueDate": "The settlement date",
   "@reportFieldMeaningDueDate": {
     "description": "#966 report guide: meaning of due_date"

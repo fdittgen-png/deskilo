@@ -6,10 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -40,7 +40,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
   }
 
   Future<void> _toggle(Workspace workspace, bool value) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     // #963 — only this switch is written; the server merges it. The
     // former full map, built from the EFFECTIVE set, switched off every
     // feature a parent was holding back.
@@ -55,8 +55,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
       context,
       domain: 'workspace',
       message: 'nfc feature toggle failed',
-      errorText: l10n?.workspaceGenericError ??
-          'Something went wrong. Please try again.',
+      errorText: l10n.workspaceGenericError,
       action: () => ref
           .read(workspaceRepositoryProvider)
           .setFeatureFlags(workspace.id, flags),
@@ -69,7 +68,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final enabled = ref
         .watch(enabledFeaturesSyncProvider)
@@ -77,22 +76,18 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
     final device = _deviceStatus;
     // Precomputed (lint: no literals inside Text with interpolation).
     final deviceLine = switch (device) {
-      null => l10n?.nfcConfigChecking ?? 'Checking…',
+      null => l10n.nfcConfigChecking,
       NfcStatus.ready =>
-        l10n?.nfcConfigDeviceReady ?? 'NFC available and enabled',
-      NfcStatus.off => l10n?.nfcConfigDeviceOff ??
-          "NFC is turned off in this device's Android settings — turn it "
-              'on to read RFID cards.',
-      NfcStatus.unsupported => l10n?.nfcConfigDeviceUnavailable ??
-          'No NFC here — Android with NFC on is needed (iPads have no '
-              'NFC). QR badges still work.',
+        l10n.nfcConfigDeviceReady,
+      NfcStatus.off => l10n.nfcConfigDeviceOff,
+      NfcStatus.unsupported => l10n.nfcConfigDeviceUnavailable,
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.nfcConfigTitle ?? 'RFID / NFC badges'),
+        title: Text(l10n.nfcConfigTitle),
         actions: [
           HelpDot(
-            l10n?.helpHintBadgesTopic ?? 'NFC badges',
+            l10n.helpHintBadgesTopic,
             anchor: HelpAnchor.badgesNfc,
           ),
         ],
@@ -101,21 +96,16 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
         padding: AppSpacing.gutterAll,
         children: [
           Text(
-            l10n?.nfcConfigIntro ??
-                'Members check in at a wall-mounted kiosk by tapping an '
-                    'RFID/NFC card. Register each member\'s card in Members '
-                    '& plans; at the kiosk they tap to reserve or check in.',
+            l10n.nfcConfigIntro,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.md),
           Card(
             child: SwitchListTile(
               key: const ValueKey('nfc-feature-switch'),
-              title: Text(l10n?.nfcConfigEnable ?? 'Enable NFC badge check-in'),
+              title: Text(l10n.nfcConfigEnable),
               subtitle: Text(
-                l10n?.nfcConfigEnableDesc ??
-                    'Show the card-tap option on kiosks and in the badge '
-                        'manager.',
+                l10n.nfcConfigEnableDesc,
               ),
               value: enabled,
               onChanged: workspace == null
@@ -136,7 +126,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
                     ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-              title: Text(l10n?.nfcConfigDeviceStatus ?? 'This device'),
+              title: Text(l10n.nfcConfigDeviceStatus),
               subtitle: Text(deviceLine),
             ),
           ),

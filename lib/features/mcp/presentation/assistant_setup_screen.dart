@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -76,9 +77,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
         if (outcome == WorkspaceSwitchOutcome.stale && mounted) {
           AppSnack.info(
             context,
-            AppLocalizations.of(context)?.assistantSetupStale ??
-                'Someone changed the offer meanwhile. Review it and try '
-                    'again.',
+            context.l10n.assistantSetupStale,
           );
         }
         ref.invalidate(myWorkspacesProvider);
@@ -87,7 +86,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
   /// Shows exactly what the recommended set changes, and saves it only
   /// when the person applies it.
   Future<void> _recommend(McpContextRef scope) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final McpPolicy policy;
     try {
       policy = await ref.read(mcpPolicyProvider(scope).future);
@@ -128,12 +127,11 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
     if (!mounted) return;
     switch (result?.status) {
       case PolicySaveStatus.saved || PolicySaveStatus.replayed:
-        AppSnack.success(context, l10n?.assistantSetupSaved ?? 'Saved.');
+        AppSnack.success(context, l10n.assistantSetupSaved);
       case PolicySaveStatus.stale || PolicySaveStatus.conflict:
         AppSnack.error(
           context,
-          l10n?.assistantSetupStale ??
-              'Someone changed the offer meanwhile. Review it and try again.',
+          l10n.assistantSetupStale,
         );
       case null:
         break;
@@ -142,18 +140,17 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scope = ref.watch(currentMcpContextProvider);
     final unavailable = InlineBanner(
       key: const ValueKey('assistant-setup-unavailable'),
       icon: Icons.cloud_off_outlined,
       text:
-          l10n?.mcpNextUnavailable ??
-          'The server could not answer. Nothing is assumed; try again later.',
+          l10n.mcpNextUnavailable,
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.assistantSetupTitle ?? 'Assistant setup'),
+        title: Text(l10n.assistantSetupTitle),
       ),
       body: scope.when(
         loading: () => const LoadingView(),
@@ -162,8 +159,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
             ? _padded(
                 Text(
                   key: const ValueKey('assistant-setup-no-workspace'),
-                  l10n?.assistantSetupNoWorkspace ??
-                      'Select a workspace first.',
+                  l10n.assistantSetupNoWorkspace,
                 ),
               )
             : ref
@@ -181,7 +177,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
       Padding(padding: const EdgeInsets.all(AppSpacing.md), child: child);
 
   Widget _checklist(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     McpContextRef scope,
     AssistantSetup setup,
   ) {
@@ -190,9 +186,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
         Text(
-          l10n?.assistantSetupIntro ??
-              'What assistants need to work in this workspace, in order. '
-                  'Each step says who takes it.',
+          l10n.assistantSetupIntro,
         ),
         const SizedBox(height: AppSpacing.sm),
         InlineBanner(
@@ -202,8 +196,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
               ? InlineBannerSeverity.error
               : InlineBannerSeverity.info,
           text: next == null
-              ? (l10n?.assistantSetupAllDone ??
-                    'Everything is set up for this workspace.')
+              ? (l10n.assistantSetupAllDone)
               : assistantSetupNextText(l10n, next),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -222,7 +215,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
   }
 
   List<Widget> _actions(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     McpContextRef scope,
     AssistantSetupItem item,
   ) {
@@ -242,26 +235,26 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
       AssistantSetupStep.identity when item.canAct => [
         button(
           'link-identity',
-          l10n?.assistantSetupLinkIdentity ?? 'Confirm my identity',
+          l10n.assistantSetupLinkIdentity,
           () => confirmAssistantIdentity(context, ref),
         ),
       ],
       AssistantSetupStep.workspace when item.canAct => [
         button(
           'turn-on',
-          l10n?.assistantSetupTurnOn ?? 'Turn on',
+          l10n.assistantSetupTurnOn,
           () => _turnOn(scope),
         ),
       ],
       AssistantSetupStep.policy when item.canAct => [
         button(
           'recommended',
-          l10n?.assistantSetupRecommended ?? 'Use the recommended set',
+          l10n.assistantSetupRecommended,
           () => _recommend(scope),
         ),
         button(
           'customise',
-          l10n?.assistantSetupCustomise ?? 'Customise',
+          l10n.assistantSetupCustomise,
           () => context.push('/settings/assistants'),
         ),
       ],
@@ -269,7 +262,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
         if (item.canAct)
           button(
             'request',
-            l10n?.assistantSetupRequest ?? 'Ask for access',
+            l10n.assistantSetupRequest,
             () => _run(
               scope,
               'assistant setup eligibility request failed',
@@ -281,7 +274,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
         if (admin)
           button(
             'review',
-            l10n?.assistantSetupReview ?? 'Review requests',
+            l10n.assistantSetupReview,
             () => context.push('/database/assistant-approvals'),
           ),
       ],
@@ -299,7 +292,7 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final done = item.state == AssistantSetupState.done;
     return Card(
@@ -355,13 +348,12 @@ class _ConnectorInstructions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final url = ref.watch(mcpConnectorUrlProvider);
     if (url == null) {
       return Text(
         key: const ValueKey('assistant-setup-no-connector'),
-        l10n?.assistantSetupNoConnector ??
-            'This app runs without a server, so there is no connector URL.',
+        l10n.assistantSetupNoConnector,
       );
     }
     return Column(
@@ -376,23 +368,20 @@ class _ConnectorInstructions extends ConsumerWidget {
           child: TextButton.icon(
             key: const ValueKey('assistant-setup-copy-url'),
             icon: const Icon(Icons.copy_outlined),
-            label: Text(l10n?.assistantSetupCopyUrl ?? 'Copy connector URL'),
+            label: Text(l10n.assistantSetupCopyUrl),
             onPressed: () async {
               await Clipboard.setData(ClipboardData(text: '$url'));
               if (context.mounted) {
                 AppSnack.success(
                   context,
-                  l10n?.assistantSetupCopied ?? 'Connector URL copied.',
+                  l10n.assistantSetupCopied,
                 );
               }
             },
           ),
         ),
         Text(
-          l10n?.assistantSetupConnectHowTo ??
-              '1. In your assistant, add a custom connector with this URL.\n'
-                  '2. Sign in with your DesKilo account when asked.\n'
-                  '3. Approve this workspace and the operations you allow.',
+          l10n.assistantSetupConnectHowTo,
         ),
         // #2145 — the steps per assistant, one-click links and a test.
         if (ref
@@ -404,7 +393,7 @@ class _ConnectorInstructions extends ConsumerWidget {
               key: const ValueKey('assistant-setup-open-guide'),
               onPressed: () => context.push(connectAssistantRoute),
               child: Text(
-                l10n?.mcpConnectOpenGuide ?? 'Open the connection guide',
+                l10n.mcpConnectOpenGuide,
               ),
             ),
           ),
@@ -421,7 +410,7 @@ class _InstanceContact extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final who = ref.watch(instanceResponsiblesProvider).value;
     if (who == null) return const SizedBox.shrink();
     if (who.isOperator) {
@@ -430,9 +419,7 @@ class _InstanceContact extends ConsumerWidget {
         children: [
           Text(
             key: const ValueKey('assistant-setup-instance-you'),
-            l10n?.assistantSetupInstanceYou ??
-                'You answer for this database: switch assistants on from the '
-                    'instance tools.',
+            l10n.assistantSetupInstanceYou,
           ),
           // #2145 — the place where that is done, one tap away.
           Align(
@@ -441,8 +428,7 @@ class _InstanceContact extends ConsumerWidget {
               key: const ValueKey('assistant-setup-open-installation'),
               onPressed: () => context.push('/installation/assistants'),
               child: Text(
-                l10n?.mcpConnectOpenInstallation ??
-                    'Open the installation console',
+                l10n.mcpConnectOpenInstallation,
               ),
             ),
           ),
@@ -456,14 +442,12 @@ class _InstanceContact extends ConsumerWidget {
     if (names.isEmpty) {
       return Text(
         key: const ValueKey('assistant-setup-instance-nobody'),
-        l10n?.assistantSetupInstanceNobody ??
-            'Nobody answers for this database yet.',
+        l10n.assistantSetupInstanceNobody,
       );
     }
     return Text(
       key: const ValueKey('assistant-setup-instance-names'),
-      l10n?.assistantSetupInstanceNames(names.join(', ')) ??
-          'Answering for this database: ${names.join(', ')}.',
+      l10n.assistantSetupInstanceNames(names.join(', ')),
     );
   }
 }
@@ -484,7 +468,7 @@ class _PreviewDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     List<Widget> section(String key, String title, Set<String> ops) => [
       if (ops.isNotEmpty) ...[
         Text(title, style: Theme.of(context).textTheme.titleSmall),
@@ -498,7 +482,7 @@ class _PreviewDialog extends StatelessWidget {
     ];
     return AlertDialog(
       key: const ValueKey('assistant-setup-preview'),
-      title: Text(l10n?.assistantSetupPreviewTitle ?? 'Recommended set'),
+      title: Text(l10n.assistantSetupPreviewTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -507,32 +491,27 @@ class _PreviewDialog extends StatelessWidget {
             if (unchanged)
               Text(
                 key: const ValueKey('assistant-setup-preview-unchanged'),
-                l10n?.assistantSetupPreviewNone ??
-                    'No change: the workspace already offers exactly this set.',
+                l10n.assistantSetupPreviewNone,
               )
             else ...[
               ...section(
                 'add',
-                l10n?.assistantSetupPreviewAdds ?? 'Added',
+                l10n.assistantSetupPreviewAdds,
                 added,
               ),
               ...section(
                 'remove',
-                l10n?.assistantSetupPreviewRemoves ?? 'Removed',
+                l10n.assistantSetupPreviewRemoves,
                 removed,
               ),
               if (narrows)
                 Text(
                   key: const ValueKey('assistant-setup-preview-own'),
-                  l10n?.assistantSetupPreviewOwn ??
-                      'Assistants see only each member\'s own records.',
+                  l10n.assistantSetupPreviewOwn,
                 ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.assistantSetupPreviewNote ??
-                    'Only a member\'s own records and the availability reads. '
-                        'Assistants already connected get new operations only '
-                        'after each person approves again.',
+                l10n.assistantSetupPreviewNote,
               ),
             ],
           ],
@@ -542,13 +521,13 @@ class _PreviewDialog extends StatelessWidget {
         TextButton(
           key: const ValueKey('assistant-setup-preview-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         if (!unchanged)
           FilledButton(
             key: const ValueKey('assistant-setup-preview-apply'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.assistantSetupApply ?? 'Apply'),
+            child: Text(l10n.assistantSetupApply),
           ),
       ],
     );

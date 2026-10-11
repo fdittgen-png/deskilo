@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/carnets.dart';
 import '../../providers/credit_providers.dart';
 
@@ -69,27 +69,26 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final products = ref.watch(creditProductsProvider).value ?? const [];
     return Column(
       key: const ValueKey('carnets-editor'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n?.carnetsTitle ?? 'Carnets',
+        Text(l10n.carnetsTitle,
             style: Theme.of(context).textTheme.titleMedium),
         if (products.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-            child: Text(l10n?.carnetsEmpty ?? 'No carnet yet.'),
+            child: Text(l10n.carnetsEmpty),
           ),
         for (final p in products)
           SwitchListTile(
             key: ValueKey('carnet-${p.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(p.name),
-            subtitle: Text(l10n?.carnetSummary(
-                    p.halfDays, centsToMajor(p.priceCents)) ??
-                '${p.halfDays} half-days · ${centsToMajor(p.priceCents)}'),
+            subtitle: Text(l10n.carnetSummary(
+                    p.halfDays, centsToMajor(p.priceCents))),
             value: p.active,
             onChanged: (on) => runGuarded(
               context,
@@ -102,7 +101,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
           key: const ValueKey('carnet-name'),
           controller: _name,
           decoration:
-              InputDecoration(labelText: l10n?.carnetName ?? 'Name'),
+              InputDecoration(labelText: l10n.carnetName),
         ),
         Row(children: [
           Expanded(
@@ -111,7 +110,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
               controller: _halfDays,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  labelText: l10n?.carnetHalfDays ?? 'Half-days'),
+                  labelText: l10n.carnetHalfDays),
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -122,7 +121,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               decoration:
-                  InputDecoration(labelText: l10n?.carnetPrice ?? 'Price'),
+                  InputDecoration(labelText: l10n.carnetPrice),
             ),
           ),
         ]),
@@ -131,8 +130,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
           controller: _validity,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              labelText: l10n?.carnetValidity ??
-                  'Valid for (months, empty = never expires)'),
+              labelText: l10n.carnetValidity),
         ),
         const SizedBox(height: AppSpacing.sm),
         Align(
@@ -141,7 +139,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
             key: const ValueKey('carnet-add'),
             onPressed: _add,
             icon: const Icon(Icons.add),
-            label: Text(l10n?.carnetAdd ?? 'Add carnet'),
+            label: Text(l10n.carnetAdd),
           ),
         ),
       ],

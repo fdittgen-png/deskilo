@@ -30,19 +30,19 @@ class _LanguageDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final current =
         ref.watch(personalLocaleProvider)?.languageCode ??
         _systemDefault;
     return SimpleDialog(
-      title: Text(l10n?.languageTitle ?? 'Language'),
+      title: Text(l10n.languageTitle),
       children: [
         RadioGroup<String>(
           key: const ValueKey('account-settings-dialogs-preferences-save-failed'),
           groupValue: current,
           onChanged: (code) async {
             await runGuarded(context, domain: 'profile', message: 'save language failed',
-              errorText: l10n?.preferencesSaveFailed ?? 'Could not save your preferences. Please try again.',
+              errorText: l10n.preferencesSaveFailed,
               action: () => savePersonalLanguage(ref, code == null || code == _systemDefault ? null : Locale(code),
                   workspaceOnly: defaultsOnly ? false : null));
             if (context.mounted) Navigator.of(context).pop();
@@ -52,7 +52,7 @@ class _LanguageDialog extends ConsumerWidget {
             children: [
               RadioListTile<String>(
                 value: _systemDefault,
-                title: Text(l10n?.languageSystemDefault ?? 'System default'),
+                title: Text(l10n.languageSystemDefault),
               ),
               for (final entry in _endonyms.entries)
                 RadioListTile<String>(
@@ -105,14 +105,13 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
   Future<void> _save() async {
     // #1514 — this form was prefilled from the recording seam.
     if (refusedWhileRecording(context, ref)) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() => _saving = true);
     if (!await runGuarded(
       context,
       domain: 'profile',
       message: 'address update failed',
-      errorText: l10n?.meAddressSaveFailed ??
-          'Could not save your address. Please try again.',
+      errorText: l10n.meAddressSaveFailed,
       action: () async {
         // One write: one invoice block (#1532, and its repository doc).
         await ref.read(myProfileEditsProvider).saveInvoiceIdentity(
@@ -128,14 +127,14 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
     ref.invalidate(myProfileProvider);
     if (!mounted) return;
     Navigator.of(context).pop();
-    AppSnack.success(context, l10n?.addressSaved ?? 'Address saved');
+    AppSnack.success(context, l10n.addressSaved);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.addressTitle ?? 'Address'),
+      title: Text(l10n.addressTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -146,7 +145,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               maxLines: 3,
               maxLength: 400,
               decoration: InputDecoration(
-                labelText: l10n?.addressTitle ?? 'Address',
+                labelText: l10n.addressTitle,
               ),
             ),
             // 0069 — what the e-invoice needs beyond the street: the
@@ -165,7 +164,7 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               ],
               onChanged: (value) => setState(() => _countryCode = value),
               decoration: InputDecoration(
-                labelText: l10n?.addressCountryLabel ?? 'Country',
+                labelText: l10n.addressCountryLabel,
               ),
             ),
             const SizedBox(height: 8),
@@ -174,9 +173,9 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
               controller: _vatId,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
-                labelText: l10n?.addressVatIdLabel ?? 'VAT number',
+                labelText: l10n.addressVatIdLabel,
                 suffixIcon: HelpDot(
-                  l10n?.helpTopicSettings ?? 'Settings & profile',
+                  l10n.helpTopicSettings,
                   anchor: HelpAnchor.profileVatId,
                 ),
               ),
@@ -188,12 +187,12 @@ class _AddressDialogState extends ConsumerState<_AddressDialog> {
         TextButton(
           key: const ValueKey('account-settings-dialogs-cancel'),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n?.commonCancel ?? 'Cancel'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           key: const ValueKey('address-save'),
           onPressed: _saving ? null : _save,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );
@@ -212,18 +211,18 @@ class _ThemeDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final current =
         ref.watch(personalThemeProvider) ?? ThemeMode.system;
     return SimpleDialog(
-      title: Text(l10n?.themeTitle ?? 'Theme'),
+      title: Text(l10n.themeTitle),
       children: [
         RadioGroup<ThemeMode>(
           key: const ValueKey('account-settings-dialogs-preferences-save-failed-2'),
           groupValue: current,
           onChanged: (mode) async {
             await runGuarded(context, domain: 'profile', message: 'save theme failed',
-              errorText: l10n?.preferencesSaveFailed ?? 'Could not save your preferences. Please try again.',
+              errorText: l10n.preferencesSaveFailed,
               action: () => savePersonalTheme(ref, mode == null || mode == ThemeMode.system ? null : mode,
                   workspaceOnly: defaultsOnly ? false : null));
             if (context.mounted) Navigator.of(context).pop();
@@ -233,15 +232,15 @@ class _ThemeDialog extends ConsumerWidget {
             children: [
               RadioListTile<ThemeMode>(
                 value: ThemeMode.system,
-                title: Text(l10n?.themeSystem ?? 'System default'),
+                title: Text(l10n.themeSystem),
               ),
               RadioListTile<ThemeMode>(
                 value: ThemeMode.light,
-                title: Text(l10n?.themeLight ?? 'Light'),
+                title: Text(l10n.themeLight),
               ),
               RadioListTile<ThemeMode>(
                 value: ThemeMode.dark,
-                title: Text(l10n?.themeDark ?? 'Dark'),
+                title: Text(l10n.themeDark),
               ),
             ],
           ),
@@ -270,10 +269,10 @@ class _NavigationDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final current = ref.watch(navigationStyleControllerProvider).value;
     return SimpleDialog(
-      title: Text(l10n?.navigationTitle ?? 'Navigation'),
+      title: Text(l10n.navigationTitle),
       children: [
         RadioGroup<NavigationStyle?>(
           key: const ValueKey('account-settings-dialogs-navigation-default'),
@@ -289,19 +288,17 @@ class _NavigationDialog extends ConsumerWidget {
                 key: const ValueKey('navigation-default'),
                 value: null,
                 title: Text(
-                    l10n?.navigationDefault ?? 'Default for this device'),
+                    l10n.navigationDefault),
               ),
               RadioListTile<NavigationStyle?>(
                 key: const ValueKey('navigation-classic'),
                 value: NavigationStyle.classic,
-                title: Text(l10n?.navigationClassic ??
-                    'Classic: the bottom bar and the round button'),
+                title: Text(l10n.navigationClassic),
               ),
               RadioListTile<NavigationStyle?>(
                 key: const ValueKey('navigation-menu'),
                 value: NavigationStyle.menu,
-                title: Text(l10n?.navigationMenu ??
-                    'Menu: the hamburger, like the web'),
+                title: Text(l10n.navigationMenu),
               ),
             ],
           ),

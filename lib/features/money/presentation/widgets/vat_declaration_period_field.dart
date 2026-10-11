@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/vat_declaration_period.dart';
@@ -18,7 +19,7 @@ String vatDeclarationPeriodName(
   AppLocalizations? l10n,
   VatDeclarationPeriod period,
 ) {
-  final words = vatWords(l10n);
+  final words = vatWords(l10n ?? englishL10n);
   return switch (period) {
     VatDeclarationPeriod.month => words.vatDeclPeriodMonth,
     VatDeclarationPeriod.quarter => words.vatDeclPeriodQuarter,
@@ -50,7 +51,7 @@ class VatDeclarationPeriodField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final words = vatWords(l10n);
+    final words = vatWords(l10n ?? englishL10n);
     final field = DropdownButtonFormField<VatDeclarationPeriod>(
       key: const ValueKey('legal-identity-declaration-period'),
       initialValue: value,

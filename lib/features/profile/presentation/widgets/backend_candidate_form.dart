@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/backend/backend_uri.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -127,7 +128,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -137,11 +138,11 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           children: [
             if (widget.offerDefault)
               _chip(_BackendConnectMode.defaultService, 'backend-mode-default',
-                  l10n?.backendModeDefault ?? "Use DesKilo's service"),
+                  l10n.backendModeDefault),
             _chip(_BackendConnectMode.connect, 'backend-mode-connect',
-                l10n?.backendModeConnect ?? 'Connect an existing organization'),
+                l10n.backendModeConnect),
             _chip(_BackendConnectMode.operator, 'backend-mode-operator',
-                l10n?.backendModeOperator ?? 'Set up a server (operators)'),
+                l10n.backendModeOperator),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -162,40 +163,35 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
         onSelected: (_) => setState(() => _mode = mode),
       );
 
-  Widget _defaultPanel(AppLocalizations? l10n) => Card(
+  Widget _defaultPanel(AppLocalizations l10n) => Card(
         key: const ValueKey('backend-default-panel'),
         child: Padding(
           padding: AppSpacing.mdAll,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(l10n?.backendModeDefaultHint ??
-                  "DesKilo's own service needs no setup. Members of an "
-                      'organization that runs its own server use its code '
-                      'instead.'),
+              Text(l10n.backendModeDefaultHint),
               const SizedBox(height: AppSpacing.sm),
               FilledButton(
                 key: const ValueKey('backend-use-default'),
                 onPressed:
                     widget.isDefault ? null : () => widget.onApply(null),
                 child: Text(widget.isDefault
-                    ? (l10n?.backendServerInUse ?? 'In use on this device')
-                    : (l10n?.backendServerReset ?? "Use the app's server")),
+                    ? (l10n.backendServerInUse)
+                    : (l10n.backendServerReset)),
               ),
             ],
           ),
         ),
       );
 
-  Widget _connectPanel(AppLocalizations? l10n) {
+  Widget _connectPanel(AppLocalizations l10n) {
     final candidate = _url.text.trim().isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          l10n?.backendModeConnectHint ??
-              'Scan or paste the server code your organization gave you. '
-                  'You never need an administrator key.',
+          l10n.backendModeConnectHint,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -203,18 +199,17 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           key: const ValueKey('backend-scan'),
           onPressed: _scan,
           icon: const Icon(Icons.qr_code_scanner),
-          label: Text(l10n?.backendScan ?? 'Scan a server QR'),
+          label: Text(l10n.backendScan),
         ),
         const SizedBox(height: AppSpacing.sm),
         _field(
           key: const ValueKey('backend-descriptor-field'),
           controller: _descriptor,
-          label: l10n?.backendDescriptorLabel ?? 'Server code',
+          label: l10n.backendDescriptorLabel,
           hint: 'deskilo://server?…',
           onChanged: _descriptorChanged,
           errorText: _descriptorInvalid
-              ? (l10n?.backendDescriptorInvalid ??
-                  'That is not a valid DesKilo server code.')
+              ? (l10n.backendDescriptorInvalid)
               : null,
         ),
         if (candidate) ...[
@@ -222,14 +217,12 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           ListTile(
             key: const ValueKey('backend-destination'),
             leading: const Icon(Icons.dns_outlined),
-            title: Text(l10n?.backendDestination(_hostOf(_url.text)) ??
-                'Destination: ${_hostOf(_url.text)}'),
+            title: Text(l10n.backendDestination(_hostOf(_url.text))),
             subtitle: _label == null
                 ? null
                 : Text(
                     key: const ValueKey('backend-descriptor-named'),
-                    l10n?.backendDescriptorNamed(_label!) ??
-                        'Named "$_label" by whoever shared it — not verified.',
+                    l10n.backendDescriptorNamed(_label!),
                   ),
           ),
           _testAndSave(l10n),
@@ -238,13 +231,13 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
     );
   }
 
-  Widget _operatorPanel(AppLocalizations? l10n) => Column(
+  Widget _operatorPanel(AppLocalizations l10n) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _field(
             key: const ValueKey('backend-url-field'),
             controller: _url,
-            label: l10n?.backendUrlLabel ?? 'Project URL',
+            label: l10n.backendUrlLabel,
             hint: 'https://xxxxxxxx.supabase.co',
             keyboard: TextInputType.url,
             onChanged: (_) => _invalidate(),
@@ -253,7 +246,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           _field(
             key: const ValueKey('backend-key-field'),
             controller: _key,
-            label: l10n?.backendKeyLabel ?? 'Publishable key',
+            label: l10n.backendKeyLabel,
             hint: 'sb_publishable_…',
             onChanged: (_) => _invalidate(),
           ),
@@ -263,7 +256,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
 
   static String _hostOf(String url) => Uri.tryParse(url.trim())?.host ?? url;
 
-  Widget _testAndSave(AppLocalizations? l10n) {
+  Widget _testAndSave(AppLocalizations l10n) {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     final current = _current;
@@ -283,8 +276,8 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
                 )
               : const Icon(Icons.network_check),
           label: Text(_testing
-              ? (l10n?.backendTesting ?? 'Testing…')
-              : (l10n?.backendTest ?? 'Test the connection')),
+              ? (l10n.backendTesting)
+              : (l10n.backendTest)),
         ),
         if (_error != null)
           Padding(
@@ -314,25 +307,21 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
         ],
         const SizedBox(height: AppSpacing.md),
         Text(
-          l10n?.backendServerRestartHint ??
-              'The app signs you out and applies the change on the next '
-                  'start.',
+          l10n.backendServerRestartHint,
           style: text.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
         FilledButton(
           key: const ValueKey('backend-save'),
           onPressed: canSave ? _save : null,
-          child: Text(l10n?.commonSave ?? 'Save'),
+          child: Text(l10n.commonSave),
         ),
         if (!canSave)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.xs),
             child: Text(
               key: const ValueKey('backend-save-hint'),
-              l10n?.backendSaveNeedsTest ??
-                  'Test the connection first. Only a verified server can be '
-                      'saved.',
+              l10n.backendSaveNeedsTest,
               textAlign: TextAlign.center,
               style: text.bodySmall,
             ),
@@ -350,7 +339,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
     TextInputType? keyboard,
     String? errorText,
   }) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return TextField(
       key: key,
       controller: controller,
@@ -367,7 +356,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
           children: [
             IconButton(
               key: ValueKey('backend-candidate-form-paste-$hint'),
-              tooltip: l10n?.backendPaste ?? 'Paste',
+              tooltip: l10n.backendPaste,
               icon: const Icon(Icons.content_paste, size: 20),
               onPressed: () async {
                 final data = await Clipboard.getData(Clipboard.kTextPlain);
@@ -399,13 +388,13 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
   }
 
   Future<void> _scan() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     BackendDescriptor? found;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (context) => SheetShell(
-        title: l10n?.backendScan ?? 'Scan a server QR',
+        title: l10n.backendScan,
         children: [
           const SizedBox(height: 12),
           ScanCameraBox(
@@ -425,7 +414,7 @@ class _BackendCandidateFormState extends ConsumerState<BackendCandidateForm> {
     if (found == null) {
       AppSnack.info(
         context,
-        l10n?.backendScanNothing ?? 'That QR is not a DesKilo server code.',
+        l10n.backendScanNothing,
       );
       return;
     }

@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -43,7 +43,7 @@ class InvoicesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final countryCode = workspace?.countryCode ?? '';
     // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
@@ -80,7 +80,7 @@ class InvoicesScreen extends ConsumerWidget {
             features.contains(WorkspaceFeature.invoicePdfTemplate)
         ? IconButton(
             key: const ValueKey('invoice-template-button'),
-            tooltip: l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+            tooltip: l10n.invoiceTemplateTitle,
             icon: const Icon(Icons.edit_note_outlined),
             onPressed: () => showInvoiceTemplateSheet(context, ref),
           )
@@ -91,7 +91,7 @@ class InvoicesScreen extends ConsumerWidget {
             features.contains(WorkspaceFeature.dunning))
         ? IconButton(
             key: const ValueKey('invoice-dunning-settings'),
-            tooltip: l10n?.dunningSettingsTitle ?? 'Reminder rules',
+            tooltip: l10n.dunningSettingsTitle,
             icon: const Icon(Icons.rule_outlined),
             onPressed: () => showDunningRulesDialog(context, ref),
           )
@@ -103,7 +103,7 @@ class InvoicesScreen extends ConsumerWidget {
     final processAction = journeyOn
         ? IconButton(
             key: const ValueKey('invoice-process-help'),
-            tooltip: l10n?.journeyHowTitle ?? 'How invoicing works',
+            tooltip: l10n.journeyHowTitle,
             icon: const Icon(Icons.help_outline),
             onPressed: () => showInvoiceProcessSheet(context),
           )
@@ -114,7 +114,7 @@ class InvoicesScreen extends ConsumerWidget {
         (canIssue && features.contains(WorkspaceFeature.expenseRepartition))
             ? IconButton(
                 key: const ValueKey('invoice-distribute-button'),
-                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.repartitionAction ?? 'Distribute an expense'}',
+                tooltip: '${l10n.assistantPrefix} · ${l10n.repartitionAction}',
                 icon: const Icon(Icons.call_split),
                 onPressed: () => showExpenseRepartitionSheet(context, ref),
               )
@@ -124,7 +124,7 @@ class InvoicesScreen extends ConsumerWidget {
         (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
             ? IconButton(
                 key: const ValueKey('invoice-settlement'),
-                tooltip: '${l10n?.assistantPrefix ?? 'Assistant'} · ${l10n?.settlementAction ?? 'Regroup into one invoice'}',
+                tooltip: '${l10n.assistantPrefix} · ${l10n.settlementAction}',
                 icon: const Icon(Icons.merge_outlined),
                 onPressed: () => showSettlementSheet(context, ref),
               )
@@ -136,7 +136,7 @@ class InvoicesScreen extends ConsumerWidget {
       (
         'invoicing-my-finances-tool',
         Icons.account_balance_wallet_outlined,
-        l10n?.invoicingMyFinances ?? 'My finances',
+        l10n.invoicingMyFinances,
         () => context.push(myFinancesRoute(
           workspaceId: ref.read(activeWorkspaceIdProvider).value)),
       ),
@@ -144,47 +144,47 @@ class InvoicesScreen extends ConsumerWidget {
         (
           'invoice-distribute-button',
           Icons.call_split,
-          l10n?.repartitionAction ?? 'Distribute an expense',
+          l10n.repartitionAction,
           () => showExpenseRepartitionSheet(context, ref),
         ),
       if (settlementAction != null)
         (
           'invoice-settlement',
           Icons.merge_outlined,
-          l10n?.settlementAction ?? 'Regroup into one invoice',
+          l10n.settlementAction,
           () => showSettlementSheet(context, ref),
         ),
       (
         'invoice-register-button',
         Icons.table_rows_outlined,
-        l10n?.invoiceRegisterTitle ?? 'Invoice register',
+        l10n.invoiceRegisterTitle,
         () => context.push('/invoice-register'),
       ),
       if (dunningAction != null)
         (
           'invoice-dunning-settings',
           Icons.rule_outlined,
-          l10n?.dunningSettingsTitle ?? 'Reminder rules',
+          l10n.dunningSettingsTitle,
           () => showDunningRulesDialog(context, ref),
         ),
       if (templateAction != null)
         (
           'invoice-template-button',
           Icons.edit_note_outlined,
-          l10n?.invoiceTemplateTitle ?? 'Invoice PDF template',
+          l10n.invoiceTemplateTitle,
           () => showInvoiceTemplateSheet(context, ref),
         ),
       if (processAction != null)
         (
           'invoice-process-help',
           Icons.help_outline,
-          l10n?.journeyHowTitle ?? 'How invoicing works',
+          l10n.journeyHowTitle,
           () => showInvoiceProcessSheet(context),
         ),
     ];
     final tools = PopupMenuButton<int>(
       key: const ValueKey('invoicing-tools'),
-      tooltip: l10n?.invoicingTools ?? 'Invoicing tools',
+      tooltip: l10n.invoicingTools,
       icon: const Icon(Icons.tune),
       onSelected: (i) => toolItems[i].$4(),
       itemBuilder: (_) => [
@@ -204,13 +204,12 @@ class InvoicesScreen extends ConsumerWidget {
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.myInvoicesTitle ?? 'My invoices'),
+          title: Text(l10n.myInvoicesTitle),
           actions: [tools],
         ),
         body: Column(children: [
           _Banner(
-            text: l10n?.memberInvoicesBanner ??
-                'All your invoices and payments, from every workspace, are in Me › Finances.',
+            text: l10n.memberInvoicesBanner,
           ),
           Expanded(child: archive),
         ]),
@@ -229,8 +228,7 @@ class InvoicesScreen extends ConsumerWidget {
       if (invoice == null) {
         AppSnack.info(
           context,
-          l10n?.invoiceProformaNothing ??
-              'Nothing tracked for this month — no proforma to send.',
+          l10n.invoiceProformaNothing,
         );
         return;
       }
@@ -266,14 +264,14 @@ class InvoicesScreen extends ConsumerWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n?.invoicingHubTitle ?? 'Invoicing'),
+          title: Text(l10n.invoicingHubTitle),
           actions: [tools],
           bottom: AppTabBar.bottom(context, tabs: [
-            AppTab(l10n?.invoiceTabToInvoice ?? 'To invoice',
+            AppTab(l10n.invoiceTabToInvoice,
                 key: const ValueKey('invoice-tab-todo')),
-            AppTab(l10n?.invoiceTabOpen ?? 'Open',
+            AppTab(l10n.invoiceTabOpen,
                 key: const ValueKey('invoice-tab-open')),
-            AppTab(l10n?.invoiceTabArchive ?? 'Archive',
+            AppTab(l10n.invoiceTabArchive,
                 key: const ValueKey('invoice-tab-archive')),
           ]),
         ),
@@ -281,13 +279,11 @@ class InvoicesScreen extends ConsumerWidget {
           key: const ValueKey('invoice-create-button'),
           onPressed: () => showInvoiceIssueSheet(context, ref),
           icon: const Icon(Icons.receipt_long_outlined),
-          label: Text(l10n?.invoiceCreate ?? 'New invoice'),
+          label: Text(l10n.invoiceCreate),
         ),
         body: Column(children: [
           _Banner(
-            text: l10n?.invoicingBanner ??
-                'You are issuing and chasing invoices for the whole workspace. '
-                    'Your own invoices and payments are in Me › Finances.',
+            text: l10n.invoicingBanner,
           ),
           RecapitulativeNotice(
               enabled: features
@@ -355,7 +351,7 @@ class _Banner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     // At large accessibility text the banner would eat the list: the same
     // link stays one tap away in the tools menu.
@@ -394,7 +390,7 @@ class _Banner extends StatelessWidget {
           workspaceId: ProviderScope.containerOf(context)
                           .read(activeWorkspaceIdProvider)
                           .value)),
-                  child: Text(l10n?.invoicingMyFinances ?? 'My finances'),
+                  child: Text(l10n.invoicingMyFinances),
                 ),
               ),
             ],

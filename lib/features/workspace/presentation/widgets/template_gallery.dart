@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -133,12 +134,11 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   // #1661 — what a search or a filter shows, as an offline workbook: at
   // most [maxTemplates], refused rather than cut short when there are more.
   Future<void> _exportResults(List<WorkspaceTemplate> shown) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     if (shown.length > maxTemplates) {
       AppSnack.error(
         context,
-        l10n?.templateExportTooMany('$maxTemplates') ??
-            'At most $maxTemplates templates per workbook. Narrow the search first.',
+        l10n.templateExportTooMany('$maxTemplates'),
       );
       return;
     }
@@ -163,13 +163,12 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   static const maxShortlist = 4;
 
   void _toggleShortlist(WorkspaceTemplate t) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     setState(() {
       if (_shortlist.any((s) => s.id == t.id)) {
         _shortlist.removeWhere((s) => s.id == t.id);
       } else if (_shortlist.length >= maxShortlist) {
-        AppSnack.info(context, l10n?.compareLimit('$maxShortlist') ??
-            'Up to $maxShortlist templates can be compared. Remove one first.');
+        AppSnack.info(context, l10n.compareLimit('$maxShortlist'));
       } else {
         _shortlist.add(t);
       }
@@ -233,7 +232,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
   Future<void> _searchCapabilities(String value) async {
     final generation = ++_generation;
     final vocabulary =
-        CapabilityVocabulary(capabilityVocabularyLabels(AppLocalizations.of(context)));
+        CapabilityVocabulary(capabilityVocabularyLabels(context.l10n));
     final parsed = vocabulary.parse(value);
     final capabilities = {..._required, ...parsed.capabilities}.toList();
     final unknown = parsed.freeWords.where((w) => !_anyTemplateText(w)).toList();
@@ -279,7 +278,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final allTags = <String>{
       for (final s in widget.sections)
@@ -326,7 +325,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
             // know the word to type.
             suffixIcon: IconButton(
               key: const ValueKey('template-browse-capabilities'),
-              tooltip: l10n?.capabilityBrowserTitle ?? 'Browse capabilities',
+              tooltip: l10n.capabilityBrowserTitle,
               icon: const Icon(Icons.account_tree_outlined),
               onPressed: () async {
                 final choice = await showCapabilityBrowser(context);
@@ -338,7 +337,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
                 });
               },
             ),
-            hintText: l10n?.librarySearchHint ?? 'Search templates',
+            hintText: l10n.librarySearchHint,
           ),
         ),
         ..._capabilityStatus(l10n),
@@ -382,10 +381,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
               liveRegion: true,
               child: Text(
                 key: const ValueKey('template-result-count'),
-                l10n?.templateResultCount(shownAll.length) ??
-                    (shownAll.length == 1
-                        ? '1 template shown'
-                        : '${shownAll.length} templates shown'),
+                l10n.templateResultCount(shownAll.length),
                 style: theme.textTheme.bodySmall,
               ),
             ),
@@ -395,7 +391,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           FilledButton.tonalIcon(
             key: const ValueKey('template-compare'),
             icon: const Icon(Icons.compare_arrows),
-            label: Text(l10n?.compareOpen('${_shortlist.length}') ?? 'Compare (${_shortlist.length})'),
+            label: Text(l10n.compareOpen('${_shortlist.length}')),
             onPressed: _shortlist.length < 2
                 ? null
                 : () => Navigator.of(context).push(MaterialPageRoute<void>(
@@ -411,8 +407,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
           OutlinedButton.icon(
             key: const ValueKey('template-export-results'),
             icon: const Icon(Icons.table_view_outlined),
-            label: Text(l10n?.templateExportResults('${shownAll.length}') ??
-                'Export these results (${shownAll.length})'),
+            label: Text(l10n.templateExportResults('${shownAll.length}')),
             onPressed: _exporting ? null : () => _exportResults(shownAll),
           ),
         ],
@@ -424,23 +419,19 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
               ? Column(key: const ValueKey('template-no-match'), children: [
                   Expanded(child: EmptyState(
                     icon: Icons.search_off,
-                    title: l10n?.templateNoMatch ??
-                        'No template matches. Change the words, a tag or a '
-                            'requirement.',
+                    title: l10n.templateNoMatch,
                   )),
                   TextButton(
                     key: const ValueKey('template-clear-filters'),
                     onPressed: _clearAll,
-                    child: Text(l10n?.templateClearFilters ?? 'Clear the search'),
+                    child: Text(l10n.templateClearFilters),
                   ),
                 ])
               : !anyTemplate && !widget.offerEmpty
               ? EmptyState(
                   key: const ValueKey('template-gallery-empty'),
                   icon: Icons.grid_view_outlined,
-                  title: l10n?.libraryEmpty ??
-                      'Nothing here yet. Save this space as a template, or '
-                          'wait for someone to share one with you.',
+                  title: l10n.libraryEmpty,
                 )
               : ListView.builder(
                   key: const ValueKey('template-gallery'),
@@ -507,7 +498,7 @@ class _EmptySpaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Card(
       key: const ValueKey('template-empty'),
       color:
@@ -515,9 +506,8 @@ class _EmptySpaceCard extends StatelessWidget {
       child: ListTile(
         key: const ValueKey('template-gallery-onboarding-start-empty'),
         leading: Icon(selected ? Icons.check : Icons.crop_square_outlined),
-        title: Text(l10n?.onboardingStartEmpty ?? 'Empty space'),
-        subtitle: Text(l10n?.onboardingStartEmptyDesc ??
-            'Draw your own plan from a blank canvas.'),
+        title: Text(l10n.onboardingStartEmpty),
+        subtitle: Text(l10n.onboardingStartEmptyDesc),
         selected: selected,
         onTap: onTap,
       ),
@@ -527,7 +517,7 @@ class _EmptySpaceCard extends StatelessWidget {
 
 extension on _TemplateGalleryState {
   /// What the search understood, or why it could not answer.
-  List<Widget> _capabilityStatus(AppLocalizations? l10n) {
+  List<Widget> _capabilityStatus(AppLocalizations l10n) {
     final capability = _capability;
     final suggestion = _suggestion;
     return [
@@ -536,10 +526,9 @@ extension on _TemplateGalleryState {
           padding: const EdgeInsets.only(top: AppSpacing.sm),
           child: Text(
             key: const ValueKey('template-search-capabilities'),
-            l10n?.librarySearchCapabilities(capability.capabilities
+            l10n.librarySearchCapabilities(capability.capabilities
                     .map((id) => capabilityLabel(l10n, id))
-                    .join(', ')) ??
-                'Set up for: ${capability.capabilities.join(', ')}',
+                    .join(', ')),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
@@ -549,9 +538,7 @@ extension on _TemplateGalleryState {
           child: InlineBanner(
             key: const ValueKey('template-search-unavailable'),
             icon: Icons.cloud_off_outlined,
-            text: l10n?.librarySearchUnavailable ??
-                'The templates\' settings could not be checked, so none is '
-                    'shown as matching. Try again.',
+            text: l10n.librarySearchUnavailable,
           ),
         ),
       if (suggestion != null)
@@ -563,8 +550,7 @@ extension on _TemplateGalleryState {
               _search.text = suggestion;
               _onQuery(suggestion);
             },
-            child: Text(l10n?.librarySearchSuggestion(suggestion) ??
-                'Did you mean "$suggestion"?'),
+            child: Text(l10n.librarySearchSuggestion(suggestion)),
           ),
         ),
     ];

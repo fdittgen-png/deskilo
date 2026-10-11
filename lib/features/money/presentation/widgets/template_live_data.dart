@@ -2,9 +2,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/report_data.dart';
@@ -69,7 +69,7 @@ Map<String, Object?>? liveReportData(
           period: period, memberName: names[me.id] ?? '');
     case 'workspace':
       return workspaceReportData(reportStringsFor(context),
-          workspaceFactsOf(ref, AppLocalizations.of(context)));
+          workspaceFactsOf(ref, context.l10n));
     case 'status':
       return null; // #934 — sample data; the live view prints from its screen.
     case 'coa':

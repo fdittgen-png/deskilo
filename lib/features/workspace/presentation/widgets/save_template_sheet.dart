@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/ids/request_id.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -25,14 +26,14 @@ import 'template_publish_summary.dart';
 /// names go with the plan (names are merge keys and cannot be stripped).
 Future<void> showSaveTemplateSheet(
     BuildContext context, WidgetRef ref, String workspaceId) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final saved = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     builder: (_) => _SaveTemplateSheet(workspaceId: workspaceId),
   );
   if (saved == true && context.mounted) {
-    AppSnack.success(context, l10n?.librarySaved ?? 'Saved to your templates.');
+    AppSnack.success(context, l10n.librarySaved);
   }
 }
 
@@ -68,15 +69,15 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
     super.dispose();
   }
 
-  static String neverLabel(AppLocalizations? l10n, NeverPublished n) =>
+  static String neverLabel(AppLocalizations l10n, NeverPublished n) =>
       switch (n.entity) {
-        'sites' => l10n?.libraryNeverSites ?? 'Sites and their addresses',
-        'payment_instructions' => l10n?.libraryNeverPayment ?? 'Bank details',
+        'sites' => l10n.libraryNeverSites,
+        'payment_instructions' => l10n.libraryNeverPayment,
         'document_design' =>
-          l10n?.libraryNeverDocumentDesign ?? 'Document designs',
+          l10n.libraryNeverDocumentDesign,
         'document_links' =>
-          l10n?.libraryNeverDocumentLinks ?? 'Links to your documents',
-        'invitations' => l10n?.libraryNeverInvitations ?? 'Invitation texts',
+          l10n.libraryNeverDocumentLinks,
+        'invitations' => l10n.libraryNeverInvitations,
         _ => n.reason,
       };
 
@@ -117,7 +118,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md,
@@ -144,7 +145,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n?.librarySave ?? 'Save this space as a template',
+                Text(l10n.librarySave,
                     style: theme.textTheme.titleMedium),
                 const SizedBox(height: AppSpacing.md),
                 TextField(
@@ -153,7 +154,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                   autofocus: true,
                   onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
-                      labelText: l10n?.librarySaveName ?? 'Template name'),
+                      labelText: l10n.librarySaveName),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 TextField(
@@ -161,8 +162,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                   controller: _description,
                   maxLines: 2,
                   decoration: InputDecoration(
-                      labelText: l10n?.librarySaveDescription ??
-                          'Description (optional)'),
+                      labelText: l10n.librarySaveDescription),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 TextField(
@@ -170,11 +170,11 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                   controller: _tags,
                   decoration: InputDecoration(
                       labelText:
-                          l10n?.librarySaveTags ?? 'Tags, separated by commas'),
+                          l10n.librarySaveTags),
                 ),
                 if (publication != null) ...[
                   const SizedBox(height: AppSpacing.md),
-                  Text(l10n?.libraryPublishGroups ?? 'What travels',
+                  Text(l10n.libraryPublishGroups,
                       style: theme.textTheme.titleSmall),
                   TemplateProfileLine(chosen: chosen.length, total: groups.length),
                   for (final g in groups)
@@ -192,40 +192,33 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                       key: const ValueKey('save-template-invitations'),
                       contentPadding: EdgeInsets.zero,
                       controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(l10n?.libraryInvitationTexts ?? 'Invitation texts'),
-                      subtitle: Text(l10n?.libraryInvitationTextsHint(InvitationTags.workspaceName) ??
-                          'Only texts written with placeholders such as {workspaceName}; '
-                              'a text naming your space or its people is refused.'),
+                      title: Text(l10n.libraryInvitationTexts),
+                      subtitle: Text(l10n.libraryInvitationTextsHint(InvitationTags.workspaceName)),
                       value: _invitationTexts,
                       onChanged: (on) => setState(() => _invitationTexts = on == true),
                     ),
                   if (_wordingRefused)
                     Text(
-                      l10n?.libraryInvitationTextsRefused ??
-                          'An invitation text still names your space or its people. '
-                              'Replace them with placeholders in the invitation settings, or untick invitation texts.',
+                      l10n.libraryInvitationTextsRefused,
                       key: const ValueKey('save-template-invitations-refused'),
                       style: TextStyle(color: theme.colorScheme.error),
                     ),
                   if (names.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      l10n?.libraryPlanNames(names.join(', ')) ??
-                          'These names go with the plan: ${names.join(', ')}',
+                      l10n.libraryPlanNames(names.join(', ')),
                       key: const ValueKey('save-template-plan-names'),
                       style: theme.textTheme.bodySmall,
                     ),
                   ],
                   const SizedBox(height: AppSpacing.md),
-                  Text(l10n?.libraryNeverPublished ?? 'Never published',
+                  Text(l10n.libraryNeverPublished,
                       style: theme.textTheme.titleSmall),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
                     [
                       if (strippedIdentity)
-                        l10n?.libraryNeverIdentity ??
-                            'Your address, legal identifiers, legal mentions '
-                                'and WhatsApp group',
+                        l10n.libraryNeverIdentity,
                       for (final n in publication.neverPublished)
                         neverLabel(l10n, n),
                     ].join(' · '),
@@ -235,7 +228,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                   TemplateLocalNeedsPreview(workspaceId: widget.workspaceId),
                 ],
                 const SizedBox(height: AppSpacing.md),
-                Text(l10n?.libraryVisibility ?? 'Who may see it',
+                Text(l10n.libraryVisibility,
                     style: theme.textTheme.bodySmall),
                 const SizedBox(height: AppSpacing.xs),
                 Wrap(spacing: AppSpacing.sm, children: [
@@ -248,11 +241,10 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                       key: ValueKey('save-template-${v.name}'),
                       label: Text(switch (v) {
                         TemplateVisibility.private =>
-                          l10n?.libraryVisibilityPrivate ?? 'Only me',
+                          l10n.libraryVisibilityPrivate,
                         TemplateVisibility.shared =>
-                          l10n?.libraryVisibilityShared ?? 'People I invite',
-                        _ => l10n?.libraryVisibilityPublic ??
-                            'Everyone (the library)',
+                          l10n.libraryVisibilityShared,
+                        _ => l10n.libraryVisibilityPublic,
                       }),
                       selected: _visibility == v,
                       onSelected: (_) => setState(() => _visibility = v),
@@ -261,7 +253,7 @@ class _SaveTemplateSheetState extends ConsumerState<_SaveTemplateSheet> {
                 if (publication != null && chosen.isEmpty) ...[
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    l10n?.libraryPublishNothing ?? 'Choose at least one group.',
+                    l10n.libraryPublishNothing,
                     style: theme.textTheme.bodySmall
                         ?.copyWith(color: theme.colorScheme.error),
                   ),

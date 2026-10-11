@@ -24,261 +24,251 @@ import 'ui_labels.g.dart';
 
 /// The sentence for a registered action; null for one this build does
 /// not describe.
-String? actionLabel(AppLocalizations? l10n, String? action) => switch (action) {
+String? actionLabel(AppLocalizations l10n, String? action) => switch (action) {
   RecorderActions.openReserve =>
-    l10n?.taskRecorderActionOpenReserve ?? 'Opened Reserve',
+    l10n.taskRecorderActionOpenReserve,
   RecorderActions.selectDate =>
-    l10n?.taskRecorderActionSelectDate ?? 'Chose the day',
+    l10n.taskRecorderActionSelectDate,
   RecorderActions.selectPeriod =>
-    l10n?.taskRecorderActionSelectPeriod ?? 'Chose the period',
+    l10n.taskRecorderActionSelectPeriod,
   RecorderActions.switchView =>
-    l10n?.taskRecorderActionSwitchView ?? 'Switched the view',
+    l10n.taskRecorderActionSwitchView,
   RecorderActions.selectResource =>
-    l10n?.taskRecorderActionSelectResource ?? 'Chose a place',
+    l10n.taskRecorderActionSelectResource,
   RecorderActions.changeBookingField =>
-    l10n?.taskRecorderActionChangeField ?? 'Changed a booking detail',
+    l10n.taskRecorderActionChangeField,
   RecorderActions.confirmBooking =>
-    l10n?.taskRecorderActionConfirmBooking ?? 'Confirmed the booking',
+    l10n.taskRecorderActionConfirmBooking,
   RecorderActions.cancelReview =>
-    l10n?.taskRecorderActionCancelReview ??
-        'Closed the booking without booking',
+    l10n.taskRecorderActionCancelReview,
   RecorderActions.viewDetails =>
-    l10n?.taskRecorderActionViewDetails ?? 'Opened the reservation',
-  RecorderActions.back => l10n?.taskRecorderActionBack ?? 'Went back',
+    l10n.taskRecorderActionViewDetails,
+  RecorderActions.back => l10n.taskRecorderActionBack,
   RecorderActions.switchFeature =>
-    l10n?.taskRecorderActionSwitchFeature ?? 'Switched a feature',
+    l10n.taskRecorderActionSwitchFeature,
   RecorderActions.declineOptIn =>
-    l10n?.taskRecorderActionDeclineOptIn ?? 'Did not switch on a test feature',
+    l10n.taskRecorderActionDeclineOptIn,
   RecorderActions.selectLevel =>
-    l10n?.taskRecorderActionSelectLevel ?? 'Chose a level',
-  RecorderActions.checkIn => l10n?.taskRecorderActionCheckIn ?? 'Checked in',
-  RecorderActions.checkOut => l10n?.taskRecorderActionCheckOut ?? 'Checked out',
+    l10n.taskRecorderActionSelectLevel,
+  RecorderActions.checkIn => l10n.taskRecorderActionCheckIn,
+  RecorderActions.checkOut => l10n.taskRecorderActionCheckOut,
   RecorderActions.cancelReservation =>
-    l10n?.taskRecorderActionCancelReservation ?? 'Cancelled the reservation',
+    l10n.taskRecorderActionCancelReservation,
   RecorderActions.closeMyReservation =>
-    l10n?.taskRecorderActionCloseMyReservation ??
-        'Closed my reservation without changing it',
+    l10n.taskRecorderActionCloseMyReservation,
   RecorderActions.calendarSwitchView =>
-    l10n?.taskRecorderActionCalendarView ?? 'Switched the calendar view',
+    l10n.taskRecorderActionCalendarView,
   RecorderActions.calendarMove =>
-    l10n?.taskRecorderActionCalendarMove ?? 'Moved through the dates',
+    l10n.taskRecorderActionCalendarMove,
   RecorderActions.calendarSelectDay =>
-    l10n?.taskRecorderActionCalendarSelectDay ?? 'Chose a day in the calendar',
+    l10n.taskRecorderActionCalendarSelectDay,
   RecorderActions.calendarFilterKind =>
-    l10n?.taskRecorderActionCalendarFilterKind ??
-        'Changed what the calendar shows',
+    l10n.taskRecorderActionCalendarFilterKind,
   RecorderActions.calendarChooseWhose =>
-    l10n?.taskRecorderActionCalendarWhose ?? 'Chose whose calendar to see',
+    l10n.taskRecorderActionCalendarWhose,
   RecorderActions.calendarOpenItem =>
-    l10n?.taskRecorderActionCalendarOpenItem ??
-        'Opened an entry from the calendar',
+    l10n.taskRecorderActionCalendarOpenItem,
   RecorderActions.calendarCancelReservation =>
-    l10n?.taskRecorderActionCalendarCancel ??
-        'Cancelled a reservation from the calendar',
+    l10n.taskRecorderActionCalendarCancel,
   RecorderActions.decideEvent =>
-    l10n?.taskRecorderActionDecideEvent ?? 'Answered a request for a decision',
+    l10n.taskRecorderActionDecideEvent,
   RecorderActions.uiOpenScreen =>
-    l10n?.taskRecorderActionUiOpenScreen ?? 'Opened a screen',
-  RecorderActions.uiTap => l10n?.taskRecorderActionUiTap ?? 'Tapped',
+    l10n.taskRecorderActionUiOpenScreen,
+  RecorderActions.uiTap => l10n.taskRecorderActionUiTap,
   RecorderActions.uiCommitField =>
-    l10n?.taskRecorderActionUiCommitField ?? 'Filled in a field',
+    l10n.taskRecorderActionUiCommitField,
   RecorderActions.uiCommand =>
-    l10n?.taskRecorderActionUiCommand ?? 'Ran a command',
+    l10n.taskRecorderActionUiCommand,
   RecorderActions.uiOpenWindow =>
-    l10n?.taskRecorderActionUiOpenWindow ?? 'Opened a window',
+    l10n.taskRecorderActionUiOpenWindow,
   RecorderActions.uiCloseWindow =>
-    l10n?.taskRecorderActionUiCloseWindow ?? 'Closed a window',
+    l10n.taskRecorderActionUiCloseWindow,
   RecorderActions.togglePermission =>
-    l10n?.taskRecorderActionTogglePermission ?? 'Switched a permission',
+    l10n.taskRecorderActionTogglePermission,
   RecorderActions.saveRole =>
-    l10n?.taskRecorderActionSaveRole ?? 'Saved a role',
+    l10n.taskRecorderActionSaveRole,
   RecorderActions.giveRole =>
-    l10n?.taskRecorderActionGiveRole ?? 'Gave or took back a role',
+    l10n.taskRecorderActionGiveRole,
   RecorderActions.cancelRoleEdit =>
-    l10n?.taskRecorderActionCancelRoleEdit ?? 'Closed the role without saving',
+    l10n.taskRecorderActionCancelRoleEdit,
   RecorderActions.saveValidationRule =>
-    l10n?.taskRecorderActionSaveValidationRule ?? 'Saved a validation rule',
+    l10n.taskRecorderActionSaveValidationRule,
   RecorderActions.cancelValidationRule =>
-    l10n?.taskRecorderActionCancelValidationRule ??
-        'Closed the rule without saving',
+    l10n.taskRecorderActionCancelValidationRule,
   _ => null,
 };
 
 /// The sentence for a registered outcome.
-String? outcomeLabel(AppLocalizations? l10n, String? outcome) =>
+String? outcomeLabel(AppLocalizations l10n, String? outcome) =>
     switch (outcome) {
       RecorderOutcomes.bookingConfirmed =>
-        l10n?.taskRecorderOutcomeConfirmed ?? 'Booked',
+        l10n.taskRecorderOutcomeConfirmed,
       RecorderOutcomes.bookingRequested =>
-        l10n?.taskRecorderOutcomeRequested ?? 'Sent for confirmation',
+        l10n.taskRecorderOutcomeRequested,
       RecorderOutcomes.seriesBooked =>
-        l10n?.taskRecorderOutcomeSeries ?? 'Series booked',
+        l10n.taskRecorderOutcomeSeries,
       RecorderOutcomes.bookingRefused =>
-        l10n?.taskRecorderOutcomeRefused ?? 'Refused',
+        l10n.taskRecorderOutcomeRefused,
       RecorderOutcomes.bookingUnknown =>
-        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+        l10n.taskRecorderOutcomeUnknown,
       RecorderOutcomes.settingSaved =>
-        l10n?.taskRecorderOutcomeSettingSaved ?? 'Saved',
+        l10n.taskRecorderOutcomeSettingSaved,
       RecorderOutcomes.settingNotSaved =>
-        l10n?.taskRecorderOutcomeSettingNotSaved ?? 'Not saved',
+        l10n.taskRecorderOutcomeSettingNotSaved,
       RecorderOutcomes.settingUnknown =>
-        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+        l10n.taskRecorderOutcomeUnknown,
       RecorderOutcomes.checkedIn =>
-        l10n?.taskRecorderOutcomeCheckedIn ?? 'Checked in',
+        l10n.taskRecorderOutcomeCheckedIn,
       RecorderOutcomes.checkedOut =>
-        l10n?.taskRecorderOutcomeCheckedOut ?? 'Checked out',
+        l10n.taskRecorderOutcomeCheckedOut,
       RecorderOutcomes.cancelled =>
-        l10n?.taskRecorderOutcomeCancelled ?? 'Cancelled',
+        l10n.taskRecorderOutcomeCancelled,
       RecorderOutcomes.reservationRefused =>
-        l10n?.taskRecorderOutcomeRefused ?? 'Refused',
+        l10n.taskRecorderOutcomeRefused,
       RecorderOutcomes.reservationUnknown =>
-        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+        l10n.taskRecorderOutcomeUnknown,
       RecorderOutcomes.settingPending =>
-        l10n?.taskRecorderOutcomeSettingPending ?? 'Sent for validation',
+        l10n.taskRecorderOutcomeSettingPending,
       RecorderOutcomes.eventDecided =>
-        l10n?.taskRecorderOutcomeEventDecided ?? 'Answer recorded',
+        l10n.taskRecorderOutcomeEventDecided,
       RecorderOutcomes.eventNotConfirmed =>
-        l10n?.taskRecorderOutcomeEventNotConfirmed ??
-            'The answer was not confirmed',
+        l10n.taskRecorderOutcomeEventNotConfirmed,
       RecorderOutcomes.commandDone =>
-        l10n?.taskRecorderOutcomeCommandDone ?? 'Done',
+        l10n.taskRecorderOutcomeCommandDone,
       RecorderOutcomes.commandPending =>
-        l10n?.taskRecorderOutcomeCommandPending ?? 'Sent for validation',
+        l10n.taskRecorderOutcomeCommandPending,
       RecorderOutcomes.commandRefused =>
-        l10n?.taskRecorderOutcomeRefused ?? 'Refused',
+        l10n.taskRecorderOutcomeRefused,
       RecorderOutcomes.commandUnknown =>
-        l10n?.taskRecorderOutcomeUnknown ?? 'No answer came',
+        l10n.taskRecorderOutcomeUnknown,
       _ => null,
     };
 
 /// The words for one category value; the raw value is never shown.
-String valueLabel(AppLocalizations? l10n, String value) => switch (value) {
-  'today' => l10n?.taskRecorderValueToday ?? 'today',
-  'tomorrow' => l10n?.taskRecorderValueTomorrow ?? 'tomorrow',
+String valueLabel(AppLocalizations l10n, String value) => switch (value) {
+  'today' => l10n.taskRecorderValueToday,
+  'tomorrow' => l10n.taskRecorderValueTomorrow,
   'later_this_week' =>
-    l10n?.taskRecorderValueLaterThisWeek ?? 'later this week',
-  'later' => l10n?.taskRecorderValueLater ?? 'a later day',
-  'past' => l10n?.taskRecorderValuePast ?? 'a past day',
-  'full_day' => l10n?.taskRecorderValueFullDay ?? 'full day',
-  'morning' => l10n?.taskRecorderValueMorning ?? 'morning',
-  'afternoon' => l10n?.taskRecorderValueAfternoon ?? 'afternoon',
-  'hours' => l10n?.taskRecorderValueHours ?? 'by the hour',
-  'custom' => l10n?.taskRecorderValueCustom ?? 'custom times',
-  'plan' => l10n?.taskRecorderValuePlan ?? 'plan',
-  'list' => l10n?.taskRecorderValueList ?? 'list',
-  'day' => l10n?.taskRecorderValueDay ?? 'day',
-  'on' => l10n?.taskRecorderValueOn ?? 'on',
-  'off' => l10n?.taskRecorderValueOff ?? 'off',
-  'week' => l10n?.taskRecorderValueWeek ?? 'week',
-  'month' => l10n?.taskRecorderValueMonth ?? 'month',
-  'desk' => l10n?.taskRecorderValueDesk ?? 'a desk',
-  'room' => l10n?.taskRecorderValueRoom ?? 'a room',
-  'other' => l10n?.taskRecorderValueOther ?? 'other',
-  'self' => l10n?.taskRecorderValueSelf ?? 'for me',
-  'other_member' => l10n?.taskRecorderValueOtherMember ?? 'for another member',
-  'once' => l10n?.taskRecorderValueOnce ?? 'once',
-  'series' => l10n?.taskRecorderValueSeries ?? 'repeating',
-  'all_booked' => l10n?.taskRecorderValueAllBooked ?? 'every date booked',
+    l10n.taskRecorderValueLaterThisWeek,
+  'later' => l10n.taskRecorderValueLater,
+  'past' => l10n.taskRecorderValuePast,
+  'full_day' => l10n.taskRecorderValueFullDay,
+  'morning' => l10n.taskRecorderValueMorning,
+  'afternoon' => l10n.taskRecorderValueAfternoon,
+  'hours' => l10n.taskRecorderValueHours,
+  'custom' => l10n.taskRecorderValueCustom,
+  'plan' => l10n.taskRecorderValuePlan,
+  'list' => l10n.taskRecorderValueList,
+  'day' => l10n.taskRecorderValueDay,
+  'on' => l10n.taskRecorderValueOn,
+  'off' => l10n.taskRecorderValueOff,
+  'week' => l10n.taskRecorderValueWeek,
+  'month' => l10n.taskRecorderValueMonth,
+  'desk' => l10n.taskRecorderValueDesk,
+  'room' => l10n.taskRecorderValueRoom,
+  'other' => l10n.taskRecorderValueOther,
+  'self' => l10n.taskRecorderValueSelf,
+  'other_member' => l10n.taskRecorderValueOtherMember,
+  'once' => l10n.taskRecorderValueOnce,
+  'series' => l10n.taskRecorderValueSeries,
+  'all_booked' => l10n.taskRecorderValueAllBooked,
   'partially_booked' =>
-    l10n?.taskRecorderValuePartiallyBooked ?? 'some dates refused',
-  'conflict' => l10n?.taskRecorderValueConflict ?? 'already taken',
-  'policy' => l10n?.taskRecorderValuePolicy ?? 'a booking rule',
-  'quota' => l10n?.taskRecorderValueQuota ?? 'an allowance',
-  'permission' => l10n?.taskRecorderValuePermission ?? 'a permission',
-  'closed' => l10n?.taskRecorderValueClosed ?? 'closed',
-  'offline' => l10n?.taskRecorderValueOffline ?? 'offline',
-  'agenda' => l10n?.taskRecorderValueAgenda ?? 'agenda',
-  'timeline' => l10n?.taskRecorderValueTimeline ?? 'timeline',
-  'range' => l10n?.taskRecorderValueRange ?? 'a date range',
-  'previous' => l10n?.taskRecorderValuePrevious ?? 'back',
-  'next' => l10n?.taskRecorderValueNext ?? 'forward',
-  'mine' => l10n?.taskRecorderValueMine ?? 'mine',
-  'someone_else' => l10n?.taskRecorderValueSomeoneElse ?? 'another member\'s',
-  'everyone' => l10n?.taskRecorderValueEveryone ?? 'everyone\'s',
-  'conversation' => l10n?.taskRecorderValueConversation ?? 'a conversation',
-  'alert' => l10n?.taskRecorderValueAlert ?? 'an alert',
-  'decision' => l10n?.taskRecorderValueDecision ?? 'a decision',
-  'payment' => l10n?.taskRecorderValuePayment ?? 'a payment',
-  'invoice' => l10n?.taskRecorderValueInvoice ?? 'an invoice',
-  'accept' => l10n?.taskRecorderValueAccept ?? 'accepted',
-  'decline' => l10n?.taskRecorderValueDecline ?? 'declined',
-  'owner' => l10n?.taskRecorderValueRoleOwner ?? 'the owner',
-  'co_owner' => l10n?.taskRecorderValueRoleCoOwner ?? 'a co-owner',
-  'admin' => l10n?.taskRecorderValueRoleAdmin ?? 'administrators',
-  'member' => l10n?.taskRecorderValueRoleMember ?? 'every member',
-  'created' => l10n?.taskRecorderValueCreated ?? 'created',
-  'edited' => l10n?.taskRecorderValueEdited ?? 'edited',
-  'renamed' => l10n?.taskRecorderValueRenamed ?? 'renamed',
-  'withheld' => l10n?.taskRecorderValueWithheld ?? 'not recorded',
-  _ => l10n?.taskRecorderValueWithheld ?? 'not recorded',
+    l10n.taskRecorderValuePartiallyBooked,
+  'conflict' => l10n.taskRecorderValueConflict,
+  'policy' => l10n.taskRecorderValuePolicy,
+  'quota' => l10n.taskRecorderValueQuota,
+  'permission' => l10n.taskRecorderValuePermission,
+  'closed' => l10n.taskRecorderValueClosed,
+  'offline' => l10n.taskRecorderValueOffline,
+  'agenda' => l10n.taskRecorderValueAgenda,
+  'timeline' => l10n.taskRecorderValueTimeline,
+  'range' => l10n.taskRecorderValueRange,
+  'previous' => l10n.taskRecorderValuePrevious,
+  'next' => l10n.taskRecorderValueNext,
+  'mine' => l10n.taskRecorderValueMine,
+  'someone_else' => l10n.taskRecorderValueSomeoneElse,
+  'everyone' => l10n.taskRecorderValueEveryone,
+  'conversation' => l10n.taskRecorderValueConversation,
+  'alert' => l10n.taskRecorderValueAlert,
+  'decision' => l10n.taskRecorderValueDecision,
+  'payment' => l10n.taskRecorderValuePayment,
+  'invoice' => l10n.taskRecorderValueInvoice,
+  'accept' => l10n.taskRecorderValueAccept,
+  'decline' => l10n.taskRecorderValueDecline,
+  'owner' => l10n.taskRecorderValueRoleOwner,
+  'co_owner' => l10n.taskRecorderValueRoleCoOwner,
+  'admin' => l10n.taskRecorderValueRoleAdmin,
+  'member' => l10n.taskRecorderValueRoleMember,
+  'created' => l10n.taskRecorderValueCreated,
+  'edited' => l10n.taskRecorderValueEdited,
+  'renamed' => l10n.taskRecorderValueRenamed,
+  'withheld' => l10n.taskRecorderValueWithheld,
+  _ => l10n.taskRecorderValueWithheld,
 };
 
 /// The words for a booking field a step changed.
-String fieldLabel(AppLocalizations? l10n, String field) => switch (field) {
-  'for_whom' => l10n?.taskRecorderFieldForWhom ?? 'who it is for',
-  'repeat' => l10n?.taskRecorderFieldRepeat ?? 'repeat',
-  'check_in' => l10n?.taskRecorderFieldCheckIn ?? 'check-in',
-  'time' => l10n?.taskRecorderFieldTime ?? 'time',
-  'accessories' => l10n?.taskRecorderFieldAccessories ?? 'accessories',
-  _ => l10n?.taskRecorderValueWithheld ?? 'not recorded',
+String fieldLabel(AppLocalizations l10n, String field) => switch (field) {
+  'for_whom' => l10n.taskRecorderFieldForWhom,
+  'repeat' => l10n.taskRecorderFieldRepeat,
+  'check_in' => l10n.taskRecorderFieldCheckIn,
+  'time' => l10n.taskRecorderFieldTime,
+  'accessories' => l10n.taskRecorderFieldAccessories,
+  _ => l10n.taskRecorderValueWithheld,
 };
 
 /// The words for a kind of protected screen.
-String protectedLabel(AppLocalizations? l10n, ProtectedSurface category) =>
+String protectedLabel(AppLocalizations l10n, ProtectedSurface category) =>
     switch (category) {
       ProtectedSurface.authentication =>
-        l10n?.taskRecorderProtectedAuthentication ?? 'sign-in',
+        l10n.taskRecorderProtectedAuthentication,
       ProtectedSurface.payment =>
-        l10n?.taskRecorderProtectedPayment ?? 'payment',
+        l10n.taskRecorderProtectedPayment,
       ProtectedSurface.provider =>
-        l10n?.taskRecorderProtectedProvider ?? 'a provider\'s screen',
+        l10n.taskRecorderProtectedProvider,
       ProtectedSurface.secrets =>
-        l10n?.taskRecorderProtectedSecrets ?? 'keys and secrets',
+        l10n.taskRecorderProtectedSecrets,
       ProtectedSurface.messenger =>
-        l10n?.taskRecorderProtectedMessenger ?? 'messages',
+        l10n.taskRecorderProtectedMessenger,
       ProtectedSurface.identity =>
-        l10n?.taskRecorderProtectedIdentity ?? 'identity',
+        l10n.taskRecorderProtectedIdentity,
       ProtectedSurface.operator =>
-        l10n?.taskRecorderProtectedOperator ?? 'installation operator',
+        l10n.taskRecorderProtectedOperator,
     };
 
 /// How complete a recording is, in words.
-String completenessLabel(AppLocalizations? l10n, Completeness c) => switch (c) {
-  Completeness.complete => l10n?.taskRecorderCompletenessComplete ?? 'Complete',
-  Completeness.partial => l10n?.taskRecorderCompletenessPartial ?? 'Partial',
+String completenessLabel(AppLocalizations l10n, Completeness c) => switch (c) {
+  Completeness.complete => l10n.taskRecorderCompletenessComplete,
+  Completeness.partial => l10n.taskRecorderCompletenessPartial,
   Completeness.interrupted =>
-    l10n?.taskRecorderCompletenessInterrupted ?? 'Interrupted',
+    l10n.taskRecorderCompletenessInterrupted,
 };
 
 /// Why a recording ended, in words.
-String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
+String endReasonLabel(AppLocalizations l10n, RecordingEndReason? r) =>
     switch (r) {
       RecordingEndReason.stopped =>
-        l10n?.taskRecorderEndStopped ?? 'Stopped by you',
+        l10n.taskRecorderEndStopped,
       RecordingEndReason.scopeChanged =>
-        l10n?.taskRecorderEndScopeChanged ??
-            'Ended: the account or workspace changed',
+        l10n.taskRecorderEndScopeChanged,
       RecordingEndReason.limitReached =>
-        l10n?.taskRecorderEndLimitReached ?? 'Ended: a limit was reached',
+        l10n.taskRecorderEndLimitReached,
       RecordingEndReason.storageFailed =>
-        l10n?.taskRecorderEndStorageFailed ??
-            'Ended: it could not be saved on this device',
+        l10n.taskRecorderEndStorageFailed,
       RecordingEndReason.referenceMissing =>
-        l10n?.taskRecorderEndReferenceMissing ?? 'Stopped: the current form could not be identified. Open a supported page and start again.',
+        l10n.taskRecorderEndReferenceMissing,
       RecordingEndReason.interrupted || null =>
-        l10n?.taskRecorderEndInterrupted ??
-            'Interrupted: the app stopped while recording',
+        l10n.taskRecorderEndInterrupted,
     };
 
 /// One step as the person reads it: a title and an optional detail.
 ({String title, String? detail}) stepText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   RecordedStep step,
 ) {
   // #2142 — a generic step reads in the app's own words when it has
   // them (its label, shown in the reader's language), else by its name.
   final label = step.payload.values['label'];
-  final words = label == null || l10n == null ? null : uiLabel(l10n, label);
+  final words = label == null ? null : uiLabel(l10n, label);
   final details = [
     if (words != null)
       words
@@ -293,31 +283,29 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
     StepKind.action => (
       title:
           actionLabel(l10n, step.action) ??
-          (l10n?.taskRecorderStepUnrecorded ??
-              'A step the recorder cannot describe'),
+          (l10n.taskRecorderStepUnrecorded),
       detail: detail,
     ),
     StepKind.observation => (
       title:
           outcomeLabel(l10n, step.outcome) ??
-          (l10n?.taskRecorderOutcomeUnknown ?? 'No answer came'),
+          (l10n.taskRecorderOutcomeUnknown),
       detail: detail,
     ),
     StepKind.annotation => (
-      title: l10n?.taskRecorderStepNote ?? 'Your note',
+      title: l10n.taskRecorderStepNote,
       detail: step.note,
     ),
     StepKind.excluded => (
       title:
-          l10n?.taskRecorderStepExcluded ?? 'A protected screen — not recorded',
+          l10n.taskRecorderStepExcluded,
       detail: step.protectedCategory == null
           ? null
           : protectedLabel(l10n, step.protectedCategory!),
     ),
     StepKind.unrecorded => (
       title:
-          l10n?.taskRecorderStepUnrecorded ??
-          'A step the recorder cannot describe',
+          l10n.taskRecorderStepUnrecorded,
       detail: null,
     ),
   };
@@ -326,15 +314,15 @@ String endReasonLabel(AppLocalizations? l10n, RecordingEndReason? r) =>
 /// #1872 — the steps as readable Markdown, for a package's transcript.
 /// Words come from the labels above; nothing the recording does not
 /// hold is added, and a note stays marked as the person's own.
-String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
+String recordingTranscript(AppLocalizations l10n, TaskRecording recording) {
   final out = StringBuffer(
-    '# ${recording.title ?? (l10n?.taskRecorderUntitled ?? 'Untitled task')}\n\n',
+    '# ${recording.title ?? (l10n.taskRecorderUntitled)}\n\n',
   );
   var segment = 0;
   for (final step in recording.steps) {
     if (step.segment != segment) {
       segment = step.segment;
-      out.writeln('— ${l10n?.taskRecorderSegmentGap ?? 'Paused here'} —');
+      out.writeln('— ${l10n.taskRecorderSegmentGap} —');
     }
     final text = stepText(l10n, step);
     out.write('${step.seq}. ${text.title}');
@@ -345,9 +333,9 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
       final shown = valueText(
         e.value,
         redacted: (n) =>
-            l10n?.taskExportValueRedacted(n) ?? 'not kept ($n characters)',
-        on: l10n?.taskExportValueOn ?? 'on',
-        off: l10n?.taskExportValueOff ?? 'off',
+            l10n.taskExportValueRedacted(n),
+        on: l10n.taskExportValueOn,
+        off: l10n.taskExportValueOff,
       );
       out.writeln('   ${e.key}: $shown');
     }
@@ -366,7 +354,7 @@ String recordingTranscript(AppLocalizations? l10n, TaskRecording recording) {
 /// A step's target in words. The vocabulary depends on the action (a
 /// calendar kind and an event type can share a wire name), so the action
 /// picks it; a target outside it reads "not recorded".
-String targetLabel(AppLocalizations? l10n, String target, {String? action}) {
+String targetLabel(AppLocalizations l10n, String target, {String? action}) {
   T? find<T>(List<T> values, bool Function(T) test) =>
       values.where(test).firstOrNull;
   switch (action) {
@@ -375,7 +363,7 @@ String targetLabel(AppLocalizations? l10n, String target, {String? action}) {
       if (feature != null) return featureName(l10n, feature);
     case RecorderActions.calendarFilterKind:
       if (target == calendarAllKinds) {
-        return l10n?.taskRecorderTargetAllKinds ?? 'every kind';
+        return l10n.taskRecorderTargetAllKinds;
       }
       final kind = find(CalendarKind.values, (k) => k.wire == target);
       if (kind != null) return calendarKindLabel(l10n, kind);
@@ -387,7 +375,7 @@ String targetLabel(AppLocalizations? l10n, String target, {String? action}) {
       if (permission != null) return permissionLabel(l10n, permission);
     case RecorderActions.saveValidationRule:
       if (target == validationDefaultRule) {
-        return l10n?.taskRecorderTargetDefaultRule ?? 'the default rule';
+        return l10n.taskRecorderTargetDefaultRule;
       }
       final rule = find(
         EventType.values,
@@ -402,11 +390,11 @@ String targetLabel(AppLocalizations? l10n, String target, {String? action}) {
 
 /// #2142 — a generic step's name, as a reader sees it; null when the
 /// step is not a generic one.
-String? uiTargetText(AppLocalizations? l10n, String? action, String target) =>
+String? uiTargetText(AppLocalizations l10n, String? action, String target) =>
     switch (action) {
       RecorderActions.uiTap || RecorderActions.uiCommitField
           when target == uiUnkeyed =>
-        l10n?.taskRecorderTargetUnkeyed ?? 'an unnamed control',
+        l10n.taskRecorderTargetUnkeyed,
       RecorderActions.uiCommand => target.replaceFirst(
         RegExp(r'\s+failed$'),
         '',

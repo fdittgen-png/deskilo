@@ -6,6 +6,7 @@
 // window-envelope contract), and the resolution rule around them.
 import 'dart:io';
 
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
 import 'package:deskilo/features/money/presentation/report_layout_defaults.dart';
@@ -21,7 +22,7 @@ pw.Font _ttf(String path) =>
     pw.Font.ttf(File(path).readAsBytesSync().buffer.asByteData());
 
 Map<String, Object?> _data() => {
-      ...sampleReportData(null),
+      ...sampleReportData(englishL10n),
       'client_name': 'Guilhem MARTIN',
       'client_address': 'SASU KaloA\n209 rue Jean Bart\n31670 LABÈGE',
       'reminder_level': '1',

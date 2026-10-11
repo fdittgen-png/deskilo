@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -39,12 +40,12 @@ class HolidayImportTile extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.holidayImport);
     if (!on) return const SizedBox.shrink();
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return ListTile(
       key: const ValueKey('availability-holiday-import'),
       leading: const Icon(Icons.cloud_download_outlined),
       title: Text(
-        l10n?.holidayImportAction ?? 'Import public holidays (open data)',
+        l10n.holidayImportAction,
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _showHolidayImportSheet(
@@ -142,14 +143,13 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null || !mounted) return;
     setState(() => _busy = true);
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     await runGuarded(
       context,
       domain: 'workspace',
       message: 'preview holiday import failed',
       errorText:
-          l10n?.holidayImportFailed ??
-          'The holidays could not be checked or imported. Nothing was changed.',
+          l10n.holidayImportFailed,
       action: () async {
         final verdict = await widget.command.preview(workspace.id, _shown);
         if (!mounted) return;
@@ -175,7 +175,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
   Future<void> _apply() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final kept = [
       for (final d in _shown)
         if (_offerable(d) && _kept.contains(_dayKey(d.day))) d,
@@ -187,8 +187,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
       domain: 'workspace',
       message: 'apply holiday import failed',
       errorText:
-          l10n?.holidayImportFailed ??
-          'The holidays could not be checked or imported. Nothing was changed.',
+          l10n.holidayImportFailed,
       action: () async {
         result = await widget.command.apply(workspace.id, kept);
       },
@@ -202,7 +201,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
     ref.invalidate(closureDaysProvider);
     AppSnack.success(
       context,
-      l10n?.publicHolidaysCreated(created) ?? '$created closure days created',
+      l10n.publicHolidaysCreated(created),
     );
     Navigator.of(context).pop();
   }
@@ -218,7 +217,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
     final all = _all;
@@ -229,8 +228,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
         .length;
     final yearLabel = '$_year';
     final source =
-        l10n?.holidayImportSource(holidaySourceName) ??
-        'Source: $holidaySourceName';
+        l10n.holidayImportSource(holidaySourceName);
 
     return SafeArea(
       child: Padding(
@@ -243,7 +241,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
               children: [
                 Flexible(
                   child: Text(
-                    l10n?.publicHolidaysSheetTitle ?? 'Public holidays',
+                    l10n.publicHolidaysSheetTitle,
                     style: theme.textTheme.titleLarge,
                   ),
                 ),
@@ -269,13 +267,12 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
                 key: const ValueKey('holiday-import-region'),
                 initialValue: _region,
                 decoration: InputDecoration(
-                  labelText: l10n?.holidayImportRegion ?? 'Region',
+                  labelText: l10n.holidayImportRegion,
                 ),
                 items: [
                   DropdownMenuItem<String?>(
                     child: Text(
-                      l10n?.holidayImportNationwide ??
-                          'Nationwide holidays only',
+                      l10n.holidayImportNationwide,
                     ),
                   ),
                   for (final r in regions)
@@ -291,11 +288,9 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
               Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: Text(
-                  l10n?.publicHolidaysLockedMonths(
+                  l10n.publicHolidaysLockedMonths(
                         verdict.lockedMonths.join(', '),
-                      ) ??
-                      'Skipped, already invoiced: '
-                          '${verdict.lockedMonths.join(', ')}',
+                      ),
                   style: TextStyle(color: theme.colorScheme.error),
                 ),
               ),
@@ -306,16 +301,13 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          l10n?.holidayImportUnavailable ??
-                              'The holiday source cannot be reached right '
-                                  'now. Try again later, or use “Add public '
-                                  'holidays”.',
+                          l10n.holidayImportUnavailable,
                           key: const ValueKey('holiday-import-unavailable'),
                         ),
                         TextButton(
                           key: const ValueKey('holiday-import-retry'),
                           onPressed: _busy ? null : _load,
-                          child: Text(l10n?.holidayImportRetry ?? 'Try again'),
+                          child: Text(l10n.holidayImportRetry),
                         ),
                       ],
                     )
@@ -323,8 +315,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
                   ? const LoadingView()
                   : _shown.isEmpty
                   ? Text(
-                      l10n?.publicHolidaysPreviewNone ??
-                          'No public holidays for this year.',
+                      l10n.publicHolidaysPreviewNone,
                     )
                   : ListView(
                       shrinkWrap: true,
@@ -341,10 +332,8 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
               onPressed: _busy || count == 0 ? null : _apply,
               child: Text(
                 count == 0
-                    ? (l10n?.publicHolidaysNothingToCreate ??
-                          'Nothing to create')
-                    : (l10n?.holidayImportConfirm(count) ??
-                          'Import $count closure days'),
+                    ? (l10n.publicHolidaysNothingToCreate)
+                    : (l10n.holidayImportConfirm(count)),
               ),
             ),
           ],
@@ -374,7 +363,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
     );
   }
 
-  Widget _tile(ImportedHoliday d, AppLocalizations? l10n, String locale) {
+  Widget _tile(ImportedHoliday d, AppLocalizations l10n, String locale) {
     final key = _dayKey(d.day);
     final v = _byDay[key];
     final offerable = _offerable(d);
@@ -384,9 +373,9 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
       if (d.regions.isNotEmpty)
         sortHolidayRegions(d.regions).map(holidayRegionName).join(', '),
       if (v?.locked ?? false)
-        l10n?.publicHolidaysLocked ?? 'Invoiced month — not created'
+        l10n.publicHolidaysLocked
       else if (v?.present ?? false)
-        l10n?.publicHolidaysPresent ?? 'Already a closure day',
+        l10n.publicHolidaysPresent,
     ].join(' · ');
     return CheckboxListTile(
       key: ValueKey('holiday-import-day-$key'),

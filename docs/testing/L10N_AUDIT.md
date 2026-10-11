@@ -183,7 +183,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/features/money/domain/vat_declaration.dart:288` | label | Nicht steuerbare / 0 %-Umsätze | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_declaration.dart:327` | label | Régularisation — TVA à reverser | features/money | KEEP_NON_UI_LITERAL |
 | `lib/features/money/domain/vat_declaration.dart:333` | label | Régularisation — autre TVA à déduire | features/money | KEEP_NON_UI_LITERAL |
-| `lib/features/money/presentation/widgets/report_texts_panel.dart:191` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
+| `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals
 

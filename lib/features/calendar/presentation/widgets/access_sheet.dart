@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -31,7 +31,7 @@ class _AccessSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final access = ref.watch(whoCanAccessMeProvider);
@@ -43,7 +43,7 @@ class _AccessSheet extends ConsumerWidget {
         features.contains(WorkspaceFeature.priceNegotiations);
 
     String people(List<String> ids) => ids.isEmpty
-        ? (l10n?.accessNobodyElse ?? 'nobody else')
+        ? (l10n.accessNobodyElse)
         : ids.map((id) => names[id] ?? '').where((n) => n.isNotEmpty).join(', ');
 
     Widget rule(CalendarKind kind, String text) => ListTile(
@@ -62,7 +62,7 @@ class _AccessSheet extends ConsumerWidget {
             Padding(
               padding: AppSpacing.lgAll,
               child: Text(
-                l10n?.calendarWhoCanSee ?? 'Who can see this',
+                l10n.calendarWhoCanSee,
                 style: theme.textTheme.titleMedium,
               ),
             ),
@@ -70,26 +70,19 @@ class _AccessSheet extends ConsumerWidget {
               AsyncData(:final value) => Column(children: [
                   rule(
                     CalendarKind.reservation,
-                    l10n?.accessRuleReservations ??
-                        'Every member of the workspace — the floor plan shows '
-                            'occupancy to everyone.',
+                    l10n.accessRuleReservations,
                   ),
                   rule(
                     CalendarKind.event,
-                    l10n?.accessRuleEvents ??
-                        'You, the member who acted, and the admins.',
+                    l10n.accessRuleEvents,
                   ),
                   rule(
                     CalendarKind.message,
-                    l10n?.accessRuleMessages ??
-                        'Only the people in the conversation — no role can '
-                            'read a conversation it is not part of.',
+                    l10n.accessRuleMessages,
                   ),
                   rule(
                     CalendarKind.invoice,
-                    l10n?.accessRuleFinances(people(value.finances)) ??
-                        'You, and those with the finance permission: '
-                            '${people(value.finances)}.',
+                    l10n.accessRuleFinances(people(value.finances)),
                   ),
                   // #914 — who administers my profile, while it is
                   // still a managed one. Once it is mine the list is
@@ -98,39 +91,30 @@ class _AccessSheet extends ConsumerWidget {
                     ListTile(
                       key: const ValueKey('access-rule-profile'),
                       leading: const Icon(Icons.contact_mail_outlined),
-                      title: Text(l10n?.accessKindProfile ?? 'Your profile'),
+                      title: Text(l10n.accessKindProfile),
                       subtitle: Text(
-                        l10n?.accessRuleManagedProfile(
-                                people(value.profile)) ??
-                            'While this profile was managed for you: '
-                                '${people(value.profile)}. Every time one '
-                                'of them opened or changed it is on the '
-                                'record below.',
+                        l10n.accessRuleManagedProfile(
+                                people(value.profile)),
                       ),
                     ),
                   if (negotiationsOn)
                     ListTile(
                       key: const ValueKey('access-rule-negotiations'),
                       leading: const Icon(Icons.handshake_outlined),
-                      title: Text(l10n?.accessKindNegotiations ??
-                          'Price negotiations'),
+                      title: Text(l10n.accessKindNegotiations),
                       subtitle: Text(
-                        l10n?.accessRuleNegotiations(
-                                people(value.negotiations)) ??
-                            'You, the owners and the finance admins: '
-                                '${people(value.negotiations)}. Every read '
-                                'by someone else is on the record below.',
+                        l10n.accessRuleNegotiations(
+                                people(value.negotiations)),
                       ),
                     ),
                   rule(
                     CalendarKind.reminder,
-                    l10n?.accessRuleReminders ?? 'Only you.',
+                    l10n.accessRuleReminders,
                   ),
                 ]),
               AsyncError() => Padding(
                   padding: AppSpacing.lgAll,
-                  child: Text(l10n?.workspaceGenericError ??
-                      'Something went wrong. Please try again.'),
+                  child: Text(l10n.workspaceGenericError),
                 ),
               _ => const LoadingView(),
             },
@@ -139,7 +123,7 @@ class _AccessSheet extends ConsumerWidget {
               Padding(
                 padding: AppSpacing.lgAll,
                 child: Text(
-                  l10n?.accessLogTitle ?? 'Who accessed your data',
+                  l10n.accessLogTitle,
                   style: theme.textTheme.titleMedium,
                 ),
               ),
@@ -147,8 +131,7 @@ class _AccessSheet extends ConsumerWidget {
                 AsyncData(value: final entries) when entries.isEmpty => Padding(
                     padding: AppSpacing.lgH,
                     child: Text(
-                      l10n?.accessLogEmpty ??
-                          'Nobody has looked at your finances or messages.',
+                      l10n.accessLogEmpty,
                       key: const ValueKey('access-log-empty'),
                       style: theme.textTheme.bodyMedium,
                     ),
@@ -160,7 +143,7 @@ class _AccessSheet extends ConsumerWidget {
                         dense: true,
                         leading: const Icon(Icons.visibility_outlined),
                         title: Text(
-                          l10n?.accessLogRow(
+                          l10n.accessLogRow(
                                 names[e.actorMemberId] ?? '',
                                 switch (e.category) {
                                   'negotiations' =>
@@ -170,17 +153,14 @@ class _AccessSheet extends ConsumerWidget {
                                   _ => e.category,
                                 },
                                 names[e.subjectMemberId] ?? '',
-                              ) ??
-                              '${names[e.actorMemberId] ?? ''} read '
-                                  '${e.category} of ${names[e.subjectMemberId] ?? ''}',
+                              ),
                         ),
                         subtitle: Text(format.dateTime(e.at)),
                       ),
                   ]),
                 AsyncError() => Padding(
                     padding: AppSpacing.lgH,
-                    child: Text(l10n?.workspaceGenericError ??
-                        'Something went wrong. Please try again.'),
+                    child: Text(l10n.workspaceGenericError),
                   ),
                 _ => const LoadingView(),
               },

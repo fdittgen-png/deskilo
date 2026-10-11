@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/blocks_providers.dart';
 import '../../providers/messenger_providers.dart';
 
@@ -17,13 +17,11 @@ Future<bool> confirmAndBlock(
   required String peer,
   required String name,
 }) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialog) => AlertDialog(
-      content: Text(l10n?.blockPersonConfirm(name) ??
-          'Block $name? Neither of you will see or reach the other. You can '
-              'undo this in Me.'),
+      content: Text(l10n.blockPersonConfirm(name)),
       actions: [
         TextButton(
           key: const ValueKey('account-block-cancel'),
@@ -33,7 +31,7 @@ Future<bool> confirmAndBlock(
         FilledButton(
           key: const ValueKey('account-block-confirm'),
           onPressed: () => Navigator.of(dialog).pop(true),
-          child: Text(l10n?.blockPersonAction ?? 'Block this person'),
+          child: Text(l10n.blockPersonAction),
         ),
       ],
     ),
@@ -48,6 +46,6 @@ Future<bool> confirmAndBlock(
   );
   if (!ok || !context.mounted) return false;
   ref.invalidate(myBlocksProvider(source));
-  AppSnack.success(context, l10n?.blockPersonDone ?? 'Blocked.', replace: true);
+  AppSnack.success(context, l10n.blockPersonDone, replace: true);
   return true;
 }

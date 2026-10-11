@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../widgets/backend_candidate_form.dart';
 import 'new_instance_screen.dart';
 
@@ -27,7 +27,7 @@ class ServerChoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = context.l10n;
     final text = Theme.of(context).textTheme;
     Widget section({
       required String key,

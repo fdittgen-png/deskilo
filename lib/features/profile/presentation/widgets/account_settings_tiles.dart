@@ -18,7 +18,7 @@ Future<void> _photoSheet(
   WidgetRef ref,
   Profile profile,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final choice = await showModalBottomSheet<String>(
     context: context,
     builder: (sheetContext) => SafeArea(
@@ -28,14 +28,14 @@ Future<void> _photoSheet(
           ListTile(
             key: const ValueKey('account-settings-tiles-profile-photo-choose'),
             leading: const Icon(Icons.add_a_photo_outlined),
-            title: Text(l10n?.profilePhotoChoose ?? 'Choose a photo'),
+            title: Text(l10n.profilePhotoChoose),
             onTap: () => Navigator.of(sheetContext).pop('choose'),
           ),
           if (profile.hasAvatar)
             ListTile(
               key: const ValueKey('account-settings-tiles-profile-photo-remove'),
               leading: const Icon(Icons.delete_outline),
-              title: Text(l10n?.profilePhotoRemove ?? 'Remove photo'),
+              title: Text(l10n.profilePhotoRemove),
               onTap: () => Navigator.of(sheetContext).pop('remove'),
             ),
           const SizedBox(height: AppSpacing.sm),
@@ -56,12 +56,12 @@ Future<void> _pickPhoto(
   WidgetRef ref,
   String userId,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   try {
     final pick = ref.read(filePickerProvider);
     final file = await pick(
       XTypeGroup(
-        label: l10n?.profilePhotoFileType ?? 'Image',
+        label: l10n.profilePhotoFileType,
         extensions: const ['jpg', 'jpeg', 'png', 'webp'],
         mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
       ),
@@ -71,7 +71,7 @@ Future<void> _pickPhoto(
     await ref.read(myProfileEditsProvider).setPhoto(bytes, contentType: file.mimeType);
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
-    AppSnack.success(context, l10n?.profilePhotoSaved ?? 'Photo updated');
+    AppSnack.success(context, l10n.profilePhotoSaved);
   } on Object catch (e, st) {
     debugPrint('profile photo upload failed: $e\n$st');
     TraceLogger.instance.error(
@@ -83,7 +83,7 @@ Future<void> _pickPhoto(
     if (!context.mounted) return;
     AppSnack.error(
       context,
-      l10n?.profilePhotoSaveFailed ?? 'Could not update the photo',
+      l10n.profilePhotoSaveFailed,
     );
   }
 }
@@ -93,12 +93,12 @@ Future<void> _removePhoto(
   WidgetRef ref,
   String userId,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   try {
     await ref.read(myProfileEditsProvider).removePhoto();
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
-    AppSnack.success(context, l10n?.profilePhotoRemoved ?? 'Photo removed');
+    AppSnack.success(context, l10n.profilePhotoRemoved);
   } on Object catch (e, st) {
     debugPrint('profile photo removal failed: $e\n$st');
     TraceLogger.instance.error(
@@ -110,7 +110,7 @@ Future<void> _removePhoto(
     if (!context.mounted) return;
     AppSnack.error(
       context,
-      l10n?.profilePhotoSaveFailed ?? 'Could not update the photo',
+      l10n.profilePhotoSaveFailed,
     );
   }
 }
@@ -127,19 +127,19 @@ void _invalidateAvatar(WidgetRef ref, String userId) {
 /// The language row; [defaultsOnly] writes the account's defaults.
 Widget _languageTile(BuildContext context, WidgetRef ref,
     {required bool defaultsOnly}) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final localeOverride = ref.watch(personalLocaleProvider);
   return ListTile(
     key: const ValueKey('account-settings-tiles-language-title'),
     leading: const Icon(Icons.language),
     title: HelpDotTitle(
-      l10n?.languageTitle ?? 'Language',
-      l10n?.helpTopicSettings ?? 'Settings & profile',
+      l10n.languageTitle,
+      l10n.helpTopicSettings,
       anchor: HelpAnchor.profileLanguage,
     ),
     subtitle: Text(
       localeOverride == null
-          ? (l10n?.languageSystemDefault ?? 'System default')
+          ? (l10n.languageSystemDefault)
           : _endonyms[localeOverride.languageCode] ??
                 localeOverride.languageCode,
     ),
@@ -153,19 +153,19 @@ Widget _languageTile(BuildContext context, WidgetRef ref,
 /// The theme row; [defaultsOnly] writes the account's defaults.
 Widget _themeTile(BuildContext context, WidgetRef ref,
     {required bool defaultsOnly}) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   return ListTile(
     key: const ValueKey('account-settings-tiles-theme-title'),
     leading: const Icon(Icons.brightness_6_outlined),
     title: HelpDotTitle(
-      l10n?.themeTitle ?? 'Theme',
-      l10n?.helpTopicSettings ?? 'Settings & profile',
+      l10n.themeTitle,
+      l10n.helpTopicSettings,
       anchor: HelpAnchor.profileTheme,
     ),
     subtitle: Text(switch (ref.watch(personalThemeProvider)) {
-      ThemeMode.light => l10n?.themeLight ?? 'Light',
-      ThemeMode.dark => l10n?.themeDark ?? 'Dark',
-      _ => l10n?.themeSystem ?? 'System default',
+      ThemeMode.light => l10n.themeLight,
+      ThemeMode.dark => l10n.themeDark,
+      _ => l10n.themeSystem,
     }),
     onTap: () => showDialog<void>(
       context: context,
@@ -187,7 +187,7 @@ List<Widget> accountSettingsTiles(
   WidgetRef ref, {
   AccountTileGroup? only,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   bool show(AccountTileGroup g) => only == null || only == g;
   final profile = show(AccountTileGroup.profile);
   final account = show(AccountTileGroup.account);
@@ -205,11 +205,11 @@ List<Widget> accountSettingsTiles(
           name: myProfile.displayName,
           hasAvatar: myProfile.hasAvatar,
         ),
-        title: Text(l10n?.profilePhotoTitle ?? 'Photo'),
+        title: Text(l10n.profilePhotoTitle),
         subtitle: Text(
           myProfile.hasAvatar
-              ? (l10n?.profilePhotoSet ?? 'Tap to change')
-              : (l10n?.profilePhotoNone ?? 'Tap to add a photo'),
+              ? (l10n.profilePhotoSet)
+              : (l10n.profilePhotoNone),
         ),
         onTap: () => _photoSheet(context, ref, myProfile),
       ),
@@ -226,13 +226,13 @@ List<Widget> accountSettingsTiles(
         key: const ValueKey('settings-personal-info'),
         leading: const Icon(Icons.contact_mail_outlined),
         title: HelpDotTitle(
-          l10n?.personalInfoTitle ?? 'Personal information',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.personalInfoTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profilePersonalInfo,
         ),
         subtitle: Text(
           _identitySummary(myProfile) ??
-              (l10n?.personalInfoNone ?? 'Not filled in yet'),
+              (l10n.personalInfoNone),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
@@ -244,14 +244,14 @@ List<Widget> accountSettingsTiles(
         key: const ValueKey('settings-address'),
         leading: const Icon(Icons.home_outlined),
         title: HelpDotTitle(
-          l10n?.addressTitle ?? 'Address',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.addressTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profileAddress,
         ),
         subtitle: Text(
           (myProfile?.address.isNotEmpty ?? false)
               ? myProfile!.address
-              : (l10n?.addressNone ?? 'No address'),
+              : (l10n.addressNone),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -267,14 +267,14 @@ List<Widget> accountSettingsTiles(
         key: ValueKey('account-settings-tiles-whatsapp-title-${only?.name}'),
         leading: const Icon(Icons.chat_outlined),
         title: HelpDotTitle(
-          l10n?.whatsappTitle ?? 'WhatsApp',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.whatsappTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profileWhatsapp,
         ),
         subtitle: Text(
           (myProfile?.sharesWhatsapp ?? false)
               ? myProfile!.whatsapp
-              : (l10n?.whatsappNotShared ?? 'Not shared'),
+              : (l10n.whatsappNotShared),
         ),
         onTap: () => showDialog<void>(
           context: context,
@@ -285,7 +285,7 @@ List<Widget> accountSettingsTiles(
     if (account) ListTile(
       key: const ValueKey('settings-linked-accounts'),
       leading: const Icon(Icons.link),
-      title: Text(l10n?.linkedAccountsTitle ?? 'Linked accounts'),
+      title: Text(l10n.linkedAccountsTitle),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => context.push('/linked-accounts'),
     ),
@@ -302,8 +302,8 @@ List<Widget> accountSettingsTiles(
         key: const ValueKey('settings-restore-hints'),
         leading: const Icon(Icons.lightbulb_outline),
         title: HelpDotTitle(
-          l10n?.helpHintRestoreTitle ?? 'Show help hints again',
-          l10n?.helpTopicSettings ?? 'Settings & profile',
+          l10n.helpHintRestoreTitle,
+          l10n.helpTopicSettings,
           anchor: HelpAnchor.profileRestoreHints,
         ),
         onTap: () async {
@@ -311,7 +311,7 @@ List<Widget> accountSettingsTiles(
           if (!context.mounted) return;
           AppSnack.success(
             context,
-            l10n?.helpHintRestored ?? 'Help hints will be shown again.',
+            l10n.helpHintRestored,
           );
         },
       ),
@@ -328,10 +328,10 @@ Widget? _navigationTile(BuildContext context, WidgetRef ref) {
           .contains(WorkspaceFeature.navigationStyle)) {
     return null;
   }
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final classic =
-      l10n?.navigationClassic ?? 'Classic: the bottom bar and the round button';
-  final menu = l10n?.navigationMenu ?? 'Menu: the hamburger, like the web';
+      l10n.navigationClassic;
+  final menu = l10n.navigationMenu;
   final byDefault = switch (ref.watch(navigationDefaultProvider)) {
     NavigationStyle.classic => classic,
     NavigationStyle.menu => menu,
@@ -340,14 +340,14 @@ Widget? _navigationTile(BuildContext context, WidgetRef ref) {
     key: const ValueKey('settings-navigation'),
     leading: const Icon(Icons.menu_open_outlined),
     title: HelpDotTitle(
-      l10n?.navigationTitle ?? 'Navigation',
-      l10n?.helpTopicSettings ?? 'Settings & profile',
+      l10n.navigationTitle,
+      l10n.helpTopicSettings,
       anchor: HelpAnchor.profileNavigation,
     ),
     subtitle: Text(switch (ref.watch(navigationStyleControllerProvider).value) {
       NavigationStyle.classic => classic,
       NavigationStyle.menu => menu,
-      _ => '${l10n?.navigationDefault ?? 'Default for this device'} · $byDefault',
+      _ => '${l10n.navigationDefault} · $byDefault',
     }),
     onTap: () => showDialog<void>(
       context: context,
@@ -360,35 +360,34 @@ Widget? _navigationTile(BuildContext context, WidgetRef ref) {
 /// the per-space override named as the exception it is, and — while the
 /// scope switch is on — the rows that edit it.
 List<Widget> spaceAccountTiles(BuildContext context, WidgetRef ref) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final features = ref.watch(enabledFeaturesSyncProvider);
   final scoped = ref.watch(workspacePreferenceEditingProvider);
   final overrides =
       ref.watch(personalSettingsProvider).value?.overrides ?? const {};
   final named = <String>[
     if (overrides[PersonalPreference.uiLocale] case final code?)
-      '${l10n?.languageTitle ?? 'Language'}: ${_endonyms[code] ?? code}',
+      '${l10n.languageTitle}: ${_endonyms[code] ?? code}',
     if (overrides[PersonalPreference.theme] case final mode?)
-      '${l10n?.themeTitle ?? 'Theme'}: ${switch (mode) {
-        'light' => l10n?.themeLight ?? 'Light',
-        'dark' => l10n?.themeDark ?? 'Dark',
-        _ => l10n?.themeSystem ?? 'System default',
+      '${l10n.themeTitle}: ${switch (mode) {
+        'light' => l10n.themeLight,
+        'dark' => l10n.themeDark,
+        _ => l10n.themeSystem,
       }}',
     if (overrides.keys.any(const {
       PersonalPreference.formatLocale,
       PersonalPreference.clock,
       PersonalPreference.timeZoneMode,
     }.contains))
-      l10n?.regionalFormatsTitle ?? 'Region & formats',
+      l10n.regionalFormatsTitle,
   ];
   final exception = named.join(' · ');
   return [
     ListTile(
       key: const ValueKey('settings-open-me'),
       leading: const Icon(Icons.person_outline),
-      title: Text(l10n?.meAccountInMe ?? 'My account is in Me'),
-      subtitle: Text(l10n?.meAccountInMeBody ??
-          'Photo, language, theme and sign-ins are yours in every space.'),
+      title: Text(l10n.meAccountInMe),
+      subtitle: Text(l10n.meAccountInMeBody),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => context.go('$kMeHome?tab=me'),
     ),
@@ -396,7 +395,7 @@ List<Widget> spaceAccountTiles(BuildContext context, WidgetRef ref) {
       ListTile(
         key: const ValueKey('settings-space-exception'),
         leading: const Icon(Icons.rule_outlined),
-        title: Text(l10n?.meSpaceException ?? 'In this space'),
+        title: Text(l10n.meSpaceException),
         subtitle: Text(exception),
       ),
     // #2414 — the navigation is changed where the person stands, in the

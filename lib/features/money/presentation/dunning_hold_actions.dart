@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -18,14 +19,14 @@ import '../providers/money_providers.dart';
 /// #1913 — the reasons a reminder may be held, as the server knows them.
 const _dunningHoldReasons = ['dispute', 'identity_error', 'insolvency', 'other'];
 
-String dunningHoldReasonLabel(AppLocalizations? l10n, String reason) =>
+String dunningHoldReasonLabel(AppLocalizations l10n, String reason) =>
     switch (reason) {
-      'dispute' => l10n?.invoiceHoldReasonDispute ?? 'The member disputes it',
+      'dispute' => l10n.invoiceHoldReasonDispute,
       'identity_error' =>
-        l10n?.invoiceHoldReasonIdentity ?? 'Wrong person or identity error',
+        l10n.invoiceHoldReasonIdentity,
       'insolvency' =>
-        l10n?.invoiceHoldReasonInsolvency ?? 'Insolvency proceedings',
-      _ => l10n?.invoiceHoldReasonOther ?? 'Another reason',
+        l10n.invoiceHoldReasonInsolvency,
+      _ => l10n.invoiceHoldReasonOther,
     };
 
 /// #1913 — places a dunning hold with its reason, or releases the active
@@ -35,7 +36,7 @@ Future<void> toggleDunningHold(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final held = ref.read(dunningHoldsProvider).value?[invoice.id];
   if (held != null) {
     if (!await runGuarded(
@@ -43,8 +44,7 @@ Future<void> toggleDunningHold(
       domain: 'money',
       message: 'dunning hold release failed',
       errorText:
-          l10n?.invoiceHoldFailed ??
-          'The reminder hold could not be changed. Please try again.',
+          l10n.invoiceHoldFailed,
       action: () => releaseDunningHold(ref, invoice.id),
     )) {
       return;
@@ -52,7 +52,7 @@ Future<void> toggleDunningHold(
     if (!context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.invoiceHoldReleased ?? 'Reminders can resume for this invoice.',
+      l10n.invoiceHoldReleased,
     );
     return;
   }
@@ -66,8 +66,7 @@ Future<void> toggleDunningHold(
     domain: 'money',
     message: 'dunning hold failed',
     errorText:
-        l10n?.invoiceHoldFailed ??
-        'The reminder hold could not be changed. Please try again.',
+        l10n.invoiceHoldFailed,
     action: () => placeDunningHold(
       ref,
       invoice.id,
@@ -80,7 +79,7 @@ Future<void> toggleDunningHold(
   if (!context.mounted) return;
   AppSnack.success(
     context,
-    l10n?.invoiceHoldPlaced ?? 'Reminders are on hold for this invoice.',
+    l10n.invoiceHoldPlaced,
   );
 }
 
@@ -103,18 +102,16 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n?.invoiceHoldTitle ?? 'Why hold the reminders?'),
+      title: Text(l10n.invoiceHoldTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n?.invoiceHoldExplain ??
-                  'No reminder is sent for this invoice, by hand or '
-                      'automatically, until the hold is released.',
+              l10n.invoiceHoldExplain,
             ),
             RadioGroup<String>(
               key: const ValueKey('dunning-hold-actions-radio-group'),
@@ -137,7 +134,7 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
               controller: _note,
               maxLength: 500,
               decoration: InputDecoration(
-                labelText: l10n?.invoiceHoldNote ?? 'Note (optional)',
+                labelText: l10n.invoiceHoldNote,
               ),
             ),
           ],
@@ -154,7 +151,7 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
           onPressed: () =>
               Navigator.of(context)
                   .pop((reason: _reason, note: _note.text.trim())),
-          child: Text(l10n?.invoiceHoldConfirm ?? 'Hold'),
+          child: Text(l10n.invoiceHoldConfirm),
         ),
       ],
     );

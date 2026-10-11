@@ -19,7 +19,7 @@ import 'booking_gate.dart';
 /// Order matters once: quota before granularity, because 'half-day
 /// quota' also contains the granularity substring 'half-day'.
 String bookingErrorText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   Object error,
   String fallback, {
   int? stepMinutes,
@@ -27,146 +27,111 @@ String bookingErrorText(
   // #1241 — a dropped connection is not "something went wrong": the
   // request never reached the server, and the booking was not made.
   if (isTransientNetworkFailure(error)) {
-    return l10n?.errorOffline ??
-        'No connection — nothing was sent. Try again when you are back '
-            'online.';
+    return l10n.errorOffline;
   }
   if (error is! PostgrestException) return fallback;
   final message = error.message;
   if (message.contains(WorkspaceClosedError.serverSubstring)) {
-    return l10n?.planClosedDayError ??
-        'The workspace is closed on that day.';
+    return l10n.planClosedDayError;
   }
   if (message.contains(QuotaExceededError.serverSubstring)) {
-    return l10n?.quotaExceededError ??
-        'Monthly half-day quota reached — request extra half-days '
-            'from the Money tab.';
+    return l10n.quotaExceededError;
   }
   if (message.contains(ReservationLimitError.serverSubstring)) {
-    return l10n?.reservationLimitError ??
-        'Reservation limit reached — you already hold the maximum '
-            'number of open reservations.';
+    return l10n.reservationLimitError;
   }
   if (message.contains(BookingGranularityError.serverSubstring)) {
-    return l10n?.planHalfDayError ?? 'Bookings here are per half day.';
+    return l10n.planHalfDayError;
   }
   if (message.contains(BookingGranularityError.fullDayServerSubstring)) {
-    return l10n?.planFullDayError ?? 'Bookings here cover the full day.';
+    return l10n.planFullDayError;
   }
   if (message.contains(BookingGranularityError.slotServerSubstring)) {
     final step = stepMinutes ?? 15;
-    return l10n?.planSlotError(step) ??
-        'Bookings must start and end on the $step-minute grid.';
+    return l10n.planSlotError(step);
   }
   // #814 — the kiosk's seat-block refusal (kiosk_act) rendered generic.
   if (message.contains('seat is blocked')) {
-    return l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.';
+    return l10n.planSeatBlocked;
   }
   // #649 — the three limits enforce_booking_rules coalesces (#814: they
   // rendered as "the seat may have just been taken").
   if (message.contains('beyond the advance-booking horizon')) {
-    return l10n?.bookingHorizonError(_leadingInt(message) ?? 0) ??
-        'Too far ahead — bookings are open ${_leadingInt(message) ?? 0} '
-            'days in advance.';
+    return l10n.bookingHorizonError(_leadingInt(message) ?? 0);
   }
   if (message.contains('below the minimum duration')) {
-    return l10n?.bookingTooShortError(_leadingInt(message) ?? 0) ??
-        'Too short — a booking lasts at least '
-            '${_leadingInt(message) ?? 0} minutes.';
+    return l10n.bookingTooShortError(_leadingInt(message) ?? 0);
   }
   if (message.contains('above the maximum duration')) {
-    return l10n?.bookingTooLongError(_leadingInt(message) ?? 0) ??
-        'Too long — a booking lasts at most '
-            '${_leadingInt(message) ?? 0} minutes.';
+    return l10n.bookingTooLongError(_leadingInt(message) ?? 0);
   }
   // #644 — a booking ends on the day it starts.
   if (message.contains('must end on the day it starts')) {
-    return l10n?.bookingSameDayError ??
-        'A booking ends on the day it starts — book the next day '
-            'separately.';
+    return l10n.bookingSameDayError;
   }
   // #600 booking-policy refusals (migration 0116).
   if (message.contains('lies entirely in the past')) {
-    return l10n?.bookingPastError ??
-        'This booking lies entirely in the past.';
+    return l10n.bookingPastError;
   }
   if (message.contains('must start today')) {
-    return l10n?.bookingWalkUpTodayError ??
-        'A walk-up check-in must start today.';
+    return l10n.bookingWalkUpTodayError;
   }
   if (message.contains('stay within the working hours')) {
-    return l10n?.bookingOutsideHoursError ??
-        'Bookings must stay within the working hours.';
+    return l10n.bookingOutsideHoursError;
   }
   // #634 outside-hours mode 'walkup_only' (migration 0120): the same
   // pinned substring plus 'spontaneous check-in' — checked FIRST, so
   // the member learns the door is only closed for booking AHEAD.
   if (message.contains('spontaneous check-in') &&
       message.contains('outside the opening hours')) {
-    return l10n?.bookingOutsideWalkUpError ??
-        'Outside the opening hours only a spontaneous check-in is '
-            'possible — booking ahead is not.';
+    return l10n.bookingOutsideWalkUpError;
   }
   // #624 outside-hours mode 'off' (migration 0118, pinned substring).
   if (message.contains('outside the opening hours')) {
-    return l10n?.bookingOutsideOffError ??
-        'Bookings outside the opening hours are not allowed.';
+    return l10n.bookingOutsideOffError;
   }
   // Presence rule (#408, migration 0077): check-in only inside
   // [starts − 15 min, end).
   if (message.contains('check-in window not open yet')) {
-    return l10n?.planCheckInNotYetError ??
-        'Check-in opens 15 minutes before the start.';
+    return l10n.planCheckInNotYetError;
   }
   if (message.contains('check-in window closed')) {
-    return l10n?.planCheckInOverError ??
-        'This reservation is over — check-in is no longer possible.';
+    return l10n.planCheckInOverError;
   }
   // One place at a time (#412, 0079 trigger + check-in guards).
   if (message.contains('you already have a reservation in that period')) {
-    return l10n?.bookingOnePlace ??
-        'You already have a booking in that period — one place at a time.';
+    return l10n.bookingOnePlace;
   }
   if (message.contains('already checked in elsewhere')) {
-    return l10n?.bookingCheckedInElsewhere ??
-        'You are checked in elsewhere — check out there first.';
+    return l10n.bookingCheckedInElsewhere;
   }
   // Whole-space paths (0050/0057): grant refusals and occupancy
   // conflicts share these pinned substrings across office and level.
   if (message.contains('not allowed to reserve a level')) {
-    return l10n?.levelNotAllowed ??
-        'You are not allowed to reserve a whole office or level.';
+    return l10n.levelNotAllowed;
   }
   // #412: these two rendered as "Something went wrong" — the owner had
   // no way to learn WHICH toggle was missing.
   if (message.contains('not bookable as a whole')) {
-    return l10n?.spaceNotWholeBookable ??
-        'This space is not set up for whole booking — the owner enables '
-            '"Bookable as a whole" on it in the editor.';
+    return l10n.spaceNotWholeBookable;
   }
   if (message.contains('level booking is not enabled')) {
-    return l10n?.levelFeatureOff ??
-        'Office & level reservations are switched off in Features.';
+    return l10n.levelFeatureOff;
   }
   // #1908 — the hierarchy guard (0325/0326): a seat and its whole desk,
   // office or level overlap. Before the level wording, which it contains.
   if (message.contains('that space is already reserved in that period')) {
-    return l10n?.bookingSpaceChainTaken ??
-        'This space, or a space it belongs to, is already reserved in that '
-            'period.';
+    return l10n.bookingSpaceChainTaken;
   }
   // #1908 — a checkout that lost the race to another checkout or to the
   // day-end sweep: the reservation is already closed.
   if (message.contains('not checked in')) {
-    return l10n?.bookingNoLongerCheckedIn ??
-        'This reservation is no longer checked in — it was checked out or '
-            'closed in the meantime.';
+    return l10n.bookingNoLongerCheckedIn;
   }
   if (message.contains('reservations in that period') ||
       message.contains('already reserved') ||
       message.contains('reserved as a whole')) {
-    return l10n?.levelConflict ??
-        'The level has reservations in that period.';
+    return l10n.levelConflict;
   }
   // #1030 — membership refusals. create_reservation raises 'not an
   // active member' for a paused member and 'not a member of this
@@ -174,14 +139,10 @@ String bookingErrorText(
   // seat may have just been taken", which blames a race the member
   // cannot win and hides the one thing an administrator can fix.
   if (message.contains(MembershipPausedError.serverSubstring)) {
-    return l10n?.bookingMembershipPaused ??
-        'Your membership is paused — an administrator reactivates it '
-            'in Members.';
+    return l10n.bookingMembershipPaused;
   }
   if (message.contains(NotAMemberError.serverSubstring)) {
-    return l10n?.bookingNotAMember ??
-        'You are no longer a member of this space — ask an '
-            'administrator for an invitation.';
+    return l10n.bookingNotAMember;
   }
   return fallback;
 }
@@ -194,41 +155,30 @@ int? _leadingInt(String message) =>
 /// surface that asks the gate before acting prints exactly what the
 /// server would have answered, so nobody learns two vocabularies.
 String bookingRefusalText(
-  AppLocalizations? l10n,
+  AppLocalizations l10n,
   BookingRefusal refusal, {
   required BookingPolicies policies,
   int? stepMinutes,
 }) =>
     switch (refusal) {
       BookingRefusal.closedDay =>
-        l10n?.planClosedDayError ?? 'The workspace is closed on that day.',
+        l10n.planClosedDayError,
       BookingRefusal.seatBlocked =>
-        l10n?.planSeatBlocked ?? 'This seat is blocked for maintenance.',
+        l10n.planSeatBlocked,
       BookingRefusal.beyondHorizon =>
-        l10n?.bookingHorizonError(policies.advanceHorizonDays) ??
-            'Too far ahead — bookings are open '
-                '${policies.advanceHorizonDays} days in advance.',
+        l10n.bookingHorizonError(policies.advanceHorizonDays),
       BookingRefusal.tooShort =>
-        l10n?.bookingTooShortError(policies.minDurationMinutes) ??
-            'Too short — a booking lasts at least '
-                '${policies.minDurationMinutes} minutes.',
+        l10n.bookingTooShortError(policies.minDurationMinutes),
       BookingRefusal.tooLong =>
-        l10n?.bookingTooLongError(policies.maxDurationMinutes) ??
-            'Too long — a booking lasts at most '
-                '${policies.maxDurationMinutes} minutes.',
+        l10n.bookingTooLongError(policies.maxDurationMinutes),
       BookingRefusal.past =>
-        l10n?.bookingPastError ?? 'This booking lies entirely in the past.',
+        l10n.bookingPastError,
       BookingRefusal.walkUpNotToday =>
-        l10n?.bookingWalkUpTodayError ?? 'A walk-up check-in must start today.',
-      BookingRefusal.crossesMidnight => l10n?.bookingSameDayError ??
-          'A booking ends on the day it starts — book the next day '
-              'separately.',
-      BookingRefusal.outsideHoursOff => l10n?.bookingOutsideOffError ??
-          'Bookings outside the opening hours are not allowed.',
+        l10n.bookingWalkUpTodayError,
+      BookingRefusal.crossesMidnight => l10n.bookingSameDayError,
+      BookingRefusal.outsideHoursOff => l10n.bookingOutsideOffError,
       BookingRefusal.outsideHoursAheadOnly =>
-        l10n?.bookingOutsideWalkUpError ??
-            'Outside the opening hours only a spontaneous check-in is '
-                'possible — booking ahead is not.',
+        l10n.bookingOutsideWalkUpError,
     };
 
 /// #622 — whether [error] is an occupancy refusal caused by ANOTHER

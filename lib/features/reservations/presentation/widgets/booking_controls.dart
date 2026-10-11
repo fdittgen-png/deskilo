@@ -7,10 +7,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../workspace/domain/booking_granularity.dart';
@@ -57,7 +57,7 @@ class WindowControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final timeFormat = appFormatOf(context); // #1150
     // Names on wide screens; compact glyph choices on phones. The reserve
     // header's summary keeps the selected name and exact hours visible.
@@ -125,26 +125,26 @@ class WindowControls extends StatelessWidget {
             chip(
               'am-chip',
               (am: true, pm: false),
-              lexiconText(context, key: 'planMorningChip', fallback: l10n?.planMorningChip ?? 'Morning'),
+              lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
               HalfDayWindows.morning,
             ),
             chip(
               'pm-chip',
               (am: false, pm: true),
-              lexiconText(context, key: 'planAfternoonChip', fallback: l10n?.planAfternoonChip ?? 'Afternoon'),
+              lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
               HalfDayWindows.afternoon,
             ),
           ],
           chip(
             'day-chip',
             (am: true, pm: true),
-            lexiconText(context, key: 'reserveFullDayChip', fallback: l10n?.reserveFullDayChip ?? 'Full day'),
+            lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip),
             HalfDayWindows.fullDay,
           ),
         ],
         if (!granularity.isDayBased) ...[
           Tooltip(
-            message: lexiconText(context, key: 'planFromLabel', fallback: l10n?.planFromLabel ?? 'From'),
+            message: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
             child: TextButton(
               key: ValueKey('$keyPrefix-from-chip'),
               style: style,
@@ -158,7 +158,7 @@ class WindowControls extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           Tooltip(
-            message: l10n?.planToLabel ?? 'To',
+            message: l10n.planToLabel,
             child: TextButton(
               key: ValueKey('$keyPrefix-to-chip'),
               style: style,

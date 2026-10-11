@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/cache/stale_reads.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../providers/reservation_providers.dart';
 
 /// #1305 S3 — availability served from the cache's stale tier says so.
@@ -31,16 +31,14 @@ class StaleAvailabilityBanner extends ConsumerWidget {
         if (savedAt == null) {
           return const SizedBox.shrink(key: ValueKey('reserve-availability-live'));
         }
-        final l10n = AppLocalizations.of(context);
+        final l10n = context.l10n;
         final time = appFormatOf(context).time(savedAt);
         return InlineBanner(
           key: const ValueKey('reserve-stale-banner'),
           icon: Icons.cloud_off_outlined,
           severity: InlineBannerSeverity.info,
-          text: l10n?.reserveStaleAvailability(time) ??
-              'Offline — availability as of $time. A seat shown free may '
-                  'have been taken since.',
-          actionLabel: l10n?.reserveStaleRetry ?? 'Retry',
+          text: l10n.reserveStaleAvailability(time),
+          actionLabel: l10n.reserveStaleRetry,
           // Refetch what the hub draws; a success clears the banner.
           onAction: () => ref
             ..invalidate(reservationsForDayProvider)

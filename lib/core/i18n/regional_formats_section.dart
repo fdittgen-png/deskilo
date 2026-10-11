@@ -10,6 +10,7 @@ import '../../features/profile/providers/profile_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../help/help_anchors.dart';
 import '../help/help_dot.dart';
+import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import '../time/clock.dart';
 import '../trace/guarded.dart';
@@ -26,13 +27,13 @@ class RegionalFormatsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
     final now = ref.watch(clockProvider).now();
     return ListTile(
       key: const ValueKey('regional-formats'),
       leading: const Icon(Icons.language_outlined),
-      title: Text(l10n?.regionalFormatsTitle ?? 'Region & formats'),
+      title: Text(l10n.regionalFormatsTitle),
       subtitle: Text(
         '${format.money(123456)} · ${format.date(now)} · ${format.time(now)}',
       ),
@@ -52,7 +53,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final scoped = ref.watch(workspacePreferenceEditingProvider);
     final stored = ref.watch(personalSettingsProvider).value;
@@ -66,8 +67,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
           context,
           domain: 'profile',
           message: 'save format prefs failed',
-          errorText: l10n?.workspaceGenericError ??
-              'Something went wrong. Please try again.',
+          errorText: l10n.workspaceGenericError,
           action: () async {
             if (scoped) {
               await ref.read(personalSettingsProvider.notifier).save({
@@ -82,12 +82,11 @@ class RegionalFormatsScreen extends ConsumerWidget {
         ).then((_) => ref.invalidate(myProfileProvider));
 
     final localeLabel = prefs.formatLocale.isEmpty
-        ? (l10n?.regionalFormatLocaleAuto(formatLocaleLabel(l10n, format.locale)) ??
-            'Follows the app language (${format.locale})')
+        ? (l10n.regionalFormatLocaleAuto(formatLocaleLabel(l10n, format.locale)))
         : formatLocaleLabel(l10n, prefs.formatLocale);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.regionalFormatsTitle ?? 'Region & formats')),
+      appBar: AppBar(title: Text(l10n.regionalFormatsTitle)),
       body: ListView(
         children: [
           const PreferenceScopeControls(),
@@ -109,8 +108,8 @@ class RegionalFormatsScreen extends ConsumerWidget {
             key: const ValueKey('regional-locale'),
             leading: const Icon(Icons.language_outlined),
             title: HelpDotTitle(
-              l10n?.regionalFormatLocale ?? 'Numbers & dates',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+              l10n.regionalFormatLocale,
+              l10n.helpTopicSettings,
               anchor: HelpAnchor.profileRegionalFormats,
             ),
             subtitle: Text(localeLabel),
@@ -121,8 +120,8 @@ class RegionalFormatsScreen extends ConsumerWidget {
             key: const ValueKey('regional-clock'),
             leading: const Icon(Icons.schedule_outlined),
             title: HelpDotTitle(
-              l10n?.regionalClock ?? 'Clock',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+              l10n.regionalClock,
+              l10n.helpTopicSettings,
               anchor: HelpAnchor.profileClock,
             ),
           ),
@@ -138,15 +137,15 @@ class RegionalFormatsScreen extends ConsumerWidget {
               segments: [
                 ButtonSegment(
                   value: ClockPref.auto,
-                  label: Text(l10n?.regionalClockAuto ?? 'Auto'),
+                  label: Text(l10n.regionalClockAuto),
                 ),
                 ButtonSegment(
                   value: ClockPref.h24,
-                  label: Text(l10n?.regionalClock24h ?? '24h'),
+                  label: Text(l10n.regionalClock24h),
                 ),
                 ButtonSegment(
                   value: ClockPref.h12,
-                  label: Text(l10n?.regionalClock12h ?? '12h'),
+                  label: Text(l10n.regionalClock12h),
                 ),
               ],
               selected: {prefs.clock},
@@ -157,17 +156,14 @@ class RegionalFormatsScreen extends ConsumerWidget {
             key: const ValueKey('regional-device-zone'),
             secondary: const Icon(Icons.public_outlined),
             title: HelpDotTitle(
-              l10n?.regionalDeviceZone ?? 'Show times in my time zone',
-              l10n?.helpTopicSettings ?? 'Settings & profile',
+              l10n.regionalDeviceZone,
+              l10n.helpTopicSettings,
               anchor: HelpAnchor.profileDeviceZone,
             ),
             // Says what the default IS, because "workspace time" only
             // means something once you know the workspace is elsewhere.
             subtitle: Text(
-              l10n?.regionalDeviceZoneHint ??
-                  'Off: times show in the workspace\'s zone, the one bookings '
-                      'are made in. On: your device\'s, labelled where it '
-                      'differs.',
+              l10n.regionalDeviceZoneHint,
             ),
             value: prefs.timeZoneMode == TimeZoneMode.device,
             onChanged: (on) => save(prefs.copyWith(
@@ -183,7 +179,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
   /// not tags: « Français (Suisse) · 1'234.56 ».
   Future<void> _pickLocale(
     BuildContext context,
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     FormatPrefs prefs,
     Future<void> Function(FormatPrefs) save,
   ) async {
@@ -200,14 +196,14 @@ class RegionalFormatsScreen extends ConsumerWidget {
             Padding(
               padding: AppSpacing.lgAll,
               child: Text(
-                l10n?.regionalFormatLocale ?? 'Numbers & dates',
+                l10n.regionalFormatLocale,
                 style: Theme.of(sheetContext).textTheme.titleMedium,
               ),
             ),
             _option(
               sheetContext,
               key: 'auto',
-              label: l10n?.regionalFollowLanguage ?? 'Automatic',
+              label: l10n.regionalFollowLanguage,
               selected: prefs.formatLocale.isEmpty,
             ),
             for (final tag in kFormatLocales)

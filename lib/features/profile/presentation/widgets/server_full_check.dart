@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/instance/instance_bundle_asset.dart';
 import '../../../../core/instance/management_api.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'instance_doctor_panel.dart';
 
 /// #1309 S2 — a full security check of this device's Supabase project, on
@@ -36,18 +36,16 @@ class _ServerFullCheckState extends ConsumerState<ServerFullCheck> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final api = _api;
     return ExpansionTile(
       key: const ValueKey('backend-full-check'),
       leading: const Icon(Icons.health_and_safety_outlined),
-      title: Text(l10n?.backendFullCheckTitle ?? 'Run a full check'),
+      title: Text(l10n.backendFullCheckTitle),
       childrenPadding: const EdgeInsets.fromLTRB(
           AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
       children: [
-        Text(l10n?.backendFullCheckHint ??
-            'Paste a personal access token for this check. It is used for '
-                'this check only and never stored.'),
+        Text(l10n.backendFullCheckHint),
         const SizedBox(height: AppSpacing.sm),
         TextField(
           key: const ValueKey('backend-full-check-token'),
@@ -59,7 +57,7 @@ class _ServerFullCheckState extends ConsumerState<ServerFullCheck> {
             if (_api != null) setState(() => _api = null);
           },
           decoration: InputDecoration(
-            labelText: l10n?.instanceTokenLabel ?? 'Personal access token',
+            labelText: l10n.instanceTokenLabel,
             border: const OutlineInputBorder(),
           ),
         ),
@@ -68,7 +66,7 @@ class _ServerFullCheckState extends ConsumerState<ServerFullCheck> {
           FilledButton.tonalIcon(
             key: const ValueKey('backend-full-check-use-token'),
             icon: const Icon(Icons.key_outlined),
-            label: Text(l10n?.backendFullCheckUseToken ?? 'Use this token'),
+            label: Text(l10n.backendFullCheckUseToken),
             onPressed: () {
               final token = _token.text.trim();
               if (token.isEmpty) return;

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/vat/place_of_supply.dart';
@@ -14,13 +15,13 @@ import '../domain/member.dart';
 import '../providers/workspace_providers.dart';
 
 /// #985 — the counterparty dimension of VAT: who [member] is for tax.
-String vatTreatmentName(AppLocalizations? l10n, VatTreatment t) => switch (t) {
-      VatTreatment.auto => l10n?.vatTreatmentAuto ?? 'Automatic',
-      VatTreatment.domestic => l10n?.vatTreatmentDomestic ?? 'Domestic VAT',
+String vatTreatmentName(AppLocalizations l10n, VatTreatment t) => switch (t) {
+      VatTreatment.auto => l10n.vatTreatmentAuto,
+      VatTreatment.domestic => l10n.vatTreatmentDomestic,
       VatTreatment.reverseCharge =>
-        l10n?.vatTreatmentReverseCharge ?? 'Reverse charge',
-      VatTreatment.export => l10n?.vatTreatmentExport ?? 'Outside the EU',
-      VatTreatment.exempt => l10n?.vatTreatmentExempt ?? 'Exempt buyer',
+        l10n.vatTreatmentReverseCharge,
+      VatTreatment.export => l10n.vatTreatmentExport,
+      VatTreatment.exempt => l10n.vatTreatmentExempt,
     };
 
 /// #985 (migration 0182) — who [member] is for VAT, and the reason an
@@ -30,7 +31,7 @@ Future<void> pickMemberVatTreatment(
   WidgetRef ref,
   Member member,
 ) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   var chosen = VatTreatment.fromWire(member.vatTreatment);
   final reason = TextEditingController(text: member.vatExemptionReason);
   final ok = await showDialog<bool>(
@@ -38,8 +39,8 @@ Future<void> pickMemberVatTreatment(
     builder: (context) => StatefulBuilder(
       builder: (context, setState) => AlertDialog(
         title: HelpDotTitle(
-          l10n?.memberVatTreatmentLabel ?? 'VAT treatment',
-          l10n?.helpTopicVat ?? 'VAT',
+          l10n.memberVatTreatmentLabel,
+          l10n.helpTopicVat,
           anchor: HelpAnchor.membersVatTreatment,
         ),
         content: Column(
@@ -47,11 +48,7 @@ Future<void> pickMemberVatTreatment(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              l10n?.memberVatTreatmentExplainer ??
-                  'Who this member is for VAT: the automatic rule (reverse '
-                      'charge for a business in another EU state), domestic '
-                      'VAT regardless, reverse charge, outside the EU, or an '
-                      'exempt buyer with the reason printed on the invoice.',
+              l10n.memberVatTreatmentExplainer,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -78,7 +75,7 @@ Future<void> pickMemberVatTreatment(
             if (chosen == VatTreatment.reverseCharge) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
-                (l10n ?? lookupAppLocalizations(const Locale('en')))
+                l10n
                     .vatTreatmentReverseChargeHint,
                 key: const Key('vat-treatment-reverse-charge-hint'),
                 style: Theme.of(context).textTheme.bodySmall,
@@ -91,8 +88,7 @@ Future<void> pickMemberVatTreatment(
                 controller: reason,
                 maxLength: 200,
                 decoration: InputDecoration(
-                  labelText: l10n?.vatTreatmentReasonField ??
-                      'Exemption reason (printed on the invoice)',
+                  labelText: l10n.vatTreatmentReasonField,
                   counterText: '',
                 ),
               ),
@@ -103,12 +99,12 @@ Future<void> pickMemberVatTreatment(
           TextButton(
             key: const ValueKey('member-vat-treatment-cancel'),
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n?.commonCancel ?? 'Cancel'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             key: const Key('vat-treatment-save'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n?.commonSave ?? 'Save'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -123,8 +119,7 @@ Future<void> pickMemberVatTreatment(
     context,
     domain: 'workspace',
     message: 'vat treatment update failed',
-    errorText: l10n?.workspaceGenericError ??
-        'Something went wrong. Please try again.',
+    errorText: l10n.workspaceGenericError,
     action: () => ref
         .read(workspaceRepositoryProvider)
         .setMemberVatTreatment(member.id, chosen.wire, text),
@@ -144,7 +139,7 @@ class _TreatmentExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n =
-        AppLocalizations.of(context) ?? lookupAppLocalizations(const Locale('en'));
+        context.l10n;
     String outcome(SupplyClass supply) => switch (supplyVatCategory(
           treatment: treatment,
           supply: supply,

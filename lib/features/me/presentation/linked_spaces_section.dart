@@ -14,10 +14,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/backend_uri.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/inline_banner.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../../l10n/app_localizations_en.dart';
 import '../domain/my_spaces.dart';
 import '../providers/me_providers.dart';
 import 'me_workspace_row.dart';
@@ -30,7 +29,7 @@ class LinkedSpacesSection extends ConsumerWidget {
     LinkedServerSpaces server,
     LinkedSpace space,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final go = await showModalBottomSheet<bool>(
       context: context,
       builder: (sheetContext) => SafeArea(
@@ -46,17 +45,14 @@ class LinkedSpacesSection extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n?.meLinkedOpenBody(server.host) ??
-                    'This space lives on ${server.host}. The app works with one '
-                        'server at a time: opening it switches to that server and '
-                        'asks you to sign in there.',
+                l10n.meLinkedOpenBody(server.host),
               ),
               const SizedBox(height: AppSpacing.lg),
               FilledButton.icon(
                 key: const ValueKey('linked-space-open'),
                 icon: const Icon(Icons.swap_horiz),
                 label: Text(
-                  l10n?.meLinkedOpen(server.host) ?? 'Open on ${server.host}',
+                  l10n.meLinkedOpen(server.host),
                 ),
                 onPressed: () => Navigator.of(sheetContext).pop(true),
               ),
@@ -77,7 +73,7 @@ class LinkedSpacesSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final servers = ref.watch(linkedServerSpacesProvider).value ?? const [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,27 +85,24 @@ class LinkedSpacesSection extends ConsumerWidget {
               icon: Icons.cloud_off_outlined,
               severity: InlineBannerSeverity.info,
               text:
-                  l10n?.meLinkedUnavailable(server.host) ??
-                  '${server.host} did not answer: this list may be incomplete.',
-              actionLabel: l10n?.commonRetry ?? 'Try again',
+                  l10n.meLinkedUnavailable(server.host),
+              actionLabel: l10n.commonRetry,
               onAction: () => ref.invalidate(linkedServerSpacesProvider),
             ),
           for (final group in _groups(server.spaces))
             MeWorkspaceRow(
               environmentHint: group.any((s) => s.environment == 'dev')
-                  ? (l10n ?? AppLocalizationsEn()).uxTestSpaceHint : null,
+                  ? l10n.uxTestSpaceHint : null,
               avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
               name: group.first.name,
               detail: group.any((s) => s.standing == MySpaceStanding.pending)
-                  ? (l10n?.meLinkedPendingOn(server.host) ??
-                      'Waiting for approval · ${server.host}')
+                  ? (l10n.meLinkedPendingOn(server.host))
                   : server.host,
               actions: [
                 for (final space in group)
                   Tooltip(
                     message: space.standing == MySpaceStanding.pending
-                        ? (l10n?.meLinkedPendingOn(server.host) ??
-                            'Waiting for approval · ${server.host}')
+                        ? (l10n.meLinkedPendingOn(server.host))
                         : space.name,
                     child: Padding(
                       padding: const EdgeInsets.only(right: AppSpacing.sm),
@@ -117,10 +110,10 @@ class LinkedSpacesSection extends ConsumerWidget {
                         key: ValueKey('linked-space-${server.host}-${space.id}'),
                         onPressed: () => _open(context, server, space),
                         child: Text(space.environment.isEmpty
-                            ? (l10n?.meSpaceOpen ?? 'Open')
+                            ? (l10n.meSpaceOpen)
                             : space.environment == 'prod'
-                            ? (l10n ?? AppLocalizationsEn()).uxOpenWorkspace
-                            : (l10n ?? AppLocalizationsEn()).uxTestSpace),
+                            ? l10n.uxOpenWorkspace
+                            : l10n.uxTestSpace),
                       ),
                     ),
                   ),

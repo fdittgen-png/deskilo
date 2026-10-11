@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -79,7 +79,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
     required String? eventType,
     required String label,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final policies = ref.read(validationPoliciesProvider).value ?? const [];
@@ -153,8 +153,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        l10n?.workspaceGenericError ??
-            'Something went wrong. Please try again.',
+        l10n.workspaceGenericError,
       );
       return;
     }
@@ -162,13 +161,13 @@ class ValidationSettingsScreen extends ConsumerWidget {
     if (!context.mounted) return;
     AppSnack.success(
       context,
-      l10n?.validationSaved ?? 'Validation rule saved.',
+      l10n.validationSaved,
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final policiesAsync = ref.watch(validationPoliciesProvider);
     // Warm the caches _edit reads synchronously.
     ref
@@ -178,7 +177,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.validationTitle ?? 'Validation rules'),
+        title: Text(l10n.validationTitle),
       ),
       body: switch (policiesAsync) {
         AsyncData(value: final policies) => ListView(
@@ -194,15 +193,12 @@ class ValidationSettingsScreen extends ConsumerWidget {
                     AppSpacing.md, AppSpacing.xs, AppSpacing.md, 0),
                 child: ListTile(
                   leading: const Icon(Icons.gavel_outlined),
-                  title: Text(l10n?.validationNoSelfTitle ??
-                      'Nobody validates their own'),
-                  subtitle: Text(l10n?.validationNoSelfDesc ??
-                      'Whoever creates an event never validates it. It waits '
-                          'for someone else, or expires undecided.'),
+                  title: Text(l10n.validationNoSelfTitle),
+                  subtitle: Text(l10n.validationNoSelfDesc),
                 ),
               ),
               ValidationPolicyCard(
-                label: l10n?.validationDefaultPolicy ?? 'Default policy',
+                label: l10n.validationDefaultPolicy,
                 effective: policies
                         .where((p) => p.eventType == null)
                         .firstOrNull ??
@@ -212,7 +208,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
                   context,
                   ref,
                   eventType: null,
-                  label: l10n?.validationDefaultPolicy ?? 'Default policy',
+                  label: l10n.validationDefaultPolicy,
                 ),
               ),
               // #1221 — grouped by the PROCESS a rule interrupts. The
@@ -243,8 +239,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
           ),
         AsyncError() => Center(
             child: Text(
-              l10n?.workspaceGenericError ??
-                  'Something went wrong. Please try again.',
+              l10n.workspaceGenericError,
             ),
           ),
         _ => const LoadingView(),
@@ -264,7 +259,7 @@ class _WorkflowHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     return Padding(
       key: ValueKey('validation-workflow-${workflow.name}'),

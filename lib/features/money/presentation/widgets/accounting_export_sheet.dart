@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_capability.dart';
@@ -24,7 +25,7 @@ Future<AccountingFormat?> showAccountingExportSheet(
   required List<AccountingFormat> formats,
 }) async {
   if (formats.isEmpty) return null;
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   return showModalBottomSheet<AccountingFormat>(
     context: context,
     showDragHandle: true,
@@ -46,7 +47,7 @@ Future<AccountingFormat?> showAccountingExportSheet(
               Row(children: [
                 Expanded(
                   child: Text(
-                    l10n?.invoiceExportChoose ?? 'Export for accounting',
+                    l10n.invoiceExportChoose,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -54,7 +55,7 @@ Future<AccountingFormat?> showAccountingExportSheet(
                 // question here, and the sheet lists eight of them
                 // without room to say it.
                 HelpDot(
-                  l10n?.helpTopicAccounting ?? 'Accounting exports',
+                  l10n.helpTopicAccounting,
                   anchor: HelpAnchor.invoicingAccountingExport,
                 ),
               ]),
@@ -73,7 +74,7 @@ class _FormatTile extends StatelessWidget {
   const _FormatTile({required this.format, required this.l10n});
 
   final AccountingFormat format;
-  final AppLocalizations? l10n;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +101,7 @@ class _FormatTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  l10n?.exportNoCompleteBooks ??
-                      'Rebuilt from invoices and payments — DesKilo keeps no '
-                          'double-entry ledger, so this is not your complete '
-                          'books. Your accountant completes it.',
+                  l10n.exportNoCompleteBooks,
                   key: const ValueKey('accounting-export-incomplete-books'),
                   style: Theme.of(context)
                       .textTheme
@@ -115,10 +113,7 @@ class _FormatTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  l10n?.exportUncertifiedSoftware ??
-                      'Built to the published spec, but DesKilo is not '
-                          'certified software in this country — check with '
-                          'your accountant whether that is required of you.',
+                  l10n.exportUncertifiedSoftware,
                   key: const ValueKey('accounting-export-uncertified'),
                   style: Theme.of(context)
                       .textTheme
@@ -142,27 +137,23 @@ class _FormatTile extends StatelessWidget {
       };
 
   String get _name => switch (format.id) {
-        'fec' => l10n?.invoiceExportFec ?? 'FEC (France)',
-        'saft' => l10n?.invoiceExportSafT ?? 'SAF-T (XML, international)',
-        'saft_pt' => l10n?.invoiceExportSafTPt ?? 'SAF-T (Portugal)',
-        'datev' => l10n?.invoiceExportDatev ?? 'DATEV (Buchungsstapel)',
-        'sage50' => l10n?.invoiceExportSage ?? 'Sage 50 (audit trail)',
+        'fec' => l10n.invoiceExportFec,
+        'saft' => l10n.invoiceExportSafT,
+        'saft_pt' => l10n.invoiceExportSafTPt,
+        'datev' => l10n.invoiceExportDatev,
+        'sage50' => l10n.invoiceExportSage,
         'accountant_csv' =>
-          l10n?.invoiceExportAccountantCsv ?? 'Accounting CSV',
-        'audit_trail' => l10n?.invoiceExportAuditTrail ?? 'Audit trail',
-        'bundle' => l10n?.invoiceExportBundle ?? 'Year archive (zip)',
+          l10n.invoiceExportAccountantCsv,
+        'audit_trail' => l10n.invoiceExportAuditTrail,
+        'bundle' => l10n.invoiceExportBundle,
         _ => format.id,
       };
 
   /// What the file claims. Deliberately blunt: this is the sentence that
   /// stops someone filing an accountant's working file as a tax return.
   String get _claimText => switch (format.claim) {
-        FormatClaim.regulatory => l10n?.exportClaimRegulatory ??
-            'The format your tax authority asks for.',
-        FormatClaim.exchange => l10n?.exportClaimExchange ??
-            'For your accountant to import and review — not a filing.',
-        FormatClaim.subset => l10n?.exportClaimSubset ??
-            'Invoices and payments only; no general ledger. The file says '
-                'so in its header.',
+        FormatClaim.regulatory => l10n.exportClaimRegulatory,
+        FormatClaim.exchange => l10n.exportClaimExchange,
+        FormatClaim.subset => l10n.exportClaimSubset,
       };
 }

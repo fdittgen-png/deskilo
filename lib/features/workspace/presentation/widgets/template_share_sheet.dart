@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -13,7 +13,7 @@ import '../../providers/workspace_providers.dart';
 /// an account exists behind it, so this sheet cannot be an oracle.
 Future<void> showTemplateShareSheet(
     BuildContext context, WidgetRef ref, WorkspaceTemplate t) async {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   final repo = ref.read(workspaceRepositoryProvider);
   final email = TextEditingController();
   await showModalBottomSheet<void>(
@@ -31,16 +31,14 @@ Future<void> showTemplateShareSheet(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l10n?.libraryShareTitle(t.name) ?? 'Share « ${t.name} »',
+                Text(l10n.libraryShareTitle(t.name),
                     style: Theme.of(ctx).textTheme.titleMedium),
                 const SizedBox(height: AppSpacing.xs),
-                Text(l10n?.libraryShareHint ??
-                    'Invite by e-mail. The invitation works the moment that '
-                        'address signs in.',
+                Text(l10n.libraryShareHint,
                     style: Theme.of(ctx).textTheme.bodySmall),
                 const SizedBox(height: AppSpacing.md),
                 if (grantees.isEmpty)
-                  Text(l10n?.libraryShareNobody ?? 'Nobody invited yet.',
+                  Text(l10n.libraryShareNobody,
                       style: Theme.of(ctx).textTheme.bodySmall),
                 for (final g in grantees)
                   ListTile(
@@ -72,7 +70,7 @@ Future<void> showTemplateShareSheet(
                       keyboardType: TextInputType.emailAddress,
                       autofillHints: const [AutofillHints.email],
                       decoration: InputDecoration(
-                          labelText: l10n?.libraryShareEmail ?? 'E-mail address'),
+                          labelText: l10n.libraryShareEmail),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
@@ -89,7 +87,7 @@ Future<void> showTemplateShareSheet(
                         setState(() {});
                       }
                     },
-                    child: Text(l10n?.libraryShareAdd ?? 'Invite'),
+                    child: Text(l10n.libraryShareAdd),
                   ),
                 ]),
               ],

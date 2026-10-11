@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -25,7 +25,7 @@ class WorkspaceOwnScreens extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final features = ref.watch(enabledFeaturesSyncProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,10 +33,9 @@ class WorkspaceOwnScreens extends ConsumerWidget {
         _Row(
           rowKey: 'workspaceSettingsWording',
           icon: Icons.translate_outlined,
-          title: l10n?.wordingRow ?? 'Wording',
+          title: l10n.wordingRow,
           anchor: HelpAnchor.workspaceWording,
-          subtitle: l10n?.wordingRowHint ??
-              'The words this space uses for a seat, the legend and the tabs.',
+          subtitle: l10n.wordingRowHint,
           path: '/settings/wording',
           helpTopic: helpTopic,
         ),
@@ -44,11 +43,9 @@ class WorkspaceOwnScreens extends ConsumerWidget {
           _Row(
             rowKey: 'workspaceSettingsColours',
             icon: Icons.palette_outlined,
-            title: l10n?.coloursTitle ?? 'Colours',
+            title: l10n.coloursTitle,
             anchor: HelpAnchor.workspaceColours,
-            subtitle: l10n?.coloursIntro ??
-                'One colour, and the app derives its light and dark themes '
-                    'from it.',
+            subtitle: l10n.coloursIntro,
             path: '/settings/colours',
             helpTopic: helpTopic,
           ),
@@ -59,10 +56,9 @@ class WorkspaceOwnScreens extends ConsumerWidget {
           _Row(
             rowKey: 'workspaceSettingsRolesOfSpace',
             icon: Icons.badge_outlined,
-            title: l10n?.rolesOfSpaceTitle ?? 'Roles this space defines',
+            title: l10n.rolesOfSpaceTitle,
             anchor: HelpAnchor.rolesSpace,
-            subtitle: l10n?.rolesOfSpaceSubtitle ??
-                "Each one adds permissions on top of a member's role.",
+            subtitle: l10n.rolesOfSpaceSubtitle,
             path: '/settings/roles-of-this-space',
             helpTopic: helpTopic,
           ),
@@ -71,11 +67,9 @@ class WorkspaceOwnScreens extends ConsumerWidget {
           _Row(
             rowKey: 'workspaceSettingsQuestions',
             icon: Icons.help_outline,
-            title: l10n?.questionsTitle ?? 'Questions this space asks',
+            title: l10n.questionsTitle,
             anchor: null,
-            subtitle: l10n?.questionsSubtitle ??
-                "They appear inside personal information, under your "
-                    "space's name.",
+            subtitle: l10n.questionsSubtitle,
             path: '/settings/questions',
             helpTopic: helpTopic,
           ),

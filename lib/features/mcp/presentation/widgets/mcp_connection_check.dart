@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../domain/mcp_usage.dart';
 import '../../providers/mcp_providers.dart';
 import 'mcp_client_tabs.dart';
@@ -109,7 +109,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
     final last = _latestMcpCall(ref.watch(myMcpUsageProvider).value ?? const []);
     String when(McpClientUsage u) => format.dateTime(u.lastUsedAt!);
@@ -119,8 +119,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
         if (last != null && _phase != _Phase.reached)
           Text(
             key: const ValueKey('mcp-connect-last-call'),
-            l10n?.mcpConnectLastCall(last.clientName, when(last)) ??
-                'Last call: ${last.clientName}, ${when(last)}.',
+            l10n.mcpConnectLastCall(last.clientName, when(last)),
           ),
         switch (_phase) {
           _Phase.idle => const SizedBox.shrink(),
@@ -137,8 +136,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
-                      l10n?.mcpConnectTestWaiting ??
-                          'Waiting for your assistant to call DesKilo. Ask it:',
+                      l10n.mcpConnectTestWaiting,
                     ),
                   ),
                 ],
@@ -146,8 +144,7 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
               McpCopyBlock(
                 id: 'test-prompt',
                 text:
-                    l10n?.mcpConnectTestPrompt ??
-                    'Using DesKilo, what are my bookings this week?',
+                    l10n.mcpConnectTestPrompt,
               ),
             ],
           ),
@@ -156,21 +153,16 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
             icon: Icons.check_circle_outline,
             severity: InlineBannerSeverity.info,
             text:
-                l10n?.mcpConnectTestReached(
+                l10n.mcpConnectTestReached(
                   _reached!.clientName,
                   when(_reached!),
-                ) ??
-                'Connected: ${_reached!.clientName} reached DesKilo, '
-                    '${when(_reached!)}.',
+                ),
           ),
           _Phase.timedOut => InlineBanner(
             key: const ValueKey('mcp-connect-test-timeout'),
             icon: Icons.help_outline,
             text:
-                l10n?.mcpConnectTestTimeout ??
-                'No call arrived yet. Check that the connector is added, that '
-                    'you approved this workspace, and that the steps above '
-                    'are done; then test again.',
+                l10n.mcpConnectTestTimeout,
           ),
         },
         const SizedBox(height: AppSpacing.sm),
@@ -181,8 +173,8 @@ class _McpConnectionTestState extends ConsumerState<McpConnectionTest> {
             icon: const Icon(Icons.network_check),
             label: Text(
               _phase == _Phase.idle
-                  ? (l10n?.mcpConnectTest ?? 'Test the connection')
-                  : (l10n?.mcpConnectTestAgain ?? 'Test again'),
+                  ? (l10n.mcpConnectTest)
+                  : (l10n.mcpConnectTestAgain),
             ),
             onPressed: _phase == _Phase.waiting ? null : _start,
           ),
