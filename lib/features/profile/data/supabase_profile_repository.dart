@@ -177,7 +177,10 @@ class SupabaseProfileRepository implements ProfileRepository {
       'p_details': details,
       'p_client_request_id': clientRequestId,
     });
-    return RightsRequest.fromJson(Map<String, dynamic>.from(row as Map));
+    return RightsRequest.fromJson(
+      Map<String, dynamic>.from(row as Map),
+      context: 'submit_rights_request',
+    );
   }
 
   @override
@@ -185,7 +188,10 @@ class SupabaseProfileRepository implements ProfileRepository {
     final rows = await _client.rpc<dynamic>('my_rights_requests');
     return [
       for (final row in (rows as List? ?? const []))
-        RightsRequest.fromJson(Map<String, dynamic>.from(row as Map)),
+        RightsRequest.fromJson(
+          Map<String, dynamic>.from(row as Map),
+          context: 'my_rights_requests',
+        ),
     ];
   }
 
