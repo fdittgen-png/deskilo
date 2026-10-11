@@ -4843,7 +4843,7 @@ Wenn Sie Umsatzsteuer berechnen und ein Unternehmen in einem anderen EU-Land in 
 <!-- anchor: user.money.vat.vies -->
 ### USt-IdNr.-Prüfung (VIES)
 
-**Zielgruppe:** Inhaber · Abrechnungsadministrator
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
 Bevor eine allgemeine Dienstleistung an ein Unternehmen in einem anderen EU-Land unter die Steuerschuldnerschaft des Empfängers fällt, braucht die App einen Nachweis, dass der Kunde ein Unternehmen ist: seine Umsatzsteuer-ID, in VIES, dem EU-Verzeichnis der Umsatzsteuer-IDs, als gültig bestätigt.
 
