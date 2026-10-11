@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:xml/xml.dart';
 
+import '../../../core/data/json_reader.dart';
 import 'invoice.dart';
 import 'vat_tax_point.dart';
 import '../../../core/data/system_columns.dart';
@@ -55,21 +56,21 @@ class VatDeclarationLine {
         },
       };
 
-  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) =>
-      VatDeclarationLine(
-        percent: (json['percent'] as num).toDouble(),
-        category: json['category'] as String? ?? '',
-        grossCents: (json['gross_cents'] as num?)?.toInt() ?? 0,
-        netCents: (json['net_cents'] as num).toInt(),
-        vatCents: (json['vat_cents'] as num).toInt(),
-        invoiceCount: (json['invoice_count'] as num?)?.toInt() ?? 0,
-        corrects: json['correction'] == true
-            ? (json['corrects'] as String? ?? '')
-            : '',
-        correctsStart: DateTime.tryParse(
-            json['corrects_start'] as String? ?? ''),
-        correctsEnd: DateTime.tryParse(json['corrects_end'] as String? ?? ''),
-      );
+  factory VatDeclarationLine.fromJson(Map<String, dynamic> json) {
+    final row = JsonReader.of(json, context: 'vat_declarations.lines');
+    final correction = row.boolOr('correction', false);
+    return VatDeclarationLine(
+      percent: row.doubleOrNull('percent') ?? 0,
+      category: row.stringOr('category'),
+      grossCents: row.intOrNull('gross_cents') ?? 0,
+      netCents: row.intOrNull('net_cents') ?? 0,
+      vatCents: row.intOrNull('vat_cents') ?? 0,
+      invoiceCount: row.intOrNull('invoice_count') ?? 0,
+      corrects: correction ? row.stringOr('corrects') : '',
+      correctsStart: correction ? row.dateTimeOrNull('corrects_start') : null,
+      correctsEnd: correction ? row.dateTimeOrNull('corrects_end') : null,
+    );
+  }
 }
 
 String? _day(DateTime? day) => day?.toIso8601String().substring(0, 10);

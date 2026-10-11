@@ -14,11 +14,11 @@ import 'lint_sources.dart';
 
 /// Raw `json['…']` reads left in hand-written lib/ (473 lines when the reader
 /// landed).
-const _rawReadBudget = 473;
+const _rawReadBudget = 467;
 
 /// `factory X.fromJson` in files that do not read through JsonReader (78
 /// when the reader landed).
-const _handFromJsonBudget = 78;
+const _handFromJsonBudget = 76;
 
 void main() {
   final files = handWrittenDartFiles('lib').toList();

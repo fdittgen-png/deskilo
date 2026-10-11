@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 import 'vat_declaration_period.dart';
 import 'vat_tax_point.dart';
 
@@ -132,7 +133,8 @@ class InvoiceLegal {
                   _ => null,
                 },
         declarationPeriod:
-            VatDeclarationPeriod.fromWire(json['vat_declaration_period']),
+            VatDeclarationPeriod.fromWire(JsonReader.of(json)
+                .stringOrNull('vat_declaration_period')),
         legalForm: json['legal_form'] as String? ?? '',
         registration: json['registration'] as String? ?? '',
         paymentTerms: json['payment_terms'] as String? ?? '',
